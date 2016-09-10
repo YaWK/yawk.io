@@ -1,0 +1,59 @@
+<?php
+// TEMPLATE WRAPPER - HEADER & breadcrumbs
+echo "
+<!-- Content Wrapper. Contains page content -->
+<div class=\"content-wrapper\" id=\"content-FX\">
+    <!-- Content Header (Page header) -->
+    <section class=\"content-header\">";
+/* draw Title on top */
+echo \YAWK\backend::getTitle($lang['EMAIL'], $lang['EMAILNEW_SUBTEXT']);
+echo"<ol class=\"breadcrumb\">
+            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
+            <li class=\"active\"><a href=\"index.php?page=users\" title=\"Users\"> Users</a></li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class=\"content\">";
+
+// if form is sent
+  if(isset($_POST['send']))
+  {
+    $email_from = YAWK\settings::getSetting($db, 'admin_email');
+    $email_to = $db->quote($_POST['email_to']);
+	$email_cc = $db->quote($_POST['email_cc']);
+	$email_subject = $db->quote($_POST['email_subject']);
+    $email_message = $db->quote($_POST['email_message']);
+    \YAWK\email::sendEmail($email_from, $email_to, $email_cc, $email_subject, $email_message);
+  }
+  else
+  {   // prepare vars + draw input form...
+	  if (isset($_GET['user'])) {
+		// fetch users email adress
+		$user = $_GET['user'];
+		$email_to = \YAWK\user::getUserEmail($db, $user);
+        $email_from = YAWK\settings::getSetting($db, 'admin_email');
+	  	}
+	  	else
+        {   // username is not set
+            $user = "";
+        }
+	  	if (!isset($email_to))
+        {   // email_to is empty
+	  	    $email_to = "";
+	  	}
+        if (!isset($email_from))
+        {   // email_from is empty
+            $email_from = "";
+        }
+  }
+?>
+<form action="index.php?page=email-new" class="form" method="POST">
+<fieldset style="width:560px;">
+	<label for="email_from">From:</label> <input id="email_from" type="text" class="form-control" name="email_from" size="15" placeholder="from:" value="<?php echo $email_from; ?>" maxlength="64">
+	<label for="email_to">To:</label> <input id="email_to" type="text" class="form-control" name="email_to" size="15" placeholder="to:" value="<?php echo $email_to; ?>" maxlength="64">
+	<label for="email_subject">Subject:</label> <input id="email_subject" type="text" class="form-control" name="email_subject" size="15" placeholder="Subject" maxlength="64">
+	<label for="email_message">Message:</label> <textarea id="email_message" name="email_message" class="form-control" cols="64" rows="15">Message</textarea><br>
+  <input type="submit" name="send" class="btn btn-success pull-right" value="Email&nbsp;an&nbsp;<?php echo $user; ?>&nbsp;senden" />
+</fieldset>
+</form>
+

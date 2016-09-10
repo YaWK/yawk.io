@@ -1,0 +1,25 @@
+
+input[type="checkbox"] {
+    -webkit-appearance: checkbox;
+}
+input[type="radio"] {
+    -webkit-appearance: radio;
+}
+
+/* dark textarea for template-edit (to edit the custom.css) */
+.dark, textarea {
+    font-family: "Courier New", Courier, monospace;
+    color: #f4f4f4;
+    background-color : #222;
+}
+
+/* center savebutton if viewport is small */
+@media (max-width:991px) {
+    #savebutton.btn {
+        margin-bottom:12px;
+        width:50%;
+    }
+    #btn-wrapper {
+        text-align: center;
+    }
+}

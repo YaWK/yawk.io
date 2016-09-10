@@ -1,0 +1,72 @@
+<?php
+namespace YAWK {
+    /**
+     * <b>send an email.</b>
+     *
+     * handles the email functions. main method is<br>
+     * <i>Example:</i>
+     * <code><?php YAWK\email::sendEmail($email_from, $email_to, $email_cc, $email_subject, $email_message); ?></code>
+     * Call this anytime when you need to send an email.
+     * <p><i>Class covers both, backend & frontend functionality.
+     * See Methods Summary for Details!</i></p>
+     *
+     * @category   CMS
+     * @package    System
+     * @global     $connection
+     * @global     $dbprefix
+     * @author     Daniel Retzl <danielretzl@gmail.com>
+     * @copyright  2009-2015 Daniel Retzl yawk.goodconnect.net
+     * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+     * @version    1.1.3
+     * @link       http://yawk.goodconnect.net/
+     * @since      File available since Release 0.0.9
+     * @annotation Email class serve function sendEmail() to send email
+     */
+    class email
+    {
+
+        static function sendEmail($email_from, $email_to, $email_cc, $email_subject, $email_message)
+        {
+            /* SEND EMAIL WITH GIVEN PARAMS */
+
+            /* trim fields */
+            $email_from = trim($email_from);
+            $email_subject = trim($email_subject);
+            $email_message = trim($email_message);
+
+            /* validate email_to adress with regex */
+            $email_exp = '/^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/';
+            if (!preg_match($email_exp, $email_from)) {
+                // echo 'Die Emailadresse scheint nicht korrekt zu sein. Tippfehler?<br /><br /><br />';
+                // exit;
+            }
+
+            /* build email header */
+            $headers = 'From: ' . $email_from . "\r\n" .
+                'Reply-To: ' . $email_from . "\r\n" .
+                'X-Mailer: PHP/' . phpversion();
+
+            if ($email_cc === TRUE) {
+                /* send email to website admin */
+                $sent = @mail($email_to, $email_subject, $email_message, $headers);
+                /* send email copy to user */
+                $sent = @mail($email_from, $email_subject, $email_message, $headers);
+            } else {
+                /* just send email to website admin */
+                $sent = @mail($email_to, $email_subject, $email_message, $headers);
+            }
+            if ($sent){
+                return true;
+            }
+            else {
+                return false;
+            }
+
+            /*
+            if ($email_sent) {
+                backend::setTimeout("../../../thankyou.html", 20000);
+            }
+            */
+        } /* end function sendEmail(); */
+    } /* end class Email */
+}

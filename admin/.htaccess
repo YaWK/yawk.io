@@ -1,0 +1,10 @@
+#Options +FollowSymlinks
+Order allow,deny
+Allow from all
+
+RewriteEngine on
+RewriteCond %{REQUEST_URI} /(.*).html
+RewriteRule ^(.*).html$ \index.php?include=$1
+
+# off for tinymce
+#RewriteRule ^(.*).htm$ \index.php?include=$1
