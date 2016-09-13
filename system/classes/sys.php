@@ -207,7 +207,18 @@ namespace YAWK {
         static function getHost($db)
         {   // get host from settings db
             $hostname = settings::getSetting($db, "host");
+            $hostname = self::addTrailingSlash($hostname);
             return $hostname;
+        }
+
+        static function addTrailingSlash($url)
+        {   // check if url contains a trailing slash at the end
+            if (substr($url, -1, 1) !== "/")
+            {   // if not, it will be added
+                $url = $url."/";
+            }
+            // return url with trailing slash
+            return $url;
         }
 
         static function getProperty($db, $property, $table, $id)
