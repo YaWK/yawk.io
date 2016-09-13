@@ -838,13 +838,19 @@ namespace YAWK {
 
         function login($db, $username, $password)
         {   /** @var $db \YAWK\db */
-
-            if (empty($username xor $password)){
+            if (empty($username && $password)){
                 echo "<div class=\"container bg-danger\"><br><h2><i class=\"fa fa-refresh fa-spin fa-fw\"></i>
                   <span class=\"sr-only\">Loading...</span> Oops! <small>
                   Missing login data...</small></h2><b>Please enter username and password.</b><br><br></div>";
                 return false;
             }
+            if (empty($username || $password)){
+                echo "<div class=\"container bg-danger\"><br><h2><i class=\"fa fa-refresh fa-spin fa-fw\"></i>
+                  <span class=\"sr-only\">Loading...</span> Oops! <small>
+                  Missing login data...</small></h2><b>Please enter username and password.</b><br><br></div>";
+                return false;
+            }
+
 
             $date_now = date("Y-m-d G:i:s");
             $this->username = strip_tags($username);
