@@ -851,7 +851,6 @@ namespace YAWK {
                 return false;
             }
 
-
             $date_now = date("Y-m-d G:i:s");
             $this->username = strip_tags($username);
             $password = strip_tags($password);
@@ -877,7 +876,10 @@ namespace YAWK {
                                         logged_in = '1'
                       WHERE username = '" . $this->username . "'"))
                 {
-                    echo \YAWK\alert::draw("warning", "Error!", "Could not log user into database. Expect some errors.", "", 6200);
+                    echo "<div class=\"container bg-danger\"><br><h2><i class=\"fa fa-refresh fa-spin fa-fw\"></i>
+                          <span class=\"sr-only\">Warning!</span> <small>Database Error! Missing login data...</small></h2><br>
+                          <b>Could not log user into database. Expect some errors.</b><br><br></div>";
+                    return false;
                 }
                 else {
                    // session_regenerate_id();
