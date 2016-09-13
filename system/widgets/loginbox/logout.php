@@ -1,10 +1,16 @@
 <?PHP
 session_start();
 include '../../classes/settings.php';
+include '../../classes/alert.php';
 include '../../classes/backend.php';
-global $dbprefix, $connection;
+include '../../classes/template.php';
 /* include core files */
-  include("../../dbconnect.php");
+include("../../classes/db.php");
+/* set database object */
+if (!isset($db)) {
+    $db = new \YAWK\db();
+}
+
    $dirprefix="$_GET[folder]"."/";
 ?>
 
@@ -23,8 +29,10 @@ global $dbprefix, $connection;
     <!-- Bootstrap core CSS -->
     <link href="../../engines/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+    <?php
+        // load active google font code
+        \YAWK\template::outputActivegFont($db);
+    ?>
 
     <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -52,7 +60,8 @@ global $dbprefix, $connection;
   </head>
 
   <body>
-<?php $host = \YAWK\settings::getSetting("host"); ?>
+  hallo....
+<?php $host = \YAWK\settings::getSetting($db, "host"); ?>
     <?php// echo YAWK\template::setPosition("globalmenu-pos"); ?>  <!-- GLOBALMENU -->
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
@@ -73,16 +82,12 @@ global $dbprefix, $connection;
     </div>
 
 <?PHP
-if (isset($_GET['dbprefix'])){
-	 $dbpraefix = $_GET['dbprefix'];
-	} else { $dbpraefix="cms_"; }
-
   	// set user offline in db
-   	if (!$res=mysqli_query($connection, "UPDATE ".$dbpraefix."users
+   	if (!$res=$db->query("UPDATE {users}
   									 SET online = '0',
   									     logged_in = '0'
    							         WHERE username = '".$_GET['user']."'")) {
-		 echo \YAWK\alert::draw("warning", "Achtung:", "Userstatus konnte nicht gesetzt werden.");
+		 \YAWK\alert::draw("warning", "Achtung:", "Userstatus konnte nicht gesetzt werden.", "", 5000);
 		 // $fehler = in var für fehlerklasse speichern?             	
    	} 
 session_destroy();

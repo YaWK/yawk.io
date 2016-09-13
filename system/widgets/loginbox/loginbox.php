@@ -1,43 +1,42 @@
-<?PHP 
-global $dbprefix, $connection;
+<?PHP
 if (isset($_SESSION['username'])) {
 $user = $_SESSION['username'];
 	} else { $user = ""; }
 
 /* include core files */
-$dirprefix = \YAWK\settings::getSetting("dirprefix");
+$dirprefix = \YAWK\settings::getSetting($db, "dirprefix");
 $dirprefix = substr($dirprefix, 1);
-$currentWidgetPath = YAWK\sys::getCurrentWidgetPath()."loginbox/";
-$loginFile = YAWK\sys::getCurrentWidgetPath()."loginbox/loginbox.php";
+$currentWidgetPath = YAWK\widget::getCurrentWidgetPath($db)."loginbox/";
+$loginFile = "$currentWidgetPath"."loginbox.php";
 $logoutFile = "logout.php?folder=".$dirprefix."&user=".$user."";
 
 // if form is sent
 if(isset($_POST['user'])) {
 // create new user object
 $user = new YAWK\user();
-  if(isset($_POST['user'])) { // if username is set
+  if(isset($_POST['user']))
+  { // if username is set
   	 // call login method 
-    if($user->login($_POST['user'],$_POST['password'])) {
-		 if(isset($_SESSION['username']) && $_SESSION['logged_in'] == true){
-			 // user is logged in, redirect to welcome controller
-			 \YAWK\backend::setTimeout("welcome.html",0);
+    if($user->login($db, $_POST['user'],$_POST['password'])) {
+		 if(isset($_SESSION['username']) && $_SESSION['logged_in'] == true)
+		 {	// user is logged in, redirect to welcome controller
+			 \YAWK\sys::setTimeout("welcome.html",0);
 			 exit;
 		 }
-		 else {
-			 // user is not logged in...
-			 \YAWK\backend::setTimeout("index.html",2800);
-			 \YAWK\alert::draw("danger", "Error!", "Obviously you are not correctly logged in. Please try again.");
+		 else
+		 {	// user is not logged in...
+			 \YAWK\alert::draw("danger", "Error!", "Obviously you are not correctly logged in. Please try again.", "index.html", 2800);
 			 exit;
 		 }
     }
     else // login method returns FALSE
 	{	 // username or password is wrong
-		\YAWK\backend::setTimeout("welcome.html",2800);
-		\YAWK\alert::draw("warning", "Warning", "Username or Password not correct. Please try again.");
+		\YAWK\alert::draw("warning", "Warning", "Username or Password not correct. Please try again.", "welcome.html", 2800);
 		exit;
 	}
   }
-  else {
+  else
+  {	  // username is not set, draw loginbox
       echo \YAWK\user::drawLoginBox("","");
   }
 }
@@ -53,10 +52,11 @@ if(isset($_SESSION['username']) && $_SESSION['logged_in'] == true)
 
 else { 
 // get widget settings and draw login box
-if (isset($wID)) {
+if (isset($wID))
+{		$w_value = "";
 		/* get widget settings */    
 		/* ESSENTIAL TO GET WIDGETS WORK PROPERLY */
-	    $res = mysqli_query($connection, "SELECT * FROM ".$dbprefix."widget_settings
+	    $res = $db->query("SELECT * FROM {widget_settings}
 	                        WHERE widgetID = '".$wID."'
 	                        AND activated = '1'");
 	    while($row = mysqli_fetch_row($res)) {

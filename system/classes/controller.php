@@ -13,10 +13,8 @@ class controller
 
     public static function frontEndInit($db, $currentpage, $user, $template)
     {
-        global $user;
         /** @var $db \YAWK\db
          * @var $currentpage \YAWK\page
-         * @user $user \YAWK\user
          *
          *  INIT FRONTEND STARTS HERE
          */

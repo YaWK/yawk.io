@@ -33,71 +33,9 @@ namespace YAWK {
         public $position;
         public $widgetType;
 
-        function toggleOffline($db, $id, $published)
+        static function getCurrentWidgetPath($db)
         {
-            /** @var $db \YAWK\db */
-            // TOGGLE WIDGET STATUS
-            if ($res = $db->query("UPDATE {widgets}
-                          SET published = '" . $published . "'
-                          WHERE id = '" . $id . "'")
-            ) {   // toggle successful
-                return true;
-            } else {   // q failed
-                return false;
-            }
-        }
-
-        function copy($db, $id)
-        {
-            /** @var $db \YAWK\db */
-            if ($res_widgets = $db->query("SELECT * FROM {widgets} WHERE id = '" . $id . "'")) {
-                // get MAX id from widgets db
-                if ($res_id = $db->query("SELECT MAX(id), MAX(sort) FROM {widgets}")) {   // set ID + sort var
-                    $row = mysqli_fetch_row($res_id);
-                    $id = $row[0] + 1;
-                    $sort = $row[1] + 1;
-                } else {   // error getting new ID
-                    return false;
-                }
-                // get data from given widget id
-                $row = mysqli_fetch_assoc($res_widgets);
-                $published = $row['published'];
-                $widgetType = $row['widgetType'];
-                $pageID = $row['pageID'];
-                $positions = $row['position'];
-                // all good so far... now: copy widget
-                if ($res = $db->query("INSERT INTO {widgets}
-                    (id, published, widgetType, pageID, sort, position)
-                    VALUES('" . $id . "',
-                          '" . $published . "',
-                          '" . $widgetType . "',
-                          '" . $pageID . "',
-                          '" . $sort . "',
-                          '" . $positions . "')")
-                ) {   // copy widget successful
-                    return true;
-                } else {
-                    // copy widget failed
-                    return false;
-                }
-            } else {   // could not get widget settings
-                return false;
-            }
-        }
-
-        function delete($db, $widget)
-        {
-            /** @var $db \YAWK\db */
-            if (!$res = $db->query("DELETE FROM {widgets} WHERE id = '" . $widget . "'")) {
-                // delete corresponding widget settings
-                if (!$res_settings = $db->query("DELETE FROM {widget_settings} WHERE widgetID = '" . $widget . "'")) {
-                    // q failed
-                    return false;
-                }
-                return false;
-            } else {
-                return true;
-            }
+            return "" . \YAWK\sys::getDirPrefix($db) . "/system/widgets/";
         }
 
         static function create($db, $widgetType, $pageID, $positions)
@@ -165,7 +103,6 @@ namespace YAWK {
             // something else has happened
             return false;
         }
-
 
         static function loadWidgets($db, $position)
         {
@@ -302,6 +239,83 @@ namespace YAWK {
             return false;
         }
 
+        static function getLoginBox()
+        {
+            include 'system/widgets/loginbox/loginbox.php';
+        }
+
+        static function getFacebookBox()
+        {
+            include 'system/widgets/fb_box/fb_box.php';
+        }
+
+        function toggleOffline($db, $id, $published)
+        {
+            /** @var $db \YAWK\db */
+            // TOGGLE WIDGET STATUS
+            if ($res = $db->query("UPDATE {widgets}
+                          SET published = '" . $published . "'
+                          WHERE id = '" . $id . "'")
+            ) {   // toggle successful
+                return true;
+            } else {   // q failed
+                return false;
+            }
+        }
+
+        function copy($db, $id)
+        {
+            /** @var $db \YAWK\db */
+            if ($res_widgets = $db->query("SELECT * FROM {widgets} WHERE id = '" . $id . "'")) {
+                // get MAX id from widgets db
+                if ($res_id = $db->query("SELECT MAX(id), MAX(sort) FROM {widgets}")) {   // set ID + sort var
+                    $row = mysqli_fetch_row($res_id);
+                    $id = $row[0] + 1;
+                    $sort = $row[1] + 1;
+                } else {   // error getting new ID
+                    return false;
+                }
+                // get data from given widget id
+                $row = mysqli_fetch_assoc($res_widgets);
+                $published = $row['published'];
+                $widgetType = $row['widgetType'];
+                $pageID = $row['pageID'];
+                $positions = $row['position'];
+                // all good so far... now: copy widget
+                if ($res = $db->query("INSERT INTO {widgets}
+                    (id, published, widgetType, pageID, sort, position)
+                    VALUES('" . $id . "',
+                          '" . $published . "',
+                          '" . $widgetType . "',
+                          '" . $pageID . "',
+                          '" . $sort . "',
+                          '" . $positions . "')")
+                ) {   // copy widget successful
+                    return true;
+                } else {
+                    // copy widget failed
+                    return false;
+                }
+            } else {   // could not get widget settings
+                return false;
+            }
+        }
+
+        function delete($db, $widget)
+        {
+            /** @var $db \YAWK\db */
+            if (!$res = $db->query("DELETE FROM {widgets} WHERE id = '" . $widget . "'")) {
+                // delete corresponding widget settings
+                if (!$res_settings = $db->query("DELETE FROM {widget_settings} WHERE widgetID = '" . $widget . "'")) {
+                    // q failed
+                    return false;
+                }
+                return false;
+            } else {
+                return true;
+            }
+        }
+
         function loadProperties($db, $id)
         {   /** @var $db \YAWK\db */
             if (isset($id))
@@ -354,17 +368,6 @@ namespace YAWK {
             {   // q failed
                 return false;
             }
-        }
-
-
-        static function getLoginBox()
-        {
-            include 'system/widgets/loginbox/loginbox.php';
-        }
-
-        static function getFacebookBox()
-        {
-            include 'system/widgets/fb_box/fb_box.php';
         }
 
 

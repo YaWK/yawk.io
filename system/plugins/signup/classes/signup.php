@@ -45,7 +45,6 @@ namespace YAWK\PLUGINS\SIGNUP {
                         return \YAWK\user::drawLoginBox("", "");
                     }
                 }
-
                 else
                 {   // error detecting user login status, maybe because of expired cookies
                     $username = "";
@@ -59,8 +58,8 @@ namespace YAWK\PLUGINS\SIGNUP {
                 // load user signup function (form)
                 return self::signUp($db);
             }
-            \YAWK\alert::draw("danger", "Warning", "Something strange has happened.","", 2000);
-            return false;
+           //     \YAWK\alert::draw("danger", "Warning", "Something strange has happened.","", 2000);
+           //  return false;
         }
 
         public static function signUp($db)

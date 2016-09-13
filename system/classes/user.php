@@ -758,26 +758,30 @@ namespace YAWK {
         function checkPassword($db, $username, $password)
         {   /** @var $db \YAWK\db */
             $adminEmail = \YAWK\settings::getSetting($db, "admin_email");
+            $host = \YAWK\settings::getSetting($db, "host");
             $password = $db->quote(trim($password));
             $username = $db->quote(trim($username));
             $username = mb_strtolower($username);
             $sql = $db->query("SELECT blocked, terminatedByUser FROM {users} WHERE
-                        username='" . $username . "' AND password = '" . md5($password) . "'");
+                               username='" . $username . "' AND password = '" . md5($password) . "'");
             $res = mysqli_fetch_assoc($sql);
             if (isset($res)){ // if there is a result, username + pwd match.
                 if(isset($res['blocked'])){ // check if user is blocked.
-                    if ($res['blocked']==='1'){
-                        echo "<br>".\YAWK\alert::draw("danger", "Sorry!", "Your Account is blocked. If you think
-                        this is a mistake, contact the admin via email:
-                    (<a href=\"mailto:$adminEmail\">$adminEmail</a>) for further information.","","3800");
+                    if ($res['blocked']==='1')
+                    {
+                        echo "<div class=\"container bg-danger\"><br><h2>We're Sorry! <small>Your Account is blocked.</h2><b>If you think
+                        this is a mistake, contact the admin via email: </b>(<a class=\"text-danger\" href=\"mailto:$adminEmail\">$adminEmail</a>)
+                        <b>for further information.</b><br><small>You will be redirected to <a class=\"small\" href=\"$host\">$host</a> in a few seconds.</small><br><br></div>";
+                        \YAWK\sys::setTimeout("index.html", 30000);
                         return false;
                     }
                 }
                 if(isset($res['terminatedByUser'])){ // is user has canceled his account
-                    if ($res['terminatedByUser']==='1'){ // check if user is terminated
-                        echo "<br>".\YAWK\alert::draw("danger", "Sorry!", "This Account does not exist. If you think
-                        this is a mistake, contact the admin via email:
-                    (<a href=\"mailto:$adminEmail\">$adminEmail</a>) for further information.","","3800");
+                    if ($res['terminatedByUser']==='1'){ // check if user is
+                        echo "<div class=\"container bg-danger\"><br><h2>We're Sorry! <small>This account does not exist.</h2><b>If you think
+                        this is a mistake, contact the admin via email: </b>(<a class=\"text-danger\" href=\"mailto:$adminEmail\">$adminEmail</a>)
+                        <b>.</b><br><small>You will be redirected to <a class=\"small\" href=\"$host\">$host</a> in a few seconds.</small><br><br></div>";
+                        \YAWK\sys::setTimeout("index.html", 30000);
                         return false;
                     }
                 }
@@ -786,7 +790,10 @@ namespace YAWK {
             }
             else {
                 // checkPassword failed
-                \YAWK\alert::draw("danger", "Login failed!", "Please check your login data and try to re-login in <span id=\"timer\"></span> seconds!","","5600");
+                echo "<div class=\"container bg-danger\"><br><h2>Warning! <small>Login failed!</h2>
+                <b>Please check your login credentials and try again in a few seconds.</b>
+                <br><small>You will be redirected to <a class=\"small\" href=\"$host\">$host</a>.</small><br><br></div>";
+                \YAWK\sys::setTimeout("index.html", 10000);
                 return false;
             }
         }
@@ -831,23 +838,23 @@ namespace YAWK {
 
         function login($db, $username, $password)
         {   /** @var $db \YAWK\db */
-            include "system/classes/backend.php";
 
-            if (empty($username)) { return false; }
-            if (empty($password)) { return false; }
-            if (empty($username && $password)){
+            if (empty($username xor $password)){
+                echo "<div class=\"container bg-danger\"><br><h2><i class=\"fa fa-refresh fa-spin fa-fw\"></i>
+                  <span class=\"sr-only\">Loading...</span> Oops! <small>
+                  Missing login data...</small></h2><b>Please enter username and password.</b><br><br></div>";
                 return false;
             }
-            if (empty($username || $password)){
-                return false;
-            }
+
             $date_now = date("Y-m-d G:i:s");
             $this->username = strip_tags($username);
             $password = strip_tags($password);
-            $password = $db->quote(trim($this->username));
+            $password = $db->quote(trim($password));
             $this->username = $db->quote(trim($this->username));
             $_SESSION['username'] = $this->username;
-            if ($this->checkPassword($db, $this->username, $password)) {
+            $username = $this->username;
+            if ($this->checkPassword($db, $username, $password)) {
+               // return true;
                 /* select and add login_count */
                 $res = $db->query("SELECT id, login_count, gid FROM {users} WHERE username='" . $username . "'");
                 $row = mysqli_fetch_row($res);
@@ -867,14 +874,15 @@ namespace YAWK {
                     echo \YAWK\alert::draw("warning", "Error!", "Could not log user into database. Expect some errors.", "", 6200);
                 }
                 else {
-                    session_regenerate_id();
+                   // session_regenerate_id();
                     $_SESSION['username'] = $this->username;
                     $_SESSION['logged_in'] = true;
                     $this->storeLogin($db, 0, "frontend", $username, $password);
                 }
                 return true;
             } else {
-                /*
+                \YAWK\alert::draw("warning", "Login failed...", "Please try to re-login in a few seconds...", "",3000);
+/*
                 if (!isset($_SESSION['failed'])){
                     $_SESSION['failed']=1;
                     $this->storeLogin($db, 1, "frontend", $username, $password);
@@ -883,12 +891,13 @@ namespace YAWK {
                 else {
                     $_SESSION['failed']++;
                     $this->storeLogin($db, 1, "frontend", $username, $password);
+                    // return false;
                 }
                 if ($_SESSION['failed'] == 2){
-                    echo "<div class=\"container\"><div class=\"well\">";
+                    echo "<div class=\"well\">";
                     echo \YAWK\alert::draw("danger", "<h3><i class=\"fa fa-exclamation-triangle\"></i> ACHTUNG!", "2. Fehlversuch!</h3>
                     <b>Du hast noch einen Versuch um deinen Benutzernamen und das Passwort korrekt einzugeben.</b>","", 6200);
-                    echo "</div></div>";
+                    echo "</div>";
                     $this->storeLogin($db, 1, "frontend", $username, $password);
                     return false;
                 }
@@ -940,8 +949,9 @@ namespace YAWK {
                     //\YAWK\backend::setTimeout("startseite.html", 6400);
                     return false;
                 }
-                */
+
                 return false;
+*/
             }
         }
 
@@ -1115,6 +1125,7 @@ namespace YAWK {
                 <input type=\"password\" id=\"password\" name=\"password\" value=\"".$password."\" class=\"form-control\" $input_style placeholder=\"Passwort\">
                 <input type=\"hidden\" name=\"login\" value=\"login\">
                 <input type=\"hidden\" name=\"LOCK\" value=\"1\">
+                <input type=\"hidden\" name=\"include\" value=\"login\">
                 <input type=\"submit\" value=\"Login\" name=\"Login\" class=\"btn btn-success\">
                 </div>
             </form>";
@@ -1124,21 +1135,35 @@ namespace YAWK {
         public function logout($db)
         {   /** @var $db \YAWK\db */
             // set user offline in db
-            if (!$res = $db->query("UPDATE {users}
-                               SET online = '0'
-                               WHERE username = '" . $_SESSION['username'] . "'"))
+            if (isset($_SESSION['username']))
+            {   // if username is set in session var, logout
+                if (!$res = $db->query("UPDATE {users}
+                                   SET online = '0'
+                                   WHERE username = '".$_SESSION['username']."'"))
+                {
+                    \YAWK\alert::draw("danger", "Error!", "Could not logout ".$_SESSION['username']." Please try again!","","3800");
+                    // DELETE SESSION
+                    $_SESSION['failed']=0;
+                    $_SESSION['logged_in']=0;
+                    session_destroy();
+                    return false;
+                }
+                else
+                {   // username is not set, delete session anyway
+                    $_SESSION['failed']=0;
+                    $_SESSION['logged_in']=0;
+                    session_destroy();
+                    return true;
+                }
+            }
+            else
             {
-                print \YAWK\alert::draw("danger", "Error!", "Could not logout user. Please try again!","","3800");
                 // DELETE SESSION
                 $_SESSION['failed']=0;
                 $_SESSION['logged_in']=0;
                 session_destroy();
-                return false;
+                return true;
             }
-            // DELETE SESSION
-            $_SESSION['logged_in']=0;
-            session_destroy();
-            return true;
         }
 
         /** GET USER LIST */

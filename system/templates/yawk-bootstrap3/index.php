@@ -112,7 +112,7 @@
           </small>
       </p>
           <br>
-      <?php // echo YAWK\template::setPosition("footer-pos"); ?>
+      <?php echo YAWK\template::setPosition($db, "footer-pos"); ?>
       </div>
 
      <!--  <div class="footer-bg">
@@ -125,7 +125,6 @@
     </div>
       <!-- import font awesome -->
       <link rel="stylesheet" href="system/engines/font-awesome/css/font-awesome.min.css" type="text/css" media="all" />
-
       <!-- Bootstrap core CSS -->
       <link href="system/engines/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
       <!-- Own Template Settings: Bootstrap core CSS override -->

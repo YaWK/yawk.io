@@ -52,22 +52,46 @@ if (isset($_GET['signup']) && ($_GET['signup']) == 1) {
 }
 
 // URL controller - this loads the properties of each page */
-if (isset($_GET['include']) && (!empty($_GET['include']))) {
+if (isset($_GET['include']) && (!empty($_GET['include'])))
+{
+    // LOGOUT SENT VIA GET (yourdomain.com/logout)
+    if ($_GET['include'] === "logout")
+    {   // start logout procedure
+        if ($user->logout($db) === true)
+        {   // redirect user to index page
+            \YAWK\sys::setTimeout("index.html", 0);
+            exit;
+        }
+    }
+    // user filled out login form
+    if (isset($_POST['login']))
+    {   // check given vars
+        if (isset($_POST['user']) && (isset($_POST['password'])))
+        {
+            if ($user->login($db, $_POST['user'], $_POST['password']) === true)
+            {
+                $_GET['include'] = "index";
+            }
+            else { /*
+                echo "<div class=\"container bg-danger\"><br><h2><i class=\"fa fa-refresh fa-spin fa-fw\"></i>
+                      <span class=\"sr-only\">Loading...</span> Oops! <small>
+                      Missing login data...</small></h2><b>Please enter username and password.</b><br><br></div>"; */
+            }
+        }
+        else
+        { /*
+            echo "<div class=\"container bg-danger\"><br><h2><i class=\"fa fa-refresh fa-spin fa-fw\"></i>
+                  <span class=\"sr-only\">Loading...</span> Oops! <small>
+                  Missing login data...</small></h2><b>Please enter username and password.</b><br><br></div>";
+          */
+        }
+    }
+
     // URL is set and not empty - lets go, load properties for given page
     $currentpage->loadProperties($db, $db->quote($_GET['include']));
 
     // different GET controller actions can be done here...
-    // LOGOUT SENT VIA GET (yourdomain.com/logout)
-    if ($_GET['include'] === "logout") {   // start logout procedure
-        if ($user->logout($db))
-        {
-            // say goodbye
-            \YAWK\alert::draw("success", "Goodbye $_SESSION[username]", "See you next time!", "index.html", 4200);
-            // redirect to index page
-            // \YAWK\sys::setTimeout("index.html","0");
-            exit;
-        }
-    }
+
 }
 else
 {   // if no page is given, set index as default page
@@ -76,6 +100,7 @@ else
     $currentpage->loadProperties($db, $db->quote($_GET['include']));
 }
 
-    // call template controller
-    $template = $template->getCurrentTemplateName($db, "frontend");
-    include("system/templates/$template/index.php");
+
+// call template controller
+$template = $template->getCurrentTemplateName($db, "frontend");
+include("system/templates/$template/index.php");

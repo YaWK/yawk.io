@@ -126,7 +126,6 @@ namespace YAWK {
                 else
                 {   // if username or pwd is wrong
                     $user->storeLogin($db, 1, "backend", $_POST['user'], $_POST['password']);
-                    // \YAWK\alert::draw("warning","Warning:","<b>Login failed.</b> Please check login data and try again. Please wait, you will be redirected in 5 Seconds...","index.php","5000");
                     return false;
                 }
             }

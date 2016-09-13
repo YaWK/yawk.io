@@ -40,7 +40,8 @@ if (isset($_POST['settings-update']) && $_POST['settings-update'] === '1')
 
 // if form is sent
 if (isset($_POST['sent']) && $_POST['sent'] === '1')
-{   // prepare vars
+{
+    // prepare vars
     $username = $db->quote($_POST['username']);
     $password1 = $db->quote($_POST['password1']);
     $password2 = $db->quote($_POST['password2']);
