@@ -31,10 +31,10 @@ namespace YAWK\PLUGINS\SIGNUP {
                     // check if user status in database is still logged in...
                     if ($user->isLoggedIn($db, $user->username))
                     {   // load userpage classes
-                        include 'system/plugins/userpage/classes/userpage.php';
+                        require_once 'system/plugins/userpage/classes/userpage.php';
                         if (!isset($userpage))
                         {   // generate & return new userpage object
-                            $userpage = new \YAWK\PLUGINS\USERPAGE\userpage();
+                            $userpage = new \YAWK\PLUGINS\USERPAGE\userpage($db, $user);
                         }
                         // load userpage for given user
                         return $userpage->init($db, $user);
@@ -80,9 +80,9 @@ namespace YAWK\PLUGINS\SIGNUP {
             // include formbuilder class
             include 'system/plugins/signup/classes/buildForm.php';
             // generate new html form object
-            $form = new \YAWK\PLUGINS\SIGNUP\buildForm();
+            $form = new \YAWK\PLUGINS\SIGNUP\buildForm($db);
             // draw form
-            return $form->init();
+            return $form->init($db);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace YAWK\PLUGINS\USERPAGE {
         protected $html;
         protected $user;
 
-        public function __construct(){
+        public function __construct($db){
             global $user;
             $this->username = $_SESSION['username'];
             $user = new \YAWK\user();

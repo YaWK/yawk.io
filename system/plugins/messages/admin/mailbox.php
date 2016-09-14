@@ -27,7 +27,7 @@ echo"<ol class=\"breadcrumb\">
 <?php
 /* page content start here */
 include '../system/plugins/messages/classes/messages.php';
-$messages = new \YAWK\PLUGINS\MESSAGES\messages($db);
+$messages = new \YAWK\PLUGINS\MESSAGES\messages($db, "backend");
 
 // check if a msg ID is sent via GET
 if (isset($_GET['msg_id']) && is_numeric($_GET['msg_id']))

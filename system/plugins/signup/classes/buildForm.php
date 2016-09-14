@@ -10,24 +10,24 @@ namespace YAWK\PLUGINS\SIGNUP {
             $this->html = "";
         }
 
-        public function init(){
-            $this->form = self::buildForm();
+        public function init($db){
+            $this->form = self::buildForm($db);
             return $this->html;
         }
 
-        public function buildForm(){
+        public function buildForm($db){
             $this->form .= self::getHeader();
-            $this->form .= self::getLayout();
+            $this->form .= self::getLayout($db);
             $this->form .= self::getFooter();
             return $this->form;
         }
 
-        public function getForm(){
-            $this->form .= self::getGroupSelect();
-            $this->form .= self::getMandatoryFields();
-            $this->form .= self::getAdditionalFields();
-            $this->form .= self::getTerms();
-            $this->form .= self::getSubmitButton();
+        public function getForm($db){
+            $this->form .= self::getGroupSelect($db);
+            $this->form .= self::getMandatoryFields($db);
+            $this->form .= self::getAdditionalFields($db);
+            $this->form .= self::getTerms($db);
+            $this->form .= self::getSubmitButton($db);
             return $this->form;
         }
 
@@ -37,13 +37,13 @@ namespace YAWK\PLUGINS\SIGNUP {
             $this->html .= "<form id=\"form\" action=\"welcome.html\" method=\"POST\">";
         }
 
-        public function getTitle()
+        public function getTitle($db)
         {
             // form title
             $this->html .= \YAWK\settings::getSetting($db, "signup_title");
         }
 
-        public function getLegend()
+        public function getLegend($db)
         {
                 // gid 0 form legend (public) -- default --
                 $this->html .= "<div id=\"0_hidden\">";
@@ -71,7 +71,7 @@ namespace YAWK\PLUGINS\SIGNUP {
                 $this->html .= "</div>";
         }
 
-        public function getLayout()
+        public function getLayout($db)
         {
             // get selected form layout (left, right, 1,2, or 3 cols...)
             $layout = \YAWK\settings::getSetting($db, "signup_layout");
@@ -85,28 +85,28 @@ namespace YAWK\PLUGINS\SIGNUP {
                     $this->html .= self::getLegend();
                     $this->html .= "</div>";
                     $this->html .= "<div class=\"col-md-6\">";
-                    $this->html .= self::getTitle();
+                    $this->html .= self::getTitle($db);
                     $this->html .= self::getForm();
                     $this->html .= "</div>";
                     break;
                 case "right":
                     $this->html .= "<div class=\"col-md-6\">";
-                    $this->html .= self::getTitle();
-                    $this->html .= self::getForm();
+                    $this->html .= self::getTitle($db);
+                    $this->html .= self::getForm($db);
                     $this->html .= "</div><div class=\"col-md-6\">";
-                    $this->html .= self::getLegend();
+                    $this->html .= self::getLegend($db);
                     $this->html .= "</div>";
                     break;
                 case "plain":
                     $this->html .= "<div class=\"col-lg-12\">";
-                    $this->html .= self::getTitle();
-                    $this->html .= self::getForm();
+                    $this->html .= self::getTitle($db);
+                    $this->html .= self::getForm($db);
                     $this->html .= "</div>";
                     break;
                 case "center":
                     $this->html .= "<div class=\"col-md-4\">&nbsp;</div>";
                     $this->html .= "<div class=\"col-md-4\">";
-                    $this->html .= self::getTitle();
+                    $this->html .= self::getTitle($db);
                     $this->html .= self::getForm();
                     $this->html .= "</div>";
                     $this->html .= "<div class=\"col-md-4\">&nbsp;</div>";
@@ -157,7 +157,7 @@ namespace YAWK\PLUGINS\SIGNUP {
                             <input type=\"hidden\" name=\"sent\" value=\"1\">";
         }
 
-        public function getTerms(){
+        public function getTerms($db){
             $this->html .= "<input type=\"checkbox\" id=\"checkTerms\" name=\"checkTerms\" class=\"form-control\" checked=\"checked\">
                              <div class=\"text-center\">
                                <label for=\"checkTerms\">
@@ -165,7 +165,7 @@ namespace YAWK\PLUGINS\SIGNUP {
                              </div>";
         }
 
-        public function getAdditionalFields(){
+        public function getAdditionalFields($db){
             // get additional field settings from db
             $firstname = \YAWK\settings::getSetting($db, "signup_firstname");
             $lastname = \YAWK\settings::getSetting($db, "signup_lastname");
@@ -200,7 +200,7 @@ namespace YAWK\PLUGINS\SIGNUP {
             }
         }
 
-        public function getSubmitButton(){
+        public function getSubmitButton($db){
             // get selected form layout (left, right, 1,2, or 3 cols...)
             $layout = \YAWK\settings::getSetting($db, "signup_layout");
             $btnStyle = \YAWK\settings::getSetting($db, "signup_submitstyle");

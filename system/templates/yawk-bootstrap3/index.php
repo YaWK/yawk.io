@@ -27,7 +27,26 @@
  <!-- apple touch icons -->
  <link rel="apple-touch-icon" sizes="120x120" href="media/images/apple-touch-icon-120x120-precomposed.png" />
  <link rel="apple-touch-icon" sizes="152x152" href="media/images/apple-touch-icon-152x152-precomposed.png" />
-
+    <!-- import font awesome -->
+    <link rel="stylesheet" href="system/engines/font-awesome/css/font-awesome.min.css" type="text/css" media="all" />
+    <!-- Bootstrap core CSS -->
+    <link href="system/engines/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Own Template Settings: Bootstrap core CSS override -->
+    <link href="system/templates/yawk-bootstrap3/css/settings.min.css" rel="stylesheet">
+    <!-- CUSTOM Template Override: custom.CSS -->
+    <link href="system/templates/yawk-bootstrap3/css/custom.min.css" rel="stylesheet">
+    <!-- import jquery 1.11.3 -->
+    <script src="system/engines/jquery/jquery-1.11.3.min.js"></script>
+    <!--[if lt IE 9]>
+    <script src="system/engines/jquery/html5shiv.min.js"></script>
+    <script src="system/engines/jquery/1.3.0-respond.min.js"></script>
+    <![endif]-->
+    <!-- import custom js -->
+    <script src="system/templates/yawk-bootstrap3/js/custom.min.js"></script>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Boostrap jQuery Plugins -->
+    <script src="system/engines/bootstrap/dist/js/bootstrap.min.js"></script>
 <noscript><br><br><h2 style="text-align: center;">Diese Seite erfordert einen modernen Browser. <br><small>Bitte aktualisiere Deinen Browser und aktiviere JavaScript.</small></h2></noscript>
 <!-- gfonts -->
 <?PHP
@@ -123,25 +142,6 @@
     <div class="container" style="margin-bottom:450px;">
     <?php echo YAWK\template::setPosition($db, "debug-pos"); ?>
     </div>
-      <!-- import font awesome -->
-      <link rel="stylesheet" href="system/engines/font-awesome/css/font-awesome.min.css" type="text/css" media="all" />
-      <!-- Bootstrap core CSS -->
-      <link href="system/engines/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-      <!-- Own Template Settings: Bootstrap core CSS override -->
-      <link href="system/templates/yawk-bootstrap3/css/settings.min.css" rel="stylesheet">
-      <!-- CUSTOM Template Override: custom.CSS -->
-      <link href="system/templates/yawk-bootstrap3/css/custom.min.css" rel="stylesheet">
-      <!-- import jquery 1.11.3 -->
-      <script src="system/engines/jquery/jquery-1.11.3.min.js"></script>
-      <!--[if lt IE 9]>
-      <script src="system/engines/jquery/html5shiv.min.js"></script>
-      <script src="system/engines/jquery/1.3.0-respond.min.js"></script>
-      <![endif]-->
-      <!-- import custom js -->
-      <script src="system/templates/yawk-bootstrap3/js/custom.min.js"></script>
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-     <!-- Boostrap jQuery Plugins -->
-  <script src="system/engines/bootstrap/dist/js/bootstrap.min.js"></script>
+
  </body>
 </html>

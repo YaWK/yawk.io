@@ -20,7 +20,7 @@ $(document).ready(function () {
         myTimer = setTimeout(function() {
             // call validation settings
             checkForm();
-        }, 400); //delay time in milliseconds
+        }, 200); //delay time in milliseconds
     });
     }
 
@@ -89,6 +89,14 @@ $(document).ready(function () {
                 required: true,
                 minlength: 2
             },
+            newUsername: {
+                minlength: 4,
+                maxlength: 48,
+                remote: {
+                    url: "system/plugins/signup/js/check-username.php",
+                    type: "post"
+                }
+            },
             newEmail: {
                 email: true,
                 maxlength: 128,
@@ -96,6 +104,7 @@ $(document).ready(function () {
                     url: "system/plugins/signup/js/check-emailChange.php",
                     type: "post"
                 }
+
             },
             newPassword1: {
                 minlength: 4,
@@ -116,7 +125,6 @@ $(document).ready(function () {
                 minlength: 2
             },
             newZipcode: {
-                number: true,
                 minlength: 2,
                 maxlength: 10
             },
@@ -127,8 +135,7 @@ $(document).ready(function () {
                 minlength: 2
             },
             newUrl: {
-                url: true,
-                minlength: 2
+                minlength: 5
             },
             newTwitter: {
                 url: true,
@@ -141,25 +148,28 @@ $(document).ready(function () {
         },
         messages: {
             username: {
-                remote: "Bitte w&auml;hle Sie einen anderen Namen. &nbsp;"
+                remote: "Please select another username. &nbsp;"
             },
             email: {
-                remote: "Hast Du bereits eine Einladung erhalten? Du bist noch nicht berechtigt, Dich hier anzumelden. &nbsp;"
+                remote: "Have you received an invitation? If not, you are not allowed to signup / login here. &nbsp;"
             },
             firstname: {
-                remote: "Dieses Feld ist ein Pflichtfeld. &nbsp;"
+                remote: "Please enter your name. &nbsp;"
             },
             zipcode: {
-                number: "Bitte geben Sie eine g&uuml;tige Postleitzahl ein. &nbsp;"
+                number: "Please enter a valid zip code. &nbsp;"
             },
             password2: {
-                equalTo: "Die Passw&ouml;rter stimmen nicht &uuml;berein. &nbsp;"
+                equalTo: "Passwords do not match. &nbsp;"
             },
             newEmail: {
-                remote: "Bitte w&auml;hlen Sie eine andere Emailadresse. &nbsp;"
+                remote: "Please use another email address. &nbsp;"
             },
             newPassword2: {
-                equalTo: "Die Passw&ouml;rter stimmen nicht &uuml;berein. &nbsp;"
+                equalTo: "Passwords do not match. &nbsp;"
+            },
+            newUsername: {
+                equalTo: "Please select another username &nbsp;"
             }
         }
     });

@@ -47,6 +47,7 @@ if (\YAWK\sys::isOffline($db)) {   // backend-users (admins) can see the fronten
 
 // check if user wants to register (signUp)
 if (isset($_GET['signup']) && ($_GET['signup']) == 1) {
+    include('system/plugins/signup/classes/signup.php');
     $signup = new \YAWK\PLUGINS\SIGNUP\signup();
     echo $signup->sayHello($db);
 }
@@ -72,18 +73,6 @@ if (isset($_GET['include']) && (!empty($_GET['include'])))
             {
                 $_GET['include'] = "index";
             }
-            else { /*
-                echo "<div class=\"container bg-danger\"><br><h2><i class=\"fa fa-refresh fa-spin fa-fw\"></i>
-                      <span class=\"sr-only\">Loading...</span> Oops! <small>
-                      Missing login data...</small></h2><b>Please enter username and password.</b><br><br></div>"; */
-            }
-        }
-        else
-        { /*
-            echo "<div class=\"container bg-danger\"><br><h2><i class=\"fa fa-refresh fa-spin fa-fw\"></i>
-                  <span class=\"sr-only\">Loading...</span> Oops! <small>
-                  Missing login data...</small></h2><b>Please enter username and password.</b><br><br></div>";
-          */
         }
     }
 

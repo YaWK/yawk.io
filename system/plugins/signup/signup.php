@@ -1,11 +1,12 @@
 <script type="text/javascript" src="system/engines/jquery/jquery.validate.min.js"></script>
-<script type="text/javascript" src="system/engines/jquery/messages_de.min.js"></script>
+<script type="text/javascript" src="system/engines/jquery/messages_en.min.js"></script>
 <script type="text/javascript" src="system/engines/jquery/notify/bootstrap-notify.min.js"></script>
 <script type="text/javascript" src="system/plugins/signup/js/signup.js"></script>
 <link rel="stylesheet" href="system/engines/animateCSS/animate.min.css">
 <?php
 /** SIGNUP PLUGIN */
 include 'system/plugins/signup/classes/signup.php';
+include 'system/classes/backend.php';
 $signup = new \YAWK\PLUGINS\SIGNUP\signup();
 // if settings update is sent from frontend
 if (isset($_POST['settings-update']) && $_POST['settings-update'] === '1')
@@ -63,14 +64,15 @@ if (isset($_POST['sent']) && $_POST['sent'] === '1')
     // execute create user function
     if(\YAWK\user::createFromFrontend($db, $username, $password1, $password2, $email, $gid))
     {   // draw thank you page...
-        \YAWK\backend::drawContentWrapper();
-        echo "<div style='text-align: center; margin-top: 20%; margin-bottom: 600px;'><h1>Hallo ".$username."!<br><small>Vielen Dank f&uuml;r Deine Registrierung.</small></h1>
+        // \YAWK\backend::drawContentWrapper();
+        echo "<div style='text-align: center; margin-top: 20%; margin-bottom: 600px;'>
+        <h1>Hallo ".$username."!<br><small>Vielen Dank f&uuml;r Deine Registrierung.</small></h1>
         <p>Du kannst Dich jetzt anmelden und sofort loslegen! <br>";
         echo \YAWK\user::drawLoginBox($username, $password1);
     }
     else
     {   // create user failed, so throw error
-        \YAWK\backend::drawContentWrapper();
+        // YAWK\backend::drawContentWrapper();
         print \YAWK\alert::draw("danger", "Fehler!", "Der Benutzer <strong>".$username."</strong> konnte nicht angelegt werden!","","");
         // and display user registration form again...
         echo $signup->sayHello($db);
@@ -79,6 +81,6 @@ if (isset($_POST['sent']) && $_POST['sent'] === '1')
 else
 {   // default view:
     // draw user signup form
-//    \YAWK\backend::drawContentWrapper();
+    // \YAWK\backend::drawContentWrapper();
     echo $signup->sayHello($db);
 }

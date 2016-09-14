@@ -57,6 +57,9 @@ if (isset($_POST['sent'])){
         if (isset($_POST['stats'])) {
             \YAWK\settings::setSetting($db, "userpage_stats", $_POST['stats']);
         }
+        if (isset($_POST['changeUsername'])) {
+            \YAWK\settings::setSetting($db, "userpage_changeUsername", $_POST['changeUsername']);
+        }
         if (isset($_POST['changePassword'])) {
             \YAWK\settings::setSetting($db, "userpage_changePassword", $_POST['changePassword']);
         }
@@ -81,6 +84,9 @@ if (isset($_POST['sent'])){
         if (isset($_POST['changeCountry'])) {
             \YAWK\settings::setSetting($db, "userpage_changeCountry", $_POST['changeCountry']);
         }
+        if (isset($_POST['changeState'])) {
+            \YAWK\settings::setSetting($db, "userpage_changeState", $_POST['changeState']);
+        }
         if (isset($_POST['changeUrl'])) {
             \YAWK\settings::setSetting($db, "userpage_changeUrl", $_POST['changeUrl']);
         }
@@ -92,6 +98,9 @@ if (isset($_POST['sent'])){
         }
         if (isset($_POST['logoutmenu'])) {
             \YAWK\settings::setSetting($db, "userpage_logoutmenu", $_POST['logoutmenu']);
+        }
+        if (isset($_POST['activeTab'])) {
+            \YAWK\settings::setSetting($db, "userpage_activeTab", $_POST['activeTab']);
         }
     }
 } // end if $_POST['sent']
@@ -138,10 +147,59 @@ if (\YAWK\settings::getSetting($db, "userpage_dashboard") === '1'){
 else {
     $dashboardHtml = "";
 }
+/* GET ACTIVE TABS */
+$activeTab = \YAWK\settings::getSetting($db, "userpage_activeTab");
+if ($activeTab == "Dashboard") {
+    $activeDashboardHtml = "checked";
+}
+else {
+    $activeDashboardHtml = "";
+}
+if ($activeTab == "Profile") {
+    $activeProfileHtml = "checked";
+}
+else {
+    $activeProfileHtml = "";
+}
+if ($activeTab == "Messages") {
+    $activeMessagesHtml = "checked";
+}
+else {
+    $activeMessagesHtml = "";
+}
+if ($activeTab == "Settings") {
+    $activeSettingsHtml = "checked";
+}
+else {
+    $activeSettingsHtml = "";
+}
+if ($activeTab == "Stats") {
+    $activeStatsHtml = "checked";
+}
+else {
+    $activeStatsHtml = "";
+}
+if ($activeTab == "Help") {
+    $activeHelpHtml = "checked";
+}
+else {
+    $activeHelpHtml = "";
+}
+if ($activeTab == "Admin") {
+    $activeAdminHtml = "checked";
+}
+else {
+    $activeAdminHtml= "";
+}
 if (\YAWK\settings::getSetting($db, "userpage_stats") === '1'){
     $statsHtml = "checked"; }
 else {
     $statsHtml = "";
+}
+if (\YAWK\settings::getSetting($db, "userpage_changeUsername") === '1'){
+    $changeUsernameHtml = "checked"; }
+else {
+    $changeUsernameHtml = "";
 }
 if (\YAWK\settings::getSetting($db, "userpage_changePassword") === '1'){
     $changePasswordHtml = "checked"; }
@@ -182,6 +240,11 @@ if (\YAWK\settings::getSetting($db, "userpage_changeCountry") === '1'){
     $changeCountryHtml = "checked"; }
 else {
     $changeCountryHtml = "";
+}
+if (\YAWK\settings::getSetting($db, "userpage_changeState") === '1'){
+    $changeStateHtml = "checked"; }
+else {
+    $changeStateHtml = "";
 }
 if (\YAWK\settings::getSetting($db, "userpage_changeUrl") === '1'){
     $changeUrlHtml = "checked"; }
@@ -268,60 +331,76 @@ else {
                     <input type="hidden" value='0' name="dashboard">
                     <input type="checkbox" id="dashboard" name="dashboard" class="form-control" value="1" title="Enable Dashboard Tab" <?PHP echo $dashboardHtml; ?>>
                     <label for="dashboard"> Enable Dashboard Tab</label><br>
+                    <!-- DASHBOARD ACTIVE TAB -->
+                    <label class="radio radio-inline control-label">
+                    <input type="radio" id="activeTab" name="activeTab" class="form-control" value="Dashboard" title="Set This Tab Active" <?PHP echo $activeDashboardHtml; ?>>
+                    Set This Tab Active</label><br>
                 </div>
                 <!-- profile -->
                 <div role="tabpanel" class="tab-pane" id="profileTab">
                     <!-- PROFILE ENABLE -->
                     <input type="hidden" value='0' name="profile">
                     <input type="checkbox" id="profile" name="profile" class="form-control" value="1" title="Enable Profile Tab" <?PHP echo $profileHtml; ?>>
-                    <label for="profile"> Enable Profile Tab</label><br><br>
+                    <label for="profile"> Enable Profile Tab</label><br>
+                    <!-- PROFILE ACTIVE TAB -->
+                    <label class="radio radio-inline control-label">
+                    <input type="radio" id="activeTab" name="activeTab" class="form-control" value="Profile" title="Set This Tab Active" <?PHP echo $activeProfileHtml; ?>>
+                    Set This Tab Active</label><br>
 
                     <fieldset>
                         <legend><i class="fa fa-user"></i> &nbsp;Set up <small>Profile Page</small></legend>
+                        <!-- change username -->
+                        <input type="hidden" value='0' name="changeUsername">
+                        <input type="checkbox" id="changeUsername" name="changeUsername" class="form-control" value="1" title="Change Username allowed?" <?PHP echo $changeUsernameHtml; ?>>
+                        <label for="changeUsername">Allow user to change the username.</label><br>
                         <!-- change email -->
                         <input type="hidden" value='0' name="changeEmail">
                         <input type="checkbox" id="changeEmail" name="changeEmail" class="form-control" value="1" title="Change Email allowed?" <?PHP echo $changeEmailHtml; ?>>
-                        <label for="changeEmail">Allow user to change  email adress.</label><br>
+                        <label for="changeEmail">Allow user to change email adress.</label><br>
                         <!-- change password -->
                         <input type="hidden" value='0' name="changePassword">
                         <input type="checkbox" id="changePassword" name="changePassword" class="form-control" value="1" title="Change Password allowed?" <?PHP echo $changePasswordHtml; ?>>
-                        <label for="changePassword">Allow user to change  password.</label><br><br>
+                        <label for="changePassword">Allow user to change password.</label><br><br>
                         <!-- change firstname -->
                         <input type="hidden" value='0' name="changeFirstname">
                         <input type="checkbox" id="changeFirstname" name="changeFirstname" class="form-control" value="1" title="Change Firstname allowed?" <?PHP echo $changeFirstnameHtml; ?>>
-                        <label for="changeFirstname">Allow user to change  firstname.</label><br>
+                        <label for="changeFirstname">Allow user to change firstname.</label><br>
                         <!-- change lastname -->
                         <input type="hidden" value='0' name="changeLastname">
                         <input type="checkbox" id="changeLastname" name="changeLastname" class="form-control" value="1" title="Change Lastname allowed?" <?PHP echo $changeLastnameHtml; ?>>
-                        <label for="changeLastname">Allow user to change  lastname.</label><br><br>
+                        <label for="changeLastname">Allow user to change lastname.</label><br><br>
                         <!-- change street -->
                         <input type="hidden" value='0' name="changeStreet">
                         <input type="checkbox" id="changeStreet" name="changeStreet" class="form-control" value="1" title="Change Street allowed?" <?PHP echo $changeStreetHtml; ?>>
-                        <label for="changeStreet">Allow user to change  street.</label><br>
+                        <label for="changeStreet">Allow user to change street.</label><br>
                         <!-- change zipcode -->
                         <input type="hidden" value='0' name="changeZipcode">
                         <input type="checkbox" id="changeZipcode" name="changeZipcode" class="form-control" value="1" title="Change Zipcode allowed?" <?PHP echo $changeZipcodeHtml; ?>>
-                        <label for="changeZipcode">Allow user to change  zipcode.</label><br>
+                        <label for="changeZipcode">Allow user to change zipcode.</label><br>
                         <!-- city city -->
                         <input type="hidden" value='0' name="changeCity">
                         <input type="checkbox" id="changeCity" name="changeCity" class="form-control" value="1" title="Change City allowed?" <?PHP echo $changeCityHtml; ?>>
-                        <label for="changeCity">Allow user to change  city.</label><br>
+                        <label for="changeCity">Allow user to change city.</label><br>
                         <!-- change country -->
                         <input type="hidden" value='0' name="changeCountry">
                         <input type="checkbox" id="changeCountry" name="changeCountry" class="form-control" value="1" title="Change Country allowed?" <?PHP echo $changeCountryHtml; ?>>
-                        <label for="changeCountry">Allow user to change  country.</label><br><br>
+                        <label for="changeCountry">Allow user to change country.</label><br>
+                        <!-- change state -->
+                        <input type="hidden" value='0' name="changeState">
+                        <input type="checkbox" id="changeState" name="changeState" class="form-control" value="1" title="Change State allowed?" <?PHP echo $changeStateHtml; ?>>
+                        <label for="changeState">Allow user to change state.</label><br><br>
                         <!-- change url -->
                         <input type="hidden" value='0' name="changeUrl">
                         <input type="checkbox" id="changeUrl" name="changeUrl" class="form-control" value="1" title="Change Website Url allowed?" <?PHP echo $changeUrlHtml; ?>>
-                        <label for="changeUrl">Allow user to change  url.</label><br>
+                        <label for="changeUrl">Allow user to change url.</label><br>
                         <!-- change facebook -->
                         <input type="hidden" value='0' name="changeFacebook">
                         <input type="checkbox" id="changeFacebook" name="changeFacebook" class="form-control" value="1" title="Change Facebook URL allowed?" <?PHP echo $changeFacebookHtml; ?>>
-                        <label for="changeFacebook">Allow user to change  facebook url.</label><br>
+                        <label for="changeFacebook">Allow user to change facebook url.</label><br>
                         <!-- change twitter -->
                         <input type="hidden" value='0' name="changeTwitter">
                         <input type="checkbox" id="changeTwitter" name="changeTwitter" class="form-control" value="1" title="Change Twitter allowed?" <?PHP echo $changeTwitterHtml; ?>>
-                        <label for="changeTwitter">Allow user to change  twitter url.</label><br><br><br>
+                        <label for="changeTwitter">Allow user to change twitter url.</label><br><br><br>
                     </fieldset>
                 </div>
                 <!-- messages -->
@@ -330,10 +409,14 @@ else {
                     <input type="hidden" value='0' name="messageplugin">
                     <input type="checkbox" id="messageplugin" name="messageplugin" class="form-control" value="1" title="Enable Message Plugin" <?PHP echo $msgpluginHtml; ?>>
                     <label for="messageplugin"> Enable Message Tab</label><br>
+                    <!-- MESSAGE ACTIVE TAB -->
+                    <label class="radio radio-inline control-label">
+                        <input type="radio" id="activeTab" name="activeTab" class="form-control" value="Messages" title="Set This Tab Active" <?PHP echo $activeMessagesHtml; ?>>
+                        Set This Tab Active</label><br>
                     <!-- link to plg settings -->
                     <h4><i class="fa fa-wrench"></i><small><i class="fa fa-envelope-o"></i></small> &nbsp;
-                        <a href="index.php?plugin=messages" title="change names, login access, frontend access and colors">Message Plugin Settings</a>
-                        <small>(edit all messaging options here)</small></h4><br><br>
+                    <a href="index.php?plugin=messages" title="change names, login access, frontend access and colors">Message Plugin Settings</a>
+                    <small>(edit all messaging options here)</small></h4><br><br>
                 </div>
                 <!-- settings -->
                 <div role="tabpanel" class="tab-pane" id="settingsTab">
@@ -341,6 +424,10 @@ else {
                     <input type="hidden" value='0' name="settings">
                     <input type="checkbox" id="settings" name="settings" class="form-control" value="1" title="Enable Settings Tab" <?PHP echo $settingsHtml; ?>>
                     <label for="settings"> Enable Settings Tab</label><br>
+                    <!-- SETTINGS ACTIVE TAB -->
+                    <label class="radio radio-inline control-label">
+                    <input type="radio" id="activeTab" name="activeTab" class="form-control" value="Settings" title="Set This Tab Active" <?PHP echo $activeSettingsHtml; ?>>
+                    Set This Tab Active</label><br>
                 </div>
                 <!-- stats -->
                 <div role="tabpanel" class="tab-pane" id="statsTab">
@@ -348,14 +435,21 @@ else {
                     <input type="hidden" value='0' name="stats">
                     <input type="checkbox" id="stats" name="stats" class="form-control" value="1" title="Enable Stats Tab" <?PHP echo $statsHtml; ?>>
                     <label for="stats"> Enable Stats Tab</label><br>
+                    <!-- STATS ACTIVE TAB -->
+                    <label class="radio radio-inline control-label">
+                    <input type="radio" id="activeTab" name="activeTab" class="form-control" value="Stats" title="Set This Tab Active" <?PHP echo $activeStatsHtml; ?>>
+                    Set This Tab Active</label><br>
                 </div>
                 <!-- help -->
                 <div role="tabpanel" class="tab-pane" id="helpTab">
                     <!-- HELP ENABLE -->
                     <input type="hidden" value='0' name="help">
                     <input type="checkbox" id="help" name="help" class="form-control" value="1" title="Enable Help Tab" <?PHP echo $helpHtml; ?>>
-                    <label for="help"> HELP Tab enabled</label>
-                    <br><br>
+                    <label for="help"> HELP Tab enabled</label><br>
+                    <!-- HELP ACTIVE TAB -->
+                    <label class="radio radio-inline control-label">
+                    <input type="radio" id="activeTab" name="activeTab" class="form-control" value="Help" title="Set This Tab Active" <?PHP echo $activeHelpHtml; ?>>
+                    Set This Tab Active</label><br>
                     <fieldset>
                         <legend><i class="fa fa-question-circle"></i> &nbsp;User Help <small>write your own user help</small></legend>
                         <!-- USER HELP TEXTAREA -->
@@ -370,6 +464,10 @@ else {
                     <input type="hidden" value='0' name="admin">
                     <input type="checkbox" id="admin" name="admin" class="form-control" value="1" title="Enable Admin Tab" <?PHP echo $adminHtml; ?>>
                     <label for="admin"> Enable Admin Tab</label><br>
+                    <!-- ADMIN ACTIVE TAB -->
+                    <label class="radio radio-inline control-label">
+                    <input type="radio" id="activeTab" name="activeTab" class="form-control" value="Admin" title="Set This Tab Active" <?PHP echo $activeAdminHtml; ?>>
+                    Set This Tab Active</label><br>
                 </div>
             </div>
         </div>

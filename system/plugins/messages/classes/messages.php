@@ -1,14 +1,39 @@
 <?PHP
 namespace YAWK\PLUGINS\MESSAGES {
-    class messages {
-        public function __construct($db){
 
-            echo "<script type=\"text/javascript\" src=\"../system/plugins/messages/js/message-send.js\"></script>";
+    use YAWK\backend;
+
+    class messages {
+        public function __construct($db, $location){
+            if (isset($location) && (!empty($location)))
+            {   // check where the script is called from...
+                // get hostname
+                $host = \YAWK\sys::getHost($db);
+                if ($location === "backend")
+                {   // backend: set directory prefix
+                    $prefix = "../";
+                }
+                else if ($location === "frontend")
+                {   // frontend: no prefix needed
+                    $prefix = $host.'';
+                }
+                else {
+                    // default:
+                    $prefix = $host.'';
+                }
+            }
+            else
+            {   // if location is not set: no prefix as default
+                $host = \YAWK\settings::getSetting($db, "host");
+                $prefix = '';
+            }
+
+            echo "<script type=\"text/javascript\" src=\"$prefix"."system/plugins/messages/js/message-send.js\"></script>";
             echo "<script type='text/javascript'>
                function markAsSpam(msg_id)
                {
                     $.ajax({
-                    url:'../system/plugins/messages/js/message-spam.php',
+                    url:'$prefix"."system/plugins/messages/js/message-spam.php',
                     type:'post',
                     data:'msg_id='+msg_id,
                     success:function(data){
@@ -27,7 +52,7 @@ namespace YAWK\PLUGINS\MESSAGES {
                function markAsTrash(msg_id)
                {
                     $.ajax({
-                    url:'../system/plugins/messages/js/message-trash.php',
+                    url:'$prefix"."system/plugins/messages/js/message-trash.php',
                     type:'post',
                     data:'msg_id='+msg_id,
                     success:function(data){
@@ -46,7 +71,7 @@ namespace YAWK\PLUGINS\MESSAGES {
                function closeMessage(msg_id)
                {
                     $.ajax({
-                    url:'../system/plugins/messages/js/message-read.php',
+                    url:'$prefix"."system/plugins/messages/js/message-read.php',
                     type:'post',
                     data:'msg_id='+msg_id,
                     success:function(data){
@@ -67,7 +92,7 @@ namespace YAWK\PLUGINS\MESSAGES {
                function restoreFromTrash(msg_id)
                {
                     $.ajax({
-                    url:'../system/plugins/messages/js/message-restore-trash.php',
+                    url:'$prefix"."system/plugins/messages/js/message-restore-trash.php',
                     type:'post',
                     data:'msg_id='+msg_id,
                     success:function(data){
@@ -86,7 +111,7 @@ namespace YAWK\PLUGINS\MESSAGES {
                function markAsDeleted(msg_id)
                {
                     $.ajax({
-                    url:'../system/plugins/messages/js/message-delete.php',
+                    url:'$prefix"."system/plugins/messages/js/message-delete.php',
                     type:'post',
                     data:'msg_id='+msg_id,
                     success:function(data){
@@ -105,7 +130,7 @@ namespace YAWK\PLUGINS\MESSAGES {
                function markAsRead(msg_id)
                {
                     $.ajax({
-                    url:'../system/plugins/messages/js/message-read.php',
+                    url:'$prefix"."system/plugins/messages/js/message-read.php',
                     type:'post',
                     data:'msg_id='+msg_id,
                     success:function(data){
@@ -126,7 +151,7 @@ namespace YAWK\PLUGINS\MESSAGES {
                function messageToggle(msg_id)
                {
                     $.ajax({
-                    url:'../system/plugins/messages/js/message-toggle.php',
+                    url:'$prefix"."system/plugins/messages/js/message-toggle.php',
                     type:'post',
                     data:'msg_id='+msg_id,
                     success:function(data){
@@ -146,7 +171,7 @@ namespace YAWK\PLUGINS\MESSAGES {
                function refreshInbox(type)
                {
                     $.ajax({
-                    url:'../system/plugins/messages/js/message-fetch.php',
+                    url:'$prefix"."system/plugins/messages/js/message-fetch.php',
                     type:'post',
                     data:'type='+type,
                     success:function(data){
@@ -184,13 +209,13 @@ namespace YAWK\PLUGINS\MESSAGES {
                 {   // session vars are here, but user is not set online in db atm,
                     // that should not be, so invite the user to login
                     echo "<h2>SORRY! Diese Seite ist nur f&uuml;r Mitglieder. <small>Du musst Dich erst einloggen.</small></h2>";
-                    return \YAWK\user::drawLoginBox($db, $username, $password);
+                    return \YAWK\user::drawLoginBox($username, $password);
                 }
             }
             else
             {   // session vars are not set. invite the user to login
                 echo "<h2>SORRY! Diese Seite ist nur f&uuml;r Mitglieder. <small>Du musst Dich erst einloggen.</small></h2>";
-                return \YAWK\user::drawLoginBox($db, $username, $password);
+                return \YAWK\user::drawLoginBox($username, $password);
             }
         }
 

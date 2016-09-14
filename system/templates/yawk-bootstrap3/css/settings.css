@@ -1,7 +1,7 @@
 /* auto generated */
     body {   /* BODY SETTINGS */
         color: #333333;
-        background-color: #FFFFFF;
+        background-color: #292929;
         text-shadow: 1px 0px #FFFFFF;
         font-size: 1.7em;
         filter: dropshadow(color=#FFFFFF, offx=1, offy=1);
@@ -91,13 +91,13 @@
        }
     /* MAIN BOX SHADOW SETTINGS */
     #main-pos {
-        box-shadow: 6px 12px 16px 0px #E8E8E8;
+        box-shadow: 6px 12px 16px 0px #474747;
     }
     #footer {
-        box-shadow: 6px 12px 16px 0px #E8E8E8;
+        box-shadow: 6px 12px 16px 0px #474747;
     }
     #footer-copyright {
-        box-shadow: 6px 12px 16px 0px #E8E8E8;
+        box-shadow: 6px 12px 16px 0px #474747;
     }
 
     /* WELL */

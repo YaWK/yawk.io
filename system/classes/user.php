@@ -21,7 +21,7 @@ namespace YAWK {
 
     class user
     {
-
+        public $currentuser;
         public $username;
         public $blocked;
         public $id;
@@ -268,8 +268,11 @@ namespace YAWK {
                 $property = $db->quote($property);
                 $value = $db->quote($value);
                 $id = $db->quote($id);
-                if ($res = $db->query("UPDATE {users} SET $property='".$value."' WHERE id = '" . $id . "'"))
+                if ($res = $db->query("UPDATE {users}
+                                        SET $property = '".$value."'
+                                        WHERE id = '" . $id . "'"))
                 {   // user property update success,
+                    \YAWK\alert::draw("success","Success!","".$value." of property ".$property." set.","","4800");
                     return true;
                 }
                 else

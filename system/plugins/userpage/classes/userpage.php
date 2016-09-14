@@ -3,57 +3,65 @@ namespace YAWK\PLUGINS\USERPAGE {
 
     class userpage
     {
-        protected $usergroup; // array
         protected $dashboard;
         protected $appendTab;
         protected $appendPanel;
         protected $userpage;
-        protected $user;
 
-        public function __construct(){
+        public function __construct($db, $user){
+            /* property $user */
+            if (isset($username) && (!empty($username)))
+            {
+                $this->user = $username;
+            }
+            $this->usergroup = \YAWK\user::getGroup($db);
         }
 
         public function init($db, $user){
-            $this->usergroup = \YAWK\user::getGroup($db);
             if ($this->usergroup['backend_allowed'] !== '1'){
                 // backend access not allowed
                 // check usergroup
                 if ($this->usergroup['backend_allowed'] === '0') {
                     // load userpage
-                    return $this->getUserPage($db, $user, $this->usergroup);
+                    return $this->getUserPage($db, $user);
                 }
-                else {
+                else
+                {   // throw error
                     return \YAWK\alert::draw("danger", "Error", "Could not load userpage. Something strange has happened.","",6800);
                 }
             }
             else {
                 // backend access granted, load root page
-                return self::getRootPage($db, $user, $this->usergroup);
+                if (\YAWK\user::isAdmin($db)){
+                    return $this->getRootPage($db, $user);
+                }
             }
+            return null;
         }
 
-        public function getUserPage($db, $user, $usergroup) {
-            return self::buildPage($db, $user, $usergroup, $this->appendTab, $this->appendPanel, $this->dashboard);
+        public function getUserPage($db, $user) {
+            return self::buildPage($db, $user->username, $user->gid, $this->appendTab, $this->appendPanel, $this->dashboard);
         }
 
-        public function getRootPage($db, $user, $usergroup) {
+        public function getRootPage($db, $user) {
             // check, if admin tab is enabled
             if (\YAWK\settings::getSetting($db, "userpage_admin") === '1'){
                 // prepare dashboard
                 $this->dashboard = "<h5 class=\"btn-danger\">*** ROOT MODE ***</h5>";
                 // root mode notice
-                $this->dashboard .= "Hello Admin! You are logged in with root access.";
+                $this->dashboard .= "Hello $user->username! You are logged in with root access.";
 
                 // append admin panel + tab
                 $this->appendTab = "<li role=\"admin\"><a href=\"#admin\" aria-controls=\"admin\" role=\"tab\" data-toggle=\"tab\">
                                 <i class=\"fa fa-wrench\"></i>&nbsp; Admin</a></li>";
-                $this->appendPanel = "<div role=\"tabpanel\" class=\"tab-pane animated fadeIn\" id=\"admin\"><h4><i class=\"fa fa-lock fa-2x\"></i> &nbsp;Admin Stuff...</h4></div>";
+                $this->appendPanel = "<div role=\"tabpanel\" class=\"tab-pane animated fadeIn\" id=\"admin\"><h4>
+                                      <i class=\"fa fa-lock fa-2x\"></i> &nbsp;Admin Stuff...</h4></div>";
             }
             else {
                 $this->appendTab = "";
                 $this->appendPanel = "";
             }
-            return self::buildPage($db, $user, $usergroup, $this->appendTab, $this->appendPanel, $this->dashboard);
+            return self::buildPage($db, $user->username, $user->gid, $this->appendTab, $this->appendPanel, $this->dashboard);
         }
 
         public static function buildPage($db, $user, $usergroup, $appendTab, $appendPanel, $dashboard)
@@ -62,12 +70,68 @@ namespace YAWK\PLUGINS\USERPAGE {
             // IF ADMINs SHOULD GET THEIR OWN WELCOME-USERPAGE
           //  if ($usergroup['backend_allowed'] === '1') {
                 // get soundblog artist button
-
+            /* GET ACTIVE TABS */
+            $activeTab = \YAWK\settings::getSetting($db, "userpage_activeTab");
+            if ($activeTab == "Dashboard") {
+                $activeDashboardTab = "class=\"active\"";
+                $activeDashboardPane = "active";
+            }
+            else {
+                $activeDashboardTab = "";
+                $activeDashboardPane = "";
+            }
+            if ($activeTab == "Profile") {
+                $activeProfileTab = "class=\"active\"";
+                $activeProfilePane = "active";
+            }
+            else {
+                $activeProfileTab = "";
+                $activeProfilePane = "";
+            }
+            if ($activeTab == "Messages") {
+                $activeMessagesTab = "class=\"active\"";
+                $activeMessagesPane = "active";
+            }
+            else {
+                $activeMessagesTab = "";
+                $activeMessagesPane = "";
+            }
+            if ($activeTab == "Settings") {
+                $activeSettingsTab = "class=\"active\"";
+                $activeSettingsPane = "active";
+            }
+            else {
+                $activeSettingsTab = "";
+                $activeSettingsPane = "";
+            }
+            if ($activeTab == "Stats") {
+                $activeStatsTab = "class=\"active\"";
+                $activeStatsPane = "active";
+            }
+            else {
+                $activeStatsTab = "";
+                $activeStatsPane = "";
+            }
+            if ($activeTab == "Help") {
+                $activeHelpTab = "class=\"active\"";
+                $activeHelpPane = "active";
+            }
+            else {
+                $activeHelpTab = "";
+                $activeHelpPane = "";
+            }
+            if ($activeTab == "Admin") {
+                $activeAdminTab = "class=\"active\"";
+                $activeAdminPane = "active";
+            }
+            else {
+                $activeAdminTab = "";
+                $activeAdminPane = "";
+            }
 
                 $dashboard .= "
                     <div class=\"row text-justify\">
                       <div class=\"col-md-4\">
-                      MEMBERS CLUB<br>
                       col 1
                       </div>
                       <div class=\"col-md-8\">
@@ -112,34 +176,34 @@ namespace YAWK\PLUGINS\USERPAGE {
           <ul class=\"nav nav-tabs\" role=\"tablist\">";
             // dashboard TAB
             if (\YAWK\settings::getSetting($db, "userpage_dashboard") === '1'){
-               $html .= "<li role=\"presentation\" class=\"active\"><a href=\"#home\" aria-controls=\"home\" role=\"tab\" data-toggle=\"tab\">
-                        <i class=\"fa fa-trophy\"></i>&nbsp; VIP Startseite</a></li>";
+               $html .= "<li role=\"presentation\" $activeDashboardTab><a href=\"#home\" aria-controls=\"home\" role=\"tab\" data-toggle=\"tab\">
+                        <i class=\"fa fa-home\"></i>&nbsp; Userpage</a></li>";
             }
             // profile TAB
             if (\YAWK\settings::getSetting($db, "userpage_profile") === '1') {
-                $html .= "<li role=\"presentation\"><a href=\"#profile\" aria-controls=\"profile\" role=\"tab\" data-toggle=\"tab\">
-                         <i class=\"fa fa-user\"></i>&nbsp; Profil bearbeiten</a></li>";
+                $html .= "<li role=\"presentation\" $activeProfileTab><a href=\"#profile\" aria-controls=\"profile\" role=\"tab\" data-toggle=\"tab\">
+                         <i class=\"fa fa-user\"></i>&nbsp; Edit Profile</a></li>";
             }
             // messages TAB
             if (\YAWK\settings::getSetting($db, "userpage_msgplugin") === '1') {
-                $html .="<li role = \"presentation\"><a href=\"#messages\" aria-controls=\"messages\" role=\"tab\" data-toggle=\"tab\">
-                        <i class=\"fa fa-envelope\"></i>&nbsp; Inbox</a></li>";
+                $html .="<li role = \"presentation\" $activeMessagesTab><a href=\"#messages\" aria-controls=\"messages\" role=\"tab\" data-toggle=\"tab\">
+                        <i class=\"fa fa-envelope\"></i>&nbsp; Messages</a></li>";
             }
             // settings TAB
             if (\YAWK\settings::getSetting($db, "userpage_settings") === '1') {
-                $html .= "<li role=\"presentation\"><a href=\"#settings\" aria-controls=\"settings\" role=\"tab\" data-toggle=\"tab\">
-                <i class=\"fa fa-cog\"></i>&nbsp; Einstellungen</a></li>";
+                $html .= "<li role=\"presentation\" $activeSettingsTab><a href=\"#settings\" aria-controls=\"settings\" role=\"tab\" data-toggle=\"tab\">
+                <i class=\"fa fa-cog\"></i>&nbsp; Settings</a></li>";
             }
             // stats TAB
             if (\YAWK\settings::getSetting($db, "userpage_stats") === '1') {
-                $html .= "<li role=\"presentation\"><a href=\"#stats\" aria-controls=\"stats\" role=\"tab\" data-toggle=\"tab\">
+                $html .= "<li role=\"presentation\" $activeStatsTab><a href=\"#stats\" aria-controls=\"stats\" role=\"tab\" data-toggle=\"tab\">
                 <i class=\"fa fa-line-chart\"></i>&nbsp; Stats</a></li>";
             }
             // help TAB
             if (\YAWK\settings::getSetting($db, "userpage_help") === '1') {
                 $signup_help = 1;
-                $html .= "<li role=\"presentation\"><a href=\"#help\" aria-controls=\"help\" role=\"tab\" data-toggle=\"tab\">
-                <i class=\"fa fa-question-circle\"></i>&nbsp; Hilfe</a></li>";
+                $html .= "<li role=\"presentation\" $activeHelpTab><a href=\"#help\" aria-controls=\"help\" role=\"tab\" data-toggle=\"tab\">
+                <i class=\"fa fa-question-circle\"></i>&nbsp; Help</a></li>";
             }
             // append TAB
             $html .= "$appendTab
@@ -150,14 +214,14 @@ namespace YAWK\PLUGINS\USERPAGE {
           <div class=\"tab-content\">";
             // dashboard TAB CONTENT
             if (\YAWK\settings::getSetting($db, "userpage_dashboard") === '1'){
-                $html .= "<div role=\"tabpanel\" class=\"tab-pane active\" id=\"home\">
+                $html .= "<div role=\"tabpanel\" class=\"tab-pane $activeDashboardPane animated fadeIn\" id=\"home\">
                     <!-- ID HOME == user dashboard -->
                     ".$dashboard."
                     </div>";
             }
             // profile TAB CONTENT
             if (\YAWK\settings::getSetting($db, "userpage_profile") === '1') {
-                $html .= "<div role=\"tabpanel\" class=\"tab-pane animated fadeIn\" id=\"profile\"><br>";
+                $html .= "<div role=\"tabpanel\" class=\"tab-pane $activeProfilePane animated fadeIn\" id=\"profile\"><br>";
                 // profile class include
                 include 'system/plugins/userpage/classes/profile.php';
                 $profile = new \YAWK\PLUGINS\USERPAGE\profile();
@@ -166,16 +230,16 @@ namespace YAWK\PLUGINS\USERPAGE {
             }
             // message plg TAB CONTENT
             if (\YAWK\settings::getSetting($db, "userpage_msgplugin") === '1'){
-               $html .= "<div role=\"tabpanel\" class=\"tab-pane animated fadeIn\" id=\"messages\">";
+               $html .= "<div role=\"tabpanel\" class=\"tab-pane $activeMessagesPane animated fadeIn\" id=\"messages\">";
                 // message plugin include
                 include 'system/plugins/messages/classes/messages.php';
-                $messages = new \YAWK\PLUGINS\MESSAGES\messages($db);
+                $messages = new \YAWK\PLUGINS\MESSAGES\messages($db, "frontend");
                 $html .= $messages->init($db);
                 $html .= "</div>";
             }
             // settings TAB CONTENT
             if (\YAWK\settings::getSetting($db, "userpage_settings") === '1'){
-                $html .= "<div role=\"tabpanel\" class=\"tab-pane animated fadeIn\" id=\"settings\"><br>";
+                $html .= "<div role=\"tabpanel\" class=\"tab-pane $activeSettingsPane animated fadeIn\" id=\"settings\"><br>";
                 // settings class include
                 include 'system/plugins/userpage/classes/settings.php';
                 $settings = new \YAWK\PLUGINS\USERPAGE\settings();
@@ -185,17 +249,17 @@ namespace YAWK\PLUGINS\USERPAGE {
             }
             // stats TAB CONTENT
             if (\YAWK\settings::getSetting($db, "userpage_stats") === '1') {
-                $html .="<div role=\"tabpanel\" class=\"tab-pane animated fadeIn\" id=\"stats\">";
+                $html .="<div role=\"tabpanel\" class=\"tab-pane $activeStatsPane animated fadeIn\" id=\"stats\">";
 
                 include 'system/plugins/userpage/classes/stats.php';
-                $stats = new \YAWK\PLUGINS\USERPAGE\stats();
-                $html .= $stats->init($db);
+                $stats = new \YAWK\PLUGINS\USERPAGE\stats($db);
+                $html .= $stats->init();
                 $html .="</div>";
             }
 
             // help TAB CONTENT
             if (\YAWK\settings::getSetting($db, "userpage_help") === '1') {
-               $html .="<div role=\"tabpanel\" class=\"tab-pane animated fadeIn\" id=\"help\">";$html .= \YAWK\settings::getLongSetting($db, "userpage_helptext");$html .="</div>";
+               $html .="<div role=\"tabpanel\" class=\"tab-pane $activeHelpPane animated fadeIn\" id=\"help\">";$html .= \YAWK\settings::getLongSetting($db, "userpage_helptext");$html .="</div>";
             }
             // append panel TAB CONTENT
             $html .="$appendPanel
