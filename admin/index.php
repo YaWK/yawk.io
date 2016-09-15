@@ -6,22 +6,22 @@ ini_set('display_errors', 1); // DISPLAY ALL ERRORS - DEVELOPMENT ONLY!!!
 $loadingTime = microtime(true); // script running start time
 
 /* include controller classes */
-include '../system/classes/db.php';
-include '../system/classes/AdminLTE.php';
-include '../system/classes/alert.php';
-include '../system/classes/settings.php';
-include '../system/classes/language.php';
-include '../system/classes/backend.php';
-include '../system/classes/user.php';
-include '../system/classes/page.php';
-include '../system/classes/menu.php';
-include '../system/classes/email.php';
-include '../system/classes/plugin.php';
-include '../system/classes/widget.php';
-include '../system/classes/template.php';
-include '../system/classes/controller.php';
-include '../system/classes/filemanager.php';
-include '../system/classes/sys.php';
+require_once '../system/classes/db.php';
+require_once '../system/classes/AdminLTE.php';
+require_once '../system/classes/alert.php';
+require_once '../system/classes/settings.php';
+require_once '../system/classes/language.php';
+require_once '../system/classes/backend.php';
+require_once '../system/classes/user.php';
+require_once '../system/classes/page.php';
+require_once '../system/classes/menu.php';
+require_once '../system/classes/email.php';
+require_once '../system/classes/plugin.php';
+require_once '../system/classes/widget.php';
+require_once '../system/classes/template.php';
+require_once '../system/classes/controller.php';
+require_once '../system/classes/filemanager.php';
+require_once '../system/classes/sys.php';
 
 /* set language object */
 if (!isset($lang)) {
