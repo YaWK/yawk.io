@@ -105,7 +105,6 @@ if (isset($_POST['sent'])){
     }
 } // end if $_POST['sent']
 
-
 // USER PAGE TAB SETTINGS (checkboxes status)
 if (\YAWK\settings::getSetting($db, "userpage_hellogroup") === '1'){
     $hellogroupHtml = "checked"; }
