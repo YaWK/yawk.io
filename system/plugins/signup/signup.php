@@ -114,8 +114,8 @@ if (isset($_POST['sent']) && $_POST['sent'] === '1')
     {   // draw thank you page...
         // \YAWK\backend::drawContentWrapper();
         echo "<div style='text-align: center; margin-top: 20%; margin-bottom: 600px;'>
-        <h1>Hallo ".$username."!<br><small>Vielen Dank f&uuml;r Deine Registrierung.</small></h1>
-        <p>Du kannst Dich jetzt anmelden und sofort loslegen! <br>";
+        <h1>Hello ".$username."!<br><small>Thank you for your registration.</small></h1>
+        <p>Please, feel free to instant login! <br>";
         echo \YAWK\user::drawLoginBox($username, $password1);
     }
     else
