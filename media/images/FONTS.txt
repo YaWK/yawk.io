@@ -1,5 +1,0 @@
-www.trimmel.cc
-calligraffitti = handwriting
-roboto = lauftext
----------------------------------------
-
