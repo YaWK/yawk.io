@@ -5,18 +5,17 @@ error_reporting(E_ALL ^ E_STRICT);
 ini_set('display_errors', 1);
 //error_reporting(0);
 /* include core files */
-include('system/classes/db.php');               // database connection
-include('system/classes/settings.php');         // get/set settings from settings db
-include('system/classes/alert.php');            // draw fancy JS-notification alert class
-include('system/classes/email.php');            // email functions
-include('system/classes/user.php');             // all get/set/handle user functions
-include('system/classes/page.php');             // all get/set/handle page functions
-include('system/classes/menu.php');             // all get/set/handle menu functions
-include('system/classes/widget.php');           // all get/set/handle widget functions
-include('system/classes/template.php');         // all template functions, including get/set template settings
-include('system/classes/sys.php');              // basic i/o and helper functions
-include('system/classes/controller.php');       // frontEnd init and filename filter controller
-
+require_once('system/classes/db.php');               // database connection
+require_once('system/classes/settings.php');         // get/set settings from settings db
+require_once('system/classes/alert.php');            // draw fancy JS-notification alert class
+require_once('system/classes/email.php');            // email functions
+require_once('system/classes/user.php');             // all get/set/handle user functions
+require_once('system/classes/page.php');             // all get/set/handle page functions
+require_once('system/classes/menu.php');             // all get/set/handle menu functions
+require_once('system/classes/widget.php');           // all get/set/handle widget functions
+require_once('system/classes/template.php');         // all template functions, including get/set template settings
+require_once('system/classes/sys.php');              // basic i/o and helper functions
+require_once('system/classes/controller.php');       // frontEnd init and filename filter controller
 /* set database object */
 if (!isset($db)) {
     $db = new \YAWK\db();
@@ -44,14 +43,12 @@ if (\YAWK\sys::isOffline($db)) {   // backend-users (admins) can see the fronten
     \YAWK\sys::drawOfflineMessage($db);
     exit;
 }
-
 // check if user wants to register (signUp)
 if (isset($_GET['signup']) && ($_GET['signup']) == 1) {
     include('system/plugins/signup/classes/signup.php');
     $signup = new \YAWK\PLUGINS\SIGNUP\signup();
     echo $signup->sayHello($db);
 }
-
 // URL controller - this loads the properties of each page */
 if (isset($_GET['include']) && (!empty($_GET['include'])))
 {
@@ -75,12 +72,10 @@ if (isset($_GET['include']) && (!empty($_GET['include'])))
             }
         }
     }
-
     // URL is set and not empty - lets go, load properties for given page
     $currentpage->loadProperties($db, $db->quote($_GET['include']));
 
     // different GET controller actions can be done here...
-
 }
 else
 {   // if no page is given, set index as default page
@@ -88,8 +83,6 @@ else
     // and load properties for it
     $currentpage->loadProperties($db, $db->quote($_GET['include']));
 }
-
-
 // call template controller
 $template = $template->getCurrentTemplateName($db, "frontend");
 include("system/templates/$template/index.php");
