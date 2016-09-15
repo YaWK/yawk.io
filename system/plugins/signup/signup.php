@@ -5,8 +5,8 @@
 <link rel="stylesheet" href="system/engines/animateCSS/animate.min.css">
 <?php
 /** SIGNUP PLUGIN */
-include 'system/plugins/signup/classes/signup.php';
-include 'system/classes/backend.php';
+require_once 'system/plugins/signup/classes/signup.php';
+require_once 'system/classes/backend.php';
 $signup = new \YAWK\PLUGINS\SIGNUP\signup();
 // if settings update is sent from frontend
 if (isset($_POST['settings-update']) && $_POST['settings-update'] === '1')
