@@ -3,6 +3,7 @@
 if (!empty($_POST['email']))
 {
     include '../../../classes/db.php';
+    $db = new \YAWK\db();
     $request = $db->quote($_POST['email']);
     $bookingTable = mysqli_query($db, "SELECT email FROM {plugin_booking} WHERE email = '".$request."' AND success = '1'");
     $userTable = mysqli_query($db, "SELECT email FROM {users] WHERE email = '".$request."'");

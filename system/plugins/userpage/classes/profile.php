@@ -89,7 +89,7 @@ namespace YAWK\PLUGINS\USERPAGE {
             if ($changeFirstname === '1'){
                 $this->html .= "<dt><small><i class=\"fa fa-user\"></i></small> First Name</dt>
                     <dd>
-                        <input type=\"text\" class=\"form-control\" id=\"newFirstname\" name=\"newFirstname\" value=\"$user->firstname\" placeholder=\"set new firstname\">
+                        <input type=\"text\" class=\"form-control\" id=\"newFirstname\" name=\"firstname\" value=\"$user->firstname\" placeholder=\"set new firstname\">
                         <label for=\"newFirstname\" class=\"small\"> &nbsp;change your first name</label> &nbsp;<br>
                     </dd>";
             }
@@ -97,7 +97,7 @@ namespace YAWK\PLUGINS\USERPAGE {
             if ($changeLastname === '1'){
                 $this->html .= "<dt><small><i class=\"fa fa-user\"></i></small> Last Name</dt>
                     <dd>
-                        <input type=\"text\" class=\"form-control\" id=\"newLastname\" name=\"newLastname\" value=\"$user->lastname\" placeholder=\"set new lastname\">
+                        <input type=\"text\" class=\"form-control\" id=\"newLastname\" name=\"lastname\" value=\"$user->lastname\" placeholder=\"set new lastname\">
                         <label for=\"newLastname\" class=\"small\"> &nbsp;change your last name</label> &nbsp;<br><br>
                     </dd>";
             }
@@ -105,7 +105,7 @@ namespace YAWK\PLUGINS\USERPAGE {
             if ($changeStreet === '1'){
                 $this->html .= "<dt><small><i class=\"fa fa-home\"></i></small> Street</dt>
                     <dd>
-                        <input type=\"text\" class=\"form-control\" id=\"newStreet\" name=\"newStreet\" value=\"$user->street\" placeholder=\"set new street\">
+                        <input type=\"text\" class=\"form-control\" id=\"newStreet\" name=\"street\" value=\"$user->street\" placeholder=\"set new street\">
                         <label for=\"newStreet\" class=\"small\"> &nbsp;change your street</label> &nbsp;<br>
                     </dd>";
             }
@@ -113,7 +113,7 @@ namespace YAWK\PLUGINS\USERPAGE {
             if ($changeZipcode === '1'){
                 $this->html .= "<dt><small><i class=\"fa fa-home\"></i></small> Zipcode</dt>
                     <dd>
-                        <input type=\"text\" class=\"form-control\" id=\"newZipcode\" name=\"newZipcode\" value=\"$user->zipcode\" placeholder=\"set new zipcode\">
+                        <input type=\"text\" class=\"form-control\" id=\"newZipcode\" name=\"zipcode\" value=\"$user->zipcode\" placeholder=\"set new zipcode\">
                         <label for=\"newZipcode\" class=\"small\"> &nbsp;change your zipcode</label> &nbsp;<br>
                     </dd>";
             }
@@ -121,7 +121,7 @@ namespace YAWK\PLUGINS\USERPAGE {
             if ($changeCity === '1'){
                 $this->html .= "<dt><small><i class=\"fa fa-home\"></i></small> City</dt>
                     <dd>
-                        <input type=\"text\" class=\"form-control\" id=\"newCity\" name=\"newCity\" value=\"$user->city\" placeholder=\"set new city\">
+                        <input type=\"text\" class=\"form-control\" id=\"newCity\" name=\"city\" value=\"$user->city\" placeholder=\"set new city\">
                         <label for=\"newCity\" class=\"small\"> &nbsp;change your city</label> &nbsp;<br>
                     </dd>";
             }
@@ -129,7 +129,7 @@ namespace YAWK\PLUGINS\USERPAGE {
             if ($changeState === '1'){
                 $this->html .= "<dt><small><i class=\"fa fa-home\"></i></small> State</dt>
                     <dd>
-                        <input type=\"text\" class=\"form-control\" id=\"newState\" name=\"newState\" value=\"$user->country\" placeholder=\"set new state\">
+                        <input type=\"text\" class=\"form-control\" id=\"newState\" name=\"state\" value=\"$user->country\" placeholder=\"set new state\">
                         <label for=\"newState\" class=\"small\"> &nbsp;change your state</label> &nbsp;
                     </dd>";
             }
@@ -137,7 +137,7 @@ namespace YAWK\PLUGINS\USERPAGE {
             if ($changeCountry === '1'){
                 $this->html .= "<dt><small><i class=\"fa fa-home\"></i></small> Country</dt>
                     <dd>
-                        <input type=\"text\" class=\"form-control\" id=\"newCountry\" name=\"newCountry\" value=\"$user->country\" placeholder=\"set new country\">
+                        <input type=\"text\" class=\"form-control\" id=\"newCountry\" name=\"country\" value=\"$user->country\" placeholder=\"set new country\">
                         <label for=\"newCountry\" class=\"small\"> &nbsp;change your country</label> &nbsp;
                     </dd>";
             }
@@ -145,7 +145,7 @@ namespace YAWK\PLUGINS\USERPAGE {
             if ($changeUrl === '1'){
                 $this->html .= "<br><dt><small><i class=\"fa fa-external-link\"></i></small> Website URL*</dt>
                     <dd>
-                        <input type=\"text\" class=\"form-control\" id=\"newUrl\" name=\"newUrl\" size=\"42\" value=\"$user->url\" placeholder=\"set new website url\">
+                        <input type=\"text\" class=\"form-control\" id=\"newUrl\" name=\"url\" size=\"42\" value=\"$user->url\" placeholder=\"set new website url\">
                         <label for=\"newUrl\" class=\"small\"> &nbsp;*optional</label> &nbsp;<br>
                     </dd>";
             }
@@ -153,7 +153,7 @@ namespace YAWK\PLUGINS\USERPAGE {
             if ($changeFacebook === '1'){
                 $this->html .= "<dt><small><i class=\"fa fa-facebook-official\"></i></small> Facebook URL*</dt>
                     <dd>
-                        <input type=\"text\" class=\"form-control\" id=\"newFacebook\" size=\"42\" value=\"$user->facebook\" name=\"newFacebook\" placeholder=\"set new facebook url\">
+                        <input type=\"text\" class=\"form-control\" id=\"newFacebook\" size=\"42\" value=\"$user->facebook\" name=\"facebook\" placeholder=\"set new facebook url\">
                         <label for=\"newFacebook\" class=\"small\"> &nbsp;*optional</label> &nbsp;<br>
                     </dd>";
             }
@@ -161,7 +161,7 @@ namespace YAWK\PLUGINS\USERPAGE {
             if ($changeTwitter === '1'){
                 $this->html .= "<dt><small><i class=\"fa fa-twitter\"></i></small> Twitter URL*</dt>
                     <dd>
-                        <input type=\"text\" class=\"form-control\" id=\"newTwitter\" size=\"42\" value=\"$user->twitter\" name=\"newTwitter\" placeholder=\"set new twitter url\">
+                        <input type=\"text\" class=\"form-control\" id=\"newTwitter\" size=\"42\" value=\"$user->twitter\" name=\"twitter\" placeholder=\"set new twitter url\">
                         <label for=\"newTwitter\" class=\"small\"> &nbsp;*optional</label> &nbsp;<br><br>
                     </dd>";
             }

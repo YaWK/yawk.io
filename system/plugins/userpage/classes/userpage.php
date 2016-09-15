@@ -169,7 +169,8 @@ namespace YAWK\PLUGINS\USERPAGE {
                 $html .= "<h2>".\YAWK\settings::getSetting($db, "userpage_hellotext")."&nbsp;$_SESSION[username]!$subtext";
             }
             if (\YAWK\settings::getSetting($db, "userpage_hellogroup") === '1'){
-                $html .= "<br><small>You are logged in as $usergroup[value]</small>";
+                $userGroupName = \YAWK\user::getGroupNameFromID($db, $usergroup);
+                $html .= "<br><small>You are logged in as $userGroupName</small>";
             }
             $html .= "</h2><div>
             <!-- Nav tabs -->

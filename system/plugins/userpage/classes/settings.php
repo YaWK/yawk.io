@@ -49,10 +49,10 @@ namespace YAWK\PLUGINS\USERPAGE {
                     <dl class=\"dl-horizontal\">
                     <dt><small><i class=\"fa fa-lock\"></i></small> Who is online?</dt>
                     <dd>
-                        <input type=\"radio\" id=\"whoisonline-on\" name=\"whoisonline\" value=\"0\" $whoisonlineCheckedOn>
+                        <input type=\"radio\" id=\"whoisonline-on\" name=\"privacy\" value=\"0\" $whoisonlineCheckedOn>
                         <label class=\"radio-inline control-label\" for=\"whoisonline-on\"> &nbsp;sichtbar</label><br>
 
-                        <input type=\"radio\" id=\"whoisonline-off\" name=\"whoisonline\" value=\"1\" $whoisonlineCheckedOff>
+                        <input type=\"radio\" id=\"whoisonline-off\" name=\"privacy\" value=\"1\" $whoisonlineCheckedOff>
                         <label class=\"radio-inline control-label\" for=\"whoisonline-off\">  &nbsp;unsichtbar</label><br><br>
                         </dd>
                     <dt><small><i class=\"fa fa-envelope-o\"></i></small> Emailadresse</dt>

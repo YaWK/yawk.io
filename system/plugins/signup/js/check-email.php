@@ -3,6 +3,7 @@
 if (!empty($_POST['email']))
 {
     include '../../../classes/db.php';
+    $db = new \YAWK\db();
     $request = $db->quote($_POST['email']);
     if ($res = $db->query("SELECT email FROM {users} WHERE email = '".$request."'"))
     {
