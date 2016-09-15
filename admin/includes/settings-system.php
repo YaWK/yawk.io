@@ -26,36 +26,6 @@ $(document).ready(function() {
 		  });	
 		});	/* end click function fb on button */
 
- /* by click "off button */
-	$("#fboff").click(function(){
-		/* toggle colors + fade out textfield */
-		$('#fbon').removeClass("btn btn-success").addClass("btn");
-		$('#fboff').removeClass("btn").addClass("btn btn-danger");
-		$("#facebookurl").fadeOut('fast', function() {
-		    /* Animation complete.
-         ...& do other things */
-		  });
-	}); /* end click function fb off button */
-	
-  /* ***************************************************** 
- /* @ TW Button  */
-		$("#twon").click(function(){ 
-		$('#twon').removeClass("btn").addClass("btn btn-success"); 
-		$('#twoff').removeClass("btn btn-danger").addClass("btn"); 
-		$("#twitterurl").fadeIn('fast', function() {
-			  /* Animation complete */
-			$('#twurl').focus();
-		  });	
-		});	/* end click function tw on button */
-
-		$("#twoff").click(function(){
-		$('#twon').removeClass("btn btn-success").addClass("btn");
-		$('#twoff').removeClass("btn").addClass("btn btn-danger");
-		$("#twitterurl").fadeOut('fast', function() {
-		    /* Animation complete. */
-        });
-	}); /* end click function tw off button */
-	
   /* *****************************************************
  /* @ OFFLINE Button  */
 		$("#offlineon").click(function(){ 
@@ -95,31 +65,42 @@ $(document).ready(function() {
 	}); /* end click function tw off button */
 }); /* end JS function */
 </script>
-
-<?PHP
+<?php
+// TEMPLATE WRAPPER - HEADER & breadcrumbs
+echo "
+    <!-- Content Wrapper. Contains page content -->
+    <div class=\"content-wrapper\" id=\"content-FX\">
+    <!-- Content Header (Page header) -->
+    <section class=\"content-header\">";
 /* draw Title on top */
- \YAWK\backend::getTitle($lang['SETTINGS_SYSTEM'],$lang['SETTINGS_SYSTEM_SUBTEXT']);
+echo \YAWK\backend::getTitle($lang['SETTINGS_SYSTEM'], $lang['SETTINGS_SYSTEM_SUBTEXT']);
+echo"<ol class=\"breadcrumb\">
+            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
+            <li><a href=\"index.php?page=settings-system\" class=\"active\" title=\"System Settings\"> System Settings</a></li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class=\"content\">";
+/* page content start here */
 ?>
-
 	
 <?php
   if(isset($_POST['save'])){
     foreach($_POST as $property=>$value){
-   if($property != "save"){
-     \YAWK\settings::setSetting($property,$value);
-   }
- }
+       if($property != "save"){
+         \YAWK\settings::setSetting($db, $property,$value);
+       }
+    }
   }
 ?>
-
-
 
 <!-- FORM -->
 <form class="form" action="index.php?page=settings-system" method="POST">
 
 <ul class="nav nav-pills">
-  <li class="active"><a href="#site" data-toggle="tab">Site</a></li>
+  <li class="active"><a href="#site" data-toggle="tab">FrontEnd</a></li>
   <li><a href="#social" data-toggle="tab">Social</a></li>
+  <li><a href="#server" data-toggle="tab">Server</a></li>
   <li><a href="#server" data-toggle="tab">Server</a></li>
 </ul>
 
@@ -128,8 +109,8 @@ $(document).ready(function() {
 <div class="tab-content">
 <?php
 // get default settings for toggleswitches 
-$offline_state=\YAWK\settings::getSetting("offline");
-$timediff_state=\YAWK\settings::getSetting("timediff");
+$offline_state=\YAWK\settings::getSetting($db, "offline");
+$timediff_state=\YAWK\settings::getSetting($db, "timediff");
   if ($offline_state === '1'){
 	$offline_on="btn";
 	$offline_off="btn btn-danger";		   	
@@ -157,10 +138,11 @@ $timediff_state=\YAWK\settings::getSetting("timediff");
   <div class="ownbox"> 
   	<h3>Design <small>set active template</small></h3>
        <select class="form-control" name="selectedTemplate">
-	     <option value="<?php echo \YAWK\template::getCurrentTemplateId(); ?>"><?php echo \YAWK\template::getCurrentTemplateName("admin"); ?></option>
+	     <option value="<?php echo \YAWK\template::getCurrentTemplateId($db); ?>">
+			 			<?php echo \YAWK\template::getCurrentTemplateName($db, "backend"); ?></option>
    
 			<?php /* foreach to fetch template select fields */
-			  foreach(\YAWK\template::getTemplates() as $template){
+			  foreach(\YAWK\template::getTemplateIds($db) as $template){
 			  
 			    echo "<option value=\"".$template['id']."\"";
 			
@@ -182,11 +164,11 @@ $timediff_state=\YAWK\settings::getSetting("timediff");
    	  <!-- OFFLINE ON BUTTON -->
 			<div class="btn-group" data-toggle="buttons-radio">
 			 <button id="offlineon" type="button" value="0" class="<?php echo $offline_on; ?>" data-toggle="button">
-			  <input type="radio" name="offline" value="0"/> Online </input>
+			  <input type="radio" name="offline" value="0"/> Online
 			 </button>
 		   <!-- OFFLINE OFF BUTTON -->
 			 <button id="offlineoff" type="button" value="1" class="<?php echo $offline_off; ?>" data-toggle="button">
-			  <input type="radio" name="offline" value="1"/> Offline </input>
+			  <input type="radio" name="offline" value="1"/> Offline
 			 </button>
 			</div><br>
 	
@@ -196,10 +178,10 @@ $timediff_state=\YAWK\settings::getSetting("timediff");
 			</div><br> -->
 	 <fieldset style="width:90%; <?php echo $offline_vis; ?>" id="offline">
 		 <legend>Offline Message</legend>
-		  <textarea class="form-control" name="offlinemsg" rows="4" style="width:90%"><?php echo \YAWK\settings::getSetting("offlinemsg"); ?></textarea></label>
+		  <textarea class="form-control" name="offlinemsg" rows="4" style="width:90%"><?php echo \YAWK\settings::getSetting($db, "offlinemsg"); ?></textarea></label>
 		  <br />
 	    <legend>Path to Offline Image</legend>
-		  <input class="form-control" name="offlineimage" type="text" value="<?php echo \YAWK\settings::getSetting("offlineimage"); ?>" placeholder="images/"> </input>
+		  <input class="form-control" name="offlineimage" type="text" value="<?php echo \YAWK\settings::getSetting($db, "offlineimage"); ?>" placeholder="images/"> </input>
 	 </fieldset>
   </div> <!-- end site ownbox -->
   <br>
@@ -211,17 +193,17 @@ $timediff_state=\YAWK\settings::getSetting("timediff");
 			     <!-- publish time difference on button -->
 				  <div class="btn-group" data-toggle="buttons-radio">
 			      <button id="timediffon" type="button" value="1" class="<?php echo $timediff_on; ?>" data-toggle="button">
-					  <input type="radio" name="timediff" value="1"/>On </input>
+					  <input type="radio" name="timediff" value="1"/>On
 					</button>
 				 <!-- publish time differece off button -->
 				   <button id="timediffoff" type="button" value="0" class="<?php echo $timediff_off; ?>" data-toggle="button">
-					  <input type="radio" name="timediff" value="0"/>Off </input>
+					  <input type="radio" name="timediff" value="0"/>Off
 					</button>
 			 	  </div>
 			 	  <br />
 			   <fieldset style="width:90%; <?php echo $timediff_vis; ?>" id="timediff">
 					<legend>Default Publish Teaser Text</legend>
-					<textarea class="form-control" name="timedifftext" rows="4" style="width:100%"><?php echo \YAWK\settings::getSetting("timedifftext"); ?></textarea>
+					<textarea class="form-control" name="timedifftext" rows="4" style="width:100%"><?php echo \YAWK\settings::getSetting($db, "timedifftext"); ?></textarea>
 			  </fieldset>
       </div> <!-- END SITE PUBLISH SETTINGS -->
       
@@ -233,15 +215,15 @@ $timediff_state=\YAWK\settings::getSetting("timediff");
    <hr>
 	 <fieldset style="width:90%;">
        <legend>Site Title</legend>
-  			<inputclass="form-control" name="sitename" type="text" value="<?php echo \YAWK\settings::getSetting("sitename"); ?>" placeholder="YaWK CMS">
+  			<inputclass="form-control" name="sitename" type="text" value="<?php echo \YAWK\settings::getSetting($db, "sitename"); ?>" placeholder="YaWK CMS">
   			<legend>Author</legend>
- 			<input class="form-control" name="siteauthor" type="text" value="<?php echo \YAWK\settings::getSetting("siteauthor"); ?>" placeholder="Site Author">
+ 			<input class="form-control" name="siteauthor" type="text" value="<?php echo \YAWK\settings::getSetting($db, "siteauthor"); ?>" placeholder="Site Author">
 			 <br>
 		 <legend>Global Meta Text</legend>
-			<textarea class="form-control" name="globalmetatext" rows="4" style="width:100%"><?php echo \YAWK\settings::getSetting("globalmetatext"); ?></textarea></label>
+			<textarea class="form-control" name="globalmetatext" rows="4" style="width:100%"><?php echo \YAWK\settings::getSetting($db, "globalmetatext"); ?></textarea></label>
  			 <br />
 		 <legend>Global Meta Keywords</legend>
-			<textarea class="form-control" name="globalmetakeywords" rows="4" style="width:100%"><?php echo \YAWK\settings::getSetting("globalmetakeywords"); ?></textarea>
+			<textarea class="form-control" name="globalmetakeywords" rows="4" style="width:100%"><?php echo \YAWK\settings::getSetting($db, "globalmetakeywords"); ?></textarea>
   			 <br />
   </div> <!-- end meta ownbox -->
  </div> <!-- end span6 -->
@@ -250,8 +232,8 @@ $timediff_state=\YAWK\settings::getSetting("timediff");
   
 <?php
 // get default settings for toggleswitches 
-$fb_state=YAWK\settings::getSetting("facebookstatus");
-$tw_state=YAWK\settings::getSetting("twitterstatus");
+$fb_state=YAWK\settings::getSetting($db, "facebookstatus");
+$tw_state=YAWK\settings::getSetting($db, "twitterstatus");
   if ($fb_state === '0'){
 	$fb_on="btn";
 	$fb_off="btn btn-danger";
@@ -290,17 +272,17 @@ $tw_state=YAWK\settings::getSetting("twitterstatus");
    <!-- FB ON BUTTON -->
 	<div class="btn-group" data-toggle="buttons-radio">
 	 <button id="fbon" type="button" value="1" class="<?php echo $fb_on; ?>" data-toggle="button">
-	  <input type="radio" name="facebookstatus" value="1"/>On </input>
+	  <input type="radio" name="facebookstatus" value="1"/>On
 	 </button>
    <!-- FB OFF BUTTON -->
 	 <button id="fboff" type="button" value="0" class="<?php echo $fb_off; ?>" data-toggle="button">
-	  <input type="radio" name="facebookstatus" value="0"/>Off </input>
+	  <input type="radio" name="facebookstatus" value="0"/>Off
 	 </button>
 	</div>
 	<!-- FB URL FIELD -->
 	<fieldset style="width:90%; <?php echo $fb_vis; ?>" id="facebookurl">
     <legend>Your Facebook URL</legend>
-    <input class="form-control" id="fburl" type="text" value="<?php echo \YAWK\settings::getSetting("facebookurl"); ?>" name="facebookurl" placeholder="http://www.facebook.com/PageID"> </input>
+    <input class="form-control" id="fburl" type="text" value="<?php echo \YAWK\settings::getSetting($db, "facebookurl"); ?>" name="facebookurl" placeholder="http://www.facebook.com/PageID"> </input>
    </fieldset>
 
   </div><!-- end facebook ownbox -->
@@ -314,17 +296,17 @@ $tw_state=YAWK\settings::getSetting("twitterstatus");
 	   <!-- TW ON BUTTON -->
 		<div class="btn-group" data-toggle="buttons-radio">
 		 <button id="twon" type="button" value="1" class="<?php echo $tw_on; ?>" data-toggle="button">
-		  <input type="radio" name="twitterstatus" value="1"/>On </input>
+		  <input type="radio" name="twitterstatus" value="1"/>On
 		 </button>
 		<!-- TW OFF BUTTON -->
 		 <button id="twoff" type="button" value="0" class="<?php echo $tw_off; ?>" data-toggle="button">
-		  <input type="radio" name="twitterstatus" value="0"/>Off </input>
+		  <input type="radio" name="twitterstatus" value="0"/>Off
 		 </button>
 		</div>
 		<!-- TW URL TEXTFIELD -->
 	   <fieldset style="width:90%; <?php echo $tw_vis; ?>" id="twitterurl">
 	     <legend>Twitter URL</legend>
-	     <input class="form-control" type="text" value="<?php echo \YAWK\settings::getSetting("twitterurl"); ?>" name="twitterurl" placeholder="http://www.twitter.com/yourID"> </input>
+	     <input class="form-control" type="text" value="<?php echo \YAWK\settings::getSetting($db, "twitterurl"); ?>" name="twitterurl" placeholder="http://www.twitter.com/yourID"> </input>
 	  </fieldset>
       </div> <!-- end twitter ownbox -->
   </div> <!-- end span6  -->
@@ -339,10 +321,10 @@ $tw_state=YAWK\settings::getSetting("twitterstatus");
   			 <!-- FOLDER PREFIX -->
 			   <fieldset style="width:90%">
 			     <legend>Folder Prefix</legend>
-			     <input class="form-control" type="text" value="<?php echo \YAWK\settings::getSetting("dirprefix"); ?>" name="dirprefix" placeholder="/YaWK-cms"> </input>
+			     <input class="form-control" type="text" value="<?php echo \YAWK\settings::getSetting($db, "dirprefix"); ?>" name="dirprefix" placeholder="/YaWK-cms"> </input>
 			  <!-- SITE URL -->
 			     <legend>Site URL</legend>
-			     <input class="form-control" type="text" value="<?php echo \YAWK\settings::getSetting("host"); ?>" name="host" placeholder="http://localhost"> </input>
+			     <input class="form-control" type="text" value="<?php echo \YAWK\settings::getSetting($db, "host"); ?>" name="host" placeholder="http://localhost"> </input>
 			  
 			  </fieldset>
       </div>
@@ -352,10 +334,10 @@ $tw_state=YAWK\settings::getSetting("twitterstatus");
   			 <hr>
 			   <fieldset style="width:90%">
 			     <legend>from</legend>
-			     <input class="form-control" type="text" value="<?php echo \YAWK\settings::getSetting("emailfrom"); ?>" name="emailfrom" placeholder="yourname@email.com"> </input>
+			     <input class="form-control" type="text" value="<?php echo \YAWK\settings::getSetting($db, "emailfrom"); ?>" name="emailfrom" placeholder="yourname@email.com"> </input>
 			     
 					<legend>Default Registration Message</legend>
-					<textarea class="form-control" name="defaultemailtext" rows="4" style="width:100%"><?php echo \YAWK\settings::getSetting("defaultemailtext"); ?></textarea>
+					<textarea class="form-control" name="defaultemailtext" rows="4" style="width:100%"><?php echo \YAWK\settings::getSetting($db, "defaultemailtext"); ?></textarea>
 			  
 			  </fieldset>
       </div> <!-- END EMAIL SETTINGS -->
@@ -369,21 +351,21 @@ $tw_state=YAWK\settings::getSetting("twitterstatus");
   			 <hr>
 			   <fieldset style="width:90%">
 			     <legend>MySQL Host</legend>
-			     <input class="form-control" type="text" value="<?php echo \YAWK\settings::getSetting("mysqlhost"); ?>" name="mysqlhost" placeholder="http://localhost"> </input>
+			     <input class="form-control" type="text" value="<?php echo \YAWK\settings::getSetting($db, "mysqlhost"); ?>" name="mysqlhost" placeholder="http://localhost"> </input>
 			  
 			     <legend>MySQL Port</legend>
-			     <input class="form-control" type="text" value="<?php echo \YAWK\settings::getSetting("mysqlport"); ?>" name="mysqlport" placeholder="3306"> </input>
+			     <input class="form-control" type="text" value="<?php echo \YAWK\settings::getSetting($db, "mysqlport"); ?>" name="mysqlport" placeholder="3306"> </input>
 			     
 			     <legend>DB Name</legend>
-			     <input class="form-control" type="text" value="<?php echo \YAWK\settings::getSetting("dbname"); ?>" name="dbname" placeholder="yawk_cms"> </input>
+			     <input class="form-control" type="text" value="<?php echo \YAWK\settings::getSetting($db, "dbname"); ?>" name="dbname" placeholder="yawk_cms"> </input>
 			     
 			     <legend>Prefix</legend>
-			     <input class="form-control" type="text" value="<?php echo \YAWK\settings::getSetting("dbprefix"); ?>" name="dbprefix" placeholder="cms_"> </input>
+			     <input class="form-control" type="text" value="<?php echo \YAWK\settings::getSetting($db, "dbprefix"); ?>" name="dbprefix" placeholder="cms_"> </input>
 			     
 			     <legend>MySQL Admin</legend>
-			     <input class="form-control" type="text" value="<?php echo \YAWK\settings::getSetting("mysqlname"); ?>" name="mysqlname" placeholder="root"> </input>
+			     <input class="form-control" type="text" value="<?php echo \YAWK\settings::getSetting($db, "mysqlname"); ?>" name="mysqlname" placeholder="root"> </input>
 			     <legend>Password</legend>
-			     <input class="form-control" type="text" value="<?php echo \YAWK\settings::getSetting("mysqlpwd"); ?>" name="mysqlpwd" placeholder="********"> </input>
+			     <input class="form-control" type="text" value="<?php echo \YAWK\settings::getSetting($db, "mysqlpwd"); ?>" name="mysqlpwd" placeholder="********"> </input>
 			  </fieldset>
       </div> <!-- end mysql ownbox -->
       
@@ -393,7 +375,7 @@ $tw_state=YAWK\settings::getSetting("twitterstatus");
   			 <hr>
 			   <fieldset style="width:90%">
 			     <legend>Session Time</legend>
-			     <input class="form-control" type="text" value="<?php echo \YAWK\settings::getSetting("sessiontime"); ?>" name="sessiontime" placeholder="60"> </input>
+			     <input class="form-control" type="text" value="<?php echo \YAWK\settings::getSetting($db, "sessiontime"); ?>" name="sessiontime" placeholder="60"> </input>
 			  
 			  </fieldset>
       </div> <!-- end session ownbox -->
@@ -407,6 +389,4 @@ $tw_state=YAWK\settings::getSetting("twitterstatus");
  <input class="btn btn-danger" id="savebutton" type="submit" name="save" value="Speichern" /> 
  <br /><br />
 </form>
-</div> <!-- end fluid row -->
-</div> <!-- end box-page -->
    
