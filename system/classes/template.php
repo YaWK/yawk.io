@@ -114,6 +114,25 @@ namespace YAWK {
             }
         }
 
+        static function getTemplateIds($db)
+        {   /** @var \YAWK\db $db */
+            // returns an array with all template IDs
+            $mysqlRes = $db->query("SELECT id, name
+	                              FROM {templates}
+	                              ORDER by name ASC");
+            while ($row = mysqli_fetch_assoc($mysqlRes)) {
+                $res[] = $row;
+            }
+            if (!empty($res))
+            {   // yey, return array
+                return $res;
+            }
+            else
+            {   // could not fetch array
+                return false;
+            }
+        }
+
         static function countTemplateSettings($db, $templateID)
         {   /** @var $db \YAWK\db */
             // count + return settings from given tpl ID
@@ -128,21 +147,21 @@ namespace YAWK {
             if (!isset($location) || (empty($location)))
             {   // if location is empty, set frontend as default
                 $location = "frontend";
-                $path = "";
+                $prefix = "";
             }
             else
             {   // check location to set path correctly
                 if ($location == "frontend")
                 {   // call from frontend
-                    $path = "";
+                    $prefix = "";
                 }
                 else
                 {   // call from backend
-                    $path = "../";
+                    $prefix = "../";
                 }
             }
             // get current template name from database
-            $tpldir = $path."system/templates/";
+            $tpldir = $prefix."system/templates/";
             if ($res = $db->query("SELECT name FROM {templates}
                        WHERE id = '" . \YAWK\settings::getSetting($db, "selectedTemplate") . "'"))
             {   // fetch data
@@ -150,7 +169,7 @@ namespace YAWK {
                 {   // check if selected tpl exists
                     if (!$dir = @opendir("$tpldir" . $row[0]))
                     {   // if directory could not be opened: throw error
-                        print alert::draw("danger", "Error: ", "Template <strong>" . $row[0] . "</strong> kann nicht gelesen werden, bitte Template-Settings checken!","page=settings-template","4800");
+                       alert::draw("danger", "Error: ", "Template <strong>" . $tpldir.$row[0] . "</strong> kann nicht gelesen werden, bitte Template-Settings checken!","page=settings-template","4800");
                         return false;
                     }
                     else
@@ -161,7 +180,7 @@ namespace YAWK {
                 else
                 {   // could not fetch template -
                     // - in that case set default template
-                    print alert::draw("warning", "Warning: ", "Template kann nicht gelesen werden, default template gesetzt. (yawk-bootstrap3)","page=settings-template","4800");
+                    print alert::draw("warning", "Warning: ", "Template kann nicht gelesen werden, default template gesetzt. (yawk-bootstrap3)","page=settings-system","4800");
                     return "yawk-bootstrap3";
                 }
             }
