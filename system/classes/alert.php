@@ -4,9 +4,9 @@ namespace YAWK {
      * <b>Throw default bootstrap-powered alerts. (warning, succes etc...)</b>
      *
      * This lets you throw a fancy designed alert message box at any
-     * time, anywhere in your script. Alert uses 3 Arguments, as shown below.
+     * time, anywhere in your script. Alert uses 5 Arguments, as shown below.
      * <i>Example:</i>
-     * <code><?php YAWK\alert::draw("success", "Yey!", "Test Alert thrown! It worked!"); ?></code> at
+     * <code><?php YAWK\alert::draw("success", "Yey!", "Test Alert thrown! It worked!", "index.html", 5000); ?></code> at
      * any place of your script where an error, info, success or danger Message
      * needs to be thrown.
      * <p><i>Class covers both, backend & frontend functionality.
@@ -23,14 +23,21 @@ namespace YAWK {
      * @link       http://yawk.goodconnect.net/
      * @since      File available since Release 0.0.9
      * @annotation Throws a fancy Bootstrap Alert (success, info, warning or danger)
+     *
      */
-    class alert {
-        /*
-          * $type = any bootstrap css alert style
-          * $title = a string of your choice
-          * $text = a string of your choice
-          */
 
+    class alert {
+
+        /**
+         * draw a fancy alert notification
+         *
+         * @param string $type Bootstrap class: success, warning, danger, info or default
+         * @param string $title Title of the notification box, drawn in h4
+         * @param string $text The Message Text of your notification. You can use HTML tags to format it.
+         * @param string $redirect URL to redirect the user via setTimeOut delay(ms). Leave empty if you just want to put on a message, but dont want to redirect the user.
+         * @param int $delay How long should the notification stay on top before it hides respectively redirect. Leave empty if it should stay on top forevermore.
+         *
+         */
         static function draw($type, $title, $text, $redirect, $delay){
             if (empty($type)) { $type="danger"; }
             if (empty($title)) { $title="ERROR!"; }
