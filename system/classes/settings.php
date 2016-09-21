@@ -2,7 +2,9 @@
 namespace YAWK {
     /**
      * <b>methods to get and set yawk system settings</b>
-     * @package YAWK
+     * @author Daniel Retzl <danielretzl@gmail.com>
+     * @version 1.0.0
+     * @website http://yawk.website
      */
     class settings
     {
@@ -64,7 +66,12 @@ namespace YAWK {
                 {   // settings type must be equal to param $type
                     if ($setting['type'] === "$type")
                     {
-                        $i_settings++;
+                      //  $i_settings++;
+                        if ($setting['property'] === "selectedTemplate")
+                        {   // TEMPLATE / THEME SELECTOR
+                            \YAWK\backend::drawTemplateSelectField($db);
+                            echo "<br>";
+                        }
 
                         // CHECKBOX
                         if ($setting['fieldType'] === "checkbox")
@@ -77,8 +84,9 @@ namespace YAWK {
                             {   // checkbox not checked
                                 $checked = "";
                             }
-                        echo "<label for=\"$setting[property]\">$setting[description]</label>
-                        <input type=\"checkbox\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" value=\"$setting[value]\" $checked>";
+                        echo "
+                        <input type=\"checkbox\" id=\"$setting[property]\" name=\"$setting[property]\" value=\"$setting[value]\" $checked>
+                        <label for=\"$setting[property]\">$setting[description]</label><br>";
                         }
 
                         /* TEXTAREA */
@@ -104,12 +112,14 @@ namespace YAWK {
 												 value=\"$setting[value]\" placeholder=\"$setting[placeholder]\"><br>
 												 <label for=\"$setting[property]\">$setting[description]</label>";
                         }
+                        /*
                         else
                         {   // draw an input field
                             echo "<label for=\"$setting[property]\">$setting[description]</label>
                                   <input class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
 							             value=\"$setting[value]\" placeholder=\"$setting[placeholder]\"><br>";
                         }
+                        */
                     }
                 }
 
@@ -118,7 +128,7 @@ namespace YAWK {
 
                 }
             }
-            echo "<p>Total: $i_settings settings</p>";
+           // echo "<p>Total: $i_settings settings</p>";
         }
 
         /**
@@ -148,8 +158,13 @@ namespace YAWK {
         }
 
         /**
-         * @param $property
-         * @return mixed
+         * Get and return value for property from settings database.
+         * @version 1.0.0
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @website http://yawk.website
+         * @param object $db Database object
+         * @param string $property Property to select from database
+         * @return bool
          */
         public static function getSetting($db, $property) // get a single setting from db
         {    /* @var $db \YAWK\db */
@@ -164,13 +179,19 @@ namespace YAWK {
                 return false;
             }
         }
+
         /**
-         * @param $property
-         * @param $value
+         * Set value for property into settings database.
+         * @version 1.0.0
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @website http://yawk.website
+         * @param object $db Database object
+         * @param string $property Property to set into database
+         * @param string $value Value to set into database
+         * @return bool
          */
         public static function setSetting($db, $property, $value)
-        {
-            /* @var $db \YAWK\db */
+        {   /* @var $db \YAWK\db */
             $property = $db->quote($property);
             $value = $db->quote($value);
             if ($res = $db->query("UPDATE {settings} SET value = '".$value."' WHERE property = '".$property."'")) {
@@ -186,11 +207,16 @@ namespace YAWK {
         }
 
         /**
-         * @param $property
+         * Get and return longValue for property from settings database.
+         * @version 1.0.0
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @website http://yawk.website
+         * @param object $db Database object
+         * @param string $property Property to get longValue from database.
          * @return mixed
          */
         public static function getLongSetting($db, $property)
-        { /* @var $db \YAWK\db */
+        {   /* @var $db \YAWK\db */
             if ($res = $db->query("SELECT longValue FROM {settings} WHERE property = '".$property."'")) {
                 $row = mysqli_fetch_row($res);
                 $res->close();
@@ -203,6 +229,16 @@ namespace YAWK {
             }
         }
 
+        /**
+         * Set (update) template setting value for property.
+         * @version 1.0.0
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @website http://yawk.website
+         * @param object $db Database object
+         * @param string $property Template property to set
+         * @param string $value Template value to set
+         * @return bool
+         */
         public static function setTemplateSetting($db, $property, $value)
         {
             /* @var $db \YAWK\db */
@@ -220,10 +256,16 @@ namespace YAWK {
             }
         }
 
-    /**
-     * @param $property
-     * @param $value
-     */
+        /**
+         * Set (update) long setting value for property.
+         * @version 1.0.0
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @website http://yawk.website
+         * @param object $db Database object
+         * @param string $property Property to set
+         * @param string $value Long value to set
+         * @return bool
+         */
         public static function setLongSetting($db, $property, $value)
         {
             /* solution for redirect after db update
@@ -250,8 +292,13 @@ namespace YAWK {
         }
 
         /**
-         * @param $property
-         * @return mixed
+         * Get setting description from requested property.
+         * @version 1.0.0
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @website http://yawk.website
+         * @param object $db Database object
+         * @param string $property Property to get description from.
+         * @return bool
          */
         public static function getSettingDescription($db, $property)
         { /* @var $db \YAWK\db */
@@ -267,8 +314,13 @@ namespace YAWK {
         }
 
         /**
-         * @param $property
-         * @return mixed
+         * Get widget setting value from widgets_settings.
+         * @version 1.0.0
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @website http://yawk.website
+         * @param object $db Database object
+         * @param string $property Property to get value from.
+         * @return bool
          */
         public static function getWidgetSetting($db, $property)
         {
@@ -287,8 +339,15 @@ namespace YAWK {
         }
 
         /**
-         * @param $property
-         * @param $value
+         * Set widget setting value into widgets_settings.
+         * @version 1.0.0
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @website http://yawk.website
+         * @param object $db Database object
+         * @param string $property Property to get value from.
+         * @param string $value Value of requested property
+         * @param int $widgetID WidgetID to get value from.
+         * @return bool
          */
         public static function setWidgetSetting($db, $property, $value, $widgetID)
         {
@@ -311,8 +370,14 @@ namespace YAWK {
         }
 
         /**
-         * @param $property
-         * @param $new_status
+         * Toggle setting offline where requested property.
+         * @version 1.0.0
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @website http://yawk.website
+         * @param object $db Database object
+         * @param string $property Property to get value from.
+         * @param string $new_status
+         * @return bool
          */
         public static function toggleOffline($db, $property, $new_status)
         {
