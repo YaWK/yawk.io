@@ -34,7 +34,7 @@ new Morris.Line({
     { year: '2012', value: 0 },
     { year: '2013', value: 1228 },
     { year: '2014', value: 2256 },
-    { year: '2015', value: 3220 },
+    { year: '2015', value: 3220 }
   ],
   // The name of the data record attribute that contains x-values.
   xkey: 'year',
@@ -49,94 +49,30 @@ new Morris.Line({
 
 <!-- ################################################# -->
 
-
-
-
 <?PHP
-// SET VARS - FULL PATH 
- $FILE_PATH = "/xampp/htdocs/yawk-LTE/";
- 
-function read_recursiv($path) { 
- global $files_count;
+echo "<h4>Quellcode Statistik</h4>";
+echo \YAWK\settings::getSetting($db, "yawkversion");
+echo " <small>";echo \YAWK\settings::getSettingDescription($db, "yawkversion");echo"</small>";
 
-     $result = array(); 
-     $handle = opendir($path); 
-     if ($handle) { 
+    // SET VARS
+    $FILE_PATH = "/xampp/htdocs/yawk-LTE/"; // full path
+    $data = \YAWK\sys::countCodeLines($FILE_PATH, '.php');
 
-         while (false !== ($file = readdir($handle))) { 
-             if ($file != "." && $file != "..") {
-                 if (is_file($file)) {
-                     $files_count = $files_count + 1;
-                 }
-                 $name = $path . "/" . $file; 
+echo"<p>$FILE_PATH <br>umfasst insgesamt <b>$data[files]</b> $data[type] files mit exakt <b>$data[lines]</b> Zeilen $data[type] Code</p>";
 
-                 if (is_dir($name)) { 
-                     $ar = read_recursiv($name); 
-                     foreach ($ar as $value) {
-                         $result[] = $value; 
-                     }
-                 } else { 
-                     $result[] = $name; 
-                     $files_count = $files_count + 1;
-                 }
-             }
-         }
-     }
-     closedir($handle); 
-     return $result; 
-}
 
- // load php data
- $FILE_TYPE = ".php";
- $data = read_recursiv("$FILE_PATH", "$FILE_TYPE");
- $anz_lines = 0;
- foreach($data as $value) {
-     // count lines of files with given type
-     if (substr($value, -4) === "$FILE_TYPE") {
-         $lines = file($value);
-         $_anz_lines = count($lines);
-         $anz_lines += $_anz_lines;
-         unset($lines, $_anz_lines);
-         $files_count++;
-     }
- }
- // $files_count = $files_count / 2;
- echo "<strong>YaWK Statistik f&uuml;r Version</strong> "; print \YAWK\settings::getSetting($db, "yawkversion"); print " <small>";print \YAWK\settings::getSettingDescription($db, "yawkversion");
- echo"</b></small><br><br> $FILE_PATH <br><br>umfasst insgesamt <b>$files_count</b> files mit exakt <b>$anz_lines</b> Zeilen .php-";
- $anz_lines1 = $anz_lines;
+    if (\YAWK\sys::checkZlib() === true)
+    {   // output
+        echo "<p class=\"text-success\">...zlib found!</p>";
+    }
+    else
+    {   // output
+        echo "<p class=\"text-danger\">...zlib not found!</p>";
+    }
 
- // load htm data
- $FILE_TYPE = ".htm";
- $data = read_recursiv("$FILE_PATH", "$FILE_TYPE");
- $anz_lines = 0;
- foreach($data as $value) {
-     // count lines of files with given type
-     if (substr($value, -4) === "$FILE_TYPE") {
-         $lines = file($value);
-         $_anz_lines = count($lines);
-         $anz_lines += $_anz_lines;
-         unset($lines, $_anz_lines);
-     }
- }
+
+/*
  $total=$anz_lines + $anz_lines1;
-
  $total = number_format($total);
- 
- echo "und <b>$anz_lines</b> Zeilen .html-Code.</b><br> Insgesamt z&auml;hlt das Projekt: <b>$total</b> Zeilen Quellcode."; 
- 
- echo"<br><br><br>";
-
-// check if zlib is installed
-if(extension_loaded('zlib')) {
-    echo "...........zlib found";
-} else {
-    echo "..........zlib missing";
-}
- 
- ?>
-<br><br>
- 
-<pre>Text in einem {pre} block, default bootstrap style</pre>
-<button class="btn btn-default" name="testbutton" id="testbutton">test</button>
-
-
+ echo "und <b>$anz_lines</b> Zeilen .html-Code.</b><br> Insgesamt z&auml;hlt das Projekt: <b>$total</b> Zeilen Quellcode.";
+ */
