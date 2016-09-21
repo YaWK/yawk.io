@@ -7,13 +7,132 @@ namespace YAWK {
     class settings
     {
         /**
-         * @param $property
+         * Returns an array with all setings where property is like $property.
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @website http://yawk.website
+         * @param object $db Database Object
+         * @param string $property
          * @return mixed
          */
         public static function getSettingsArray($db, $property) // get all settings from db like property
         {
             /* @var $db \YAWK\db */
             if ($res= $db->query("SELECT * FROM {settings} WHERE property LIKE '".$property."'")) {
+                $settingsArray = array();
+                while ($row = $res->fetch_assoc())
+                {   // fill array
+                    $settingsArray[] = $row;
+                }
+            }
+            else
+            {   // q failed, throw error
+                \YAWK\alert::draw("warning", "Warning!", "Fetch database error: getSettingsArray failed.","","4800");
+                return false;
+            }
+            return $settingsArray;
+        }
+
+        /**
+         * Return corresponding form elements for given settings.
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @website http://yawk.website
+         * @param object $db
+         * @param array $settings
+         * @param int $type
+         */
+        public static function getFormElements($db, $settings, $type)
+        {	// loop trough array
+            $i_settings = 0;
+            if(!isset($settings) || (empty($settings)) || (!is_array($settings)))
+            {	// if settings are not set, try to get them...
+                $settings = \YAWK\settings::getAllSettingsIntoArray($db);
+            }
+            if(!isset($type) && (empty($type)))
+            {	// if param 'type' is missing, show all settings
+                $type = 1;
+            }
+            // loop trough settings array
+            foreach ($settings as $setting)
+            {	// check if field type is not set or empty
+                if (!isset($setting['fieldType']) && (empty($fieldType)))
+                {   // set input field as default
+                    $setting['fieldType'] = "input";
+                }
+                else
+                {   // settings type must be equal to param $type
+                    if ($setting['type'] === "$type")
+                    {
+                        $i_settings++;
+
+                        // CHECKBOX
+                        if ($setting['fieldType'] === "checkbox")
+                        {    // build a checkbox
+                            if ($setting['value'] === "1")
+                            {   // set checkbox to checked
+                                $checked = "checked";
+                            }
+                            else
+                            {   // checkbox not checked
+                                $checked = "";
+                            }
+                        echo "<label for=\"$setting[property]\">$setting[description]</label>
+                        <input type=\"checkbox\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" value=\"$setting[value]\" $checked>";
+                        }
+
+                        /* TEXTAREA */
+                        else if ($setting['fieldType'] === "textarea")
+                        {    // if a long value is set
+                            if (isset($setting['longValue']) && (!empty($setting['longValue'])))
+                            {   // build a longValue tagged textarea and fill with longValue
+                                $setting['longValue'] = nl2br($setting['longValue']);
+                                echo "<label for=\"$setting[property]-long\">$setting[description]</label>
+                                      <textarea class=\"$setting[fieldClass]\" id=\"$setting[property]-long\" name=\"$setting[property]-long\">$setting[longValue]</textarea>";
+                            }
+                            else
+                            {   // draw default textarea
+                                $setting['value'] = nl2br($setting['value']);
+                                echo "<label for=\"$setting[property]-long\">$setting[description]</label>
+                                      <textarea class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\">$setting[value]</textarea>";
+                            }
+                        }
+                        /* INPUT FIELD */
+                        else if ($setting['fieldType'] === "input")
+                        {    // draw an input field
+                            echo "<input class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
+												 value=\"$setting[value]\" placeholder=\"$setting[placeholder]\"><br>
+												 <label for=\"$setting[property]\">$setting[description]</label>";
+                        }
+                        else
+                        {   // draw an input field
+                            echo "<label for=\"$setting[property]\">$setting[description]</label>
+                                  <input class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
+							             value=\"$setting[value]\" placeholder=\"$setting[placeholder]\"><br>";
+                        }
+                    }
+                }
+
+                if (isset($setting['longValue']) && (!empty($setting['longValue'])))
+                {
+
+                }
+            }
+            echo "<p>Total: $i_settings settings</p>";
+        }
+
+        /**
+         * Returns an array with all settings data.
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @website http://yawk.website
+         * @param object $db Database Object
+         * @return array|bool
+         */
+        public static function getAllSettingsIntoArray($db) // get all settings from db like property
+        {
+            /* @var $db \YAWK\db */
+            if ($res= $db->query("SELECT * FROM {settings} ORDER by sortation")) {
                 $settingsArray = array();
                 while ($row = $res->fetch_assoc())
                 {   // fill array
