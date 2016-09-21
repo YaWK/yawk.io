@@ -1,4 +1,32 @@
 <?php
+/**
+ * <b>Index.php - the main entry point (controller) of the website's frontend</b>
+ *
+ * First of all, the session gets started, error reporting is set, followed by
+ * including all required classes (because its faster than SPLautoload).
+ * Afterwards, a handful of objects will be created:
+ * <ul>
+ * <li>\YAWK\db</li>
+ * <li>\YAWK\template</li>
+ * <li>\YAWK\user</li>
+ * <li>\YAWK\page</li>
+ * <li>\YAWK\controller</li>
+ * </ul>
+ * <p>Those objects are holding all data used by the frontend. Additional
+ * you can use any of that many static methods from other classes. See class
+ * overview for details about how YaWK is organized.</p>
+ *
+ * @category   CMS
+ * @package    System
+ * @author     Daniel Retzl <danielretzl@gmail.com>
+ * @copyright  2016 Daniel Retzl http://yawk.website
+ * @license    http://www.gnu.org/licenses/gpl-3.0  GNU/GPL 3.0
+ * @version    1.0.0
+ * @link       http://yawk.website
+ * @since      File available since Release 1.0.0
+ * @annotation Index.php - the main entry point (controller) of the website's frontend
+ *
+ */
 session_start();
 /* Error Reporting - this is for DEVELOPMENT PURPOSE ONLY! */
 error_reporting(E_ALL ^ E_STRICT);
