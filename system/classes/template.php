@@ -28,17 +28,26 @@ namespace YAWK {
         public $author;
         public $url;
 
+        /**
+         * returns the ID of the current (active) template
+         * @param object $db
+         * @return int
+         */
         static function getCurrentTemplateId($db)
-        {
+        {   // return value of property selectedTemplate from settings db
             return \YAWK\settings::getSetting($db, "selectedTemplate");
         }
 
+        /**
+         * fetch positions of current (active) template, explode string and return positions array
+         * @param object $db
+         * @return array|bool|mixed|string
+         */
         static function getTemplatePositions($db)
         {   /** @var $db \YAWK\db */
             $res = '';
             // fetch template id
             $tpl_id = settings::getSetting($db, "selectedTemplate");
-
             // fetch template positions
             if ($res = $db->query("SELECT positions
 	                              FROM {templates}
@@ -51,9 +60,9 @@ namespace YAWK {
                 }
                 $pos = $posArray[0]['positions'];
                 // explode string into array + return
-                $res = explode(':', $pos);
+                $positions = explode(':', $pos);
                 // return tpl positions
-                return $res;
+                return $positions;
             }
             else
             {
@@ -62,6 +71,15 @@ namespace YAWK {
             }
         }
 
+        /**
+         * This saves a template as new. It copies the tpl folder and all settings into a new one.
+         * @param object $db
+         * @param object $template
+         * @param string $new_template
+         * @param string $positions
+         * @param string $description
+         * @return bool
+         */
         public function saveAs($db, $template, $new_template, $positions, $description)
         {   /** @var \YAWK\db $db */
             // save theme as new template
@@ -92,6 +110,15 @@ namespace YAWK {
             return true;
         }
 
+        /**
+         * Load properties into template object
+         * @author      Daniel Retzl <danielretzl@gmail.com>
+         * @version     1.0.0
+         * @link        http://yawk.website/
+         * @param object $db database object
+         * @param int $id template id to load
+         * @return bool true or false
+         */
         public function loadProperties($db, $id)
         {
             /** @var $db \YAWK\db $res */
@@ -114,6 +141,11 @@ namespace YAWK {
             }
         }
 
+        /**
+         * Returns an array with all template id's.
+         * @param object $db
+         * @return array|bool
+         */
         static function getTemplateIds($db)
         {   /** @var \YAWK\db $db */
             // returns an array with all template IDs
@@ -330,6 +362,17 @@ namespace YAWK {
             }
         }
 
+        /**
+         * Add a new template setting to the database.
+         * @param object $db
+         * @param string $property
+         * @param string $value
+         * @param string $valueDefault
+         * @param string $description
+         * @param string $fieldclass
+         * @param string $placeholder
+         * @return bool
+         */
         function addTemplateSetting($db, $property, $value, $valueDefault, $description, $fieldclass, $placeholder)
         {   /** @var $db \YAWK\db  */
             $active = 1;
