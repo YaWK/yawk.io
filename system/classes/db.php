@@ -63,7 +63,7 @@ namespace YAWK {
 		 * Fetch rows from the database (SELECT query)
 		 *
 		 * @param $query The query string
-		 * @return bool False on failure / array Database rows on success
+		 * @return bool on failure / array Database rows on success
 		 */
 		public function select($query)
 		{
