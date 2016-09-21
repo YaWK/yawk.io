@@ -33,6 +33,94 @@ namespace YAWK {
         }
 
         /**
+         * Read a directory recursively
+         * @author      Daniel Retzl <danielretzl@gmail.com>
+         * @version     1.0.0
+         * @link        http://yawk.website/
+         * @param string $path full path e.g. /xampp/htdocs/yawk-LTE/
+         * @return array
+         */
+        public static function read_recursive($path) {
+            global $files_count;
+            $result = array();
+            $handle = opendir($path);
+            if ($handle) {
+
+                while (false !== ($file = readdir($handle))) {
+                    if ($file != "." && $file != "..") {
+                        if (is_file($file)) {
+                            $files_count = $files_count + 1;
+                        }
+                        $name = $path . "/" . $file;
+
+                        if (is_dir($name)) {
+                            $ar = self::read_recursive($name);
+                            foreach ($ar as $value) {
+                                $result[] = $value;
+                            }
+                        } else {
+                            $result[] = $name;
+                            $files_count = $files_count + 1;
+                        }
+                    }
+                }
+            }
+            closedir($handle);
+            return $result;
+        }
+
+        /**
+         * Count code lines and output a small overview
+         * @author      Daniel Retzl <danielretzl@gmail.com>
+         * @version     1.0.0
+         * @link        http://yawk.website/
+         * @param object $db database object
+         * @param string $path the full path (including base path)
+         * @param string $fileType file type with leading dot, for example: '.php'
+         * @return mixed array
+         */
+        public static function countCodeLines($path, $fileType)
+        {
+            $data = \YAWK\sys::read_recursive($path);
+            $linesCount = 0;
+            $filesCount = 0;
+            foreach($data as $value) {
+                // count lines of files with given type
+                if (substr($value, -4) === "$fileType") {
+                    $lines = file($value);
+                    $i_lines = count($lines);
+                    $linesCount += $i_lines;
+                    unset($lines, $i_lines);
+                    $filesCount++;
+                }
+            }
+            return $array = [
+                "type" => $fileType,
+                "files" => $filesCount,
+                "lines" => $linesCount,
+            ];
+        }
+
+        /**
+         * Check if zlib is available
+         * @author      Daniel Retzl <danielretzl@gmail.com>
+         * @version     1.0.0
+         * @link        http://yawk.website/
+         * @return bool
+         */
+        public static function checkZlib()
+        {   // check if zlib is installed
+            if(extension_loaded('zlib'))
+            {   // installed
+                return true;
+            }
+            else
+            {   // not installed
+                return false;
+            }
+        }
+
+        /**
          * Copy a file, or recursively copy a folder and its contents
          * @author      Aidan Lister <aidan@php.net>
          * @version     1.0.1
@@ -43,22 +131,18 @@ namespace YAWK {
          * @return      bool     Returns true on success, false on failure
          */
         static function xcopy($source, $dest, $permissions = 0755)
-        {
-            // Check for symlinks
+        {   // Check for symlinks
             if (is_link($source)) {
                 return symlink(readlink($source), $dest);
             }
-
             // Simple copy for a file
             if (is_file($source)) {
                 return copy($source, $dest);
             }
-
             // Make destination directory
             if (!is_dir($dest)) {
                 mkdir($dest, $permissions);
             }
-
             // Loop through the folder
             $dir = dir($source);
             while (false !== $entry = $dir->read()) {
@@ -66,16 +150,22 @@ namespace YAWK {
                 if ($entry == '.' || $entry == '..') {
                     continue;
                 }
-
                 // Deep copy directories
                 self::xcopy("$source/$entry", "$dest/$entry", $permissions);
             }
-
             // Clean up
             $dir->close();
             return true;
         }
 
+        /**
+         * Minify any string: removes spaces, tabs and linebreaks.
+         * @author      Daniel Retzl <danielretzl@gmail.com>
+         * @version     1.0.0
+         * @link        http://yawk.website/
+         * @param       string      $content
+         * @return      mixed
+         */
         static function  minify($content)
         {   /** minify data */
             // remove comments
@@ -191,10 +281,10 @@ namespace YAWK {
         static function encodeChars($string)
         {   // requires string. encodes german vowels
             $string = utf8_decode($string);
-            $chars = array("ö" => "&ouml;", "ä" => "&auml;", "ü" => "&uuml;",
-                "Ö" => "&Ouml;", "Ä" => "&Auml;", "Ü" => "&Uuml;",
-                "ß" => "&szlig;",
-                "€" => "&euro;");
+            $chars = array("ï¿½" => "&ouml;", "ï¿½" => "&auml;", "ï¿½" => "&uuml;",
+                "ï¿½" => "&Ouml;", "ï¿½" => "&Auml;", "ï¿½" => "&Uuml;",
+                "ï¿½" => "&szlig;",
+                "ï¿½" => "&euro;");
             return strtr($string, $chars);
         }
 
@@ -490,8 +580,8 @@ namespace YAWK {
             $month = substr($date, 5, 2);
             $time = substr($date, 11, 5);
 
-            /* führende null entfernen */
-            $day = 1 * $day; // Typänderung von String auf Integer
+            /* fï¿½hrende null entfernen */
+            $day = 1 * $day; // Typï¿½nderung von String auf Integer
             $i = strlen($day);
             // if ($i <= 1) { $day = "".$day; }
 
@@ -544,8 +634,8 @@ namespace YAWK {
             $month = substr($date, 5, 2);
             $time = substr($date, 11, 5);
 
-            /* führende null entfernen */
-            $day = 1 * $day; // Typänderung von String auf Integer
+            /* fï¿½hrende null entfernen */
+            $day = 1 * $day; // Typï¿½nderung von String auf Integer
             $i = strlen($day);
             // if ($i <= 1) { $day = "".$day; }
 
