@@ -91,15 +91,15 @@ echo"<ol class=\"breadcrumb\">
 			<div class="row animated fadeIn">
 				<div class="col-md-4">
                     <h3><i class="fa fa-picture-o"></i> Theme <small> set active design template</small></h3>
-					<?php \YAWK\settings::getFormElements($db, $settings, 3); ?>
+					<?php \YAWK\settings::getFormElements($db, $settings, 3, $lang); ?>
 				</div>
 				<div class="col-md-4">
-					<h3><i class="fa fa-clock-o"></i> Publish <small>Settings</small></h3>
-                    <?php \YAWK\settings::getFormElements($db, $settings, 7); ?>
+					<!-- publish settings -->
+                    <?php \YAWK\settings::getFormElements($db, $settings, 7, $lang); ?>
 				</div>
 				<div class="col-md-4">
-					<h3><i class="fa fa-wrench"></i> Service Mode <small>maintenance</small></h3>
-                    <?php \YAWK\settings::getFormElements($db, $settings, 8); ?>
+					<!-- maintenance mode -->
+                    <?php \YAWK\settings::getFormElements($db, $settings, 8, $lang); ?>
 				</div>
 			</div>
 		</div>
@@ -134,7 +134,7 @@ echo"<ol class=\"breadcrumb\">
 			<div class="row animated fadeIn">
 				<div class="col-md-4">
 					<h3>Server <small> Settings</small></h3>
-					<?php \YAWK\settings::getFormElements($db, $settings, 1); ?>
+					<?php \YAWK\settings::getFormElements($db, $settings, 1, $lang); ?>
 				</div>
 				<div class="col-md-4">
 					<h3>Main Shadow <small>around all positions</small></h3>
