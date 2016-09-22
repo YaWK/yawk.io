@@ -34,7 +34,7 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 /* draw Title on top */
-echo \YAWK\backend::getTitle($lang['SETTINGS_SYSTEM'], $lang['SETTINGS_SYSTEM_SUBTEXT']);
+echo \YAWK\backend::getTitle($lang['SETTINGS'], $lang['SETTINGS_SYSTEM_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
             <li><a href=\"index.php?page=settings-system\" class=\"active\" title=\"Edit Settings\"> Settings</a></li>
@@ -90,16 +90,16 @@ echo"<ol class=\"breadcrumb\">
 			<!-- list GOOGLE FONTS -->
 			<div class="row animated fadeIn">
 				<div class="col-md-4">
-					<h3>Frontend <small>Settings</small></h3>
+                    <h3><i class="fa fa-picture-o"></i> Theme <small> set active design template</small></h3>
 					<?php \YAWK\settings::getFormElements($db, $settings, 3); ?>
 				</div>
 				<div class="col-md-4">
-					<h3>Menu <small>Font</small></h3>
-					...
+					<h3><i class="fa fa-clock-o"></i> Publish <small>Settings</small></h3>
+                    <?php \YAWK\settings::getFormElements($db, $settings, 7); ?>
 				</div>
 				<div class="col-md-4">
-					<h3>Text <small>Font</small></h3>
-					...
+					<h3><i class="fa fa-wrench"></i> Service Mode <small>maintenance</small></h3>
+                    <?php \YAWK\settings::getFormElements($db, $settings, 8); ?>
 				</div>
 			</div>
 		</div>
