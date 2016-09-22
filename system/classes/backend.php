@@ -135,6 +135,37 @@ namespace YAWK {
             }
         }
 
+
+        /**
+         * Draw a SELECT field with all templates, current active template is selected
+         * @version 1.0.0
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @website http://yawk.website
+         * @param object $db Database object
+         */
+        public static function drawTemplateSelectField($db)
+        {
+            /* TEMPLATE SELECTOR */
+            echo "<!-- TEMPLATE SELECT -->
+                               <select class=\"form-control\" name=\"selectedTemplate\">
+                                 <option value=\""; echo \YAWK\template::getCurrentTemplateId($db); echo "\">";
+            echo \YAWK\template::getCurrentTemplateName($db, "backend");
+            echo"</option>";
+            /* foreach to fetch template select fields */
+            foreach(\YAWK\template::getTemplateIds($db) as $template)
+            {
+                echo "<option value=\"".$template['id']."\"";
+                if (isset($_POST['template'])) {
+                    if($_POST['template'] === $template['id']){
+                        echo "selected=\"selected\"";
+                    }
+                }
+                echo ">".$template['name']."</option>";
+            }
+            echo"</select>";
+        }
+
+
         static function drawLoginForm($username, $password)
         { /**
          * draw login box
