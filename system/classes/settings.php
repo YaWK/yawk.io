@@ -44,7 +44,7 @@ namespace YAWK {
          * @param array $settings
          * @param int $type
          */
-        public static function getFormElements($db, $settings, $type)
+        public static function getFormElements($db, $settings, $type, $lang)
         {	// loop trough array
             $i_settings = 0;
             if(!isset($settings) || (empty($settings)) || (!is_array($settings)))
@@ -67,19 +67,67 @@ namespace YAWK {
                     if ($setting['type'] === "$type")
                     {
                       //  $i_settings++;
+                        // THEME (template) selector
+                        // this draws a SELECT field, where admin can set the active template
                         if ($setting['property'] === "selectedTemplate")
                         {   // TEMPLATE / THEME SELECTOR
                             \YAWK\backend::drawTemplateSelectField($db);
                             echo "<br>";
                         }
-                        if (isset($setting['moreDescription']) && (!empty($setting['moreDescription'])))
-                        {
-                            $moreDescription = $setting['moreDescription'];
+                        // check if ICON is set
+                        // if an icon is set, it will be drawn before the heading, to the left.
+                        if (isset($setting['icon']) && (!empty($setting['icon'])))
+                        {   // fill it w icon
+                            $setting['icon'] = "<i class=\"$setting[icon]\"></i>";
                         }
                         else
-                            {
-                                $moreDescription = '';
-                            }
+                        {   // leave empty - no icon available
+                            $setting['icon'] = '';
+                        }
+
+                        // check if LABEL is set
+                        // The label sits directly above, relative to the setting form element
+                        if (isset($setting['label']) && (!empty($setting['label'])))
+                        {   // if its set, put it into $lang array for L11n
+                            $setting['label'] = $lang[$setting['label']];
+                        }
+                        else
+                        {   // otherwise throw error
+                            $setting['label'] = 'sorry, there is not label set. meh!';
+                        }
+
+                        // check if HEADING is set
+                        // if set, a <H3>Heading</H3> will be shown above the setting
+                        if (isset($setting['heading']) && (!empty($setting['heading'])))
+                        {   // L11n
+                            $setting['heading'] = $lang[$setting['heading']];
+                        }
+                        else
+                        {   // leave empty - no heading for that setting
+                            $setting['heading'] = '';
+                        }
+
+                        // check if SUBTEXT is set
+                        // this is shown in <small>tags</small> beneath the heading
+                        if (isset($setting['subtext']) && (!empty($setting['subtext'])))
+                        {   // L11n
+                            $setting['subtext'] = $lang[$setting['subtext']];
+                        }
+                        else
+                        {   // leave empty - no subtext beneath the heading
+                            $setting['subtext'] = '';
+                        }
+
+                        // check if description is set
+                        // the description will be shown underneath the form element
+                        if (isset($setting['description']) && (!empty($setting['description'])))
+                        {   // L11n
+                            $setting['description'] = $lang[$setting['description']];
+                        }
+                        else
+                        {   // leave empty - no description available
+                            $setting['description'] = '';
+                        }
 
                         // CHECKBOX
                         if ($setting['fieldType'] === "checkbox")
@@ -92,9 +140,9 @@ namespace YAWK {
                             {   // checkbox not checked
                                 $checked = "";
                             }
-                        echo "
+                        echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>
                         <input type=\"checkbox\" id=\"$setting[property]\" name=\"$setting[property]\" value=\"$setting[value]\" $checked>
-                        <label for=\"$setting[property]\">$setting[description]</label><p>$moreDescription</p>";
+                        <label for=\"$setting[property]\">$setting[label]</label><p>$setting[description]</p>";
                         }
 
                         /* TEXTAREA */
@@ -103,27 +151,27 @@ namespace YAWK {
                             if (isset($setting['longValue']) && (!empty($setting['longValue'])))
                             {   // build a longValue tagged textarea and fill with longValue
                                 $setting['longValue'] = nl2br($setting['longValue']);
-                                echo "<label for=\"$setting[property]-long\">$setting[description]</label>
+                                echo "<label for=\"$setting[property]-long\">$setting[label]</label>
                                       <textarea class=\"$setting[fieldClass]\" id=\"$setting[property]-long\" name=\"$setting[property]-long\">$setting[longValue]</textarea>";
                             }
                             else
                             {   // draw default textarea
                                 $setting['value'] = nl2br($setting['value']);
-                                echo "<label for=\"$setting[property]-long\">$setting[description]</label>
+                                echo "<label for=\"$setting[property]-long\">$setting[label]</label>
                                       <textarea class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\">$setting[value]</textarea>";
                             }
                         }
                         /* INPUT FIELD */
                         else if ($setting['fieldType'] === "input")
                         {    // draw an input field
-                            echo "<label for=\"$setting[property]\">$setting[description]</label>
+                            echo "<label for=\"$setting[property]\">$setting[label]</label>
                                   <input class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
-										 value=\"$setting[value]\" placeholder=\"$setting[placeholder]\"><p>$moreDescription</p>";
+										 value=\"$setting[value]\" placeholder=\"$setting[placeholder]\"><p>$setting[description]</p>";
                         }
                         /*
                         else
                         {   // draw an input field
-                            echo "<label for=\"$setting[property]\">$setting[description]</label>
+                            echo "<label for=\"$setting[property]\">$setting[label]</label>
                                   <input class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
 							             value=\"$setting[value]\" placeholder=\"$setting[placeholder]\"><br>";
                         }
