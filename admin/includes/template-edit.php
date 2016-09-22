@@ -24,7 +24,6 @@
             tabsClass: 'hidden-sm hidden-xs',
             accordionClass: 'visible-sm visible-xs'
         });
-
     });
 </script>
 
@@ -803,8 +802,6 @@ if(isset($_POST['save']) ||isset($_POST['savenewtheme']))
     $template->setTemplateCssFile($db, $template->id, $content, 0);
     // create minified version for production environments (css/settings.min.css)
     $template->setTemplateCssFile($db, $template->id, $content, 1);
-
-
 
     //////////////////////////////////////////////////////////////////////////////////////
 }
