@@ -72,6 +72,14 @@ namespace YAWK {
                             \YAWK\backend::drawTemplateSelectField($db);
                             echo "<br>";
                         }
+                        if (isset($setting['moreDescription']) && (!empty($setting['moreDescription'])))
+                        {
+                            $moreDescription = $setting['moreDescription'];
+                        }
+                        else
+                            {
+                                $moreDescription = '';
+                            }
 
                         // CHECKBOX
                         if ($setting['fieldType'] === "checkbox")
@@ -86,7 +94,7 @@ namespace YAWK {
                             }
                         echo "
                         <input type=\"checkbox\" id=\"$setting[property]\" name=\"$setting[property]\" value=\"$setting[value]\" $checked>
-                        <label for=\"$setting[property]\">$setting[description]</label><br>";
+                        <label for=\"$setting[property]\">$setting[description]</label><p>$moreDescription</p>";
                         }
 
                         /* TEXTAREA */
@@ -108,9 +116,9 @@ namespace YAWK {
                         /* INPUT FIELD */
                         else if ($setting['fieldType'] === "input")
                         {    // draw an input field
-                            echo "<input class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
-												 value=\"$setting[value]\" placeholder=\"$setting[placeholder]\"><br>
-												 <label for=\"$setting[property]\">$setting[description]</label>";
+                            echo "<label for=\"$setting[property]\">$setting[description]</label>
+                                  <input class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
+										 value=\"$setting[value]\" placeholder=\"$setting[placeholder]\"><p>$moreDescription</p>";
                         }
                         /*
                         else
