@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 10. Sep 2016 um 02:56
+-- Erstellungszeit: 22. Sep 2016 um 04:05
 -- Server-Version: 10.1.10-MariaDB
 -- PHP-Version: 5.6.19
 
@@ -230,6 +230,155 @@ CREATE TABLE `cms_logins` (
   `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Daten für Tabelle `cms_logins`
+--
+
+INSERT INTO `cms_logins` (`id`, `datetime`, `location`, `failed`, `ip`, `useragent`, `username`, `password`) VALUES
+(1, '2016-09-12 22:22:23', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', 'admin'),
+(2, '2016-09-12 22:22:39', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', 'admin'),
+(3, '2016-09-12 22:22:45', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', 'admin'),
+(4, '2016-09-12 22:26:11', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', 'admin'),
+(5, '2016-09-12 22:34:49', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(6, '2016-09-12 22:35:50', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(7, '2016-09-12 22:38:10', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(8, '2016-09-12 22:38:10', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(9, '2016-09-12 22:38:41', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(10, '2016-09-12 22:38:41', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(11, '2016-09-12 22:39:11', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(12, '2016-09-12 22:39:11', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(13, '2016-09-12 22:41:10', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(14, '2016-09-12 22:41:10', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(15, '2016-09-12 22:41:52', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(16, '2016-09-12 22:41:52', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(17, '2016-09-12 22:41:59', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(18, '2016-09-12 22:41:59', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(19, '2016-09-12 22:42:39', 'frontend', 1, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '12345'),
+(20, '2016-09-12 22:42:42', 'frontend', 1, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '12345'),
+(21, '2016-09-12 22:42:42', 'frontend', 1, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '12345'),
+(22, '2016-09-12 22:43:04', 'frontend', 1, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '12345'),
+(23, '2016-09-12 22:43:04', 'frontend', 1, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '12345'),
+(24, '2016-09-12 22:43:08', 'frontend', 1, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '12345'),
+(25, '2016-09-12 22:43:09', 'frontend', 1, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '12345'),
+(26, '2016-09-12 22:43:12', 'frontend', 1, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '12345'),
+(27, '2016-09-12 22:43:13', 'frontend', 1, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '12345'),
+(28, '2016-09-12 22:43:36', 'frontend', 1, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '12345'),
+(29, '2016-09-12 22:45:00', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(30, '2016-09-12 22:45:00', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(31, '2016-09-12 22:50:55', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(32, '2016-09-12 22:50:55', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(33, '2016-09-12 22:57:14', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(34, '2016-09-12 22:57:14', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(35, '2016-09-12 22:57:25', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(36, '2016-09-12 22:57:25', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(37, '2016-09-12 22:57:40', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(38, '2016-09-12 22:57:40', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(39, '2016-09-12 23:25:54', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(40, '2016-09-12 23:25:54', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(41, '2016-09-12 23:26:00', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(42, '2016-09-12 23:26:00', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(43, '2016-09-13 00:16:23', 'backend', 1, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(44, '2016-09-13 00:16:23', 'backend', 1, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(45, '2016-09-13 00:56:09', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(46, '2016-09-13 00:56:09', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(47, '2016-09-13 01:20:42', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(48, '2016-09-13 01:20:42', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(49, '2016-09-13 01:56:03', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(50, '2016-09-13 01:56:03', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(51, '2016-09-13 03:14:23', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(52, '2016-09-13 03:14:23', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(53, '2016-09-13 03:37:21', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(54, '2016-09-13 03:37:21', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(55, '2016-09-13 03:41:40', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(56, '2016-09-13 03:41:40', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(57, '2016-09-13 12:01:17', 'backend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', '', ''),
+(58, '2016-09-13 12:01:17', 'backend', 1, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', '', ''),
+(59, '2016-09-13 12:01:17', 'backend', 1, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', '', ''),
+(60, '2016-09-13 12:08:13', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(61, '2016-09-13 12:08:13', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(62, '2016-09-13 12:08:24', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(63, '2016-09-13 12:08:24', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(64, '2016-09-13 12:08:45', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(65, '2016-09-13 12:08:45', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(66, '2016-09-13 12:15:02', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(67, '2016-09-13 12:15:02', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(68, '2016-09-13 12:21:09', 'backend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(69, '2016-09-13 12:29:20', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(70, '2016-09-13 12:29:20', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(71, '2016-09-13 12:29:35', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(72, '2016-09-13 12:29:35', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(73, '2016-09-13 13:10:40', 'backend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(74, '2016-09-13 13:17:59', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(75, '2016-09-13 13:17:59', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(76, '2016-09-13 13:32:49', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(77, '2016-09-13 13:32:49', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(78, '2016-09-13 13:40:22', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(79, '2016-09-13 13:40:22', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(80, '2016-09-13 13:42:14', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(81, '2016-09-13 13:42:14', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(82, '2016-09-13 13:43:42', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(83, '2016-09-13 13:43:42', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(84, '2016-09-13 13:45:28', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(85, '2016-09-13 13:45:28', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(86, '2016-09-13 13:45:48', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(87, '2016-09-13 13:45:48', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(88, '2016-09-13 13:54:08', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(89, '2016-09-13 13:54:08', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(90, '2016-09-13 14:01:32', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(91, '2016-09-13 14:01:32', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(92, '2016-09-13 14:11:59', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(93, '2016-09-13 14:11:59', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(94, '2016-09-13 14:52:49', 'backend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(95, '2016-09-13 15:53:43', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(96, '2016-09-13 15:53:43', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(97, '2016-09-13 16:07:44', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'test', '1234'),
+(98, '2016-09-13 16:07:44', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'test', '1234'),
+(99, '2016-09-13 16:08:07', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(100, '2016-09-13 16:08:07', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(101, '2016-09-13 16:13:44', 'backend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(102, '2016-09-13 21:11:18', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'test', '1234'),
+(103, '2016-09-13 21:11:18', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'test', '1234'),
+(104, '2016-09-13 21:16:29', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(105, '2016-09-13 21:16:29', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(106, '2016-09-13 21:42:09', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(107, '2016-09-13 21:42:09', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(108, '2016-09-14 11:56:31', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(109, '2016-09-14 11:56:31', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(110, '2016-09-14 12:40:15', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(111, '2016-09-14 12:40:15', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(112, '2016-09-14 15:55:14', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '123456'),
+(113, '2016-09-14 15:55:14', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '123456'),
+(114, '2016-09-14 21:56:38', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(115, '2016-09-14 21:56:38', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(116, '2016-09-14 22:13:01', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(117, '2016-09-14 22:13:01', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(118, '2016-09-15 00:42:16', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(119, '2016-09-15 00:42:16', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(120, '2016-09-15 00:42:52', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admins', '1234'),
+(121, '2016-09-15 00:42:52', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admins', '1234'),
+(122, '2016-09-15 00:43:06', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(123, '2016-09-15 00:43:06', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '1234'),
+(124, '2016-09-15 01:20:11', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '12345'),
+(125, '2016-09-15 01:20:11', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '12345'),
+(126, '2016-09-15 02:25:52', 'backend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '12345'),
+(127, '2016-09-15 02:51:52', 'backend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '12345'),
+(128, '2016-09-15 02:53:04', 'backend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '12345'),
+(129, '2016-09-15 02:54:25', 'backend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '12345'),
+(130, '2016-09-15 02:55:38', 'backend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '12345'),
+(131, '2016-09-15 02:56:39', 'backend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '12345'),
+(132, '2016-09-15 03:02:01', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '12345'),
+(133, '2016-09-15 03:02:01', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '12345'),
+(134, '2016-09-15 03:03:20', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '12345'),
+(135, '2016-09-15 03:03:20', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '12345'),
+(136, '2016-09-15 05:36:56', 'backend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '12345'),
+(137, '2016-09-15 11:57:37', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '12345'),
+(138, '2016-09-15 11:57:37', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '12345'),
+(139, '2016-09-15 13:53:32', 'backend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '12345'),
+(140, '2016-09-15 14:17:02', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '12345'),
+(141, '2016-09-15 14:17:02', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '12345'),
+(142, '2016-09-15 15:50:31', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '12345'),
+(143, '2016-09-15 15:50:31', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'admin', '12345');
+
 -- --------------------------------------------------------
 
 --
@@ -315,6 +464,16 @@ CREATE TABLE `cms_meta_local` (
   `content` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Daten für Tabelle `cms_meta_local`
+--
+
+INSERT INTO `cms_meta_local` (`name`, `page`, `content`) VALUES
+('description', 4, 'logout'),
+('description', 5, 'terms-of-service'),
+('keywords', 4, 'keyword1, keyword2, keyword3, keyword4'),
+('keywords', 5, 'keyword1, keyword2, keyword3, keyword4');
+
 -- --------------------------------------------------------
 
 --
@@ -331,6 +490,14 @@ CREATE TABLE `cms_notifications` (
   `toGID` int(11) NOT NULL DEFAULT '0',
   `seen` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Daten für Tabelle `cms_notifications`
+--
+
+INSERT INTO `cms_notifications` (`log_id`, `log_date`, `log_type`, `msg_id`, `fromUID`, `toUID`, `toGID`, `seen`) VALUES
+(1, '0000-00-00 00:00:00', 1, 0, 1, 0, 0, 0),
+(2, '0000-00-00 00:00:00', 1, 0, 1, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -376,7 +543,9 @@ CREATE TABLE `cms_pages` (
 INSERT INTO `cms_pages` (`id`, `published`, `gid`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `alias`, `title`, `bgimage`, `owner`, `menu`, `locked`, `blogid`, `plugin`) VALUES
 (1, 1, 1, '2016-08-19 09:43:45', '2016-09-09 19:53:47', '2016-08-19 09:43:45', '0000-00-00 00:00:00', 'index', 'Startseite', '', -1, 0, 0, 0, '0'),
 (2, 1, 1, '2016-08-19 09:58:39', '2016-09-04 09:47:27', '2016-08-19 09:58:39', '0000-00-00 00:00:00', 'override-bootstrap-style-settings-theme-generator', 'Styling', '', -1, 0, 0, 0, '0'),
-(3, 1, 2, '2016-08-19 10:54:00', '2016-08-19 10:57:07', '2016-08-19 10:54:00', '0000-00-00 00:00:00', 'welcome', 'Userpage', '', -1, 0, 1, 0, '0');
+(3, 1, 2, '2016-08-19 10:54:00', '2016-08-19 10:57:07', '2016-08-19 10:54:00', '0000-00-00 00:00:00', 'welcome', 'Userpage', '', -1, 0, 1, 0, '0'),
+(4, 0, 1, '2016-09-12 14:32:17', '2016-09-12 14:36:13', '2016-09-12 14:32:17', '0000-00-00 00:00:00', 'logout', 'logout', '', -1, 0, 1, 0, '0'),
+(5, 1, 1, '2016-09-15 02:58:56', '0000-00-00 00:00:00', '2016-09-15 02:58:56', '0000-00-00 00:00:00', 'terms-of-service', 'terms-of-service', '', -1, 0, 0, 0, '0');
 
 -- --------------------------------------------------------
 
@@ -482,6 +651,13 @@ CREATE TABLE `cms_plugin_msg` (
   `spam` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Daten für Tabelle `cms_plugin_msg`
+--
+
+INSERT INTO `cms_plugin_msg` (`msg_id`, `parentID`, `msg_date`, `fromUID`, `toUID`, `msg_body`, `msg_read`, `trash`, `spam`) VALUES
+(1, 0, '2016-09-14 00:36:26', 1, 1, 'test', 1, 0, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -508,103 +684,111 @@ CREATE TABLE `cms_settings` (
   `value` varchar(255) NOT NULL,
   `longValue` text NOT NULL,
   `type` int(11) NOT NULL DEFAULT '1',
+  `sortation` int(11) NOT NULL,
   `activated` int(1) NOT NULL DEFAULT '1',
-  `description` varchar(255) NOT NULL
+  `description` varchar(255) NOT NULL,
+  `fieldClass` varchar(255) NOT NULL DEFAULT 'form-control',
+  `fieldType` varchar(255) NOT NULL,
+  `placeholder` varchar(255) NOT NULL,
+  `moreDescription` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `cms_settings`
 --
 
-INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `activated`, `description`) VALUES
-('admin_email', 'youremail@domain.com', '', 1, 1, 'Administrator Email'),
-('backendFooter', '0', '', 2, 1, 'Display Footer at the bottom of every backend page.'),
-('backendFooterValue', '(C) 2016 YaWK', '', 2, 1, 'Backend Footer Content'),
-('backendFX', '0', '', 2, 1, 'Backend Effects on or off'),
-('backendFXtime', '820', '', 2, 1, 'Backend Effects default duration in ms'),
-('backendFXtype', 'fadeIn', '', 2, 1, 'Backend Effects Type: [fadeIn, slideDown]'),
-('backendLayout', 'sidebar-mini', '', 2, 1, 'Backend Layout: [fixed, sidebar-collapse, sidebar-mini, layout-boxed, layout-top-nav]'),
-('backendMessagesMenu', '1', '', 2, 1, 'Backend Email Icon on top'),
-('backendNotificationMenu', '1', '', 2, 1, 'Display Notify Menu on Top'),
-('backendSkin', 'skin-blue', '', 2, 1, 'Backend Skin: [skin-black, blue, green, purple, red, yellow]'),
-('dbname', 'yawk_lte', '', 1, 1, 'Database Name'),
-('dbprefix', 'cms_', '', 1, 1, 'db-table Prefix'),
-('defaultemailtext', 'Hello $user,\\n\\n\\Thank you for registering on site\\n\\n$url', '', 1, 1, 'Default Registration Email Message'),
-('dirprefix', '/yawk-LTE', '', 1, 1, 'Root Directory (falls nicht /)'),
-('domain', 'localhost.net', '', 1, 1, 'your website''s domain without http://'),
-('facebookstatus', '0', '', 4, 1, 'Facebook on/off'),
-('facebookurl', 'http://www.facebook.com', '', 1, 1, 'URL zu Facebook Seite / Profil '),
-('frontendFX', '0', '', 2, 1, 'Frontend Effects on or off'),
-('globalmenuid', '1', '', 1, 1, 'Globales Men&uuml;'),
-('globalmetakeywords', 'YAWK, CMS, WORDPRESS, JOOMLA', '', 2, 1, 'Global Site Keywords'),
-('globalmetatext', 'YAWK DEVELOPMENT VERSION', '', 2, 1, 'Global Meta Description'),
-('host', 'http://192.168.1.8/yawk-LTE', '', 2, 1, 'Website''s URL (http://www.example.com)'),
-('loadingTime', '0', '', 2, 1, 'Display page loading time in the backend footer. For development purpose. Set 0 or 1'),
-('logoutmenuid', '1', '', 1, 1, 'Logout Menu for logged-in Users'),
-('mysqlhost', 'http://localhost', '', 1, 1, 'MySQL Host (most cases http://localhost)'),
-('mysqlname', 'root', '', 1, 1, 'MySQL Username'),
-('mysqlport', '3306', '', 1, 1, 'MySQL Port (default: 3306)'),
-('mysqlpwd', 'test', '', 1, 1, 'MySQL Password'),
-('offline', '0', '', 2, 1, 'Offline Modus'),
-('offlineimage', 'media/images/closed-sign-tm.jpg', '', 2, 1, 'Image on Offline-Page'),
-('offlinemsg', '<h1>Wartungsarbeiten</h1><h3>Bitte schau spÃ¤ter nochmal vorbei.</h3>', '', 2, 1, 'Offline Message'),
-('selectedTemplate', '1', '', 3, 1, 'Aktueller Skin'),
-('sessiontime', '60', '', 1, 1, 'Session Time in Minutes'),
-('signup_adultcheck', '0', '', 5, 1, 'display adultcheck question before registration form'),
-('signup_city', '0', '', 5, 1, 'require city to signup'),
-('signup_country', '0', '', 5, 1, 'require country to signup'),
-('signup_defaultgid', '2', '', 5, 1, 'Default Group ID for new users'),
-('signup_firstname', '0', '', 5, 1, 'require firstname to signUp'),
-('signup_gid', '1', '', 5, 1, 'Adds a GroupID select field to SignUp Form'),
-('signup_lastname', '0', '', 5, 1, 'require lastname to signUp'),
-('signup_layout', 'right', '', 5, 1, 'Layout of User SignUp Form (left, right or plain)'),
-('signup_legend0-long', '', '<h2>...fÃ¼r geladene GÃ¤ste <small>- become a VIP!</small></h2><p>\r\nDas bedeutet, dass Du an meinem exklusiven FSK-18 Members-Club teilnehmen kannst. Es erwarten Dich:\r\n\r\n<ul>\r\n<li class="fa fa-check"> geile Bilder</li><br>\r\n<li class="fa fa-check"> sexy Videos</li><br>\r\n<li class="fa fa-check"> private Einblicke</li><br>\r\n<li class="fa fa-check"> behind the scenes uvm...</li><br>\r\n</ul>\r\n\r\nVIP sein ist kostenlos und verpflichtet zu nichts.</p>\r\n<b>ABER ACHTUNG! Bitte beachte: Erst dann, wenn wir einander bereits persÃ¶nlich kennengelernt haben <u>und Du von mir via Email eine Einladung erhalten hast,</u> kannst Du dich hier anmelden.</b>', 5, 1, 'signUp legend text'),
-('signup_legend1-long', '', '<h2>SignUp as Guest</h2>', 5, 1, 'signUp legend text'),
-('signup_legend2-long', '', '<h2>SignUp as User <br><small>all the good things...</small></h2>\r\n<ul>\r\n<li>Item 1</li>\r\n<li>Item 2</li>\r\n<li>Item 3</li>\r\n</ul>', 5, 1, 'signUp legend text'),
-('signup_legend3-long', '', '<h2>SignUp as Provider</h2>', 5, 1, 'signUp legend text'),
-('signup_legend4-long', '', '<h2>SignUp as Admin</h2>', 5, 1, 'signUp legend text'),
-('signup_legend5-long', '', '<h2>SignUp as Root</h2>', 5, 1, 'signUp legend text'),
-('signup_street', '0', '', 5, 1, 'require street to signUp'),
-('signup_submitstyle', 'success', '', 5, 1, 'success, error, warning, danger, info, default'),
-('signup_submittext', 'SignUp', '', 5, 1, 'Submit Button Text'),
-('signup_terms-long', '', 'Please accept our terms of service!', 5, 1, 'Terms of Service Text'),
-('signup_title', '<h2>Kennen wir uns persÃ¶nlich! <small>Das freut mich!</small></h2>', '', 5, 1, 'signup title'),
-('signup_toscolor', 'A3A3A3', '', 5, 1, 'terms of service color'),
-('signup_tospage', 'terms-of-service', '', 5, 1, 'terms of service filename'),
-('signup_tostext', 'Terms of service', '', 5, 1, 'terms of service description'),
-('signup_zipcode', '0', '', 5, 1, 'require zipcode to signup'),
-('siteauthor', 'YaWK', '', 2, 1, 'Site Author'),
-('sitename', 'YaWK - yet another webkit - CMS', '', 2, 1, 'Your projects name'),
-('timediff', '1', '', 3, 1, 'Zeit bis Publish Datum im Frontend anzeigen'),
-('timedifftext', 'Diese Seite ist noch nicht online! Bitte komm wieder in', '', 2, 1, 'Publish-Teaser Text'),
-('title', 'YAWK LTE', '', 2, 1, 'Website-Titel (erscheint im Header)'),
-('twitterstatus', '0', '', 4, 1, 'Twitter on/off'),
-('twitterurl', 'http://www.twitter.com', '', 4, 1, 'URL zu Twitter Profil'),
-('userpage_admin', '0', '', 6, 1, 'userpage admin tab enabled?'),
-('userpage_changeCity', '0', '', 6, 1, 'allow user to change city'),
-('userpage_changeCountry', '0', '', 6, 1, 'allow user to change country'),
-('userpage_changeEmail', '1', '', 6, 1, 'allow user to change email adress'),
-('userpage_changeFacebook', '0', '', 6, 1, 'allow user to change facebook link'),
-('userpage_changeFirstname', '1', '', 6, 1, 'allow user to change firstname'),
-('userpage_changeLastname', '1', '', 6, 1, 'allow user to change lastname'),
-('userpage_changePassword', '1', '', 6, 1, 'allow user to change password'),
-('userpage_changeStreet', '0', '', 6, 1, 'allow user to change street'),
-('userpage_changeTwitter', '0', '', 6, 1, 'allow user to change twitter link'),
-('userpage_changeUrl', '0', '', 6, 1, 'allow user to change website link'),
-('userpage_changeZipcode', '0', '', 6, 1, 'allow user to change zipcode'),
-('userpage_dashboard', '1', '', 6, 1, 'userpage dashboard tab enabled?'),
-('userpage_hello', '1', '', 6, 1, 'user greeting enabled?'),
-('userpage_hellogroup', '0', '', 6, 1, 'user group greeting enabled?'),
-('userpage_hellotext', 'Hello', '', 6, 1, 'user greeting'),
-('userpage_hellotextsub', 'Welcome to your profile!', '', 6, 1, 'user greeting subtext'),
-('userpage_help', '0', '', 6, 1, 'userpage help enabled?'),
-('userpage_helptext', '', '<h2>User Help <small>this is the user help text</small></h2>\r\n<p>you can style it the way you want</p>', 6, 1, 'Userpage Help Text'),
-('userpage_logoutmenu', '1', '', 6, 1, 'enable logout menu section in globalmenu'),
-('userpage_msgplugin', '0', '', 6, 1, 'userpage message plugin tab enabled?'),
-('userpage_profile', '1', '', 6, 1, 'userpage profile enabled?'),
-('userpage_settings', '0', '', 6, 1, 'userpage`settings'),
-('userpage_stats', '0', '', 6, 1, 'userpage stats enabled?'),
-('yawkversion', '0.1.8', '', 1, 1, 'pre Alpha build 1.1');
+INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation`, `activated`, `description`, `fieldClass`, `fieldType`, `placeholder`, `moreDescription`) VALUES
+('admin_email', 'youremail@domain.com', '', 1, 0, 1, 'Administrator Email', 'form-control', '', '', ''),
+('backendFooter', '0', '', 2, 0, 1, 'Display Footer at the bottom of every backend page.', 'form-control', '', '', ''),
+('backendFooterValue', '(C) 2016 YaWK', '', 2, 0, 1, 'Backend Footer Content', 'form-control', '', '', ''),
+('backendFX', '0', '', 2, 0, 1, 'Backend Effects on or off', 'form-control', '', '', ''),
+('backendFXtime', '820', '', 2, 0, 1, 'Backend Effects default duration in ms', 'form-control', '', '', ''),
+('backendFXtype', 'fadeIn', '', 2, 0, 1, 'Backend Effects Type: [fadeIn, slideDown]', 'form-control', '', '', ''),
+('backendLayout', 'sidebar-mini', '', 2, 0, 1, 'Backend Layout: [fixed, sidebar-collapse, sidebar-mini, layout-boxed, layout-top-nav]', 'form-control', '', '', ''),
+('backendMessagesMenu', '1', '', 2, 0, 1, 'Backend Email Icon on top', 'form-control', '', '', ''),
+('backendNotificationMenu', '1', '', 2, 0, 1, 'Display Notify Menu on Top', 'form-control', '', '', ''),
+('backendSkin', 'skin-blue', '', 2, 0, 1, 'Backend Skin: [skin-black, blue, green, purple, red, yellow]', 'form-control', '', '', ''),
+('dbname', 'yawk_lte', '', 1, 0, 1, 'Database Name', 'form-control', '', '', ''),
+('dbprefix', 'cms_', '', 1, 0, 1, 'db-table Prefix', 'form-control', '', '', ''),
+('defaultemailtext', '', 'Hello $user,\\n\\n\\Thank you for registering on site\\n\\n$url', 1, 0, 1, 'Default SignUp Email Message', 'form-control', 'textarea', '', ''),
+('dirprefix', '/yawk-LTE', '', 1, 0, 1, 'Root Directory (falls nicht /)', 'form-control', '', '', ''),
+('domain', 'localhost.net', '', 1, 0, 1, 'your website''s domain without http://', 'form-control', '', '', ''),
+('facebookstatus', '0', '', 4, 0, 1, 'Facebook on/off', 'form-control', '', '', ''),
+('facebookurl', 'http://www.facebook.com', '', 1, 0, 1, 'URL zu Facebook Seite / Profil ', 'form-control', '', '', ''),
+('frontendFX', '0', '', 2, 0, 1, 'Frontend Effects on or off', 'form-control', '', '', ''),
+('globalmenuid', '1', '', 1, 0, 1, 'Globales Men&uuml;', 'form-control', '', '', ''),
+('globalmetakeywords', 'YAWK, CMS, WORDPRESS, JOOMLA', '', 2, 0, 1, 'Global Site Keywords', 'form-control', '', '', ''),
+('globalmetatext', 'YAWK DEVELOPMENT VERSION', '', 2, 0, 1, 'Global Meta Description', 'form-control', '', '', ''),
+('host', 'http://192.168.1.8/yawk-LTE', '', 2, 0, 1, 'Website''s URL (http://www.example.com)', 'form-control', '', '', ''),
+('loadingTime', '1', '', 2, 0, 1, 'Display page loading time in the backend footer. For development purpose. Set 0 or 1', 'form-control', '', '', ''),
+('logoutmenuid', '1', '', 1, 0, 1, 'Logout Menu ID for logged-in Users', 'form-control', '', '', ''),
+('mysqlhost', 'http://localhost', '', 1, 0, 1, 'MySQL Host (most cases http://localhost)', 'form-control', '', '', ''),
+('mysqlname', 'root', '', 1, 0, 1, 'MySQL Username', 'form-control', '', '', ''),
+('mysqlport', '3306', '', 1, 0, 1, 'MySQL Port (default: 3306)', 'form-control', '', '', ''),
+('mysqlpwd', 'test', '', 1, 0, 1, 'MySQL Password', 'form-control', '', '', ''),
+('offline', '0', '', 8, 0, 1, 'Offline Mode', 'form-control', 'checkbox', '', 'If checked, your website is offline. You can still login to backend. As logged in admin you can always view frontend to check the changes you''ve made.'),
+('offlineimage', 'media/images/closed-sign-tm.jpg', '', 8, 0, 1, 'Image on Offline-Page', 'form-control', 'input', '', ''),
+('offlinemsg', '<h1>Wartungsarbeiten</h1><h3>Bitte schau sp&auml;ter nochmal vorbei.</h3>', '', 8, 0, 1, 'Offline Message', 'form-control', 'input', '', ''),
+('selectedTemplate', '1', '', 3, 1, 1, 'Aktueller Skin', 'form-control', '', '', ''),
+('sessiontime', '60', '', 1, 0, 1, 'Session Time in Minutes', 'form-control', '', '', ''),
+('signup_adultcheck', '1', '', 5, 0, 1, 'display adultcheck question before registration form', 'form-control', '', '', ''),
+('signup_city', '0', '', 5, 0, 1, 'require city to signup', 'form-control', '', '', ''),
+('signup_country', '0', '', 5, 0, 1, 'require country to signup', 'form-control', '', '', ''),
+('signup_defaultgid', '2', '', 5, 0, 1, 'Default Group ID for new users', 'form-control', '', '', ''),
+('signup_firstname', '0', '', 5, 0, 1, 'require firstname to signUp', 'form-control', '', '', ''),
+('signup_gid', '1', '', 5, 0, 1, 'Adds a GroupID select field to SignUp Form', 'form-control', '', '', ''),
+('signup_lastname', '0', '', 5, 0, 1, 'require lastname to signUp', 'form-control', '', '', ''),
+('signup_layout', 'right', '', 5, 0, 1, 'Layout of User SignUp Form (left, right or plain)', 'form-control', '', '', ''),
+('signup_legend0-long', '', '<h2>...fÃ¼r geladene GÃ¤ste <small>- become a VIP!</small></h2><p>\r\nDas bedeutet, dass Du an meinem exklusiven FSK-18 Members-Club teilnehmen kannst. Es erwarten Dich:\r\n\r\n<ul>\r\n<li class="fa fa-check"> geile Bilder</li><br>\r\n<li class="fa fa-check"> sexy Videos</li><br>\r\n<li class="fa fa-check"> private Einblicke</li><br>\r\n<li class="fa fa-check"> behind the scenes uvm...</li><br>\r\n</ul>\r\n\r\nVIP sein ist kostenlos und verpflichtet zu nichts.</p>\r\n<b>ABER ACHTUNG! Bitte beachte: Erst dann, wenn wir einander bereits persÃ¶nlich kennengelernt haben <u>und Du von mir via Email eine Einladung erhalten hast,</u> kannst Du dich hier anmelden.</b>', 5, 0, 1, 'signUp legend text', 'form-control', '', '', ''),
+('signup_legend1-long', '', '<h2>SignUp as Guest</h2>', 5, 0, 1, 'signUp legend text', 'form-control', '', '', ''),
+('signup_legend2-long', '', '<h2>SignUp as User <br><small>all the good things...</small></h2>\r\n<ul>\r\n<li>Item 1</li>\r\n<li>Item 2</li>\r\n<li>Item 3</li>\r\n</ul>', 5, 0, 1, 'signUp legend text', 'form-control', '', '', ''),
+('signup_legend3-long', '', '<h2>SignUp as Provider</h2>', 5, 0, 1, 'signUp legend text', 'form-control', '', '', ''),
+('signup_legend4-long', '', '<h2>SignUp as Admin</h2>', 5, 0, 1, 'signUp legend text', 'form-control', '', '', ''),
+('signup_legend5-long', '', '<h2>SignUp as Root</h2>', 5, 0, 1, 'signUp legend text', 'form-control', '', '', ''),
+('signup_street', '0', '', 5, 0, 1, 'require street to signUp', 'form-control', '', '', ''),
+('signup_submitstyle', 'success', '', 5, 0, 1, 'success, error, warning, danger, info, default', 'form-control', '', '', ''),
+('signup_submittext', 'SignUp', '', 5, 0, 1, 'Submit Button Text', 'form-control', '', '', ''),
+('signup_terms-long', '', 'Please accept our terms of service!', 5, 0, 1, 'Terms of Service Text', 'form-control', '', '', ''),
+('signup_title', '<h2>Signup as new user <small>be part of it.</small></h2>', '', 5, 0, 1, 'signup title', 'form-control', '', '', ''),
+('signup_toscolor', 'A3A3A3', '', 5, 0, 1, 'terms of service color', 'form-control', '', '', ''),
+('signup_tospage', 'terms-of-service', '', 5, 0, 1, 'terms of service filename', 'form-control', '', '', ''),
+('signup_tostext', 'Terms of service', '', 5, 0, 1, 'terms of service description', 'form-control', '', '', ''),
+('signup_zipcode', '0', '', 5, 0, 1, 'require zipcode to signup', 'form-control', '', '', ''),
+('siteauthor', 'YaWK', '', 2, 0, 1, 'Site Author', 'form-control', '', '', ''),
+('sitename', 'YaWK - yet another webkit - CMS', '', 2, 0, 1, 'Your projects name', 'form-control', '', '', ''),
+('timediff', '1', '', 7, 1, 1, 'Show time until publish?', 'form-control', 'checkbox', '', 'If user lands on a page that is not published yet, would you like to show how long it would take until the page is published? You may find this useful for time-based promotions, countdowns and stuff like that...'),
+('timedifftext', 'This page is not online yet. Please come back in ', '', 7, 2, 1, 'Publish-Teaser Text', 'form-control', 'input', '', ''),
+('title', 'YAWK LTE', '', 2, 0, 1, 'Website-Titel (erscheint im Header)', 'form-control', '', '', ''),
+('twitterstatus', '0', '', 4, 0, 1, 'Twitter on/off', 'form-control', '', '', ''),
+('twitterurl', 'http://www.twitter.com', '', 4, 0, 1, 'URL zu Twitter Profil', 'form-control', '', '', ''),
+('userpage_activeTab', 'Profile', '', 6, 0, 1, 'Userpage Active Tab', 'form-control', '', '', ''),
+('userpage_admin', '1', '', 6, 0, 1, 'userpage admin tab enabled?', 'form-control', '', '', ''),
+('userpage_changeCity', '1', '', 6, 0, 1, 'allow user to change city', 'form-control', '', '', ''),
+('userpage_changeCountry', '1', '', 6, 0, 1, 'allow user to change country', 'form-control', '', '', ''),
+('userpage_changeEmail', '1', '', 6, 0, 1, 'allow user to change email adress', 'form-control', '', '', ''),
+('userpage_changeFacebook', '1', '', 6, 0, 1, 'allow user to change facebook link', 'form-control', '', '', ''),
+('userpage_changeFirstname', '1', '', 6, 0, 1, 'allow user to change firstname', 'form-control', '', '', ''),
+('userpage_changeLastname', '1', '', 6, 0, 1, 'allow user to change lastname', 'form-control', '', '', ''),
+('userpage_changePassword', '1', '', 6, 0, 1, 'allow user to change password', 'form-control', '', '', ''),
+('userpage_changeState', '1', '', 6, 0, 1, 'allow user to change state', 'form-control', '', '', ''),
+('userpage_changeStreet', '1', '', 6, 0, 1, 'allow user to change street', 'form-control', '', '', ''),
+('userpage_changeTwitter', '1', '', 6, 0, 1, 'allow user to change twitter link', 'form-control', '', '', ''),
+('userpage_changeUrl', '1', '', 6, 0, 1, 'allow user to change website link', 'form-control', '', '', ''),
+('userpage_changeUsername', '1', '', 6, 0, 1, 'allow user to change the username', 'form-control', '', '', ''),
+('userpage_changeZipcode', '1', '', 6, 0, 1, 'allow user to change zipcode', 'form-control', '', '', ''),
+('userpage_dashboard', '1', '', 6, 0, 1, 'userpage dashboard tab enabled?', 'form-control', '', '', ''),
+('userpage_hello', '1', '', 6, 0, 1, 'user greeting enabled?', 'form-control', '', '', ''),
+('userpage_hellogroup', '0', '', 6, 0, 1, 'user group greeting enabled?', 'form-control', '', '', ''),
+('userpage_hellotext', 'Hello', '', 6, 0, 1, 'user greeting', 'form-control', '', '', ''),
+('userpage_hellotextsub', 'Welcome to your profile!', '', 6, 0, 1, 'user greeting subtext', 'form-control', '', '', ''),
+('userpage_help', '0', '', 6, 0, 1, 'userpage help enabled?', 'form-control', '', '', ''),
+('userpage_helptext', '', '<h2>User Help <small>this is the user help text</small></h2>\r\n<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>\r\n<h2>Second Headline <small>for more information</small></h2>\r\n<p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. </p>', 6, 0, 1, 'Userpage Help Text', 'form-control', '', '', ''),
+('userpage_logoutmenu', '1', '', 6, 0, 1, 'enable logout menu section in globalmenu', 'form-control', '', '', ''),
+('userpage_msgplugin', '0', '', 6, 0, 1, 'userpage message plugin tab enabled?', 'form-control', '', '', ''),
+('userpage_profile', '1', '', 6, 0, 1, 'userpage profile enabled?', 'form-control', '', '', ''),
+('userpage_settings', '1', '', 6, 0, 1, 'userpage`settings', 'form-control', '', '', ''),
+('userpage_stats', '0', '', 6, 0, 1, 'userpage stats enabled?', 'form-control', '', '', ''),
+('yawkversion', '0.1.8', '', 1, 0, 1, 'pre Alpha build 1.1', 'form-control', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -622,12 +806,14 @@ CREATE TABLE `cms_settings_types` (
 --
 
 INSERT INTO `cms_settings_types` (`id`, `value`) VALUES
-(1, 'global'),
-(2, 'backend'),
+(1, 'system'),
+(2, 'server'),
 (3, 'frontend'),
-(4, 'socialmedia'),
+(4, 'backend'),
 (5, 'plugin_signup'),
-(6, 'plugin_userpage');
+(6, 'plugin_userpage'),
+(7, 'publish'),
+(8, 'service');
 
 -- --------------------------------------------------------
 
@@ -728,7 +914,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (8, 1, 'h4-fontcolor', '000000', '000000', 'H4 Color', 1, 0, 'color', 'pick a color or leave blank'),
 (9, 1, 'h5-fontcolor', '000000', '000000', 'H5 Color', 1, 0, 'color', 'pick a color or leave blank'),
 (10, 1, 'h6-fontcolor', '000000', '000000', 'H6 Color', 1, 0, 'color', 'pick a color or leave blank'),
-(11, 1, 'body-bg-color', 'FFFFFF', 'FFFFFF', 'Body Background Color', 1, 0, 'color', 'pick a color or leave blank'),
+(11, 1, 'body-bg-color', '292929', 'FFFFFF', 'Body Background Color', 1, 0, 'color', 'pick a color or leave blank'),
 (14, 1, 'well-bg-color', 'F5F5F5', 'f5f5f5', 'Well Background Color', 1, 0, 'color', 'pick a color or leave blank'),
 (15, 1, 'smalltag-fontcolor', '777777', '777777', 'Small Tag Font Color', 1, 0, 'color', 'pick a color or leave blank'),
 (16, 1, 'font-menucolor', '777777', '777777', 'Font Color', 1, 0, 'color', 'pick a color or leave blank'),
@@ -772,7 +958,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (56, 1, 'body-bg-attachment', 'fixed', 'fixed', 'Body Background Attach', 1, 0, 'form-control', 'scroll, fixed, local, initial, inherit'),
 (57, 1, 'body-bg-size', 'cover', 'cover', 'Body Background Size', 1, 0, 'form-control', 'auto, cover, length, percentage, initial, inherit'),
 (58, 1, 'main-box-shadow', '6px 12px 16px 0px', '6px 12px 6px', 'Main Box Shadow', 1, 0, 'form-control', 'eg. 3px 6px 3px'),
-(59, 1, 'main-box-shadow-color', 'E8E8E8', 'E8E8E8', 'Main Box Shadow Color', 1, 0, 'color', 'pick a color or leave blank'),
+(59, 1, 'main-box-shadow-color', '474747', 'E8E8E8', 'Main Box Shadow Color', 1, 0, 'color', 'pick a color or leave blank'),
 (60, 1, 'well-min-height', '20px', '20px', 'Well Minimum Height', 1, 0, 'form-control', 'value in px eg. 20px'),
 (61, 1, 'well-padding', '20px', '19px', 'Well padding', 1, 0, 'form-control', 'value in px eg. 20px'),
 (62, 1, 'well-margin-top', '0px', '0px', 'Well Margin Top', 1, 0, 'form-control', 'value in px eg. 10px'),
@@ -882,6 +1068,7 @@ CREATE TABLE `cms_users` (
   `zipcode` varchar(12) NOT NULL,
   `city` varchar(128) NOT NULL,
   `country` varchar(128) NOT NULL,
+  `state` varchar(128) NOT NULL,
   `logged_in` int(1) NOT NULL DEFAULT '0',
   `public_email` int(1) NOT NULL DEFAULT '0',
   `terminatedByUser` int(1) NOT NULL DEFAULT '0',
@@ -893,8 +1080,10 @@ CREATE TABLE `cms_users` (
 -- Daten für Tabelle `cms_users`
 --
 
-INSERT INTO `cms_users` (`id`, `blocked`, `privacy`, `online`, `gid`, `terms`, `username`, `password`, `date_created`, `date_changed`, `date_expired`, `date_lastlogin`, `login_count`, `email`, `url`, `twitter`, `facebook`, `firstname`, `lastname`, `street`, `zipcode`, `city`, `country`, `logged_in`, `public_email`, `terminatedByUser`, `job`, `likes`) VALUES
-(1, 0, 1, 0, 5, 1, 'admin', '81dc9bdb52d04dc20036dbd8313ed05', '2016-09-10 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, '', '', '', '', '', '', '', '', '', '', 0, 0, 0, '', 0);
+INSERT INTO `cms_users` (`id`, `blocked`, `privacy`, `online`, `gid`, `terms`, `username`, `password`, `date_created`, `date_changed`, `date_expired`, `date_lastlogin`, `login_count`, `email`, `url`, `twitter`, `facebook`, `firstname`, `lastname`, `street`, `zipcode`, `city`, `country`, `state`, `logged_in`, `public_email`, `terminatedByUser`, `job`, `likes`) VALUES
+(1, 0, 1, 1, 5, 1, 'admin', '827ccb0eea8a706c4c34a16891f84e7b', '2016-09-10 00:00:00', '2016-09-15 00:44:24', '0000-00-00 00:00:00', '2016-09-15 15:50:31', 166, 'danielretzl@gmail.com', 'http://yawk.website', 'https://www.twitter.com/danielretzl', 'https://www.facebook.com/dretzl', 'Daniel', 'Retzl', 'Arnoldgasse 1/5/21', '1210', 'Wien', '&Ouml;sterreich', '&Ouml;sterreich', 1, 1, 0, 'YaWK Main Developer', 0),
+(2, 0, 0, 0, 2, 1, 'test', '81dc9bdb52d04dc20036dbd8313ed055', '2016-09-13 13:54:26', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2016-09-13 21:11:18', 4, 'test@test.com', '', '', '', '', '', '', '', '', '', '', 1, 0, 0, '', 0),
+(3, 0, 0, 0, 2, 1, 'tux', '81dc9bdb52d04dc20036dbd8313ed055', '2016-09-13 13:55:31', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 'tux@yourdomain.com', '', '', '', '', '', '', '', '', '', '', 0, 0, 0, '', 0);
 
 -- --------------------------------------------------------
 
@@ -915,7 +1104,7 @@ CREATE TABLE `cms_user_groups` (
 --
 
 INSERT INTO `cms_user_groups` (`id`, `value`, `color`, `signup_allowed`, `backend_allowed`) VALUES
-(1, 'Guest', 'success', 0, 0),
+(1, 'Guest', 'success', 1, 0),
 (2, 'User', 'info', 1, 0),
 (3, 'Moderator', 'warning', 1, 1),
 (4, 'Administrator', 'warning', 0, 1),
@@ -935,6 +1124,14 @@ CREATE TABLE `cms_widgets` (
   `sort` int(11) NOT NULL,
   `position` varchar(128) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Daten für Tabelle `cms_widgets`
+--
+
+INSERT INTO `cms_widgets` (`id`, `published`, `widgetType`, `pageID`, `sort`, `position`) VALUES
+(1, 1, 1, 1, 1, 'footer'),
+(2, 1, 9, 3, 2, 'main');
 
 -- --------------------------------------------------------
 
@@ -1015,7 +1212,8 @@ INSERT INTO `cms_widget_settings` (`id`, `widgetID`, `property`, `value`, `widge
 (19, 9, 'clockcolor', '999999', 8, 1),
 (20, 9, 'clockcolor', '999999', 8, 1),
 (21, 9, 'clockcolor', '999', 8, 1),
-(22, 9, 'clockcolor', '999', 8, 1);
+(22, 9, 'clockcolor', '999', 8, 1),
+(23, 1, 'buttontitle', 'Login', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1300,7 +1498,7 @@ ALTER TABLE `cms_friends`
 -- AUTO_INCREMENT für Tabelle `cms_logins`
 --
 ALTER TABLE `cms_logins`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=144;
 --
 -- AUTO_INCREMENT für Tabelle `cms_menu`
 --
@@ -1310,7 +1508,7 @@ ALTER TABLE `cms_menu`
 -- AUTO_INCREMENT für Tabelle `cms_notifications`
 --
 ALTER TABLE `cms_notifications`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT für Tabelle `cms_notifications_msg`
 --
@@ -1325,7 +1523,7 @@ ALTER TABLE `cms_plugin_faq`
 -- AUTO_INCREMENT für Tabelle `cms_plugin_msg`
 --
 ALTER TABLE `cms_plugin_msg`
-  MODIFY `msg_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `msg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT für Tabelle `cms_syslog`
 --
@@ -1350,7 +1548,7 @@ ALTER TABLE `cms_template_settings`
 -- AUTO_INCREMENT für Tabelle `cms_users`
 --
 ALTER TABLE `cms_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT für Tabelle `cms_user_groups`
 --
@@ -1365,7 +1563,7 @@ ALTER TABLE `cms_widget_defaults`
 -- AUTO_INCREMENT für Tabelle `cms_widget_settings`
 --
 ALTER TABLE `cms_widget_settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
