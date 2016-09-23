@@ -159,13 +159,13 @@ if (isset($_GET['move']))
 
 <!-- Tabs -->
 <ul id="myTab" class="nav nav-tabs">
-    <li><a href="#audio" data-toggle="tab">Audio</a></li>
-    <li><a href="#backup" data-toggle="tab">Backup</a></li>
-    <li><a href="#documents" data-toggle="tab">Documents</a></li>
-    <li><a href="#downloads" data-toggle="tab">Downloads</a></li>
-    <li class="active"><a href="#images" data-toggle="tab">Images</a></li>
-    <li><a href="#uploads" data-toggle="tab">Uploads</a></li>
-    <li><a href="#video" data-toggle="tab">Video</a></li>
+    <li><a href="#audio" data-toggle="tab"><i class="fa fa-music"></i> &nbsp;Audio</a></li>
+    <li><a href="#backup" data-toggle="tab"><i class="fa fa-file-zip-o"></i> &nbsp;Backup</a></li>
+    <li><a href="#documents" data-toggle="tab"><i class="fa fa-file-text-o"></i> &nbsp;Documents</a></li>
+    <li><a href="#downloads" data-toggle="tab"><i class="fa fa-download"></i> &nbsp;Downloads</a></li>
+    <li class="active"><a href="#images" data-toggle="tab"><i class="fa fa-picture-o"></i> &nbsp;Images</a></li>
+    <li><a href="#uploads" data-toggle="tab"><i class="fa fa-upload"></i> &nbsp;Uploads</a></li>
+    <li><a href="#video" data-toggle="tab"><i class="fa fa-video-camera"></i> &nbsp;Video</a></li>
 </ul>
 
 <!-- content start -->
