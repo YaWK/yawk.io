@@ -65,7 +65,7 @@ namespace YAWK {
                 else
                 {   // settings type must be equal to param $type
                     // equals settings category
-                    if ($setting['type'] === "$type")
+                    if ($setting['type'] === "$type" && ($setting['activated'] === "1"))
                     {
                         // check if ICON is set
                         // if an icon is set, it will be drawn before the heading, to the left.
@@ -137,7 +137,8 @@ namespace YAWK {
                             {
                                 echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
                             }
-                        echo "<input type=\"checkbox\" id=\"$setting[property]\" name=\"$setting[property]\" value=\"$setting[value]\" $checked>
+                        echo "<input type=\"hidden\" name=\"$setting[property]\" value=\"0\">
+                              <input type=\"checkbox\" id=\"$setting[property]\" name=\"$setting[property]\" value=\"1\" $checked>
                               <label for=\"$setting[property]\">&nbsp; $setting[label]</label><p>$setting[description]</p>";
                         }
 
