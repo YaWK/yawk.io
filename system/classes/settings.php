@@ -64,16 +64,10 @@ namespace YAWK {
                 }
                 else
                 {   // settings type must be equal to param $type
+                    // equals settings category
                     if ($setting['type'] === "$type")
                     {
                       //  $i_settings++;
-                        // THEME (template) selector
-                        // this draws a SELECT field, where admin can set the active template
-                        if ($setting['property'] === "selectedTemplate")
-                        {   // TEMPLATE / THEME SELECTOR
-                            \YAWK\backend::drawTemplateSelectField($db);
-                            echo "<br>";
-                        }
                         // check if ICON is set
                         // if an icon is set, it will be drawn before the heading, to the left.
                         if (isset($setting['icon']) && (!empty($setting['icon'])))
@@ -129,6 +123,55 @@ namespace YAWK {
                             $setting['description'] = '';
                         }
 
+                        // THEME (template) selector
+                        // this draws a SELECT field, where admin can set the active template
+                        if ($setting['property'] === "selectedTemplate")
+                        {   // TEMPLATE / THEME SELECTOR
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                            {
+                                echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
+                            }
+                            \YAWK\backend::drawTemplateSelectField($db);
+                            echo "<p>$setting[description]</p>";
+                        }
+                        // SKIN (backend theme) selector
+                        // this draws a SELECT field, where admin can set AdminLTE's skin color
+                        if ($setting['property'] === "backendSkin")
+                        {   // TEMPLATE / THEME SELECTOR
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                            {
+                                echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
+                            }
+                            echo "<select class=\"form-control\" id=\"$setting[property]\" name=\"$setting[property]\">
+                                    <option value=\"$setting[value]\">current color: $setting[value]</option>
+                                    <option value=\"skin-blue\">Blue</option>
+                                    <option value=\"skin-green\">Green</option>
+                                    <option value=\"skin-red\">Red</option>
+                                    <option value=\"skin-yellow\">Yellow</option>
+                                    <option value=\"skin-purple\">Purple</option>
+                                    <option value=\"skin-black\">Black</option>
+                                  </select>";
+                            echo "<p>$setting[description]</p>";
+                        }
+                        // LAYOUT (backend layout) selector
+                        // this draws a SELECT field, where admin can set AdminLTE's layout style
+                        if ($setting['property'] === "backendLayout")
+                        {   // TEMPLATE / THEME SELECTOR
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                            {
+                                echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
+                            }
+                            echo "<select class=\"form-control\" id=\"$setting[property]\" name=\"$setting[property]\">
+                                    <option value=\"$setting[value]\">current layout: $setting[value]</option>
+                                    <option value=\"fixed\">Fixed</option>
+                                    <option value=\"sidebar-collapse\">Sidebar Collapse</option>
+                                    <option value=\"sidebar-mini\">Sidebar Mini</option>
+                                    <option value=\"layout-boxed\">Layout Boxed</option>
+                                    <option value=\"layout-top-nav\">Layout Top Nav</option>
+                                  </select>";
+                            echo "<p>$setting[description]</p>";
+                        }
+
                         // CHECKBOX
                         if ($setting['fieldType'] === "checkbox")
                         {    // build a checkbox
@@ -140,9 +183,12 @@ namespace YAWK {
                             {   // checkbox not checked
                                 $checked = "";
                             }
-                        echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>
-                        <input type=\"checkbox\" id=\"$setting[property]\" name=\"$setting[property]\" value=\"$setting[value]\" $checked>
-                        <label for=\"$setting[property]\">$setting[label]</label><p>$setting[description]</p>";
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                            {
+                                echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
+                            }
+                        echo "<input type=\"checkbox\" id=\"$setting[property]\" name=\"$setting[property]\" value=\"$setting[value]\" $checked>
+                        <label for=\"$setting[property]\">&nbsp; $setting[label]</label><p>$setting[description]</p>";
                         }
 
                         /* TEXTAREA */
@@ -164,6 +210,10 @@ namespace YAWK {
                         /* INPUT FIELD */
                         else if ($setting['fieldType'] === "input")
                         {    // draw an input field
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                            {
+                                echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
+                            }
                             echo "<label for=\"$setting[property]\">$setting[label]</label>
                                   <input class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
 										 value=\"$setting[value]\" placeholder=\"$setting[placeholder]\"><p>$setting[description]</p>";
