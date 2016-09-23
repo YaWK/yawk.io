@@ -43,7 +43,7 @@ echo"<ol class=\"breadcrumb\">
     <section class=\"content\">";
 /* page content start here */
 ?>
-<form id="template-edit-form" action="index.php?page=template-edit" method="POST">
+<form id="template-edit-form" action="index.php?page=settings-system" method="POST">
 	<!-- <div class="nav-tabs-custom"> <!-- admin LTE tab style -->
 	<div id="btn-wrapper" class="text-right">
 		<input id="savebutton" type="submit" class="btn btn-success" name="save" value="<?php echo $lang['SAVE_SETTINGS']; ?>">
@@ -61,13 +61,12 @@ echo"<ol class=\"breadcrumb\">
 	<div class="tab-content">
 		<!-- OVERVIEW -->
 		<div role="tabpanel" class="tab-pane active" id="overview">
-			<h3>Overview <small>Template Statistics</small></h3>
-			<!-- list GOOGLE FONTS -->
+			<h3>Overview <small>Settings Statistics</small></h3>
 			<div class="row animated fadeIn">
 				<div class="col-md-8">
 					<div class="box">
 						<div class="box-header with-border">
-							<h3 class="box-title">Template Details <small>of the current active theme</small></h3>
+							<h3 class="box-title">Settings Details <small>watch all editable settings</small></h3>
 						</div>
 						<div class="box-body">
 							<?php // print_r($settings);
@@ -84,13 +83,13 @@ echo"<ol class=\"breadcrumb\">
 			</div>
 		</div>
 
-		<!-- FONTS -->
+		<!-- FRONTEND -->
 		<div role="tabpanel" class="tab-pane" id="frontend">
 			<h3>Frontend <small>all settings that belongs to your website frontend</small></h3>
 			<!-- list GOOGLE FONTS -->
 			<div class="row animated fadeIn">
 				<div class="col-md-4">
-                    <h3><i class="fa fa-picture-o"></i> Theme <small> set active design template</small></h3>
+                    <!-- theme selector -->
 					<?php \YAWK\settings::getFormElements($db, $settings, 3, $lang); ?>
 				</div>
 				<div class="col-md-4">
@@ -104,22 +103,18 @@ echo"<ol class=\"breadcrumb\">
 			</div>
 		</div>
 
-		<!-- TYPO -->
+		<!-- BACKEND SETTINGS -->
 		<div role="tabpanel" class="tab-pane" id="backend">
+            <h3>Backend <small>all settings that belongs to your administrative backend.</small></h3>
 			<!-- typography styles -->
 			<div class="row animated fadeIn">
 				<div class="col-md-4">
-					<h3>Text <small>Settings</small></h3>
-					...
-					...
-					...
-
-					<h3>Link <small>Colors </small></h3>
-					...
+                    <!-- backend settings -->
+                    <?php \YAWK\settings::getFormElements($db, $settings, 2, $lang); ?>
 				</div>
 				<div class="col-md-4">
-					<h3>Heading <small>Font Size</small></h3>
-					...
+                    <!-- footer settings -->
+                    <?php \YAWK\settings::getFormElements($db, $settings, 11, $lang); ?>
 				</div>
 				<div class="col-md-4">
 					<h3>Heading <small>Colors </small></h3>
