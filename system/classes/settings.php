@@ -4,7 +4,7 @@ namespace YAWK {
      * <b>methods to get and set yawk system settings</b>
      * @author Daniel Retzl <danielretzl@gmail.com>
      * @version 1.0.0
-     * @website http://yawk.website
+     * @link http://yawk.website
      */
     class settings
     {
@@ -12,7 +12,7 @@ namespace YAWK {
          * Returns an array with all setings where property is like $property.
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
-         * @website http://yawk.website
+         * @link http://yawk.website
          * @param object $db Database Object
          * @param string $property
          * @return mixed
@@ -39,8 +39,8 @@ namespace YAWK {
          * Return corresponding form elements for given settings.
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
-         * @website http://yawk.website
-         * @param object $db
+         * @link http://yawk.website
+         * @param object $db Database Object
          * @param array $settings
          * @param int $type
          */
@@ -67,7 +67,6 @@ namespace YAWK {
                     // equals settings category
                     if ($setting['type'] === "$type")
                     {
-                      //  $i_settings++;
                         // check if ICON is set
                         // if an icon is set, it will be drawn before the heading, to the left.
                         if (isset($setting['icon']) && (!empty($setting['icon'])))
@@ -123,55 +122,6 @@ namespace YAWK {
                             $setting['description'] = '';
                         }
 
-                        // THEME (template) selector
-                        // this draws a SELECT field, where admin can set the active template
-                        if ($setting['property'] === "selectedTemplate")
-                        {   // TEMPLATE / THEME SELECTOR
-                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
-                            {
-                                echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
-                            }
-                            \YAWK\backend::drawTemplateSelectField($db);
-                            echo "<p>$setting[description]</p>";
-                        }
-                        // SKIN (backend theme) selector
-                        // this draws a SELECT field, where admin can set AdminLTE's skin color
-                        if ($setting['property'] === "backendSkin")
-                        {   // TEMPLATE / THEME SELECTOR
-                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
-                            {
-                                echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
-                            }
-                            echo "<select class=\"form-control\" id=\"$setting[property]\" name=\"$setting[property]\">
-                                    <option value=\"$setting[value]\">current color: $setting[value]</option>
-                                    <option value=\"skin-blue\">Blue</option>
-                                    <option value=\"skin-green\">Green</option>
-                                    <option value=\"skin-red\">Red</option>
-                                    <option value=\"skin-yellow\">Yellow</option>
-                                    <option value=\"skin-purple\">Purple</option>
-                                    <option value=\"skin-black\">Black</option>
-                                  </select>";
-                            echo "<p>$setting[description]</p>";
-                        }
-                        // LAYOUT (backend layout) selector
-                        // this draws a SELECT field, where admin can set AdminLTE's layout style
-                        if ($setting['property'] === "backendLayout")
-                        {   // TEMPLATE / THEME SELECTOR
-                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
-                            {
-                                echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
-                            }
-                            echo "<select class=\"form-control\" id=\"$setting[property]\" name=\"$setting[property]\">
-                                    <option value=\"$setting[value]\">current layout: $setting[value]</option>
-                                    <option value=\"fixed\">Fixed</option>
-                                    <option value=\"sidebar-collapse\">Sidebar Collapse</option>
-                                    <option value=\"sidebar-mini\">Sidebar Mini</option>
-                                    <option value=\"layout-boxed\">Layout Boxed</option>
-                                    <option value=\"layout-top-nav\">Layout Top Nav</option>
-                                  </select>";
-                            echo "<p>$setting[description]</p>";
-                        }
-
                         // CHECKBOX
                         if ($setting['fieldType'] === "checkbox")
                         {    // build a checkbox
@@ -188,7 +138,39 @@ namespace YAWK {
                                 echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
                             }
                         echo "<input type=\"checkbox\" id=\"$setting[property]\" name=\"$setting[property]\" value=\"$setting[value]\" $checked>
-                        <label for=\"$setting[property]\">&nbsp; $setting[label]</label><p>$setting[description]</p>";
+                              <label for=\"$setting[property]\">&nbsp; $setting[label]</label><p>$setting[description]</p>";
+                        }
+
+                        /* SELECT FIELD */
+                        else if ($setting['fieldType'] === "select")
+                        {   // display icon, heading and subtext, if its set
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                            {
+                                echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
+                            }
+                            if ($setting['property'] === "selectedTemplate")
+                            {   // if property is selected template...
+                                \YAWK\backend::drawTemplateSelectField($db);
+                                echo "<p>$setting[description]</p>";
+                            }
+                            else
+                                {   // begin draw select
+                                    echo "<select class=\"form-control\" id=\"$setting[property]\" name=\"$setting[property]\">";
+                                    echo "<option value=\"$setting[value]\">current setting: $setting[value]</option>";
+                                    // explode option string into array
+                                    $optionValues = explode(":", $setting['options']);
+                                    foreach ($optionValues as $value)
+                                    {
+                                        // extract value from option setting string
+                                        $optionValue = preg_replace("/,[a-zA-Z0-9]*/", "", $value);
+                                        // extract description from option setting
+                                        $optionDesc = preg_replace('/.*,(.*)/','$1',$value);
+
+                                        echo "<option value=\"$optionValue\">$optionDesc</option>";
+                                    }
+                                    echo "</select>";
+                                    echo "<p>$setting[description]</p>";
+                                }
                         }
 
                         /* TEXTAREA */
@@ -207,6 +189,7 @@ namespace YAWK {
                                       <textarea class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\">$setting[value]</textarea>";
                             }
                         }
+
                         /* INPUT FIELD */
                         else if ($setting['fieldType'] === "input")
                         {    // draw an input field
@@ -218,30 +201,21 @@ namespace YAWK {
                                   <input class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
 										 value=\"$setting[value]\" placeholder=\"$setting[placeholder]\"><p>$setting[description]</p>";
                         }
-                        /*
-                        else
-                        {   // draw an input field
-                            echo "<label for=\"$setting[property]\">$setting[label]</label>
-                                  <input class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
-							             value=\"$setting[value]\" placeholder=\"$setting[placeholder]\"><br>";
-                        }
-                        */
                     }
                 }
-
+/*
                 if (isset($setting['longValue']) && (!empty($setting['longValue'])))
                 {
 
-                }
+                } */
             }
-           // echo "<p>Total: $i_settings settings</p>";
         }
 
         /**
          * Returns an array with all settings data.
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
-         * @website http://yawk.website
+         * @link http://yawk.website
          * @param object $db Database Object
          * @return array|bool
          */
@@ -267,7 +241,7 @@ namespace YAWK {
          * Get and return value for property from settings database.
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
-         * @website http://yawk.website
+         * @link http://yawk.website
          * @param object $db Database object
          * @param string $property Property to select from database
          * @return bool
@@ -290,7 +264,7 @@ namespace YAWK {
          * Set value for property into settings database.
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
-         * @website http://yawk.website
+         * @link http://yawk.website
          * @param object $db Database object
          * @param string $property Property to set into database
          * @param string $value Value to set into database
@@ -316,7 +290,7 @@ namespace YAWK {
          * Get and return longValue for property from settings database.
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
-         * @website http://yawk.website
+         * @link http://yawk.website
          * @param object $db Database object
          * @param string $property Property to get longValue from database.
          * @return mixed
@@ -339,7 +313,7 @@ namespace YAWK {
          * Set (update) template setting value for property.
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
-         * @website http://yawk.website
+         * @link http://yawk.website
          * @param object $db Database object
          * @param string $property Template property to set
          * @param string $value Template value to set
@@ -366,7 +340,7 @@ namespace YAWK {
          * Set (update) long setting value for property.
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
-         * @website http://yawk.website
+         * @link http://yawk.website
          * @param object $db Database object
          * @param string $property Property to set
          * @param string $value Long value to set
@@ -401,7 +375,7 @@ namespace YAWK {
          * Get setting description from requested property.
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
-         * @website http://yawk.website
+         * @link http://yawk.website
          * @param object $db Database object
          * @param string $property Property to get description from.
          * @return bool
@@ -423,7 +397,7 @@ namespace YAWK {
          * Get widget setting value from widgets_settings.
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
-         * @website http://yawk.website
+         * @link http://yawk.website
          * @param object $db Database object
          * @param string $property Property to get value from.
          * @return bool
@@ -448,7 +422,7 @@ namespace YAWK {
          * Set widget setting value into widgets_settings.
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
-         * @website http://yawk.website
+         * @link http://yawk.website
          * @param object $db Database object
          * @param string $property Property to get value from.
          * @param string $value Value of requested property
@@ -479,7 +453,7 @@ namespace YAWK {
          * Toggle setting offline where requested property.
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
-         * @website http://yawk.website
+         * @link http://yawk.website
          * @param object $db Database object
          * @param string $property Property to get value from.
          * @param string $new_status
