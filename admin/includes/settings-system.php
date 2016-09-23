@@ -27,6 +27,21 @@
 	});
 </script>
 <?php
+// SAVE tpl settings
+if(isset($_POST['save']) ||isset($_POST['savenewtheme']))
+{   // loop through $_POST items
+    foreach ($_POST as $property => $value) {
+        if ($property != "save") {
+            // save value of property to database
+            \YAWK\settings::setSetting($db, $property, $value);
+        }
+    }
+    \YAWK\sys::setTimeout("index.php?page=settings-system", 0);
+}
+?>
+
+
+<?php
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
     <!-- Content Wrapper. Contains page content -->
@@ -78,7 +93,7 @@ echo"<ol class=\"breadcrumb\">
 					</div>
 				</div>
 				<div class="col-md-4">
-					...
+                    <?php \YAWK\settings::getFormElements($db, $settings, 1, $lang); ?>
 
 				</div>
 			</div>
@@ -128,14 +143,17 @@ echo"<ol class=\"breadcrumb\">
 			<!-- typography styles -->
 			<div class="row animated fadeIn">
 				<div class="col-md-4">
+                    <!-- server seettings -->
 					<h3><?php echo $lang['SERVER']; ?> <small> <?php echo $lang['SERVER_SUBTEXT']; ?></small></h3>
-					<?php \YAWK\settings::getFormElements($db, $settings, 1, $lang); ?>
+					<?php \YAWK\settings::getFormElements($db, $settings, 9, $lang); ?>
 				</div>
 				<div class="col-md-4">
+                    <!-- database settings -->
                     <h3><?php echo $lang['DATABASE']; ?> <small> <?php echo $lang['DATABASE_SUBTEXT']; ?></small></h3>
                     <?php \YAWK\settings::getFormElements($db, $settings, 13, $lang); ?>
 				</div>
 				<div class="col-md-4">
+                    <!-- syslog settings -->
                     <h3><?php echo $lang['SYSLOG']; ?> <small> <?php echo $lang['SETTINGS']; ?></small></h3>
                     <?php \YAWK\settings::getFormElements($db, $settings, 0, $lang); ?>
 				</div>
