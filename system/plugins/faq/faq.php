@@ -5,4 +5,4 @@ include 'classes/faq-frontend.php';
  * FRONTEND PAGE
  */
 $faq = new \YAWK\PLUGINS\FAQ\frontend();
-$faq->draw_faq();
+$faq->draw_faq($db);

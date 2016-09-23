@@ -1,6 +1,5 @@
 <?php
 namespace YAWK\PLUGINS\FAQ {
-include 'system/classes/db.php';
     class frontend extends \YAWK\PLUGINS\FAQ\faq {
         public $id;
         public $cat;
