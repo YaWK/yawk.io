@@ -52,26 +52,27 @@ echo"<ol class=\"breadcrumb\">
 	<!-- Nav tabs -->
 	<ul class="nav nav-tabs" id="tabs" role="tablist">
 		<li role="presentation" class="active"><a href="#overview" aria-controls="overview" role="tab" data-toggle="tab"><i class="fa fa-home"></i>&nbsp; <?php echo $lang['OVERVIEW'] ?></a></li>
-		<li role="presentation"><a href="#frontend" aria-controls="fonts" role="tab" data-toggle="tab"><i class="fa fa-globe"></i>&nbsp; Front End</a></li>
-		<li role="presentation"><a href="#backend" aria-controls="typo" role="tab" data-toggle="tab"><i class="fa fa-wrench"></i>&nbsp; Back End</a></li>
-		<li role="presentation"><a href="#system" aria-controls="layout" role="tab" data-toggle="tab"><i class="fa fa-gears"></i>&nbsp; System</a></li>
+		<li role="presentation"><a href="#frontend" aria-controls="fonts" role="tab" data-toggle="tab"><i class="fa fa-globe"></i>&nbsp; <?php echo $lang['FRONTEND'] ?></a></li>
+		<li role="presentation"><a href="#backend" aria-controls="typo" role="tab" data-toggle="tab"><i class="fa fa-wrench"></i>&nbsp; <?php echo $lang['BACKEND'] ?></a></li>
+		<li role="presentation"><a href="#system" aria-controls="layout" role="tab" data-toggle="tab"><i class="fa fa-gears"></i>&nbsp; <?php echo $lang['SYSTEM'] ?></a></li>
 	</ul>
 
 	<!-- Tab panes -->
 	<div class="tab-content">
 		<!-- OVERVIEW -->
 		<div role="tabpanel" class="tab-pane active" id="overview">
-			<h3>Overview <small>Settings Statistics</small></h3>
+			<h3><?php echo $lang['OVERVIEW']; ?> <small><?php echo $lang['SETTINGS_SYSTEM_SUBTEXT']; ?></small></h3>
 			<div class="row animated fadeIn">
 				<div class="col-md-8">
 					<div class="box">
 						<div class="box-header with-border">
-							<h3 class="box-title">Settings Details <small>watch all editable settings</small></h3>
+							<h3 class="box-title"><?php echo $lang['SETTINGS']; ?>  <small><?php echo $lang['SETTINGS_SUBTEXT']; ?> </small></h3>
 						</div>
 						<div class="box-body">
 							<?php // print_r($settings);
 							$i_settings = 0;
 							$settings = \YAWK\settings::getAllSettingsIntoArray($db);
+							// echo "<pre>"; echo print_r($lang); echo "</pre>";
 							?>
 							</div>
 					</div>
@@ -85,7 +86,7 @@ echo"<ol class=\"breadcrumb\">
 
 		<!-- FRONTEND -->
 		<div role="tabpanel" class="tab-pane" id="frontend">
-			<h3>Frontend <small>all settings that belongs to your website frontend</small></h3>
+			<h3><?php echo $lang['FRONTEND']; ?> <small><?php echo $lang['FRONTEND_SUBTEXT']; ?></small></h3>
 			<!-- list GOOGLE FONTS -->
 			<div class="row animated fadeIn">
 				<div class="col-md-4">
@@ -105,7 +106,7 @@ echo"<ol class=\"breadcrumb\">
 
 		<!-- BACKEND SETTINGS -->
 		<div role="tabpanel" class="tab-pane" id="backend">
-            <h3>Backend <small>all settings that belongs to your administrative backend.</small></h3>
+            <h3><?php echo $lang['BACKEND']; ?> <small><?php echo $lang['BACKEND_SUBTEXT']; ?></small></h3>
 			<!-- typography styles -->
 			<div class="row animated fadeIn">
 				<div class="col-md-4">
@@ -117,8 +118,7 @@ echo"<ol class=\"breadcrumb\">
                     <?php \YAWK\settings::getFormElements($db, $settings, 11, $lang); ?>
 				</div>
 				<div class="col-md-4">
-					<h3>Heading <small>Colors </small></h3>
-					...
+					<?php \YAWK\settings::getFormElements($db, $settings, 12, $lang); ?>
 				</div>
 			</div>
 		</div>
@@ -128,25 +128,19 @@ echo"<ol class=\"breadcrumb\">
 			<!-- typography styles -->
 			<div class="row animated fadeIn">
 				<div class="col-md-4">
-					<h3>Server <small> Settings</small></h3>
+					<h3><?php echo $lang['SERVER']; ?> <small> <?php echo $lang['SERVER_SUBTEXT']; ?></small></h3>
 					<?php \YAWK\settings::getFormElements($db, $settings, 1, $lang); ?>
 				</div>
 				<div class="col-md-4">
-					<h3>Main Shadow <small>around all positions</small></h3>
-					...
-					<h3>List Group <small>Colors</small></h3>
-					...
+                    <h3><?php echo $lang['DATABASE']; ?> <small> <?php echo $lang['DATABASE_SUBTEXT']; ?></small></h3>
+                    <?php \YAWK\settings::getFormElements($db, $settings, 13, $lang); ?>
 				</div>
 				<div class="col-md-4">
-					<h3>Background <small>Image</small></h3>
-					...
-					...
-					...
+                    <h3><?php echo $lang['SYSLOG']; ?> <small> <?php echo $lang['SETTINGS']; ?></small></h3>
+                    <?php \YAWK\settings::getFormElements($db, $settings, 0, $lang); ?>
 				</div>
 			</div>
 		</div>
-
 	</div>
-
 	<!-- </div> <!-- ./ nav-tabs-custom -->
 </form>
