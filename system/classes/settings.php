@@ -41,7 +41,7 @@ namespace YAWK {
          * @version 1.0.0
          * @link http://yawk.website
          * @param object $db Database Object
-         * @param array $settings
+         * @param array $settings Settings: property|value|type|sortation|activated|label|icon|heading|subtext|fieldClass|fieldType|placeholder|description|options
          * @param int $type
          */
         public static function getFormElements($db, $settings, $type, $lang)
@@ -155,8 +155,9 @@ namespace YAWK {
                             }
                             else
                                 {   // begin draw select
-                                    echo "<select class=\"form-control\" id=\"$setting[property]\" name=\"$setting[property]\">";
-                                    echo "<option value=\"$setting[value]\">current setting: $setting[value]</option>";
+                                    echo "<label for=\"$setting[property]\">$setting[label]</label>
+                                          <select class=\"form-control\" id=\"$setting[property]\" name=\"$setting[property]\">";
+                                    echo "<option value=\"$setting[value]\">$lang[SETTING_CURRENT] $setting[value]</option>";
                                     // explode option string into array
                                     $optionValues = explode(":", $setting['options']);
                                     foreach ($optionValues as $value)
@@ -180,17 +181,31 @@ namespace YAWK {
                             {   // build a longValue tagged textarea and fill with longValue
                                 $setting['longValue'] = nl2br($setting['longValue']);
                                 echo "<label for=\"$setting[property]-long\">$setting[label]</label>
-                                      <textarea class=\"$setting[fieldClass]\" id=\"$setting[property]-long\" name=\"$setting[property]-long\">$setting[longValue]</textarea>";
+                                      <textarea cols=\"64\" rows=\"4\" class=\"$setting[fieldClass]\" id=\"$setting[property]-long\" name=\"$setting[property]-long\">$setting[longValue]</textarea>";
+                                echo "<p>$setting[description]</p>";
                             }
                             else
                             {   // draw default textarea
                                 $setting['value'] = nl2br($setting['value']);
                                 echo "<label for=\"$setting[property]-long\">$setting[label]</label>
-                                      <textarea class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\">$setting[value]</textarea>";
+                                      <textarea cols=\"64\" rows=\"4\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\">$setting[value]</textarea>";
+                                echo "<p>$setting[description]</p>";
                             }
                         }
 
-                        /* INPUT FIELD */
+                        /* INPUT PASSWORD FIELD */
+                        else if ($setting['fieldType'] === "password")
+                        {    // draw an input field
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                            {
+                                echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
+                            }
+                            echo "<label for=\"$setting[property]\">$setting[label]</label>
+                                  <input type=\"password\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
+										 value=\"$setting[value]\" placeholder=\"$setting[placeholder]\"><p>$setting[description]</p>";
+                        }
+
+                        /* INPUT TEXT FIELD */
                         else if ($setting['fieldType'] === "input")
                         {    // draw an input field
                             if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
@@ -198,7 +213,7 @@ namespace YAWK {
                                 echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
                             }
                             echo "<label for=\"$setting[property]\">$setting[label]</label>
-                                  <input class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
+                                  <input type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
 										 value=\"$setting[value]\" placeholder=\"$setting[placeholder]\"><p>$setting[description]</p>";
                         }
                     }
