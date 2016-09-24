@@ -50,20 +50,33 @@ new Morris.Line({
 <!-- ################################################# -->
 
 <?PHP
+/*
+if (\YAWK\sys::isBrowscapSet($_SERVER['HTTP_USER_AGENT']) === false)
+{
+  echo "Your Browser: <b>".\YAWK\sys::getBrowserName($_SERVER['HTTP_USER_AGENT'])."</b>";
+}
+*/
+$useragent = \YAWK\sys::getBrowser();
+echo "<h4>Browser Statistik </h4>Your browser: "."<b>". $useragent['name'] . " " . $useragent['version'] . " on " .$useragent['platform'] ."</b><br><br>";
+
+echo "<h4>User Statistik</h4>Referer: ".$_SERVER['HTTP_REFERER']."<br>";
+echo "Current: ".$_SERVER['REQUEST_URI']."<br>";
+echo "accept language: ".$_SERVER['HTTP_ACCEPT_LANGUAGE']."<br><br>";
+
 echo "<h4>Quellcode Statistik</h4>";
-echo \YAWK\settings::getSetting($db, "yawkversion");
+echo "YaWK Version: ".\YAWK\settings::getSetting($db, "yawkversion");
 echo " <small>";echo \YAWK\settings::getSettingDescription($db, "yawkversion");echo"</small>";
 
     // SET VARS
     $FILE_PATH = "/xampp/htdocs/yawk-LTE/"; // full path
     $data = \YAWK\sys::countCodeLines($FILE_PATH, '.php');
 
-echo"<p>$FILE_PATH <br>umfasst insgesamt <b>$data[files]</b> $data[type] files mit exakt <b>$data[lines]</b> Zeilen $data[type] Code</p>";
+echo"<p>$FILE_PATH <br>umfasst insgesamt <b>$data[files]</b> $data[type] files mit exakt <b>$data[lines]</b> Zeilen $data[type] Code</p><br>";
 
-
+echo "<h4>Server Statistik</h4>";
     if (\YAWK\sys::checkZlib() === true)
     {   // output
-        echo "<p class=\"text-success\">...zlib found!</p>";
+        echo "<p>...zlib found!</p>";
     }
     else
     {   // output
