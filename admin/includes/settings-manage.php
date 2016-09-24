@@ -39,7 +39,7 @@ echo"<ol class=\"breadcrumb\">
 /* page content start here */
 ?>
 
-<form name="settings" action="index.php?page=settings-backend&save=true" method="post">
+<form name="settings" action="index.php?page=settings-manage&save=true" method="post">
 <input type="submit" name="save" class="btn btn-success pull-right" value="<?php print $lang['SETTINGS_SAVE'];?>">
 
 <table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-hover" id="table-sort">

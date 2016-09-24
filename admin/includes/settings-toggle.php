@@ -7,9 +7,9 @@ else {
 }
 
 if(YAWK\settings::toggleOffline($db, $_GET['property'], $activated)){
-    YAWK\backend::setTimeout("index.php?page=settings-expert", "0");
+    YAWK\backend::setTimeout("index.php?page=settings-manage", "0");
 }
 else {
     print \YAWK\alert::draw("danger", "Error", "Could not toggle settings status.", "", 3500);
-    YAWK\backend::setTimeout("index.php?page=settings-expert", "0");
+    YAWK\backend::setTimeout("index.php?page=settings-manage", "0");
 }
