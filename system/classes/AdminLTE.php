@@ -533,11 +533,12 @@ namespace YAWK {
 
         /**
          * Left sidebar navigation
-         * @param object $db Database Object
-         * @param object $user User Object
+         * @param object $db Database object
+         * @param object $user User object
+         * @param array $lang Language array
          * @return null
          */
-        function drawHtmlLeftSidebar($db, $user){
+        function drawHtmlLeftSidebar($db, $user, $lang){
 
             $currentuser = \YAWK\backend::getFullUsername($user);
             $currentuser_image = \YAWK\user::getUserImage("backend", $user->username, "img-circle sidebar-toggle", 64, 64);
@@ -578,49 +579,41 @@ namespace YAWK {
                     <a href=\"index.php\"><i class=\"fa fa-home\"></i> <span>Dashboard</span></a>
                 </li>
                 <li ";echo (isset($_GET['page']) && $_GET['page'] == 'pages') || (isset($_GET['page']) && ($_GET['page'] == 'page-edit')) ? "class='active'" : ""; echo">
-                    <a href=\"index.php?page=pages\" title=\"add or edit a static .html page\"><i class=\"fa fa-file-word-o\"></i> <span>Pages</span></a>
+                    <a href=\"index.php?page=pages\" title=\"add or edit a static .html page\"><i class=\"fa fa-file-word-o\"></i> <span>$lang[PAGES]</span></a>
                 </li>
                 <li ";echo (isset($_GET['page']) && $_GET['page'] == 'menus') || (isset($_GET['page']) && ($_GET['page'] == 'menu-edit')) ? "class='active'" : ""; echo">
-                    <a href=\"index.php?page=menus\" title=\"add or edit menu entries\"><i class=\"fa fa-bars\"></i> <span>Menus</span></a>
+                    <a href=\"index.php?page=menus\" title=\"add or edit menu entries\"><i class=\"fa fa-bars\"></i> <span>$lang[MENUS]</span></a>
                 </li>
                 <li ";echo (isset($_GET['page']) && $_GET['page'] == 'users') || (isset($_GET['page']) && ($_GET['page'] == 'user-edit')) ? "class='active'" : ""; echo">
-                    <a href=\"index.php?page=users\" title=\"add or modify users\"><i class=\"fa fa-user\"></i> <span>Users</span></a>
+                    <a href=\"index.php?page=users\" title=\"add or modify users\"><i class=\"fa fa-user\"></i> <span>$lang[USERS]</span></a>
                 </li>
                 <!-- plugins -->
                 <li ";echo (isset($_GET['page']) && $_GET['page'] == 'plugins') || (isset($_GET['plugin'])) || (isset($_GET['page']) && ($_GET['page'] == 'plugins-manage')) ? "class='active'" : ""; echo">
-                    <a href=\"index.php?page=plugins\" title=\"Plugins\"><i class=\"fa fa-plug\"></i> <span>Plugins</span> </a>
+                    <a href=\"index.php?page=plugins\" title=\"Plugins\"><i class=\"fa fa-plug\"></i> <span>$lang[PLUGINS]</span> </a>
                 </li>
                 <!-- widgets -->
                 <li ";echo (isset($_GET['page']) && $_GET['page'] == 'widgets') || (isset($_GET['page']) && ($_GET['page'] == 'widget-edit')) ? "class='active'" : ""; echo">
-                    <a href=\"index.php?page=widgets\"><i class=\"fa fa-tags\"></i> <span>Widgets</span> </a>
+                    <a href=\"index.php?page=widgets\"><i class=\"fa fa-tags\"></i> <span>$lang[WIDGETS]</span> </a>
                 </li>
                 <!-- files -->
                 <li ";echo (isset($_GET['page']) && $_GET['page'] == 'filemanager') ? "class='active'" : ""; echo">
-                    <a href=\"index.php?page=filemanager\" title=\"Filemanager\"><i class=\"fa fa-folder\"></i> <span>Files</span></a>
+                    <a href=\"index.php?page=filemanager\" title=\"Filemanager\"><i class=\"fa fa-folder\"></i> <span>$lang[FILEMANAGER]</span></a>
                 </li>
                 <!-- design -->
                 <li ";echo (isset($_GET['page']) && $_GET['page'] == 'template-edit') ? "class='active'" : ""; echo">
-                    <a href=\"index.php?page=template-edit\"><i class=\"fa fa-paint-brush\"></i> <span>ReDesign</span></a>
+                    <a href=\"index.php?page=template-edit\"><i class=\"fa fa-paint-brush\"></i> <span>$lang[REDESIGN]</span></a>
                 </li>
                 <!-- themes -->
                 <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-template') ? "class='active'" : ""; echo">
-                    <a href=\"index.php?page=settings-template\"><i class=\"fa fa-photo\"></i> <span>Themes</span></a>
+                    <a href=\"index.php?page=settings-template\"><i class=\"fa fa-photo\"></i> <span>$lang[THEMES]</span></a>
                 </li>
                 <!-- seo -->
                 <li ";echo (isset($_GET['page']) && $_GET['page'] == 'yawk-stats') ? "class='active'" : ""; echo">
-                    <a href=\"index.php?page=yawk-stats\"><i class=\"fa fa-line-chart\"></i> <span>Stats</span></a>
+                    <a href=\"index.php?page=yawk-stats\"><i class=\"fa fa-line-chart\"></i> <span>$lang[STATS]</span></a>
                 </li>
                 <!-- system -->
-                <li class=\"treeview\">
-                  <a href=\"#\"><i class=\"fa fa-cog\"></i> <span>Settings</span> <i class=\"fa fa-angle-left pull-right\"></i></a>
-                  <ul class=\"treeview-menu\">
-                    <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-system') ? "class='active'" : ""; echo">
-                        <a href=\"index.php?page=settings-system\"> <i class=\"fa fa - cog\"></i> System Settings</a>
-                    </li>
-                    <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-backend') ? "class='active'" : ""; echo">
-                        <a href=\"index.php?page=settings-expert\"> <i class=\"fa fa-wrench\"></i> Expert Mode</a>
-                    </li>
-                  </ul>
+                <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-system') ? "class='active'" : ""; echo">
+                    <a href=\"index.php?page=settings-system\"> <i class=\"fa fa-cog\"></i> <span>$lang[SETTINGS]</span></a>
                 </li>
               </ul><!-- /.sidebar-menu -->
             </section>
