@@ -28,7 +28,7 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 /* draw Title on top */
-echo \YAWK\backend::getTitle($lang['BACKEND_SETTINGS'], $lang['BACKEND_SETTINGS_SUBTEXT']);
+echo \YAWK\backend::getTitle($lang['SETTINGS_EXPERT'], $lang['SETTINGS_EXPERT_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
             <li><a href=\"index.php?page=settings-backend\" class=\"active\" title=\"Backend Settings\"> Backend Settings</a></li>
@@ -48,7 +48,8 @@ echo"<ol class=\"breadcrumb\">
       <td width="3%"><strong>&nbsp;</strong></td>
       <td width="20%"><strong><i class="fa fa-caret-down"></i> <?PHP print $lang['SETTING']; ?></strong></td>
       <td width="27%"><strong><i class="fa fa-caret-down"></i> <?PHP print $lang['SETTING_VALUE']; ?></strong></td>
-      <td width="50%"><strong><?PHP print $lang['DESCRIPTION']; ?></strong></td>
+      <td width="25%"><strong><?PHP print $lang['LABEL']; ?></strong></td>
+      <td width="25%"><strong><?PHP print $lang['DESCRIPTION']; ?></strong></td>
     </tr>
   </thead>
   <tbody>
@@ -62,8 +63,7 @@ else
 
 }
   /* query database and select settings */
-    if ($res = $db->query("SELECT * FROM {settings}
-                           WHERE type = '2'"))
+    if ($res = $db->query("SELECT * FROM {settings}"))
     {   // fetch loop
         while($row = mysqli_fetch_assoc($res)){
             /* check if settings is published and set badge-button text */
@@ -76,6 +76,7 @@ else
      <span class=\"label label-$pub\">$pubtext</span></a></td>
  <td>".$row['property']."</td>
  <td><input type=\"text\" name=\"".$row['property']."\" class=\"form-control\" value=\"".$row['value']."\"></td>
+ <td>".$row['label']."</td>
  <td>".$row['description']."</td>
 </tr>";
         }
