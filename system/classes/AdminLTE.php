@@ -127,7 +127,7 @@ namespace YAWK {
     } // ./ drawHtmlHeader
 
         /**
-         * Draw <body> and <header> Tag
+         * Draw body and header Tag
          * @return null
          */
         function drawHtmlBody(){
@@ -145,14 +145,23 @@ namespace YAWK {
          * @param object $db Database object
          * @return null
          */
-        function drawHtmlLogo($db){
-            $host = \YAWK\settings::getSetting($db, "host");
+        function drawHtmlLogo($db)
+        {   // check, if URL or personal text should be displayed...
+            if (\YAWK\settings::getSetting($db, "backendLogoUrl") === "1")
+            {   // URL is requested, -> get hostname (project URL)
+                $logoText = "<small class=\"h5\">".\YAWK\settings::getSetting($db, "host")."</small>";
+            }
+            else
+                {   // personal text requestet, -> get logo text + subtext
+                    $logoText = "<b>".\YAWK\settings::getSetting($db, "backendLogoText")."</b>&nbsp;";
+                    $logoText .= \YAWK\settings::getSetting($db, "backendLogoSubText");
+                }
             echo "<!-- Logo -->
             <a href=\"../index.html\" class=\"logo\" target=\"_blank\">
               <!-- mini logo for sidebar mini 50x50 pixels -->
               <span class=\"logo-mini\"><b class=\"fa fa-globe\"></b></span>
               <!-- logo for regular state and mobile devices -->
-              <span class=\"logo-lg\"><b>YaWK </b>frontend <!-- $host --></span>
+              <span class=\"logo-lg\">$logoText</span>
             </a>";
             return null;
         }
