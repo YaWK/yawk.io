@@ -14,14 +14,12 @@ namespace YAWK {
      *
      * @category   CMS
      * @package    System
-     * @global     $connection
-     * @global     $dbprefix
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2009-2015 Daniel Retzl yawk.goodconnect.net
      * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
-     * @version    1.1.3
-     * @link       http://yawk.goodconnect.net/
-     * @since      File available since Release 0.0.9
+     * @version    1.2.0
+     * @link       http://yawk.website/
+     * @since      File available since Release 1.0.0
      * @annotation Throws a fancy Bootstrap Alert (success, info, warning or danger)
      *
      */

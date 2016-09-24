@@ -139,7 +139,6 @@ namespace YAWK {
     return null;
     }
 
-
         /**
          * Draw logo in the top left corner
          * @param object $db Database object

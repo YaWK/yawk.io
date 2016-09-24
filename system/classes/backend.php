@@ -20,19 +20,22 @@ namespace YAWK {
      *
      * @category   CMS
      * @package    System
-     * @global     $connection
-     * @global     $dbprefix
      * @author     Daniel Retzl <danielretzl@gmail.com>
-     * @copyright  2009-2015 Daniel Retzl yawk.goodconnect.net
+     * @copyright  2009-2015 Daniel Retzl yawk.website
      * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
-     * @version    1.1.3
-     * @link       http://yawk.goodconnect.net/
-     * @since      File available since Release 0.0.9
+     * @version    1.2.0
+     * @link       http://yawk.website/
+     * @since      File available since Release 1.0.0
      * @annotation Backend class serves a few useful functions for the admin backend.
      */
     class backend
     {
-        /* header title on top of every page */
+        /**
+         * Header title on top of every page
+         * @param string $title Title to display
+         * @param string $subtext Subtitle as small-tag beneath Title
+         * @return string
+         */
         static function getTitle($title, $subtext)
         {
             if ($title && $subtext) {
@@ -43,22 +46,25 @@ namespace YAWK {
             return $html;
         }
 
+        /**
+         * Set focus to any input field on pageload
+         * @param string $field Name of the html input form element who should be focused.
+         */
         static function setFocus($field)
         {
-            /**
-             * setFocus :: textfield focus on pageload
-             */
             print"<script type=\"text/javascript\" >
-          $(document).ready(function() {
-          $('#" . $field . "').focus(); });
-          </script>";
+            $(document).ready(function() {
+            $('#" . $field . "').focus(); });
+            </script>";
         }
 
+        /**
+         * Do a javascript redirect to $location after given delay time ($wait) in ms
+         * @param string $location url to redirect
+         * @param string $wait Time to wait in ms before redirect
+         */
         static function setTimeout($location, $wait)
         {
-            /**
-             * setTimeout force page reload via JS
-             */
             print"<script type=\"text/javascript\">
             setTimeout(\"self.location.href='" . $location . "'\"," . $wait . ");
             </script>
@@ -68,6 +74,12 @@ namespace YAWK {
 			</noscript>";
         }
 
+        /**
+         * Include Javascript FX to apply on #content-FX DOM element
+         * @param object $db Database object
+         * @param string $time FX time in milliseconds
+         * @param string $type FX type
+         */
         static function getFX($db, $time, $type)
         {
             // set defaults
@@ -85,6 +97,10 @@ namespace YAWK {
             }
         }
 
+        /**
+         * Draw the AdminLTE Content Wrapper. Useful that view dont crash in situations where the DOM is not loaded or could not be loaded.
+         * @return null
+         */
         static function drawContentWrapper(){
             echo "
             <!-- Content Wrapper. Contains page content -->
@@ -97,6 +113,10 @@ namespace YAWK {
             return null;
         }
 
+        /**
+         * Draw the footer in the backend.
+         * @return null
+         */
         static function drawHtmlFooter()
         {   $currentYear = date("Y");
             echo "</div></section>
@@ -112,6 +132,11 @@ namespace YAWK {
             return null;
         }
 
+        /**
+         * Checks whether a user is allowed to login to backend or not. Logins will be stored.
+         * @param object $db Database object
+         * @return bool
+         */
         static function checkLogin($db)
         {   /** @var $db \YAWK\db */
             /* check user login */
@@ -166,6 +191,12 @@ namespace YAWK {
         }
 
 
+        /**
+         * Draw a login form. If username and/or password was given, the form will be pre-filled with given values.
+         * @param string $username The username
+         * @param string $password The password
+         * @return string Returns the complete html form.
+         */
         static function drawLoginForm($username, $password)
         { /**
          * draw login box
@@ -186,6 +217,14 @@ namespace YAWK {
             return $form;
         }
 
+        /**
+         * Draw a login box. Basically it wraps the drawLoginForm function with an AdminLTE box.
+         * @param object $db Database object
+         * @param string $title Box title
+         * @param string $username The username
+         * @param string $password The password
+         * @return string Returns the complete html form
+         */
         static function drawLoginBox($db, $title, $username, $password)
         { /**
          * draw login box
@@ -224,6 +263,11 @@ namespace YAWK {
             return $loginBox;
         }
 
+        /**
+         * Clever function to return the username. Expects the user object as param to work correctly.
+         * @param object $user User object is required.
+         * @return null|string Return the proper string or null.
+         */
         static function getFullUsername($user)
         {
             if (empty($user->firstname))
@@ -258,8 +302,9 @@ namespace YAWK {
 
 
         /**
-         * @param $property
-         * @return array
+         * Get pages and user groups into an array.
+         * @param object $db Database object
+         * @return array|string
          */
         public static function getPagesArray($db) // get all settings from db like property
         {
@@ -282,7 +327,8 @@ namespace YAWK {
         }
 
         /**
-         * @param $property
+         * Get Menu id name and published into an array.
+         * @param object $db Database object
          * @return array
          */
         static function getMenusArray($db)
