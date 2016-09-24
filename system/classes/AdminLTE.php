@@ -11,23 +11,30 @@ namespace YAWK {
      * @category   CMS
      * @package    System
      * @author     Daniel Retzl <danielretzl@gmail.com>
-     * @copyright  2009-2016 Daniel Retzl yawk.goodconnect.net
+     * @copyright  2009-2016 Daniel Retzl http://yawk.website
      * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
-     * @version    1.1.3
-     * @link       http://yawk.goodconnect.net/
-     * @since      File available since Release 0.0.9
+     * @version    1.0.0
+     * @link       http://yawk.website/
+     * @since      File available since Release 1.0.0
      * @annotation Backend class serves a few useful functions for the admin backend.
      */
     class AdminLTE
     {
+        /**
+         * @var string
+         */
         public $backendSkin;
         public $backendLayout;
 
+        /**
+         * AdminLTE constructor.
+         * @param object $db Database object
+         */
         public function __construct($db){
             // get skin setting
             $this->backendSkin = \YAWK\settings::getSetting($db, "backendSkin");
             if (empty($this->backendSkin)){
-                $this->backendSkin = "skin-black"; // default
+                $this->backendSkin = "skin-blue"; // default
             }
             // get layout setting
             $this->backendLayout = \YAWK\settings::getSetting($db, "backendLayout");
@@ -36,6 +43,10 @@ namespace YAWK {
             }
         }
 
+        /**
+         * Draw the HTML Header. Loads all .css and .js files
+         * @return null
+         */
         function drawHtmlHead(){
             echo "<!DOCTYPE html>
 <html>
@@ -115,7 +126,11 @@ namespace YAWK {
     return null;
     } // ./ drawHtmlHeader
 
-    function drawHtmlBody(){
+        /**
+         * Draw <body> and <header> Tag
+         * @return null
+         */
+        function drawHtmlBody(){
     echo "
     <body class=\"hold-transition $this->backendSkin $this->backendLayout\">
         <div class=\"wrapper\">
@@ -125,6 +140,11 @@ namespace YAWK {
     }
 
 
+        /**
+         * Draw logo in the top left corner
+         * @param object $db Database object
+         * @return null
+         */
         function drawHtmlLogo($db){
             $host = \YAWK\settings::getSetting($db, "host");
             echo "<!-- Logo -->
@@ -137,6 +157,10 @@ namespace YAWK {
             return null;
         }
 
+        /**
+         * Draw the navbar (top)
+         * @return null
+         */
         function drawHtmlNavbar(){
             echo "<!-- Header Navbar -->
             <nav class=\"navbar navbar-static-top\" role=\"navigation\">
@@ -147,6 +171,10 @@ namespace YAWK {
             return null;
         }
 
+        /**
+         * Draw right navbar
+         * @return null
+         */
         function drawHtmlNavbarRightMenu(){
             echo "<!-- Navbar Right Menu -->
               <div class=\"navbar-custom-menu\">
@@ -154,8 +182,13 @@ namespace YAWK {
             return null;
         }
 
+        /**
+         * Messages Menu: the small icon in the right corner of top navigation
+         * This is a facebook-ike messaging preview.
+         * @param object $db Database object
+         * @return null
+         */
         function drawHtmlNavbarMessagesMenu($db){
-
             // count + return unread messages
             $i = \YAWK\user::countNewMessages($db, $_SESSION['uid']);
             if ($i === 1)
@@ -235,6 +268,12 @@ namespace YAWK {
             return null;
         }
 
+        /**
+         * Draw navbar notification. This tells you whats going on in your project.
+         * @param object $db Database object
+         * @param $user
+         * @return null
+         */
         function drawHtmlNavbarNotificationsMenu($db, $user)
         {
 
@@ -392,6 +431,12 @@ namespace YAWK {
             return null;
         }
 
+        /**
+         * Show your user account details. Counts your friends and connections, let you log out.
+         * @param object $db Database object
+         * @param object $user User object
+         * @return null
+         */
         function drawHtmlNavbarUserAccountMenu($db, $user){
             $currentuser = \YAWK\backend::getFullUsername($user);
             $currentuser_image = \YAWK\user::getUserImage("backend", $user->username, "img-circle", 140, 140);
@@ -469,6 +514,10 @@ namespace YAWK {
             return null;
         }
 
+        /**
+         * End Navbar
+         * @return null
+         */
         function drawHtmlNavbarHeaderEnd(){
             echo "
                   <!-- Control Sidebar Toggle Button -->
@@ -482,6 +531,12 @@ namespace YAWK {
             return null;
         }
 
+        /**
+         * Left sidebar navigation
+         * @param object $db Database Object
+         * @param object $user User Object
+         * @return null
+         */
         function drawHtmlLeftSidebar($db, $user){
 
             $currentuser = \YAWK\backend::getFullUsername($user);
@@ -559,14 +614,11 @@ namespace YAWK {
                 <li class=\"treeview\">
                   <a href=\"#\"><i class=\"fa fa-cog\"></i> <span>Settings</span> <i class=\"fa fa-angle-left pull-right\"></i></a>
                   <ul class=\"treeview-menu\">
-                    <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-backend') ? "class='active'" : ""; echo">
-                        <a href=\"index.php?page=settings-backend\"> <i class=\"fa fa-wrench\"></i> Backend Settings</a>
-                    </li>
-                    <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-frontend') ? "class='active'" : ""; echo">
-                        <a href=\"index.php?page=settings-frontend\"> <i class=\"fa fa-globe\"></i> Frontend Settings</a>
-                    </li>
                     <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-system') ? "class='active'" : ""; echo">
-                        <a href=\"index.php?page=settings-system\"> <i class=\"fa fa-cog\"></i> System Settings</a>
+                        <a href=\"index.php?page=settings-system\"> <i class=\"fa fa - cog\"></i> System Settings</a>
+                    </li>
+                    <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-backend') ? "class='active'" : ""; echo">
+                        <a href=\"index.php?page=settings-expert\"> <i class=\"fa fa-wrench\"></i> Expert Mode</a>
                     </li>
                   </ul>
                 </li>
@@ -577,16 +629,31 @@ namespace YAWK {
             return null;
         }
 
+        /**
+         * HTML Content Header (manually written in \includes)
+         * @param array $lang Language Array
+         * @return null
+         */
         function drawHtmlContentHeader($lang){
             echo "";
             return null;
         }
 
+        /**
+         * HTML Content Header Breadcrumbs (manually written in \includes)
+         * @return null
+         */
         function drawHtmlContentBreadcrumbs(){
             echo "";
             return null;
         }
 
+        /**
+         * @param object $db Database object
+         * @param array $lang Language array
+         * @param object $user User object - not in use atm, check this!
+         * @return null
+         */
         function drawHtmlContent($db, $lang, $user){
             if(isset($_GET['page']))
             {   // load given page
@@ -641,6 +708,10 @@ namespace YAWK {
             return null;
         }
 
+        /**
+         * End Content
+         * @return null
+         */
         function drawHtmlContentClose()
         {
             echo "</div>";
@@ -648,6 +719,10 @@ namespace YAWK {
             return null;
         }
 
+        /**
+         * Draw a Footer on every backend page.
+         * @return null
+         */
         function drawHtmlFooter()
         {   $currentYear = date("Y");
             echo "
@@ -663,6 +738,10 @@ namespace YAWK {
             return null;
         }
 
+        /**
+         * Draw right, collapsable sidebar
+         * @return null
+         */
         function drawHtmlRightSidebar(){
             echo "
           <!-- Control Sidebar -->
@@ -751,6 +830,10 @@ namespace YAWK {
             return null;
         }
 
+        /**
+         * Include needed JS files
+         * @return null
+         */
         function drawHtmlJSIncludes(){
             echo "
         <!-- REQUIRED JS SCRIPTS -->
@@ -783,6 +866,11 @@ namespace YAWK {
             return null;
         }
 
+        /**
+         * SetUp Backend FX and end html body </body>
+         * @param object $db Database
+         * @return null
+         */
         function drawHtmlEnd($db){
             global $loadingTime;
             /* SetUp backend effects */
@@ -795,8 +883,8 @@ namespace YAWK {
             }
 
             echo "
-</body>
-</html>";
+            </body>
+            </html>";
             return null;
         }
 
