@@ -68,7 +68,7 @@ if (!isset($AdminLTE)) {
       }
       echo $AdminLTE->drawHtmlNavbarUserAccountMenu($db, $user);
       echo $AdminLTE->drawHtmlNavbarHeaderEnd();
-      echo $AdminLTE->drawHtmlLeftSidebar($db, $user);
+      echo $AdminLTE->drawHtmlLeftSidebar($db, $user, $lang);
       echo $AdminLTE->drawHtmlContentHeader($lang);
       echo $AdminLTE->drawHtmlContentBreadcrumbs();
       echo $AdminLTE->drawHtmlContent($db, $lang, $user);
