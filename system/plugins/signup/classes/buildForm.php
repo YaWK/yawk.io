@@ -82,11 +82,11 @@ namespace YAWK\PLUGINS\SIGNUP {
                 case "left":
                     // form title
                     $this->html .= "<div class=\"col-md-6\">";
-                    $this->html .= self::getLegend();
+                    $this->html .= self::getLegend($db);
                     $this->html .= "</div>";
                     $this->html .= "<div class=\"col-md-6\">";
                     $this->html .= self::getTitle($db);
-                    $this->html .= self::getForm();
+                    $this->html .= self::getForm($db);
                     $this->html .= "</div>";
                     break;
                 case "right":
@@ -107,7 +107,7 @@ namespace YAWK\PLUGINS\SIGNUP {
                     $this->html .= "<div class=\"col-md-4\">&nbsp;</div>";
                     $this->html .= "<div class=\"col-md-4\">";
                     $this->html .= self::getTitle($db);
-                    $this->html .= self::getForm();
+                    $this->html .= self::getForm($db);
                     $this->html .= "</div>";
                     $this->html .= "<div class=\"col-md-4\">&nbsp;</div>";
                     break;
