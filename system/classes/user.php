@@ -63,6 +63,85 @@ namespace YAWK {
             }
         }
 
+        static function getLogins($db, $user)
+        {   /* @var $db \YAWK\db */
+            if (isset($user) && (!empty($user)))
+            {   // check if user is registered
+                if (self::hasLoggedIn($db, $user))
+                {   // user is in list, extend sql string
+                    $sqlStr = "WHERE username='$user'";
+                    \YAWK\alert::draw("success", "showing login data for user: $user", " ", "",2400);
+                }
+                else
+                    {   // user not found in table, so draw an alert and show all logins...
+                        $sqlStr = '';
+                        \YAWK\alert::draw("warning", "Error!", "<h4>No login data available.</h4> Could not get data for user <b>$user</b>. Displaying all data instead.", "",5000);
+                    }
+            }
+            else
+                {   // show all logins
+                    $sqlStr = '';
+                }
+            if ($res = $db->query("SELECT * FROM {logins} $sqlStr"))
+            {   // fetch data in loop
+                while ($row = $res->fetch_assoc())
+                {   // store logins into array
+                    $loginsArray[] = $row;
+                }
+                if (isset($loginsArray) && (!empty($loginsArray)))
+                {   // if array is set and not empty
+                    return $loginsArray;
+                }
+                else
+                    {   // something went wrong
+                        return false;
+                    }
+            }
+            else
+                {   // could not query login data...
+                    return false;
+                }
+        }
+
+        static function isRegistered($db, $user)
+        {   /** @var $db \YAWK\db */
+            if ($res = $db->query("SELECT username FROM {users} WHERE username='$user'"))
+            {
+                if ($row = $res->fetch_assoc())
+                {
+                    return true;
+                }
+                else
+                    {
+                        return false;
+                    }
+            }
+            else
+                {
+                    return false;
+                }
+        }
+
+        static function hasLoggedIn($db, $user)
+        {   /** @var $db \YAWK\db */
+            if ($res = $db->query("SELECT username FROM {logins} WHERE username='$user'"))
+            {
+                if ($row = $res->fetch_assoc())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
         static function isAdmin($db)
         {   /** @var $db \YAWK\db */
             // checks if backend login is allowed for this (logged in) Group ID
