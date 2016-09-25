@@ -63,7 +63,7 @@ namespace YAWK {
             }
         }
 
-        static function getLogins($db, $user)
+        static function getLoginData($db, $user)
         {   /* @var $db \YAWK\db */
             if (isset($user) && (!empty($user)))
             {   // check if user is registered

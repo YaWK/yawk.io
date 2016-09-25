@@ -53,7 +53,7 @@ echo"<ol class=\"breadcrumb\">
     if (isset($_GET['user']) && (!empty($_GET['user'])))
     { $user = $_GET['user']; } else { $user = ''; } // if not, show all logins
 
-    foreach (\YAWK\user::getLogins($db, $user) as $row)
+    foreach (\YAWK\user::getLoginData($db, $user) as $row)
     {
         if ($row['failed'] === '0')
         {
