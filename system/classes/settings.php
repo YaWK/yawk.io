@@ -227,6 +227,20 @@ namespace YAWK {
             }
         }
 
+        static function getCurrentLanguageFormElements($lang)
+        {
+            echo "<h2>Language <small>override the selected language</small></h2>";
+            $i = 0;
+            foreach ($lang as $property=>$tag)
+            {
+                $i++;
+                echo "<label for=\"$property\">$property</label>
+									  <input type=\"text\" id=\"$property\" class=\"form-control\" name=\"$property\" value=\"$tag\"><br>";
+            }
+            echo "Total: ".$i." language tags found.";
+        }
+
+
         /**
          * Returns an array with all settings data.
          * @author Daniel Retzl <danielretzl@gmail.com>

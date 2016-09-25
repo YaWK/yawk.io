@@ -70,6 +70,7 @@ echo"<ol class=\"breadcrumb\">
 		<li role="presentation"><a href="#frontend" aria-controls="fonts" role="tab" data-toggle="tab"><i class="fa fa-globe"></i>&nbsp; <?php echo $lang['FRONTEND'] ?></a></li>
 		<li role="presentation"><a href="#backend" aria-controls="typo" role="tab" data-toggle="tab"><i class="fa fa-wrench"></i>&nbsp; <?php echo $lang['BACKEND'] ?></a></li>
 		<li role="presentation"><a href="#system" aria-controls="layout" role="tab" data-toggle="tab"><i class="fa fa-gears"></i>&nbsp; <?php echo $lang['SYSTEM'] ?></a></li>
+		<li role="presentation"><a href="#info" aria-controls="layout" role="tab" data-toggle="tab"><i class="fa fa-info-circle"></i>&nbsp; <?php echo $lang['INFO'] ?></a></li>
 	</ul>
 
 	<!-- Tab panes -->
@@ -94,7 +95,6 @@ echo"<ol class=\"breadcrumb\">
 				</div>
 				<div class="col-md-4">
                     <?php \YAWK\settings::getFormElements($db, $settings, 1, $lang); ?>
-
 				</div>
 			</div>
 		</div>
@@ -102,7 +102,7 @@ echo"<ol class=\"breadcrumb\">
 		<!-- FRONTEND -->
 		<div role="tabpanel" class="tab-pane" id="frontend">
 			<h3><?php echo $lang['FRONTEND']; ?> <small><?php echo $lang['FRONTEND_SUBTEXT']; ?></small></h3>
-			<!-- list GOOGLE FONTS -->
+			<!-- frontend settings -->
 			<div class="row animated fadeIn">
 				<div class="col-md-4">
                     <!-- theme selector -->
@@ -122,7 +122,7 @@ echo"<ol class=\"breadcrumb\">
 		<!-- BACKEND SETTINGS -->
 		<div role="tabpanel" class="tab-pane" id="backend">
             <h3><?php echo $lang['BACKEND']; ?> <small><?php echo $lang['BACKEND_SUBTEXT']; ?></small></h3>
-			<!-- typography styles -->
+			<!-- backend settings -->
 			<div class="row animated fadeIn">
 				<div class="col-md-4">
                     <!-- backend settings -->
@@ -138,9 +138,9 @@ echo"<ol class=\"breadcrumb\">
 			</div>
 		</div>
 
-		<!-- BODY-->
+		<!-- SYSTEM TAB -->
 		<div role="tabpanel" class="tab-pane" id="system">
-			<!-- typography styles -->
+			<!-- system settings -->
 			<div class="row animated fadeIn">
 				<div class="col-md-4">
                     <!-- server seettings -->
@@ -159,6 +159,30 @@ echo"<ol class=\"breadcrumb\">
 				</div>
 			</div>
 		</div>
+
+		<!-- OVERVIEW -->
+		<div role="tabpanel" class="tab-pane" id="info">
+			<h3><?php echo $lang['INFO']; ?> <small><?php echo $lang['INFO_SUBTEXT']; ?></small></h3>
+			<div class="row animated fadeIn">
+				<div class="col-md-8">
+					<div class="box">
+						<div class="box-header with-border">
+							<h3 class="box-title"><?php echo $lang['SETTINGS']; ?>  <small><?php echo $lang['SETTINGS_SUBTEXT']; ?> </small></h3>
+						</div>
+						<div class="box-body">
+							<?php
+							// echo "<h2>Language Array</h2><pre>"; echo print_r($lang); echo "</pre>";
+
+							?>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					...
+				</div>
+			</div>
+		</div>
+
 	</div>
 	<!-- </div> <!-- ./ nav-tabs-custom -->
 </form>

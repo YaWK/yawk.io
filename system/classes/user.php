@@ -1008,13 +1008,10 @@ namespace YAWK {
             else { // kick it back
                 /** LOG FAILED LOGIN ....*/
                 if (!isset($_SESSION['failed'])){
-                    $_SESSION['failed']=1;
+                    $_SESSION['failed']++;
                     \YAWK\alert::draw("danger", "Login failed!", "Please check your login data and try to re-login in <span id=\"timer\"></span> seconds!","","6000");
                     // \YAWK\alert::draw("danger", "Login failed!", "Please check your login data and try again.", "", 6000);
                     $this->storeLogin($db, 0, "backend", $username, $password);
-                }
-                else {
-                    $_SESSION['failed']++;
                 }
                 /**
                 if ($_SESSION['failed'] == 2){
