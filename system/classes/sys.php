@@ -296,9 +296,16 @@ namespace YAWK {
             return null;
         }
 
-        static function getBrowser()
+        static function getBrowser($useragent)
         {
-            $u_agent = $_SERVER['HTTP_USER_AGENT'];
+            if (isset($useragent) && (!empty($useragent)))
+            {
+                $u_agent = $useragent;
+            }
+            else
+                {
+                    $u_agent = $_SERVER['HTTP_USER_AGENT'];
+                }
             $bname = 'Unknown';
             $platform = 'Unknown';
             $version= "";
