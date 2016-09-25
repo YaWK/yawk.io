@@ -5,6 +5,134 @@
 <script type="text/javascript">
 	/* reminder: check if form has changed and warns the user that he needs to save. */
 	$(document).ready(function() {
+
+		/* START CHECKBOX backend footer */
+		// check backend footer checkbox onload
+		if( $('#backendFooter').prop('checked')){
+			// box is checked, set input field to NOT disabled
+			$("#backendFooterValue").prop('disabled', false);
+		}
+		else {
+			// box is not checked, set field to disabled
+			$("#backendFooterValue").prop('disabled', true);
+		}
+		// check wheter the checkbox is clicked
+		$('#backendFooter').click(function(){ // if user clicked save
+			if( $('#backendFooter').prop('checked')){
+				// box is checked, set input field to NOT disabled
+				$("#backendFooterValue").prop('disabled', false);
+			}
+			else {
+				// set footer value input field to disabled
+				$("#backendFooterValue").prop('disabled', true);
+			}
+		});
+		/* END CHECKBOX backend footer */
+
+		/* START CHECKBOX backend logo */
+		// check backend footer checkbox onload
+		if( $('#backendLogoUrl').prop('checked')){
+			// box is checked, set input field to NOT disabled
+			$("#backendLogoText").prop('disabled', true);
+			$("#backendLogoSubText").prop('disabled', true);
+		}
+		else {
+			// box is not checked, set field to disabled
+			$("#backendLogoText").prop('disabled', false);
+			$("#backendLogoSubText").prop('disabled', false);
+		}
+		// check wheter the checkbox is clicked
+		$('#backendLogoUrl').click(function(){ // if user clicked save
+			if( $('#backendLogoUrl').prop('checked')){
+				// box is checked, set input field to NOT disabled
+				$("#backendLogoText").prop('disabled', true);
+				$("#backendLogoSubText").prop('disabled', true);
+			}
+			else {
+				// set footer value input field to disabled
+				$("#backendLogoText").prop('disabled', false);
+				$("#backendLogoSubText").prop('disabled', false);
+			}
+		});
+		/* END CHECKBOX backend logo */
+
+		/* START CHECKBOX backend fx */
+		// check backend footer checkbox onload
+		if( $('#backendFX').prop('checked')){
+			// box is checked, set input field to NOT disabled
+			$("#backendFXtype").prop('disabled', false);
+			$("#backendFXtime").prop('disabled', false);
+		}
+		else {
+			// box is not checked, set field to disabled
+			$("#backendFXtype").prop('disabled', true);
+			$("#backendFXtime").prop('disabled', true);
+		}
+		// check wheter the checkbox is clicked
+		$('#backendFX').click(function(){ // if user clicked save
+			if( $('#backendFX').prop('checked')){
+				// box is checked, set input field to NOT disabled
+				$("#backendFXtype").prop('disabled', false);
+				$("#backendFXtime").prop('disabled', false);
+			}
+			else {
+				// set footer value input field to disabled
+				$("#backendFXtype").prop('disabled', true);
+				$("#backendFXtime").prop('disabled', true);
+			}
+		});
+		/* END CHECKBOX backend fx */
+
+		/* START CHECKBOX backend footer */
+		// check backend footer checkbox onload
+		if( $('#timediff').prop('checked')){
+			// box is checked, set input field to NOT disabled
+			$("#timedifftext").prop('disabled', false);
+		}
+		else {
+			// box is not checked, set field to disabled
+			$("#timedifftext").prop('disabled', true);
+		}
+		// check wheter the checkbox is clicked
+		$('#timediff').click(function(){ // if user clicked save
+			if( $('#timediff').prop('checked')){
+				// box is checked, set input field to NOT disabled
+				$("#timedifftext").prop('disabled', false);
+			}
+			else {
+				// set footer value input field to disabled
+				$("#timedifftext").prop('disabled', true);
+			}
+		});
+		/* END CHECKBOX backend footer */
+
+		/* START CHECKBOX backend fx */
+		// check backend footer checkbox onload
+		if( $('#offline').prop('checked')){
+			// box is checked, set input field to NOT disabled
+			$("#offlinemsg").prop('disabled', false);
+			$("#offlineimage").prop('disabled', false);
+		}
+		else {
+			// box is not checked, set field to disabled
+			$("#offlinemsg").prop('disabled', true);
+			$("#offlineimage").prop('disabled', true);
+		}
+		// check wheter the checkbox is clicked
+		$('#offline').click(function(){ // if user clicked save
+			if( $('#offline').prop('checked')){
+				// box is checked, set input field to NOT disabled
+				$("#offlinemsg").prop('disabled', false);
+				$("#offlineimage").prop('disabled', false);
+			}
+			else {
+				// set footer value input field to disabled
+				$("#offlinemsg").prop('disabled', true);
+				$("#offlineimage").prop('disabled', true);
+			}
+		});
+		/* END CHECKBOX backend fx */
+
 		formmodified=0; // status
 		$('form *').change(function(){ // if form has changed
 			formmodified=1; // set status
