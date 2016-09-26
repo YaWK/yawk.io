@@ -148,7 +148,16 @@ namespace YAWK {
         {   // check, if URL or personal text should be displayed...
             if (\YAWK\settings::getSetting($db, "backendLogoUrl") === "1")
             {   // URL is requested, -> get hostname (project URL)
-                $logoText = "<small class=\"h5\">".\YAWK\settings::getSetting($db, "host")."</small>";
+                $host = \YAWK\settings::getSetting($db, "host");
+                $chars = (strlen($host));
+                if ($chars <= 24)
+                {
+                    $logoText = "<small class=\"h4\">$host</small>";
+                }
+                else if ($chars >= 25)
+                {
+                    $logoText = "<small class=\"h5\">$host</small>";
+                }
             }
             else
                 {   // personal text requestet, -> get logo text + subtext
