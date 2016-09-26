@@ -733,20 +733,46 @@ namespace YAWK {
          * Draw a Footer on every backend page.
          * @return null
          */
-        function drawHtmlFooter()
-        {   $currentYear = date("Y");
+        function drawHtmlFooter($db)
+        {   /* @var $db \YAWK\db */
+            $copyright = \YAWK\settings::getSetting($db, "backendFooterCopyright");
+            $valueLeft = \YAWK\settings::getSetting($db, "backendFooterValueLeft");
+            $valueRight = \YAWK\settings::getSetting($db, "backendFooterValueRight");
+
+            if (isset($valueLeft) && (!empty($valueLeft)))
+            {   // left value
+                $leftValue = $valueLeft;
+            }
+            else { $leftValue = ''; }
+
+            if (isset($valueRight) && (!empty($valueRight)))
+            {   // right value
+                $rightValue = $valueRight;
+            }
+            else { $rightValue = ''; }
+
+            // check if copyright is enabled
+            if ($copyright === "1")
+            {   // get host and display copyright information
+                $host = \YAWK\settings::getSetting($db, "host");
+                $leftValue = "<strong>Copyright &copy; ".date("Y")." <a href=\"https://github.com/YaWK/yawk-cms\" target=\"_blank\">YaWK CMS</a> </strong><small> All rights reserved. </small>";
+                $rightValue = "Yet another Web Kit v".\YAWK\settings::getSetting($db, "yawkversion")."";
+            }
+
+            // output footer data
             echo "
             <!-- Main Footer -->
             <footer class=\"main-footer\">
               <!-- To the right -->
                 <div class=\"pull-right hidden-xs\">
-                  <small>Yet another Web Kit 1.0</small>
+                  <small>$rightValue</small>
                 </div>
                 <!-- Default to the left -->
-                <strong>Copyright &copy; 2009-$currentYear <a href=\"#\">YaWK CMS</a>.</strong> All rights reserved.";
-            echo "</footer>";
+                $leftValue
+            </footer>";
             return null;
         }
+
 
         /**
          * Draw right, collapsable sidebar
