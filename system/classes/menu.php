@@ -531,6 +531,24 @@ namespace YAWK {
             return false;
         }
 
+        static function getMenuNameByID($db, $id)
+        {   /* @var $db \YAWK\db */
+            $menu = '';
+            if ($res = $db->query("SELECT name from {menu_names} WHERE id = $id"))
+            {
+               if ($row = mysqli_fetch_row($res))
+               {
+                   $menu = $row[0];
+               }
+            }
+            else
+                {
+                    $menu = "could not select menu";
+                }
+                return $menu;
+        }
+
+
         /* call function for global menu */
         function displayGlobalMenu($db)
         {   /** @var $db \YAWK\db */
