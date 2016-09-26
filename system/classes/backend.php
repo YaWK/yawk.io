@@ -350,5 +350,22 @@ namespace YAWK {
             }
             return $menusArray;
         }
+
+        static function getMenuNamesArray($db)
+        {
+            /* @var $db \YAWK\db */
+            if ($res = $db->query("SELECT id, name FROM {menu_names} WHERE published = '1'"))
+            {
+                $menusArray = array();
+                while ($rows = $res->fetch_assoc()) {
+                    $menusArray[] = $rows;
+                }
+                /* free result set */
+                $res->close();
+            } else {
+                die ("Sorry, fetch database error: getMenus failed.");
+            }
+            return $menusArray;
+        }
     } /* END class::backend */
 }
