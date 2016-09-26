@@ -74,7 +74,7 @@ if (!isset($AdminLTE)) {
       echo $AdminLTE->drawHtmlContent($db, $lang, $user);
       if (\YAWK\settings::getSetting($db, "backendFooter") == 1)
       {   // draw footer, if enabled
-          echo $AdminLTE->drawHtmlFooter();
+          echo $AdminLTE->drawHtmlFooter($db);
       }
       echo $AdminLTE->drawHtmlRightSidebar();
       echo $AdminLTE->drawHtmlJSIncludes();
