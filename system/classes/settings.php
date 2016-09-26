@@ -161,7 +161,7 @@ namespace YAWK {
                                 $currentMenu = \YAWK\menu::getMenuNameByID($db, $setting['value']);
                                 echo "<label for=\"$setting[property]\">$setting[label]</label>
                                       <select name=\"$setting[property]\" class=\"form-control\" id=\"$setting[property]\">";
-                                echo "<option value=\"$setting[property]\">$currentMenu</option>";
+                                echo "<option value=\"$setting[value]\">$currentMenu</option>";
                                 foreach (\YAWK\backend::getMenuNamesArray($db) as $property=>$row)
                                 {
                                     if ($row['id'] !== $setting['value']){
