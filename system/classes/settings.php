@@ -149,9 +149,28 @@ namespace YAWK {
                             {
                                 echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
                             }
+                            // TEMPLATE SELECTOR
                             if ($setting['property'] === "selectedTemplate")
                             {   // if property is selected template...
                                 \YAWK\backend::drawTemplateSelectField($db);
+                                echo "<p>$setting[description]</p>";
+                            }
+                            // GLOBALMENU ID SELECTOR
+                            else if ($setting['property'] === "globalmenuid")
+                            {
+                                $currentMenu = \YAWK\menu::getMenuNameByID($db, $setting['value']);
+                                echo "<label for=\"$setting[property]\">$setting[label]</label>
+                                      <select name=\"$setting[property]\" class=\"form-control\" id=\"$setting[property]\">";
+                                echo "<option value=\"$setting[property]\">$currentMenu</option>";
+                                foreach (\YAWK\backend::getMenuNamesArray($db) as $property=>$row)
+                                {
+                                    if ($row['id'] !== $setting['value']){
+                                        echo "<option value=\"$row[id]\">$row[name]</option>";
+                                    }
+
+                                }
+                                echo "<option value=\"0\">$lang[NO_ENTRY]</option>";
+                                echo "</select>";
                                 echo "<p>$setting[description]</p>";
                             }
                             else
