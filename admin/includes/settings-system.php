@@ -10,23 +10,44 @@
 		// check backend footer checkbox onload
 		if( $('#backendFooter').prop('checked')){
 			// box is checked, set input field to NOT disabled
-			$("#backendFooterValue").prop('disabled', false);
+			$("#backendFooterValueLeft").prop('disabled', false);
+			$("#backendFooterValueRight").prop('disabled', false);
+			$("#backendFooterCopyright").prop('disabled', false);
 		}
 		else {
 			// box is not checked, set field to disabled
-			$("#backendFooterValue").prop('disabled', true);
+			$("#backendFooterValueLeft").prop('disabled', true);
+			$("#backendFooterValueRight").prop('disabled', true);
+			$("#backendFooterCopyright").prop('disabled', true);
 		}
-		// check wheter the checkbox is clicked
+		// check wheter the footer checkbox is clicked
 		$('#backendFooter').click(function(){ // if user clicked save
 			if( $('#backendFooter').prop('checked')){
 				// box is checked, set input field to NOT disabled
-				$("#backendFooterValue").prop('disabled', false);
+				$("#backendFooterValueLeft").prop('disabled', false);
+				$("#backendFooterValueRight").prop('disabled', false);
+				$("#backendFooterCopyright").prop('disabled', false);
 			}
 			else {
 				// set footer value input field to disabled
-				$("#backendFooterValue").prop('disabled', true);
+				$("#backendFooterValueLeft").prop('disabled', true);
+				$("#backendFooterValueRight").prop('disabled', true);
+				$("#backendFooterCopyright").prop('disabled', true);
 			}
 		});
+        // check wheter the footer copyright checkbox is clicked
+        $('#backendFooterCopyright').click(function(){ // if user clicked save
+            if( $('#backendFooterCopyright').prop('checked')){
+                // box is checked, set input field to NOT disabled
+                $("#backendFooterValueLeft").prop('disabled', true);
+                $("#backendFooterValueRight").prop('disabled', true);
+            }
+            else {
+                // set footer value input field to disabled
+                $("#backendFooterValueLeft").prop('disabled', false);
+                $("#backendFooterValueRight").prop('disabled', false);
+            }
+        });
 		/* END CHECKBOX backend footer */
 
 		/* START CHECKBOX backend logo */
@@ -83,7 +104,7 @@
 		});
 		/* END CHECKBOX backend fx */
 
-		/* START CHECKBOX backend footer */
+		/* START CHECKBOX timediff */
 		// check backend footer checkbox onload
 		if( $('#timediff').prop('checked')){
 			// box is checked, set input field to NOT disabled
@@ -106,7 +127,7 @@
 		});
 		/* END CHECKBOX backend footer */
 
-		/* START CHECKBOX backend fx */
+		/* START CHECKBOX offline mode */
 		// check backend footer checkbox onload
 		if( $('#offline').prop('checked')){
 			// box is checked, set input field to NOT disabled
