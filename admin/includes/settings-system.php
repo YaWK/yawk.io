@@ -160,8 +160,18 @@ if(isset($_POST['save']) ||isset($_POST['savenewtheme']))
 {   // loop through $_POST items
     foreach ($_POST as $property => $value) {
         if ($property != "save") {
-            // save value of property to database
-            \YAWK\settings::setSetting($db, $property, $value);
+			// check setting and call corresponding function
+			if (substr($property, -5, 5) == '-long')
+			{   // LONG VALUE SETTINGS
+				if (!\YAWK\settings::setLongSetting($db, $property, $value))
+				{   // throw error
+					\YAWK\alert::draw("warning", "Error", "Long Settings: Could not set long value <b>$value</b> of property <b>$property</b>","plugin=signup","4800");
+				}
+			}
+			else {
+				// save value of property to database
+				\YAWK\settings::setSetting($db, $property, $value);
+			}
         }
     }
     \YAWK\sys::setTimeout("index.php?page=settings-system", 0);
