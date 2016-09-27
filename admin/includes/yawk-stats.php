@@ -56,7 +56,7 @@ if (\YAWK\sys::isBrowscapSet($_SERVER['HTTP_USER_AGENT']) === false)
   echo "Your Browser: <b>".\YAWK\sys::getBrowserName($_SERVER['HTTP_USER_AGENT'])."</b>";
 }
 */
-$useragent = \YAWK\sys::getBrowser();
+$useragent = \YAWK\sys::getBrowser('');
 echo "<h4>Browser Statistik </h4>Your browser: "."<b>". $useragent['name'] . " " . $useragent['version'] . " on " .$useragent['platform'] ."</b><br><br>";
 
 echo "<h4>User Statistik</h4>Referer: ".$_SERVER['HTTP_REFERER']."<br>";
