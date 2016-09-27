@@ -8,24 +8,31 @@
  * @see http://www.binpress.com/tutorial/using-php-with-mysql-the-right-way/17
  */
 namespace YAWK {
-	final class db extends \mysqli {
+    /**
+     * Class db extends \mysqli
+     * @package YAWK
+     */
+    final class db extends \mysqli {
 		private $config;
 		public static $connection;
 
-		public function __construct()
+        /**
+         * db constructor.
+         */
+        public function __construct()
 		{
 			$this->config['username'] = "root";
 			$this->config['password'] = "";
 			$this->config['dbname'] = "yawk_lte";
 			$this->config['prefix'] = "cms_";
+			$this->config['port'] = "3306";
 		}
 
 		/**
 		 * Connect to the database
 		 *
-		 * @return bool false on failure / mysqli MySQLi object instance on success
+		 * @return object | bool false on failure / mysqli MySQLi object instance on success
 		 */
-
 		public function connect()
 		{
 			// Try and connect to the database
@@ -43,7 +50,7 @@ namespace YAWK {
         /**
 		 * query database
 		 *
-		 * @param $query the query string
+		 * @param $query | the query string
 		 * @return mixed The result of the mysqli::query() function
 		 */
 		public function query($query)
@@ -55,15 +62,14 @@ namespace YAWK {
             $query = str_replace("{", $this->config['prefix'], $query);
 			// query the database
 			$result = $connection->query($query);
-
 			return $result;
 		}
 
 		/**
 		 * Fetch rows from the database (SELECT query)
 		 *
-		 * @param $query The query string
-		 * @return bool on failure / array Database rows on success
+		 * @param $query | The query string
+		 * @return array | bool on failure
 		 */
 		public function select($query)
 		{
