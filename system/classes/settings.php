@@ -141,6 +141,26 @@ namespace YAWK {
                               <input type=\"checkbox\" id=\"$setting[property]\" name=\"$setting[property]\" value=\"1\" $checked>
                               <label for=\"$setting[property]\">&nbsp; $setting[label]</label><p>$setting[description]</p>";
                         }
+                        // RADIO BUTTTONS
+                        if ($setting['fieldType'] === "radio")
+                        {
+                            echo "<label for=\"$setting[property]\">$setting[label]</label>
+                                  <input type=\"radio\" class=\"form-control\" id=\"$setting[property]\" name=\"$setting[property]\">";
+                            echo "<option value=\"$setting[value]\">$lang[SETTING_CURRENT] $setting[value]</option>";
+                            // explode option string into array
+                            $optionValues = explode(":", $setting['options']);
+                            foreach ($optionValues as $value)
+                            {
+                                // extract value from option setting string
+                                $optionValue = preg_replace("/,[a-zA-Z0-9]*/", "", $value);
+                                // extract description from option setting
+                                $optionDesc = preg_replace('/.*,(.*)/','$1',$value);
+
+                                echo "<option value=\"$optionValue\">$optionDesc</option>";
+                            }
+                            echo "</select>";
+                            echo "<p>$setting[description]</p>";
+                        }
 
                         /* SELECT FIELD */
                         else if ($setting['fieldType'] === "select")
