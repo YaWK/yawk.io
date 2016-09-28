@@ -401,6 +401,30 @@ namespace YAWK {
             }
         }
 
+        public static function setTemplateActive($db, $templateID)
+        {   /** @var $db \YAWK\db */
+            if (!isset($templateID) && (empty($templateID)))
+            {   // if template id is not set, get it from database
+                $templateID = \YAWK\settings::getSetting($db, "selectedTemplate");
+            }
+            // null active template in table
+            if (!$res = $db->query("UPDATE {templates} SET active = 0 WHERE active != 0"))
+            {
+                return false;
+            }
+            if ($res = $db->query("UPDATE {templates}
+                                   SET active = 1
+                                   WHERE id = $templateID"))
+            {   // success
+                return true;
+            }
+            else
+            {   // q failed
+                return false;
+            }
+
+        }
+
         public static function copyTemplateSettings($db, $templateID, $newID)
         {   /** @var $db \YAWK\db */
 
