@@ -4,12 +4,26 @@
             "bPaginate": false,
             "bLengthChange": false,
             "bFilter": true,
-            "bSort": true,
+            "bSort": false,
             "bInfo": true,
             "bAutoWidth": false
         } );
     } );
 </script>
+<?php
+if (isset($_GET['templateID']) && (is_numeric($_GET['templateID'])))
+{   // escape chars
+$_GET['templateID'] = $db->quote($_GET['templateID']);
+if (\YAWK\settings::setSetting($db, "selectedTemplate", $_GET['templateID']))
+{   // additional: set this template as active in template database
+    \YAWK\template::setTemplateActive($db, $_GET['templateID']);
+}
+else
+{
+\YAWK\alert::draw("warning", "Could not switch template.", "Please try it again or go to settings page.", "page=settings-template", 3000);
+}
+}
+?>
 <?php
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
@@ -52,7 +66,7 @@ echo"<ol class=\"breadcrumb\">
     $i_pages_unpublished = 0;
     // get active tpl name
     $activeTemplate = \YAWK\template::getCurrentTemplateName($db, "admin");
-    if ($res = $db->query("SELECT * FROM {templates} ORDER BY name DESC"))
+    if ($res = $db->query("SELECT * FROM {templates} ORDER BY active DESC"))
     {
         // fetch templates and draw a tbl row in a while loop
         while($row = mysqli_fetch_assoc($res))
@@ -83,7 +97,7 @@ echo"<ol class=\"breadcrumb\">
 
             echo "<tr>
           <td style=\"text-align:center;\">
-            <a title=\"toggle&nbsp;status\" href=\"index.php?page=template-toggle&template=".$row['id']."\">
+            <a title=\"toggle&nbsp;status\" href=\"index.php?page=settings-template&templateID=".$row['id']."\">
             <span class=\"label label-$pub\">$pubtext</span></a>&nbsp;</td>
           <td>".$row['id']."</td>
           <td><a href=\"index.php?page=template-edit&id=".$row['id']."\"><div style=\"width:100%\">".$row['name']."</div></a></td>
