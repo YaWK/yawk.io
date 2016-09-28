@@ -177,7 +177,7 @@
 </script>
 <?php
 // SAVE tpl settings
-if(isset($_POST['save']) ||isset($_POST['savenewtheme']))
+if(isset($_POST['save']) || isset($_POST['savenewtheme']))
 {   // loop through $_POST items
     foreach ($_POST as $property => $value) {
         if ($property != "save") {
@@ -190,6 +190,10 @@ if(isset($_POST['save']) ||isset($_POST['savenewtheme']))
 				}
 			}
 			else {
+				if ($property === "selectedTemplate")
+				{
+					\YAWK\template::setTemplateActive($db, $value);
+				}
 				// save value of property to database
 				\YAWK\settings::setSetting($db, $property, $value);
 			}
