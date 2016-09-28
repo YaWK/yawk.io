@@ -102,11 +102,9 @@ echo"<ol class=\"breadcrumb\">
           <td>".$row['id']."</td>
           <td><a href=\"index.php?page=template-edit&id=".$row['id']."\"><div style=\"width:100%\">".$row['name']."</div></a></td>
           <td><a href=\"index.php?page=template-edit&id=".$row['id']."\" style=\"color: #7A7376;\"><div style=\"width:100%\">".$row['description']."<br><small>".$row['positions']."</small></div></a></td>
-
           <td><a href=\"index.php?page=template-edit&id=".$row['id']."\" title=\"edit ".$row['name']."\">".$screenshot."</a></td>
-          <td style=\"text-align:center;\">
+          <td class=\"text-center\">
 
-            <a class=\"fa fa-edit\"title=\"".$lang['EDIT']."\" href=\"index.php?page=template-edit&id=".$row['id']."\"></a>&nbsp;
             <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Das Template &laquo;".$row['name']." / ".$row['id']."&raquo; wirklich l&ouml;schen?\"
             title=\"".$lang['DELETE']."\" href=\"index.php?page=template-delete&template=".$row['id']."\">
             </a>
