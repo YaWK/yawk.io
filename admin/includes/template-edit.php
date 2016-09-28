@@ -42,6 +42,7 @@ if(isset($_POST['savenewtheme']) && isset($_POST['newthemename']))
     $newID = \YAWK\template::getMaxId($db);
     $newTplId = $newID++;
     $template->id = $newTplId;
+    \YAWK\settings::setSetting($db, "selectedTemplate", $newID);
 
     if (isset($_POST['description']) && (!empty($_POST['description'])))
     {   // set new tpl description
@@ -61,8 +62,9 @@ if(isset($_POST['savenewtheme']) && isset($_POST['newthemename']))
     }
     // save as new theme
     $template->saveAs($db, $template, $template->name, $template->positions, $template->description);
-    // copy tpl settings to new ones
-    // $template->copyTemplateSettings($db, $oldTemplateId);
+    // set the new theme active
+    \YAWK\template::setTemplateActive($db, $newID);
+    // copy the template settings into the new template
     \YAWK\template::copyTemplateSettings($db, $oldTemplateId, $newID);
 }
 
