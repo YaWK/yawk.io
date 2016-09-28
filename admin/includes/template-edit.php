@@ -36,8 +36,13 @@ $template->loadProperties($db, YAWK\template::getCurrentTemplateId($db));
 // SAVE AS new theme
 if(isset($_POST['savenewtheme']) && isset($_POST['newthemename']))
 {   // prepare vars
-$template->name = $db->quote($_POST['newthemename']);
-$template->id = $template->id++;
+    $template->name = $db->quote($_POST['newthemename']);
+    // get new template id
+    $oldTemplateId = $template->id;
+    $newID = \YAWK\template::getMaxId($db);
+    $newTplId = $newID++;
+    $template->id = $newTplId;
+
     if (isset($_POST['description']) && (!empty($_POST['description'])))
     {   // set new tpl description
         $template->description = $db->quote($_POST['description']);
@@ -54,28 +59,50 @@ $template->id = $template->id++;
     {   // new positions not set, default value instead:
         $template->positions = "globalmenu:top:main:bottom:footer";
     }
-// save as new theme
-$template->saveAs($db, $template, $template->name, $template->positions, $template->description);
+    // save as new theme
+    $template->saveAs($db, $template, $template->name, $template->positions, $template->description);
+    // copy tpl settings to new ones
+    // $template->copyTemplateSettings($db, $oldTemplateId);
+    \YAWK\template::copyTemplateSettings($db, $oldTemplateId, $newID);
 }
 
 // SAVE tpl settings
-if(isset($_POST['save']) ||isset($_POST['savenewtheme']))
+if(isset($_POST['save']) || isset($_POST['savenewtheme']))
 {   // check and delete settings file if needed
     // $template->deleteSettingsCSSFile($db, "");
     // loop trough settings and save to database + settings.css file
+
+    // get max ID from template db
     foreach($_POST as $property=>$value){
-        if($property != "save" && $property != "customCSS"){
-            // to database
-            $template->setTemplateSetting($db, $template->id, $property, $value);
-            // to file
-            // $template->setTemplateCssFile($db, $template->id, $property, $value);
+        if (isset($_POST['savenewtheme']))
+        {
+            if($property != "save" && $property != "customCSS")
+            {   // save new theme settings to database
+                $template->setTemplateSetting($db, $newID, $property, $value);
+            }
+            // if save property is customCSS
+            elseif ($property === "customCSS")
+            {   // save the content to /system/template/$NAME/css/custom.css
+                $template->setCustomCssFile($db, $value, 0);
+                // save a minified version to /system/template/$NAME/css/custom.min.css
+                $template->setCustomCssFile($db, $value, 1);
+            }
         }
-        // if save property is customCSS
-        elseif ($property == "customCSS")
-        {   // save the content to /system/template/$NAME/css/custom.css
-            $template->setCustomCssFile($db, $value, 0);
-            // save a minified version to /system/template/$NAME/css/custom.min.css
-            $template->setCustomCssFile($db, $value, 1);
+        else
+        {
+            if($property != "save" && $property != "customCSS")
+            {   // save theme settings to database
+                $template->setTemplateSetting($db, $template->id, $property, $value);
+                // to file
+                $template->setTemplateCssFile($db, $template->id, $property, $value);
+            }
+            // if save property is customCSS
+            elseif ($property == "customCSS")
+            {   // save the content to /system/template/$NAME/css/custom.css
+                $template->setCustomCssFile($db, $value, 0);
+                // save a minified version to /system/template/$NAME/css/custom.min.css
+                $template->setCustomCssFile($db, $value, 1);
+            }
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////

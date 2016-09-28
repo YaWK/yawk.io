@@ -142,7 +142,7 @@ namespace YAWK {
         }
 
         /**
-         * Returns an array with all template id's.
+         * Returns an array with all template id's + names.
          * @param object $db
          * @return array|bool
          */
@@ -174,7 +174,28 @@ namespace YAWK {
             return $i_tplsettings;
         }
 
-        static function getCurrentTemplateName($db, $location)
+        public static function getCurrentTemplateNameById($db, $templateID)
+        {   /** @var $db \YAWK\db */
+            if (!isset($templateID) || (empty($templateID)))
+            {   // template id is not set, try to get current template
+                $templateID = \YAWK\settings::getSetting($db, "selectedTemplate");
+            }
+                // query template name
+                if ($res = $db->query("SELECT name from {templates} WHERE id = $templateID"))
+                {   // fetch data
+                    if ($row = mysqli_fetch_row($res))
+                    {   // return current name
+                        return $row[0];
+                    }
+                }
+                else
+                {   // exit and throw error
+                    die ("could not get template name");
+                }
+                return null;
+        }
+
+        public static function getCurrentTemplateName($db, $location)
         {   /** @var $db \YAWK\db */
             if (!isset($location) || (empty($location)))
             {   // if location is empty, set frontend as default
@@ -201,8 +222,8 @@ namespace YAWK {
                 {   // check if selected tpl exists
                     if (!$dir = @opendir("$tpldir" . $row[0]))
                     {   // if directory could not be opened: throw error
-                       alert::draw("danger", "Error: ", "Template <strong>" . $tpldir.$row[0] . "</strong> kann nicht gelesen werden, bitte Template-Settings checken!","page=settings-template","4800");
-                        return false;
+                        alert::draw("danger", "Error: ", "Template <strong>" . $tpldir.$row[0] . "</strong> kann nicht gelesen werden, bitte Template-Settings checken!","page=settings-template","4800");
+                        return "yawk-bootstrap3";
                     }
                     else
                     {   // return template name
@@ -212,7 +233,7 @@ namespace YAWK {
                 else
                 {   // could not fetch template -
                     // - in that case set default template
-                    print alert::draw("warning", "Warning: ", "Template kann nicht gelesen werden, default template gesetzt. (yawk-bootstrap3)","page=settings-system","4800");
+                   // print alert::draw("warning", "Warning: ", "Template kann nicht gelesen werden, default template gesetzt. (yawk-bootstrap3)","page=settings-system","4800");
                     return "yawk-bootstrap3";
                 }
             }
@@ -220,7 +241,7 @@ namespace YAWK {
             return false;
         }
 
-        function setTemplateCssFile($db, $tplId, $content, $minify)
+        public function setTemplateCssFile($db, $tplId, $content, $minify)
         {   /** @var $db \YAWK\db */
             // check whether templateID is not set or empty
             if (!isset($tplId) || (empty($tplId)))
@@ -259,7 +280,7 @@ namespace YAWK {
             return true;
         }
 
-        function setCustomCssFile($db, $content, $minify)
+        public function setCustomCssFile($db, $content, $minify)
         {   /** @var $db \YAWK\db */
             // create template/css/custom.css (for development purpose in backend)
             // prepare vars
@@ -294,14 +315,14 @@ namespace YAWK {
             return true;
         }
 
-        function getCustomCSSFile($db)
+        public function getCustomCSSFile($db)
         {   // get the content from custom.css
             $filename = self::getCustomCSSFilename($db, "backend");
             $content = file_get_contents($filename);
             return $content;
         }
 
-        function getSettingsCSSFilename($db, $location)
+        public function getSettingsCSSFilename($db, $location)
         {   /** @var $db \YAWK\db */
             // prepare vars... path + filename
             $tplName = self::getCurrentTemplateName($db, $location); // tpl name
@@ -310,13 +331,32 @@ namespace YAWK {
             return $filename;
         }
 
-        function getCustomCSSFilename($db, $location)
+        public function getCustomCSSFilename($db, $location)
         {   /** @var $db \YAWK\db */
             // prepare vars... path + filename
             $tplName = self::getCurrentTemplateName($db, $location); // tpl name
             $alias = "custom"; // set CSS file name
             $filename = "../system/templates/$tplName/css/" . $alias . ".css";
             return $filename;
+        }
+
+        public static function getMaxId($db)
+        {   /* @var $db \YAWK\db */
+            if ($res = $db->query("SELECT MAX(id) from {templates}"))
+            {   // fetch id
+                if ($row = mysqli_fetch_row($res))
+                {
+                    return $row[0];
+                }
+                else
+                    {
+                        return false;
+                    }
+            }
+            else
+                {
+                    return false;
+                }
         }
 
         function deleteSettingsCSSFile($db, $filename)
@@ -345,8 +385,7 @@ namespace YAWK {
         }
 
         function setTemplateSetting($db, $id, $property, $value)
-        {
-            /** @var $db \YAWK\db */
+        {   /** @var $db \YAWK\db */
             $property = $db->quote($property);
             $value = $db->quote($value);
             if ($res = $db->query("UPDATE {template_settings}
@@ -359,6 +398,32 @@ namespace YAWK {
             else
             {   // q failed
                 return false;
+            }
+        }
+
+        public static function copyTemplateSettings($db, $templateID, $newID)
+        {   /** @var $db \YAWK\db */
+
+        $res = $db->query("INSERT INTO {template_settings} (templateID, property, value, valueDefault, description, activated, sort, fieldClass, placeholder)
+                           SELECT NULL, property, value, valueDefault, description, activated, sort, fieldClass, placeholder FROM {template_settings}
+                           WHERE templateID = '".$templateID."'");
+            if (!$res)
+            {
+                \YAWK\alert::draw("danger", "Could not copy settings", "please try again.", "", 5000);
+            }
+            else
+            {
+                \YAWK\alert::draw("success", "Settings copied", "successful", "", 5000);
+                // alter IDs
+                $update = $db->query("UPDATE {template_settings} SET templateID='".$newID."' WHERE templateID=0");
+                if ($update)
+                {
+                    \YAWK\alert::draw("success", "Settings are set-up", "successful", "", 5000);
+                }
+                else
+                {
+                    \YAWK\alert::draw("warning", "Could not set new template settings", "unable to alter IDs.", "", 5000);
+                }
             }
         }
 

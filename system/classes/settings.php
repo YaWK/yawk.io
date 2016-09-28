@@ -141,12 +141,12 @@ namespace YAWK {
                               <input type=\"checkbox\" id=\"$setting[property]\" name=\"$setting[property]\" value=\"1\" $checked>
                               <label for=\"$setting[property]\">&nbsp; $setting[label]</label><p>$setting[description]</p>";
                         }
-                        // RADIO BUTTTONS
+                        /* RADIO BUTTTONS */
                         if ($setting['fieldType'] === "radio")
                         {
                             echo "<label for=\"$setting[property]\">$setting[label]</label>
-                                  <input type=\"radio\" class=\"form-control\" id=\"$setting[property]\" name=\"$setting[property]\">";
-                            echo "<option value=\"$setting[value]\">$lang[SETTING_CURRENT] $setting[value]</option>";
+                                  <input type=\"radio\" id=\"$setting[property]\" name=\"$setting[property]\">";
+                            echo "<input type=\"radio\" value=\"$setting[value]\">$lang[SETTING_CURRENT] $setting[value]</option>";
                             // explode option string into array
                             $optionValues = explode(":", $setting['options']);
                             foreach ($optionValues as $value)

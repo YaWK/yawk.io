@@ -13,6 +13,14 @@
   db-positions:
   globalmenu:top:main:bottom:footer:hiddentoolbar:debug
 */
+if (isset($_GET['template']) && (!empty($template)))
+{
+    $template = $_GET['template'];
+}
+else
+    {
+        $template = YAWK\template::getCurrentTemplateNameById($db, "");
+    }
 ?>
  <!-- To ensure proper rendering and touch zooming on phones and tablets -->
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,12 +37,14 @@
  <link rel="apple-touch-icon" sizes="152x152" href="media/images/apple-touch-icon-152x152-precomposed.png" />
     <!-- import font awesome -->
     <link rel="stylesheet" href="system/engines/font-awesome/css/font-awesome.min.css" type="text/css" media="all" />
+    <!-- import animate.css -->
+    <link rel="stylesheet" href="system/engines/animateCSS/animate.min.css" type="text/css" media="all" />
     <!-- Bootstrap core CSS -->
     <link href="system/engines/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Own Template Settings: Bootstrap core CSS override -->
-    <link href="system/templates/yawk-bootstrap3/css/settings.min.css" rel="stylesheet">
+    <link href="system/templates/<?php echo $template; ?>/css/settings.min.css" rel="stylesheet">
     <!-- CUSTOM Template Override: custom.CSS -->
-    <link href="system/templates/yawk-bootstrap3/css/custom.min.css" rel="stylesheet">
+    <link href="system/templates/<?php echo $template; ?>/css/custom.min.css" rel="stylesheet">
     <!-- import jquery 1.11.3 -->
     <script src="system/engines/jquery/jquery-1.11.3.min.js"></script>
     <!--[if lt IE 9]>
@@ -42,7 +52,7 @@
     <script src="system/engines/jquery/1.3.0-respond.min.js"></script>
     <![endif]-->
     <!-- import custom js -->
-    <script src="system/templates/yawk-bootstrap3/js/custom.min.js"></script>
+    <script src="system/templates/<?php echo $template; ?>/js/custom.min.js"></script>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Boostrap jQuery Plugins -->
