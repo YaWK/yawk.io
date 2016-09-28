@@ -406,10 +406,10 @@ namespace YAWK {
         static function encodeChars($string)
         {   // requires string. encodes german vowels
             $string = utf8_decode($string);
-            $chars = array("�" => "&ouml;", "�" => "&auml;", "�" => "&uuml;",
-                "�" => "&Ouml;", "�" => "&Auml;", "�" => "&Uuml;",
-                "�" => "&szlig;",
-                "�" => "&euro;");
+            $chars = array("ö" => "&ouml;", "ä" => "&auml;", "u" => "&uuml;",
+                "Ö" => "&Ouml;", "A" => "&Auml;", "U" => "&Uuml;",
+                "ß" => "&szlig;",
+                "€" => "&euro;");
             return strtr($string, $chars);
         }
 
