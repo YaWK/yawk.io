@@ -593,7 +593,7 @@ namespace YAWK {
                 <li class=\"header\">MAIN NAVIGATION</li>
                 <!-- Optionally, you can add icons to the links -->
                 <li ";echo (!isset($_GET['page'])) && (!isset($_GET['plugin'])) ? "class='active'" : ""; echo">
-                    <a href=\"index.php\"><i class=\"fa fa-home\"></i> <span>Dashboard</span></a>
+                    <a href=\"index.php\"><i class=\"fa fa-dashboard\"></i> <span>Dashboard</span></a>
                 </li>
                 <li ";echo (isset($_GET['page']) && $_GET['page'] == 'pages') || (isset($_GET['page']) && ($_GET['page'] == 'page-edit')) ? "class='active'" : ""; echo">
                     <a href=\"index.php?page=pages\" title=\"add or edit a static .html page\"><i class=\"fa fa-file-word-o\"></i> <span>$lang[PAGES]</span></a>
