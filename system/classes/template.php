@@ -235,8 +235,7 @@ namespace YAWK {
                 {   // check if selected tpl exists
                     if (!$dir = @opendir("$tpldir" . $row[0]))
                     {   // if directory could not be opened: throw error
-                        // alert::draw("danger", "Error: ", "Template <strong>" . $tpldir.$row[0] . "</strong> kann nicht gelesen werden, bitte Template-Settings checken!","page=settings-template","4800");
-                        return "could not open template folder ".$tpldir.$row[0]."";
+                        return "<b>Oh-oh! There was a big error. . .</b> <u>you shall not see this!</u><br><br>Unable to load template ".$row[0].".&nbsp; I am deeply sorry.<br> I am sure my administrator is hurry to fix that problem.<br> yours,<br>YaWK <i><small>(Yet another Web Kit)</i></small>";
                     }
                     else
                     {   // return template name

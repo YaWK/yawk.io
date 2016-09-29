@@ -992,7 +992,7 @@ echo"<ol class=\"breadcrumb\">
                 <div class="col-md-6">
                     <!-- 16:9 aspect ratio -->
                     <div class="embed-responsive embed-responsive-4by3">
-                        <iframe class="embed-responsive-item" src="../index.php"></iframe>
+                        <iframe id="preview" class="embed-responsive-item" src="../index.php"></iframe>
                     </div>
                     <?php
                     // $tpl = \YAWK\template::getTemplateSettingsArray($db);
