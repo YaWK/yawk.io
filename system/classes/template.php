@@ -895,13 +895,16 @@ namespace YAWK {
             }
         }
 
-        static function getTemplateSettingsArray($db)
+        static function getTemplateSettingsArray($db, $templateID)
         {   /* @var \YAWK\db $db */
+            if (!isset($templateID) || (empty($templateID)))
+            {   // if no templateID is set, take current template ID from settings db
+                $templateID = settings::getSetting($db, "selectedTemplate");
+            }
             $array = '';
-            $tpl_id = settings::getSetting($db, "selectedTemplate");
             $res = $db->query("SELECT property, value
                         	FROM {template_settings}
-                            WHERE templateID = '" . $tpl_id . "'");
+                            WHERE templateID = '" . $templateID . "'");
 
             while ($row = mysqli_fetch_assoc($res)){
                 $prop = $row['property'];

@@ -30,8 +30,18 @@
 <?php
 // create new template object
 if (!isset($template)) { $template = new \YAWK\template(); }
+
+if (isset($_GET['id']) && (is_numeric($_GET['id'])))
+{   // get template properties for requested template ID
+    $template->loadProperties($db, $_GET['id']);
+}
+else
+    {   // get template properties for current active template ID
+        $template->loadProperties($db, YAWK\settings::getSetting($db, "selectedTemplate"));
+    }
+
 // get current template properties
-$template->loadProperties($db, YAWK\template::getCurrentTemplateId($db));
+
 
 // SAVE AS new theme
 if(isset($_POST['savenewtheme']) && isset($_POST['newthemename']))
@@ -42,6 +52,7 @@ if(isset($_POST['savenewtheme']) && isset($_POST['newthemename']))
     $newID = \YAWK\template::getMaxId($db);
     $newTplId = $newID++;
     $template->id = $newTplId;
+    // set new theme active
     \YAWK\settings::setSetting($db, "selectedTemplate", $newID);
 
     if (isset($_POST['description']) && (!empty($_POST['description'])))
@@ -62,7 +73,7 @@ if(isset($_POST['savenewtheme']) && isset($_POST['newthemename']))
     }
     // save as new theme
     $template->saveAs($db, $template, $template->name, $template->positions, $template->description);
-    // set the new theme active
+    // set the new theme active in template
     \YAWK\template::setTemplateActive($db, $newID);
     // copy the template settings into the new template
     \YAWK\template::copyTemplateSettings($db, $oldTemplateId, $newID);
@@ -109,7 +120,7 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
     }
     ////////////////////////////////////////////////////////////////////////////////////////
     // get all settings for active template
-    $tpl_settings = YAWK\template::getTemplateSettingsArray($db);
+    $tpl_settings = YAWK\template::getTemplateSettingsArray($db, "");
     // get HEADER FONT from db
     $headingFont = YAWK\template::getActivegfont($db, "", "heading-gfont");
 
