@@ -11,18 +11,39 @@
     } );
 </script>
 <?php
-if (isset($_GET['templateID']) && (is_numeric($_GET['templateID'])))
-{   // escape chars
-$_GET['templateID'] = $db->quote($_GET['templateID']);
-if (\YAWK\settings::setSetting($db, "selectedTemplate", $_GET['templateID']))
-{   // additional: set this template as active in template database
-    \YAWK\template::setTemplateActive($db, $_GET['templateID']);
-}
-else
+if (isset($_GET['toggle']) && ($_GET['toggle'] === "1"))
 {
-\YAWK\alert::draw("warning", "Could not switch template.", "Please try it again or go to settings page.", "page=settings-template", 3000);
+    if (isset($_GET['templateID']) && (is_numeric($_GET['templateID'])))
+    {   // escape chars
+        $_GET['templateID'] = $db->quote($_GET['templateID']);
+        if (\YAWK\settings::setSetting($db, "selectedTemplate", $_GET['templateID']))
+        {   // additional: set this template as active in template database
+            \YAWK\template::setTemplateActive($db, $_GET['templateID']);
+        }
+        else
+        {
+            \YAWK\alert::draw("warning", "Could not switch template.", "Please try it again or go to settings page.", "page=settings-template", 3000);
+        }
+    }
 }
+
+// DELETE TEMPLATE
+if (isset($_GET['delete']) && ($_GET['delete'] === "1"))
+{   // check, if the given ID is correct
+    if (isset($_GET['templateID']) && (is_numeric($_GET['templateID'])))
+    {   // escape chars
+        $_GET['templateID'] = $db->quote($_GET['templateID']);
+        if (\YAWK\template::deleteTemplate($db, $_GET['templateID']))
+        {   // throw success msg
+            \YAWK\alert::draw("success", "<i class=\"fa fa-trash-o\"></i> Template deleted.", "...all good things come to an end.", "", 3000);
+        }
+        else
+        {
+            \YAWK\alert::draw("danger", "Could not delete template ID $_GET[templateID]", "Please try it again.", "", 3000);
+        }
+    }
 }
+
 ?>
 <?php
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
@@ -65,7 +86,7 @@ echo"<ol class=\"breadcrumb\">
     $i_pages_published = 0;
     $i_pages_unpublished = 0;
     // get active tpl name
-    $activeTemplate = \YAWK\template::getCurrentTemplateName($db, "admin");
+    $activeTemplate = \YAWK\template::getCurrentTemplateName($db, "admin", "");
     if ($res = $db->query("SELECT * FROM {templates} ORDER BY active DESC"))
     {
         // fetch templates and draw a tbl row in a while loop
@@ -77,11 +98,22 @@ echo"<ol class=\"breadcrumb\">
             {   // set published online
                 $pub = "success"; $pubtext="On";
                 $i_pages_published = $i_pages_published + 1;
+                // do not allow to delete current active template
+                $deleteIcon = "<i class=\"fa fa-ban\" title=\"Delete not possible, because template is set to active.\"></i>";
+            }
+            else if ($row['id'] === "1" && ($activeTemplateId !== $row['id']))
+            {   // do not allow to delete default template
+                $pub = "danger"; $pubtext = "Off";
+                $deleteIcon = "<i class=\"fa fa-ban\" title=\"Cannot delete the default template.\"></i>";
             }
             else
             {   // set published offline
                 $pub = "danger"; $pubtext = "Off";
                 $i_pages_unpublished = $i_pages_unpublished +1;
+                // delete template button
+                $deleteIcon = "<a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Das Template &laquo;".$row['name']." / ".$row['id']."&raquo; wirklich l&ouml;schen?\"
+                title=\"".$lang['DELETE']."\" href=\"index.php?page=settings-template&delete=1&templateID=".$row['id']."\">
+                </a>";
             }
 
             // set template image (screen shot)
@@ -97,17 +129,14 @@ echo"<ol class=\"breadcrumb\">
 
             echo "<tr>
           <td style=\"text-align:center;\">
-            <a title=\"toggle&nbsp;status\" href=\"index.php?page=settings-template&templateID=".$row['id']."\">
+            <a title=\"toggle&nbsp;status\" href=\"index.php?page=settings-template&toggle=1&templateID=".$row['id']."\">
             <span class=\"label label-$pub\">$pubtext</span></a>&nbsp;</td>
           <td>".$row['id']."</td>
           <td><a href=\"index.php?page=template-edit&id=".$row['id']."\"><div style=\"width:100%\">".$row['name']."</div></a></td>
           <td><a href=\"index.php?page=template-edit&id=".$row['id']."\" style=\"color: #7A7376;\"><div style=\"width:100%\">".$row['description']."<br><small>".$row['positions']."</small></div></a></td>
           <td><a href=\"index.php?page=template-edit&id=".$row['id']."\" title=\"edit ".$row['name']."\">".$screenshot."</a></td>
           <td class=\"text-center\">
-
-            <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Das Template &laquo;".$row['name']." / ".$row['id']."&raquo; wirklich l&ouml;schen?\"
-            title=\"".$lang['DELETE']."\" href=\"index.php?page=template-delete&template=".$row['id']."\">
-            </a>
+            $deleteIcon
           </td>
         </tr>";
         }
