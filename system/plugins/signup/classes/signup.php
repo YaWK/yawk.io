@@ -17,49 +17,38 @@ namespace YAWK\PLUGINS\SIGNUP {
         public function sayHello($db)
         {   /** @var $db \YAWK\db */
             // greets user and load welcome page for given role(gid)
-            if (isset($_SESSION['username']) && isset($_SESSION['uid']))
-            {
-                if ($_SESSION['logged_in'] == true)
-                {   // if login session var is true, set username
-                    $this->username = $_SESSION['username'];
-                    if (!isset($user))
-                    {   // create new user object if it not exists
-                        $user = new \YAWK\user();
+            if (\YAWK\user::isAnybodyThere())
+            {   // load userpage for signed in user
+                // if login session var is true, set username
+                $this->username = $_SESSION['username'];
+                if (!isset($user))
+                {   // create new user object if it not exists
+                    $user = new \YAWK\user();
+                }
+                // load properties for this user
+                $user->loadProperties($db, $this->username);
+                // check if user status in database is still logged in...
+                if ($user->isLoggedIn($db, $user->username))
+                {   // load userpage classes
+                    require_once 'system/plugins/userpage/classes/userpage.php';
+                    if (!isset($userpage))
+                    {   // generate & return new userpage object
+                        $userpage = new \YAWK\PLUGINS\USERPAGE\userpage($db, $user);
                     }
-                    // load properties for this user
-                    $user->loadProperties($db, $this->username);
-                    // check if user status in database is still logged in...
-                    if ($user->isLoggedIn($db, $user->username))
-                    {   // load userpage classes
-                        require_once 'system/plugins/userpage/classes/userpage.php';
-                        if (!isset($userpage))
-                        {   // generate & return new userpage object
-                            $userpage = new \YAWK\PLUGINS\USERPAGE\userpage($db, $user);
-                        }
-                        // load userpage for given user
-                        return $userpage->init($db, $user);
-                    }
-                    else
-                    {   // user is not logged in
-                        \YAWK\alert::draw("danger", "Error!", "Obviously you are not correctly logged in. Please re-login!","",5000);
-                        return \YAWK\user::drawLoginBox("", "");
-                    }
+                    // load userpage for given user
+                    return $userpage->init($db, $user);
                 }
                 else
-                {   // error detecting user login status, maybe because of expired cookies
-                    $username = "";
-                    $password = "";
-                    \YAWK\alert::draw("danger", "Warning!", "Unable to get your login status. Please try to re-login!","",4200);
-                    return \YAWK\user::drawLoginBox($username, $password);
+                {   // user is not logged in
+                    \YAWK\alert::draw("danger", "Error!", "Obviously you are not correctly logged in. Please re-login!","",5000);
+                    return \YAWK\user::drawLoginBox("", "");
                 }
             }
             else
-            {   // not logged in
-                // load user signup function (form)
-                return self::signUp($db);
-            }
-           //     \YAWK\alert::draw("danger", "Warning", "Something strange has happened.","", 2000);
-           //  return false;
+                {   // not logged in
+                    // load user signup function (form)
+                    return self::signUp($db);
+                }
         }
 
         public static function signUp($db)
