@@ -426,6 +426,14 @@ namespace YAWK {
             return $hostname;
         }
 
+        static function recurseRmdir($dir) {
+            $files = array_diff(scandir($dir), array('.','..'));
+            foreach ($files as $file) {
+                (is_dir("$dir/$file")) ? self::recurseRmdir("$dir/$file") : unlink("$dir/$file");
+            }
+            return rmdir($dir);
+        }
+
         static function addTrailingSlash($url)
         {   // check if url contains a trailing slash at the end
             if (substr($url, -1, 1) !== "/")
