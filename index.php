@@ -112,5 +112,5 @@ else
     $currentpage->loadProperties($db, $db->quote($_GET['include']));
 }
 // call template controller
-$template = $template->getCurrentTemplateName($db, "frontend");
+$template = $template->getCurrentTemplateName($db, "frontend", "");
 include("system/templates/$template/index.php");
