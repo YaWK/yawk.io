@@ -83,8 +83,17 @@ namespace YAWK {
         public function saveAs($db, $template, $new_template, $positions, $description)
         {   /** @var \YAWK\db $db */
             // save theme as new template
-            $new_template = \YAWK\sys::encodeChars($new_template);
-            $template->name = \YAWK\sys::encodeChars($template->name);
+
+            $replace = array("/ä/", "/ü/", "/ö/", "/Ä/", "/Ü/", "/Ö/", "/ß/"); // array of special chars
+            $chars = array("ae", "ue", "oe", "Ae", "Ue", "Oe", "ss"); // array of replacement chars
+            $new_template = preg_replace($replace, $chars, $new_template);      // replace with preg
+            // final check: just numbers and chars are allowed
+            $new_template = preg_replace("/[^a-z0-9\-\/]/i", "", $new_template);
+            // same goes on for $template->name
+            $template->name = preg_replace($replace, $chars, $template->name);      // replace with preg
+            // final check: just numbers and chars are allowed
+            $template->name = preg_replace("/[^a-z0-9\-\/]/i", "", $template->name);
+
             // check if new tpl folder already exists
             if (file_exists("../system/templates/$new_template/"))
             {   // overwrite data
@@ -195,7 +204,7 @@ namespace YAWK {
                 return null;
         }
 
-        public static function getCurrentTemplateName($db, $location)
+        public static function getCurrentTemplateName($db, $location, $templateID)
         {   /** @var $db \YAWK\db */
             if (!isset($location) || (empty($location)))
             {   // if location is empty, set frontend as default
@@ -213,17 +222,21 @@ namespace YAWK {
                     $prefix = "../";
                 }
             }
+            if (!isset($templateID) || (empty($templateID)))
+            {   // no templateID sent via param, so set current selected template ID
+                $templateID = \YAWK\settings::getSetting($db, "selectedTemplate");
+            }
             // get current template name from database
             $tpldir = $prefix."system/templates/";
             if ($res = $db->query("SELECT name FROM {templates}
-                       WHERE id = '" . \YAWK\settings::getSetting($db, "selectedTemplate") . "'"))
+                       WHERE id = $templateID"))
             {   // fetch data
                 if ($row = mysqli_fetch_row($res))
                 {   // check if selected tpl exists
                     if (!$dir = @opendir("$tpldir" . $row[0]))
                     {   // if directory could not be opened: throw error
-                        alert::draw("danger", "Error: ", "Template <strong>" . $tpldir.$row[0] . "</strong> kann nicht gelesen werden, bitte Template-Settings checken!","page=settings-template","4800");
-                        return "yawk-bootstrap3";
+                        // alert::draw("danger", "Error: ", "Template <strong>" . $tpldir.$row[0] . "</strong> kann nicht gelesen werden, bitte Template-Settings checken!","page=settings-template","4800");
+                        return "could not open template folder ".$tpldir.$row[0]."";
                     }
                     else
                     {   // return template name
@@ -234,7 +247,7 @@ namespace YAWK {
                 {   // could not fetch template -
                     // - in that case set default template
                    // print alert::draw("warning", "Warning: ", "Template kann nicht gelesen werden, default template gesetzt. (yawk-bootstrap3)","page=settings-system","4800");
-                    return "yawk-bootstrap3";
+                    return "template ID $templateID not in database...?";
                 }
             }
             // something else has happened
@@ -325,7 +338,7 @@ namespace YAWK {
         public function getSettingsCSSFilename($db, $location)
         {   /** @var $db \YAWK\db */
             // prepare vars... path + filename
-            $tplName = self::getCurrentTemplateName($db, $location); // tpl name
+            $tplName = self::getCurrentTemplateName($db, $location, ""); // tpl name
             $alias = "settings"; // set CSS file name
             $filename = "../system/templates/$tplName/css/" . $alias . ".css";
             return $filename;
@@ -334,7 +347,7 @@ namespace YAWK {
         public function getCustomCSSFilename($db, $location)
         {   /** @var $db \YAWK\db */
             // prepare vars... path + filename
-            $tplName = self::getCurrentTemplateName($db, $location); // tpl name
+            $tplName = self::getCurrentTemplateName($db, $location, ""); // tpl name
             $alias = "custom"; // set CSS file name
             $filename = "../system/templates/$tplName/css/" . $alias . ".css";
             return $filename;
@@ -409,7 +422,7 @@ namespace YAWK {
             }
             // null active template in table
             if (!$res = $db->query("UPDATE {templates} SET active = 0 WHERE active != 0"))
-            {
+            {   // error: abort.
                 return false;
             }
             if ($res = $db->query("UPDATE {templates}
@@ -484,6 +497,54 @@ namespace YAWK {
             }
         }
 
+        static function deleteTemplate($db, $templateID)
+        {   /** @var $db \YAWK\db  */
+            if (!isset($templateID) && (empty($templateID)))
+            {   // no templateID is set...
+                return false;
+            }
+            else
+                {   // quote var, just to be sure its clean
+                    $templateID = $db->quote($templateID);
+
+                    // to delete the files, we need to get the template folder's name
+                    // this function checks if template exits in database + if folder physically in on disk
+                    $templateFolder = \YAWK\template::getCurrentTemplateName($db, "backend", $templateID);
+
+                    // delete template folder from disk
+                    if (!\YAWK\sys::recurseRmdir("../system/templates/$templateFolder"))
+                    {   // booh, deleting recurse did not work
+                        return false;
+                    }
+
+                    // delete template from database {templates}
+                    if (!$res = $db->query("DELETE FROM {templates} WHERE id = $templateID"))
+                    {   // if failed
+                        return false;
+                    }
+                    else
+                        {   // ALTER table and set auto_increment value to prevent errors when deleting + adding new tpl
+                            if ($res = $db->query("SELECT MAX(id) FROM {templates}"))
+                            {   // get MAX ID
+                                $row = mysqli_fetch_row($res);
+                                if (!$res = $db->query("ALTER TABLE {templates} AUTO_INCREMENT $row[0]"))
+                                {   // could not select auto encrement
+                                    return false;
+                                }
+                            }
+                        }
+
+                    // delete template settings for requested templateID
+                    if (!$res = $db->query("DELETE FROM {template_settings} WHERE templateID = $templateID"))
+                    {   // delete settings failed...
+                        return false;
+                    }
+                    else
+                        {   // all good so far.
+                            return true;
+                        }
+                }
+        }
 
         function getSetting($db, $filter, $special, $readonly)
         {   /** @var $db \YAWK\db  */
