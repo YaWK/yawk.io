@@ -11,6 +11,9 @@
             $('#savebutton').click(function(){ // if user clicked save
                 formmodified=0; // do not warn user, just save.
             });
+            $('#addbutton').click(function(){ // if user clicked save
+                formmodified=0; // do not warn user, just save.
+            });
         });
         // now the function:
         window.onbeforeunload = confirmExit; // before close
@@ -1283,7 +1286,7 @@ echo"<ol class=\"breadcrumb\">
                     <input type="text" class="form-control" name="newthemename" value="<?php echo $template->name; ?>-copy" placeholder="New Theme Name">
                     <input type="text" class="form-control" name="description" placeholder="Template Description">
                     <input type="text" class="form-control" name="positions" placeholder="Positions eg. top:main:footer">
-                    <br><input id="savebutton" type="submit" class="btn btn-danger" name="savenewtheme" value="Add&nbsp;as new Theme" />
+                    <br><input id="addbutton" type="submit" class="btn btn-danger" name="savenewtheme" value="Add&nbsp;as new Theme" />
                 </div>
             </div>
         </div>
