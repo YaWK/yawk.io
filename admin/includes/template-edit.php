@@ -11,8 +11,8 @@
             $('#savebutton').click(function(){ // if user clicked save
                 formmodified=0; // do not warn user, just save.
             });
-            $('#addbutton').click(function(){ // if user clicked save
-                formmodified=0; // do not warn user, just save.
+            $('#addbutton').click(function(){ // if user clicked add new theme
+                formmodified=0; // do not warn user, just save the new theme.
             });
         });
         // now the function:
@@ -31,9 +31,66 @@
 </script>
 
 <?php
-// create new template object
-if (!isset($template)) { $template = new \YAWK\template(); }
+    // new template object if not exists
+    if (!isset($template)) { $template = new \YAWK\template(); }
+    // new user object if not exists
+    if (!isset($user)) { $user = new \YAWK\user(); }
+    // $_GET['id'] or $_POST['id'] holds the template ID to edit.
+    // If any one of these two is set, we're in "preview mode" - this means:
+    // The user database holds two extra cols: overrideTemplate(int|0,1) and templateID
+    // Any user who is allowed to override the Template, can edit a template and view it
+    // in the frontend. -Without affecting the current active theme for any other user.
+    // This is pretty cool when working on a new design: because you see changes, while others wont.
+    // In theory, thereby every user can have a different frontend template activated.
 
+    // OVERRIDE TEMPLATE
+    // check if call comes from template-manage or template-edit form
+    if (isset($_GET['id']) && (is_numeric($_GET['id']) || (isset($_POST['id']) && (is_numeric($_POST['id'])))))
+    {
+        if (empty($_GET['id']) && (!empty($_POST['id']))) { $getID = $_POST['id']; }
+        else if (!empty($_GET['id']) && (empty($_POST['id']))) { $getID = $_GET['id']; }
+        else { $getID = 0; }
+
+        if ($user->isTemplateEqual($db, $getID))
+        {
+            // update template in user table row
+            $user->setUserTemplate($db, 0, $getID, $user->id);
+            // build info badge to inform user that this is HIS preview
+            $infoBadge = "<span class=\"label label-success\"><i class=\"fa fa-check\"></i>&nbsp;&nbsp;Visible to everyone</span>";
+            $previewButton = "<span class=\"btn btn-success\"><i class=\"fa fa-check\"></i>&nbsp;&nbsp;Visible to everyone</span>";
+        }
+        else
+            {   $user->setUserTemplate($db, 1, $getID, $user->id);
+                // build info badge to inform user that this is HIS preview
+                $infoBadge = "<span class=\"label label-danger\"><i class=\"fa fa-eye\"></i>&nbsp;&nbsp;Visible to you</span>";
+                $previewButton = "<span class=\"btn btn-danger\"><i class=\"fa fa-eye\"></i>&nbsp;&nbsp;Preview</span>";
+            }
+
+        // check if user/admin is allowed to override the template
+        if ($user->isAllowedToOverrideTemplate($db, $user->id) === true)
+        {   // ok, user is allowed to override: set tpl from user database
+            if (isset($_GET['overrideTemplate']) && ($_GET['overrideTemplate'] === "1"))
+            {
+                $user->setUserTemplate($db, 1, $getID, $user->id);
+            }
+            else
+            {
+                $user->setUserTemplate($db, 0, $getID, $user->id);
+            }
+
+            // $userTemplateID = \YAWK\user::getUserTemplateID($db, $user->id);
+            // load template properties for userTemplateID
+            $template->loadProperties($db, $getID);
+        }
+        else
+        {   // user is not allowed to override, so we load the default (global) selectedTemplate settings
+           // $template->loadProperties($db, YAWK\settings::getSetting($db, "selectedTemplate"));
+            $template->loadProperties($db, $getID);
+        }
+    }
+
+
+/*
 if (isset($_GET['id']) && (is_numeric($_GET['id'])))
 {   // get template properties for requested template ID
     $template->loadProperties($db, $_GET['id']);
@@ -43,8 +100,17 @@ else
         $template->loadProperties($db, YAWK\settings::getSetting($db, "selectedTemplate"));
     }
 
-// get current template properties
+        if (isset($_GET['id']) && (!empty($_GET['id'])))
+        {
+           //  \YAWK\user::setUserTemplate($db, $_GET['id'], $_SESSION['uid']);
+            $getSettingsID = $_GET['id'];
+        }
+        else
+        {
+            $getSettingsID = "";
+        }
 
+*/
 
 // SAVE AS new theme
 if(isset($_POST['savenewtheme']) && isset($_POST['newthemename']))
@@ -56,7 +122,8 @@ if(isset($_POST['savenewtheme']) && isset($_POST['newthemename']))
     $newTplId = $newID++;
     $template->id = $newTplId;
     // set new theme active
-    \YAWK\settings::setSetting($db, "selectedTemplate", $newID);
+    $user->setUserTemplate($db, 1, $newID, $user->id);
+    //\YAWK\settings::setSetting($db, "selectedTemplate", $newID);
 
     if (isset($_POST['description']) && (!empty($_POST['description'])))
     {   // set new tpl description
@@ -99,15 +166,21 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
             // if save property is customCSS
             elseif ($property === "customCSS")
             {   // save the content to /system/template/$NAME/css/custom.css
-                $template->setCustomCssFile($db, $value, 0);
+                $template->setCustomCssFile($db, $value, 0, $getID);
                 // save a minified version to /system/template/$NAME/css/custom.min.css
-                $template->setCustomCssFile($db, $value, 1);
+                $template->setCustomCssFile($db, $value, 1, $getID);
             }
         }
         else
         {
             if($property != "save" && $property != "customCSS")
-            {   // save theme settings to database
+            {
+                // PREVIEW VAR
+                if (isset($_POST['getID']))
+                {
+                    $template->id = $_POST['getID'];
+                }
+                // save theme settings to database
                 $template->setTemplateSetting($db, $template->id, $property, $value);
                 // to file
                 $template->setTemplateCssFile($db, $template->id, $property, $value);
@@ -115,15 +188,17 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
             // if save property is customCSS
             elseif ($property == "customCSS")
             {   // save the content to /system/template/$NAME/css/custom.css
-                $template->setCustomCssFile($db, $value, 0);
+                $template->setCustomCssFile($db, $value, 0, $getID);
                 // save a minified version to /system/template/$NAME/css/custom.min.css
-                $template->setCustomCssFile($db, $value, 1);
+                $template->setCustomCssFile($db, $value, 1, $getID);
             }
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////
-    // get all settings for active template
-    $tpl_settings = YAWK\template::getTemplateSettingsArray($db, "");
+
+
+    $tpl_settings = YAWK\template::getTemplateSettingsArray($db, $getID);
+
     // get HEADER FONT from db
     $headingFont = YAWK\template::getActivegfont($db, "", "heading-gfont");
 
@@ -839,6 +914,15 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         -webkit-filter: brightness(".$tpl_settings['img-brightness'].");
      }
     ";
+
+    if (isset($_POST['getID']))
+    {
+        $template->id = $_POST['getID'];
+    }
+    if (isset($_GET['id']))
+    {   // if id is set
+    $template->id = $_GET['id'];
+    }
     // minify content
     // $content = \YAWK\sys::minify($content);
     // create settings.css for development purpose (css/settings.css)
@@ -883,7 +967,12 @@ if (isset($_GET['id']) && (is_numeric($_GET['id'])))
     $template->id = $_GET['id'];
 }
 else
-{   // load current template id
+{
+    if (isset($_POST['getID']))
+    {
+        $template->id = $_POST['getID'];
+    }
+    // load current template id
     $template->id = \YAWK\template::getCurrentTemplateId($db);
 }
 
@@ -897,16 +986,57 @@ echo "
 echo \YAWK\backend::getTitle("ReDesign", $lang['DESIGN_DETAILS']);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
-            <li><a href=\"index.php?page=settings-template\" title=\"Themes\"> Themes</a></li>
+            <li><a href=\"index.php?page=template-manage\" title=\"Themes\"> Theme Manager</a></li>
             <li><a href=\"index.php?page=template-edit&id=$template->id\" class=\"active\" title=\"Edit Theme\"> Edit Theme</a></li>
         </ol></section>
     <!-- Main content -->
     <section class=\"content\">";
 /* page content start here */
 ?>
-<form id="template-edit-form" action="index.php?page=template-edit" method="POST">
+
+<?php
+    if (isset($_GET['id']))
+    {
+        $getID = $_GET['id'];
+    }
+    else
+        {
+            $getID = "";
+        }
+?>
+
+<?php
+if (isset($_GET['overrideTemplate']) && ($_GET['overrideTemplate']) === "1")
+{
+    if (!isset($newID))
+    {
+        if (!isset($newTplId))
+        {
+            $id = $_GET['id'];
+        }
+        else
+            {
+                $id = $newTplId;
+            }
+    }
+    else
+        {
+            $id = $newID;
+        }
+    $overrideTemplate = "overrideTemplate=1";
+}
+else
+    {
+        $overrideTemplate = "";
+        $id = $template->id;
+    }
+
+?>
+<form id="template-edit-form" action="index.php?page=template-edit&<?php echo $overrideTemplate; ?>&id=<?php echo $template->id; // echo $id; ?>" method="POST">
+    <input type="hidden" name="getID" value="<?php echo $getID; ?>">
     <!-- <div class="nav-tabs-custom"> <!-- admin LTE tab style -->
     <div id="btn-wrapper" class="text-right">
+        <?php echo $previewButton; ?>
     <input id="savebutton" type="submit" class="btn btn-success" name="save" value="<?php echo $lang['DESIGN_SAVE']; ?>">
     </div>
     <!-- FORM -->
@@ -950,6 +1080,8 @@ echo"<ol class=\"breadcrumb\">
                             ?>
                             <dt>Template Name</dt>
                             <dd><b><?php echo $template->name; ?></b></dd>
+                            <dt>Status</dt>
+                            <dd><b><?php echo $infoBadge; ?></b></dd>
                             <dt>Author</dt>
                             <dd><?php echo $template->author; ?>&nbsp;<?php echo $authorUrl; ?> </dd>
                             <dt>Release Date</dt>
@@ -1034,25 +1166,25 @@ echo"<ol class=\"breadcrumb\">
             <div class="row animated fadeIn">
                 <div class="col-md-4">
                     <h3>Text <small>Settings</small></h3>
-                    <?PHP  $template->getSetting($db, "body-text-size", "", ""); ?>
-                    <?PHP  $template->getSetting($db, "body-text-shadow", "", ""); ?>
-                    <?PHP  $template->getSetting($db, "body-text-shadow-color", "", ""); ?>
+                    <?PHP  $template->getSetting($db, "body-text-size", "", "", $user); ?>
+                    <?PHP  $template->getSetting($db, "body-text-shadow", "", "", $user); ?>
+                    <?PHP  $template->getSetting($db, "body-text-shadow-color", "", "", $user); ?>
 
                     <h3>Link <small>Colors </small></h3>
-                    <?PHP $template->getSetting($db, "%-link", "", ""); ?>
+                    <?PHP $template->getSetting($db, "%-link", "", "", $user); ?>
                 </div>
                 <div class="col-md-4">
                     <h3>Heading <small>Font Size</small></h3>
-                    <?PHP $template->getSetting($db, "h1-size", "", ""); ?>
-                    <?PHP $template->getSetting($db, "h2-size", "", ""); ?>
-                    <?PHP $template->getSetting($db, "h3-size", "", ""); ?>
-                    <?PHP $template->getSetting($db, "h4-size", "", ""); ?>
-                    <?PHP $template->getSetting($db, "h5-size", "", ""); ?>
-                    <?PHP $template->getSetting($db, "h6-size", "", ""); ?>
+                    <?PHP $template->getSetting($db, "h1-size", "", "", $user); ?>
+                    <?PHP $template->getSetting($db, "h2-size", "", "", $user); ?>
+                    <?PHP $template->getSetting($db, "h3-size", "", "", $user); ?>
+                    <?PHP $template->getSetting($db, "h4-size", "", "", $user); ?>
+                    <?PHP $template->getSetting($db, "h5-size", "", "", $user); ?>
+                    <?PHP $template->getSetting($db, "h6-size", "", "", $user); ?>
                 </div>
                 <div class="col-md-4">
                     <h3>Heading <small>Colors </small></h3>
-                    <?PHP $template->getSetting($db, "%-fontcolor", "", ""); ?>
+                    <?PHP $template->getSetting($db, "%-fontcolor", "", "", $user); ?>
                 </div>
             </div>
         </div>
@@ -1064,26 +1196,26 @@ echo"<ol class=\"breadcrumb\">
                 <div class="col-md-4">
                     <h3>Body <small>Settings</small></h3>
                     <?PHP
-                    $template->getSetting($db, "body-bg-color", "", ""); ?>
+                    $template->getSetting($db, "body-bg-color", "", "", $user); ?>
                     <h3>Body <small>Positioning</small></h3>
-                    <?PHP $template->getSetting($db, "body-margin-%", "", ""); ?>
+                    <?PHP $template->getSetting($db, "body-margin-%", "", "", $user); ?>
                 </div>
                 <div class="col-md-4">
                     <h3>Main Shadow <small>around all positions</small></h3>
                     <?PHP
-                    $template->getSetting($db, "main-box-shadow", "", "");
-                    $template->getSetting($db, "main-box-shadow-color", "", ""); ?>
+                    $template->getSetting($db, "main-box-shadow", "", "", $user);
+                    $template->getSetting($db, "main-box-shadow-color", "", "", $user); ?>
                     <h3>List Group <small>Colors</small></h3>
-                    <?PHP $template->getSetting($db, "%-listgroup", "", ""); ?>
+                    <?PHP $template->getSetting($db, "%-listgroup", "", "", $user); ?>
                 </div>
                 <div class="col-md-4">
                     <h3>Background <small>Image</small></h3>
                     <?PHP
-                    $template->getSetting($db, "body-bg-image", "", "");
-                    $template->getSetting($db, "body-bg-repeat", "", "");
-                    $template->getSetting($db, "body-bg-position", "", "");
-                    $template->getSetting($db, "body-bg-attachment", "", "");
-                    $template->getSetting($db, "body-bg-size", "", "");
+                    $template->getSetting($db, "body-bg-image", "", "", $user);
+                    $template->getSetting($db, "body-bg-repeat", "", "", $user);
+                    $template->getSetting($db, "body-bg-position", "", "", $user);
+                    $template->getSetting($db, "body-bg-attachment", "", "", $user);
+                    $template->getSetting($db, "body-bg-size", "", "", $user);
                     ?>
                 </div>
             </div>
@@ -1094,17 +1226,17 @@ echo"<ol class=\"breadcrumb\">
             <div class="row animated fadeIn">
                 <div class="col-md-3">
                     <h3>Menu Font <small>Colors </small></h3>
-                    <?PHP $template->getSetting($db, "%-menucolor", "", ""); ?>
+                    <?PHP $template->getSetting($db, "%-menucolor", "", "", $user); ?>
                 </div>
 
                 <div class="col-md-3">
                     <h3>Menu Background <small>Colors</small></h3>
-                    <?PHP $template->getSetting($db, "%-menubgcolor", "", ""); ?>
+                    <?PHP $template->getSetting($db, "%-menubgcolor", "", "", $user); ?>
                 </div>
 
                 <div class="col-md-3">
                     <h3>Dropdown <small>Colors</small></h3>
-                    <?PHP $template->getSetting($db, "%-menudropdowncolor", "", ""); ?>
+                    <?PHP $template->getSetting($db, "%-menudropdowncolor", "", "", $user); ?>
                 </div>
                 <div class="col-md-3">...additional content here...</div>
             </div>
@@ -1115,7 +1247,7 @@ echo"<ol class=\"breadcrumb\">
             <div class="row animated fadeIn">
                 <div class="col-md-3">
                     <h3>Well <small>Box Design</small></h3>
-                    <?PHP $template->getSetting($db, "well-%", "", ""); ?>
+                    <?PHP $template->getSetting($db, "well-%", "", "", $user); ?>
                 </div>
 
                 <div class="col-md-3">
@@ -1137,11 +1269,11 @@ echo"<ol class=\"breadcrumb\">
                 <div class="col-md-4">
                     <h3>Button <small>Basic Settings</small></h3>
                     <?PHP
-                    $template->getSetting($db, "btn-fontsize", "", "");
-                    $template->getSetting($db, "btn-font-weight", "", "");
-                    $template->getSetting($db, "btn-border", "", "");
-                    $template->getSetting($db, "btn-border-style", "", "");
-                    $template->getSetting($db, "btn-border-radius", "", "");
+                    $template->getSetting($db, "btn-fontsize", "", "", $user);
+                    $template->getSetting($db, "btn-font-weight", "", "", $user);
+                    $template->getSetting($db, "btn-border", "", "", $user);
+                    $template->getSetting($db, "btn-border-style", "", "", $user);
+                    $template->getSetting($db, "btn-border-radius", "", "", $user);
 
                     ?>
                 </div>
@@ -1153,38 +1285,38 @@ echo"<ol class=\"breadcrumb\">
                 <div class="col-md-2">
                     <h3>Default <small>Button</small></h3>
                     <?PHP
-                    $template->getSetting($db, "btn-default-%", "", "");
+                    $template->getSetting($db, "btn-default-%", "", "", $user);
                     ?>
                 </div>
 
                 <div class="col-md-2">
                     <h3>Primary <small>Button</small></h3>
                     <?PHP
-                    $template->getSetting($db, "btn-primary-%", "", "");
+                    $template->getSetting($db, "btn-primary-%", "", "", $user);
                     ?>
                 </div>
                 <div class="col-md-2">
                     <h3>Success <small>Button</small></h3>
                     <?PHP
-                    $template->getSetting($db, "btn-success-%", "", "");
+                    $template->getSetting($db, "btn-success-%", "", "", $user);
                     ?>
                 </div>
                 <div class="col-md-2">
                     <h3>Warning <small>Button</small></h3>
                     <?PHP
-                    $template->getSetting($db, "btn-warning-%", "", "");
+                    $template->getSetting($db, "btn-warning-%", "", "", $user);
                     ?>
                 </div>
                 <div class="col-md-2">
                     <h3>Danger <small>Button</small></h3>
                     <?PHP
-                    $template->getSetting($db, "btn-danger-%", "", "");
+                    $template->getSetting($db, "btn-danger-%", "", "", $user);
                     ?>
                 </div>
                 <div class="col-md-2">
                     <h3>Info <small>Button</small></h3>
                     <?PHP
-                    $template->getSetting($db, "btn-info-%", "", "");
+                    $template->getSetting($db, "btn-info-%", "", "", $user);
                     ?>
                 </div>
             </div>
@@ -1195,7 +1327,7 @@ echo"<ol class=\"breadcrumb\">
             <div class="row animated fadeIn">
                 <div class="col-md-3">
                     <h3>Image <small>Effects</small></h3>
-                    <?PHP $template->getSetting($db, "img-%", "", ""); ?>
+                    <?PHP $template->getSetting($db, "img-%", "", "", $user); ?>
                 </div>
 
                 <div class="col-md-3">
@@ -1223,7 +1355,7 @@ echo"<ol class=\"breadcrumb\">
                     <label class="h3" for="summernote">Custom.CSS
                         <small>Override settings and add your own definitions to extend this template</small></label>
                     <textarea name="customCSS" cols="64" rows="28" id="summernote" class="form-control dark"><?php
-                        $customCSS = $template->getCustomCSSFile($db);
+                        $customCSS = $template->getCustomCSSFile($db, $template->id);
                         echo $customCSS; ?></textarea>
                 </div>
                 <div class="col-md-4">

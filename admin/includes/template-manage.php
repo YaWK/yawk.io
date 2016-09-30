@@ -22,7 +22,7 @@ if (isset($_GET['toggle']) && ($_GET['toggle'] === "1"))
         }
         else
         {
-            \YAWK\alert::draw("warning", "Could not switch template.", "Please try it again or go to settings page.", "page=settings-template", 3000);
+            \YAWK\alert::draw("warning", "Could not switch template.", "Please try it again or go to settings page.", "page=template-manage", 3000);
         }
     }
 }
@@ -56,7 +56,7 @@ echo "
 echo \YAWK\backend::getTitle($lang['DESIGN'], $lang['TEMPLATES_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
-            <li><a href=\"index.php?page=settings-template\" class=\"active\" title=\"Users\"> Themes</a></li>
+            <li><a href=\"index.php?page=template-manage\" class=\"active\" title=\"Users\"> Themes</a></li>
         </ol>
     </section>
     <!-- Main content -->
@@ -86,7 +86,7 @@ echo"<ol class=\"breadcrumb\">
     $i_pages_published = 0;
     $i_pages_unpublished = 0;
     // get active tpl name
-    $activeTemplate = \YAWK\template::getCurrentTemplateName($db, "admin", "");
+    $activeTemplate = \YAWK\template::getCurrentTemplateName($db, "backend", "");
     if ($res = $db->query("SELECT * FROM {templates} ORDER BY active DESC"))
     {
         // fetch templates and draw a tbl row in a while loop
@@ -112,7 +112,7 @@ echo"<ol class=\"breadcrumb\">
                 $i_pages_unpublished = $i_pages_unpublished +1;
                 // delete template button
                 $deleteIcon = "<a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Das Template &laquo;".$row['name']." / ".$row['id']."&raquo; wirklich l&ouml;schen?\"
-                title=\"".$lang['DELETE']."\" href=\"index.php?page=settings-template&delete=1&templateID=".$row['id']."\">
+                title=\"".$lang['DELETE']."\" href=\"index.php?page=template-manage&delete=1&templateID=".$row['id']."\">
                 </a>";
             }
 
@@ -129,10 +129,10 @@ echo"<ol class=\"breadcrumb\">
 
             echo "<tr>
           <td style=\"text-align:center;\">
-            <a title=\"toggle&nbsp;status\" href=\"index.php?page=settings-template&toggle=1&templateID=".$row['id']."\">
+            <a title=\"toggle&nbsp;status\" href=\"index.php?page=template-manage&toggle=1&templateID=".$row['id']."\">
             <span class=\"label label-$pub\">$pubtext</span></a>&nbsp;</td>
           <td>".$row['id']."</td>
-          <td><a href=\"index.php?page=template-edit&id=".$row['id']."\"><div style=\"width:100%\">".$row['name']."</div></a></td>
+          <td><a href=\"index.php?page=template-edit&overrideTemplate=1&id=".$row['id']."\"><div style=\"width:100%\">".$row['name']."</div></a></td>
           <td><a href=\"index.php?page=template-edit&id=".$row['id']."\" style=\"color: #7A7376;\"><div style=\"width:100%\">".$row['description']."<br><small>".$row['positions']."</small></div></a></td>
           <td><a href=\"index.php?page=template-edit&id=".$row['id']."\" title=\"edit ".$row['name']."\">".$screenshot."</a></td>
           <td class=\"text-center\">

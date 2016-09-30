@@ -19,7 +19,8 @@ if (isset($_GET['template']) && (!empty($template)))
 }
 else
     {
-        $template = YAWK\template::getCurrentTemplateNameById($db, "");
+       // $template = YAWK\template::getCurrentTemplateNameById($db, "");
+        $template = $templateName;
     }
 ?>
  <!-- To ensure proper rendering and touch zooming on phones and tablets -->
@@ -38,7 +39,7 @@ else
     <!-- import font awesome -->
     <link rel="stylesheet" href="system/engines/font-awesome/css/font-awesome.min.css" type="text/css" media="all" />
     <!-- import animate.css -->
-    <link rel="stylesheet" href="system/engines/animateCSS/animate.min.css" type="text/css" media="all" />
+    <!-- <link rel="stylesheet" href="system/engines/animateCSS/animate.min.css" type="text/css" media="all" /> -->
     <!-- Bootstrap core CSS -->
     <link href="system/engines/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Own Template Settings: Bootstrap core CSS override -->

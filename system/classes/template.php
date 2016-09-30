@@ -27,6 +27,8 @@ namespace YAWK {
         public $releaseDate;
         public $author;
         public $url;
+        public $selectedTemplate;
+
 
         /**
          * returns the ID of the current (active) template
@@ -141,6 +143,7 @@ namespace YAWK {
                 $this->releaseDate = $row['releaseDate'];
                 $this->author = $row['author'];
                 $this->url = $row['url'];
+                $this->selectedTemplate = \YAWK\settings::getSetting($db, "selectedTemplate");
                 return true;
             }
             else
@@ -183,7 +186,7 @@ namespace YAWK {
             return $i_tplsettings;
         }
 
-        public static function getCurrentTemplateNameById($db, $templateID)
+        public static function getTemplateNameById($db, $templateID)
         {   /** @var $db \YAWK\db */
             if (!isset($templateID) || (empty($templateID)))
             {   // template id is not set, try to get current template
@@ -222,8 +225,12 @@ namespace YAWK {
                     $prefix = "../";
                 }
             }
+            // NO TEMPLATE ID IS SET...
             if (!isset($templateID) || (empty($templateID)))
-            {   // no templateID sent via param, so set current selected template ID
+            {
+                // check if user has its own template
+                // $userTemplateID = \YAWK\user::getUserTemplateID($db, )
+                // no templateID sent via param, set current selected template ID
                 $templateID = \YAWK\settings::getSetting($db, "selectedTemplate");
             }
             // get current template name from database
@@ -262,7 +269,7 @@ namespace YAWK {
             }
             // prepare vars
             // $content = $property." = ".$value.";"."\r\n";
-            $filename = self::getSettingsCSSFilename($db, "backend");
+            $filename = self::getSettingsCSSFilename($db, "backend", $tplId);
             // check if file need to be minified
             if (isset($minify) && (!empty($minify)))
             {   // minify is set
@@ -292,11 +299,11 @@ namespace YAWK {
             return true;
         }
 
-        public function setCustomCssFile($db, $content, $minify)
+        public function setCustomCssFile($db, $content, $minify, $templateID)
         {   /** @var $db \YAWK\db */
             // create template/css/custom.css (for development purpose in backend)
             // prepare vars
-            $filename = self::getCustomCSSFilename($db, "backend");
+            $filename = self::getCustomCSSFilename($db, "backend", $templateID);
             // check if file need to be minified
             if (isset($minify) && (!empty($minify)))
             {   // minify is set
@@ -327,26 +334,26 @@ namespace YAWK {
             return true;
         }
 
-        public function getCustomCSSFile($db)
+        public function getCustomCSSFile($db, $templateID)
         {   // get the content from custom.css
-            $filename = self::getCustomCSSFilename($db, "backend");
+            $filename = self::getCustomCSSFilename($db, "backend", $templateID);
             $content = file_get_contents($filename);
             return $content;
         }
 
-        public function getSettingsCSSFilename($db, $location)
+        public function getSettingsCSSFilename($db, $location, $templateID)
         {   /** @var $db \YAWK\db */
             // prepare vars... path + filename
-            $tplName = self::getCurrentTemplateName($db, $location, ""); // tpl name
+            $tplName = self::getCurrentTemplateName($db, $location, $templateID); // tpl name
             $alias = "settings"; // set CSS file name
             $filename = "../system/templates/$tplName/css/" . $alias . ".css";
             return $filename;
         }
 
-        public function getCustomCSSFilename($db, $location)
+        public function getCustomCSSFilename($db, $location, $templateID)
         {   /** @var $db \YAWK\db */
             // prepare vars... path + filename
-            $tplName = self::getCurrentTemplateName($db, $location, ""); // tpl name
+            $tplName = self::getCurrentTemplateName($db, $location, $templateID); // tpl name
             $alias = "custom"; // set CSS file name
             $filename = "../system/templates/$tplName/css/" . $alias . ".css";
             return $filename;
@@ -413,6 +420,7 @@ namespace YAWK {
             }
         }
 
+        /* outdated?? */
         public static function setTemplateActive($db, $templateID)
         {   /** @var $db \YAWK\db */
             if (!isset($templateID) && (empty($templateID)))
@@ -545,7 +553,7 @@ namespace YAWK {
                 }
         }
 
-        function getSetting($db, $filter, $special, $readonly)
+        function getSetting($db, $filter, $special, $readonly, $user)
         {   /** @var $db \YAWK\db  */
             // build sql query string
             // to build the template-settings page correct within one function
@@ -575,12 +583,37 @@ namespace YAWK {
                         break;
                 }
             }
-
-            if ($res = $db->query("SELECT ts.property, ts.value, ts.valueDefault, ts.description, ts.fieldClass, ts.placeholder
+            // OVERRIDE SETTINGS
+            if (isset($user))
+            {
+            if ($user->overrideTemplate == 1)
+            {
+                $sql = "SELECT ts.property, ts.value, ts.valueDefault, ts.description, ts.fieldClass, ts.placeholder
+                                   FROM {template_settings} ts
+                                   JOIN {users} u on u.templateID = ts.templateID
+                                   WHERE ts.activated = 1 && u.id = $user->id && ts.property
+                                   LIKE '$filter' && ts.property NOT RLIKE '.*-pos' $sql ORDER BY ts.sort";
+            }
+            else
+                {
+                    $sql = "SELECT ts.property, ts.value, ts.valueDefault, ts.description, ts.fieldClass, ts.placeholder
                                    FROM {template_settings} ts
                                    JOIN {settings} s on s.value = ts.templateID
                                    WHERE ts.activated = 1 && s.property = 'selectedTemplate' && ts.property
-                                   LIKE '$filter' && ts.property NOT RLIKE '.*-pos' $sql ORDER BY ts.sort"))
+                                   LIKE '$filter' && ts.property NOT RLIKE '.*-pos' $sql ORDER BY ts.sort";
+                }
+            }/*
+            else
+                {
+                    $sql = "SELECT ts.property, ts.value, ts.valueDefault, ts.description, ts.fieldClass, ts.placeholder
+                                   FROM {template_settings} ts
+                                   JOIN {settings} s on s.value = ts.templateID
+                                   WHERE ts.activated = 1 && s.property = 'selectedTemplate' && ts.property
+                                   LIKE '$filter' && ts.property NOT RLIKE '.*-pos' $sql ORDER BY ts.sort";
+                }
+*/
+
+            if ($res = $db->query($sql))
             {
                 $x = 1; // <h> tags count var
                 // draw input fields / template-settings.php
@@ -903,7 +936,7 @@ namespace YAWK {
             $array = '';
             $res = $db->query("SELECT property, value
                         	FROM {template_settings}
-                            WHERE templateID = '" . $templateID . "'");
+                            WHERE templateID = $templateID");
 
             while ($row = mysqli_fetch_assoc($res)){
                 $prop = $row['property'];

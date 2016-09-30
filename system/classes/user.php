@@ -50,6 +50,17 @@ namespace YAWK {
         public $public_email;
         public $logged_in;
         public $likes;
+        public $overrideTemplate;
+        public $templateID;
+
+        function __construct()
+        {
+            if (!isset($db)){ $db = new \YAWK\db(); }
+            if (isset($_SESSION['username']))
+            {
+                $this->loadProperties($db, $_SESSION['username']);
+            }
+        }
 
         static function getCurrentUserName()
         {
@@ -60,6 +71,114 @@ namespace YAWK {
             else
             {
                 return "Gast";
+            }
+        }
+
+        static function isAnybodyThere()
+        {   // check if session username + uid is set
+            if (isset($_SESSION['username']) && isset($_SESSION['uid']))
+            {   // check if session logged_in status is true
+                if ($_SESSION['logged_in'] == true)
+                {
+                    return true;
+                }
+                else
+                    {
+                        return false;
+                    }
+            }
+            else
+                {
+                    return false;
+                }
+        }
+
+        static function getUserTemplateID($db, $uid)
+        {   /* @var $db \YAWK\db */
+            if (!isset($uid) && (empty($uid)))
+            {   // uid is missing
+                return false;
+            }
+            if ($res = $db->query("SELECT templateID FROM {users} WHERE id = $uid"))
+            {
+                if ($row = mysqli_fetch_row($res))
+                {   // return $userTemplateID
+                    return $row[0];
+                }
+                else
+                    {
+                        return false;
+                    }
+            }
+            else
+                {
+                    return false;
+                }
+        }
+
+        public function isAllowedToOverrideTemplate($db, $uid)
+        {   /* @var $db \YAWK\db */
+            if ($res = $db->query("SELECT overrideTemplate FROM {users} WHERE id = $uid"))
+            {
+                if ($row = mysqli_fetch_row($res))
+                {
+                    if ($row[0] === "1")
+                    {
+                        return true;
+                    }
+                    else
+                        {
+                            return false;
+                        }
+                }
+                else
+                    {
+                        return false;
+                    }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public function setUserTemplate($db, $overrideTemplate, $userTemplateID, $uid)
+        {   /* @var $db \YAWK\db */
+        if (!isset($overrideTemplate) && (!is_numeric($overrideTemplate)))
+        {   // wrong param
+            return false;
+        }
+        if (!isset($userTemplateID) && (!is_numeric($userTemplateID)))
+        {   // wrong param
+            return false;
+        }
+        if (!isset($uid) && (!is_numeric($uid)))
+        {   // wrong param
+            return false;
+        }
+
+            if ($res = $db->query("UPDATE {users} SET overrideTemplate = $overrideTemplate, templateID = $userTemplateID WHERE id = $uid"))
+            {
+                return true;
+            }
+            else
+                {
+                    return false;
+                }
+        }
+
+        public function isTemplateEqual($db, $userTemplateID)
+        {
+            /* @var $db \YAWK\db */
+            // check if userTemplateID param is set
+            if (!isset($userTemplateID) && (empty($userTemplateID))) {   // missing templateID - cannot compare,
+                return false;
+            }
+            $selectedTemplate = \YAWK\settings::getSetting($db, "selectedTemplate");
+            if ($selectedTemplate === $userTemplateID) {   // user templateID and primary template (selectedTemplate) are equal
+                return true;
+            } else {   // user templateID and selected template do not match
+                return false;
             }
         }
 
@@ -310,6 +429,8 @@ namespace YAWK {
                     $this->public_email = $row['public_email'];
                     $this->job = $row['job'];
                     $this->likes = $row['likes'];
+                    $this->overrideTemplate = $row['overrideTemplate'];
+                    $this->templateID = $row['templateID'];
                 }
                 else
                 {   // fetch failed

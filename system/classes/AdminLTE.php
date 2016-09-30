@@ -618,11 +618,11 @@ namespace YAWK {
                 </li>
                 <!-- design -->
                 <li ";echo (isset($_GET['page']) && $_GET['page'] == 'template-edit') ? "class='active'" : ""; echo">
-                    <a href=\"index.php?page=template-edit\"><i class=\"fa fa-paint-brush\"></i> <span>$lang[REDESIGN]</span></a>
+                    <a href=\"index.php?page=template-edit&id=";echo \YAWK\settings::getSetting($db, "selectedTemplate"); echo"\"><i class=\"fa fa-paint-brush\"></i> <span>$lang[REDESIGN]</span></a>
                 </li>
                 <!-- themes -->
-                <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-template') ? "class='active'" : ""; echo">
-                    <a href=\"index.php?page=settings-template\"><i class=\"fa fa-photo\"></i> <span>$lang[THEMES]</span></a>
+                <li ";echo (isset($_GET['page']) && $_GET['page'] == 'template-manage') ? "class='active'" : ""; echo">
+                    <a href=\"index.php?page=template-manage\"><i class=\"fa fa-photo\"></i> <span>$lang[THEMES]</span></a>
                 </li>
                 <!-- seo -->
                 <li ";echo (isset($_GET['page']) && $_GET['page'] == 'yawk-stats') ? "class='active'" : ""; echo">

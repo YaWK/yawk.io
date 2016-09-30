@@ -111,6 +111,31 @@ else
     // and load properties for it
     $currentpage->loadProperties($db, $db->quote($_GET['include']));
 }
+
+// get global selected template ID
+$selectedTemplate = \YAWK\settings::getSetting($db, "selectedTemplate");
 // call template controller
-$template = $template->getCurrentTemplateName($db, "frontend", "");
-include("system/templates/$template/index.php");
+if (\YAWK\user::isAnybodyThere())
+{   // user seems to be logged in...
+    // load template name from {users}
+    $user->loadProperties($db, $_SESSION['username']);
+    // check if user is allowed to overrule selectedTemplate
+    if ($user->overrideTemplate == true)
+    {   // set user template ID to session
+        $_SESSION['userTemplateID'] = $user->templateID;
+        // get template by user templateID
+        $templateName = \YAWK\template::getTemplateNameById($db, $user->templateID);
+        // include page, based on user templateID
+        include("system/templates/$templateName/index.php");
+    }
+    else
+        {   // user is not allowed to overrule template, show global default (selectedTemplate) instead.
+            $templateName = \YAWK\template::getTemplateNameById($db, $selectedTemplate);
+            include("system/templates/$templateName/index.php");
+        }
+}
+else
+    {   // user is NOT logged in, load default template (selectedTemplate) from settings db
+        $templateName = \YAWK\template::getTemplateNameById($db, $selectedTemplate);
+        include("system/templates/$templateName/index.php");
+    }
