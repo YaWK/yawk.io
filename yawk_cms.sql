@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 29. Sep 2016 um 07:36
+-- Erstellungszeit: 01. Okt 2016 um 00:46
 -- Server-Version: 10.1.10-MariaDB
 -- PHP-Version: 5.6.19
 
@@ -449,7 +449,22 @@ INSERT INTO `cms_logins` (`id`, `datetime`, `location`, `failed`, `ip`, `userage
 (198, '2016-09-28 13:07:52', 'backend', 1, '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36', 'admin', 'test'),
 (199, '2016-09-28 13:07:52', 'backend', 1, '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36', 'admin', 'test'),
 (200, '2016-09-28 13:07:57', 'backend', 0, '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36', 'admin', '12345'),
-(201, '2016-09-29 00:19:27', 'backend', 0, '192.168.1.5', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36', 'claudia', '12345');
+(201, '2016-09-29 00:19:27', 'backend', 0, '192.168.1.5', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36', 'claudia', '12345'),
+(202, '2016-09-29 21:22:15', 'backend', 0, '192.168.1.5', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36', 'claudia', '1q2345'),
+(203, '2016-09-29 21:22:15', 'backend', 1, '192.168.1.5', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36', 'claudia', '1q2345'),
+(204, '2016-09-29 21:22:15', 'backend', 1, '192.168.1.5', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36', 'claudia', '1q2345'),
+(205, '2016-09-29 21:22:46', 'backend', 0, '192.168.1.5', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36', 'claudia', '12345'),
+(206, '2016-09-29 21:46:30', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36', 'admin', '12345'),
+(207, '2016-09-29 21:46:30', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36', 'admin', '12345'),
+(208, '2016-09-29 22:06:22', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36', 'admin', '12345'),
+(209, '2016-09-29 22:06:22', 'frontend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36', 'admin', '12345'),
+(210, '2016-09-29 22:06:38', 'backend', 0, '192.168.1.5', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36', 'claudia', '12345'),
+(211, '2016-09-29 22:25:59', 'frontend', 0, '192.168.1.5', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36', 'claudia', '12345'),
+(212, '2016-09-29 22:26:11', 'frontend', 0, '192.168.1.5', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36', 'claudia', '12345'),
+(213, '2016-09-29 22:26:51', 'frontend', 0, '192.168.1.5', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36', 'claudia', '12345'),
+(214, '2016-09-29 22:27:03', 'frontend', 0, '192.168.1.5', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36', 'claudia', '12345'),
+(215, '2016-09-29 22:27:43', 'backend', 0, '192.168.1.5', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36', 'claudia', '12345'),
+(216, '2016-09-30 07:58:13', 'backend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0', 'claudia', '12345');
 
 -- --------------------------------------------------------
 
@@ -575,7 +590,9 @@ CREATE TABLE `cms_notifications` (
 
 INSERT INTO `cms_notifications` (`log_id`, `log_date`, `log_type`, `msg_id`, `fromUID`, `toUID`, `toGID`, `seen`) VALUES
 (1, '0000-00-00 00:00:00', 1, 0, 1, 0, 0, 0),
-(2, '0000-00-00 00:00:00', 1, 0, 1, 0, 0, 0);
+(2, '0000-00-00 00:00:00', 1, 0, 1, 0, 0, 0),
+(3, '0000-00-00 00:00:00', 1, 0, 1, 0, 0, 0),
+(4, '0000-00-00 00:00:00', 1, 0, 1, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -973,7 +990,8 @@ CREATE TABLE `cms_templates` (
 --
 
 INSERT INTO `cms_templates` (`id`, `active`, `name`, `positions`, `description`, `version`, `releaseDate`, `author`, `url`) VALUES
-(1, 1, 'yawk-bootstrap3', 'menu:main:footer', '<b>Bootstrap 3 Theme</b> <small>SYSTEM DEFAULT THEME</SMALL>', '1.0.0', '2016-09-29 00:00:00', 'Daniel Retzl ', 'http://yawk.io');
+(1, 1, 'yawk-bootstrap3', 'menu:main:footer', '<b>Bootstrap 3 Theme</b> <small>SYSTEM DEFAULT THEME</SMALL>', '1.0.0', '2016-09-29 00:00:00', 'Daniel Retzl ', 'http://yawk.io'),
+(2, 0, 'rosa', 'main', 'rosa', '', '0000-00-00 00:00:00', '', '');
 
 -- --------------------------------------------------------
 
@@ -1008,7 +1026,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (8, 1, 'h4-fontcolor', '000000', '000000', 'H4 Color', 1, 0, 'color', 'pick a color or leave blank'),
 (9, 1, 'h5-fontcolor', '000000', '000000', 'H5 Color', 1, 0, 'color', 'pick a color or leave blank'),
 (10, 1, 'h6-fontcolor', '000000', '000000', 'H6 Color', 1, 0, 'color', 'pick a color or leave blank'),
-(11, 1, 'body-bg-color', 'F0F0F0', 'FFFFFF', 'Body Background Color', 1, 0, 'color', 'pick a color or leave blank'),
+(11, 1, 'body-bg-color', '2B2B2A', 'FFFFFF', 'Body Background Color', 1, 0, 'color', 'pick a color or leave blank'),
 (14, 1, 'well-bg-color', 'F5F5F5', 'f5f5f5', 'Well Background Color', 1, 0, 'color', 'pick a color or leave blank'),
 (15, 1, 'smalltag-fontcolor', '777777', '777777', 'Small Tag Font Color', 1, 0, 'color', 'pick a color or leave blank'),
 (16, 1, 'font-menucolor', '777777', '777777', 'Font Color', 1, 0, 'color', 'pick a color or leave blank'),
@@ -1061,7 +1079,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (65, 1, 'well-border-color', 'E0E0E0', 'e3e3e3', 'Well Border Color', 1, 0, 'color', 'pick a color or leave blank'),
 (66, 1, 'well-border-radius', '0px', '0px', 'Well Border Radius', 1, 0, 'form-control', 'for rounded edges, value in px eg. 4px'),
 (67, 1, 'well-shadow', '2px 2px 5px 6px', '3px 3px 5px 6px', 'Well Shadow', 1, 0, 'form-control', 'value in px eg. x,y,blur,spread'),
-(68, 1, 'well-shadow-color', 'F0F0F0', 'CCCCCC', 'Well Shadow Color', 1, 0, 'color', 'pick a color or leave blank'),
+(68, 1, 'well-shadow-color', 'DBDBDB', 'CCCCCC', 'Well Shadow Color', 1, 0, 'color', 'pick a color or leave blank'),
 (69, 1, 'h1-size', '36px', '36px', 'H1 Text Size', 1, 0, 'form-control', 'size in px eg. 36px'),
 (70, 1, 'h2-size', '30px', '30px', 'H2 Text Size', 1, 0, 'form-control', 'size in px eg. 30px'),
 (71, 1, 'h3-size', '24px', '24px', 'H3 Text Size', 1, 0, 'form-control', 'size in px eg. 24px'),
@@ -1130,7 +1148,139 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (134, 1, 'img-lefty', '-7deg', '-7deg', 'Angle to Left', 1, 0, 'form-control', 'value in degree e.g. -7deg'),
 (135, 1, 'img-righty-less', '4deg', '4deg', 'Lesser Angle to Right', 1, 0, 'form-control', 'value in degree e.g. 4deg'),
 (136, 1, 'img-lefty-less', '-4deg', '-4deg', 'Lesser Angle to Left', 1, 0, 'form-control', 'value in degree e.g. -4deg'),
-(137, 1, 'img-brightness', '110%', '110%', 'Brightness On Hover', 1, 0, 'form-control', 'value in percent eg. 110%');
+(137, 1, 'img-brightness', '110%', '110%', 'Brightness On Hover', 1, 0, 'form-control', 'value in percent eg. 110%'),
+(8817, 2, 'heading-gfont', '8', '1', 'Global GoogleFont ID', 1, 0, 'form-control', 'Default Google Font'),
+(8818, 2, 'menu-gfont', '8', '1', 'Menu GoogleFont ID', 1, 0, 'form-control', 'Menu Google Font'),
+(8819, 2, 'text-gfont', '7', '1', 'Text GoogleFont ID', 1, 0, 'form-control', 'Text Google Font'),
+(8820, 2, 'h1-fontcolor', '000000', '000000', 'H1 Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8821, 2, 'h2-fontcolor', '000000', '000000', 'H2 Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8822, 2, 'h3-fontcolor', '000000', '000000', 'H3 Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8823, 2, 'h4-fontcolor', '000000', '000000', 'H4 Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8824, 2, 'h5-fontcolor', '000000', '000000', 'H5 Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8825, 2, 'h6-fontcolor', '000000', '000000', 'H6 Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8826, 2, 'body-bg-color', 'DE909B', 'FFFFFF', 'Body Background Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8827, 2, 'well-bg-color', 'FFA6B2', 'f5f5f5', 'Well Background Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8828, 2, 'smalltag-fontcolor', '777777', '777777', 'Small Tag Font Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8829, 2, 'font-menucolor', '777777', '777777', 'Font Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8830, 2, 'brand-menucolor', '777777', '777777', 'Brand Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8831, 2, 'brandhover-menucolor', '5E5E5E', '5e5e5e', 'Brand Hover Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8832, 2, 'fonthover-menucolor', '333333', '333333', 'Font Hover Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8833, 2, 'fontactive-menucolor', '555555', '555555', 'Font Active Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8834, 2, 'fontdisabled-menucolor', 'CCCCCC', 'cccccc', 'Font Disabled Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8835, 2, 'default-menubgcolor', 'F8F8F8', 'f8f8f8', 'Default Background Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8836, 2, 'border-menubgcolor', 'E7E7E7', 'e7e7e7', 'Border Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8837, 2, 'active-menubgcolor', 'E7E7E7', 'e7e7e7', 'Active Background Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8838, 2, 'toggle-menubgcolor', 'DDDDDD', 'dddddd', 'Toggle Border Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8839, 2, 'iconbar-menubgcolor', '888888', '888888', 'IconBar Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8840, 2, 'background-menudropdowncolor', 'FFFFFF', 'ffffff', 'Dropdown Background Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8841, 2, 'border-menudropdowncolor', 'CCCCCC', 'cccccc', 'Dropdown Border Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8842, 2, 'font-menudropdowncolor', '333333', '333333', 'Dropdown Font Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8843, 2, 'fonthover-menudropdowncolor', '262626', '262626', 'Dropdown Font Hover Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8844, 2, 'hoverbg-menudropdowncolor', 'F5F5F5', 'f5f5f5', 'Hover Background Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8845, 2, 'fontactive-menudropdowncolor', 'FFFFFF', 'ffffff', 'Dropdown Font Active Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8846, 2, 'activebg-menudropdowncolor', '337AB7', '337ab7', 'Dropdown Active Background Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8847, 2, 'disabled-menudropdowncolor', '777777', '777777', 'Dropdown Font Disabled Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8848, 2, 'a-link', '337AB7', '337ab7', 'Link Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8849, 2, 'visited-link', '337AB7', '337ab7', 'Visited Link', 1, 0, 'color', 'pick a color or leave blank'),
+(8850, 2, 'hover-link', '23527C', '23527c', 'Link Hover Cover', 1, 0, 'color', 'pick a color or leave blank'),
+(8851, 2, 'decoration-link', 'none', 'none', 'Link Decoration', 1, 0, 'form-control', 'none'),
+(8852, 2, 'hoverdecoration-link', 'underline', 'underline', 'Hover Decoration', 1, 0, 'form-control', 'underline'),
+(8853, 2, 'buttontext-link', 'FFFFFF', 'ffffff', 'Button Text Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8854, 2, 'background-listgroup', 'FFFFFF', 'ffffff', 'List Group Background Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8855, 2, 'fontcolor-listgroup', '000000', '000000', 'Font Color List Group', 1, 0, 'color', 'pick a color or leave blank'),
+(8856, 2, 'text-fontcolor', '333333', '333333', 'Text Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8857, 2, 'fontshadow-menucolor', 'CCCCCC', '#CCCCCC', 'Menu Text Shadow Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8858, 2, 'form-valid', '009900', '009900', 'Form Valid Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8859, 2, 'form-error', 'FF0000', 'FF0000', 'Form Error Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8860, 2, 'body-text-shadow', '1px 0px', '1px 0px', 'Body Text Shadow Thickness', 1, 0, 'form-control', 'shadow size in pixels'),
+(8861, 2, 'body-text-shadow-color', 'FFFFFF', 'CCCCCC', 'Body Text Shadow Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8862, 2, 'body-text-size', '1.7em', '1.7em', 'Body Font Size', 1, 0, 'form-control', 'size in 1.7em or 16px (for example)'),
+(8863, 2, 'body-margin-top', '40px', '40px', 'Body Top Margin', 1, 0, 'form-control', 'value in px e.g. 40px'),
+(8864, 2, 'body-bg-image', '', 'any .jpg or .png you want', 'Body Background Image', 1, 0, 'form-control', 'media/images/background.jpg'),
+(8865, 2, 'body-bg-repeat', 'no-repeat', 'no-repeat', 'Body Background Repeat', 1, 0, 'form-control', 'repeat, repeat-x, repeat-y, no-repeat, inherit'),
+(8866, 2, 'body-bg-position', 'center', 'center', 'Body Background Position', 1, 0, 'form-control', 'left-center, right-center, top-center, [top, bottom]'),
+(8867, 2, 'body-bg-attachment', 'fixed', 'fixed', 'Body Background Attach', 1, 0, 'form-control', 'scroll, fixed, local, initial, inherit'),
+(8868, 2, 'body-bg-size', 'cover', 'cover', 'Body Background Size', 1, 0, 'form-control', 'auto, cover, length, percentage, initial, inherit'),
+(8869, 2, 'main-box-shadow', '6px 12px 16px 0px', '6px 12px 6px', 'Main Box Shadow', 1, 0, 'form-control', 'eg. 3px 6px 3px'),
+(8870, 2, 'main-box-shadow-color', '474747', 'E8E8E8', 'Main Box Shadow Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8871, 2, 'well-min-height', '20px', '20px', 'Well Minimum Height', 1, 0, 'form-control', 'value in px eg. 20px'),
+(8872, 2, 'well-padding', '20px', '19px', 'Well padding', 1, 0, 'form-control', 'value in px eg. 20px'),
+(8873, 2, 'well-margin-top', '0px', '0px', 'Well Margin Top', 1, 0, 'form-control', 'value in px eg. 10px'),
+(8874, 2, 'well-margin-bottom', '0px', '0px', 'Well Margin Bottom', 1, 0, 'form-control', 'value in px eg. 10px'),
+(8875, 2, 'well-border', '0px solid', '1px solid', 'Well Border Style', 1, 0, 'form-control', 'value in px eg. 1px solid'),
+(8876, 2, 'well-border-color', 'E0E0E0', 'e3e3e3', 'Well Border Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8877, 2, 'well-border-radius', '0px', '0px', 'Well Border Radius', 1, 0, 'form-control', 'for rounded edges, value in px eg. 4px'),
+(8878, 2, 'well-shadow', '2px 2px 5px 6px', '3px 3px 5px 6px', 'Well Shadow', 1, 0, 'form-control', 'value in px eg. x,y,blur,spread'),
+(8879, 2, 'well-shadow-color', 'DBDBDB', 'CCCCCC', 'Well Shadow Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8880, 2, 'h1-size', '36px', '36px', 'H1 Text Size', 1, 0, 'form-control', 'size in px eg. 36px'),
+(8881, 2, 'h2-size', '30px', '30px', 'H2 Text Size', 1, 0, 'form-control', 'size in px eg. 30px'),
+(8882, 2, 'h3-size', '24px', '24px', 'H3 Text Size', 1, 0, 'form-control', 'size in px eg. 24px'),
+(8883, 2, 'h4-size', '18px', '18px', 'H4 Text Size', 1, 0, 'form-control', 'size in px eg. 18px'),
+(8884, 2, 'h5-size', '14px', '14px', 'H5 Text Size', 1, 0, 'form-control', 'size in px eg. 14px'),
+(8885, 2, 'h6-size', '12px', '12px', 'H6 Text Size', 1, 0, 'form-control', 'size in px eg. 12px'),
+(8886, 2, 'btn-fontsize', '14px', '14px', 'Button Fontsize', 1, 0, 'form-control', 'size in px eg. 12px'),
+(8887, 2, 'btn-font-weight', 'normal', 'normal', 'Button Font Weight', 1, 0, 'form-control', 'normal or bold'),
+(8888, 2, 'btn-border', '1px', '1px', 'Button Border', 1, 0, 'form-control', 'value in px eg. 1px'),
+(8889, 2, 'btn-border-style', 'solid', 'solid', 'Button Border Style', 1, 0, 'form-control', 'solid, dotted, dashed'),
+(8890, 2, 'btn-border-radius', '4px', '4px', 'Button Border Radius', 1, 0, 'form-control', 'value in px eg. 4px'),
+(8891, 2, 'btn-default-color', '333333', '333333', 'Text Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8892, 2, 'btn-default-background-color', 'FFFFFF', 'FFFFFF', 'BG Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8893, 2, 'btn-default-border-color', 'CCCCCC', 'CCCCCC', 'Border Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8894, 2, 'btn-default-focus-background-color', 'E6E6E6', 'E6E6E6', 'Focus BG Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8895, 2, 'btn-default-focus-border-color', '8C8C8C', '8C8C8C', 'Focus Border Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8896, 2, 'btn-default-hover-color', '333333', '333333', ':hover Text Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8897, 2, 'btn-default-hover-background-color', 'E6E6E6', 'E6E6E6', ':hover BG Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8898, 2, 'btn-default-hover-border-color', 'ADADAD', 'ADADAD', ':hover Border Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8899, 2, 'btn-primary-color', 'FFFFFF', 'FFFFFF', 'Text Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8900, 2, 'btn-primary-background-color', '337AB7', '337ab7', 'BG Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8901, 2, 'btn-primary-border-color', '2E6DA4', '2e6da4', 'Border Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8902, 2, 'btn-primary-focus-background-color', '286090', '286090', 'Focus BG Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8903, 2, 'btn-primary-focus-border-color', '122B40', '122b40', 'Focus Border Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8904, 2, 'btn-primary-hover-color', 'FFFFFF', 'FFFFFF', ':hover Text Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8905, 2, 'btn-primary-hover-background-color', '286090', '286090', 'Hover BG Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8906, 2, 'btn-primary-hover-border-color', '204D74', '204d74', 'Hover Border Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8907, 2, 'btn-success-color', 'FFFFFF', 'FFFFFF', 'Text Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8908, 2, 'btn-success-background-color', '5CB85C', '5cb85c', 'BG Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8909, 2, 'btn-success-border-color', '4CAE4C', '4cae4c', 'Border Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8910, 2, 'btn-success-focus-background-color', '449D44', '449d44', 'Focus BG Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8911, 2, 'btn-success-focus-border-color', '255625', '255625', 'Focus Border Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8912, 2, 'btn-success-hover-color', 'FFFFFF', 'FFFFFF', ':hover Text Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8913, 2, 'btn-success-hover-background-color', '449D44', '449d44', 'Hover BG Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8914, 2, 'btn-success-hover-border-color', '398439', '398439', 'Hover Border Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8915, 2, 'btn-info-color', 'FFFFFF', 'FFFFFF', 'Text Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8916, 2, 'btn-info-background-color', '5BC0DE', '5bc0de', 'BG Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8917, 2, 'btn-info-border-color', '46B8DA', '46b8da', 'Border Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8918, 2, 'btn-info-focus-background-color', '31B0D5', '31b0d5', 'Focus BG Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8919, 2, 'btn-info-focus-border-color', '1B6D85', '1b6d85', 'Focus Border Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8920, 2, 'btn-info-hover-color', 'FFFFFF', 'FFFFFF', ':hover Text Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8921, 2, 'btn-info-hover-background-color', '31B0D5', '31b0d5', 'Hover BG Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8922, 2, 'btn-info-hover-border-color', '269ABC', '269abc', 'Hover Border Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8923, 2, 'btn-warning-color', 'FFFFFF', 'FFFFFF', 'Text Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8924, 2, 'btn-warning-background-color', 'F0AD4E', 'f0ad4e', 'BG Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8925, 2, 'btn-warning-border-color', 'EEA236', 'eea236', 'Border Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8926, 2, 'btn-warning-focus-background-color', 'EC971F', 'ec971f', 'Focus BG Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8927, 2, 'btn-warning-focus-border-color', '985F0D', '985f0d', 'Focus Border Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8928, 2, 'btn-warning-hover-color', 'FFFFFF', 'FFFFFF', ':hover Text Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8929, 2, 'btn-warning-hover-background-color', 'EC971F', 'ec971f', 'Hover BG Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8930, 2, 'btn-warning-hover-border-color', 'D58512', 'd58512', 'Hover Border Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8931, 2, 'btn-danger-color', 'FFFFFF', 'FFFFFF', 'Text Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8932, 2, 'btn-danger-background-color', 'D9534F', 'd9534f', 'BG Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8933, 2, 'btn-danger-border-color', 'D43F3A', 'd43f3a', 'Border Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8934, 2, 'btn-danger-focus-background-color', 'C9302C', 'c9302c', 'Focus BG Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8935, 2, 'btn-danger-focus-border-color', '761C19', '761c19', 'Focus Border Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8936, 2, 'btn-danger-hover-color', 'FFFFFF', 'FFFFFF', ':hover Text Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8937, 2, 'btn-danger-hover-background-color', 'C9302C', 'c9302c', 'Hover BG Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8938, 2, 'btn-danger-hover-border-color', 'AC2925', 'ac2925', 'Hover Border Color', 1, 0, 'color', 'pick a font or leave blank'),
+(8939, 2, 'body-margin-bottom', '0px', '0px', 'Body Bottom Margin', 1, 0, 'form-control', 'value in px e.g. 0px'),
+(8940, 2, 'body-margin-left', '0px', '0px', 'Body Left Margin', 1, 0, 'form-control', 'value in px e.g. 0px'),
+(8941, 2, 'body-margin-right', '0px', '0px', 'Body Right Margin', 1, 0, 'form-control', 'value in px e.g. 0px'),
+(8942, 2, 'img-shadow', '2px 2px 12px 2px', '2px 2px 12px 2px', 'Image Shadow', 1, 0, 'form-control', 'value in px e.g. 2px 2px 12px 2px'),
+(8943, 2, 'img-shadow-color', 'A8A8A8', '0A0A0A', 'Image Shadow Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8944, 2, 'img-righty', '7deg', '7deg', 'Angle to Right', 1, 0, 'form-control', 'value in degree e.g. 7deg'),
+(8945, 2, 'img-lefty', '-7deg', '-7deg', 'Angle to Left', 1, 0, 'form-control', 'value in degree e.g. -7deg'),
+(8946, 2, 'img-righty-less', '4deg', '4deg', 'Lesser Angle to Right', 1, 0, 'form-control', 'value in degree e.g. 4deg'),
+(8947, 2, 'img-lefty-less', '-4deg', '-4deg', 'Lesser Angle to Left', 1, 0, 'form-control', 'value in degree e.g. -4deg'),
+(8948, 2, 'img-brightness', '110%', '110%', 'Brightness On Hover', 1, 0, 'form-control', 'value in percent eg. 110%');
 
 -- --------------------------------------------------------
 
@@ -1167,17 +1317,19 @@ CREATE TABLE `cms_users` (
   `public_email` int(1) NOT NULL DEFAULT '0',
   `terminatedByUser` int(1) NOT NULL DEFAULT '0',
   `job` varchar(255) NOT NULL,
-  `likes` int(11) NOT NULL DEFAULT '0'
+  `likes` int(11) NOT NULL DEFAULT '0',
+  `overrideTemplate` int(1) NOT NULL,
+  `templateID` int(6) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `cms_users`
 --
 
-INSERT INTO `cms_users` (`id`, `blocked`, `privacy`, `online`, `gid`, `terms`, `username`, `password`, `date_created`, `date_changed`, `date_expired`, `date_lastlogin`, `login_count`, `email`, `url`, `twitter`, `facebook`, `firstname`, `lastname`, `street`, `zipcode`, `city`, `country`, `state`, `logged_in`, `public_email`, `terminatedByUser`, `job`, `likes`) VALUES
-(1, 0, 1, 1, 5, 1, 'admin', '827ccb0eea8a706c4c34a16891f84e7b', '2016-09-10 00:00:00', '2016-09-15 00:44:24', '0000-00-00 00:00:00', '2016-09-28 13:07:57', 181, 'danielretzl@gmail.com', 'http://yawk.website', 'https://www.twitter.com/danielretzl', 'https://www.facebook.com/dretzl', 'Daniel', 'Retzl', 'Arnoldgasse 1/5/21', '1210', 'Wien', '&Ouml;sterreich', '&Ouml;sterreich', 1, 1, 0, 'YaWK Main Developer', 0),
-(2, 0, 0, 1, 4, 1, 'claudia', '827ccb0eea8a706c4c34a16891f84e7b', '2016-09-13 13:54:26', '2016-09-29 00:19:20', '0000-00-00 00:00:00', '2016-09-29 00:19:27', 5, 'test@test.com', '', '', '', '', '', '', '', '', '', '', 1, 0, 0, '', 0),
-(3, 0, 0, 0, 2, 1, 'tux', '81dc9bdb52d04dc20036dbd8313ed055', '2016-09-13 13:55:31', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 'tux@yourdomain.com', '', '', '', '', '', '', '', '', '', '', 0, 0, 0, '', 0);
+INSERT INTO `cms_users` (`id`, `blocked`, `privacy`, `online`, `gid`, `terms`, `username`, `password`, `date_created`, `date_changed`, `date_expired`, `date_lastlogin`, `login_count`, `email`, `url`, `twitter`, `facebook`, `firstname`, `lastname`, `street`, `zipcode`, `city`, `country`, `state`, `logged_in`, `public_email`, `terminatedByUser`, `job`, `likes`, `overrideTemplate`, `templateID`) VALUES
+(1, 0, 1, 1, 5, 1, 'admin', '827ccb0eea8a706c4c34a16891f84e7b', '2016-09-10 00:00:00', '2016-09-15 00:44:24', '0000-00-00 00:00:00', '2016-09-29 22:06:22', 185, 'danielretzl@gmail.com', 'http://yawk.website', 'https://www.twitter.com/danielretzl', 'https://www.facebook.com/dretzl', 'Daniel', 'Retzl', '', '', '', '', '', 1, 1, 0, 'YaWK Main Developer', 0, 0, 1),
+(2, 0, 0, 1, 4, 1, 'claudia', '827ccb0eea8a706c4c34a16891f84e7b', '2016-09-13 13:54:26', '2016-09-29 00:19:20', '0000-00-00 00:00:00', '2016-09-30 07:58:13', 13, 'test@test.com', '', '', '', '', '', '', '', '', '', '', 1, 0, 0, '', 0, 0, 2),
+(3, 0, 0, 0, 2, 1, 'tux', '81dc9bdb52d04dc20036dbd8313ed055', '2016-09-13 13:55:31', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 'tux@yourdomain.com', '', '', '', '', '', '', '', '', '', '', 0, 0, 0, '', 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -1593,17 +1745,17 @@ ALTER TABLE `cms_friends`
 -- AUTO_INCREMENT für Tabelle `cms_logins`
 --
 ALTER TABLE `cms_logins`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=202;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=217;
 --
 -- AUTO_INCREMENT für Tabelle `cms_menu`
 --
 ALTER TABLE `cms_menu`
-  MODIFY `TMPID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `TMPID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT für Tabelle `cms_notifications`
 --
 ALTER TABLE `cms_notifications`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT für Tabelle `cms_notifications_msg`
 --
@@ -1633,12 +1785,12 @@ ALTER TABLE `cms_syslog_types`
 -- AUTO_INCREMENT für Tabelle `cms_templates`
 --
 ALTER TABLE `cms_templates`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT für Tabelle `cms_template_settings`
 --
 ALTER TABLE `cms_template_settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4218;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9072;
 --
 -- AUTO_INCREMENT für Tabelle `cms_users`
 --
