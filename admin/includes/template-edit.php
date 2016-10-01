@@ -49,23 +49,23 @@
     {
         if (empty($_GET['id']) || (!empty($_POST['id']))) { $getID = $_POST['id']; }
         else if (!empty($_GET['id']) || (empty($_POST['id']))) { $getID = $_GET['id']; }
-        else { $getID = \YAWK\settings::getSetting($db, "selectedTemplate");
-
-        }
+        else { $getID = \YAWK\settings::getSetting($db, "selectedTemplate");  }
 
         if ($user->isTemplateEqual($db, $getID))
         {
             // update template in user table row
             $user->setUserTemplate($db, 0, $getID, $user->id);
+            $user->overrideTemplate = 0;
             // build info badge to inform user that this is HIS preview
             $infoBadge = "<span class=\"label label-success\"><i class=\"fa fa-check\"></i>&nbsp;&nbsp;Visible to everyone</span>";
             $previewButton = "<span class=\"btn btn-success\"><i class=\"fa fa-check\"></i>&nbsp;&nbsp;Visible to everyone</span>";
         }
         else
             {   $user->setUserTemplate($db, 1, $getID, $user->id);
+                $user->overrideTemplate = 1;
                 // build info badge to inform user that this is HIS preview
                 $infoBadge = "<span class=\"label label-danger\"><i class=\"fa fa-eye\"></i>&nbsp;&nbsp;Visible to you</span>";
-                $previewButton = "<span class=\"btn btn-danger\"><i class=\"fa fa-eye\"></i>&nbsp;&nbsp;Preview</span>";
+                $previewButton = "<a class=\"btn btn-danger\" href=\"index.php?page=template-manage&overrideTemplate=0&id=$getID\"><i class=\"fa fa-times\"></i>&nbsp;&nbsp;Close Preview</a>";
             }
 
         // check if user/admin is allowed to override the template
@@ -74,10 +74,13 @@
             if (isset($_GET['overrideTemplate']) && ($_GET['overrideTemplate'] === "1"))
             {
                 $user->setUserTemplate($db, 1, $getID, $user->id);
+                $user->overrideTemplate = 1;
+                $template->loadProperties($db, $getID);
             }
             else
             {
                 $user->setUserTemplate($db, 0, $getID, $user->id);
+                $user->overrideTemplate = 0;
             }
 
             // $userTemplateID = \YAWK\user::getUserTemplateID($db, $user->id);
@@ -103,6 +106,7 @@ if(isset($_POST['savenewtheme']) && isset($_POST['newthemename']))
     $template->id = $newTplId;
     // set new theme active
     $user->setUserTemplate($db, 1, $newID, $user->id);
+    $user->overrideTemplate = 1;
     //\YAWK\settings::setSetting($db, "selectedTemplate", $newID);
 
     if (isset($_POST['description']) && (!empty($_POST['description'])))
@@ -142,16 +146,17 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
             if($property != "save" && $property != "customCSS")
             {   // save new theme settings to database
                 $template->setTemplateSetting($db, $newID, $property, $value);
-                // to file
-                $template->setTemplateCssFile($db, $newID, $property, $value);
             }
             // if save property is customCSS
             elseif ($property === "customCSS")
             {   // save the content to /system/template/$NAME/css/custom.css
                 $template->setCustomCssFile($db, $value, 0, $getID);
-                // save a minified version to /system/template/$NAME/css/custom.min.css
-                $template->setCustomCssFile($db, $value, 1, $getID);
             }
+            // ##### CHECKEN, ob das in die schleife gehört!
+            // to file
+            // $template->setTemplateCssFile($db, $newID, $property, $value);
+            // save a minified version to /system/template/$NAME/css/custom.min.css
+            // $template->setCustomCssFile($db, $value, 1, $getID);
         }
         else
         {
@@ -165,7 +170,7 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
                 // save theme settings to database
                 $template->setTemplateSetting($db, $template->id, $property, $value);
                 // to file
-                $template->setTemplateCssFile($db, $template->id, $property, $value);
+                // $template->setTemplateCssFile($db, $template->id, $property, $value);
             }
             // if save property is customCSS
             elseif ($property == "customCSS")
@@ -944,10 +949,6 @@ if(isset($_GET['deletegfont'])){
 }
 
 
-if (isset($_GET['savenewtheme']))
-{
-    \YAWK\sys::setTimeout("index.php?page=template-manage", 0);
-}
 
 // INIT template ID
 if (isset($_GET['id']) && (is_numeric($_GET['id'])))

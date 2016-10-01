@@ -1,7 +1,7 @@
 /* auto generated */
     body {   /* BODY SETTINGS */
         color: #333333;
-        background-color: #2B2B2A;
+        background-color: #FFFFFF;
         text-shadow: 1px 0px #FFFFFF;
         font-size: 1.7em;
         filter: dropshadow(color=#FFFFFF, offx=1, offy=1);
@@ -109,8 +109,8 @@
         background-color: #F5F5F5;
         border: 0px solid #E0E0E0;
         border-radius: 0px;
-        -webkit-box-shadow: 2px 2px 5px 6px #DBDBDB;
-        box-shadow: 2px 2px 5px 6px #DBDBDB;
+        -webkit-box-shadow: 2px 2px 5px 6px #F0F0F0;
+        box-shadow: 2px 2px 5px 6px #F0F0F0;
     }
     /* LIST GROUP */
    .list-group-item {
