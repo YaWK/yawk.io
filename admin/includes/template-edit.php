@@ -56,15 +56,17 @@
             // update template in user table row
             $user->setUserTemplate($db, 0, $getID, $user->id);
             $user->overrideTemplate = 0;
-            // build info badge to inform user that this is HIS preview
+            // info badge to inform user that this is HIS preview
             $infoBadge = "<span class=\"label label-success\"><i class=\"fa fa-check\"></i>&nbsp;&nbsp;Visible to everyone</span>";
-            $previewButton = "<span class=\"btn btn-success\"><i class=\"fa fa-check\"></i>&nbsp;&nbsp;Visible to everyone</span>";
+            // info button on top
+            $previewButton = "";
         }
         else
             {   $user->setUserTemplate($db, 1, $getID, $user->id);
                 $user->overrideTemplate = 1;
-                // build info badge to inform user that this is HIS preview
-                $infoBadge = "<span class=\"label label-danger\"><i class=\"fa fa-eye\"></i>&nbsp;&nbsp;Visible to you</span>";
+                // info badge to inform user that this is HIS preview
+                $infoBadge = "<span class=\"label label-danger\"><i class=\"fa fa-eye\"></i>&nbsp;&nbsp;Preview</span>";
+                // close preview button on top
                 $previewButton = "<a class=\"btn btn-danger\" href=\"index.php?page=template-manage&overrideTemplate=0&id=$getID\"><i class=\"fa fa-times\"></i>&nbsp;&nbsp;Close Preview</a>";
             }
 
@@ -81,6 +83,7 @@
             {
                 $user->setUserTemplate($db, 0, $getID, $user->id);
                 $user->overrideTemplate = 0;
+                $template->loadProperties($db, $getID);
             }
 
             // $userTemplateID = \YAWK\user::getUserTemplateID($db, $user->id);
@@ -948,7 +951,10 @@ if(isset($_GET['deletegfont'])){
     }
 }
 
-
+if (isset($_POST['savenewtheme']))
+{
+    \YAWK\sys::setTimeout("index.php?page=template-manage", 0);
+}
 
 // INIT template ID
 if (isset($_GET['id']) && (is_numeric($_GET['id'])))
@@ -1025,8 +1031,8 @@ else
     <input type="hidden" name="getID" value="<?php echo $getID; ?>">
     <!-- <div class="nav-tabs-custom"> <!-- admin LTE tab style -->
     <div id="btn-wrapper" class="text-right">
-        <?php echo $previewButton; ?>
-    <input id="savebutton" type="submit" class="btn btn-success" name="save" value="<?php echo $lang['DESIGN_SAVE']; ?>">
+    <?php echo $previewButton; ?>
+        <input id="savebutton" type="submit" class="btn btn-success" name="save" value="<?php echo $lang['DESIGN_SAVE']; ?>">
     </div>
     <!-- FORM -->
     <!-- Nav tabs -->
