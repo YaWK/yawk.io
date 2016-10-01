@@ -47,9 +47,11 @@
     // check if call comes from template-manage or template-edit form
     if (isset($_GET['id']) && (is_numeric($_GET['id']) || (isset($_POST['id']) && (is_numeric($_POST['id'])))))
     {
-        if (empty($_GET['id']) && (!empty($_POST['id']))) { $getID = $_POST['id']; }
-        else if (!empty($_GET['id']) && (empty($_POST['id']))) { $getID = $_GET['id']; }
-        else { $getID = 0; }
+        if (empty($_GET['id']) || (!empty($_POST['id']))) { $getID = $_POST['id']; }
+        else if (!empty($_GET['id']) || (empty($_POST['id']))) { $getID = $_GET['id']; }
+        else { $getID = \YAWK\settings::getSetting($db, "selectedTemplate");
+
+        }
 
         if ($user->isTemplateEqual($db, $getID))
         {
@@ -80,37 +82,15 @@
 
             // $userTemplateID = \YAWK\user::getUserTemplateID($db, $user->id);
             // load template properties for userTemplateID
-            $template->loadProperties($db, $getID);
+            // $template->loadProperties($db, $getID);
         }
         else
         {   // user is not allowed to override, so we load the default (global) selectedTemplate settings
            // $template->loadProperties($db, YAWK\settings::getSetting($db, "selectedTemplate"));
-            $template->loadProperties($db, $getID);
+           $template->loadProperties($db, $getID);
         }
     }
 
-
-/*
-if (isset($_GET['id']) && (is_numeric($_GET['id'])))
-{   // get template properties for requested template ID
-    $template->loadProperties($db, $_GET['id']);
-}
-else
-    {   // get template properties for current active template ID
-        $template->loadProperties($db, YAWK\settings::getSetting($db, "selectedTemplate"));
-    }
-
-        if (isset($_GET['id']) && (!empty($_GET['id'])))
-        {
-           //  \YAWK\user::setUserTemplate($db, $_GET['id'], $_SESSION['uid']);
-            $getSettingsID = $_GET['id'];
-        }
-        else
-        {
-            $getSettingsID = "";
-        }
-
-*/
 
 // SAVE AS new theme
 if(isset($_POST['savenewtheme']) && isset($_POST['newthemename']))
@@ -162,6 +142,8 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
             if($property != "save" && $property != "customCSS")
             {   // save new theme settings to database
                 $template->setTemplateSetting($db, $newID, $property, $value);
+                // to file
+                $template->setTemplateCssFile($db, $newID, $property, $value);
             }
             // if save property is customCSS
             elseif ($property === "customCSS")
@@ -959,6 +941,12 @@ if(isset($_GET['deletegfont'])){
     if($gfontid != '0'){
         $template->deletegfont($db, $gfontid);
     }
+}
+
+
+if (isset($_GET['savenewtheme']))
+{
+    \YAWK\sys::setTimeout("index.php?page=template-manage", 0);
 }
 
 // INIT template ID
