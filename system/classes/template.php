@@ -20,13 +20,19 @@ namespace YAWK {
     class template
     {
         public $id;
+        public $active;
         public $name;
         public $positions;
         public $description;
-        public $version;
         public $releaseDate;
         public $author;
-        public $url;
+        public $authorUrl;
+        public $weblink;
+        public $subAuthor;
+        public $subAuthorUrl;
+        public $modifyDate;
+        public $version;
+        public $license;
         public $selectedTemplate;
 
 
@@ -136,13 +142,18 @@ namespace YAWK {
             $res = $db->query("SELECT * FROM {templates} WHERE id = '".$id."'");
             if ($row = mysqli_fetch_assoc($res)) {
                 $this->id = $row['id'];
+                $this->active = $row['active'];
                 $this->name = $row['name'];
                 $this->positions = $row['positions'];
                 $this->description = $row['description'];
-                $this->version = $row['version'];
                 $this->releaseDate = $row['releaseDate'];
                 $this->author = $row['author'];
-                $this->url = $row['url'];
+                $this->authorUrl = $row['authorUrl'];
+                $this->weblink = $row['weblink'];
+                $this->subAuthor = $row['subAuthor'];
+                $this->subAuthorUrl = $row['subAuthorUrl'];
+                $this->modifyDate = $row['modifyDate'];
+                $this->version = $row['version'];
                 $this->selectedTemplate = \YAWK\settings::getSetting($db, "selectedTemplate");
                 return true;
             }
