@@ -1066,29 +1066,82 @@ else
                         </div>
                         <dl class="dl-horizontal">
                             <?php
-                            if (isset($template->url) && (!empty($template->url)))
-                            {   // set external link html code
-                                $authorUrl = "<small>&nbsp;<a href=\"$template->url\" title=\"Author's weblink [in new tab]\"
+                            // PREPARE TEMPLATE DETAILS VARS
+                            // author URL
+                            if (isset($template->authorUrl) && (!empty($template->authorUrl)))
+                            {   // set author's link
+                                $authorUrl = "<small>&nbsp;<a href=\"$template->authorUrl\" target=\"_blank\" title=\"Author's weblink [in new tab]\"
                                 <i class=\"fa fa-external-link\"></i></a></small>";
                             }
-                            else { $authorUrl = ''; }
+                            else { $authorUrl = ""; }
+
+                            // author
+                            if (isset($template->author) && (!empty($template->author)))
+                            {   // set author
+                                $author = "<dt>Author</dt><dd>$template->author&nbsp;$authorUrl</dd>";
+                            }
+                            else { $author = ""; }
+
+                            // weblink
+                            if (isset($template->weblink) && (!empty($template->weblink)))
+                            {   // set author's link
+                                $weblink = "<dt>Weblink</dt><dd><a href=\"$template->weblink\" target=\"_blank\" title=\"Project's weblink [in new tab]\">$template->weblink</a></dd>";
+                            }
+                            else { $weblink= ""; }
+
+                            // modifyDate
+                            if (isset($template->modifyDate) && ($template->modifyDate !== "0000-00-00 00:00:00"))
+                            {   // set modifyDate
+                                $modifyDate = "<dt>modified</dt><dd>$template->modifyDate</dd>";
+                            }
+                            else { $modifyDate = ''; }
+
+                            // releaseDate
+                            if (isset($template->releaseDate) && ($template->releaseDate !== "0000-00-00 00:00:00"))
+                            {   // set release date
+                                $releaseDate = "<dt>Release</dt><dd>$template->releaseDate</dd>";
+                            }
+                            else { $releaseDate = ''; }
+
+                            // description
+                            if (isset($template->description) && (!empty($template->description)))
+                            {   // set author
+                                $description = "<dt>Description</dt><dd>$template->description</dd>";
+                            }
+                            else { $description = ""; }
+
+                            // version
+                            if (isset($template->version) && (!empty($template->version)))
+                            {   // set author
+                                $version = "<dt>Version</dt><dd>$template->version</dd>";
+                            }
+                            else { $version = ""; }
+
+                            if (isset($template->subAuthorUrl) && (!empty($template->subAuthorUrl)))
+                            {   // set author's link
+                                $subauthorurl = "<small>&nbsp;<a href=\"$template->subAuthorUrl\" target=\"_blanl\" title=\"Modified by weblink [in new tab]\"
+                                <i class=\"fa fa-external-link\"></i></a></small>";
+                            }
+                            else { $subauthorurl = ""; }
+
+                            // subAuthor
+                            if (isset($template->subAuthor) && (!empty($template->subAuthor)))
+                            {   // set subAuthor
+                                $subauthor = "<dt>Modified by</dt><dd>$template->subAuthor&nbsp;$subauthorurl</dd>";
+                            }
+                            else { $subauthor = ""; }
+
+                            $settings = "<dt>Settings</dt>
+                            <dd>".$template->countTemplateSettings($db,    $template->id)."</dd>";
+
                             ?>
                             <dt>Template Name</dt>
                             <dd><b><?php echo $template->name; ?></b></dd>
                             <dt>Status</dt>
                             <dd><b><?php echo $infoBadge; ?></b></dd>
-                            <dt>Author</dt>
-                            <dd><?php echo $template->author; ?>&nbsp;<?php echo $authorUrl; ?> </dd>
-                            <dt>Release Date</dt>
-                            <dd><?php echo $template->releaseDate; ?></dd>
-                            <dt>Version</dt>
-                            <dd><?php echo $template->version; ?></dd>
-                            <dt>Settings</dt>
-                            <dd><?php echo $template->countTemplateSettings($db,    $template->id); ?></dd>
-                            <dt>&nbsp;</dt>
-                            <dd>&nbsp;</dd>
-                            <dt>Description</dt>
-                            <dd><?php echo $template->description; ?></dd>
+
+                            <?php echo $description.$author.$weblink.$version.$releaseDate.$settings."<br>".$subauthor.$modifyDate; ?>
+
                             <dt>&nbsp;</dt>
                             <dd>&nbsp;</dd>
                             <dt>Engines</dt>
@@ -1374,6 +1427,19 @@ else
             <h3>Settings <small>add settings or fonts to database</small></h3>
             <div class="row animated fadeIn">
                 <div class="col-md-4">
+                    <h4>Update Details <small>of this template</small></h4>
+                    <label for="Tname">Template Name</label>
+                    <input type="text" class="form-control" id="Tname" name="Tname" value="<?php echo $template->name; ?>" placeholder="Template Name" disabled>
+                    <label for="Tauthor">Template Author</label>
+                    <input type="text" class="form-control" id="Tauthor" name="Tauthor" value="<?php echo $template->author; ?>" placeholder="Template Author" disabled>
+                    <label for="Tversion">Template Version</label>
+                    <input type="text" class="form-control" id="Tversion" name="Tversion" value="<?php echo $template->version; ?>" placeholder="Template Version" disabled>
+                    <label for="Tname">Template Release Date</label>
+                    <input type="text" class="form-control" id="Treleasedate" name="Treleasedate" value="<?php echo $template->releaseDate; ?>" placeholder="Template Release Date" disabled>
+                    <label for="Tdescription">Template Description</label>
+                    <textarea class="form-control" id="Tdescription" rows="5" cols="64" name="Tdescription"><?php echo $template->description; ?></textarea>
+                </div>
+                <div class="col-md-4">
                     <label for="property">add Setting <small>to active template</small></label>
                     <input type="text" class="form-control" id="property" name="property" placeholder="property">
                     <input type="text" class="form-control" name="value" placeholder="value">
@@ -1388,9 +1454,6 @@ else
                     <input type="text" class="form-control" id="gfont" name="gfont" placeholder="font eg. Ubuntu">
                     <input type="text" class="form-control" name="gfontdescription" placeholder="description eg. Ubuntu, serif">
                     <br /><input id="savebutton" type="submit" class="btn btn-danger" name="addgfont" value="Add&nbsp;GoogleFont" />
-                </div>
-                <div class="col-md-4">
-                    ...
                 </div>
             </div>
         </div>
