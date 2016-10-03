@@ -154,6 +154,7 @@ namespace YAWK {
                 $this->subAuthorUrl = $row['subAuthorUrl'];
                 $this->modifyDate = $row['modifyDate'];
                 $this->version = $row['version'];
+                $this->license = $row['license'];
                 $this->selectedTemplate = \YAWK\settings::getSetting($db, "selectedTemplate");
                 return true;
             }
