@@ -30,17 +30,16 @@ if(isset($_POST['save'])){
         $_POST['content'] = \YAWK\sys::encodeChars($_POST['content']);
         // write content to file
         if ($page->writeContent("../", stripslashes(str_replace('\r\n', '', ($_POST['content']))))) {
-            print YAWK\alert::draw("success", "Success!", "The page has been saved!","page=page-edit&alias=$page->alias&id=$page->id", "800");
-            exit;
+            print YAWK\alert::draw("success", "Success!", "The page has been saved!","", 800);
           }
           else {
-              print YAWK\alert::draw("danger", "Error!", "File $page->alias could not be written. Check CHMOD!","page=page-edit&alias=$page->alias&id=$page->id", "4200");
-              exit;
+              print YAWK\alert::draw("danger", "Error!", "File $page->alias could not be written. Please check chmod properties!", "", "8200");
+
           }
     }
     else {
-       print YAWK\alert::draw("danger", "Error!", "Could not store data of $page->alias into database!","page=page-edit&alias=$page->alias&id=$page->id", "4200");
-       exit;
+       print YAWK\alert::draw("danger", "Error!", "Could not store data of $page->alias into database!", "", "8200");
+
     }
 }
 // path to cms	
@@ -65,7 +64,7 @@ $page->alias = preg_replace("/[^a-z0-9\-\/]/i","",$alias); // final check: just 
 <!-- bootstrap date-timepicker -->
 <link type="text/css" href="../system/engines/datetimepicker/css/datetimepicker.min.css" rel="stylesheet" />
 <script type="text/javascript" src="../system/engines/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
- 	 
+
 <!-- include summernote css/js-->
 <!-- include codemirror (codemirror.css, codemirror.js, xml.js, formatting.js) -->
 <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.min.css" />
@@ -78,24 +77,47 @@ $page->alias = preg_replace("/[^a-z0-9\-\/]/i","",$alias); // final check: just 
 
 <link href="../system/engines/summernote/dist/summernote.css" rel="stylesheet">
 <script src="../system/engines/summernote/dist/summernote.min.js"></script>
+<script src="../system/engines/summernote/dist/summernote-cleaner.js"></script>
+<script src="../system/engines/summernote/dist/summernote-image-attributes.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-$('#summernote').summernote({
-  height: 420,                 // set editor height
-  minHeight: null,             // set minimum height of editor
-  maxHeight: null,             // set maximum height of editor
-  focus: true,                 // set focus to editable area after initializing summernote
 
-  codemirror: { // codemirror options
-  theme: 'monokai'
-  }
+    // initialize summernote editor
+    $('#summernote').summernote({
+        height: 420,                 // set editor height
+        minHeight: null,             // set minimum height of editor
+        maxHeight: null,             // set maximum height of editor
+        focus: true,                 // set focus to editable area after initializing summernote
 
-});
-});
+        popover: {
+            image: [
+                ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+                ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                ['custom', ['imageAttributes', 'imageShape']],
+                ['remove', ['removeMedia']]
+            ]
+        },
+        lang: 'en-US',
+
+        codemirror: { // codemirror options
+            theme: 'monokai'
+        },
+
+        cleaner: {
+            action: 'both', // both|button|paste 'button' only cleans via toolbar button, 'paste' only clean when pasting content, both does both options.
+            newline: '<br>' // Summernote's default is to use '<p><br></p>'
+            // notTime:2400, // Time to display Notifications.
+            // notStyle:'position:absolute;bottom:0;left:2px', // Position of Notification
+            // icon:'<i class="note-icon">[Your Button]</i>'
+        }
+    }); // end summernote
+
+}); // end document ready
 </script>
 
 <script type="text/javascript" >
 $(document).ready(function() {
+
 $('#datetimepicker1').datetimepicker({
     format: 'yyyy-mm-dd hh:ii:ss'
 });
@@ -103,7 +125,7 @@ $('#datetimepicker1').datetimepicker({
 $('#datetimepicker2').datetimepicker({
     format: 'yyyy-mm-dd hh:ii:ss'
 });
-});//]]>  /* END document.ready */
+}); //]]>  /* END document.ready */
 /* ...end admin jQ controlls  */
 </script>
 
@@ -126,10 +148,17 @@ echo "
     <section class=\"content\">";
 ?>
 
-
-
-  <form name="form" role="form" class="form-inline" action="index.php?page=page-edit&site=<?php print $page->alias; ?>" method="post">
-
+<!-- CHECK THIS -->
+  <form name="form" role="form" class="form-inline" onsubmit="/* return copyCodeIfCodeView()*/" action="index.php?page=page-edit&site=<?php print $page->alias; ?>&id=<?php echo $page->id; ?>"  method="post">
+      <script type="text/javascript">
+/*
+          function copyCodeIfCodeView(e) {
+              if ($summernote.summernote('codeview.isActivated')) {
+                  var context_textarea = window.document.getElementById('summernote');
+                  context_textarea.value = $summernote.summernote('code');
+              }
+          } */
+      </script>
       <div class="row">
           <div class="col-md-8">
     <!-- EDITOR -->
@@ -137,13 +166,12 @@ echo "
   	<textarea id="summernote" name="content"><?php print $page->readContent("../"); ?> </textarea>
 
     <!-- SAVE BUTTON -->
-    <button type="submit" id="savebutton" name="save" class="btn btn-danger" style="float:right; margin-top:6px;">
-      <i class="fa fa-check"></i> &nbsp;<?php print $lang['SAVE_CHANGES']; ?>
-    </button>
+    <div class="text-right">
+        <button type="submit" id="savebutton" name="save" class="btn btn-danger">
+            <i class="fa fa-check"></i> &nbsp;<?php print $lang['SAVE_CHANGES']; ?>
+        </button>
+    </div>
 
-  	<!-- SAVEBUTTON OLD (w/o icon)
- 	<input id="savebutton" name="save" class="btn btn-danger" style="float:right; margin-top:10px;" type="submit" value="<?php print $lang['SAVE_CHANGES']; ?>" />
-    -->
 	<input type="hidden" name="searchstring" value="<?php print $page->alias; ?>.html" >
 	<input type="hidden" name="id" value="<?php print $_GET['id']; ?>" >
 

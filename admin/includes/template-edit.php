@@ -1131,6 +1131,13 @@ else
                             }
                             else { $subauthor = ""; }
 
+                            // subAuthor
+                            if (isset($template->license) && (!empty($template->license)))
+                            {   // set subAuthor
+                                $license = "<dt>License</dt><dd>$template->license</dd>";
+                            }
+                            else { $license = ""; }
+
                             $settings = "<dt>Settings</dt>
                             <dd>".$template->countTemplateSettings($db,    $template->id)."</dd>";
 
@@ -1140,7 +1147,7 @@ else
                             <dt>Status</dt>
                             <dd><b><?php echo $infoBadge; ?></b></dd>
 
-                            <?php echo $description.$author.$weblink.$version.$releaseDate.$settings."<br>".$subauthor.$modifyDate; ?>
+                            <?php echo $description.$author.$weblink.$license.$version.$releaseDate.$settings."<br>".$subauthor.$modifyDate; ?>
 
                             <dt>&nbsp;</dt>
                             <dd>&nbsp;</dd>
@@ -1436,8 +1443,20 @@ else
                     <input type="text" class="form-control" id="Tversion" name="Tversion" value="<?php echo $template->version; ?>" placeholder="Template Version" disabled>
                     <label for="Tname">Template Release Date</label>
                     <input type="text" class="form-control" id="Treleasedate" name="Treleasedate" value="<?php echo $template->releaseDate; ?>" placeholder="Template Release Date" disabled>
+                    <label for="Tlicenese">Template License</label>
+                    <select name="Tlicense" class="form-control" id="Tlicenese" disabled>
+                        <option value="GNU General Public License (GPL)">GNU General Public License (GPL) </option>
+                        <option value="GNU Lesser Public License (LGPL)">GNU Lesser Public License (LGPL)</option>
+                        <option value="MIT License">MIT License</option>
+                        <option value="Mozilla Public License 2.0">Mozilla Public License 2.0</option>
+                        <option value="Apache License 2.0">Apache License 2.0</option>
+                    </select>
                     <label for="Tdescription">Template Description</label>
                     <textarea class="form-control" id="Tdescription" rows="5" cols="64" name="Tdescription"><?php echo $template->description; ?></textarea>
+                    <label for="Tname">Modified by</label>
+                    <input type="text" class="form-control" id="Tsubauthor" name="Tsubauthor" value="<?php echo $template->subAuthor; ?>" placeholder="Sub Author">
+                    <label for="Tname">Sub Author URL</label>
+                    <input type="text" class="form-control" id="Tsubauthorurl" name="Tsubauthor" value="<?php echo $template->subAuthorUrl; ?>" placeholder="Co Author Url">
                 </div>
                 <div class="col-md-4">
                     <label for="property">add Setting <small>to active template</small></label>
