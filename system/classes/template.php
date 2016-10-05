@@ -516,6 +516,18 @@ namespace YAWK {
             }
         }
 
+        function setTemplateDetails($db, $description = "", $author = "", $authorUrl ="", $id)
+        {    /** @var $db \YAWK\db  */
+            if ($res = $db->query("UPDATE {templates} SET description = '$description', subAuthor = '$author', subAuthorUrl = '$authorUrl' WHERE id = $id"))
+            {   // template details updated...
+                return true;
+            }
+            else
+                {   // could not save template details
+                    return false;
+                }
+        }
+
         static function deleteTemplate($db, $templateID)
         {   /** @var $db \YAWK\db  */
             if (!isset($templateID) && (empty($templateID)))
