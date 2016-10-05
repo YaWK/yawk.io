@@ -90,7 +90,11 @@ $page->alias = preg_replace("/[^a-z0-9\-\/]/i","",$alias); // final check: just 
 $(document).ready(function() {
 
         $( "#savebutton" ).click(function() {
-            // $('textarea#summernote').summernote('codeview.deactivate');
+            // check if codeview is active
+            if ($('textarea#summernote').summernote('codeview.isActivated')) {
+                // if so, turn it off
+                $('textarea#summernote').summernote('codeview.deactivate');
+            }
             // get the value of summernote textarea
             var text = $('textarea#summernote').val();
             // search for <img> tags and revert src ../ to set correct path for frontend
