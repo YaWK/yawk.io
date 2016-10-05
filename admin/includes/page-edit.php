@@ -83,12 +83,13 @@ $page->alias = preg_replace("/[^a-z0-9\-\/]/i","",$alias); // final check: just 
 $(document).ready(function() {
 
         $( "#savebutton" ).click(function() {
+            $('textarea#summernote').summernote('codeview.deactivate');
             // get the value of summernote textarea
             var text = $('textarea#summernote').val();
             // search for <img> tags and revert src ../ to set correct path for frontend
             var frontend = text.replace(/<img src=\"..\/media/g,"<img src=\"media");
             // put the new string back into <textarea>
-            $('textarea#summernote').val(frontend).summernote('codeview.deactivate'); // to make sure that saving works
+            $('textarea#summernote').val(frontend); // to make sure that saving works
 
         });
 
