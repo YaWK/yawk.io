@@ -305,12 +305,11 @@ echo "
               <!-- SUB MENU SELECTOR -->
               <label for="menu">SubMen&uuml;
                   <select name="menu" class="form-control">
-                      <option value="<? print \YAWK\sys::getSubMenu($db, $page->id); ?>"><?php print \YAWK\sys::getMenuItem($db, $page->id); ?></option>
+                      <option value="<?php print \YAWK\sys::getSubMenu($db, $page->id); ?>"><?php print \YAWK\sys::getMenuItem($db, $page->id); ?></option>
                       <option value="0">-- Kein Men&uuml; --</option>
                       <?php
                       foreach(YAWK\sys::getMenus($db) as $menue){
                           print "<option value=\"".$menue['id']."\"";
-
                           if (isset($_POST['menu'])) {
                               if($_POST['menu'] === $menue['id']){
                                   print " selected=\"selected\"";
