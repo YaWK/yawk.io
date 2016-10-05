@@ -5,7 +5,7 @@
             "bPaginate": false,
             "bLengthChange": false,
             "bFilter": true,
-            "bSort": true,
+            "bSort": false,
             "bInfo": true,
             "bAutoWidth": false
         } );
@@ -32,9 +32,10 @@
     <tr>
       <td width="5%">&nbsp;</td>
       <td width="5%"><strong>ID</strong></td>
+      <td width="10%"><strong>Status</strong></td>
       <td width="30%"><strong>Name</strong></td>
-      <td width="40%"><strong>Eintr&auml;ge</strong></td>
-      <td width="20%" style="text-align: center;"><strong>Aktionen</strong></td>
+      <td width="30%"><strong>Eintr&auml;ge</strong></td>
+      <td width="20%" class="text-center"><strong>Aktionen</strong></td>
     </tr>
   </thead>
   <tbody>
@@ -42,27 +43,67 @@
     <?php
 
     /* get all menus */
+    $globalMenuID = \YAWK\settings::getSetting($db, "globalmenuid");
+
     $rows = \YAWK\backend::getMenusArray($db);
         foreach ($rows AS $row) {
             $res[] = $row;
-            if ($row['published'] === '1') {
+            $pageName = '';
+            if ($sql = $db->query("SELECT menu, alias FROM {pages} WHERE menu = $row[id]"))
+            {
+                $result = mysqli_fetch_row($sql);
+                if ($result[0] == $row['id'])
+                {
+                    $subMenuLabel = "<i class=\"label label-default\">SubMenu</i>";
+                    $pageName = "<small>$result[1].html</small>";
+                }
+                else
+                {
+                    $subMenuLabel = '';
+                    $pageName = '';
+                }
+            }
+
+            if ($row['published'] === '1')
+            {   // set label to online
                 $pub = "success";
                 $pubtext = "On";
-            } else {
-                $pub = "danger";
-                $pubtext = "Off";
+                // if menu is set as globalmenu
+                if ($row['id'] === $globalMenuID)
+                {   // set colors and label text
+                    $globalMenuLabel = "<i class=\"label label-success\">Global Menu</i>";
+                }
+                else
+                    {   // leave empty, because its not set as globalmenu
+                        $globalMenuLabel = '';
+                    }
             }
+            else    // menu is offline
+                {   // set colors and label
+                    $pub = "danger";
+                    $pubtext = "Off";
+                    // if menu is set as globalmenu
+                    if ($row['id'] === $globalMenuID)
+                    {   // set colors and label text
+                        $globalMenuLabel = "<i class=\"label label-success\">Global Menu</i>";
+                    }
+                    else
+                    {   // leave empty, because its not set as globalmenu
+                        $globalMenuLabel = '';
+                    }
+                }
 
             echo "<tr>
     <td><a title=\"toggle&nbsp;status\" href=\"index.php?page=menu-toggle&menuid=" . $row['id'] . "\">
             <span class=\"label label-$pub\">" . $pubtext . "</span></a></td>
     <td>" . $row['id'] . "</td>
+    <td>$globalMenuLabel $subMenuLabel</td>
     <td><a title=\"Bearbeiten\" href=\"index.php?page=menu-edit&menu=" . $row['id'] . "\">
-            <div style=\"width:100%\">" . $row['name'] . "</div></a></td>
+            <div style=\"width:100%\"><b>" . $row['name'] . "</b><br>".$pageName."</div></a></td>
 
     <td><a title=\"Bearbeiten\" href=\"index.php?page=menu-edit&menu=" . $row['id'] . "\">
             <div style=\"width:100%\">" . $row['count'] . "</div></a></td>
-    <td style=\"text-align: center;\">
+    <td class=\"text-center\">
     <a class=\"fa fa-edit\" title=\"Bearbeiten\" href=\"index.php?page=menu-edit&menu=" . $row['id'] . "\">
     </a>
     &nbsp;
