@@ -55,7 +55,7 @@
                 if ($result[0] == $row['id'])
                 {
                     $subMenuLabel = "<i class=\"label label-default\">SubMenu</i>";
-                    $pageName = "<small>$result[1].html</small>";
+                    $pageName = "<small><small>@</small> $result[1].html</small>";
                 }
                 else
                 {
