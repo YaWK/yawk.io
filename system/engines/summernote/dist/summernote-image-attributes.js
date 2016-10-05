@@ -8,37 +8,6 @@
     }
 }(function($){
     $.extend(true,$.summernote.lang,{
-        'de-DE':{
-            imageAttributes:{
-                tooltip:'Bild Eigenschaften',
-                tooltipShape:'Form',
-                tooltipShapeOptions: [ 'Rounded', 'Circle', 'Thumbnail', 'None' ],
-                pluginImageTitle:'Bild Eigenschaften',
-                pluginLinkTitle:'Link Eigenschaften',
-                title:'Titel',
-                alt:'Alt Tag',
-                class:'CSS Klasse',
-                classSelect:'w&auml;hle CSS Klasse',
-                style:'Stil',
-                href:'URL',
-                target:'Ziel (target)',
-                linkClass:'CSS Link Klasse',
-                rel:'Link Beziehung (Relation)',
-                relBlank:'Keine Link Beziehung',
-                relAlternate:'Alternate: Link zu einer alternativen Version',
-                relAuthor:'Author: Link zum Autor des Artikels',
-                relBookmark:'Bookmark: Permanent URL f&uuml;r Lesezeichen',
-                relHelp:'Help: Link zur Hilfe',
-                relLicense:'License: Link zu Urheber und Lizenzinformationen',
-                relNext:'Next: Die n&auml;chste aktive Seite',
-                relNofollow:'NoFollow: Suchmaschinen sollen dem Link nicht folgen',
-                relNoreferrer:'NoReferrer: Browser soll keinen HTTP Header senden',
-                relPrefetch:'PreFetch: Gibt an, dass die Seite gecacht werden soll',
-                relPrev:'Prev: Die zuletzt aktive Seite',
-                relSearch:'Search: Link zur Dokumentsuche',
-                relTag:'Tag: Ein Schl&uuml;sselwort (keyword) f&uuml;r diese Seite'
-            }
-        },
         'en-US':{
             imageAttributes:{
                 tooltip:'Image Attributes',
@@ -55,19 +24,19 @@
                 target:'Target',
                 linkClass:'Link Class',
                 rel:'Link Rel',
-                relBlank:'Do not use Rel Attribute',
-                relAlternate:'Alternate: Links to an alternate version of the document',
-                relAuthor:'Author: Links to the Author of the Document',
-                relBookmark:'Bookmark: Permanent URL used for Bookmarking',
-                relHelp:'Help: Links to a Help Document',
-                relLicense:'License: Links to copyright information for the document',
+                relBlank:'Do not use rel attribute',
+                relAlternate:'Alternate: Link to an alternate version',
+                relAuthor:'Author: Links to the author of the document',
+                relBookmark:'Bookmark: Permanent URL used for bookmarking',
+                relHelp:'Help: Links to a help document',
+                relLicense:'License: Link to copyright information',
                 relNext:'Next: The next document in a selection',
-                relNofollow:'NoFollow: Links to an unendorsed document, like a paid link, also stops Search Engines following this link',
-                relNoreferrer:'NoReferrer: Specifies that the browser should not send a HTTP Header',
-                relPrefetch:'PreFetch: Specifies that the target document should be cached',
+                relNofollow:'NoFollow: Stops search engines following the link',
+                relNoreferrer:'NoReferrer: Browser should not send a HTTP Header',
+                relPrefetch:'PreFetch: The target document should be cached',
                 relPrev:'Prev: The previous document in a selection',
-                relSearch:'Search: Links to a search tool for the document',
-                relTag:'Tag: A tag (Keyword) for the current document'
+                relSearch:'Search: Link to a search tool for the document',
+                relTag:'Tag: A tag (keyword) for the current document'
             }
         },
         'es-ES':{
@@ -195,6 +164,37 @@
                 relSearch:'Search: Collegamenti a uno strumento di ricerca per questo documento',
                 relTag:'Tag: Un tag (parola chiave) per questo documento'
             }
+        },
+        'de-DE':{
+            imageAttributes:{
+                tooltip:'Bild Eigenschaften',
+                tooltipShape:'Form',
+                tooltipShapeOptions: [ 'Rounded', 'Circle', 'Thumbnail', 'None' ],
+                pluginImageTitle:'Bild Eigenschaften',
+                pluginLinkTitle:'Link Eigenschaften',
+                title:'Titel',
+                alt:'Alt Tag',
+                class:'CSS Klasse',
+                classSelect:'w&auml;hle CSS Klasse',
+                style:'Stil',
+                href:'URL',
+                target:'Ziel (target)',
+                linkClass:'CSS Link Klasse',
+                rel:'Link Beziehung (Relation)',
+                relBlank:'Keine Link Beziehung',
+                relAlternate:'Alternate: Link zu einer alternativen Version',
+                relAuthor:'Author: Link zum Autor des Artikels',
+                relBookmark:'Bookmark: Permanent URL f&uuml;r Lesezeichen',
+                relHelp:'Help: Link zur Hilfe',
+                relLicense:'License: Link zu Urheber und Lizenzinformationen',
+                relNext:'Next: Die n&auml;chste aktive Seite',
+                relNofollow:'NoFollow: Suchmaschinen sollen dem Link nicht folgen',
+                relNoreferrer:'NoReferrer: Browser soll keinen HTTP Header senden',
+                relPrefetch:'PreFetch: Gibt an, dass die Seite gecacht werden soll',
+                relPrev:'Prev: Die zuletzt aktive Seite',
+                relSearch:'Search: Link zur Dokumentsuche',
+                relTag:'Tag: Ein Schl&uuml;sselwort (keyword) f&uuml;r diese Seite'
+            }
         }
     });
     $.extend($.summernote.options,{
@@ -264,7 +264,8 @@
                     '</select>'+
                     '</dd>'+
                     '<dt>'+'<label for="linkClass">'+lang.imageAttributes.linkClass+'</label></dt>'+
-                    '<dd>'+'<input type="text" id="linkClass" class="note-image-attributes-link-class form-control"></dd>'+
+                    '<dd>'+'<input type="text" id="linkClass" class="note-image-attributes-link-class form-control">'+
+                    '</dd>'+
                     '<dt>'+'<label for="rel">'+lang.imageAttributes.rel+'</label></dt>'+
                     '<dd>'+
                     '<select id="rel" class="note-image-attributes-link-rel form-control">'+
@@ -287,7 +288,7 @@
                 this.$dialog=ui.dialog({
                     title:'Image Attributes',
                     body:body,
-                    footer:'<button href="#" class="btn btn-primary note-image-attributes-btn">OK</button>'
+                    footer:'<button href="#" class="btn btn-success note-image-attributes-btn">OK</button>'
                 }).render().appendTo($container);
             };
             this.destroy=function(){
