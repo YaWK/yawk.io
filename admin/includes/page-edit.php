@@ -82,6 +82,22 @@ $page->alias = preg_replace("/[^a-z0-9\-\/]/i","",$alias); // final check: just 
 <script type="text/javascript">
 $(document).ready(function() {
 
+        $( "#savebutton" ).click(function() {
+            // get the value of summernote textarea
+            var text = $('textarea#summernote').val();
+            // search for <img> tags and revert src ../ to set correct path for frontend
+            var frontend = text.replace(/<img src=\"..\/media/g,"<img src=\"media");
+            // put the new string back into <textarea>
+            $('textarea#summernote').val(frontend); // set new value into textarea
+        });
+    // ## SUMMERNOTE HACK
+    // get the value of summernote textarea
+    var text = $('textarea#summernote').val();
+    // search for <img> tags and update src ../ to get images viewed in summernote
+    var backend = text.replace(/<img src=\"media/g,"<img src=\"../media");
+    // put the new string back into <textarea>
+    $('textarea#summernote').val(backend); // set new value into textarea
+
     // initialize summernote editor
     $('#summernote').summernote({
         height: 420,                 // set editor height
@@ -125,6 +141,7 @@ $('#datetimepicker1').datetimepicker({
 $('#datetimepicker2').datetimepicker({
     format: 'yyyy-mm-dd hh:ii:ss'
 });
+
 }); //]]>  /* END document.ready */
 /* ...end admin jQ controlls  */
 </script>
@@ -149,9 +166,9 @@ echo "
 ?>
 
 <!-- CHECK THIS -->
-  <form name="form" role="form" class="form-inline" onsubmit="/* return copyCodeIfCodeView()*/" action="index.php?page=page-edit&site=<?php print $page->alias; ?>&id=<?php echo $page->id; ?>"  method="post">
+  <form name="form" role="form" class="form-inline" onsubmit="return replaceImgPrefix()" action="index.php?page=page-edit&site=<?php print $page->alias; ?>&id=<?php echo $page->id; ?>" method="post">
       <script type="text/javascript">
-/*
+          /*
           function copyCodeIfCodeView(e) {
               if ($summernote.summernote('codeview.isActivated')) {
                   var context_textarea = window.document.getElementById('summernote');
