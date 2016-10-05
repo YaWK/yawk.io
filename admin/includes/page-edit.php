@@ -4,7 +4,14 @@ if (!isset($page))
     $page = new YAWK\page();
 }
 
-/* page content start here */
+// make sure, that $_SESSION['lang'] exists
+if (!isset($_SESSION['lang']))
+{
+    if (!isset($lang)) {
+        $lang = new YAWK\language();
+        $lang->init();
+    }
+}
 
 if (isset($_GET['alias'])){
     $alias = $db->quote($_GET['alias']);
@@ -81,9 +88,9 @@ $page->alias = preg_replace("/[^a-z0-9\-\/]/i","",$alias); // final check: just 
 <script src="../system/engines/summernote/dist/summernote-image-attributes.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-        // ## SUMMERNOTE HACK savebutton
+
         $( "#savebutton" ).click(function() {
-            $('textarea#summernote').summernote('codeview.deactivate');
+            // $('textarea#summernote').summernote('codeview.deactivate');
             // get the value of summernote textarea
             var text = $('textarea#summernote').val();
             // search for <img> tags and revert src ../ to set correct path for frontend
@@ -115,7 +122,7 @@ $(document).ready(function() {
                 ['remove', ['removeMedia']]
             ]
         },
-        lang: 'en-US',
+        lang: '<?php echo $_SESSION['lang']; ?>',
 
         codemirror: { // codemirror options
             theme: 'monokai'
