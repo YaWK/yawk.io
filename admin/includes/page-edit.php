@@ -81,7 +81,7 @@ $page->alias = preg_replace("/[^a-z0-9\-\/]/i","",$alias); // final check: just 
 <script src="../system/engines/summernote/dist/summernote-image-attributes.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-
+        // ## SUMMERNOTE HACK savebutton
         $( "#savebutton" ).click(function() {
             $('textarea#summernote').summernote('codeview.deactivate');
             // get the value of summernote textarea
@@ -90,7 +90,6 @@ $(document).ready(function() {
             var frontend = text.replace(/<img src=\"..\/media/g,"<img src=\"media");
             // put the new string back into <textarea>
             $('textarea#summernote').val(frontend); // to make sure that saving works
-
         });
 
     // ## SUMMERNOTE HACK
