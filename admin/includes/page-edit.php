@@ -88,8 +88,10 @@ $(document).ready(function() {
             // search for <img> tags and revert src ../ to set correct path for frontend
             var frontend = text.replace(/<img src=\"..\/media/g,"<img src=\"media");
             // put the new string back into <textarea>
-            $('textarea#summernote').val(frontend); // set new value into textarea
+            $('textarea#summernote').val(frontend).summernote('codeview.deactivate'); // to make sure that saving works
+
         });
+
     // ## SUMMERNOTE HACK
     // get the value of summernote textarea
     var text = $('textarea#summernote').val();
