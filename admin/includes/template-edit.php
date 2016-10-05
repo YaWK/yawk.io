@@ -52,7 +52,7 @@
         else { $getID = \YAWK\settings::getSetting($db, "selectedTemplate");  }
 
         if ($user->isTemplateEqual($db, $getID))
-        {
+        {   // user template equals selectedTemplate
             // update template in user table row
             $user->setUserTemplate($db, 0, $getID, $user->id);
             $user->overrideTemplate = 0;
@@ -62,7 +62,8 @@
             $previewButton = "";
         }
         else
-            {   $user->setUserTemplate($db, 1, $getID, $user->id);
+            {   // show preview button and set template active for this user
+                $user->setUserTemplate($db, 1, $getID, $user->id);
                 $user->overrideTemplate = 1;
                 // info badge to inform user that this is HIS preview
                 $infoBadge = "<span class=\"label label-danger\"><i class=\"fa fa-eye\"></i>&nbsp;&nbsp;Preview</span>";
@@ -97,7 +98,8 @@
         }
     }
 
-
+$newID = '';
+$getID = '';
 // SAVE AS new theme
 if(isset($_POST['savenewtheme']) && isset($_POST['newthemename']))
 {   // prepare vars
@@ -142,6 +144,12 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
     // $template->deleteSettingsCSSFile($db, "");
     // loop trough settings and save to database + settings.css file
 
+    if (isset($_POST['Tdescription']) || isset($_POST['Tsubauthor']) || isset($_POST['Tsubauthorurl']))
+    {   // save template details
+        $template->setTemplateDetails($db, $_POST['Tdescription'], $_POST['Tsubauthor'], $_POST['Tsubauthorurl'], $template->id);
+    }
+
+
     // get max ID from template db
     foreach($_POST as $property=>$value){
         if (isset($_POST['savenewtheme']))
@@ -154,12 +162,9 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
             elseif ($property === "customCSS")
             {   // save the content to /system/template/$NAME/css/custom.css
                 $template->setCustomCssFile($db, $value, 0, $getID);
+                // save a minified version to /system/template/$NAME/css/custom.min.css
+                $template->setCustomCssFile($db, $value, 1, $getID);
             }
-            // ##### CHECKEN, ob das in die schleife gehört!
-            // to file
-            // $template->setTemplateCssFile($db, $newID, $property, $value);
-            // save a minified version to /system/template/$NAME/css/custom.min.css
-            // $template->setCustomCssFile($db, $value, 1, $getID);
         }
         else
         {
@@ -947,7 +952,7 @@ if(isset($_POST['addgfont'])){
 if(isset($_GET['deletegfont'])){
     $gfontid=$_GET['gfontid'];
     if($gfontid != '0'){
-        $template->deletegfont($db, $gfontid);
+        $template->deleteGfont($db, $gfontid);
     }
 }
 
@@ -1456,7 +1461,7 @@ else
                     <label for="Tname">Modified by</label>
                     <input type="text" class="form-control" id="Tsubauthor" name="Tsubauthor" value="<?php echo $template->subAuthor; ?>" placeholder="Sub Author">
                     <label for="Tname">Sub Author URL</label>
-                    <input type="text" class="form-control" id="Tsubauthorurl" name="Tsubauthor" value="<?php echo $template->subAuthorUrl; ?>" placeholder="Co Author Url">
+                    <input type="text" class="form-control" id="Tsubauthorurl" name="Tsubauthorurl" value="<?php echo $template->subAuthorUrl; ?>" placeholder="Co Author Url">
                 </div>
                 <div class="col-md-4">
                     <label for="property">add Setting <small>to active template</small></label>
