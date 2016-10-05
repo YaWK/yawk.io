@@ -8,6 +8,37 @@
     }
 }(function($){
     $.extend(true,$.summernote.lang,{
+        'de-DE':{
+            imageAttributes:{
+                tooltip:'Bild Eigenschaften',
+                tooltipShape:'Form',
+                tooltipShapeOptions: [ 'Rounded', 'Circle', 'Thumbnail', 'None' ],
+                pluginImageTitle:'Bild Eigenschaften',
+                pluginLinkTitle:'Link Eigenschaften',
+                title:'Titel',
+                alt:'Alt Tag',
+                class:'CSS Klasse',
+                classSelect:'w&auml;hle CSS Klasse',
+                style:'Stil',
+                href:'URL',
+                target:'Ziel (target)',
+                linkClass:'CSS Link Klasse',
+                rel:'Link Beziehung (Relation)',
+                relBlank:'Keine Link Beziehung',
+                relAlternate:'Alternate: Link zu einer alternativen Version',
+                relAuthor:'Author: Link zum Autor des Artikels',
+                relBookmark:'Bookmark: Permanent URL f&uuml;r Lesezeichen',
+                relHelp:'Help: Link zur Hilfe',
+                relLicense:'License: Link zu Urheber und Lizenzinformationen',
+                relNext:'Next: Die n&auml;chste aktive Seite',
+                relNofollow:'NoFollow: Suchmaschinen sollen dem Link nicht folgen',
+                relNoreferrer:'NoReferrer: Browser soll keinen HTTP Header senden',
+                relPrefetch:'PreFetch: Gibt an, dass die Seite gecacht werden soll',
+                relPrev:'Prev: Die zuletzt aktive Seite',
+                relSearch:'Search: Link zur Dokumentsuche',
+                relTag:'Tag: Ein Schl&uuml;sselwort (keyword) f&uuml;r diese Seite'
+            }
+        },
         'en-US':{
             imageAttributes:{
                 tooltip:'Image Attributes',
@@ -164,8 +195,7 @@
                 relSearch:'Search: Collegamenti a uno strumento di ricerca per questo documento',
                 relTag:'Tag: Un tag (parola chiave) per questo documento'
             }
-        },
-
+        }
     });
     $.extend($.summernote.options,{
         imageAttributes: {
@@ -177,7 +207,8 @@
             /* Must keep the same order as in lang.imageAttributes.tooltipShapeOptions */
             shapes: [ 'img-rounded', 'img-circle', 'img-thumbnail', '' ]
         }
-    })
+    });
+
     $.extend($.summernote.plugins,{
         'imageAttributes':function(context){
             var self=this;
@@ -203,65 +234,40 @@
                 $.each( options.imageShape.shapes, function( index, value ) {
                     if(value) $shapesOptions = $shapesOptions + '<option value="' + value + '">' + lang.imageAttributes.tooltipShapeOptions[index] + '</option>'
                 });
-                var body='<h5>'+lang.imageAttributes.pluginImageTitle+'</h5>'+
-                    '<div class="form-group">'+
-                    '<label class="control-label col-xs-2">'+lang.imageAttributes.title+'</label>'+
-                    '<div class="input-group col-xs-10">'+
-                    '<input type="text" class="note-image-attributes-title form-control">'+
-                    '</div>'+
-                    '</div>'+
-                    '<div class="form-group">'+
-                    '<label class="control-label col-xs-2">'+lang.imageAttributes.alt+'</label>'+
-                    '<div class="input-group col-xs-10">'+
-                    '<input type="text" class="note-image-attributes-alt form-control">'+
-                    '</div>'+
-                    '</div>'+
-                    '<div class="form-group">'+
-                    '<label class="control-label col-xs-2">'+lang.imageAttributes.class+'</label>'+
-                    '<div class="input-group col-xs-10">'+
-                    '<input type="text" class="note-image-attributes-class form-control">'+
-                    '<div class="input-group-btn">'+
+                var body='<h3>'+lang.imageAttributes.pluginImageTitle+'</h3>'+
+                    '<dl class="dl-horizontal">'+
+                    '<dt>'+'<label for="title">'+lang.imageAttributes.title+'</label></dt>'+
+                    '<dd>'+'<input type="text" id="title" class="note-image-attributes-title form-control"></dd>'+
+                    '<dt>'+'<label for="alt">'+lang.imageAttributes.alt+'</label></dt>'+
+                    '<dd>'+'<input type="text" id="alt" class="note-image-attributes-alt form-control"></dd>'+
+                    '<dt>'+'<label for="class">'+lang.imageAttributes.class+'</label></dt>'+
+                    '<dd>'+'<input type="text" id="class" class="note-image-attributes-class form-control">'+
                     '<select class="note-image-attributes-class-select btn btn-default">'+
-                    '<option value="">' + lang.imageAttributes.classSelect + '</option>'+
+                    '<option value="">'+lang.imageAttributes.classSelect+'</option>'+
                     $shapesOptions+
                     '</select>'+
-                    '</div>'+
-                    '</div>'+
-                    '</div>'+
-                    '<div class="form-group">'+
-                    '<label class="control-label col-xs-2">'+lang.imageAttributes.style + '</label>'+
-                    '<div class="input-group col-xs-10">'+
-                    '<input type="text" class="note-image-attributes-style form-control">'+
-                    '</div>'+
-                    '</div>'+
-                    '<h5>'+lang.imageAttributes.pluginLinkTitle+'</h5>'+
-                    '<div class="form-group">'+
-                    '<label class="control-label col-xs-2">'+lang.imageAttributes.href+'</label>'+
-                    '<div class="input-group col-xs-10">'+
-                    '<input type="text" class="note-image-attributes-href form-control">'+
-                    '</div>'+
-                    '</div>'+
-                    '<div class="form-group">'+
-                    '<label class="control-label col-xs-2">'+lang.imageAttributes.target+'</label>'+
-                    '<div class="input-group col-xs-10">'+
-                    '<select class="note-image-attributes-target form-control">'+
+                    '</dd>'+
+                    '<dt>'+'<label for="style">'+lang.imageAttributes.style+'</label></dt>'+
+                    '<dd>'+'<input type="text" id="style" class="note-image-attributes-style form-control"></dd>'+
+                    '</dl>'+
+
+                    '<h3>'+lang.imageAttributes.pluginLinkTitle+'</h3>'+
+                    '<dl class="dl-horizontal">'+
+                    '<dt>'+'<label for="href">'+lang.imageAttributes.href+'</label></dt>'+
+                    '<dd>'+'<input type="text" id="href" class="note-image-attributes-href form-control"></dd>'+
+                    '<dt>'+'<label for="target">'+lang.imageAttributes.target+'</label></dt>'+
+                    '<dd>'+'<select id="target" class="note-image-attributes-target form-control">'+
                     '<option value="_self">Self</option>'+
                     '<option value="_blank">Blank</option>'+
                     '<option value="_top">Top</option>'+
                     '<option value="_parent">Parent</option>'+
                     '</select>'+
-                    '</div>'+
-                    '</div>'+
-                    '<div class="form-group">'+
-                    '<label class="control-label col-xs-2">'+lang.imageAttributes.linkClass+'</label>'+
-                    '<div class="input-group col-xs-10">'+
-                    '<input type="text" class="note-image-attributes-link-class form-control">'+
-                    '</div>'+
-                    '</div>'+
-                    '<div class="form-group">'+
-                    '<label class="control-label col-xs-2">'+lang.imageAttributes.rel+'</label>'+
-                    '<div class="input-group col-xs-10">'+
-                    '<select class="note-image-attributes-link-rel form-control">'+
+                    '</dd>'+
+                    '<dt>'+'<label for="linkClass">'+lang.imageAttributes.linkClass+'</label></dt>'+
+                    '<dd>'+'<input type="text" id="linkClass" class="note-image-attributes-link-class form-control"></dd>'+
+                    '<dt>'+'<label for="rel">'+lang.imageAttributes.rel+'</label></dt>'+
+                    '<dd>'+
+                    '<select id="rel" class="note-image-attributes-link-rel form-control">'+
                     '<option value="">'+lang.imageAttributes.relBlank+'</option>'+
                     '<option value="alternate">'+lang.imageAttributes.relAlternate+'</option>'+
                     '<option value="author">'+lang.imageAttributes.relAuthor+'</option>'+
@@ -276,8 +282,8 @@
                     '<option value="search">'+lang.imageAttributes.relSearch+'</option>'+
                     '<option value="tag">'+lang.imageAttributes.relTag+'</option>'+
                     '</select>'+
-                    '</div>'+
-                    '</div>';
+                    '</dd>'+
+                    '</dl>';
                 this.$dialog=ui.dialog({
                     title:'Image Attributes',
                     body:body,
