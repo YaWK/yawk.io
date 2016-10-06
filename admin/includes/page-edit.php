@@ -88,6 +88,7 @@ $page->alias = preg_replace("/[^a-z0-9\-\/]/i","",$alias); // final check: just 
 <script src="../system/engines/summernote/dist/summernote.min.js"></script>
 <script src="../system/engines/summernote/dist/summernote-cleaner.js"></script>
 <script src="../system/engines/summernote/dist/summernote-image-attributes.js"></script>
+<script src="../system/engines/summernote/dist/summernote-floats-bs.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 
@@ -123,7 +124,9 @@ $(document).ready(function() {
         popover: {
             image: [
                 ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
-                ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                /* ['float', ['floatLeft', 'floatRight', 'floatNone']], */
+                /* Those are the old regular float buttons */
+                ['floatBS', ['floatBSLeft', 'floatBSNone', 'floatBSRight']],
                 ['custom', ['imageAttributes', 'imageShape']],
                 ['remove', ['removeMedia']]
             ]
