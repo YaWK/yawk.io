@@ -34,7 +34,9 @@ if(isset($_POST['save'])){
     // after preparing the vars, update db + write content
     if($page->save($db)) {
           // encode chars
-        $_POST['content'] = \YAWK\sys::encodeChars($_POST['content']);
+        // $_POST['content'] = \YAWK\sys::encodeChars($_POST['content']);
+        $_POST['content'] = utf8_encode($_POST['content']);
+        $_POST['content'] = utf8_decode($_POST['content']);
         // write content to file
         if ($page->writeContent("../", stripslashes(str_replace('\r\n', '', ($_POST['content']))))) {
             print YAWK\alert::draw("success", "Success!", "The page has been saved!","", 800);
