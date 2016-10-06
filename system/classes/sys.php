@@ -585,34 +585,34 @@ namespace YAWK {
         static function getSubMenu($db, $id)
         {
             /** @var $db \YAWK\db $res */
-            if ($res = $db->query("SELECT cm.id
-	                           FROM {pages} as cp
-	                           JOIN {menu_names} as cm on cm.id = cp.menu
-	                           WHERE cp.id = $id")){
-                $row = mysqli_fetch_row($res);
-                return $row;
-            }
-            else
-            {
-                \YAWK\alert::draw("warning", "Warning", "Could not fetch submenu for page ID: $id", "","2000");
-                return false;
-            }
-        }
-        static function getMenuItem($db, $id)
-        {
-            /** @var $db \YAWK\db $res */
-            if ($res = $db->query("SELECT cp.menu, cm.name
-	                              FROM {pages} as cp
-	                              JOIN {menu_names} as cm on cm.id = cp.menu
-	                              WHERE cp.id = ".$id.""))
-            {
+            if ($res = $db->query("SELECT m.id
+	                           FROM {pages} as p
+	                           JOIN {menu_names} as m on m.id = p.menu
+	                           WHERE p.id = $id")){
                 $row = mysqli_fetch_row($res);
                 return $row[0];
             }
-            else {
-                \YAWK\alert::draw("warning", "Warning!", "Could not fetch menu items for page ID: $id","","2000");
-                return false;
+            else
+                {
+                    return false;
+                }
+        }
+
+        static function getMenuItem($db, $id)
+        {
+            /** @var $db \YAWK\db $res */
+            if ($res = $db->query("SELECT p.menu, m.name
+	                              FROM {pages} as p
+	                              JOIN {menu_names} as m on m.id = p.menu
+	                              WHERE p.id = $id"))
+            {
+                $row = mysqli_fetch_row($res);
+                return $row[1];
             }
+            else
+                {
+                    return false;
+                }
         }
 
         static function getMenus($db)
