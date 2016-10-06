@@ -118,21 +118,21 @@ if(isset($_GET['backend']) && (isset($_GET['gid'])))
             if ($row['backend_allowed'] === '1')
             {
                 $backendhtml = "success";
-                $backend_allowedtext ="BACKEND Login allowed";
+                $backend_allowedtext ="<i class=\"fa fa-unlock\"></i>&nbsp;&nbsp;BACKEND Login allowed";
             }
             else {
                 $backendhtml = "danger";
-                $backend_allowedtext = "Backend Login forbidden";
+                $backend_allowedtext = "<i class=\"fa fa-exclamation-triangle\"></i>&nbsp;&nbsp;Backend Login forbidden";
             }
 
             if ($row['signup_allowed'] === '1')
             {
                 $signuphtml = "success";
-                $signuptext="allowed";
+                $signuptext="<i class=\"fa fa-check\"></i>&nbsp;&nbsp;allowed";
             }
             else {
                 $signuphtml = "danger";
-                $signuptext = "forbidden";
+                $signuptext = "<i class=\"fa fa-times\"></i>&nbsp;&nbsp;forbidden";
             }
 
             echo "<tr>
