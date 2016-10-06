@@ -610,32 +610,27 @@ namespace YAWK {
             // OVERRIDE SETTINGS
             if (isset($user))
             {
-            if ($user->overrideTemplate == 1)
-            {
-                $sql = "SELECT ts.property, ts.value, ts.valueDefault, ts.description, ts.fieldClass, ts.placeholder
-                                   FROM {template_settings} ts
-                                   JOIN {users} u on u.templateID = ts.templateID
-                                   WHERE ts.activated = 1 && u.id = $user->id && ts.property
-                                   LIKE '$filter' && ts.property NOT RLIKE '.*-pos' $sql ORDER BY ts.sort";
+                if ($user->overrideTemplate == 1)
+                {
+                    $sql = "SELECT ts.property, ts.value, ts.valueDefault, ts.description, ts.fieldClass, ts.placeholder
+                                       FROM {template_settings} ts
+                                       JOIN {users} u on u.templateID = ts.templateID
+                                       WHERE ts.activated = 1 && u.id = $user->id && ts.property
+                                       LIKE '$filter' && ts.property NOT RLIKE '.*-pos' $sql ORDER BY ts.sort";
+                }
+                else
+                    {
+                        $sql = "SELECT ts.property, ts.value, ts.valueDefault, ts.description, ts.fieldClass, ts.placeholder
+                                       FROM {template_settings} ts
+                                       JOIN {settings} s on s.value = ts.templateID
+                                       WHERE ts.activated = 1 && s.property = 'selectedTemplate' && ts.property
+                                       LIKE '$filter' && ts.property NOT RLIKE '.*-pos' $sql ORDER BY ts.sort";
+                    }
             }
             else
                 {
-                    $sql = "SELECT ts.property, ts.value, ts.valueDefault, ts.description, ts.fieldClass, ts.placeholder
-                                   FROM {template_settings} ts
-                                   JOIN {settings} s on s.value = ts.templateID
-                                   WHERE ts.activated = 1 && s.property = 'selectedTemplate' && ts.property
-                                   LIKE '$filter' && ts.property NOT RLIKE '.*-pos' $sql ORDER BY ts.sort";
+                    return false;
                 }
-            }/*
-            else
-                {
-                    $sql = "SELECT ts.property, ts.value, ts.valueDefault, ts.description, ts.fieldClass, ts.placeholder
-                                   FROM {template_settings} ts
-                                   JOIN {settings} s on s.value = ts.templateID
-                                   WHERE ts.activated = 1 && s.property = 'selectedTemplate' && ts.property
-                                   LIKE '$filter' && ts.property NOT RLIKE '.*-pos' $sql ORDER BY ts.sort";
-                }
-*/
 
             if ($res = $db->query($sql))
             {
