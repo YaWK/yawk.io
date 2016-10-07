@@ -84,6 +84,23 @@ $page->alias = preg_replace("/[^a-z0-9\-\/]/i","",$alias); // final check: just 
         if ($editorSmartIndent === "0") { $editorSmartIndent = "false"; } else { $editorSmartIndent = "true"; }
         // indent unit
         $editorIndentUnit = \YAWK\settings::getSetting($db, "editorIndentUnit");
+        // editor height
+        $editorHeight = \YAWK\settings::getSetting($db, "editorHeight");
+        // match brackets
+        $editorMatchBrackets = \YAWK\settings::getSetting($db, "editorMatchBrackets");
+        if ($editorMatchBrackets === "0") { $editorMatchBrackets = "false"; } else { $editorMatchBrackets = "true"; }
+        // close brackets
+        $editorCloseBrackets = \YAWK\settings::getSetting($db, "editorCloseBrackets");
+        if ($editorCloseBrackets === "0") { $editorCloseBrackets = "false"; } else { $editorCloseBrackets = "true"; }
+        // close tags
+        $editorCloseTags = \YAWK\settings::getSetting($db, "editorCloseTags");
+        if ($editorCloseTags === "0") { $editorCloseTags = "false"; } else { $editorCloseTags = "true"; }
+        // match tags
+        $editorMatchTags = \YAWK\settings::getSetting($db, "editorMatchTags");
+        if ($editorMatchTags === "0") { $editorMatchTags = "false"; } else { $editorMatchTags = "true"; }
+        // style active line
+        $editorActiveLine = \YAWK\settings::getSetting($db, "editorActiveLine");
+        if ($editorActiveLine === "0") { $editorActiveLine = "false"; } else { $editorActiveLine = "true"; }
 
 ?>
 
@@ -141,7 +158,7 @@ $(document).ready(function() {
 
     // INIT SUMMERNOTE EDITOR
     $('#summernote').summernote({    // set editor itself
-        height: 420,                 // set editor height
+        height: <?php echo $editorHeight; ?>,                 // set editor height
         minHeight: null,             // set minimum height of editor
         maxHeight: null,             // set maximum height of editor
         focus: true,                 // set focus to editable area after initializing summernote
@@ -167,14 +184,14 @@ $(document).ready(function() {
             smartIndent: <?php echo $editorSmartIndent; ?>,          // better indent
             indentUnit: <?php echo $editorIndentUnit; ?>,              // how many spaces auto indent? (default: 2)
             scrollbarStyle: null,       // styling of the scrollbars
-            matchBrackets: true,        // highlight corresponding brackets
-            autoCloseBrackets: true,    // auto insert close brackets
-            autoCloseTags: true,        // auto insert close tags after opening
+            matchBrackets: <?php echo $editorMatchBrackets; ?>,        // highlight corresponding brackets
+            autoCloseBrackets: <?php echo $editorCloseBrackets; ?>,    // auto insert close brackets
+            autoCloseTags: <?php echo $editorCloseTags; ?>,        // auto insert close tags after opening
             value: "<html>\n  " + document.documentElement.innerHTML + "\n</html>",     // all html
             mode: "htmlmixed",              // editor mode
-            matchTags: {bothTags: true},    // hightlight matching tags: both
+            matchTags: {bothTags: <?php echo $editorMatchTags; ?>},    // hightlight matching tags: both
             extraKeys: {"Ctrl-J": "toMatchingTag", "Ctrl-Space": "autocomplete"},     // press ctrl-j to jump to next matching tab
-            styleActiveLine: true       // highlight the active line (where the cursor is)
+            styleActiveLine: <?php echo $editorActiveLine; ?>       // highlight the active line (where the cursor is)
         },
 
         // plugin: summernote-cleaner.js
