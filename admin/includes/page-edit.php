@@ -62,12 +62,29 @@ $alias = mb_strtolower($alias); // lowercase
 $alias = str_replace(" ", "-", $alias); // replace all ' ' with -
 // special chars
 $umlaute =array("/&auml;/","/&uuml;/","/&ouml;/","/&Auml;/","/&Uuml;/","/&Ouml;/","/&szlig;/"); // array of special chars
-$ersetze = array("ae","ue","oe","Ae","Ue","Oe","ss"); // array of replacement chars
-$alias = preg_replace($umlaute,$ersetze,$alias);	    // replace with preg
+$ersetze = array("ae","ue","oe","Ae","Ue","Oe","ss");           // array of replacement chars
+$alias = preg_replace($umlaute,$ersetze,$alias);	          // replace with preg
 $page->alias = preg_replace("/[^a-z0-9\-\/]/i","",$alias); // final check: just numbers and chars are allowed
 
 // make sure that user cannot change index' article name (index.php/html)
  if ($page->alias === "index") { $readonly = "readonly"; }
+?>
+
+<?php
+        // build + set editor setting vars
+        // editor theme
+        $editorTheme = \YAWK\settings::getSetting($db, "editorTheme");
+        // line numbers
+        $editorLineNumbers = \YAWK\settings::getSetting($db, "editorLineNumbers");
+            if ($editorLineNumbers === "0") { $editorLineNumbers = "false"; } else { $editorLineNumbers = "true"; }
+        // undo depth
+        $editorUndoDepth = \YAWK\settings::getSetting($db, "editorUndoDepth");
+        // smart indent
+        $editorSmartIndent = \YAWK\settings::getSetting($db, "editorSmartIndent");
+        if ($editorSmartIndent === "0") { $editorSmartIndent = "false"; } else { $editorSmartIndent = "true"; }
+        // indent unit
+        $editorIndentUnit = \YAWK\settings::getSetting($db, "editorIndentUnit");
+
 ?>
 
 <!-- bootstrap date-timepicker -->
@@ -77,7 +94,7 @@ $page->alias = preg_replace("/[^a-z0-9\-\/]/i","",$alias); // final check: just 
 <!-- include summernote css/js-->
 <!-- include codemirror (codemirror.css, codemirror.js, xml.js) -->
 <link rel="stylesheet" type="text/css" href="../system/engines/codemirror/codemirror.min.css">
-<link rel="stylesheet" type="text/css" href="../system/engines/codemirror/themes/monokai.css">
+<link rel="stylesheet" type="text/css" href="../system/engines/codemirror/themes/<?php echo $editorTheme; ?>.css">
 <link rel="stylesheet" type="text/css" href="../system/engines/codemirror/show-hint.min.css">
 <script type="text/javascript" src="../system/engines/codemirror/codemirror-compressed.js"></script>
 
@@ -144,11 +161,11 @@ $(document).ready(function() {
 
         // powerup the codeview with codemirror theme
         codemirror: { // codemirror options
-            theme: 'monokai',           // codeview theme
-            lineNumbers: true,          // display lineNumbers true|false
-            undoDepth: 200,             // how many undo steps should be saved? (default: 200)
-            indentUnit: 4,              // how many spaces auto indent? (default: 2)
-            smartIndent: true,          // better indent
+            theme: '<?php echo $editorTheme; ?>',           // codeview theme
+            lineNumbers: <?php echo $editorLineNumbers; ?>,          // display lineNumbers true|false
+            undoDepth: <?php echo $editorUndoDepth; ?>,             // how many undo steps should be saved? (default: 200)
+            smartIndent: <?php echo $editorSmartIndent; ?>,          // better indent
+            indentUnit: <?php echo $editorIndentUnit; ?>,              // how many spaces auto indent? (default: 2)
             scrollbarStyle: null,       // styling of the scrollbars
             matchBrackets: true,        // highlight corresponding brackets
             autoCloseBrackets: true,    // auto insert close brackets
