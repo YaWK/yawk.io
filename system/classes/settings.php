@@ -203,11 +203,14 @@ namespace YAWK {
                                     foreach ($optionValues as $value)
                                     {
                                         // extract value from option setting string
-                                        $optionValue = preg_replace("/,[a-zA-Z0-9]*/", "", $value);
+                                        // $optionValue = preg_replace("/,[a-zA-Z0-9]*/", "", $value);
                                         // extract description from option setting
-                                        $optionDesc = preg_replace('/.*,(.*)/','$1',$value);
+                                        $optionDesc = preg_replace('/.*,(.*)/','$1', $value);
+                                        $optionValue = preg_split("/,[a-zA-Z0-9]*/", $value);
 
-                                        echo "<option value=\"$optionValue\">$optionDesc</option>";
+                                        echo "<option value=\"$optionValue[0]\">$optionDesc</option>";
+                                        // echo "<option value=\"$optionValue[0]\">$optionDesc</option>";
+                                       // echo "<option value=\"$value\">$value</option>";
                                     }
                                     echo "</select>";
                                     echo "<p>$setting[description]</p>";
