@@ -317,8 +317,8 @@ echo"<ol class=\"breadcrumb\">
 				</div>
 				<div class="col-md-4">
                     <!-- syslog settings -->
-                    <h3><?php echo $lang['SYSLOG']; ?> <small> <?php echo $lang['SETTINGS']; ?></small></h3>
-                    <?php \YAWK\settings::getFormElements($db, $settings, 0, $lang); ?>
+                    <h3><?php echo $lang['EDITOR']; ?> <small> <?php echo $lang['EDITOR_SUBTEXT']; ?></small></h3>
+                    <?php \YAWK\settings::getFormElements($db, $settings, 14, $lang); ?>
 				</div>
 			</div>
 		</div>
@@ -341,7 +341,9 @@ echo"<ol class=\"breadcrumb\">
 					</div>
 				</div>
 				<div class="col-md-4">
-					...
+					<!-- syslog settings -->
+					<h3><?php echo $lang['SYSLOG']; ?> <small> <?php echo $lang['SETTINGS']; ?></small></h3>
+					<?php \YAWK\settings::getFormElements($db, $settings, 0, $lang); ?>
 				</div>
 			</div>
 		</div>
