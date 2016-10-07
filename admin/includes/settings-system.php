@@ -317,7 +317,7 @@ echo"<ol class=\"breadcrumb\">
 				</div>
 				<div class="col-md-4">
                     <!-- syslog settings -->
-                    <h3><?php echo $lang['EDITOR']; ?> <small> <?php echo $lang['EDITOR_SUBTEXT']; ?></small></h3>
+                    <h3><i class="fa fa-code"></i> <?php echo $lang['EDITOR']; ?> <small> <?php echo $lang['EDITOR_SUBTEXT']; ?></small></h3>
                     <?php \YAWK\settings::getFormElements($db, $settings, 14, $lang); ?>
 				</div>
 			</div>
