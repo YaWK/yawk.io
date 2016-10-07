@@ -71,19 +71,17 @@ $page->alias = preg_replace("/[^a-z0-9\-\/]/i","",$alias); // final check: just 
 ?>
 
 <!-- bootstrap date-timepicker -->
-<link type="text/css" href="../system/engines/datetimepicker/css/datetimepicker.min.css" rel="stylesheet" />
+<link type="text/css" href="../system/engines/datetimepicker/css/datetimepicker.min.css" rel="stylesheet">
 <script type="text/javascript" src="../system/engines/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
 
 <!-- include summernote css/js-->
-<!-- include codemirror (codemirror.css, codemirror.js, xml.js, formatting.js) -->
-<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.min.css" />
-<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/theme/monokai.min.css" />
-<!-- include codemirror (codemirror.css, codemirror.js, xml.js, formatting.js) -->
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.js"></script>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/mode/xml/xml.js"></script>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/2.36.0/formatting.js"></script>
+<!-- include codemirror (codemirror.css, codemirror.js, xml.js) -->
+<link rel="stylesheet" type="text/css" href="../system/engines/codemirror/codemirror.min.css">
+<link rel="stylesheet" type="text/css" href="../system/engines/codemirror/themes/monokai.css">
+<link rel="stylesheet" type="text/css" href="../system/engines/codemirror/show-hint.min.css">
+<script type="text/javascript" src="../system/engines/codemirror/codemirror-compressed.js"></script>
 
-
+<!-- SUMMERNOTE -->
 <link href="../system/engines/summernote/dist/summernote.css" rel="stylesheet">
 <script src="../system/engines/summernote/dist/summernote.min.js"></script>
 <script src="../system/engines/summernote/dist/summernote-cleaner.js"></script>
@@ -146,10 +144,20 @@ $(document).ready(function() {
 
         // powerup the codeview with codemirror theme
         codemirror: { // codemirror options
-            theme: 'monokai',    // ya know why? - best for long sessions
-            lineNumbers: true,
-            undoDepth: 200,
-            scrollbarStyle: null
+            theme: 'monokai',           // codeview theme
+            lineNumbers: true,          // display lineNumbers true|false
+            undoDepth: 200,             // how many undo steps should be saved? (default: 200)
+            indentUnit: 4,              // how many spaces auto indent? (default: 2)
+            smartIndent: true,          // better indent
+            scrollbarStyle: null,       // styling of the scrollbars
+            matchBrackets: true,        // highlight corresponding brackets
+            autoCloseBrackets: true,    // auto insert close brackets
+            autoCloseTags: true,        // auto insert close tags after opening
+            value: "<html>\n  " + document.documentElement.innerHTML + "\n</html>",     // all html
+            mode: "htmlmixed",              // editor mode
+            matchTags: {bothTags: true},    // hightlight matching tags: both
+            extraKeys: {"Ctrl-J": "toMatchingTag", "Ctrl-Space": "autocomplete"},     // press ctrl-j to jump to next matching tab
+            styleActiveLine: true       // highlight the active line (where the cursor is)
         },
 
         // plugin: summernote-cleaner.js
