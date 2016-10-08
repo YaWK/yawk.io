@@ -1,0 +1,36 @@
+/* Based on Sublime Text's yawk theme */
+
+.cm-s-yawk.CodeMirror { background: #272822; color: #f8f8f2; }
+.cm-s-yawk div.CodeMirror-selected { background: #49483E; }
+.cm-s-yawk .CodeMirror-line::selection, .cm-s-yawk .CodeMirror-line > span::selection, .cm-s-yawk .CodeMirror-line > span > span::selection { background: rgba(73, 72, 62, .99); }
+.cm-s-yawk .CodeMirror-line::-moz-selection, .cm-s-yawk .CodeMirror-line > span::-moz-selection, .cm-s-yawk .CodeMirror-line > span > span::-moz-selection { background: rgba(73, 72, 62, .99); }
+.cm-s-yawk .CodeMirror-gutters { background: #222222; border-right: 1px solid #5394BA; }
+.cm-s-yawk .CodeMirror-guttermarker { color: white; }
+.cm-s-yawk .CodeMirror-guttermarker-subtle { color: #d0d0d0; }
+.cm-s-yawk .CodeMirror-linenumber { color: #5394BA; }
+.cm-s-yawk .CodeMirror-cursor { border-left: 1px solid #f8f8f0; }
+
+.cm-s-yawk span.cm-comment { color: #75715e; }
+.cm-s-yawk span.cm-atom { color: #ae81ff; }
+.cm-s-yawk span.cm-number { color: #ae81ff; }
+
+.cm-s-yawk span.cm-property, .cm-s-yawk span.cm-attribute { color: #a6e22e; }
+.cm-s-yawk span.cm-keyword { color: #f92672; }
+.cm-s-yawk span.cm-builtin { color: #66d9ef; }
+.cm-s-yawk span.cm-string { color: #e6db74; }
+
+.cm-s-yawk span.cm-variable { color: #f8f8f2; }
+.cm-s-yawk span.cm-variable-2 { color: #9effff; }
+.cm-s-yawk span.cm-variable-3 { color: #66d9ef; }
+.cm-s-yawk span.cm-def { color: #fd971f; }
+.cm-s-yawk span.cm-bracket { color: #f8f8f2; }
+.cm-s-yawk span.cm-tag { color: #f92672; }
+.cm-s-yawk span.cm-header { color: #ae81ff; }
+.cm-s-yawk span.cm-link { color: #ae81ff; }
+.cm-s-yawk span.cm-error { background: #f92672; color: #f8f8f0; }
+
+.cm-s-yawk .CodeMirror-activeline-background { background: #373831; }
+.cm-s-yawk .CodeMirror-matchingbracket {
+    text-decoration: underline;
+    color: white !important;
+}
