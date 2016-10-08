@@ -125,10 +125,15 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
                 value: "<html>\n  " + document.documentElement.innerHTML + "\n</html>",       // all html
                 mode: "css",                                                            // editor mode
                 matchTags: {bothTags: <?php echo $editorSettings['editorMatchTags']; ?>},     // hightlight matching tags: both
-                extraKeys: {"Ctrl-J": "toMatchingTag", "Ctrl-Space": "autocomplete"},         // press ctrl-j to jump to next matching tab
+                extraKeys: {
+                        "Ctrl-J": "toMatchingTag",                  // CTRL-J to jump to next matching tab
+                        "Ctrl-Space": "autocomplete"               // CTRL-SPACE to open autocomplete window
+                },
                 styleActiveLine: <?php echo $editorSettings['editorActiveLine']; ?>,           // highlight the active line (where the cursor is)
                 autoRefresh: true
             },
+
+
 
             // plugin: summernote-cleaner.js
             // this allows to copy/paste from word, browsers etc.

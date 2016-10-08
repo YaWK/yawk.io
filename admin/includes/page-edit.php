@@ -69,16 +69,15 @@ $page->alias = preg_replace("/[^a-z0-9\-\/]/i","",$alias); // final check: just 
  if ($page->alias === "index") { $readonly = "readonly"; }
 ?>
 
-<?php
-// get settings for editor
-$editorSettings = \YAWK\settings::getEditorSettings($db, 14);
-
-?>
-
 <!-- bootstrap date-timepicker -->
 <link type="text/css" href="../system/engines/datetimepicker/css/datetimepicker.min.css" rel="stylesheet">
 <script type="text/javascript" src="../system/engines/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
 
+
+<?php
+// get settings for editor
+$editorSettings = \YAWK\settings::getEditorSettings($db, 14);
+?>
 <!-- include summernote css/js-->
 <!-- include codemirror (codemirror.css, codemirror.js, xml.js) -->
 <link rel="stylesheet" type="text/css" href="../system/engines/codemirror/codemirror.min.css">
