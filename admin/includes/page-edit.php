@@ -48,7 +48,6 @@ if(isset($_POST['save'])){
     }
     else {
        print YAWK\alert::draw("danger", "Error!", "Could not store data of $page->alias into database!", "", "8200");
-
     }
 }
 // path to cms	
@@ -61,7 +60,7 @@ $alias = $page->alias;
 $alias = mb_strtolower($alias); // lowercase
 $alias = str_replace(" ", "-", $alias); // replace all ' ' with -
 // special chars
-$umlaute =array("/&auml;/","/&uuml;/","/&ouml;/","/&Auml;/","/&Uuml;/","/&Ouml;/","/&szlig;/"); // array of special chars
+$umlaute = array("/&auml;/","/&uuml;/","/&ouml;/","/&Auml;/","/&Uuml;/","/&Ouml;/","/&szlig;/"); // array of special chars
 $ersetze = array("ae","ue","oe","Ae","Ue","Oe","ss");           // array of replacement chars
 $alias = preg_replace($umlaute,$ersetze,$alias);	          // replace with preg
 $page->alias = preg_replace("/[^a-z0-9\-\/]/i","",$alias); // final check: just numbers and chars are allowed
@@ -71,36 +70,8 @@ $page->alias = preg_replace("/[^a-z0-9\-\/]/i","",$alias); // final check: just 
 ?>
 
 <?php
-        // build + set editor setting vars
-        // editor theme
-        $editorTheme = \YAWK\settings::getSetting($db, "editorTheme");
-        // line numbers
-        $editorLineNumbers = \YAWK\settings::getSetting($db, "editorLineNumbers");
-            if ($editorLineNumbers === "0") { $editorLineNumbers = "false"; } else { $editorLineNumbers = "true"; }
-        // undo depth
-        $editorUndoDepth = \YAWK\settings::getSetting($db, "editorUndoDepth");
-        // smart indent
-        $editorSmartIndent = \YAWK\settings::getSetting($db, "editorSmartIndent");
-        if ($editorSmartIndent === "0") { $editorSmartIndent = "false"; } else { $editorSmartIndent = "true"; }
-        // indent unit
-        $editorIndentUnit = \YAWK\settings::getSetting($db, "editorIndentUnit");
-        // editor height
-        $editorHeight = \YAWK\settings::getSetting($db, "editorHeight");
-        // match brackets
-        $editorMatchBrackets = \YAWK\settings::getSetting($db, "editorMatchBrackets");
-        if ($editorMatchBrackets === "0") { $editorMatchBrackets = "false"; } else { $editorMatchBrackets = "true"; }
-        // close brackets
-        $editorCloseBrackets = \YAWK\settings::getSetting($db, "editorCloseBrackets");
-        if ($editorCloseBrackets === "0") { $editorCloseBrackets = "false"; } else { $editorCloseBrackets = "true"; }
-        // close tags
-        $editorCloseTags = \YAWK\settings::getSetting($db, "editorCloseTags");
-        if ($editorCloseTags === "0") { $editorCloseTags = "false"; } else { $editorCloseTags = "true"; }
-        // match tags
-        $editorMatchTags = \YAWK\settings::getSetting($db, "editorMatchTags");
-        if ($editorMatchTags === "0") { $editorMatchTags = "false"; } else { $editorMatchTags = "true"; }
-        // style active line
-        $editorActiveLine = \YAWK\settings::getSetting($db, "editorActiveLine");
-        if ($editorActiveLine === "0") { $editorActiveLine = "false"; } else { $editorActiveLine = "true"; }
+// get settings for editor
+$editorSettings = \YAWK\settings::getEditorSettings($db, 14);
 
 ?>
 
@@ -111,7 +82,7 @@ $page->alias = preg_replace("/[^a-z0-9\-\/]/i","",$alias); // final check: just 
 <!-- include summernote css/js-->
 <!-- include codemirror (codemirror.css, codemirror.js, xml.js) -->
 <link rel="stylesheet" type="text/css" href="../system/engines/codemirror/codemirror.min.css">
-<link rel="stylesheet" type="text/css" href="../system/engines/codemirror/themes/<?php echo $editorTheme; ?>.css">
+<link rel="stylesheet" type="text/css" href="../system/engines/codemirror/themes/<?php echo $editorSettings['editorTheme']; ?>.css">
 <link rel="stylesheet" type="text/css" href="../system/engines/codemirror/show-hint.min.css">
 <script type="text/javascript" src="../system/engines/codemirror/codemirror-compressed.js"></script>
 
@@ -158,7 +129,7 @@ $(document).ready(function() {
 
     // INIT SUMMERNOTE EDITOR
     $('#summernote').summernote({    // set editor itself
-        height: <?php echo $editorHeight; ?>,                 // set editor height
+        height: <?php echo $editorSettings['editorHeight']; ?>,                 // set editor height
         minHeight: null,             // set minimum height of editor
         maxHeight: null,             // set maximum height of editor
         focus: true,                 // set focus to editable area after initializing summernote
@@ -178,20 +149,20 @@ $(document).ready(function() {
 
         // powerup the codeview with codemirror theme
         codemirror: { // codemirror options
-            theme: '<?php echo $editorTheme; ?>',           // codeview theme
-            lineNumbers: <?php echo $editorLineNumbers; ?>,          // display lineNumbers true|false
-            undoDepth: <?php echo $editorUndoDepth; ?>,             // how many undo steps should be saved? (default: 200)
-            smartIndent: <?php echo $editorSmartIndent; ?>,          // better indent
-            indentUnit: <?php echo $editorIndentUnit; ?>,              // how many spaces auto indent? (default: 2)
-            scrollbarStyle: null,       // styling of the scrollbars
-            matchBrackets: <?php echo $editorMatchBrackets; ?>,        // highlight corresponding brackets
-            autoCloseBrackets: <?php echo $editorCloseBrackets; ?>,    // auto insert close brackets
-            autoCloseTags: <?php echo $editorCloseTags; ?>,        // auto insert close tags after opening
-            value: "<html>\n  " + document.documentElement.innerHTML + "\n</html>",     // all html
-            mode: "htmlmixed",              // editor mode
-            matchTags: {bothTags: <?php echo $editorMatchTags; ?>},    // hightlight matching tags: both
-            extraKeys: {"Ctrl-J": "toMatchingTag", "Ctrl-Space": "autocomplete"},     // press ctrl-j to jump to next matching tab
-            styleActiveLine: <?php echo $editorActiveLine; ?>       // highlight the active line (where the cursor is)
+            theme: '<?php echo $editorSettings['editorTheme']; ?>',                       // codeview theme
+            lineNumbers: <?php echo $editorSettings['editorLineNumbers']; ?>,             // display lineNumbers true|false
+            undoDepth: <?php echo $editorSettings['editorUndoDepth']; ?>,                 // how many undo steps should be saved? (default: 200)
+            smartIndent: <?php echo $editorSettings['editorSmartIndent']; ?>,             // better indent
+            indentUnit: <?php echo $editorSettings['editorIndentUnit']; ?>,               // how many spaces auto indent? (default: 2)
+            scrollbarStyle: null,                                                         // styling of the scrollbars
+            matchBrackets: <?php echo $editorSettings['editorMatchBrackets']; ?>,         // highlight corresponding brackets
+            autoCloseBrackets: <?php echo $editorSettings['editorCloseBrackets'];?>,      // auto insert close brackets
+            autoCloseTags: <?php echo $editorSettings['editorCloseTags']; ?>,             // auto insert close tags after opening
+            value: "<html>\n  " + document.documentElement.innerHTML + "\n</html>",       // all html
+            mode: "htmlmixed",                                                            // editor mode
+            matchTags: {bothTags: <?php echo $editorSettings['editorMatchTags']; ?>},     // hightlight matching tags: both
+            extraKeys: {"Ctrl-J": "toMatchingTag", "Ctrl-Space": "autocomplete"},         // press ctrl-j to jump to next matching tab
+            styleActiveLine: <?php echo $editorSettings['editorActiveLine']; ?>           // highlight the active line (where the cursor is)
         },
 
         // plugin: summernote-cleaner.js
@@ -201,9 +172,9 @@ $(document).ready(function() {
             newline: '<br>' // Summernote's default is to use '<p><br></p>'
 
             // silent mode:
-            // from my pov it is not necessary to inform the user about the sourcecode cleaning process.
-            // just a useless, annoying bubble: everytime you hit the save button.
-            // But if you need this notification, you can enable it by uncommenting the following 3 lines
+            // from my pov it is not necessary to notify the user about the code cleaning process.
+            // it throws just a useless, annoying bubble everytime you hit the save button.
+            // BUT: if you need this notification, you can enable it by uncommenting the following 3 lines
             // notTime:2400,                                            // Time to display notifications.
             // notStyle:'position:absolute;bottom:0;left:2px',          // Position of notification
             // icon:'<i class="note-icon">[Your Button]</i>'            // Display an icon
