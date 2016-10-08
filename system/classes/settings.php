@@ -4,7 +4,7 @@ namespace YAWK {
      * <b>methods to get and set yawk system settings</b>
      * @author Daniel Retzl <danielretzl@gmail.com>
      * @version 1.0.0
-     * @link http://yawk.website
+     * @link http://yawk.io
      */
     class settings
     {
@@ -12,7 +12,7 @@ namespace YAWK {
          * Returns an array with all setings where property is like $property.
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
-         * @link http://yawk.website
+         * @link http://yawk.io
          * @param object $db Database Object
          * @param string $property
          * @return mixed
@@ -39,7 +39,7 @@ namespace YAWK {
          * Return corresponding form elements for given settings.
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
-         * @link http://yawk.website
+         * @link http://yawk.io
          * @param object $db Database Object
          * @param array $settings Settings: property|value|type|sortation|activated|label|icon|heading|subtext|fieldClass|fieldType|placeholder|description|options
          * @param int $type
@@ -261,11 +261,6 @@ namespace YAWK {
                         }
                     }
                 }
-/*
-                if (isset($setting['longValue']) && (!empty($setting['longValue'])))
-                {
-
-                } */
             }
         }
 
@@ -277,9 +272,89 @@ namespace YAWK {
             {
                 $i++;
                 echo "<label for=\"$property\">$property</label>
-									  <input type=\"text\" id=\"$property\" class=\"form-control\" name=\"$property\" value=\"$tag\"><br>";
+					  <input type=\"text\" id=\"$property\" class=\"form-control\" name=\"$property\" value=\"$tag\"><br>";
             }
             echo "Total: ".$i." language tags found.";
+        }
+
+        public static function getSettingsByType($db, $typeID)
+        {   /* @var $db \YAWK\db */
+            if ($res = $db->query("SELECT * FROM {settings} WHERE type = $typeID"))
+            {
+                $settingsArray = array();
+                while ($row = $res->fetch_assoc())
+                {   // fill array with settings by type
+                    $settingsArray[] = $row;
+                }
+            }
+            else
+            {   // query failed...
+                return false;
+            }
+            return $settingsArray;
+        }
+
+        /**
+         * Returns an associative array containing the editor settings
+         * @param object $db Database object
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param int $typeID The ID of settings type to get.
+         * @return array|bool
+         */
+        public static function getEditorSettings($db, $typeID=0)
+        {   /* @var $db \YAWK\db */
+            // check if type is set, if not, try to fetch it
+            if (!isset($typeID) || ($typeID == 0))
+            {   // if type is not set, try to query db to get the ID of editor settings
+                if ($res = $db->query("SELECT id FROM {settings_types} WHERE value = 'editor'"))
+                {   // fetch data
+                    if ($row = mysqli_fetch_row($res))
+                    {
+                        $typeID = $row[0];
+                    }
+                }
+                else
+                    {   // no type was set, try to fetch editor type failed.
+                        \YAWK\alert::draw("danger", "Could not fetch editor settings.", "Settings type not set. Tried to fetch, but it seems that there is no setting type called editor.", "", 6500);
+                    }
+            }
+            // ok, now we got the type, lets go: fetch editor settings
+            if ($res = $db->query("SELECT * FROM {settings} WHERE type = $typeID"))
+            {   // build an array
+                $editorSettingsArray = array();
+                while ($row = $res->fetch_assoc())
+                {   // fill it with settings
+                    if ($row['property'] === "editorLineNumbers") {
+                        if ($row['value'] == "1") { $row['value'] = "true"; } else { $row['value'] = "false"; }
+                    }
+                    if ($row['property'] === "editorSmartIndent") {
+                        if ($row['value'] == "1") { $row['value'] = "true"; } else { $row['value'] = "false"; }
+                    }
+                    if ($row['property'] === "editorActiveLine") {
+                        if ($row['value'] == "1") { $row['value'] = "true"; } else { $row['value'] = "false"; }
+                    }
+                    if ($row['property'] === "editorCloseBrackets") {
+                        if ($row['value'] == "1") { $row['value'] = "true"; } else { $row['value'] = "false"; }
+                    }
+                    if ($row['property'] === "editorCloseTags") {
+                        if ($row['value'] == "1") { $row['value'] = "true"; } else { $row['value'] = "false"; }
+                    }
+                    if ($row['property'] === "editorMatchBrackets") {
+                        if ($row['value'] == "1") { $row['value'] = "true"; } else { $row['value'] = "false"; }
+                    }
+                    if ($row['property'] === "editorMatchTags") {
+                        if ($row['value'] == "1") { $row['value'] = "true"; } else { $row['value'] = "false"; }
+                    }
+                    $editorSettingsArray[$row['property']] = $row['value'];
+                }
+            }
+            else
+            {   // query failed...
+                return false;
+            }
+            return $editorSettingsArray;
         }
 
 
@@ -287,7 +362,7 @@ namespace YAWK {
          * Returns an array with all settings data.
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
-         * @link http://yawk.website
+         * @link http://yawk.io
          * @param object $db Database Object
          * @return array|bool
          */
@@ -313,7 +388,7 @@ namespace YAWK {
          * Get and return value for property from settings database.
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
-         * @link http://yawk.website
+         * @link http://yawk.io
          * @param object $db Database object
          * @param string $property Property to select from database
          * @return bool
@@ -336,7 +411,7 @@ namespace YAWK {
          * Set value for property into settings database.
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
-         * @link http://yawk.website
+         * @link http://yawk.io
          * @param object $db Database object
          * @param string $property Property to set into database
          * @param string $value Value to set into database
@@ -362,7 +437,7 @@ namespace YAWK {
          * Get and return longValue for property from settings database.
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
-         * @link http://yawk.website
+         * @link http://yawk.io
          * @param object $db Database object
          * @param string $property Property to get longValue from database.
          * @return mixed
@@ -385,7 +460,7 @@ namespace YAWK {
          * Set (update) template setting value for property.
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
-         * @link http://yawk.website
+         * @link http://yawk.io
          * @param object $db Database object
          * @param string $property Template property to set
          * @param string $value Template value to set
@@ -412,7 +487,7 @@ namespace YAWK {
          * Set (update) long setting value for property.
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
-         * @link http://yawk.website
+         * @link http://yawk.io
          * @param object $db Database object
          * @param string $property Property to set
          * @param string $value Long value to set
@@ -447,7 +522,7 @@ namespace YAWK {
          * Get setting description from requested property.
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
-         * @link http://yawk.website
+         * @link http://yawk.io
          * @param object $db Database object
          * @param string $property Property to get description from.
          * @return bool
@@ -469,7 +544,7 @@ namespace YAWK {
          * Get widget setting value from widgets_settings.
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
-         * @link http://yawk.website
+         * @link http://yawk.io
          * @param object $db Database object
          * @param string $property Property to get value from.
          * @return bool
@@ -494,7 +569,7 @@ namespace YAWK {
          * Set widget setting value into widgets_settings.
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
-         * @link http://yawk.website
+         * @link http://yawk.io
          * @param object $db Database object
          * @param string $property Property to get value from.
          * @param string $value Value of requested property
@@ -525,7 +600,7 @@ namespace YAWK {
          * Toggle setting offline where requested property.
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
-         * @link http://yawk.website
+         * @link http://yawk.io
          * @param object $db Database object
          * @param string $property Property to get value from.
          * @param string $new_status
