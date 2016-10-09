@@ -3,8 +3,36 @@
 <!-- --><script type="text/javascript" src="../system/engines/jquery/bootstrap-tabcollapse.js"></script>
 <!-- JS GO -->
 <script type="text/javascript">
-	/* reminder: check if form has changed and warns the user that he needs to save. */
+	function saveHotkey() {
+		// simply disables save event for chrome
+		$(window).keypress(function (event) {
+			if (!(event.which == 115 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) && !(event.which == 19)) return true;
+			event.preventDefault();
+			formmodified=0; // do not warn user, just save.
+			return false;
+		});
+		// used to process the cmd+s and ctrl+s events
+		$(document).keydown(function (event) {
+			if (event.which == 83 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) {
+				event.preventDefault();
+				$('#savebutton').click(); // SAVE FORM AFTER PRESSING STRG-S hotkey
+				formmodified=0; // do not warn user, just save.
+				// save(event);
+				return false;
+			}
+		});
+	}
+	saveHotkey();
 	$(document).ready(function() {
+		// textarea that will be transformed into editor
+		var savebutton = ('#savebutton');
+		var savebuttonIcon = ('#savebuttonIcon');
+		// ok, lets go...
+		// we need to check if user clicked on save button
+		$(savebutton).click(function() {
+			$(savebutton).removeClass('btn btn-success').addClass('btn btn-warning');
+			$(savebuttonIcon).removeClass('fa fa-check').addClass('fa fa-spinner fa-spin fa-fw');
+		});
 
 		/* START CHECKBOX backend footer */
 		// check backend footer checkbox onload
@@ -224,7 +252,9 @@ echo"<ol class=\"breadcrumb\">
 <form id="template-edit-form" action="index.php?page=settings-system" method="POST">
 	<!-- <div class="nav-tabs-custom"> <!-- admin LTE tab style -->
 	<div id="btn-wrapper" class="text-right">
-		<input id="savebutton" type="submit" class="btn btn-success" name="save" value="<?php echo $lang['SAVE_SETTINGS']; ?>">
+		<button type="submit" id="savebutton" name="save" class="btn btn-success">
+			<i id="savebuttonIcon" class="fa fa-check"></i> &nbsp;<?php print $lang['SAVE_SETTINGS']; ?>
+		</button>
 	</div>
 	<!-- FORM -->
 	<!-- Nav tabs -->

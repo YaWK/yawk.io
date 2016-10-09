@@ -108,9 +108,13 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
 $(document).ready(function() {
     // textarea that will be transformed into editor
     var editor = ('textarea#summernote');
+    var savebutton = ('#savebutton');
+    var savebuttonIcon = ('#savebuttonIcon');
     // ok, lets go...
     // we need to check if user clicked on save button
-        $( "#savebutton" ).click(function() {
+        $(savebutton).click(function() {
+            $(savebutton).removeClass('btn btn-success').addClass('btn btn-warning');
+            $(savebuttonIcon).removeClass('fa fa-check').addClass('fa fa-spinner fa-spin fa-fw');
             // to save, even if the editor is currently opened in code view
             // we need to check if codeview is currently active:
             if ($(editor).summernote('codeview.isActivated')) {
@@ -260,8 +264,8 @@ echo "
 
     <!-- SAVE BUTTON -->
     <div class="text-right">
-        <button type="submit" id="savebutton" name="save" class="btn btn-danger">
-            <i class="fa fa-check"></i> &nbsp;<?php print $lang['SAVE_CHANGES']; ?>
+        <button type="submit" id="savebutton" name="save" class="btn btn-success">
+            <i id="savebuttonIcon" class="fa fa-check"></i> &nbsp;<?php print $lang['SAVE_CHANGES']; ?>
         </button>
     </div>
 

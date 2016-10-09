@@ -74,9 +74,13 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
     $(document).ready(function() {
         // textarea that will be transformed into editor
         var editor = ('textarea#summernote');
+        var savebutton = ('#savebutton');
+        var savebuttonIcon = ('#savebuttonIcon');
         // ok, lets go...
         // we need to check if user clicked on save button
-        $( "#savebutton" ).click(function() {
+        $(savebutton).click(function() {
+            $(savebutton).removeClass('btn btn-success').addClass('btn btn-warning');
+            $(savebuttonIcon).removeClass('fa fa-check').addClass('fa fa-spinner fa-spin fa-fw');
             // to save, even if the editor is currently opened in code view
             // we need to check if codeview is currently active:
             if ($(editor).summernote('codeview.isActivated')) {
@@ -1184,7 +1188,11 @@ else
     <!-- <div class="nav-tabs-custom"> <!-- admin LTE tab style -->
     <div id="btn-wrapper" class="text-right">
     <?php echo $previewButton; ?>
-        <input id="savebutton" type="submit" class="btn btn-success" name="save" value="<?php echo $lang['DESIGN_SAVE']; ?>">
+
+        <button type="submit" id="savebutton" name="save" class="btn btn-success">
+            <i id="savebuttonIcon" class="fa fa-check"></i> &nbsp;<?php print $lang['DESIGN_SAVE']; ?>
+        </button>
+       <!-- <input id="savebutton" type="submit" class="btn btn-success" name="save" value="<?php echo $lang['DESIGN_SAVE']; ?>"> -->
     </div>
     <!-- FORM -->
     <!-- Nav tabs -->
@@ -1574,7 +1582,10 @@ else
                             <br><br>
                             If you need help w CSS take a look here:<br>
                             &raquo; <a href="http://www.w3schools.com/css/" title="open CSS overview in new TAB" target="_blank">w3schools.com/css/</a>
-                            </small>
+
+                            <br><br>
+                            <b>Did you know?</b><br>
+                            If your browser support it, you can save with [CTRL-S]. <i>Try it!</i></small>
 
                     </h3>
                 </div>
