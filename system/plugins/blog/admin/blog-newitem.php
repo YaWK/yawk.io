@@ -15,9 +15,8 @@ if (isset($_POST['create']) && isset($_POST['blogid'])) {
     $blog->thumbnail = $db->quote($_POST['thumbnail']);
     $blog->youtubeUrl = $db->quote($_POST['youtubeUrl']);
 
-    if ($blog->createItem($blog->blogid, $blog->title, $blog->subtitle, $blog->published, $blog->teasertext, $blog->blogtext, $blog->date_publish, $blog->date_unpublish, $blog->thumbnail, $blog->youtubeUrl)) {
+    if ($blog->createItem($db, $blog->blogid, $blog->title, $blog->subtitle, $blog->published, $blog->teasertext, $blog->blogtext, $blog->date_publish, $blog->date_unpublish, $blog->thumbnail, $blog->youtubeUrl)) {
         echo YAWK\alert::draw("success", "Success!", "Your entry $blog->title was saved.","plugin=blog&pluginpage=blog-entries&blogid=".$blog->blogid."","1200");
-        exit;
     }
     else
     {   // create failed, throw error
@@ -25,7 +24,7 @@ if (isset($_POST['create']) && isset($_POST['blogid'])) {
     }
 }
 
-$blog = new \YAWK\PLUGINS\BLOG\Blog();
+$blog = new \YAWK\PLUGINS\BLOG\blog();
 $blog->icon = $blog->getBlogProperty($db, $_GET['blogid'], "icon");
 $blog->name = $blog->getBlogProperty($db, $_GET['blogid'], "name");
 $blog->id = $blog->getBlogProperty($db, $_GET['blogid'], "id");

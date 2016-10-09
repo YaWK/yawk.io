@@ -40,23 +40,21 @@ if (isset($_POST['create']))
 
     if ($blog->create($db, $name, $description, $menuID, $icon))
     {
-        print \YAWK\alert::draw("success", "Erfolg!", "Blog wurde erfolgreich angelegt.","","1200");
-    }
-    else
-    {   // no name is set
+        // no name is set
         if (empty($name) || (!isset($name)))
         {   // no name is set, throw error
-            \YAWK\alert::draw("warning", "Error!", "Give your new blog a name or title!","","6200");
-        }
-        else
-        {   // could not create blog because of any other reason
-            \YAWK\alert::draw("warning", "Error!", "The Blog " . $_POST['name'] . " could not be created.","","6800");
+            \YAWK\alert::draw("warning", "Error!", "Give your new blog a name or title!","","16200");
         }
 
         if (empty($icon) || (!isset($icon)))
         {   // no icon is set, throw a info alert in users face
-            \YAWK\alert::draw("info", "Did you know...?", "You can add an icon to your Blog. This makes it easier to identify, if you manage a bunch of blogs!","","8400");
+            \YAWK\alert::draw("info", "Did you know...?", "You can add an icon to your Blog. This makes it easier to identify, if you manage a bunch of blogs!","","18400");
         }
+        print \YAWK\alert::draw("success", "Erfolg!", "Blog wurde erfolgreich angelegt.","","3800");
+    }
+    else
+    {
+
     }
 }
 

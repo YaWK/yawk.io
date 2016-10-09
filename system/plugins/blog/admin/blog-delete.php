@@ -17,7 +17,6 @@ if (!isset($_GET['delete']))
             <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
             <li><a href=\"index.php?page=plugins\" title=\"Plugins\"> Plugins</a></li>
             <li><a href=\"index.php?plugin=blog\" title=\"Blog\"> Blog</a></li>
-            <li><a href=\"index.php?plugin=blog\" title=\"Blog\"> Blog</a></li>
             <li class=\"active\"><a href=\"index.php?plugin=blog&pluginpage=blog-delete\" title=\"Blog\"> Delete Blog</a></li>
         </ol>
     </section>
@@ -42,14 +41,12 @@ else
         if (!$blog->deleteItem($db, $_GET['blogid'], $_GET['itemid'], $_GET['pageid']))
         {   // delete item failed, throw error
             \YAWK\alert::draw("warning", "Error: ", "Could not delete Blog Page: " . $_GET['itemid'] . " ","plugin=blog","2000");
-            exit;
         }
     }
     // delete full blog including all content
     if (!$blog->delete($db, $_GET['blog']))
     {   // delete blog failed, throw error
         \YAWK\alert::draw("warning", "Error: ", "Could not delete Entry ID: " . $_GET['itemid'] . " ","plugin=blog","2000");
-        exit;
     }
 }
 ?>

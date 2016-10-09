@@ -79,7 +79,8 @@ namespace YAWK {
           page. However, you can choose any other skin. Make sure you
           apply the skin class to the body tag so the changes take effect.
     -->
-    <link rel=\"stylesheet\" href=\"../system/engines/AdminLTE/css/skins/$this->backendSkin.min.css\">
+    <!-- <link rel=\"stylesheet\" href=\"../system/engines/AdminLTE/css/skins/____this->backendSkin.min.css\"> -->
+    <link rel=\"stylesheet\" href=\"../system/engines/AdminLTE/css/skins/$this->backendSkin.css\">
 
     <!-- include custom css -->
     <link rel=\"stylesheet\" href=\"../system/engines/AdminLTE/css/skins/custom.css\">
@@ -146,6 +147,9 @@ namespace YAWK {
          */
         function drawHtmlLogo($db)
         {   // check, if URL or personal text should be displayed...
+            if ($this->backendLayout === "layout-top-nav"){
+                return null;
+            }
             if (\YAWK\settings::getSetting($db, "backendLogoUrl") === "1")
             {   // URL is requested, -> get hostname (project URL)
                 $host = \YAWK\settings::getSetting($db, "host");
@@ -179,12 +183,26 @@ namespace YAWK {
          * @return null
          */
         function drawHtmlNavbar(){
-            echo "<!-- Header Navbar -->
+            if ($this->backendLayout === "layout-top-nav"){
+                echo "
+    <nav class=\"navbar navbar-static-top\" role=\"navigation\">
+      <div class=\"container\">
+        <div class=\"navbar-header\">
+          <a href=\"../../index2.html\" class=\"navbar-brand\"><b>Admin</b>LTE</a>
+          <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#navbar-collapse\">
+            <i class=\"fa fa-bars\"></i>
+          </button>
+        </div>";
+            }
+            else {
+                echo "<!-- Header Navbar -->
             <nav class=\"navbar navbar-static-top\" role=\"navigation\">
               <!-- Sidebar toggle button-->
               <a href=\"#\" class=\"sidebar-toggle\" data-toggle=\"offcanvas\" role=\"button\">
                 <span class=\"sr-only\">Toggle navigation</span>
               </a>";
+
+            }
             return null;
         }
 

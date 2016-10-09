@@ -22,8 +22,7 @@ if (isset($_POST['save'])) {
     // tinyMCE \r\n bugfix
     $blog->text = stripslashes(str_replace('\r\n', '', ($blog->blogtext)));
     if ($blog->save($db)) {
-        YAWK\alert::draw("success", "Hooray!", "Der Eintrag wurde erfolgreich gespeichert!","plugin=blog&pluginpage=blog-edit&itemid=$blog->itemid&blogid=$blog->blogid","1200");
-        exit;
+        YAWK\alert::draw("success", "Hooray!", "Der Eintrag wurde erfolgreich gespeichert!", "", "800");
     }
     else
     {   // throw error
@@ -112,17 +111,22 @@ $blog->name = $blog->getBlogProperty($db, $blog->blogid, "name");
 <div class="row">
     <div class="col-md-8">
     <!-- EDITOR -->
-    <label for="summernote">Teaser Text</label>
-    <textarea
-        id="summernote"
-        class="form-control"
-        style="margin-top:10px;"
-        name="teasertext"
-        cols="50"
-        rows="18">
-        <?php print $blog->teasertext; ?>
-    </textarea>
-<br>
+    <?php if ($blog->layout !== "3")
+    {
+        echo "
+        <label for=\"summernote\">Teaser Text</label>
+        <textarea
+            id=\"summernote\"
+            class=\"form-control\"
+            style=\"margin-top:10px;\"
+            name=\"teasertext\"
+            cols=\"50\"
+            rows=\"18\">
+            $blog->teasertext
+        </textarea>
+    <br>";
+    }
+        ?>
     <!-- EDITOR -->
     <label for="summernote2">Blog Text</label>
     <textarea

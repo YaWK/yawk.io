@@ -15,18 +15,11 @@ if ($item->published === '1') {
 
 if ($item->toggleItemOffline($db, $_GET['id'], $item->published))
 {   //
-    \YAWK\backend::setTimeout("plugin=blog&pluginpage=blog-entries&blogid=" . $blogid . "",0);
+    \YAWK\backend::setTimeout("plugin=blog&pluginpage=blog-entries&blogid=$blogid",0);
 }
 else
 {
-    print \YAWK\alert::draw("danger", "Error", "Could not toggle blog status.");
+    print \YAWK\alert::draw("danger", "Error", "Could not toggle blog status.", "", 6800);
 }
 
 ?>
-<br><br>
-<div class="progress progress-striped active"> &nbsp; ...please wait...
-    <div class="progress-bar progress-bar-<?php print $progress; ?>" role="progressbar" aria-valuenow="45"
-         aria-valuemin="0" aria-valuemax="100" style="width: 45%">
-        <span class="sr-only">45% Complete</span>
-    </div>
-</div>

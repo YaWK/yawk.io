@@ -61,9 +61,9 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
         <td width="3%"><strong>ID</strong></td>
         <td width="13%"><strong>Type</strong></td>
         <td width="8%"><strong>Period</strong></td>
-        <td width="10%" style="text-align:center;"><strong>User</strong></td>
+        <td width="10%" class="text-center";><strong>User</strong></td>
         <td width="54%"><strong>Action</strong></td>
-        <td width="12%" style="text-align:center;"><strong>Affected</strong></td>
+        <td width="12%" class="text-center";><strong>Affected</strong></td>
     </tr>
     </thead>
     <tbody>

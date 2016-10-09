@@ -106,7 +106,7 @@ if(isset($_GET['backend']) && (isset($_GET['gid'])))
         <td width="20%"><strong>Gruppe umbenennen</strong></td>
         <td width="30%"><strong>Access to /admin </strong> <small>(be careful...!)</small></td>
         <td width="30%"><strong>FrontEnd-SignUp allowed? </strong><small>(for this group)</small></td>
-        <td width="15%" style="text-align:center;"><strong>Farbe</strong></td>
+        <td width="15%" class="text-center";><strong>Farbe</strong></td>
     </tr>
     </thead>
     <tbody>

@@ -61,12 +61,12 @@ echo"<ol class=\"breadcrumb\">
     <thead>
     <tr>
         <td width="3%"><strong>&nbsp;</strong></td>
-        <td width="13%" style="text-align:center;"><strong>User</strong></td>
-        <td width="14%" style="text-align:center;"><strong>Date</strong></td>
+        <td width="13%" class="text-center";><strong>User</strong></td>
+        <td width="14%" class="text-center";><strong>Date</strong></td>
         <td width="57%"><strong>Comment</strong></td>
-        <td width="5%" style="text-align:center;"><strong>ID</strong></td>
-        <td width="3%" style="text-align:center;"><strong>Group</strong></td>
-        <td width="5%" style="text-align:center;"><strong>Aktionen</strong></td>
+        <td width="5%" class="text-center";><strong>ID</strong></td>
+        <td width="3%" class="text-center";><strong>Group</strong></td>
+        <td width="5%" class="text-center";><strong>Aktionen</strong></td>
     </tr>
     </thead>
     <tbody>

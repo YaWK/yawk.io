@@ -56,14 +56,14 @@ echo "
     <thead>
     <tr>
         <td width="3%"><strong>&nbsp;</strong></td>
-        <td width="5%" style="text-align:center;"><strong>ID</strong></td>
+        <td width="5%" class="text-center";><strong>ID</strong></td>
         <td width="25%"><strong>Title</strong></td>
         <td width="30%"><strong>Subtitle</strong></td>
-        <td width="5%" style="text-align:center;"><strong>User</strong></td>
-        <td width="5%" style="text-align:center;"><strong>Group</strong></td>
-        <td width="10%" style="text-align:center;"><strong>Publish</strong></td>
-        <td width="7%" style="text-align:center;"><strong>Comments</strong></td>
-        <td width="10%" style="text-align:center;"><strong>Aktionen</strong></td>
+        <td width="5%" class="text-center";><strong>User</strong></td>
+        <td width="5%" class="text-center";><strong>Group</strong></td>
+        <td width="10%" class="text-center";><strong>Publish</strong></td>
+        <td width="7%" class="text-center";><strong>Comments</strong></td>
+        <td width="10%" class="text-center";><strong>Aktionen</strong></td>
     </tr>
     </thead>
     <tbody>

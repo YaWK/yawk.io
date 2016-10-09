@@ -38,7 +38,7 @@ namespace YAWK\PLUGINS\BLOG {
      * @since      File available since Release 0.1.8
      * @annotation Handles the Plugin System.
      */
-    class Blog
+    class blog
     {
         /* init vars
          * @set public
@@ -498,6 +498,17 @@ namespace YAWK\PLUGINS\BLOG {
                 $this->name = $row['name'];
                 $this->description = $row['description'];
                 $this->icon = $row['icon'];
+                $this->showTitle = $row['showtitle'];
+                $this->showDesc = $row['showdesc'];
+                $this->showDate = $row['showdate'];
+                $this->showAuthor = $row['showauthor'];
+                $this->sequence = $row['sequence'];
+                $this->sortation = $row['sortation'];
+                $this->footer = $row['footer'];
+                $this->comments = $row['commenta'];
+                $this->gid = $row['gid'];
+                $this->permaLink = $row['permalink'];
+                $this->layout = $row['layout'];
                 $this->preview = $row['preview'];
                 $this->voting = $row['voting'];
                 return true;
@@ -553,7 +564,7 @@ namespace YAWK\PLUGINS\BLOG {
         $date_changed = date("Y-m-d G:i:s");
         $this->teasertext = stripslashes(str_replace('\r\n', '', $this->teasertext));
 
-        $alias = $this->title;
+        $alias = $this->blogtitle;
         /* alias string manipulation to generate a valid filename */
         $alias = mb_strtolower($alias); // lowercase
         $alias = str_replace(" ", "-", $alias); // replace all ' ' with -
@@ -606,7 +617,7 @@ namespace YAWK\PLUGINS\BLOG {
             if ($res = $db->query("UPDATE {blog_items} SET
                     published = '" . $this->published . "',
                     sort = '" . $this->sort . "',
-                    title = '" . $this->title . "',
+                    title = '" . $this->blogtitle . "',
                     subtitle = '" . $this->subtitle . "',
                     date_changed = '" . $date_changed . "',
                     date_publish = '" . $this->date_publish . "',
@@ -1009,22 +1020,26 @@ namespace YAWK\PLUGINS\BLOG {
                         if (file_exists($filename)) {   // delete file
                             unlink($filename);
                             if ($res = $db->query("DELETE FROM {blog_items} WHERE blogid = '" . $blogid . "' AND id = '" . $itemid . "'")) {   // blog item deleted from database
-                                \YAWK\alert::draw("danger", "Error: ", "Blog item deleted from database!", "", "2200");
+                                \YAWK\alert::draw("success", "Blog item deleted ", "Blog item deleted from database!", "", "2200");
                             }
                             if ($res = $db->query("DELETE FROM {blog_comments} WHERE blogid = '" . $blogid . "' AND itemid = '" . $itemid . "'")) {   // blog comments removed from db
-                                \YAWK\alert::draw("danger", "Error: ", "Blog comments deleted from database!", "", "2200");
+                                \YAWK\alert::draw("success", "Blog comments deleted", "Blog comments deleted from database!", "", "2200");
                             }
                         } else {   // could not delete file, throw error
-                            \YAWK\alert::draw("danger", "Error: ", "Could not delete $filename", "", "3800");
+                            // \YAWK\alert::draw("danger", "Error: ", "Could not delete $filename", "", "3800");
+                            return false;
                         }
-                    } else {   // delte failed, throw error
-                        \YAWK\alert::draw("warning", "Error: ", "Could not delete item from database", "", "3800");
+                    } else {   // delete failed, throw error
+                       //  \YAWK\alert::draw("warning", "Error: ", "Could not delete item from database", "", "3800");
+                        return false;
                     }
                 } else {   // fetch failed, throw error
-                    \YAWK\alert::draw("danger", "Error: ", "Could not fetch alias from pages database.", "", "3800");
+                   // \YAWK\alert::draw("danger", "Error: ", "Could not fetch alias from pages database.", "", "3800");
+                    return false;
                 }
             } else {   // q failed
-                \YAWK\alert::draw("danger", "Error: ", "Could not query alias from pages database.", "", "3800");
+                // \YAWK\alert::draw("danger", "Error: ", "Could not query alias from pages database.", "", "3800");
+                return false;
             }
             return true;
         }
@@ -1160,8 +1175,8 @@ namespace YAWK\PLUGINS\BLOG {
                     $subtitle = htmlentities($subtitle);
 
                     // convert html special chars
-                    $this->teasertext = self::encodeChars($this->teasertext);
-                    $this->blogtext = self::encodeChars($this->blogtext);
+                    $this->teasertext = \YAWK\sys::encodeChars($this->teasertext);
+                    $this->blogtext = \YAWK\sys::encodeChars($this->blogtext);
 
                     if ($res = $db->query("INSERT INTO {blog_items}
                                 (blogid,id,uid,pageid,sort,published,title,subtitle,date_created,date_publish,date_unpublish,teasertext,blogtext,thumbnail,youtubeUrl,author)
