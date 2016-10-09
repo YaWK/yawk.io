@@ -93,6 +93,26 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
 <script src="../system/engines/summernote/dist/summernote-floats-bs.js"></script>
 
 <script type="text/javascript">
+    function saveHotkey() {
+        // simply disables save event for chrome
+        $(window).keypress(function (event) {
+            if (!(event.which == 115 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) && !(event.which == 19)) return true;
+            event.preventDefault();
+            formmodified=0; // do not warn user, just save.
+            return false;
+        });
+        // used to process the cmd+s and ctrl+s events
+        $(document).keydown(function (event) {
+            if (event.which == 83 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) {
+                event.preventDefault();
+                $('#savebutton').click(); // SAVE FORM AFTER PRESSING STRG-S hotkey
+                formmodified=0; // do not warn user, just save.
+                // save(event);
+                return false;
+            }
+        });
+    }
+    saveHotkey();
 $(document).ready(function() {
     // textarea that will be transformed into editor
     var editor = ('textarea#summernote');

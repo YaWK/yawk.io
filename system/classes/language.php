@@ -28,6 +28,7 @@ namespace YAWK {
         public function init(){
             if (isset($_GET['lang'])) {
                 self::setLanguage($_GET['lang']);
+                    $this->current = $_GET['lang'];
             }
             else {
                 self::setLanguage("en-EN");
@@ -50,7 +51,7 @@ namespace YAWK {
 
             /* LANGUAGE TASKS */
             /* is the language switched right now */
-            if (isSet($_GET['lang'])) {
+            if (isset($_GET['lang'])) {
                 $lang = $_GET['lang'];
                 // register and overwrite session var
                 $_SESSION['lang'] = $lang;

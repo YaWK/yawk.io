@@ -5,6 +5,28 @@
 <script type="text/javascript">
 /* reminder: check if form has changed and warns the user that he needs to save. */
     $(document).ready(function() {
+    // TRY TP DISABLE CTRL-S browser hotkey
+        function saveHotkey() {
+            // simply disables save event for chrome
+            $(window).keypress(function (event) {
+                if (!(event.which == 115 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) && !(event.which == 19)) return true;
+                event.preventDefault();
+                formmodified=0; // do not warn user, just save.
+                return false;
+            });
+            // used to process the cmd+s and ctrl+s events
+            $(document).keydown(function (event) {
+                if (event.which == 83 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) {
+                    event.preventDefault();
+                    $('#savebutton').click(); // SAVE FORM AFTER PRESSING STRG-S hotkey
+                    formmodified=0; // do not warn user, just save.
+                    // save(event);
+                    return false;
+                }
+            });
+        }
+        saveHotkey();
+
         formmodified=0; // status
         $('form *').change(function(){ // if form has changed
             formmodified=1; // set status
@@ -109,7 +131,7 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
                 ]
             },
             // language for plugin image-attributes.js
-            lang: '<?php echo $_SESSION['lang']; ?>',
+            lang: <?php echo "'$_SESSION[lang]'"; ?>,
 
             // powerup the codeview with codemirror theme
             codemirror: { // codemirror options
@@ -219,6 +241,9 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
            // $template->loadProperties($db, YAWK\settings::getSetting($db, "selectedTemplate"));
            $template->loadProperties($db, $getID);
         }
+    }
+    else {
+        $previewButton = "";
     }
 
 $newID = '';

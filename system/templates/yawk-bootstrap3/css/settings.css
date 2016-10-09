@@ -1,10 +1,10 @@
 /* auto generated */
     body {   /* BODY SETTINGS */
-        color: #333333;
-        background-color: #FFFFFF;
-        text-shadow: 1px 0px #CCCCCC;
-        font-size: 1.7em;
-        filter: dropshadow(color=#CCCCCC, offx=1, offy=1);
+        color: #FFFFFF;
+        background-color: #292A25;
+        text-shadow: 1px 0px #000000;
+        font-size: 1.6em;
+        filter: dropshadow(color=#000000, offx=1, offy=1);
         margin-top: 40px;
         margin-bottom: 0px;
         margin-left: 0px;
@@ -32,33 +32,33 @@
         /* TYPOGRAPHY SETTINGS */
     h1 {
 	   font-family: Oswald;
-        color: #000000;
+        color: #FFFFFF;
         font-size: 36px;
 
     }
        h2 {
            font-family: Oswald;
-           color: #000000;
+           color: #05A3FF;
            font-size: 30px;
        }
        h3 {
            font-family: Oswald;;
-           color: #000000;
+           color: #FFFFFF;
            font-size: 24px;
        }
        h4 {
            font-family: Oswald;
-           color: #000000;
+           color: #FFFFFF;
            font-size: 18px;
        }
        h5 {
            font-family: Oswald;
-           color: #000000;
+           color: #FFFFFF;
            font-size: 14px;
        }
        h6 {
            font-family: Oswald;
-           color: #000000;
+           color: #FFFFFF;
            font-size: 12px;
        }
        h1 small,
@@ -87,17 +87,17 @@
        .h6 .small {
            font-weight: normal;
            line-height: 1;
-           color: #777777;
+           color: #F5F5F5;
        }
     /* MAIN BOX SHADOW SETTINGS */
     #main-pos {
-        box-shadow: 6px 12px 16px 0px #E8E8E8;
+        box-shadow: 6px 12px 16px 0px #141414;
     }
     #footer {
-        box-shadow: 6px 12px 16px 0px #E8E8E8;
+        box-shadow: 6px 12px 16px 0px #141414;
     }
     #footer-copyright {
-        box-shadow: 6px 12px 16px 0px #E8E8E8;
+        box-shadow: 6px 12px 16px 0px #141414;
     }
 
     /* WELL */
@@ -106,7 +106,7 @@
         padding: 20px;
         margin-bottom: 0px;
         margin-top: 0px;
-        background-color: #F5F5F5;
+        background-color: #525251;
         border: 0px solid #E0E0E0;
         border-radius: 0px;
         -webkit-box-shadow: 2px 2px 5px 6px #F0F0F0;
@@ -496,26 +496,26 @@
    .navbar-default {
        text-shadow: 1px 0px #CCCCCC;
        filter: dropshadow(color=#CCCCCC, offx=1, offy=1);
-       background-color: #F8F8F8;
-       border-color: #E7E7E7;
+       background-color: #242423;
+       border-color: #3D3D3C;
    }
    .navbar-default .navbar-brand {
-       color: #777777;
+       color: #000000;
    }
    .navbar-default .navbar-brand:hover,
    .navbar-default .navbar-brand:focus {
-       color: #5E5E5E;
+       color: #FFFFFF;
        background-color: transparent;
    }
    .navbar-default .navbar-text {
-       color: #777777;
+       color: #EDEDED;
    }
    .navbar-default .navbar-nav > li > a {
-       color: #777777;
+       color: #EDEDED;
    }
    .navbar-default .navbar-nav > li > a:hover,
    .navbar-default .navbar-nav > li > a:focus {
-       color: #333333;
+       color: #F7F7F7;
        background-color: transparent;
    }
    .navbar-default .navbar-nav > .active > a,
@@ -542,7 +542,7 @@
    }
    .navbar-default .navbar-collapse,
    .navbar-default .navbar-form {
-       border-color: #E7E7E7;
+       border-color: #3D3D3C;
    }
    .navbar-default .navbar-nav > .open > a,
    .navbar-default .navbar-nav > .open > a:hover,
@@ -552,11 +552,11 @@
    }
    @media (max-width: 767px) {
        .navbar-default .navbar-nav .open .dropdown-menu > li > a {
-           color: #777777;
+           color: #EDEDED;
        }
        .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
        .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
-           color: #333333;
+           color: #F7F7F7;
            background-color: transparent;
        }
        .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
@@ -573,17 +573,17 @@
        }
    }
    .navbar-default .navbar-link {
-       color: #777777;
+       color: #EDEDED;
    }
    .navbar-default .navbar-link:hover {
-       color: #333333;
+       color: #F7F7F7;
    }
    .navbar-default .btn-link {
-       color: #777777;
+       color: #EDEDED;
    }
    .navbar-default .btn-link:hover,
    .navbar-default .btn-link:focus {
-       color: #333333;
+       color: #F7F7F7;
    }
    .navbar-default .btn-link[disabled]:hover,
    fieldset[disabled] .navbar-default .btn-link:hover,
