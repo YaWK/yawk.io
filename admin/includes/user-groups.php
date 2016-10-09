@@ -149,7 +149,7 @@ if(isset($_GET['backend']) && (isset($_GET['gid'])))
                   <a title=\"toggle&nbsp;status\" href=\"index.php?page=user-groups&signup=".$row['signup_allowed']."&gid=".$row['id']."\">
                   <span class=\"label label-$signuphtml\">$signuptext</span></a>&nbsp;</td>
 
-                <td style=\"text-align:center;\"><p class=\"text-$row[color]\">$row[color]</p></td>
+                <td class="text-center";><p class=\"text-$row[color]\">$row[color]</p></td>
 
               </tr>";
         }

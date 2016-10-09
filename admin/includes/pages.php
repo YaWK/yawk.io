@@ -106,7 +106,7 @@ $i_pages_unpublished = 0;
         }
 
         echo "<tr>
-          <td style=\"text-align:center;\">
+          <td class="text-center";>
             <a title=\"toggle&nbsp;status\" href=\"index.php?page=page-toggle&id=".$row['id']."&title=".$row['title']."&published=".$row['published']."\">
             <span class=\"label label-$pub\">$pubtext</span></a>&nbsp;</td>
           <td>".$lockIcon."</i></td>

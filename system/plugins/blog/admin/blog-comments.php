@@ -133,21 +133,21 @@ echo"<ol class=\"breadcrumb\">
         }
         // draw table and badges
         echo "<tr>
-                <td style=\"text-align:center;\">
+                <td class="text-center";>
                 <a href=\"index.php?plugin=blog&pluginpage=blog-togglecomment&published=" . $row['published'] . "&blogid=" . $blog->id . "&id=" . $row['id'] . "\">
                 <span class=\"label label-$pub\">$pubtext</span></a>&nbsp;</td>
-                <td style=\"text-align:center;\">" . $comment_user . "</td>
+                <td class="text-center";>" . $comment_user . "</td>
 
                 <td><a href=\"index.php?plugin=blog&pluginpage=blog-edit&itemid=" . $row['id'] . "&blogid=" . $blog->id . "\"><div style=\"width:100%\">" . $row['date_created'] . "</div></a></td>
                 <td><a href=\"index.php?plugin=blog&pluginpage=blog-edit&itemid=" . $row['id'] . "&blogid=" . $blog->id . "\" style=\"color: #7A7376;\"><div style=\"width:100%\">" . $row['comment'] . "</div></a></td>
 
 
-                <td style=\"text-align:center;\">" . $row['id'] . "</td>
+                <td class="text-center";>" . $row['id'] . "</td>
 
-                <td style=\"text-align:center;\">
+                <td class="text-center";>
                 <a href=\"#\"><span class=\"label label-$color\">" . $label . "</span></a></td>
 
-                <td style=\"text-align:center;\"> 
+                <td class="text-center";> 
 
                   <a class=\"icon icon-trash\" data-confirm=\"Soll der Eintrag &laquo;" . $comment_user . " - " . $row['comment'] . "&raquo; wirklich gel&ouml;scht werden?\" title=\"DELETE " . $row['id'] . "\" href=\"index.php?plugin=blog&pluginpage=blog-deletecomment&item=kill&commentid=" . $row['id'] . "&blogid=" . $blog->id . "&itemid=" . $row['itemid'] . "&delete=true\">
                   </a>

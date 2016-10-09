@@ -134,7 +134,7 @@ echo"<ol class=\"breadcrumb\">
             }
 
             echo "<tr>
-          <td style=\"text-align:center;\">
+          <td class="text-center";>
             <a title=\"toggle&nbsp;status\" href=\"index.php?page=template-manage&toggle=1&templateID=".$row['id']."\">
             <span class=\"label label-$pub\">$pubtext</span></a>&nbsp;</td>
           <td>".$row['id']."</td>

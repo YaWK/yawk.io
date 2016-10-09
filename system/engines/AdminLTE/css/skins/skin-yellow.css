@@ -3,7 +3,7 @@
  * ------------
  */
 .skin-yellow .main-header .navbar {
-  background-color: #000;
+  background-color: #f39c12;
 }
 .skin-yellow .main-header .navbar .nav > li > a {
   color: #ffffff;
@@ -26,10 +26,10 @@
   background: rgba(0, 0, 0, 0.1);
 }
 .skin-yellow .main-header .navbar .sidebar-toggle {
-  color: #ffff;
+  color: #fff;
 }
 .skin-yellow .main-header .navbar .sidebar-toggle:hover {
-  background-color: #257F00;
+  background-color: #e08e0b;
 }
 @media (max-width: 767px) {
   .skin-yellow .main-header .navbar .dropdown-menu li.divider {
@@ -43,15 +43,15 @@
   }
 }
 .skin-yellow .main-header .logo {
-  background-color: #257F00;
+  background-color: #e08e0b;
   color: #ffffff;
   border-bottom: 0 solid transparent;
 }
 .skin-yellow .main-header .logo:hover {
-  background-color: #257F00;
+  background-color: #db8b0b;
 }
 .skin-yellow .main-header li.user-header {
-  background-color: #257F00;
+  background-color: #f39c12;
 }
 .skin-yellow .content-header {
   background: transparent;
@@ -59,7 +59,7 @@
 .skin-yellow .wrapper,
 .skin-yellow .main-sidebar,
 .skin-yellow .left-side {
-  background-color: #154800;
+  background-color: #222d32;
 }
 .skin-yellow .user-panel > .info,
 .skin-yellow .user-panel > .info > a {
@@ -67,24 +67,20 @@
 }
 .skin-yellow .sidebar-menu > li.header {
   color: #4b646f;
-  background: #0F3300;
+  background: #1a2226;
 }
 .skin-yellow .sidebar-menu > li > a {
   border-left: 3px solid transparent;
 }
-.skin-yellow .sidebar-menu > li:hover > a {
-  color: #ffffff;
-  background: #0F3300;
-  border-left-color: #3ED400;
-}
+.skin-yellow .sidebar-menu > li:hover > a,
 .skin-yellow .sidebar-menu > li.active > a {
   color: #ffffff;
-  background: #0F3300;
-  border-left-color: #3ED400;
+  background: #1e282c;
+  border-left-color: #f39c12;
 }
 .skin-yellow .sidebar-menu > li > .treeview-menu {
   margin: 0 1px;
-  background: #0F3300;
+  background: #2c3b41;
 }
 .skin-yellow .sidebar a {
   color: #b8c7ce;
@@ -101,13 +97,13 @@
 }
 .skin-yellow .sidebar-form {
   border-radius: 3px;
-  border: 1px solid #000;
+  border: 1px solid #374850;
   margin: 10px 10px;
 }
 .skin-yellow .sidebar-form input[type="text"],
 .skin-yellow .sidebar-form .btn {
   box-shadow: none;
-  background-color: #257F00;
+  background-color: #374850;
   border: 1px solid transparent;
   height: 35px;
 }
@@ -132,10 +128,4 @@
   border-top-right-radius: 2px;
   border-bottom-right-radius: 2px;
   border-bottom-left-radius: 0;
-}
-.content-wrapper,
-.right-side {
-  min-height: 100%;
-  background-color: rgba (37, 127, 0, 0.1);
-  z-index: 800;
 }

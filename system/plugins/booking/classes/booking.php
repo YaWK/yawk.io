@@ -573,7 +573,7 @@ $html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"hure-wien-buc
                         $visitHtml = "<span class=\"label label-danger\">$this->visits</span>";
                     }
                     $html .= "<tr>
-                    <td style=\"text-align:center;\">
+                    <td class="text-center";>
                     <a title=\"toggle&nbsp;status\" href=\"index.php?plugin=booking&pluginpage=booking-toggle&toggle=1&id=" . $this->id . "\">
                     <span class=\"label label-$pub\">$pubtext</span></a></td>
                     <td><small>$prettydate_created</small></td>
@@ -581,12 +581,12 @@ $html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"hure-wien-buc
                     <a href=\"index.php?plugin=booking&pluginpage=booking&email=$this->email\" target=\"_blank\">$this->email</a><br>
                     <a href=\"index.php?plugin=booking&pluginpage=booking&phone=$this->phone\" target=\"_blank\">$this->phone</a></p>
                     </div></td>
-                    <td style=\"text-align:center;\">$prettydate_wish<p style=\"color:#707070;\">$prettydate_alternative</p></td>
-                    <td style=\"text-align:center;\">$this->todo</td>
+                    <td class="text-center";>$prettydate_wish<p style=\"color:#707070;\">$prettydate_alternative</p></td>
+                    <td class="text-center";>$this->todo</td>
                     <td ".$msgstyle.">$this->text</td>
-                    <td style=\"text-align:center;\">".self::countVisits($db, $this->email)."</td>
-                    <td style=\"text-align:center;\"><a href=\"index.php?plugin=booking&pluginpage=booking&ip=$this->ip\" target=\"_blank\">$this->ip</a></td>
-                    <td style=\"text-align:center;\">
+                    <td class="text-center";>".self::countVisits($db, $this->email)."</td>
+                    <td class="text-center";><a href=\"index.php?plugin=booking&pluginpage=booking&ip=$this->ip\" target=\"_blank\">$this->ip</a></td>
+                    <td class="text-center";>
                         <a class=\"fa fa-hourglass-end\" title=\"".$lang['OUTDATED']."\" href=\"index.php?plugin=booking&pluginpage=booking-toggle&outdated=1&id=".$this->id."\"></a>&nbsp;
                         <a class=\"fa fa-ban\" title=\"".$lang['BAN']."\" href=\"index.php?plugin=booking&pluginpage=booking-toggle&ban=1&id=".$this->id."\"></a>&nbsp;
                         <a class=\"fa fa-edit\" title=\"" . $lang['EDIT'] . "\" href=\"index.php?plugin=booking&pluginpage=booking-edit&id=" . $this->id . "\"></a>&nbsp;
@@ -924,7 +924,7 @@ $html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"hure-wien-buc
             }
 
             if ($res && $sent_admin && $sent_user || $sent) {
-                \YAWK\alert::draw("success", "Erfolg", "Vielen Dank für Deinen Terminvorschlag! Ich werde mich so bald als m&ouml;glich bei Dir melden!","",4200);
+                \YAWK\alert::draw("success", "Erfolg", "Vielen Dank fï¿½r Deinen Terminvorschlag! Ich werde mich so bald als m&ouml;glich bei Dir melden!","",4200);
             } else {
                 \YAWK\alert::draw("warning", "Fehler", "Es tut mir leid, der Terminvorschlag konnte nicht abgeschickt werden! Bitte versuche es sp&auml;ter nochmal. Danke!","",4200);
             }

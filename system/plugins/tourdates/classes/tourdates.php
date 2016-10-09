@@ -145,7 +145,7 @@ namespace YAWK\PLUGINS\TOURDATES {
                         $pubtext = "Off";
                     }
                     $html .= "<tr>
-                    <td style=\"text-align:center;\">
+                    <td class="text-center";>
                     <a title=\"toggle&nbsp;status\" href=\"index.php?plugin=tourdates&pluginpage=tourdates-toggle&id=" . $this->id . "\">
                     <span class=\"label label-$pub\">$pubtext</span></a></td>
                     <td>$this->day. $this->month</td>

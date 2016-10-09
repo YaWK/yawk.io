@@ -127,21 +127,21 @@ echo "
             }
             // draw table and badges
             echo "<tr>
-                    <td style=\"text-align:center;\">
+                    <td class="text-center";>
                     <a href=\"index.php?plugin=blog&pluginpage=blog-toggleitem&published=" . $row['published'] . "&blogid=" . $blog->id . "&id=" . $row['id'] . "\">
                     <span class=\"label label-$pub\">$pubtext</span></a>&nbsp;</td>
-                    <td style=\"text-align:center;\">" . $row['id'] . "</td>
+                    <td class="text-center";>" . $row['id'] . "</td>
                     <td><a href=\"index.php?plugin=blog&pluginpage=blog-edit&itemid=" . $row['id'] . "&blogid=" . $blog->id . "\"><div style=\"width:100%\">" . $row['title'] . "</div></a></td>
                     <td><a href=\"index.php?plugin=blog&pluginpage=blog-edit&itemid=" . $row['id'] . "&blogid=" . $blog->id . "\" style=\"color: #7A7376;\"><div style=\"width:100%\">" . $row['subtitle'] . "</div></a></td>
-                    <td style=\"text-align:center;\">" . $row['username'] . "</td>
+                    <td class="text-center";>" . $row['username'] . "</td>
 
-                    <td style=\"text-align:center;\">
+                    <td class="text-center";>
                     <a href=\"index.php?plugin=blog&pluginpage=blog-togglegroup&itemgid=" . $row['itemgid'] . "&blogid=" . $blog->id . "&itemid=" . $row['id'] . "\">
                     <span class=\"label label-$rcolor\">" . $row['gid'] . "</span></a></td>
 
-                    <td style=\"text-align:center;\">" . $date_publish . "</td>
-                    <td style=\"text-align:center;\">" . $i_comments . "</td>
-                    <td style=\"text-align:center;\">
+                    <td class="text-center";>" . $date_publish . "</td>
+                    <td class="text-center";>" . $i_comments . "</td>
+                    <td class="text-center";>
 
                        ".$commentIcon."
                       <a class=\"fa fa-copy\" title=\"" . $lang['COPY'] . ": " . $row['title'] . "\" href=\"index.php?plugin=blog&pluginpage=blog-copyitem&copy=true&itemgid=" . $row['itemgid'] . "&itemid=".$row['id']."&blogid=" . $blog->id . "\"></a>&nbsp;
@@ -149,7 +149,7 @@ echo "
                       <a class=\"fa fa-trash\" data-confirm=\"Soll der Eintrag &laquo;" . $row['title'] . " - " . $row['subtitle'] . "&raquo; wirklich gel&ouml;scht werden?\" title=\"DELETE " . $row['title'] . "\" href=\"index.php?plugin=blog&pluginpage=blog-delete&item=kill&pageid=" . $row['pageid'] . "&blogid=" . $blog->id . "&itemid=" . $row['id'] . "&delete=true\">
                       </a>
 
-                      <a class=\"fa fa-edit\"title=\"" . $lang['EDIT'] . ": " . $row['title'] . "\" href=\"index.php?plugin=blog&pluginpage=blog-edit&itemid=" . $row['id'] . "&blogid=" . $blog->id . "\"></a>&nbsp;
+                      <a class=\"fa fa-edit\" title=\"" . $lang['EDIT'] . ": " . $row['title'] . "\" href=\"index.php?plugin=blog&pluginpage=blog-edit&itemid=" . $row['id'] . "&blogid=" . $blog->id . "\"></a>&nbsp;
                       <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Soll der Eintrag &laquo;" . $row['id'] . " / " . $row['title'] . "&raquo; wirklich gel&ouml;scht werden?\"
                       title=\"" . $lang['DEL'] . "\" href=\"index.php?plugin=blog&pluginpage=blog-delete&pageid=" . $row['pageid'] . "&itemid=" . $row['id'] . "&blogid=" . $blog->id . "&delete=true\">
                       </a>

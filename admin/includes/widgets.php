@@ -60,16 +60,16 @@ echo"<ol class=\"breadcrumb\">
           } else {
               $pub = "danger"; $pubtext="Off";}
           echo "<tr>
-                <td style=\"text-align:center;\">
+                <td class="text-center";>
                 <a href=\"index.php?page=widget-toggle&widget=".$row['id']."&published=".$row['published']."\">
                 <span class=\"label label-$pub\">$pubtext</span></a></td>
-                <td style=\"text-align:center;\">".$row['id']."</td>
+                <td class="text-center";>".$row['id']."</td>
                 <td><a href=\"index.php?page=widget-edit&widget=".$row['id']."\"><div style=\"width:100%\">".$row['name']."</div></a></td>
                 <td><a href=\"index.php?page=widget-edit&widget=".$row['id']."\" style=\"color: #7A7376;\"><div style=\"width:100%\">".$row['title']."</div></a></td>
 
-                <td style=\"text-align:center;\">".$row['sort']."</td>
-                <td style=\"text-align:center;\">".$row['position']."</td>
-                <td style=\"text-align:center;\">
+                <td class="text-center";>".$row['sort']."</td>
+                <td class="text-center";>".$row['position']."</td>
+                <td class="text-center";>
 
                 <a class=\"fa fa-copy\" title=\"".$lang['WIDGET_COPY']."\" href=\"index.php?page=widget-copy&copy=true&widget=".$row['id']."\"></a>&nbsp;
                 <a class=\"fa fa-edit\" title=\"EDIT: ".$row['name']."\" href=\"index.php?page=widget-edit&widget=".$row['id']."\"></a>&nbsp;

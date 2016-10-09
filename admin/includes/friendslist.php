@@ -191,7 +191,7 @@ else
                     <td style=\"display:block; text-align: right\"><a href=\"index.php?page=user-edit&user=$friend_username\">"; echo \YAWK\user::getUserImage("backend", $friend_username, "img-circle", 50, 50); echo "</a></td>
                     <td style=\"display:block;\"><b><a href=\"index.php?page=user-edit&user=$friend_username\">".$friend_username."</a></b></td>
                     <td id=\"btnRow\" class=\"text-center\">".$acceptBtn."&nbsp;".$disconnectBtn."&nbsp;".$declineBtn."</td>
-                    <td id=\"since\" style=\"text-align:center;\">".$time_ago."</td>
+                    <td id=\"since\" class="text-center";>".$time_ago."</td>
                     </tr>";
                 }
             }
