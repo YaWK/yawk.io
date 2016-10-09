@@ -180,7 +180,7 @@
                 href:'URL',
                 target:'Ziel (target)',
                 linkClass:'CSS Link Klasse',
-                rel:'Link Beziehung (Relation)',
+                rel:'Beziehung (Relation)',
                 relBlank:'Keine Link Beziehung',
                 relAlternate:'Alternate: Link zu einer alternativen Version',
                 relAuthor:'Author: Link zum Autor des Artikels',
