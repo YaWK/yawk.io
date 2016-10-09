@@ -56,14 +56,14 @@ echo "
     <thead>
     <tr>
         <td width="3%"><strong>&nbsp;</strong></td>
-        <td width="5%" class="text-center";><strong>ID</strong></td>
-        <td width="25%"><strong>Title</strong></td>
-        <td width="30%"><strong>Subtitle</strong></td>
-        <td width="5%" class="text-center";><strong>User</strong></td>
-        <td width="5%" class="text-center";><strong>Group</strong></td>
-        <td width="10%" class="text-center";><strong>Publish</strong></td>
-        <td width="7%" class="text-center";><strong>Comments</strong></td>
-        <td width="10%" class="text-center";><strong>Aktionen</strong></td>
+        <td width="5%" class="text-center";><strong><?php print $lang['ID']; ?></strong></td>
+        <td width="25%"><strong><?php print $lang['TITLE']; ?></strong></td>
+        <td width="30%"><strong><?php print $lang['SUBTITLE']; ?></strong></td>
+        <td width="5%" class="text-center";><strong><?php print $lang['AUTHOR']; ?></strong></td>
+        <td width="5%" class="text-center";><strong><?php print $lang['GROUP']; ?></strong></td>
+        <td width="10%" class="text-center";><strong><?php print $lang['START_PUBLISH']; ?></strong></td>
+        <td width="7%" class="text-center";><strong><?php print $lang['COMMENTS']; ?></strong></td>
+        <td width="10%" class="text-center";><strong><?php print $lang['ACTIONS']; ?></strong></td>
     </tr>
     </thead>
     <tbody>
