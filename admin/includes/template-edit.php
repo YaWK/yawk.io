@@ -1180,7 +1180,7 @@ else
     }
 
 ?>
-<form id="template-edit-form" action="index.php?page=template-edit&<?php echo $overrideTemplate; ?>&id=<?php echo $template->id; // echo $id; ?>" method="POST">
+<form id="template-edit-form" action="index.php?page=template-edit&<?php echo $overrideTemplate; ?>id=<?php echo $template->id; // echo $id; ?>" method="POST">
     <input type="hidden" name="getID" value="<?php echo $getID; ?>">
     <!-- <div class="nav-tabs-custom"> <!-- admin LTE tab style -->
     <div id="btn-wrapper" class="text-right">
