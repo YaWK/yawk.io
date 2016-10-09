@@ -7,7 +7,7 @@ if (!isset($page))
 // make sure, that $_SESSION['lang'] exists
 if (!isset($_SESSION['lang']))
 {
-    if (!isset($lang)) {
+    if (!isset($lang) || (!isset($_SESSION['lang']))) {
         $lang = new YAWK\language();
         $lang->init();
     }
@@ -164,7 +164,7 @@ $(document).ready(function() {
             ]
         },
         // language for plugin image-attributes.js
-        lang: '<?php echo $_SESSION['lang']; ?>',
+        lang: '<?php if (isset($_SESSION['lang']) && is_string($_SESSION['lang'])) { echo $_SESSION['lang']; } else echo "en-EN"; ?>',
 
         // powerup the codeview with codemirror theme
         codemirror: { // codemirror options
