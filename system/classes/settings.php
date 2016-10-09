@@ -347,6 +347,9 @@ namespace YAWK {
                     if ($row['property'] === "editorMatchTags") {
                         if ($row['value'] == "1") { $row['value'] = "true"; } else { $row['value'] = "false"; }
                     }
+                    if ($row['property'] === "editorAutoCodeview") {
+                        if ($row['value'] == "1") { $row['value'] = "true"; } else { $row['value'] = "false"; }
+                    }
                     $editorSettingsArray[$row['property']] = $row['value'];
                 }
             }

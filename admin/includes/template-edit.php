@@ -104,7 +104,8 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
         // put the new string back into <textarea>
         $(editor).val(backend); // set new value into textarea
 
-        // summernote.init
+        // summernote.init -
+        // LOAD SUMMERNOTE IN CODEVIEW ON STARTUP
         $(editor).on('summernote.init', function() {
             // toggle editor to codeview
             $(editor).summernote('codeview.toggle');
@@ -131,7 +132,7 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
                 ]
             },
             // language for plugin image-attributes.js
-            lang: <?php echo "'$_SESSION[lang]'"; ?>,
+            lang: '<?php echo $lang['CURRENT_LANGUAGE']; ?>',
 
             // powerup the codeview with codemirror theme
             codemirror: { // codemirror options
@@ -297,7 +298,6 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         $template->setTemplateDetails($db, $_POST['Tdescription'], $_POST['Tsubauthor'], $_POST['Tsubauthorurl'], $template->id);
     }
 
-
     // get max ID from template db
     foreach($_POST as $property=>$value){
         if (isset($_POST['savenewtheme']))
@@ -338,7 +338,6 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////
-
 
     $tpl_settings = YAWK\template::getTemplateSettingsArray($db, $getID);
 

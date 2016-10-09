@@ -24,14 +24,16 @@ namespace YAWK {
     class language
     {
         public $lang;
+        public $current;
 
         public function init(){
-            if (isset($_GET['lang'])) {
+            if (isset($_GET['lang']) && (!empty($_GET['lang']))) {
                 self::setLanguage($_GET['lang']);
                     $this->current = $_GET['lang'];
             }
             else {
                 self::setLanguage("en-EN");
+                $this->current = "en-EN";
             }
             return $this->lang;
         }
@@ -63,8 +65,10 @@ namespace YAWK {
             } else if (isSet($_COOKIE['lang'])) {
                 $lang = $_COOKIE['lang'];
             } /* if language cannot be set, set en as default */
-            else {
+            else
+                {
                 $lang = 'en-EN';
+                $_SESSION['lang'] = $lang;
             }
 
             /* parse the language file */

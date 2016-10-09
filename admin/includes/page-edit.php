@@ -4,15 +4,6 @@ if (!isset($page))
     $page = new YAWK\page();
 }
 
-// make sure, that $_SESSION['lang'] exists
-if (!isset($_SESSION['lang']))
-{
-    if (!isset($lang) || (!isset($_SESSION['lang']))) {
-        $lang = new YAWK\language();
-        $lang->init();
-    }
-}
-
 if (isset($_GET['alias'])){
     $alias = $db->quote($_GET['alias']);
     $page->loadProperties($db,$alias);
@@ -84,6 +75,7 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
 <link rel="stylesheet" type="text/css" href="../system/engines/codemirror/themes/<?php echo $editorSettings['editorTheme']; ?>.css">
 <link rel="stylesheet" type="text/css" href="../system/engines/codemirror/show-hint.min.css">
 <script type="text/javascript" src="../system/engines/codemirror/codemirror-compressed.js"></script>
+<script type="text/javascript" src="../system/engines/codemirror/auto-refresh.js"></script>
 
 <!-- SUMMERNOTE -->
 <link href="../system/engines/summernote/dist/summernote.css" rel="stylesheet">
@@ -146,6 +138,18 @@ $(document).ready(function() {
     // put the new string back into <textarea>
     $(editor).val(backend); // set new value into textarea
 
+    <?php
+        if ($editorSettings['editorAutoCodeview'] === "true")
+        {
+            // summernote.init -
+            // LOAD SUMMERNOTE IN CODEVIEW ON STARTUP
+            echo "$(editor).on('summernote.init', function() {
+                // toggle editor to codeview
+                $(editor).summernote('codeview.toggle');
+            });";
+        }
+    ?>
+
     // INIT SUMMERNOTE EDITOR
     $('#summernote').summernote({    // set editor itself
         height: <?php echo $editorSettings['editorHeight']; ?>,                 // set editor height
@@ -164,7 +168,7 @@ $(document).ready(function() {
             ]
         },
         // language for plugin image-attributes.js
-        lang: '<?php if (isset($_SESSION['lang']) && is_string($_SESSION['lang'])) { echo $_SESSION['lang']; } else echo "en-EN"; ?>',
+        lang: '<?php echo $lang['CURRENT_LANGUAGE']; ?>',
 
         // powerup the codeview with codemirror theme
         codemirror: { // codemirror options
@@ -181,7 +185,8 @@ $(document).ready(function() {
             mode: "htmlmixed",                                                            // editor mode
             matchTags: {bothTags: <?php echo $editorSettings['editorMatchTags']; ?>},     // hightlight matching tags: both
             extraKeys: {"Ctrl-J": "toMatchingTag", "Ctrl-Space": "autocomplete"},         // press ctrl-j to jump to next matching tab
-            styleActiveLine: <?php echo $editorSettings['editorActiveLine']; ?>           // highlight the active line (where the cursor is)
+            styleActiveLine: <?php echo $editorSettings['editorActiveLine']; ?>,           // highlight the active line (where the cursor is)
+            autoRefresh: true
         },
 
         // plugin: summernote-cleaner.js
