@@ -75,12 +75,12 @@ echo"<ol class=\"breadcrumb\">
         <td width="3%" style="text-align: center;"><strong>Fix?</strong></td>
         <td width="14%"><strong><?PHP print $lang['DATE_CREATED']; ?></strong></td>
         <td width="10%"><strong><?PHP print $lang['NAME']; ?></strong></td>
-        <td width="5%" class="text-center";><strong><?PHP print $lang['BOOKING_DATEWISH']; ?></strong></td>
-        <td width="5%" class="text-center";><strong><?PHP print $lang['BOOKING_TODO']; ?></strong></td>
+        <td width="5%" class=\"text-center\"><strong><?PHP print $lang['BOOKING_DATEWISH']; ?></strong></td>
+        <td width="5%" class=\"text-center\"><strong><?PHP print $lang['BOOKING_TODO']; ?></strong></td>
         <td width="39%"><strong><?PHP print $lang['MESSAGE']; ?></strong></td>
-        <td width="5%" class="text-center";><strong><?PHP print $lang['BOOKING_VISITS']; ?></strong></td>
-        <td width="5%" class="text-center";><strong><?PHP print $lang['IP']; ?></strong></td>
-        <td width="14%" class="text-center";><strong><?PHP print $lang['ACTIONS']; ?></strong></td>
+        <td width="5%" class=\"text-center\"><strong><?PHP print $lang['BOOKING_VISITS']; ?></strong></td>
+        <td width="5%" class=\"text-center\"><strong><?PHP print $lang['IP']; ?></strong></td>
+        <td width="14%" class=\"text-center\"><strong><?PHP print $lang['ACTIONS']; ?></strong></td>
     </tr>
     </thead>
     <tbody>

@@ -573,7 +573,7 @@ $html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"hure-wien-buc
                         $visitHtml = "<span class=\"label label-danger\">$this->visits</span>";
                     }
                     $html .= "<tr>
-                    <td class="text-center";>
+                    <td class=\"text-center\">
                     <a title=\"toggle&nbsp;status\" href=\"index.php?plugin=booking&pluginpage=booking-toggle&toggle=1&id=" . $this->id . "\">
                     <span class=\"label label-$pub\">$pubtext</span></a></td>
                     <td><small>$prettydate_created</small></td>
@@ -581,12 +581,12 @@ $html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"hure-wien-buc
                     <a href=\"index.php?plugin=booking&pluginpage=booking&email=$this->email\" target=\"_blank\">$this->email</a><br>
                     <a href=\"index.php?plugin=booking&pluginpage=booking&phone=$this->phone\" target=\"_blank\">$this->phone</a></p>
                     </div></td>
-                    <td class="text-center";>$prettydate_wish<p style=\"color:#707070;\">$prettydate_alternative</p></td>
-                    <td class="text-center";>$this->todo</td>
+                    <td class=\"text-center\">$prettydate_wish<p style=\"color:#707070;\">$prettydate_alternative</p></td>
+                    <td class=\"text-center\">$this->todo</td>
                     <td ".$msgstyle.">$this->text</td>
-                    <td class="text-center";>".self::countVisits($db, $this->email)."</td>
-                    <td class="text-center";><a href=\"index.php?plugin=booking&pluginpage=booking&ip=$this->ip\" target=\"_blank\">$this->ip</a></td>
-                    <td class="text-center";>
+                    <td class=\"text-center\">".self::countVisits($db, $this->email)."</td>
+                    <td class=\"text-center\"><a href=\"index.php?plugin=booking&pluginpage=booking&ip=$this->ip\" target=\"_blank\">$this->ip</a></td>
+                    <td class=\"text-center\">
                         <a class=\"fa fa-hourglass-end\" title=\"".$lang['OUTDATED']."\" href=\"index.php?plugin=booking&pluginpage=booking-toggle&outdated=1&id=".$this->id."\"></a>&nbsp;
                         <a class=\"fa fa-ban\" title=\"".$lang['BAN']."\" href=\"index.php?plugin=booking&pluginpage=booking-toggle&ban=1&id=".$this->id."\"></a>&nbsp;
                         <a class=\"fa fa-edit\" title=\"" . $lang['EDIT'] . "\" href=\"index.php?plugin=booking&pluginpage=booking-edit&id=" . $this->id . "\"></a>&nbsp;

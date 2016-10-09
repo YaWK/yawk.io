@@ -37,11 +37,11 @@ namespace YAWK\PLUGINS\FAQ {
                     echo "<tr>
               <td><a href=\"index.php?plugin=faq&pluginpage=faq-toggleitem&published=" . $this->published . "&id=" . $this->id . "\">
                 <span class=\"label label-$pub\">$pubtext</span></a></td>
-              <td class="text-center";>$this->id</td>
-              <td class="text-center";>$this->sort</td>
+              <td class=\"text-center\">$this->id</td>
+              <td class=\"text-center\">$this->sort</td>
               <td><a href=\"index.php?plugin=faq&pluginpage=faq-edit&id=".$this->id."\"><b>$this->question</a></b><br><small>$this->answer</small></td>
-              <td class="text-center";>$this->cat</td>
-              <td class="text-center";>
+              <td class=\"text-center\">$this->cat</td>
+              <td class=\"text-center\">
               <a class=\"fa fa-edit\" title=\"edit\" href=\"index.php?plugin=faq&pluginpage=faq-edit&id=" . $this->id . "\"></a>&nbsp;
               <a class=\"fa fa-trash\" data-confirm=\"Soll der Eintrag &laquo;" . $this->id . " - " . $this->question . " &raquo; wirklich gel&ouml;scht werden?\"
               title=\"DELETE ".$this->id."\" href=\"index.php?plugin=faq&pluginpage=faq-delete&delete=1&id=".$this->id."\">

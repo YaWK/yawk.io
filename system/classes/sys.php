@@ -249,7 +249,7 @@ namespace YAWK {
             $offlinemsg = \YAWK\settings::getSetting($db, "offlinemsg");
             $offlineimg = \YAWK\settings::getSetting($db, "offlineimage");
             // draw offline message
-            echo "<div class="text-center";>
+            echo "<div class=\"text-center\">
                     <img src=\"".$offlineimg."\"><br><br>
                     ".$offlinemsg."<br><br>
                   </div>";

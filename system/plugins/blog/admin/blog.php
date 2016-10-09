@@ -87,16 +87,16 @@ echo"<ol class=\"breadcrumb\">
         $items = $item_count[0];
 
         echo "<tr>
-                <td class="text-center";>
+                <td class=\"text-center\">
                 <a title=\"toggle&nbsp;status\" href=\"index.php?plugin=blog&pluginpage=blog-toggle&blog=" . $row['id'] . "&published=" . $row['published'] . "\">
             <span class=\"label label-$pub\">$pubtext</span></a>&nbsp;</td>
-                <td class="text-center";>" . $row['id'] . "</td>
+                <td class=\"text-center\">" . $row['id'] . "</td>
                 <td>" . $iconHtml . "</td>
                 <td><a href=\"index.php?plugin=blog&pluginpage=blog-entries&blogid=" . $row['id'] . "\"><div style=\"width:100%\">" . $row['name'] . "</div></a></td>
                 <td><a href=\"index.php?plugin=blog&pluginpage=blog-entries&blogid=" . $row['id'] . "\" style=\"color: #7A7376;\"><div style=\"width:100%\">" . $row['description'] . "</div></a></td>
                 
-            <td class="text-center";>" . $items . "</td>
-            <td class="text-center";>
+            <td class=\"text-center\">" . $items . "</td>
+            <td class=\"text-center\">
             " . $commentIcon . "
             <a href=\"index.php?plugin=blog&pluginpage=blog-setup&blogid=" . $row['id'] . "\" title=\"" . $row['name'] . "&nbsp;" . $lang['CONFIGURE'] . "\"><i class=\"fa fa-wrench\"></i></a>&nbsp;&nbsp;
             <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"VORSICHT! &laquo;Blog #" . $row['id'] . " - " . $row['name'] . "&raquo; inklusive Inhalt l&ouml;schen?\" title=\"" . $lang['BLOG_DELETE'] . "&nbsp;" . $row['name'] . "\" href=\"index.php?plugin=blog&pluginpage=blog-delete&blog=" . $row['id'] . "&delete=true\">

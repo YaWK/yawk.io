@@ -61,9 +61,9 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
         <td width="3%"><strong>ID</strong></td>
         <td width="13%"><strong>Type</strong></td>
         <td width="8%"><strong>Period</strong></td>
-        <td width="10%" class="text-center";><strong>User</strong></td>
+        <td width="10%" class=\"text-center\"><strong>User</strong></td>
         <td width="54%"><strong>Action</strong></td>
-        <td width="12%" class="text-center";><strong>Affected</strong></td>
+        <td width="12%" class=\"text-center\"><strong>Affected</strong></td>
     </tr>
     </thead>
     <tbody>
@@ -82,9 +82,9 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
                 <td>".$log['log_id']."</td>
                 <td><b>".$log['property']."</b></td>
                 <td>".$time_ago."</td>
-                <td class="text-center";>".$log['username']."</td>
+                <td class=\"text-center\">".$log['username']."</td>
                 <td><i class=\"".$log['icon']."\"></i> &nbsp;&nbsp;".$log['message']."</td>
-                <td class="text-center";>".$affected_user."</td>
+                <td class=\"text-center\">".$affected_user."</td>
               </tr>";
     }
     ?>

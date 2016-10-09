@@ -74,16 +74,16 @@ echo"<ol class=\"breadcrumb\">
         }
 
         echo "<tr class=\"".$text."\" >
-                <td class="text-center";>
+                <td class=\"text-center\">
                   <i class=\"label label-$pub\">$pubtext</i></a>&nbsp;</td>
-                <td class="text-center";>".$row['id']."</td>
+                <td class=\"text-center\">".$row['id']."</td>
                 <td>".$row['datetime']."</td>
-                <td class=\"".$text."\" class="text-center";>".$row['ip']."</td>
+                <td class=\"".$text."\" class=\"text-center\">".$row['ip']."</td>
                 <td>".$row['username']."</td>
                 <td class=\"".$text."\">".$row['password']."</td>
                 <td class=\"".$locationText."\">".$row['location']."</td>
                 <td class=\"".$text."\">".$row['failed']."</td>
-                <td class="text-center";>".$row['useragent']['name']." <small>".$row['useragent']['version']."</small></td>
+                <td class=\"text-center\">".$row['useragent']['name']." <small>".$row['useragent']['version']."</small></td>
 
               </tr>";
     }

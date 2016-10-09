@@ -81,7 +81,7 @@ echo"<ol class=\"breadcrumb\">
         <td width="20%"><strong><i class="fa fa-caret-down"></i> <?PHP print $lang['TEMPLATE']; ?></strong></td>
         <td width="40%"><strong><i class="fa fa-caret-down"></i> <?PHP print $lang['DESCRIPTION']; ?></strong></td>
         <td width="24%"><strong><?PHP print $lang['SCREENSHOT']; ?></strong></td>
-        <td width="10%" class="text-center";><strong><?PHP print $lang['ACTIONS']; ?></strong></td>
+        <td width="10%" class=\"text-center\"><strong><?PHP print $lang['ACTIONS']; ?></strong></td>
     </tr>
     </thead>
     <tbody>
@@ -134,7 +134,7 @@ echo"<ol class=\"breadcrumb\">
             }
 
             echo "<tr>
-          <td class="text-center";>
+          <td class=\"text-center\">
             <a title=\"toggle&nbsp;status\" href=\"index.php?page=template-manage&toggle=1&templateID=".$row['id']."\">
             <span class=\"label label-$pub\">$pubtext</span></a>&nbsp;</td>
           <td>".$row['id']."</td>
