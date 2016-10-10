@@ -36,6 +36,7 @@ if(isset($_POST['add'])) {
   }
 }
   else if(isset($_POST['save'])) {
+    $entries = array();
     foreach($_POST as $param=>$value){
 
     if(substr($param,-4,4) === "_gid"){
@@ -66,8 +67,8 @@ if(isset($_POST['add'])) {
       }
     }
 
-  foreach($entries as $id=>$params){
-//      echo "<br>".$params['gid']; exit;
+    foreach($entries as $id=>$params){
+    // echo "<br>".$params['gid']; exit;
       $_GET['menu'] = $db->quote($_GET['menu']);
       $id = $db->quote($id);
       $params['title'] = $db->quote($params['title']);
@@ -87,7 +88,7 @@ if(isset($_POST['add'])) {
           $params['published'],
           $params['parentID'],
           $params['target']);
-}
+    }
   }
   else {
     foreach($_POST as $param=>$value){
