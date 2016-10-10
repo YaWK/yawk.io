@@ -1,3 +1,32 @@
+<?PHP
+if (!isset($user))
+{   // generate new user object
+    $user = new YAWK\user();
+}
+if (isset($_GET['delete']))
+{
+    if($_GET['delete'] === "true")
+    {   // check if user is set
+        if (isset($_GET['user']))
+        {   // username is set, check forbidden names
+            if ($_GET['user'] === 'admin' OR $_GET['user'] === 'root' OR $_GET['user'] === 'administrator')
+            {   // throw forbidden user deletion warning
+                print \YAWK\alert::draw("danger", "Achtung:", "Es ist nicht m&ouml;glich, den Root-User (admin) zu l&ouml;schen.", "", 10000);
+            }
+            // delete user
+            if($user->delete($db, $_GET['user']))
+            {   // success
+                print \YAWK\alert::draw("success", "Erfolg!", "Der User <strong>".$_GET['user']."</strong> wurde gel&ouml;scht!", "", 800);
+            }
+            else
+            {   // throw error
+                print \YAWK\alert::draw("danger", "Fehler!", "Der User <strong>".$_GET['user']."</strong> konnte nicht gel&ouml;scht werden!", "", 5800);
+            }
+        }
+        // draw success or error message
+    }
+}
+?>
 <script type="text/javascript">
     $(document).ready(function() {
         $('#table-sort').dataTable( {
@@ -88,9 +117,9 @@ echo"<ol class=\"breadcrumb\">
                    </a>&nbsp;
                   <a class=\"fa fa-edit\" title=\"edit: ".$row['username']."\" href=\"index.php?page=user-edit&user=".$row['username']."\"></a>&nbsp;
                    
-                  <a class=\"fa fa-trash-o\" data-confirm=\"Den User &laquo;".$row['username']." wirklich l&ouml;schen?\" 
-                     href=\"index.php?page=user-delete&user=".$row['username']."&gid=".$row['gid']."&uid=".$row['id']."\">
-                   </a>
+                <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Den User &laquo;$row[username]&raquo; wirklich l&ouml;schen?\"
+                   title=\"$lang[DELETE]\" href=\"index.php?page=users&del=1&user=$row[username]&gid=$row[gid]&uid=$row[id]&delete=true\">
+                </a>
                 </td>
               </tr>";
       }
