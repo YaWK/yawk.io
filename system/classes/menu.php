@@ -203,20 +203,19 @@ namespace YAWK {
         {   /** @var $db \YAWK\db */
             if (!$res = $db->query("DELETE FROM {menu} WHERE menuID = '" . $menu . "' AND id = '" . $id . "'"))
             {   // throw error
-                \YAWK\alert::draw("warning", "Warning!", "Could not delete menu entry $id.","",4200);
+                return false;
             }
             else
             {   // menu deleted
-                if (!$res = $db->query("UPDATE {menu} SET id = id - 1 WHERE id > '" . $id . "'"))
-                {
-                    \YAWK\alert::draw("warning", "Warning!", "Could not delete menu id $id.", "", 4200);
+                if (!$res = $db->query("UPDATE {menu} SET id = id -1 WHERE id > '" . $id . "'"))
+                {   // menu del not worked
+                    return false;
                 }
                 else {
-                    // all worked
+                    // all good, menu entry deleted
                     return true;
                 }
             }
-            return false;
         }
 
         /* DELETE MENU */
@@ -245,7 +244,7 @@ namespace YAWK {
         }
 
 
-        static function displayEditable($db, $id) /* SHOW EDITABLEN MENU ENTRIES IN BACKEND */
+        static function displayEditable($db, $id, $lang) /* SHOW EDITABLEN MENU ENTRIES IN BACKEND */
         {
             /** UPDATE: OPTIMIZATION NEEDED
              *  HERE SHOULD BE A SELECT JOIN user_groups + parent items
@@ -375,7 +374,12 @@ namespace YAWK {
       </td>
 
       <td>
-        <a href=\"index.php?page=menu-edit&menu=" . $id . "&entry=" . $row['id'] . "&deleteitem=1\"><i class=\"fa fa-trash-o\" alt=\"delete\"></i></a>
+       <!-- <a href=\"index.php?page=menu-edit&menu=" . $id . "&entry=" . $row['id'] . "&deleteitem=1\"><i class=\"fa fa-trash-o\" alt=\"delete\"></i></a> -->
+        
+       <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Den Eintrag &laquo; $row[title] / $row[href] &raquo; wirklich l&ouml;schen?\" 
+        title=\"$lang[DELETE]\" href=\"index.php?page=menu-edit&menu=" . $id . "&entry=" . $row['id'] . "&del=1&deleteitem=1delete=true\">
+       </a>
+
         <input type=\"hidden\" name=\"" . $row['id'] ."_published\" value=\"".$row['published']."\">
       </td>
     </tr>";
