@@ -1,3 +1,20 @@
+<?php
+// DELETE MENU
+if (isset($_GET['del']) && ($_GET['del'] === "1"))
+{   // check if delete is true
+    if (isset($_GET['delete']) && ($_GET['delete'] == 'true'))
+    {   // delete whole menu
+        if(\YAWK\menu::delete($db, $db->quote($_GET['menu'])))
+        {   // all good...
+            print \YAWK\alert::draw("success", "Erfolg", "Das Men&uuml; wurde gel&ouml;scht!","","800");
+        }
+        else
+        {   // throw error
+            print \YAWK\alert::draw("danger", "Fehler!", "Das Men&uuml; konnte nicht gel&ouml;scht werden!","","5800");
+        }
+    }
+}
+?>
 <!-- data tables JS -->
 <script type="text/javascript">
     $(document).ready(function() {
@@ -106,8 +123,9 @@
     <td class=\"text-center\">
     <a class=\"fa fa-edit\" title=\"Bearbeiten\" href=\"index.php?page=menu-edit&menu=" . $row['id'] . "\">
     </a>
-    &nbsp;
-    <a class=\"fa fa-trash-o\" title=\"L&ouml;schen\" href=\"index.php?page=menu-delete&menu=" . $row['id'] . "\">
+    
+    <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Das Men&uuml; &laquo;$row[name]&raquo; wirklich l&ouml;schen?\"
+       title=\"$lang[DELETE]\" href=\"index.php?page=menus&del=1&menu=$row[id]&delete=true\">
     </a>
     </td>
 </tr>";
