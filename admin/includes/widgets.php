@@ -1,3 +1,24 @@
+<?php
+// DELETE WIDGET
+if (isset($_GET['del']) && ($_GET['del'] === "1"))
+{
+  if (!isset($widget))
+  {   // create new widget obj
+      $widget = new YAWK\widget();
+  }
+  if (isset($_GET['widget']) && (isset($_GET['delete']) && ($_GET['delete'] == "true")))
+  {   // delete widget
+    if($widget->delete($db, $_GET['widget']))
+    {   // delete successful
+      YAWK\alert::draw("success", "Erfolg", "Das Widget ".$_GET['widget']." wurde gel&ouml;scht!","","800");
+    }
+    else
+    {   // q failed, throw error
+      \YAWK\alert::draw("danger", "Error!", "Could not delete widget ".$_GET['widget']."!","","5800");
+    }
+  }
+}
+?>
 <script type="text/javascript">
     $(document).ready(function() {
         $('#table-sort').dataTable( {
@@ -73,7 +94,8 @@ echo"<ol class=\"breadcrumb\">
 
                 <a class=\"fa fa-copy\" title=\"".$lang['WIDGET_COPY']."\" href=\"index.php?page=widget-copy&copy=true&widget=".$row['id']."\"></a>&nbsp;
                 <a class=\"fa fa-edit\" title=\"EDIT: ".$row['name']."\" href=\"index.php?page=widget-edit&widget=".$row['id']."\"></a>&nbsp;
-                <a class=\"fa fa-trash-o\" title=\"DELETE ".$row['name']."\" href=\"index.php?page=widget-delete&widget=".$row['id']."\">
+                <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Das Widget &laquo; # $row[id] &raquo; wirklich l&ouml;schen?\"
+                   title=\"$lang[DELETE]\" href=\"index.php?page=widgets&del=1&widget=$row[id]&delete=true\">
                 </a>
                 </td>
               </tr>";
