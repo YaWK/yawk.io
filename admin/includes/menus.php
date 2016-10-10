@@ -1,4 +1,16 @@
 <?php
+// ADD MENU
+/* if user clicked create menu */
+if(isset($_GET['add']) && ($_GET['add'] === "1")){
+    if (YAWK\menu::createMenu($db, $db->quote($_POST['name']))) {
+        print \YAWK\alert::draw("success", "Erfolg!", "Das Men&uuml; <strong>".$_POST['name']."</strong> wurde erstellt!", "","800");
+    }
+    else
+    {   // throw error
+        print \YAWK\alert::draw("danger", "Fehler!", "Das Men&uuml; <strong>".$_POST['name']."</strong> konnte nicht erstellt werden!", "","5800");
+    }
+}
+
 // DELETE MENU
 if (isset($_GET['del']) && ($_GET['del'] === "1"))
 {   // check if delete is true

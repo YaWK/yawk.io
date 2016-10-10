@@ -15,22 +15,7 @@
 <section class="content">
 <!-- START CONTENT HERE -->
 
-  <?php
-/* if user clicked create menu */
-if(isset($_POST['create'])){
-  if (YAWK\menu::createMenu($db, $db->quote($_POST['name']))) {
-    print \YAWK\alert::draw("success", "Erfolg!", "Das Men&uuml; <strong>".$_POST['name']."</strong> wurde erstellt!", "page=menus","2000");
-    exit;
-    }
-    else 
-    {
-    print \YAWK\alert::draw("danger", "Fehler!", "Das Men&uuml; <strong>".$_POST['name']."</strong> konnte nicht erstellt werden!", "page=menu-new","2400");
-    exit;
-    }
-  }
-/* ...and the plain HTML form */
-?>
-<form action="index.php?page=menu-new" role="form" method="POST">
+<form action="index.php?page=menus&add=1" role="form" method="POST">
   <input name="menu" class="form-control" value="<?php print $id; ?>" type="hidden" />
   <input name="page" class="form-control" value="menu-create" type="hidden" />
   <label>W&auml;hle einen aussagekr&auml;ftigen Namen f&uuml;r Dein neues Men&uuml;.
