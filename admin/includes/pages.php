@@ -1,3 +1,31 @@
+<?php
+// COPY PAGE
+if (isset($_GET['copy']) && ($_GET['copy'] === "true"))
+{
+    // check if vars are set
+    if (isset($_GET['alias']))
+    {   // if page object is not set
+        if (!isset($page))
+        {   // generate new page object
+            $page = new YAWK\page();
+        }
+        // escape vars
+        $_GET['alias'] = $db->quote($_GET['alias']);
+        // load properties for given page
+        $page->loadProperties($db, $_GET['alias']);
+        // copy page
+        if($page->copy($db))
+        {   // all good.
+            print \YAWK\alert::draw("success", "Erfolg!", "Die Seite ".$_GET['alias']." wurde kopiert!", "", "1200");
+        }
+        else
+            {   // copy failed, throw error
+                print \YAWK\alert::draw("danger", "Could not copy page $_GET[alias]", "Please try again.", "", "6800");
+            }
+    }
+}
+
+?>
 <script type="text/javascript">
 $(document).ready(function() {
     $('#table-sort').dataTable( {
@@ -100,7 +128,7 @@ $i_pages_unpublished = 0;
             $lockTitle = "title=\"".$lang['PAGE_LOCK']."\"";
             $lockLinkTitle = "title=\"".$lang['EDIT']."\"";
             $lockAction = "<a class=\"fa fa-lock\" ".$lockTitle." ".$lockLink."></a>&nbsp;";
-            $lockCopyLink = "title=\"".$lang['PAGE_COPY']."\" href=\"index.php?page=page-copy&title=".$row['title']."&alias=".$row['alias']."&copy=true\"";
+            $lockCopyLink = "title=\"".$lang['PAGE_COPY']."\" href=\"index.php?page=pages&copy=1&title=".$row['title']."&alias=".$row['alias']."&copy=true\"";
             $lockDeleteLink = "role=\"dialog\" data-confirm=\"Die Seite &laquo;".$row['title']." / ".$row['alias'].".html&raquo; wirklich l&ouml;schen?\"
             title=\"".$lang['PAGE_DELETE']."\" href=\"index.php?page=page-delete&alias=".$row['alias']."\"";
         }
