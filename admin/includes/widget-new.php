@@ -19,10 +19,9 @@ echo"<ol class=\"breadcrumb\">
 
 
 if(!isset($_POST['widgetType'])){
-  // 	$cmspath = YAWK\settings::getSetting("cmspath");
 ?>
 
-  <form action="index.php?page=widget-new" role="form" method="post">
+  <form action="index.php?page=widgets&add=1" role="form" method="post">
       <dl class="dl-horizontal">
           <dt><label for="widgetType">Erzeuge:</label> </dt>
           <dd><select id="widgetType" name="widgetType" class="btn btn-default">
@@ -97,17 +96,6 @@ if(!isset($_POST['widgetType'])){
   }
   else
   {
-       $pageID = $db->quote($_POST['pageID']);
-       $widgetType = $db->quote($_POST['widgetType']);
-       $positions = $db->quote($_POST['positions']);
 
-       if (YAWK\widget::create($db, $widgetType, $pageID, $positions))
-       {    // success
-            print \YAWK\alert::draw("success", "Erfolg", "Das Widget wurde erfolgreich erstellt.","page=widgets","2000");
-       }
-       else
-       {
-          print \YAWK\alert::draw("danger", "Fehler", "Das Widget konnte nicht erstellt werden.","page=widgets","4200");
-       }
   }
 ?>

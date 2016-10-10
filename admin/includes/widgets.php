@@ -1,4 +1,21 @@
 <?php
+// ADD WIDGET
+if (isset($_GET['add']) && ($_GET['add'] === "1"))
+{   // prepare vars
+    $pageID = $db->quote($_POST['pageID']);
+    $widgetType = $db->quote($_POST['widgetType']);
+    $positions = $db->quote($_POST['positions']);
+
+    if (YAWK\widget::create($db, $widgetType, $pageID, $positions))
+    {    // success
+        print \YAWK\alert::draw("success", "Erfolg", "Das Widget wurde erfolgreich erstellt.", "", 800);
+    }
+    else
+    {   // throw error
+        print \YAWK\alert::draw("danger", "Fehler", "Das Widget konnte nicht erstellt werden.", "", 5800);
+    }
+}
+
 // DELETE WIDGET
 if (isset($_GET['del']) && ($_GET['del'] === "1"))
 {
