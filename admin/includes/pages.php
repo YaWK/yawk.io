@@ -1,4 +1,28 @@
 <?php
+// DELETE PAGE
+if (isset($_GET['del']) && ($_GET['del'] === "1"))
+{
+    if (isset($_GET['delete']) && ($_GET['delete'] == "true")){
+        // if page obj != set
+        if (!isset($page))
+        {   // create new page object
+            $page = new YAWK\page();
+            $_GET['alias'] = $db->quote($_GET['alias']);
+            $page->loadProperties($db, $_GET['alias']);
+        }
+        // ok, delete page
+        if ($page->delete($db))
+        {   // success
+            \YAWK\alert::draw("success", "Erfolg!", "Die Seite " . $_GET['alias'] . " wurde gel&ouml;scht!",""," 800");
+           // \YAWK\backend::setTimeout("index.php?page=pages",1260);
+        }
+        else
+        {   // failed
+            \YAWK\alert::draw("danger", "Error!", "Die Seite " . $_GET['alias'] . " konnte nicht gel&ouml;scht werden!", "","6800");
+        }
+    }
+}
+
 // COPY PAGE
 if (isset($_GET['copy']) && ($_GET['copy'] === "true"))
 {
@@ -130,7 +154,7 @@ $i_pages_unpublished = 0;
             $lockAction = "<a class=\"fa fa-lock\" ".$lockTitle." ".$lockLink."></a>&nbsp;";
             $lockCopyLink = "title=\"".$lang['PAGE_COPY']."\" href=\"index.php?page=pages&copy=1&title=".$row['title']."&alias=".$row['alias']."&copy=true\"";
             $lockDeleteLink = "role=\"dialog\" data-confirm=\"Die Seite &laquo;".$row['title']." / ".$row['alias'].".html&raquo; wirklich l&ouml;schen?\"
-            title=\"".$lang['PAGE_DELETE']."\" href=\"index.php?page=page-delete&alias=".$row['alias']."\"";
+            title=\"".$lang['PAGE_DELETE']."\" href=\"index.php?page=pages&del=1&alias=".$row['alias']."&delete=true\"";
         }
 
         echo "<tr>
@@ -160,7 +184,7 @@ $i_pages_unpublished = 0;
 </table>
 
 <!-- End of Page --> 
-<br><br>
+<br>
 <!-- Start FOOTER -->
 <div class="panel panel-default">
   <div class="panel-heading">
