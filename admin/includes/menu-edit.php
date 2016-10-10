@@ -1,14 +1,23 @@
 <?PHP
-if (isset($_GET['deleteitem']) && (is_numeric($_GET['deleteitem']))) {
-    switch ($_GET['deleteitem']) {
-          case 1:
-              $menuID = $_GET['menu'];  
-              $entry = $_GET['entry'];
-            YAWK\menu::deleteEntry($db, $menuID, $entry);
-            break;
-    } 
+/* DELETE MENU ENTRY */
+if (isset($_GET['del']) && ($_GET['del'] === "1")) {
+    switch ($_GET['deleteitem'])
+    {
+        case 1:
+            $menuID = $_GET['menu'];
+            $entry = $_GET['entry'];
+            if (YAWK\menu::deleteEntry($db, $menuID, $entry) === true)
+            {   // delete successful
+                \YAWK\alert::draw("success", "Item deleted.", "Its all good...", "", 800);
+            }
+            else
+                {   // could not delete - throw error
+                    \YAWK\alert::draw("danger", "Menu entry could not be deleted.", "Database Error. Something strange has happened. Please try again.", "", 5800);
+                }
+         break;
+    }
 }
-
+/* CHANGE MENU TITLE */
 if(isset($_POST['changetitle'])) {
     if (!$res = \YAWK\menu::changeTitle($db, $db->quote($_GET['menu']),$db->quote($_POST['menutitle'])))
     {   // throw error
@@ -16,7 +25,7 @@ if(isset($_POST['changetitle'])) {
         exit;
     }
 }
-
+/* ADD MENU ENTRY */
 if(isset($_POST['add'])) {
   trim($_POST['newtitle']);
   trim($_POST['newurl']);
@@ -127,7 +136,7 @@ if(isset($_POST['add'])) {
   <form role="form" action="index.php?page=menu-edit&menu=<?php echo $_GET['menu']; ?>" method="POST">
   <?php
   // DISPLAY EDITABLE MENU ENTRIES
-  \YAWK\menu::displayEditable($db, $db->quote($_GET['menu']));
+  \YAWK\menu::displayEditable($db, $db->quote($_GET['menu']), $lang);
   ?>
   <input name="save" id="savebutton" class="btn btn-danger pull-right" type="submit" value="Speichern"/>
   
