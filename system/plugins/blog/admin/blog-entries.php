@@ -1,8 +1,23 @@
 <?php
 include '../system/plugins/blog/classes/blog.php';
-global $lang;
-// generate new blog object
-$blog = new \YAWK\PLUGINS\BLOG\blog();
+if (!isset($blog)) { $blog = new \YAWK\PLUGINS\BLOG\blog(); }
+// DELETE ENTRY
+if (isset($_GET['delete']) || ($_GET === "1"))
+{
+    // if an itemID is set, just delete THIS itemID
+    if (isset($_GET['itemid'])) { $_GET['itemid'] = $db->quote($_GET['itemid']); }
+    if (isset($_GET['blogid'])) { $_GET['blogid'] = $db->quote($_GET['blogid']); }
+    if (isset($_GET['pageid'])) { $_GET['pageid'] = $db->quote($_GET['pageid']); }
+    if (isset($_GET['title'])) { $_GET['title'] = $db->quote($_GET['title']); }
+    if (isset($_GET['itemid']))
+    {   // delete blog item
+        if (!$blog->deleteItem($db, $_GET['blogid'], $_GET['itemid'], $_GET['pageid']))
+        {   // delete item failed, throw error
+            \YAWK\alert::draw("danger", "Could not delete blog page: #$_GET[itemid] / $_GET[title]", "Is the entry even still there? Please try again.", "", 5800);
+        }
+    }
+}
+// set blog object properties
 if (isset($_GET['blogid'])) {
     $blog->id = $_GET['blogid'];
 } else {
@@ -151,7 +166,7 @@ echo "
 
                       <a class=\"fa fa-edit\" title=\"" . $lang['EDIT'] . ": " . $row['title'] . "\" href=\"index.php?plugin=blog&pluginpage=blog-edit&itemid=" . $row['id'] . "&blogid=" . $blog->id . "\"></a>&nbsp;
                       <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Soll der Eintrag &laquo;" . $row['id'] . " / " . $row['title'] . "&raquo; wirklich gel&ouml;scht werden?\"
-                      title=\"" . $lang['DEL'] . "\" href=\"index.php?plugin=blog&pluginpage=blog-delete&pageid=" . $row['pageid'] . "&itemid=" . $row['id'] . "&blogid=" . $blog->id . "&delete=true\">
+                      title=\"" . $lang['DEL'] . "\" href=\"index.php?plugin=blog&pluginpage=blog-entries&title=".$row['title']."&pageid=" . $row['pageid'] . "&itemid=" . $row['id'] . "&blogid=" . $blog->id . "&delete=1\">
                       </a>
                     </td>
                   </tr>";
