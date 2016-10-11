@@ -1,5 +1,28 @@
 <?php
 include '../system/plugins/blog/classes/blog.php';
+if (!isset($blog)) { $blog = new \YAWK\PLUGINS\BLOG\blog(); }
+if (isset($_GET['delete']) || ($_GET === "1"))
+{
+    // if an itemID is set, just delete THIS itemID
+    if (isset($_GET['itemid']))
+    {   // delete blog item
+        if (!$blog->deleteItem($db, $_GET['blogid'], $_GET['itemid'], $_GET['pageid']))
+        {   // delete item failed, throw error
+            \YAWK\alert::draw("warning", "Error: ", "Could not delete Blog Page: " . $_GET['itemid'] . " ", "", 800);
+        }
+    }
+    // if all is set to 1, the full blog, including all items will be deleted
+    if (isset($_GET['all']) && ($_GET['all'] === "true"))
+    {   // check if a blogID is set
+        if (isset($_GET['blog']))
+        {   // delete full blog including whole content
+            if (!$blog->delete($db, $_GET['blog']))
+            {   // delete blog failed, throw error
+                \YAWK\alert::draw("warning", "Error: ", "Could not delete Entry ID: " . $_GET['itemid'] . " ","plugin=blog", 5800);
+            }
+        }
+    }
+}
 YAWK\backend::getTitle($lang['BLOG'], $lang['BLOGS_SUBTEXT']);
 ?>
 <script type="text/javascript">
@@ -99,7 +122,7 @@ echo"<ol class=\"breadcrumb\">
             <td class=\"text-center\">
             " . $commentIcon . "
             <a href=\"index.php?plugin=blog&pluginpage=blog-setup&blogid=" . $row['id'] . "\" title=\"" . $row['name'] . "&nbsp;" . $lang['CONFIGURE'] . "\"><i class=\"fa fa-wrench\"></i></a>&nbsp;&nbsp;
-            <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"VORSICHT! &laquo;Blog #" . $row['id'] . " - " . $row['name'] . "&raquo; inklusive Inhalt l&ouml;schen?\" title=\"" . $lang['BLOG_DELETE'] . "&nbsp;" . $row['name'] . "\" href=\"index.php?plugin=blog&pluginpage=blog-delete&blog=" . $row['id'] . "&delete=true\">
+            <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"VORSICHT! &laquo;Blog #" . $row['id'] . " - " . $row['name'] . "&raquo; inklusive Inhalt l&ouml;schen?\" title=\"" . $lang['BLOG_DELETE'] . "&nbsp;" . $row['name'] . "\" href=\"index.php?plugin=blog&delete=1&blog=" . $row['id'] . "&all=true\">
             </a>
                 </td>
               </tr>";
@@ -117,8 +140,3 @@ echo"<ol class=\"breadcrumb\">
     ?>
     </tbody>
 </table>
-
-
-<?php
-\YAWK\backend::drawHtmlFooter();
-?>
