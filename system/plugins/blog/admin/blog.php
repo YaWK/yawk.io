@@ -1,16 +1,44 @@
 <?php
 include '../system/plugins/blog/classes/blog.php';
 if (!isset($blog)) { $blog = new \YAWK\PLUGINS\BLOG\blog(); }
-if (isset($_GET['delete']) || ($_GET === "1"))
-{
-    // if an itemID is set, just delete THIS itemID
-    if (isset($_GET['itemid']))
-    {   // delete blog item
-        if (!$blog->deleteItem($db, $_GET['blogid'], $_GET['itemid'], $_GET['pageid']))
-        {   // delete item failed, throw error
-            \YAWK\alert::draw("warning", "Error: ", "Could not delete Blog Page: " . $_GET['itemid'] . " ", "", 800);
+
+// ADD BLOG
+if (isset($_GET['addblog']))
+{   // user comes from blog-new
+    if ($_GET['addblog'] === "1")
+    {   // check if vars are set
+        if (!empty($_POST['name']) || (!empty($_POST['description'])))
+        {   // escape vars
+            $name = $db->quote($_POST['name']);
+            $description = $db->quote($_POST['description']);
+        }
+        else
+        {   // empty
+            $name = '';
+            $description = '';
+        }
+        // prepare rest of vars
+        if (!empty($_POST['menuID'])) { $menuID = $db->quote($_POST['menuID']); } else { $menuID = ''; }
+        if (!empty($_POST['icon'])) { $icon = $db->quote($_POST['icon']); } else { $icon = ''; }
+        // create new blog
+        if ($blog->create($db, $name, $description, $menuID, $icon))
+        {   // if the user did not set an icon, notify him that he should / can do that.
+            if (empty($icon) || (!isset($icon)))
+            {   // no icon is set, throw a info alert in users face
+                \YAWK\alert::draw("info", "Did you know...?", "You can add an icon to your Blog. This makes it easier to identify, if you manage a bunch of blogs!", "", 12400);
+            }
+            print \YAWK\alert::draw("success", "Erfolg!", "Blog wurde erfolgreich angelegt.", "", 800);
+        }
+        else
+        {   // could not create blog, throw error
+            print \YAWK\alert::draw("danger", "Could not create blog!", "$name could not be created. Please try again.","",3800);
         }
     }
+}
+
+// DELETE BLOG
+if (isset($_GET['delete']) || ($_GET === "1"))
+{
     // if all is set to 1, the full blog, including all items will be deleted
     if (isset($_GET['all']) && ($_GET['all'] === "true"))
     {   // check if a blogID is set

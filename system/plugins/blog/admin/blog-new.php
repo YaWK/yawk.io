@@ -9,55 +9,6 @@
 <?php
 include '../system/plugins/blog/classes/blog.php';
 
-if (isset($_POST['create']))
-{
-    $blog = new \YAWK\PLUGINS\BLOG\blog();
-    if (!empty($_POST['name']) || (!empty($_POST['description'])))
-    {   $name = $db->quote($_POST['name']);
-        $description = $db->quote($_POST['description']);
-    }
-    else
-    {
-        $name = '';
-        $description = '';
-    }
-    if (!empty($_POST['menuID']))
-    {
-        $menuID = $db->quote($_POST['menuID']);
-    }
-    else
-    {
-        $menuID = '';
-    }
-    if (!empty($_POST['icon']))
-    {
-        $icon = $db->quote($_POST['icon']);
-    }
-    else
-    {
-        $icon = '';
-    }
-
-    if ($blog->create($db, $name, $description, $menuID, $icon))
-    {
-        // no name is set
-        if (empty($name) || (!isset($name)))
-        {   // no name is set, throw error
-            \YAWK\alert::draw("warning", "Error!", "Give your new blog a name or title!","","16200");
-        }
-
-        if (empty($icon) || (!isset($icon)))
-        {   // no icon is set, throw a info alert in users face
-            \YAWK\alert::draw("info", "Did you know...?", "You can add an icon to your Blog. This makes it easier to identify, if you manage a bunch of blogs!","","18400");
-        }
-        print \YAWK\alert::draw("success", "Erfolg!", "Blog wurde erfolgreich angelegt.","","3800");
-    }
-    else
-    {
-
-    }
-}
-
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
     <!-- Content Wrapper. Contains page content -->
@@ -78,7 +29,7 @@ echo"<ol class=\"breadcrumb\">
 /* page content start here */
 ?>
 
-<form action="index.php?plugin=blog&pluginpage=blog-new" class="form-inline" role="form" method="POST">
+<form action="index.php?plugin=blog&pluginpage=blog&addblog=1" class="form-inline" role="form" method="POST">
     <input name="create" value="blog-create" type="hidden"/>
     <input type="text" class="form-control" size="90" placeholder="<?PHP echo $lang['BLOG_NAME']; ?>" name="name"><br>
     <input type="text" class="form-control" size="90" style="margin-top:5px;" placeholder="<?PHP echo $lang['BLOG_DESCRIPTION']; ?>" name="description"><br>
@@ -101,7 +52,4 @@ echo"<ol class=\"breadcrumb\">
         <option value="empty"></option>
     </select>
 </form>
-<?php
-\YAWK\backend::drawHtmlFooter();
-?>
 

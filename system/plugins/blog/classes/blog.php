@@ -976,16 +976,16 @@ namespace YAWK\PLUGINS\BLOG {
         function delete($db, $blogid)
         {
             /** @var $db \YAWK\db */
-            if ($res = $db->query("DELETE FROM {menu} WHERE blogid = '" . $blogid . "'")) {   // delete menu entry
+            if (!$res = $db->query("DELETE FROM {menu} WHERE blogid = '" . $blogid . "'")) {   // delete menu entry
                 \YAWK\alert::draw("success", "Success!", "Menu Entry deleted.", "", "2000");
             }
-            if ($res = $db->query("DELETE FROM {blog} WHERE id = '" . $blogid . "'")) {   // delete blog itself
+            if (!$res = $db->query("DELETE FROM {blog} WHERE id = '" . $blogid . "'")) {   // delete blog itself
                 \YAWK\alert::draw("success", "Success!", "Blog deleted.", "", "2200");
             }
-            if ($res = $db->query("DELETE FROM {blog_items} WHERE blogid = '" . $blogid . "'")) {   // delete blog items (entries)
+            if (!$res = $db->query("DELETE FROM {blog_items} WHERE blogid = '" . $blogid . "'")) {   // delete blog items (entries)
                 \YAWK\alert::draw("success", "Success!", "Blog Item deleted.", "", "2400");
             }
-            if ($res = $db->query("DELETE FROM {blog_comments} WHERE blogid = '" . $blogid . "'")) {   // delete blog comments
+            if (!$res = $db->query("DELETE FROM {blog_comments} WHERE blogid = '" . $blogid . "'")) {   // delete blog comments
                 \YAWK\alert::draw("success", "Success!", "Blog Comments deleted.", "", "2600");
             }
             if ($result = $db->query("SELECT alias FROM {pages} WHERE blogid = '" . $blogid . "'")) {   // get file alias from page table
@@ -995,14 +995,14 @@ namespace YAWK\PLUGINS\BLOG {
                     $dirprefix = \YAWK\settings::getSetting($db, "dirprefix");
                     $filename = $dirprefix . "../content/articles/" . $alias . ".php";
                     if (file_exists($filename)) {   // delete file
-                        if (unlink($filename)) {
+                        if (!unlink($filename)) {
                             \YAWK\alert::draw("success", "Success!", "Blog file $filename deleted.", "", "2800");
                         }
                     }
                 }
-
+                if (!isset($filename)){ $filename = ''; }
                 if ($res = $db->query("DELETE FROM {pages} WHERE blogid = '" . $blogid . "'")) {
-                    \YAWK\alert::draw("success", "Success!", "Blog Page deleted from database.", "", "2800");
+                    \YAWK\alert::draw("success", "Deleted Blog", "Blog $filename deleted successfully.", "", "2800");
                 }
             }
             return true;
