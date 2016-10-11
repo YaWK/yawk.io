@@ -1,4 +1,24 @@
-<?php 
+<?php
+echo "<!-- Optionally, you can add Slimscroll and FastClick plugins.
+Both of these plugins are recommended to enhance the
+             user experience. Slimscroll is required when using the
+             fixed layout. -->";
+            echo "
+    <!-- Ionicons -->
+    <link rel=\"stylesheet\" href=\"https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css\">
+    <!-- jvectormap -->
+    <link rel=\"stylesheet\" href=\"../system/engines/AdminLTE/plugins/jvectormap/jquery-jvectormap-1.2.2.css\">
+        <!-- Sparkline -->
+        <script src=\"../system/engines/AdminLTE/plugins/sparkline/jquery.sparkline.min.js\"></script>
+        <!-- jvectormap -->
+        <script src=\"../system/engines/AdminLTE/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js\"></script>
+        <script src=\"../system/engines/AdminLTE/plugins/jvectormap/jquery-jvectormap-world-mill-en.js\"></script>
+        <!-- SlimScroll 1.3.0 -->
+        <script src=\"../system/engines/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js\"></script>
+        <!-- ChartJS 1.0.1 -->
+        <script src=\"../system/engines/AdminLTE/plugins/chartjs/Chart.min.js\"></script>
+        <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+        <script src=\"../system/engines/AdminLTE/plugins/dashboard2.js\"></script>";
 /* draw Title on top */
 // YAWK\backend::getTitle($lang['DASHBOARD'],$lang['DASHBOARD_SUBTEXT']);
 // echo \YAWK\sys::getCurrentUserName();

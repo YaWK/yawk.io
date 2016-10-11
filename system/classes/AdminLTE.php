@@ -69,10 +69,6 @@ namespace YAWK {
     <link rel=\"stylesheet\" href=\"../system/engines/animateCSS/animate.min.css\">
     <!-- Font Awesome -->
     <link rel=\"stylesheet\" href=\"../system/engines/font-awesome/css/font-awesome.min.css\">
-    <!-- Ionicons -->
-    <link rel=\"stylesheet\" href=\"https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css\">
-    <!-- jvectormap -->
-    <link rel=\"stylesheet\" href=\"../system/engines/AdminLTE/plugins/jvectormap/jquery-jvectormap-1.2.2.css\">
     <!-- Theme style -->
     <link rel=\"stylesheet\" href=\"../system/engines/AdminLTE/css/AdminLTE.min.css\">
     <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
@@ -900,23 +896,7 @@ namespace YAWK {
         <!-- data table -->
         <script type=\"text/javascript\" src=\"../system/engines/jquery/jquery.dataTables.min.js\"></script>
         <!-- AdminLTE App -->
-        <script type=\"text/javascript\" src=\"../system/engines/AdminLTE/js/app.min.js\"></script>
-        <!-- Optionally, you can add Slimscroll and FastClick plugins.
-             Both of these plugins are recommended to enhance the
-             user experience. Slimscroll is required when using the
-             fixed layout. -->";
-            echo "
-        <!-- Sparkline -->
-        <script src=\"../system/engines/AdminLTE/plugins/sparkline/jquery.sparkline.min.js\"></script>
-        <!-- jvectormap -->
-        <script src=\"../system/engines/AdminLTE/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js\"></script>
-        <script src=\"../system/engines/AdminLTE/plugins/jvectormap/jquery-jvectormap-world-mill-en.js\"></script>
-        <!-- SlimScroll 1.3.0 -->
-        <script src=\"../system/engines/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js\"></script>
-        <!-- ChartJS 1.0.1 -->
-        <script src=\"../system/engines/AdminLTE/plugins/chartjs/Chart.min.js\"></script>
-        <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-        <script src=\"../system/engines/AdminLTE/plugins/dashboard2.js\"></script>";
+        <script type=\"text/javascript\" src=\"../system/engines/AdminLTE/js/app.min.js\"></script>";
             return null;
         }
 
