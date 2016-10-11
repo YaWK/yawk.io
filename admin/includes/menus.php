@@ -135,7 +135,7 @@ if (isset($_GET['del']) && ($_GET['del'] === "1"))
     <td class=\"text-center\">
     <a class=\"fa fa-edit\" title=\"Bearbeiten\" href=\"index.php?page=menu-edit&menu=" . $row['id'] . "\">
     </a>
-    
+    &nbsp;
     <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Das Men&uuml; &laquo;$row[name]&raquo; wirklich l&ouml;schen?\"
        title=\"$lang[DELETE]\" href=\"index.php?page=menus&del=1&menu=$row[id]&delete=true\">
     </a>

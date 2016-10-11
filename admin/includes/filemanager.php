@@ -21,13 +21,11 @@ if (isset($_POST['upload']))
             if(move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target_path))
             {   // store uploaded file
                 $file = basename( $_FILES['uploadedfile']['name']);
-                print \YAWK\alert::draw("success", "Erfolg!", "Datei <strong>".$file."</strong> erfolgreich hochgeladen!","page=filemanager","4800");
-                exit;
+                print \YAWK\alert::draw("success", "Erfolg!", "Datei <strong>".$file."</strong> erfolgreich hochgeladen!", "", 800);
             }
             else
             {   // could not upload file, throw error
-                echo YAWK\alert::draw("danger", "Error!", "There was an error uploading your file, please try again.","page=filemanager","4800");
-                exit;
+                echo YAWK\alert::draw("danger", "Error!", "There was an error uploading your file, please try again.", "", 5800);
             }
             break;
     }
