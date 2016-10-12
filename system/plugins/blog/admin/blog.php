@@ -21,7 +21,7 @@ if (isset($_GET['addblog']))
         if (!empty($_POST['menuID'])) { $menuID = $db->quote($_POST['menuID']); } else { $menuID = ''; }
         if (!empty($_POST['icon'])) { $icon = $db->quote($_POST['icon']); } else { $icon = ''; }
         // create new blog
-        if ($blog->create($db, $name, $description, $menuID, $icon))
+        if ($blog->create($db, $name, $description, $menuID, $icon) === true)
         {   // if the user did not set an icon, notify him that he should / can do that.
             if (empty($icon) || (!isset($icon)))
             {   // no icon is set, throw a info alert in users face
@@ -149,6 +149,7 @@ echo"<ol class=\"breadcrumb\">
             <td class=\"text-center\">" . $items . "</td>
             <td class=\"text-center\">
             " . $commentIcon . "
+            
             <a href=\"index.php?plugin=blog&pluginpage=blog-setup&blogid=" . $row['id'] . "\" title=\"" . $row['name'] . "&nbsp;" . $lang['CONFIGURE'] . "\"><i class=\"fa fa-wrench\"></i></a>&nbsp;&nbsp;
             <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"VORSICHT! &laquo;Blog #" . $row['id'] . " - " . $row['name'] . "&raquo; inklusive Inhalt l&ouml;schen?\" title=\"" . $lang['BLOG_DELETE'] . "&nbsp;" . $row['name'] . "\" href=\"index.php?plugin=blog&delete=1&blog=" . $row['id'] . "&all=true\">
             </a>
