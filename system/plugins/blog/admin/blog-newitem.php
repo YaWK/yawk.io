@@ -16,7 +16,8 @@ if (isset($_POST['create']) && isset($_POST['blogid'])) {
     $blog->youtubeUrl = $db->quote($_POST['youtubeUrl']);
 
     if ($blog->createItem($db, $blog->blogid, $blog->title, $blog->subtitle, $blog->published, $blog->teasertext, $blog->blogtext, $blog->date_publish, $blog->date_unpublish, $blog->thumbnail, $blog->youtubeUrl)) {
-        echo YAWK\alert::draw("success", "Success!", "Your entry $blog->title was saved.","plugin=blog&pluginpage=blog-entries&blogid=".$blog->blogid."","1200");
+        // echo YAWK\alert::draw("success", "Success!", "Your entry $blog->title was saved.","plugin=blog&pluginpage=blog-entries&blogid=".$blog->blogid."", 9800);
+        echo YAWK\alert::draw("success", "Success!", "Your entry $blog->title was saved.", "plugin=blog&pluginpage=blog-entries&blogid=".$blog->blogid."", 0);
     }
     else
     {   // create failed, throw error
@@ -25,9 +26,11 @@ if (isset($_POST['create']) && isset($_POST['blogid'])) {
 }
 
 $blog = new \YAWK\PLUGINS\BLOG\blog();
-$blog->icon = $blog->getBlogProperty($db, $_GET['blogid'], "icon");
-$blog->name = $blog->getBlogProperty($db, $_GET['blogid'], "name");
-$blog->id = $blog->getBlogProperty($db, $_GET['blogid'], "id");
+if (isset($_GET['blogid'])){
+    $blog->icon = $blog->getBlogProperty($db, $_GET['blogid'], "icon");
+    $blog->name = $blog->getBlogProperty($db, $_GET['blogid'], "name");
+    $blog->id = $blog->getBlogProperty($db, $_GET['blogid'], "id");
+}
 ?>
 
 <link href="../system/engines/summernote/dist/summernote.css" rel="stylesheet">
@@ -136,7 +139,7 @@ echo"<ol class=\"breadcrumb\">
                    value="Eintrag&nbsp;speichern"/>
 
             <!-- CANCEL BUTTON -->
-            <a href="index.php?plugin=blog&pluginpage=blog-entries&blogid=<?php echo $_GET['blogid']; ?>" id="cancel" style="float:right; margin-top:6px; margin-bottom:30px;">
+            <a href="index.php?plugin=blog&pluginpage=blog-entries&blogid=<?php $blog->id; ?>" id="cancel" style="float:right; margin-top:6px; margin-bottom:30px;">
                 <i class="btn btn-default">zur&uuml;ck</i></a>
             <br><br><br>
 
@@ -243,7 +246,7 @@ echo"<ol class=\"breadcrumb\">
             </dl>
 
             <!-- HIDDEN FIELDS -->
-            <input type="hidden" name="blogid" value="<?php print $_GET['blogid']; ?>"/>
+            <input type="hidden" name="blogid" value="<?php print $blog->id; ?>"/>
             <input type="hidden" name="create" value="1">
         </div>
 
