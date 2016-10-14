@@ -15,13 +15,13 @@ namespace YAWK {
 
         static function getEditor($db)
         {
-            $editorSettings = \YAWK\settings::getEditorSettings($db, $typeID = 0);
-            echo self::loadEditorJS($editorSettings);
-            echo self::setEditor($editorSettings);
+            $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
+            echo self::loadJavascript($editorSettings);
+            echo self::setEditorSettings($editorSettings);
             return null;
         }
 
-        static function loadEditorJS($editorSettings)
+        static function loadJavascript($editorSettings)
         {   // returns the JS include HTML
             return "<!-- include codemirror) -->
                     <link rel=\"stylesheet\" type=\"text/css\" href=\"../system/engines/codemirror/codemirror.min.css\">
@@ -37,7 +37,7 @@ namespace YAWK {
                     <script src=\"../system/engines/summernote/dist/summernote-floats-bs.js\"></script>";
         }
 
-        static function setEditor($editorSettings)
+        static function setEditorSettings($editorSettings)
         {   // returns the editor HTML
             return "
 <script type=\"text/javascript\">
@@ -59,7 +59,7 @@ $(document).ready(function() {
             // get the value of summernote textarea
             var text = $(editor).val();
             // search for <img> tags and revert src ../ to set correct path for frontend
-            var frontend = text.replace(/<img src=\"..\/media/g,\"<img src=\"media\");
+            var frontend = text.replace(/<img src=\\\"..\/media/g,\"<img src=\\\"media\");
             // put the new string back into <textarea>
             $(editor).val(frontend); // to make sure that saving works
         });
@@ -70,7 +70,7 @@ $(document).ready(function() {
     // get the value of summernote textarea
     var text = $(editor).val();
     // search for <img> tags and update src ../ to get images viewed in summernote
-    var backend = text.replace(/<img src=\"media/g,\"<img src=\"../media\");
+    var backend = text.replace(/<img src=\\\"media/g,\"<img src=\\\"../media\");
     // put the new string back into <textarea>
     $(editor).val(backend); // set new value into textarea
 
@@ -93,7 +93,7 @@ $(document).ready(function() {
         },
         // language for plugin image-attributes.js
         lang: '$_SESSION[lang]',
-
+        
         // powerup the codeview with codemirror theme
         codemirror: { // codemirror options
             theme: '$editorSettings[editorTheme]',                       // codeview theme
@@ -105,7 +105,7 @@ $(document).ready(function() {
             matchBrackets: $editorSettings[editorMatchBrackets],         // highlight corresponding brackets
             autoCloseBrackets: $editorSettings[editorCloseBrackets],      // auto insert close brackets
             autoCloseTags: $editorSettings[editorCloseTags],             // auto insert close tags after opening
-            value: \"<html>\n  \" + document.documentElement.innerHTML + \"\n</html>\",       // all html
+            value: \"<html>\\n  \" + document.documentElement.innerHTML + \"\\n</html>\",       // all html
             mode: \"htmlmixed\",                                                            // editor mode
             matchTags: {bothTags: $editorSettings[editorMatchTags] },     // hightlight matching tags: both
             extraKeys: {\"Ctrl-J\": \"toMatchingTag\", \"Ctrl-Space\": \"autocomplete\"},         // press ctrl-j to jump to next matching tab
@@ -115,8 +115,8 @@ $(document).ready(function() {
         // plugin: summernote-cleaner.js
         // this allows to copy/paste from word, browsers etc.
         cleaner: { // does the job well: no messy code anymore!
-            action: 'both', // both|button|paste 'button' only cleans via toolbar button, 'paste' only clean when pasting content, both does both options.
-            newline: '<br>' // Summernote's default is to use '<p><br></p>'
+            action: \"both\", // both|button|paste 'button' only cleans via toolbar button, 'paste' only clean when pasting content, both does both options.
+            newline: \"<br>\" // Summernote's default is to use '<p><br></p>'
 
             // silent mode:
             // from my pov it is not necessary to notify the user about the code cleaning process.
@@ -128,11 +128,8 @@ $(document).ready(function() {
         }
     }); // end summernote
 }); // end document ready
-</script>
-";
-
+</script>";
         }
-
     } // end class editor
 } // end namespace
 
