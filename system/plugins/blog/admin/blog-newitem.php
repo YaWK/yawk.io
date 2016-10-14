@@ -1,6 +1,7 @@
 <?php
 include '../system/plugins/blog/classes/blog.php';
-global $lang;
+include '../system/classes/editor.php';
+$blog = new \YAWK\PLUGINS\BLOG\blog();
 
 if (isset($_POST['create']) && isset($_POST['blogid'])) {
     $blog = new \YAWK\PLUGINS\BLOG\blog();
@@ -14,8 +15,9 @@ if (isset($_POST['create']) && isset($_POST['blogid'])) {
     $blog->date_unpublish = $db->quote($_POST['date_unpublish']);
     $blog->thumbnail = $db->quote($_POST['thumbnail']);
     $blog->youtubeUrl = $db->quote($_POST['youtubeUrl']);
+    $blog->weblink = $db->quote($_POST['weblink']);
 
-    if ($blog->createItem($db, $blog->blogid, $blog->title, $blog->subtitle, $blog->published, $blog->teasertext, $blog->blogtext, $blog->date_publish, $blog->date_unpublish, $blog->thumbnail, $blog->youtubeUrl)) {
+    if ($blog->createItem($db, $blog->blogid, $blog->title, $blog->subtitle, $blog->published, $blog->teasertext, $blog->blogtext, $blog->date_publish, $blog->date_unpublish, $blog->thumbnail, $blog->youtubeUrl, $blog->weblink)) {
         // echo YAWK\alert::draw("success", "Success!", "Your entry $blog->title was saved.","plugin=blog&pluginpage=blog-entries&blogid=".$blog->blogid."", 9800);
         echo YAWK\alert::draw("success", "Success!", "Your entry $blog->title was saved.", "plugin=blog&pluginpage=blog-entries&blogid=".$blog->blogid."", 0);
     }
@@ -25,14 +27,16 @@ if (isset($_POST['create']) && isset($_POST['blogid'])) {
     }
 }
 
-$blog = new \YAWK\PLUGINS\BLOG\blog();
 if (isset($_GET['blogid'])){
     $blog->icon = $blog->getBlogProperty($db, $_GET['blogid'], "icon");
     $blog->name = $blog->getBlogProperty($db, $_GET['blogid'], "name");
     $blog->id = $blog->getBlogProperty($db, $_GET['blogid'], "id");
 }
+
+echo \YAWK\editor::getEditor($db);
 ?>
 
+<!-- summernote basic settings
 <link href="../system/engines/summernote/dist/summernote.css" rel="stylesheet">
 <script src="../system/engines/summernote/dist/summernote.min.js"></script>
 <script type="text/javascript">
@@ -57,6 +61,9 @@ if (isset($_GET['blogid'])){
         });
     });
 </script>
+
+<!--    -->
+
 
 <!-- bootstrap date-timepicker -->
 <link type="text/css" href="../system/engines/datetimepicker/css/datetimepicker.min.css" rel="stylesheet"/>
@@ -131,18 +138,13 @@ echo"<ol class=\"breadcrumb\">
         <!-- SETTINGS -->
         <div class="col-md-4">
             <!-- SAVE BUTTON -->
-            <input id="savebutton"
-                   name="save"
-                   class="btn btn-success"
-                   style="float:right; margin-top:6px; margin-bottom:30px;"
-                   type="submit"
-                   value="Eintrag&nbsp;speichern"/>
-
+            <button type="submit" id="savebutton" name="save" class="btn btn-success pull-right">
+                <i id="savebuttonIcon" class="fa fa-check"></i> &nbsp;<?php print $lang['SAVE_CHANGES']; ?>
+            </button>
             <!-- CANCEL BUTTON -->
-            <a href="index.php?plugin=blog&pluginpage=blog-entries&blogid=<?php $blog->id; ?>" id="cancel" style="float:right; margin-top:6px; margin-bottom:30px;">
+            <a href="index.php?plugin=blog&pluginpage=blog-entries&blogid=<?php $blog->id; ?>" id="cancel" class="pull-right">
                 <i class="btn btn-default">zur&uuml;ck</i></a>
-            <br><br><br>
-
+            <br>
             <dl>
                 <!-- TITLE -->
                 <h4><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;Einstellungen <small>Titel und Dateiname</small></h4>

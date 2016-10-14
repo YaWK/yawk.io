@@ -8,7 +8,6 @@ input[type="radio"] {
 
 /* dark textarea for template-edit (to edit the custom.css) */
 .dark, textarea {
-    font-family: "Courier New", Courier, monospace;
     color: #f4f4f4;
     background-color : #222;
 }

@@ -455,22 +455,20 @@ namespace YAWK {
                 $desc = htmlentities($desc);
                 $keyw = htmlentities($keyw);
                 // add local metatags
-                if (!$res2 = $db->query("INSERT INTO {meta_local} (name,page,content)
-                        VALUES ('" . $desc . "', '" . $id . "', '" . $title . "')"))
-                {
-                    // error inserting page into database - throw error
-                    \YAWK\alert::draw("warning", "Error!", "Could not insert local meta tags. (description)", "pages", "4300");
+                if (!$db->query("INSERT INTO {meta_local} (name, page, content)
+                        VALUES ($desc, $id, $title)"))
+                {   // error inserting page into database - throw error
+                    \YAWK\alert::draw("warning", "Error!", "Failed to insert meta description.", "", 4300);
                 }
-                if (!$res3 = $db->query("INSERT INTO {meta_local} (name,page,content)
-                        VALUES ('" . $keyw . "','" . $id . "','" . $words . "')"))
-                {
-                    // error inserting page into database - throw error
-                    \YAWK\alert::draw("warning", "Error!", "Could not insert local meta tags. (keywords)", "pages", "4300");
+                if (!$db->query("INSERT INTO {meta_local} (name,page,content)
+                        VALUES ($keyw, $id, $words)"))
+                {   // error inserting page into database - throw error
+                    \YAWK\alert::draw("warning", "Error!", "Failed to insert meta keywords.", "", 4300);
                 }
             }
             else
             {   // error inserting page into database - throw error
-                \YAWK\alert::draw("danger", "Error!", "Could not insert page into database.", "pages-new", "4300");
+                \YAWK\alert::draw("danger", "Error!", "Could not insert page into database.", "", 4300);
             }
 
             // create file

@@ -49,6 +49,7 @@ namespace YAWK\PLUGINS\BLOG {
         public $html_ext;
         public $blogid;
         public $itemid;
+        public $itemgid;
         public $category;
         public $title;
         public $blogtitle;
@@ -87,6 +88,7 @@ namespace YAWK\PLUGINS\BLOG {
         public $preview;
         public $voting;
         public $youtubeUrl;
+        public $weblink;
 
         static function getBlogTitle($title, $subtext, $icon)
         {   // draw title
@@ -130,9 +132,11 @@ namespace YAWK\PLUGINS\BLOG {
 
             if ($showTitle && $showDesc === '1') {   // show title AND description
                 echo "<h1>$icon &nbsp;$name <small>$description</small></h1>";
-            } else if ($showTitle === '1' && $showDesc === '0') {   // just title
+            }
+            else if ($showTitle === '1' && $showDesc === '0') {   // just title
                 echo "<h1>$icon &nbsp;$name</h1>";
-            } else if ($showTitle === '0' && $showDesc === '1') {   // just show description
+            }
+            else if ($showTitle === '0' && $showDesc === '1') {   // just show description
                 echo "<h1>$icon $description</h1>";
             }
         }
@@ -251,6 +255,7 @@ namespace YAWK\PLUGINS\BLOG {
                     $this->blogid = $row['blogid'];
                     $this->thumbnail = $row['thumbnail'];
                     $this->youtubeUrl = $row['youtubeUrl'];
+                    $this->weblink = $row['weblink'];
                     $this->voteUp = $row['voteUp'];
                     $this->voteDown = $row['voteDown'];
                     // settings for blog_item are set,
@@ -545,6 +550,7 @@ namespace YAWK\PLUGINS\BLOG {
                 $this->author = $row['author'];
                 $this->thumbnail = $row['thumbnail'];
                 $this->youtubeUrl = $row['youtubeUrl'];
+                $this->weblink = $row['weblink'];
             }
             else
             {   // fetch failed
@@ -563,7 +569,6 @@ namespace YAWK\PLUGINS\BLOG {
         /** @var $db \YAWK\db */
         $date_changed = date("Y-m-d G:i:s");
         $this->teasertext = stripslashes(str_replace('\r\n', '', $this->teasertext));
-
         $alias = $this->blogtitle;
         /* alias string manipulation to generate a valid filename */
         $alias = mb_strtolower($alias); // lowercase
@@ -625,7 +630,8 @@ namespace YAWK\PLUGINS\BLOG {
                     teasertext = '" . $this->teasertext . "',
                     blogtext = '" . $this->blogtext . "',
                     thumbnail = '" . $this->thumbnail . "',
-                    youtubeUrl = '" . $this->youtubeUrl . "'
+                    youtubeUrl = '" . $this->youtubeUrl . "',
+                    weblink = '" . $this->weblink . "'
                     WHERE id = '" . $this->itemid . "'
                     AND blogid = '" . $this->blogid . "'"))
             {   // success
@@ -1122,10 +1128,9 @@ namespace YAWK\PLUGINS\BLOG {
         }
 
 
-        function createItem($db, $blogid, $title, $subtitle, $published, $teasertext, $blogtext, $date_publish, $date_unpublish, $thumbnail, $youtubeUrl)
+        function createItem($db, $blogid, $title, $subtitle, $published, $teasertext, $blogtext, $date_publish, $date_unpublish, $thumbnail, $youtubeUrl, $weblink)
         {
             /** @var $db \YAWK\db */
-
             $date_created = date("Y-m-d G:i:s");
             $alias = $title;
             /* alias string manipulation to generate a valid filename */
@@ -1207,6 +1212,7 @@ namespace YAWK\PLUGINS\BLOG {
                           '" . $blogtext . "',
                           '" . $thumbnail . "',
                           '" . $youtubeUrl . "',
+                          '" . $weblink . "',
                           '" . $_SESSION['username'] . "')"))
                     {
                         // define content of file
@@ -1279,7 +1285,7 @@ namespace YAWK\PLUGINS\BLOG {
                     $id = $row[0] + 1;
                 }
                 // add new entry to db blog_items
-                if ($res = $db->query("INSERT INTO {blog_items} (blogid,id,uid,pageid,sort,published,itemgid,title,subtitle,date_created,date_changed,date_publish,date_unpublish,teasertext,blogtext,author,youtubeUrl,thumbnail)
+                if ($res = $db->query("INSERT INTO {blog_items} (blogid,id,uid,pageid,sort,published,itemgid,title,subtitle,date_created,date_changed,date_publish,date_unpublish,teasertext,blogtext,author,youtubeUrl,thumbnail, weblink)
                         VALUES ('" . $this->blogid . "',
                                 '" . $id . "',
                                 '" . $this->uid . "',
@@ -1297,6 +1303,7 @@ namespace YAWK\PLUGINS\BLOG {
                                 '" . $this->blogtext . "',
                                 '" . $this->author . "',
                                 '" . $this->youtubeUrl . "',
+                                '" . $this->weblink . "',
                                 '" . $this->thumbnail . "')"))
                 {   // blog items inserted into database
                     // generate local meta tags

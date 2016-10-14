@@ -247,15 +247,6 @@ echo "
 
 <!-- CHECK THIS -->
   <form name="form" role="form" class="form-inline" onsubmit="return replaceImgPrefix()" action="index.php?page=page-edit&site=<?php print $page->alias; ?>&id=<?php echo $page->id; ?>" method="post">
-      <script type="text/javascript">
-          /*
-          function copyCodeIfCodeView(e) {
-              if ($summernote.summernote('codeview.isActivated')) {
-                  var context_textarea = window.document.getElementById('summernote');
-                  context_textarea.value = $summernote.summernote('code');
-              }
-          } */
-      </script>
       <div class="row">
           <div class="col-md-8">
     <!-- EDITOR -->
