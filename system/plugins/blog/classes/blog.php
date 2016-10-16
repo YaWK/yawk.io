@@ -92,6 +92,17 @@ namespace YAWK\PLUGINS\BLOG {
         public $youtubeUrl;
         public $weblink;
 
+
+        /**
+         * Print blog title
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param string $title Blog Title
+         * @param string $subtext Blog SubTitle
+         * @param string $icon Font Awesome Icon e.g. fa fa-globe
+         * @return null
+         */
         static function getBlogTitle($title, $subtext, $icon)
         {   // draw title
             if ($title && $subtext && $icon)
@@ -102,8 +113,19 @@ namespace YAWK\PLUGINS\BLOG {
             {   // draw title without icon
                 print "<h1>" . $title . "&nbsp;<small>" . $subtext . "</small></h1>";
             }
+            return null;
         }
 
+
+        /**
+         * Print the latest blog subtitle from
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param int $blogid The blog id of the subtitle to get
+         * @return mixed mixed|bool
+         */
         static function getLatestEntrySubtitle($db, $blogid)
         {   /** @var $db \YAWK\db */
             if ($res = $db->query("SELECT subtitle FROM {blog_items} WHERE blogid = " . $blogid . " ORDER BY id DESC LIMIT 1")) {   // fetch data
@@ -117,9 +139,18 @@ namespace YAWK\PLUGINS\BLOG {
             }
         }
 
+        /**
+         * Get the blog title
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param int $blogid The blog id of the title to get
+         * @return null
+         */
         static function getTitle($db, $blogid)
-        {
-            /** @var $db \YAWK\db */
+        {   /** @var $db \YAWK\db */
+            // get blog title settings from database
             $showTitle = self::getBlogProperty($db, $blogid, "showtitle");
             $showDesc = self::getBlogProperty($db, $blogid, "showdesc");
             $description = self::getBlogProperty($db, $blogid, "description");
@@ -141,8 +172,19 @@ namespace YAWK\PLUGINS\BLOG {
             else if ($showTitle === '0' && $showDesc === '1') {   // just show description
                 echo "<h1>$icon $description</h1>";
             }
+            return null;
         }
 
+        /**
+         * Toggle a whole blog on/offline
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param int $id The blog id of the blog to toggle
+         * @param int $published The publish status 0|1
+         * @return bool
+         */
         function toggleOffline($db, $id, $published)
         {
             /** @var $db \YAWK\db */
@@ -157,6 +199,16 @@ namespace YAWK\PLUGINS\BLOG {
             }
         }
 
+        /**
+         * Toggle a single blog item (entry) on/offline
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param int $id The id of the blog item to toggle
+         * @param int $published The publish status 0|1
+         * @return bool
+         */
         function toggleItemOffline($db, $id, $published)
         {
             /** @var $db \YAWK\db */
@@ -171,6 +223,16 @@ namespace YAWK\PLUGINS\BLOG {
             }
         }
 
+        /**
+         * Toggle a blog comment on/offline
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param int $id The id of the comment to toggle
+         * @param int $published The publish status 0|1
+         * @return bool
+         */
         function toggleCommentOffline($db, $id, $published)
         {
             /** @var $db \YAWK\db */
@@ -185,6 +247,17 @@ namespace YAWK\PLUGINS\BLOG {
             }
         }
 
+        /**
+         * Toggle a the group id (role) of blog item
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param int $itemgid The new group id for the blog item
+         * @param int $id The id of the blog item to set
+         * @param int $bllgid ??
+         * @return bool
+         */
         function toggleRole($db, $itemgid, $id, $blogid)
         {
             /** @var $db \YAWK\db */
@@ -199,6 +272,18 @@ namespace YAWK\PLUGINS\BLOG {
             }
         }
 
+        /**
+         * This get all blog entries from database, prepare layout and draw them onscreen (frontend).
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param int $blogid The id of the blog to get entries from
+         * @param int $itemid The item id to get, if a single entry is wanted
+         * @param int $full_view Should the blog be loaded without a preview, in full mode as default? 0|1
+         * @param int $limit Number of entries to get from database.
+         * @return null
+         */
         function getFrontendEntries($db, $blogid, $itemid, $full_view, $limit)
         {
             /** @var $db \YAWK\db */
@@ -465,6 +550,16 @@ namespace YAWK\PLUGINS\BLOG {
             }
         }
 
+    /**
+    * +++ still in development +++ not for production use! - Draw a voting box (thumbs up/down)
+    * @author Daniel Retzl <danielretzl@gmail.com>
+    * @version 0.0.0
+    * @link http://yawk.io
+    * @param object $db Database Object
+    * @param int $voteUp Vote up integer
+    * @param int $voteDown Vote down integer
+    * @return mixed Html voting box
+    */
     function drawVotingBox($db, $voteUp, $voteDown)
     {
         /** @var $db \YAWK\db */
@@ -480,6 +575,18 @@ namespace YAWK\PLUGINS\BLOG {
         return $votingBox;
     }
 
+    /**
+     * Get any blog property you want from given blogid.
+     * Selection goes like this: "SELECT $property FROM {blog} WHERE id = $blogid
+     *
+     * @author Daniel Retzl <danielretzl@gmail.com>
+     * @version 1.0.0
+     * @link http://yawk.io
+     * @param object $db Database Object
+     * @param int $blogid The blog id of wich we want to get the settings
+     * @param string $property The property to get
+     * @return mixed|bool
+    */
     function getBlogProperty($db, $blogid, $property)
     {
         /** @var $db \YAWK\db */
@@ -494,6 +601,17 @@ namespace YAWK\PLUGINS\BLOG {
         }
     }
 
+    /**
+     * Load properties for given blog id and store $this -> $blog properties
+     *
+     * @author Daniel Retzl <danielretzl@gmail.com>
+     * @version 1.0.0
+     * @link http://yawk.io
+     * @param object $db Database Object
+     * @param int $blogid The blog id of wich we want to load properties
+     * @param string $property The property to get
+     * @return bool
+    */
     function loadBlogProperties($db, $blogid)
     {
         /** @var $db \YAWK\db */
@@ -527,6 +645,17 @@ namespace YAWK\PLUGINS\BLOG {
         }
     }
 
+    /**
+     * Load properties for given blog item (entry) and store $this -> $blog properties
+     *
+     * @author Daniel Retzl <danielretzl@gmail.com>
+     * @version 1.0.0
+     * @link http://yawk.io
+     * @param object $db Database Object
+     * @param int $blogid The blog id of wich we want to load properties
+     * @param int $itemid The item id of wich we want to load properties
+     * @return bool
+    */
     function loadItemProperties($db, $blogid, $itemid)
     {   /** @var $db \YAWK\db */
         if ($res = $db->query("SELECT * FROM {blog_items}
@@ -567,6 +696,15 @@ namespace YAWK\PLUGINS\BLOG {
         return true;
     }
 
+    /**
+     * Save blog blog entry data. (See blog properties)
+     *
+     * @author Daniel Retzl <danielretzl@gmail.com>
+     * @version 1.0.0
+     * @link http://yawk.io
+     * @param object $db Database Object
+     * @return bool
+    */
     function save($db)
     {
         /** @var $db \YAWK\db */
@@ -647,6 +785,17 @@ namespace YAWK\PLUGINS\BLOG {
         }
     }
 
+    /**
+     * Save blog settings data. (layout, general ettings, comment settings etc...)
+     *
+     * @author Daniel Retzl <danielretzl@gmail.com>
+     * @version 1.0.0
+     * @link http://yawk.io
+     * @param object $db Database Object
+     * @param int $blogid The blog id of wich we want to save properties
+     * @param string $property The property to get
+     * @return bool
+    */
     function setup($db, $blogid)
     {
         /** @var $db \YAWK\db */
@@ -672,6 +821,15 @@ namespace YAWK\PLUGINS\BLOG {
                     WHERE id = '" . $blogid . "'");
     }
 
+    /**
+     * Return a copyright footer
+     *
+     * @author Daniel Retzl <danielretzl@gmail.com>
+     * @version 1.0.0
+     * @link http://yawk.io
+     * @param object $db Database Object
+     * @return mixed Html Code
+    */
     function getFooter($db)
     {
         /** @var $db \YAWK\db */
@@ -680,11 +838,32 @@ namespace YAWK\PLUGINS\BLOG {
         return $this->html .= "<small><i class='pull-right'>Copyright (C) $this->year_created $hostURL</i></small>";
     }
 
+
+    /**
+     * Return the HTML code. To render the view, call this function with echo or print
+     *
+     * @author Daniel Retzl <danielretzl@gmail.com>
+     * @version 1.0.0
+     * @link http://yawk.io
+     * @return mixed Html
+    */
     function draw()
-    {
+    {   // mixed HTML, built, filled and modified by several previews functions
         return $this->html;
     }
 
+    /**
+     * Get all comments for given blog + item id and stores it in $this->html
+     *
+     * @author Daniel Retzl <danielretzl@gmail.com>
+     * @version 1.0.0
+     * @link http://yawk.io
+     * @param object $db Database Object
+     * @param int $blogid The blog ID to get comments from
+     * @param int $itemid The item ID to get comments from
+     * @param array $row The current dataset
+     * @return null
+    */
     function getAllComments($db, $blogid, $itemid, $row)
     {
         /** @var $db \YAWK\db */
@@ -757,6 +936,7 @@ namespace YAWK\PLUGINS\BLOG {
             }
         }
         $this->html .= "<br>";
+        return null;
     }
 
     function drawComments($db, $blogid, $itemid)
