@@ -55,7 +55,7 @@ if (!isset($AdminLTE)) {
       // get user properties
       $user->loadProperties($db, $_SESSION['username']);
       echo $AdminLTE->drawHtmlBody();
-      echo $AdminLTE->drawHtmlLogo($db);
+      echo $AdminLTE->drawHtmlLogo($db, $lang);
       echo $AdminLTE->drawHtmlNavbar();
       echo $AdminLTE->drawHtmlNavbarRightMenu();
       if (\YAWK\settings::getSetting($db, "backendMessagesMenu") == 1)
