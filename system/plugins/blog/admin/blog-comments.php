@@ -2,18 +2,39 @@
 include '../system/plugins/blog/classes/blog.php';                  // include blog class
 if (!isset($blog)) { $blog = new \YAWK\PLUGINS\BLOG\blog(); }       // generate new blog object
 
+// TOGGLE COMMENT ON/OFF
+if (isset($_GET['toggle']))
+{   // check if published state and id are sent
+    if (isset($_GET['published']) && (isset($_GET['id'])))
+    {   // check and switch state
+        if ($_GET['published'] === '1')
+        {   $_GET['published'] = 0; $status = "offline"; }
+        else
+        {   $_GET['published'] = 1; $status = "online"; }
+        // finally: toggle the comment state
+        if ($blog->toggleCommentOffline($db, $_GET['id'], $_GET['published']))
+        {   // success, notify user
+            print \YAWK\alert::draw("success", "Comment is now $status.", "Comment is now $status", "", 800);
+        }
+        else
+        {   // toggle did not work, throw error
+            print \YAWK\alert::draw("danger", "Error: Could not toggle comment status.", "Comment is still $status", "", 5800);
+        }
+    }
+}
+
 // DELETE COMMENT
 if (isset($_GET['deletecomment']))
-{
-    // DELETE COMMENT
+{   // delete, if true
     if ($_GET['deletecomment'] === "true") {
-        // delete comment
+        // check vars
         if (isset($_GET['commentid']) && (isset($_GET['itemid']) && (isset($_GET['blogid'])))) {
+            // ok, do it...
             if ($blog->deleteComment($db, $_GET['blogid'], $_GET['itemid'], $_GET['commentid'])) {
                 \YAWK\alert::draw("success", "Success! ", "Comment ID " . $_GET['commentid'] . " deleted.", "","800");
             }
             else
-            {
+            {   // throw error
                 \YAWK\alert::draw("danger", "Error: ", "Could not delete comment ID: " . $_GET['commentid'] . " from Blog: ".$_GET['blogid']." ", "","3800");
             }
         }
@@ -80,11 +101,11 @@ echo"<ol class=\"breadcrumb\">
     <thead>
     <tr>
         <td width="3%"><strong>&nbsp;</strong></td>
+        <td width="3%" class=\"text-center\"><strong>Group</strong></td>
         <td width="13%" class=\"text-center\"><strong>User</strong></td>
         <td width="14%" class=\"text-center\"><strong>Date</strong></td>
         <td width="57%"><strong>Comment</strong></td>
         <td width="5%" class=\"text-center\"><strong>ID</strong></td>
-        <td width="3%" class=\"text-center\"><strong>Group</strong></td>
         <td width="5%" class=\"text-center\"><strong>Aktionen</strong></td>
     </tr>
     </thead>
@@ -153,18 +174,18 @@ echo"<ol class=\"breadcrumb\">
         // draw table and badges
         echo "<tr>
                 <td class=\"text-center\">
-                <a href=\"index.php?plugin=blog&pluginpage=blog-togglecomment&published=" . $row['published'] . "&blogid=" . $blog->id . "&id=" . $row['id'] . "\">
+                <a href=\"index.php?plugin=blog&pluginpage=blog-comments&toggle=1&published=" . $row['published'] . "&blogid=" . $blog->id . "&id=" . $row['id'] . "\">
                 <span class=\"label label-$pub\">$pubtext</span></a>&nbsp;</td>
+                
+                <td class=\"text-center\">
+                <a href=\"#\"><span class=\"label label-$color\">" . $label . "</span></a></td>
+                
                 <td class=\"text-center\">" . $comment_user . "</td>
 
                 <td><a href=\"index.php?plugin=blog&pluginpage=blog-edit&itemid=" . $row['id'] . "&blogid=" . $blog->id . "\"><div style=\"width:100%\">" . $row['date_created'] . "</div></a></td>
                 <td><a href=\"index.php?plugin=blog&pluginpage=blog-edit&itemid=" . $row['id'] . "&blogid=" . $blog->id . "\" style=\"color: #7A7376;\"><div style=\"width:100%\">" . $row['comment'] . "</div></a></td>
 
-
-                <td class=\"text-center\">" . $row['id'] . "</td>
-
-                <td class=\"text-center\">
-                <a href=\"#\"><span class=\"label label-$color\">" . $label . "</span></a></td>
+                <td>" . $row['id'] . "</td>
 
                 <td class=\"text-center\"> 
 
