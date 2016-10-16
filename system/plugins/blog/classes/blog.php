@@ -1080,9 +1080,9 @@ namespace YAWK\PLUGINS\BLOG {
                 if (!isset($row[0])) {
                     $id = 1;
                 } else {
-                    $id = $row[0] + 1;
+                    $id = $row[0]++;
                 }
-                $sort = $row[1] + 1;
+                $sort = $row[1]++;
                 $published = 1;
                 $name = htmlentities($name);
                 $description = htmlentities($description);
@@ -1194,7 +1194,7 @@ namespace YAWK\PLUGINS\BLOG {
                     $this->blogtext = \YAWK\sys::encodeChars($this->blogtext);
 
                     if ($res = $db->query("INSERT INTO {blog_items}
-                                (blogid,id,uid,pageid,sort,published,title,subtitle,date_created,date_publish,date_unpublish,teasertext,blogtext,thumbnail,youtubeUrl,author,weblink)
+                                (blogid,id,uid,pageid,sort,published,title,filename,subtitle,date_created,date_publish,date_unpublish,teasertext,blogtext,thumbnail,youtubeUrl,author,weblink)
                           VALUES('" . $blogid . "',
                           '" . $id . "',
                           '" . $_SESSION['uid'] . "',
@@ -1202,6 +1202,7 @@ namespace YAWK\PLUGINS\BLOG {
                           '" . $sort . "',
                           '" . $published . "',
                           '" . $title . "',
+                          '" . $alias . "',
                           '" . $subtitle . "',
                           '" . $date_created . "',
                           '" . $date_publish . "',
