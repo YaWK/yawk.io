@@ -1311,12 +1311,12 @@ namespace YAWK\PLUGINS\BLOG {
                     if (!$res = $db->query("INSERT INTO {meta_local} (name,page,content)
                         VALUES ('" . $desc . "', '" . $id . "', '" . $this->blogtitle . "')"))
                     {   // inset local meta description failed
-                        \YAWK\alert::draw("warning", "Warning: ", "Could not store meta description.", "", "3800");
+                       // \YAWK\alert::draw("warning", "Warning: ", "Could not store meta description.", "", "3800");
                     }
                     if (!$res = $db->query("INSERT INTO {meta_local} (name,page,content)
                         VALUES ('" . $keyw . "','" . $id . "','" . $words . "')"))
                     {   // insert local meta keywords
-                        \YAWK\alert::draw("warning", "Warning: ", "Could not store meta description.", "", "3800");
+                        // \YAWK\alert::draw("warning", "Warning: ", "Could not store meta description.", "", "3800");
                     }
                     // prepare loading page content
                     $content = "<?php \$blog_id = $this->blogid; \$item_id = $id; \$full_view = 1; include 'system/plugins/blog/blog.php'; ?>";
