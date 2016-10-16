@@ -33,7 +33,7 @@ if (isset($_GET['copy']))
 
         if($_GET['copy'] === "true")
         {
-            if($blog->copyItem($db, $blog))
+            if($blog->copyItem($db))
             {   // success
                 \YAWK\alert::draw("success", "Erfolg!", "Der Blogeintrag ".$_GET['itemid']." wurde kopiert!","","2000");
             }
@@ -211,8 +211,7 @@ echo "
                        ".$commentIcon."
                       <a class=\"fa fa-copy\" title=\"" . $lang['COPY'] . ": " . $row['title'] . "\" href=\"index.php?plugin=blog&pluginpage=blog-entries&copy=true&itemgid=" . $row['itemgid'] . "&itemid=".$row['id']."&blogid=" . $blog->id . "\"></a>&nbsp;
 
-                      <a class=\"fa fa-trash\" data-confirm=\"Soll der Eintrag &laquo;" . $row['title'] . " - " . $row['subtitle'] . "&raquo; wirklich gel&ouml;scht werden?\" title=\"DELETE " . $row['title'] . "\" href=\"index.php?plugin=blog&pluginpage=blog-delete&item=kill&pageid=" . $row['pageid'] . "&blogid=" . $blog->id . "&itemid=" . $row['id'] . "&delete=true\">
-                      </a>
+                     
 
                       <a class=\"fa fa-edit\" title=\"" . $lang['EDIT'] . ": " . $row['title'] . "\" href=\"index.php?plugin=blog&pluginpage=blog-edit&itemid=" . $row['id'] . "&blogid=" . $blog->id . "\"></a>&nbsp;
                       <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Soll der Eintrag &laquo;" . $row['id'] . " / " . $row['title'] . "&raquo; wirklich gel&ouml;scht werden?\"

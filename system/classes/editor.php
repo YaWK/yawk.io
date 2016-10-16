@@ -116,7 +116,7 @@ $(document).ready(function() {
             ]
         },
         // language for plugin image-attributes.js
-        lang: '$_SESSION[lang]',
+        lang: 'de-DE',
         
         // powerup the codeview with codemirror theme
         codemirror: { // codemirror options

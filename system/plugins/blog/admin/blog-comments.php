@@ -31,11 +31,11 @@ if (isset($_GET['deletecomment']))
         if (isset($_GET['commentid']) && (isset($_GET['itemid']) && (isset($_GET['blogid'])))) {
             // ok, do it...
             if ($blog->deleteComment($db, $_GET['blogid'], $_GET['itemid'], $_GET['commentid'])) {
-                \YAWK\alert::draw("success", "Success! ", "Comment ID " . $_GET['commentid'] . " deleted.", "","800");
+                \YAWK\alert::draw("success", "Success! ", "Comment deleted.", "","800");
             }
             else
             {   // throw error
-                \YAWK\alert::draw("danger", "Error: ", "Could not delete comment ID: " . $_GET['commentid'] . " from Blog: ".$_GET['blogid']." ", "","3800");
+                \YAWK\alert::draw("danger", "Error: ", "Could not delete comment ID: " . $_GET['commentid'] . " from Blog: ".$_GET['blogid']." ", "","5800");
             }
         }
     }
@@ -178,7 +178,7 @@ echo"<ol class=\"breadcrumb\">
                 <span class=\"label label-$pub\">$pubtext</span></a>&nbsp;</td>
                 
                 <td class=\"text-center\">
-                <a href=\"#\"><span class=\"label label-$color\">" . $label . "</span></a></td>
+                <span class=\"label label-$color\">" . $label . "</span></td>
                 
                 <td class=\"text-center\">" . $comment_user . "</td>
 
