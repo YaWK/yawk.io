@@ -405,7 +405,7 @@ namespace YAWK {
 
         static function encodeChars($string)
         {   // requires string. encodes german vowels
-            $string = utf8_decode($string);
+            // $string = utf8_decode($string);
             $chars = array("ö" => "&ouml;", "ä" => "&auml;", "ü" => "&uuml;",
                 "Ö" => "&Ouml;", "Ä" => "&Auml;", "Ü" => "&Uuml;",
                 "ß" => "&szlig;",
