@@ -838,6 +838,40 @@ namespace YAWK {
             return $time_ago . ' ago';
         }
 
+        static function getWeekday($date){
+            if (isset($date)){
+                // get weekday
+                $weekday = date("l",strtotime($date));
+                switch($weekday){
+                    case "Monday":
+                        $weekday = "Montag";
+                        break;
+                    case "Tuesday":
+                        $weekday = "Dienstag";
+                        break;
+                    case "Wednesday":
+                        $weekday = "Mittwoch";
+                        break;
+                    case "Thursday":
+                        $weekday = "Donnerstag";
+                        break;
+                    case "Friday":
+                        $weekday = "Freitag";
+                        break;
+                    case "Saturday":
+                        $weekday = "Samstag";
+                        break;
+                    case "Sunday":
+                        $weekday = "Sonntag";
+                        break;
+                }
+                return $weekday;
+            }
+            else {
+                return false;
+            }
+        }
+
         static function setSyslog($db, $log_type, $message, $fromUID, $toUID, $toGID, $seen)
         {   /** @var $db \YAWK\db */
             // THIS DB STORES ALL THE SYSLOG FOR ADMINISTRATOR REASONS

@@ -259,7 +259,7 @@ namespace YAWK\PLUGINS\BLOG {
                 $this->voteUp = $row['voteUp'];
                 $this->voteDown = $row['voteDown'];
                 // settings for blog_item are set,
-                // not get properties of that BLOG (general blog settings)
+                // now get properties of that BLOG (general blog settings)
                 $this->permaLink = $this->getBlogProperty($db, $this->blogid, "permaLink");
                 $this->layout = $this->getBlogProperty($db, $this->blogid, "layout");
                 $this->comments = $this->getBlogProperty($db, $this->blogid, "comments");
@@ -906,7 +906,7 @@ namespace YAWK\PLUGINS\BLOG {
         }
     }
 
-        function draw_commentbox()
+        function draw_commentbox($db)
         {   /** @var $db \YAWK\db */
             // check if user is logged in
             if (isset($_SESSION['logged_in']) && ($_SESSION['logged_in'] == true)) {

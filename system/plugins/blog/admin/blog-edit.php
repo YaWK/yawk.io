@@ -109,7 +109,7 @@ $blog->name = $blog->getBlogProperty($db, $blog->blogid, "name");
       method="post">
 
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-10">
     <!-- EDITOR -->
     <?php if ($blog->layout !== "3")
     {
@@ -140,7 +140,7 @@ $blog->name = $blog->getBlogProperty($db, $blog->blogid, "name");
     </textarea>
     </div> <!-- end left col -->
 
-    <div class="col-md-4">
+    <div class="col-md-2">
     <!-- right col -->
         <!-- SAVE BUTTON -->
         <input id="savebutton"
@@ -162,7 +162,7 @@ $blog->name = $blog->getBlogProperty($db, $blog->blogid, "name");
                        class="form-control"
                        id="blogtitle"
                        name="blogtitle"
-                       size="64"
+                       size="32"
                        maxlength="255"
                        value="<?php print $blog->blogtitle; ?>">
             </dd>
