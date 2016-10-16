@@ -1240,9 +1240,9 @@ namespace YAWK\PLUGINS\BLOG {
         {
             /** @var $db \YAWK\db */
             $gid = "$this->itemgid";
-            $alias = "$this->alias-kopie";
-            $title_new = "$this->alias-kopie";
-            $title = "$this->title";
+            $alias = "$this->filename-kopie";
+            $title_new = "$this->filename-kopie";
+            $this->blogtitle = $this->blogtitle."-KOPIE";
             $date_created = date("Y-m-d G:i:s");
 
             if (!$this->alias)
@@ -1270,7 +1270,7 @@ namespace YAWK\PLUGINS\BLOG {
                                 '" . $date_created . "',
                                 '" . $date_created . "',
                                 '" . $alias . "',
-                                '" . $title_new . "',
+                                '" . $this->blogtitle . "',
                                 '" . $locked . "',
                                 '" . $this->blogid . "')"))
             {   // select max id from blog_items
@@ -1280,7 +1280,7 @@ namespace YAWK\PLUGINS\BLOG {
                     $id = $row[0] + 1;
                 }
                 // add new entry to db blog_items
-                if ($res = $db->query("INSERT INTO {blog_items} (blogid,id,uid,pageid,sort,published,itemgid,title,subtitle,date_created,date_changed,date_publish,date_unpublish,teasertext,blogtext,author,youtubeUrl,thumbnail, weblink)
+                if ($res = $db->query("INSERT INTO {blog_items} (blogid,id,uid,pageid,sort,published,itemgid,title,filename,subtitle,date_created,date_changed,date_publish,date_unpublish,teasertext,blogtext,author,youtubeUrl,thumbnail, weblink)
                         VALUES ('" . $this->blogid . "',
                                 '" . $id . "',
                                 '" . $this->uid . "',
@@ -1288,6 +1288,7 @@ namespace YAWK\PLUGINS\BLOG {
                                 '" . $this->sort . "',
                                 '" . $this->published . "',
                                 '" . $this->itemgid . "',
+                                '" . $this->blogtitle . "',
                                 '" . $alias . "',
                                 '" . $this->subtitle . "',
                                 '" . $this->date_created . "',
@@ -1307,7 +1308,7 @@ namespace YAWK\PLUGINS\BLOG {
                     $words = "";
                     // insert local meta description to db meta_local
                     if (!$res = $db->query("INSERT INTO {meta_local} (name,page,content)
-                        VALUES ('" . $desc . "', '" . $id . "', '" . $title . "')"))
+                        VALUES ('" . $desc . "', '" . $id . "', '" . $this->blogtitle . "')"))
                     {   // inset local meta description failed
                         \YAWK\alert::draw("warning", "Warning: ", "Could not store meta description.", "", "3800");
                     }
