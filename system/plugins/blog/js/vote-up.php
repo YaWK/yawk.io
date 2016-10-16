@@ -1,5 +1,6 @@
 <?php
-include '../../../dbconnect.php';
+include '../../../classes/db.php';
+if (!isset($db)) { $db = new \YAWK\db(); }
 include '../../../classes/sys.php';
 include '../classes/blog.php';
 $voteUp		=	$_POST['voteUp'];
