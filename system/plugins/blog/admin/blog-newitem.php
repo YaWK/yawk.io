@@ -32,38 +32,9 @@ if (isset($_GET['blogid'])){
     $blog->name = $blog->getBlogProperty($db, $_GET['blogid'], "name");
     $blog->id = $blog->getBlogProperty($db, $_GET['blogid'], "id");
 }
-
+// LOAD EDITOR JS + SETTINGS
 echo \YAWK\editor::getEditor($db);
 ?>
-
-<!-- summernote basic settings
-<link href="../system/engines/summernote/dist/summernote.css" rel="stylesheet">
-<script src="../system/engines/summernote/dist/summernote.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#summernote').summernote({
-            height: 80,                 // set editor height
-            minHeight: null,             // set minimum height of editor
-            maxHeight: null,             // set maximum height of editor
-            focus: true,                 // set focus to editable area after initializing summernote
-            codemirror: { // codemirror options
-                theme: 'monokai'
-            }
-        });
-        $('#summernote2').summernote({
-            height: 360,                 // set editor height
-            minHeight: null,             // set minimum height of editor
-            maxHeight: null,             // set maximum height of editor
-            focus: true,                 // set focus to editable area after initializing summernote
-            codemirror: { // codemirror options
-                theme: 'monokai'
-            }
-        });
-    });
-</script>
-
-<!--    -->
-
 
 <!-- bootstrap date-timepicker -->
 <link type="text/css" href="../system/engines/datetimepicker/css/datetimepicker.min.css" rel="stylesheet"/>
@@ -201,15 +172,9 @@ echo"<ol class=\"breadcrumb\">
                     <label for="published"><?php print $lang['ENTRY'];print"&nbsp;";print $lang['ONLINE']; ?></label>
                 </dt>
                 <dd>
-                    <?php if($blog->published == 1){
-                        $publishedHtml = "<option value=\"1\" selected=\"selected\">online</option>";
-                        $publishedHtml .= "<option value=\"0\" >offline</option>";
-                    } else {
-                        $publishedHtml = "<option value=\"0\" selected=\"selected\">offline</option>";
-                        $publishedHtml .= "<option value=\"1\" >online</option>";
-                    } ?>
                     <select id="published" name="published" class="form-control">
-                        <?php echo $publishedHtml; ?>
+                        <option value="1" selected="selected">online</option>
+                        <option value="0">offline</option>
                     </select>
                 </dd>
                 <!-- blog thumbnail -->
@@ -231,7 +196,7 @@ echo"<ol class=\"breadcrumb\">
                 </dd>
 
                 <dt>
-                    <label for="thumbnail">
+                    <label for="youtubeUrl">
                         <i class="fa fa-youtube"></i> &nbsp;<?php print $lang['YOUTUBEURL']; ?>:&nbsp;</label>
                 </dt>
                 <dd> <!-- YouTube Link -->
@@ -243,6 +208,21 @@ echo"<ol class=\"breadcrumb\">
                         size="64"
                         maxlength="255"
                         placeholder="https://www.youtube.com/embed/1A2B3C4D5E6F"
+                        value="<?php print $blog->youtubeUrl; ?>">
+                </dd>
+                <dt>
+                    <label for="weblink">
+                        <i class="fa fa-globe"></i> &nbsp;<?php print $lang['WEBLINK']; ?>:&nbsp;</label>
+                </dt>
+                <dd> <!-- Weblink -->
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="weblink"
+                        name="weblink"
+                        size="64"
+                        maxlength="255"
+                        placeholder="https://www.yawk.io"
                         value="<?php print $blog->youtubeUrl; ?>">
                 </dd>
             </dl>

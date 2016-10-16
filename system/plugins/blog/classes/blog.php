@@ -231,142 +231,141 @@ namespace YAWK\PLUGINS\BLOG {
             }
 
             // select settings for given blog id
-            if ($res = $db->query("SELECT * FROM {blog_items}
+            $res = $db->query("SELECT * FROM {blog_items}
                                          WHERE blogid = '$blogid' " . $sql . "
                                          AND published = '1'
                                          ORDER BY " . $this->sequence . " " . $this->sortation . "
-                                         $limitSql")
-            ) {   // fetch data in loop
-                while ($row = mysqli_fetch_array($res)) {   // set blog item properties
-                    $this->itemid = $row['id'];
-                    $this->uid = $row['uid'];
-                    $this->gid = $row['uid'];
-                    $this->pageid = $row['pageid'];
-                    $this->title = $row['title'];
-                    $this->subtitle = $row['subtitle'];
-                    $this->teasertext = $row['teasertext'];
-                    $this->blogtext = $row['blogtext'];
-                    $this->gid = $row['itemgid'];
-                    $this->date_publish = $row['date_publish'];
-                    $this->date_unpublish = $row['date_unpublish'];
-                    $this->date_created = $row['date_created'];
-                    $this->date_changed = $row['date_changed'];
-                    $this->author = $row['author'];
-                    $this->blogid = $row['blogid'];
-                    $this->thumbnail = $row['thumbnail'];
-                    $this->youtubeUrl = $row['youtubeUrl'];
-                    $this->weblink = $row['weblink'];
-                    $this->voteUp = $row['voteUp'];
-                    $this->voteDown = $row['voteDown'];
-                    // settings for blog_item are set,
-                    // not get properties of that BLOG (general blog settings)
-                    $this->permaLink = $this->getBlogProperty($db, $this->blogid, "permaLink");
-                    $this->layout = $this->getBlogProperty($db, $this->blogid, "layout");
-                    $this->comments = $this->getBlogProperty($db, $this->blogid, "comments");
+                                         $limitSql");
+            // fetch data in loop
+            while ($row = mysqli_fetch_array($res)) {   // set blog item properties
+                $this->itemid = $row['id'];
+                $this->uid = $row['uid'];
+                $this->gid = $row['uid'];
+                $this->pageid = $row['pageid'];
+                $this->title = $row['title'];
+                $this->subtitle = $row['subtitle'];
+                $this->teasertext = $row['teasertext'];
+                $this->blogtext = $row['blogtext'];
+                $this->gid = $row['itemgid'];
+                $this->date_publish = $row['date_publish'];
+                $this->date_unpublish = $row['date_unpublish'];
+                $this->date_created = $row['date_created'];
+                $this->date_changed = $row['date_changed'];
+                $this->author = $row['author'];
+                $this->blogid = $row['blogid'];
+                $this->thumbnail = $row['thumbnail'];
+                $this->youtubeUrl = $row['youtubeUrl'];
+                $this->weblink = $row['weblink'];
+                $this->voteUp = $row['voteUp'];
+                $this->voteDown = $row['voteDown'];
+                // settings for blog_item are set,
+                // not get properties of that BLOG (general blog settings)
+                $this->permaLink = $this->getBlogProperty($db, $this->blogid, "permaLink");
+                $this->layout = $this->getBlogProperty($db, $this->blogid, "layout");
+                $this->comments = $this->getBlogProperty($db, $this->blogid, "comments");
+
+
+                if ($frontendShowDate === '1') {   // show date of this entry
+                    /* date string to array function */
+                    $splitDate = \YAWK\sys::splitDate($this->date_publish);
+                    /* set seperated vars */
+                    $year = $splitDate['year'];
+                    $day = $splitDate['day'];
+                    $month = $splitDate['month'];
+                    $time = $splitDate['time'];
+
+                    // get weekday from datetime
+                    $weekday = \YAWK\sys::getWeekday($this->date_publish);
+
+                    // build a prettydate
+                    $prettydate = "$weekday, $day. $month $year, $time";
+                    $prettydate = trim($prettydate);
+                } else {   // display no date
+                    $prettydate = '';
                 }
-            }   // ./ blog item settings query
 
-            if ($frontendShowDate === '1') {   // show date of this entry
-                /* date string to array function */
-                $splitDate = \YAWK\sys::splitDate($this->date_publish);
-                /* set seperated vars */
-                $year = $splitDate['year'];
-                $day = $splitDate['day'];
-                $month = $splitDate['month'];
-                $time = $splitDate['time'];
+                if ($this->permaLink === '1') {   // show permalink of this entry
+                    $host = \YAWK\settings::getSetting($db, "host");
+                    $page = new \YAWK\page();
+                    $alias = $page->getProperty($db, $this->pageid, "alias");
+                    $this->permaLink = "share this URL: <a href=\"$host/$alias.html\">$host/$alias.html</a>";
+                } else {   // no permalink
+                    $page = new \YAWK\page();
+                    $alias = $page->getProperty($db, $this->pageid, "alias");
+                    $this->permaLink = '';
+                }
 
-                // get weekday from datetime
-                $weekday = \YAWK\sys::getWeekday($this->date_publish);
+                if ($frontendShowAuthor === '1') {   //  show author of this entry
+                    $author = "by <strong>$this->author</strong>";
+                } else {   // do not display author
+                    $author = '';
+                }
 
-                // build a prettydate
-                $prettydate = "$weekday, $day. $month $year, $time";
-                $prettydate = trim($prettydate);
-            } else {   // display no date
-                $prettydate = '';
-            }
+                if ($frontendVoting === '1') {   // show voting box
+                    $voting = self::drawVotingBox($db, $this->voteUp, $this->voteDown);
+                } else {   // no voting
+                    $voting = '';
+                }
 
-            if ($this->permaLink === '1') {   // show permalink of this entry
-                $host = \YAWK\settings::getSetting($db, "host");
-                $page = new \YAWK\page();
-                $alias = $page->getProperty($db, $this->pageid, "alias");
-                $this->permaLink = "share this URL: <a href=\"$host/$alias.html\">$host/$alias.html</a>";
-            } else {   // no permalink
-                $page = new \YAWK\page();
-                $alias = $page->getProperty($db, $this->pageid, "alias");
-                $this->permaLink = '';
-            }
+                // current date + time
+                $atm = date("Y-m-d G:i:s");
 
-            if ($frontendShowAuthor === '1') {   //  show author of this entry
-                $author = "by <strong>$this->author</strong>";
-            } else {   // do not display author
-                $author = '';
-            }
-
-            if ($frontendVoting === '1') {   // show voting box
-                $voting = self::drawVotingBox($db, $this->voteUp, $this->voteDown);
-            } else {   // no voting
-                $voting = '';
-            }
-
-            // current date + time
-            $atm = date("Y-m-d G:i:s");
-
-            // check publish date and show entry
-            if ($atm < $this->date_publish) {
-                $this->html .= "";
-            }
-            if (isset($_SESSION['gid'])) {
-                $session_gid = $_SESSION['gid'];
-            } else {
-                $session_gid = 1;
-            }
-            // check if content is outdated
-            if ($this->date_unpublish < $atm XOR $this->date_unpublish === "0000-00-00 00:00:00") {
-                $this->html .= ""; // do nothing
-            } // check publish date and show entry
-            else if ($atm > $this->date_publish && $session_gid >= $this->gid && $session_gid >= $blog_gid) {
-                // publish datetime is behind us, so display the blog
-                // 1.) check & get settings, 2. check layouts, 3. draw
-
-                // check & build vars for single entry FULL view
-                if (isset($full_view) && ($full_view === 1)) {
-                    $blogtextHtml = $this->blogtext;
-                    $showAllButton = '';
+                // check publish date and show entry
+                if ($atm < $this->date_publish) {
+                    $this->html .= "";
+                }
+                if (isset($_SESSION['gid'])) {
+                    $session_gid = $_SESSION['gid'];
                 } else {
-                    if ($frontendPreview === '0') {
-                        $showAllButton = "<a class='btn btn-default' role='button' href=\"$alias.html\"><i class='fa fa-bars'></i> &nbsp;alles anzeigen</a>";
-                    } else {
+                    $session_gid = 1;
+                }
+                // check if content is outdated
+                if ($this->date_unpublish < $atm XOR $this->date_unpublish === "0000-00-00 00:00:00") {
+                    $this->html .= ""; // do nothing
+                } // check publish date and show entry
+                else if ($atm > $this->date_publish && $session_gid >= $this->gid && $session_gid >= $blog_gid) {
+                    // publish datetime is behind us, so display the blog
+                    // 1.) check & get settings, 2. check layouts, 3. draw
+
+                    // check & build vars for single entry FULL view
+                    if (isset($full_view) && ($full_view === 1)) {
+                        $blogtextHtml = $this->blogtext;
                         $showAllButton = '';
-                    }
-                    $blogtextHtml = '';
-                }
-
-                // check & set the different layouts
-                // LAYOUT 0 = 1 col, TEXT BLOG
-                // LAYOUT 1 = 2 col, IMG PREVIEW LEFT
-                // LAYOUT 2 = 2 col, IMG PREVIEW RIGHT
-                // LAYOUT 3 = 1 col, NEWSPAPER STYLE
-                // LAYOUT 4 = 1 col, YOUTUBE RESPONSIVE BLOG
-
-                if ($this->layout === '0') {   // LAYOUT 0 = 1 col, default text blog
-                    $this->html .= "<br><small class=\"pull-right\"><i>$this->permaLink$prettydate " . $author . "</i></small>";
-                    $this->html .= "<h2>$this->title&nbsp;<small>$this->subtitle</small></h2>$this->teasertext" . $blogtextHtml . "";
-                    // are comments enabled?
-                    if ($this->comments !== '0') {
-                        if (isset($full_view) && ($full_view === 1)) {   // full view, display comments
-                            $this->html .= self::draw_commentbox($db);
-                        } else {   // display btn with link to the full view
-                            $this->html .= "<a class='btn btn-default' role='button' href=\"$alias.html\"><i class='fa fa-bars'></i> &nbsp;anzeigen</a><br><br><br>";
+                    } else {
+                        if ($frontendPreview === '0') {
+                            $showAllButton = "<a class='btn btn-default' role='button' href=\"$alias.html\"><i class='fa fa-bars'></i> &nbsp;alles anzeigen</a>";
+                        } else {
+                            $showAllButton = '';
                         }
-                    } else {   // no comments, show all button
-                        $this->html .= $showAllButton;
+                        $blogtextHtml = '';
                     }
-                    $this->html .= "<hr>";
-                }
 
-                if ($this->layout === '1') {   // LAYOUT 1 = 2 cols, left thumbnail
-                    if (!empty($this->thumbnail)) $imgHtml = "<img src=\"" . $this->thumbnail . "\" class=\"img-thumbnail img-lefty-less protected\">"; else $imgHtml = '';
-                    $this->html .= "
+                    // check & set the different layouts
+                    // LAYOUT 0 = 1 col, TEXT BLOG
+                    // LAYOUT 1 = 2 col, IMG PREVIEW LEFT
+                    // LAYOUT 2 = 2 col, IMG PREVIEW RIGHT
+                    // LAYOUT 3 = 1 col, NEWSPAPER STYLE
+                    // LAYOUT 4 = 1 col, YOUTUBE RESPONSIVE BLOG
+
+                    if ($this->layout === '0') {   // LAYOUT 0 = 1 col, default text blog
+                        $this->html .= "<br><small class=\"pull-right\"><i>$this->permaLink$prettydate " . $author . "</i></small>";
+                        $this->html .= "<h2>$this->title&nbsp;<small>$this->subtitle</small></h2>$this->teasertext" . $blogtextHtml . "";
+                        // are comments enabled?
+                        if ($this->comments !== '0') {
+                            if (isset($full_view) && ($full_view === 1)) {   // full view, display comments
+                                $this->html .= self::draw_commentbox($db);
+                            } else {   // display btn with link to the full view
+                                $this->html .= "<a class='btn btn-default' role='button' href=\"$alias.html\"><i class='fa fa-bars'></i> &nbsp;anzeigen</a><br><br><br>";
+                            }
+                        } else {   // no comments, show all button
+                            $this->html .= $showAllButton;
+                        }
+                        $this->html .= "<hr>";
+                    }
+
+                    if ($this->layout === '1') {   // LAYOUT 1 = 2 cols, left thumbnail
+                        if (!empty($this->thumbnail)) $imgHtml = "<img src=\"" . $this->thumbnail . "\" class=\"img-thumbnail img-lefty-less protected\">"; else $imgHtml = '';
+                        $this->html .= "
                         <div class=\"row\">
                             <div class=\"col-md-4 text-center\">
                                 <br>$imgHtml
@@ -374,90 +373,91 @@ namespace YAWK\PLUGINS\BLOG {
                             <div class=\"col-md-8\">
                             <small class=\"pull-right\"><i>$this->permaLink$prettydate $author</i></small>
                             <h2>$this->title&nbsp;<small>$this->subtitle</small></h2>$this->teasertext" . $blogtextHtml . "";
-                    // are comments enabled?
-                    if ($this->comments !== '0') {
-                        if (isset($full_view) && ($full_view === 1)) {  // full view, display comments
-                            $this->html .= self::draw_commentbox($db);
-                        } else {   // display btn with link to the full view
-                            $this->html .= "<a class='btn btn-default' href=\"$alias.html\"><i class='fa fa-bars'></i> &nbsp;anzeigen</a><br><br><br>";
+                        // are comments enabled?
+                        if ($this->comments !== '0') {
+                            if (isset($full_view) && ($full_view === 1)) {  // full view, display comments
+                                $this->html .= self::draw_commentbox($db);
+                            } else {   // display btn with link to the full view
+                                $this->html .= "<a class='btn btn-default' href=\"$alias.html\"><i class='fa fa-bars'></i> &nbsp;anzeigen</a><br><br><br>";
+                            }
+                        } else {   // no comments, show all button
+                            $this->html .= $showAllButton;
                         }
-                    } else {   // no comments, show all button
-                        $this->html .= $showAllButton;
-                    }
-                    $this->html .= "</div>
+                        $this->html .= "</div>
                         </div>";
-                }
+                    }
 
-                if ($this->layout === '2') {   // LAYOUT 2 = 2 cols, right thumbnail
-                    if (!empty($this->thumbnail)) $imgHtml = "<img src=\"" . $this->thumbnail . "\" class=\"thumbnail img-responsive\">"; else $imgHtml = '';
-                    $this->html .= "
+                    if ($this->layout === '2') {   // LAYOUT 2 = 2 cols, right thumbnail
+                        if (!empty($this->thumbnail)) $imgHtml = "<img src=\"" . $this->thumbnail . "\" class=\"thumbnail img-responsive\">"; else $imgHtml = '';
+                        $this->html .= "
                     <div class=\"row\">
                       <div class=\"col-xs-12 col-md-8\">
                       <small class=\"pull-right\"><i>$this->permaLink$prettydate $author</i></small>
                        <h2>$this->title&nbsp;<small>$this->subtitle</small></h2>$this->teasertext" . $blogtextHtml . "";
-                    // are comments enabled?
-                    if ($this->comments !== '0') {
-                        if (isset($full_view) && ($full_view === 1)) {
-                            $this->html .= self::draw_commentbox($db);
-                        } else {
-                            $this->html .= "<a class='btn btn-info' href=\"$alias.html\"><i class='fa fa-bars'></i> &nbsp;anzeigen</a><br><br>";
-                        }
-                    } else {
-                        $this->html .= $showAllButton;
-                    }
-                    $this->html .= "<hr></div>
-                      <div class=\"col-xs-6 col-md-4\">
-                      <br>$imgHtml </div>
-
-                 </div>";
-                }
-                if ($this->layout === '3') {   // LAYOUT 3 = 3 cols, newspaper layout
-                    if (!empty($this->thumbnail)) $imgHtml = "<img src=\"" . $this->thumbnail . "\" class=\"thumbnail img-responsive\">"; else $imgHtml = '';
-                    $this->html .= "<div class=\"row\">
-                  <div class=\"col-xs-6 col-md-4\"><br>advertising space</div>
-                  <div class=\"col-xs-6 col-md-4\">
-                   <small class=\"pull-right\"><i>$this->permaLink$prettydate $author</i></small>
-                  <h2>$this->title&nbsp;<small>$this->subtitle</small></h2>$imgHtml $this->teasertext" . $blogtextHtml . "<hr>
-                  ";
-                    // are comments enabled?
-                    if ($this->comments !== '0') {
-                        if (isset($full_view) && ($full_view === 1)) {
-                            $this->html .= self::draw_commentbox($db);
-                        } else {
-                            $this->html .= "<a href=\"$alias.html\"><i class='btn btn-info'>comments anzeigen</i></a>";
-                        }
-                    } else {
-                        $this->html .= $showAllButton;
-                    }
-                    $this->html .= "</div>
-                  <div class=\"col-xs-6 col-md-4\"><br>advertising space
-                    </div>
-                </div>";
-                }
-                if ($this->layout === '4') {   // LAYOUT 4 = 1 col, youtube responsive blog
-                    // cut of time from prettydate
-                    $prettydate = substr($prettydate, 0, -7);
-                    if (!empty($this->youtubeUrl)) {
-                        $this->html .= "<small class=\"pull-right\"><i>$this->permaLink$prettydate $author</i></small>";
-                        $this->html .= "<h2>$this->title&nbsp;<small>$this->subtitle</small></h2>
-                                            <div class=\"embed-container\">
-                                              <iframe src=\"$this->youtubeUrl\" frameborder=\"0\" allowfullscreen></iframe>
-                                            </div>";
-                        $this->html .= "$this->teasertext";
-                        $this->html .= "<br>$voting";
-                        $this->html .= "$blogtextHtml";
-
                         // are comments enabled?
                         if ($this->comments !== '0') {
                             if (isset($full_view) && ($full_view === 1)) {
                                 $this->html .= self::draw_commentbox($db);
                             } else {
-                                $this->html .= "<a class='btn btn-default' role='button' href=\"$alias.html\"><i class='fa fa-bars'></i> &nbsp;anzeigen</a><br><br><br>";
+                                $this->html .= "<a class='btn btn-info' href=\"$alias.html\"><i class='fa fa-bars'></i> &nbsp;anzeigen</a><br><br>";
                             }
                         } else {
                             $this->html .= $showAllButton;
                         }
-                        $this->html .= "<hr>";
+                        $this->html .= "<hr></div>
+                      <div class=\"col-xs-6 col-md-4\">
+                      <br>$imgHtml </div>
+
+                 </div>";
+                    }
+                    if ($this->layout === '3') {   // LAYOUT 3 = 3 cols, newspaper layout
+                        if (!empty($this->thumbnail)) $imgHtml = "<img src=\"" . $this->thumbnail . "\" class=\"thumbnail img-responsive\">"; else $imgHtml = '';
+                        $this->html .= "<div class=\"row\">
+                  <div class=\"col-xs-6 col-md-4\"><br>advertising space</div>
+                  <div class=\"col-xs-6 col-md-4\">
+                   <small class=\"pull-right\"><i>$this->permaLink$prettydate $author</i></small>
+                  <h2>$this->title&nbsp;<small>$this->subtitle</small></h2>$imgHtml $this->teasertext" . $blogtextHtml . "<hr>
+                  ";
+                        // are comments enabled?
+                        if ($this->comments !== '0') {
+                            if (isset($full_view) && ($full_view === 1)) {
+                                $this->html .= self::draw_commentbox($db);
+                            } else {
+                                $this->html .= "<a href=\"$alias.html\"><i class='btn btn-info'>comments anzeigen</i></a>";
+                            }
+                        } else {
+                            $this->html .= $showAllButton;
+                        }
+                        $this->html .= "</div>
+                  <div class=\"col-xs-6 col-md-4\"><br>advertising space
+                    </div>
+                </div>";
+                    }
+                    if ($this->layout === '4') {   // LAYOUT 4 = 1 col, youtube responsive blog
+                        // cut of time from prettydate
+                        $prettydate = substr($prettydate, 0, -7);
+                        if (!empty($this->youtubeUrl)) {
+                            $this->html .= "<small class=\"pull-right\"><i>$this->permaLink$prettydate $author</i></small>";
+                            $this->html .= "<h2>$this->title&nbsp;<small>$this->subtitle</small></h2>
+                                            <div class=\"embed-container\">
+                                              <iframe src=\"$this->youtubeUrl\" frameborder=\"0\" allowfullscreen></iframe>
+                                            </div>";
+                            $this->html .= "$this->teasertext";
+                            $this->html .= "<br>$voting";
+                            $this->html .= "$blogtextHtml";
+
+                            // are comments enabled?
+                            if ($this->comments !== '0') {
+                                if (isset($full_view) && ($full_view === 1)) {
+                                    $this->html .= self::draw_commentbox($db);
+                                } else {
+                                    $this->html .= "<a class='btn btn-default' role='button' href=\"$alias.html\"><i class='fa fa-bars'></i> &nbsp;anzeigen</a><br><br><br>";
+                                }
+                            } else {
+                                $this->html .= $showAllButton;
+                            }
+                            $this->html .= "<hr>";
+                        }
                     }
                 }
             }
@@ -594,7 +594,6 @@ namespace YAWK\PLUGINS\BLOG {
             chmod($filename, 0777);
             if (!$res) {   // cannot write file, throw error
                 \YAWK\alert::draw("danger", "Error", "could not write file: $filename", "", "4200");
-                exit;
             } else {   // delete old file
                 unlink($filename_old);
             }
@@ -605,7 +604,6 @@ namespace YAWK\PLUGINS\BLOG {
             chmod($filename, 0777);
             if (!$res) {
                 \YAWK\alert::draw("danger", "Error", "could not create file: $filename", "", "4200");
-                exit;
             }
         }
         // convert html special chars
@@ -616,7 +614,7 @@ namespace YAWK\PLUGINS\BLOG {
 
         if ($res = $db->query("UPDATE {pages} SET
             alias = '" . $alias . "',
-            title = '" . $this->title . "'
+            title = '" . $alias . "'
             WHERE id = '" . $this->pageid . "'"))
         {
             if ($res = $db->query("UPDATE {blog_items} SET
@@ -1196,7 +1194,7 @@ namespace YAWK\PLUGINS\BLOG {
                     $this->blogtext = \YAWK\sys::encodeChars($this->blogtext);
 
                     if ($res = $db->query("INSERT INTO {blog_items}
-                                (blogid,id,uid,pageid,sort,published,title,subtitle,date_created,date_publish,date_unpublish,teasertext,blogtext,thumbnail,youtubeUrl,author)
+                                (blogid,id,uid,pageid,sort,published,title,subtitle,date_created,date_publish,date_unpublish,teasertext,blogtext,thumbnail,youtubeUrl,author,weblink)
                           VALUES('" . $blogid . "',
                           '" . $id . "',
                           '" . $_SESSION['uid'] . "',
@@ -1243,21 +1241,18 @@ namespace YAWK\PLUGINS\BLOG {
             /** @var $db \YAWK\db */
             $gid = "$this->itemgid";
             $alias = "$this->alias-kopie";
-            $title_new = "$this->title-kopie";
+            $title_new = "$this->alias-kopie";
             $title = "$this->title";
             $date_created = date("Y-m-d G:i:s");
 
-
             if (!$this->alias)
             {   // if no page name is given
-                \YAWK\alert::draw("warning", "Warning: ", "Alias not set. Please reload the page and try again.", "","3600");
-                return false;
+                \YAWK\alert::draw("warning", "Warning: ", "Alias not set. Please reload the page and try again.", "","5600");
             }
             // select max id from pages
             if (!$res = $db->query("SELECT MAX(id) FROM {pages}"))
             {   // q failed
                 \YAWK\alert::draw("warning", "Warning: ", "Cannot get MAX id from pages database.", "","3600");
-                return false;
             }
             else
             {   // fetch data & prepare vars

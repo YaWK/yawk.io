@@ -458,12 +458,12 @@ namespace YAWK {
                 if (!$db->query("INSERT INTO {meta_local} (name, page, content)
                         VALUES ($desc, $id, $title)"))
                 {   // error inserting page into database - throw error
-                    \YAWK\alert::draw("warning", "Error!", "Failed to insert meta description.", "", 4300);
+                   // \YAWK\alert::draw("warning", "Error!", "Failed to insert meta description.", "", 4300);
                 }
                 if (!$db->query("INSERT INTO {meta_local} (name,page,content)
                         VALUES ($keyw, $id, $words)"))
                 {   // error inserting page into database - throw error
-                    \YAWK\alert::draw("warning", "Error!", "Failed to insert meta keywords.", "", 4300);
+                    // \YAWK\alert::draw("warning", "Error!", "Failed to insert meta keywords.", "", 4300);
                 }
             }
             else

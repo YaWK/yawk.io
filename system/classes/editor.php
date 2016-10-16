@@ -97,18 +97,6 @@ $(document).ready(function() {
     var backend = text.replace(/<img src=\\\"media/g,\"<img src=\\\"../media\");
     // put the new string back into <textarea>
     $(editor).val(backend); // set new value into textarea
-    
-    ";
-            if ($editorSettings['editorAutoCodeview'] === "true")
-        {
-            // summernote.init -
-            // LOAD SUMMERNOTE IN CODEVIEW ON STARTUP
-            echo "$(editor).on('summernote.init', function() {
-                // toggle editor to codeview
-                $(editor).summernote('codeview.toggle');
-            });";
-        }
-    echo "
 
     // INIT SUMMERNOTE EDITOR
     $('#summernote').summernote({    // set editor itself
