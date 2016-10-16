@@ -58,6 +58,7 @@ namespace YAWK\PLUGINS\BLOG {
         public $published;
         public $content;
         public $date_publish;
+        public $date_changed;
         public $date_unpublish;
         public $description;
         public $subtitle;
