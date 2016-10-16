@@ -52,6 +52,7 @@ namespace YAWK\PLUGINS\BLOG {
         public $itemgid;
         public $category;
         public $title;
+        public $filename;
         public $blogtitle;
         public $name;
         public $published;
@@ -540,6 +541,7 @@ namespace YAWK\PLUGINS\BLOG {
                 $this->published = $row['published'];
                 $this->itemgid = $row['itemgid'];
                 $this->blogtitle = $row['title'];
+                $this->filename = $row['filename'];
                 $this->subtitle = $row['subtitle'];
                 $this->date_created = $row['date_created'];
                 $this->date_changed = $row['date_changed'];
@@ -569,22 +571,21 @@ namespace YAWK\PLUGINS\BLOG {
         /** @var $db \YAWK\db */
         $date_changed = date("Y-m-d G:i:s");
         $this->teasertext = stripslashes(str_replace('\r\n', '', $this->teasertext));
-        $alias = $this->blogtitle;
         /* alias string manipulation to generate a valid filename */
-        $alias = mb_strtolower($alias); // lowercase
-        $alias = str_replace(" ", "-", $alias); // replace all ' ' with -
+        $this->filename = mb_strtolower($this->filename); // lowercase
+        $this->filename = str_replace(" ", "-", $this->filename); // replace all ' ' with -
         // special chars
         $umlaute = array("/ä/", "/ü/", "/ö/", "/Ä/", "/Ü/", "/Ö/", "/ß/"); // array of special chars
         $ersetze = array("ae", "ue", "oe", "ae", "ue", "oe", "ss"); // array of replacement chars
-        $alias = preg_replace($umlaute, $ersetze, $alias);      // replace with preg
-        $alias = preg_replace("/[^a-z0-9\-\/]/i", "", $alias); // final check: just numbers and chars are allowed
+        $this->filename = preg_replace($umlaute, $ersetze, $this->filename);      // replace with preg
+        $this->filename = preg_replace("/[^a-z0-9\-\/]/i", "", $this->filename); // final check: just numbers and chars are allowed
 
         // get filename from pages db
         $res = $db->query("SELECT alias FROM {pages} WHERE id = '" . $this->pageid . "'");
         $row = mysqli_fetch_row($res);
         $alias_old = $row[0];
         $filename_old = "../content/articles/" . $alias_old . ".php";
-        $filename = "../content/articles/" . $alias . ".php";
+        $filename = "../content/articles/" . $this->filename . ".php";
         // set content of the plugin file
         $content = "<?php \$blog_id = $this->blogid; \$item_id = $this->itemid; \$full_view = 1; include 'system/plugins/blog/blog.php'; ?>";
         if (file_exists($filename_old)) {
@@ -594,8 +595,6 @@ namespace YAWK\PLUGINS\BLOG {
             chmod($filename, 0777);
             if (!$res) {   // cannot write file, throw error
                 \YAWK\alert::draw("danger", "Error", "could not write file: $filename", "", "4200");
-            } else {   // delete old file
-                unlink($filename_old);
             }
         } else {
             $handle = fopen($filename, "wr");
@@ -613,14 +612,15 @@ namespace YAWK\PLUGINS\BLOG {
         $this->subtitle = htmlentities($this->subtitle);
 
         if ($res = $db->query("UPDATE {pages} SET
-            alias = '" . $alias . "',
-            title = '" . $alias . "'
+            alias = '" . $this->filename . "',
+            title = '" . $this->blogtitle . "'
             WHERE id = '" . $this->pageid . "'"))
         {
             if ($res = $db->query("UPDATE {blog_items} SET
                     published = '" . $this->published . "',
                     sort = '" . $this->sort . "',
                     title = '" . $this->blogtitle . "',
+                    filename = '" . $this->filename . "',
                     subtitle = '" . $this->subtitle . "',
                     date_changed = '" . $date_changed . "',
                     date_publish = '" . $this->date_publish . "',

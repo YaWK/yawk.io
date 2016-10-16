@@ -7,6 +7,7 @@ $blog->sort++;
 
 if (isset($_POST['save'])) {
     $blog->blogtitle = $db->quote($_POST['blogtitle']);
+    $blog->filename = $db->quote($_POST['filename']);
     $blog->subtitle = $db->quote($_POST['subtitle']);
     $blog->published = $db->quote($_POST['published']);
     $blog->itemid = $db->quote($_POST['itemid']);
@@ -104,12 +105,19 @@ $blog->name = $blog->getBlogProperty($db, $blog->blogid, "name");
 
 ?>
 
-<form name="form" role="form" class="form-inline"
+<form name="form" role="form"
       action="index.php?plugin=blog&pluginpage=blog-edit&blogid=<?php print $blog->blogid; ?>&itemid=<?php print $blog->itemid; ?>"
       method="post">
 
 <div class="row">
     <div class="col-md-10">
+        <label for="blogtitle"><?php print $lang['TITLE']; ?></label>
+        <input type="text"
+               class="form-control"
+               id="blogtitle"
+               name="blogtitle"
+               value="<?php print $blog->blogtitle; ?>">
+        <br>
     <!-- EDITOR -->
     <?php if ($blog->layout !== "3")
     {
@@ -155,17 +163,16 @@ $blog->name = $blog->getBlogProperty($db, $blog->blogid, "name");
             <i class="btn btn-default">zur&uuml;ck</i></a>
         <br><br><br>
         <dl>
-        <!-- TITLE -->
+        <!-- FILENAME -->
             <h4><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;Einstellungen <small>Titel und Dateiname</small></h4>
-            <dt> <label for="blogtitle"><?php print $lang['TITLE']; ?></label></dt>
-            <dd> <input type="text"
+            <dt><label for="filename"><?php print $lang['FILENAME']; ?></label></dt>
+            <dd><input type="text"
                        class="form-control"
-                       id="blogtitle"
-                       name="blogtitle"
-                       size="32"
+                       name="filename"
+                       id="filename"
+                       size="64"
                        maxlength="255"
-                       value="<?php print $blog->blogtitle; ?>">
-            </dd>
+                       value="<?php print $blog->filename; ?>"> </dd>
             <!-- SUBTITLE -->
             <dt><label for="subtitle"><?php print $lang['SUBTITLE']; ?></label></dt>
             <dd><input type="text"
@@ -176,12 +183,11 @@ $blog->name = $blog->getBlogProperty($db, $blog->blogid, "name");
                        maxlength="255"
                        value="<?php print $blog->subtitle; ?>">
             </dd>
-              <hr>
 
             <h4><i class="fa fa-clock-o"></i>&nbsp;&nbsp;Ver&ouml;ffentlichung <small>Zeitpunkt & Privatsph&auml;re</small></h4>
             <dt>
                 <!-- PUBLISH DATE -->
-                <label for="datetimepicker1"><?php print $lang['START_PUBLISH']; ?></label>
+                <label for="datetimepicker1"><i class="fa fa-calendar"></i> <?php print $lang['START_PUBLISH']; ?></label>
             </dt>
             <dd>
                 <input
@@ -195,7 +201,7 @@ $blog->name = $blog->getBlogProperty($db, $blog->blogid, "name");
             </dd>
             <dt>
                 <!-- UNPUBLISH DATE -->
-                <label for="datetimepicker2"><?php print $lang['END_PUBLISH']; ?></label>
+                <label for="datetimepicker2"><i class="fa fa-ban"></i> <?php print $lang['END_PUBLISH']; ?></label>
             </dt>
             <dd>
                 <input
@@ -209,7 +215,7 @@ $blog->name = $blog->getBlogProperty($db, $blog->blogid, "name");
             </dd>
             <dt>
             <!-- PAGE ON / OFF STATUS -->
-                <label for="published"><?php print $lang['ENTRY'];print"&nbsp;";print $lang['ONLINE']; ?></label>
+                <label for="published"><i class="fa fa-eye"></i> <?php print $lang['ENTRY'];print"&nbsp;";print $lang['ONLINE']; ?></label>
             </dt>
             <dd>
                 <?php if($blog->published == 1){
