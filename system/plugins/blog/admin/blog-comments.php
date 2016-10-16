@@ -1,8 +1,25 @@
 <?php
-include '../system/plugins/blog/classes/blog.php';
-global $lang;
-// generate new blog object
-$blog = new \YAWK\PLUGINS\BLOG\blog();
+include '../system/plugins/blog/classes/blog.php';                  // include blog class
+if (!isset($blog)) { $blog = new \YAWK\PLUGINS\BLOG\blog(); }       // generate new blog object
+
+// DELETE COMMENT
+if (isset($_GET['deletecomment']))
+{
+    // DELETE COMMENT
+    if ($_GET['deletecomment'] === "true") {
+        // delete comment
+        if (isset($_GET['commentid']) && (isset($_GET['itemid']) && (isset($_GET['blogid'])))) {
+            if ($blog->deleteComment($db, $_GET['blogid'], $_GET['itemid'], $_GET['commentid'])) {
+                \YAWK\alert::draw("success", "Success! ", "Comment ID " . $_GET['commentid'] . " deleted.", "","800");
+            }
+            else
+            {
+                \YAWK\alert::draw("danger", "Error: ", "Could not delete comment ID: " . $_GET['commentid'] . " from Blog: ".$_GET['blogid']." ", "","3800");
+            }
+        }
+    }
+}
+
 if (isset($_GET['blogid'])) {
     $blog->id = $_GET['blogid'];
     if (isset($_GET['itemid'])){
@@ -16,6 +33,8 @@ if (isset($_GET['blogid'])) {
 } else {
     $blog->id = 1;
 }
+
+// set blog object properties
 $blog->name = $blog->getBlogProperty($db, $blog->id, "name");
 $blog->icon = $blog->getBlogProperty($db, $blog->id, "icon");
 
@@ -153,7 +172,7 @@ echo"<ol class=\"breadcrumb\">
                   </a>
 
                   <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Soll der Eintrag &laquo;" . $row['id'] . " / " . $row['comment'] . "&raquo; wirklich gel&ouml;scht werden?\"
-                  title=\"" . $lang['DEL'] . "\" href=\"index.php?plugin=blog&pluginpage=blog-deletecomment&blogid=" . $blog->id . "&commentid=" . $row['id'] . "&itemid=" . $row['itemid'] . "&delete=true\">
+                  title=\"" . $lang['DEL'] . "\" href=\"index.php?plugin=blog&pluginpage=blog-comments&blogid=" . $blog->id . "&commentid=" . $row['id'] . "&itemid=" . $row['itemid'] . "&deletecomment=true\">
                   </a>
                 </td>
               </tr>";

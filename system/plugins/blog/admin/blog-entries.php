@@ -1,6 +1,19 @@
 <?php
 include '../system/plugins/blog/classes/blog.php';
 if (!isset($blog)) { $blog = new \YAWK\PLUGINS\BLOG\blog(); }
+// SET BLOG ITEM PROPERTIES
+if (isset($_GET['blogid']))
+    {   // pickup + store the blog ID from GET variable
+        $blog->id = $_GET['blogid'];
+    }
+    else
+        {   // default value:
+            $blog->id = 1;
+        }
+// get BLOG properties
+$blog->name = $blog->getBlogProperty($db, $blog->id, "name");
+$blog->icon = $blog->getBlogProperty($db, $blog->id, "icon");
+$blog->comments = $blog->getBlogProperty($db, $blog->id, "comments");
 
 // COPY ENTRY
 if (isset($_GET['copy']))
@@ -49,15 +62,22 @@ if (isset($_GET['delete']) || ($_GET === "1"))
     }
 }
 // set blog object properties
-if (isset($_GET['blogid'])) {
-    $blog->id = $_GET['blogid'];
-} else {
-    $blog->id = 1;
+if (isset($_GET['deletecomment']))
+{
+    // DELETE COMMENT
+    if ($_GET['deletecomment'] === "true") {
+        // delete comment
+        if (isset($_GET['commentid']) && (isset($_GET['itemid']) && (isset($_GET['blogid'])))) {
+            if ($blog->deleteComment($db, $_GET['blogid'], $_GET['itemid'], $_GET['commentid'])) {
+                \YAWK\alert::draw("success", "Success! ", "Comment ID " . $_GET['id'] . " deleted.", "","1200");
+            }
+            else
+            {
+                \YAWK\alert::draw("danger", "Error: ", "Could not delete comment ID: " . $_GET['id'] . " ", "","3800");
+            }
+        }
+    }
 }
-$blog->name = $blog->getBlogProperty($db, $blog->id, "name");
-$blog->icon = $blog->getBlogProperty($db, $blog->id, "icon");
-$blog->comments = $blog->getBlogProperty($db, $blog->id, "comments");
-
 /* draw Title on top */
 
 ?>
