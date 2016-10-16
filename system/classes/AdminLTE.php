@@ -141,7 +141,7 @@ namespace YAWK {
          * @param object $db Database object
          * @return null
          */
-        function drawHtmlLogo($db)
+        function drawHtmlLogo($db, $lang)
         {   // check, if URL or personal text should be displayed...
             if ($this->backendLayout === "layout-top-nav"){
                 return null;
@@ -165,7 +165,7 @@ namespace YAWK {
                     $logoText .= \YAWK\settings::getSetting($db, "backendLogoSubText");
                 }
             echo "<!-- Logo -->
-            <a href=\"../index.html\" class=\"logo\" target=\"_blank\">
+            <a href=\"../index.html\" class=\"logo\" title=\"$lang[GOTO_WEBSITE]\" target=\"_blank\">
               <!-- mini logo for sidebar mini 50x50 pixels -->
               <span class=\"logo-mini\"><b class=\"fa fa-globe\"></b></span>
               <!-- logo for regular state and mobile devices -->
