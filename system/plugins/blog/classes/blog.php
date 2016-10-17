@@ -26,17 +26,11 @@ namespace YAWK\PLUGINS\BLOG {
      * <p><i>This class covers both, backend + frontend functionality.
      * See Methods Summary for Details!</i></p>
      *
-     * @category   CMS
-     * @package    System
-     * @global     $connection
-     * @global     $dbprefix
      * @author     Daniel Retzl <danielretzl@gmail.com>
-     * @copyright  2009-2015 Daniel Retzl yawk.goodconnect.net
      * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
-     * @version    0.0.2
-     * @link       http://yawk.goodconnect.net/
-     * @since      File available since Release 0.1.8
-     * @annotation Handles the Plugin System.
+     * @version    1.0.0
+     * @link       http://yawk.io/
+     * @annotation Handles the Blog System.
      */
     class blog
     {
@@ -583,7 +577,7 @@ namespace YAWK\PLUGINS\BLOG {
      * @version 1.0.0
      * @link http://yawk.io
      * @param object $db Database Object
-     * @param int $blogid The blog id of wich we want to get the settings
+     * @param int $blogid The blog id of which we want to get the settings
      * @param string $property The property to get
      * @return mixed|bool
     */
@@ -608,7 +602,7 @@ namespace YAWK\PLUGINS\BLOG {
      * @version 1.0.0
      * @link http://yawk.io
      * @param object $db Database Object
-     * @param int $blogid The blog id of wich we want to load properties
+     * @param int $blogid The blog id of which we want to load properties
      * @param string $property The property to get
      * @return bool
     */
@@ -652,8 +646,8 @@ namespace YAWK\PLUGINS\BLOG {
      * @version 1.0.0
      * @link http://yawk.io
      * @param object $db Database Object
-     * @param int $blogid The blog id of wich we want to load properties
-     * @param int $itemid The item id of wich we want to load properties
+     * @param int $blogid The blog id of which we want to load properties
+     * @param int $itemid The item id of which we want to load properties
      * @return bool
     */
     function loadItemProperties($db, $blogid, $itemid)
@@ -792,7 +786,7 @@ namespace YAWK\PLUGINS\BLOG {
      * @version 1.0.0
      * @link http://yawk.io
      * @param object $db Database Object
-     * @param int $blogid The blog id of wich we want to save properties
+     * @param int $blogid The blog id of which we want to save properties
      * @param string $property The property to get
      * @return bool
     */
@@ -939,6 +933,17 @@ namespace YAWK\PLUGINS\BLOG {
         return null;
     }
 
+    /**
+     * Get all comments for given blog + item id and stores it in $this->html
+     *
+     * @author Daniel Retzl <danielretzl@gmail.com>
+     * @version 1.0.0
+     * @link http://yawk.io
+     * @param object $db Database Object
+     * @param int $blogid The blog ID to get comments from
+     * @param int $itemid The item ID to get comments from
+     * @return null
+    */
     function drawComments($db, $blogid, $itemid)
     {
         /** @var $db \YAWK\db */
@@ -952,9 +957,21 @@ namespace YAWK\PLUGINS\BLOG {
             //     self::getAllComments($blogid, $itemid, $row);
         }
         $this->html .= "</div>";
+        return null;
     }
 
 
+    /**
+     * Get all comments for given blog + item id and stores it in $this->html
+     *
+     * @author Daniel Retzl <danielretzl@gmail.com>
+     * @version 1.0.0
+     * @link http://yawk.io
+     * @param object $db Database Object
+     * @param int $blogid The blog ID to get comments from
+     * @param int $itemid The item ID to get comments from
+     * @return null
+    */
     function getComments($db, $blogid, $itemid)
     {
         /** @var $db \YAWK\db */
@@ -1048,7 +1065,7 @@ namespace YAWK\PLUGINS\BLOG {
                     //     $this->html .= "<p><i><h5>".$indent."<strong>".$emailLink."</strong> <small>am " . $prettydate . "</small></h5></i><div style=\"$padding\">".$comment."</div>
                     //     $this->html .= "$reply_link</p><hr>";
                 } else { // uid or gid value is not zero...
-                    // wich means this is a USER COMMENT
+                    // which means this is a USER COMMENT
                     // check if comment got an email and set link color
                     if (!empty($email)) {
                         $emailLink = "<a href=\"mailto:$email\">$name</a>";
@@ -1071,8 +1088,21 @@ namespace YAWK\PLUGINS\BLOG {
             $this->html = 'Failed to query comments database.';
         }
         $this->html .= "</div>";
+        return null;
     }
 
+
+    /**
+     * Count and returns all active comments. If no result is found, false will be returned.
+     *
+     * @author Daniel Retzl <danielretzl@gmail.com>
+     * @version 1.0.0
+     * @link http://yawk.io
+     * @param object $db Database Object
+     * @param int $blogid The blog ID to count comments from
+     * @param int $itemid The item ID to count comments from
+     * @return mixed bool
+    */
     static function countActiveComments($db, $blogid, $itemid)
     {
         /** @var $db \YAWK\db */
@@ -1087,64 +1117,93 @@ namespace YAWK\PLUGINS\BLOG {
         }
     }
 
-        function draw_commentbox($db)
-        {   /** @var $db \YAWK\db */
-            // check if user is logged in
-            if (isset($_SESSION['logged_in']) && ($_SESSION['logged_in'] == true)) {
-                // check if uid and gid is set
-                if (isset($_SESSION['uid']) && (isset($_SESSION['gid']))) {
-                    if (isset($_SESSION['username'])) {
-                        $username = $_SESSION['username'];
-                    } else {
+
+    /**
+     * Draw comments box
+     *
+     * @author Daniel Retzl <danielretzl@gmail.com>
+     * @version 1.0.0
+     * @link http://yawk.io
+     * @param object $db Database Object
+     * @return null
+    */
+    function draw_commentbox($db)
+    {   /** @var $db \YAWK\db */
+        // check if user is logged in
+        if (isset($_SESSION['logged_in']) && ($_SESSION['logged_in'] == true)) {
+            // check if uid and gid is set
+            if (isset($_SESSION['uid']) && (isset($_SESSION['gid']))) {
+                if (isset($_SESSION['username'])) {
+                    $username = $_SESSION['username'];
+                }
+                else
+                    {
                         $username = "";
                     }
-                    $hidden_uid = $_SESSION['uid'];
-                    $hidden_gid = $_SESSION['gid'];
-                    $i = self::countActiveComments($db, $this->blogid, $this->itemid);
-                    $this->html .= "<a class=\"btn btn-info\" id=\"commentsBtn\" role=\"button\" data-toggle=\"collapse\" href=\"#comments" . $this->itemid . "\" aria-expanded=\"false\" aria-controls=\"comments\">
-             <i class=\"fa fa-comments\"></i> &nbsp;Kommentare einblenden <small>(" . $i . ")</small></a>
-             <div class=\"collapse\" id=\"comments\">
-             <h4>Deine Meinung ist gefragt! <small>Gib Deinen Senf dazu :)</small></h4>
-             <div class=\"form-group\">
-                 <input class=\"form-control\" type=\"nameplaceholder\" id=\"nameplaceholder\" disabled title=\"Du bist als $username eingeloggt.\" placeholder=\"$username &nbsp;[Du bist eingeloggt]\">
-                        <textarea class=\"form-control\" id=\"comment\" placeholder=\"Deine Nachricht \" rows=\"3\"></textarea>
-                        <input type=\"button\" class=\"btn btn-success\" id=\"submit_post\" name=\"save_comment\" value=\"absenden\" style=\"\">
-                          <input type=\"hidden\" id=\"uid\" name=\"uid\" value=\"" . $hidden_uid . "\">
-                          <input type=\"hidden\" id=\"gid\" name=\"gid\" value=\"" . $hidden_gid . "\">
-                          <input type=\"hidden\" id=\"itemid\" name=\"itemid\" value=\"" . $this->itemid . "\">
-                          <input type=\"hidden\" id=\"blogid\" name=\"blogid\" value=\"" . $this->blogid . "\">
-                          <input type=\"hidden\" id=\"name\" name=\"name\" value=\"$username\">
-             </div>";
-                } // session uid or gid is empty, user is not logged in correctly
-                else {
+                $hidden_uid = $_SESSION['uid'];
+                $hidden_gid = $_SESSION['gid'];
+                $i = self::countActiveComments($db, $this->blogid, $this->itemid);
+                $this->html .= "<a class=\"btn btn-info\" id=\"commentsBtn\" role=\"button\" data-toggle=\"collapse\" href=\"#comments" . $this->itemid . "\" aria-expanded=\"false\" aria-controls=\"comments\">
+                <i class=\"fa fa-comments\"></i> &nbsp;Kommentare einblenden <small>(" . $i . ")</small></a>
+                <div class=\"collapse\" id=\"comments\">
+                <h4>Deine Meinung ist gefragt! <small>Gib Deinen Senf dazu :)</small></h4>
+                <div class=\"form-group\">
+                    <input class=\"form-control\" type=\"nameplaceholder\" id=\"nameplaceholder\" disabled title=\"Du bist als $username eingeloggt.\" placeholder=\"$username &nbsp;[Du bist eingeloggt]\">
+                    <textarea class=\"form-control\" id=\"comment\" placeholder=\"Deine Nachricht \" rows=\"3\"></textarea>
+                    <input type=\"button\" class=\"btn btn-success\" id=\"submit_post\" name=\"save_comment\" value=\"absenden\" style=\"\">
+                    <input type=\"hidden\" id=\"uid\" name=\"uid\" value=\"" . $hidden_uid . "\">
+                    <input type=\"hidden\" id=\"gid\" name=\"gid\" value=\"" . $hidden_gid . "\">
+                    <input type=\"hidden\" id=\"itemid\" name=\"itemid\" value=\"" . $this->itemid . "\">
+                    <input type=\"hidden\" id=\"blogid\" name=\"blogid\" value=\"" . $this->blogid . "\">
+                    <input type=\"hidden\" id=\"name\" name=\"name\" value=\"$username\">
+                </div>";
+            } // session uid or gid is empty, user is not logged in correctly
+            else
+                {
                     echo \YAWK\alert::draw("danger", "Error!", "Cannot detect User Status. Obviously you are not correctly logged-in. Please try to re-login.", "", "4200");
                     exit;
                 }
-            } else { // user is not logged in
-                $hidden_uid = 0;
-                $hidden_gid = 0;
-                $i = self::countActiveComments($db, $this->blogid, $this->itemid);
-                $this->html .= "<a id=\"commentsBtn\" class=\"btn btn-info\" role=\"button\" data-toggle=\"collapse\" href=\"#comments" . $this->itemid . "\" aria-expanded=\"false\" aria-controls=\"comments\">
-        <i class=\"fa fa-comments\"></i> &nbsp;Kommentare einblenden <small>(" . $i . ")</small></a>
-        <div class=\"collapse\" id=\"comments\">
-          <h4>Deine Meinung ist gefragt! <small>Gib Deinen Senf dazu :)</small></h4>
-          <div class=\"form-group\">
+            }
+            else
+                {
+                    // user is not logged in
+                    $hidden_uid = 0;
+                    $hidden_gid = 0;
+                    $i = self::countActiveComments($db, $this->blogid, $this->itemid);
+                    $this->html .= "<a id=\"commentsBtn\" class=\"btn btn-info\" role=\"button\" data-toggle=\"collapse\" href=\"#comments" . $this->itemid . "\" aria-expanded=\"false\" aria-controls=\"comments\">
+                    <i class=\"fa fa-comments\"></i> &nbsp;Kommentare einblenden <small>(" . $i . ")</small></a>
+                    <div class=\"collapse\" id=\"comments\">
+                    <h4>Deine Meinung ist gefragt! <small>Gib Deinen Senf dazu :)</small></h4>
+                    <div class=\"form-group\">
                         <input type=\"text\" name=\"name\" id=\"name\" class=\"form-control\" placeholder=\"Dein Name\">
                         <input type=\"text\" name=\"email\" id=\"email\" class=\"form-control\" placeholder=\"Emailadresse &nbsp;[optional]\">
                         <textarea class=\"form-control\" id=\"comment\" placeholder=\"Deine Nachricht\" rows=\"3\"></textarea>
                         <input type=\"submit\" class=\"btn btn-success\" id=\"submit_post\" name=\"save_comment\" value=\"absenden\" style=\"\">
-                          <input type=\"hidden\" id=\"uid\" name=\"uid\" value=\"" . $hidden_uid . "\">
-                          <input type=\"hidden\" id=\"gid\" name=\"gid\" value=\"" . $hidden_gid . "\">
-                          <input type=\"hidden\" id=\"itemid\" name=\"itemid\" value=\"" . $this->itemid . "\">
-                          <input type=\"hidden\" id=\"blogid\" name=\"blogid\" value=\"" . $this->blogid . "\">
-        </div>";
+                        <input type=\"hidden\" id=\"uid\" name=\"uid\" value=\"" . $hidden_uid . "\">
+                        <input type=\"hidden\" id=\"gid\" name=\"gid\" value=\"" . $hidden_gid . "\">
+                        <input type=\"hidden\" id=\"itemid\" name=\"itemid\" value=\"" . $this->itemid . "\">
+                        <input type=\"hidden\" id=\"blogid\" name=\"blogid\" value=\"" . $this->blogid . "\">
+                    </div>";
             }
             $row = '';
             $this->html .= self::getComments($db, $this->blogid, $this->itemid);
             // $this->html .= self::getComments($this->blogid, $this->itemid);
             $this->html .= "</div>";
+        return null;
         }
 
+        /**
+         * Get Property of any blog item
+         *
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param int $blogid The blog ID to get data from
+         * @param int $itemid The item ID to get data from
+         * @param string $property The property you like to get
+         * @return mixed bool
+         */
         function getItemProperty($db, $blogid, $itemid, $property)
         {
             /** @var $db \YAWK\db $sql */
@@ -1158,6 +1217,17 @@ namespace YAWK\PLUGINS\BLOG {
             return null;
         }
 
+
+        /**
+         * Delete a whole blog, including its contents, all entries, comments and pages.
+         *
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param int $blogid The blog ID to delete
+         * @return bool
+         */
         function delete($db, $blogid)
         {
             /** @var $db \YAWK\db */
@@ -1205,6 +1275,18 @@ namespace YAWK\PLUGINS\BLOG {
             return true;
         }
 
+        /**
+         * Delete any blog item
+         *
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param int $blogid The blog ID to delete
+         * @param int $itemid The item ID to delete
+         * @param int $pageid The page ID to delete
+         * @return bool
+         */
         function deleteItem($db, $blogid, $itemid, $pageid)
         {
             /** @var $db \YAWK\db */
@@ -1241,6 +1323,18 @@ namespace YAWK\PLUGINS\BLOG {
             return true;
         }
 
+        /**
+         * Delete any blog comment
+         *
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param int $blogid The blog ID to delete
+         * @param int $itemid The item ID to delete
+         * @param int $commentidid The page ID to delete
+         * @return bool
+         */
         function deleteComment($db, $blogid, $itemid, $commentid)
         {
             /** @var $db \YAWK\db */
@@ -1252,6 +1346,19 @@ namespace YAWK\PLUGINS\BLOG {
             }
         }
 
+        /**
+         * Create a new blog
+         *
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param string $name The name of the new blog
+         * @param string $description What is this blog all about?
+         * @param int $menuID Menu ID to which an entry will be added
+         * @param string $icon Any font awesome icon to identify the blog e.g fa fa-globe
+         * @return bool
+         */
         function create($db, $name, $description, $menuID, $icon)
         {
             /** @var $db \YAWK\db */
@@ -1307,6 +1414,25 @@ namespace YAWK\PLUGINS\BLOG {
         }
 
 
+        /**
+         * Create a new blog item
+         *
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param int $blogid Blog id to which the entry should be added
+         * @param string $title Title of the new blog
+         * @param string $subtitle SubTitle of the new blog
+         * @param string $teasertext Teaser text as intro with (read more) link afterwards
+         * @param string $blogtext The blog main story text
+         * @param string $date_publish Publishing date in mysql datetime format yyyy-mm-dd 00:00:00
+         * @param string $date_unpublish UnPublishing date in mysql datetime format yyyy-mm-dd 00:00:00
+         * @param string $thumbnail Any preview image. Will be displayed beneath the teasertext.
+         * @param string $youtubeUrl Any YouTube URL to display video if video layout is selected
+         * @param string $weblink Any URL (external Link, related information)
+         * @return bool
+         */
         function createItem($db, $blogid, $title, $subtitle, $published, $teasertext, $blogtext, $date_publish, $date_unpublish, $thumbnail, $youtubeUrl, $weblink)
         {
             /** @var $db \YAWK\db */
@@ -1418,6 +1544,15 @@ namespace YAWK\PLUGINS\BLOG {
             return true;
         }
 
+        /**
+         * Copy a single blog entry
+         *
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @return bool
+         */
         function copyItem($db)
         {
             /** @var $db \YAWK\db */
