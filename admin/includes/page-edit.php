@@ -295,7 +295,7 @@ echo "
                       <label for="datetimepicker2"><?php print $lang['END_PUBLISH']; ?></label>
                   </dt>
                   <dd>
-                      <input type="text" class="form-control" id="datetimepicker2" name="date_unpublish" data-date-format="yyyy-mm-dd hh:mm:ss"maxlength="19" value="<?php print $page->date_unpublish; ?>">
+                      <input type="text" class="form-control" id="datetimepicker2" name="date_unpublish" data-date-format="yyyy-mm-dd hh:mm:ss" maxlength="19" value="<?php print $page->date_unpublish; ?>">
                   </dd>
                   <dt> <!-- ACCESS RIGHTS - gid select field -->
                       <label for="gidselect"> <?php print $lang['PAGE_VISIBLE']; ?></label>
