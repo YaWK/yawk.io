@@ -15,7 +15,7 @@ namespace YAWK {
      * @copyright  2009-2015 Daniel Retzl yawk.goodconnect.net
      * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
      * @version    1.1.3
-     * @link       http://yawk.goodconnect.net/
+     * @link       http://yawk.io
      * @since      File available since Release 0.0.1
      * @annotation The default pages class. Provide all functions to handle static pages.
      */

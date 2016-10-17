@@ -32,23 +32,23 @@
         /* TYPOGRAPHY SETTINGS */
     h1 {
 	   font-family: Oswald;
-        color: #FFFFFF;
+        color: #FF9900;
         font-size: 36px;
 
     }
        h2 {
            font-family: Oswald;
-           color: #05A3FF;
+           color: #99FF00;
            font-size: 30px;
        }
        h3 {
            font-family: Oswald;;
-           color: #FFFFFF;
+           color: #FF00AA;
            font-size: 24px;
        }
        h4 {
            font-family: Oswald;
-           color: #FFFFFF;
+           color: #03A2FF;
            font-size: 18px;
        }
        h5 {

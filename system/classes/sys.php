@@ -15,7 +15,7 @@ namespace YAWK {
      * @copyright  2009-2016 Daniel Retzl yawk.goodconnect.net
      * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
      * @version    1.0.0
-     * @link       http://yawk.goodconnect.net/
+     * @link       http://yawk.io
      * @since      File available since Release 0.0.2
      * @annotation The sys class - handles yawk's system core functions.
      */
