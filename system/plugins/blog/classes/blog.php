@@ -741,8 +741,13 @@ namespace YAWK\PLUGINS\BLOG {
             }
         }
         // convert html special chars
+
+        $this->blogtext = stripslashes(str_replace('\r\n', '', ($this->blogtext)));
+        $this->teasertext = stripslashes(str_replace('\r\n', '', ($this->teasertext)));
         $this->teasertext = \YAWK\sys::encodeChars($this->teasertext);
         $this->blogtext = \YAWK\sys::encodeChars($this->blogtext);
+        $this->blogtext = utf8_encode($this->blogtext);
+        $this->teasertext = utf8_encode($this->teasertext);
         $this->title = htmlentities($this->title);
         $this->subtitle = htmlentities($this->subtitle);
 
