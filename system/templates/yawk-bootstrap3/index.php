@@ -26,18 +26,18 @@ else
  <!-- To ensure proper rendering and touch zooming on phones and tablets -->
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <!-- import meta tags -->
- <meta name="author" content="<?php echo YAWK\settings::getSetting($db, "siteauthor"); ?>" />
- <meta name="keywords" content="<?php echo YAWK\settings::getSetting($db, "globalmetakeywords"); ?>" />
- <meta name="description" content="<?php echo YAWK\settings::getSetting($db, "globalmetatext"); ?>" />
+ <meta name="author" content="<?php echo YAWK\settings::getSetting($db, "siteauthor"); ?>">
+ <meta name="keywords" content="<?php echo YAWK\settings::getSetting($db, "globalmetakeywords"); ?>">
+ <meta name="description" content="<?php echo YAWK\settings::getSetting($db, "globalmetatext"); ?>">
  <meta charset="utf-8">
  <meta http-equiv="imagetoolbar" content="no">
- <meta name="google-site-verification" content="x557vK7Psu-reaTe6WOfjYXSKhCxUmfkRiX1sOKlTdA" />
+ <meta name="google-site-verification" content="x557vK7Psu-reaTe6WOfjYXSKhCxUmfkRiX1sOKlTdA">
  <meta http-equiv="X-UA-Compatible" content="IE=edge">
  <!-- apple touch icons -->
- <link rel="apple-touch-icon" sizes="120x120" href="media/images/apple-touch-icon-120x120-precomposed.png" />
- <link rel="apple-touch-icon" sizes="152x152" href="media/images/apple-touch-icon-152x152-precomposed.png" />
+ <link rel="apple-touch-icon" sizes="120x120" href="media/images/apple-touch-icon-120x120-precomposed.png">
+ <link rel="apple-touch-icon" sizes="152x152" href="media/images/apple-touch-icon-152x152-precomposed.png">
     <!-- import font awesome -->
-    <link rel="stylesheet" href="system/engines/font-awesome/css/font-awesome.min.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="system/engines/font-awesome/css/font-awesome.min.css" type="text/css" media="all">
     <!-- import animate.css -->
     <!-- <link rel="stylesheet" href="system/engines/animateCSS/animate.min.css" type="text/css" media="all" /> -->
     <!-- Bootstrap core CSS -->
