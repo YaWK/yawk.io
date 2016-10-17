@@ -28,6 +28,11 @@ if (isset($_POST['save'])) {
     {   // if not, take blogtitle as description
         $_POST['metakeywords'] = "";
     }
+    // check if a teasertext is set
+    if (!isset($_POST['teasertext']) || (empty($_POST['teasertext'])))
+    {   // if not, leave it empty
+        $_POST['teasertext'] = "";
+    }
 
     // quote post vars
     $blog->blogtitle = $db->quote($_POST['blogtitle']);
@@ -49,9 +54,7 @@ if (isset($_POST['save'])) {
 
     // increment sortation variable
     $blog->sort++;
-
-    // tinyMCE \r\n bugfix
-    // $blog->text = stripslashes(str_replace('\r\n', '', ($blog->blogtext)));
+    // Summernot Editor \r\n removal
     if ($blog->save($db))
     {   // throw success notify
         YAWK\alert::draw("success", "Hooray!", "Der Eintrag wurde erfolgreich gespeichert!", "", "800");
@@ -151,37 +154,45 @@ $(editor2).summernote('codeview.deactivate');
 // to do that, the current value of textarea will be read into var text and search/replaced
 // and written back into the textarea. utf-8 encoding/decoding happens in php, before saving into db.
 // get the value of summernote textarea
-var text = $(editor).val();
+    if ( $(editor).length) {    // check if element exists in dom to load editor correctly
+        var text = $(editor).val();
 // search for <img> tags and revert src ../ to set correct path for frontend
-var frontend = text.replace(/<img src=\"..\/media/g,"<img src=\"media");
+        var frontend = text.replace(/<img src=\"..\/media/g,"<img src=\"media");
 // put the new string back into <textarea>
-$(editor).val(frontend); // to make sure that saving works
+        $(editor).val(frontend); // to make sure that saving works
+    }
 
-    // do the same thing for the 2nd textarea:
-    var text2 = $(editor2).val();
-    // search for <img> tags and revert src ../ to set correct path for frontend
-    var frontend2 = text2.replace(/<img src=\"..\/media/g,"<img src=\"media");
-    // put the new string back into <textarea>
-    $(editor2).val(frontend2); // to make sure that saving works
+    if ( $(editor2).length) {    // check if element exists in dom to load editor correctly
+        // do the same thing for the 2nd textarea:
+        var text2 = $(editor2).val();
+        // search for <img> tags and revert src ../ to set correct path for frontend
+        var frontend2 = text2.replace(/<img src=\"..\/media/g, "<img src=\"media");
+        // put the new string back into <textarea>
+        $(editor2).val(frontend2); // to make sure that saving works
+    }
 });
 
     // BEFORE SUMMERNOTE loads: 3 important lines of code!
     // to display images in backend correctly, we need to change the path of every image.
     // procedure is the same as above (see #savebutton.click)
     // get the value of summernote textarea
-    var text = $(editor).val();
-    // search for <img> tags and update src ../ to get images viewed in summernote
-    var backend = text.replace(/<img src=\"media/g,"<img src=\"../media");
-    // put the new string back into <textarea>
-    $(editor).val(backend); // set new value into textarea
 
-    // do the same thing for the 2nd textarea:
-    var text2 = $(editor2).val();
-    // search for <img> tags and update src ../ to get images viewed in summernote
-    var backend2 = text2.replace(/<img src=\"media/g,"<img src=\"../media");
-    // put the new string back into <textarea>
-    $(editor2).val(backend2); // set new value into textarea
+    if ( $(editor).length) {    // check if element exists in dom to load editor correctly
+        var text = $(editor).val();
+        // search for <img> tags and update src ../ to get images viewed in summernote
+        var backend = text.replace(/<img src=\"media/g, "<img src=\"../media");
+        // put the new string back into <textarea>
+        $(editor).val(backend); // set new value into textarea
+    }
 
+    if ( $(editor2).length) {    // check if element exists in dom to load editor correctly
+        // do the same thing for the 2nd textarea:
+        var text2 = $(editor2).val();
+        // search for <img> tags and update src ../ to get images viewed in summernote
+        var backend2 = text2.replace(/<img src=\"media/g, "<img src=\"../media");
+        // put the new string back into <textarea>
+        $(editor2).val(backend2); // set new value into textarea
+    }
         <?php
         // check if codeview is enabled on default
         if ($editorSettings['editorAutoCodeview'] === "true")
@@ -191,6 +202,10 @@ $(editor).val(frontend); // to make sure that saving works
             echo "$(editor).on('summernote.init', function() {
                 // toggle editor to codeview
                 $(editor).summernote('codeview.toggle');
+            });";
+            echo "$(editor2).on('summernote.init', function() {
+                // toggle editor to codeview
+                $(editor2).summernote('codeview.toggle');
             });";
         }
         ?>
@@ -308,7 +323,6 @@ $(editor).val(frontend); // to make sure that saving works
 }); // end document ready
         </script>
 
-
 <!-- bootstrap date-timepicker -->
 <link type="text/css" href="../system/engines/datetimepicker/css/datetimepicker.min.css" rel="stylesheet"/>
 <script type="text/javascript" src="../system/engines/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
@@ -330,6 +344,7 @@ $(editor).val(frontend); // to make sure that saving works
 <?php
 $blog->icon = $blog->getBlogProperty($db, $blog->blogid, "icon");
 $blog->name = $blog->getBlogProperty($db, $blog->blogid, "name");
+$blog->layout = $blog->getBlogProperty($db, $blog->blogid, "layout");
 /* draw Title on top */
 
 ?>
@@ -347,20 +362,16 @@ $blog->name = $blog->getBlogProperty($db, $blog->blogid, "name");
                name="blogtitle"
                value="<?php print $blog->blogtitle; ?>">
         <br>
-    <!-- EDITOR -->
-    <?php if ($blog->layout !== "3")
+    <?php if ($blog->layout !== "0")
     {
         echo "
+        <!-- EDITOR -->
         <label for=\"summernote\">Teaser Text</label>
         <textarea
             id=\"summernote\"
             class=\"form-control\"
             style=\"margin-top:10px;\"
-            name=\"teasertext\"
-            cols=\"50\"
-            rows=\"18\">
-            $blog->teasertext
-        </textarea>";
+            name=\"teasertext\">$blog->teasertext</textarea>";
     }
         ?>
     <!-- EDITOR -->
@@ -371,9 +382,7 @@ $blog->name = $blog->getBlogProperty($db, $blog->blogid, "name");
         style="margin-top:10px;"
         name="blogtext"
         cols="50"
-        rows="18">
-        <?php print $blog->blogtext; ?>
-    </textarea>
+        rows="18"><?php print $blog->blogtext; ?></textarea>
     </div> <!-- end left col -->
 
     <div class="col-md-3">
@@ -576,7 +585,7 @@ $blog->name = $blog->getBlogProperty($db, $blog->blogid, "name");
                 <!-- /.box-header -->
                 <div class="box-body" style="display: block;">
                     <!-- SUB MENU SELECTOR -->
-                    <label for="menu">SubMen&uuml;
+                    <label for="menu">SubMen&uuml;</label>
                         <select name="menu" class="form-control">
                             <option value="<?php print \YAWK\sys::getSubMenu($db, $page->id); ?>"><?php print \YAWK\sys::getMenuItem($db, $page->id); ?></option>
                             <option value="0">-- Kein Men&uuml; --</option>
