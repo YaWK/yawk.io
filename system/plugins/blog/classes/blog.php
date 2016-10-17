@@ -85,6 +85,8 @@ namespace YAWK\PLUGINS\BLOG {
         public $voting;
         public $youtubeUrl;
         public $weblink;
+        public $metakeywords;
+        public $metadescription;
 
 
         /**
@@ -744,13 +746,35 @@ namespace YAWK\PLUGINS\BLOG {
         $this->title = htmlentities($this->title);
         $this->subtitle = htmlentities($this->subtitle);
 
+        // UPDATE PAGES TABLE
         if ($res = $db->query("UPDATE {pages} SET
             alias = '" . $this->filename . "',
             title = '" . $this->blogtitle . "'
             WHERE id = '" . $this->pageid . "'"))
         {
+            // UPDATE LOCAL META KEYWORDS
+            if (!$db->query("UPDATE {meta_local} SET
+                    name = 'keywords',
+                    content = '" . $this->metakeywords . "'
+                    WHERE page = '" . $this->pageid . "'
+                    AND name = 'keywords'"))
+            {   // could not insert, throw alert
+                \YAWK\alert::draw("warning", "Failed to update keywords.", "Keywords could not be saved.", "", 5800);
+            }
+
+            // UPDATE LOCAL META DESCRIPTION
+            if (!$db->query("UPDATE {meta_local} SET
+                    content = '" . $this->metadescription . "'
+                    WHERE page = '" . $this->pageid . "'
+                    AND name = 'description' "))
+            {   // could not insert, throw alert
+                \YAWK\alert::draw("warning", "Failed to update meta description.", "Meta description could not be saved.", "", 5800);
+            }
+
+            // UPDATE BLOG ENTRY ITSELF
             if ($res = $db->query("UPDATE {blog_items} SET
                     published = '" . $this->published . "',
+                    itemgid = '" . $this->itemgid . "',
                     sort = '" . $this->sort . "',
                     title = '" . $this->blogtitle . "',
                     filename = '" . $this->filename . "',
