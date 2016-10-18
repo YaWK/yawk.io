@@ -30,8 +30,8 @@ if (isset($_POST['save'])) {
     }
     // check if a teasertext is set
     if (!isset($_POST['teasertext']) || (empty($_POST['teasertext'])))
-    {   // if not, leave it empty
-        $_POST['teasertext'] = "";
+    {   // if not, leave old teasertext (hidden post field)
+        $_POST['teasertext'] = $_POST['oldteasertext'];
     }
 
     // quote post vars
@@ -611,9 +611,10 @@ $blog->layout = $blog->getBlogProperty($db, $blog->blogid, "layout");
         <!-- /. ADDITIONAL BOXES-->
 
     <!-- HIDDEN FIELDS -->
-    <input type="hidden" name="blogid" value="<?php print $blog->blogid; ?>"/>
-    <input type="hidden" name="itemid" value="<?php print $blog->itemid; ?>"/>
-    <input type="hidden" name="pageid" value="<?php print $blog->pageid; ?>"/>
+    <input type="hidden" name="blogid" value="<?php print $blog->blogid; ?>">
+    <input type="hidden" name="itemid" value="<?php print $blog->itemid; ?>">
+    <input type="hidden" name="pageid" value="<?php print $blog->pageid; ?>">
+    <input type="hidden" name="oldteasertext" value="<?php print $blog->teasertext; ?>">
 
     </div>
 </div>
