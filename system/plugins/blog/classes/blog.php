@@ -87,6 +87,8 @@ namespace YAWK\PLUGINS\BLOG {
         public $weblink;
         public $metakeywords;
         public $metadescription;
+        public $itemlayout;
+        public $itemcomments;
 
 
         /**
@@ -341,11 +343,20 @@ namespace YAWK\PLUGINS\BLOG {
                 $this->weblink = $row['weblink'];
                 $this->voteUp = $row['voteUp'];
                 $this->voteDown = $row['voteDown'];
+                $this->itemlayout = $row['itemlayout'];
+                $this->itemcomments = $row['itemcomments'];
                 // settings for blog_item are set,
                 // now get properties of that BLOG (general blog settings)
                 $this->permaLink = $this->getBlogProperty($db, $this->blogid, "permaLink");
                 $this->layout = $this->getBlogProperty($db, $this->blogid, "layout");
                 $this->comments = $this->getBlogProperty($db, $this->blogid, "comments");
+
+                // override blog layout, if item layout differ from global blog settings
+                if ($this->itemlayout !== "-1")
+                {   // global layout differs from itemlayout,
+                    // obviously we need to override the layout w item settings:
+                    $this->layout = $this->itemlayout;
+                }
 
 
                 if ($frontendShowDate === '1') {   // show date of this entry
@@ -679,6 +690,8 @@ namespace YAWK\PLUGINS\BLOG {
                 $this->thumbnail = $row['thumbnail'];
                 $this->youtubeUrl = $row['youtubeUrl'];
                 $this->weblink = $row['weblink'];
+                $this->itemlayout = $row['itemlayout'];
+                $this->itemcomments = $row['itemcomments'];
             }
             else
             {   // fetch failed
@@ -791,7 +804,9 @@ namespace YAWK\PLUGINS\BLOG {
                     blogtext = '" . $this->blogtext . "',
                     thumbnail = '" . $this->thumbnail . "',
                     youtubeUrl = '" . $this->youtubeUrl . "',
-                    weblink = '" . $this->weblink . "'
+                    weblink = '" . $this->weblink . "',
+                    itemlayout = '" . $this->itemlayout . "',
+                    itemcomments = '" . $this->itemcomments . "'
                     WHERE id = '" . $this->itemid . "'
                     AND blogid = '" . $this->blogid . "'"))
             {   // success

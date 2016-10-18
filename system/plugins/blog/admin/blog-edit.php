@@ -51,9 +51,9 @@ if (isset($_POST['save'])) {
     $blog->youtubeUrl = $db->quote($_POST['youtubeUrl']);
     $blog->metakeywords = $db->quote($_POST['metakeywords']);
     $blog->metadescription = $db->quote($_POST['metadescription']);
+    $blog->itemlayout = $db->quote($_POST['itemlayout']);
+    $blog->itemcomments = $db->quote($_POST['itemcomments']);
 
-    // increment sortation variable
-    $blog->sort++;
     // Summernot Editor \r\n removal
     if ($blog->save($db))
     {   // throw success notify
@@ -607,6 +607,61 @@ $blog->layout = $blog->getBlogProperty($db, $blog->blogid, "layout");
                 </div>
                 <!-- /.box-body -->
             </div>
+
+
+        <!-- blog thumbnail -->
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title"><i class="fa fa-object-ungroup"></i>&nbsp;&nbsp;Layout <small>und Kommentare</small></h3>
+                <!-- box-tools -->
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                </div>
+                <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body" style="display: block;">
+                <!-- LAYOUT -->
+                <label for="itemlayout"><?php print $lang['LAYOUT']; ?>:&nbsp;</label><br>
+                <select name="itemlayout" id="itemlayout" class="form-control"><?php
+                    $layoutOptions = '';
+                    $currentLayout = '';
+                    $layouts = array(
+                        "-1" => "Blog Vorgabe",
+                        "0" => "1 spaltig, Textblog",
+                        "1" => "2 spaltig, Vorschaubild links",
+                        "2" => "2 spaltig, Vorschaubild rechts",
+                        "3" => "3 spaltig, Newspaper Layout",
+                        "4" => "1 spaltig, YouTube Blog Layout");
+                    foreach ($layouts as $id => $layout)
+                    {
+                        if ($blog->itemlayout == $id)
+                        {
+                            $currentLayout = "
+                    <option value=\"$blog->layout\">$layout</option>";
+                        }
+                        else
+                            {
+                                $layoutOptions .= "
+                    <option value=\"$id\">$layout</option>";
+                            }
+                    }
+                    // load option w current value
+                    echo $currentLayout.$layoutOptions;
+                    ?>
+
+                </select>
+                <label for="itemcomments"><i class="fa fa-comment-o"></i> &nbsp;<?php print $lang['COMMENTS']; ?>:&nbsp;</label><br>
+                <!-- YouTube Link -->
+                <select name="itemcomments" id="itemcomments" class="form-control">
+                    <option value="-1">Blog Vorgabe</option>
+                    <option value="1">Kommentare erlaubt</option>
+                    <option value="0">Kommentare verboten</option>
+                </select>
+            </div>
+            <!-- /.box-body -->
+        </div>
 
         <!-- /. ADDITIONAL BOXES-->
 
