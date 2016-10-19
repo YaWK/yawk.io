@@ -458,7 +458,7 @@ namespace YAWK\PLUGINS\BLOG {
                     }
 
                     if ($this->layout === '1') {   // LAYOUT 1 = 2 cols, left thumbnail
-                        if (!empty($this->thumbnail)) $imgHtml = "<img src=\"" . $this->thumbnail . "\" class=\"img-thumbnail img-lefty-less protected\">"; else $imgHtml = '';
+                        if (!empty($this->thumbnail)) $imgHtml = "<br><img src=\"" . $this->thumbnail . "\" class=\"img-thumbnail img-lefty-less protected\">"; else $imgHtml = '';
                         $this->html .= "
                         <div class=\"row\">
                             <div class=\"col-md-4 text-center\">
@@ -482,10 +482,10 @@ namespace YAWK\PLUGINS\BLOG {
                     }
 
                     if ($this->layout === '2') {   // LAYOUT 2 = 2 cols, right thumbnail
-                        if (!empty($this->thumbnail)) $imgHtml = "<img src=\"" . $this->thumbnail . "\" class=\"thumbnail img-responsive\">"; else $imgHtml = '';
+                        if (!empty($this->thumbnail)) $imgHtml = "<br><img src=\"" . $this->thumbnail . "\" class=\"img-thumbnail img-righty-less protected\">"; else $imgHtml = '';
                         $this->html .= "
                     <div class=\"row\">
-                      <div class=\"col-xs-12 col-md-8\">
+                      <div class=\"col-xs-12 col-md-8 text-right\">
                       <small class=\"pull-right\"><i>$this->permaLink$prettydate $author</i></small>
                        <h2>$this->title&nbsp;<small>$this->subtitle</small></h2>$this->teasertext" . $blogtextHtml . "";
                         // are comments enabled?
@@ -755,12 +755,14 @@ namespace YAWK\PLUGINS\BLOG {
         }
         // convert html special chars
 
-        $this->blogtext = stripslashes(str_replace('\r\n', '', ($this->blogtext)));
-        $this->teasertext = stripslashes(str_replace('\r\n', '', ($this->teasertext)));
+        $this->blogtext = utf8_encode($this->blogtext);
+        $this->blogtext = utf8_decode($this->blogtext);
+        $this->teasertext = utf8_encode($this->teasertext);
+        $this->teasertext = utf8_decode($this->teasertext);
+        $this->blogtext = stripslashes(str_replace('\r\n','', ($this->blogtext)));
+        $this->teasertext = stripslashes(str_replace('\r\n','', ($this->teasertext)));
         $this->teasertext = \YAWK\sys::encodeChars($this->teasertext);
         $this->blogtext = \YAWK\sys::encodeChars($this->blogtext);
-        $this->blogtext = utf8_encode($this->blogtext);
-        $this->teasertext = utf8_encode($this->teasertext);
         $this->title = htmlentities($this->title);
         $this->subtitle = htmlentities($this->subtitle);
 
