@@ -15,6 +15,34 @@ $blog->name = $blog->getBlogProperty($db, $blog->id, "name");
 $blog->icon = $blog->getBlogProperty($db, $blog->id, "icon");
 $blog->comments = $blog->getBlogProperty($db, $blog->id, "comments");
 
+// TOGGLE ITEM
+if (isset($_GET['toggle']))
+{
+    $published = $db->quote($_GET['published']);
+    $blogid = $db->quote($_GET['blogid']);
+
+// check status and toggle it
+    if ($published === '1') {
+        $published = 0;
+        $status = "offline";
+        $color = "danger";
+    } else {
+        $published = 1;
+        $status = "online";
+        $color = "success";
+    }
+
+    if ($blog->toggleItemOffline($db, $blogid, $published))
+    {   //
+        print \YAWK\alert::draw($color, "Page is now $status", "Toggle page status successful.", "", 800);
+    }
+    else
+    {
+        print \YAWK\alert::draw("danger", "Error", "Could not toggle status of this page.", "", 6800);
+    }
+
+}
+
 // COPY ENTRY
 if (isset($_GET['copy']))
 {
@@ -194,7 +222,7 @@ echo "
             // draw table and badges
             echo "<tr>
                     <td class=\"text-center\">
-                    <a href=\"index.php?plugin=blog&pluginpage=blog-toggleitem&published=" . $row['published'] . "&blogid=" . $blog->id . "&id=" . $row['id'] . "\">
+                    <a href=\"index.php?plugin=blog&pluginpage=blog-entries&toggle=1&published=" . $row['published'] . "&blogid=" . $blog->id . "&id=" . $row['id'] . "\">
                     <span class=\"label label-$pub\">$pubtext</span></a>&nbsp;</td>
                     <td class=\"text-center\">" . $row['id'] . "</td>
                     <td><a href=\"index.php?plugin=blog&pluginpage=blog-edit&itemid=" . $row['id'] . "&blogid=" . $blog->id . "\"><div style=\"width:100%\">" . $row['title'] . "</div></a></td>
