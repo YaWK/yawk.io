@@ -196,12 +196,12 @@ namespace YAWK {
                 }
 
                 // prepare files
-                $file = "../content/articles/" . $alias_old . ".php";
-                $newfile = "../content/articles/" . $alias . ".php";
+                $file = "../content/pages/" . $alias_old . ".php";
+                $newfile = "../content/pages/" . $alias . ".php";
                 // copy file
                 if (!copy($file, $newfile) && !chmod($filename, 0777))
                 {
-                    print \YAWK\alert::draw("danger", "Error!", "File could not be copied. permissions of /content/articles !", "", "");
+                    print \YAWK\alert::draw("danger", "Error!", "File could not be copied. permissions of /content/pages !", "", "");
                 }
 
                 // ## selectmenuID from menu db
@@ -283,7 +283,7 @@ namespace YAWK {
                 \YAWK\alert::draw("warning", "Warning:", "could not delete local meta tags from database", "pages", "4300");
             }
             // build path + filename
-            $filename = "../content/articles/" . $this->alias . ".php";
+            $filename = "../content/pages/" . $this->alias . ".php";
             if (file_exists($filename)) {
                 if (!unlink($filename)) {
                     \YAWK\alert::draw("danger", "Error:", "could not delete file from /content/ folder", "pages", "4300");
@@ -472,7 +472,7 @@ namespace YAWK {
             }
 
             // create file
-            $filename = "../content/articles/" . $alias . ".php";
+            $filename = "../content/pages/" . $alias . ".php";
             if (!file_exists($filename)) {
                 $handle = fopen($filename, "wr");
                 $res = fwrite($handle, $content);
@@ -498,8 +498,8 @@ namespace YAWK {
 
             // rename file
             $oldAlias = substr($this->searchstring, 0, -5);  // remove last 5 chars (.html) to get the plain filename
-            $oldFilename = "../content/articles/" . $oldAlias . ".php";
-            $newFilename = "../content/articles/" . $this->alias . ".php";
+            $oldFilename = "../content/pages/" . $oldAlias . ".php";
+            $newFilename = "../content/pages/" . $this->alias . ".php";
             if (file_exists($oldFilename)) {
                 // try to rename the new file
                 if (!rename($oldFilename, $newFilename))
@@ -563,7 +563,7 @@ namespace YAWK {
         function deleteContent($dirprefix)
         {
             global $dirprefix;
-            $filename = $dirprefix . "../content/articles/" . $this->alias . ".php";
+            $filename = $dirprefix . "../content/pages/" . $this->alias . ".php";
             if (file_exists($filename)) {
                 unlink($filename);
             }
@@ -580,7 +580,7 @@ namespace YAWK {
             $ersetze = array("ae", "ue", "oe", "ae", "ue", "oe", "ss"); // array of replacement chars
             $alias = preg_replace($umlaute, $ersetze, $alias);        // replace with preg
             $alias = preg_replace("/[^a-z0-9\-\/]/i", "", $alias); // final check: just numbers and chars are allowed
-            $filename = $dirprefix . "content/articles/" . $alias . ".php";
+            $filename = $dirprefix . "content/pages/" . $alias . ".php";
             $handle = fopen($filename, "w+");
             $res = fwrite($handle, $content);
             fclose($handle);
@@ -590,7 +590,7 @@ namespace YAWK {
 
         function readContent($dirpraefix)
         {
-            $filename = $dirpraefix . "content/articles/" . $this->alias . ".php";
+            $filename = $dirpraefix . "content/pages/" . $this->alias . ".php";
             $handle = @fopen($filename, "rw");
             $content = @fread($handle, filesize($filename));
             fclose($handle);
@@ -748,7 +748,7 @@ namespace YAWK {
                     }
                     exit;
                 }
-                return include(\YAWK\controller::filterfilename("content/articles/" . $this->alias));
+                return include(\YAWK\controller::filterfilename("content/pages/" . $this->alias));
             }
         }
 

@@ -1,1 +1,0 @@
-<?php include 'system/plugins/signup/signup.php'; ?>

@@ -138,7 +138,7 @@ namespace YAWK {
 
         static function createPluginPage($db, $alias, $plugin)
         {   /** @var $db \YAWK\db */
-            if (!file_exists("../content/articles/$alias.php"))
+            if (!file_exists("../content/pages/$alias.php"))
             {   // frontend plugin file not found
                 if (!isset($page))
                 {   // check if page obj exists

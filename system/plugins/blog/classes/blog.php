@@ -5,10 +5,10 @@ namespace YAWK\PLUGINS\BLOG {
      *
      * The Blog Plugin is very useful if you want to build anything that is or acts actually like
      * blog. A bunch of pre-defined layouts are there to help you building a clean view to make
-     * your articles good looking. A Blog got a title, subtitle, teaser text, longer text, an image
+     * your pages good looking. A Blog got a title, subtitle, teaser text, longer text, an image
      * according left or right to the teaser text. It comes with a nice built in ajax-powered comment
      * feature. You can create many different blogs and much more entries. It is perfect to build up
-     * a dynamic website. Blogs, articles, user comments and blog settings can be comfortably managed in
+     * a dynamic website. Blogs, pages, user comments and blog settings can be comfortably managed in
      * a beautiful Backend. It is part of YaWK and integrates seamless.<br><br>
      * There are four major layouts:<ul>
      * <li>1 col, default text blog</li>
@@ -732,8 +732,8 @@ namespace YAWK\PLUGINS\BLOG {
         $res = $db->query("SELECT alias FROM {pages} WHERE id = '" . $this->pageid . "'");
         $row = mysqli_fetch_row($res);
         $alias_old = $row[0];
-        $filename_old = "../content/articles/" . $alias_old . ".php";
-        $filename = "../content/articles/" . $this->filename . ".php";
+        $filename_old = "../content/pages/" . $alias_old . ".php";
+        $filename = "../content/pages/" . $this->filename . ".php";
         // set content of the plugin file
         $content = "<?php \$blog_id = $this->blogid; \$item_id = $this->itemid; \$full_view = 1; include 'system/plugins/blog/blog.php'; ?>";
         if (file_exists($filename_old)) {
@@ -1282,7 +1282,7 @@ namespace YAWK\PLUGINS\BLOG {
                 while ($row = mysqli_fetch_row($res)) {
                     // unlink file
                     $alias = $row[0];
-                    $filename = "../content/articles/" . $alias . ".php";
+                    $filename = "../content/pages/" . $alias . ".php";
                     if (file_exists($filename)) {   // delete file
                         if (unlink($filename)) {
                             \YAWK\alert::draw("success", "Success!", "Blog file $filename deleted.", "", 2800);
@@ -1341,7 +1341,7 @@ namespace YAWK\PLUGINS\BLOG {
                     $alias = $row['alias'];
                     // remove page data from db
                     if ($res = $db->query("DELETE FROM {pages} WHERE id = '" . $pageid . "'")) {   // build filename to delete
-                        $filename = "../content/articles/" . $alias . ".php";
+                        $filename = "../content/pages/" . $alias . ".php";
                         if (file_exists($filename)) {   // delete file
                             unlink($filename);
                             if ($res = $db->query("DELETE FROM {blog_items} WHERE blogid = '" . $blogid . "' AND id = '" . $itemid . "'")) {   // blog item deleted from database
@@ -1570,7 +1570,7 @@ namespace YAWK\PLUGINS\BLOG {
                         // define content of file
                         $content = "<?php \$blog_id = $blogid; \$item_id = $id; \$full_view = 1; include 'system/plugins/blog/blog.php'; ?>";
                         // prepare file
-                        $filename = "../content/articles/" . $alias . ".php";
+                        $filename = "../content/pages/" . $alias . ".php";
                         if (!file_exists($filename)) {   // create file if not exist
                             $handle = fopen($filename, "wr");
                             $res = fwrite($handle, $content);
@@ -1683,7 +1683,7 @@ namespace YAWK\PLUGINS\BLOG {
                     // prepare loading page content
                     $content = "<?php \$blog_id = $this->blogid; \$item_id = $id; \$full_view = 1; include 'system/plugins/blog/blog.php'; ?>";
                     // prepare file
-                    $filename = "../content/articles/" . $alias . ".php";
+                    $filename = "../content/pages/" . $alias . ".php";
                     $handle = fopen($filename, "wr");
                     if (fwrite($handle, $content))
                     {   // create file
