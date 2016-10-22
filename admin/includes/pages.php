@@ -1,17 +1,45 @@
 <?php
+// CHECK PAGE OBJECT
+if (!isset($page)) // if no page object is set
+{   // create new page object
+    $page = new YAWK\page();
+}
+
 // TOGGLE PAGE
 if (isset($_GET['toggle']) && ($_GET['toggle'] === "1"))
-{
+{   // check if vars are set
     if (isset($_GET['id']) && isset($_GET['published']) && isset($_GET['title']))
-    {   // check if page object exists,
-        if (!isset($page))
-        {   // if not, create new object
-            $page = new \YAWK\page();
-        }
-        // finally: toggle that damn page
+    {   // toggle page
         if(!$page->toggleOffline($db, $_GET['id'], $_GET['published'], $_GET['title']))
         {   // all good, notify msg
             \YAWK\alert::draw("danger", "Could not toggle page item!", "Please try again.", "", 5800);
+        }
+    }
+}
+
+// LOCK PAGE
+if (isset($_GET['lock']) && ($_GET['lock']) === "1")
+{
+    // check if vars are set
+    if (isset($_GET['id']) && (isset($_GET['locked'])))
+    {
+        // escape vars
+        $id = $db->quote($_GET['id']);
+        $locked = $db->quote($_GET['locked']);
+
+        if ($locked === '1') { $setLock = 0; $status = "unlocked"; $color="success"; }
+        if ($locked === '0') { $setLock = 1; $status = "locked"; $color="danger"; }
+        else { $setLock = 0; }
+
+        // execute page lock
+        if ($page->toggleLock($db, $id, $setLock))
+        {
+            // successful, throw notification
+            \YAWK\alert::draw("$color", "Page is $status", "Page $status successfully.", "",800);
+        }
+        else
+        {   // throw error msg
+            \YAWK\alert::draw("danger", "Error", "Could not toggle page lock.","page=pages", 4300);
         }
     }
 }
@@ -21,21 +49,20 @@ if (isset($_GET['del']) && ($_GET['del'] === "1"))
 {
     if (isset($_GET['delete']) && ($_GET['delete'] == "true")){
         // if page obj != set
-        if (!isset($page))
-        {   // create new page object
-            $page = new YAWK\page();
+        if (isset($_GET['alias']))
+        {   // quote alias and load properties
             $_GET['alias'] = $db->quote($_GET['alias']);
             $page->loadProperties($db, $_GET['alias']);
         }
         // ok, delete page
         if ($page->delete($db))
         {   // success
-            \YAWK\alert::draw("success", "Erfolg!", "Die Seite " . $_GET['alias'] . " wurde gel&ouml;scht!",""," 800");
+            \YAWK\alert::draw("success", "Erfolg!", "Die Seite " . $_GET['alias'] . " wurde gel&ouml;scht!","", 800);
            // \YAWK\backend::setTimeout("index.php?page=pages",1260);
         }
         else
         {   // failed
-            \YAWK\alert::draw("danger", "Error!", "Die Seite " . $_GET['alias'] . " konnte nicht gel&ouml;scht werden!", "","6800");
+            \YAWK\alert::draw("danger", "Error!", "Die Seite " . $_GET['alias'] . " konnte nicht gel&ouml;scht werden!", "", 6800);
         }
     }
 }
@@ -45,12 +72,7 @@ if (isset($_GET['copy']) && ($_GET['copy'] === "true"))
 {
     // check if vars are set
     if (isset($_GET['alias']))
-    {   // if page object is not set
-        if (!isset($page))
-        {   // generate new page object
-            $page = new YAWK\page();
-        }
-        // escape vars
+    {   // escape vars
         $_GET['alias'] = $db->quote($_GET['alias']);
         // load properties for given page
         $page->loadProperties($db, $_GET['alias']);
@@ -158,21 +180,24 @@ $i_pages_unpublished = 0;
             }
         }
 
-        if ($row['locked'] !== '0') {
+        if ($row['locked'] !== '0')
+        {   // PAGE IS LOCKED
             $lockIcon = "<i class=\"fa fa-lock\"></i>";
             $lockHover = "style=\"cursor:not-allowed;\"";
             $lockHref = "href=\"#\"";
-            $lockLink = "href=\"index.php?page=page-lock&id=".$row['id']."&locked=".$row['locked']."\"";
+            $lockLink = "href=\"index.php?page=pages&lock=1&id=".$row['id']."&locked=".$row['locked']."\"";
             $lockTitle = "title=\"".$lang['PAGE_UNLOCK']."\"";
             $lockLinkTitle = "title=\"".$lang['PAGE_LOCKED']."\"";
             $lockAction = "<a class=\"fa fa-unlock-alt\" ".$lockTitle." ".$lockLink."></a>&nbsp;";
-            $lockEditLink = "href=\"index.php?page=page-lock&id=".$row['id']."&locked=".$row['locked']."\"";
+            $lockEditLink = "href=\"index.php?page=pages&lock=1&id=".$row['id']."&locked=".$row['locked']."\"";
             $lockDeleteLink = "href = \"#\" ".$lockHover." ";
             $lockCopyLink = "".$lockHover." href=\"#\"";
-        } else {
+        }
+        else
+        {   // PAGE IS NOT LOCKED
             $lockIcon = '';
             $lockHover = '';
-            $lockLink = "href=\"index.php?page=page-lock&id=".$row['id']."&locked=".$row['locked']."\"";
+            $lockLink = "href=\"index.php?page=pages&lock=1&id=".$row['id']."&locked=".$row['locked']."\"";
             $lockHref = "href=\"index.php?page=page-edit&alias=".$row['alias']."&id=".$row['id']."\"";
             $lockTitle = "title=\"".$lang['PAGE_LOCK']."\"";
             $lockLinkTitle = "title=\"".$lang['EDIT']."\"";
