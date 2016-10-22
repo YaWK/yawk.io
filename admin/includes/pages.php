@@ -1,4 +1,21 @@
 <?php
+// TOGGLE PAGE
+if (isset($_GET['toggle']) && ($_GET['toggle'] === "1"))
+{
+    if (isset($_GET['id']) && isset($_GET['published']) && isset($_GET['title']))
+    {   // check if page object exists,
+        if (!isset($page))
+        {   // if not, create new object
+            $page = new \YAWK\page();
+        }
+        // finally: toggle that damn page
+        if(!$page->toggleOffline($db, $_GET['id'], $_GET['published'], $_GET['title']))
+        {   // all good, notify msg
+            \YAWK\alert::draw("danger", "Could not toggle page item!", "Please try again.", "", 5800);
+        }
+    }
+}
+
 // DELETE PAGE
 if (isset($_GET['del']) && ($_GET['del'] === "1"))
 {
@@ -81,10 +98,18 @@ echo "
     /* page content start here */
 ?>
 
-<a class="btn btn-success pull-right" href="index.php?page=page-new">
-<i class="glyphicon glyphicon-plus"></i> &nbsp;<?php print $lang['PAGE+']; ?></a>
 
-<table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-hover" id="table-sort">
+<!--
+<div class="box box-default">
+    <div class="box-body"> -->
+
+<div class="box box-default">
+    <div class="box-body">
+
+        <a class="btn btn-success pull-right" href="index.php?page=page-new">
+            <i class="glyphicon glyphicon-plus"></i> &nbsp;<?php print $lang['PAGE+']; ?></a>
+
+<table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-striped table-hover" id="table-sort">
   <thead>
     <tr>
       <td width="3%"><strong>Status</strong></td>
@@ -159,7 +184,7 @@ $i_pages_unpublished = 0;
 
         echo "<tr>
           <td class=\"text-center\">
-            <a title=\"toggle&nbsp;status\" href=\"index.php?page=page-toggle&id=".$row['id']."&title=".$row['title']."&published=".$row['published']."\">
+            <a title=\"toggle&nbsp;status\" href=\"index.php?page=pages&toggle=1&id=".$row['id']."&title=".$row['title']."&published=".$row['published']."\">
             <span class=\"label label-$pub\">$pubtext</span></a>&nbsp;</td>
           <td>".$lockIcon."</i></td>
           <td>".$row['id']."</td>
@@ -185,31 +210,36 @@ $i_pages_unpublished = 0;
 
 <!-- End of Page --> 
 <br>
+
+
+    </div>
+</div>
+
 <!-- Start FOOTER -->
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title"><i class="glyphicon glyphicon-stats"></i> &nbsp;<?PHP print $lang['PAGE_STATS']; ?></h3>
-  </div>
-  <div class="panel-body">
-  <?PHP  $page = $lang['PAGE'];
-    $pages = $lang['PAGES'];
+<div class="box box-default">
+    <div class="box-header with-border">
+        <h3 class="box-title"><i class="glyphicon glyphicon-stats"></i> &nbsp;<?PHP print $lang['PAGE_STATS']; ?></h3>
+    </div>
+    <div class="box-body">
+        <?PHP  $page = $lang['PAGE'];
+        $pages = $lang['PAGES'];
 
-    if ($i_pages > 1) { $seiten="$i_pages $pages $lang[OVERALL]"; }
-    else if ($i_pages = 1) { $seiten="$i_pages $page angelegt"; }
-    else { $seiten = "Es wurde noch keine $page angelegt"; }
+        if ($i_pages > 1) { $seiten="$i_pages $pages $lang[OVERALL]"; }
+        else if ($i_pages = 1) { $seiten="$i_pages $page angelegt"; }
+        else { $seiten = "Es wurde noch keine $page angelegt"; }
 
-    if ($i_pages_published > 1) { $pub="$i_pages_published $pages published"; }
-    else if ($i_pages_published === '1') { $pub="$i_pages_published $page published"; }
-    else { $pub = "Es wurde noch keine $page published"; }
+        if ($i_pages_published > 1) { $pub="$i_pages_published $pages published"; }
+        else if ($i_pages_published === '1') { $pub="$i_pages_published $page published"; }
+        else { $pub = "Es wurde noch keine $page published"; }
 
-    if ($i_pages_unpublished > 1) { $unpub="$i_pages_unpublished $pages sind offline"; }
-    else if ($i_pages_unpublished === '1') { $unpub="$i_pages_unpublished $page ist offline"; }
-    else { $unpub = $lang['PAGES_ONLINE']; }
+        if ($i_pages_unpublished > 1) { $unpub="$i_pages_unpublished $pages sind offline"; }
+        else if ($i_pages_unpublished === '1') { $unpub="$i_pages_unpublished $page ist offline"; }
+        else { $unpub = $lang['PAGES_ONLINE']; }
 
-    // stats on bottom of page
-    echo "$seiten<br>
+        // stats on bottom of page
+        echo "$seiten<br>
           $pub<br>
           $unpub";
-  ?>
-  </div>
+        ?>
+    </div>
 </div>
