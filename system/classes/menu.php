@@ -21,7 +21,9 @@ namespace YAWK {
      */
     class menu
     {
+        public $id;
         public $published;
+        public $parent;
 
         /* CREATE A NEW MENU */
         static function createMenu($db, $name)
@@ -330,7 +332,7 @@ namespace YAWK {
 
                 echo "
     <tr>
-      <td><a href=\"index.php?page=menu-toggle-item&menu=$id&id=$row[id]&published=$row[published]\">
+      <td><a href=\"index.php?page=menu-edit&toggleItem=1&menu=$id&id=$row[id]&published=$row[published]\">
           <span class=\"label label-$pub\">$pubtext</span></a></td>
       <td>
           <input type=\"text\" class=\"form-control\" name=\"" . $row['id'] . "_id\" readonly value=\"" . $row['id'] . "\" size=\"1\" style=\"float:left;\" />
