@@ -54,6 +54,8 @@ if (isset($_GET['del']) && ($_GET['del'] === "1"))
     <!-- Main content -->
     <section class="content">
 <!-- START CONTENT HERE -->
+<div class="box box-default">
+    <div class="box-body">
 
 <a href="index.php?page=menu-new" class="btn btn-success pull-right"><b class="glyphicon glyphicon-plus"></b> <?php print $lang['MENU+']; ?></a>
 <table class="table table-hover" id="table-sort">
@@ -146,3 +148,6 @@ if (isset($_GET['del']) && ($_GET['del'] === "1"))
     ?>
   </tbody>
 </table>
+
+    </div>
+</div>
