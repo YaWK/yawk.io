@@ -3,6 +3,48 @@ if (!isset($user))
 {   // generate new user object
     $user = new YAWK\user();
 }
+// TOGGLE USER
+if (isset($_GET['toggle']) && $_GET['toggle'] === "1")
+{
+    // username is not set
+    if (!isset($user))
+    {   // create new object
+        $user = new YAWK\user();
+    }
+    if (isset($_GET['blocked']))
+    {   // set user obj property
+        $user->blocked = $_GET['blocked'];
+    }
+    if (isset($_GET['uid']))
+    {   // set user id
+        $user->id = $_GET['uid'];
+    }
+    if ($user->blocked === '1')
+    {   // user is not blocked
+        $user->blocked = 0;
+        $color = "success";
+        $status = "un-blocked";
+    }
+    else
+    {   // set user status to blocked
+        $user->blocked = 1;
+        $color = "danger";
+        $status = "blocked";
+    }
+    $user->username = \YAWK\user::getUserNameFromID($db, $user->id);
+
+    // now toggle user status
+    if($user->toggleOffline($db, $user->id, $user->blocked))
+    {   // successful
+        print \YAWK\alert::draw("$color", "$user->username is now $status", "$status $user->username from login.", "", 800);
+    }
+    else
+    {   // throw error
+        print \YAWK\alert::draw("danger", "Error!", "Could not toggle user status.", "page=users", 5800);
+    }
+}
+
+// DELETE USER
 if (isset($_GET['delete']))
 {
     if($_GET['delete'] === "true")
@@ -100,7 +142,7 @@ echo"<ol class=\"breadcrumb\">
 
         echo "<tr>
                 <td class=\"text-center\">
-                  <a title=\"toggle&nbsp;status\" href=\"index.php?page=user-toggle&blocked=".$row['blocked']."&uid=".$row['id']."&user=".$row['username']."\">
+                  <a title=\"toggle&nbsp;status\" href=\"index.php?page=users&toggle=1&blocked=".$row['blocked']."&uid=".$row['id']."&user=".$row['username']."\">
                     <span class=\"label label-$pub\">$pubtext</span></a>&nbsp;
                 </td>
                 <td class=\"text-center\">".$row['id']."</td>
