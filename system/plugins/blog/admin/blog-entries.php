@@ -146,7 +146,7 @@ echo "
 <a class="btn btn-default" href="index.php?plugin=blog" style="float:right;">
     <i class="glyphicon glyphicon-backward"></i> &nbsp;<?php print $lang['BACK']; ?></a>
 
-<table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-hover" id="table-sort">
+<table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-striped table-hover" id="table-sort">
     <thead>
     <tr>
         <td width="3%"><strong>&nbsp;</strong></td>
