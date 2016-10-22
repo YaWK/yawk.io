@@ -132,29 +132,77 @@ if(isset($_POST['add'])) {
     </section>
     <!-- Main content -->
     <section class="content">
-        <!-- START CONTENT HERE -->
+    <!-- START CONTENT HERE -->
+<form role="form" action="index.php?page=menu-edit&menu=<?php echo $_GET['menu']; ?>" method="POST">
+<div class="box box-default">
+    <div class="box-body">
+        <!-- save btn -->
+        <button name="save"
+                id="savebutton"
+                class="btn btn-success pull-right"
+                type="submit"><i class="fa fa-save"></i>&nbsp; <?php echo $lang['MENU_SAVE']; ?>
+        </button>
+        <!-- back btn -->
+        <a class="btn btn-default" href="index.php?page=menus" style="float:right;">
+        <i class="glyphicon glyphicon-backward"></i> &nbsp;<?php print $lang['BACK']; ?></a>
+      <?php
+      // DISPLAY EDITABLE MENU ENTRIES
+      \YAWK\menu::displayEditable($db, $db->quote($_GET['menu']), $lang);
+      ?>
 
-  <form role="form" action="index.php?page=menu-edit&menu=<?php echo $_GET['menu']; ?>" method="POST">
-  <?php
-  // DISPLAY EDITABLE MENU ENTRIES
-  \YAWK\menu::displayEditable($db, $db->quote($_GET['menu']), $lang);
-  ?>
-  <input name="save" id="savebutton" class="btn btn-danger pull-right" type="submit" value="Speichern"/>
-  
-<br><br>
+    <br><br>
 
-<div class="col-md-6">
-      <h4>Eintrag in Men&uuml; <?php print \YAWK\sys::getMenuName($db, $_GET['menu']); ?> hinzuf&uuml;gen</h4>
-      <input type="text" class="form-control" name="newtitle" maxlength="128" placeholder="Title" />
-      <input type="text" class="form-control" name="newurl" maxlength="128" placeholder="http://link or filename e.g. index.html" />
-      <input name="add" id="savebutton3" style="margin-top:5px;" class="btn btn-default pull-right" type="submit" value="Hinzuf&uuml;gen"/>
- </div>
-<!-- 2nd col -->
-<div class="col-md-6">
-      <h4>Men&uuml; Titel &auml;ndern</h4>
-      <input type="text" class="form-control" name="menutitle" maxlength="128" value="<?php print \YAWK\sys::getMenuName($db, $_GET['menu']); ?>">
-      <input name="changetitle" style="margin-top:5px;" id="savebutton2" class="btn btn-default pull-right" type="submit" value="Speichern"/>
+    </div>
 </div>
-<br><br>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box default">
+                <div class="box-header with border">
+                    <h3 class="box-title">Eintrag in Men&uuml; <?php print \YAWK\sys::getMenuName($db, $_GET['menu']); ?> hinzuf&uuml;gen</h3>
+                </div>
+                <div class="box-body">
+                    <input type="text"
+                           id="newtitle"
+                           class="form-control"
+                           name="newtitle"
+                           maxlength="128"
+                           placeholder="Title">
+                    <input type="text"
+                           id="newurl"
+                           class="form-control"
+                           name="newurl"
+                           maxlength="128"
+                           placeholder="http://link or filename e.g. index.html">
+                    <input name="add"
+                           id="savebutton3"
+                           style="margin-top:5px;"
+                           class="btn btn-default pull-right"
+                           type="submit"
+                           value="Hinzuf&uuml;gen">
+                </div>
+            </div>
+         </div>
+        <!-- 2nd col -->
+        <div class="col-md-6">
+            <div class="box default">
+                <div class="box-header with border">
+                    <h3 class="box-title">Men&uuml; Titel &auml;ndern</h3>
+                </div>
+                <div class="box-body">
+                    <input type="text"
+                           class="form-control"
+                           name="menutitle"
+                           maxlength="128"
+                           value="<?php print \YAWK\sys::getMenuName($db, $_GET['menu']); ?>">
+                    <input name="changetitle"
+                           style="margin-top:5px;"
+                           id="savebutton2"
+                           class="btn btn-default pull-right"
+                           type="submit"
+                           value="Speichern">
+                    </div>
+            </div>
+        </div>
+    </div>
 </form>
-</div>
