@@ -50,13 +50,16 @@ echo"<ol class=\"breadcrumb\">
   }
 ?>
 <!-- FORM -->
+<div class="box box-default">
+    <div class="box-body">
+<br>
 <form role="form" class="form-inline" action="index.php?page=page-new" method="post">
-  <label for "alias"><?PHP print $lang['PAGE_ADD_SUBTEXT']; ?><br>
+  <label for "alias"><?PHP print $lang['PAGE_ADD_SUBTEXT']; ?>  </label><br>
   <!-- TEXT FIELD -->
   <input type="text" id="alias" size="84" name="alias" class="form-control" maxlength="255" 
   placeholder="<?PHP print $lang['PAGE_ADD_PLACEHOLDER']; ?>" /> .html
-  </label>
-  <br>
+
+  <br><br>
   <!-- MENU SELECTOR -->
   &nbsp;&nbsp;<?PHP print $lang['IN_MENU']; ?>&nbsp; <select name="menuID" class="btn btn-default">
     <?PHP
@@ -83,3 +86,6 @@ echo"<ol class=\"breadcrumb\">
     <input type="hidden" name="blogid" value="0">
   <input type="hidden" name="locked" value="0">
 </form>
+<br>
+    </div>
+</div>
