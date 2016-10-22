@@ -47,13 +47,54 @@ echo"<ol class=\"breadcrumb\">
         }
   }
 ?>
-<form action="index.php?page=email-new" class="form" method="POST">
-<fieldset style="width:560px;">
-	<label for="email_from">From:</label> <input id="email_from" type="text" class="form-control" name="email_from" size="15" placeholder="from:" value="<?php echo $email_from; ?>" maxlength="64">
-	<label for="email_to">To:</label> <input id="email_to" type="text" class="form-control" name="email_to" size="15" placeholder="to:" value="<?php echo $email_to; ?>" maxlength="64">
-	<label for="email_subject">Subject:</label> <input id="email_subject" type="text" class="form-control" name="email_subject" size="15" placeholder="Subject" maxlength="64">
-	<label for="email_message">Message:</label> <textarea id="email_message" name="email_message" class="form-control" cols="64" rows="15">Message</textarea><br>
-  <input type="submit" name="send" class="btn btn-success pull-right" value="Email&nbsp;an&nbsp;<?php echo $user; ?>&nbsp;senden" />
-</fieldset>
-</form>
+<div class="row">
+    <div class="col-md-6">
+        <div class="box box-default">
+            <div class="box-header"><h3 class="box-title"><?php echo $lang['EMAIL']." ".$lang['EMAILNEW_SUBTEXT']; ?></h3></div>
+            <div class="box-body">
+                <form action="index.php?page=email-new" class="form" method="POST">
+                        <label for="email_from">From:</label>
+                        <input id="email_from"
+                               type="text"
+                               class="form-control"
+                               name="email_from"
+                               size="15"
+                               placeholder="from:"
+                               value="<?php echo $email_from; ?>"
+                               maxlength="64">
 
+                        <label for="email_to">To:</label>
+                        <input id="email_to"
+                               type="text"
+                               class="form-control"
+                               name="email_to"
+                               size="15"
+                               placeholder="to:"
+                               value="<?php echo $email_to; ?>"
+                               maxlength="64">
+                        <label for="email_subject">Subject:</label>
+                        <input id="email_subject"
+                               type="text"
+                               class="form-control"
+                               name="email_subject"
+                               size="15"
+                               placeholder="Subject"
+                               maxlength="64">
+                        <label for="email_message">Message:</label>
+                        <textarea id="email_message"
+                                  name="email_message"
+                                  class="form-control"
+                                  cols="64"
+                                  rows="15">Message
+                        </textarea><br>
+                        <button type="submit"
+                                name="send"
+                                class="btn btn-success pull-right"><i class="fa fa-envelope-o"></i>&nbsp; Email&nbsp;an&nbsp;<?php echo $user; ?>&nbsp;senden</button>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="col-md-6">&nbsp;</div>
+</div>
