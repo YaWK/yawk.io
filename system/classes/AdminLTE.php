@@ -514,7 +514,7 @@ namespace YAWK {
                   <li class=\"user-header\">
                   $currentuser_image
                     <p>
-                      <b><a href=\"index.php?page=user-edit&user=$user->username\" style=\"color:#fff;\">$currentuser</a></b>
+                      <b><a class=\"menuLink\" href=\"index.php?page=user-edit&user=$user->username\">$currentuser</a></b>
                       <small>$currentuser_job</small>
                       <small>$currentuser_group $currentuser_created</small>
                     </p>
@@ -585,7 +585,7 @@ namespace YAWK {
                   $currentuser_image
                 </div>
                 <div class=\"pull-left info\">
-                  <p><a href=\"index.php?page=user-edit&user=$user->username\" style=\"color: #fff;\">$currentuser</a></p>
+                  <p><a href=\"index.php?page=user-edit&user=$user->username\" class=\"menuLink\">$currentuser</a></p>
                   <!-- Status -->
                   <a href=\"index.php?page=userlist\"><i class=\"fa fa-circle text-success\"></i> Online</a>
                 </div>
