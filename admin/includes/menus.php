@@ -1,4 +1,39 @@
 <?php
+// CHECK MENU OBJECT
+if (!isset($menu))
+{   // create new menu object if its not set
+    $menu = new \YAWK\menu();
+}
+// TOGGLE MENU
+if (isset($_GET['toggle']) && ($_GET['toggle'] === "1"))
+{   // prepare vars
+    $menu->id = ($db->quote($_GET['menuid']));
+    $menu->published = $menu->getMenuStatus($db, $menu->id);
+
+    // check status and toggle it
+    if ($menu->published === '1')
+    {   // set status to NOT published
+        $menu->published = 0;
+        $status = "offline";
+        $color = "danger";
+    }
+    else
+    {   // set status to PUBLISHED
+        $menu->published = 1;
+        $status = "online";
+        $color = "success";
+    }
+
+    if($menu->toggleOffline($db, $menu->id, $menu->published))
+    {
+        \YAWK\alert::draw("$color", "Menu is now $status", "Menu Status toggled to $status.", "", 800);
+    }
+    else
+    {
+        print \YAWK\alert::draw("danger", "Error", "Could not toggle menu status to $status.","page=menus","5800");
+    }
+}
+
 // ADD MENU
 /* if user clicked create menu */
 if(isset($_GET['add']) && ($_GET['add'] === "1")){
@@ -125,7 +160,7 @@ if (isset($_GET['del']) && ($_GET['del'] === "1"))
                 }
 
             echo "<tr>
-    <td><a title=\"toggle&nbsp;status\" href=\"index.php?page=menu-toggle&menuid=" . $row['id'] . "\">
+    <td><a title=\"toggle&nbsp;status\" href=\"index.php?page=menus&toggle=1&menuid=" . $row['id'] . "\">
             <span class=\"label label-$pub\">" . $pubtext . "</span></a></td>
     <td>" . $row['id'] . "</td>
     <td>$globalMenuLabel $subMenuLabel</td>
