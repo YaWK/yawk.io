@@ -14,12 +14,32 @@
 <!-- Main content -->
 <section class="content">
 <!-- START CONTENT HERE -->
+<div class="box box-default">
+    <div class="box-header">
+        <h3 class="box-title"><?php echo $lang['MENU_ADD']; ?></h3>
+    </div>
+    <div class="box-body">
+    <form action="index.php?page=menus&add=1" role="form" method="POST">
+        <input name="menu"
+               class="form-control"
+               value="<?php print $id; ?>"
+               type="hidden">
+        <input name="page"
+               class="form-control"
+               value="menu-create"
+               type="hidden">
 
-<form action="index.php?page=menus&add=1" role="form" method="POST">
-  <input name="menu" class="form-control" value="<?php print $id; ?>" type="hidden" />
-  <input name="page" class="form-control" value="menu-create" type="hidden" />
-  <label>W&auml;hle einen aussagekr&auml;ftigen Namen f&uuml;r Dein neues Men&uuml;.
-   <input type="text" class="form-control" placeholder="Men&uuml; Name" id="name" name="name" />
-  </label>
-  <input class="btn btn-success" type="submit" name="create" value="Men&uuml;&nbsp;anlegen" />
-</form>
+        <label>W&auml;hle einen aussagekr&auml;ftigen Namen f&uuml;r Dein neues Men&uuml;.
+        <input type="text"
+               class="form-control"
+               placeholder="Men&uuml; Name"
+               id="name"
+               name="name" />
+        </label>
+        <input class="btn btn-success"
+               type="submit"
+               name="create"
+               value="Men&uuml;&nbsp;anlegen" />
+    </form>
+    </div>
+</div>
