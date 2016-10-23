@@ -23,7 +23,6 @@ echo"<ol class=\"breadcrumb\">
     <section class=\"content\">";
 /* page content start here */
 
-
 // form sent: prepare vars and add into db
 if (isset($_POST['create'])){
     if (isset($_GET['id'])){
@@ -152,6 +151,8 @@ if (isset($_GET['id'])){
     }
 ?>
 
+    <div class="box box-default">
+    <div class="box-body">
     <div class="row">
         <div class="col-md-8">
             <ul class="list-group">
@@ -233,6 +234,8 @@ if (isset($_GET['id'])){
             <a class="btn btn-default" href="index.php?plugin=booking" style="float:right;">
             <i class="glyphicon glyphicon-backward"></i> &nbsp;<?php print $lang['BACK']; ?></a>
         </div>
+    </div>
+    </div>
     </div>
 <?PHP
 }

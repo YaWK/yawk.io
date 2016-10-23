@@ -18,6 +18,8 @@ echo"<ol class=\"breadcrumb\">
 
    if(!isset($_POST['username'])){   ?>
 
+<div class="box box-default">
+    <div class="box-body">
 <!-- ADD USER FORM -->
 <form class="form" action="index.php?page=user-new" method="post">
     <div class="row">
@@ -69,10 +71,10 @@ echo"<ol class=\"breadcrumb\">
     <label for="facebook"><i class="fa fa-facebook"></i> Facebook:</label><input type="text" class="form-control" id="facebook" name="facebook" maxlength="100" placeholder="http://www.facebook.com/username" />
       </div>
     </div>
-   
-       
   </form>
-  
+</div>
+</div>
+
 <?PHP
   }
   else {

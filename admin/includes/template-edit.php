@@ -1183,6 +1183,9 @@ else
     }
 
 ?>
+<div class="box box-default">
+    <div class="box-body">
+
 <form id="template-edit-form" action="index.php?page=template-edit&<?php echo $overrideTemplate; ?>id=<?php echo $template->id; // echo $id; ?>" method="POST">
     <input type="hidden" name="getID" value="<?php echo $getID; ?>">
     <!-- <div class="nav-tabs-custom"> <!-- admin LTE tab style -->
@@ -1361,200 +1364,407 @@ else
             <!-- list GOOGLE FONTS -->
             <div class="row animated fadeIn">
                 <div class="col-md-4">
-                    <h3>H1-H6 <small>Font</small></h3>
-                    <?PHP $template->getgFonts($db, "heading-gfont"); ?>
+                    <div class="box box-default">
+                        <div class="box-header">
+                            <h3 class="box-title">H1-H6 <small>Font</small></h3>
+                        </div>
+                        <div class="box-body">
+                            <?PHP $template->getgFonts($db, "heading-gfont"); ?>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-4">
-                    <h3>Menu <small>Font</small></h3>
-                    <?PHP $template->getgFonts($db, "menu-gfont"); ?>
+                    <div class="box box-default">
+                        <div class="box-header">
+                            <h3 class="box-title">Menu <small>Font</small></h3>
+                        </div>
+                        <div class="box-body">
+                            <?PHP $template->getgFonts($db, "menu-gfont"); ?>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-4">
-                    <h3>Text <small>Font</small></h3>
-                    <?PHP $template->getgFonts($db, "text-gfont"); ?>
+                    <div class="box box-default">
+                        <div class="box-header">
+                            <h3 class="box-title">Text <small>Font</small></h3>
+                        </div>
+                        <div class="box-body">
+                            <?PHP $template->getgFonts($db, "text-gfont"); ?>
+                        </div>
+                    </div>
                 </div>
-            </div>
+                </div>
         </div>
 
         <!-- TYPO -->
         <div role="tabpanel" class="tab-pane" id="typo">
+            <h3>Typography <small>Settings</small></h3>
             <!-- typography styles -->
             <div class="row animated fadeIn">
                 <div class="col-md-4">
-                    <h3>Text <small>Settings</small></h3>
-                    <?PHP  $template->getSetting($db, "body-text-size", "", "", $user); ?>
-                    <?PHP  $template->getSetting($db, "body-text-shadow", "", "", $user); ?>
-                    <?PHP  $template->getSetting($db, "body-text-shadow-color", "", "", $user); ?>
+                    <div class="box box-default">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Global Text <small>Settings</small></h3>
+                        </div>
+                        <div class="box-body">
+                            <?PHP $template->getSetting($db, "body-text-size", "", "", $user); ?>
+                            <?PHP $template->getSetting($db, "body-text-shadow", "", "", $user); ?>
+                            <?PHP $template->getSetting($db, "body-text-shadow-color", "", "", $user); ?>
+                        </div>
+                    </div>
 
-                    <h3>Link <small>Colors </small></h3>
-                    <?PHP $template->getSetting($db, "%-link", "", "", $user); ?>
+                    <div class="box box-default">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Link <small>Colors </small></h3>
+                        </div>
+                        <div class="box-body">
+                            <?PHP $template->getSetting($db, "%-link", "", "", $user); ?>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="col-md-4">
-                    <h3>Heading <small>Font Size</small></h3>
-                    <?PHP $template->getSetting($db, "h1-size", "", "", $user); ?>
-                    <?PHP $template->getSetting($db, "h2-size", "", "", $user); ?>
-                    <?PHP $template->getSetting($db, "h3-size", "", "", $user); ?>
-                    <?PHP $template->getSetting($db, "h4-size", "", "", $user); ?>
-                    <?PHP $template->getSetting($db, "h5-size", "", "", $user); ?>
-                    <?PHP $template->getSetting($db, "h6-size", "", "", $user); ?>
+                    <div class="box box-default">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Heading <small>Font Size</small></h3>
+                        </div>
+                        <div class="box-body">
+                            <?PHP $template->getSetting($db, "h1-size", "", "", $user); ?>
+                            <?PHP $template->getSetting($db, "h2-size", "", "", $user); ?>
+                            <?PHP $template->getSetting($db, "h3-size", "", "", $user); ?>
+                            <?PHP $template->getSetting($db, "h4-size", "", "", $user); ?>
+                            <?PHP $template->getSetting($db, "h5-size", "", "", $user); ?>
+                            <?PHP $template->getSetting($db, "h6-size", "", "", $user); ?>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="col-md-4">
-                    <h3>Heading <small>Colors </small></h3>
-                    <?PHP $template->getSetting($db, "%-fontcolor", "", "", $user); ?>
+                    <div class="box box-default">
+                        <div class="box-header">
+                            <h3 class="box-title">Heading <small>Colors </small></h3>
+                        </div>
+                        <div class="box-body">
+                            <?PHP $template->getSetting($db, "%-fontcolor", "", "", $user); ?>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+         </div>
 
         <!-- BODY-->
         <div role="tabpanel" class="tab-pane" id="body">
+            <h3>Body <small>Global Settings</small></h3>
             <!-- typography styles -->
             <div class="row animated fadeIn">
                 <div class="col-md-4">
-                    <h3>Body <small>Settings</small></h3>
-                    <?PHP
-                    $template->getSetting($db, "body-bg-color", "", "", $user); ?>
-                    <h3>Body <small>Positioning</small></h3>
-                    <?PHP $template->getSetting($db, "body-margin-%", "", "", $user); ?>
+                    <div class="box box-default">
+                        <div class="box-header">
+                            <h3 class="box-title">Body <small>Settings</small></h3>
+                        </div>
+                        <div class="box-body">
+                            <?PHP $template->getSetting($db, "body-bg-color", "", "", $user); ?>
+                        </div>
+                    </div>
+
+                    <div class="box box-default">
+                        <div class="box-header">
+                            <h3 class="box-title">Body <small>Positioning</small></h3>
+                        </div>
+                        <div class="box-body">
+                            <?PHP $template->getSetting($db, "body-margin-%", "", "", $user); ?>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="col-md-4">
-                    <h3>Main Shadow <small>around all positions</small></h3>
-                    <?PHP
-                    $template->getSetting($db, "main-box-shadow", "", "", $user);
-                    $template->getSetting($db, "main-box-shadow-color", "", "", $user); ?>
-                    <h3>List Group <small>Colors</small></h3>
-                    <?PHP $template->getSetting($db, "%-listgroup", "", "", $user); ?>
+                    <div class="box box-default">
+                        <div class="box-header">
+                            <h3 class="box-title">Main Shadow <small>around all positions</small></h3>
+                        </div>
+                        <div class="box-body">
+                            <?PHP
+                            $template->getSetting($db, "main-box-shadow", "", "", $user);
+                            $template->getSetting($db, "main-box-shadow-color", "", "", $user); ?>
+                        </div>
+                    </div>
+
+                    <div class="box box-default">
+                        <div class="box-header">
+                            <h3 class="box-title">List Group <small>Colors</small></h3>
+                        </div>
+                        <div class="box-body">
+                            <?PHP $template->getSetting($db, "%-listgroup", "", "", $user); ?>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="col-md-4">
-                    <h3>Background <small>Image</small></h3>
-                    <?PHP
-                    $template->getSetting($db, "body-bg-image", "", "", $user);
-                    $template->getSetting($db, "body-bg-repeat", "", "", $user);
-                    $template->getSetting($db, "body-bg-position", "", "", $user);
-                    $template->getSetting($db, "body-bg-attachment", "", "", $user);
-                    $template->getSetting($db, "body-bg-size", "", "", $user);
-                    ?>
+
+                    <div class="box box-default">
+                        <div class="box-header">
+                            <h3 class="box-title">Background <small>Image</small></h3>
+                        </div>
+                        <div class="box-body">
+                            <?PHP
+                            $template->getSetting($db, "body-bg-image", "", "", $user);
+                            $template->getSetting($db, "body-bg-repeat", "", "", $user);
+                            $template->getSetting($db, "body-bg-position", "", "", $user);
+                            $template->getSetting($db, "body-bg-attachment", "", "", $user);
+                            $template->getSetting($db, "body-bg-size", "", "", $user);
+                            ?>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- MENU -->
         <div role="tabpanel" class="tab-pane" id="menu">
+            <h3>Menu <small>Settings</small></h3>
             <div class="row animated fadeIn">
                 <div class="col-md-3">
-                    <h3>Menu Font <small>Colors </small></h3>
-                    <?PHP $template->getSetting($db, "%-menucolor", "", "", $user); ?>
+                    <div class="box box-default">
+                        <div class="box-header">
+                            <h3 class="box-title">Menu Font <small>Colors </small></h3>
+                        </div>
+                        <div class="box-body">
+                            <?PHP $template->getSetting($db, "%-menucolor", "", "", $user); ?>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="col-md-3">
-                    <h3>Menu Background <small>Colors</small></h3>
-                    <?PHP $template->getSetting($db, "%-menubgcolor", "", "", $user); ?>
+                    <div class="box box-default">
+                        <div class="box-header">
+                            <h3 class="box-title">Menu Background <small>Colors</small></h3>
+                        </div>
+                        <div class="box-body">
+                            <?PHP $template->getSetting($db, "%-menubgcolor", "", "", $user); ?>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="col-md-3">
-                    <h3>Dropdown <small>Colors</small></h3>
-                    <?PHP $template->getSetting($db, "%-menudropdowncolor", "", "", $user); ?>
+                    <div class="box box-default">
+                        <div class="box-header">
+                            <h3 class="box-title">Dropdown <small>Colors</small></h3>
+                        </div>
+                        <div class="box-body">
+                            <?PHP $template->getSetting($db, "%-menudropdowncolor", "", "", $user); ?>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-3">...additional content here...</div>
+
+                <div class="col-md-3">
+                    <div class="box box-default">
+                        <div class="box-header">
+                            <h3 class="box-title">Additional <small>Menu stuff here...</small></h3>
+                        </div>
+                        <div class="box-body">
+                            ...fill this empty space with love...
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- WELL, JUMBOTRON -->
         <div role="tabpanel" class="tab-pane" id="well">
+            <h3>Well <small>Settings</small></h3>
             <div class="row animated fadeIn">
                 <div class="col-md-3">
-                    <h3>Well <small>Box Design</small></h3>
-                    <?PHP $template->getSetting($db, "well-%", "", "", $user); ?>
+                    <div class="box box-default">
+                        <div class="box-header">
+                            <h3 class="box-title">Well <small>Box Design</small></h3>
+                        </div>
+                        <div class="box-body">
+                            <?PHP $template->getSetting($db, "well-%", "", "", $user); ?>
+                        </div>
+                    </div>
+                 </div>
+
+                <div class="col-md-3">
+                    <div class="box box-default">
+                        <div class="box-header">
+                            <h3 class="box-title">Jumbotron <small>Box Design</small></h3>
+                        </div>
+                        <div class="box-body">
+                            <?PHP // $template->getSetting($db, "%-menubgcolor", "", ""); ?>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="col-md-3">
-                    <h3>Jumbotron <small>Box Design</small></h3>
-                    <?PHP // $template->getSetting($db, "%-menubgcolor", "", ""); ?>
+                    <div class="box box-default">
+                        <div class="box-header">
+                            <h3 class="box-title">Any <small>Other Thing</small></h3>
+                        </div>
+                        <div class="box-body">
+                            <?PHP // $template->getSetting($db, "%-menudropdowncolor", "", ""); ?>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="col-md-3">
-                    <h3>Any <small>Other Thing</small></h3>
-                    <?PHP // $template->getSetting($db, "%-menudropdowncolor", "", ""); ?>
+                    <div class="box box-default">
+                        <div class="box-header">
+                            <h3 class="box-title">Any <small>Other Thing</small></h3>
+                        </div>
+                        <div class="box-body">
+                            <?PHP // $template->getSetting($db, "%-menudropdowncolor", "", ""); ?>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-3">...additional content here...</div>
             </div>
         </div>
 
         <!-- BUTTONS -->
         <div role="tabpanel" class="tab-pane" id="buttons">
+            <h3>Button <small>Settings</small></h3>
             <div class="row animated fadeIn">
-                <div class="col-md-4">
-                    <h3>Button <small>Basic Settings</small></h3>
-                    <?PHP
-                    $template->getSetting($db, "btn-fontsize", "", "", $user);
-                    $template->getSetting($db, "btn-font-weight", "", "", $user);
-                    $template->getSetting($db, "btn-border", "", "", $user);
-                    $template->getSetting($db, "btn-border-style", "", "", $user);
-                    $template->getSetting($db, "btn-border-radius", "", "", $user);
 
-                    ?>
+                <div class="col-md-4">
+                <!-- btn basic settings -->
+                    <div class="box box-default">
+                        <div class="box-header">
+                            <h3 class="box-title">Button <small>font and border settings</small></h3>
+                        </div>
+                        <div class="box-body">
+                            <?PHP
+                                $template->getSetting($db, "btn-fontsize", "", "", $user);
+                                $template->getSetting($db, "btn-font-weight", "", "", $user);
+                                $template->getSetting($db, "btn-border", "", "", $user);
+                                $template->getSetting($db, "btn-border-style", "", "", $user);
+                                $template->getSetting($db, "btn-border-radius", "", "", $user);
+                            ?>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-4">2</div>
-                <div class="col-md-4">3</div>
+
+                <div class="col-md-4">
+                    <div class="box box-default">
+                        <div class="box-header">
+                            <h3 class="box-title">Any other thing <small>here ...</small></h3>
+                        </div>
+                        <div class="box-body">
+                            ...fill this empty space with love...
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="box box-default">
+                        <div class="box-header">
+                            <h3 class="box-title">Any other thing <small>here ...</small></h3>
+                        </div>
+                        <div class="box-body">
+                            ...fill this empty space with love...
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="row animated fadeIn">
                 <div class="col-md-2">
-                    <h3>Default <small>Button</small></h3>
-                    <?PHP
-                    $template->getSetting($db, "btn-default-%", "", "", $user);
-                    ?>
-                </div>
-
-                <div class="col-md-2">
-                    <h3>Primary <small>Button</small></h3>
-                    <?PHP
-                    $template->getSetting($db, "btn-primary-%", "", "", $user);
-                    ?>
+                    <div class="box box-default">
+                        <div class="box-header">
+                            <h3 class="box-title">Default <small>Button</small></h3>
+                        </div>
+                        <div class="box-body">
+                            <?PHP $template->getSetting($db, "btn-default-%", "", "", $user); ?>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-2">
-                    <h3>Success <small>Button</small></h3>
-                    <?PHP
-                    $template->getSetting($db, "btn-success-%", "", "", $user);
-                    ?>
+                    <div class="box box-default">
+                        <div class="box-header">
+                            <h3 class="box-title">Primary <small>Button</small></h3>
+                        </div>
+                        <div class="box-body">
+                            <?PHP $template->getSetting($db, "btn-primary-%", "", "", $user); ?>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-2">
-                    <h3>Warning <small>Button</small></h3>
-                    <?PHP
-                    $template->getSetting($db, "btn-warning-%", "", "", $user);
-                    ?>
+                    <div class="box box-default">
+                        <div class="box-header">
+                            <h3 class="box-title">Success <small>Button</small></h3>
+                        </div>
+                        <div class="box-body">
+                            <?PHP $template->getSetting($db, "btn-success-%", "", "", $user); ?>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-2">
-                    <h3>Danger <small>Button</small></h3>
-                    <?PHP
-                    $template->getSetting($db, "btn-danger-%", "", "", $user);
-                    ?>
+                    <div class="box box-default">
+                        <div class="box-header">
+                            <h3 class="box-title">Warning <small>Button</small></h3>
+                        </div>
+                        <div class="box-body">
+                            <?PHP $template->getSetting($db, "btn-warning-%", "", "", $user); ?>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-2">
-                    <h3>Info <small>Button</small></h3>
-                    <?PHP
-                    $template->getSetting($db, "btn-info-%", "", "", $user);
-                    ?>
+                    <div class="box box-default">
+                        <div class="box-header">
+                            <h3 class="box-title">Danger <small>Button</small></h3>
+                        </div>
+                        <div class="box-body">
+                            <?PHP $template->getSetting($db, "btn-danger-%", "", "", $user); ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="box box-default">
+                        <div class="box-header">
+                            <h3 class="box-title">Info <small>Button</small></h3>
+                        </div>
+                        <div class="box-body">
+                            <?PHP $template->getSetting($db, "btn-info-%", "", "", $user); ?>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- IMAGES -->
         <div role="tabpanel" class="tab-pane" id="images">
+            <h3>Image <small>Settings</small></h3>
             <div class="row animated fadeIn">
                 <div class="col-md-3">
-                    <h3>Image <small>Effects</small></h3>
-                    <?PHP $template->getSetting($db, "img-%", "", "", $user); ?>
+                    <div class="box box-default">
+                        <div class="box-header">
+                            <h3 class="box-title">Image <small>Effects</small></h3>
+                        </div>
+                        <div class="box-body">
+                            <?PHP $template->getSetting($db, "img-%", "", "", $user); ?>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="col-md-3">
-                    <h3>Image <small>Effects</small></h3>
-                    <?PHP // $template->getSetting($db, "%-menubgcolor", "", ""); ?>
+                    <div class="box box-default">
+                        <div class="box-header">
+                            <h3 class="box-title">Any other thing <small>here...</small></h3>
+                        </div>
+                        <div class="box-body">
+                            <?PHP // $template->getSetting($db, "%-menubgcolor", "", ""); ?>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="col-md-3">
-                    <h3>Any <small>Other Thing</small></h3>
-                    <?PHP // $template->getSetting($db, "%-menudropdowncolor", "", ""); ?>
+                    <div class="box box-default">
+                        <div class="box-header">
+                            <h3 class="box-title">Any other thing <small>here...</small></h3>
+                        </div>
+                        <div class="box-body">
+                            <?PHP // $template->getSetting($db, "%-menudropdowncolor", "", ""); ?>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-3">...additional content here...</div>
             </div>
         </div>
 
@@ -1565,29 +1775,97 @@ else
 
         <!-- CUSTOM CSS -->
         <div role="tabpanel" class="tab-pane animated fadeIn" id="custom">
+            <h3>Custom.CSS <small>Override settings and add your own definitions to extend this template</small></h3>
             <div class="row">
+
                 <div class="col-md-8">
-                    <label class="h3" for="summernote">Custom.CSS
-                        <small>Override settings and add your own definitions to extend this template</small></label>
-                    <textarea name="customCSS" cols="64" rows="28" id="summernote"><?php
-                        $customCSS = $template->getCustomCSSFile($db, $template->id);
-                        echo $customCSS; ?></textarea>
+                    <?php $customCSS = $template->getCustomCSSFile($db, $template->id); ?>
+                    <textarea name="customCSS" cols="64" rows="28" id="summernote"><?php echo $customCSS; ?></textarea>
+
+                    <label for="summernote"><small><?php echo $lang['YOU_EDIT']; ?>:</small> &nbsp;system/templates/<?php echo $template->name; ?>/css/custom.css</label>
                 </div>
                 <div class="col-md-4">
-                    <h3>
-                            <br><?PHP echo $template->name; ?>/css/custom.css<br>
-                            <small><b>This file is loaded after any other css file.</b> The last link in the chain. This means
-                            you can override any CSS setting. (Even those you set here in the backend in the tabs before).
-                            Use this to dump any css definitions you need to fit the style to your corporate design.
+                    <div class="box box-default">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><?PHP echo $template->name; ?>/css/custom.css</h3>
+                        </div>
+                        <div class="box-body">
+                            <b>This file is loaded after any other css file.</b><br>The last link in the chain. This means
+                            you can override any CSS setting. (Even those you set here in the tabs before...!) Use the custom.css
+                            file to over-write any css definitions you need to fit the style to your corporate design.
                             <br><br>
-                            If you need help w CSS take a look here:<br>
+                            <i>If you need help w CSS take a look here:</i><br>
                             &raquo; <a href="http://www.w3schools.com/css/" title="open CSS overview in new TAB" target="_blank">w3schools.com/css/</a>
 
-                            <br><br>
+                            <hr>
                             <b>Did you know?</b><br>
-                            If your browser support it, you can save with [CTRL-S]. <i>Try it!</i></small>
+                            <i>If your browser support it, you can save with [CTRL-S]. Try it!</i>
+                </div>
 
-                    </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- THEMES -->
+        <div role="tabpanel" class="tab-pane" id="themes">
+            <h3>Theme <small>Settings</small></h3>
+            <!-- list availalbe THEMES -->
+            <div class="row animated fadeIn">
+                <div class="col-md-4">
+                    <div class="box box-default">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Load <small>Theme</small></h3>
+                        </div>
+                        <div class="box-body">
+                            ...
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="box box-default">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Update Details <small>of this template</small></h3>
+                        </div>
+                        <div class="box-body">
+                            <label for="Tname">Template Name</label>
+                            <input type="text" class="form-control" id="Tname" name="Tname" value="<?php echo $template->name; ?>" placeholder="Template Name" disabled>
+                            <label for="Tauthor">Template Author</label>
+                            <input type="text" class="form-control" id="Tauthor" name="Tauthor" value="<?php echo $template->author; ?>" placeholder="Template Author" disabled>
+                            <label for="Tversion">Template Version</label>
+                            <input type="text" class="form-control" id="Tversion" name="Tversion" value="<?php echo $template->version; ?>" placeholder="Template Version" disabled>
+                            <label for="Tname">Template Release Date</label>
+                            <input type="text" class="form-control" id="Treleasedate" name="Treleasedate" value="<?php echo $template->releaseDate; ?>" placeholder="Template Release Date" disabled>
+                            <label for="Tlicenese">Template License</label>
+                            <select name="Tlicense" class="form-control" id="Tlicenese" disabled>
+                                <option value="GNU General Public License (GPL)">GNU General Public License (GPL) </option>
+                                <option value="GNU Lesser Public License (LGPL)">GNU Lesser Public License (LGPL)</option>
+                                <option value="MIT License">MIT License</option>
+                                <option value="Mozilla Public License 2.0">Mozilla Public License 2.0</option>
+                                <option value="Apache License 2.0">Apache License 2.0</option>
+                            </select>
+                            <label for="Tdescription">Template Description</label>
+                            <textarea class="form-control" id="Tdescription" rows="5" cols="64" name="Tdescription"><?php echo $template->description; ?></textarea>
+                            <label for="Tname">Modified by</label>
+                            <input type="text" class="form-control" id="Tsubauthor" name="Tsubauthor" value="<?php echo $template->subAuthor; ?>" placeholder="Sub Author">
+                            <label for="Tname">Sub Author URL</label>
+                            <input type="text" class="form-control" id="Tsubauthorurl" name="Tsubauthorurl" value="<?php echo $template->subAuthorUrl; ?>" placeholder="Co Author Url">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="box box-default">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Save as <small>new Theme</small></h3>
+                        </div>
+                        <div class="box-body">
+                            <label for="savetheme">or save new theme as... </label>
+                            <input type="text" class="form-control" name="newthemename" value="<?php echo $template->name; ?>-copy" placeholder="New Theme Name">
+                            <input type="text" class="form-control" name="description" placeholder="Template Description">
+                            <input type="text" class="form-control" name="positions" placeholder="Positions eg. top:main:footer">
+                            <br><input id="addbutton" type="submit" class="btn btn-danger" name="savenewtheme" value="Add&nbsp;as new Theme">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1597,68 +1875,42 @@ else
             <h3>Settings <small>add settings or fonts to database</small></h3>
             <div class="row animated fadeIn">
                 <div class="col-md-4">
-                    <h4>Update Details <small>of this template</small></h4>
-                    <label for="Tname">Template Name</label>
-                    <input type="text" class="form-control" id="Tname" name="Tname" value="<?php echo $template->name; ?>" placeholder="Template Name" disabled>
-                    <label for="Tauthor">Template Author</label>
-                    <input type="text" class="form-control" id="Tauthor" name="Tauthor" value="<?php echo $template->author; ?>" placeholder="Template Author" disabled>
-                    <label for="Tversion">Template Version</label>
-                    <input type="text" class="form-control" id="Tversion" name="Tversion" value="<?php echo $template->version; ?>" placeholder="Template Version" disabled>
-                    <label for="Tname">Template Release Date</label>
-                    <input type="text" class="form-control" id="Treleasedate" name="Treleasedate" value="<?php echo $template->releaseDate; ?>" placeholder="Template Release Date" disabled>
-                    <label for="Tlicenese">Template License</label>
-                    <select name="Tlicense" class="form-control" id="Tlicenese" disabled>
-                        <option value="GNU General Public License (GPL)">GNU General Public License (GPL) </option>
-                        <option value="GNU Lesser Public License (LGPL)">GNU Lesser Public License (LGPL)</option>
-                        <option value="MIT License">MIT License</option>
-                        <option value="Mozilla Public License 2.0">Mozilla Public License 2.0</option>
-                        <option value="Apache License 2.0">Apache License 2.0</option>
-                    </select>
-                    <label for="Tdescription">Template Description</label>
-                    <textarea class="form-control" id="Tdescription" rows="5" cols="64" name="Tdescription"><?php echo $template->description; ?></textarea>
-                    <label for="Tname">Modified by</label>
-                    <input type="text" class="form-control" id="Tsubauthor" name="Tsubauthor" value="<?php echo $template->subAuthor; ?>" placeholder="Sub Author">
-                    <label for="Tname">Sub Author URL</label>
-                    <input type="text" class="form-control" id="Tsubauthorurl" name="Tsubauthorurl" value="<?php echo $template->subAuthorUrl; ?>" placeholder="Co Author Url">
+                    <div class="box box-default">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Any thing <small>could be here...</small></h3>
+                        </div>
+                        <div class="box-body">
+                            ...
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-4">
-                    <label for="property">add Setting <small>to active template</small></label>
-                    <input type="text" class="form-control" id="property" name="property" placeholder="property">
-                    <input type="text" class="form-control" name="value" placeholder="value">
-                    <input type="text" class="form-control" name="valueDefault" placeholder="default value">
-                    <input type="text" class="form-control" name="description" placeholder="description">
-                    <input type="text" class="form-control" name="fieldclass" placeholder="fieldClass e.g. input-xlarge">
-                    <input type="text" class="form-control" name="placeholder" placeholder="placeholder">
-                    <br /><input id="savebutton" type="submit" class="btn btn-danger" name="addsetting" value="Add&nbsp;Template&nbsp;Setting" />
+                    <div class="box box-default">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">add Setting <small>to active template</small></h3>
+                        </div>
+                        <div class="box-body">
+                            <input type="text" class="form-control" id="property" name="property" placeholder="property">
+                            <input type="text" class="form-control" name="value" placeholder="value">
+                            <input type="text" class="form-control" name="valueDefault" placeholder="default value">
+                            <input type="text" class="form-control" name="description" placeholder="description">
+                            <input type="text" class="form-control" name="fieldclass" placeholder="fieldClass e.g. input-xlarge">
+                            <input type="text" class="form-control" name="placeholder" placeholder="placeholder">
+                            <br><input id="savebutton" type="submit" class="btn btn-danger" name="addsetting" value="Add&nbsp;Template&nbsp;Setting">
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-4">
-                    <label for="gfont">add GoogleFont to database</label>
-                    <input type="text" class="form-control" id="gfont" name="gfont" placeholder="font eg. Ubuntu">
-                    <input type="text" class="form-control" name="gfontdescription" placeholder="description eg. Ubuntu, serif">
-                    <br /><input id="savebutton" type="submit" class="btn btn-danger" name="addgfont" value="Add&nbsp;GoogleFont" />
-                </div>
-            </div>
-        </div>
-
-        <!-- THEMES -->
-        <div role="tabpanel" class="tab-pane" id="themes">
-            <!-- list availalbe THEMES -->
-            <div class="row animated fadeIn">
-                <div class="col-md-4">
-                    <h3>Load <small>Theme</small></h3>
-                    ...
-                </div>
-                <div class="col-md-4">
-                    <h3>Save <small>Theme</small></h3>
-                    ...
-                </div>
-                <div class="col-md-4">
-                    <h3>Save as <small>new Theme</small></h3>
-                    <label for="savetheme">or save new theme as... </label>
-                    <input type="text" class="form-control" name="newthemename" value="<?php echo $template->name; ?>-copy" placeholder="New Theme Name">
-                    <input type="text" class="form-control" name="description" placeholder="Template Description">
-                    <input type="text" class="form-control" name="positions" placeholder="Positions eg. top:main:footer">
-                    <br><input id="addbutton" type="submit" class="btn btn-danger" name="savenewtheme" value="Add&nbsp;as new Theme" />
+                    <div class="box box-default">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">add Google Font<small>to database</small></h3>
+                        </div>
+                        <div class="box-body">
+                            <input type="text" class="form-control" id="gfont" name="gfont" placeholder="font eg. Ubuntu">
+                            <input type="text" class="form-control" name="gfontdescription" placeholder="description eg. Ubuntu, serif">
+                            <br><input id="savebutton" type="submit" class="btn btn-danger" name="addgfont" value="Add&nbsp;GoogleFont">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1668,3 +1920,6 @@ else
     <br><br><br><br><br><br><br><br>
       <!-- </div> <!-- ./ nav-tabs-custom -->
      </form>
+
+    </div>
+</div>

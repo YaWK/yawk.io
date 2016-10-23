@@ -67,6 +67,8 @@ echo"<ol class=\"breadcrumb\">
 /* page content start here */
 ?>
 
+<div class="box box-default">
+    <div class="box-body">
 <a class="btn btn-success pull-right" title="<?php $lang['WIDGET+']; ?>" href="index.php?page=widget-new">
 <i class="glyphicon glyphicon-plus"></i> &nbsp;<?php print $lang['WIDGET']; ?></a>
 
@@ -121,3 +123,5 @@ echo"<ol class=\"breadcrumb\">
     ?>
   </tbody>
 </table>
+    </div>
+</div>

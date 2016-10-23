@@ -249,6 +249,9 @@ echo"<ol class=\"breadcrumb\">
     <section class=\"content\">";
 /* page content start here */
 ?>
+<div class="box box-default">
+	<div class="box-body">
+
 <form id="template-edit-form" action="index.php?page=settings-system" method="POST">
 	<!-- <div class="nav-tabs-custom"> <!-- admin LTE tab style -->
 	<div id="btn-wrapper" class="text-right">
@@ -381,3 +384,6 @@ echo"<ol class=\"breadcrumb\">
 	</div>
 	<!-- </div> <!-- ./ nav-tabs-custom -->
 </form>
+
+	</div>
+</div>

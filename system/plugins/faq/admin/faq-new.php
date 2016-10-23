@@ -55,14 +55,21 @@ echo "
     /* page content start here */
 
 ?>
-<form action="index.php?plugin=faq&pluginpage=faq-new" class="form-inline" role="form" method="POST"
+<form action="index.php?plugin=faq&pluginpage=faq-new" role="form" method="POST"
       xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<div class="box box-default">
+    <div class="box-body">
+        <div class="box-header with-border">
+            <h3 class="box-title"><?php echo $lang['FAQ_ADD']; ?></h3>
+        </div>
+        <div class="box-body">
     <input name="create" value="faq-create" type="hidden"/>
     <textarea class="form-control" cols="55" rows="1" name="question"><?PHP echo $lang['FAQ_QUESTION']; ?></textarea><br>
     <textarea class="form-control" cols="55" rows="4" name="answer"><?PHP echo $lang['FAQ_ANSWER']; ?></textarea><br>
     <input id="savebutton" class="btn btn-success" type="submit" name="create" value="FAQ&nbsp;Eintrag&nbsp;anlegen"/>&nbsp;
+
+
+        </div>
+    </div>
+</div>
 </form>
-<?php
-// to render layout correctly, include the footer
-\YAWK\backend::drawHtmlFooter();
-?>

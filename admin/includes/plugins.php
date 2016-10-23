@@ -30,6 +30,8 @@ echo"<ol class=\"breadcrumb\">
 ?>
 
 
+<div class="box box-default">
+    <div class="box-body">
         <a class="btn btn-success" href="index.php?page=plugins-manage" style="float:right;">
             <i class="glyphicon glyphicon-cog"></i> &nbsp;<?php print $lang['PLUGIN_MANAGE']; ?></a>
 
@@ -53,3 +55,5 @@ echo"<ol class=\"breadcrumb\">
     ?>
     </tbody>
 </table>
+    </div>
+</div>

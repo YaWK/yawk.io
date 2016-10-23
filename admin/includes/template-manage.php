@@ -11,6 +11,11 @@
     } );
 </script>
 <?php
+// check user obj
+if (!isset($user))
+{   // create new user obj
+    $user = new \YAWK\user();
+}
 // disable preview (overrideTemplate)
 $user->setUserTemplate($db, 0, \YAWK\settings::getSetting($db, "selectedTemplate"), $user->id);
 $user->overrideTemplate = 0;
@@ -69,8 +74,10 @@ echo"<ol class=\"breadcrumb\">
     <section class=\"content\">";
 /* page content start here */
 ?>
+<div class="box box-default">
+    <div class="box-body">
 
-<a class="btn btn-success" href="index.php?page=page-new" style="float:right;">
+<a class="btn btn-success" href="#" style="float:right;">
 <i class="glyphicon glyphicon-plus"></i> &nbsp;<?php print $lang['TEMPLATE']; ?></a>
 
 <table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-hover" id="table-sort">
@@ -150,3 +157,6 @@ echo"<ol class=\"breadcrumb\">
     ?>
     </tbody>
 </table>
+
+    </div>
+</div>

@@ -99,6 +99,8 @@ echo"<ol class=\"breadcrumb\">
     <section class=\"content\">";
 /* page content start here */
 ?>
+<div class="box box-default">
+    <div class="box-body">
 
 <!-- btn add user -->
 <a class="btn btn-success pull-right" href="index.php?page=user-new">
@@ -168,3 +170,6 @@ echo"<ol class=\"breadcrumb\">
     ?>
   </tbody>
 </table>
+
+    </div>
+</div>

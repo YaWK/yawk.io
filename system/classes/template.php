@@ -654,7 +654,7 @@ namespace YAWK {
                     }
                     else
                     {   // draw a textfield
-                        echo "<br><label for=\"".$row['property']."\"><small>" . $row['description'] . " <i class=\"h6 small\">default: ".$row['valueDefault']."</i></small></label><br>";
+                        echo "<label for=\"".$row['property']."\"><small>" . $row['description'] . " <i class=\"h6 small\">default: ".$row['valueDefault']."</i></small></label><br>";
                         echo "<div style=\"display:inline-block; \">";
                         echo "<input id=\"";
                         echo $row['property'];
@@ -670,7 +670,7 @@ namespace YAWK {
                     if ($special == "slider")
                     {   // set slider html
                         // if method is called with slider parameter, draw one with given property name
-                        echo " <div id=\"slider-";
+                        echo "<div id=\"slider-";
                         echo $row['property'];
                         echo "\"></div>";
                     }

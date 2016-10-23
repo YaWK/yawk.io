@@ -251,6 +251,8 @@ echo "
     <section class=\"content\">";
         /* page content start here */
 ?>
+<div class="box box-default">
+    <div class="box-body">
 
 <form action="index.php?plugin=blog&pluginpage=blog-setup" class="form-inline" role="form" method="POST"
       xmlns="http://www.w3.org/1999/html">
@@ -464,3 +466,6 @@ echo "
 
 <br><br><br><br>
 
+
+    </div>
+</div>

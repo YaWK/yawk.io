@@ -51,8 +51,10 @@ else
         $tourdates = new \YAWK\PLUGINS\TOURDATES\tourdates();
     }
     $tourdates->loadProperties($db, $_GET['id']);
-
     ?>
+
+    <div class="box box-default">
+    <div class="box-body">
     <!-- FORM -->
     <form role="form" class="form" action="index.php?plugin=tourdates&pluginpage=tourdates-edit&action=1" method="post">
         <!-- PUBLISH DATE -->
@@ -65,7 +67,6 @@ else
                    name="date"
                    maxlength="19">
         </label>
-        &nbsp;
 
         <!-- TEXT FIELD -->
         <label for="band"><?php print $lang['TOUR_BAND']; ?>&nbsp;
@@ -76,7 +77,7 @@ else
                    value="<?php print $tourdates->band; ?>"
                    class="form-control"
                    maxlength="128"
-                   placeholder="<?PHP print $lang['TOUR_BAND_INPUT']; ?>"/>
+                   placeholder="<?PHP print $lang['TOUR_BAND_INPUT']; ?>">
         </label>
         <!-- TEXT FIELD -->
         <label for="venue"><?php print $lang['TOUR_VENUE']; ?>&nbsp;
@@ -87,7 +88,7 @@ else
                    class="form-control"
                    value="<?php print $tourdates->venue; ?>"
                    maxlength="128"
-                   placeholder="<?PHP print $lang['TOUR_VENUE_INPUT']; ?>"/>
+                   placeholder="<?PHP print $lang['TOUR_VENUE_INPUT']; ?>">
         </label>
         <!-- TEXT FIELD -->
         <label for="fburl"><?php print $lang['TOUR_FBLINK']; ?>&nbsp;
@@ -98,17 +99,17 @@ else
                    class="form-control"
                    value="<?php print $tourdates->fburl; ?>"
                    maxlength="255"
-                   placeholder="<?PHP print $lang['TOUR_FBLINK']; ?>"/>
+                   placeholder="<?PHP print $lang['TOUR_FBLINK']; ?>">
         </label>
         <!-- SUBMIT BUTTON -->
-        <input type="hidden" name="id" value="<?php echo $tourdates->id; ?>"/>
+        <input type="hidden" name="id" value="<?php echo $tourdates->id; ?>">
         <input type="submit"
-               class="btn btn-info"
-               value="<?PHP print $lang['TOUR_DATES_EDIT']; ?>"/>
+               class="btn btn-success"
+               value="<?PHP print $lang['TOUR_DATES_EDIT']; ?>">
     </form>
+    </div>
+</div>
     <?php
 }
 
-// to render layout correctly, include the footer
-\YAWK\backend::drawHtmlFooter();
 ?>

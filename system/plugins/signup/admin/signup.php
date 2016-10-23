@@ -199,6 +199,9 @@ else {
 
 ?>
 <script type="text/javascript" src="../system/plugins/signup/js/admin.js"></script>
+
+<div class="box box-default">
+    <div class="box-body">
 <form action="index.php?plugin=signup" class="form-inline" role="form" name="settings" method="POST">
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
@@ -455,3 +458,6 @@ else {
             </fieldset>
         </div>
 </form>
+
+    </div>
+</div>

@@ -39,6 +39,9 @@ echo"<ol class=\"breadcrumb\">
     <section class=\"content\">";
 /* page content start here */
 ?>
+<div class="box box-default">
+    <div class="box-body">
+
 <!-- btn -->
 <a class="btn btn-default pull-right" href="index.php?plugin=tourdates&addpage=1">
     <i class="glyphicon glyphicon-wrench"></i> &nbsp;<?php print $lang['PAGE_ADD_BTN']; ?></a>
@@ -67,7 +70,6 @@ echo"<ol class=\"breadcrumb\">
     ?>
     </tbody>
 </table>
-<?php
-// to render layout correctly, include the footer
-\YAWK\backend::drawHtmlFooter();
-?>
+
+    </div>
+</div>

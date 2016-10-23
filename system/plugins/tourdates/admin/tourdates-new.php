@@ -52,6 +52,9 @@ echo"<ol class=\"breadcrumb\">
 /* page content start here */
 ?>
 
+<div class="box box-default">
+    <div class="box-body">
+
     <!-- FORM -->
     <form role="form" class="form" action="index.php?plugin=tourdates&pluginpage=tourdates-new&addgig=1" method="post">
         <!-- PUBLISH DATE -->
@@ -59,19 +62,17 @@ echo"<ol class=\"breadcrumb\">
             <input class="form-control" id="datetimepicker1" data-date-format="yyyy-mm-dd hh:mm:ss" type="text"
                    name="date" maxlength="19">
         </label>
-        &nbsp;
-
-        <!-- TEXT FIELD -->
+        <!-- BAND -->
         <label for="band"><?php print $lang['TOUR_BAND']; ?>&nbsp;
             <input type="text" id="band" size="28" name="band" class="form-control" maxlength="128"
                    placeholder="<?PHP print $lang['TOUR_BAND_INPUT']; ?>"/>
         </label>
-        <!-- TEXT FIELD -->
+        <!-- VENUE -->
         <label for="venue"><?php print $lang['TOUR_VENUE']; ?>&nbsp;
             <input type="text" id="venue" size="28" name="venue" class="form-control" maxlength="128"
                    placeholder="<?PHP print $lang['TOUR_VENUE_INPUT']; ?>"/>
         </label>
-        <!-- TEXT FIELD -->
+        <!-- FB LINK -->
         <label for="fburl"><?php print $lang['TOUR_FBLINK']; ?>&nbsp;
             <input type="text" id="fblink" size="28" name="fburl" class="form-control" maxlength="255"
                    placeholder="<?PHP print $lang['TOUR_FBLINK']; ?>"/>
@@ -79,8 +80,5 @@ echo"<ol class=\"breadcrumb\">
         <!-- SUBMIT BUTTON -->
         <input type="submit" class="btn btn-success" value="<?PHP print $lang['TOUR_DATES_ADD']; ?>"/>
     </form>
-
-<?php
-// to render layout correctly, include the footer
-\YAWK\backend::drawHtmlFooter();
-?>
+    </div>
+</div>

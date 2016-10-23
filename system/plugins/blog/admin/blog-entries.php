@@ -140,6 +140,9 @@ echo "
     <section class=\"content\">";
         /* page content start here */
 ?>
+<div class="box box-default">
+    <div class="box-body">
+
 <a class="btn btn-success" href="index.php?plugin=blog&pluginpage=blog-newitem&blogid=<?php echo $blog->id; ?>" style="float:right;">
     <i class="glyphicon glyphicon-plus"></i> &nbsp;<?php print $lang['BLOG+']; ?></a>
 
@@ -256,3 +259,6 @@ echo "
     ?>
     </tbody>
 </table>
+
+    </div>
+</div>

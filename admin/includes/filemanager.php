@@ -84,6 +84,8 @@ if (isset($_GET['move']))
     <!-- Main content -->
     <section class="content">
         <!-- START CONTENT HERE -->
+<div class="box box-default">
+    <div class="box-body">
 
 <!-- upload btn -->
 <a class="btn btn-success" data-toggle="modal" data-target="#myModal" href="#myModal" style="float:right;">
@@ -215,5 +217,8 @@ if (isset($_GET['move']))
         <?php YAWK\filemanager::drawTableHeader($lang, 7); ?>
         <?php YAWK\filemanager::getFilesFromFolder("video");  ?>
         <?php YAWK\filemanager::drawTableFooter(); ?>
+    </div>
+</div>
+
     </div>
 </div>

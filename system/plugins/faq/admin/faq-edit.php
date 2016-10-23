@@ -50,16 +50,20 @@ echo "
     <!-- Main content -->
     <section class=\"content\">";
 ?>
-<h1><?PHP echo "$lang[FAQ] <small>$lang[EDIT]"; ?></h1>
-<form action="index.php?plugin=faq&pluginpage=faq-edit&id=<?PHP echo $_GET['id']; ?>" class="form-inline" role="form" method="POST"
+
+<form action="index.php?plugin=faq&pluginpage=faq-edit&id=<?PHP echo $_GET['id']; ?>" role="form" method="POST"
       xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
-    <input name="create" value="faq-create" type="hidden"/>
-    <input type="text" name="sort" class="form-control" value="<?PHP echo $faq->sort; ?>"><br>
-    <textarea class="form-control" cols="55" rows="1" name="question"><?PHP echo $faq->question; ?></textarea><br>
-    <textarea class="form-control" cols="55" rows="4" name="answer"><?PHP echo $faq->answer; ?></textarea><br>
-    <input id="savebutton" class="btn btn-success" type="submit" name="save" value="FAQ&nbsp;Eintrag&nbsp;bearbeiten"/>&nbsp;
+    <div class="box box-default">
+    <div class="box-header with-border">
+        <h3 class="box-title"><?PHP echo "$lang[FAQ] <small>$lang[EDIT]"; ?></h3>
+    </div>
+        <div class="box-body">
+            <input name="create" value="faq-create" type="hidden">
+            <input type="text" name="sort" class="form-control" value="<?PHP echo $faq->sort; ?>"><br>
+            <textarea class="form-control" cols="55" rows="1" name="question"><?PHP echo $faq->question; ?></textarea><br>
+            <textarea class="form-control" cols="55" rows="4" name="answer"><?PHP echo $faq->answer; ?></textarea><br>
+            <input id="savebutton" class="btn btn-success" type="submit" name="save" value="FAQ&nbsp;Eintrag&nbsp;bearbeiten">&nbsp;
+        <br><br>
+        </div>
+    </div>
 </form>
-<?php
-// to render layout correctly, include the footer
-\YAWK\backend::drawHtmlFooter();
-?>

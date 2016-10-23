@@ -62,11 +62,11 @@ echo"<ol class=\"breadcrumb\">
 <!-- LEFT -->
 <div class="col-md-6">
 <!-- BASIC WIDGET SETTINGS -->
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title"><?PHP echo $widget->name; ?> Widget</h3>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title"><?PHP echo $widget->name; ?> Widget</h3>
   </div>
-  <div class="panel-body">
+  <div class="box-body">
     <!-- WIDGET -->
     <label for="widgetType">Widget:&nbsp;
      <select id="widgetType" name="widgetType" class="form-control">
@@ -121,11 +121,11 @@ echo"<ol class=\"breadcrumb\">
 
 <!-- RIGHT -->
   <div class="col-md-6">
-    <div class="panel panel-default">
-    <div class="panel-heading">
-    <h3 class="panel-title">Extended Widget Settings</h3>
+    <div class="box box-default">
+    <div class="box-header with-border">
+    <h3 class="box-title">Extended Widget Settings</h3>
   </div>
-  <div class="panel-body">
+  <div class="box-body">
   <!-- MORE WIDGET SETTINGS -->
   <?PHP
     if ($res = $db->query("SELECT cws.property, cws.value, cwd.fieldClass, cwd.description, cw.widgetType as widget

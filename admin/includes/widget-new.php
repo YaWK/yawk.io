@@ -20,7 +20,10 @@ echo"<ol class=\"breadcrumb\">
 
 if(!isset($_POST['widgetType'])){
 ?>
-
+<div class="box box-default">
+    <div class="box-body">
+        <div class="box-header with-border"><h3 class="box-title">Neues Widget anlegen</h3></div>
+        <br>
   <form action="index.php?page=widgets&add=1" role="form" method="post">
       <dl class="dl-horizontal">
           <dt><label for="widgetType">Erzeuge:</label> </dt>
@@ -92,6 +95,9 @@ if(!isset($_POST['widgetType'])){
           </dd>
       </dl>
   </form>
+
+    </div>
+</div>
 <?PHP
   }
   else

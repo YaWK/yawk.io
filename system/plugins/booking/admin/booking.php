@@ -55,6 +55,8 @@ echo"<ol class=\"breadcrumb\">
     <section class=\"content\">";
 /* page content start here */
 ?>
+<div class="box box-default">
+    <div class="box-body">
 
 <!-- backward btn -->
 <a class="btn btn-default" href="index.php?page=plugins" style="float:right;">
@@ -87,3 +89,6 @@ echo"<ol class=\"breadcrumb\">
     <?PHP print $booking->getBackendTable($db, $i, $field, $value); ?>
     </tbody>
 </table>
+
+    </div>
+</div>

@@ -88,6 +88,9 @@ if(isset($_GET['backend']) && (isset($_GET['gid'])))
         } );
     } );
 </script>
+
+<div class="box box-default">
+    <div class="box-body">
 <form role="form" method="POST" action="index.php?page=user-groups">
     <!-- save btn -->
     <button type="submit" class="btn btn-success pull-right">
@@ -160,3 +163,5 @@ if(isset($_GET['backend']) && (isset($_GET['gid'])))
 </table>
     <input type="hidden" name="update" value="1">
 </form>
+    </div>
+</div>

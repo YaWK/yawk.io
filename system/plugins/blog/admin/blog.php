@@ -84,6 +84,9 @@ echo"<ol class=\"breadcrumb\">
     <section class=\"content\">";
 /* page content start here */
 ?>
+<div class="box box-default">
+    <div class="box-body">
+
 <a class="btn btn-success" href="index.php?plugin=blog&pluginpage=blog-new" style="float:right;">
     <i class="glyphicon glyphicon-plus"></i> &nbsp;<?php print $lang['BLOG_ADD']; ?></a>
 
@@ -169,3 +172,6 @@ echo"<ol class=\"breadcrumb\">
     ?>
     </tbody>
 </table>
+
+    </div>
+</div>

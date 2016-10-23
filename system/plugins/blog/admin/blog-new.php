@@ -28,6 +28,8 @@ echo"<ol class=\"breadcrumb\">
     <section class=\"content\">";
 /* page content start here */
 ?>
+<div class="box box-default">
+    <div class="box-body">
 
 <form action="index.php?plugin=blog&pluginpage=blog&addblog=1" class="form-inline" role="form" method="POST">
     <input name="create" value="blog-create" type="hidden"/>
@@ -53,3 +55,5 @@ echo"<ol class=\"breadcrumb\">
     </select>
 </form>
 
+    </div>
+</div>

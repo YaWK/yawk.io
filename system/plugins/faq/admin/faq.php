@@ -38,6 +38,9 @@ echo"<ol class=\"breadcrumb\">
     <section class=\"content\">";
 /* page content start here */
 ?>
+<div class="box box-default">
+    <div class="box-header">
+
 <!-- btn -->
 <a class="btn btn-default pull-right" href="index.php?plugin=faq&addpage=1">
     <i class="glyphicon glyphicon-wrench"></i> &nbsp;<?php print $lang['PAGE_ADD_BTN']; ?></a>
@@ -63,8 +66,5 @@ $faq->drawBackEndTableBody($db);
 ?>
     </tbody>
     </table>
-
-<?php
-// to render layout correctly, include the footer
-\YAWK\backend::drawHtmlFooter();
-?>
+    </div>
+</div>
