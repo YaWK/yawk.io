@@ -98,26 +98,31 @@ echo"<ol class=\"breadcrumb\">
                     <i id="savebuttonIcon" class="fa fa-check"></i>&nbsp; <?php print $lang['GALLERY_ADD']; ?>
                 </button>
                 <br><h4><i class="fa fa-wrench text-muted"></i>&nbsp; Additional settings</h4>
-                <input type="checkbox" value="1" id="thumbnails" name="thumbnails">
-                <label for="thumbnails">Create thumbnails from images?</label>
+                <input type="hidden" value="0" name="createThumbnails">
+                <input type="checkbox" value="1" id="createThumbnails" name="createThumbnails">
+                <label for="createThumbnails">Create thumbnails from images?</label>
                 <br>
-                <label for="tnWidth">Thumbnail width in px</label>
-                <input type="text" id="tnWidth" maxlength="12" name="tnWidth" class="form-control" placeholder="200px">
-
+                <label for="thumbnailWidth">Thumbnail width in px</label>
+                <input type="text" id="thumbnailWidth" maxlength="12" name="tnWidth" class="form-control" placeholder="200px">
 
                 <label for="watermark">Watermark &amp; Position</label>
                 <input type="text" id="watermark" name="watermark" class="form-control" placeholder="(C) <?php echo date("Y")." photographer"; ?>">
                 &nbsp;&nbsp;
-                <input type="radio" id="topLeft" name="watermark" value="topLeft">
+                <input type="radio" id="topLeft" name="watermarkPosition" value="topLeft">
                 <label for="topLeft">Top left&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                <input type="radio" id="topRight" name="watermark" value="topRight">
+                <input type="radio" id="topRight" name="watermarkPosition" value="topRight">
                 <label for="topRight">Top right&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 
-                <input type="radio" id="bottomLeft" name="watermark" value="bottomLeft">
+                <input type="radio" id="bottomLeft" name="watermarkPosition" value="bottomLeft">
                 <label for="bottomLeft">Bottom left&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                <input type="radio" id="bottomRight" name="watermark" value="bottomRight">
+                <input type="radio" id="bottomRight" name="watermarkPosition" value="bottomRight">
                 <label for="bottomRight">Bottom right&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                <br>
+                <br><br>
+
+                <label for="author">Photographer</label>
+                <input type="text" id="author" name="author" class="form-control" placeholder="Originator of this picture">
+                <label for="author">Photographer URL</label>
+                <input type="text" id="authorUrl" name="authorUrl" class="form-control" placeholder="http://">
 
             </div>
         </div>

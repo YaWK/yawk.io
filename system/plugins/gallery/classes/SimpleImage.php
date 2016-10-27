@@ -9,7 +9,7 @@
  *
  */
 
-namespace abeautifulsite;
+namespace YAWK;
 use Exception;
 
 /**

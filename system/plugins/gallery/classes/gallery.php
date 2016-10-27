@@ -10,10 +10,14 @@ namespace YAWK\PLUGINS\GALLERY {
         public $title;
         public $description;
         public $images;
+        public $createThumbnails;
+        public $thumbnailWidth;
+        public $watermark;
+        public $watermarkPosition;
 
 
         public function __construct(){
-        // include 'system/plugins/messages/classes/messages.php';
+        require_once 'system/plugins/gallery/classes/SimpleImage.php';
         }
 
         public function drawFolderSelect($path)
@@ -22,6 +26,13 @@ namespace YAWK\PLUGINS\GALLERY {
                   <option value=\"Select Image Folder\">Select Image Folder</option>
                   ".self::scanDir($path)."
                   </select>";
+        }
+
+        public function checkDir($folder)
+        {   // check if directory exists
+            if (!is_dir("$folder/")) {
+                mkdir("$folder/");
+            }
         }
 
         public function scanDir($path)
@@ -40,12 +51,6 @@ namespace YAWK\PLUGINS\GALLERY {
                 }
             }
             return $html;
-        }
-
-
-        public function init()
-        {
-            // do something...
         }
 
         public function delete($db)
@@ -139,6 +144,10 @@ namespace YAWK\PLUGINS\GALLERY {
         public function add($db)
         {   /** @var $db \YAWK\db **/
             // add a new gallery
+            // 1.) check vars
+            // 2.) manipulate images corresponding to selected settings
+            // 3.) insert into database
+
             if (isset($_POST['folder']) && (!empty($_POST['folder'])))
             {   // gallery folder
                 $this->folder = $db->quote($_POST['folder']);
@@ -154,6 +163,22 @@ namespace YAWK\PLUGINS\GALLERY {
             if (isset($_POST['description']) && (!empty($_POST['description'])))
             {   // gallery description
                 $this->description = $db->quote($_POST['description']);
+            }
+            if (isset($_POST['createThumbnails']) && (!empty($_POST['createThumbnails'])))
+            {   // thumbnails? 0|1
+                $this->createThumbnails = $db->quote($_POST['createThumbnails']);
+            }
+            if (isset($_POST['thumbnailWidth']) && (!empty($_POST['thumbnailWidth'])))
+            {   // thumbnail width in px
+                $this->thumbnailWidth = $db->quote($_POST['thumbnailWidth']);
+            }
+            if (isset($_POST['watermark']) && (!empty($_POST['watermark'])))
+            {   // thumbnail width in px
+                $this->watermark = $db->quote($_POST['watermark']);
+            }
+            if (isset($_POST['watermarkPosition']) && (!empty($_POST['watermarkPosition'])))
+            {   // thumbnail width in px
+                $this->watermarkPosition = $db->quote($_POST['watermarkPosition']);
             }
 
             // add new gallery to database
