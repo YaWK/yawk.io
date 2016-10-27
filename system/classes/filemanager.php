@@ -144,6 +144,26 @@ namespace YAWK {
             return ini_get('post_max_size') . "B\n";
         }
 
+        static function countFilesFromFolder($folder)
+        {
+            $i = 0;
+            foreach (new \DirectoryIterator($folder) as $fileInfo) {
+                if($fileInfo->isDot()) continue;
+                if($fileInfo->isDir()) continue;
+                $i++;
+            }
+            return $i;
+        }
+
+        static function getFilesOnlyFromFolder($folder)
+        {
+            foreach (new \DirectoryIterator($folder) as $fileInfo) {
+                if($fileInfo->isDot()) continue;
+                if($fileInfo->isDir()) continue;
+                echo $fileInfo->getFilename() . "<br>\n";
+            }
+        }
+
         public function sizeFilter($bytes)
         {
             $label = array('B', 'KB', 'MB', 'GB', 'TB', 'PB');
