@@ -87,10 +87,53 @@ namespace YAWK\PLUGINS\GALLERY {
             return true;
         }
 
+        public function getGalleryFolderByID($db, $galleryID)
+        {   /** @var $db \YAWK\db **/
+            if ($res = $db->query("SELECT folder from {plugin_gallery} WHERE id='$galleryID'"))
+            {   // fetch data
+                $row = mysqli_fetch_row($res);
+                return $row[0]; // return folder
+            }
+            else
+                {   // error fetch data
+                    return false;
+                }
+        }
+
         public function reScanFolder($db, $folder)
         {   /** @var $db \YAWK\db **/
-            // delete a gallery
-
+            if (isset($_GET['id']) && (!empty($_GET['id']) && (is_numeric($_GET['id']))))
+            {   // delete gallery items from db
+                if (!$deleteItems = $db->query("DELETE FROM {plugin_gallery_items} WHERE galleryID = '$_GET[id]'"))
+                {   // could not delete items
+                    \YAWK\alert::draw("warning", "Could not delete gallery items from database", "Please try again!", "", 5800);
+                }
+                else
+                {   // scan directory again
+                    // iterate trough folder and save each file in a db row...
+                    if (!isset($folder) && (empty($folder)))
+                    {   // fetch folder if its not set
+                        $this->folder = $this->getGalleryFolderByID($db, $_GET['id']);
+                    }
+                    foreach (new \DirectoryIterator($folder) as $fileInfo) {
+                        if($fileInfo->isDot()) continue;
+                        if($fileInfo->isDir()) continue;
+                        $filename = $fileInfo->getFilename();
+                        // TODO: this needs to be improved:
+                        // TODO: 1 db insert per file is NOT! ok - but how to implement implode() correctly to avoid that memory lack?
+                        if ($res = $db->query("INSERT INTO {plugin_gallery_items} (galleryID, filename, title, author, authorUrl)
+                        VALUES ('" . $_GET['id'] . "','" . $filename . "','" . $filename . "','" . " " . "', '". " " ."')"))
+                        {   // all good
+                            // \YAWK\alert::draw("success", "Gallery created.", "Database entry success.", "", 800);
+                        }
+                        else
+                        {   // error inserting data, throw notification
+                            \YAWK\alert::draw("warning", "Could not insert $filename", "Database error. Please check folder and try again.", "", 1200);
+                        }
+                    }
+                }
+            }
+            return true;
         }
 
         public function add($db)
@@ -162,14 +205,14 @@ namespace YAWK\PLUGINS\GALLERY {
             {
                 while ($row = mysqli_fetch_assoc($res))
                 {
-                    if (!$getPreviewImages = $db->query("SELECT galleryID, filename from {plugin_gallery_items} WHERE galleryID = '$row[id]'"))
+                    if (!$getPreviewImages = $db->query("SELECT galleryID, filename from {plugin_gallery_items} WHERE galleryID = '$row[id]' LIMIT 5"))
                     {   // store info msg, if files could not be retrieved
                         $previewError = "Sorry, no preview available.";
                     }
                     // preview without images
                     echo "<div class=\"row\"><div class=\"col-md-4\"><a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Soll die Galerie &laquo;" . $row['id'] . " / " . $row['title'] . "&raquo; wirklich gel&ouml;scht werden?\"
                       title=\"" . $lang['DEL'] . "\" href=\"index.php?plugin=gallery&delete=1&id=" . $row['id'] . "\"></a>
-                      &nbsp;<a href=\"#\"><i class=\"fa fa-refresh\"></i></a>
+                      &nbsp;<a href=\"index.php?plugin=gallery&refresh=1&id=$row[id]&folder=$row[folder]\" title=\"refresh\"><i class=\"fa fa-refresh\"></i></a>
                       &nbsp;<b>".$row['title']."</b><br><small>".$row['description']."</small></div>
                     <div class=\"col-md-8\">";
                     if (isset($previewError))

@@ -5,9 +5,9 @@ if (!isset($gallery))
 {
     $gallery = new \YAWK\PLUGINS\GALLERY\gallery();
 }
-// ADD NEW GALLERY
 if (isset($_POST))
 {
+    // DELETE GALLERY
     if (isset($_GET['delete']) && ($_GET['delete'] === "1"))
     {   // delete a gallery from database
         if ($gallery->delete($db) == true)
@@ -15,9 +15,18 @@ if (isset($_POST))
             \YAWK\alert::draw("success", "Gallery deleted successfully.", "Files on disk are <i>not</i> affected.", "", 1200);
         }
     }
+    // ADD NEW GALLERY
     if (isset($_GET['add']) && ($_GET['add'] === "1"))
     {   // add a new gallery to database
         $gallery->add($db);
+    }
+    // RESCAN GALLERY
+    if (isset($_GET['refresh']) && ($_GET['refresh'] === "1"))
+    {   // re-scan folder an re-write database
+        if ($gallery->reScanFolder($db, $_GET['folder']) == true)
+        {   // deletion successfull
+            \YAWK\alert::draw("success", "Refresh of $_GET[folder] successful.", "Gallery has been updated.", "", 2000);
+        }
     }
 }
 ?>
@@ -58,7 +67,7 @@ echo"<ol class=\"breadcrumb\">
     <div class="col-md-6">
         <div class="box box-default">
             <div class="box-header">
-                <h3 class="box-title">Add a new gallery</h3>
+                <h3 class="box-title"><i class="fa fa-plus-circle text-muted"></i> &nbsp;Add a new gallery</h3>
             </div>
             <div class="box-body">
                 <label for="folder">Select the folder where your images are located</label>
@@ -86,8 +95,30 @@ echo"<ol class=\"breadcrumb\">
                         id="savebutton"
                         name="save"
                         class="btn btn-success pull-right">
-                    <i id="savebuttonIcon" class="fa fa-check"></i> &nbsp;<?php print $lang['GALLERY_ADD']; ?>
+                    <i id="savebuttonIcon" class="fa fa-check"></i>&nbsp; <?php print $lang['GALLERY_ADD']; ?>
                 </button>
+                <br><h4><i class="fa fa-wrench text-muted"></i>&nbsp; Additional settings</h4>
+                <input type="checkbox" value="1" id="thumbnails" name="thumbnails">
+                <label for="thumbnails">Create thumbnails from images?</label>
+                <br>
+                <label for="tnWidth">Thumbnail width in px</label>
+                <input type="text" id="tnWidth" maxlength="12" name="tnWidth" class="form-control" placeholder="200px">
+
+
+                <label for="watermark">Watermark &amp; Position</label>
+                <input type="text" id="watermark" name="watermark" class="form-control" placeholder="(C) <?php echo date("Y")." photographer"; ?>">
+                &nbsp;&nbsp;
+                <input type="radio" id="topLeft" name="watermark" value="topLeft">
+                <label for="topLeft">Top left&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <input type="radio" id="topRight" name="watermark" value="topRight">
+                <label for="topRight">Top right&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+
+                <input type="radio" id="bottomLeft" name="watermark" value="bottomLeft">
+                <label for="bottomLeft">Bottom left&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <input type="radio" id="bottomRight" name="watermark" value="bottomRight">
+                <label for="bottomRight">Bottom right&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <br>
+
             </div>
         </div>
     </div>
