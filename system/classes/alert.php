@@ -72,10 +72,10 @@ namespace YAWK {
                     $icon = "fa fa-check-circle-o";
                     break;
                 case "default":
-                    $icon = "fa fa-info";
+                    $icon = "fa fa-info-circle";
                     break;
                 default:
-                    $icon = "fa fa-times-circle";
+                    $icon = "fa fa-info-circle";
                     break;
             }
 
