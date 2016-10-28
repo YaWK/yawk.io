@@ -21,6 +21,9 @@ namespace YAWK\PLUGINS\GALLERY {
         public $offsetRight;
         public $watermarkTextSize;
         public $watermarkOpacity;
+        public $watermarkColor;
+        public $watermarkBorderColor;
+        public $watermarkBorder;
 
 
         public function __construct()
@@ -234,6 +237,18 @@ namespace YAWK\PLUGINS\GALLERY {
             {   // offset left (from right)
                 $this->watermarkOpacity = $db->quote($_POST['watermarkOpacity']);
             }
+            if (isset($_POST['watermarkColor']) && (!empty($_POST['watermarkColor'])))
+            {   // offset left (from right)
+                $this->watermarkColor = $db->quote($_POST['watermarkColor']);
+            }
+            if (isset($_POST['watermarkBorderColor']) && (!empty($_POST['watermarkBorderColor'])))
+            {   // offset left (from right)
+                $this->watermarkBorderColor = $db->quote($_POST['watermarkBorderColor']);
+            }
+            if (isset($_POST['watermarkBorder']) && (!empty($_POST['watermarkBorder'])))
+            {   // offset left (from right)
+                $this->watermarkBorder = $db->quote($_POST['watermarkBorder']);
+            }
 
             // add new gallery to database
             if ($res = $db->query("INSERT INTO {plugin_gallery} (folder, title, description)
@@ -300,7 +315,7 @@ namespace YAWK\PLUGINS\GALLERY {
                     }
                     if (!empty($this->watermark))
                     {   // text watermark
-                        $img->load("../$this->folder/$filename")->text("$this->watermark", '../system/plugins/gallery/ttf/delicious.ttf', $this->watermarkTextSize, '#FFFFFF', "$this->watermarkPosition", "$this->offsetRight", "$this->offsetBottom", '#000', 1)->save("../$this->folder/$filename");
+                        $img->load("../$this->folder/$filename")->text("$this->watermark", '../system/plugins/gallery/ttf/delicious.ttf', $this->watermarkTextSize, "#$this->watermarkColor", "$this->watermarkPosition", "$this->offsetRight", "$this->offsetBottom", "#$this->watermarkBorderColor", $this->watermarkBorder)->save("../$this->folder/$filename");
                     }
 
                     // check if thumbnails should be created
@@ -317,7 +332,7 @@ namespace YAWK\PLUGINS\GALLERY {
                         // check if thumbnail folder exists
                         $this->checkDir("../$this->folder/thumbnails");
                         // add watermark with stroke to every thumbnail image
-                        $img->load("../$this->folder/$filename")->text("$this->watermark", '../system/plugins/gallery/ttf/delicious.ttf', $this->watermarkTextSize, '#FFFFFF', "$this->watermarkPosition", "$this->offsetRight", "$this->offsetBottom", '#000', 1)->fit_to_width($this->thumbnailWidth)->save("../$this->folder/thumbnails/$filename");
+                        $img->load("../$this->folder/$filename")->text("$this->watermark", '../system/plugins/gallery/ttf/delicious.ttf', $this->watermarkTextSize, "#$this->watermarkColor", "$this->watermarkPosition", "$this->offsetRight", "$this->offsetBottom", "#$this->watermarkBorderColor", $this->watermarkBorder)->fit_to_width($this->thumbnailWidth)->save("../$this->folder/thumbnails/$filename");
                     }
 
 

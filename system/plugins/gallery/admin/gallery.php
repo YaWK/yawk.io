@@ -151,7 +151,23 @@ echo"<ol class=\"breadcrumb\">
 
                     ?>
                 </select>
+                <label for="watermarkColor">Watermark Text Color</label>
+                <input type="text" id="watermarkColor" name="watermarkColor" class="form-control color" placeholder="pick a color or leave blank" value="ffffff">
+                <label for="watermarkBorderColor">Watermark Border</label>
+                <input type="text" id="watermarkBorderColor" name="watermarkBorderColor" class="form-control color" placeholder="pick a color or leave blank" value="000000">
+                <label for="watermarkBorder">Watermark Border Thickness</label>
+                <select id="watermarkBorder" name="watermarkBorder" class="form-control">
+                    <?php
+                    $i = 0;
+                    while ($i < 201)
+                    {   // get 120 option fields in while loop
+                        if ($i == 1) { $selected = "selected"; } else { $selected = ''; }
+                        echo "<option value=\"$i\" $selected>$i px</option>";
+                        $i++;
+                    }
 
+                    ?>
+                </select>
 
                 <label for="author">Photographer</label>
                 <input type="text" id="author" name="author" class="form-control" placeholder="Originator of this picture">
