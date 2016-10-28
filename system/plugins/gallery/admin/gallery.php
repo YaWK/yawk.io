@@ -134,10 +134,18 @@ echo"<ol class=\"breadcrumb\">
                     <option value="center">Center</option>
                     <option value="top">Top</option>
                 </select>
-                <label for="offsetBottom">Offset Bottom</label>
-                <input type="text" id="offsetBottom" name="offsetBottom" class="form-control" placeholder="-12" value="-12">
-                <label for="offsetRight">Offset Right</label>
+                <label for="offsetRight">Offset from right</label>
                 <input type="text" id="offsetRight" name="offsetRight" class="form-control" placeholder="-12" value="-12">
+                <label for="offsetBottom">Offset from bottom</label>
+                <input type="text" id="offsetBottom" name="offsetBottom" class="form-control" placeholder="-12" value="-12">
+                <label for="watermarkFont">Watermark Font</label>
+                <select id="watermarkFont" name="watermarkFont" class="form-control">
+                    <?php
+                    echo $gallery->scanFonts("../system/fonts/");
+                    ?>
+                </select>
+
+
                 <label for="watermarkTextSize">Watermark Text Size</label>
                 <select id="watermarkTextSize" name="watermarkTextSize" class="form-control">
                     <?php
@@ -153,7 +161,7 @@ echo"<ol class=\"breadcrumb\">
                 </select>
                 <label for="watermarkColor">Watermark Text Color</label>
                 <input type="text" id="watermarkColor" name="watermarkColor" class="form-control color" placeholder="pick a color or leave blank" value="ffffff">
-                <label for="watermarkBorderColor">Watermark Border</label>
+                <label for="watermarkBorderColor">Watermark Border Color</label>
                 <input type="text" id="watermarkBorderColor" name="watermarkBorderColor" class="form-control color" placeholder="pick a color or leave blank" value="000000">
                 <label for="watermarkBorder">Watermark Border Thickness</label>
                 <select id="watermarkBorder" name="watermarkBorder" class="form-control">
