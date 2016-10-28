@@ -103,12 +103,26 @@ echo"<ol class=\"breadcrumb\">
                 <label for="createThumbnails">Create thumbnails from images?</label>
                 <br>
                 <label for="thumbnailWidth">Thumbnail width in px</label>
-                <input type="text" id="thumbnailWidth" maxlength="12" name="tnWidth" class="form-control" placeholder="200px">
+                <input type="text" id="thumbnailWidth" maxlength="12" name="thumbnailWidth" class="form-control" placeholder="200px">
 
                 <h4><i class="fa fa-copyright text-muted"></i> Watermark Settings</h4>
                 <label for="watermark">Watermark from custom text</label>
                 <input type="text" id="watermark" name="watermark" class="form-control" placeholder="(C) <?php echo date("Y")." photographer"; ?>">
-                &nbsp;&nbsp;
+                <label for="watermarkImage">OR from any image</label>
+                <input type="text" id="watermarkImage" name="watermarkImage" class="form-control" placeholder="media/images/yourfile.png">
+                <label for="watermarkOpacity">Overlay opacity (only with watermark from image)</label>
+                <select id="watermarkOpacity" name="watermarkOpacity" class="form-control">
+                    <option value=".1">10%</option>
+                    <option value=".2">20%</option>
+                    <option value=".3">30%</option>
+                    <option value=".4">40%</option>
+                    <option value=".5" aria-selected="true" selected>50%</option>
+                    <option value=".6">60%</option>
+                    <option value=".7">70%</option>
+                    <option value=".8">80%</option>
+                    <option value=".9">90%</option>
+                    <option value="1">100%</option>
+                </select>
                 <label for="watermarkPosition">Watermark Position</label>
                 <select id="watermarkPosition" name="watermarkPosition" class="form-control">
                     <option value="---">Where should the watermark be placed?</option>
@@ -119,6 +133,23 @@ echo"<ol class=\"breadcrumb\">
                     <option value="bottom">Bottom</option>
                     <option value="center">Center</option>
                     <option value="top">Top</option>
+                </select>
+                <label for="offsetBottom">Offset Bottom</label>
+                <input type="text" id="offsetBottom" name="offsetBottom" class="form-control" placeholder="-12" value="-12">
+                <label for="offsetRight">Offset Right</label>
+                <input type="text" id="offsetRight" name="offsetRight" class="form-control" placeholder="-12" value="-12">
+                <label for="watermarkTextSize">Watermark Text Size</label>
+                <select id="watermarkTextSize" name="watermarkTextSize" class="form-control">
+                    <?php
+                    $i = 0;
+                    while ($i < 201)
+                    {   // get 120 option fields in while loop
+                        if ($i == 24) { $selected = "selected"; } else { $selected = ''; }
+                        echo "<option value=\"$i\" $selected>$i px</option>";
+                        $i++;
+                    }
+
+                    ?>
                 </select>
 
 

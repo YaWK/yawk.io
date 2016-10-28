@@ -15,7 +15,12 @@ namespace YAWK\PLUGINS\GALLERY {
         public $createThumbnails;
         public $thumbnailWidth;
         public $watermark;
+        public $watermarkImage;
         public $watermarkPosition;
+        public $offsetBottom;
+        public $offsetRight;
+        public $watermarkTextSize;
+        public $watermarkOpacity;
 
 
         public function __construct()
@@ -150,34 +155,9 @@ namespace YAWK\PLUGINS\GALLERY {
         {   /** @var $db \YAWK\db **/
             if (isset($_GET['id']) && (!empty($_GET['id']) && (is_numeric($_GET['id']))))
             {   // delete gallery items from db
-                if (!$deleteItems = $db->query("DELETE FROM {plugin_gallery_items} WHERE galleryID = '$_GET[id]'"))
-                {   // could not delete items
-                    \YAWK\alert::draw("warning", "Could not delete gallery items from database", "Please try again!", "", 5800);
-                }
-                else
-                {   // scan directory again
-                    // iterate trough folder and save each file in a db row...
-                    if (!isset($folder) && (empty($folder)))
-                    {   // fetch folder if its not set
-                        $this->folder = $this->getGalleryFolderByID($db, $_GET['id']);
-                    }
-                    foreach (new \DirectoryIterator($folder) as $fileInfo) {
-                        if($fileInfo->isDot()) continue;
-                        if($fileInfo->isDir()) continue;
-                        $filename = $fileInfo->getFilename();
-                        // TODO: this needs to be improved:
-                        // TODO: 1 db insert per file is NOT! ok - but how to implement implode() correctly to avoid that memory lack?
-                        if ($res = $db->query("INSERT INTO {plugin_gallery_items} (galleryID, filename, title, author, authorUrl)
-                        VALUES ('" . $_GET['id'] . "','" . $filename . "','" . $filename . "','" . " " . "', '". " " ."')"))
-                        {   // all good
-                            // \YAWK\alert::draw("success", "Gallery created.", "Database entry success.", "", 800);
-                        }
-                        else
-                        {   // error inserting data, throw notification
-                            \YAWK\alert::draw("warning", "Could not insert $filename", "Database error. Please check folder and try again.", "", 1200);
-                        }
-                    }
-                }
+                $this->delete($db);
+                $this->add($db);
+
             }
             return true;
         }
@@ -219,20 +199,40 @@ namespace YAWK\PLUGINS\GALLERY {
                 $this->thumbnailWidth = $db->quote($_POST['thumbnailWidth']);
             }
             if (isset($_POST['watermark']) && (!empty($_POST['watermark'])))
-            {   // thumbnail width in px
+            {   // any string can do the watermark job
                 $this->watermark = $db->quote($_POST['watermark']);
             }
             if (isset($_POST['watermarkPosition']) && (!empty($_POST['watermarkPosition'])))
-            {   // thumbnail width in px
+            {   // position of the watermark (bottom left, bottom right, top left, top right, bottom, center, top)
                 $this->watermarkPosition = $db->quote($_POST['watermarkPosition']);
             }
             if (isset($_POST['author']) && (!empty($_POST['author'])))
-            {   // thumbnail width in px
+            {   // name of the author, studio, photographer, originator
                 $this->author = $db->quote($_POST['author']);
             }
             if (isset($_POST['authorUrl']) && (!empty($_POST['authorUrl'])))
-            {   // thumbnail width in px
+            {   // any url of the photographer (author, originator)
                 $this->authorUrl = $db->quote($_POST['authorUrl']);
+            }
+            if (isset($_POST['watermarkImage']) && (!empty($_POST['watermarkImage'])))
+            {   // any image used as watermark (preferably transparent png-24)
+                $this->watermarkImage = $db->quote($_POST['watermarkImage']);
+            }
+            if (isset($_POST['offsetBottom']) && (!empty($_POST['offsetBottom'])))
+            {   // offset left (from right)
+                $this->offsetBottom = $db->quote($_POST['offsetBottom']);
+            }
+            if (isset($_POST['offsetRight']) && (!empty($_POST['offsetRight'])))
+            {   // offset right (from left)
+                $this->offsetRight = $db->quote($_POST['offsetRight']);
+            }
+            if (isset($_POST['watermarkTextSize']) && (!empty($_POST['watermarkTextSize'])))
+            {   // offset left (from right)
+                $this->watermarkTextSize = $db->quote($_POST['watermarkTextSize']);
+            }
+            if (isset($_POST['watermarkOpacity']) && (!empty($_POST['watermarkOpacity'])))
+            {   // offset left (from right)
+                $this->watermarkOpacity = $db->quote($_POST['watermarkOpacity']);
             }
 
             // add new gallery to database
@@ -257,7 +257,9 @@ namespace YAWK\PLUGINS\GALLERY {
                     $galleryID = $this->title;
                 }
 
-            // iterate trough folder and save each file in a db row...
+            // ITERATE THROUGH FOLDER
+            // check settings, set them...
+            // and save each file in a db row.
             foreach (new \DirectoryIterator("../$this->folder") as $fileInfo) {
                 if($fileInfo->isDot()) continue;        // exclude dots
                 if($fileInfo->isDir()) continue;        // exclude subdirectories
@@ -266,7 +268,7 @@ namespace YAWK\PLUGINS\GALLERY {
                 // MANIPULATE IMAGES IN A ROW
 
                 // check if a watermark should be set
-                if (!empty($this->watermark))
+                if (!empty($this->watermark) || (!empty($this->watermarkImage)))
                 {   // check watermark position
                     if ($this->watermarkPosition === "---")
                     {   // default position, if no pos is set
@@ -292,7 +294,14 @@ namespace YAWK\PLUGINS\GALLERY {
                         } // end backup copy original files
                     }
                     // add watermark with stroke to every image
-                    $img->load("../$this->folder/$filename")->text("$this->watermark", '../system/plugins/gallery/ttf/delicious.ttf', 24, '#FFFFFF', "$this->watermarkPosition", -12, -12, '#000', 1)->save("../$this->folder/$filename");
+                    if (!empty($this->watermarkImage))
+                    {   // Overlay image watermark
+                        $img->load("../$this->folder/$filename")->overlay("../$this->watermarkImage", "$this->watermarkPosition", $this->watermarkOpacity)->save("../$this->folder/$filename");
+                    }
+                    if (!empty($this->watermark))
+                    {   // text watermark
+                        $img->load("../$this->folder/$filename")->text("$this->watermark", '../system/plugins/gallery/ttf/delicious.ttf', $this->watermarkTextSize, '#FFFFFF', "$this->watermarkPosition", "$this->offsetRight", "$this->offsetBottom", '#000', 1)->save("../$this->folder/$filename");
+                    }
 
                     // check if thumbnails should be created
                     if ($this->createThumbnails === "1")
@@ -301,13 +310,16 @@ namespace YAWK\PLUGINS\GALLERY {
                         {   // if no default width is set, take this as default value
                             $this->thumbnailWidth = 200;
                         }
-                        // check if thumbnail folder exits
+                        else
+                            {   // remove all but numbers from thumbnail width
+                                $this->thumbnailWidth = preg_replace("/[^0-9]/","",$this->thumbnailWidth);
+                            }
+                        // check if thumbnail folder exists
                         $this->checkDir("../$this->folder/thumbnails");
                         // add watermark with stroke to every thumbnail image
-                        $img->load("../$this->folder/$filename")->text("$this->watermark", '../system/plugins/gallery/ttf/delicious.ttf', 24, '#FFFFFF', "$this->watermarkPosition", -12, -12, '#000', 1)->save("../$this->folder/thumbnails/$filename");
-                        // fit to width
-                        $img->load("../$this->folder/thumbnails/$filename")->fit_to_width($this->thumbnailWidth)->save("../$this->folder/thumbnails/$filename");
+                        $img->load("../$this->folder/$filename")->text("$this->watermark", '../system/plugins/gallery/ttf/delicious.ttf', $this->watermarkTextSize, '#FFFFFF', "$this->watermarkPosition", "$this->offsetRight", "$this->offsetBottom", '#000', 1)->fit_to_width($this->thumbnailWidth)->save("../$this->folder/thumbnails/$filename");
                     }
+
 
                 }
                 else
