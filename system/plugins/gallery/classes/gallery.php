@@ -9,6 +9,8 @@ namespace YAWK\PLUGINS\GALLERY {
         public $folder;
         public $title;
         public $description;
+        public $author;
+        public $authorUrl;
         public $images;
         public $createThumbnails;
         public $thumbnailWidth;
@@ -16,8 +18,9 @@ namespace YAWK\PLUGINS\GALLERY {
         public $watermarkPosition;
 
 
-        public function __construct(){
-        require_once 'system/plugins/gallery/classes/SimpleImage.php';
+        public function __construct()
+        {
+            //...
         }
 
         public function drawFolderSelect($path)
@@ -40,11 +43,10 @@ namespace YAWK\PLUGINS\GALLERY {
             $html = '';
             if (!isset($path))
             {
-                $path = "../media/images/"; // '.' for current
+                $path = "media/images/"; // '.' for current
             }
-            foreach (new \DirectoryIterator($path) as $file) {
+            foreach (new \DirectoryIterator("../$path") as $file) {
                 if ($file->isDot()) continue;
-
                 if ($file->isDir()) {
                     // print $file->getFilename() . '<br>';
                     $html .= "<option value=\"$path".$file->getFilename()."\">images/".$file->getFilename()."</option>";
@@ -57,7 +59,46 @@ namespace YAWK\PLUGINS\GALLERY {
         {   /** @var $db \YAWK\db **/
             // delete a gallery
             if (isset($_GET['id']) && (!empty($_GET['id']) && (is_numeric($_GET['id']))))
-            {   // delete gallery from database
+            {
+                // gallery folder
+                $folder = $this->getGalleryFolderByID($db, $_GET['id']);
+                // DELETE FILES
+                // check if thumbnail directory is here
+                if (is_dir("../$folder/thumbnails/"))
+                {   // try to delete it recursively
+                    if (!\YAWK\sys::recurseRmdir("../$folder/thumbnails/"))
+                    {   // did not work, throw notification
+                        \YAWK\alert::draw("warning", "Could not delete thumbnails!", "$folder/thumbnails could not be deleted.", "", 5800);
+                    }
+                    else
+                        {
+                            \YAWK\alert::draw("success", "Thumbnails deleted!", "$folder/thumbnails is removed.", "", 1200);
+                        }
+                }
+
+                // check if there are backup files to restore
+                if (is_dir("../$folder/original/"))
+                {
+                    // delete images in root folder of this gallery
+                    foreach (new \DirectoryIterator("../$folder/") as $fileInfo) {
+                        if($fileInfo->isDir()) continue;
+                        if($fileInfo->isDot()) continue;
+                        $filename = $fileInfo->getFilename();
+                        unlink("../$folder/$filename");
+                        // copy files from backup folder back to root directory
+                        if (!copy("../$folder/original/$filename", "../$folder/$filename"))
+                        {   // could not copy file, throw notification
+                            \YAWK\alert::draw("warning", "Could not restore file $filename", "This should not happen. We're sorry!", "", 800);
+                        }
+                    }
+                    // delete backup folder
+                    if (!\YAWK\sys::recurseRmdir("../$folder/original/"))
+                    {   // did not work, throw notification
+                        \YAWK\alert::draw("warning", "Could not delete backup folder!", "$folder/original could not be deleted.", "", 5800);
+                    }
+                }
+
+                // delete gallery from database
                 if ($res = $db->query("DELETE FROM {plugin_gallery} WHERE id = '$_GET[id]'"))
                 {   // gallery deleted...
                     // now go ahead with the items
@@ -148,6 +189,11 @@ namespace YAWK\PLUGINS\GALLERY {
             // 2.) manipulate images corresponding to selected settings
             // 3.) insert into database
 
+            // include SimpleImage Class
+            require_once 'SimpleImage.php';
+            // create object
+            $img = new \YAWK\SimpleImage();
+
             if (isset($_POST['folder']) && (!empty($_POST['folder'])))
             {   // gallery folder
                 $this->folder = $db->quote($_POST['folder']);
@@ -180,6 +226,14 @@ namespace YAWK\PLUGINS\GALLERY {
             {   // thumbnail width in px
                 $this->watermarkPosition = $db->quote($_POST['watermarkPosition']);
             }
+            if (isset($_POST['author']) && (!empty($_POST['author'])))
+            {   // thumbnail width in px
+                $this->author = $db->quote($_POST['author']);
+            }
+            if (isset($_POST['authorUrl']) && (!empty($_POST['authorUrl'])))
+            {   // thumbnail width in px
+                $this->authorUrl = $db->quote($_POST['authorUrl']);
+            }
 
             // add new gallery to database
             if ($res = $db->query("INSERT INTO {plugin_gallery} (folder, title, description)
@@ -204,14 +258,79 @@ namespace YAWK\PLUGINS\GALLERY {
                 }
 
             // iterate trough folder and save each file in a db row...
-            foreach (new \DirectoryIterator($this->folder) as $fileInfo) {
-                if($fileInfo->isDot()) continue;
-                if($fileInfo->isDir()) continue;
+            foreach (new \DirectoryIterator("../$this->folder") as $fileInfo) {
+                if($fileInfo->isDot()) continue;        // exclude dots
+                if($fileInfo->isDir()) continue;        // exclude subdirectories
+                // store filename in var for better handling
                 $filename = $fileInfo->getFilename();
+                // MANIPULATE IMAGES IN A ROW
+
+                // check if a watermark should be set
+                if (!empty($this->watermark))
+                {   // check watermark position
+                    if ($this->watermarkPosition === "---")
+                    {   // default position, if no pos is set
+                        $this->watermarkPosition = "bottom right";
+                    }
+                    // BACKUP
+                    // keep non-watermarked files in folder original
+                    // check if backup folder exists
+                    if (!is_dir("../$this->folder/original"))
+                    {   // if not, create folder
+                        mkdir("../$this->folder/original");
+                        // copy original files to backup folder
+                        // iterate through folder and write backup files
+                        foreach (new \DirectoryIterator("../$this->folder") as $backupFile)
+                        {   // exclude dots'n'dirs
+                            if($fileInfo->isDot()) continue;        // exclude dots
+                            if($fileInfo->isDir()) continue;        // exclude subdirectories
+                            $copyFile = $backupFile->getFilename();
+                            if (!@copy("../$this->folder/$copyFile", "../$this->folder/original/$copyFile"))
+                            {   // could not copy file, throw notification
+                                \YAWK\alert::draw("warning", "Could not backup file $filename", "This should not happen. We're sorry!", "", 800);
+                            }
+                        } // end backup copy original files
+                    }
+                    // add watermark with stroke to every image
+                    $img->load("../$this->folder/$filename")->text("$this->watermark", '../system/plugins/gallery/ttf/delicious.ttf', 24, '#FFFFFF', "$this->watermarkPosition", -12, -12, '#000', 1)->save("../$this->folder/$filename");
+
+                    // check if thumbnails should be created
+                    if ($this->createThumbnails === "1")
+                    {   // check if tn width is set
+                        if (empty($this->thumbnailWidth))
+                        {   // if no default width is set, take this as default value
+                            $this->thumbnailWidth = 200;
+                        }
+                        // check if thumbnail folder exits
+                        $this->checkDir("../$this->folder/thumbnails");
+                        // add watermark with stroke to every thumbnail image
+                        $img->load("../$this->folder/$filename")->text("$this->watermark", '../system/plugins/gallery/ttf/delicious.ttf', 24, '#FFFFFF', "$this->watermarkPosition", -12, -12, '#000', 1)->save("../$this->folder/thumbnails/$filename");
+                        // fit to width
+                        $img->load("../$this->folder/thumbnails/$filename")->fit_to_width($this->thumbnailWidth)->save("../$this->folder/thumbnails/$filename");
+                    }
+
+                }
+                else
+                    {   // no watermark required...
+                        // check if thumbnails should be created
+                        if ($this->createThumbnails === "1")
+                        {   // check if tn width is set
+                            if (empty($this->thumbnailWidth))
+                            {   // if no default width is set, take this as default value
+                                $this->thumbnailWidth = 200;
+                            }
+                            // check if thumbnail folder exits
+                            $this->checkDir("../$this->folder/thumbnails");
+                            // fit to width
+                            $img->load("../$this->folder/$filename")->fit_to_width($this->thumbnailWidth)->save("../$this->folder/thumbnails/$filename");
+                        }
+                    }
+
+
                 // TODO: this needs to be improved:
                 // TODO: 1 db insert per file is NOT! ok - but how to implement implode() correctly to avoid that memory lack?
                 if ($res = $db->query("INSERT INTO {plugin_gallery_items} (galleryID, filename, title, author, authorUrl)
-                        VALUES ('" . $galleryID . "','" . $filename . "','" . $filename . "','" . " " . "', '". " " ."')"))
+                        VALUES ('".$galleryID."', '".$filename."', '".$this->title."', '".$this->author."', '".$this->authorUrl."')"))
                 {   // all good
                     // \YAWK\alert::draw("success", "Gallery created.", "Database entry success.", "", 800);
                 }
@@ -248,7 +367,7 @@ namespace YAWK\PLUGINS\GALLERY {
                     {   // previewImage array is set, walk through it...
                         foreach ($getPreviewImages as $property => $image)
                         {   // display preview images
-                            echo "<img src=\"$row[folder]/$image[filename]\" class=\"img-thumbnail\" width=\"100\">";
+                            echo "<img src=\"../$row[folder]/$image[filename]\" class=\"img-thumbnail\" width=\"100\">";
                         }
                     }
                     echo"</div></div>

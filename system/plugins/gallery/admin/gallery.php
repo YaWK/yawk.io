@@ -71,7 +71,7 @@ echo"<ol class=\"breadcrumb\">
             </div>
             <div class="box-body">
                 <label for="folder">Select the folder where your images are located</label>
-                <?php echo $gallery->drawFolderSelect("../media/images/")?>
+                <?php echo $gallery->drawFolderSelect("media/images/")?>
                 <label for="customFolder">or set any different folder</label>
                 <input id="customFolder"
                        name="customFolder"
@@ -105,19 +105,22 @@ echo"<ol class=\"breadcrumb\">
                 <label for="thumbnailWidth">Thumbnail width in px</label>
                 <input type="text" id="thumbnailWidth" maxlength="12" name="tnWidth" class="form-control" placeholder="200px">
 
-                <label for="watermark">Watermark &amp; Position</label>
+                <h4><i class="fa fa-copyright text-muted"></i> Watermark Settings</h4>
+                <label for="watermark">Watermark from custom text</label>
                 <input type="text" id="watermark" name="watermark" class="form-control" placeholder="(C) <?php echo date("Y")." photographer"; ?>">
                 &nbsp;&nbsp;
-                <input type="radio" id="topLeft" name="watermarkPosition" value="topLeft">
-                <label for="topLeft">Top left&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                <input type="radio" id="topRight" name="watermarkPosition" value="topRight">
-                <label for="topRight">Top right&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <label for="watermarkPosition">Watermark Position</label>
+                <select id="watermarkPosition" name="watermarkPosition" class="form-control">
+                    <option value="---">Where should the watermark be placed?</option>
+                    <option value="bottom right">Bottom right</option>
+                    <option value="bottom left">Bottom left</option>
+                    <option value="top left">Top left</option>
+                    <option value="top right">Top right</option>
+                    <option value="bottom">Bottom</option>
+                    <option value="center">Center</option>
+                    <option value="top">Top</option>
+                </select>
 
-                <input type="radio" id="bottomLeft" name="watermarkPosition" value="bottomLeft">
-                <label for="bottomLeft">Bottom left&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                <input type="radio" id="bottomRight" name="watermarkPosition" value="bottomRight">
-                <label for="bottomRight">Bottom right&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                <br><br>
 
                 <label for="author">Photographer</label>
                 <input type="text" id="author" name="author" class="form-control" placeholder="Originator of this picture">
