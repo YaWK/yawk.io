@@ -19,6 +19,7 @@ namespace YAWK\PLUGINS\GALLERY {
         public $watermarkPosition;
         public $offsetBottom;
         public $offsetRight;
+        public $watermarkFont;
         public $watermarkTextSize;
         public $watermarkOpacity;
         public $watermarkColor;
@@ -44,6 +45,27 @@ namespace YAWK\PLUGINS\GALLERY {
             if (!is_dir("$folder/")) {
                 mkdir("$folder/");
             }
+        }
+
+
+        public function scanFonts($path)
+        {
+            $html = '';
+            if (!isset($path))
+            {
+                $path = "../system/fonts/"; // '.' for current
+            }
+            foreach (new \DirectoryIterator("$path") as $file) {
+                if ($file->isDot()) continue;
+                if ($file->isDir()) continue;
+                if ($file->getExtension() === "ttf")
+                {
+                    // print $file->getFilename() . '<br>';
+                    $html .= "<option value=\"$path".$file->getFilename()."\">system/fonts/".$file->getFilename()."</option>";
+                }
+
+            }
+            return $html;
         }
 
         public function scanDir($path)
@@ -214,7 +236,7 @@ namespace YAWK\PLUGINS\GALLERY {
                 $this->author = $db->quote($_POST['author']);
             }
             if (isset($_POST['authorUrl']) && (!empty($_POST['authorUrl'])))
-            {   // any url of the photographer (author, originator)
+            {   // url of the photographer (author, originator)
                 $this->authorUrl = $db->quote($_POST['authorUrl']);
             }
             if (isset($_POST['watermarkImage']) && (!empty($_POST['watermarkImage'])))
@@ -222,31 +244,35 @@ namespace YAWK\PLUGINS\GALLERY {
                 $this->watermarkImage = $db->quote($_POST['watermarkImage']);
             }
             if (isset($_POST['offsetBottom']) && (!empty($_POST['offsetBottom'])))
-            {   // offset left (from right)
+            {   // offset bottom (from bottom)
                 $this->offsetBottom = $db->quote($_POST['offsetBottom']);
             }
             if (isset($_POST['offsetRight']) && (!empty($_POST['offsetRight'])))
-            {   // offset right (from left)
+            {   // offset right (from right)
                 $this->offsetRight = $db->quote($_POST['offsetRight']);
             }
+            if (isset($_POST['watermarkFont']) && (!empty($_POST['watermarkFont'])))
+            {   // true type font to use for watermarking (located in system/fonts/)
+                $this->watermarkFont = $db->quote($_POST['watermarkFont']);
+            }
             if (isset($_POST['watermarkTextSize']) && (!empty($_POST['watermarkTextSize'])))
-            {   // offset left (from right)
+            {   // text size of your watermark
                 $this->watermarkTextSize = $db->quote($_POST['watermarkTextSize']);
             }
             if (isset($_POST['watermarkOpacity']) && (!empty($_POST['watermarkOpacity'])))
-            {   // offset left (from right)
+            {   // opacity (this works only, when watermark is set to an image!)
                 $this->watermarkOpacity = $db->quote($_POST['watermarkOpacity']);
             }
             if (isset($_POST['watermarkColor']) && (!empty($_POST['watermarkColor'])))
-            {   // offset left (from right)
+            {   // text color of your text-watermark
                 $this->watermarkColor = $db->quote($_POST['watermarkColor']);
             }
             if (isset($_POST['watermarkBorderColor']) && (!empty($_POST['watermarkBorderColor'])))
-            {   // offset left (from right)
+            {   // border color of your text-watermark
                 $this->watermarkBorderColor = $db->quote($_POST['watermarkBorderColor']);
             }
             if (isset($_POST['watermarkBorder']) && (!empty($_POST['watermarkBorder'])))
-            {   // offset left (from right)
+            {   // text-border in px
                 $this->watermarkBorder = $db->quote($_POST['watermarkBorder']);
             }
 
@@ -311,11 +337,25 @@ namespace YAWK\PLUGINS\GALLERY {
                     // add watermark with stroke to every image
                     if (!empty($this->watermarkImage))
                     {   // Overlay image watermark
-                        $img->load("../$this->folder/$filename")->overlay("../$this->watermarkImage", "$this->watermarkPosition", $this->watermarkOpacity)->save("../$this->folder/$filename");
+                        $img->load("../$this->folder/$filename")
+                            ->overlay("../$this->watermarkImage",
+                                      "$this->watermarkPosition",
+                                       $this->watermarkOpacity)
+                            ->save("../$this->folder/$filename");
                     }
                     if (!empty($this->watermark))
                     {   // text watermark
-                        $img->load("../$this->folder/$filename")->text("$this->watermark", '../system/plugins/gallery/ttf/delicious.ttf', $this->watermarkTextSize, "#$this->watermarkColor", "$this->watermarkPosition", "$this->offsetRight", "$this->offsetBottom", "#$this->watermarkBorderColor", $this->watermarkBorder)->save("../$this->folder/$filename");
+                        $img->load("../$this->folder/$filename")
+                            ->text("$this->watermark",
+                                    "$this->watermarkFont",
+                                    $this->watermarkTextSize,
+                                    "#$this->watermarkColor",
+                                    "$this->watermarkPosition",
+                                    "$this->offsetRight",
+                                    "$this->offsetBottom",
+                                    "#$this->watermarkBorderColor",
+                                    $this->watermarkBorder)
+                            ->save("../$this->folder/$filename");
                     }
 
                     // check if thumbnails should be created
@@ -332,10 +372,19 @@ namespace YAWK\PLUGINS\GALLERY {
                         // check if thumbnail folder exists
                         $this->checkDir("../$this->folder/thumbnails");
                         // add watermark with stroke to every thumbnail image
-                        $img->load("../$this->folder/$filename")->text("$this->watermark", '../system/plugins/gallery/ttf/delicious.ttf', $this->watermarkTextSize, "#$this->watermarkColor", "$this->watermarkPosition", "$this->offsetRight", "$this->offsetBottom", "#$this->watermarkBorderColor", $this->watermarkBorder)->fit_to_width($this->thumbnailWidth)->save("../$this->folder/thumbnails/$filename");
+                        $img->load("../$this->folder/$filename")
+                            ->text("$this->watermark",
+                                   "$this->watermarkFont",
+                                   $this->watermarkTextSize,
+                                   "#$this->watermarkColor",
+                                   "$this->watermarkPosition",
+                                   "$this->offsetRight",
+                                   "$this->offsetBottom",
+                                   "#$this->watermarkBorderColor",
+                                    $this->watermarkBorder)
+                            ->fit_to_width($this->thumbnailWidth)
+                            ->save("../$this->folder/thumbnails/$filename");
                     }
-
-
                 }
                 else
                     {   // no watermark required...
@@ -349,7 +398,9 @@ namespace YAWK\PLUGINS\GALLERY {
                             // check if thumbnail folder exits
                             $this->checkDir("../$this->folder/thumbnails");
                             // fit to width
-                            $img->load("../$this->folder/$filename")->fit_to_width($this->thumbnailWidth)->save("../$this->folder/thumbnails/$filename");
+                            $img->load("../$this->folder/$filename")
+                                ->fit_to_width($this->thumbnailWidth)
+                                ->save("../$this->folder/thumbnails/$filename");
                         }
                     }
 
