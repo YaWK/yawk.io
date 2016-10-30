@@ -40,6 +40,14 @@ namespace YAWK\PLUGINS\GALLERY {
                   </select>";
         }
 
+        public function drawFolderSelectFromGallery($path, $folder)
+        {
+            echo "folder: $folder<select name=\"folder\" class=\"form-control\" id=\"folder\">
+                  <option value=\"$folder\">$folder</option>
+                  ".self::scanDir($path)."
+                  </select>";
+        }
+
         public function checkDir($folder)
         {   // check if directory exists
             if (!is_dir("$folder/")) {
@@ -469,28 +477,21 @@ namespace YAWK\PLUGINS\GALLERY {
                     $this->folder = $row['folder'];
                     $this->title = $row['title'];
                     $this->description = $row['description'];
-                }
-                if ($res = $db->query("SELECT * from {plugin_gallery} where galleryID = $galleryID"))
-                {
-                    while ($row = mysqli_fetch_assoc($res))
-                    {
-                        $this->author = $row['author'];
-                        $this->authorUrl = $row['authorUrl'];
-                        $this->authorUrl = $row['authorUrl'];
-                        $this->createThumbnails = $row['createThumbnails'];
-                        $this->thumbnailWidth = $row['thumbnailWidth'];
-                        $this->watermark = $row['watermark'];
-                        $this->watermarkPosition = $row['watermarkPosition'];
-                        $this->watermarkImage = $row['watermarkImage'];
-                        $this->offsetBottom = $row['offsetBottom'];
-                        $this->offsetRight = $row['offsetRight'];
-                        $this->watermarkFont = $row['watermarkFont'];
-                        $this->watermarkTextSize = $row['watermarkTextSize'];
-                        $this->watermarkOpacity = $row['watermarkOpacity'];
-                        $this->watermarkColor = $row['watermarkColor'];
-                        $this->watermarkBorderColor = $row['watermarkBorderColor'];
-                        $this->watermarkBorder = $row['watermarkBorder'];
-                    }
+                    $this->author = $row['author'];
+                    $this->authorUrl = $row['authorUrl'];
+                    $this->createThumbnails = $row['createThumbnails'];
+                    $this->thumbnailWidth = $row['thumbnailWidth'];
+                    $this->watermark = $row['watermark'];
+                    $this->watermarkPosition = $row['watermarkPosition'];
+                    $this->watermarkImage = $row['watermarkImage'];
+                    $this->offsetBottom = $row['offsetBottom'];
+                    $this->offsetRight = $row['offsetRight'];
+                    $this->watermarkFont = $row['watermarkFont'];
+                    $this->watermarkTextSize = $row['watermarkTextSize'];
+                    $this->watermarkOpacity = $row['watermarkOpacity'];
+                    $this->watermarkColor = $row['watermarkColor'];
+                    $this->watermarkBorderColor = $row['watermarkBorderColor'];
+                    $this->watermarkBorder = $row['watermarkBorder'];
                 }
             }
         }
