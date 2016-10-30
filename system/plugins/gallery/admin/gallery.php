@@ -165,9 +165,9 @@ echo"<ol class=\"breadcrumb\">
                     ?>
                 </select>
                 <label for="watermarkColor">Watermark Text Color</label>
-                <input type="text" id="watermarkColor" name="watermarkColor" class="form-control color" placeholder="pick a color or leave blank" value="ffffff">
+                <input type="text" id="watermarkColor" name="watermarkColor" class="form-control color" placeholder="pick a color or leave blank" value="e8e8e8">
                 <label for="watermarkBorderColor">Watermark Border Color</label>
-                <input type="text" id="watermarkBorderColor" name="watermarkBorderColor" class="form-control color" placeholder="pick a color or leave blank" value="000000">
+                <input type="text" id="watermarkBorderColor" name="watermarkBorderColor" class="form-control color" placeholder="pick a color or leave blank" value="424242">
                 <label for="watermarkBorder">Watermark Border Thickness</label>
                 <select id="watermarkBorder" name="watermarkBorder" class="form-control">
                     <?php

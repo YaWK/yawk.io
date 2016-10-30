@@ -276,9 +276,48 @@ namespace YAWK\PLUGINS\GALLERY {
                 $this->watermarkBorder = $db->quote($_POST['watermarkBorder']);
             }
 
+            if ($this->watermarkPosition === "---")
+            {
+                $this->watermarkPosition = "bottom right";
+            }
+            if (empty($this->thumbnailWidth) || ($this->thumbnailWidth === "0"))
+            {
+                $this->thumbnailWidth = 200;
+            }
+
             // add new gallery to database
-            if ($res = $db->query("INSERT INTO {plugin_gallery} (folder, title, description)
-                        VALUES ('" . $this->folder . "','" . $this->title . "','" . $this->description . "')"))
+            if ($res = $db->query("INSERT INTO {plugin_gallery} (folder, 
+                                                                 title, 
+                                                                 description, 
+                                                                 createThumbnails,
+                                                                 thumbnailWidth, 
+                                                                 watermark, 
+                                                                 watermarkPosition, 
+                                                                 watermarkImage, 
+                                                                 offsetBottom, 
+                                                                 offsetRight, 
+                                                                 watermarkFont, 
+                                                                 watermarkTextSize,
+                                                                 watermarkOpacity,
+                                                                 watermarkColor,
+                                                                 watermarkBorderColor,
+                                                                 watermarkBorder)
+                                    VALUES ('".$this->folder."',
+                                            '".$this->title."',
+                                            '".$this->description."',
+                                            '".$this->createThumbnails."',
+                                            '".$this->thumbnailWidth."',
+                                            '".$this->watermark."',
+                                            '".$this->watermarkPosition."',
+                                            '".$this->watermarkImage."',
+                                            '".$this->offsetBottom."',
+                                            '".$this->offsetRight."',
+                                            '".$this->watermarkFont."',
+                                            '".$this->watermarkTextSize."',
+                                            '".$this->watermarkOpacity."',
+                                            '".$this->watermarkColor."',
+                                            '".$this->watermarkBorderColor."',
+                                            '".$this->watermarkBorder."')"))
             {   // all good
                 \YAWK\alert::draw("success", "Gallery created.", "Database entry success.", "", 800);
             }
@@ -404,7 +443,6 @@ namespace YAWK\PLUGINS\GALLERY {
                         }
                     }
 
-
                 // TODO: this needs to be improved:
                 // TODO: 1 db insert per file is NOT! ok - but how to implement implode() correctly to avoid that memory lack?
                 if ($res = $db->query("INSERT INTO {plugin_gallery_items} (galleryID, filename, title, author, authorUrl)
@@ -418,6 +456,43 @@ namespace YAWK\PLUGINS\GALLERY {
                     }
             }
             return true;
+        }
+
+        public function loadProperties($db, $galleryID)
+        {   /** @var $db \YAWK\db * */
+            // load all gallery properties
+            if ($res = $db->query("SELECT * from {plugin_gallery} where id = $galleryID"))
+            {
+                while ($row = mysqli_fetch_assoc($res))
+                {
+                    $this->id = $galleryID;
+                    $this->folder = $row['folder'];
+                    $this->title = $row['title'];
+                    $this->description = $row['description'];
+                }
+                if ($res = $db->query("SELECT * from {plugin_gallery} where galleryID = $galleryID"))
+                {
+                    while ($row = mysqli_fetch_assoc($res))
+                    {
+                        $this->author = $row['author'];
+                        $this->authorUrl = $row['authorUrl'];
+                        $this->authorUrl = $row['authorUrl'];
+                        $this->createThumbnails = $row['createThumbnails'];
+                        $this->thumbnailWidth = $row['thumbnailWidth'];
+                        $this->watermark = $row['watermark'];
+                        $this->watermarkPosition = $row['watermarkPosition'];
+                        $this->watermarkImage = $row['watermarkImage'];
+                        $this->offsetBottom = $row['offsetBottom'];
+                        $this->offsetRight = $row['offsetRight'];
+                        $this->watermarkFont = $row['watermarkFont'];
+                        $this->watermarkTextSize = $row['watermarkTextSize'];
+                        $this->watermarkOpacity = $row['watermarkOpacity'];
+                        $this->watermarkColor = $row['watermarkColor'];
+                        $this->watermarkBorderColor = $row['watermarkBorderColor'];
+                        $this->watermarkBorder = $row['watermarkBorder'];
+                    }
+                }
+            }
         }
 
         public function getPreview($db, $lang)
@@ -435,7 +510,7 @@ namespace YAWK\PLUGINS\GALLERY {
                     echo "<div class=\"row\"><div class=\"col-md-4\"><a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Soll die Galerie &laquo;" . $row['id'] . " / " . $row['title'] . "&raquo; wirklich gel&ouml;scht werden?\"
                       title=\"" . $lang['DEL'] . "\" href=\"index.php?plugin=gallery&delete=1&id=" . $row['id'] . "\"></a>
                       &nbsp;<a href=\"index.php?plugin=gallery&refresh=1&id=$row[id]&folder=$row[folder]\" title=\"refresh\"><i class=\"fa fa-refresh\"></i></a>
-                      &nbsp;<a href=\"index.php?plugin=gallery&edit=1&id=$row[id]&folder=$row[folder]\" title=\"edit\"><i class=\"fa fa-edit\"></i></a>
+                      &nbsp;<a href=\"index.php?plugin=gallery&pluginpage=edit&id=$row[id]&folder=$row[folder]\" title=\"edit\"><i class=\"fa fa-edit\"></i></a>
                       &nbsp;<b>".$row['title']."</b><br><small>".$row['description']."</small></div>
                     <div class=\"col-md-8\">";
                     if (isset($previewError))
