@@ -7,6 +7,11 @@ if (!isset($gallery))
 }
 if (isset($_POST))
 {
+    // EDIT GALLERY
+    if (isset($_GET['edit']) && ($_GET['edit'] === "1"))
+    {
+        // .... edit page....
+    }
     // DELETE GALLERY
     if (isset($_GET['delete']) && ($_GET['delete'] === "1"))
     {   // delete a gallery from database

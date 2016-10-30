@@ -435,6 +435,7 @@ namespace YAWK\PLUGINS\GALLERY {
                     echo "<div class=\"row\"><div class=\"col-md-4\"><a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Soll die Galerie &laquo;" . $row['id'] . " / " . $row['title'] . "&raquo; wirklich gel&ouml;scht werden?\"
                       title=\"" . $lang['DEL'] . "\" href=\"index.php?plugin=gallery&delete=1&id=" . $row['id'] . "\"></a>
                       &nbsp;<a href=\"index.php?plugin=gallery&refresh=1&id=$row[id]&folder=$row[folder]\" title=\"refresh\"><i class=\"fa fa-refresh\"></i></a>
+                      &nbsp;<a href=\"index.php?plugin=gallery&edit=1&id=$row[id]&folder=$row[folder]\" title=\"edit\"><i class=\"fa fa-edit\"></i></a>
                       &nbsp;<b>".$row['title']."</b><br><small>".$row['description']."</small></div>
                     <div class=\"col-md-8\">";
                     if (isset($previewError))
