@@ -42,7 +42,7 @@ namespace YAWK\PLUGINS\GALLERY {
 
         public function drawFolderSelectFromGallery($path, $folder)
         {
-            echo "folder: $folder<select name=\"folder\" class=\"form-control\" id=\"folder\">
+            echo "<select name=\"folder\" class=\"form-control\" id=\"folder\">
                   <option value=\"$folder\">$folder</option>
                   ".self::scanDir($path)."
                   </select>";
@@ -510,7 +510,7 @@ namespace YAWK\PLUGINS\GALLERY {
                     // preview without images
                     echo "<div class=\"row\"><div class=\"col-md-4\"><a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Soll die Galerie &laquo;" . $row['id'] . " / " . $row['title'] . "&raquo; wirklich gel&ouml;scht werden?\"
                       title=\"" . $lang['DEL'] . "\" href=\"index.php?plugin=gallery&delete=1&id=" . $row['id'] . "\"></a>
-                      &nbsp;<a href=\"index.php?plugin=gallery&refresh=1&id=$row[id]&folder=$row[folder]\" title=\"refresh\"><i class=\"fa fa-refresh\"></i></a>
+                      <!-- &nbsp;<a href=\"index.php?plugin=gallery&refresh=1&id=$row[id]&folder=$row[folder]\" title=\"refresh\"><i class=\"fa fa-refresh\"></i></a> -->
                       &nbsp;<a href=\"index.php?plugin=gallery&pluginpage=edit&id=$row[id]&folder=$row[folder]\" title=\"edit\"><i class=\"fa fa-edit\"></i></a>
                       &nbsp;<b>".$row['title']."</b><br><small>".$row['description']."</small></div>
                     <div class=\"col-md-8\">";
@@ -526,6 +526,41 @@ namespace YAWK\PLUGINS\GALLERY {
                         }
                     }
                     echo"</div></div>
+                    <hr>";
+                }
+            }
+            return null;
+        }
+
+
+        public function getEditableImages($db, $lang, $galleryID)
+        {   /** @var $db \YAWK\db **/
+            // get gallery titles...
+            if ($res = $db->query("SELECT * from {plugin_gallery} WHERE id = $galleryID"))
+            {
+                while ($row = mysqli_fetch_assoc($res))
+                {
+                    if (!$getPreviewImages = $db->query("SELECT galleryID, filename from {plugin_gallery_items} WHERE galleryID = $galleryID"))
+                    {   // store info msg, if files could not be retrieved
+                        $previewError = "Sorry, no preview available.";
+                    }
+                    // preview without images
+                    echo "<a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Soll die Galerie &laquo;" . $row['id'] . " / " . $row['title'] . "&raquo; wirklich gel&ouml;scht werden?\"
+                      title=\"" . $lang['DEL'] . "\" href=\"index.php?plugin=gallery&delete=1&id=" . $row['id'] . "\"></a>
+                      &nbsp;<a href=\"index.php?plugin=gallery&refresh=1&id=$row[id]&folder=$row[folder]\" title=\"refresh\"><i class=\"fa fa-refresh\"></i></a>
+                      &nbsp;<b>".$row['title']."</b><br><small>".$row['description']."</small><br><div class=\"text-center\"><br>";
+                    if (isset($previewError))
+                    {   // if files could not be loaded from db
+                        echo $previewError;
+                    }
+                    else
+                    {   // previewImage array is set, walk through it...
+                        foreach ($getPreviewImages as $property => $image)
+                        {   // display preview images
+                            echo "<img src=\"../$row[folder]/$image[filename]\" class=\"img-thumbnail\" width=\"300\" style=\"margin-right:20px; margin-bottom: 20px;\">";
+                        }
+                    }
+                    echo"</div>
                     <hr>";
                 }
             }

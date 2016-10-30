@@ -47,7 +47,8 @@ echo \YAWK\backend::getTitle($lang['GALLERY'], $lang['GALLERY_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
             <li><a href=\"index.php?page=plugins\" title=\"Plugins\"> Plugins</a></li>
-            <li class=\"active\"><a href=\"index.php?plugin=gallery\" title=\"Gallery\"> Gallery</a></li>
+            <li><a href=\"index.php?plugin=gallery\" title=\"Gallery\"> Gallery</a></li>
+            <li class=\"active\"><a href=\"index.php?plugin=gallery&pluginpage=edit&id=$gallery->id\" title=\"edit $gallery->title\"> edit gallery</a></li>
          </ol>
     </section>
     <!-- Main content -->
@@ -57,12 +58,23 @@ echo"<ol class=\"breadcrumb\">
 
 <form action="index.php?plugin=gallery&pluginpage=gallery&add=1" role="form" method="POST">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div class="box box-default">
                 <div class="box-header">
-                    <h3 class="box-title"><i class="fa fa-plus-circle text-muted"></i> &nbsp;Add a new gallery</h3>
+                    <h3 class="box-title"><i class="fa fa-edit text-muted"></i> &nbsp;edit <i><?php echo $gallery->title; ?></i></h3>
                 </div>
                 <div class="box-body">
+                    <?php echo $gallery->getEditableImages($db, $lang, $gallery->id); ?>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="box box-default">
+                <div class="box-header">
+                    <h3 class="box-title">Existing Galleries</h3>
+                </div>
+                <div class="box-body">
+
                     <label for="folder">Select the folder where your images are located</label>
                     <?php echo $gallery->drawFolderSelectFromGallery("media/images/", "$gallery->folder")?>
                     <label for="customFolder">or set any different folder</label>
@@ -95,14 +107,14 @@ echo"<ol class=\"breadcrumb\">
                     <br><h4><i class="fa fa-wrench text-muted"></i>&nbsp; Additional settings</h4>
                     <input type="hidden" value="0" name="createThumbnails">
                     <?php
-                        if ($gallery->createThumbnails === "1")
-                        {
-                            $checked = "checked";
-                        }
-                        else
-                            {
-                                $checked = "";
-                            }
+                    if ($gallery->createThumbnails === "1")
+                    {
+                        $checked = "checked";
+                    }
+                    else
+                    {
+                        $checked = "";
+                    }
                     ?>
                     <input type="checkbox" value="<?php echo $gallery->createThumbnails; ?>" id="createThumbnails" name="createThumbnails" <?php echo $checked; ?>>
                     <label for="createThumbnails">Create thumbnails from images?</label>
@@ -191,16 +203,6 @@ echo"<ol class=\"breadcrumb\">
                     <label for="author">Photographer URL</label>
                     <input type="text" id="authorUrl" name="authorUrl" class="form-control" value="<?php echo $gallery->authorUrl; ?>" placeholder="http://">
 
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="box box-default">
-                <div class="box-header">
-                    <h3 class="box-title">Existing Galleries</h3>
-                </div>
-                <div class="box-body">
-                    <?php echo $gallery->getPreview($db, $lang); ?>
                 </div>
             </div>
         </div>
