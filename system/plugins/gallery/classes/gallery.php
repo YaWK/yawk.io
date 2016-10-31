@@ -110,7 +110,7 @@ namespace YAWK\PLUGINS\GALLERY {
                         \YAWK\alert::draw("warning", "Could not delete thumbnails!", "$folder/thumbnails could not be deleted.", "", 5800);
                     }
                     else
-                        {
+                        {   // thumbnails deleted success msg
                             \YAWK\alert::draw("success", "Thumbnails deleted!", "$folder/thumbnails is removed.", "", 1200);
                         }
                 }
@@ -124,12 +124,19 @@ namespace YAWK\PLUGINS\GALLERY {
                         if($fileInfo->isDot()) continue;
                         $filename = $fileInfo->getFilename();
                         unlink("../$folder/$filename");
+                    }
+                    // copy images back from backup folder
+                    foreach (new \DirectoryIterator("../$folder/original") as $fileInfo) {
+                        if($fileInfo->isDir()) continue;
+                        if($fileInfo->isDot()) continue;
+                        $filename = $fileInfo->getFilename();
                         // copy files from backup folder back to root directory
                         if (!copy("../$folder/original/$filename", "../$folder/$filename"))
                         {   // could not copy file, throw notification
                             \YAWK\alert::draw("warning", "Could not restore file $filename", "This should not happen. We're sorry!", "", 800);
                         }
                     }
+
                     // delete backup folder
                     if (!\YAWK\sys::recurseRmdir("../$folder/original/"))
                     {   // did not work, throw notification
@@ -550,16 +557,26 @@ namespace YAWK\PLUGINS\GALLERY {
                         if (rename("../$this->folder/$oldFile", "../$this->folder/$newFile"))
                         {   // filename did change - notify user about that
                             \YAWK\alert::draw("success", "$oldFile renamed to $newFile", "$this->itemID", "", 800);
+                            // update database: save new file name
                             if (!$saveItem = $db->query("UPDATE {plugin_gallery_items} 
                                                          SET filename = '$newFile' 
                                                          WHERE id = $this->itemID"))
                             {   // could not rename file in database, notify user
                                 \YAWK\alert::draw("danger", "Could not save new filename $newFile in database!", "But... the file is already renamed. Expect errors.", "", 5800);
                             }
+
+                            // check if there are thumbnails to rename...
+                            if (is_dir("../$this->folder/thumbnails/"))
+                            {   // thumbnail directory exist
+                                if (!rename("../$this->folder/thumbnails/$oldFile", "../$this->folder/thumbnails/$newFile"))
+                                {   // rename thumbnail failed, throw error
+                                    \YAWK\alert::draw("danger", "Could not rename thumbnails/$oldFile to $newFile", "Please check folder permissions!", "", 5800);
+                                }
+                            }
                         }
                         else
                         {   // rename failed
-                            \YAWK\alert::draw("danger", "Could not rename $oldFile to $newFile", "$this->itemID", "", 5800);
+                            \YAWK\alert::draw("danger", "Could not rename $oldFile to $newFile", "Please check folder permissions!", "", 5800);
                         }
                     }
                     // ## CHECK IF IMAGE TITLE HAS CHANGED...
