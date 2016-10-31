@@ -9,6 +9,7 @@ namespace YAWK\PLUGINS\GALLERY {
         public $itemID;
         public $folder;
         public $title;
+        public $itemTitle;
         public $description;
         public $author;
         public $authorUrl;
@@ -738,7 +739,8 @@ namespace YAWK\PLUGINS\GALLERY {
                             for ($i = 0; $i < count($property); $i++) {
                                 $this->itemID = $image['id'];
                                 $this->filename = $image['filename'];
-                                $this->title = $image['title'];
+                                // $this->title = $image['title'];
+                                $this->itemTitle = $image['title'];
                                 $this->author = $image['author'];
                                 $this->authorUrl = $image['authorUrl'];
 
@@ -747,7 +749,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                     </div>';
                                     echo '
                                     <div class="row"><div class="col-md-4">
-                                         <img class="img-thumbnail" width="400" title="'.$this->title.'" src="../' . $row['folder']."/".$this->filename . '">'.$this->itemID.'<br>
+                                    <a href="../' . $row['folder']."/".$this->filename . '" data-lightbox="'.$this->title.'"><img class="img-thumbnail" width="400" title="'.$this->itemTitle.'" src="../' . $row['folder']."/".$this->filename . '"></a>
+                                   '.$this->itemID.'<br>
                                          <div style="margin-top: 10px; margin-bottom:10px;">
                                          <i class="fa fa-arrows-h"></i>&nbsp;
                                          <i class="fa fa-arrows-v"></i>&nbsp;
@@ -772,7 +775,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                 else
                                     {  echo '  
                                       <div class="col-md-4">
-                                         <img class="img-thumbnail" width="400" title="'.$this->title.'" src="../' . $row['folder']."/".$this->filename . '">'.$this->itemID.'<br>
+                                         
+                                    <a href="../' . $row['folder']."/".$this->filename . '" data-lightbox="'.$this->title.'"><img class="img-thumbnail" width="400" title="'.$this->itemTitle.'" src="../' . $row['folder']."/".$this->filename . '"></a>'.$this->itemID.'<br>
                                          <div style="margin-top: 10px; margin-bottom:10px;">
                                          <i class="fa fa-arrows-h"></i>&nbsp;
                                          <i class="fa fa-arrows-v"></i>&nbsp;
