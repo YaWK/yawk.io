@@ -71,7 +71,7 @@ echo"<ol class=\"breadcrumb\">
         <div class="col-md-4">
             <div class="box box-default">
                 <div class="box-header">
-                    <h3 class="box-title">Existing Galleries</h3>
+                    <h3 class="box-title">Edit this gallery</h3>
                 </div>
                 <div class="box-body">
 

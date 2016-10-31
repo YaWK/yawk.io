@@ -11,7 +11,7 @@ namespace YAWK\PLUGINS\GALLERY {
         public $description;
         public $author;
         public $authorUrl;
-        public $images;
+        public $filename;
         public $createThumbnails;
         public $thumbnailWidth;
         public $watermark;
@@ -540,7 +540,9 @@ namespace YAWK\PLUGINS\GALLERY {
             {
                 while ($row = mysqli_fetch_assoc($res))
                 {
-                    if (!$getPreviewImages = $db->query("SELECT galleryID, filename from {plugin_gallery_items} WHERE galleryID = $galleryID"))
+                    if (!$getPreviewImages = $db->query("SELECT id, galleryID, filename, title, author, authorUrl
+                                                         from {plugin_gallery_items} 
+                                                         WHERE galleryID = $galleryID ORDER BY filename, sort DESC"))
                     {   // store info msg, if files could not be retrieved
                         $previewError = "Sorry, no preview available.";
                     }
@@ -548,19 +550,62 @@ namespace YAWK\PLUGINS\GALLERY {
                     echo "<a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Soll die Galerie &laquo;" . $row['id'] . " / " . $row['title'] . "&raquo; wirklich gel&ouml;scht werden?\"
                       title=\"" . $lang['DEL'] . "\" href=\"index.php?plugin=gallery&delete=1&id=" . $row['id'] . "\"></a>
                       &nbsp;<a href=\"index.php?plugin=gallery&refresh=1&id=$row[id]&folder=$row[folder]\" title=\"refresh\"><i class=\"fa fa-refresh\"></i></a>
-                      &nbsp;<b>".$row['title']."</b><br><small>".$row['description']."</small><br><div class=\"text-center\"><br>";
+                      &nbsp;<b>".$row['title']."</b><br><small>".$row['description']."</small><br>
+                                    <div class=\"text-center\"><br>";
                     if (isset($previewError))
                     {   // if files could not be loaded from db
                         echo $previewError;
                     }
                     else
                     {   // previewImage array is set, walk through it...
+                        $count = 3;
+                        echo '
+                                    <div class="row">
+                                    ';
                         foreach ($getPreviewImages as $property => $image)
                         {   // display preview images
-                            echo "<img src=\"../$row[folder]/$image[filename]\" class=\"img-thumbnail\" width=\"300\" style=\"margin-right:20px; margin-bottom: 20px;\">";
+                            for ($i = 0; $i < count($property); $i++) {
+                                $this->id = $image['id'];
+                                $this->filename = $image['filename'];
+
+                                if ($count % 3 == 0) { // time to break line
+                                    echo '
+                                    </div>';
+                                    echo '
+                                    <div class="row"><div class="col-md-4">
+                                         <img class="img-thumbnail" width="400" title="'.$this->title.'" src="../' . $row['folder']."/".$this->filename . '"><br>'.$this->id.'
+                                         <i class="fa fa-arrows-h"></i>&nbsp;
+                                         <i class="fa fa-arrows-v"></i>&nbsp;
+                                         <i class="fa fa-undo"></i>&nbsp;
+                                         <i class="fa fa-adjust"></i>&nbsp;
+                                         <i class="fa fa-adjust text-muted" style="color:#ccc;"></i>&nbsp;
+                                         <i class="fa fa-tint"></i>&nbsp;
+                                         <i class="fa fa-tint text-muted" style="color:#ccc;"></i>&nbsp;
+                                         <i class="fa fa-sort"></i>&nbsp;
+                                         <i class="fa fa-trash-o"></i>&nbsp;<br><br>
+                                      </div>';
+                                }
+                                else
+                                    {  echo '  
+                                      <div class="col-md-4">
+                                         <img class="img-thumbnail" width="400" title="'.$this->title.'" src="../' . $row['folder']."/".$this->filename . '"><br>'.$this->id.'
+                                         <i class="fa fa-arrows-h"></i>&nbsp;
+                                         <i class="fa fa-arrows-v"></i>&nbsp;
+                                         <i class="fa fa-undo"></i>&nbsp;
+                                         <i class="fa fa-adjust"></i>&nbsp;
+                                         <i class="fa fa-adjust text-muted" style="color:#ccc;"></i>&nbsp;
+                                         <i class="fa fa-tint"></i>&nbsp;
+                                         <i class="fa fa-tint text-muted" style="color:#ccc;"></i>&nbsp;
+                                         <i class="fa fa-sort"></i>&nbsp;
+                                         <i class="fa fa-trash-o"></i>&nbsp;<br><br>
+                                      </div>';
+                                    }
+                                $count++;
+                            }
+                            //echo "<img src=\"../$row[folder]/$image[filename]\" title=\"$this->title\" class=\"img-thumbnail\" width=\"300\" style=\"margin-right:20px; margin-bottom: 20px;\">";
                         }
                     }
-                    echo"</div>
+                    echo"</div></div>
                     <hr>";
                 }
             }
