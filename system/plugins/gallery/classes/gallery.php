@@ -6,6 +6,7 @@ namespace YAWK\PLUGINS\GALLERY {
     class gallery
     {
         public $id;
+        public $itemID;
         public $folder;
         public $title;
         public $description;
@@ -496,6 +497,60 @@ namespace YAWK\PLUGINS\GALLERY {
             }
         }
 
+
+        public function edit($db, $galleryID)
+        {   /** @var $db \YAWK\db * */
+            // quote all POST vars
+            $this->id = $galleryID;
+            $this->folder = $db->quote($_POST['folder']);
+            $this->title = $db->quote($_POST['title']);
+            $this->description = $db->quote($_POST['description']);
+            $this->author = $db->quote($_POST['author']);
+            $this->authorUrl = $db->quote($_POST['authorUrl']);
+            $this->createThumbnails = $db->quote($_POST['createThumbnails']);
+            $this->thumbnailWidth = $db->quote($_POST['thumbnailWidth']);
+            $this->watermark = $db->quote($_POST['watermark']);
+            $this->watermarkPosition = $db->quote($_POST['watermarkPosition']);
+            $this->watermarkImage = $db->quote($_POST['watermarkImage']);
+            $this->offsetBottom = $db->quote($_POST['offsetBottom']);
+            $this->offsetRight = $db->quote($_POST['offsetRight']);
+            $this->watermarkFont = $db->quote($_POST['watermarkFont']);
+            $this->watermarkTextSize = $db->quote($_POST['watermarkTextSize']);
+            $this->watermarkOpacity = $db->quote($_POST['watermarkOpacity']);
+            $this->watermarkColor = $db->quote($_POST['watermarkColor']);
+            $this->watermarkBorderColor = $db->quote($_POST['watermarkBorderColor']);
+            $this->watermarkBorder = $db->quote($_POST['watermarkBorder']);
+            // update database: gallery settings
+            if (!$res = $db->query("UPDATE {plugin_gallery} 
+                                   SET folder='$this->folder',
+                                       title='$this->title',
+                                       description='$this->description',
+                                       author='$this->author',
+                                       authorUrl='$this->authorUrl',
+                                       createThumbnails='$this->createThumbnails',
+                                       thumbnailWidth='$this->thumbnailWidth',
+                                       watermark='$this->watermark',
+                                       watermarkPosition='$this->watermarkPosition',
+                                       watermarkImage='$this->watermarkImage',
+                                       offsetBottom='$this->offsetBottom',
+                                       offsetRight='$this->offsetRight',
+                                       watermarkFont='$this->watermarkFont',
+                                       watermarkTextSize='$this->watermarkTextSize',
+                                       watermarkOpacity='$this->watermarkOpacity',
+                                       watermarkColor='$this->watermarkColor',
+                                       watermarkBorderColor='$this->watermarkBorderColor',
+                                       watermarkBorder='$this->watermarkBorder'"))
+            {   // update gallery not worked, notify user
+                \YAWK\alert::draw("warning", "Could not save gallery settings.", "Please check your input data and try again.", "", 5800);
+            }
+            else
+                {   // all good,
+                    return true;
+                }
+        // something above did not worked,
+        return false;
+        }
+
         public function getPreview($db, $lang)
         {   /** @var $db \YAWK\db **/
             // get gallery titles...
@@ -573,7 +628,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                     </div>';
                                     echo '
                                     <div class="row"><div class="col-md-4">
-                                         <img class="img-thumbnail" width="400" title="'.$this->title.'" src="../' . $row['folder']."/".$this->filename . '"><br>'.$this->id.'
+                                         <img class="img-thumbnail" width="400" title="'.$this->title.'" src="../' . $row['folder']."/".$this->filename . '">'.$this->id.'<br>
+                                         <div style="margin-top: 10px; margin-bottom:10px;">
                                          <i class="fa fa-arrows-h"></i>&nbsp;
                                          <i class="fa fa-arrows-v"></i>&nbsp;
                                          <i class="fa fa-undo"></i>&nbsp;
@@ -582,13 +638,19 @@ namespace YAWK\PLUGINS\GALLERY {
                                          <i class="fa fa-tint"></i>&nbsp;
                                          <i class="fa fa-tint text-muted" style="color:#ccc;"></i>&nbsp;
                                          <i class="fa fa-sort"></i>&nbsp;
-                                         <i class="fa fa-trash-o"></i>&nbsp;<br><br>
-                                      </div>';
+                                         <i class="fa fa-trash-o"></i>&nbsp;<br>
+                                         </div>
+                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="filename-'.$this->id.'" id="filename-'.$this->id.'" placeholder="filename.jpg" value="'.$this->filename.'">
+                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="title-'.$this->id.'" id="title-'.$this->id.'" placeholder="File Title" value="'.$this->title.'">
+                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="author-'.$this->id.'" id="author-'.$this->id.'" placeholder="Copyright Owner (author)" value="'.$this->author.'">
+                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="authorUrl-'.$this->id.'" id="authorUrl-'.$this->id.'" placeholder="URL" value="'.$this->authorUrl.'"><br>
+                                      <br></div>';
                                 }
                                 else
                                     {  echo '  
                                       <div class="col-md-4">
-                                         <img class="img-thumbnail" width="400" title="'.$this->title.'" src="../' . $row['folder']."/".$this->filename . '"><br>'.$this->id.'
+                                         <img class="img-thumbnail" width="400" title="'.$this->title.'" src="../' . $row['folder']."/".$this->filename . '">'.$this->id.'<br>
+                                         <div style="margin-top: 10px; margin-bottom:10px;">
                                          <i class="fa fa-arrows-h"></i>&nbsp;
                                          <i class="fa fa-arrows-v"></i>&nbsp;
                                          <i class="fa fa-undo"></i>&nbsp;
@@ -597,8 +659,13 @@ namespace YAWK\PLUGINS\GALLERY {
                                          <i class="fa fa-tint"></i>&nbsp;
                                          <i class="fa fa-tint text-muted" style="color:#ccc;"></i>&nbsp;
                                          <i class="fa fa-sort"></i>&nbsp;
-                                         <i class="fa fa-trash-o"></i>&nbsp;<br><br>
-                                      </div>';
+                                         <i class="fa fa-trash-o"></i>&nbsp;<br>
+                                         </div>
+                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="filename-'.$this->id.'" id="filename-'.$this->id.'" placeholder="filename.jpg" value="'.$this->filename.'">
+                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="title-'.$this->id.'" id="title-'.$this->id.'" placeholder="File Title" value="'.$this->title.'">
+                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="author-'.$this->id.'" id="author-'.$this->id.'" placeholder="Copyright Owner (author)" value="'.$this->author.'">
+                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="authorUrl-'.$this->id.'" id="authorUrl-'.$this->id.'" placeholder="URL" value="'.$this->authorUrl.'"><br>
+                                      <br></div>';
                                     }
                                 $count++;
                             }

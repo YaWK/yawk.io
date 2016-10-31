@@ -8,10 +8,14 @@ if (!isset($gallery))
 if (isset($_POST))
 {
     // EDIT GALLERY
-    if (isset($_GET['id']) && (is_numeric($_GET['id'])))
+    if (isset($_GET['id']) && (is_numeric($_GET['id']) && (!isset($_GET['edit']))))
         {   // load gallery properties
             $gallery->loadProperties($db, $_GET['id']);
         }
+    if (isset($_GET['edit']) && ($_GET['edit'] === "1") && (isset($_GET['id']) && (is_numeric($_GET['id']))))
+    {
+        $gallery->edit($db, $_GET['id']);
+    }
 
     // RESCAN GALLERY
     if (isset($_GET['refresh']) && ($_GET['refresh'] === "1"))
@@ -56,7 +60,7 @@ echo"<ol class=\"breadcrumb\">
 /* page content start here */
 ?>
 
-<form action="index.php?plugin=gallery&pluginpage=gallery&add=1" role="form" method="POST">
+<form action="index.php?plugin=gallery&pluginpage=edit&edit=1&id=<?php echo $gallery->id; ?>" role="form" method="POST">
     <div class="row">
         <div class="col-md-8">
             <div class="box box-default">
