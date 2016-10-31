@@ -497,7 +497,6 @@ namespace YAWK\PLUGINS\GALLERY {
             }
         }
 
-
         public function edit($db, $galleryID)
         {   /** @var $db \YAWK\db * */
             // quote all POST vars
@@ -520,6 +519,106 @@ namespace YAWK\PLUGINS\GALLERY {
             $this->watermarkColor = $db->quote($_POST['watermarkColor']);
             $this->watermarkBorderColor = $db->quote($_POST['watermarkBorderColor']);
             $this->watermarkBorder = $db->quote($_POST['watermarkBorder']);
+
+            // check, if any itemIDs need to be updated, get get them and loop through items...
+            if ($res = $db->query("SELECT id from {plugin_gallery_items} 
+                                   WHERE galleryID = $this->id"))
+            {   // foreach itemID
+                while ($row = mysqli_fetch_assoc($res))
+                {   // set itemID
+                    $this->itemID = $row['id'];
+                    // set vars to compare if they have changed...
+                    // filename
+                    $oldFile = $_POST['filename-'.$this->itemID.'-old'];
+                    $newFile = $_POST['filename-'.$this->itemID.''];
+                    // title
+                    $oldTitle = $_POST['title-'.$this->itemID.'-old'];
+                    $newTitle = $_POST['title-'.$this->itemID.''];
+                    // author
+                    $oldAuthor = $_POST['author-'.$this->itemID.'-old'];
+                    $newAuthor = $_POST['author-'.$this->itemID.''];
+                    // authorUrl
+                    $oldAuthorUrl = $_POST['authorUrl-'.$this->itemID.'-old'];
+                    $newAuthorUrl = $_POST['authorUrl-'.$this->itemID.''];
+                    // ## CHECK IF IMAGE FILENAME HAS CHANGED...
+                    if ($oldFile === $newFile)
+                    {   // files MATCH, no rename required: save ressources + do nothing :)
+                        // \YAWK\alert::draw("warning", "files match!", "no rename required.", "", 800);
+                    }
+                    else
+                    {   // files DO NOT match - RENAME file
+                        if (rename("../$this->folder/$oldFile", "../$this->folder/$newFile"))
+                        {   // filename did change - notify user about that
+                            \YAWK\alert::draw("success", "$oldFile renamed to $newFile", "$this->itemID", "", 800);
+                            if (!$saveItem = $db->query("UPDATE {plugin_gallery_items} 
+                                                         SET filename = '$newFile' 
+                                                         WHERE id = $this->itemID"))
+                            {   // could not rename file in database, notify user
+                                \YAWK\alert::draw("danger", "Could not save new filename $newFile in database!", "But... the file is already renamed. Expect errors.", "", 5800);
+                            }
+                        }
+                        else
+                        {   // rename failed
+                            \YAWK\alert::draw("danger", "Could not rename $oldFile to $newFile", "$this->itemID", "", 5800);
+                        }
+                    }
+                    // ## CHECK IF IMAGE TITLE HAS CHANGED...
+                    if ($oldTitle === $newTitle)
+                    {
+                        // files MATCH, no action required: save ressources + do nothing :)
+                    }
+                    else
+                    {   // change title for this image in database
+                        if (!$saveItem = $db->query("UPDATE {plugin_gallery_items} 
+                                                         SET title = '$newTitle' 
+                                                         WHERE id = $this->itemID"))
+                        {   // could not change title in db => notify user
+                            \YAWK\alert::draw("warning", "Could not change title $newTitle", "Please check your data and try again!", "", 5800);
+                        }
+                        else
+                        {   // change title success
+                            \YAWK\alert::draw("success", "Changed $oldTitle to $newTitle", "affected image ID: $this->itemID", "", 800);
+                        }
+                    }
+                    // ## CHECK IF IMAGE AUTHOR HAS CHANGED...
+                    if ($oldAuthor === $newAuthor)
+                    {
+                        // authors MATCH, no action required: save ressources + do nothing :)
+                    }
+                    else
+                    {   // change author for this image in database
+                        if (!$saveItem = $db->query("UPDATE {plugin_gallery_items} 
+                                                         SET author = '$newAuthor' 
+                                                         WHERE id = $this->itemID"))
+                        {   // could not change author => notify user
+                            \YAWK\alert::draw("warning", "Could not change author $newAuthor", "Please check your data and try again!", "", 5800);
+                        }
+                        else
+                        {   // change title success
+                            \YAWK\alert::draw("success", "Changed $oldAuthor to $newAuthor", "affected image ID: $this->itemID", "", 800);
+                        }
+                    }
+                    // ## CHECK IF IMAGE AUTHOR URL HAS CHANGED...
+                    if ($oldAuthorUrl === $newAuthorUrl)
+                    {
+                        // authors MATCH, no action required: save ressources + do nothing :)
+                    }
+                    else
+                    {   // change authorUrl for this image in database
+                        if (!$saveItem = $db->query("UPDATE {plugin_gallery_items} 
+                                                         SET authorUrl = '$newAuthorUrl' 
+                                                         WHERE id = $this->itemID"))
+                        {   // could not change author => notify user
+                            \YAWK\alert::draw("warning", "Could not change author URL to $newAuthorUrl", "Please check your data and try again!", "", 5800);
+                        }
+                        else
+                        {   // change title success
+                            \YAWK\alert::draw("success", "Changed Author URL to $newAuthorUrl", "affected image ID: $this->itemID", "", 800);
+                        }
+                    }
+                }
+            }
+
             // update database: gallery settings
             if (!$res = $db->query("UPDATE {plugin_gallery} 
                                    SET folder='$this->folder',
@@ -539,7 +638,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                        watermarkOpacity='$this->watermarkOpacity',
                                        watermarkColor='$this->watermarkColor',
                                        watermarkBorderColor='$this->watermarkBorderColor',
-                                       watermarkBorder='$this->watermarkBorder'"))
+                                       watermarkBorder='$this->watermarkBorder' WHERE id = '$this->id'"))
             {   // update gallery not worked, notify user
                 \YAWK\alert::draw("warning", "Could not save gallery settings.", "Please check your input data and try again.", "", 5800);
             }
@@ -620,15 +719,18 @@ namespace YAWK\PLUGINS\GALLERY {
                         foreach ($getPreviewImages as $property => $image)
                         {   // display preview images
                             for ($i = 0; $i < count($property); $i++) {
-                                $this->id = $image['id'];
+                                $this->itemID = $image['id'];
                                 $this->filename = $image['filename'];
+                                $this->title = $image['title'];
+                                $this->author = $image['author'];
+                                $this->authorUrl = $image['authorUrl'];
 
                                 if ($count % 3 == 0) { // time to break line
                                     echo '
                                     </div>';
                                     echo '
                                     <div class="row"><div class="col-md-4">
-                                         <img class="img-thumbnail" width="400" title="'.$this->title.'" src="../' . $row['folder']."/".$this->filename . '">'.$this->id.'<br>
+                                         <img class="img-thumbnail" width="400" title="'.$this->title.'" src="../' . $row['folder']."/".$this->filename . '">'.$this->itemID.'<br>
                                          <div style="margin-top: 10px; margin-bottom:10px;">
                                          <i class="fa fa-arrows-h"></i>&nbsp;
                                          <i class="fa fa-arrows-v"></i>&nbsp;
@@ -640,16 +742,20 @@ namespace YAWK\PLUGINS\GALLERY {
                                          <i class="fa fa-sort"></i>&nbsp;
                                          <i class="fa fa-trash-o"></i>&nbsp;<br>
                                          </div>
-                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="filename-'.$this->id.'" id="filename-'.$this->id.'" placeholder="filename.jpg" value="'.$this->filename.'">
-                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="title-'.$this->id.'" id="title-'.$this->id.'" placeholder="File Title" value="'.$this->title.'">
-                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="author-'.$this->id.'" id="author-'.$this->id.'" placeholder="Copyright Owner (author)" value="'.$this->author.'">
-                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="authorUrl-'.$this->id.'" id="authorUrl-'.$this->id.'" placeholder="URL" value="'.$this->authorUrl.'"><br>
+                                      <input type="hidden" name="filename-'.$this->itemID.'-old" value="'.$this->filename.'">
+                                      <input type="hidden" name="title-'.$this->itemID.'-old" value="'.$this->title.'">
+                                      <input type="hidden" name="author-'.$this->itemID.'-old" value="'.$this->author.'">
+                                      <input type="hidden" name="authorUrl-'.$this->itemID.'-old" value="'.$this->authorUrl.'">
+                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="filename-'.$this->itemID.'" id="filename-'.$this->itemID.'" placeholder="filename.jpg" value="'.$this->filename.'">
+                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="title-'.$this->itemID.'" id="title-'.$this->itemID.'" placeholder="File Title" value="'.$this->title.'">
+                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="author-'.$this->itemID.'" id="author-'.$this->itemID.'" placeholder="Copyright Owner (author)" value="'.$this->author.'">
+                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="authorUrl-'.$this->itemID.'" id="authorUrl-'.$this->itemID.'" placeholder="URL" value="'.$this->authorUrl.'"><br>
                                       <br></div>';
                                 }
                                 else
                                     {  echo '  
                                       <div class="col-md-4">
-                                         <img class="img-thumbnail" width="400" title="'.$this->title.'" src="../' . $row['folder']."/".$this->filename . '">'.$this->id.'<br>
+                                         <img class="img-thumbnail" width="400" title="'.$this->title.'" src="../' . $row['folder']."/".$this->filename . '">'.$this->itemID.'<br>
                                          <div style="margin-top: 10px; margin-bottom:10px;">
                                          <i class="fa fa-arrows-h"></i>&nbsp;
                                          <i class="fa fa-arrows-v"></i>&nbsp;
@@ -661,10 +767,14 @@ namespace YAWK\PLUGINS\GALLERY {
                                          <i class="fa fa-sort"></i>&nbsp;
                                          <i class="fa fa-trash-o"></i>&nbsp;<br>
                                          </div>
-                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="filename-'.$this->id.'" id="filename-'.$this->id.'" placeholder="filename.jpg" value="'.$this->filename.'">
-                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="title-'.$this->id.'" id="title-'.$this->id.'" placeholder="File Title" value="'.$this->title.'">
-                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="author-'.$this->id.'" id="author-'.$this->id.'" placeholder="Copyright Owner (author)" value="'.$this->author.'">
-                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="authorUrl-'.$this->id.'" id="authorUrl-'.$this->id.'" placeholder="URL" value="'.$this->authorUrl.'"><br>
+                                      <input type="hidden" name="filename-'.$this->itemID.'-old" value="'.$this->filename.'">
+                                      <input type="hidden" name="title-'.$this->itemID.'-old" value="'.$this->title.'">
+                                      <input type="hidden" name="author-'.$this->itemID.'-old" value="'.$this->author.'">
+                                      <input type="hidden" name="authorUrl-'.$this->itemID.'-old" value="'.$this->authorUrl.'">
+                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="filename-'.$this->itemID.'" id="filename-'.$this->itemID.'" placeholder="filename.jpg" value="'.$this->filename.'">
+                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="title-'.$this->itemID.'" id="title-'.$this->itemID.'" placeholder="File Title" value="'.$this->title.'">
+                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="author-'.$this->itemID.'" id="author-'.$this->itemID.'" placeholder="Copyright Owner (author)" value="'.$this->author.'">
+                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="authorUrl-'.$this->itemID.'" id="authorUrl-'.$this->itemID.'" placeholder="URL" value="'.$this->authorUrl.'"><br>
                                       <br></div>';
                                     }
                                 $count++;
