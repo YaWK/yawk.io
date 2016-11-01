@@ -29,6 +29,11 @@ if (isset($_POST))
 ?>
 <link href="../system/engines/jquery/lightbox2/css/lightbox.min.css" rel="stylesheet">
 <script src="../system/engines/jquery/lightbox2/js/lightbox.min.js"></script>
+<script type="text/javascript">
+    lightbox.option({
+        'albumLabel': "Image %1 of %2 - you may need to reload (strg-r or f5) to see changes take effect in fullscreen mode."
+    })
+</script>
 <?php
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "

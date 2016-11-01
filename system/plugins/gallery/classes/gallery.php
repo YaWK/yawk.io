@@ -1,8 +1,6 @@
 <?php
 namespace YAWK\PLUGINS\GALLERY {
 
-    use YAWK\filemanager;
-
     class gallery
     {
         public $id;
@@ -764,6 +762,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                 $this->author = $image['author'];
                                 $this->authorUrl = $image['authorUrl'];
                                 $rnd = uniqid();
+                                $rnd2 = uniqid();
 
                                 $flipH_action = "flipHorizontal('$this->folder', '$this->filename')";
                                 if ($count % 3 == 0) { // time to break line
@@ -771,7 +770,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                     </div>';
                                     echo '
                                     <div class="row"><div class="col-md-4">
-                                    <a href="../' . $row['folder']."/".$this->filename . '" data-lightbox="'.$this->title.'"><img class="img-thumbnail" id="img-'.$this->itemID.'" width="400" title="'.$this->itemTitle.'" src="../' . $row['folder']."/".$this->filename . '?'.$rnd.'"></a>
+                                    <a href="../' . $row['folder']."/".$this->filename . '?'.$rnd.'" data-lightbox="'.$this->title.'"><img class="img-thumbnail" id="img-'.$this->itemID.'" width="400" title="'.$this->itemTitle.'" src="../' . $row['folder']."/".$this->filename . '?'.$rnd.'"></a>
                                     <br>
                                          <div style="margin-top: 10px; margin-bottom:10px;">
                                          <i class="fa fa-arrows-h" onclick="flipHorizontal(\''.$this->folder.'\', \''.$this->filename.'\', \''.$this->itemID.'\')" id="flipHorizontal"></i>&nbsp;
@@ -797,7 +796,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                 else
                                     {  echo '  
                                       <div class="col-md-4">
-                                    <a href="../' . $row['folder']."/".$this->filename . '" data-lightbox="'.$this->title.'"><img class="img-thumbnail" id="img-'.$this->itemID.'" width="400" title="'.$this->itemTitle.'" src="../' . $row['folder']."/".$this->filename . '?'.$rnd.'"></a>
+                                    <a href="../' . $row['folder']."/".$this->filename . '?'.$rnd.'" data-lightbox="'.$this->title.'"><img class="img-thumbnail" id="img-'.$this->itemID.'" width="400" title="'.$this->itemTitle.'" src="../' . $row['folder']."/".$this->filename . '?'.$rnd.'"></a>
                                          <div style="margin-top: 10px; margin-bottom:10px;">
                                          <i class="fa fa-arrows-h" data-filename="'.$this->filename.'" data-folder="'.$this->folder.'" id="flip-h"></i>&nbsp;
                                          <i class="fa fa-arrows-v"></i>&nbsp;
