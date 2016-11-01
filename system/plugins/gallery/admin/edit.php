@@ -27,18 +27,6 @@ if (isset($_POST))
     }
 }
 ?>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#table-sort').dataTable({
-            "bPaginate": false,
-            "bLengthChange": false,
-            "bFilter": true,
-            "bSort": true,
-            "bInfo": true,
-            "bAutoWidth": false
-        });
-    });
-</script>
 <link href="../system/engines/jquery/lightbox2/css/lightbox.min.css" rel="stylesheet">
 <script src="../system/engines/jquery/lightbox2/js/lightbox.min.js"></script>
 <?php

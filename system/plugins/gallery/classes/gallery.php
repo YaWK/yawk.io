@@ -28,10 +28,30 @@ namespace YAWK\PLUGINS\GALLERY {
         public $watermarkBorderColor;
         public $watermarkBorder;
 
-
         public function __construct()
         {
-            //...
+            echo "<script type=\"text/javascript\">
+                function flipHorizontal(folder, filename, itemID) 
+                {                    
+                    $.ajax({
+                        url:'../system/plugins/gallery/js/flip-horizontal.php',
+                        type:'post',
+                        data:'folder='+folder+'&filename='+filename,
+                        success: function(data)
+                        {   // check if data was sent
+                            if(!data)
+                            {   // something else has happened
+                                $('#img-'+itemID).hide().removeAttr('src').attr('src', '../'+folder+'/'+filename+'?'+Math.random()).show();
+                                return false;
+                            }
+                            else
+                            {   // all good, reload image
+                                alert('Sorry, could not flip image!');
+                            }
+                        }
+                    });
+                }
+                </script>";
         }
 
         public function drawFolderSelect($path)
@@ -743,18 +763,20 @@ namespace YAWK\PLUGINS\GALLERY {
                                 $this->itemTitle = $image['title'];
                                 $this->author = $image['author'];
                                 $this->authorUrl = $image['authorUrl'];
+                                $rnd = uniqid();
 
+                                $flipH_action = "flipHorizontal('$this->folder', '$this->filename')";
                                 if ($count % 3 == 0) { // time to break line
                                     echo '
                                     </div>';
                                     echo '
                                     <div class="row"><div class="col-md-4">
-                                    <a href="../' . $row['folder']."/".$this->filename . '" data-lightbox="'.$this->title.'"><img class="img-thumbnail" width="400" title="'.$this->itemTitle.'" src="../' . $row['folder']."/".$this->filename . '"></a>
-                                   '.$this->itemID.'<br>
+                                    <a href="../' . $row['folder']."/".$this->filename . '" data-lightbox="'.$this->title.'"><img class="img-thumbnail" id="img-'.$this->itemID.'" width="400" title="'.$this->itemTitle.'" src="../' . $row['folder']."/".$this->filename . '?'.$rnd.'"></a>
+                                    <br>
                                          <div style="margin-top: 10px; margin-bottom:10px;">
-                                         <i class="fa fa-arrows-h"></i>&nbsp;
-                                         <i class="fa fa-arrows-v"></i>&nbsp;
-                                         <i class="fa fa-undo"></i>&nbsp;
+                                         <i class="fa fa-arrows-h" onclick="flipHorizontal(\''.$this->folder.'\', \''.$this->filename.'\', \''.$this->itemID.'\')" id="flipHorizontal"></i>&nbsp;
+                                         <i class="fa fa-arrows-v" id="flip-v"></i>&nbsp;
+                                         <i class="fa fa-undo" id="undo"></i>&nbsp;
                                          <i class="fa fa-adjust"></i>&nbsp;
                                          <i class="fa fa-adjust text-muted" style="color:#ccc;"></i>&nbsp;
                                          <i class="fa fa-tint"></i>&nbsp;
@@ -775,10 +797,9 @@ namespace YAWK\PLUGINS\GALLERY {
                                 else
                                     {  echo '  
                                       <div class="col-md-4">
-                                         
-                                    <a href="../' . $row['folder']."/".$this->filename . '" data-lightbox="'.$this->title.'"><img class="img-thumbnail" width="400" title="'.$this->itemTitle.'" src="../' . $row['folder']."/".$this->filename . '"></a>'.$this->itemID.'<br>
+                                    <a href="../' . $row['folder']."/".$this->filename . '" data-lightbox="'.$this->title.'"><img class="img-thumbnail" id="img-'.$this->itemID.'" width="400" title="'.$this->itemTitle.'" src="../' . $row['folder']."/".$this->filename . '?'.$rnd.'"></a>
                                          <div style="margin-top: 10px; margin-bottom:10px;">
-                                         <i class="fa fa-arrows-h"></i>&nbsp;
+                                         <i class="fa fa-arrows-h" data-filename="'.$this->filename.'" data-folder="'.$this->folder.'" id="flip-h"></i>&nbsp;
                                          <i class="fa fa-arrows-v"></i>&nbsp;
                                          <i class="fa fa-undo"></i>&nbsp;
                                          <i class="fa fa-adjust"></i>&nbsp;
