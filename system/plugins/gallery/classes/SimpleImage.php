@@ -318,6 +318,30 @@ class SimpleImage {
      * @return SimpleImage
      *
      */
+    function sharpen()
+    {
+        // define the sharpen matrix
+        $sharpen = array(
+            array(0.0, -1.0, 0.0),
+            array(-1.0, 10.0, -1.0),
+            array(0.0, -1.0, 0.0)
+        );
+        // calculate the sharpen divisor
+        $divisor = array_sum(array_map('array_sum', $sharpen));
+        // apply the matrix
+        imageconvolution($this->image, $sharpen, $divisor, 0);
+        return $this;
+    }
+
+
+    /**
+     * Desaturate
+     *
+     * @param int           $percentage Level of desaturization.
+     *
+     * @return SimpleImage
+     *
+     */
     function desaturate($percentage = 100) {
 
         // Determine percentage
