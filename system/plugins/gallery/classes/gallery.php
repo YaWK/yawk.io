@@ -242,6 +242,9 @@ namespace YAWK\PLUGINS\GALLERY {
             // 2.) manipulate images corresponding to selected settings
             // 3.) insert into database
 
+            // loading info...
+            \YAWK\alert::draw("success", "Gallery will be created. . .", "<div class=\"text-center\"><i class=\"fa fa-spinner fa-spin\" style=\"font-size:24px\"></i><br>Please be patient, this should only take a few seconds.</div>", "", 2800);
+
             // include SimpleImage Class
             require_once 'SimpleImage.php';
             // create object
@@ -367,7 +370,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                             '".$this->watermarkBorderColor."',
                                             '".$this->watermarkBorder."')"))
             {   // all good
-                \YAWK\alert::draw("success", "Gallery created.", "Database entry success.", "", 800);
+                // \YAWK\alert::draw("success", "Gallery created.", "Database entry success.", "", 800);
             }
             else
             {   // gallery could not be added - notify user
@@ -494,6 +497,29 @@ namespace YAWK\PLUGINS\GALLERY {
                 }
                 else
                     {   // no watermark required...
+
+                        // BACKUP
+                        // but to keep the usability of the edit function (pixlate, sharpen etc)
+                        // we do a backup of original images here too. (in case no watermark is needed)
+                        // keep non-watermarked files in folder original
+                        // check if backup folder exists
+                        if (!is_dir("../$this->folder/original"))
+                        {   // if not, create folder
+                            mkdir("../$this->folder/original");
+                            // copy original files to backup folder
+                            // iterate through folder and write backup files
+                            foreach (new \DirectoryIterator("../$this->folder") as $backupFile)
+                            {   // exclude dots'n'dirs
+                                if($fileInfo->isDot()) continue;        // exclude dots
+                                if($fileInfo->isDir()) continue;        // exclude subdirectories
+                                $copyFile = $backupFile->getFilename();
+                                if (!@copy("../$this->folder/$copyFile", "../$this->folder/original/$copyFile"))
+                                {   // could not copy file, throw notification
+                                    \YAWK\alert::draw("warning", "Could not backup file $filename", "This should not happen. We're sorry!", "", 800);
+                                }
+                            } // end backup copy original files
+                        }
+
                         // check if thumbnails should be created
                         if ($this->createThumbnails === "1")
                         {   // check if tn width is set
@@ -984,6 +1010,26 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 \''.$this->watermarkBorderColor.'\', 
                                                 \''.$this->watermarkBorder.'\'
                                                 )"></i>&nbsp;
+                                         <i class="fa fa-paint-brush"
+                                            id="saturation-plus"
+                                            onclick="doImageAction(\'saturation-plus\', 
+                                                \''.$this->folder.'\', 
+                                                \''.$this->filename.'\', 
+                                                \''.$this->itemID.'\', 
+                                                \''.$this->createThumbnails.'\', 
+                                                \''.$this->thumbnailWidth.'\', 
+                                                \''.$this->watermark.'\', 
+                                                \''.$this->watermarkImage.'\', 
+                                                \''.$this->watermarkOpacity.'\', 
+                                                \''.$this->watermarkPosition.'\', 
+                                                \''.$this->offsetRight.'\', 
+                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->watermarkFont.'\', 
+                                                \''.$this->watermarkTextSize.'\', 
+                                                \''.$this->watermarkColor.'\', 
+                                                \''.$this->watermarkBorderColor.'\', 
+                                                \''.$this->watermarkBorder.'\'
+                                                )"></i>&nbsp;
                                          <i class="fa fa-tint text-muted"
                                             id="greyscale"
                                             onclick="doImageAction(\'greyscale\', 
@@ -1025,7 +1071,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 \''.$this->watermarkBorderColor.'\', 
                                                 \''.$this->watermarkBorder.'\'
                                                 )"></i>&nbsp;
-                                         <i class="glyphicon glyphicon-th"
+                                         <i class="fa fa-th text-muted"
                                             id="pixelate"
                                             onclick="doImageAction(\'pixelate\', 
                                                 \''.$this->folder.'\', 
@@ -1323,7 +1369,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 \''.$this->watermarkBorderColor.'\', 
                                                 \''.$this->watermarkBorder.'\'
                                                 )"></i>&nbsp;
-                                         <i class="glyphicon glyphicon-th"
+                                         <i class="fa fa-th text-muted"
                                             id="pixelate"
                                             onclick="doImageAction(\'pixelate\', 
                                                 \''.$this->folder.'\', 
