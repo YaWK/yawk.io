@@ -472,8 +472,7 @@ if ($action === "pixelate")
     if (!empty($watermark))
     {   // load, pixelate, save to edit (tmp), slap the watermark on and finally save image to img gallery root folder
         $img->load("$prefix$folder/edit/$filename")
-            ->pixelate(8)
-            ->save("$prefix$folder/edit/$filename")
+            ->pixelate(12)
             ->text("$watermark",
                 "$ttfPrefix$watermarkFont",
                 $watermarkTextSize,
@@ -488,7 +487,7 @@ if ($action === "pixelate")
     else
     {   // if no watermark is set, just pixelate and save
         $img->load("$prefix$folder/$filename")
-            ->pixelate(8)
+            ->pixelate(12)
             ->save("$prefix$folder/$filename");
     }
 
@@ -496,7 +495,7 @@ if ($action === "pixelate")
     if (!empty($watermarkImage))
     {   // load image, pixelate, overlay image watermark and save to image gallery root folder
         $img->load("$prefix$folder/edit/$filename")
-            ->pixelate(8)
+            ->pixelate(12)
             ->overlay("$prefix$watermarkImage",
                 "$watermarkPosition",
                 $watermarkOpacity)
