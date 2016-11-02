@@ -12,6 +12,8 @@ namespace YAWK\PLUGINS\GALLERY {
         public $description;
         public $author;
         public $authorUrl;
+        public $itemAuthor;
+        public $itemAuthorUrl;
         public $filename;
         public $createThumbnails;
         public $thumbnailWidth;
@@ -818,8 +820,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                 $this->filename = $image['filename'];
                                 // $this->title = $image['title'];
                                 $this->itemTitle = $image['title'];
-                                $this->author = $image['author'];
-                                $this->authorUrl = $image['authorUrl'];
+                                $this->itemAuthor = $image['author'];
+                                $this->itemAuthorUrl = $image['authorUrl'];
                                 $rnd = uniqid();
 
                                 if ($count % 3 == 0) { // time to break line
@@ -1113,13 +1115,13 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 )"></i>&nbsp;<br>
                                          </div>
                                       <input type="hidden" name="filename-'.$this->itemID.'-old" value="'.$this->filename.'">
-                                      <input type="hidden" name="title-'.$this->itemID.'-old" value="'.$this->title.'">
-                                      <input type="hidden" name="author-'.$this->itemID.'-old" value="'.$this->author.'">
-                                      <input type="hidden" name="authorUrl-'.$this->itemID.'-old" value="'.$this->authorUrl.'">
+                                      <input type="hidden" name="title-'.$this->itemID.'-old" value="'.$this->itemTitle.'">
+                                      <input type="hidden" name="author-'.$this->itemID.'-old" value="'.$this->itemAuthor.'">
+                                      <input type="hidden" name="authorUrl-'.$this->itemID.'-old" value="'.$this->itemAuthorUrl.'">
                                       <input type="text" class="form-control" style="margin-bottom:2px;" name="filename-'.$this->itemID.'" id="filename-'.$this->itemID.'" placeholder="filename.jpg" value="'.$this->filename.'">
-                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="title-'.$this->itemID.'" id="title-'.$this->itemID.'" placeholder="File Title" value="'.$this->title.'">
-                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="author-'.$this->itemID.'" id="author-'.$this->itemID.'" placeholder="Copyright owner of this picture" value="'.$this->author.'">
-                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="authorUrl-'.$this->itemID.'" id="authorUrl-'.$this->itemID.'" placeholder="URL" value="'.$this->authorUrl.'"><br>
+                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="title-'.$this->itemID.'" id="title-'.$this->itemID.'" placeholder="File Title" value="'.$this->itemTitle.'">
+                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="author-'.$this->itemID.'" id="author-'.$this->itemID.'" placeholder="Copyright owner of this picture" value="'.$this->itemAuthor.'">
+                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="authorUrl-'.$this->itemID.'" id="authorUrl-'.$this->itemID.'" placeholder="URL" value="'.$this->itemAuthorUrl.'"><br>
                                       <br></div>';
                                 }
                                 else
@@ -1411,13 +1413,13 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 )"></i>&nbsp;<br>
                                          </div>
                                       <input type="hidden" name="filename-'.$this->itemID.'-old" value="'.$this->filename.'">
-                                      <input type="hidden" name="title-'.$this->itemID.'-old" value="'.$this->title.'">
-                                      <input type="hidden" name="author-'.$this->itemID.'-old" value="'.$this->author.'">
-                                      <input type="hidden" name="authorUrl-'.$this->itemID.'-old" value="'.$this->authorUrl.'">
+                                      <input type="hidden" name="title-'.$this->itemID.'-old" value="'.$this->itemTitle.'">
+                                      <input type="hidden" name="author-'.$this->itemID.'-old" value="'.$this->itemAuthor.'">
+                                      <input type="hidden" name="authorUrl-'.$this->itemID.'-old" value="'.$this->itemAuthorUrl.'">
                                       <input type="text" class="form-control" style="margin-bottom:2px;" name="filename-'.$this->itemID.'" id="filename-'.$this->itemID.'" placeholder="filename.jpg" value="'.$this->filename.'">
-                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="title-'.$this->itemID.'" id="title-'.$this->itemID.'" placeholder="File Title" value="'.$this->title.'">
-                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="author-'.$this->itemID.'" id="author-'.$this->itemID.'" placeholder="Copyright owner of this picture" value="'.$this->author.'">
-                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="authorUrl-'.$this->itemID.'" id="authorUrl-'.$this->itemID.'" placeholder="URL" value="'.$this->authorUrl.'"><br>
+                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="title-'.$this->itemID.'" id="title-'.$this->itemID.'" placeholder="File Title" value="'.$this->itemTitle.'">
+                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="author-'.$this->itemID.'" id="author-'.$this->itemID.'" placeholder="Copyright owner of this picture" value="'.$this->itemAuthor.'">
+                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="authorUrl-'.$this->itemID.'" id="authorUrl-'.$this->itemID.'" placeholder="URL" value="'.$this->itemAuthorUrl.'"><br>
                                       <br></div>';
                                     }
                                 $count++;
