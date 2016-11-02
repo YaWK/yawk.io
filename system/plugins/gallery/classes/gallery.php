@@ -5,6 +5,7 @@ namespace YAWK\PLUGINS\GALLERY {
     {
         public $id;
         public $itemID;
+        public $action;
         public $folder;
         public $title;
         public $itemTitle;
@@ -29,12 +30,12 @@ namespace YAWK\PLUGINS\GALLERY {
         public function __construct()
         {
             echo "<script type=\"text/javascript\">
-                function flipHorizontal(folder, filename, itemID) 
+                function doImageAction(action, folder, filename, itemID, createThumbnails, thumbnailWidth, watermark, watermarkImage, watermarkOpacity, watermarkPosition, offsetRight, offsetBottom, watermarkFont, watermarkTextSize, watermarkColor, watermarkBorderColor, watermarkBorder) 
                 {                    
                     $.ajax({
-                        url:'../system/plugins/gallery/js/flip-horizontal.php',
+                        url:'../system/plugins/gallery/js/actions.php',
                         type:'post',
-                        data:'folder='+folder+'&filename='+filename,
+                        data:'action='+action+'&folder='+folder+'&filename='+filename+'&itemID='+itemID+'&createThumbnails='+createThumbnails+'&thumbnailWidth='+thumbnailWidth+'&watermark='+watermark+'&watermarkImage='+watermarkImage+'&watermarkOpacity='+watermarkOpacity+'&watermarkPosition='+watermarkPosition+'&offsetRight='+offsetRight+'&offsetBottom='+offsetBottom+'&watermarkFont='+watermarkFont+'&watermarkTextSize='+watermarkTextSize+'&watermarkColor='+watermarkColor+'&watermarkBorderColor='+watermarkBorderColor+'&watermarkBorder='+watermarkBorder,
                         success: function(data)
                         {   // check if data was sent
                             if(!data)
@@ -132,6 +133,18 @@ namespace YAWK\PLUGINS\GALLERY {
                         {   // thumbnails deleted success msg
                             \YAWK\alert::draw("success", "Thumbnails deleted!", "$folder/thumbnails is removed.", "", 1200);
                         }
+                }
+                // check if edit directory is here
+                if (is_dir("../$folder/edit/"))
+                {   // try to delete it recursively
+                    if (!\YAWK\sys::recurseRmdir("../$folder/edit/"))
+                    {   // did not work, throw notification
+                        \YAWK\alert::draw("warning", "Could not delete edit folder!", "$folder/edit could not be deleted.", "", 5800);
+                    }
+                    else
+                    {   // delete edit (tmp) folder did not work, throw notify...
+                        // \YAWK\alert::draw("success", "TMP folder deleted!", "$folder/edit is removed.", "", 1200);
+                    }
                 }
 
                 // check if there are backup files to restore
@@ -389,6 +402,25 @@ namespace YAWK\PLUGINS\GALLERY {
                     {   // default position, if no pos is set
                         $this->watermarkPosition = "bottom right";
                     }
+                    // CREATE EDIT FOLDER
+                    // images here are stored to keep settings while user is in edit preview
+                    if (!is_dir("../$this->folder/edit"))
+                    {   // if no edit folder is set
+                        mkdir("../$this->folder/edit");
+                        // copy original files to backup folder
+                        // iterate through folder and write backup files
+                        foreach (new \DirectoryIterator("../$this->folder") as $backupFile)
+                        {   // exclude dots'n'dirs
+                            if($fileInfo->isDot()) continue;        // exclude dots
+                            if($fileInfo->isDir()) continue;        // exclude subdirectories
+                            $copyFile = $backupFile->getFilename();
+                            if (!@copy("../$this->folder/$copyFile", "../$this->folder/edit/$copyFile"))
+                            {   // could not copy file, throw notification
+                                \YAWK\alert::draw("warning", "Could not copy file $filename to edit folder", "This should not happen. We're sorry!", "", 800);
+                            }
+                        } // end backup copy original files
+                    }
+
                     // BACKUP
                     // keep non-watermarked files in folder original
                     // check if backup folder exists
@@ -762,9 +794,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                 $this->author = $image['author'];
                                 $this->authorUrl = $image['authorUrl'];
                                 $rnd = uniqid();
-                                $rnd2 = uniqid();
 
-                                $flipH_action = "flipHorizontal('$this->folder', '$this->filename')";
                                 if ($count % 3 == 0) { // time to break line
                                     echo '
                                     </div>';
@@ -772,16 +802,288 @@ namespace YAWK\PLUGINS\GALLERY {
                                     <div class="row"><div class="col-md-4">
                                     <a href="../' . $row['folder']."/".$this->filename . '?'.$rnd.'" data-lightbox="'.$this->title.'"><img class="img-thumbnail" id="img-'.$this->itemID.'" width="400" title="'.$this->itemTitle.'" src="../' . $row['folder']."/".$this->filename . '?'.$rnd.'"></a>
                                     <br>
-                                         <div style="margin-top: 10px; margin-bottom:10px;">
-                                         <i class="fa fa-arrows-h" onclick="flipHorizontal(\''.$this->folder.'\', \''.$this->filename.'\', \''.$this->itemID.'\')" id="flipHorizontal"></i>&nbsp;
-                                         <i class="fa fa-arrows-v" id="flip-v"></i>&nbsp;
-                                         <i class="fa fa-undo" id="undo"></i>&nbsp;
-                                         <i class="fa fa-adjust"></i>&nbsp;
-                                         <i class="fa fa-adjust text-muted" style="color:#ccc;"></i>&nbsp;
-                                         <i class="fa fa-tint"></i>&nbsp;
-                                         <i class="fa fa-tint text-muted" style="color:#ccc;"></i>&nbsp;
-                                         <i class="fa fa-sort"></i>&nbsp;
-                                         <i class="fa fa-trash-o"></i>&nbsp;<br>
+                                         <div style="margin-top: 10px; margin-bottom:10px; cursor:pointer;">
+                                         <i class="fa fa-arrows-h" 
+                                            id="flipHorizontal" 
+                                            onclick="doImageAction(\'flip-horizontal\', 
+                                                \''.$this->folder.'\', 
+                                                \''.$this->filename.'\', 
+                                                \''.$this->itemID.'\', 
+                                                \''.$this->createThumbnails.'\', 
+                                                \''.$this->thumbnailWidth.'\', 
+                                                \''.$this->watermark.'\', 
+                                                \''.$this->watermarkImage.'\', 
+                                                \''.$this->watermarkOpacity.'\', 
+                                                \''.$this->watermarkPosition.'\', 
+                                                \''.$this->offsetRight.'\', 
+                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->watermarkFont.'\', 
+                                                \''.$this->watermarkTextSize.'\', 
+                                                \''.$this->watermarkColor.'\', 
+                                                \''.$this->watermarkBorderColor.'\', 
+                                                \''.$this->watermarkBorder.'\'
+                                                )"></i>&nbsp;
+                                         <i class="fa fa-arrows-v" 
+                                            id="flipVertical" 
+                                            onclick="doImageAction(\'flip-vertical\', 
+                                                \''.$this->folder.'\', 
+                                                \''.$this->filename.'\', 
+                                                \''.$this->itemID.'\', 
+                                                \''.$this->createThumbnails.'\', 
+                                                \''.$this->thumbnailWidth.'\', 
+                                                \''.$this->watermark.'\', 
+                                                \''.$this->watermarkImage.'\', 
+                                                \''.$this->watermarkOpacity.'\', 
+                                                \''.$this->watermarkPosition.'\', 
+                                                \''.$this->offsetRight.'\', 
+                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->watermarkFont.'\', 
+                                                \''.$this->watermarkTextSize.'\', 
+                                                \''.$this->watermarkColor.'\', 
+                                                \''.$this->watermarkBorderColor.'\', 
+                                                \''.$this->watermarkBorder.'\'
+                                                )"></i>&nbsp;
+                                         <i class="fa fa-undo" 
+                                            id="rotate-90"
+                                            onclick="doImageAction(\'rotate-90\', 
+                                                \''.$this->folder.'\', 
+                                                \''.$this->filename.'\', 
+                                                \''.$this->itemID.'\', 
+                                                \''.$this->createThumbnails.'\', 
+                                                \''.$this->thumbnailWidth.'\', 
+                                                \''.$this->watermark.'\', 
+                                                \''.$this->watermarkImage.'\', 
+                                                \''.$this->watermarkOpacity.'\', 
+                                                \''.$this->watermarkPosition.'\', 
+                                                \''.$this->offsetRight.'\', 
+                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->watermarkFont.'\', 
+                                                \''.$this->watermarkTextSize.'\', 
+                                                \''.$this->watermarkColor.'\', 
+                                                \''.$this->watermarkBorderColor.'\', 
+                                                \''.$this->watermarkBorder.'\'
+                                                )"></i>&nbsp;
+                                         <i class="fa fa-adjust" 
+                                            id="contrast-plus"
+                                            onclick="doImageAction(\'contrast-plus\', 
+                                                \''.$this->folder.'\', 
+                                                \''.$this->filename.'\', 
+                                                \''.$this->itemID.'\', 
+                                                \''.$this->createThumbnails.'\', 
+                                                \''.$this->thumbnailWidth.'\', 
+                                                \''.$this->watermark.'\', 
+                                                \''.$this->watermarkImage.'\', 
+                                                \''.$this->watermarkOpacity.'\', 
+                                                \''.$this->watermarkPosition.'\', 
+                                                \''.$this->offsetRight.'\', 
+                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->watermarkFont.'\', 
+                                                \''.$this->watermarkTextSize.'\', 
+                                                \''.$this->watermarkColor.'\', 
+                                                \''.$this->watermarkBorderColor.'\', 
+                                                \''.$this->watermarkBorder.'\'
+                                                )"></i>&nbsp;
+                                         <i class="fa fa-adjust text-muted" style="color:#ccc;"
+                                            id="contrast-minus"
+                                            onclick="doImageAction(\'contrast-minus\', 
+                                                \''.$this->folder.'\', 
+                                                \''.$this->filename.'\', 
+                                                \''.$this->itemID.'\', 
+                                                \''.$this->createThumbnails.'\', 
+                                                \''.$this->thumbnailWidth.'\', 
+                                                \''.$this->watermark.'\', 
+                                                \''.$this->watermarkImage.'\', 
+                                                \''.$this->watermarkOpacity.'\', 
+                                                \''.$this->watermarkPosition.'\', 
+                                                \''.$this->offsetRight.'\', 
+                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->watermarkFont.'\', 
+                                                \''.$this->watermarkTextSize.'\', 
+                                                \''.$this->watermarkColor.'\', 
+                                                \''.$this->watermarkBorderColor.'\', 
+                                                \''.$this->watermarkBorder.'\'
+                                                )"></i>&nbsp;
+                                         <i class="fa fa-sun-o"
+                                            id="brightness-plus"
+                                            onclick="doImageAction(\'brightness-minus\', 
+                                                \''.$this->folder.'\', 
+                                                \''.$this->filename.'\', 
+                                                \''.$this->itemID.'\', 
+                                                \''.$this->createThumbnails.'\', 
+                                                \''.$this->thumbnailWidth.'\', 
+                                                \''.$this->watermark.'\', 
+                                                \''.$this->watermarkImage.'\', 
+                                                \''.$this->watermarkOpacity.'\', 
+                                                \''.$this->watermarkPosition.'\', 
+                                                \''.$this->offsetRight.'\', 
+                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->watermarkFont.'\', 
+                                                \''.$this->watermarkTextSize.'\', 
+                                                \''.$this->watermarkColor.'\', 
+                                                \''.$this->watermarkBorderColor.'\', 
+                                                \''.$this->watermarkBorder.'\'
+                                                )"></i>&nbsp;
+                                         <i class="fa fa-sun-o text-muted" style="color:#ccc;"
+                                            id="brightness-minus"
+                                            onclick="doImageAction(\'brightness-plus\', 
+                                                \''.$this->folder.'\', 
+                                                \''.$this->filename.'\', 
+                                                \''.$this->itemID.'\', 
+                                                \''.$this->createThumbnails.'\', 
+                                                \''.$this->thumbnailWidth.'\', 
+                                                \''.$this->watermark.'\', 
+                                                \''.$this->watermarkImage.'\', 
+                                                \''.$this->watermarkOpacity.'\', 
+                                                \''.$this->watermarkPosition.'\', 
+                                                \''.$this->offsetRight.'\', 
+                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->watermarkFont.'\', 
+                                                \''.$this->watermarkTextSize.'\', 
+                                                \''.$this->watermarkColor.'\', 
+                                                \''.$this->watermarkBorderColor.'\', 
+                                                \''.$this->watermarkBorder.'\'
+                                                )"></i>&nbsp;
+                                         <i class="fa fa-diamond"
+                                            id="sharpen"
+                                            onclick="doImageAction(\'sharpen\', 
+                                                \''.$this->folder.'\', 
+                                                \''.$this->filename.'\', 
+                                                \''.$this->itemID.'\', 
+                                                \''.$this->createThumbnails.'\', 
+                                                \''.$this->thumbnailWidth.'\', 
+                                                \''.$this->watermark.'\', 
+                                                \''.$this->watermarkImage.'\', 
+                                                \''.$this->watermarkOpacity.'\', 
+                                                \''.$this->watermarkPosition.'\', 
+                                                \''.$this->offsetRight.'\', 
+                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->watermarkFont.'\', 
+                                                \''.$this->watermarkTextSize.'\', 
+                                                \''.$this->watermarkColor.'\', 
+                                                \''.$this->watermarkBorderColor.'\', 
+                                                \''.$this->watermarkBorder.'\'
+                                                )"></i>&nbsp;
+                                         <i class="fa fa-magic"
+                                            id="selective-blur"
+                                            onclick="doImageAction(\'selective-blur\', 
+                                                \''.$this->folder.'\', 
+                                                \''.$this->filename.'\', 
+                                                \''.$this->itemID.'\', 
+                                                \''.$this->createThumbnails.'\', 
+                                                \''.$this->thumbnailWidth.'\', 
+                                                \''.$this->watermark.'\', 
+                                                \''.$this->watermarkImage.'\', 
+                                                \''.$this->watermarkOpacity.'\', 
+                                                \''.$this->watermarkPosition.'\', 
+                                                \''.$this->offsetRight.'\', 
+                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->watermarkFont.'\', 
+                                                \''.$this->watermarkTextSize.'\', 
+                                                \''.$this->watermarkColor.'\', 
+                                                \''.$this->watermarkBorderColor.'\', 
+                                                \''.$this->watermarkBorder.'\'
+                                                )"></i>&nbsp;
+                                         <i class="fa fa-tint text-muted"
+                                            id="greyscale"
+                                            onclick="doImageAction(\'greyscale\', 
+                                                \''.$this->folder.'\', 
+                                                \''.$this->filename.'\', 
+                                                \''.$this->itemID.'\', 
+                                                \''.$this->createThumbnails.'\', 
+                                                \''.$this->thumbnailWidth.'\', 
+                                                \''.$this->watermark.'\', 
+                                                \''.$this->watermarkImage.'\', 
+                                                \''.$this->watermarkOpacity.'\', 
+                                                \''.$this->watermarkPosition.'\', 
+                                                \''.$this->offsetRight.'\', 
+                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->watermarkFont.'\', 
+                                                \''.$this->watermarkTextSize.'\', 
+                                                \''.$this->watermarkColor.'\', 
+                                                \''.$this->watermarkBorderColor.'\', 
+                                                \''.$this->watermarkBorder.'\'
+                                                )"></i>&nbsp;
+                                         <i class="fa fa-tint"
+                                            style="color:#9b5c1c;"
+                                            id="sepia"
+                                            onclick="doImageAction(\'sepia\', 
+                                                \''.$this->folder.'\', 
+                                                \''.$this->filename.'\', 
+                                                \''.$this->itemID.'\', 
+                                                \''.$this->createThumbnails.'\', 
+                                                \''.$this->thumbnailWidth.'\', 
+                                                \''.$this->watermark.'\', 
+                                                \''.$this->watermarkImage.'\', 
+                                                \''.$this->watermarkOpacity.'\', 
+                                                \''.$this->watermarkPosition.'\', 
+                                                \''.$this->offsetRight.'\', 
+                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->watermarkFont.'\', 
+                                                \''.$this->watermarkTextSize.'\', 
+                                                \''.$this->watermarkColor.'\', 
+                                                \''.$this->watermarkBorderColor.'\', 
+                                                \''.$this->watermarkBorder.'\'
+                                                )"></i>&nbsp;
+                                         <i class="glyphicon glyphicon-th"
+                                            id="pixelate"
+                                            onclick="doImageAction(\'pixelate\', 
+                                                \''.$this->folder.'\', 
+                                                \''.$this->filename.'\', 
+                                                \''.$this->itemID.'\', 
+                                                \''.$this->createThumbnails.'\', 
+                                                \''.$this->thumbnailWidth.'\', 
+                                                \''.$this->watermark.'\', 
+                                                \''.$this->watermarkImage.'\', 
+                                                \''.$this->watermarkOpacity.'\', 
+                                                \''.$this->watermarkPosition.'\', 
+                                                \''.$this->offsetRight.'\', 
+                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->watermarkFont.'\', 
+                                                \''.$this->watermarkTextSize.'\', 
+                                                \''.$this->watermarkColor.'\', 
+                                                \''.$this->watermarkBorderColor.'\', 
+                                                \''.$this->watermarkBorder.'\'
+                                                )"></i>&nbsp;
+                                         <i class="fa fa-refresh"
+                                            id="reset-file"
+                                            onclick="doImageAction(\'reset-file\', 
+                                                \''.$this->folder.'\', 
+                                                \''.$this->filename.'\', 
+                                                \''.$this->itemID.'\', 
+                                                \''.$this->createThumbnails.'\', 
+                                                \''.$this->thumbnailWidth.'\', 
+                                                \''.$this->watermark.'\', 
+                                                \''.$this->watermarkImage.'\', 
+                                                \''.$this->watermarkOpacity.'\', 
+                                                \''.$this->watermarkPosition.'\', 
+                                                \''.$this->offsetRight.'\', 
+                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->watermarkFont.'\', 
+                                                \''.$this->watermarkTextSize.'\', 
+                                                \''.$this->watermarkColor.'\', 
+                                                \''.$this->watermarkBorderColor.'\', 
+                                                \''.$this->watermarkBorder.'\'
+                                                )"></i>&nbsp;
+                                         <i class="fa fa-trash-o"
+                                            id="delete-file"
+                                            onclick="doImageAction(\'delete-file\', 
+                                                \''.$this->folder.'\', 
+                                                \''.$this->filename.'\', 
+                                                \''.$this->itemID.'\', 
+                                                \''.$this->createThumbnails.'\', 
+                                                \''.$this->thumbnailWidth.'\', 
+                                                \''.$this->watermark.'\', 
+                                                \''.$this->watermarkImage.'\', 
+                                                \''.$this->watermarkOpacity.'\', 
+                                                \''.$this->watermarkPosition.'\', 
+                                                \''.$this->offsetRight.'\', 
+                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->watermarkFont.'\', 
+                                                \''.$this->watermarkTextSize.'\', 
+                                                \''.$this->watermarkColor.'\', 
+                                                \''.$this->watermarkBorderColor.'\', 
+                                                \''.$this->watermarkBorder.'\'
+                                                )"></i>&nbsp;<br>
                                          </div>
                                       <input type="hidden" name="filename-'.$this->itemID.'-old" value="'.$this->filename.'">
                                       <input type="hidden" name="title-'.$this->itemID.'-old" value="'.$this->title.'">
@@ -797,16 +1099,289 @@ namespace YAWK\PLUGINS\GALLERY {
                                     {  echo '  
                                       <div class="col-md-4">
                                     <a href="../' . $row['folder']."/".$this->filename . '?'.$rnd.'" data-lightbox="'.$this->title.'"><img class="img-thumbnail" id="img-'.$this->itemID.'" width="400" title="'.$this->itemTitle.'" src="../' . $row['folder']."/".$this->filename . '?'.$rnd.'"></a>
-                                         <div style="margin-top: 10px; margin-bottom:10px;">
-                                         <i class="fa fa-arrows-h" data-filename="'.$this->filename.'" data-folder="'.$this->folder.'" id="flip-h"></i>&nbsp;
-                                         <i class="fa fa-arrows-v"></i>&nbsp;
-                                         <i class="fa fa-undo"></i>&nbsp;
-                                         <i class="fa fa-adjust"></i>&nbsp;
-                                         <i class="fa fa-adjust text-muted" style="color:#ccc;"></i>&nbsp;
-                                         <i class="fa fa-tint"></i>&nbsp;
-                                         <i class="fa fa-tint text-muted" style="color:#ccc;"></i>&nbsp;
-                                         <i class="fa fa-sort"></i>&nbsp;
-                                         <i class="fa fa-trash-o"></i>&nbsp;<br>
+                                         
+                                         <div style="margin-top: 10px; margin-bottom:10px; cursor:pointer;">
+                                         <i class="fa fa-arrows-h" 
+                                            id="flipHorizontal" 
+                                            onclick="doImageAction(\'flip-horizontal\', 
+                                                \''.$this->folder.'\', 
+                                                \''.$this->filename.'\', 
+                                                \''.$this->itemID.'\', 
+                                                \''.$this->createThumbnails.'\', 
+                                                \''.$this->thumbnailWidth.'\', 
+                                                \''.$this->watermark.'\', 
+                                                \''.$this->watermarkImage.'\', 
+                                                \''.$this->watermarkOpacity.'\', 
+                                                \''.$this->watermarkPosition.'\', 
+                                                \''.$this->offsetRight.'\', 
+                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->watermarkFont.'\', 
+                                                \''.$this->watermarkTextSize.'\', 
+                                                \''.$this->watermarkColor.'\', 
+                                                \''.$this->watermarkBorderColor.'\', 
+                                                \''.$this->watermarkBorder.'\'
+                                                )"></i>&nbsp;
+                                         <i class="fa fa-arrows-v" 
+                                            id="flipVertical" 
+                                            onclick="doImageAction(\'flip-vertical\', 
+                                                \''.$this->folder.'\', 
+                                                \''.$this->filename.'\', 
+                                                \''.$this->itemID.'\', 
+                                                \''.$this->createThumbnails.'\', 
+                                                \''.$this->thumbnailWidth.'\', 
+                                                \''.$this->watermark.'\', 
+                                                \''.$this->watermarkImage.'\', 
+                                                \''.$this->watermarkOpacity.'\', 
+                                                \''.$this->watermarkPosition.'\', 
+                                                \''.$this->offsetRight.'\', 
+                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->watermarkFont.'\', 
+                                                \''.$this->watermarkTextSize.'\', 
+                                                \''.$this->watermarkColor.'\', 
+                                                \''.$this->watermarkBorderColor.'\', 
+                                                \''.$this->watermarkBorder.'\'
+                                                )"></i>&nbsp;
+                                         <i class="fa fa-undo" 
+                                            id="rotate-90"
+                                            onclick="doImageAction(\'rotate-90\', 
+                                                \''.$this->folder.'\', 
+                                                \''.$this->filename.'\', 
+                                                \''.$this->itemID.'\', 
+                                                \''.$this->createThumbnails.'\', 
+                                                \''.$this->thumbnailWidth.'\', 
+                                                \''.$this->watermark.'\', 
+                                                \''.$this->watermarkImage.'\', 
+                                                \''.$this->watermarkOpacity.'\', 
+                                                \''.$this->watermarkPosition.'\', 
+                                                \''.$this->offsetRight.'\', 
+                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->watermarkFont.'\', 
+                                                \''.$this->watermarkTextSize.'\', 
+                                                \''.$this->watermarkColor.'\', 
+                                                \''.$this->watermarkBorderColor.'\', 
+                                                \''.$this->watermarkBorder.'\'
+                                                )"></i>&nbsp;
+                                         <i class="fa fa-adjust" 
+                                            id="contrast-plus"
+                                            onclick="doImageAction(\'contrast-plus\', 
+                                                \''.$this->folder.'\', 
+                                                \''.$this->filename.'\', 
+                                                \''.$this->itemID.'\', 
+                                                \''.$this->createThumbnails.'\', 
+                                                \''.$this->thumbnailWidth.'\', 
+                                                \''.$this->watermark.'\', 
+                                                \''.$this->watermarkImage.'\', 
+                                                \''.$this->watermarkOpacity.'\', 
+                                                \''.$this->watermarkPosition.'\', 
+                                                \''.$this->offsetRight.'\', 
+                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->watermarkFont.'\', 
+                                                \''.$this->watermarkTextSize.'\', 
+                                                \''.$this->watermarkColor.'\', 
+                                                \''.$this->watermarkBorderColor.'\', 
+                                                \''.$this->watermarkBorder.'\'
+                                                )"></i>&nbsp;
+                                         <i class="fa fa-adjust text-muted" style="color:#ccc;"
+                                            id="contrast-minus"
+                                            onclick="doImageAction(\'contrast-minus\', 
+                                                \''.$this->folder.'\', 
+                                                \''.$this->filename.'\', 
+                                                \''.$this->itemID.'\', 
+                                                \''.$this->createThumbnails.'\', 
+                                                \''.$this->thumbnailWidth.'\', 
+                                                \''.$this->watermark.'\', 
+                                                \''.$this->watermarkImage.'\', 
+                                                \''.$this->watermarkOpacity.'\', 
+                                                \''.$this->watermarkPosition.'\', 
+                                                \''.$this->offsetRight.'\', 
+                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->watermarkFont.'\', 
+                                                \''.$this->watermarkTextSize.'\', 
+                                                \''.$this->watermarkColor.'\', 
+                                                \''.$this->watermarkBorderColor.'\', 
+                                                \''.$this->watermarkBorder.'\'
+                                                )"></i>&nbsp;
+                                         <i class="fa fa-sun-o"
+                                            id="brightness-plus"
+                                            onclick="doImageAction(\'brightness-minus\', 
+                                                \''.$this->folder.'\', 
+                                                \''.$this->filename.'\', 
+                                                \''.$this->itemID.'\', 
+                                                \''.$this->createThumbnails.'\', 
+                                                \''.$this->thumbnailWidth.'\', 
+                                                \''.$this->watermark.'\', 
+                                                \''.$this->watermarkImage.'\', 
+                                                \''.$this->watermarkOpacity.'\', 
+                                                \''.$this->watermarkPosition.'\', 
+                                                \''.$this->offsetRight.'\', 
+                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->watermarkFont.'\', 
+                                                \''.$this->watermarkTextSize.'\', 
+                                                \''.$this->watermarkColor.'\', 
+                                                \''.$this->watermarkBorderColor.'\', 
+                                                \''.$this->watermarkBorder.'\'
+                                                )"></i>&nbsp;
+                                         <i class="fa fa-sun-o text-muted" style="color:#ccc;"
+                                            id="brightness-minus"
+                                            onclick="doImageAction(\'brightness-plus\', 
+                                                \''.$this->folder.'\', 
+                                                \''.$this->filename.'\', 
+                                                \''.$this->itemID.'\', 
+                                                \''.$this->createThumbnails.'\', 
+                                                \''.$this->thumbnailWidth.'\', 
+                                                \''.$this->watermark.'\', 
+                                                \''.$this->watermarkImage.'\', 
+                                                \''.$this->watermarkOpacity.'\', 
+                                                \''.$this->watermarkPosition.'\', 
+                                                \''.$this->offsetRight.'\', 
+                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->watermarkFont.'\', 
+                                                \''.$this->watermarkTextSize.'\', 
+                                                \''.$this->watermarkColor.'\', 
+                                                \''.$this->watermarkBorderColor.'\', 
+                                                \''.$this->watermarkBorder.'\'
+                                                )"></i>&nbsp;
+                                         <i class="fa fa-diamond"
+                                            id="sharpen"
+                                            onclick="doImageAction(\'sharpen\', 
+                                                \''.$this->folder.'\', 
+                                                \''.$this->filename.'\', 
+                                                \''.$this->itemID.'\', 
+                                                \''.$this->createThumbnails.'\', 
+                                                \''.$this->thumbnailWidth.'\', 
+                                                \''.$this->watermark.'\', 
+                                                \''.$this->watermarkImage.'\', 
+                                                \''.$this->watermarkOpacity.'\', 
+                                                \''.$this->watermarkPosition.'\', 
+                                                \''.$this->offsetRight.'\', 
+                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->watermarkFont.'\', 
+                                                \''.$this->watermarkTextSize.'\', 
+                                                \''.$this->watermarkColor.'\', 
+                                                \''.$this->watermarkBorderColor.'\', 
+                                                \''.$this->watermarkBorder.'\'
+                                                )"></i>&nbsp;
+                                         <i class="fa fa-magic"
+                                            id="selective-blur"
+                                            onclick="doImageAction(\'selective-blur\', 
+                                                \''.$this->folder.'\', 
+                                                \''.$this->filename.'\', 
+                                                \''.$this->itemID.'\', 
+                                                \''.$this->createThumbnails.'\', 
+                                                \''.$this->thumbnailWidth.'\', 
+                                                \''.$this->watermark.'\', 
+                                                \''.$this->watermarkImage.'\', 
+                                                \''.$this->watermarkOpacity.'\', 
+                                                \''.$this->watermarkPosition.'\', 
+                                                \''.$this->offsetRight.'\', 
+                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->watermarkFont.'\', 
+                                                \''.$this->watermarkTextSize.'\', 
+                                                \''.$this->watermarkColor.'\', 
+                                                \''.$this->watermarkBorderColor.'\', 
+                                                \''.$this->watermarkBorder.'\'
+                                                )"></i>&nbsp;
+                                         <i class="fa fa-tint text-muted"
+                                            id="greyscale"
+                                            onclick="doImageAction(\'greyscale\', 
+                                                \''.$this->folder.'\', 
+                                                \''.$this->filename.'\', 
+                                                \''.$this->itemID.'\', 
+                                                \''.$this->createThumbnails.'\', 
+                                                \''.$this->thumbnailWidth.'\', 
+                                                \''.$this->watermark.'\', 
+                                                \''.$this->watermarkImage.'\', 
+                                                \''.$this->watermarkOpacity.'\', 
+                                                \''.$this->watermarkPosition.'\', 
+                                                \''.$this->offsetRight.'\', 
+                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->watermarkFont.'\', 
+                                                \''.$this->watermarkTextSize.'\', 
+                                                \''.$this->watermarkColor.'\', 
+                                                \''.$this->watermarkBorderColor.'\', 
+                                                \''.$this->watermarkBorder.'\'
+                                                )"></i>&nbsp;
+                                         <i class="fa fa-tint"
+                                            style="color:#9b5c1c;"
+                                            id="sepia"
+                                            onclick="doImageAction(\'sepia\', 
+                                                \''.$this->folder.'\', 
+                                                \''.$this->filename.'\', 
+                                                \''.$this->itemID.'\', 
+                                                \''.$this->createThumbnails.'\', 
+                                                \''.$this->thumbnailWidth.'\', 
+                                                \''.$this->watermark.'\', 
+                                                \''.$this->watermarkImage.'\', 
+                                                \''.$this->watermarkOpacity.'\', 
+                                                \''.$this->watermarkPosition.'\', 
+                                                \''.$this->offsetRight.'\', 
+                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->watermarkFont.'\', 
+                                                \''.$this->watermarkTextSize.'\', 
+                                                \''.$this->watermarkColor.'\', 
+                                                \''.$this->watermarkBorderColor.'\', 
+                                                \''.$this->watermarkBorder.'\'
+                                                )"></i>&nbsp;
+                                         <i class="glyphicon glyphicon-th"
+                                            id="pixelate"
+                                            onclick="doImageAction(\'pixelate\', 
+                                                \''.$this->folder.'\', 
+                                                \''.$this->filename.'\', 
+                                                \''.$this->itemID.'\', 
+                                                \''.$this->createThumbnails.'\', 
+                                                \''.$this->thumbnailWidth.'\', 
+                                                \''.$this->watermark.'\', 
+                                                \''.$this->watermarkImage.'\', 
+                                                \''.$this->watermarkOpacity.'\', 
+                                                \''.$this->watermarkPosition.'\', 
+                                                \''.$this->offsetRight.'\', 
+                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->watermarkFont.'\', 
+                                                \''.$this->watermarkTextSize.'\', 
+                                                \''.$this->watermarkColor.'\', 
+                                                \''.$this->watermarkBorderColor.'\', 
+                                                \''.$this->watermarkBorder.'\'
+                                                )"></i>&nbsp;
+                                         <i class="fa fa-refresh"
+                                            id="reset-file"
+                                            onclick="doImageAction(\'reset-file\', 
+                                                \''.$this->folder.'\', 
+                                                \''.$this->filename.'\', 
+                                                \''.$this->itemID.'\', 
+                                                \''.$this->createThumbnails.'\', 
+                                                \''.$this->thumbnailWidth.'\', 
+                                                \''.$this->watermark.'\', 
+                                                \''.$this->watermarkImage.'\', 
+                                                \''.$this->watermarkOpacity.'\', 
+                                                \''.$this->watermarkPosition.'\', 
+                                                \''.$this->offsetRight.'\', 
+                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->watermarkFont.'\', 
+                                                \''.$this->watermarkTextSize.'\', 
+                                                \''.$this->watermarkColor.'\', 
+                                                \''.$this->watermarkBorderColor.'\', 
+                                                \''.$this->watermarkBorder.'\'
+                                                )"></i>&nbsp;
+                                         <i class="fa fa-trash-o"
+                                            id="delete-file"
+                                            onclick="doImageAction(\'delete-file\', 
+                                                \''.$this->folder.'\', 
+                                                \''.$this->filename.'\', 
+                                                \''.$this->itemID.'\', 
+                                                \''.$this->createThumbnails.'\', 
+                                                \''.$this->thumbnailWidth.'\', 
+                                                \''.$this->watermark.'\', 
+                                                \''.$this->watermarkImage.'\', 
+                                                \''.$this->watermarkOpacity.'\', 
+                                                \''.$this->watermarkPosition.'\', 
+                                                \''.$this->offsetRight.'\', 
+                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->watermarkFont.'\', 
+                                                \''.$this->watermarkTextSize.'\', 
+                                                \''.$this->watermarkColor.'\', 
+                                                \''.$this->watermarkBorderColor.'\', 
+                                                \''.$this->watermarkBorder.'\'
+                                                )"></i>&nbsp;<br>
                                          </div>
                                       <input type="hidden" name="filename-'.$this->itemID.'-old" value="'.$this->filename.'">
                                       <input type="hidden" name="title-'.$this->itemID.'-old" value="'.$this->title.'">
@@ -820,7 +1395,6 @@ namespace YAWK\PLUGINS\GALLERY {
                                     }
                                 $count++;
                             }
-                            //echo "<img src=\"../$row[folder]/$image[filename]\" title=\"$this->title\" class=\"img-thumbnail\" width=\"300\" style=\"margin-right:20px; margin-bottom: 20px;\">";
                         }
                     }
                     echo"</div></div>
