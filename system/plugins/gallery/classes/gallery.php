@@ -45,7 +45,7 @@ namespace YAWK\PLUGINS\GALLERY {
                             }
                             else
                             {   // all good, reload image
-                                alert('Sorry, could not flip image!');
+                                alert('Sorry, there was an error executing this command. Maybe there is a problem with the image folders. Please check folder permissions first.');
                             }
                         }
                     });
@@ -993,26 +993,6 @@ namespace YAWK\PLUGINS\GALLERY {
                                          <i class="fa fa-magic"
                                             id="selective-blur"
                                             onclick="doImageAction(\'selective-blur\', 
-                                                \''.$this->folder.'\', 
-                                                \''.$this->filename.'\', 
-                                                \''.$this->itemID.'\', 
-                                                \''.$this->createThumbnails.'\', 
-                                                \''.$this->thumbnailWidth.'\', 
-                                                \''.$this->watermark.'\', 
-                                                \''.$this->watermarkImage.'\', 
-                                                \''.$this->watermarkOpacity.'\', 
-                                                \''.$this->watermarkPosition.'\', 
-                                                \''.$this->offsetRight.'\', 
-                                                \''.$this->offsetBottom.'\', 
-                                                \''.$this->watermarkFont.'\', 
-                                                \''.$this->watermarkTextSize.'\', 
-                                                \''.$this->watermarkColor.'\', 
-                                                \''.$this->watermarkBorderColor.'\', 
-                                                \''.$this->watermarkBorder.'\'
-                                                )"></i>&nbsp;
-                                         <i class="fa fa-paint-brush"
-                                            id="saturation-plus"
-                                            onclick="doImageAction(\'saturation-plus\', 
                                                 \''.$this->folder.'\', 
                                                 \''.$this->filename.'\', 
                                                 \''.$this->itemID.'\', 
