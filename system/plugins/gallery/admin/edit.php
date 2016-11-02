@@ -104,7 +104,14 @@ echo"<ol class=\"breadcrumb\">
                             class="btn btn-success pull-right">
                         <i id="savebuttonIcon" class="fa fa-check"></i>&nbsp; <?php print $lang['GALLERY_EDIT']; ?>
                     </button>
-                    <br><h4><i class="fa fa-wrench text-muted"></i>&nbsp; Additional settings</h4>
+                </div>
+            </div>
+
+            <div class="box box-default">
+                <div class="box-header">
+                    <h3 class="box-title"><i class="fa fa-wrench text-muted"></i>&nbsp; Additional settings</h3>
+                </div>
+                <div class="box-body">
                     <input type="hidden" value="0" name="createThumbnails">
                     <?php
                     if ($gallery->createThumbnails === "1")
@@ -121,8 +128,14 @@ echo"<ol class=\"breadcrumb\">
                     <br>
                     <label for="thumbnailWidth">Thumbnail width in px</label>
                     <input type="text" id="thumbnailWidth" maxlength="12" name="thumbnailWidth" class="form-control" placeholder="200px" value="<?php echo $gallery->thumbnailWidth; ?>">
+                </div>
+            </div>
 
-                    <h4><i class="fa fa-copyright text-muted"></i> Watermark Settings</h4>
+            <div class="box box-default">
+                <div class="box-header">
+                    <h3 class="box-title"><i class="fa fa-copyright text-muted"></i> Watermark Settings</h3>
+                </div>
+                <div class="box-body">
                     <label for="watermark">Watermark from custom text</label>
                     <input type="text" id="watermark" name="watermark" class="form-control" placeholder="(C) <?php echo date("Y")." photographer"; ?>" value="<?php echo $gallery->watermark; ?>">
                     <label for="watermarkImage">OR from any image</label>
