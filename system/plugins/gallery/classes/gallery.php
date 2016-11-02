@@ -334,7 +334,8 @@ namespace YAWK\PLUGINS\GALLERY {
             }
             if (isset($_POST['watermarkFont']) && (!empty($_POST['watermarkFont'])))
             {   // true type font to use for watermarking (located in system/fonts/)
-                $this->watermarkFont = $db->quote($_POST['watermarkFont']);
+                // $this->watermarkFont = $db->quote($_POST['watermarkFont']);
+                $this->watermarkFont = ($_POST['watermarkFont']);
             }
             if (isset($_POST['watermarkTextSize']) && (!empty($_POST['watermarkTextSize'])))
             {   // text size of your watermark
@@ -550,6 +551,25 @@ namespace YAWK\PLUGINS\GALLERY {
                             } // end backup copy original files
                         }
 
+                        // CREATE EDIT FOLDER
+                        // images here are stored to keep settings while user is in edit preview
+                        if (!is_dir("../$this->folder/edit"))
+                        {   // if no edit folder is set
+                            mkdir("../$this->folder/edit");
+                            // copy original files to backup folder
+                            // iterate through folder and write backup files
+                            foreach (new \DirectoryIterator("../$this->folder") as $backupFile)
+                            {   // exclude dots'n'dirs
+                                if($fileInfo->isDot()) continue;        // exclude dots
+                                if($fileInfo->isDir()) continue;        // exclude subdirectories
+                                $copyFile = $backupFile->getFilename();
+                                if (!@copy("../$this->folder/$copyFile", "../$this->folder/edit/$copyFile"))
+                                {   // could not copy file, throw notification
+                                    \YAWK\alert::draw("warning", "Could not copy file $filename to edit folder", "This should not happen. We're sorry!", "", 800);
+                                }
+                            } // end backup copy original files
+                        }
+
                         // check if thumbnails should be created
                         if ($this->createThumbnails === "1")
                         {   // check if tn width is set
@@ -678,6 +698,15 @@ namespace YAWK\PLUGINS\GALLERY {
                                 if (!rename("../$this->folder/original/$oldFile", "../$this->folder/original/$newFile"))
                                 {   // rename thumbnail failed, throw error
                                     \YAWK\alert::draw("warning", "Could not rename original/$oldFile to $newFile", "Please check folder permissions!", "", 5800);
+                                }
+                            }
+
+                            // check if there are any originals to rename...
+                            if (is_dir("../$this->folder/edit/"))
+                            {   // thumbnail directory exist
+                                if (!rename("../$this->folder/edit/$oldFile", "../$this->folder/edit/$newFile"))
+                                {   // rename thumbnail failed, throw error
+                                    \YAWK\alert::draw("warning", "Could not rename edit/$oldFile to $newFile", "Please check folder permissions!", "", 5800);
                                 }
                             }
 
@@ -824,6 +853,7 @@ namespace YAWK\PLUGINS\GALLERY {
         public function getEditableImages($db, $lang, $galleryID)
         {   /** @var $db \YAWK\db **/
             // get gallery titles...
+
             if ($res = $db->query("SELECT * from {plugin_gallery} WHERE id = $galleryID"))
             {
                 while ($row = mysqli_fetch_assoc($res))
@@ -855,13 +885,13 @@ namespace YAWK\PLUGINS\GALLERY {
                             for ($i = 0; $i < count($property); $i++) {
                                 $this->itemID = $image['id'];
                                 $this->filename = $image['filename'];
-                                // $this->title = $image['title'];
                                 $this->itemTitle = $image['title'];
                                 $this->itemAuthor = $image['author'];
                                 $this->itemAuthorUrl = $image['authorUrl'];
                                 $rnd = uniqid();
 
-                                if ($count % 3 == 0) { // time to break line
+                                if ($count % 3 == 0)
+                                { // time to break line
                                     echo '
                                     </div>';
                                     echo '

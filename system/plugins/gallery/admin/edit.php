@@ -172,7 +172,6 @@ echo"<ol class=\"breadcrumb\">
                     <input type="text" id="offsetBottom" name="offsetBottom" class="form-control" placeholder="-12" value="<?php echo $gallery->offsetBottom; ?>">
                     <label for="watermarkFont">Watermark Font</label>
                     <select id="watermarkFont" name="watermarkFont" class="form-control">
-                        <?php $gallery->watermarkFont = substr($gallery->watermarkFont, 3); ?>
                         <option value="<?php echo $gallery->watermarkFont; ?>"><?php echo $gallery->watermarkFont; ?></option>
                         <?php
                         echo $gallery->scanFonts("../system/fonts/");
