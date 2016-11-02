@@ -59,7 +59,7 @@ namespace YAWK\PLUGINS\GALLERY {
         {
             echo "<select name=\"folder\" class=\"form-control\" id=\"folder\">
                   <option value=\"Select Image Folder\">Select Image Folder</option>
-                  ".self::scanDir($path)."
+                  ".self::scanImageDirectory($path)."
                   </select>";
         }
 
@@ -67,7 +67,7 @@ namespace YAWK\PLUGINS\GALLERY {
         {
             echo "<select name=\"folder\" class=\"form-control\" id=\"folder\">
                   <option value=\"$folder\">$folder</option>
-                  ".self::scanDir($path)."
+                  ".self::scanImageDirectory($path)."
                   </select>";
         }
 
@@ -99,7 +99,7 @@ namespace YAWK\PLUGINS\GALLERY {
             return $html;
         }
 
-        public function scanDir($path)
+        public function scanImageDirectory($path)
         {
             $html = '';
             if (!isset($path))
@@ -188,22 +188,50 @@ namespace YAWK\PLUGINS\GALLERY {
                         \YAWK\alert::draw("warning", "Could not delete gallery items from database", "Please try again!", "", 5800);
                     }
 
+                    // RESET AUTO INCREMENT
                     // ALTER table and set auto_increment value to prevent errors when deleting + adding new tpl
-                    if ($res = $db->query("SELECT MAX(id) FROM {plugin_gallery}"))
+                    if ($alterTable = $db->query("SELECT MAX(id) FROM {plugin_gallery}"))
                     {   // get MAX ID
-                        $row = mysqli_fetch_row($res);
-                        if (!$res = $db->query("ALTER TABLE {plugin_gallery} AUTO_INCREMENT $row[0]"))
-                        {   // could not delete plugin_gallery
-                            return false;
-                        }
-                    }
-                    else
-                        {   // could not get maxID, maybe there is not entry - reset auto increment value to zero
-                            if (!$res = $db->query("ALTER TABLE {plugin_gallery} AUTO_INCREMENT 0"))
-                            {   // could not select auto encrement
+                        $row = mysqli_fetch_row($alterTable);
+                        if ($row[0] >= 1)
+                        {
+                            if (!$alterTable = $db->query("ALTER TABLE {plugin_gallery} AUTO_INCREMENT=$row[0]"))
+                            {   // could not delete plugin_gallery
                                 return false;
                             }
                         }
+                        else
+                            {
+                                // could not get maxID, maybe there is not entry - reset auto increment value to zero
+                                if (!$alterTable = $db->query("ALTER TABLE {plugin_gallery} AUTO_INCREMENT=1"))
+                                {   // could not select auto encrement
+                                    return false;
+                                }
+
+                            }
+                    }
+                    // RESET AUTO INCREMENT
+                    // ALTER table and set auto_increment value to prevent errors when deleting + adding new tpl
+                    if ($alterItemsTable = $db->query("SELECT MAX(id) FROM {plugin_gallery_items}"))
+                    {   // get MAX ID
+                        $row = mysqli_fetch_row($alterItemsTable);
+                        if ($row[0] >= 1)
+                        {
+                            if (!$alterItemsTable = $db->query("ALTER TABLE {plugin_gallery_items} AUTO_INCREMENT=$row[0]"))
+                            {   // could not delete plugin_gallery
+                                return false;
+                            }
+                        }
+                        else
+                        {
+                            // could not get maxID, maybe there is not entry - reset auto increment value to zero
+                            if (!$alterItemsTable = $db->query("ALTER TABLE {plugin_gallery_items} AUTO_INCREMENT=1"))
+                            {   // could not select auto encrement
+                                return false;
+                            }
+
+                        }
+                    }
                 }
                 else
                     {   // delete failed, throw error
@@ -245,7 +273,7 @@ namespace YAWK\PLUGINS\GALLERY {
             // 3.) insert into database
 
             // loading info...
-            \YAWK\alert::draw("success", "Gallery will be created. . .", "<div class=\"text-center\"><i class=\"fa fa-spinner fa-spin\" style=\"font-size:24px\"></i><br>Please be patient, this should only take a few seconds.</div>", "", 2800);
+            \YAWK\alert::draw("success", "Gallery will be created. . .", "<div class=\"text-center\"><i class=\"fa fa-spinner fa-spin\" style=\"font-size:24px\"></i><br>Please be patient, this should only take a few seconds.</div>", "", 3800);
 
             // include SimpleImage Class
             require_once 'SimpleImage.php';
@@ -641,7 +669,16 @@ namespace YAWK\PLUGINS\GALLERY {
                                                          SET filename = '$newFile' 
                                                          WHERE id = $this->itemID"))
                             {   // could not rename file in database, notify user
-                                \YAWK\alert::draw("danger", "Could not save new filename $newFile in database!", "But... the file is already renamed. Expect errors.", "", 5800);
+                                \YAWK\alert::draw("warning", "Could not save new filename $newFile in database!", "But... the file is already renamed. Expect errors.", "", 5800);
+                            }
+
+                            // check if there are any originals to rename...
+                            if (is_dir("../$this->folder/original/"))
+                            {   // thumbnail directory exist
+                                if (!rename("../$this->folder/original/$oldFile", "../$this->folder/original/$newFile"))
+                                {   // rename thumbnail failed, throw error
+                                    \YAWK\alert::draw("warning", "Could not rename original/$oldFile to $newFile", "Please check folder permissions!", "", 5800);
+                                }
                             }
 
                             // check if there are thumbnails to rename...
@@ -649,7 +686,7 @@ namespace YAWK\PLUGINS\GALLERY {
                             {   // thumbnail directory exist
                                 if (!rename("../$this->folder/thumbnails/$oldFile", "../$this->folder/thumbnails/$newFile"))
                                 {   // rename thumbnail failed, throw error
-                                    \YAWK\alert::draw("danger", "Could not rename thumbnails/$oldFile to $newFile", "Please check folder permissions!", "", 5800);
+                                    \YAWK\alert::draw("warning", "Could not rename thumbnails/$oldFile to $newFile", "Please check folder permissions!", "", 5800);
                                 }
                             }
                         }
