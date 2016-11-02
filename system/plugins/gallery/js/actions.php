@@ -326,7 +326,7 @@ if ($action === "sharpen")
             ->save("$prefix$folder/$filename");
     }
     else
-    {   // if no watermark is set, just remove color and save
+    {   // if no watermark is set, just sharpen and save
         $img->load("$prefix$folder/$filename")
             ->sharpen()
             ->save("$prefix$folder/$filename");
@@ -334,7 +334,7 @@ if ($action === "sharpen")
 
     // if watermark FROM IMAGE is set
     if (!empty($watermarkImage))
-    {   // load image, remove color, overlay image watermark and save to image gallery root folder
+    {   // load image, sharpen, overlay image watermark and save to image gallery root folder
         $img->load("$prefix$folder/edit/$filename")
             ->sharpen()
             ->overlay("$prefix$watermarkImage",
@@ -342,7 +342,7 @@ if ($action === "sharpen")
                 $watermarkOpacity)
             ->save("$prefix$folder/$filename");
     }
-} // ./ greyscale
+} // ./ sharpen
 
 
 // SELECTIVE BLUR (magic wand)
@@ -352,7 +352,7 @@ if ($action === "selective-blur")
     if (!empty($watermark))
     {   // load, set blur, save to edit (tmp), slap the watermark on and finally save image to img gallery root folder
         $img->load("$prefix$folder/edit/$filename")
-            ->blur('selective', 10)
+            ->blur('selective', 2)
             ->save("$prefix$folder/edit/$filename")
             ->text("$watermark",
                 "$ttfPrefix$watermarkFont",
@@ -368,7 +368,7 @@ if ($action === "selective-blur")
     else
     {   // if no watermark is set, just set blur and save
         $img->load("$prefix$folder/$filename")
-            ->blur('selective', 10)
+            ->blur('selective', 2)
             ->save("$prefix$folder/$filename");
     }
 
@@ -376,7 +376,7 @@ if ($action === "selective-blur")
     if (!empty($watermarkImage))
     {   // load image, set blur, overlay image watermark and save to image gallery root folder
         $img->load("$prefix$folder/edit/$filename")
-            ->blur('selective', 10)
+            ->blur('selective', 2)
             ->overlay("$prefix$watermarkImage",
                 "$watermarkPosition",
                 $watermarkOpacity)
