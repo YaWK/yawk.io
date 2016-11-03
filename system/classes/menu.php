@@ -304,7 +304,7 @@ namespace YAWK {
 
                     // prepare parentID select field
                     // get menu entry name for <option....> from menuID
-                        if($entries_res = $db->query("SELECT id, title, parentID FROM {menu} ORDER BY sort, parentID, title"))
+                        if($entries_res = $db->query("SELECT id, title, parentID FROM {menu} WHERE menuID = $id ORDER BY sort, parentID, title"))
                         {
                             $menuSelect = '';
                             $menuSelected = '';
