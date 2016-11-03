@@ -25,9 +25,9 @@ if(isset($_POST['save'])){
     // after preparing the vars, update db + write content
     if($page->save($db)) {
           // encode chars
-        // $_POST['content'] = \YAWK\sys::encodeChars($_POST['content']);
-        $_POST['content'] = utf8_encode($_POST['content']);
-        $_POST['content'] = utf8_decode($_POST['content']);
+        //  $_POST['content'] = \YAWK\sys::encodeChars($_POST['content']);
+         $_POST['content'] = utf8_encode($_POST['content']);
+         $_POST['content'] = utf8_decode($_POST['content']);
         // write content to file
         if ($page->writeContent("../", stripslashes(str_replace('\r\n', '', ($_POST['content']))))) {
             print YAWK\alert::draw("success", "Success!", "The page has been saved!","", 800);
@@ -125,22 +125,28 @@ $(document).ready(function() {
             // to do that, the current value of textarea will be read into var text and search/replaced
             // and written back into the textarea. utf-8 encoding/decoding happens in php, before saving into db.
             // get the value of summernote textarea
-            var text = $(editor).val();
-            // search for <img> tags and revert src ../ to set correct path for frontend
-            var frontend = text.replace(/<img src=\"..\/media/g,"<img src=\"media");
-            // put the new string back into <textarea>
-            $(editor).val(frontend); // to make sure that saving works
+            if ( $(editor).length) {    // check if element exists in dom to load editor correctly
+                var text = $(editor).val();
+                // search for <img> tags and revert src ../ to set correct path for frontend
+                var frontend = text.replace(/<img src=\x22..\/media/g,"<img src=\x22media");
+                // put the new string back into <textarea>
+                $(editor).val(frontend); // to make sure that saving works
+            }
+
         });
 
     // BEFORE SUMMERNOTE loads: 3 important lines of code!
     // to display images in backend correctly, we need to change the path of every image.
     // procedure is the same as above (see #savebutton.click)
     // get the value of summernote textarea
-    var text = $(editor).val();
-    // search for <img> tags and update src ../ to get images viewed in summernote
-    var backend = text.replace(/<img src=\"media/g,"<img src=\"../media");
-    // put the new string back into <textarea>
-    $(editor).val(backend); // set new value into textarea
+    
+    if ( $(editor).length) {    // check if element exists in dom to load editor correctly
+        var text = $(editor).val();
+        // search for <img> tags and update src ../ to get images viewed in summernote
+        var backend = text.replace(/<img src=\x22media/g, "<img src=\x22../media");
+        // put the new string back into <textarea>
+        $(editor).val(backend); // set new value into textarea
+    }
 
     <?php
         if ($editorSettings['editorAutoCodeview'] === "true")
@@ -155,7 +161,7 @@ $(document).ready(function() {
     ?>
 
     // INIT SUMMERNOTE EDITOR
-    $('#summernote').summernote({    // set editor itself
+    $("#summernote").summernote({    // set editor itself
         height: <?php echo $editorSettings['editorHeight']; ?>,                 // set editor height
         minHeight: null,             // set minimum height of editor
         maxHeight: null,             // set maximum height of editor
@@ -245,8 +251,8 @@ echo "
     <section class=\"content\">";
 ?>
 
-<!-- CHECK THIS -->
-  <form name="form" role="form" class="form-inline" onsubmit="return replaceImgPrefix()" action="index.php?page=page-edit&site=<?php print $page->alias; ?>&id=<?php echo $page->id; ?>" method="post">
+<!-- FORM -->
+  <form name="form" role="form" class="form-inline" action="index.php?page=page-edit&site=<?php print $page->alias; ?>&id=<?php echo $page->id; ?>" method="post">
       <div class="row">
           <div class="col-md-8">
     <!-- EDITOR -->

@@ -156,9 +156,9 @@ $(editor2).summernote('codeview.deactivate');
 // get the value of summernote textarea
     if ( $(editor).length) {    // check if element exists in dom to load editor correctly
         var text = $(editor).val();
-// search for <img> tags and revert src ../ to set correct path for frontend
-        var frontend = text.replace(/<img src=\"..\/media/g,"<img src=\"media");
-// put the new string back into <textarea>
+        // search for <img> tags and revert src ../ to set correct path for frontend
+        var frontend = text.replace(/<img src=\x22..\/media/g,"<img src=\x22media");
+        // put the new string back into <textarea>
         $(editor).val(frontend); // to make sure that saving works
     }
 
@@ -166,7 +166,7 @@ $(editor2).summernote('codeview.deactivate');
         // do the same thing for the 2nd textarea:
         var text2 = $(editor2).val();
         // search for <img> tags and revert src ../ to set correct path for frontend
-        var frontend2 = text2.replace(/<img src=\"..\/media/g, "<img src=\"media");
+        var frontend2 = text2.replace(/<img src=\x22..\/media/g, "<img src=\x22media");
         // put the new string back into <textarea>
         $(editor2).val(frontend2); // to make sure that saving works
     }
