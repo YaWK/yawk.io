@@ -170,7 +170,7 @@ if(isset($_POST['add'])) {
         <ol class="breadcrumb">
             <li><a href="./" title="Dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             <li><a href="index.php?page=menus" title="Menus"> Menus</a></li>
-            <li class="active"><a href="index.php?page=menu-edit" title="edit Menu"> Edit Menu</a></li>
+            <li class="active"><a href="index.php?page=menu-edit&menu=<?php echo $_GET['menu']; ?>" title="edit Menu"> Edit Menu</a></li>
         </ol>
     </section>
     <!-- Main content -->

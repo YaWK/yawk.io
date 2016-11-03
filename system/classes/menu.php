@@ -262,8 +262,8 @@ namespace YAWK {
       <td><strong>Link</strong></td>
       <td><strong>Group</strong></td>
       <td><strong>Target</strong></td>
-      <td><strong>Order</strong></td>
-      <td><strong>ParentID</strong></td>
+      <td><strong>Sortation</strong></td>
+      <td><strong>Parent Element</strong></td>
       <td><strong>&nbsp;</td>
     </tr>
   </thead>
@@ -321,7 +321,7 @@ namespace YAWK {
                                         $menuSelected = "<option value=\"0\" selected>--no parent item--</option>";
                                     }
                                     else {
-                                        $parentID2name = $db->query("SELECT title FROM {menu} WHERE id=$row[parentID]");
+                                        $parentID2name = $db->query("SELECT title FROM {menu} WHERE menuID = $id AND id=$row[parentID]");
                                         $parentName = mysqli_fetch_row($parentID2name);
                                         $menuSelected = "<option value=\"" . $row['parentID'] . "\" selected>" . $parentName[0] . "</option>";
                                     }
