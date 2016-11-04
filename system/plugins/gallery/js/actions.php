@@ -5,6 +5,7 @@ $img = new \YAWK\SimpleImage();
 // prepare vars
 $prefix = "../../../../";
 $action = $_POST['action'];
+$galleryID = $_POST['id'];
 $folder = $_POST['folder'];
 $filename = $_POST['filename'];
 $itemID = $_POST['itemID'];
@@ -540,3 +541,42 @@ if ($action === "reset-file")
     }
 } // ./ reset-file
 
+
+// DELETE file
+if ($action === "delete-file")
+{   // delete file from all folders, except original
+    require_once '../../../classes/db.php';
+    require_once '../../../classes/alert.php';
+    $db = new \YAWK\db();
+
+    // DELETE FILES
+    // check if there is a thumbnail folder
+    if (is_dir("$prefix$folder/thumbnails/"))
+    {   // check if there is a thumbnail image
+        if (is_file("$prefix$folder/thumbnails/$filename"))
+        {   // delete thumbnail image
+            unlink("$prefix$folder/thumbnails/$filename");
+        }
+    }
+    // check if there is an edit folder
+    if (is_dir("$prefix$folder/edit/"))
+    {   // check if there is a image in this folder
+        if (is_file("$prefix$folder/edit/$filename"))
+        {   // delete temporary edit image
+            unlink("$prefix$folder/edit/$filename");
+        }
+    }
+    // check if there is an image in root folder
+    if (is_file("$prefix$folder/edit/$filename"))
+    {   // delete temporary edit image
+        unlink("$prefix$folder/edit/$filename");
+    }
+    // finally: delete item from database
+    $db->query("DELETE FROM {plugin_gallery_items} WHERE id = $itemID");
+    // image deletion completed, reload gallery edit page to let users see changes take effect.
+
+    // \YAWK\alert::draw("success", "Image deleted successfully", "deleted: $filename","index.php?plugin=gallery&pluginpage=edit&id=$galleryID&folder=$folder", 0);
+    // \YAWK\sys::setTimeout("index.php?plugin=gallery&pluginpage=edit&id=$galleryID&folder=$folder", 0);
+
+
+} // ./ delete-file
