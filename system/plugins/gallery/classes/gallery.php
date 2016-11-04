@@ -32,23 +32,54 @@ namespace YAWK\PLUGINS\GALLERY {
         public function __construct()
         {
             echo "<script type=\"text/javascript\">
-                function doImageAction(action, folder, filename, itemID, createThumbnails, thumbnailWidth, watermark, watermarkImage, watermarkOpacity, watermarkPosition, offsetRight, offsetBottom, watermarkFont, watermarkTextSize, watermarkColor, watermarkBorderColor, watermarkBorder) 
+                function doImageAction(action, id, folder, filename, itemID, createThumbnails, thumbnailWidth, watermark, watermarkImage, watermarkOpacity, watermarkPosition, offsetRight, offsetBottom, watermarkFont, watermarkTextSize, watermarkColor, watermarkBorderColor, watermarkBorder) 
                 {                    
                     $.ajax({
                         url:'../system/plugins/gallery/js/actions.php',
                         type:'post',
-                        data:'action='+action+'&folder='+folder+'&filename='+filename+'&itemID='+itemID+'&createThumbnails='+createThumbnails+'&thumbnailWidth='+thumbnailWidth+'&watermark='+watermark+'&watermarkImage='+watermarkImage+'&watermarkOpacity='+watermarkOpacity+'&watermarkPosition='+watermarkPosition+'&offsetRight='+offsetRight+'&offsetBottom='+offsetBottom+'&watermarkFont='+watermarkFont+'&watermarkTextSize='+watermarkTextSize+'&watermarkColor='+watermarkColor+'&watermarkBorderColor='+watermarkBorderColor+'&watermarkBorder='+watermarkBorder,
+                        data:'action='+action+'&id='+id+'&folder='+folder+'&filename='+filename+'&itemID='+itemID+'&createThumbnails='+createThumbnails+'&thumbnailWidth='+thumbnailWidth+'&watermark='+watermark+'&watermarkImage='+watermarkImage+'&watermarkOpacity='+watermarkOpacity+'&watermarkPosition='+watermarkPosition+'&offsetRight='+offsetRight+'&offsetBottom='+offsetBottom+'&watermarkFont='+watermarkFont+'&watermarkTextSize='+watermarkTextSize+'&watermarkColor='+watermarkColor+'&watermarkBorderColor='+watermarkBorderColor+'&watermarkBorder='+watermarkBorder,
+                        dataType: 'json',
+                        // dataType: 'json',
                         success: function(data)
-                        {   // check if data was sent
+                        {   
+                        // alert(data.status);
+                         var status = data.status;
+                         var action = data.action;
+                         if(status == 'delete')
+                         {   // delete successful, reload page afterwards to update gallery view
+                             // console.log( data );
+                             $('#imgCol-'+itemID).hide();
+                             $('#toolset-'+itemID).hide();
+                             return true;
+                             // location.reload();
+                         }
+                         if(status == 'true') 
+                         {  // after any other action, reload that image to see changes
+                            $('#img-'+itemID).hide().removeAttr('src').attr('src', '../'+folder+'/'+filename+'?'+Math.random()).show();
+                            return true;
+                         }
+                         if(status == 'false')
+                         {  // could not manipulate image
+                            alert('Sorry, the action '+action+'could not be done.');
+                            return false;
+                         }
+                         else 
+                         {  // any other error
+                            alert('Sorry, undefined error executing '+action+'. Maybe there is a problem with your image folders, files or permissions.');
+                            return false;
+                         }
+                            /*
+                            // check if data was sent
                             if(!data)
                             {   // something else has happened
-                                $('#img-'+itemID).hide().removeAttr('src').attr('src', '../'+folder+'/'+filename+'?'+Math.random()).show();
+                                
                                 return false;
                             }
                             else
                             {   // all good, reload image
                                 alert('Sorry, there was an error executing this command. Maybe there is a problem with the image folders. Please check folder permissions first.');
                             }
+                            */
                         }
                     });
                 }
@@ -895,13 +926,14 @@ namespace YAWK\PLUGINS\GALLERY {
                                     echo '
                                     </div>';
                                     echo '
-                                    <div class="row"><div class="col-md-4">
+                                    <div class="row"><div class="col-md-4" id="imgCol-'.$this->itemID.'">
                                     <a href="../' . $row['folder']."/".$this->filename . '?'.$rnd.'" data-lightbox="'.$this->title.'"><img class="img-thumbnail" id="img-'.$this->itemID.'" width="400" title="'.$this->itemTitle.'" src="../' . $row['folder']."/".$this->filename . '?'.$rnd.'"></a>
                                     <br>
-                                         <div style="margin-top: 10px; margin-bottom:10px; cursor:pointer;">
+                                         <div style="margin-top: 10px; margin-bottom:10px; cursor:pointer;" id="toolset-'.$this->itemID.'">
                                          <i class="fa fa-arrows-h" 
                                             id="flipHorizontal" 
                                             onclick="doImageAction(\'flip-horizontal\', 
+                                                \''.$this->id.'\', 
                                                 \''.$this->folder.'\', 
                                                 \''.$this->filename.'\', 
                                                 \''.$this->itemID.'\', 
@@ -922,6 +954,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                          <i class="fa fa-arrows-v" 
                                             id="flipVertical" 
                                             onclick="doImageAction(\'flip-vertical\', 
+                                                \''.$this->id.'\', 
                                                 \''.$this->folder.'\', 
                                                 \''.$this->filename.'\', 
                                                 \''.$this->itemID.'\', 
@@ -942,6 +975,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                          <i class="fa fa-undo" 
                                             id="rotate-90"
                                             onclick="doImageAction(\'rotate-90\', 
+                                                \''.$this->id.'\', 
                                                 \''.$this->folder.'\', 
                                                 \''.$this->filename.'\', 
                                                 \''.$this->itemID.'\', 
@@ -962,6 +996,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                          <i class="fa fa-adjust" 
                                             id="contrast-plus"
                                             onclick="doImageAction(\'contrast-plus\', 
+                                                \''.$this->id.'\', 
                                                 \''.$this->folder.'\', 
                                                 \''.$this->filename.'\', 
                                                 \''.$this->itemID.'\', 
@@ -982,6 +1017,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                          <i class="fa fa-adjust text-muted" style="color:#ccc;"
                                             id="contrast-minus"
                                             onclick="doImageAction(\'contrast-minus\', 
+                                                \''.$this->id.'\', 
                                                 \''.$this->folder.'\', 
                                                 \''.$this->filename.'\', 
                                                 \''.$this->itemID.'\', 
@@ -1002,6 +1038,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                          <i class="fa fa-sun-o"
                                             id="brightness-plus"
                                             onclick="doImageAction(\'brightness-minus\', 
+                                                \''.$this->id.'\', 
                                                 \''.$this->folder.'\', 
                                                 \''.$this->filename.'\', 
                                                 \''.$this->itemID.'\', 
@@ -1022,6 +1059,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                          <i class="fa fa-sun-o text-muted" style="color:#ccc;"
                                             id="brightness-minus"
                                             onclick="doImageAction(\'brightness-plus\', 
+                                                \''.$this->id.'\', 
                                                 \''.$this->folder.'\', 
                                                 \''.$this->filename.'\', 
                                                 \''.$this->itemID.'\', 
@@ -1042,6 +1080,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                          <i class="fa fa-diamond"
                                             id="sharpen"
                                             onclick="doImageAction(\'sharpen\', 
+                                                \''.$this->id.'\', 
                                                 \''.$this->folder.'\', 
                                                 \''.$this->filename.'\', 
                                                 \''.$this->itemID.'\', 
@@ -1062,6 +1101,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                          <i class="fa fa-magic"
                                             id="selective-blur"
                                             onclick="doImageAction(\'selective-blur\', 
+                                                \''.$this->id.'\', 
                                                 \''.$this->folder.'\', 
                                                 \''.$this->filename.'\', 
                                                 \''.$this->itemID.'\', 
@@ -1082,6 +1122,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                          <i class="fa fa-tint text-muted"
                                             id="greyscale"
                                             onclick="doImageAction(\'greyscale\', 
+                                                \''.$this->id.'\', 
                                                 \''.$this->folder.'\', 
                                                 \''.$this->filename.'\', 
                                                 \''.$this->itemID.'\', 
@@ -1103,6 +1144,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                             style="color:#9b5c1c;"
                                             id="sepia"
                                             onclick="doImageAction(\'sepia\', 
+                                                \''.$this->id.'\', 
                                                 \''.$this->folder.'\', 
                                                 \''.$this->filename.'\', 
                                                 \''.$this->itemID.'\', 
@@ -1123,6 +1165,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                          <i class="fa fa-th text-muted"
                                             id="pixelate"
                                             onclick="doImageAction(\'pixelate\', 
+                                                \''.$this->id.'\', 
                                                 \''.$this->folder.'\', 
                                                 \''.$this->filename.'\', 
                                                 \''.$this->itemID.'\', 
@@ -1143,6 +1186,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                          <i class="fa fa-refresh"
                                             id="reset-file"
                                             onclick="doImageAction(\'reset-file\', 
+                                                \''.$this->id.'\', 
                                                 \''.$this->folder.'\', 
                                                 \''.$this->filename.'\', 
                                                 \''.$this->itemID.'\', 
@@ -1163,6 +1207,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                          <i class="fa fa-trash-o"
                                             id="delete-file"
                                             onclick="doImageAction(\'delete-file\', 
+                                                \''.$this->id.'\', 
                                                 \''.$this->folder.'\', 
                                                 \''.$this->filename.'\', 
                                                 \''.$this->itemID.'\', 
@@ -1193,13 +1238,14 @@ namespace YAWK\PLUGINS\GALLERY {
                                 }
                                 else
                                     {  echo '  
-                                      <div class="col-md-4">
+                                      <div class="col-md-4" id="imgCol-'.$this->itemID.'">
                                     <a href="../' . $row['folder']."/".$this->filename . '?'.$rnd.'" data-lightbox="'.$this->title.'"><img class="img-thumbnail" id="img-'.$this->itemID.'" width="400" title="'.$this->itemTitle.'" src="../' . $row['folder']."/".$this->filename . '?'.$rnd.'"></a>
                                          
-                                         <div style="margin-top: 10px; margin-bottom:10px; cursor:pointer;">
+                                         <div style="margin-top: 10px; margin-bottom:10px; cursor:pointer;" id="toolset-'.$this->itemID.'">
                                          <i class="fa fa-arrows-h" 
                                             id="flipHorizontal" 
-                                            onclick="doImageAction(\'flip-horizontal\', 
+                                            onclick="doImageAction(\'flip-horizontal\',
+                                                \''.$this->id.'\',  
                                                 \''.$this->folder.'\', 
                                                 \''.$this->filename.'\', 
                                                 \''.$this->itemID.'\', 
@@ -1219,7 +1265,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 )"></i>&nbsp;
                                          <i class="fa fa-arrows-v" 
                                             id="flipVertical" 
-                                            onclick="doImageAction(\'flip-vertical\', 
+                                            onclick="doImageAction(\'flip-vertical\',
+                                                \''.$this->id.'\',  
                                                 \''.$this->folder.'\', 
                                                 \''.$this->filename.'\', 
                                                 \''.$this->itemID.'\', 
@@ -1240,6 +1287,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                          <i class="fa fa-undo" 
                                             id="rotate-90"
                                             onclick="doImageAction(\'rotate-90\', 
+                                                \''.$this->id.'\', 
                                                 \''.$this->folder.'\', 
                                                 \''.$this->filename.'\', 
                                                 \''.$this->itemID.'\', 
@@ -1260,6 +1308,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                          <i class="fa fa-adjust" 
                                             id="contrast-plus"
                                             onclick="doImageAction(\'contrast-plus\', 
+                                                \''.$this->id.'\', 
                                                 \''.$this->folder.'\', 
                                                 \''.$this->filename.'\', 
                                                 \''.$this->itemID.'\', 
@@ -1280,6 +1329,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                          <i class="fa fa-adjust text-muted" style="color:#ccc;"
                                             id="contrast-minus"
                                             onclick="doImageAction(\'contrast-minus\', 
+                                                \''.$this->id.'\', 
                                                 \''.$this->folder.'\', 
                                                 \''.$this->filename.'\', 
                                                 \''.$this->itemID.'\', 
@@ -1300,6 +1350,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                          <i class="fa fa-sun-o"
                                             id="brightness-plus"
                                             onclick="doImageAction(\'brightness-minus\', 
+                                                \''.$this->id.'\', 
                                                 \''.$this->folder.'\', 
                                                 \''.$this->filename.'\', 
                                                 \''.$this->itemID.'\', 
@@ -1320,6 +1371,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                          <i class="fa fa-sun-o text-muted" style="color:#ccc;"
                                             id="brightness-minus"
                                             onclick="doImageAction(\'brightness-plus\', 
+                                                \''.$this->id.'\', 
                                                 \''.$this->folder.'\', 
                                                 \''.$this->filename.'\', 
                                                 \''.$this->itemID.'\', 
@@ -1340,6 +1392,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                          <i class="fa fa-diamond"
                                             id="sharpen"
                                             onclick="doImageAction(\'sharpen\', 
+                                                \''.$this->id.'\', 
                                                 \''.$this->folder.'\', 
                                                 \''.$this->filename.'\', 
                                                 \''.$this->itemID.'\', 
@@ -1359,7 +1412,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 )"></i>&nbsp;
                                          <i class="fa fa-magic"
                                             id="selective-blur"
-                                            onclick="doImageAction(\'selective-blur\', 
+                                            onclick="doImageAction(\'selective-blur\',
+                                                \''.$this->id.'\',  
                                                 \''.$this->folder.'\', 
                                                 \''.$this->filename.'\', 
                                                 \''.$this->itemID.'\', 
@@ -1380,6 +1434,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                          <i class="fa fa-tint text-muted"
                                             id="greyscale"
                                             onclick="doImageAction(\'greyscale\', 
+                                                \''.$this->id.'\', 
                                                 \''.$this->folder.'\', 
                                                 \''.$this->filename.'\', 
                                                 \''.$this->itemID.'\', 
@@ -1401,6 +1456,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                             style="color:#9b5c1c;"
                                             id="sepia"
                                             onclick="doImageAction(\'sepia\', 
+                                                \''.$this->id.'\', 
                                                 \''.$this->folder.'\', 
                                                 \''.$this->filename.'\', 
                                                 \''.$this->itemID.'\', 
@@ -1421,6 +1477,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                          <i class="fa fa-th text-muted"
                                             id="pixelate"
                                             onclick="doImageAction(\'pixelate\', 
+                                                \''.$this->id.'\', 
                                                 \''.$this->folder.'\', 
                                                 \''.$this->filename.'\', 
                                                 \''.$this->itemID.'\', 
@@ -1441,6 +1498,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                          <i class="fa fa-refresh"
                                             id="reset-file"
                                             onclick="doImageAction(\'reset-file\', 
+                                                \''.$this->id.'\', 
                                                 \''.$this->folder.'\', 
                                                 \''.$this->filename.'\', 
                                                 \''.$this->itemID.'\', 
@@ -1461,6 +1519,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                          <i class="fa fa-trash-o"
                                             id="delete-file"
                                             onclick="doImageAction(\'delete-file\', 
+                                                \''.$this->id.'\', 
                                                 \''.$this->folder.'\', 
                                                 \''.$this->filename.'\', 
                                                 \''.$this->itemID.'\', 

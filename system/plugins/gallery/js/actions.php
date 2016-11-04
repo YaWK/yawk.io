@@ -63,10 +63,13 @@ $ttfPrefix = "../../../";                                        // prefix to sy
                            $watermarkOpacity)
                 ->save("$prefix$folder/$filename");
         }
+        $response['status'] = 'true';
+        $response['action'] = 'flip horizontal';
+        echo json_encode($response);
     } // ./ flip-horizontal
 
 
-// FLIP X (horizontal)
+// FLIP Y (vertical)
     if ($action === "flip-vertical")
     {   // flip image vertical (Y axis)
         // if watermark is set
@@ -103,6 +106,9 @@ $ttfPrefix = "../../../";                                        // prefix to sy
                            $watermarkOpacity)
                 ->save("$prefix$folder/$filename");
         }
+        $response['status'] = 'true';
+        $response['action'] = 'flip vertical';
+        echo json_encode($response);
     } // ./ flip-vertical
 
 
@@ -143,6 +149,9 @@ if ($action === "rotate-90")
                        $watermarkOpacity)
             ->save("$prefix$folder/$filename");
     }
+    $response['status'] = 'true';
+    $response['action'] = 'flip rotate -90';
+    echo json_encode($response);
 } // ./ rotate-90
 
 
@@ -183,6 +192,9 @@ if ($action === "contrast-plus")
                 $watermarkOpacity)
             ->save("$prefix$folder/$filename");
     }
+    $response['status'] = 'true';
+    $response['action'] = 'more contrast';
+    echo json_encode($response);
 } // ./ contrast-plus
 
 
@@ -223,6 +235,9 @@ if ($action === "contrast-minus")
                 $watermarkOpacity)
             ->save("$prefix$folder/$filename");
     }
+    $response['status'] = 'true';
+    $response['action'] = 'less contrast';
+    echo json_encode($response);
 } // ./ contrast-plus
 
 
@@ -263,6 +278,9 @@ if ($action === "brightness-plus")
                 $watermarkOpacity)
             ->save("$prefix$folder/$filename");
     }
+    $response['status'] = 'true';
+    $response['action'] = 'more brightness';
+    echo json_encode($response);
 } // ./ brightness-plus
 
 
@@ -303,6 +321,9 @@ if ($action === "brightness-minus")
                 $watermarkOpacity)
             ->save("$prefix$folder/$filename");
     }
+    $response['status'] = 'true';
+    $response['action'] = 'less brightness';
+    echo json_encode($response);
 } // ./ brightness-remove
 
 
@@ -343,6 +364,9 @@ if ($action === "sharpen")
                 $watermarkOpacity)
             ->save("$prefix$folder/$filename");
     }
+    $response['status'] = 'true';
+    $response['action'] = 'sharpen';
+    echo json_encode($response);
 } // ./ sharpen
 
 
@@ -383,6 +407,9 @@ if ($action === "selective-blur")
                 $watermarkOpacity)
             ->save("$prefix$folder/$filename");
     }
+    $response['status'] = 'true';
+    $response['action'] = 'magic blur (selective blur)';
+    echo json_encode($response);
 } // ./ selective-blur
 
 
@@ -423,6 +450,9 @@ if ($action === "greyscale")
                 $watermarkOpacity)
             ->save("$prefix$folder/$filename");
     }
+    $response['status'] = 'true';
+    $response['action'] = 'greyscale';
+    echo json_encode($response);
 } // ./ greyscale
 
 
@@ -463,6 +493,9 @@ if ($action === "sepia")
                 $watermarkOpacity)
             ->save("$prefix$folder/$filename");
     }
+    $response['status'] = 'true';
+    $response['action'] = 'sepia';
+    echo json_encode($response);
 } // ./ sepia
 
 
@@ -502,6 +535,9 @@ if ($action === "pixelate")
                 $watermarkOpacity)
             ->save("$prefix$folder/$filename");
     }
+    $response['status'] = 'true';
+    $response['action'] = 'pixelate';
+    echo json_encode($response);
 } // ./ pixelate
 
 
@@ -539,6 +575,9 @@ if ($action === "reset-file")
                 $watermarkOpacity)
             ->save("$prefix$folder/$filename");
     }
+    $response['status'] = 'true';
+    $response['action'] = 'reset changes and restore original image';
+    echo json_encode($response);
 } // ./ reset-file
 
 
@@ -567,16 +606,19 @@ if ($action === "delete-file")
         }
     }
     // check if there is an image in root folder
-    if (is_file("$prefix$folder/edit/$filename"))
+    if (is_file("$prefix$folder/$filename"))
     {   // delete temporary edit image
-        unlink("$prefix$folder/edit/$filename");
+        unlink("$prefix$folder/$filename");
     }
+    // create array for json response
+    $response = array();
     // finally: delete item from database
-    $db->query("DELETE FROM {plugin_gallery_items} WHERE id = $itemID");
-    // image deletion completed, reload gallery edit page to let users see changes take effect.
-
-    // \YAWK\alert::draw("success", "Image deleted successfully", "deleted: $filename","index.php?plugin=gallery&pluginpage=edit&id=$galleryID&folder=$folder", 0);
-    // \YAWK\sys::setTimeout("index.php?plugin=gallery&pluginpage=edit&id=$galleryID&folder=$folder", 0);
-
+    if ($db->query("DELETE FROM {plugin_gallery_items} WHERE id = $itemID"))
+    {   // all good...
+        $response['status'] = 'delete';
+        $response['action'] = 'delete';
+        echo json_encode($response);
+    }
+    // image deletion completed, return response status as json
 
 } // ./ delete-file
