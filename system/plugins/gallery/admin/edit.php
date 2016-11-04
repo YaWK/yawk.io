@@ -31,7 +31,7 @@ if (isset($_POST))
 <script src="../system/engines/jquery/lightbox2/js/lightbox.min.js"></script>
 <script type="text/javascript">
     lightbox.option({
-        'albumLabel': "Image %1 of %2 - you may need to reload (strg-r or f5) to see changes take effect in fullscreen mode.",
+        'albumLabel': "Image %1 of %2 - you need to save to see changes take effect in fullscreen.",
         'wrapAround': true
     })
 </script>

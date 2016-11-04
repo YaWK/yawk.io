@@ -68,18 +68,6 @@ namespace YAWK\PLUGINS\GALLERY {
                             alert('Sorry, undefined error executing '+action+'. Maybe there is a problem with your image folders, files or permissions.');
                             return false;
                          }
-                            /*
-                            // check if data was sent
-                            if(!data)
-                            {   // something else has happened
-                                
-                                return false;
-                            }
-                            else
-                            {   // all good, reload image
-                                alert('Sorry, there was an error executing this command. Maybe there is a problem with the image folders. Please check folder permissions first.');
-                            }
-                            */
                         }
                     });
                 }
@@ -927,7 +915,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                     </div>';
                                     echo '
                                     <div class="row"><div class="col-md-4" id="imgCol-'.$this->itemID.'">
-                                    <a href="../' . $row['folder']."/".$this->filename . '?'.$rnd.'" data-lightbox="'.$this->title.'"><img class="img-thumbnail" id="img-'.$this->itemID.'" width="400" title="'.$this->itemTitle.'" src="../' . $row['folder']."/".$this->filename . '?'.$rnd.'"></a>
+                                    <a href="../' . $row['folder']."/".$this->filename . '?'.$rnd.'" data-lightbox="'.$this->id.'"><img class="img-thumbnail" id="img-'.$this->itemID.'" width="400" title="'.$this->itemTitle.'" src="../' . $row['folder']."/".$this->filename . '?'.$rnd.'"></a>
                                     <br>
                                          <div style="margin-top: 10px; margin-bottom:10px; cursor:pointer;" id="toolset-'.$this->itemID.'">
                                          <i class="fa fa-arrows-h" 
