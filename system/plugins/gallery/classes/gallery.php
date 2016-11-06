@@ -92,9 +92,21 @@ namespace YAWK\PLUGINS\GALLERY {
 
         public function checkDir($folder)
         {   // check if directory exists
-            if (!is_dir("$folder/")) {
-                mkdir("$folder/");
+            if (!is_dir("$folder/"))
+            {   // folder does not exist, create it
+                if (mkdir("$folder/"))
+                {   // folder created,
+                    return true;
+                }
+                else
+                    {   // could not create folder
+                        return false;
+                    }
             }
+            else
+                {   // directory exists
+                    return true;
+                }
         }
 
 
@@ -652,6 +664,7 @@ namespace YAWK\PLUGINS\GALLERY {
 
         public function edit($db, $galleryID)
         {   /** @var $db \YAWK\db * */
+
             // quote all POST vars
             $this->id = $galleryID;
             $this->folder = $db->quote($_POST['folder']);
@@ -672,6 +685,12 @@ namespace YAWK\PLUGINS\GALLERY {
             $this->watermarkColor = $db->quote($_POST['watermarkColor']);
             $this->watermarkBorderColor = $db->quote($_POST['watermarkBorderColor']);
             $this->watermarkBorder = $db->quote($_POST['watermarkBorder']);
+            // thumbnailWidth
+            $oldThumbnailWidth = $_POST['oldThumbnailWidth'];
+            if ($oldThumbnailWidth !== $this->thumbnailWidth)
+            {   // loading info...
+                \YAWK\alert::draw("success", "Saving settings. . .", "<div class=\"text-center\"><i class=\"fa fa-spinner fa-spin\" style=\"font-size:24px\"></i><br>Please be patient, this should only take a few seconds.</div>", "", 2200);
+            }
 
             // check, if any itemIDs need to be updated, get get them and loop through items...
             if ($res = $db->query("SELECT id from {plugin_gallery_items} 
@@ -795,6 +814,38 @@ namespace YAWK\PLUGINS\GALLERY {
                         else
                         {   // change title success
                             \YAWK\alert::draw("success", "Changed Author URL to $newAuthorUrl", "affected image ID: $this->itemID", "", 800);
+                        }
+                    }
+                }
+                // ## CHECK IF THUMBNAIL WIDTH HAS CHANGED...
+                if ($oldThumbnailWidth === $this->thumbnailWidth)
+                {
+                    // thumbnail size not changed, no action required: save ressources + do nothing :)
+                }
+                else
+                {   // save thumbnails new...
+                    // check if thumbnails should be created
+                    if ($this->createThumbnails === "1")
+                    {   // check if tn width is set
+                        if (empty($this->thumbnailWidth))
+                        {   // if no default width is set, take this as default value
+                            $this->thumbnailWidth = 200;
+                        }
+                        // include SimpleImage Class
+                        require_once 'SimpleImage.php';
+                        // create object
+                        $img = new \YAWK\SimpleImage();
+
+                        // walk through images folder
+                        foreach (new \DirectoryIterator("../$this->folder") as $image)
+                        {   // exclude dots'n'dirs
+                            if($image->isDot()) continue;        // exclude dots
+                            if($image->isDir()) continue;        // exclude subdirectories
+                            // store filename in var for better handling
+                            $filename = $image->getFilename();
+                            $img->load("../$this->folder/$filename")
+                                ->fit_to_width($this->thumbnailWidth)
+                                ->save("../$this->folder/thumbnails/$filename");
                         }
                     }
                 }

@@ -128,6 +128,7 @@ echo"<ol class=\"breadcrumb\">
                     <br>
                     <label for="thumbnailWidth">Thumbnail width in px</label>
                     <input type="text" id="thumbnailWidth" maxlength="12" name="thumbnailWidth" class="form-control" placeholder="200px" value="<?php echo $gallery->thumbnailWidth; ?>">
+                    <input type="hidden" id="oldThumbnailWidth" maxlength="12" name="oldThumbnailWidth" class="form-control" placeholder="200px" value="<?php echo $gallery->thumbnailWidth; ?>">
                 </div>
             </div>
 
