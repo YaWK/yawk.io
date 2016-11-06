@@ -88,8 +88,6 @@ $ttfPrefix = "../../../";                                        // prefix to sy
         if (!empty($watermarkImage))
         {   // load image, flip X, overlay image watermark and save to image gallery root folder
             $img->load("$prefix$folder/edit/$filename")
-                ->flip("x")
-                ->save("$prefix$folder/edit/$filename")
                 ->overlay("$prefix$watermarkImage",
                           "$watermarkPosition",
                            $watermarkOpacity)
@@ -176,8 +174,6 @@ $ttfPrefix = "../../../";                                        // prefix to sy
         if (!empty($watermarkImage))
         {   // load image, flip Y, overlay image watermark and save to image gallery root folder
             $img->load("$prefix$folder/edit/$filename")
-                ->flip("y")
-                ->save("$prefix$folder/edit/$filename")
                 ->overlay("$prefix$watermarkImage",
                     "$watermarkPosition",
                     $watermarkOpacity)
@@ -263,8 +259,6 @@ if ($action === "rotate-90")
     if (!empty($watermarkImage))
     {   // load image, rotate, overlay image watermark and save to image gallery root folder
         $img->load("$prefix$folder/edit/$filename")
-            ->rotate(-90)
-            ->save("$prefix$folder/edit/$filename")
             ->overlay("$prefix$watermarkImage",
                 "$watermarkPosition",
                 $watermarkOpacity)
@@ -349,8 +343,6 @@ if ($action === "contrast-plus")
     if (!empty($watermarkImage))
     {   // load image, contrast+, overlay image watermark and save to image gallery root folder
         $img->load("$prefix$folder/edit/$filename")
-            ->contrast(-5)
-            ->save("$prefix$folder/edit/$filename")
             ->overlay("$prefix$watermarkImage",
                 "$watermarkPosition",
                 $watermarkOpacity)
@@ -434,8 +426,6 @@ if ($action === "contrast-minus")
     if (!empty($watermarkImage))
     {   // load image, remove contrast, overlay image watermark and save to image gallery root folder
         $img->load("$prefix$folder/edit/$filename")
-            ->contrast(5)
-            ->save("$prefix$folder/edit/$filename")
             ->overlay("$prefix$watermarkImage",
                 "$watermarkPosition",
                 $watermarkOpacity)
@@ -519,8 +509,6 @@ if ($action === "brightness-plus")
     if (!empty($watermarkImage))
     {   // load image, add brightness, overlay image watermark and save to image gallery root folder
         $img->load("$prefix$folder/edit/$filename")
-            ->brightness(5)
-            ->save("$prefix$folder/edit/$filename")
             ->overlay("$prefix$watermarkImage",
                 "$watermarkPosition",
                 $watermarkOpacity)
@@ -605,8 +593,6 @@ if ($action === "brightness-minus")
     if (!empty($watermarkImage))
     {   // load image, remove brightness, overlay image watermark and save to image gallery root folder
         $img->load("$prefix$folder/edit/$filename")
-            ->brightness(-5)
-            ->save("$prefix$folder/edit/$filename")
             ->overlay("$prefix$watermarkImage",
                 "$watermarkPosition",
                 $watermarkOpacity)
@@ -692,8 +678,6 @@ if ($action === "sharpen")
     if (!empty($watermarkImage))
     {   // load image, sharpen, overlay image watermark and save to image gallery root folder
         $img->load("$prefix$folder/edit/$filename")
-            ->sharpen()
-            ->save("$prefix$folder/edit/$filename")
             ->overlay("$prefix$watermarkImage",
                 "$watermarkPosition",
                 $watermarkOpacity)
@@ -778,8 +762,6 @@ if ($action === "selective-blur")
     if (!empty($watermarkImage))
     {   // load image, set blur, overlay image watermark and save to image gallery root folder
         $img->load("$prefix$folder/edit/$filename")
-            ->blur('selective', 2)
-            ->save("$prefix$folder/edit/$filename")
             ->overlay("$prefix$watermarkImage",
                 "$watermarkPosition",
                 $watermarkOpacity)
@@ -864,8 +846,6 @@ if ($action === "greyscale")
     if (!empty($watermarkImage))
     {   // load image, greyscale, overlay image with watermark and save to image gallery root folder
         $img->load("$prefix$folder/edit/$filename")
-            ->desaturate()
-            ->save("$prefix$folder/edit/$filename")
             ->overlay("$prefix$watermarkImage",
                 "$watermarkPosition",
                 $watermarkOpacity)
@@ -949,8 +929,6 @@ if ($action === "sepia")
     if (!empty($watermarkImage))
     {   // load image, sepia, overlay image watermark and save to image gallery root folder
         $img->load("$prefix$folder/edit/$filename")
-            ->sepia()
-            ->save("$prefix$folder/edit/$filename")
             ->overlay("$prefix$watermarkImage",
                 "$watermarkPosition",
                 $watermarkOpacity)
@@ -1034,8 +1012,6 @@ if ($action === "pixelate")
     if (!empty($watermarkImage))
     {   // load image, pixelate, overlay image watermark and save to image gallery root folder
         $img->load("$prefix$folder/edit/$filename")
-            ->pixelate(12)
-            ->save("$prefix$folder/edit/$filename")
             ->overlay("$prefix$watermarkImage",
                 "$watermarkPosition",
                 $watermarkOpacity)
