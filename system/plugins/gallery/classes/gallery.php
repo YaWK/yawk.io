@@ -695,8 +695,6 @@ namespace YAWK\PLUGINS\GALLERY {
             $oldWatermark = $_POST['oldWatermark'];
             $oldWatermarkImage = $_POST['oldWatermarkImage'];
 
-            // old imageWidth
-            // $oldImageWidth = $_POST['oldImageWidth'];
             if ($oldThumbnailWidth !== $this->thumbnailWidth)
             {   // "saving thumbnails" message
                 \YAWK\alert::draw("success", "Saving new thumbnails. . .", "<div class=\"text-center\"><i class=\"fa fa-spinner fa-spin\" style=\"font-size:24px\"></i><br>Please be patient, this should only take a few seconds.</div>", "", 2200);
@@ -1408,7 +1406,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                 else
                                     {  echo '  
                                       <div class="col-md-4" id="imgCol-'.$this->itemID.'">
-                                    <a href="../' . $row['folder']."/".$this->filename . '?'.$rnd.'" data-lightbox="'.$this->title.'"><img class="img-thumbnail" id="img-'.$this->itemID.'" width="400" title="'.$this->itemTitle.'" src="../' . $row['folder']."/".$this->filename . '?'.$rnd.'"></a>
+                                    <a href="../' . $row['folder']."/".$this->filename . '?'.$rnd.'" data-lightbox="'.$this->id.'"><img class="img-thumbnail" id="img-'.$this->itemID.'" width="400" title="'.$this->itemTitle.'" src="../' . $row['folder']."/".$this->filename . '?'.$rnd.'"></a>
                                          
                                          <div style="margin-top: 10px; margin-bottom:10px; cursor:pointer;" id="toolset-'.$this->itemID.'">
                                          <i class="fa fa-arrows-h" 
