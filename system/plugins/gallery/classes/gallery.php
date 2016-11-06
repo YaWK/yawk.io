@@ -16,6 +16,7 @@ namespace YAWK\PLUGINS\GALLERY {
         public $itemAuthorUrl;
         public $filename;
         public $createThumbnails;
+        public $imageWidth;
         public $thumbnailWidth;
         public $watermark;
         public $watermarkImage;
@@ -646,6 +647,7 @@ namespace YAWK\PLUGINS\GALLERY {
                     $this->author = $row['author'];
                     $this->authorUrl = $row['authorUrl'];
                     $this->createThumbnails = $row['createThumbnails'];
+                    $this->imageWidth = $row['imageWidth'];
                     $this->thumbnailWidth = $row['thumbnailWidth'];
                     $this->watermark = $row['watermark'];
                     $this->watermarkPosition = $row['watermarkPosition'];
@@ -673,6 +675,7 @@ namespace YAWK\PLUGINS\GALLERY {
             $this->author = $db->quote($_POST['author']);
             $this->authorUrl = $db->quote($_POST['authorUrl']);
             $this->createThumbnails = $db->quote($_POST['createThumbnails']);
+           // $this->imageWidth = $db->quote($_POST['imageWidth']);
             $this->thumbnailWidth = $db->quote($_POST['thumbnailWidth']);
             $this->watermark = $db->quote($_POST['watermark']);
             $this->watermarkPosition = $db->quote($_POST['watermarkPosition']);
@@ -685,12 +688,31 @@ namespace YAWK\PLUGINS\GALLERY {
             $this->watermarkColor = $db->quote($_POST['watermarkColor']);
             $this->watermarkBorderColor = $db->quote($_POST['watermarkBorderColor']);
             $this->watermarkBorder = $db->quote($_POST['watermarkBorder']);
-            // thumbnailWidth
+
+            // store old values to compare if settings have changed
+            // process only what really changed.
             $oldThumbnailWidth = $_POST['oldThumbnailWidth'];
+            $oldWatermark = $_POST['oldWatermark'];
+            $oldWatermarkImage = $_POST['oldWatermarkImage'];
+
+            // old imageWidth
+            // $oldImageWidth = $_POST['oldImageWidth'];
             if ($oldThumbnailWidth !== $this->thumbnailWidth)
-            {   // loading info...
-                \YAWK\alert::draw("success", "Saving settings. . .", "<div class=\"text-center\"><i class=\"fa fa-spinner fa-spin\" style=\"font-size:24px\"></i><br>Please be patient, this should only take a few seconds.</div>", "", 2200);
+            {   // "saving thumbnails" message
+                \YAWK\alert::draw("success", "Saving new thumbnails. . .", "<div class=\"text-center\"><i class=\"fa fa-spinner fa-spin\" style=\"font-size:24px\"></i><br>Please be patient, this should only take a few seconds.</div>", "", 2200);
             }
+            /* TODO: implement image width
+            else if ($oldImageWidth !== $this->imageWidth)
+            {
+                {   // "changing image size" message
+                    \YAWK\alert::draw("success", "Resizing your images. . .", "<div class=\"text-center\"><i class=\"fa fa-spinner fa-spin\" style=\"font-size:24px\"></i><br>Please be patient, this should only take a few seconds.</div>", "", 2200);
+                }
+            }
+            */
+            else
+                {
+                    \YAWK\alert::draw("success", "Settings saved.", "Gallery updated.", "", 800);
+                }
 
             // check, if any itemIDs need to be updated, get get them and loop through items...
             if ($res = $db->query("SELECT id from {plugin_gallery_items} 
@@ -817,7 +839,115 @@ namespace YAWK\PLUGINS\GALLERY {
                         }
                     }
                 }
-                // ## CHECK IF THUMBNAIL WIDTH HAS CHANGED...
+
+                // ## CHECK IF WATERMARK HAS CHANGED...
+                if (empty($this->watermark))
+                {
+                    // watermark not changed, no action required: save ressources + do nothing :)
+                }
+                else
+                {   // save new watermark onto files
+
+                    // load SimpleImage Class
+                    require_once 'SimpleImage.php';
+                    // create object
+                    $img = new \YAWK\SimpleImage();
+
+                    // check if thumbnails should be created
+                    if ($this->createThumbnails === "1")
+                    {   // check if tn width is set
+                        if (empty($this->thumbnailWidth))
+                        {   // if no default width is set, take this as default value
+                            $this->thumbnailWidth = 200;
+                        }
+                        // walk through images folder
+                        foreach (new \DirectoryIterator("../$this->folder/edit/") as $image)
+                        {   // exclude dots'n'dirs
+                            if($image->isDot()) continue;        // exclude dots
+                            if($image->isDir()) continue;        // exclude subdirectories
+                            // store filename in var for better handling
+                            $filename = $image->getFilename();
+                            $img->load("../$this->folder/edit/$filename")
+                                ->text("$this->watermark",
+                                    "$this->watermarkFont",
+                                    $this->watermarkTextSize,
+                                    "#$this->watermarkColor",
+                                    "$this->watermarkPosition",
+                                    "$this->offsetRight",
+                                    "$this->offsetBottom",
+                                    "#$this->watermarkBorderColor",
+                                    $this->watermarkBorder)
+                                ->save("../$this->folder/$filename")
+                                ->fit_to_width($this->thumbnailWidth)
+                                ->save("../$this->folder/thumbnails/$filename");
+                        }
+                    }
+                    else
+                        {   // no thumbnails required, just change watermark to root folder images
+                            // walk through images folder
+                            foreach (new \DirectoryIterator("../$this->folder/edit/") as $image)
+                            {   // exclude dots'n'dirs
+                                if($image->isDot()) continue;        // exclude dots
+                                if($image->isDir()) continue;        // exclude subdirectories
+                                // store filename in var for better handling
+                                $filename = $image->getFilename();
+                                $img->load("../$this->folder/edit/$filename")
+                                    ->text("$this->watermark",
+                                        "$this->watermarkFont",
+                                        $this->watermarkTextSize,
+                                        "#$this->watermarkColor",
+                                        "$this->watermarkPosition",
+                                        "$this->offsetRight",
+                                        "$this->offsetBottom",
+                                        "#$this->watermarkBorderColor",
+                                        $this->watermarkBorder)
+                                    ->save("../$this->folder/$filename");
+                            }
+                        }
+
+                    // ## CHECK IF WATERMARK HAS CHANGED...
+                    if (empty($this->watermarkImage))
+                    {
+                        // watermark not changed, no action required: save ressources + do nothing :)
+                    }
+                    else
+                        {  // walk through images folder
+                            foreach (new \DirectoryIterator("../$this->folder/edit/") as $image)
+                            {   // exclude dots'n'dirs
+                                if($image->isDot()) continue;        // exclude dots
+                                if($image->isDir()) continue;        // exclude subdirectories
+                                // store filename in var for better handling
+                                $filename = $image->getFilename();
+
+                                // check if thumbnails should be created
+                                if ($this->createThumbnails === "1")
+                                {   // check if tn width is set
+                                    if (empty($this->thumbnailWidth)) {   // if no default width is set, take this as default value
+                                        $this->thumbnailWidth = 200;
+                                    }
+                                    // add watermark with stroke to every image + save as thumbnail
+                                    $img->load("../$this->folder/edit/$filename")
+                                        ->overlay("../$this->watermarkImage",
+                                                    "$this->watermarkPosition",
+                                                    $this->watermarkOpacity)
+                                        ->save("../$this->folder/$filename")
+                                        ->fit_to_width($this->thumbnailWidth)
+                                        ->save("../$this->folder/thumbnails/$filename");
+                                }
+                                else
+                                    {
+                                        // add watermark with stroke to every image
+                                        $img->load("../$this->folder/edit/$filename")
+                                            ->overlay("../$this->watermarkImage",
+                                                "$this->watermarkPosition",
+                                                $this->watermarkOpacity)
+                                            ->save("../$this->folder/$filename");
+                                    }
+                            }
+                        }
+
+                }
+                // ## CHECK IF THUMBNAILS SHOULD BE CHANGED...
                 if ($oldThumbnailWidth === $this->thumbnailWidth)
                 {
                     // thumbnail size not changed, no action required: save ressources + do nothing :)

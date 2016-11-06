@@ -123,12 +123,17 @@ echo"<ol class=\"breadcrumb\">
                         $checked = "";
                     }
                     ?>
-                    <input type="checkbox" value="<?php echo $gallery->createThumbnails; ?>" id="createThumbnails" name="createThumbnails" <?php echo $checked; ?>>
+                    <input type="checkbox" value="1" id="createThumbnails" name="createThumbnails" <?php echo $checked; ?>>
                     <label for="createThumbnails">Create thumbnails from images?</label>
                     <br>
                     <label for="thumbnailWidth">Thumbnail width in px</label>
                     <input type="text" id="thumbnailWidth" maxlength="12" name="thumbnailWidth" class="form-control" placeholder="200px" value="<?php echo $gallery->thumbnailWidth; ?>">
                     <input type="hidden" id="oldThumbnailWidth" maxlength="12" name="oldThumbnailWidth" class="form-control" placeholder="200px" value="<?php echo $gallery->thumbnailWidth; ?>">
+                    <!-- TODO: add image width
+                    <label for="imageWidth">Image width in px</label>
+                    <input type="text" id="imageWidth" maxlength="12" name="imageWidth" class="form-control" placeholder="1024px" value="<?php // echo $gallery->imageWidth; ?>">
+                    <input type="hidden" id="oldImageWidth" maxlength="12" name="oldImageWidth" class="form-control" placeholder="1024px" value="<?php // echo $gallery->imageWidth; ?>"
+                    -->
                 </div>
             </div>
 
@@ -139,8 +144,10 @@ echo"<ol class=\"breadcrumb\">
                 <div class="box-body">
                     <label for="watermark">Watermark from custom text</label>
                     <input type="text" id="watermark" name="watermark" class="form-control" placeholder="(C) <?php echo date("Y")." photographer"; ?>" value="<?php echo $gallery->watermark; ?>">
+                    <input type="hidden" id="oldWatermark" name="oldWatermark" class="form-control" value="<?php echo $gallery->watermark; ?>">
                     <label for="watermarkImage">OR from any image</label>
                     <input type="text" id="watermarkImage" name="watermarkImage" class="form-control" placeholder="media/images/yourfile.png" value="<?php echo $gallery->watermarkImage; ?>">
+                    <input type="hidden" id="oldWatermarkImage" name="oldWatermarkImage" class="form-control" value="<?php echo $gallery->watermarkImage; ?>">
                     <label for="watermarkOpacity">Overlay opacity (only with watermark from image)</label>
                     <select id="watermarkOpacity" name="watermarkOpacity" class="form-control">
 
