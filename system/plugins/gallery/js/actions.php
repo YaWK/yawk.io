@@ -960,6 +960,7 @@ if ($action === "pixelate")
     {   // load, pixelate, save to edit (tmp), slap the watermark on and finally save image to img gallery root folder
         $img->load("$prefix$folder/edit/$filename")
             ->pixelate(12)
+            ->save("$prefix$folder/edit/$filename")
             ->text("$watermark",
                 "$ttfPrefix$watermarkFont",
                 $watermarkTextSize,
