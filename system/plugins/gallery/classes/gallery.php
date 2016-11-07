@@ -455,9 +455,11 @@ namespace YAWK\PLUGINS\GALLERY {
             // ITERATE THROUGH FOLDER
             // check settings, set them...
             // and save each file in a db row.
+            $i = 0;
             foreach (new \DirectoryIterator("../$this->folder") as $fileInfo) {
                 if($fileInfo->isDot()) continue;        // exclude dots
                 if($fileInfo->isDir()) continue;        // exclude subdirectories
+                $i++;
                 // store filename in var for better handling
                 $filename = $fileInfo->getFilename();
                 // MANIPULATE IMAGES IN A ROW
@@ -621,8 +623,8 @@ namespace YAWK\PLUGINS\GALLERY {
 
                 // TODO: this needs to be improved:
                 // TODO: 1 db insert per file is NOT! ok - but how to implement implode() correctly to avoid that memory lack?
-                if ($res = $db->query("INSERT INTO {plugin_gallery_items} (galleryID, filename, title, author, authorUrl)
-                        VALUES ('".$galleryID."', '".$filename."', '".$this->title."', '".$this->author."', '".$this->authorUrl."')"))
+                if ($res = $db->query("INSERT INTO {plugin_gallery_items} (galleryID, sort, filename, title, author, authorUrl)
+                        VALUES ('".$galleryID."', '".$i."', '".$filename."', '".$this->title."', '".$this->author."', '".$this->authorUrl."')"))
                 {   // all good
                     // \YAWK\alert::draw("success", "Gallery created.", "Database entry success.", "", 800);
                 }
@@ -1749,7 +1751,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                       <input type="hidden" name="author-'.$this->itemID.'-old" value="'.$this->itemAuthor.'">
                                       <input type="hidden" name="authorUrl-'.$this->itemID.'-old" value="'.$this->itemAuthorUrl.'">
                                       <input type="hidden" name="sort-'.$this->itemID.'-old" value="'.$this->sort.'">
-                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="sort-'.$this->itemID.'" id="sort-'.$this->itemID.'" placeholder="0" value="'.$this->sort.'">
+                                      <input type="text" class="form-control" style="margin-bottom:2px;" style="margin-bottom:2px;" name="sort-'.$this->itemID.'" id="sort-'.$this->itemID.'" placeholder="0" value="'.$this->sort.'">
                                       <input type="text" class="form-control" style="margin-bottom:2px;" name="filename-'.$this->itemID.'" id="filename-'.$this->itemID.'" placeholder="filename.jpg" value="'.$this->filename.'">
                                       <input type="text" class="form-control" style="margin-bottom:2px;" name="title-'.$this->itemID.'" id="title-'.$this->itemID.'" placeholder="File Title" value="'.$this->itemTitle.'">
                                       <input type="text" class="form-control" style="margin-bottom:2px;" name="author-'.$this->itemID.'" id="author-'.$this->itemID.'" placeholder="Copyright owner of this picture" value="'.$this->itemAuthor.'">
