@@ -48,7 +48,7 @@ echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
             <li><a href=\"index.php?page=plugins\" title=\"Plugins\"> Plugins</a></li>
             <li><a href=\"index.php?plugin=gallery\" title=\"Gallery\"> Gallery</a></li>
-            <li class=\"active\"><a href=\"index.php?plugin=gallery&pluginpage=edit&id=$gallery->id\" title=\"edit $gallery->title\"> edit gallery</a></li>
+            <li class=\"active\"><a href=\"index.php?plugin=gallery&pluginpage=edit&id=$gallery->id\" title=\"edit $gallery->title\"> reload gallery</a></li>
          </ol>
     </section>
     <!-- Main content -->
