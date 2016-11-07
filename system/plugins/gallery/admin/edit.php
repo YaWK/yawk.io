@@ -33,7 +33,7 @@ if (isset($_POST))
     lightbox.option({
         'albumLabel': "Image %1 of %2 - you need to save to see changes take effect in fullscreen.",
         'wrapAround': true
-    })
+    });
 </script>
 <?php
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
