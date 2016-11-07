@@ -5,6 +5,7 @@ namespace YAWK\PLUGINS\GALLERY {
     {
         public $id;
         public $itemID;
+        public $sort;
         public $action;
         public $folder;
         public $title;
@@ -732,6 +733,20 @@ namespace YAWK\PLUGINS\GALLERY {
                     // authorUrl
                     $oldAuthorUrl = $_POST['authorUrl-'.$this->itemID.'-old'];
                     $newAuthorUrl = $_POST['authorUrl-'.$this->itemID.''];
+
+                    // item sortation
+                    $oldSort = $_POST['sort-'.$this->itemID.'-old'];
+                    $newSort = $_POST['sort-'.$this->itemID.''];
+                    if ($oldSort !== $newSort)
+                    {
+                        if (!$db->query("UPDATE {plugin_gallery_items} 
+                                         SET sort = '$newSort' 
+                                         WHERE id = $this->itemID"))
+                        {   // could not rename file in database, notify user
+                            \YAWK\alert::draw("warning", "Could not save new filename $newFile in database!", "But... the file is already renamed. Expect errors.", "", 5800);
+                        }
+                    }
+
                     // ## CHECK IF IMAGE FILENAME HAS CHANGED...
                     if ($oldFile === $newFile)
                     {   // files MATCH, no rename required: save ressources + do nothing :)
@@ -1077,11 +1092,11 @@ namespace YAWK\PLUGINS\GALLERY {
             {
                 while ($row = mysqli_fetch_assoc($res))
                 {
-                    if (!$getPreviewImages = $db->query("SELECT id, galleryID, filename, title, author, authorUrl
+                    if (!$getPreviewImages = $db->query("SELECT id, galleryID, sort, filename, title, author, authorUrl
                                                          from {plugin_gallery_items} 
-                                                         WHERE galleryID = $galleryID ORDER BY filename, sort DESC"))
+                                                         WHERE galleryID = $galleryID ORDER BY sort, filename DESC"))
                     {   // store info msg, if files could not be retrieved
-                        $previewError = "Sorry, no preview available.";
+                        $previewError = "Sorry, ".$db->error()."";
                     }
                     // preview without images
                     echo "<a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Soll die Galerie &laquo;" . $row['id'] . " / " . $row['title'] . "&raquo; wirklich gel&ouml;scht werden?\"
@@ -1103,6 +1118,7 @@ namespace YAWK\PLUGINS\GALLERY {
                         {   // display preview images
                             for ($i = 0; $i < count($property); $i++) {
                                 $this->itemID = $image['id'];
+                                $this->sort = $image['sort'];
                                 $this->filename = $image['filename'];
                                 $this->itemTitle = $image['title'];
                                 $this->itemAuthor = $image['author'];
@@ -1418,6 +1434,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                       <input type="hidden" name="title-'.$this->itemID.'-old" value="'.$this->itemTitle.'">
                                       <input type="hidden" name="author-'.$this->itemID.'-old" value="'.$this->itemAuthor.'">
                                       <input type="hidden" name="authorUrl-'.$this->itemID.'-old" value="'.$this->itemAuthorUrl.'">
+                                      <input type="hidden" name="sort-'.$this->itemID.'-old" value="'.$this->sort.'">
+                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="sort-'.$this->itemID.'" id="sort-'.$this->itemID.'" placeholder="0" value="'.$this->sort.'">
                                       <input type="text" class="form-control" style="margin-bottom:2px;" name="filename-'.$this->itemID.'" id="filename-'.$this->itemID.'" placeholder="filename.jpg" value="'.$this->filename.'">
                                       <input type="text" class="form-control" style="margin-bottom:2px;" name="title-'.$this->itemID.'" id="title-'.$this->itemID.'" placeholder="File Title" value="'.$this->itemTitle.'">
                                       <input type="text" class="form-control" style="margin-bottom:2px;" name="author-'.$this->itemID.'" id="author-'.$this->itemID.'" placeholder="Copyright owner of this picture" value="'.$this->itemAuthor.'">
@@ -1730,6 +1748,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                       <input type="hidden" name="title-'.$this->itemID.'-old" value="'.$this->itemTitle.'">
                                       <input type="hidden" name="author-'.$this->itemID.'-old" value="'.$this->itemAuthor.'">
                                       <input type="hidden" name="authorUrl-'.$this->itemID.'-old" value="'.$this->itemAuthorUrl.'">
+                                      <input type="hidden" name="sort-'.$this->itemID.'-old" value="'.$this->sort.'">
+                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="sort-'.$this->itemID.'" id="sort-'.$this->itemID.'" placeholder="0" value="'.$this->sort.'">
                                       <input type="text" class="form-control" style="margin-bottom:2px;" name="filename-'.$this->itemID.'" id="filename-'.$this->itemID.'" placeholder="filename.jpg" value="'.$this->filename.'">
                                       <input type="text" class="form-control" style="margin-bottom:2px;" name="title-'.$this->itemID.'" id="title-'.$this->itemID.'" placeholder="File Title" value="'.$this->itemTitle.'">
                                       <input type="text" class="form-control" style="margin-bottom:2px;" name="author-'.$this->itemID.'" id="author-'.$this->itemID.'" placeholder="Copyright owner of this picture" value="'.$this->itemAuthor.'">
