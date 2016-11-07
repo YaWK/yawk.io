@@ -1204,7 +1204,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 )"></i>&nbsp;
                                          <i class="fa fa-sun-o"
                                             id="brightness-plus"
-                                            onclick="doImageAction(\'brightness-minus\', 
+                                            onclick="doImageAction(\'brightness-plus\', 
                                                 \''.$this->id.'\', 
                                                 \''.$this->folder.'\', 
                                                 \''.$this->filename.'\', 
@@ -1225,7 +1225,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 )"></i>&nbsp;
                                          <i class="fa fa-sun-o text-muted" style="color:#ccc;"
                                             id="brightness-minus"
-                                            onclick="doImageAction(\'brightness-plus\', 
+                                            onclick="doImageAction(\'brightness-minus\', 
                                                 \''.$this->id.'\', 
                                                 \''.$this->folder.'\', 
                                                 \''.$this->filename.'\', 
@@ -1516,7 +1516,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 )"></i>&nbsp;
                                          <i class="fa fa-sun-o"
                                             id="brightness-plus"
-                                            onclick="doImageAction(\'brightness-minus\', 
+                                            onclick="doImageAction(\'brightness-plus\', 
                                                 \''.$this->id.'\', 
                                                 \''.$this->folder.'\', 
                                                 \''.$this->filename.'\', 
@@ -1537,7 +1537,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 )"></i>&nbsp;
                                          <i class="fa fa-sun-o text-muted" style="color:#ccc;"
                                             id="brightness-minus"
-                                            onclick="doImageAction(\'brightness-plus\', 
+                                            onclick="doImageAction(\'brightness-minus\', 
                                                 \''.$this->id.'\', 
                                                 \''.$this->folder.'\', 
                                                 \''.$this->filename.'\', 
