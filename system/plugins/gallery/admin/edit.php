@@ -148,13 +148,33 @@ echo"<ol class=\"breadcrumb\">
                     <?php if ($gallery->imageWidth === '0') $gallery->imageWidth = ''; ?>
                     <input type="text" id="imageWidth" maxlength="11" name="imageWidth" class="form-control" placeholder="eg. 1024px" value="<?php echo $gallery->imageWidth; ?>">
                     <input type="hidden" id="imageWidth-old" maxlength="11" name="imageWidth-old" class="form-control" value="<?php echo $gallery->imageWidth; ?>">
+
+                    <label for="imageHeight">Fullscreen image height in px</label>
+                    <?php if ($gallery->imageHeight === '0') $gallery->imageHeight = ''; ?>
+                    <input type="text" id="imageHeight" maxlength="11" name="imageHeight" class="form-control" placeholder="eg. 1024px" value="<?php echo $gallery->imageHeight; ?>">
+                    <input type="hidden" id="imageHeight-old" maxlength="11" name="imageHeight-old" class="form-control" value="<?php echo $gallery->imageHeight; ?>">
+
                     <label for="resizeType">Resize Type</label>
                     <select class="form-control" id="resizeType" name="resizeType">
-                        <option value="fit_to_width">fit to width</option>
-                        <option value="fit_to_height">fit to height</option>
-                        <option value="best_fit">best fit</option>
+                        <?php
+                        $resizeTypes = array("fit_to_width", "fit_to_height", "thumbnail", "best_fit", "resize");
+                        foreach ($resizeTypes as $type)
+                        {   // if type is not set or empty
+                            if (!isset($gallery->resizeType) && empty($gallery->resizeType))
+                            {   // set default value
+                                $gallery->resizeType = "fit_to_width";
+                            }
+                            if ($type === "$gallery->resizeType")
+                            {   // selected value
+                                echo "<option value=\"$type\" selected aria-selected=\"true\">$type</option>";
+                            }
+                            else
+                                {   // all others
+                                    echo "<option value=\"$type\">$type</option>";
+                                }
+                        }
+                        ?>
                     </select>
-
                 </div>
             </div>
 

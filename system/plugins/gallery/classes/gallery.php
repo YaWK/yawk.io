@@ -18,6 +18,7 @@ namespace YAWK\PLUGINS\GALLERY {
         public $filename;
         public $createThumbnails;
         public $imageWidth;
+        public $imageHeight;
         public $resizeImages;
         public $resizeType;
         public $thumbnailWidth;
@@ -653,7 +654,9 @@ namespace YAWK\PLUGINS\GALLERY {
                     $this->authorUrl = $row['authorUrl'];
                     $this->createThumbnails = $row['createThumbnails'];
                     $this->imageWidth = $row['imageWidth'];
+                    $this->imageHeight = $row['imageHeight'];
                     $this->resizeImages = $row['resizeImages'];
+                    $this->resizeType = $row['resizeType'];
                     $this->thumbnailWidth = $row['thumbnailWidth'];
                     $this->watermark = $row['watermark'];
                     $this->watermarkPosition = $row['watermarkPosition'];
@@ -682,6 +685,8 @@ namespace YAWK\PLUGINS\GALLERY {
             $this->authorUrl = $db->quote($_POST['authorUrl']);
             $this->createThumbnails = $db->quote($_POST['createThumbnails']);
             $this->imageWidth = $db->quote($_POST['imageWidth']);
+            $this->imageHeight = $db->quote($_POST['imageHeight']);
+            $this->imageHeight = $db->quote($_POST['imageHeight']);
             $this->resizeImages = $db->quote($_POST['resizeImages']);
             $this->resizeType = $db->quote($_POST['resizeType']);
             $this->thumbnailWidth = $db->quote($_POST['thumbnailWidth']);
@@ -703,6 +708,7 @@ namespace YAWK\PLUGINS\GALLERY {
             $oldWatermark = $_POST['watermark-old'];
             $oldWatermarkImage = $_POST['watermarkImage-old'];
             $oldImageWidth = $_POST['imageWidth-old'];
+            $oldImageHeight = $_POST['imageHeight-old'];
 
             if ($oldThumbnailWidth !== $this->thumbnailWidth)
             {   // "saving thumbnails" message
@@ -859,6 +865,10 @@ namespace YAWK\PLUGINS\GALLERY {
                     }
                 }
 
+                // load SimpleImage Class
+                require_once 'SimpleImage.php';
+                // create object
+                $img = new \YAWK\SimpleImage();
 
                 // ## CHECK IF WATERMARK HAS CHANGED...
                 if (empty($this->watermark))
@@ -867,11 +877,6 @@ namespace YAWK\PLUGINS\GALLERY {
                 }
                 else
                 {   // save new watermark onto files
-
-                    // load SimpleImage Class
-                    require_once 'SimpleImage.php';
-                    // create object
-                    $img = new \YAWK\SimpleImage();
 
                     // check if thumbnails should be created
                     if ($this->createThumbnails === "1")
@@ -999,22 +1004,99 @@ namespace YAWK\PLUGINS\GALLERY {
                         }
                     }
                 }
-
-
                 // SHOULD IMAGES BE RESIZED?
                 // ## CHECK IF IMAGES SHOULD BE RESIZED...
                 if ($this->resizeImages === "1")
                 {
-                    // walk through images folder
-                    foreach (new \DirectoryIterator("../$this->folder") as $image)
-                    {   // exclude dots'n'dirs
-                        if($image->isDot()) continue;        // exclude dots
-                        if($image->isDir()) continue;        // exclude subdirectories
-                        // store filename in var for better handling
-                        $filename = $image->getFilename();
-                        $img->load("../$this->folder/$filename")
-                        ->fit_to_width($this->imageWidth)
-                        ->save("../$this->folder/$filename");
+                    $this->imageWidth = preg_replace('![^0-9]!', '', $this->imageWidth);
+                    $this->imageHeight = preg_replace('![^0-9]!', '', $this->imageHeight);
+
+                    // if width is empty, try to take height
+                    if (!isset($this->imageWidth) || (empty($this->imageWidth)))
+                    {
+                        $this->imageWidth = $this->imageHeight;
+                    }
+                    // if height is empty, try to take width
+                    if (!isset($this->imageHeight) || (empty($this->imageHeight)))
+                    {
+                        $this->imageHeight = $this->imageWidth;
+                    }
+                    // if both values are empty...
+                    if (empty($this->imageWidth) && (empty($this->imageHeight)))
+                    {   // set default value
+                        $this->imageWidth = 300;
+                        $this->imageHeight = 300;
+                    }
+
+                    if ($this->resizeType === "fit_to_width")
+                    {
+                        // walk through images folder
+                        foreach (new \DirectoryIterator("../$this->folder") as $image)
+                        {   // exclude dots'n'dirs
+                            if($image->isDot()) continue;        // exclude dots
+                            if($image->isDir()) continue;        // exclude subdirectories
+                            // store filename in var for better handling
+                            $filename = $image->getFilename();
+                            $img->load("../$this->folder/$filename")
+                                ->fit_to_width($this->imageWidth)
+                                ->save("../$this->folder/$filename");
+                        }
+                    }
+                    if ($this->resizeType === "fit_to_height")
+                    {
+                        // walk through images folder
+                        foreach (new \DirectoryIterator("../$this->folder") as $image)
+                        {   // exclude dots'n'dirs
+                            if($image->isDot()) continue;        // exclude dots
+                            if($image->isDir()) continue;        // exclude subdirectories
+                            // store filename in var for better handling
+                            $filename = $image->getFilename();
+                            $img->load("../$this->folder/$filename")
+                                ->fit_to_height($this->imageWidth)
+                                ->save("../$this->folder/$filename");
+                        }
+                    }
+                    if ($this->resizeType === "best_fit")
+                    {
+                            // walk through images folder
+                            foreach (new \DirectoryIterator("../$this->folder") as $image)
+                            {   // exclude dots'n'dirs
+                                if($image->isDot()) continue;        // exclude dots
+                                if($image->isDir()) continue;        // exclude subdirectories
+                                // store filename in var for better handling
+                                $filename = $image->getFilename();
+                                $img->load("../$this->folder/$filename")
+                                    ->best_fit($this->imageWidth, $this->imageHeight)
+                                    ->save("../$this->folder/$filename");
+                            }
+                    }
+                    if ($this->resizeType === "resize")
+                    {
+                        // walk through images folder
+                        foreach (new \DirectoryIterator("../$this->folder") as $image)
+                        {   // exclude dots'n'dirs
+                            if($image->isDot()) continue;        // exclude dots
+                            if($image->isDir()) continue;        // exclude subdirectories
+                            // store filename in var for better handling
+                            $filename = $image->getFilename();
+                            $img->load("../$this->folder/$filename")
+                                ->resize($this->imageWidth, $this->imageHeight)
+                                ->save("../$this->folder/$filename");
+                        }
+                    }
+                    if ($this->resizeType === "thumbnail")
+                    {
+                        // walk through images folder
+                        foreach (new \DirectoryIterator("../$this->folder") as $image)
+                        {   // exclude dots'n'dirs
+                            if($image->isDot()) continue;        // exclude dots
+                            if($image->isDir()) continue;        // exclude subdirectories
+                            // store filename in var for better handling
+                            $filename = $image->getFilename();
+                            $img->load("../$this->folder/$filename")
+                                ->thumbnail($this->imageWidth, $this->imageHeight, 'top')
+                                ->save("../$this->folder/$filename");
+                        }
                     }
                 }
             }
@@ -1029,7 +1111,9 @@ namespace YAWK\PLUGINS\GALLERY {
                                        createThumbnails='$this->createThumbnails',
                                        thumbnailWidth='$this->thumbnailWidth',
                                        imageWidth='$this->imageWidth',
+                                       imageHeight='$this->imageHeight',
                                        resizeImages='$this->resizeImages',
+                                       resizeType='$this->resizeType',
                                        watermark='$this->watermark',
                                        watermarkPosition='$this->watermarkPosition',
                                        watermarkImage='$this->watermarkImage',
