@@ -707,6 +707,20 @@ namespace YAWK\PLUGINS\GALLERY {
             $this->watermarkBorderColor = $db->quote($_POST['watermarkBorderColor']);
             $this->watermarkBorder = $db->quote($_POST['watermarkBorder']);
 
+            // check if count is set to calculate estimating time for the fancy user notification
+            if (isset($_GET['imageCount']) && (is_numeric($_GET['imageCount'])))
+            {   // prepare and calculate
+                $i = $_GET['imageCount'];           // the number of images
+                $processingDurationPerImage = 200;  // estimated processing time per item in ms
+                $notifyDuration = $i * $processingDurationPerImage; // time that the notify box will be shown
+            }
+            else
+                {   // count images to calculate notify box
+                    $i = $this->countEntries($db, $this->id);
+                    $processingDurationPerImage = 200;  // estimated processing time per item in ms
+                    $notifyDuration = $i * $processingDurationPerImage; // time that the notify box will be shown
+                }
+
             // store old values to compare if settings have changed
             // process only what really changed.
             $oldThumbnailWidth = $_POST['thumbnailWidth-old'];
@@ -717,12 +731,12 @@ namespace YAWK\PLUGINS\GALLERY {
 
             if ($oldThumbnailWidth !== $this->thumbnailWidth)
             {   // "saving thumbnails" message
-                \YAWK\alert::draw("success", "Saving new thumbnails. . .", "<div class=\"text-center\"><i class=\"fa fa-spinner fa-spin\" style=\"font-size:24px\"></i><br>Please be patient, this should only take a few seconds.</div>", "", 2200);
+                \YAWK\alert::draw("success", "Saving new thumbnails. . .", "<div class=\"text-center\"><i class=\"fa fa-spinner fa-spin\" style=\"font-size:24px\"></i><br>Please be patient, this should only take a few seconds.</div>", "", $notifyDuration);
             }
             else if ($oldImageWidth !== $this->imageWidth && ($this->resizeImages === "1"))
             {
                 {   // "changing image size" message
-                    \YAWK\alert::draw("success", "Resizing your images. . .", "<div class=\"text-center\"><i class=\"fa fa-spinner fa-spin\" style=\"font-size:24px\"></i><br>Please be patient, this should only take a few seconds.</div>", "", 2200);
+                    \YAWK\alert::draw("success", "Resizing your images. . .", "<div class=\"text-center\"><i class=\"fa fa-spinner fa-spin\" style=\"font-size:24px\"></i><br>Please be patient, this should only take a few seconds.</div>", "", $notifyDuration);
                 }
             }
             else
