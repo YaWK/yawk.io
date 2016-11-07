@@ -1056,8 +1056,9 @@ namespace YAWK\PLUGINS\GALLERY {
                     {   // previewImage array is set, walk through it...
                         foreach ($getPreviewImages as $property => $image)
                         {   // display preview images
+                            $rnd = mt_rand(1,2000000);
                             echo "<a href=\"index.php?plugin=gallery&pluginpage=edit&id=$row[id]&folder=$row[folder]\" title=\"edit gallery\">
-                                  <img src=\"../$row[folder]/$image[filename]\" class=\"img-thumbnail\" width=\"100\"></a>";
+                                  <img src=\"../$row[folder]/$image[filename]?$rnd\" class=\"img-thumbnail\" width=\"100\"></a>";
                         }
                     }
                     echo"</div></div>
@@ -1087,7 +1088,7 @@ namespace YAWK\PLUGINS\GALLERY {
                       title=\"" . $lang['DEL'] . "\" href=\"index.php?plugin=gallery&delete=1&id=" . $row['id'] . "\"></a>
                       &nbsp;<a href=\"index.php?plugin=gallery&refresh=1&id=$row[id]&folder=$row[folder]\" title=\"refresh\"><i class=\"fa fa-refresh\"></i></a>
                       &nbsp;<b>".$row['title']."</b><br><small>".$row['description']."</small><br>
-                                    <div class=\"text-center\"><br>";
+                                    <div class=\"text-center\">";
                     if (isset($previewError))
                     {   // if files could not be loaded from db
                         echo $previewError;
