@@ -18,6 +18,8 @@ namespace YAWK\PLUGINS\GALLERY {
         public $filename;
         public $createThumbnails;
         public $imageWidth;
+        public $resizeImages;
+        public $resizeType;
         public $thumbnailWidth;
         public $watermark;
         public $watermarkImage;
@@ -651,6 +653,7 @@ namespace YAWK\PLUGINS\GALLERY {
                     $this->authorUrl = $row['authorUrl'];
                     $this->createThumbnails = $row['createThumbnails'];
                     $this->imageWidth = $row['imageWidth'];
+                    $this->resizeImages = $row['resizeImages'];
                     $this->thumbnailWidth = $row['thumbnailWidth'];
                     $this->watermark = $row['watermark'];
                     $this->watermarkPosition = $row['watermarkPosition'];
@@ -678,7 +681,9 @@ namespace YAWK\PLUGINS\GALLERY {
             $this->author = $db->quote($_POST['author']);
             $this->authorUrl = $db->quote($_POST['authorUrl']);
             $this->createThumbnails = $db->quote($_POST['createThumbnails']);
-           // $this->imageWidth = $db->quote($_POST['imageWidth']);
+            $this->imageWidth = $db->quote($_POST['imageWidth']);
+            $this->resizeImages = $db->quote($_POST['resizeImages']);
+            $this->resizeType = $db->quote($_POST['resizeType']);
             $this->thumbnailWidth = $db->quote($_POST['thumbnailWidth']);
             $this->watermark = $db->quote($_POST['watermark']);
             $this->watermarkPosition = $db->quote($_POST['watermarkPosition']);
@@ -694,22 +699,21 @@ namespace YAWK\PLUGINS\GALLERY {
 
             // store old values to compare if settings have changed
             // process only what really changed.
-            $oldThumbnailWidth = $_POST['oldThumbnailWidth'];
-            $oldWatermark = $_POST['oldWatermark'];
-            $oldWatermarkImage = $_POST['oldWatermarkImage'];
+            $oldThumbnailWidth = $_POST['thumbnailWidth-old'];
+            $oldWatermark = $_POST['watermark-old'];
+            $oldWatermarkImage = $_POST['watermarkImage-old'];
+            $oldImageWidth = $_POST['imageWidth-old'];
 
             if ($oldThumbnailWidth !== $this->thumbnailWidth)
             {   // "saving thumbnails" message
                 \YAWK\alert::draw("success", "Saving new thumbnails. . .", "<div class=\"text-center\"><i class=\"fa fa-spinner fa-spin\" style=\"font-size:24px\"></i><br>Please be patient, this should only take a few seconds.</div>", "", 2200);
             }
-            /* TODO: implement image width
-            else if ($oldImageWidth !== $this->imageWidth)
+            else if ($oldImageWidth !== $this->imageWidth && ($this->resizeImages === "1"))
             {
                 {   // "changing image size" message
                     \YAWK\alert::draw("success", "Resizing your images. . .", "<div class=\"text-center\"><i class=\"fa fa-spinner fa-spin\" style=\"font-size:24px\"></i><br>Please be patient, this should only take a few seconds.</div>", "", 2200);
                 }
             }
-            */
             else
                 {
                     \YAWK\alert::draw("success", "Settings saved.", "Gallery updated.", "", 800);
@@ -855,6 +859,7 @@ namespace YAWK\PLUGINS\GALLERY {
                     }
                 }
 
+
                 // ## CHECK IF WATERMARK HAS CHANGED...
                 if (empty($this->watermark))
                 {
@@ -994,6 +999,24 @@ namespace YAWK\PLUGINS\GALLERY {
                         }
                     }
                 }
+
+
+                // SHOULD IMAGES BE RESIZED?
+                // ## CHECK IF IMAGES SHOULD BE RESIZED...
+                if ($this->resizeImages === "1")
+                {
+                    // walk through images folder
+                    foreach (new \DirectoryIterator("../$this->folder") as $image)
+                    {   // exclude dots'n'dirs
+                        if($image->isDot()) continue;        // exclude dots
+                        if($image->isDir()) continue;        // exclude subdirectories
+                        // store filename in var for better handling
+                        $filename = $image->getFilename();
+                        $img->load("../$this->folder/$filename")
+                        ->fit_to_width($this->imageWidth)
+                        ->save("../$this->folder/$filename");
+                    }
+                }
             }
 
             // update database: gallery settings
@@ -1005,6 +1028,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                        authorUrl='$this->authorUrl',
                                        createThumbnails='$this->createThumbnails',
                                        thumbnailWidth='$this->thumbnailWidth',
+                                       imageWidth='$this->imageWidth',
+                                       resizeImages='$this->resizeImages',
                                        watermark='$this->watermark',
                                        watermarkPosition='$this->watermarkPosition',
                                        watermarkImage='$this->watermarkImage',
@@ -1053,7 +1078,7 @@ namespace YAWK\PLUGINS\GALLERY {
             {
                 while ($row = mysqli_fetch_assoc($res))
                 {
-                    if (!$getPreviewImages = $db->query("SELECT galleryID, filename from {plugin_gallery_items} WHERE galleryID = '$row[id]' LIMIT 5"))
+                    if (!$getPreviewImages = $db->query("SELECT galleryID, filename from {plugin_gallery_items} WHERE galleryID = '$row[id]' ORDER by sort, filename DESC LIMIT 5"))
                     {   // store info msg, if files could not be retrieved
                         $previewError = "Sorry, no preview available.";
                     }
@@ -1437,7 +1462,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                       <input type="hidden" name="author-'.$this->itemID.'-old" value="'.$this->itemAuthor.'">
                                       <input type="hidden" name="authorUrl-'.$this->itemID.'-old" value="'.$this->itemAuthorUrl.'">
                                       <input type="hidden" name="sort-'.$this->itemID.'-old" value="'.$this->sort.'">
-                                      <input type="text" class="form-control" style="margin-bottom:2px;" name="sort-'.$this->itemID.'" id="sort-'.$this->itemID.'" placeholder="0" value="'.$this->sort.'">
+                                      <input type="text" class="form-control" style="margin-bottom:2px;" maxlength="11" name="sort-'.$this->itemID.'" id="sort-'.$this->itemID.'" placeholder="0" value="'.$this->sort.'">
                                       <input type="text" class="form-control" style="margin-bottom:2px;" name="filename-'.$this->itemID.'" id="filename-'.$this->itemID.'" placeholder="filename.jpg" value="'.$this->filename.'">
                                       <input type="text" class="form-control" style="margin-bottom:2px;" name="title-'.$this->itemID.'" id="title-'.$this->itemID.'" placeholder="File Title" value="'.$this->itemTitle.'">
                                       <input type="text" class="form-control" style="margin-bottom:2px;" name="author-'.$this->itemID.'" id="author-'.$this->itemID.'" placeholder="Copyright owner of this picture" value="'.$this->itemAuthor.'">
@@ -1751,7 +1776,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                       <input type="hidden" name="author-'.$this->itemID.'-old" value="'.$this->itemAuthor.'">
                                       <input type="hidden" name="authorUrl-'.$this->itemID.'-old" value="'.$this->itemAuthorUrl.'">
                                       <input type="hidden" name="sort-'.$this->itemID.'-old" value="'.$this->sort.'">
-                                      <input type="text" class="form-control" style="margin-bottom:2px;" style="margin-bottom:2px;" name="sort-'.$this->itemID.'" id="sort-'.$this->itemID.'" placeholder="0" value="'.$this->sort.'">
+                                      <input type="text" class="form-control" style="margin-bottom:2px;" maxlength="11" style="margin-bottom:2px;" name="sort-'.$this->itemID.'" id="sort-'.$this->itemID.'" placeholder="0" value="'.$this->sort.'">
                                       <input type="text" class="form-control" style="margin-bottom:2px;" name="filename-'.$this->itemID.'" id="filename-'.$this->itemID.'" placeholder="filename.jpg" value="'.$this->filename.'">
                                       <input type="text" class="form-control" style="margin-bottom:2px;" name="title-'.$this->itemID.'" id="title-'.$this->itemID.'" placeholder="File Title" value="'.$this->itemTitle.'">
                                       <input type="text" class="form-control" style="margin-bottom:2px;" name="author-'.$this->itemID.'" id="author-'.$this->itemID.'" placeholder="Copyright owner of this picture" value="'.$this->itemAuthor.'">

@@ -109,45 +109,66 @@ echo"<ol class=\"breadcrumb\">
 
             <div class="box box-default">
                 <div class="box-header">
-                    <h3 class="box-title"><i class="fa fa-wrench text-muted"></i>&nbsp; Additional settings</h3>
+                    <h3 class="box-title"><i class="fa fa-wrench text-muted"></i>&nbsp; Thumbnails <small>and image resize</small></h3>
                 </div>
                 <div class="box-body">
                     <input type="hidden" value="0" name="createThumbnails">
                     <?php
                     if ($gallery->createThumbnails === "1")
                     {
-                        $checked = "checked";
+                        $createThumbnailsChecked = "checked";
                     }
                     else
                     {
-                        $checked = "";
+                        $createThumbnailsChecked = "";
                     }
+
+                    if ($gallery->resizeImages === '1')
+                    {
+                        $resizeImagesChecked = "checked";
+                    }
+                    else
+                        {
+                            $resizeImagesChecked = '';
+                        }
                     ?>
-                    <input type="checkbox" value="1" id="createThumbnails" name="createThumbnails" <?php echo $checked; ?>>
+                    <input type="checkbox" value="1" id="createThumbnails" name="createThumbnails" <?php echo $createThumbnailsChecked; ?>>
                     <label for="createThumbnails">Create thumbnails from images?</label>
                     <br>
                     <label for="thumbnailWidth">Thumbnail width in px</label>
-                    <input type="text" id="thumbnailWidth" maxlength="12" name="thumbnailWidth" class="form-control" placeholder="200px" value="<?php echo $gallery->thumbnailWidth; ?>">
-                    <input type="hidden" id="oldThumbnailWidth" maxlength="12" name="oldThumbnailWidth" class="form-control" placeholder="200px" value="<?php echo $gallery->thumbnailWidth; ?>">
-                    <!-- TODO: add image width
-                    <label for="imageWidth">Image width in px</label>
-                    <input type="text" id="imageWidth" maxlength="12" name="imageWidth" class="form-control" placeholder="1024px" value="<?php // echo $gallery->imageWidth; ?>">
-                    <input type="hidden" id="oldImageWidth" maxlength="12" name="oldImageWidth" class="form-control" placeholder="1024px" value="<?php // echo $gallery->imageWidth; ?>"
-                    -->
+                    <input type="text" id="thumbnailWidth" maxlength="11" name="thumbnailWidth" class="form-control" placeholder="200px" value="<?php echo $gallery->thumbnailWidth; ?>">
+                    <input type="hidden" id="thumbnailWidth-old" maxlength="11" name="thumbnailWidth-old" class="form-control" value="<?php echo $gallery->thumbnailWidth; ?>">
+
+                    <br>
+                    <input type="hidden" value="0" name="resizeImages">
+                    <input type="checkbox" value="1" id="resizeImages" name="resizeImages" <?php echo $resizeImagesChecked; ?>>
+                    <label for="resizeImages">Resize all images to</label>
+                    <br>
+                    <label for="imageWidth">Fullscreen image width in px</label>
+                    <?php if ($gallery->imageWidth === '0') $gallery->imageWidth = ''; ?>
+                    <input type="text" id="imageWidth" maxlength="11" name="imageWidth" class="form-control" placeholder="eg. 1024px" value="<?php echo $gallery->imageWidth; ?>">
+                    <input type="hidden" id="imageWidth-old" maxlength="11" name="imageWidth-old" class="form-control" value="<?php echo $gallery->imageWidth; ?>">
+                    <label for="resizeType">Resize Type</label>
+                    <select class="form-control" id="resizeType" name="resizeType">
+                        <option value="fit_to_width">fit to width</option>
+                        <option value="fit_to_height">fit to height</option>
+                        <option value="best_fit">best fit</option>
+                    </select>
+
                 </div>
             </div>
 
             <div class="box box-default">
                 <div class="box-header">
-                    <h3 class="box-title"><i class="fa fa-copyright text-muted"></i> Watermark Settings</h3>
+                    <h3 class="box-title"><i class="fa fa-copyright text-muted"></i> Watermark <small>and copyright settings</small></h3>
                 </div>
                 <div class="box-body">
                     <label for="watermark">Watermark from custom text</label>
                     <input type="text" id="watermark" name="watermark" class="form-control" placeholder="(C) <?php echo date("Y")." photographer"; ?>" value="<?php echo $gallery->watermark; ?>">
-                    <input type="hidden" id="oldWatermark" name="oldWatermark" class="form-control" value="<?php echo $gallery->watermark; ?>">
+                    <input type="hidden" id="watermark-old" name="watermark-old" class="form-control" value="<?php echo $gallery->watermark; ?>">
                     <label for="watermarkImage">OR from any image</label>
                     <input type="text" id="watermarkImage" name="watermarkImage" class="form-control" placeholder="media/images/yourfile.png" value="<?php echo $gallery->watermarkImage; ?>">
-                    <input type="hidden" id="oldWatermarkImage" name="oldWatermarkImage" class="form-control" value="<?php echo $gallery->watermarkImage; ?>">
+                    <input type="hidden" id="watermarkImage-old" name="watermarkImage-old" class="form-control" value="<?php echo $gallery->watermarkImage; ?>">
                     <label for="watermarkOpacity">Overlay opacity (only with watermark from image)</label>
                     <select id="watermarkOpacity" name="watermarkOpacity" class="form-control">
 
