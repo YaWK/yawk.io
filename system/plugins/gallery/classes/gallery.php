@@ -713,27 +713,22 @@ namespace YAWK\PLUGINS\GALLERY {
                 $i = $_GET['imageCount'];           // the number of images
                 $processingDurationPerImage = 200;  // estimated processing time per item in ms
                 $notifyDuration = $i * $processingDurationPerImage; // time that the notify box will be shown
+                $notifyDurationShort = $notifyDuration / 2;
             }
             else
                 {   // count images to calculate notify box
                     $i = $this->countEntries($db, $this->id);
                     $processingDurationPerImage = 200;  // estimated processing time per item in ms
                     $notifyDuration = $i * $processingDurationPerImage; // time that the notify box will be shown
+                    $notifyDurationShort = $notifyDuration / 2;
                 }
 
-            // store old values to compare if settings have changed
-            // process only what really changed.
             $oldThumbnailWidth = $_POST['thumbnailWidth-old'];
-            $oldWatermark = $_POST['watermark-old'];
-            $oldWatermarkImage = $_POST['watermarkImage-old'];
-            $oldImageWidth = $_POST['imageWidth-old'];
-            $oldImageHeight = $_POST['imageHeight-old'];
-
             if ($oldThumbnailWidth !== $this->thumbnailWidth)
             {   // "saving thumbnails" message
                 \YAWK\alert::draw("success", "Saving new thumbnails. . .", "<div class=\"text-center\"><i class=\"fa fa-spinner fa-spin\" style=\"font-size:24px\"></i><br>Please be patient, this should only take a few seconds.</div>", "", $notifyDuration);
             }
-            else if ($oldImageWidth !== $this->imageWidth && ($this->resizeImages === "1"))
+            if ($this->resizeImages === "1")
             {
                 {   // "changing image size" message
                     \YAWK\alert::draw("success", "Resizing your images. . .", "<div class=\"text-center\"><i class=\"fa fa-spinner fa-spin\" style=\"font-size:24px\"></i><br>Please be patient, this should only take a few seconds.</div>", "", $notifyDuration);
@@ -741,7 +736,7 @@ namespace YAWK\PLUGINS\GALLERY {
             }
             else
                 {
-                    \YAWK\alert::draw("success", "Settings saved.", "Gallery updated.", "", 800);
+                    \YAWK\alert::draw("success", "Settings saved.", "Gallery updated.", "", $notifyDurationShort);
                 }
 
             // check, if any itemIDs need to be updated, get get them and loop through items...
