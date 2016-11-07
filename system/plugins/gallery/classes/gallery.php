@@ -1010,9 +1010,28 @@ namespace YAWK\PLUGINS\GALLERY {
         return false;
         }
 
+        public function countEntries($db, $galleryID)
+        {   /** @var $db \YAWK\db **/
+            // count gallery item entries
+            $i = 0; // init entries counter
+            if ($res = $db->query("SELECT id from {plugin_gallery_items} WHERE galleryID = '$galleryID'"))
+            {   // loop
+                while ($row = mysqli_fetch_assoc($res))
+                {   // add counter
+                    $i++;
+                }
+            }
+            else
+                {   // could not get data from db
+                    return false;
+                }
+            return $i;
+        }
+
         public function getPreview($db, $lang)
         {   /** @var $db \YAWK\db **/
             // get gallery titles...
+
             if ($res = $db->query("SELECT * from {plugin_gallery}"))
             {
                 while ($row = mysqli_fetch_assoc($res))
@@ -1021,12 +1040,13 @@ namespace YAWK\PLUGINS\GALLERY {
                     {   // store info msg, if files could not be retrieved
                         $previewError = "Sorry, no preview available.";
                     }
+                    $imageCount = $this->countEntries($db, $row['id'])." Images";
                     // preview without images
                     echo "<div class=\"row\"><div class=\"col-md-4\"><a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Soll die Galerie &laquo;" . $row['id'] . " / " . $row['title'] . "&raquo; wirklich gel&ouml;scht werden?\"
                       title=\"" . $lang['DEL'] . "\" href=\"index.php?plugin=gallery&delete=1&id=" . $row['id'] . "\"></a>
                       <!-- &nbsp;<a href=\"index.php?plugin=gallery&refresh=1&id=$row[id]&folder=$row[folder]\" title=\"refresh\"><i class=\"fa fa-refresh\"></i></a> -->
                       &nbsp;<a href=\"index.php?plugin=gallery&pluginpage=edit&id=$row[id]&folder=$row[folder]\" title=\"edit\"><i class=\"fa fa-edit\"></i>
-                      &nbsp;<b>".$row['title']."</b></a><br><small>".$row['description']."</small></div>
+                      &nbsp;<b>".$row['title']."</b></a><br><small><strong>$imageCount</strong><br> ".$row['description']."</small></div>
                     <div class=\"col-md-8\">";
                     if (isset($previewError))
                     {   // if files could not be loaded from db
