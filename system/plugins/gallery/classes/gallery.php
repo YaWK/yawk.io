@@ -23,6 +23,7 @@ namespace YAWK\PLUGINS\GALLERY {
         public $resizeType;
         public $thumbnailWidth;
         public $watermark;
+        public $watermarkEnabled;
         public $watermarkImage;
         public $watermarkPosition;
         public $offsetY;
@@ -410,6 +411,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                                                  createThumbnails,
                                                                  thumbnailWidth, 
                                                                  watermark, 
+                                                                 watermarkEnabled, 
                                                                  watermarkPosition, 
                                                                  watermarkImage, 
                                                                  offsetY, 
@@ -426,6 +428,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                             '".$this->createThumbnails."',
                                             '".$this->thumbnailWidth."',
                                             '".$this->watermark."',
+                                            '".$this->watermarkEnabled."',
                                             '".$this->watermarkPosition."',
                                             '".$this->watermarkImage."',
                                             '".$this->offsetY."',
@@ -659,6 +662,7 @@ namespace YAWK\PLUGINS\GALLERY {
                     $this->resizeType = $row['resizeType'];
                     $this->thumbnailWidth = $row['thumbnailWidth'];
                     $this->watermark = $row['watermark'];
+                    $this->watermarkEnabled = $row['watermarkEnabled'];
                     $this->watermarkPosition = $row['watermarkPosition'];
                     $this->watermarkImage = $row['watermarkImage'];
                     $this->offsetY = $row['offsetY'];
@@ -691,6 +695,7 @@ namespace YAWK\PLUGINS\GALLERY {
             $this->resizeType = $db->quote($_POST['resizeType']);
             $this->thumbnailWidth = $db->quote($_POST['thumbnailWidth']);
             $this->watermark = $db->quote($_POST['watermark']);
+            $this->watermarkEnabled = $db->quote($_POST['watermarkEnabled']);
             $this->watermarkPosition = $db->quote($_POST['watermarkPosition']);
             $this->watermarkImage = $db->quote($_POST['watermarkImage']);
             $this->offsetY = $db->quote($_POST['offsetY']);
@@ -870,14 +875,46 @@ namespace YAWK\PLUGINS\GALLERY {
                 // create object
                 $img = new \YAWK\SimpleImage();
 
-                // ## CHECK IF WATERMARK HAS CHANGED...
-                if (empty($this->watermark))
+                if (empty($this->watermark) || ($this->watermarkEnabled === "0"))
                 {
                     // watermark not changed, no action required: save ressources + do nothing :)
+                    // check if thumbnails should be created
+                    if ($this->createThumbnails === "1")
+                    {   // check if tn width is set
+                        if (empty($this->thumbnailWidth))
+                        {   // if no default width is set, take this as default value
+                            $this->thumbnailWidth = 200;
+                        }
+                        // walk through images folder
+                        foreach (new \DirectoryIterator("../$this->folder/edit/") as $image)
+                        {   // exclude dots'n'dirs
+                            if($image->isDot()) continue;        // exclude dots
+                            if($image->isDir()) continue;        // exclude subdirectories
+                            // store filename in var for better handling
+                            $filename = $image->getFilename();
+                            $img->load("../$this->folder/edit/$filename")
+                                ->save("../$this->folder/$filename")
+                                ->fit_to_width($this->thumbnailWidth)
+                                ->save("../$this->folder/thumbnails/$filename");
+                        }
+                    }
+                    else
+                    {   // no thumbnails required, just change watermark to root folder images
+                        // walk through images folder
+                        foreach (new \DirectoryIterator("../$this->folder/edit/") as $image)
+                        {   // exclude dots'n'dirs
+                            if($image->isDot()) continue;        // exclude dots
+                            if($image->isDir()) continue;        // exclude subdirectories
+                            // store filename in var for better handling
+                            $filename = $image->getFilename();
+                            $img->load("../$this->folder/edit/$filename")
+                                ->save("../$this->folder/$filename");
+                        }
+                    }
+
                 }
                 else
                 {   // save new watermark onto files
-
                     // check if thumbnails should be created
                     if ($this->createThumbnails === "1")
                     {   // check if tn width is set
@@ -929,11 +966,12 @@ namespace YAWK\PLUGINS\GALLERY {
                                     ->save("../$this->folder/$filename");
                             }
                         }
-
+                }
                     // ## CHECK IF WATERMARK HAS CHANGED...
                     if (empty($this->watermarkImage))
                     {
                         // watermark not changed, no action required: save ressources + do nothing :)
+
                     }
                     else
                         {  // walk through images folder
@@ -971,7 +1009,6 @@ namespace YAWK\PLUGINS\GALLERY {
                             }
                         }
 
-                }
                 // ## CHECK IF THUMBNAILS SHOULD BE CHANGED...
                 if ($oldThumbnailWidth === $this->thumbnailWidth)
                 {
@@ -1004,6 +1041,7 @@ namespace YAWK\PLUGINS\GALLERY {
                         }
                     }
                 }
+
                 // SHOULD IMAGES BE RESIZED?
                 // ## CHECK IF IMAGES SHOULD BE RESIZED...
                 if ($this->resizeImages === "1")
@@ -1058,17 +1096,17 @@ namespace YAWK\PLUGINS\GALLERY {
                     }
                     if ($this->resizeType === "best_fit")
                     {
-                            // walk through images folder
-                            foreach (new \DirectoryIterator("../$this->folder") as $image)
-                            {   // exclude dots'n'dirs
-                                if($image->isDot()) continue;        // exclude dots
-                                if($image->isDir()) continue;        // exclude subdirectories
-                                // store filename in var for better handling
-                                $filename = $image->getFilename();
-                                $img->load("../$this->folder/$filename")
-                                    ->best_fit($this->imageWidth, $this->imageHeight)
-                                    ->save("../$this->folder/$filename");
-                            }
+                        // walk through images folder
+                        foreach (new \DirectoryIterator("../$this->folder") as $image)
+                        {   // exclude dots'n'dirs
+                            if($image->isDot()) continue;        // exclude dots
+                            if($image->isDir()) continue;        // exclude subdirectories
+                            // store filename in var for better handling
+                            $filename = $image->getFilename();
+                            $img->load("../$this->folder/$filename")
+                                ->best_fit($this->imageWidth, $this->imageHeight)
+                                ->save("../$this->folder/$filename");
+                        }
                     }
                     if ($this->resizeType === "resize")
                     {
@@ -1166,13 +1204,13 @@ namespace YAWK\PLUGINS\GALLERY {
                     {   // store info msg, if files could not be retrieved
                         $previewError = "Sorry, no preview available.";
                     }
-                    $imageCount = $this->countEntries($db, $row['id'])." Images";
+                    $imageCount = $this->countEntries($db, $row['id']);
                     // preview without images
                     echo "<div class=\"row\"><div class=\"col-md-4\"><a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Soll die Galerie &laquo;" . $row['id'] . " / " . $row['title'] . "&raquo; wirklich gel&ouml;scht werden?\"
                       title=\"" . $lang['DEL'] . "\" href=\"index.php?plugin=gallery&delete=1&id=" . $row['id'] . "\"></a>
                       <!-- &nbsp;<a href=\"index.php?plugin=gallery&refresh=1&id=$row[id]&folder=$row[folder]\" title=\"refresh\"><i class=\"fa fa-refresh\"></i></a> -->
-                      &nbsp;<a href=\"index.php?plugin=gallery&pluginpage=edit&id=$row[id]&folder=$row[folder]\" title=\"edit\"><i class=\"fa fa-edit\"></i>
-                      &nbsp;<b>".$row['title']."</b></a><br><small><strong>$imageCount</strong><br> ".$row['description']."</small></div>
+                      &nbsp;<a href=\"index.php?plugin=gallery&pluginpage=edit&id=$row[id]&folder=$row[folder]&imageCount=$imageCount\" title=\"edit\"><i class=\"fa fa-edit\"></i>
+                      &nbsp;<b>".$row['title']."</b></a><br><small><strong>$imageCount Images</strong><br> ".$row['description']."</small></div>
                     <div class=\"col-md-8\">";
                     if (isset($previewError))
                     {   // if files could not be loaded from db
@@ -1182,8 +1220,8 @@ namespace YAWK\PLUGINS\GALLERY {
                     {   // previewImage array is set, walk through it...
                         foreach ($getPreviewImages as $property => $image)
                         {   // display preview images
-                            $rnd = mt_rand(1,2000000);
-                            echo "<a href=\"index.php?plugin=gallery&pluginpage=edit&id=$row[id]&folder=$row[folder]\" title=\"edit gallery\">
+                            $rnd = uniqid();
+                            echo "<a href=\"index.php?plugin=gallery&pluginpage=edit&id=$row[id]&folder=$row[folder]&imageCount=$imageCount\" title=\"edit gallery\">
                                   <img src=\"../$row[folder]/$image[filename]?$rnd\" class=\"img-thumbnail\" width=\"100\"></a>";
                         }
                     }

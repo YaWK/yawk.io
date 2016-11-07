@@ -157,7 +157,7 @@ echo"<ol class=\"breadcrumb\">
                     <label for="resizeType">Resize Type</label>
                     <select class="form-control" id="resizeType" name="resizeType">
                         <?php
-                        $resizeTypes = array("fit_to_width", "fit_to_height", "thumbnail", "best_fit", "resize");
+                        $resizeTypes = array("fit_to_width", "fit_to_height", "thumbnail", "resize");
                         foreach ($resizeTypes as $type)
                         {   // if type is not set or empty
                             if (!isset($gallery->resizeType) && empty($gallery->resizeType))
@@ -183,6 +183,22 @@ echo"<ol class=\"breadcrumb\">
                     <h3 class="box-title"><i class="fa fa-copyright text-muted"></i> Watermark <small>and copyright settings</small></h3>
                 </div>
                 <div class="box-body">
+                    <input type="hidden" value="0" name="watermarkEnable">
+
+                    <?php
+                    if ($gallery->watermarkEnabled === '1')
+                    {
+                    $watermarkEnabledChecked = "checked";
+                    }
+                    else
+                    {
+                    $watermarkEnabledChecked = '';
+                    }
+                    ?>
+                    <input type="hidden" value="0" name="watermarkEnabled">
+                    <input type="checkbox" value="1" id="watermarkEnabled" name="watermarkEnabled" <?php echo $watermarkEnabledChecked; ?>>
+                    <label for="watermarkEnabled">Enable Watermark?</label>
+                    <br>
                     <label for="watermark">Watermark from custom text</label>
                     <input type="text" id="watermark" name="watermark" class="form-control" placeholder="(C) <?php echo date("Y")." photographer"; ?>" value="<?php echo $gallery->watermark; ?>">
                     <input type="hidden" id="watermark-old" name="watermark-old" class="form-control" value="<?php echo $gallery->watermark; ?>">
