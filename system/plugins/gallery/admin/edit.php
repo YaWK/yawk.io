@@ -174,10 +174,10 @@ echo"<ol class=\"breadcrumb\">
                         <option value="center">Center</option>
                         <option value="top">Top</option>
                     </select>
-                    <label for="offsetRight">Offset from right</label>
-                    <input type="text" id="offsetRight" name="offsetRight" class="form-control" placeholder="-12" value="<?php echo $gallery->offsetRight; ?>">
-                    <label for="offsetBottom">Offset from bottom</label>
-                    <input type="text" id="offsetBottom" name="offsetBottom" class="form-control" placeholder="-12" value="<?php echo $gallery->offsetBottom; ?>">
+                    <label for="offsetX">Offset X-axis</label>
+                    <input type="text" id="offsetX" name="offsetX" class="form-control" placeholder="-12" value="<?php echo $gallery->offsetX; ?>">
+                    <label for="offsetY">Offset Y-axis</label>
+                    <input type="text" id="offsetY" name="offsetY" class="form-control" placeholder="-12" value="<?php echo $gallery->offsetY; ?>">
                     <label for="watermarkFont">Watermark Font</label>
                     <select id="watermarkFont" name="watermarkFont" class="form-control">
                         <option value="<?php echo $gallery->watermarkFont; ?>"><?php echo $gallery->watermarkFont; ?></option>

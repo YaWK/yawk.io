@@ -15,8 +15,8 @@ $watermark = $_POST['watermark'];
 $watermarkImage = $_POST['watermarkImage'];
 $watermarkOpacity = $_POST['watermarkOpacity'];
 $watermarkPosition = $_POST['watermarkPosition'];
-$offsetRight = $_POST['offsetRight'];
-$offsetBottom = $_POST['offsetBottom'];
+$offsetX = $_POST['offsetX'];
+$offsetY = $_POST['offsetY'];
 $watermarkFont = $_POST['watermarkFont'];
 $watermarkTextSize = $_POST['watermarkTextSize'];
 $watermarkColor = $_POST['watermarkColor'];
@@ -41,8 +41,8 @@ $ttfPrefix = "../../../";                                        // prefix to sy
                         $watermarkTextSize,
                        "#$watermarkColor",
                        "$watermarkPosition",
-                       "$offsetRight",
-                       "$offsetBottom",
+                       "$offsetX",
+                       "$offsetY",
                        "#$watermarkBorderColor",
                         $watermarkBorder)
                 ->save("$prefix$folder/$filename");
@@ -58,8 +58,8 @@ $ttfPrefix = "../../../";                                        // prefix to sy
                         $watermarkTextSize,
                         "#$watermarkColor",
                         "$watermarkPosition",
-                        "$offsetRight",
-                        "$offsetBottom",
+                        "$offsetX",
+                        "$offsetY",
                         "#$watermarkBorderColor",
                         $watermarkBorder)
                     ->fit_to_width($thumbnailWidth)
@@ -125,8 +125,8 @@ $ttfPrefix = "../../../";                                        // prefix to sy
                         $watermarkTextSize,
                         "#$watermarkColor",
                         "$watermarkPosition",
-                        "$offsetRight",
-                        "$offsetBottom",
+                        "$offsetX",
+                        "$offsetY",
                         "#$watermarkBorderColor",
                         $watermarkBorder)
                 ->save("$prefix$folder/$filename");
@@ -142,8 +142,8 @@ $ttfPrefix = "../../../";                                        // prefix to sy
                             $watermarkTextSize,
                             "#$watermarkColor",
                             "$watermarkPosition",
-                            "$offsetRight",
-                            "$offsetBottom",
+                            "$offsetX",
+                            "$offsetY",
                             "#$watermarkBorderColor",
                             $watermarkBorder)
                         ->fit_to_width($thumbnailWidth)
@@ -211,8 +211,8 @@ if ($action === "rotate-90")
                     $watermarkTextSize,
                     "#$watermarkColor",
                     "$watermarkPosition",
-                    "$offsetRight",
-                    "$offsetBottom",
+                    "$offsetX",
+                    "$offsetY",
                     "#$watermarkBorderColor",
                     $watermarkBorder)
             ->save("$prefix$folder/$filename");
@@ -228,8 +228,8 @@ if ($action === "rotate-90")
                         $watermarkTextSize,
                         "#$watermarkColor",
                         "$watermarkPosition",
-                        "$offsetRight",
-                        "$offsetBottom",
+                        "$offsetX",
+                        "$offsetY",
                         "#$watermarkBorderColor",
                         $watermarkBorder)
                     ->fit_to_width($thumbnailWidth)
@@ -296,8 +296,8 @@ if ($action === "contrast-plus")
                 $watermarkTextSize,
                 "#$watermarkColor",
                 "$watermarkPosition",
-                "$offsetRight",
-                "$offsetBottom",
+                "$offsetX",
+                "$offsetY",
                 "#$watermarkBorderColor",
                 $watermarkBorder)
             ->save("$prefix$folder/$filename");
@@ -313,8 +313,8 @@ if ($action === "contrast-plus")
                         $watermarkTextSize,
                         "#$watermarkColor",
                         "$watermarkPosition",
-                        "$offsetRight",
-                        "$offsetBottom",
+                        "$offsetX",
+                        "$offsetY",
                         "#$watermarkBorderColor",
                         $watermarkBorder)
                     ->fit_to_width($thumbnailWidth)
@@ -380,8 +380,8 @@ if ($action === "contrast-minus")
                 $watermarkTextSize,
                 "#$watermarkColor",
                 "$watermarkPosition",
-                "$offsetRight",
-                "$offsetBottom",
+                "$offsetX",
+                "$offsetY",
                 "#$watermarkBorderColor",
                 $watermarkBorder)
             ->save("$prefix$folder/$filename");
@@ -396,8 +396,8 @@ if ($action === "contrast-minus")
                         $watermarkTextSize,
                         "#$watermarkColor",
                         "$watermarkPosition",
-                        "$offsetRight",
-                        "$offsetBottom",
+                        "$offsetX",
+                        "$offsetY",
                         "#$watermarkBorderColor",
                         $watermarkBorder)
                     ->fit_to_width($thumbnailWidth)
@@ -463,8 +463,8 @@ if ($action === "brightness-plus")
                 $watermarkTextSize,
                 "#$watermarkColor",
                 "$watermarkPosition",
-                "$offsetRight",
-                "$offsetBottom",
+                "$offsetX",
+                "$offsetY",
                 "#$watermarkBorderColor",
                 $watermarkBorder)
             ->save("$prefix$folder/$filename");
@@ -479,8 +479,8 @@ if ($action === "brightness-plus")
                         $watermarkTextSize,
                         "#$watermarkColor",
                         "$watermarkPosition",
-                        "$offsetRight",
-                        "$offsetBottom",
+                        "$offsetX",
+                        "$offsetY",
                         "#$watermarkBorderColor",
                         $watermarkBorder)
                     ->fit_to_width($thumbnailWidth)
@@ -547,8 +547,8 @@ if ($action === "brightness-minus")
                 $watermarkTextSize,
                 "#$watermarkColor",
                 "$watermarkPosition",
-                "$offsetRight",
-                "$offsetBottom",
+                "$offsetX",
+                "$offsetY",
                 "#$watermarkBorderColor",
                 $watermarkBorder)
             ->save("$prefix$folder/$filename");
@@ -563,8 +563,8 @@ if ($action === "brightness-minus")
                         $watermarkTextSize,
                         "#$watermarkColor",
                         "$watermarkPosition",
-                        "$offsetRight",
-                        "$offsetBottom",
+                        "$offsetX",
+                        "$offsetY",
                         "#$watermarkBorderColor",
                         $watermarkBorder)
                     ->fit_to_width($thumbnailWidth)
@@ -631,8 +631,8 @@ if ($action === "sharpen")
                 $watermarkTextSize,
                 "#$watermarkColor",
                 "$watermarkPosition",
-                "$offsetRight",
-                "$offsetBottom",
+                "$offsetX",
+                "$offsetY",
                 "#$watermarkBorderColor",
                 $watermarkBorder)
             ->save("$prefix$folder/$filename");
@@ -647,8 +647,8 @@ if ($action === "sharpen")
                         $watermarkTextSize,
                         "#$watermarkColor",
                         "$watermarkPosition",
-                        "$offsetRight",
-                        "$offsetBottom",
+                        "$offsetX",
+                        "$offsetY",
                         "#$watermarkBorderColor",
                         $watermarkBorder)
                     ->fit_to_width($thumbnailWidth)
@@ -716,8 +716,8 @@ if ($action === "selective-blur")
                 $watermarkTextSize,
                 "#$watermarkColor",
                 "$watermarkPosition",
-                "$offsetRight",
-                "$offsetBottom",
+                "$offsetX",
+                "$offsetY",
                 "#$watermarkBorderColor",
                 $watermarkBorder)
             ->save("$prefix$folder/$filename");
@@ -732,8 +732,8 @@ if ($action === "selective-blur")
                         $watermarkTextSize,
                         "#$watermarkColor",
                         "$watermarkPosition",
-                        "$offsetRight",
-                        "$offsetBottom",
+                        "$offsetX",
+                        "$offsetY",
                         "#$watermarkBorderColor",
                         $watermarkBorder)
                     ->fit_to_width($thumbnailWidth)
@@ -800,8 +800,8 @@ if ($action === "greyscale")
                 $watermarkTextSize,
                 "#$watermarkColor",
                 "$watermarkPosition",
-                "$offsetRight",
-                "$offsetBottom",
+                "$offsetX",
+                "$offsetY",
                 "#$watermarkBorderColor",
                 $watermarkBorder)
             ->save("$prefix$folder/$filename");
@@ -816,8 +816,8 @@ if ($action === "greyscale")
                         $watermarkTextSize,
                         "#$watermarkColor",
                         "$watermarkPosition",
-                        "$offsetRight",
-                        "$offsetBottom",
+                        "$offsetX",
+                        "$offsetY",
                         "#$watermarkBorderColor",
                         $watermarkBorder)
                     ->fit_to_width($thumbnailWidth)
@@ -883,8 +883,8 @@ if ($action === "sepia")
                 $watermarkTextSize,
                 "#$watermarkColor",
                 "$watermarkPosition",
-                "$offsetRight",
-                "$offsetBottom",
+                "$offsetX",
+                "$offsetY",
                 "#$watermarkBorderColor",
                 $watermarkBorder)
             ->save("$prefix$folder/$filename");
@@ -899,8 +899,8 @@ if ($action === "sepia")
                         $watermarkTextSize,
                         "#$watermarkColor",
                         "$watermarkPosition",
-                        "$offsetRight",
-                        "$offsetBottom",
+                        "$offsetX",
+                        "$offsetY",
                         "#$watermarkBorderColor",
                         $watermarkBorder)
                     ->fit_to_width($thumbnailWidth)
@@ -966,8 +966,8 @@ if ($action === "pixelate")
                 $watermarkTextSize,
                 "#$watermarkColor",
                 "$watermarkPosition",
-                "$offsetRight",
-                "$offsetBottom",
+                "$offsetX",
+                "$offsetY",
                 "#$watermarkBorderColor",
                 $watermarkBorder)
             ->save("$prefix$folder/$filename");
@@ -982,8 +982,8 @@ if ($action === "pixelate")
                         $watermarkTextSize,
                         "#$watermarkColor",
                         "$watermarkPosition",
-                        "$offsetRight",
-                        "$offsetBottom",
+                        "$offsetX",
+                        "$offsetY",
                         "#$watermarkBorderColor",
                         $watermarkBorder)
                     ->fit_to_width($thumbnailWidth)
@@ -1050,8 +1050,8 @@ if ($action === "reset-file")
                 $watermarkTextSize,
                 "#$watermarkColor",
                 "$watermarkPosition",
-                "$offsetRight",
-                "$offsetBottom",
+                "$offsetX",
+                "$offsetY",
                 "#$watermarkBorderColor",
                 $watermarkBorder)
             ->save("$prefix$folder/$filename");
@@ -1066,8 +1066,8 @@ if ($action === "reset-file")
                         $watermarkTextSize,
                         "#$watermarkColor",
                         "$watermarkPosition",
-                        "$offsetRight",
-                        "$offsetBottom",
+                        "$offsetX",
+                        "$offsetY",
                         "#$watermarkBorderColor",
                         $watermarkBorder)
                     ->fit_to_width($thumbnailWidth)

@@ -21,8 +21,8 @@ namespace YAWK\PLUGINS\GALLERY {
         public $watermark;
         public $watermarkImage;
         public $watermarkPosition;
-        public $offsetBottom;
-        public $offsetRight;
+        public $offsetY;
+        public $offsetX;
         public $watermarkFont;
         public $watermarkTextSize;
         public $watermarkOpacity;
@@ -33,12 +33,12 @@ namespace YAWK\PLUGINS\GALLERY {
         public function __construct()
         {
             echo "<script type=\"text/javascript\">
-                function doImageAction(action, id, folder, filename, itemID, createThumbnails, thumbnailWidth, watermark, watermarkImage, watermarkOpacity, watermarkPosition, offsetRight, offsetBottom, watermarkFont, watermarkTextSize, watermarkColor, watermarkBorderColor, watermarkBorder) 
+                function doImageAction(action, id, folder, filename, itemID, createThumbnails, thumbnailWidth, watermark, watermarkImage, watermarkOpacity, watermarkPosition, offsetX, offsetY, watermarkFont, watermarkTextSize, watermarkColor, watermarkBorderColor, watermarkBorder) 
                 {                    
                     $.ajax({
                         url:'../system/plugins/gallery/js/actions.php',
                         type:'post',
-                        data:'action='+action+'&id='+id+'&folder='+folder+'&filename='+filename+'&itemID='+itemID+'&createThumbnails='+createThumbnails+'&thumbnailWidth='+thumbnailWidth+'&watermark='+watermark+'&watermarkImage='+watermarkImage+'&watermarkOpacity='+watermarkOpacity+'&watermarkPosition='+watermarkPosition+'&offsetRight='+offsetRight+'&offsetBottom='+offsetBottom+'&watermarkFont='+watermarkFont+'&watermarkTextSize='+watermarkTextSize+'&watermarkColor='+watermarkColor+'&watermarkBorderColor='+watermarkBorderColor+'&watermarkBorder='+watermarkBorder,
+                        data:'action='+action+'&id='+id+'&folder='+folder+'&filename='+filename+'&itemID='+itemID+'&createThumbnails='+createThumbnails+'&thumbnailWidth='+thumbnailWidth+'&watermark='+watermark+'&watermarkImage='+watermarkImage+'&watermarkOpacity='+watermarkOpacity+'&watermarkPosition='+watermarkPosition+'&offsetX='+offsetX+'&offsetY='+offsetY+'&watermarkFont='+watermarkFont+'&watermarkTextSize='+watermarkTextSize+'&watermarkColor='+watermarkColor+'&watermarkBorderColor='+watermarkBorderColor+'&watermarkBorder='+watermarkBorder,
                         dataType: 'json',
                         // dataType: 'json',
                         success: function(data)
@@ -356,13 +356,13 @@ namespace YAWK\PLUGINS\GALLERY {
             {   // any image used as watermark (preferably transparent png-24)
                 $this->watermarkImage = $db->quote($_POST['watermarkImage']);
             }
-            if (isset($_POST['offsetBottom']) && (!empty($_POST['offsetBottom'])))
+            if (isset($_POST['offsetY']) && (!empty($_POST['offsetY'])))
             {   // offset bottom (from bottom)
-                $this->offsetBottom = $db->quote($_POST['offsetBottom']);
+                $this->offsetY = $db->quote($_POST['offsetY']);
             }
-            if (isset($_POST['offsetRight']) && (!empty($_POST['offsetRight'])))
+            if (isset($_POST['offsetX']) && (!empty($_POST['offsetX'])))
             {   // offset right (from right)
-                $this->offsetRight = $db->quote($_POST['offsetRight']);
+                $this->offsetX = $db->quote($_POST['offsetX']);
             }
             if (isset($_POST['watermarkFont']) && (!empty($_POST['watermarkFont'])))
             {   // true type font to use for watermarking (located in system/fonts/)
@@ -408,8 +408,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                                                  watermark, 
                                                                  watermarkPosition, 
                                                                  watermarkImage, 
-                                                                 offsetBottom, 
-                                                                 offsetRight, 
+                                                                 offsetY, 
+                                                                 offsetX, 
                                                                  watermarkFont, 
                                                                  watermarkTextSize,
                                                                  watermarkOpacity,
@@ -424,8 +424,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                             '".$this->watermark."',
                                             '".$this->watermarkPosition."',
                                             '".$this->watermarkImage."',
-                                            '".$this->offsetBottom."',
-                                            '".$this->offsetRight."',
+                                            '".$this->offsetY."',
+                                            '".$this->offsetX."',
                                             '".$this->watermarkFont."',
                                             '".$this->watermarkTextSize."',
                                             '".$this->watermarkOpacity."',
@@ -523,8 +523,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                     $this->watermarkTextSize,
                                     "#$this->watermarkColor",
                                     "$this->watermarkPosition",
-                                    "$this->offsetRight",
-                                    "$this->offsetBottom",
+                                    "$this->offsetX",
+                                    "$this->offsetY",
                                     "#$this->watermarkBorderColor",
                                     $this->watermarkBorder)
                             ->save("../$this->folder/$filename");
@@ -550,8 +550,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                    $this->watermarkTextSize,
                                    "#$this->watermarkColor",
                                    "$this->watermarkPosition",
-                                   "$this->offsetRight",
-                                   "$this->offsetBottom",
+                                   "$this->offsetX",
+                                   "$this->offsetY",
                                    "#$this->watermarkBorderColor",
                                     $this->watermarkBorder)
                             ->fit_to_width($this->thumbnailWidth)
@@ -652,8 +652,8 @@ namespace YAWK\PLUGINS\GALLERY {
                     $this->watermark = $row['watermark'];
                     $this->watermarkPosition = $row['watermarkPosition'];
                     $this->watermarkImage = $row['watermarkImage'];
-                    $this->offsetBottom = $row['offsetBottom'];
-                    $this->offsetRight = $row['offsetRight'];
+                    $this->offsetY = $row['offsetY'];
+                    $this->offsetX = $row['offsetX'];
                     $this->watermarkFont = $row['watermarkFont'];
                     $this->watermarkTextSize = $row['watermarkTextSize'];
                     $this->watermarkOpacity = $row['watermarkOpacity'];
@@ -680,8 +680,8 @@ namespace YAWK\PLUGINS\GALLERY {
             $this->watermark = $db->quote($_POST['watermark']);
             $this->watermarkPosition = $db->quote($_POST['watermarkPosition']);
             $this->watermarkImage = $db->quote($_POST['watermarkImage']);
-            $this->offsetBottom = $db->quote($_POST['offsetBottom']);
-            $this->offsetRight = $db->quote($_POST['offsetRight']);
+            $this->offsetY = $db->quote($_POST['offsetY']);
+            $this->offsetX = $db->quote($_POST['offsetX']);
             $this->watermarkFont = $db->quote($_POST['watermarkFont']);
             $this->watermarkTextSize = $db->quote($_POST['watermarkTextSize']);
             $this->watermarkOpacity = $db->quote($_POST['watermarkOpacity']);
@@ -871,8 +871,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                     $this->watermarkTextSize,
                                     "#$this->watermarkColor",
                                     "$this->watermarkPosition",
-                                    "$this->offsetRight",
-                                    "$this->offsetBottom",
+                                    "$this->offsetX",
+                                    "$this->offsetY",
                                     "#$this->watermarkBorderColor",
                                     $this->watermarkBorder)
                                 ->save("../$this->folder/$filename")
@@ -895,8 +895,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                         $this->watermarkTextSize,
                                         "#$this->watermarkColor",
                                         "$this->watermarkPosition",
-                                        "$this->offsetRight",
-                                        "$this->offsetBottom",
+                                        "$this->offsetX",
+                                        "$this->offsetY",
                                         "#$this->watermarkBorderColor",
                                         $this->watermarkBorder)
                                     ->save("../$this->folder/$filename");
@@ -991,8 +991,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                        watermark='$this->watermark',
                                        watermarkPosition='$this->watermarkPosition',
                                        watermarkImage='$this->watermarkImage',
-                                       offsetBottom='$this->offsetBottom',
-                                       offsetRight='$this->offsetRight',
+                                       offsetY='$this->offsetY',
+                                       offsetX='$this->offsetX',
                                        watermarkFont='$this->watermarkFont',
                                        watermarkTextSize='$this->watermarkTextSize',
                                        watermarkOpacity='$this->watermarkOpacity',
@@ -1110,8 +1110,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 \''.$this->watermarkImage.'\', 
                                                 \''.$this->watermarkOpacity.'\', 
                                                 \''.$this->watermarkPosition.'\', 
-                                                \''.$this->offsetRight.'\', 
-                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->offsetX.'\', 
+                                                \''.$this->offsetY.'\', 
                                                 \''.$this->watermarkFont.'\', 
                                                 \''.$this->watermarkTextSize.'\', 
                                                 \''.$this->watermarkColor.'\', 
@@ -1131,8 +1131,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 \''.$this->watermarkImage.'\', 
                                                 \''.$this->watermarkOpacity.'\', 
                                                 \''.$this->watermarkPosition.'\', 
-                                                \''.$this->offsetRight.'\', 
-                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->offsetX.'\', 
+                                                \''.$this->offsetY.'\', 
                                                 \''.$this->watermarkFont.'\', 
                                                 \''.$this->watermarkTextSize.'\', 
                                                 \''.$this->watermarkColor.'\', 
@@ -1152,8 +1152,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 \''.$this->watermarkImage.'\', 
                                                 \''.$this->watermarkOpacity.'\', 
                                                 \''.$this->watermarkPosition.'\', 
-                                                \''.$this->offsetRight.'\', 
-                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->offsetX.'\', 
+                                                \''.$this->offsetY.'\', 
                                                 \''.$this->watermarkFont.'\', 
                                                 \''.$this->watermarkTextSize.'\', 
                                                 \''.$this->watermarkColor.'\', 
@@ -1173,8 +1173,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 \''.$this->watermarkImage.'\', 
                                                 \''.$this->watermarkOpacity.'\', 
                                                 \''.$this->watermarkPosition.'\', 
-                                                \''.$this->offsetRight.'\', 
-                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->offsetX.'\', 
+                                                \''.$this->offsetY.'\', 
                                                 \''.$this->watermarkFont.'\', 
                                                 \''.$this->watermarkTextSize.'\', 
                                                 \''.$this->watermarkColor.'\', 
@@ -1194,8 +1194,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 \''.$this->watermarkImage.'\', 
                                                 \''.$this->watermarkOpacity.'\', 
                                                 \''.$this->watermarkPosition.'\', 
-                                                \''.$this->offsetRight.'\', 
-                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->offsetX.'\', 
+                                                \''.$this->offsetY.'\', 
                                                 \''.$this->watermarkFont.'\', 
                                                 \''.$this->watermarkTextSize.'\', 
                                                 \''.$this->watermarkColor.'\', 
@@ -1215,8 +1215,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 \''.$this->watermarkImage.'\', 
                                                 \''.$this->watermarkOpacity.'\', 
                                                 \''.$this->watermarkPosition.'\', 
-                                                \''.$this->offsetRight.'\', 
-                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->offsetX.'\', 
+                                                \''.$this->offsetY.'\', 
                                                 \''.$this->watermarkFont.'\', 
                                                 \''.$this->watermarkTextSize.'\', 
                                                 \''.$this->watermarkColor.'\', 
@@ -1236,8 +1236,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 \''.$this->watermarkImage.'\', 
                                                 \''.$this->watermarkOpacity.'\', 
                                                 \''.$this->watermarkPosition.'\', 
-                                                \''.$this->offsetRight.'\', 
-                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->offsetX.'\', 
+                                                \''.$this->offsetY.'\', 
                                                 \''.$this->watermarkFont.'\', 
                                                 \''.$this->watermarkTextSize.'\', 
                                                 \''.$this->watermarkColor.'\', 
@@ -1257,8 +1257,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 \''.$this->watermarkImage.'\', 
                                                 \''.$this->watermarkOpacity.'\', 
                                                 \''.$this->watermarkPosition.'\', 
-                                                \''.$this->offsetRight.'\', 
-                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->offsetX.'\', 
+                                                \''.$this->offsetY.'\', 
                                                 \''.$this->watermarkFont.'\', 
                                                 \''.$this->watermarkTextSize.'\', 
                                                 \''.$this->watermarkColor.'\', 
@@ -1278,8 +1278,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 \''.$this->watermarkImage.'\', 
                                                 \''.$this->watermarkOpacity.'\', 
                                                 \''.$this->watermarkPosition.'\', 
-                                                \''.$this->offsetRight.'\', 
-                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->offsetX.'\', 
+                                                \''.$this->offsetY.'\', 
                                                 \''.$this->watermarkFont.'\', 
                                                 \''.$this->watermarkTextSize.'\', 
                                                 \''.$this->watermarkColor.'\', 
@@ -1299,8 +1299,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 \''.$this->watermarkImage.'\', 
                                                 \''.$this->watermarkOpacity.'\', 
                                                 \''.$this->watermarkPosition.'\', 
-                                                \''.$this->offsetRight.'\', 
-                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->offsetX.'\', 
+                                                \''.$this->offsetY.'\', 
                                                 \''.$this->watermarkFont.'\', 
                                                 \''.$this->watermarkTextSize.'\', 
                                                 \''.$this->watermarkColor.'\', 
@@ -1321,8 +1321,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 \''.$this->watermarkImage.'\', 
                                                 \''.$this->watermarkOpacity.'\', 
                                                 \''.$this->watermarkPosition.'\', 
-                                                \''.$this->offsetRight.'\', 
-                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->offsetX.'\', 
+                                                \''.$this->offsetY.'\', 
                                                 \''.$this->watermarkFont.'\', 
                                                 \''.$this->watermarkTextSize.'\', 
                                                 \''.$this->watermarkColor.'\', 
@@ -1342,8 +1342,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 \''.$this->watermarkImage.'\', 
                                                 \''.$this->watermarkOpacity.'\', 
                                                 \''.$this->watermarkPosition.'\', 
-                                                \''.$this->offsetRight.'\', 
-                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->offsetX.'\', 
+                                                \''.$this->offsetY.'\', 
                                                 \''.$this->watermarkFont.'\', 
                                                 \''.$this->watermarkTextSize.'\', 
                                                 \''.$this->watermarkColor.'\', 
@@ -1363,8 +1363,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 \''.$this->watermarkImage.'\', 
                                                 \''.$this->watermarkOpacity.'\', 
                                                 \''.$this->watermarkPosition.'\', 
-                                                \''.$this->offsetRight.'\', 
-                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->offsetX.'\', 
+                                                \''.$this->offsetY.'\', 
                                                 \''.$this->watermarkFont.'\', 
                                                 \''.$this->watermarkTextSize.'\', 
                                                 \''.$this->watermarkColor.'\', 
@@ -1384,8 +1384,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 \''.$this->watermarkImage.'\', 
                                                 \''.$this->watermarkOpacity.'\', 
                                                 \''.$this->watermarkPosition.'\', 
-                                                \''.$this->offsetRight.'\', 
-                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->offsetX.'\', 
+                                                \''.$this->offsetY.'\', 
                                                 \''.$this->watermarkFont.'\', 
                                                 \''.$this->watermarkTextSize.'\', 
                                                 \''.$this->watermarkColor.'\', 
@@ -1422,8 +1422,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 \''.$this->watermarkImage.'\', 
                                                 \''.$this->watermarkOpacity.'\', 
                                                 \''.$this->watermarkPosition.'\', 
-                                                \''.$this->offsetRight.'\', 
-                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->offsetX.'\', 
+                                                \''.$this->offsetY.'\', 
                                                 \''.$this->watermarkFont.'\', 
                                                 \''.$this->watermarkTextSize.'\', 
                                                 \''.$this->watermarkColor.'\', 
@@ -1443,8 +1443,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 \''.$this->watermarkImage.'\', 
                                                 \''.$this->watermarkOpacity.'\', 
                                                 \''.$this->watermarkPosition.'\', 
-                                                \''.$this->offsetRight.'\', 
-                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->offsetX.'\', 
+                                                \''.$this->offsetY.'\', 
                                                 \''.$this->watermarkFont.'\', 
                                                 \''.$this->watermarkTextSize.'\', 
                                                 \''.$this->watermarkColor.'\', 
@@ -1464,8 +1464,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 \''.$this->watermarkImage.'\', 
                                                 \''.$this->watermarkOpacity.'\', 
                                                 \''.$this->watermarkPosition.'\', 
-                                                \''.$this->offsetRight.'\', 
-                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->offsetX.'\', 
+                                                \''.$this->offsetY.'\', 
                                                 \''.$this->watermarkFont.'\', 
                                                 \''.$this->watermarkTextSize.'\', 
                                                 \''.$this->watermarkColor.'\', 
@@ -1485,8 +1485,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 \''.$this->watermarkImage.'\', 
                                                 \''.$this->watermarkOpacity.'\', 
                                                 \''.$this->watermarkPosition.'\', 
-                                                \''.$this->offsetRight.'\', 
-                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->offsetX.'\', 
+                                                \''.$this->offsetY.'\', 
                                                 \''.$this->watermarkFont.'\', 
                                                 \''.$this->watermarkTextSize.'\', 
                                                 \''.$this->watermarkColor.'\', 
@@ -1506,8 +1506,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 \''.$this->watermarkImage.'\', 
                                                 \''.$this->watermarkOpacity.'\', 
                                                 \''.$this->watermarkPosition.'\', 
-                                                \''.$this->offsetRight.'\', 
-                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->offsetX.'\', 
+                                                \''.$this->offsetY.'\', 
                                                 \''.$this->watermarkFont.'\', 
                                                 \''.$this->watermarkTextSize.'\', 
                                                 \''.$this->watermarkColor.'\', 
@@ -1527,8 +1527,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 \''.$this->watermarkImage.'\', 
                                                 \''.$this->watermarkOpacity.'\', 
                                                 \''.$this->watermarkPosition.'\', 
-                                                \''.$this->offsetRight.'\', 
-                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->offsetX.'\', 
+                                                \''.$this->offsetY.'\', 
                                                 \''.$this->watermarkFont.'\', 
                                                 \''.$this->watermarkTextSize.'\', 
                                                 \''.$this->watermarkColor.'\', 
@@ -1548,8 +1548,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 \''.$this->watermarkImage.'\', 
                                                 \''.$this->watermarkOpacity.'\', 
                                                 \''.$this->watermarkPosition.'\', 
-                                                \''.$this->offsetRight.'\', 
-                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->offsetX.'\', 
+                                                \''.$this->offsetY.'\', 
                                                 \''.$this->watermarkFont.'\', 
                                                 \''.$this->watermarkTextSize.'\', 
                                                 \''.$this->watermarkColor.'\', 
@@ -1569,8 +1569,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 \''.$this->watermarkImage.'\', 
                                                 \''.$this->watermarkOpacity.'\', 
                                                 \''.$this->watermarkPosition.'\', 
-                                                \''.$this->offsetRight.'\', 
-                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->offsetX.'\', 
+                                                \''.$this->offsetY.'\', 
                                                 \''.$this->watermarkFont.'\', 
                                                 \''.$this->watermarkTextSize.'\', 
                                                 \''.$this->watermarkColor.'\', 
@@ -1590,8 +1590,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 \''.$this->watermarkImage.'\', 
                                                 \''.$this->watermarkOpacity.'\', 
                                                 \''.$this->watermarkPosition.'\', 
-                                                \''.$this->offsetRight.'\', 
-                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->offsetX.'\', 
+                                                \''.$this->offsetY.'\', 
                                                 \''.$this->watermarkFont.'\', 
                                                 \''.$this->watermarkTextSize.'\', 
                                                 \''.$this->watermarkColor.'\', 
@@ -1611,8 +1611,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 \''.$this->watermarkImage.'\', 
                                                 \''.$this->watermarkOpacity.'\', 
                                                 \''.$this->watermarkPosition.'\', 
-                                                \''.$this->offsetRight.'\', 
-                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->offsetX.'\', 
+                                                \''.$this->offsetY.'\', 
                                                 \''.$this->watermarkFont.'\', 
                                                 \''.$this->watermarkTextSize.'\', 
                                                 \''.$this->watermarkColor.'\', 
@@ -1633,8 +1633,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 \''.$this->watermarkImage.'\', 
                                                 \''.$this->watermarkOpacity.'\', 
                                                 \''.$this->watermarkPosition.'\', 
-                                                \''.$this->offsetRight.'\', 
-                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->offsetX.'\', 
+                                                \''.$this->offsetY.'\', 
                                                 \''.$this->watermarkFont.'\', 
                                                 \''.$this->watermarkTextSize.'\', 
                                                 \''.$this->watermarkColor.'\', 
@@ -1654,8 +1654,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 \''.$this->watermarkImage.'\', 
                                                 \''.$this->watermarkOpacity.'\', 
                                                 \''.$this->watermarkPosition.'\', 
-                                                \''.$this->offsetRight.'\', 
-                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->offsetX.'\', 
+                                                \''.$this->offsetY.'\', 
                                                 \''.$this->watermarkFont.'\', 
                                                 \''.$this->watermarkTextSize.'\', 
                                                 \''.$this->watermarkColor.'\', 
@@ -1675,8 +1675,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 \''.$this->watermarkImage.'\', 
                                                 \''.$this->watermarkOpacity.'\', 
                                                 \''.$this->watermarkPosition.'\', 
-                                                \''.$this->offsetRight.'\', 
-                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->offsetX.'\', 
+                                                \''.$this->offsetY.'\', 
                                                 \''.$this->watermarkFont.'\', 
                                                 \''.$this->watermarkTextSize.'\', 
                                                 \''.$this->watermarkColor.'\', 
@@ -1696,8 +1696,8 @@ namespace YAWK\PLUGINS\GALLERY {
                                                 \''.$this->watermarkImage.'\', 
                                                 \''.$this->watermarkOpacity.'\', 
                                                 \''.$this->watermarkPosition.'\', 
-                                                \''.$this->offsetRight.'\', 
-                                                \''.$this->offsetBottom.'\', 
+                                                \''.$this->offsetX.'\', 
+                                                \''.$this->offsetY.'\', 
                                                 \''.$this->watermarkFont.'\', 
                                                 \''.$this->watermarkTextSize.'\', 
                                                 \''.$this->watermarkColor.'\', 
