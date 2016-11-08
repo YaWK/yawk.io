@@ -308,6 +308,8 @@ namespace YAWK\PLUGINS\GALLERY {
                         $dbItems = '';
                     }
 
+                    // TODO: only files that are NOT in the folder should be processed - still buggy yet!
+
                 // walk through images folder
                 foreach (new \DirectoryIterator("../$this->folder/") as $image)
                 {   // exclude dots'n'dirs
@@ -322,23 +324,21 @@ namespace YAWK\PLUGINS\GALLERY {
 
                         }
                         else
-                            {
-                                if (is_file("../$this->folder/$item"))
-                                {
-                                    if (!@copy("../$this->folder/$filename", "../$this->folder/original/$filename"))
-                                    {   // could not copy file, throw notification
-                                        \YAWK\alert::draw("warning", "Could not copy file $filename to original folder", "Could not copy image to backup folder!", "", 800);
-                                    }
-                                    if (!@copy("../$this->folder/$filename", "../$this->folder/edit/$filename"))
-                                    {   // could not copy file, throw notification
-                                        \YAWK\alert::draw("warning", "Could not copy file $filename to edit folder", "Could not copy image to backup folder!", "", 800);
-                                    }
-                                    if (!$res = $db->query("INSERT INTO {plugin_gallery_items} (galleryID, filename) VALUES ('".$galleryID."', '".$filename."')"))
-                                    {   // could not add image data to db
-                                        \YAWK\alert::draw("warning", "Could not add image data to database.", "Error inserting <b>$filename</b>.", "", 2800);
-                                    }
-                                }
+                        {
+                            \YAWK\alert::draw("info", "$item", "$item", "", 5800);
+                            if (!@copy("../$this->folder/$filename", "../$this->folder/original/$filename"))
+                            {   // could not copy file, throw notification
+                                \YAWK\alert::draw("warning", "Could not copy file $filename to original folder", "Could not copy image to backup folder!", "", 800);
                             }
+                            if (!@copy("../$this->folder/$filename", "../$this->folder/edit/$filename"))
+                            {   // could not copy file, throw notification
+                                \YAWK\alert::draw("warning", "Could not copy file $filename to edit folder", "Could not copy image to backup folder!", "", 800);
+                            }
+                            if (!$res = $db->query("INSERT INTO {plugin_gallery_items} (galleryID, filename) VALUES ('".$galleryID."', '".$filename."')"))
+                            {   // could not add image data to db
+                                \YAWK\alert::draw("warning", "Could not add image data to database.", "Error inserting <b>$filename</b>.", "", 2800);
+                            }
+                        }
                     }
                 }
                 return true;
@@ -347,8 +347,6 @@ namespace YAWK\PLUGINS\GALLERY {
                 {   // no id is set
                     return false;
                 }
-                // something else has happened
-                return false;
         }
 
         public function add($db)
