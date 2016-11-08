@@ -291,15 +291,64 @@ namespace YAWK\PLUGINS\GALLERY {
                 }
         }
 
-        public function reScanFolder($db, $folder)
+        public function reScanFolder($db, $galleryID)
         {   /** @var $db \YAWK\db **/
-            if (isset($_GET['id']) && (!empty($_GET['id']) && (is_numeric($_GET['id']))))
-            {   // delete gallery items from db
-                $this->delete($db);
-                $this->add($db);
+            if (isset($galleryID) && (!empty($galleryID) && (is_numeric($galleryID))))
+            {   // check if folder obj property is set
+                if (!isset($this->folder) && (empty($this->folder)))
+                {   // if not, get folder from ID
+                    $this->folder = $this->getGalleryFolderByID($db, $galleryID);
+                }
+                if ($res = $db->query("SELECT filename from {plugin_gallery_items} WHERE galleryID = $galleryID"))
+                {   // get items from database
+                    $dbItems = mysqli_fetch_assoc($res);
+                }
+                else
+                    {
+                        $dbItems = '';
+                    }
 
+                // walk through images folder
+                foreach (new \DirectoryIterator("../$this->folder/") as $image)
+                {   // exclude dots'n'dirs
+                    if($image->isDot()) continue;        // exclude dots
+                    if($image->isDir()) continue;        // exclude subdirectories
+                    $filename = $image->getFilename();
+
+                    foreach ($dbItems as $item)
+                    {
+                        if ($item === $filename)
+                        {
+
+                        }
+                        else
+                            {
+                                if (is_file("../$this->folder/$item"))
+                                {
+                                    if (!@copy("../$this->folder/$filename", "../$this->folder/original/$filename"))
+                                    {   // could not copy file, throw notification
+                                        \YAWK\alert::draw("warning", "Could not copy file $filename to original folder", "Could not copy image to backup folder!", "", 800);
+                                    }
+                                    if (!@copy("../$this->folder/$filename", "../$this->folder/edit/$filename"))
+                                    {   // could not copy file, throw notification
+                                        \YAWK\alert::draw("warning", "Could not copy file $filename to edit folder", "Could not copy image to backup folder!", "", 800);
+                                    }
+                                    if (!$res = $db->query("INSERT INTO {plugin_gallery_items} (galleryID, filename) VALUES ('".$galleryID."', '".$filename."')"))
+                                    {   // could not add image data to db
+                                        \YAWK\alert::draw("warning", "Could not add image data to database.", "Error inserting <b>$filename</b>.", "", 2800);
+                                    }
+                                }
+                            }
+                    }
+                }
+                return true;
             }
-            return true;
+            else
+                {   // no id is set
+                    return false;
+                }
+                // something else has happened
+                return false;
         }
 
         public function add($db)
@@ -1256,10 +1305,17 @@ namespace YAWK\PLUGINS\GALLERY {
                     {   // store info msg, if files could not be retrieved
                         $previewError = "Sorry, ".$db->error()."";
                     }
+                    if (!isset($_GET['imageCount']) && (!empty($_GET['imageCount'])))
+                    {
+                        $imageCount = $_GET['imageCount'];
+                    }
+                    else {
+                        $imageCount = '';
+                    }
                     // preview without images
                     echo "<a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Soll die Galerie &laquo;" . $row['id'] . " / " . $row['title'] . "&raquo; wirklich gel&ouml;scht werden?\"
                       title=\"" . $lang['DEL'] . "\" href=\"index.php?plugin=gallery&delete=1&id=" . $row['id'] . "\"></a>
-                      &nbsp;<a href=\"index.php?plugin=gallery&refresh=1&id=$row[id]&folder=$row[folder]\" title=\"refresh\"><i class=\"fa fa-refresh\"></i></a>
+                      &nbsp;<a href=\"index.php?plugin=gallery&pluginpage=edit&refresh=1&id=$row[id]&folder=$row[folder]&imageCount=".$imageCount."\" title=\"refresh\"><i class=\"fa fa-refresh\"></i></a>
                       &nbsp;<b>".$row['title']."</b><br><small>".$row['description']."</small><br>
                                     <div class=\"text-center\">";
                     if (isset($previewError))

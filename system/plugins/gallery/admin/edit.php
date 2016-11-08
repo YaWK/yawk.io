@@ -20,10 +20,14 @@ if (isset($_POST))
     // RESCAN GALLERY
     if (isset($_GET['refresh']) && ($_GET['refresh'] === "1"))
     {   // re-scan folder an re-write database
-        if ($gallery->reScanFolder($db, $_GET['folder']) == true)
+        if ($gallery->reScanFolder($db, $_GET['id']))
         {   // deletion successfull
-            \YAWK\alert::draw("success", "Refresh of $_GET[folder] successful.", "Gallery has been updated.", "", 2000);
+            \YAWK\alert::draw("success", "Refresh of $_GET[folder] successful.", "Gallery has been updated.", "", 5800);
         }
+        else
+            {   // could not re-scan gallery
+                \YAWK\alert::draw("danger", "Refresh of $_GET[folder] not successful.", "Could not update Gallery.", "", 5800);
+            }
     }
 }
 ?>
