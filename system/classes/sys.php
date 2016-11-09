@@ -872,24 +872,65 @@ namespace YAWK {
             }
         }
 
+        static function getCurrentDateTime()
+        {
+            return date("Y-m-d H:i:s");
+        }
+
         static function setSyslog($db, $log_type, $message, $fromUID, $toUID, $toGID, $seen)
         {   /** @var $db \YAWK\db */
             // THIS DB STORES ALL THE SYSLOG FOR ADMINISTRATOR REASONS
             // insert admin-friendly message of all data into syslog db
-            if ($db->query("INSERT INTO {syslog} (log_type,message,fromUID,toUID,toGID,seen)
-                                        VALUES ('".$log_type."',
+
+            // get current log date
+            $log_date = sys::getCurrentDateTime();
+
+            // check if log_type is empty
+            if (!isset($log_type) || (empty($log_type) || ($log_type === "0")))
+            {   // default value: system settings (type 1)
+                $log_type = 1;
+            }
+            // check if message is empty
+            if (!isset($message) || (empty($message) || ($message === "0")))
+            {   // default value
+                $message = "something happened, but no text was set for logging.";
+            }
+
+            // check if syslog is enabled
+            if (\YAWK\settings::getSetting($db, "syslogEnable") === "1")
+            {   // check, if fromUID (user that affected the event) is set
+                if (!isset($fromUID) || (empty($fromUID) || ($fromUID === "0")))
+                {   // check if session uid is set
+                    if (isset($_SESSION['uid']))
+                    {   // ok, set var
+                        $fromUID = $_SESSION['uid'];
+                    }
+                    else
+                    {   // set zero
+                        $fromUID = 0;
+                    }
+                }
+                // insert syslog entry into db
+                if ($db->query("INSERT INTO {syslog} (log_date, log_type,message,fromUID,toUID,toGID,seen)
+                                        VALUES ('".$log_date."',
+                                                '".$log_type."',
                                                 '".$message."',
                                                 '".$fromUID."',
                                                 '".$toUID."',
                                                 '".$toGID."',
                                                 '".$seen."')"))
-            {   // set a notification into syslog
-                return true;
+                {   // syslog entry set
+                    return true;
+                }
+                else
+                {   // insert q failed
+                    return false;
+                }
             }
             else
-            {   // q failed
-                return false;
-            }
+                {   // syslog is disabled
+                    return null;
+                }
         }
 
         static function setNotification($db, $log_type, $msg_id, $fromUID, $toUID, $toGID, $seen)
