@@ -10,12 +10,8 @@ namespace YAWK {
      * <p><i>Class covers both, backend & frontend functionality.
      * See Methods Summary for Details!</i></p>
      *
-     * @category   CMS
-     * @package    System
-     * @global     $connection
-     * @global     $dbprefix
      * @author     Daniel Retzl <danielretzl@gmail.com>
-     * @copyright  2009-2015 Daniel Retzl yawk.goodconnect.net
+     * @copyright  2009-2015 Daniel Retzl yawk.io
      * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
      * @version    1.1.3
      * @link       http://yawk.io
@@ -58,7 +54,9 @@ namespace YAWK {
             if ($sent){
                 return true;
             }
-            else {
+            else
+            {   // sending failed
+                \YAWK\sys::setSyslog($db, 5, "send email to $email_to failed", 0, 0, 0, 0);
                 return false;
             }
 
