@@ -62,15 +62,7 @@ namespace YAWK {
             $query = str_replace("}", "", $query);
             $query = str_replace("{", $this->config['prefix'], $query);
 			// query the database
-			if ($result = $connection->query($query))
-			{   // all good,
-                return $result;
-            }
-            else
-                {   // q failed
-                    \YAWK\sys::setSyslog($db, 5, "$this->error()", 0, 0, 0, 0);
-                    return false;
-                }
+			return $connection->query($query);
 		}
 
 		/**
