@@ -42,6 +42,7 @@ namespace YAWK {
 			// If connection was not successful, handle the error
 			if ($this->connection === false) {
 				// Handle error - notify administrator, log to a file, show an error screen, etc.
+                \YAWK\sys::setSyslog($db, 5, "$this->error()", 0, 0, 0, 0);
 				return false;
 			}
 			return $this->connection;
@@ -61,8 +62,15 @@ namespace YAWK {
             $query = str_replace("}", "", $query);
             $query = str_replace("{", $this->config['prefix'], $query);
 			// query the database
-			$result = $connection->query($query);
-			return $result;
+			if ($result = $connection->query($query))
+			{   // all good,
+                return $result;
+            }
+            else
+                {   // q failed
+                    \YAWK\sys::setSyslog($db, 5, "$this->error()", 0, 0, 0, 0);
+                    return false;
+                }
 		}
 
 		/**
@@ -76,6 +84,7 @@ namespace YAWK {
 			$rows = array();
 			$result = $this->query($query);
 			if ($result === false) {
+                \YAWK\sys::setSyslog($db, 5, "$this->error()", 0, 0, 0, 0);
 				return false;
 			}
 			while ($row = $result->fetch_assoc()) {
