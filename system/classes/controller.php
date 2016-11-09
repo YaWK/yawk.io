@@ -45,6 +45,7 @@ class controller
         // what if file not exists...
         if (!file_exists($filename))
         {   // file does not exist, load 404 page
+            $notfound = $filename;
             $filename = "content/errors/404.php";
             // check if call comes from frontend or backend
             if (file_exists($filename))
@@ -53,6 +54,8 @@ class controller
             }
             else
             {   // call from backend, set path correctly
+                if (!isset($db)) { $db = new \YAWK\db(); }
+                \YAWK\sys::setSyslog($db, 5, "404 ERROR $notfound", 0, 0, 0, 0);
                 $filename = "../content/errors/404.php";
                 return $filename;
             }
