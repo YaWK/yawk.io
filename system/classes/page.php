@@ -314,7 +314,7 @@ namespace YAWK {
                     \YAWK\alert::draw("danger", "Error:", "could not delete file from /content/ folder", "pages", "4300");
                     return false;
                 } else {
-                    \YAWK\sys::setSyslog($db, 2, "deleted $filename", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 2, "delete $filename", 0, 0, 0, 0);
                     return true;
                 }
             }
@@ -515,7 +515,7 @@ namespace YAWK {
                 fclose($handle);
                 chmod($filename, 0777);
             }
-            \YAWK\sys::setSyslog($db, 2, "added $filename", 0, 0, 0, 0);
+            \YAWK\sys::setSyslog($db, 2, "add $filename", 0, 0, 0, 0);
             return true;
         }
 
@@ -594,7 +594,7 @@ namespace YAWK {
                 }
                 else {
                     // update pages db worked, all fin
-                    \YAWK\sys::setSyslog($db, 2, "saved $filename", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 2, "save $this->alias", 0, 0, 0, 0);
                     return true;
                 }
             }
