@@ -52,7 +52,7 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
         <div class="box-body">
 
             <!-- btn clear log -->
-            <a class="btn btn-success pull-right" href="index.php?page=syslog&clear=1">
+            <a class="btn btn-success pull-right" role="dialog" data-confirm="Do you want to delete all syslog entries?" href="index.php?page=syslog&clear=1">
                 <i class="fa fa-trash-o"></i> &nbsp;<?php print $lang['SYSLOG_CLEAR']; ?></a>
 
 <table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-hover" id="table-sort">
