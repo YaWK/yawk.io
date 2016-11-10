@@ -200,6 +200,35 @@ namespace YAWK {
             }
         }
 
+        static function iStatusToString($i, $on, $off)
+        {   // check if $i is set and from correct type
+            if (isset($i) && is_numeric(($i)))
+            {
+                // check online string
+                if (!isset($on) || (empty($on)))
+                {
+                    $on = "online";
+                }
+                // check offline string
+                if (!isset($off) || (empty($off)))
+                {
+                    $off = "offline";
+                }
+                if ($i === '1')
+                {   // return word online
+                    return "$on";
+                }
+                else
+                    {   // return word offline
+                        return "$off";
+                    }
+            }
+            else
+            {   // ID not set or not a number
+                return false;
+            }
+        }
+
         static function replaceCarriageReturns($replace, $string)
         {
             return str_replace(array("\n\r", "\n", "\r"), $replace, $string);
