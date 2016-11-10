@@ -82,7 +82,7 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
                 <td>".$log['log_id']."</td>
                 <td><b>".$log['property']."</b></td>
                 <td>".$time_ago."</td>
-                <td class=\"text-center\">".$log['username']."</td>
+                <td class=\"text-center\"><a href=\"index.php?page=user-edit&user=$log[username]\" title=\"$log[username] (in new window)\" target=\"_blank\">".$log['username']."</a></td>
                 <td><i class=\"".$log['icon']."\"></i> &nbsp;&nbsp;".$log['message']."</td>
                 <td class=\"text-center\">".$affected_user."</td>
               </tr>";
