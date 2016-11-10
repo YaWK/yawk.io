@@ -22,6 +22,7 @@ namespace YAWK {
     class menu
     {
         public $id;
+        public $name;
         public $published;
         public $parent;
 
