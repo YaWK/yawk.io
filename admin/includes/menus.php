@@ -26,10 +26,12 @@ if (isset($_GET['toggle']) && ($_GET['toggle'] === "1"))
 
     if($menu->toggleOffline($db, $menu->id, $menu->published))
     {
+        \YAWK\sys::setSyslog($db, 7, "menu $menu->id $status", 0, 0, 0, 0);
         \YAWK\alert::draw("$color", "Menu is now $status", "Menu Status toggled to $status.", "", 800);
     }
     else
     {
+        \YAWK\sys::setSyslog($db, 7, "menu $menu->id $status", 0, 0, 0, 0);
         print \YAWK\alert::draw("danger", "Error", "Could not toggle menu status to $status.","page=menus","5800");
     }
 }
@@ -38,10 +40,12 @@ if (isset($_GET['toggle']) && ($_GET['toggle'] === "1"))
 /* if user clicked create menu */
 if(isset($_GET['add']) && ($_GET['add'] === "1")){
     if (YAWK\menu::createMenu($db, $db->quote($_POST['name']))) {
+        \YAWK\sys::setSyslog($db, 7, "menu $_POST[name] created", 0, 0, 0, 0);
         print \YAWK\alert::draw("success", "Erfolg!", "Das Men&uuml; <strong>".$_POST['name']."</strong> wurde erstellt!", "","800");
     }
     else
     {   // throw error
+        \YAWK\sys::setSyslog($db, 5, "failed to create menu $_POST[name]", 0, 0, 0, 0);
         print \YAWK\alert::draw("danger", "Fehler!", "Das Men&uuml; <strong>".$_POST['name']."</strong> konnte nicht erstellt werden!", "","5800");
     }
 }
@@ -53,10 +57,12 @@ if (isset($_GET['del']) && ($_GET['del'] === "1"))
     {   // delete whole menu
         if(\YAWK\menu::delete($db, $db->quote($_GET['menu'])))
         {   // all good...
+            \YAWK\sys::setSyslog($db, 7, "deleted menu $_GET[menu]", 0, 0, 0, 0);
             print \YAWK\alert::draw("success", "Erfolg", "Das Men&uuml; wurde gel&ouml;scht!","","800");
         }
         else
         {   // throw error
+            \YAWK\sys::setSyslog($db, 5, "failed to delete menu $_GET[menu]", 0, 0, 0, 0);
             print \YAWK\alert::draw("danger", "Fehler!", "Das Men&uuml; konnte nicht gel&ouml;scht werden!","","5800");
         }
     }
