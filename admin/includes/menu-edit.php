@@ -29,7 +29,7 @@ if (isset($_GET['toggleItem']))
                 $color = "success";
             }
             // all ok, now toggle that menu entry
-            if($menu->toggleItemOffline($db, $menu->id, $menu->published))
+            if($menu->toggleItemOffline($db, $menu->id, $menu->published, $menu->parent))
             {   // throw notification
                 \YAWK\alert::draw("$color", "Menu item is now $status", "Menu Item toggled to $status.", "", 800);
             }
