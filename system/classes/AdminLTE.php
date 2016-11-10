@@ -308,11 +308,11 @@ namespace YAWK {
         function drawHtmlNavbarNotificationsMenu($db, $user)
         {
 
-            echo "<script type='text/javascript'>
+            echo "<script type=\"text/javascript\">
             function dismissNotifications(uid) {
                 // alert(uid);
                 $.ajax({    // do ajax request
-                url:'js/dismiss-notification.php',
+                url:'js/dismiss-notifications.php',
                 type:'post',
                 data:'uid='+uid,
                 success:function(data){
@@ -327,7 +327,6 @@ namespace YAWK {
                     }
                 }
             });
-            }
             </script>";
 
             $i_syslog = \YAWK\user::countNotifications($db);
@@ -439,7 +438,7 @@ namespace YAWK {
                             $timeAgo = \YAWK\sys::time_ago($note['log_date']);
 
                             echo "<li><a href=\"#\" title=\"\">
-                            <div class=\"pull-left\">
+                            <div class=\"pull-left\" id=\"note-$note[id]\">
                             <!-- User Image -->
                                 <i class=\"$note[icon] $note[type]\"></i>&nbsp; <small>$note[message]<br>
                             </div>
@@ -456,7 +455,7 @@ namespace YAWK {
                     }
                     echo "</ul>
                   </li>
-                  <li class=\"footer\"><a href=\"index.php?page=syslog\">View all</a></li>
+                  <li class=\"footer\"><a href=\"index.php?page=syslog\">View System Log</a></li>
                 </ul>
               </li>";
             return null;

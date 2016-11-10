@@ -893,7 +893,8 @@ namespace YAWK {
             // check if message is empty
             if (!isset($message) || (empty($message) || ($message === "0")))
             {   // default value
-                $message = "something happened, but no text was set for logging.";
+                if (isset($_GET['page'])) { $page = $_GET['page']; } else { $page = 'no page set.'; }
+                $message = "something happened, but no text was set for logging. $page";
             }
 
             // check if syslog is enabled

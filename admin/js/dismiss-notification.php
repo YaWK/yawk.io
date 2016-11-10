@@ -10,22 +10,13 @@ if (!isset($db))
     $db = new \YAWK\db();
 }
 
-$uid = $_POST['uid'];
+$id = $_POST['id'];
 // SET NOTIFICATION STATUS TO SEEN
-if ($sql = $db->query("UPDATE {notifications} SET seen = '1' WHERE toUID = '".$uid."'"))
+if ($sql = $db->query("UPDATE {syslog} SET seen = '1' WHERE id = '".$id."'"))
 {   // success
     echo "notification status set";
 }
 else
 {   // q failed
     echo \YAWK\alert::draw("warning","Warning!", "Could not set notification status. Please try again.",'',4200);
-}
-// SET SYSLOG STATUS TO SEEN
-if ($sql = $db->query("UPDATE {syslog} SET seen = '1'"))
-{   // success
-    echo "syslog status set";
-}
-else
-{   // q failed
-    echo \YAWK\alert::draw("warning","Warning!", "Could not set syslog status. Please try again.",'',4200);
 }

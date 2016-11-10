@@ -1,8 +1,6 @@
 <link rel="stylesheet" href="../system/engines/jquery/morris/morris.css">
 <script src="../system/engines/jquery/morris/raphael-min.js"></script>
 <script src="../system/engines/jquery/morris/morris.min.js"></script>
-<script src="../system/engines/jquery/notify/bootstrap-notify.min.js"></script>
-<script src="../system/engines/jquery/notify/package.js"></script>
 <?php
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
@@ -25,25 +23,25 @@ echo"<ol class=\"breadcrumb\">
 <h3>Seitenaufrufe</h3>
 <div id="myfirstchart" class="container-fluid" style="height: 250px;"></div>
 <script type="text/javascript">
-new Morris.Line({
-  // ID of the element in which to draw the chart.
-  element: 'myfirstchart',
-  // Chart data records -- each entry in this array corresponds to a point on
-  // the chart.
-  data: [
-    { year: '2012', value: 0 },
-    { year: '2013', value: 1228 },
-    { year: '2014', value: 2256 },
-    { year: '2015', value: 3220 }
-  ],
-  // The name of the data record attribute that contains x-values.
-  xkey: 'year',
-  // A list of names of data record attributes that contain y-values.
-  ykeys: ['value'],
-  // Labels for the ykeys -- will be displayed when you hover over the
-  // chart.
-  labels: ['Seitenaufrufe']
-});
+  new Morris.Line({
+    // ID of the element in which to draw the chart.
+    element: 'myfirstchart',
+    // Chart data records -- each entry in this array corresponds to a point on
+    // the chart.
+    data: [
+      { year: '2012', value: 0 },
+      { year: '2013', value: 1228 },
+      { year: '2014', value: 2256 },
+      { year: '2015', value: 3220 }
+    ],
+    // The name of the data record attribute that contains x-values.
+    xkey: 'year',
+    // A list of names of data record attributes that contain y-values.
+    ykeys: ['value'],
+    // Labels for the ykeys -- will be displayed when you hover over the
+    // chart.
+    labels: ['Seitenaufrufe']
+  });
 </script>
 
 
@@ -67,21 +65,21 @@ echo "<h4>Quellcode Statistik</h4>";
 echo "YaWK Version: ".\YAWK\settings::getSetting($db, "yawkversion");
 echo " <small>";echo \YAWK\settings::getSettingDescription($db, "yawkversion");echo"</small>";
 
-    // SET VARS
-    $FILE_PATH = "/xampp/htdocs/yawk-LTE/"; // full path
-    $data = \YAWK\sys::countCodeLines($FILE_PATH, '.php');
+// SET VARS
+$FILE_PATH = "/xampp/htdocs/yawk-LTE/"; // full path
+$data = \YAWK\sys::countCodeLines($FILE_PATH, '.php');
 
 echo"<p>$FILE_PATH <br>umfasst insgesamt <b>$data[files]</b> $data[type] files mit exakt <b>$data[lines]</b> Zeilen $data[type] Code</p><br>";
 
 echo "<h4>Server Statistik</h4>";
-    if (\YAWK\sys::checkZlib() === true)
-    {   // output
-        echo "<p>...zlib found!</p>";
-    }
-    else
-    {   // output
-        echo "<p class=\"text-danger\">...zlib not found!</p>";
-    }
+if (\YAWK\sys::checkZlib() === true)
+{   // output
+  echo "<p>...zlib found!</p>";
+}
+else
+{   // output
+  echo "<p class=\"text-danger\">...zlib not found!</p>";
+}
 
 
 /*
