@@ -48,7 +48,7 @@ if (!isset($AdminLTE)) {
 
   \YAWK\backend::checkLogin($db);
 
-  if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true)
+  if (isset($_SESSION['logged_in']) && ($_SESSION['logged_in'] === true))
   {
     if (isset($_SESSION['username']) && (isset($_SESSION['gid']) && (isset($_SESSION['uid']))))
     {
@@ -93,9 +93,11 @@ if (!isset($AdminLTE)) {
     echo "<br><br></section></div>";
     echo $AdminLTE->drawHtmlJSIncludes();
 
-    if (\YAWK\backend::checkLogin($db)){
-
+    if (\YAWK\backend::checkLogin($db))
+    {
+        // ...
     }
+
     echo $AdminLTE->drawHtmlEnd($db);
     exit;
   }

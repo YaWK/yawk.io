@@ -247,7 +247,7 @@ namespace YAWK {
             $title = \YAWK\settings::getSetting($db, "title");
             // TEMPLATE WRAPPER - HEADER & breadcrumbs
             $loginBox = "
-            <div class=\"row\"><br><br>
+            <div class=\"row\" id=\"loginbox\"><br><br>
                     <div class=\"col-md-4\">&nbsp;</div>
                     <div class=\"col-md-4\">
                         <div class=\"box box-default\">

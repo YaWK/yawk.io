@@ -327,6 +327,13 @@ namespace YAWK {
                     }
                 }
             });
+            
+            /*
+            $('#syslogLink').click(function() {
+                var uid = $(this).attr('data-uid');
+                dismissNotifications(uid);
+            });
+            */
             </script>";
 
             $i_syslog = \YAWK\user::countNotifications($db);
@@ -455,7 +462,7 @@ namespace YAWK {
                     }
                     echo "</ul>
                   </li>
-                  <li class=\"footer\"><a href=\"index.php?page=syslog\">View System Log</a></li>
+                  <li class=\"footer\"><a id=\"syslogLink\" data-uid=\"$_SESSION[uid]\" href=\"index.php?page=syslog\">View System Log</a></li>
                 </ul>
               </li>";
             return null;

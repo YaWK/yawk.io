@@ -993,10 +993,10 @@ namespace YAWK {
             }
             else {
                 // checkPassword failed
-                echo "<div class=\"container bg-danger\"><br><h2>Warning! <small>Login failed!</h2>
+                /* echo "<div class=\"container bg-danger\"><br><h2>Warning! <small>Login failed!</h2>
                 <b>Please check your login credentials and try again in a few seconds.</b>
                 <br><small>You will be redirected to <a class=\"small\" href=\"$host\">$host</a>.</small><br><br></div>";
-                \YAWK\sys::setTimeout("index.html", 10000);
+                \YAWK\sys::setTimeout("index.html", 10000); */
                 return false;
             }
         }
@@ -1195,24 +1195,53 @@ namespace YAWK {
                     }
                     else
                     {   // avoid fake session ID
-                        session_regenerate_id();
+                        @session_regenerate_id();
                         $_SESSION['logged_in'] = true;
                     }
                     return true;
                 }
                 else
                 {  // user aint got the rights to login to backend
+                    \YAWK\alert::draw("danger", "Login failed!", "You are not allowed to login here.", "", 10000);
 
                 }
             } // wrong password given
             else { // kick it back
                 /** LOG FAILED LOGIN ....*/
-                if (!isset($_SESSION['failed'])){
+                if (!isset($_SESSION['failed']))
+                {
+                    $_SESSION['failed'] = 0;
+                }
+                else
+                {
                     $_SESSION['failed']++;
+                }
+                    echo "<script>
+                            // RE-LOGIN TIMER
+                                $('div *').prop('disabled', true);
+                                var count=7;
+                                var counter=setInterval(timer, 1000); // 1000 will  run it every 1 second
+                                function timer()
+                                {
+                                    count=count-1;
+                                    if (count <= 0)
+                                    {
+                                        timer = '#timer';
+                                        clearInterval(counter);
+                                        //counter ended, do something here
+                                        $('div *').prop('disabled', false);
+                                        $(timer).empty();
+                                        $(timer).append(\"a few\").fadeIn();
+                                        return null;
+                                    }
+                                    //Do code for showing the number of seconds here
+                                    document.getElementById(\"timer\").innerHTML=count; // watch for spelling
+                                }
+                            </script>";
                     \YAWK\alert::draw("danger", "Login failed!", "Please check your login data and try to re-login in <span id=\"timer\"></span> seconds!","","6000");
                     // \YAWK\alert::draw("danger", "Login failed!", "Please check your login data and try again.", "", 6000);
                     $this->storeLogin($db, 0, "backend", $username, $password);
-                }
+
                 /**
                 if ($_SESSION['failed'] == 2){
                     echo \YAWK\alert::draw("danger", "<h3><i class=\"fa fa-exclamation-triangle\"></i> ATTENTION!", "2nd failed try!</h3>

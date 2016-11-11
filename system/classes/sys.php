@@ -202,7 +202,8 @@ namespace YAWK {
 
         static function iStatusToString($i, $on, $off)
         {   // check if $i is set and from correct type
-            if (isset($i) && is_numeric(($i)))
+            $status = '';
+            if (isset($i))
             {
                 // check online string
                 if (!isset($on) || (empty($on)))
@@ -214,19 +215,24 @@ namespace YAWK {
                 {
                     $off = "offline";
                 }
-                if ($i === '1')
+                if ($i == "1")
                 {   // return word online
-                    return "$on";
+                    $status = $on;
+                }
+                elseif ($i == "0")
+                {   // return word online
+                    $status = $off;
                 }
                 else
-                    {   // return word offline
-                        return "$off";
+                    {
+                        $status = "error: \$i status undefined";
                     }
             }
             else
             {   // ID not set or not a number
                 return false;
             }
+            return $status;
         }
 
         static function replaceCarriageReturns($replace, $string)

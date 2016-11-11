@@ -81,6 +81,7 @@ namespace YAWK {
         /* ADD MENU ENTRY */
         static function addEntry($db, $menu, $title, $href)
         {
+            $menuName = \YAWK\menu::getMenuNameByID($db, $menu);
             /** @var $db \YAWK\db */
             $date_created = date("Y-m-d G:i:s");
             $parentID = 0; // default parent = 0
@@ -112,12 +113,12 @@ namespace YAWK {
                VALUES ('" . $id . "','" . $sort . "','" . $menu . "','" . $title . "','" . $href . "','" . $date_created . "','" . $parentID . "')"))
             {
                 // entry added
-                \YAWK\sys::setSyslog($db, 7, "added menu entry <b>$title</b> to $menu", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 7, "added menu entry <b>$title</b> to <b>$menuName</b>", 0, 0, 0, 0);
                 return true;
             }
             else {
                 // failed
-                \YAWK\sys::setSyslog($db, 5, "failed to add menu entry <b>$title</b> to $menu", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 5, "failed to add menu entry <b>$title</b> to <b>$menuName</b>", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -263,6 +264,7 @@ namespace YAWK {
                 if ($res = $db->query("DELETE FROM {menu} WHERE menuID = '" . $id . "'"))
                 {
                     \YAWK\sys::setSyslog($db, 7, "deleted all entries of <b>$menuName</b>", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 7, "deleted menu <b>$menuName</b>", 0, 0, 0, 0);
                     return true;
                 }
                 else
