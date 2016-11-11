@@ -68,6 +68,7 @@ namespace YAWK {
             }
             else {
                 // throw alert
+                \YAWK\sys::setSyslog($db, 5, "Could not fetch meta $type for page ID $id", 0, 0, 0, 0);
                 \YAWK\alert::draw("warning", "Warning", "Could not fetch meta $type for page ID $id", "",4200);
             }
             // q failed
@@ -89,13 +90,17 @@ namespace YAWK {
                 $published = $db->quote($published);
                 $title = $db->quote($title);
 
+                $status = \YAWK\sys::iStatusToString($published, "online", "offline");
+
                 if ($published === "0") { $status = "offline"; } else { $status = "online"; }
 
                 // TOGGLE PAGES
                 if (!$res = $db->query("UPDATE {pages}
                                         SET published = '" . $published . "'
-                                        WHERE id = '" . $id . "'")) {
-                    // could not update pages db table
+                                        WHERE id = '" . $id . "'"))
+                {   // could not update pages db table
+                    $status = \YAWK\sys::iStatusToString($published, "online", "offline");
+                    \YAWK\sys::setSyslog($db, 5, "failed to toggle $title status to $status", 0, 0, 0, 0);
                     print alert::draw("danger", "Error", "Site Status could not be toggled.", "", 4200);
                 }
                 else
@@ -132,7 +137,8 @@ namespace YAWK {
                 // $res->close();
                 return true;
             }
-            else {
+            else
+            {   //
                 print \YAWK\alert::draw("danger", "Error", "Site Lock could not be toggled.","page=pages",4200);
                 if ($locked === "0") { $status = "unlocked"; } else { $status = "locked"; }
                 \YAWK\sys::setSyslog($db, 2, "$status page id #$id", 0, 0, 0, 0);
