@@ -29,6 +29,7 @@ namespace YAWK {
             }
             else
             {   // q failed, throw error
+                \YAWK\sys::setSyslog($db, 5, "failed to get settings from database $db->error()", 0, 0, 0, 0);
                 \YAWK\alert::draw("warning", "Warning!", "Fetch database error: getSettingsArray failed.","","4800");
                 return false;
             }
@@ -289,6 +290,7 @@ namespace YAWK {
             }
             else
             {   // query failed...
+                \YAWK\sys::setSyslog($db, 5, "could not get settings for typeID $typeID $db->error()", 0, 0, 0, 0);
                 return false;
             }
             return $settingsArray;
@@ -317,6 +319,7 @@ namespace YAWK {
                 }
                 else
                     {   // no type was set, try to fetch editor type failed.
+                        \YAWK\sys::setSyslog($db, 5, "failed to get editor settings from database $db->error()", 0, 0, 0, 0);
                         \YAWK\alert::draw("danger", "Could not fetch editor settings.", "Settings type not set. Tried to fetch, but it seems that there is no setting type called editor.", "", 6500);
                     }
             }
@@ -372,7 +375,8 @@ namespace YAWK {
         public static function getAllSettingsIntoArray($db) // get all settings from db like property
         {
             /* @var $db \YAWK\db */
-            if ($res= $db->query("SELECT * FROM {settings} ORDER by sortation")) {
+            if ($res= $db->query("SELECT * FROM {settings} ORDER by sortation"))
+            {
                 $settingsArray = array();
                 while ($row = $res->fetch_assoc())
                 {   // fill array
@@ -381,6 +385,7 @@ namespace YAWK {
             }
             else
             {   // q failed, throw error
+                \YAWK\sys::setSyslog($db, 5, "could not get settings from database $db->error()", 0, 0, 0, 0);
                 \YAWK\alert::draw("warning", "Warning!", "Fetch database error: getSettingsArray failed.","","4800");
                 return false;
             }
@@ -405,6 +410,7 @@ namespace YAWK {
             }
             else
             {   // q failed, throw error
+                \YAWK\sys::setSyslog($db, 5, "failed to get property <b>$property</b> from settings db $db->error()", 0, 0, 0, 0);
                 \YAWK\alert::draw("warning", "Warning!", "Fetch database error: getSetting failed.","","4800");
                 return false;
             }
@@ -426,11 +432,13 @@ namespace YAWK {
             $value = $db->quote($value);
             if ($res = $db->query("UPDATE {settings} SET value = '".$value."' WHERE property = '".$property."'")) {
                 // success
+                \YAWK\sys::setSyslog($db, 10, "setting <b>$property</b> set to $value ", 0, 0, 0, 0);
                 \YAWK\alert::draw("success", "Success!","Setting $property saved.","","120");
                 return true;
             }
             else
             {   // q failed
+                \YAWK\sys::setSyslog($db, 5, "failed to set <b>$value</b> to <b>$property</b> $db->error()", 0, 0, 0, 0);
                 \YAWK\alert::draw("warning", "Warning!", "Setting $property could not be saved.", "","4800");
                 return false;
             }
@@ -454,6 +462,7 @@ namespace YAWK {
             }
             else
             {   // q failed, throw error
+                \YAWK\sys::setSyslog($db, 5, "failed to get settings longValue from property <b>$property</b> $db->error()", 0, 0, 0, 0);
                 \YAWK\alert::draw("warning", "Warning!", "Fetch database error: getLongSetting failed.","","4800");
                 return false;
             }
@@ -481,6 +490,7 @@ namespace YAWK {
             }
             else
             {   // q failed, throw error
+                \YAWK\sys::setSyslog($db, 5, "failed to set templateSetting <b>$value</b> to <b>$property</b> $db->error()", 0, 0, 0, 0);
                 \YAWK\alert::draw("danger", "Error!", "Sorry, could not save template setting $property.","","4800");
                 return false;
             }
@@ -515,6 +525,7 @@ namespace YAWK {
             }
             else
             {   // q failed, throw error
+                \YAWK\sys::setSyslog($db, 5, "failed to set settings longValue <b>$value</b> to <b>$property</b> $db->error()", 0, 0, 0, 0);
                 \YAWK\alert::draw("danger", "Error!", "Sorry, update database error: could not set LongValue: ".$value." - setLongSetting failed.", "","4800");
                 return false;
                 // echo \YAWK\backend::setTimeout($referer,"4800");
@@ -538,6 +549,7 @@ namespace YAWK {
             }
             else
             {   // q failed, throw error
+                \YAWK\sys::setSyslog($db, 5, "failed to set settings description of <b>$property</b> $db->error()", 0, 0, 0, 0);
                 \YAWK\alert::draw("warning", "Warning!", "Error loading setting description of property $property", "","4800");
                 return false;
             }
@@ -563,6 +575,7 @@ namespace YAWK {
             }
             else
             {   // q failed, throw error
+                \YAWK\sys::setSyslog($db, 5, "failed to get widget setting of <b>$property</b> $db->error()", 0, 0, 0, 0);
                 \YAWK\alert::draw("warning", "Warning!", "Error loading Widget Setting $property","","4800");
                 return false;
             }
@@ -593,6 +606,7 @@ namespace YAWK {
             else
             {
                 // q failed
+                \YAWK\sys::setSyslog($db, 5, "failed to set widget value <b>$value</b> of <b>$property</b> $db->error()", 0, 0, 0, 0);
                 \YAWK\alert::draw("danger", "Error!", "Sorry, update database error: could not set Widget Setting $value of property $property.", "","4800");
                 return false;
                 // echo \YAWK\backend::setTimeout($referer,"4800");
@@ -621,6 +635,7 @@ namespace YAWK {
             }
             else
             {   // q failed, throw error
+                \YAWK\sys::setSyslog($db, 5, "failed to toggle <b>$value</b> of <b>$property</b> $db->error()", 0, 0, 0, 0);
                 \YAWK\alert::draw("danger", "Error!", "Could not toggle $property to status $new_status", "","4800");
                 return false;
             }
