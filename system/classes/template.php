@@ -896,7 +896,6 @@ namespace YAWK {
             }
             else
             {   // q failed
-                \YAWK\sys::setSyslog($db, 5, "failed to get template setting $field and property $property $db->error()", 0, 0, 0, 0);
                 return false;
             }
         }
