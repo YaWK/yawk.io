@@ -112,6 +112,7 @@ namespace YAWK {
             }
             else
                 {
+                    \YAWK\sys::setSyslog($db, 5, "failed to get templateID from user db $db->error()", 0, 0, 0, 0);
                     return false;
                 }
         }
@@ -133,6 +134,7 @@ namespace YAWK {
                 }
                 else
                     {
+                        \YAWK\sys::setSyslog($db, 5, "failed to get overrideTemplate status from user db $db->error()", 0, 0, 0, 0);
                         return false;
                     }
             }
@@ -163,6 +165,7 @@ namespace YAWK {
             }
             else
                 {
+                    \YAWK\sys::setSyslog($db, 5, "failed to get templateID from user db $db->error()", 0, 0, 0, 0);
                     return false;
                 }
         }
@@ -218,6 +221,7 @@ namespace YAWK {
             }
             else
                 {   // could not query login data...
+                    \YAWK\sys::setSyslog($db, 5, "failed query login data $db->error()", 0, 0, 0, 0);
                     return false;
                 }
         }
@@ -356,6 +360,7 @@ namespace YAWK {
             }
             else {
                 $userDataArray = '';
+                \YAWK\sys::setSyslog($db, 5, "failed to get users $db->error()", 0, 0, 0, 0);
                 echo \YAWK\alert::draw("danger", "Error", "Sorry, database error: fetch getLatestUsers failed.","page=users","4800");
             }
             return $userDataArray;
@@ -371,6 +376,7 @@ namespace YAWK {
             }
             else
             {
+                \YAWK\sys::setSyslog($db, 5, "failed to count user db $db->error()", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -390,6 +396,7 @@ namespace YAWK {
         }
         else {
             $userDataArray = '';
+            \YAWK\sys::setSyslog($db, 5, "failed to fetch getAllUserData $db->error()", 0, 0, 0, 0);
             echo \YAWK\alert::draw("danger", "Error", "Sorry, database error: fetch getAllUserData failed.","page=users","4800");
         }
         return $userDataArray;
@@ -434,13 +441,15 @@ namespace YAWK {
                 }
                 else
                 {   // fetch failed
-                    \YAWK\alert::draw("warning","Warning!","Load settings for user $username failed.","","4800");
+                    \YAWK\sys::setSyslog($db, 5, "failed to load user settings $db->error()", 0, 0, 0, 0);
+                    \YAWK\alert::draw("warning","Warning!","Load settings for user <b>$username</b> failed.","","4800");
                     return false;
                 }
             }
             else
             {   // q failed
-                \YAWK\alert::draw("danger","Error!","Could not select data for user $user from database...","","4800");
+                \YAWK\sys::setSyslog($db, 5, "failed to load user settings $db->error()", 0, 0, 0, 0);
+                \YAWK\alert::draw("danger","Error!","Could not select data for user <b>$username</b> from database...","","4800");
                 return false;
             }
             return true;
@@ -456,6 +465,7 @@ namespace YAWK {
             }
             else
             {   // q failed
+                \YAWK\sys::setSyslog($db, 5, "Could not get property <b>$property</b> of user id <b>#$uid</b> $db->error()", 0, 0, 0, 0);
                 \YAWK\alert::draw("danger","Error!","Could not get property $property","","4800");
                 return false;
             }
@@ -477,6 +487,7 @@ namespace YAWK {
                 }
                 else
                 {   // q failed
+                    \YAWK\sys::setSyslog($db, 5, "Could not set value <b>$value</b> of property <b>$property</b> $db->error()", 0, 0, 0, 0);
                     \YAWK\alert::draw("danger","Error!","Could not set value ".$value." of property ".$property.".","","4800");
                     return false;
                 }
@@ -544,12 +555,14 @@ namespace YAWK {
                 }
                 else
                 {   // fetch failed, throw error
+                    \YAWK\sys::setSyslog($db, 5, "Could not fetch id from user_groups db $db->error()", 0, 0, 0, 0);
                     \YAWK\alert::draw("warning","Warning","Could not fetch id and/or value from user groups database.","","4800");
                     return false;
                 }
             }
             else
             {   // q failed, throw error
+                \YAWK\sys::setSyslog($db, 5, "Could not query id from user_groups db $db->error()", 0, 0, 0, 0);
                 \YAWK\alert::draw("warning","Warning","Could not select id and/or value from user groups database.","","4800");
                 return false;
             }
@@ -732,7 +745,8 @@ namespace YAWK {
             }
             else
             {   // q failed
-                \YAWK\alert::draw("warning", "Error!", "User status could not be changed, please try again.","","4800");
+                \YAWK\sys::setSyslog($db, 5, "User status could not be saved.  $db->error()", 0, 0, 0, 0);
+                \YAWK\alert::draw("warning", "Error!", "User status could not be saved, please try again.","","4800");
                 return false;
             }
         }
@@ -740,15 +754,20 @@ namespace YAWK {
         function toggleOffline($db, $id, $blocked)
         {   /** @var $db \YAWK\db */
             // TOGGLE PAGE STATUS
+            if (isset($blocked)) {
+                $status = \YAWK\sys::iStatusToString($blocked, "blocked", "unblocked");
+            } else { $status = "undefined - \$blocked not set"; }
             if (!$res = $db->query("UPDATE {users}
                           SET blocked = '" . $blocked . "'
                           WHERE id = '" . $id . "'"))
             {
                 // q failed
+                \YAWK\sys::setSyslog($db, 5, "could not toggle user id <b>#$id</b> to status <b>$status</b> $db->error()", 0, 0, 0, 0);
                 return false;
             }
             else
             {   // toggle successful
+                \YAWK\sys::setSyslog($db, 3, "toggled user id <b>#$id</b> to status <b>$status</b> $db->error()", 0, 0, 0, 0);
                 return true;
             }
         }
@@ -763,8 +782,8 @@ namespace YAWK {
                 return $row[0];
             }
             else
-            {
-                // q failed
+            {   // q failed
+                \YAWK\sys::setSyslog($db, 3, "could not get email address for <b>$user</b> $db->error()", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -783,6 +802,7 @@ namespace YAWK {
 
             if ($username === "administrator" xor $username === "admin" or $username === "root")
             {   // forbidden username, throw error
+                \YAWK\sys::setSyslog($db, 5, "somebody tried to register as <b>$username</b>", 0, 0, 0, 0);
                 \YAWK\alert::draw("danger","Warning!","This username is not allowed!","page=user-new","4800");
                 exit;
             }
@@ -798,13 +818,14 @@ namespace YAWK {
                 // vermeidung doppelter user
                 if ($res = $db->query("SELECT username FROM {users} WHERE username='" . $username . "'"))
                 {
-                    $row = mysqli_fetch_row($res); // wenn pwd gleich wie db, dann db wert
+                    $row = mysqli_fetch_row($res); // username is already taken
                     if ($row[0]) {
                         \YAWK\alert::draw("danger","Warning!","Please choose another username!","page=user-new","4800");
                         exit;
                     }
                 }
                 else {
+                    \YAWK\sys::setSyslog($db, 5, "could not fetch username <b>$username</b> $db->error()", 0, 0, 0, 0);
                     \YAWK\alert::draw("danger","Warning!","Could not fetch username! Database error?","page=user-new","4800");
                     exit;
                 }
@@ -931,6 +952,7 @@ namespace YAWK {
                 }
                 else
                 {   // q failed
+                    \YAWK\sys::setSyslog($db, 5, "error registering <b>$username</b> $db->error()", 0, 0, 0, 0);
                     \YAWK\alert::draw("danger", "Error!", "Error registering username. Exit with empty result.","","");
                     echo \YAWK\PLUGINS\SIGNUP\signup::signUp($db);
                 }
@@ -954,6 +976,7 @@ namespace YAWK {
             }
             else
             {
+                \YAWK\sys::setSyslog($db, 5, "failed to delete <b>$user</b> $db->error()", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -972,6 +995,7 @@ namespace YAWK {
                 if(isset($res['blocked'])){ // check if user is blocked.
                     if ($res['blocked']==='1')
                     {
+                        \YAWK\sys::setSyslog($db, 3, "<b>blocked user $username</b> tried to login.", 0, 0, 0, 0);
                         echo "<div class=\"container bg-danger\"><br><h2>We're Sorry! <small>Your Account is blocked.</h2><b>If you think
                         this is a mistake, contact the admin via email: </b>(<a class=\"text-danger\" href=\"mailto:$adminEmail\">$adminEmail</a>)
                         <b>for further information.</b><br><small>You will be redirected to <a class=\"small\" href=\"$host\">$host</a> in a few seconds.</small><br><br></div>";
@@ -981,6 +1005,7 @@ namespace YAWK {
                 }
                 if(isset($res['terminatedByUser'])){ // is user has canceled his account
                     if ($res['terminatedByUser']==='1'){ // check if user is
+                        \YAWK\sys::setSyslog($db, 3, "failed to login <b>$username</b> user has deleted his account before - it does not exist anymore.", 0, 0, 0, 0);
                         echo "<div class=\"container bg-danger\"><br><h2>We're Sorry! <small>This account does not exist.</h2><b>If you think
                         this is a mistake, contact the admin via email: </b>(<a class=\"text-danger\" href=\"mailto:$adminEmail\">$adminEmail</a>)
                         <b>.</b><br><small>You will be redirected to <a class=\"small\" href=\"$host\">$host</a> in a few seconds.</small><br><br></div>";
@@ -1012,6 +1037,7 @@ namespace YAWK {
             }
             else
             {   // login not allowed from that user group
+                \YAWK\sys::setSyslog($db, 5, "user group id <b>#$gid</b> is not allowed to login into backend.", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -1024,17 +1050,20 @@ namespace YAWK {
                 if($user->login($db, $_POST['user'],$_POST['password']))
                 {   // create session var
                     $user->storeLogin($db, 0, "backend", $_POST['user'], $_POST['password']);
+                    \YAWK\sys::setSyslog($db, 3, "backend login <b>$_POST[user]</b> successful.", 0, 0, 0, 0);
                     return true;
                 }
                 else
                 {   // if username or pwd is wrong
                     $user->storeLogin($db, 1, "backend", $_POST['user'], $_POST['password']);
+                    \YAWK\sys::setSyslog($db, 3, "failed backend login <b>$_POST[user]</b> username or password wrong.", 0, 0, 0, 0);
                     // \YAWK\alert::draw("warning","Warning:","<b>Login failed.</b> Please check login data and try again. Please wait, you will be redirected in 5 Seconds...","index.php","5000");
                     return false;
                 }
             }
             else
             {   // username or password not set
+                // \YAWK\sys::setSyslog($db, 3, "somebody tried to login, but username or password was not set.", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -1079,6 +1108,7 @@ namespace YAWK {
                                         logged_in = '1'
                       WHERE username = '" . $this->username . "'"))
                 {
+                    \YAWK\sys::setSyslog($db, 3, "failed to login <b>$username</b> $db->error().", 0, 0, 0, 0);
                     echo "<div class=\"container bg-danger\"><br><h2><i class=\"fa fa-refresh fa-spin fa-fw\"></i>
                           <span class=\"sr-only\">Warning!</span> <small>Database Error! Missing login data...</small></h2><br>
                           <b>Could not log user into database. Expect some errors.</b><br><br></div>";
@@ -1092,6 +1122,7 @@ namespace YAWK {
                 }
                 return true;
             } else {
+                \YAWK\sys::setSyslog($db, 3, "failed to login <b>$username</b> $db->error().", 0, 0, 0, 0);
                 \YAWK\alert::draw("warning", "Login failed...", "Please try to re-login in a few seconds...", "",3000);
 /*
                 if (!isset($_SESSION['failed'])){
@@ -1191,6 +1222,7 @@ namespace YAWK {
                                         logged_in = '1'
                       WHERE username = '" . $this->username . "'"))
                     {
+                        \YAWK\sys::setSyslog($db, 3, "failed to login <b>$username</b> $db->error().", 0, 0, 0, 0);
                         echo \YAWK\alert::draw("warning", "Error!", "Could not log user into database. Expect some errors.","","3800");
                     }
                     else
@@ -1202,6 +1234,7 @@ namespace YAWK {
                 }
                 else
                 {  // user aint got the rights to login to backend
+                    \YAWK\sys::setSyslog($db, 3, "failed to login <b>$username</b> user aint got sufficient rights to login. $db->error().", 0, 0, 0, 0);
                     \YAWK\alert::draw("danger", "Login failed!", "You are not allowed to login here.", "", 10000);
 
                 }
@@ -1239,6 +1272,7 @@ namespace YAWK {
                                 }
                             </script>";
                     \YAWK\alert::draw("danger", "Login failed!", "Please check your login data and try to re-login in <span id=\"timer\"></span> seconds!","","6000");
+                    \YAWK\sys::setSyslog($db, 3, "failed to login <b>$username</b> $db->error().", 0, 0, 0, 0);
                     // \YAWK\alert::draw("danger", "Login failed!", "Please check your login data and try again.", "", 6000);
                     $this->storeLogin($db, 0, "backend", $username, $password);
 
@@ -1378,6 +1412,7 @@ namespace YAWK {
                                    SET online = '0'
                                    WHERE username = '".$_SESSION['username']."'"))
                 {
+                    \YAWK\sys::setSyslog($db, 5, "could not logout <b>$_SESSION[username]</b> $db->error().", 0, 0, 0, 0);
                     \YAWK\alert::draw("danger", "Error!", "Could not logout ".$_SESSION['username']." Please try again!","","3800");
                     // DELETE SESSION
                     $_SESSION['failed']=0;
@@ -1450,6 +1485,7 @@ namespace YAWK {
             }
             else
             {   // q failed
+                \YAWK\sys::setSyslog($db, 3, "could not get status from follower db $db->error().", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -1466,11 +1502,13 @@ namespace YAWK {
                 }
                 else
                 {
+                    \YAWK\sys::setSyslog($db, 3, "failed to fetch friendship status of uid <b>#$uid</b> $db->error().", 0, 0, 0, 0);
                     return false;
                 }
             }
             else
             {   // q failed
+                \YAWK\sys::setSyslog($db, 3, "failed to query friendship status of uid <b>#$uid</b> $db->error().", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -1490,6 +1528,7 @@ namespace YAWK {
             }
             else
             {   // q failed
+                \YAWK\sys::setSyslog($db, 3, "failed to query friendship request status of uid <b>#$uid</b> $db->error().", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -1504,6 +1543,7 @@ namespace YAWK {
             }
             else
             {   // q failed
+                \YAWK\sys::setSyslog($db, 3, "failed to count notifications $db->error().", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -1518,6 +1558,7 @@ namespace YAWK {
             }
             else
             {   // q failed
+                \YAWK\sys::setSyslog($db, 3, "failed to count personal notifications of uid <b>#$uid</b> $db->error().", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -1550,6 +1591,7 @@ namespace YAWK {
             }
             else
             {   // q failed
+                \YAWK\sys::setSyslog($db, 3, "failed to get all notifications $db->error().", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -1574,6 +1616,7 @@ namespace YAWK {
             }
             else
             {   // q failed
+                \YAWK\sys::setSyslog($db, 3, "failed to get my notifications $db->error().", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -1587,6 +1630,7 @@ namespace YAWK {
             }
             else
             {   // q failed
+                \YAWK\sys::setSyslog($db, 3, "failed to count followers of uid <b>#$uid</b> $db->error().", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -1603,6 +1647,7 @@ namespace YAWK {
             }
             else
             {   // q failed
+                \YAWK\sys::setSyslog($db, 3, "failed to count friends of uid <b>#$uid</b> $db->error().", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -1632,6 +1677,7 @@ namespace YAWK {
             }
             else
             {   // q failed
+                \YAWK\sys::setSyslog($db, 3, "failed to get friends of uid <b>#$uid</b> $db->error().", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -1667,6 +1713,7 @@ namespace YAWK {
             }
             else
             {   // q failed
+                \YAWK\sys::setSyslog($db, 3, "failed to get followers of uid <b>#$uid</b> $db->error().", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -1684,6 +1731,7 @@ namespace YAWK {
             }
             else
             {   // q failed
+                \YAWK\sys::setSyslog($db, 3, "failed to count new messages of uid <b>#$uid</b> $db->error().", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -1702,6 +1750,7 @@ namespace YAWK {
             }
             else
             {   // q failed
+                \YAWK\sys::setSyslog($db, 3, "failed to get new messages of uid <b>#$uid</b> $db->error().", 0, 0, 0, 0);
                 return false;
             }
         }
