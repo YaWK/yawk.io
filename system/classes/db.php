@@ -37,14 +37,12 @@ namespace YAWK {
 		{
 			// Try and connect to the database
 			if (!isset($this->connection)) {
-				$this->connection = new \mysqli('localhost', $this->config['username'], $this->config['password'], $this->config['dbname']);
+				$this->connection = @new \mysqli('localhost', $this->config['username'], $this->config['password'], $this->config['dbname']);
 			}
-			// If connection was not successful, handle the error
-			if ($this->connection === false) {
-				// Handle error - notify administrator, log to a file, show an error screen, etc.
-                \YAWK\sys::setSyslog($db, 5, "$this->error()", 0, 0, 0, 0);
-				return false;
-			}
+            // If connection was not successful, die and show the error
+            if (mysqli_connect_errno()) {
+                die ('Database error: '.mysqli_connect_error().'('.mysqli_connect_errno().')');
+            }
 			return $this->connection;
 		}
 
