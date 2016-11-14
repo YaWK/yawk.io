@@ -410,7 +410,6 @@ namespace YAWK {
             }
             else
             {   // q failed, throw error
-                \YAWK\sys::setSyslog($db, 5, "failed to get property <b>$property</b> from settings db $db->error()", 0, 0, 0, 0);
                 \YAWK\alert::draw("warning", "Warning!", "Fetch database error: getSetting failed.","","4800");
                 return false;
             }
