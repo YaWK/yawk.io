@@ -21,6 +21,7 @@ namespace YAWK {
          */
         public function __construct()
 		{
+		    // TODO: cfg file for installer!
 			$this->config['username'] = "root";
 			$this->config['password'] = "";
 			$this->config['dbname'] = "yawk_lte";
