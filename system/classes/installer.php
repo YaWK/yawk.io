@@ -19,6 +19,10 @@ namespace YAWK {
          */
         function checkForInstallation()
         {
+            if (!is_file("install.ini"))
+            {
+                die ("Installer file not found.");
+            }
 
         }
     }
