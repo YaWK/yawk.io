@@ -23,6 +23,10 @@ namespace YAWK {
             {
                 die ("Installer file not found.");
             }
+            else
+                {
+                    // do installation ...
+                }
 
         }
     }
