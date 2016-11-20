@@ -25,7 +25,7 @@ namespace YAWK {
             }
             else
                 {
-                    // do installation ...
+                    // do installation...
                 }
         }
     }
