@@ -1591,7 +1591,7 @@ namespace YAWK {
             }
             else
             {   // q failed
-                \YAWK\sys::setSyslog($db, 3, "failed to get all notifications $db->error().", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 3, "failed to get all notifications ".$db->error().".", 0, 0, 0, 0);
                 return false;
             }
         }

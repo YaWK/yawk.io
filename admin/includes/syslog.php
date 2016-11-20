@@ -4,7 +4,7 @@
             "bPaginate": false,
             "bLengthChange": false,
             "bFilter": true,
-            "bSort": true,
+            "bSort": false,
             "bInfo": true,
             "bAutoWidth": false
         } );
@@ -60,7 +60,7 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
     <tr>
         <td width="3%"><strong>ID</strong></td>
         <td width="13%"><strong>Type</strong></td>
-        <td width="8%"><strong>Period</strong></td>
+        <td width="8%"><strong>Timestamp</strong></td>
         <td width="10%" class="text-center"><strong>User</strong></td>
         <td width="54%"><strong>Action</strong></td>
         <td width="12%" class="text-center"><strong>Affected</strong></td>
@@ -70,22 +70,25 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
     <?PHP
     /* load complete syslog, get all notifications */
     $syslog = \YAWK\user::getAllNotifications($db);
-    foreach ($syslog AS $log)
-    {   // get username for affected uid
-        $affected_user = \YAWK\user::getUserNameFromID($db, $log['toUID']);
-        // cpt. caps
-        $log['property'] = strtoupper($log['property']);
-        // calculate time ago view
-        $time_ago = \YAWK\sys::time_ago($log['log_date']);
+    if (is_array($syslog))
+    {
+        foreach ($syslog AS $log)
+        {   // get username for affected uid
+            $affected_user = \YAWK\user::getUserNameFromID($db, $log['toUID']);
+            // cpt. caps
+            $log['property'] = strtoupper($log['property']);
+            // calculate time ago view
+            $time_ago = \YAWK\sys::time_ago($log['log_date']);
 
-        echo "<tr class=\"".$log['type']."\">
-                <td>".$log['log_id']."</td>
-                <td><b>".$log['property']."</b></td>
-                <td>".$time_ago."</td>
-                <td class=\"text-center\"><a href=\"index.php?page=user-edit&user=$log[username]\" title=\"$log[username] (in new window)\" target=\"_blank\">".$log['username']."</a></td>
-                <td><i class=\"".$log['icon']."\"></i> &nbsp;&nbsp;".$log['message']."</td>
-                <td class=\"text-center\">".$affected_user."</td>
-              </tr>";
+            echo "<tr class=\"".$log['type']."\">
+                    <td>".$log['log_id']."</td>
+                    <td><b>".$log['property']."</b></td>
+                    <td><small>$log[log_date]<br><small>".$time_ago."</small></td>
+                    <td class=\"text-center\"><a href=\"index.php?page=user-edit&user=$log[username]\" title=\"$log[username] (in new window)\" target=\"_blank\">".$log['username']."</a></td>
+                    <td><i class=\"".$log['icon']."\"></i> &nbsp;&nbsp;".$log['message']."</td>
+                    <td class=\"text-center\">".$affected_user."</td>
+                  </tr>";
+        }
     }
     ?>
     </tbody>
