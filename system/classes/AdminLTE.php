@@ -308,33 +308,7 @@ namespace YAWK {
         function drawHtmlNavbarNotificationsMenu($db, $user)
         {
 
-            echo "<script type=\"text/javascript\">
-            function dismissNotifications(uid) {
-                // alert(uid);
-                $.ajax({    // do ajax request
-                url:'js/dismiss-notifications.php',
-                type:'post',
-                data:'uid='+uid,
-                success:function(data){
-                    if(! data ){
-                        alert('Something went wrong!');
-                        return false;
-                    }
-                    else {
-                        $(data).hide().prependTo('#notificationDropdown');
-                        $('#notification-header').html('You have 0 notifications');
-                        $('#notification-menu').fadeOut();
-                    }
-                }
-            });
-            
-            /*
-            $('#syslogLink').click(function() {
-                var uid = $(this).attr('data-uid');
-                dismissNotifications(uid);
-            });
-            */
-            </script>";
+            echo "";
 
             $i_syslog = \YAWK\user::countNotifications($db);
             $i_notifications = \YAWK\user::countMyNotifications($db, $_SESSION['uid']);
@@ -357,7 +331,10 @@ namespace YAWK {
             {   // set singular correctly
                 $notification = "notification";
             }
-            echo "
+            echo "<script type=\"text/javascript\">
+            
+            
+            </script>
               <!-- Notifications Menu -->
               <li id=\"notification-dropdown\" class=\"dropdown notifications-menu\">
                 <!-- Menu toggle button -->
@@ -366,7 +343,7 @@ namespace YAWK {
                   $label
                   </a>
                 <ul id=\"notification-dropdownlink\" class=\"dropdown-menu\">
-                  <li id=\"notification-header\" class=\"header\">You have $i_total $notification <small><small>(<a href=\"#\" id=\"dismiss\" onclick=\"dismissNotifications($_SESSION[uid]);\" title=\"dismiss all\">mark as read</a>)</small></small></li>
+                  <li id=\"notification-header\" class=\"header\">You have $i_total $notification <small><small>(<a href=\"#\" id=\"dismiss\" data-uid=\"$_SESSION[uid]\" title=\"dismiss all\">mark as read</a>)</small></small></li>
                   <li>
                     <!-- Inner Menu: contains the notifications -->
                     <ul id=\"notification-menu\" class=\"menu\">";

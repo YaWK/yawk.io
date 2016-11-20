@@ -75,7 +75,8 @@ namespace YAWK {
 			$rows = array();
 			$result = $this->query($query);
 			if ($result === false) {
-                \YAWK\sys::setSyslog($db, 5, "$this->error()", 0, 0, 0, 0);
+			    $error = $this->error();
+                \YAWK\sys::setSyslog($db, 5, "$error", 0, 0, 0, 0);
 				return false;
 			}
 			while ($row = $result->fetch_assoc()) {

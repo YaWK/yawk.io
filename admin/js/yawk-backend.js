@@ -13,10 +13,33 @@ $(document).ready(function() {
         return false;
     });
 
+
+    function dismissNotifications(uid) {
+        // alert(uid);
+        $.ajax({    // do ajax request
+            url: 'js/dismiss-notifications.php',
+            type: 'post',
+            data: 'uid=' + uid,
+            success: function (data) {
+                if (!data) {
+                    alert('Something went wrong!');
+                    return false;
+                }
+                else {
+                    $(data).hide().prependTo('#notificationDropdown');
+                    $('#notification-header').html('You have 0 notifications');
+                    $('#notification-menu').fadeOut();
+                }
+            }
+        });
+    }
+
     // NOTIFICATION DISMISS BTN
     $("#dismiss").click(function()
     {   // fade away the orange label on top
         $("#bell-label").fadeOut();
+        var uid = $(this).attr('data-uid');
+        dismissNotifications(uid);
     });
 
     // BLOCKED USER BUTTON (user-edit.php)
