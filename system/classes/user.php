@@ -1272,7 +1272,7 @@ namespace YAWK {
                                 }
                             </script>";
                     \YAWK\alert::draw("danger", "Login failed!", "Please check your login data and try to re-login in <span id=\"timer\"></span> seconds!","","6000");
-                    \YAWK\sys::setSyslog($db, 3, "failed to login <b>$username</b> $db->error().", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 3, "failed to login <b>$username</b>.", 0, 0, 0, 0);
                     // \YAWK\alert::draw("danger", "Login failed!", "Please check your login data and try again.", "", 6000);
                     $this->storeLogin($db, 0, "backend", $username, $password);
 
