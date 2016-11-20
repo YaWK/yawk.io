@@ -649,27 +649,27 @@ namespace YAWK {
         function loadProperties($db, $alias)
         {
             /** @var $db \YAWK\db $res */
-            $res = $db->query("SELECT * FROM {pages} WHERE alias = '".$alias."'");
-            if ($row = mysqli_fetch_assoc($res)) {
-                $this->id = $row['id'];
-                $this->date_created = $row['date_created'];
-                $this->date_publish = $row['date_publish'];
-                $this->date_unpublish = $row['date_unpublish'];
-                $this->published = $row['published'];
-                $this->gid = $row['gid'];
-                $this->title = $row['title'];
-                $this->ownerid = $row['owner'];
-                $this->menu = $row['menu'];
-                $this->bgimage = $row['bgimage'];
-                $this->locked = $row['locked'];
-                $this->blogid = $row['blogid'];
-                $this->plugin = $row['plugin'];
-                $this->alias = $alias;
+            if (isset($alias) && (!empty($alias)))
+            {
+                $res = $db->query("SELECT * FROM {pages} WHERE alias = '".$alias."'");
+                if ($row = mysqli_fetch_assoc($res))
+                {
+                    $this->id = $row['id'];
+                    $this->date_created = $row['date_created'];
+                    $this->date_publish = $row['date_publish'];
+                    $this->date_unpublish = $row['date_unpublish'];
+                    $this->published = $row['published'];
+                    $this->gid = $row['gid'];
+                    $this->title = $row['title'];
+                    $this->ownerid = $row['owner'];
+                    $this->menu = $row['menu'];
+                    $this->bgimage = $row['bgimage'];
+                    $this->locked = $row['locked'];
+                    $this->blogid = $row['blogid'];
+                    $this->plugin = $row['plugin'];
+                    $this->alias = $alias;
+                }
             }
-           else
-               {   // could not load properties, set syslog entry
-                   \YAWK\sys::setSyslog($db, 5, "could not load page properties", 0, 0, 0, 0);
-               }
         }
 
         function getProperty($db, $id, $property)
