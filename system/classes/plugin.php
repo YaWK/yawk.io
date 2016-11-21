@@ -163,7 +163,6 @@ namespace YAWK {
             }
             else
             {   // q failed
-                \YAWK\sys::setSyslog($db, 5, "page ../content/pages/$alias.php does not exist. Could not create page for $plugin", 0, 0, 0, 0);
                 return true;
             }
         }
