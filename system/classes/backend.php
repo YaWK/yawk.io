@@ -113,24 +113,6 @@ namespace YAWK {
             return null;
         }
 
-        /**
-         * Draw the footer in the backend.
-         * @return null
-         */
-        static function drawHtmlFooter()
-        {   $currentYear = date("Y");
-            echo "</div></section>
-            <!-- Main Footer -->
-            <footer class=\"main-footer\">
-              <!-- To the right -->
-                <div class=\"pull-right hidden-xs\">
-                  <small>Yet another Web Kit 1.0</small>
-                </div>
-                <!-- Default to the left -->
-                <strong>Copyright &copy; 2009-$currentYear <a href=\"#\">YaWK CMS</a>.</strong> All rights reserved.";
-            echo "</footer></div></section>";
-            return null;
-        }
 
         /**
          * Checks whether a user is allowed to login to backend or not. Logins will be stored.
