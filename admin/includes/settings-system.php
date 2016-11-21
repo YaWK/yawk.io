@@ -342,10 +342,10 @@ echo"<ol class=\"breadcrumb\">
                     <!-- server seettings -->
 					<h3><?php echo $lang['SERVER']; ?> <small> <?php echo $lang['SERVER_SUBTEXT']; ?></small></h3>
 					<?php \YAWK\settings::getFormElements($db, $settings, 9, $lang); ?>
+					<?php \YAWK\settings::getFormElements($db, $settings, 16, $lang); ?>
 				</div>
 				<div class="col-md-4">
                     <!-- database settings -->
-                    <h3><?php echo $lang['DATABASE']; ?> <small> <?php echo $lang['DATABASE_SUBTEXT']; ?></small></h3>
                     <?php \YAWK\settings::getFormElements($db, $settings, 13, $lang); ?>
 				</div>
 				<div class="col-md-4">
