@@ -431,7 +431,6 @@ namespace YAWK {
             $value = $db->quote($value);
             if ($res = $db->query("UPDATE {settings} SET value = '".$value."' WHERE property = '".$property."'")) {
                 // success
-                \YAWK\sys::setSyslog($db, 10, "setting <b>$property</b> set to $value ", 0, 0, 0, 0);
                 \YAWK\alert::draw("success", "Success!","Setting $property saved.","","120");
                 return true;
             }
