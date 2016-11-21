@@ -9,8 +9,6 @@ namespace YAWK {
      *
      * @category   CMS
      * @package    Plugins
-     * @global     $connection
-     * @global     $dbprefix
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2009-2016 Daniel Retzl yawk.goodconnect.net
      * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
@@ -24,7 +22,7 @@ namespace YAWK {
         static function displayGlobalMenu($db)
         {   /** @var \YAWK\db  $db */
             $res = $db->query("SELECT value FROM {settings}
-                    WHERE property = 'globalmenuid'");
+                               WHERE property = 'globalmenuid'");
             if ($row = mysqli_fetch_row($res)) {
                 if ($published = \YAWK\menu::getMenuStatus($db, $row[0]) != '0') {
                     menu::display($db, $row[0]);
