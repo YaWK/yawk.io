@@ -672,6 +672,31 @@ namespace YAWK {
             }
         }
 
+        static function getLatest($db, $count)
+        {   /** @var $db \YAWK\db */
+            // check and set default value
+            if (!isset($count) && (empty($count))) { $count = 4; }
+            // select latest n page titles
+            if ($res = $db->query("SELECT id, alias, title, published, date_publish 
+                                   FROM {pages} 
+                                   WHERE blogid = 0 
+                                   AND plugin = 0
+                                   ORDER BY date_created 
+                                   DESC LIMIT $count"))
+            {
+                $latestPages = array();
+                while ($row = mysqli_fetch_assoc($res))
+                {
+                    $latestPages[] = $row;
+                }
+                return $latestPages;
+            }
+            else
+                {
+                    return "no pages found.";
+                }
+        }
+
         function getProperty($db, $id, $property)
         {   /** @var $db \YAWK\db $res */
             // select property from pages db
