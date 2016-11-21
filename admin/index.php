@@ -12,6 +12,7 @@ require_once '../system/classes/alert.php';
 require_once '../system/classes/settings.php';
 require_once '../system/classes/language.php';
 require_once '../system/classes/backend.php';
+require_once '../system/classes/dashboard.php';
 require_once '../system/classes/user.php';
 require_once '../system/classes/page.php';
 require_once '../system/classes/menu.php';
