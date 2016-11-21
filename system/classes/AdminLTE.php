@@ -710,7 +710,7 @@ namespace YAWK {
               <section class=\"content\">";
                 include(\YAWK\controller::filterfilename("includes/dashboard"));
                 self::drawHtmlContentClose();
-                \YAWK\backend::drawHtmlFooter();
+                \YAWK\AdminLTE::drawHtmlFooter($db);
             }
             return null;
         }
