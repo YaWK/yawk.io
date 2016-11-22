@@ -11,8 +11,10 @@ namespace YAWK
         public $userAgent;
         public $device;
         public $deviceType;
-        public $OS;
+        public $os;
+        public $osVersion;
         public $browser;
+        public $browserVersion;
         public $date_created;
         public $referer;
         public $page;
@@ -67,16 +69,24 @@ namespace YAWK
             require_once 'system/engines/mobiledetect/Mobile_Detect.php';
             $detect = new \Mobile_Detect;
 
-            $this->deviceType = ($detect->isMobile() ? ($detect->isTablet() ? 'Tablet' : 'Phone') : 'Computer');
+            $this->deviceType = ($detect->isMobile() ? ($detect->isTablet() ? 'Tablet' : 'Phone') : 'Desktop');
 
             // Any mobile device (phones or tablets).
             if ( $detect->isMobile() ) {
                 // $this->deviceType = "Mobile";
+                $browser = array();
+                $browser = \YAWK\sys::getBrowser($this->userAgent);
+                $this->browser = $browser['name'];
+                $this->browserVersion = $browser['version'];
             }
 
             // Any tablet device.
             if( $detect->isTablet() ){
                 // $this->deviceType = "Tablet";
+                $browser = array();
+                $browser = \YAWK\sys::getBrowser($this->userAgent);
+                $this->browser = $browser['name'];
+                $this->browserVersion = $browser['version'];
             }
 
             // No Mobile, no tablet - must be a computer
@@ -85,32 +95,38 @@ namespace YAWK
                 $browser = array();
                 $browser = \YAWK\sys::getBrowser($this->userAgent);
                 $this->browser = $browser['name'];
-                $this->OS = ucfirst($browser['platform']);
+                $this->browserVersion = $browser['version'];
+                $this->os = ucfirst($browser['platform']);
+                $this->osVersion = \YAWK\sys::getOS($this->userAgent);
             }
 
             // check OS for iOS
             if( $detect->isiOS() ){
-                $this->OS = "iOS";
-
-                if ( $detect->isIphone() ) {
+                $this->os = "iOS";
+                // detect wheter its a phone, pad or pod
+                if ( $detect->version('iPhone') ) {
                     $this->device = "iPhone";
-                    $this->OS .= " ".$detect->version('iPhone');
+                    $this->osVersion = $detect->version('iPhone');
                 }
-                if ( $detect->isIpad() ) {
+                if ( $detect->version('iPad') ) {
                     $this->device = "iPad";
-                    $this->OS .= " ".$detect->version('iPad');
+                    $this->osVersion = $detect->version('iPad');
+                }
+                if ( $detect->version('iPod') ) {
+                    $this->device = "iPod";
+                    $this->osVersion = $detect->version('iPod');
                 }
             }
             else
                 {   // check OS for android
                     if( $detect->isAndroidOS() ){
-                        $this->OS = "Android";
-                        $this->OS .= " ".$detect->version('Android');
-                        if ( $detect->isSamsung() ) { $this->device = "Samsung"; }
-                        elseif ( $detect->isLG() ) { $this->device = "LG"; }
-                        else { $this->device = "Unknown"; }
+                        $this->os = "Android";
+                        $this->osVersion = $detect->version('Android');
                     }
                 }
+
+
+
 
             // the referer page from which the user came
             if (!isset($_SERVER['HTTP_REFERER']) || (empty($_SERVER['HTTP_REFERER'])))
@@ -143,10 +159,12 @@ namespace YAWK
                                      logged_in, 
                                      remoteAddr, 
                                      userAgent, 
-                                     device, 
+                                     device,  
                                      deviceType, 
-                                     OS,
+                                     os,
+                                     osVersion,
                                      browser, 
+                                     browserVersion, 
                                      date_created, 
                                      referer, 
                                      page)
@@ -157,8 +175,10 @@ namespace YAWK
                                    '".$this->userAgent."', 
                                    '".$this->device."', 
                                    '".$this->deviceType."', 
-                                   '".$this->OS."', 
+                                   '".$this->os."', 
+                                   '".$this->osVersion."', 
                                    '".$this->browser."', 
+                                   '".$this->browserVersion."', 
                                    '".$this->date_created."', 
                                    '".$this->referer."', 
                                    '".$this->page."')"))
