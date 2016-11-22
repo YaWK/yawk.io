@@ -8,8 +8,6 @@ Both of these plugins are recommended to enhance the
     <link rel=\"stylesheet\" href=\"https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css\">
     <!-- jvectormap -->
     <link rel=\"stylesheet\" href=\"../system/engines/AdminLTE/plugins/jvectormap/jquery-jvectormap-1.2.2.css\">
-        <!-- Sparkline -->
-        <script src=\"../system/engines/AdminLTE/plugins/sparkline/jquery.sparkline.min.js\"></script>
         <!-- jvectormap -->
         <script src=\"../system/engines/AdminLTE/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js\"></script>
         <script src=\"../system/engines/AdminLTE/plugins/jvectormap/jquery-jvectormap-world-mill-en.js\"></script>
@@ -476,46 +474,8 @@ global $lang;
             <!-- /.col -->
 
             <div class="col-md-6">
-                <!-- USERS LIST -->
-                <div class="box box-danger">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Latest Members</h3>
-
-                        <div class="box-tools pull-right">
-                            <span class="label label-danger">8 New Members</span>
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                            </button>
-                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body no-padding">
-                        <ul class="users-list clearfix">
-                        <?php
-                        $latestUsers = \YAWK\user::getLatestUsers($db, 8);
-                        foreach ($latestUsers AS $newUser)
-                        {
-                            $userpic = \YAWK\user::getUserImage("backend", $newUser['username'], "img-circle", 50, 50);
-                            $timeAgo = \YAWK\sys::time_ago($newUser['date_created']);
-                            echo"<li>
-                                <a href=\"index.php?page=user-edit&user=$newUser[username]\">$userpic</a>
-                                <br><a href=\"index.php?page=user-edit&user=$newUser[username]\">$newUser[username]</a>
-                                <span class=\"users-list-date\">$timeAgo</span>
-                            </li>";
-                        }
-
-                        ?>
-                        </ul>
-                        <!-- /.users-list -->
-                    </div>
-                    <!-- /.box-body -->
-                    <div class="box-footer text-center">
-                        <a href="index.php?page=users" class="uppercase">View All Users</a>
-                    </div>
-                    <!-- /.box-footer -->
-                </div>
-                <!--/.box -->
+                <!-- LATEST USERS -->
+                <?php \YAWK\dashboard::drawLatestUsers($db, 8); ?>
             </div>
             <!-- /.col -->
         </div>
@@ -737,80 +697,7 @@ global $lang;
         </div>
         <!-- /.box -->
 
-        <!-- PRODUCT LIST -->
-        <div class="box box-primary">
-            <div class="box-header with-border">
-                <h3 class="box-title">Recently Added Products</h3>
-
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-                <ul class="products-list product-list-in-box">
-                    <li class="item">
-                        <div class="product-img">
-                            <img src="../system/engines/AdminLTE/dist/img/default-50x50.gif" alt="Product Image">
-                        </div>
-                        <div class="product-info">
-                            <a href="javascript:void(0)" class="product-title">Samsung TV
-                                <span class="label label-warning pull-right">$1800</span></a>
-                        <span class="product-description">
-                          Samsung 32" 1080p 60Hz LED Smart HDTV.
-                        </span>
-                        </div>
-                    </li>
-                    <!-- /.item -->
-                    <li class="item">
-                        <div class="product-img">
-                            <img src="../system/engines/AdminLTE/dist/img/default-50x50.gif" alt="Product Image">
-                        </div>
-                        <div class="product-info">
-                            <a href="javascript:void(0)" class="product-title">Bicycle
-                                <span class="label label-info pull-right">$700</span></a>
-                        <span class="product-description">
-                          26" Mongoose Dolomite Men's 7-speed, Navy Blue.
-                        </span>
-                        </div>
-                    </li>
-                    <!-- /.item -->
-                    <li class="item">
-                        <div class="product-img">
-                            <img src="../system/engines/AdminLTE/dist/img/default-50x50.gif" alt="Product Image">
-                        </div>
-                        <div class="product-info">
-                            <a href="javascript:void(0)" class="product-title">Xbox One <span class="label label-danger pull-right">$350</span></a>
-                        <span class="product-description">
-                          Xbox One Console Bundle with Halo Master Chief Collection.
-                        </span>
-                        </div>
-                    </li>
-                    <!-- /.item -->
-                    <li class="item">
-                        <div class="product-img">
-                            <img src="../system/engines/AdminLTE/dist/img/default-50x50.gif" alt="Product Image">
-                        </div>
-                        <div class="product-info">
-                            <a href="javascript:void(0)" class="product-title">PlayStation 4
-                                <span class="label label-success pull-right">$399</span></a>
-                        <span class="product-description">
-                          PlayStation 4 500GB Console (PS4)
-                        </span>
-                        </div>
-                    </li>
-                    <!-- /.item -->
-                </ul>
-            </div>
-            <!-- /.box-body -->
-            <div class="box-footer text-center">
-                <a href="javascript:void(0)" class="uppercase">View All Products</a>
-            </div>
-            <!-- /.box-footer -->
-        </div>
-        <!-- /.box -->
+        <?php \YAWK\dashboard::drawLatestPages($db, 5); ?>
     </div>
     <!-- /.col -->
 </div>

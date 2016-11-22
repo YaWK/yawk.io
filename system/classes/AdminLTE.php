@@ -75,7 +75,6 @@ namespace YAWK {
           page. However, you can choose any other skin. Make sure you
           apply the skin class to the body tag so the changes take effect.
     -->
-    <!-- <link rel=\"stylesheet\" href=\"../system/engines/AdminLTE/css/skins/____this->backendSkin.min.css\"> -->
     <link rel=\"stylesheet\" href=\"../system/engines/AdminLTE/css/skins/$this->backendSkin.min.css\">
 
     <!-- include custom css -->

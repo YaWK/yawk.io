@@ -44,6 +44,7 @@ require_once('system/classes/widget.php');           // all get/set/handle widge
 require_once('system/classes/template.php');         // all template functions, including get/set template settings
 require_once('system/classes/sys.php');              // basic i/o and helper functions
 require_once('system/classes/controller.php');       // frontEnd init and filename filter controller
+require_once('system/classes/stats.php');            // statistics functions
 /* set database object */
 if (!isset($db)) {
     $db = new \YAWK\db();
@@ -63,6 +64,11 @@ if (!isset($page)) {
 /* set controller object */
 if (!isset($controller)) {
     $controller = new \YAWK\controller();
+}
+/* set stats object */
+if (!isset($stats)) {
+    $stats = new \YAWK\stats();
+    $stats->setStats($db);
 }
 // lets go with the frontEnd...
 // \YAWK\controller::frontEndInit($db, $currentpage, $user, $template);
