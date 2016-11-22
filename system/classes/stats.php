@@ -7,6 +7,7 @@ namespace YAWK
         public $uid;
         public $gid;
         public $logged_in;
+        public $acceptLanguage;
         public $remoteAddr;
         public $userAgent;
         public $device;
@@ -23,7 +24,6 @@ namespace YAWK
         {
             // ...
         }
-
         function setStats($db)
         {   /* @var $db \YAWK\db */
             // check if stats are enabled
@@ -125,8 +125,10 @@ namespace YAWK
                     }
                 }
 
+            // set remote user
+            $this->acceptLanguage = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
 
-
+            // $this->country = geoip_country_name_by_name($this->remoteAddr);
 
             // the referer page from which the user came
             if (!isset($_SERVER['HTTP_REFERER']) || (empty($_SERVER['HTTP_REFERER'])))
@@ -151,12 +153,19 @@ namespace YAWK
             $this->date_created = \YAWK\sys::now();
         }
 
+        function getBrowsers()
+        {   /* @var $db \YAWK\db */
+           // if ($res = $db->query("SELECT browser, "))
+
+        }
+
         function insertData($db)
         {   /* @var $db \YAWK\db */
             if ($db->query("INSERT INTO {stats} 
                                     (uid, 
                                      gid, 
                                      logged_in, 
+                                     acceptLanguage, 
                                      remoteAddr, 
                                      userAgent, 
                                      device,  
@@ -171,6 +180,7 @@ namespace YAWK
                             VALUES ('".$this->uid."', 
                                    '".$this->gid."', 
                                    '".$this->logged_in."', 
+                                   '".$this->acceptLanguage."', 
                                    '".$this->remoteAddr."',
                                    '".$this->userAgent."', 
                                    '".$this->device."', 
