@@ -128,8 +128,6 @@ namespace YAWK
             // set remote user
             $this->acceptLanguage = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
 
-            // $this->country = geoip_country_name_by_name($this->remoteAddr);
-
             // the referer page from which the user came
             if (!isset($_SERVER['HTTP_REFERER']) || (empty($_SERVER['HTTP_REFERER'])))
             {   // empty referer
@@ -153,9 +151,20 @@ namespace YAWK
             $this->date_created = \YAWK\sys::now();
         }
 
-        function getBrowsers()
+        function countBrowsers()
         {   /* @var $db \YAWK\db */
-           // if ($res = $db->query("SELECT browser, "))
+            if ($res = $db->query("SELECT browser FROM {stats}"))
+            {
+                $browsers = array();
+                while ($row = mysqli_fetch_assoc($res))
+                {
+                    $browsers[] = $res;
+                }
+            }
+            foreach ($browsers AS $browser)
+            {
+                //.... count browsers here...
+            }
 
         }
 
