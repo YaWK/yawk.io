@@ -1,4 +1,5 @@
 <?php
+require_once '../system/classes/stats.php';
 echo "<!-- Optionally, you can add Slimscroll and FastClick plugins.
 Both of these plugins are recommended to enhance the
              user experience. Slimscroll is required when using the
@@ -670,12 +671,46 @@ global $lang;
                     <!-- /.col -->
                     <div class="col-md-4">
                         <ul class="chart-legend clearfix">
-                            <li><i class="fa fa-circle-o text-red"></i> Chrome</li>
-                            <li><i class="fa fa-circle-o text-green"></i> IE</li>
-                            <li><i class="fa fa-circle-o text-yellow"></i> FireFox</li>
-                            <li><i class="fa fa-circle-o text-aqua"></i> Safari</li>
-                            <li><i class="fa fa-circle-o text-light-blue"></i> Opera</li>
-                            <li><i class="fa fa-circle-o text-gray"></i> Navigator</li>
+                            <?php
+                            $browsers = \YAWK\stats::countBrowsers($db);
+                                foreach ($browsers AS $browser => $value)
+                                {
+                                    switch ($browser) {
+                                        case "Chrome":
+                                            $textcolor = "text-red";
+                                            break;
+                                        case "IE":
+                                            $textcolor = "text-green";
+                                            break;
+                                        case "Firefox":
+                                            $textcolor = "text-yellow";
+                                            break;
+                                        case "Safari":
+                                            $textcolor = "text-aqua";
+                                            break;
+                                        case "Opera":
+                                            $textcolor = "text-light-blue";
+                                            break;
+                                        case "Netscape":
+                                            $textcolor = "text-grey";
+                                            break;
+                                        default:
+                                            $textcolor = "text-grey";
+                                    }
+                                    // show browsers that are used more than 0, exclude totals
+                                    if ($value > 0 && ($browser !== "Total"))
+                                    {
+                                        echo "<li><i class=\"fa fa-circle-o $textcolor\"></i> <b>$value</b> $browser</li>";
+                                    }
+                                    // show totals
+                                    if ($browser === "Total")
+                                    {
+                                        echo "<li class=\"small\">of $value Visitors</li>";
+                                    }
+                                }
+
+                            ?>
+
                         </ul>
                     </div>
                     <!-- /.col -->
