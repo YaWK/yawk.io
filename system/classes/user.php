@@ -1502,7 +1502,6 @@ namespace YAWK {
                 }
                 else
                 {
-                    \YAWK\sys::setSyslog($db, 3, "failed to fetch friendship status of uid <b>#$uid</b> $db->error().", 0, 0, 0, 0);
                     return false;
                 }
             }

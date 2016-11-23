@@ -151,21 +151,71 @@ namespace YAWK
             $this->date_created = \YAWK\sys::now();
         }
 
-        function countBrowsers()
+        static function countBrowsers($db)
         {   /* @var $db \YAWK\db */
-            if ($res = $db->query("SELECT browser FROM {stats}"))
-            {
-                $browsers = array();
-                while ($row = mysqli_fetch_assoc($res))
-                {
-                    $browsers[] = $res;
-                }
-            }
-            foreach ($browsers AS $browser)
-            {
-                //.... count browsers here...
-            }
 
+            // this vars stores the counting for each browser
+            $msie = 0;
+            $chrome = 0;
+            $firefox = 0;
+            $opera = 0;
+            $safari = 0;
+            $netscape = 0;
+            $others = 0;
+            $total = 0;
+
+            // get browsers from db
+            if ($res = $db->query("SELECT browser FROM {stats}"))
+            {   // create array
+                $browserlist = array();
+                while ($row = mysqli_fetch_assoc($res))
+                {   // add to array
+                    $browserlist[] = $row;
+                    $total++;
+                }
+
+                // count browsers
+                foreach ($browserlist AS $browser) {   // add +1 for each found
+                    switch ($browser['browser']) {
+                        case "Google Chrome":
+                            $chrome++;
+                            break;
+                        case "Internet Explorer":
+                            $msie++;
+                            break;
+                        case "Mozilla Firefox":
+                            $firefox++;
+                            break;
+                        case "Apple Safari":
+                            $safari++;
+                            break;
+                        case "Opera":
+                            $opera++;
+                            break;
+                        case "Netscape":
+                            $netscape++;
+                            break;
+                        default:
+                            $others++;
+                    }
+                }
+                // build an array, cointaining the browsers and the number how often it's been found
+                $browsers = array(
+                    "Chrome" => $chrome,
+                    "IE" => $msie,
+                    "Firefox" => $firefox,
+                    "Safari" => $safari,
+                    "Opera" => $opera,
+                    "Netscape" => $netscape,
+                    "Others" => $others,
+                    "Total" => $total
+                );
+                return $browsers;
+            }
+            else
+                {
+                    return false;
+                }
         }
 
         function insertData($db)
