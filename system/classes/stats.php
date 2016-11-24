@@ -1,6 +1,9 @@
 <?php
 namespace YAWK
 {
+
+    use YAWK\PLUGINS\MESSAGES\messages;
+
     class stats
     {
         public $id;
@@ -151,15 +154,35 @@ namespace YAWK
             $this->date_created = \YAWK\sys::now();
         }
 
-        static function getJsonBrowsers($db)
-        {
-            /* @var $db \YAWK\db */
-            // get browsers from db
-            $browsers = self::countBrowsers($db);
+
+        static function countMessages($db)
+        {   /* @var $db \YAWK\db */
+            if ($res = $db->query("SELECT COUNT(*) FROM {plugin_msg}"))
+            {   // fetch and return how many messages have been sent
+                $messageCount = mysqli_fetch_row($res);
+                return $messageCount[0];
+            }
+            else
+                {
+                    $messageCount = "db error: could not count messages";
+                    return $messageCount;
+                }
+        }
+
+
+        static function getJsonBrowsers($db, $browsers)
+        {   /* @var $db \YAWK\db */
+            // check if browsers are set
+            if (!isset($browsers) || (empty($browsers)))
+            {   // nope, get them from db
+                $browsers = self::countBrowsers($db, 200);
+            }
             $jsonData = "[";
             foreach ($browsers AS $browser => $value)
             {
-                // get the right colors
+                // init textcolor
+                $textcolor = '';
+                // set different colors for each browser
                 if ($browser === "Chrome") { $textcolor = "#f56954"; }
                 if ($browser === "IE") { $textcolor = "#00a65a"; }
                 if ($browser === "Firefox") { $textcolor = "#f39c12"; }
@@ -185,9 +208,42 @@ namespace YAWK
             echo $jsonData;
         }
 
+        static function getBrowserColors($browser)
+        {
+            switch ($browser) {
+                case "Chrome":
+                    $textcolor = "text-red";
+                    break;
+                case "IE":
+                    $textcolor = "text-green";
+                    break;
+                case "Firefox":
+                    $textcolor = "text-yellow";
+                    break;
+                case "Safari":
+                    $textcolor = "text-aqua";
+                    break;
+                case "Opera":
+                    $textcolor = "text-light-blue";
+                    break;
+                case "Netscape":
+                    $textcolor = "text-grey";
+                    break;
+                default:
+                    $textcolor = "text-grey";
+            }
+            return $textcolor;
+        }
 
-        static function countBrowsers($db)
+
+        static function countBrowsers($db, $limit)
         {   /* @var $db \YAWK\db */
+
+            // check if limit (i) is set
+            if (!isset($limit) || (empty($limit)))
+            {   // set default value
+                $limit = 100;
+            }
 
             // this vars stores the counting for each browser
             $msie = 0;
@@ -200,7 +256,7 @@ namespace YAWK
             $total = 0;
 
             // get browsers from db
-            if ($res = $db->query("SELECT browser FROM {stats}"))
+            if ($res = $db->query("SELECT browser FROM {stats} ORDER BY id DESC LIMIT $limit"))
             {   // create array
                 $browserlist = array();
                 while ($row = mysqli_fetch_assoc($res))
