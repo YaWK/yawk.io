@@ -151,6 +151,41 @@ namespace YAWK
             $this->date_created = \YAWK\sys::now();
         }
 
+        static function getJsonBrowsers($db)
+        {
+            /* @var $db \YAWK\db */
+            // get browsers from db
+            $browsers = self::countBrowsers($db);
+            $jsonData = "[";
+            foreach ($browsers AS $browser => $value)
+            {
+                // get the right colors
+                if ($browser === "Chrome") { $textcolor = "#f56954"; }
+                if ($browser === "IE") { $textcolor = "#00a65a"; }
+                if ($browser === "Firefox") { $textcolor = "#f39c12"; }
+                if ($browser === "Safari") { $textcolor = "#00c0ef"; }
+                if ($browser === "Opera") { $textcolor = "#3c8dbc"; }
+                if ($browser === "Netscape") { $textcolor = "#d2d6de"; }
+                if ($browser === "Others") { $textcolor = "#cccccc"; }
+
+                // only browsers, not the total value
+                if ($browser !== ("Total"))
+                {
+                    $jsonData .= "
+                            {
+                                value: $value,
+                                color: \"$textcolor\",
+                                highlight: \"$textcolor\",
+                                label: \"$browser\"
+                            },";
+                }
+            }
+
+            $jsonData .= "]";
+            echo $jsonData;
+        }
+
+
         static function countBrowsers($db)
         {   /* @var $db \YAWK\db */
 
