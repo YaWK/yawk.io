@@ -18,6 +18,9 @@ Both of these plugins are recommended to enhance the
         <script src=\"../system/engines/AdminLTE/plugins/chartjs/Chart.min.js\"></script>
         <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
         <script src=\"../system/engines/AdminLTE/plugins/dashboard2.js\"></script>";
+
+
+
 /* draw Title on top */
 // YAWK\backend::getTitle($lang['DASHBOARD'],$lang['DASHBOARD_SUBTEXT']);
 // echo \YAWK\sys::getCurrentUserName();
@@ -636,7 +639,7 @@ global $lang;
 
             <div class="info-box-content">
                 <span class="info-box-text">Direct Messages</span>
-                <span class="info-box-number">163,921</span>
+                <span class="info-box-number"><?php echo \YAWK\stats::countMessages($db); ?></span>
 
                 <div class="progress">
                     <div class="progress-bar" style="width: 40%"></div>
@@ -671,46 +674,69 @@ global $lang;
                     <!-- /.col -->
                     <div class="col-md-4">
                         <ul class="chart-legend clearfix">
+
+                            <script> //-------------
+                                //- PIE CHART -
+                                //-------------
+
+                                // Get context with jQuery - using jQuery's .get() method.
+                                var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
+                                var pieChart = new Chart(pieChartCanvas);
+                                // set limitation due performance reasons
+                                <?php $limit = 200; ?>
+                                // get browsers array
+                                <?php $browsers = \YAWK\stats::countBrowsers($db, $limit); ?>
+                                // output js data with php function getJsonBrowsers
+                                var PieData = <?php echo \YAWK\stats::getJsonBrowsers($db, $browsers); ?>;
+                                var pieOptions = {
+                                    //Boolean - Whether we should show a stroke on each segment
+                                    segmentShowStroke: true,
+                                    //String - The colour of each segment stroke
+                                    segmentStrokeColor: "#fff",
+                                    //Number - The width of each segment stroke
+                                    segmentStrokeWidth: 1,
+                                    //Number - The percentage of the chart that we cut out of the middle
+                                    percentageInnerCutout: 50, // This is 0 for Pie charts
+                                    //Number - Amount of animation steps
+                                    animationSteps: 100,
+                                    //String - Animation easing effect
+                                    animationEasing: "easeOutBounce",
+                                    //Boolean - Whether we animate the rotation of the Doughnut
+                                    animateRotate: true,
+                                    //Boolean - Whether we animate scaling the Doughnut from the centre
+                                    animateScale: false,
+                                    //Boolean - whether to make the chart responsive to window resizing
+                                    responsive: true,
+                                    // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+                                    maintainAspectRatio: false,
+                                    //String - A legend template
+                                    legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>",
+                                    //String - A tooltip template
+                                    tooltipTemplate: "<%=value %> <%=label%> users"
+                                };
+                                //Create pie or douhnut chart
+                                // You can switch between pie and douhnut using the method below.
+                                pieChart.Doughnut(PieData, pieOptions);
+                                //-----------------
+                                //- END PIE CHART -
+                                //-----------------</script>
                             <?php
-                            $browsers = \YAWK\stats::countBrowsers($db);
+                            // walk through array and draw data beneath pie chart
                                 foreach ($browsers AS $browser => $value)
-                                {
-                                    switch ($browser) {
-                                        case "Chrome":
-                                            $textcolor = "text-red";
-                                            break;
-                                        case "IE":
-                                            $textcolor = "text-green";
-                                            break;
-                                        case "Firefox":
-                                            $textcolor = "text-yellow";
-                                            break;
-                                        case "Safari":
-                                            $textcolor = "text-aqua";
-                                            break;
-                                        case "Opera":
-                                            $textcolor = "text-light-blue";
-                                            break;
-                                        case "Netscape":
-                                            $textcolor = "text-grey";
-                                            break;
-                                        default:
-                                            $textcolor = "text-grey";
-                                    }
-                                    // show browsers that are used more than 0, exclude totals
+                                {   // get text colors
+                                    $textcolor = \YAWK\stats::getBrowserColors($browser);
+                                    // show browsers their value is greater than zero and exclude totals
                                     if ($value > 0 && ($browser !== "Total"))
-                                    {
+                                    {   // 1 line for every browser
                                         echo "<li><i class=\"fa fa-circle-o $textcolor\"></i> <b>$value</b> $browser</li>";
                                     }
                                     // show totals
                                     if ($browser === "Total")
-                                    {
-                                        echo "<li class=\"small\">of $value Visitors</li>";
+                                    {   // of how many visits
+                                        echo "<li class=\"small\">latest $value visitors</li>";
                                     }
                                 }
-
                             ?>
-
                         </ul>
                     </div>
                     <!-- /.col -->
@@ -720,12 +746,22 @@ global $lang;
             <!-- /.box-body -->
             <div class="box-footer no-padding">
                 <ul class="nav nav-pills nav-stacked">
-                    <li><a href="#">United States of America
-                            <span class="pull-right text-red"><i class="fa fa-angle-down"></i> 12%</span></a></li>
-                    <li><a href="#">India <span class="pull-right text-green"><i class="fa fa-angle-up"></i> 4%</span></a>
-                    </li>
-                    <li><a href="#">China
-                            <span class="pull-right text-yellow"><i class="fa fa-angle-left"></i> 0%</span></a></li>
+                    <?php
+                    // sort array by value high to low to display most browsers first
+                    $browsers[] = arsort($browsers);
+                    // walk through array and display browsers as nav pills
+                    foreach ($browsers as $browser => $value)
+                    {   // show only items where browser got a value
+                        if ($value !== 0 && $browser !== 0)
+                        {   // get different textcolors
+                            $textcolor = \YAWK\stats::getBrowserColors($browser);
+                            echo "<li><a href=\"#\" class=\"$textcolor\">$browser
+                                <span class=\"pull-right $textcolor\"><i class=\"fa fa-angle-down\"></i> $value</span></a></li>";
+                        }
+                    }
+
+                    ?>
+
                 </ul>
             </div>
             <!-- /.footer -->
