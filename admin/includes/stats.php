@@ -30,6 +30,10 @@ echo"<ol class=\"breadcrumb\">
 /* page content start here */
 ?>
 
+<div class="row">
+    <div class="col-md-8"><?php $stats->calculateStats($db); ?></div>
+    <div class="col-md-4">...</div>
+</div>
 
 <div class="row">
     <div class="col-md-4">spalte 1</div>
@@ -37,7 +41,3 @@ echo"<ol class=\"breadcrumb\">
     <div class="col-md-4">spalte 3</div>
 </div>
 
-<div class="row">
-    <div class="col-md-8"><?php $stats->calculateStats($db); ?></div>
-    <div class="col-md-4">...</div>
-</div>

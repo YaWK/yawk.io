@@ -59,6 +59,13 @@ namespace YAWK
         public $i_mobile = 0;
         public $i_others = 0;
 
+        // devices
+        public $i_desktop = 0;
+        public $i_tablet = 0;
+        public $i_phone = 0;
+
+
+
         function construct()
         {
             // ...
@@ -497,9 +504,26 @@ namespace YAWK
                         $this->i_others++;
                 }
 
+                // count device types
+                switch ($item['deviceType'])
+                {
+                    case "Desktop";
+                        $this->i_desktop++;
+                        break;
+                    case "Tablet";
+                        $this->i_tablet++;
+                        break;
+                    case "Phone";
+                        $this->i_phone++;
+                        break;
+                }
+
+
             }
-            echo $this->i_hits;
-            echo $this->i_osWindows;
+            echo "Total hits: ".$this->i_hits."<br>";
+            echo "davon Phone: ".$this->i_phone."<br>";
+            echo "davon Tablet: ".$this->i_tablet."<br>";
+            echo "davon Desktop: ".$this->i_desktop."<br>";
             echo "<pre>";
             print_r($data);
             echo "</pre>";
