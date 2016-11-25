@@ -23,6 +23,42 @@ namespace YAWK
         public $referer;
         public $page;
 
+
+        // stats variables
+        public $i_hits = 0;
+        public $i_loggedUsers = 0;
+        public $i_publicUsers = 0;
+
+        // os types
+        public $i_osWindows = 0;
+        public $i_osMac = 0;
+        public $i_osLinux = 0;
+        public $i_osAndroid = 0;
+        public $i_osUnknown = 0;
+
+        // os versions
+        public $i_windows8 = 0;
+        public $i_windows7 = 0;
+        public $i_windowsVista = 0;
+        public $i_windowsServer = 0;
+        public $i_windowsXP = 0;
+        public $i_windows2000 = 0;
+        public $i_windowsME = 0;
+        public $i_windows98 = 0;
+        public $i_windows95 = 0;
+        public $i_windows311 = 0;
+        public $i_macosX = 0;
+        public $i_macos9 = 0;
+        public $i_linux = 0;
+        public $i_ubuntu = 0;
+        public $i_iPhone = 0;
+        public $i_iPod = 0;
+        public $i_iPad = 0;
+        public $i_android = 0;
+        public $i_blackberry = 0;
+        public $i_mobile = 0;
+        public $i_others = 0;
+
         function construct()
         {
             // ...
@@ -214,13 +250,25 @@ namespace YAWK
                 case "Chrome":
                     $textcolor = "text-red";
                     break;
+                case "Google Chrome":
+                    $textcolor = "text-red";
+                    break;
                 case "IE":
+                    $textcolor = "text-green";
+                    break;
+                case "Internet Explorer":
                     $textcolor = "text-green";
                     break;
                 case "Firefox":
                     $textcolor = "text-yellow";
                     break;
+                case "Mozilla Firefox":
+                    $textcolor = "text-yellow";
+                    break;
                 case "Safari":
+                    $textcolor = "text-aqua";
+                    break;
+                case "Apple Safari":
                     $textcolor = "text-aqua";
                     break;
                 case "Opera":
@@ -229,8 +277,11 @@ namespace YAWK
                 case "Netscape":
                     $textcolor = "text-grey";
                     break;
-                default:
+                case "Navigator":
                     $textcolor = "text-grey";
+                    break;
+                default:
+                    $textcolor = "text-black";
             }
             return $textcolor;
         }
@@ -308,6 +359,152 @@ namespace YAWK
                     return false;
                 }
         }
+
+        /**
+         * Returns an array with all stats, ordered by date_created.
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param string $property
+         * @return mixed
+         */
+        public static function getStatsArray($db) // get all settings from db like property
+        {
+            /* @var $db \YAWK\db */
+            if ($res = $db->query("SELECT * FROM {stats} ORDER BY date_created DESC"))
+            {
+                $statsArray = array();
+                while ($row = $res->fetch_assoc())
+                {   // fill array
+                    $statsArray[] = $row;
+                }
+            }
+            else
+            {   // q failed, throw error
+                \YAWK\sys::setSyslog($db, 5, "failed to get stats from database.", 0, 0, 0, 0);
+                \YAWK\alert::draw("warning", "Warning!", "Fetch database error: getStatsArray failed.","","4800");
+                return false;
+            }
+            return $statsArray;
+        }
+
+        public function calculateStats($db)
+        {   // get stats data
+            $data = \YAWK\stats::getStatsArray($db);
+            // count and analyze the stats data in a loop
+            foreach ($data as $value => $item)
+            {
+                // count hits
+                $this->i_hits++;
+
+                // count how many users were logged in
+                if ($item['logged_in'] === "1")
+                {
+                    $this->i_loggedUsers++;
+                }
+
+                // count how many users were guests (or not logged in)
+                if ($item['logged_in'] === "0")
+                {
+                    $this->i_publicUsers++;
+                }
+
+                // count Operating Systems
+                switch ($item['os'])
+                {
+                    case "Windows";
+                        $this->i_osWindows++;
+                        break;
+                    case "Linux";
+                        $this->i_osLinux++;
+                        break;
+                    case "Mac";
+                        $this->i_osMac++;
+                        break;
+                    case "Android";
+                        $this->i_osAndroid++;
+                        break;
+                    default: $this->i_osUnknown++;
+                }
+
+                // count Operating Systems Versions
+                switch ($item['osVersion'])
+                {
+                    case "Windows 8";
+                        $this->i_windows8++;
+                        break;
+                    case "Windows 7";
+                        $this->i_windows7++;
+                        break;
+                    case "Windows Vista";
+                        $this->i_windowsVista++;
+                        break;
+                    case "Windows Server 2003/XP x64";
+                        $this->i_windowsServer++;
+                        break;
+                    case "Windows XP";
+                        $this->i_windowsXP++;
+                        break;
+                    case "Windows 2000";
+                        $this->i_windows2000++;
+                        break;
+                    case "Windows ME";
+                        $this->i_windowsME++;
+                        break;
+                    case "Windows 98";
+                        $this->i_windows98++;
+                        break;
+                    case "Windows 95";
+                        $this->i_windows95++;
+                        break;
+                    case "Windows 3.11";
+                        $this->i_windows311++;
+                        break;
+                    case "Max OS X";
+                        $this->i_macosX++;
+                        break;
+                    case "Max OS 9";
+                        $this->i_macos9++;
+                        break;
+                    case "Linux";
+                        $this->i_linux++;
+                        break;
+                    case "Ubuntu";
+                        $this->i_ubuntu++;
+                        break;
+                    case "iPhone";
+                        $this->i_iPhone++;
+                        break;
+                    case "iPad";
+                        $this->i_iPad++;
+                        break;
+                    case "iPod";
+                        $this->i_iPod++;
+                        break;
+                    case "Android";
+                        $this->i_android++;
+                        break;
+                    case "BlackBerry";
+                        $this->i_blackberry++;
+                        break;
+                    case "Mobile";
+                        $this->i_mobile++;
+                        break;
+
+                    // could not detect OS Version
+                    default:
+                        $this->i_others++;
+                }
+
+            }
+            echo $this->i_hits;
+            echo $this->i_osWindows;
+            echo "<pre>";
+            print_r($data);
+            echo "</pre>";
+        }
+
 
         function insertData($db)
         {   /* @var $db \YAWK\db */

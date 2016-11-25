@@ -621,8 +621,8 @@ namespace YAWK {
                     <a href=\"index.php?page=template-manage\"><i class=\"fa fa-photo\"></i> <span>$lang[THEMES]</span></a>
                 </li>
                 <!-- seo -->
-                <li ";echo (isset($_GET['page']) && $_GET['page'] == 'yawk-stats') ? "class='active'" : ""; echo">
-                    <a href=\"index.php?page=yawk-stats\"><i class=\"fa fa-line-chart\"></i> <span>$lang[STATS]</span></a>
+                <li ";echo (isset($_GET['page']) && $_GET['page'] == 'stats') ? "class='active'" : ""; echo">
+                    <a href=\"index.php?page=stats\"><i class=\"fa fa-line-chart\"></i> <span>$lang[STATS]</span></a>
                 </li>
                 <!-- system -->
                 <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-system') ? "class='active'" : ""; echo">
