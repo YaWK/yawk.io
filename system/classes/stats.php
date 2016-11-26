@@ -523,7 +523,7 @@ namespace YAWK
             echo "Total hits: ".$this->i_hits."<br>";
             echo "davon Phone: ".$this->i_phone."<br>";
             echo "davon Tablet: ".$this->i_tablet."<br>";
-            echo "davon Desktop: ".$this->i_desktop."<br>";
+            echo "davon Desktop: ".$this->i_desktop." Win: $this->i_osWindows Mac: $this->i_osMac Linux: $this->i_osLinux<br>";
             echo "<pre>";
             print_r($data);
             echo "</pre>";
