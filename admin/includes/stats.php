@@ -31,8 +31,80 @@ echo"<ol class=\"breadcrumb\">
 ?>
 
 <div class="row">
-    <div class="col-md-8"><?php $stats->calculateStats($db); ?></div>
-    <div class="col-md-4">...</div>
+    <div class="col-md-8">
+
+        <!-- box -->
+        <div class="box">
+            <div class="box-header with-border">
+                Statistics / Hits and Users
+            </div>
+            <div class="box-body">
+                hits overall, % of users (guests), % of logged in users, average group id
+            </div>
+        </div>
+        <!-- / box -->
+
+        <!-- box -->
+        <div class="box">
+            <div class="box-header with-border">
+                Device Types
+            </div>
+            <div class="box-body">
+                desktop, phone, tablet
+            </div>
+        </div>
+        <!-- / box -->
+
+        <!-- box -->
+        <div class="box">
+            <div class="box-header with-border">
+                Operating Systems
+            </div>
+            <div class="box-body">
+                windows, mac, linux, android or iOS
+            </div>
+        </div>
+        <!-- / box -->
+
+        <!-- box -->
+        <div class="box">
+            <div class="box-header with-border">
+                Browsers
+            </div>
+            <div class="box-body">
+                IE, Firefox, Chrome, Opera, Safari...
+            </div>
+        </div>
+        <!-- / box -->
+
+        <!-- box -->
+        <div class="box">
+            <div class="box-header with-border">
+                Languages
+            </div>
+            <div class="box-body">
+                all users languages
+            </div>
+        </div>
+        <!-- / box -->
+
+    </div>
+    <div class="col-md-4">
+
+        <!-- box -->
+        <div class="box">
+            <div class="box-header with-border">
+                Statistics / Pages
+            </div>
+            <div class="box-body">
+                current visited page, referrer
+            </div>
+        </div>
+
+        <?php $stats->calculateStats($db); ?>
+        <!-- / box -->
+
+    </div>
 </div>
 
 <div class="row">
