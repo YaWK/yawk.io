@@ -28,6 +28,8 @@ echo"<ol class=\"breadcrumb\">
     <!-- Main content -->
     <section class=\"content\">";
 /* page content start here */
+
+$data = \YAWK\stats::getStatsArray($db);
 ?>
 
 <div class="row">
@@ -67,15 +69,7 @@ echo"<ol class=\"breadcrumb\">
         <!-- / box -->
 
         <!-- box -->
-        <div class="box">
-            <div class="box-header with-border">
-                Browsers
-            </div>
-            <div class="box-body">
-                IE, Firefox, Chrome, Opera, Safari...
-            </div>
-        </div>
-        <!-- / box -->
+        <?php \YAWK\stats::drawBrowserBox($db, $data, 100); ?>
 
         <!-- box -->
         <div class="box">
@@ -101,7 +95,7 @@ echo"<ol class=\"breadcrumb\">
             </div>
         </div>
 
-        <?php $stats->calculateStats($db); ?>
+        <?php $data = $stats->calculateStats($db); ?>
         <!-- / box -->
 
     </div>
