@@ -218,7 +218,7 @@ namespace YAWK
             // check if browsers are set
             if (!isset($browsers) || (empty($browsers)))
             {   // nope, get them from db
-                $browsers = self::countBrowsers($db, 200);
+                $browsers = self::countBrowsers($db, '', 200);
             }
             $jsonData = "[";
             foreach ($browsers AS $browser => $value)
@@ -294,7 +294,7 @@ namespace YAWK
         }
 
 
-        static function countBrowsers($db, $limit)
+        static function countBrowsers($db, $data, $limit)
         {   /* @var $db \YAWK\db */
 
             // check if limit (i) is set
@@ -304,67 +304,83 @@ namespace YAWK
             }
 
             // this vars stores the counting for each browser
-            $msie = 0;
-            $chrome = 0;
-            $firefox = 0;
-            $opera = 0;
-            $safari = 0;
-            $netscape = 0;
-            $others = 0;
+            $n_msie = 0;
+            $n_chrome = 0;
+            $n_firefox = 0;
+            $n_opera = 0;
+            $n_safari = 0;
+            $n_netscape = 0;
+            $n_others = 0;
             $total = 0;
 
-            // get browsers from db
-            if ($res = $db->query("SELECT browser FROM {stats} ORDER BY id DESC LIMIT $limit"))
-            {   // create array
-                $browserlist = array();
-                while ($row = mysqli_fetch_assoc($res))
-                {   // add to array
-                    $browserlist[] = $row;
-                    $total++;
-                }
 
-                // count browsers
-                foreach ($browserlist AS $browser) {   // add +1 for each found
-                    switch ($browser['browser']) {
-                        case "Google Chrome":
-                            $chrome++;
-                            break;
-                        case "Internet Explorer":
-                            $msie++;
-                            break;
-                        case "Mozilla Firefox":
-                            $firefox++;
-                            break;
-                        case "Apple Safari":
-                            $safari++;
-                            break;
-                        case "Opera":
-                            $opera++;
-                            break;
-                        case "Netscape":
-                            $netscape++;
-                            break;
-                        default:
-                            $others++;
+            // check if data array is set, if not load data from db
+            if (!isset($data) || (empty($data) || (!is_array($data))))
+            {   // data is not set or in false format, try to get it from database
+                \YAWK\alert::draw("warning", "database needed", "need to get browser data - array not set, empty or not an array.", "", 0);
+                if ($res = $db->query("SELECT browser FROM {stats} ORDER BY id DESC LIMIT $limit"))
+                {   // create array
+                    $data = array();
+                    while ($row = mysqli_fetch_assoc($res))
+                    {   // add data to array
+                        $data[] = $row;
+                        $total++;
                     }
                 }
-                // build an array, cointaining the browsers and the number how often it's been found
-                $browsers = array(
-                    "Chrome" => $chrome,
-                    "IE" => $msie,
-                    "Firefox" => $firefox,
-                    "Safari" => $safari,
-                    "Opera" => $opera,
-                    "Netscape" => $netscape,
-                    "Others" => $others,
-                    "Total" => $total
-                );
-                return $browsers;
+                else
+                    {   // data array not set and unable to get data from db
+                        return false;
+                    }
             }
-            else
-                {
-                    return false;
-                }
+
+            // LIMIT the data to x entries
+            if (isset($limit) && (!empty($limit)))
+            {   // if limit is set, cut array to limited range
+                $data = array_slice($data, 0, $limit, true);
+            }
+
+            // count browsers
+            foreach ($data AS $item => $browser) {   // add +1 for each found
+                switch ($browser['browser']) {
+                    case "Google Chrome":
+                        $n_chrome++;
+                        break;
+                    case "Internet Explorer":
+                        $n_msie++;
+                        break;
+                    case "Mozilla Firefox":
+                        $n_firefox++;
+                        break;
+                    case "Apple Safari":
+                        $n_safari++;
+                        break;
+                    case "Opera":
+                        $n_opera++;
+                        break;
+                    case "Netscape":
+                        $n_netscape++;
+                        break;
+                    default:
+                    $n_others++;
+                    }
+            }
+            // get the sum of all detected browsers
+            $total = $n_chrome+$n_msie+$n_firefox+$n_safari+$n_opera+$n_netscape+$n_others;
+
+            // build an array, cointaining the browsers and the number how often it's been found
+            $browsers = array(
+                "Chrome" => $n_chrome,
+                "IE" => $n_msie,
+                "Firefox" => $n_firefox,
+                "Safari" => $n_safari,
+                "Opera" => $n_opera,
+                "Netscape" => $n_netscape,
+                "Others" => $n_others,
+                "Total" => $total
+            );
+
+            // return browser data array
+            return $browsers;
         }
 
         /**
@@ -520,12 +536,13 @@ namespace YAWK
 
 
             }
+
             echo "Total hits: ".$this->i_hits."<br>";
             echo "davon Phone: ".$this->i_phone."<br>";
             echo "davon Tablet: ".$this->i_tablet."<br>";
             echo "davon Desktop: ".$this->i_desktop." Win: $this->i_osWindows Mac: $this->i_osMac Linux: $this->i_osLinux<br>";
             echo "<pre>";
-            print_r($data);
+            // print_r($data);
             echo "</pre>";
         }
 
@@ -570,6 +587,126 @@ namespace YAWK
                 {
                     return false;
                 }
+        }
+
+
+        static function drawBrowserBox($db, $data, $limit)
+        {   /** @var $db \YAWK\db */
+            // get data for this box
+            $browsers = \YAWK\stats::countBrowsers($db, $data, $limit);
+
+            echo "<!-- donut box:  -->
+        <div class=\"box box-default\">
+            <div class=\"box-header with-border\">
+                <h3 class=\"box-title\">Browser Usage</h3>
+
+                <div class=\"box-tools pull-right\">
+                    <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"collapse\"><i class=\"fa fa-minus\"></i>
+                    </button>
+                    <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"remove\"><i class=\"fa fa-times\"></i></button>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class=\"box-body\">
+                <div class=\"row\">
+                    <div class=\"col-md-8\">
+                        <div class=\"chart-responsive\">
+                            <canvas id=\"pieChartBrowser\" height=\"150\"></canvas>
+                        </div>
+                        <!-- ./chart-responsive -->
+                    </div>
+                    <!-- /.col -->
+                    <div class=\"col-md-4\">
+                        <ul class=\"chart-legend clearfix\">
+
+                            <script> //-------------
+                                //- PIE CHART -
+                                //-------------
+
+                                // Get context with jQuery - using jQuery's .get() method.
+                                var pieChartCanvas = $('#pieChartBrowser').get(0).getContext('2d');
+                                var pieChart = new Chart(pieChartCanvas);
+                                // get browsers array
+                                // output js data with php function getJsonBrowsers
+                                var PieData = "; self::getJsonBrowsers($db, $browsers);
+                                echo"
+                                var pieOptions = {
+                                    //Boolean - Whether we should show a stroke on each segment
+                                    segmentShowStroke: true,
+                                    //String - The colour of each segment stroke
+                                    segmentStrokeColor: '#fff',
+                                    //Number - The width of each segment stroke
+                                    segmentStrokeWidth: 1,
+                                    //Number - The percentage of the chart that we cut out of the middle
+                                    percentageInnerCutout: 50, // This is 0 for Pie charts
+                                    //Number - Amount of animation steps
+                                    animationSteps: 100,
+                                    //String - Animation easing effect
+                                    animationEasing: 'easeOutBounce',
+                                    //Boolean - Whether we animate the rotation of the Doughnut
+                                    animateRotate: true,
+                                    //Boolean - Whether we animate scaling the Doughnut from the centre
+                                    animateScale: false,
+                                    //Boolean - whether to make the chart responsive to window resizing
+                                    responsive: true,
+                                    // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+                                    maintainAspectRatio: false,
+                                    //String - A legend template
+                                    legendTemplate: '<ul class=\"<%=name . toLowerCase() %>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background - color:<%=segments[i] . fillColor %>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>',
+                                    //String - A tooltip template
+                                    tooltipTemplate: '<%=value %> <%=label%> users'
+                                };
+                                //Create pie or douhnut chart
+                                // You can switch between pie and douhnut using the method below.
+                                pieChart.Doughnut(PieData, pieOptions);
+                                //-----------------
+                                //- END PIE CHART -
+                                //-----------------</script>";
+
+            // walk through array and draw data beneath pie chart
+            foreach ($browsers AS $browser => $value)
+            {   // get text colors
+                $textcolor = self::getBrowserColors($browser);
+                // show browsers their value is greater than zero and exclude totals
+                if ($value > 0 && ($browser !== "Total"))
+                {   // 1 line for every browser
+                    echo "<li><i class=\"fa fa-circle-o $textcolor\"></i> <b>$value</b> $browser</li>";
+                }
+                // show totals
+                if ($browser === "Total")
+                {   // of how many visits
+                    echo "<li class=\"small\">latest $value visitors</li>";
+                }
+            }
+            echo"
+                        </ul>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.box-body -->
+            <div class=\"box-footer no-padding\">
+                <ul class=\"nav nav-pills nav-stacked\">";
+
+            // sort array by value high to low to display most browsers first
+            $browsers[] = arsort($browsers);
+            // walk through array and display browsers as nav pills
+            foreach ($browsers as $browser => $value)
+            {   // show only items where browser got a value
+                if ($value !== 0 && $browser !== 0)
+                {   // get different textcolors
+                    $textcolor = self::getBrowserColors($browser);
+                    echo "<li><a href=\"#\" class=\"$textcolor\">$browser
+        <span class=\"pull-right $textcolor\" ><i class=\"fa fa-angle-down\"></i>$value</span></a></li>";
+                }
+            }
+
+            echo "</ul>
+            </div>
+            <!-- /.footer -->
+        </div>
+        <!-- /.box -->";
         }
     }
 }
