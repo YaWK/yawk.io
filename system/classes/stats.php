@@ -251,6 +251,45 @@ namespace YAWK
             echo $jsonData;
         }
 
+
+        static function getJsonOS($db, $oss)
+        {   /* @var $db \YAWK\db */
+            // check if browsers are set
+            if (!isset($oss) || (empty($oss)))
+            {   // nope, get them from db
+                $oss = self::countOS($db, '', 200);
+            }
+            $jsonData = "[";
+            foreach ($oss AS $os => $value)
+            {
+                // init textcolor
+                $textcolor = '';
+                // set different colors for each browser
+                if ($os === "Windows") { $textcolor = "#00c0ef"; }
+                if ($os === "Linux") { $textcolor = "#f56954"; }
+                if ($os === "Mac") { $textcolor = "#f39c12"; }
+                if ($os === "Android") { $textcolor = "#00a65a"; }
+                if ($os === "Unknown") { $textcolor = "#cccccc"; }
+
+                // only browsers, not the total value
+                if ($os !== ("Total"))
+                {
+                    $jsonData .= "
+                            {
+                                value: $value,
+                                color: \"$textcolor\",
+                                highlight: \"$textcolor\",
+                                label: \"$os\"
+                            },";
+                }
+            }
+
+            $jsonData .= "]";
+            echo $jsonData;
+        }
+
+
+
         static function getBrowserColors($browser)
         {
             switch ($browser) {
@@ -285,6 +324,31 @@ namespace YAWK
                     $textcolor = "text-grey";
                     break;
                 case "Navigator":
+                    $textcolor = "text-grey";
+                    break;
+                default:
+                    $textcolor = "text-black";
+            }
+            return $textcolor;
+        }
+
+
+        static function getOsColors($os)
+        {
+            switch ($os) {
+                case "Windows":
+                    $textcolor = "text-blue";
+                    break;
+                case "Linux":
+                    $textcolor = "text-red";
+                    break;
+                case "Mac":
+                    $textcolor = "text-orange";
+                    break;
+                case "Android":
+                    $textcolor = "text-green";
+                    break;
+                case "Unknown":
                     $textcolor = "text-grey";
                     break;
                 default:
@@ -383,6 +447,59 @@ namespace YAWK
             return $browsers;
         }
 
+
+        public function countOS($db, $data, $limit)
+        {   /* @var $db \YAWK\db */
+
+            // check if limit (i) is set
+            if (!isset($limit) || (empty($limit)))
+            {   // set default value
+                $limit = 100;
+            }
+
+            // check if data array is set, if not load data from db
+            if (!isset($data) || (empty($data) || (!is_array($data))))
+            {   // data is not set or in false format, try to get it from database
+                \YAWK\alert::draw("warning", "database needed", "need to get browser data - array not set, empty or not an array.", "", 0);
+                if ($res = $db->query("SELECT os FROM {stats} ORDER BY id DESC LIMIT $limit"))
+                {   // create array
+                    $data = array();
+                    while ($row = mysqli_fetch_assoc($res))
+                    {   // add data to array
+                        $data[] = $row;
+                    }
+                }
+                else
+                {   // data array not set and unable to get data from db
+                    return false;
+                }
+            }
+
+            // LIMIT the data to x entries
+            if (isset($limit) && (!empty($limit)))
+            {   // if limit is set, cut array to limited range
+                $data = array_slice($data, 0, $limit, true);
+            }
+
+            self::calculateStatsFromArray($db, $data);
+
+            // count Operating Systems
+            $total = $this->i_osWindows+$this->i_osLinux+$this->i_osMac+$this->i_osAndroid+$this->i_osUnknown;
+            // build an array, cointaining the browsers and the number how often it's been found
+            $os = array(
+                "Windows" => $this->i_osWindows,
+                "Linux" => $this->i_osLinux,
+                "Mac" => $this->i_osMac,
+                "Android" => $this->i_osAndroid,
+                "Unknown" => $this->i_osUnknown,
+                "Total" => $total
+            );
+
+            // return OS data array
+            return $os;
+        }
+
+
         /**
          * Returns an array with all stats, ordered by date_created.
          * @author Daniel Retzl <danielretzl@gmail.com>
@@ -412,9 +529,13 @@ namespace YAWK
             return $statsArray;
         }
 
-        public function calculateStats($db)
+        public function calculateStatsFromArray($db, $data)
         {   // get stats data
-            $data = \YAWK\stats::getStatsArray($db);
+            if (!isset($data) || (empty($data)))
+            {
+                // get statistics into array
+                $data = \YAWK\stats::getStatsArray($db);
+            }
             // count and analyze the stats data in a loop
             foreach ($data as $value => $item)
             {
@@ -533,17 +654,17 @@ namespace YAWK
                         $this->i_phone++;
                         break;
                 }
-
-
             }
 
+            /*
             echo "Total hits: ".$this->i_hits."<br>";
             echo "davon Phone: ".$this->i_phone."<br>";
             echo "davon Tablet: ".$this->i_tablet."<br>";
             echo "davon Desktop: ".$this->i_desktop." Win: $this->i_osWindows Mac: $this->i_osMac Linux: $this->i_osLinux<br>";
             echo "<pre>";
-            // print_r($data);
+            print_r($data);
             echo "</pre>";
+            */
         }
 
 
@@ -590,7 +711,7 @@ namespace YAWK
         }
 
 
-        static function drawBrowserBox($db, $data, $limit)
+        function drawBrowserBox($db, $data, $limit)
         {   /** @var $db \YAWK\db */
             // get data for this box
             $browsers = \YAWK\stats::countBrowsers($db, $data, $limit);
@@ -708,5 +829,128 @@ namespace YAWK
         </div>
         <!-- /.box -->";
         }
+
+
+
+        public function drawOsBox($db, $data, $limit)
+        {   /** @var $db \YAWK\db */
+            // get data for this box
+            $oss = \YAWK\stats::countOS($db, $data, $limit);
+
+            echo "<!-- donut box:  -->
+        <div class=\"box box-default\">
+            <div class=\"box-header with-border\">
+                <h3 class=\"box-title\">Operating Systems</h3>
+
+                <div class=\"box-tools pull-right\">
+                    <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"collapse\"><i class=\"fa fa-minus\"></i>
+                    </button>
+                    <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"remove\"><i class=\"fa fa-times\"></i></button>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class=\"box-body\">
+                <div class=\"row\">
+                    <div class=\"col-md-8\">
+                        <div class=\"chart-responsive\">
+                            <canvas id=\"pieChartOS\" height=\"150\"></canvas>
+                        </div>
+                        <!-- ./chart-responsive -->
+                    </div>
+                    <!-- /.col -->
+                    <div class=\"col-md-4\">
+                        <ul class=\"chart-legend clearfix\">
+
+                            <script> //-------------
+                                //- PIE CHART -
+                                //-------------
+
+                                // Get context with jQuery - using jQuery's .get() method.
+                                var pieChartCanvas = $('#pieChartOS').get(0).getContext('2d');
+                                var pieChart = new Chart(pieChartCanvas);
+                                // get browsers array
+                                // output js data with php function getJsonBrowsers
+                                var PieData = "; self::getJsonOS($db, $oss);
+                                echo"
+                                var pieOptions = {
+                                    //Boolean - Whether we should show a stroke on each segment
+                                    segmentShowStroke: true,
+                                    //String - The colour of each segment stroke
+                                    segmentStrokeColor: '#fff',
+                                    //Number - The width of each segment stroke
+                                    segmentStrokeWidth: 1,
+                                    //Number - The percentage of the chart that we cut out of the middle
+                                    percentageInnerCutout: 50, // This is 0 for Pie charts
+                                    //Number - Amount of animation steps
+                                    animationSteps: 100,
+                                    //String - Animation easing effect
+                                    animationEasing: 'easeOutBounce',
+                                    //Boolean - Whether we animate the rotation of the Doughnut
+                                    animateRotate: true,
+                                    //Boolean - Whether we animate scaling the Doughnut from the centre
+                                    animateScale: false,
+                                    //Boolean - whether to make the chart responsive to window resizing
+                                    responsive: true,
+                                    // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+                                    maintainAspectRatio: false,
+                                    //String - A legend template
+                                    legendTemplate: '<ul class=\"<%=name.toLowerCase() %>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor %>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>',
+                                    //String - A tooltip template
+                                    tooltipTemplate: '<%=value %> <%=label%> users'
+                                };
+                                //Create pie or douhnut chart
+                                // You can switch between pie and douhnut using the method below.
+                                pieChart.Doughnut(PieData, pieOptions);
+                                //-----------------
+                                //- END PIE CHART -
+                                //-----------------</script>";
+
+            // walk through array and draw data beneath pie chart
+            foreach ($oss AS $os => $value)
+            {   // get text colors
+                $textcolor = self::getOsColors($os);
+                // show browsers their value is greater than zero and exclude totals
+                if ($value > 0 && ($os !== "Total"))
+                {   // 1 line for every browser
+                    echo "<li><i class=\"fa fa-circle-o $textcolor\"></i> <b>$value</b> $os</li>";
+                }
+                // show totals
+                if ($os === "Total")
+                {   // of how many visits
+                    echo "<li class=\"small\">latest $value users</li>";
+                }
+            }
+            echo"
+                        </ul>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.box-body -->
+            <div class=\"box-footer no-padding\">
+                <ul class=\"nav nav-pills nav-stacked\">";
+
+            // sort array by value high to low to display most browsers first
+            $oss[] = arsort($oss);
+            // walk through array and display browsers as nav pills
+            foreach ($oss as $os => $value)
+            {   // show only items where browser got a value
+                if ($value !== 0 && $os !== 0)
+                {   // get different textcolors
+                    $textcolor = self::getOsColors($os);
+                    echo "<li><a href=\"#\" class=\"$textcolor\">$os
+                          <span class=\"pull-right $textcolor\" ><i class=\"fa fa-angle-down\"></i>$value</span></a></li>";
+                }
+            }
+
+            echo "</ul>
+            </div>
+            <!-- /.footer -->
+        </div>
+        <!-- /.box -->";
+        }
+
+
     }
 }

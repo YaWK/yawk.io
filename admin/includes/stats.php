@@ -29,6 +29,8 @@ echo"<ol class=\"breadcrumb\">
     <section class=\"content\">";
 /* page content start here */
 
+// load statistics data into an array
+$stats = new \YAWK\stats();
 $data = \YAWK\stats::getStatsArray($db);
 ?>
 
@@ -57,19 +59,12 @@ $data = \YAWK\stats::getStatsArray($db);
         </div>
         <!-- / box -->
 
-        <!-- box -->
-        <div class="box">
-            <div class="box-header with-border">
-                Operating Systems
-            </div>
-            <div class="box-body">
-                windows, mac, linux, android or iOS
-            </div>
-        </div>
+        <!-- OS box -->
+        <?php $stats->drawOsBox($db, $data, 50); ?>
         <!-- / box -->
 
         <!-- box -->
-        <?php \YAWK\stats::drawBrowserBox($db, $data, 100); ?>
+        <?php $stats->drawBrowserBox($db, $data, 120); ?>
 
         <!-- box -->
         <div class="box">
@@ -95,7 +90,7 @@ $data = \YAWK\stats::getStatsArray($db);
             </div>
         </div>
 
-        <?php $data = $stats->calculateStats($db); ?>
+        <?php $stats->calculateStatsFromArray($db, $data); ?>
         <!-- / box -->
 
     </div>
