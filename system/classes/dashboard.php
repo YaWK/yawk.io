@@ -4,7 +4,7 @@ namespace YAWK
     class dashboard
     {
 
-        static function drawLatestPages($db, $count)
+        static function drawLatestPagesBox($db, $count)
         {   // default latest pages
             if (!isset($count) || (empty($count))) { $count = 4; }
             $latestPages = array();
