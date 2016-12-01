@@ -288,6 +288,58 @@ namespace YAWK
             echo $jsonData;
         }
 
+        static function getJsonOSVersions($db, $osVersions)
+        {   /* @var $db \YAWK\db */
+            // check if browsers are set
+            if (!isset($osVersions) || (empty($osVersions)))
+            {   // nope, get them from db
+                $osVersions = self::countOSVersions($db, '', 200);
+            }
+            $jsonData = "[";
+            foreach ($osVersions AS $osVersion => $value)
+            {
+                // init textcolor
+                $textcolor = '';
+                // set different colors for each OS version
+                if ($osVersion === "Windows 8") { $textcolor = "#00c0ef"; }
+                if ($osVersion === "Windows 7") { $textcolor = "#00A0C7"; }
+                if ($osVersion === "Windows Vista") { $textcolor = "#00B5E1"; }
+                if ($osVersion === "Windows Server") { $textcolor = "#004E61"; }
+                if ($osVersion === "Windows 2000") { $textcolor = "#005A7F"; }
+                if ($osVersion === "Windows XP") { $textcolor = "#00B5FF"; }
+                if ($osVersion === "Windows ME") { $textcolor = "#0090C9"; }
+                if ($osVersion === "Windows 98") { $textcolor = "#00A5E5"; }
+                if ($osVersion === "Windows 95") { $textcolor = "#0089BF"; }
+                if ($osVersion === "Windows 3.11") { $textcolor = "#00ACBF"; }
+                if ($osVersion === "Mac OS X") { $textcolor = "#f39c12"; }
+                if ($osVersion === "Mac OS 9") { $textcolor = "#BD7A0E"; }
+                if ($osVersion === "Linux") { $textcolor = "#f56954"; }
+                if ($osVersion === "Ubuntu") { $textcolor = "#BF5242"; }
+                if ($osVersion === "iPhone") { $textcolor = "#212121"; }
+                if ($osVersion === "iPad") { $textcolor = "#131313"; }
+                if ($osVersion === "iPod") { $textcolor = "#212121"; }
+                if ($osVersion === "Android") { $textcolor = "#6FF576"; }
+                if ($osVersion === "Blackberry") { $textcolor = "#187521"; }
+                if ($osVersion === "Mobile") { $textcolor = "#437540"; }
+                if ($osVersion === "Unknown") { $textcolor = "#6B756D"; }
+
+                // only browsers, not the total value
+                if ($osVersion !== ("Total"))
+                {
+                    $jsonData .= "
+                            {
+                                value: $value,
+                                color: \"$textcolor\",
+                                highlight: \"$textcolor\",
+                                label: \"$osVersion\"
+                            },";
+                }
+            }
+
+            $jsonData .= "]";
+            echo $jsonData;
+        }
+
 
 
         static function getBrowserColors($browser)
@@ -346,6 +398,82 @@ namespace YAWK
                     $textcolor = "text-orange";
                     break;
                 case "Android":
+                    $textcolor = "text-green";
+                    break;
+                case "Unknown":
+                    $textcolor = "text-grey";
+                    break;
+                default:
+                    $textcolor = "text-black";
+            }
+            return $textcolor;
+        }
+
+
+        static function getOsVersionsColors($osVersions)
+        {
+            switch ($osVersions) {
+                case "Windows 8":
+                    $textcolor = "text-blue";
+                    break;
+                case "Windows 7":
+                    $textcolor = "text-blue";
+                    break;
+                case "Windows Vista":
+                    $textcolor = "text-blue";
+                    break;
+                case "Windows Server":
+                    $textcolor = "text-blue";
+                    break;
+                case "Windows 2000":
+                    $textcolor = "text-blue";
+                    break;
+                case "Windows XP":
+                    $textcolor = "text-blue";
+                    break;
+                case "Windows ME":
+                    $textcolor = "text-blue";
+                    break;
+                case "Windows 98":
+                    $textcolor = "text-blue";
+                    break;
+                case "Windows 95":
+                    $textcolor = "text-blue";
+                    break;
+                case "Windows 3.11":
+                    $textcolor = "text-blue";
+                    break;
+                case "Windows 311":
+                    $textcolor = "text-blue";
+                    break;
+                case "Mac OS X":
+                    $textcolor = "text-orange";
+                    break;
+                case "Mac OS 9":
+                    $textcolor = "text-orange";
+                    break;
+                case "Linux":
+                    $textcolor = "text-red";
+                    break;
+                case "Ubuntu":
+                    $textcolor = "text-red";
+                    break;
+                case "iPhone":
+                    $textcolor = "text-black";
+                    break;
+                case "iPad":
+                    $textcolor = "text-black";
+                    break;
+                case "iPod":
+                    $textcolor = "text-black";
+                    break;
+                case "Android":
+                    $textcolor = "text-green";
+                    break;
+                case "Blackberry":
+                    $textcolor = "text-green";
+                    break;
+                case "Mobile":
                     $textcolor = "text-green";
                     break;
                 case "Unknown":
@@ -480,8 +608,26 @@ namespace YAWK
             {   // if limit is set, cut array to limited range
                 $data = array_slice($data, 0, $limit, true);
             }
-
-            self::calculateStatsFromArray($db, $data);
+            foreach ($data as $os => $value)
+            {
+                // count Operating Systems
+                switch ($value['os'])
+                {
+                    case "Windows";
+                        $this->i_osWindows++;
+                        break;
+                    case "Linux";
+                        $this->i_osLinux++;
+                        break;
+                    case "Mac";
+                        $this->i_osMac++;
+                        break;
+                    case "Android";
+                        $this->i_osAndroid++;
+                        break;
+                    default: $this->i_osUnknown++;
+                }
+            }
 
             // count Operating Systems
             $total = $this->i_osWindows+$this->i_osLinux+$this->i_osMac+$this->i_osAndroid+$this->i_osUnknown;
@@ -500,80 +646,47 @@ namespace YAWK
         }
 
 
-        /**
-         * Returns an array with all stats, ordered by date_created.
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
-         * @param object $db Database Object
-         * @param string $property
-         * @return mixed
-         */
-        public static function getStatsArray($db) // get all settings from db like property
-        {
-            /* @var $db \YAWK\db */
-            if ($res = $db->query("SELECT * FROM {stats} ORDER BY date_created DESC"))
-            {
-                $statsArray = array();
-                while ($row = $res->fetch_assoc())
-                {   // fill array
-                    $statsArray[] = $row;
+        public function countOSVersions($db, $data, $limit)
+        {   /* @var $db \YAWK\db */
+
+            // check if limit (i) is set
+            if (!isset($limit) || (empty($limit)))
+            {   // set default value
+                $limit = 100;
+            }
+
+            // check if data array is set, if not load data from db
+            if (!isset($data) || (empty($data) || (!is_array($data))))
+            {   // data is not set or in false format, try to get it from database
+                \YAWK\alert::draw("warning", "database needed", "need to get browser data - array not set, empty or not an array.", "", 0);
+                if ($res = $db->query("SELECT osVersion FROM {stats} ORDER BY id DESC LIMIT $limit"))
+                {   // create array
+                    $data = array();
+                    while ($row = mysqli_fetch_assoc($res))
+                    {   // add data to array
+                        $data[] = $row;
+                    }
+                }
+                else
+                {   // data array not set and unable to get data from db
+                    return false;
                 }
             }
-            else
-            {   // q failed, throw error
-                \YAWK\sys::setSyslog($db, 5, "failed to get stats from database.", 0, 0, 0, 0);
-                \YAWK\alert::draw("warning", "Warning!", "Fetch database error: getStatsArray failed.","","4800");
-                return false;
+
+            // LIMIT the data to x entries
+            if (isset($limit) && (!empty($limit)))
+            {   // if limit is set, cut array to limited range
+                $data = array_slice($data, 0, $limit, true);
             }
-            return $statsArray;
-        }
 
-        public function calculateStatsFromArray($db, $data)
-        {   // get stats data
-            if (!isset($data) || (empty($data)))
-            {
-                // get statistics into array
-                $data = \YAWK\stats::getStatsArray($db);
-            }
-            // count and analyze the stats data in a loop
-            foreach ($data as $value => $item)
-            {
-                // count hits
-                $this->i_hits++;
-
-                // count how many users were logged in
-                if ($item['logged_in'] === "1")
-                {
-                    $this->i_loggedUsers++;
-                }
-
-                // count how many users were guests (or not logged in)
-                if ($item['logged_in'] === "0")
-                {
-                    $this->i_publicUsers++;
-                }
-
-                // count Operating Systems
-                switch ($item['os'])
-                {
-                    case "Windows";
-                        $this->i_osWindows++;
-                        break;
-                    case "Linux";
-                        $this->i_osLinux++;
-                        break;
-                    case "Mac";
-                        $this->i_osMac++;
-                        break;
-                    case "Android";
-                        $this->i_osAndroid++;
-                        break;
-                    default: $this->i_osUnknown++;
-                }
-
+            // count browsers
+            foreach ($data AS $item => $osVersion) {   // add +1 for each found
                 // count Operating Systems Versions
-                switch ($item['osVersion'])
+                if ($osVersion['os'] === "Android")
+                {
+                    $osVersion['osVersion'] .= "Android ".$osVersion['osVersion'];
+                }
+                switch ($osVersion['osVersion'])
                 {
                     case "Windows 8";
                         $this->i_windows8++;
@@ -626,7 +739,7 @@ namespace YAWK
                     case "iPod";
                         $this->i_iPod++;
                         break;
-                    case "Android";
+                    case "Android":
                         $this->i_android++;
                         break;
                     case "BlackBerry";
@@ -639,6 +752,115 @@ namespace YAWK
                     // could not detect OS Version
                     default:
                         $this->i_others++;
+                }
+            }
+
+            // count OS Versions
+            $total = $this->i_windows8
+                    +$this->i_windows7
+                    +$this->i_windowsVista
+                    +$this->i_windowsServer
+                    +$this->i_windows2000
+                    +$this->i_windowsXP
+                    +$this->i_windowsME
+                    +$this->i_windows98
+                    +$this->i_windows95
+                    +$this->i_windows311
+                    +$this->i_macosX
+                    +$this->i_macos9
+                    +$this->i_linux
+                    +$this->i_ubuntu
+                    +$this->i_iPhone
+                    +$this->i_iPad
+                    +$this->i_iPod
+                    +$this->i_android
+                    +$this->i_blackberry
+                    +$this->i_mobile
+                    +$this->i_others;
+            // build an array, cointaining the counted OS Versions and the sum overall
+            $osVersions = array(
+                "Windows 8" => $this->i_windows8,
+                "Windows 7" => $this->i_windows7,
+                "Windows Vista" => $this->i_windowsVista,
+                "Windows Server" => $this->i_windowsServer,
+                "Windows 2000" => $this->i_windows2000,
+                "Windows XP" => $this->i_windowsXP,
+                "Windows ME" => $this->i_windowsME,
+                "Windows 98" => $this->i_windows98,
+                "Windows 95" => $this->i_windows95,
+                "Windows 3.11" => $this->i_windows311,
+                "Mac OS X" => $this->i_macosX,
+                "Mac OS 9" => $this->i_macos9,
+                "Linux" => $this->i_linux,
+                "Ubuntu" => $this->i_ubuntu,
+                "iPhone" => $this->i_iPhone,
+                "iPad" => $this->i_iPad,
+                "iPod" => $this->i_iPod,
+                "Android" => $this->i_android,
+                "Blackberry" => $this->i_blackberry,
+                "Mobile" => $this->i_mobile,
+                "Unknown" => $this->i_others,
+                "Total" => $total
+            );
+
+            // return OS data array
+            return $osVersions;
+        }
+
+        /**
+         * Returns an array with all stats, ordered by date_created.
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param string $property
+         * @return mixed
+         */
+        public function getStatsArray($db) // get all settings from db like property
+        {
+            /* @var $db \YAWK\db */
+            if ($res = $db->query("SELECT * FROM {stats} ORDER BY date_created DESC"))
+            {
+                $statsArray = array();
+                while ($row = $res->fetch_assoc())
+                {   // fill array
+                    $statsArray[] = $row;
+                }
+            }
+            else
+            {   // q failed, throw error
+                \YAWK\sys::setSyslog($db, 5, "failed to get stats from database.", 0, 0, 0, 0);
+                \YAWK\alert::draw("warning", "Warning!", "Fetch database error: getStatsArray failed.","","4800");
+                return false;
+            }
+
+            $this->calculateStatsFromArray($db, $statsArray);
+            return $statsArray;
+        }
+
+        public function calculateStatsFromArray($db, $data)
+        {   // get stats data
+            if (!isset($data) || (empty($data)))
+            {
+                // get statistics into array
+                $data = \YAWK\stats::getStatsArray($db);
+            }
+            // count and analyze the stats data in a loop
+            foreach ($data as $value => $item)
+            {
+                // count hits
+                $this->i_hits++;
+
+                // count how many users were logged in
+                if ($item['logged_in'] === "1")
+                {
+                    $this->i_loggedUsers++;
+                }
+
+                // count how many users were guests (or not logged in)
+                if ($item['logged_in'] === "0")
+                {
+                    $this->i_publicUsers++;
                 }
 
                 // count device types
@@ -940,6 +1162,126 @@ namespace YAWK
                 {   // get different textcolors
                     $textcolor = self::getOsColors($os);
                     echo "<li><a href=\"#\" class=\"$textcolor\">$os
+                          <span class=\"pull-right $textcolor\" ><i class=\"fa fa-angle-down\"></i>$value</span></a></li>";
+                }
+            }
+
+            echo "</ul>
+            </div>
+            <!-- /.footer -->
+        </div>
+        <!-- /.box -->";
+        }
+
+
+        public function drawOsVersionBox($db, $data, $limit)
+        {   /** @var $db \YAWK\db */
+            // get data for this box
+            $osVersions = \YAWK\stats::countOSVersions($db, $data, $limit);
+
+            echo "<!-- donut box:  -->
+        <div class=\"box box-default\">
+            <div class=\"box-header with-border\">
+                <h3 class=\"box-title\">OS Versions <small>(experimental)</small></h3>
+
+                <div class=\"box-tools pull-right\">
+                    <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"collapse\"><i class=\"fa fa-minus\"></i>
+                    </button>
+                    <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"remove\"><i class=\"fa fa-times\"></i></button>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class=\"box-body\">
+                <div class=\"row\">
+                    <div class=\"col-md-8\">
+                        <div class=\"chart-responsive\">
+                            <canvas id=\"pieChartOSVersion\" height=\"150\"></canvas>
+                        </div>
+                        <!-- ./chart-responsive -->
+                    </div>
+                    <!-- /.col -->
+                    <div class=\"col-md-4\">
+                        <ul class=\"chart-legend clearfix\">
+
+                            <script> //-------------
+                                //- PIE CHART -
+                                //-------------
+
+                                // Get context with jQuery - using jQuery's .get() method.
+                                var pieChartCanvas = $('#pieChartOSVersion').get(0).getContext('2d');
+                                var pieChart = new Chart(pieChartCanvas);
+                                // get browsers array
+                                // output js data with php function getJsonBrowsers
+                                var PieData = "; self::getJsonOSVersions($db, $osVersions);
+                                echo"
+                                var pieOptions = {
+                                    //Boolean - Whether we should show a stroke on each segment
+                                    segmentShowStroke: true,
+                                    //String - The colour of each segment stroke
+                                    segmentStrokeColor: '#fff',
+                                    //Number - The width of each segment stroke
+                                    segmentStrokeWidth: 1,
+                                    //Number - The percentage of the chart that we cut out of the middle
+                                    percentageInnerCutout: 50, // This is 0 for Pie charts
+                                    //Number - Amount of animation steps
+                                    animationSteps: 100,
+                                    //String - Animation easing effect
+                                    animationEasing: 'easeOutBounce',
+                                    //Boolean - Whether we animate the rotation of the Doughnut
+                                    animateRotate: true,
+                                    //Boolean - Whether we animate scaling the Doughnut from the centre
+                                    animateScale: false,
+                                    //Boolean - whether to make the chart responsive to window resizing
+                                    responsive: true,
+                                    // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+                                    maintainAspectRatio: false,
+                                    //String - A legend template
+                                    legendTemplate: '<ul class=\"<%=name.toLowerCase() %>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor %>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>',
+                                    //String - A tooltip template
+                                    tooltipTemplate: '<%=value %> <%=label%> users'
+                                };
+                                //Create pie or douhnut chart
+                                // You can switch between pie and douhnut using the method below.
+                                pieChart.Doughnut(PieData, pieOptions);
+                                //-----------------
+                                //- END PIE CHART -
+                                //-----------------</script>";
+
+            // walk through array and draw data beneath pie chart
+            foreach ($osVersions AS $osVersion => $value)
+            {   // get text colors
+                $textcolor = self::getOsVersionsColors($osVersion);
+                // show browsers their value is greater than zero and exclude totals
+                if ($value > 0 && ($osVersion !== "Total"))
+                {   // 1 line for every browser
+                    echo "<li><i class=\"fa fa-circle-o $textcolor\"></i> <b>$value</b> $osVersion</li>";
+                }
+                // show totals
+                if ($osVersion === "Total")
+                {   // of how many visits
+                    echo "<li class=\"small\">latest $value OSes</li>";
+                }
+            }
+            echo"
+                        </ul>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.box-body -->
+            <div class=\"box-footer no-padding\">
+                <ul class=\"nav nav-pills nav-stacked\">";
+
+            // sort array by value high to low to display most browsers first
+            $osVersions[] = arsort($osVersions);
+            // walk through array and display browsers as nav pills
+            foreach ($osVersions as $osVersion => $value)
+            {   // show only items where browser got a value
+                if ($value !== 0 && $osVersion !== 0)
+                {   // get different textcolors
+                    $textcolor = self::getOsColors($osVersion);
+                    echo "<li><a href=\"#\" class=\"$textcolor\">$osVersion
                           <span class=\"pull-right $textcolor\" ><i class=\"fa fa-angle-down\"></i>$value</span></a></li>";
                 }
             }

@@ -1,6 +1,3 @@
-<?php require_once '../system/classes/stats.php';
-$stats = new \YAWK\stats();
-?>
 <!-- JS includes -->
 <!-- jvectormap -->
 <link rel="stylesheet" href="../system/engines/AdminLTE/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
@@ -28,10 +25,19 @@ echo"<ol class=\"breadcrumb\">
     <!-- Main content -->
     <section class=\"content\">";
 /* page content start here */
+?>
 
-// load statistics data into an array
-$stats = new \YAWK\stats();
-$data = \YAWK\stats::getStatsArray($db);
+<?php
+// include stats class
+    require_once '../system/classes/stats.php';
+// check if stats object is set...
+    if (!isset($stats))
+    {   // if not, create new
+        $stats = new \YAWK\stats();
+    }
+// load stats data into an array that every box will use, this saves performance
+    $data = $stats->getStatsArray($db);
+
 ?>
 
 <div class="row">
@@ -60,11 +66,15 @@ $data = \YAWK\stats::getStatsArray($db);
         <!-- / box -->
 
         <!-- OS box -->
-        <?php $stats->drawOsBox($db, $data, 50); ?>
+        <div class="row">
+        <div class="col-md-6"><?php $stats->drawOsBox($db, $data, 100); ?></div>
+        <div class="col-md-6"><?php $stats->drawOsVersionBox($db, $data, 100); ?></div>
+        </div>
+
         <!-- / box -->
 
         <!-- box -->
-        <?php $stats->drawBrowserBox($db, $data, 120); ?>
+        <?php $stats->drawBrowserBox($db, $data, 100); ?>
 
         <!-- box -->
         <div class="box">
@@ -90,7 +100,7 @@ $data = \YAWK\stats::getStatsArray($db);
             </div>
         </div>
 
-        <?php $stats->calculateStatsFromArray($db, $data); ?>
+        <?php // $stats->calculateStatsFromArray($db, $data); ?>
         <!-- / box -->
 
     </div>
@@ -101,4 +111,3 @@ $data = \YAWK\stats::getStatsArray($db);
     <div class="col-md-4">spalte 2</div>
     <div class="col-md-4">spalte 3</div>
 </div>
-
