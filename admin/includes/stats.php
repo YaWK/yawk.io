@@ -54,10 +54,13 @@ else
         <!-- box -->
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">Statistics / Hits and Users</h3>
+                <h3 class="box-title">Statistics <small>hits and user behavior</small></h3>
             </div>
             <div class="box-body h3">
-                Hits overall: <b><?php echo $stats->i_hits; ?></b><br>
+                <?php
+                if ($stats->i_hits !== $limit) { $current = "<small><i>(view: $limit)</i></small>"; } else { $current = ''; }
+                ?>
+                Hits overall: <b><?php echo $stats->i_hits; ?></b> <?php echo $current; ?> <br>
                 Guests: <b><?php echo $stats->i_publicUsersPercentage; ?>% </b> <small>(<?php echo $stats->i_publicUsers; ?>)</small><br>
                 Members: <b><?php echo $stats->i_loggedUsersPercentage; ?>%</b> <small>(<?php echo $stats->i_loggedUsers; ?>)</small><br>
             </div>
@@ -100,7 +103,7 @@ else
             </div>
             <div class="box-body">
                 <form action="index.php?page=stats" method="post">
-                    <label for="limit">view latest hits, leave blank for all</label>
+                    <label for="limit">view latest <small><i>n</i></small> hits, leave blank for all</label>
                     <input id="limit" name="limit" value="<?php echo $limit; ?>" type="text" placeholder="500" class="form-control">
                     <br>
                     <button type="submit" class="btn btn-success pull-right"><i class="glyphicon glyphicon-refresh"></i>&nbsp; Refresh Stats</button>
@@ -111,10 +114,24 @@ else
         <!-- box -->
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">Pages <small>and referrer</small></h3>
+                <h3 class="box-title">Pages <small>from most to least</small></h3>
             </div>
             <div class="box-body">
-                latest pages, referer etc...
+                <?php
+                    $erg = array();
+                    $data = array_slice($data, 0, $limit, true);
+                    foreach ($data AS $page => $value)
+                    {
+                        $erg[] = $value['page'];
+                    }
+
+                    $erg = (array_count_values($erg));
+                    arsort($erg);
+                    foreach ($erg AS $page => $value)
+                    {
+                        echo "<b>$value</b> <a href=\"../$page\" target=\"_blank\" title=\"(open in new tab)\">$page</a><br>";
+                    }
+                ?>
             </div>
         </div>
 
