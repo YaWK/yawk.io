@@ -46,35 +46,30 @@ echo"<ol class=\"breadcrumb\">
         <!-- box -->
         <div class="box">
             <div class="box-header with-border">
-                Statistics / Hits and Users
+                <h3 class="box-title">Statistics / Hits and Users</h3>
             </div>
-            <div class="box-body">
-                hits overall, % of users (guests), % of logged in users, average group id
+            <div class="box-body h3">
+                Hits overall: <b><?php echo $stats->i_hits; ?></b><br>
+                Guests: <b><?php echo $stats->i_publicUsersPercentage; ?>% </b> <small>(<?php echo $stats->i_publicUsers; ?>)</small><br>
+                Logged in: <b><?php echo $stats->i_loggedUsersPercentage; ?>%</b> <small>(<?php echo $stats->i_loggedUsers; ?>)</small><br>
             </div>
         </div>
         <!-- / box -->
 
-        <!-- box -->
-        <div class="box">
-            <div class="box-header with-border">
-                Device Types
-            </div>
-            <div class="box-body">
-                desktop, phone, tablet
-            </div>
-        </div>
+        <!-- DEVICE TYPE box -->
+        <?php $stats->drawDeviceTypeBox($db, $data, 200); ?>
         <!-- / box -->
 
         <!-- OS box -->
         <div class="row">
-        <div class="col-md-6"><?php $stats->drawOsBox($db, $data, 100); ?></div>
-        <div class="col-md-6"><?php $stats->drawOsVersionBox($db, $data, 100); ?></div>
+        <div class="col-md-6"><?php $stats->drawOsBox($db, $data, 200); ?></div>
+        <div class="col-md-6"><?php $stats->drawOsVersionBox($db, $data, 200); ?></div>
         </div>
 
         <!-- / box -->
 
         <!-- box -->
-        <?php $stats->drawBrowserBox($db, $data, 100); ?>
+        <?php $stats->drawBrowserBox($db, $data, 200); ?>
 
         <!-- box -->
         <div class="box">

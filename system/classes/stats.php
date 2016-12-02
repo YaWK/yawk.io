@@ -27,7 +27,9 @@ namespace YAWK
         // stats variables
         public $i_hits = 0;
         public $i_loggedUsers = 0;
+        public $i_loggedUsersPercentage = 0;
         public $i_publicUsers = 0;
+        public $i_publicUsersPercentage = 0;
 
         // os types
         public $i_osWindows = 0;
@@ -341,6 +343,60 @@ namespace YAWK
         }
 
 
+        public function getJsonDeviceTypes($db, $deviceTypes)
+        {   /* @var $db \YAWK\db */
+            // check if device types are set
+            if (!isset($deviceTypes) || (empty($deviceTypes)))
+            {   // nope, get them from db
+                $deviceTypes = self::countDeviceTypes($db, '', 200);
+            }
+
+            $jsonData = "labels: ['Desktop', 'Phone', 'Tablet'],
+            datasets: [
+                {
+                  label: 'Hits',
+                  fillColor: ['#f39c12', '#00a65a', '#00c0ef'],
+                  strokeColor: 'rgba(210, 214, 222, 1)',
+                  pointColor: 'rgba(210, 214, 222, 1)',
+                  pointStrokeColor: '#c1c7d1',
+                  pointHighlightFill: '#fff',
+                  pointHighlightStroke: 'rgba(220,220,220,1)',
+                  data: [$this->i_desktop, $this->i_phone, $this->i_tablet]
+                }
+            ]";
+
+
+            /* pie data
+            $jsonData = "[";
+            foreach ($deviceTypes AS $deviceType => $value)
+            {
+                // init textcolor
+                $textcolor = '';
+                // set different colors for each browser
+                if ($deviceType === "Desktop") { $textcolor = "#00c0ef"; }
+                if ($deviceType === "Phone") { $textcolor = "#f56954"; }
+                if ($deviceType === "Tablet") { $textcolor = "#f39c12"; }
+
+                // only browsers, not the total value
+                if ($deviceType !== ("Total"))
+                {
+                    $jsonData .= "
+                            {
+                                value: $value,
+                                color: \"$textcolor\",
+                                highlight: \"$textcolor\",
+                                label: \"$deviceType\"
+                            },";
+                }
+            }
+
+            $jsonData .= "]";
+            */
+            echo $jsonData;
+        }
+
+
+
 
         static function getBrowserColors($browser)
         {
@@ -402,6 +458,26 @@ namespace YAWK
                     break;
                 case "Unknown":
                     $textcolor = "text-grey";
+                    break;
+                default:
+                    $textcolor = "text-black";
+            }
+            return $textcolor;
+        }
+
+
+
+        static function getDeviceTypeColors($deviceType)
+        {
+            switch ($deviceType) {
+                case "Desktop":
+                    $textcolor = "text-orange";
+                    break;
+                case "Phone":
+                    $textcolor = "text-green";
+                    break;
+                case "Tablet":
+                    $textcolor = "text-blue";
                     break;
                 default:
                     $textcolor = "text-black";
@@ -573,6 +649,69 @@ namespace YAWK
 
             // return browser data array
             return $browsers;
+        }
+
+
+        public function countDeviceTypes($db, $data, $limit)
+        {   /* @var $db \YAWK\db */
+
+            // check if limit (i) is set
+            if (!isset($limit) || (empty($limit)))
+            {   // set default value
+                $limit = 100;
+            }
+
+            // check if data array is set, if not load data from db
+            if (!isset($data) || (empty($data) || (!is_array($data))))
+            {   // data is not set or in false format, try to get it from database
+                if ($res = $db->query("SELECT deviceType FROM {stats} ORDER BY id DESC LIMIT $limit"))
+                {   // create array
+                    $data = array();
+                    while ($row = mysqli_fetch_assoc($res))
+                    {   // add data to array
+                        $data[] = $row;
+                    }
+                }
+                else
+                {   // data array not set and unable to get data from db
+                    return false;
+                }
+            }
+
+            // LIMIT the data to x entries
+            if (isset($limit) && (!empty($limit)))
+            {   // if limit is set, cut array to limited range
+                $data = array_slice($data, 0, $limit, true);
+            }
+            foreach ($data as $deviceType => $value)
+            {
+                // count device types
+                switch ($value['deviceType'])
+                {
+                    case "Desktop":
+                        $this->i_desktop++;
+                        break;
+                    case "Tablet":
+                        $this->i_tablet++;
+                        break;
+                    case "Phone":
+                        $this->i_phone++;
+                        break;
+                }
+            }
+
+            // count device types
+            $total = $this->i_desktop+$this->i_tablet+$this->i_phone;
+            // build an array, cointaining the device types and the number how often it's been found
+            $deviceTypes = array(
+                "Desktop" => $this->i_desktop,
+                "Tablet" => $this->i_tablet,
+                "Phone" => $this->i_phone,
+                "Total" => $total
+            );
+
+            // return OS data array
+            return $deviceTypes;
         }
 
 
@@ -863,19 +1002,13 @@ namespace YAWK
                     $this->i_publicUsers++;
                 }
 
-                // count device types
-                switch ($item['deviceType'])
-                {
-                    case "Desktop";
-                        $this->i_desktop++;
-                        break;
-                    case "Tablet";
-                        $this->i_tablet++;
-                        break;
-                    case "Phone";
-                        $this->i_phone++;
-                        break;
-                }
+                // calculate percentage of guests vs logged in users
+                $percentage = 100 / $this->i_hits;
+                $this->i_loggedUsersPercentage = $this->i_loggedUsers * $percentage;
+                $this->i_publicUsersPercentage = $this->i_publicUsers * $percentage;
+                $this->i_loggedUsersPercentage = round($this->i_loggedUsersPercentage, 1, PHP_ROUND_HALF_UP);
+                $this->i_publicUsersPercentage = round($this->i_publicUsersPercentage, 1, PHP_ROUND_HALF_UP);
+
             }
 
             /*
@@ -995,7 +1128,7 @@ namespace YAWK
                                     // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
                                     maintainAspectRatio: false,
                                     //String - A legend template
-                                    legendTemplate: '<ul class=\"<%=name . toLowerCase() %>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background - color:<%=segments[i] . fillColor %>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>',
+                                    legendTemplate: '<ul class=\"<%=name.toLowerCase() %>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor %>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>',
                                     //String - A tooltip template
                                     tooltipTemplate: '<%=value %> <%=label%> users'
                                 };
@@ -1238,7 +1371,7 @@ namespace YAWK
                                     //String - A legend template
                                     legendTemplate: '<ul class=\"<%=name.toLowerCase() %>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor %>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>',
                                     //String - A tooltip template
-                                    tooltipTemplate: '<%=value %> <%=label%> users'
+                                    tooltipTemplate: '<%=value %> <%=label%>'
                                 };
                                 //Create pie or douhnut chart
                                 // You can switch between pie and douhnut using the method below.
@@ -1280,8 +1413,130 @@ namespace YAWK
             {   // show only items where browser got a value
                 if ($value !== 0 && $osVersion !== 0)
                 {   // get different textcolors
-                    $textcolor = self::getOsColors($osVersion);
+                    $textcolor = self::getOsVersionsColors($osVersion);
                     echo "<li><a href=\"#\" class=\"$textcolor\">$osVersion
+                          <span class=\"pull-right $textcolor\" ><i class=\"fa fa-angle-down\"></i>$value</span></a></li>";
+                }
+            }
+
+            echo "</ul>
+            </div>
+            <!-- /.footer -->
+        </div>
+        <!-- /.box -->";
+        }
+
+        public function drawDeviceTypeBox($db, $data, $limit)
+        {   /** @var $db \YAWK\db */
+            // get data for this box
+            $deviceTypes = \YAWK\stats::countDeviceTypes($db, $data, $limit);
+
+            echo "<!-- donut box:  -->
+        <div class=\"box box-default\">
+            <div class=\"box-header with-border\">
+                <h3 class=\"box-title\">Device Type <small>(desktop or mobile)</small></h3>
+
+                <div class=\"box-tools pull-right\">
+                    <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"collapse\"><i class=\"fa fa-minus\"></i>
+                    </button>
+                    <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"remove\"><i class=\"fa fa-times\"></i></button>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class=\"box-body\">
+                <div class=\"row\">
+                    <div class=\"col-md-8\">
+                        <div class=\"chart-responsive\">
+                            <canvas id=\"barChartDeviceType\" height=\"150\"></canvas>
+                        </div>
+                        <!-- ./chart-responsive -->
+                    </div>
+                    <!-- /.col -->
+                    <div class=\"col-md-4\">
+                        <ul class=\"chart-legend clearfix\">
+
+                        <script>    
+                            //-------------
+                            //- BAR CHART -
+                            //-------------
+                            
+                            var barChartData = {
+                              ";
+                                    $this->getJsonDeviceTypes($db, $deviceTypes);
+                            echo "};
+                        
+                            var barChartCanvas = $('#barChartDeviceType').get(0).getContext('2d');
+                            var barChart = new Chart(barChartCanvas);
+                            barChartData.datasets.fillColor = '#00a65a';
+                            barChartData.datasets.strokeColor = '#00a65a';
+                            barChartData.datasets.pointColor = '#00a65a';
+                            var barChartOptions = {
+                              //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+                              scaleBeginAtZero: true,
+                              //Boolean - Whether grid lines are shown across the chart
+                              scaleShowGridLines: true,
+                              //String - Colour of the grid lines
+                              scaleGridLineColor: 'rgba(0,0,0,.05)',
+                              //Number - Width of the grid lines
+                              scaleGridLineWidth: 1,
+                              //Boolean - Whether to show horizontal lines (except X axis)
+                              scaleShowHorizontalLines: true,
+                              //Boolean - Whether to show vertical lines (except Y axis)
+                              scaleShowVerticalLines: true,
+                              //Boolean - If there is a stroke on each bar
+                              barShowStroke: true,
+                              //Number - Pixel width of the bar stroke
+                              barStrokeWidth: 2,
+                              //Number - Spacing between each of the X value sets
+                              barValueSpacing: 5,
+                              //Number - Spacing between data sets within X values
+                              barDatasetSpacing: 1,
+                              //String - A legend template
+                              legendTemplate: '<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets.fillColor %>\"></span><%if(datasets[i].label){%><%=datasets.label%><%}%></li><%}%></ul>',
+                              //Boolean - whether to make the chart responsive
+                              responsive: true,
+                              maintainAspectRatio: true
+                            };
+                        
+                            barChartOptions.datasetFill = false;
+                            barChart.Bar(barChartData, barChartOptions);
+                        </script>";
+
+            // walk through array and draw data beneath pie chart
+            foreach ($deviceTypes AS $deviceType => $value)
+            {   // get text colors
+                $textcolor = self::getDeviceTypeColors($deviceType);
+                // show browsers their value is greater than zero and exclude totals
+                if ($value > 0 && ($deviceType !== "Total"))
+                {   // 1 line for every browser
+                    echo "<li><i class=\"fa fa-circle-o $textcolor\"></i> <b>$value</b> $deviceType</li>";
+                }
+                // show totals
+                if ($deviceType === "Total")
+                {   // of how many visits
+                    echo "<li class=\"small\">latest $value Users</li>";
+                }
+            }
+            echo"
+                        </ul>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.box-body -->
+            <div class=\"box-footer no-padding\">
+                <ul class=\"nav nav-pills nav-stacked\">";
+
+            // sort array by value high to low to display most browsers first
+            $deviceTypes[] = arsort($deviceTypes);
+            // walk through array and display browsers as nav pills
+            foreach ($deviceTypes as $deviceType => $value)
+            {   // show only items where browser got a value
+                if ($value !== 0 && $deviceType !== 0)
+                {   // get different textcolors
+                    $textcolor = self::getDeviceTypeColors($deviceType);
+                    echo "<li><a href=\"#\" class=\"$textcolor\">$deviceType
                           <span class=\"pull-right $textcolor\" ><i class=\"fa fa-angle-down\"></i>$value</span></a></li>";
                 }
             }
