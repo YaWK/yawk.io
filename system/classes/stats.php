@@ -1195,7 +1195,7 @@ namespace YAWK
             echo "<!-- donut box:  -->
         <div class=\"box box-default\">
             <div class=\"box-header with-border\">
-                <h3 class=\"box-title\">Operating Systems</h3>
+                <h3 class=\"box-title\">Operating Systems <small>(experimental)</small></h3>
 
                 <div class=\"box-tools pull-right\">
                     <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"collapse\"><i class=\"fa fa-minus\"></i>
@@ -1434,7 +1434,7 @@ namespace YAWK
             echo "<!-- donut box:  -->
         <div class=\"box box-default\">
             <div class=\"box-header with-border\">
-                <h3 class=\"box-title\">Device Type <small>(desktop or mobile)</small></h3>
+                <h3 class=\"box-title\">Device Type <small>(desktop, mobile or tablet)</small></h3>
 
                 <div class=\"box-tools pull-right\">
                     <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"collapse\"><i class=\"fa fa-minus\"></i>
