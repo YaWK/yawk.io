@@ -38,6 +38,14 @@ echo"<ol class=\"breadcrumb\">
 // load stats data into an array that every box will use, this saves performance
     $data = $stats->getStatsArray($db);
 
+if (isset($_POST['limit']) && (!empty($_POST['limit'])))
+{
+    $limit = strip_tags($_POST['limit']);
+}
+else
+    {
+        $limit = $stats->i_hits;
+    }
 ?>
 
 <div class="row">
@@ -51,25 +59,25 @@ echo"<ol class=\"breadcrumb\">
             <div class="box-body h3">
                 Hits overall: <b><?php echo $stats->i_hits; ?></b><br>
                 Guests: <b><?php echo $stats->i_publicUsersPercentage; ?>% </b> <small>(<?php echo $stats->i_publicUsers; ?>)</small><br>
-                Logged in: <b><?php echo $stats->i_loggedUsersPercentage; ?>%</b> <small>(<?php echo $stats->i_loggedUsers; ?>)</small><br>
+                Members: <b><?php echo $stats->i_loggedUsersPercentage; ?>%</b> <small>(<?php echo $stats->i_loggedUsers; ?>)</small><br>
             </div>
         </div>
         <!-- / box -->
 
         <!-- DEVICE TYPE box -->
-        <?php $stats->drawDeviceTypeBox($db, $data, 200); ?>
+        <?php $stats->drawDeviceTypeBox($db, $data, $limit); ?>
         <!-- / box -->
 
         <!-- OS box -->
         <div class="row">
-        <div class="col-md-6"><?php $stats->drawOsBox($db, $data, 200); ?></div>
-        <div class="col-md-6"><?php $stats->drawOsVersionBox($db, $data, 200); ?></div>
+        <div class="col-md-6"><?php $stats->drawOsBox($db, $data, $limit); ?></div>
+        <div class="col-md-6"><?php $stats->drawOsVersionBox($db, $data, $limit); ?></div>
         </div>
 
         <!-- / box -->
 
         <!-- box -->
-        <?php $stats->drawBrowserBox($db, $data, 200); ?>
+        <?php $stats->drawBrowserBox($db, $data, $limit); ?>
 
         <!-- box -->
         <div class="box">
@@ -88,10 +96,25 @@ echo"<ol class=\"breadcrumb\">
         <!-- box -->
         <div class="box">
             <div class="box-header with-border">
-                Statistics / Pages
+                <h3 class="box-title">Statistics <small>Settings</small></h3>
             </div>
             <div class="box-body">
-                current visited page, referrer
+                <form action="index.php?page=stats" method="post">
+                    <label for="limit">view latest hits, leave blank for all</label>
+                    <input id="limit" name="limit" value="<?php echo $limit; ?>" type="text" placeholder="500" class="form-control">
+                    <br>
+                    <button type="submit" class="btn btn-success pull-right"><i class="glyphicon glyphicon-refresh"></i>&nbsp; Refresh Stats</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- box -->
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Pages <small>and referrer</small></h3>
+            </div>
+            <div class="box-body">
+                latest pages, referer etc...
             </div>
         </div>
 
