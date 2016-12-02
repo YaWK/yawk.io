@@ -1,9 +1,13 @@
 <?php
+
 namespace YAWK
 {
 
-    use YAWK\PLUGINS\MESSAGES\messages;
-
+    /**
+     * Class stats
+     * @package YAWK
+     *
+     */
     class stats
     {
         public $id;
@@ -36,6 +40,7 @@ namespace YAWK
         public $i_osMac = 0;
         public $i_osLinux = 0;
         public $i_osAndroid = 0;
+        public $i_iOS = 0;
         public $i_osUnknown = 0;
 
         // os versions
@@ -65,7 +70,6 @@ namespace YAWK
         public $i_desktop = 0;
         public $i_tablet = 0;
         public $i_phone = 0;
-
 
 
         function construct()
@@ -271,6 +275,7 @@ namespace YAWK
                 if ($os === "Linux") { $textcolor = "#f56954"; }
                 if ($os === "Mac") { $textcolor = "#f39c12"; }
                 if ($os === "Android") { $textcolor = "#00a65a"; }
+                if ($os === "iOS") { $textcolor = "#000000"; }
                 if ($os === "Unknown") { $textcolor = "#cccccc"; }
 
                 // only browsers, not the total value
@@ -464,7 +469,6 @@ namespace YAWK
             }
             return $textcolor;
         }
-
 
 
         static function getDeviceTypeColors($deviceType)
@@ -764,18 +768,22 @@ namespace YAWK
                     case "Android";
                         $this->i_osAndroid++;
                         break;
+                    case "iOS";
+                        $this->i_iOS++;
+                        break;
                     default: $this->i_osUnknown++;
                 }
             }
 
             // count Operating Systems
-            $total = $this->i_osWindows+$this->i_osLinux+$this->i_osMac+$this->i_osAndroid+$this->i_osUnknown;
+            $total = $this->i_osWindows+$this->i_osLinux+$this->i_osMac+$this->i_osAndroid+$this->i_iOS+$this->i_osUnknown;
             // build an array, cointaining the browsers and the number how often it's been found
             $os = array(
                 "Windows" => $this->i_osWindows,
                 "Linux" => $this->i_osLinux,
                 "Mac" => $this->i_osMac,
                 "Android" => $this->i_osAndroid,
+                "iOS" => $this->i_iOS,
                 "Unknown" => $this->i_osUnknown,
                 "Total" => $total
             );
@@ -1547,7 +1555,6 @@ namespace YAWK
         </div>
         <!-- /.box -->";
         }
-
 
     }
 }

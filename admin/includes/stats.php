@@ -104,12 +104,24 @@ else
             <div class="box-body">
                 <form action="index.php?page=stats" method="post">
                     <label for="limit">view latest <small><i>n</i></small> hits, leave blank for all</label>
-                    <input id="limit" name="limit" value="<?php echo $limit; ?>" type="text" placeholder="500" class="form-control">
+                    <input id="limit" name="limit" value="<?php echo $limit; ?>" type="text" placeholder="<?php echo $limit; ?>" class="form-control">
                     <br>
                     <button type="submit" class="btn btn-success pull-right"><i class="glyphicon glyphicon-refresh"></i>&nbsp; Refresh Stats</button>
                 </form>
             </div>
         </div>
+
+
+        <!-- box -->
+        <div class="box">
+            <div class="box-header with-border">
+                Daytime
+            </div>
+            <div class="box-body">
+                pieChart (morgen, mittag, abend, nacht)
+            </div>
+        </div>
+        <!-- / box -->
 
         <!-- box -->
         <div class="box">
@@ -134,8 +146,18 @@ else
                 ?>
             </div>
         </div>
-
         <?php // $stats->calculateStatsFromArray($db, $data); ?>
+        <!-- / box -->
+
+        <!-- box -->
+        <div class="box">
+            <div class="box-header with-border">
+                Logins
+            </div>
+            <div class="box-body">
+                all user logins
+            </div>
+        </div>
         <!-- / box -->
 
     </div>
