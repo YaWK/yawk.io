@@ -126,9 +126,8 @@ else
         <!-- box -->
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">Pages <small>from most to least</small></h3>
+                <h3 class="box-title">Pages <small>hits from most to least</small></h3>
             </div>
-            <div class="box-body">
                 <?php
                     $erg = array();
                     $data = array_slice($data, 0, $limit, true);
@@ -139,26 +138,30 @@ else
 
                     $erg = (array_count_values($erg));
                     arsort($erg);
-                    foreach ($erg AS $page => $value)
-                    {
-                        echo "<b>$value</b> <a href=\"../$page\" target=\"_blank\" title=\"(open in new tab)\">$page</a><br>";
-                    }
-                ?>
+                echo "<div class=\"box-footer no-padding\">
+                <ul class=\"nav nav-pills nav-stacked\">";
+
+                // walk through array and display pages as nav pills
+            foreach ($erg as $page => $value)
+            {   // show only items where browser got a value
+                if ($value !== 0 && $page !== 0)
+                {   // get different textcolors
+                    echo "<li><a href=\"../$page\" target=\"_blank\"><b>$value</b> &nbsp;<span class=\"text-blue\">$page</span></a></li>";
+                }
+            }
+
+            echo "</ul>";
+              ?>
+                <!-- /.footer -->
             </div>
         </div>
-        <?php // $stats->calculateStatsFromArray($db, $data); ?>
         <!-- / box -->
 
-        <!-- box -->
-        <div class="box">
-            <div class="box-header with-border">
-                Logins
-            </div>
-            <div class="box-body">
-                all user logins
-            </div>
-        </div>
-        <!-- / box -->
+    <!-- login box -->
+    <?php
+     $stats->drawLoginBox($db, $limit);
+    ?>
+    <!-- / login box -->
 
     </div>
 </div>

@@ -71,6 +71,17 @@ namespace YAWK
         public $i_tablet = 0;
         public $i_phone = 0;
 
+        // logins
+        public $i_totalLogins = 0;
+        public $i_loginSuccessful = 0;
+        public $i_loginFailed = 0;
+        public $i_loginFrontend = 0;
+        public $i_loginBackend = 0;
+        public $i_loginBackendSuccess = 0;
+        public $i_loginBackendFailed = 0;
+        public $i_loginFrontendSuccess = 0;
+        public $i_loginFrontendFailed = 0;
+
 
         function construct()
         {
@@ -218,6 +229,118 @@ namespace YAWK
                 }
         }
 
+        public function countLogins($db, $limit)
+        {   /* @var $db \YAWK\db */
+            if (!isset($limit) || (empty($limit)))
+            {
+                $limit = 100;
+            }
+            if ($res = $db->query("SELECT * FROM {logins} LIMIT $limit"))
+            {   // fetch and return how many messages have been sent
+                $loginDataArray = array();
+                // count login data
+                while ($row = mysqli_fetch_assoc($res))
+                {
+                    // GET AN ARRAY CONTAINING ALL DATA FROM LOGIN DB
+                    // $loginDataArray[] = $row;
+
+                    // count +1 to all logins
+                    $this->i_totalLogins++;
+
+                    // count frontend logins
+                    if ($row['location'] === "frontend")
+                    {
+                        // add total frontendlogins +1
+                        $this->i_loginFrontend++;
+                        if ($row['failed'] === "1")
+                        {   // frontend login failed +1
+                            $this->i_loginFrontendFailed++;
+                        }
+                        else
+                            {   // frontend login success +1
+                                $this->i_loginFrontendSuccess++;
+                            }
+                    }
+                    // count backend logins
+                    if ($row['location'] === "backend")
+                    {   // add total backend login +1
+                        $this->i_loginBackend++;
+                        if ($row['failed'] === "1")
+                        {   // backend login failed +1
+                            $this->i_loginBackendFailed++;
+                        }
+                        else
+                            {   // backend login success +1
+                                $this->i_loginBackendSuccess++;
+                            }
+                    }
+                    // total success logins +1
+                    if ($row['failed'] === "0")
+                    {   // success +1
+                        $this->i_loginSuccessful++;
+                    }
+                    // total failed logins +1
+                    if ($row['failed'] === "1")
+                    {   // failed +1
+                        $this->i_loginFailed++;
+                    }
+                }
+                // build an array, cointaining the failed and successful logins
+                $loginDataArray = array(
+                    "Failed" => $this->i_loginFailed,
+                    "Successful" => $this->i_loginSuccessful,
+                    "BackendSuccess" => $this->i_loginBackendSuccess,
+                    "BackendFailed" => $this->i_loginBackendFailed,
+                    "FrontendSuccess" => $this->i_loginFrontendSuccess,
+                    "FrontendFailed" => $this->i_loginFrontendFailed,
+               //     "Frontend" => $this->i_loginFrontend,
+               //     "Backend" => $this->i_loginBackend,
+                    "Total" => $this->i_totalLogins
+                );
+                return $loginDataArray;
+            }
+            else
+            {
+                \YAWK\alert::draw("warning", "Could not get login data array.", "error getting data into array", "", 5200);
+                return false;
+            }
+        }
+
+
+        static function getJsonLogins($db, $logins)
+        {   /* @var $db \YAWK\db */
+            // check if logins are set
+            if (!isset($logins) || (empty($logins)))
+            {   // nope, get them from db
+                $logins = self::countLogins($db, 200);
+            }
+            $jsonData = "[";
+            foreach ($logins AS $login => $value)
+            {
+                // init textcolor
+                $textcolor = '';
+                // set different colors for each status
+                if ($login === "Failed") { $textcolor = "#f56954"; }
+                if ($login === "Successful") { $textcolor = "#00a65a"; }
+               //  if ($login === "Backend") { $textcolor = "#f39c12"; }
+               //  if ($login === "Frontend") { $textcolor = "#00c0ef"; }
+
+                // only browsers, not the total value
+                if ($login !== ("Total") && ($login === ("Failed") || ($login === ("Successful"))))
+                {
+                    $jsonData .= "
+                            {
+                                value: $value,
+                                color: \"$textcolor\",
+                                highlight: \"$textcolor\",
+                                label: \"$login\"
+                            },";
+                }
+            }
+
+            $jsonData .= "]";
+            echo $jsonData;
+        }
 
         static function getJsonBrowsers($db, $browsers)
         {   /* @var $db \YAWK\db */
@@ -369,34 +492,6 @@ namespace YAWK
                   data: [$this->i_desktop, $this->i_phone, $this->i_tablet]
                 }
             ]";
-
-
-            /* pie data
-            $jsonData = "[";
-            foreach ($deviceTypes AS $deviceType => $value)
-            {
-                // init textcolor
-                $textcolor = '';
-                // set different colors for each browser
-                if ($deviceType === "Desktop") { $textcolor = "#00c0ef"; }
-                if ($deviceType === "Phone") { $textcolor = "#f56954"; }
-                if ($deviceType === "Tablet") { $textcolor = "#f39c12"; }
-
-                // only browsers, not the total value
-                if ($deviceType !== ("Total"))
-                {
-                    $jsonData .= "
-                            {
-                                value: $value,
-                                color: \"$textcolor\",
-                                highlight: \"$textcolor\",
-                                label: \"$deviceType\"
-                            },";
-                }
-            }
-
-            $jsonData .= "]";
-            */
             echo $jsonData;
         }
 
@@ -482,6 +577,27 @@ namespace YAWK
                     break;
                 case "Tablet":
                     $textcolor = "text-blue";
+                    break;
+                default:
+                    $textcolor = "text-black";
+            }
+            return $textcolor;
+        }
+
+        static function getLoginColors($login)
+        {
+            switch ($login) {
+                case "Failed":
+                    $textcolor = "text-red";
+                    break;
+                case "Successful":
+                    $textcolor = "text-green";
+                    break;
+                case "Frontend":
+                    $textcolor = "text-blue";
+                    break;
+                case "Backend":
+                    $textcolor = "text-orange";
                     break;
                 default:
                     $textcolor = "text-black";
@@ -1545,6 +1661,136 @@ namespace YAWK
                 {   // get different textcolors
                     $textcolor = self::getDeviceTypeColors($deviceType);
                     echo "<li><a href=\"#\" class=\"$textcolor\">$deviceType
+                          <span class=\"pull-right $textcolor\" ><i class=\"fa fa-angle-down\"></i>$value</span></a></li>";
+                }
+            }
+
+            echo "</ul>
+            </div>
+            <!-- /.footer -->
+        </div>
+        <!-- /.box -->";
+        }
+
+
+        public function drawLoginBox($db, $limit)
+        {   /** @var $db \YAWK\db */
+            // get data for this box
+            $logins = $this->countLogins($db, $limit);
+
+            echo "<!-- donut box:  -->
+        <div class=\"box box-default\">
+            <div class=\"box-header with-border\">
+                <h3 class=\"box-title\">Logins <small>overview user logins</small></h3>
+
+                <div class=\"box-tools pull-right\">
+                    <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"collapse\"><i class=\"fa fa-minus\"></i>
+                    </button>
+                    <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"remove\"><i class=\"fa fa-times\"></i></button>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class=\"box-body\">
+                <div class=\"row\">
+                    <div class=\"col-md-8\">
+                        <div class=\"chart-responsive\">
+                            <canvas id=\"pieChartLogins\" height=\"150\"></canvas>
+                        </div>
+                        <!-- ./chart-responsive -->
+                    </div>
+                    <!-- /.col -->
+                    <div class=\"col-md-4\">
+                        <ul class=\"chart-legend clearfix\">
+
+                            <script> //-------------
+                                //- PIE CHART -
+                                //-------------
+
+                                // Get context with jQuery - using jQuery's .get() method.
+                                var pieChartCanvas = $('#pieChartLogins').get(0).getContext('2d');
+                                var pieChart = new Chart(pieChartCanvas);
+                                // get browsers array
+                                // output js data with php function getJsonBrowsers
+                                var PieData = ";self::getJsonLogins($db, $logins);
+            echo"
+                                var pieOptions = {
+                                    //Boolean - Whether we should show a stroke on each segment
+                                    segmentShowStroke: true,
+                                    //String - The colour of each segment stroke
+                                    segmentStrokeColor: '#fff',
+                                    //Number - The width of each segment stroke
+                                    segmentStrokeWidth: 1,
+                                    //Number - The percentage of the chart that we cut out of the middle
+                                    percentageInnerCutout: 50, // This is 0 for Pie charts
+                                    //Number - Amount of animation steps
+                                    animationSteps: 100,
+                                    //String - Animation easing effect
+                                    animationEasing: 'easeOutBounce',
+                                    //Boolean - Whether we animate the rotation of the Doughnut
+                                    animateRotate: true,
+                                    //Boolean - Whether we animate scaling the Doughnut from the centre
+                                    animateScale: false,
+                                    //Boolean - whether to make the chart responsive to window resizing
+                                    responsive: true,
+                                    // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+                                    maintainAspectRatio: false,
+                                    //String - A legend template
+                                    legendTemplate: '<ul class=\"<%=name.toLowerCase() %>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor %>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>',
+                                    //String - A tooltip template
+                                    tooltipTemplate: '<%=value %> <%=label%>'
+                                };
+                                //Create pie or douhnut chart
+                                // You can switch between pie and douhnut using the method below.
+                                pieChart.Doughnut(PieData, pieOptions);
+                                //-----------------
+                                //- END PIE CHART -
+                                //-----------------</script>";
+
+            // walk through array and draw data beneath pie chart
+            foreach ($logins AS $login => $value)
+            {   // get text colors
+                $textcolor = self::getLoginColors($login);
+                // show browsers their value is greater than zero and exclude totals
+                if ($value > 0 && ($login !== "Total") && ($login === "Failed") || ($login === "Successful"))
+                {   // 1 line for every browser
+                    echo "<li><i class=\"fa fa-circle-o $textcolor\"></i> <b>$value</b> $login</li>";
+                }
+                // show totals
+                if ($login === "Total")
+                {   // of how many visits
+                    echo "<li class=\"small\">latest $value Logins</li>";
+                }
+            }
+            echo"
+                        </ul>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.box-body -->
+            <div class=\"box-footer no-padding\">
+                <ul class=\"nav nav-pills nav-stacked\">";
+
+            // sort array by value high to low to display most browsers first
+            $logins[] = arsort($logins);
+            // walk through array and display browsers as nav pills
+            foreach ($logins as $login => $value)
+            {   // show only items where browser got a value
+                if ($value !== 0 && $login !== 0)
+                {   // get different textcolors
+                    $textcolor = self::getLoginColors($login);
+                    if ($login !== "Failed" && ($login !== "Successful") && ($login !== "Total"))
+                    {
+                        $spacer = "&nbsp;&nbsp;&nbsp;&nbsp;<small>";
+                        $spacerEnd ="</small>";
+                    }
+                    else
+                        {
+                            $spacer = '';
+                            $spacerEnd = '';
+                        }
+                    echo "<li><a href=\"#\" class=\"$textcolor\">$spacer$login$spacerEnd
                           <span class=\"pull-right $textcolor\" ><i class=\"fa fa-angle-down\"></i>$value</span></a></li>";
                 }
             }
