@@ -2548,7 +2548,8 @@ namespace YAWK
                 // show browsers their value is greater than zero and exclude totals
                 if ($value > 0 && ($weekday !== "Total"))
                 {   // 1 line for every browser
-                    echo "<li><b>$value%</b> $weekday</li>";
+                    if (strlen($value) === 1) { $spacer = "&nbsp;&nbsp;"; } else { $spacer = ''; }
+                    echo "<li><b>$spacer$value%</b> $weekday</li>";
                 }
                 // show totals
                 if ($weekday === "Total")
