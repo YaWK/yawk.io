@@ -81,6 +81,8 @@ namespace YAWK
         public $i_loginBackendFailed = 0;
         public $i_loginFrontendSuccess = 0;
         public $i_loginFrontendFailed = 0;
+        public $i_loginSuccessPercentage = 0;
+        public $i_loginFailedPercentage = 0;
 
 
         function construct()
@@ -285,6 +287,15 @@ namespace YAWK
                         $this->i_loginFailed++;
                     }
                 }
+                // calculate percentage
+                $total = $this->i_totalLogins;
+                $failed = $this->i_loginFailed;
+                $success = $this->i_loginSuccessful;
+                $total = 100 / $total;
+                $this->i_loginFailedPercentage = round($total * $failed);
+                $this->i_loginSuccessPercentage = round($total * $success);
+
+
                 // build an array, cointaining the failed and successful logins
                 $loginDataArray = array(
                     "Failed" => $this->i_loginFailed,
@@ -293,6 +304,8 @@ namespace YAWK
                     "BackendFailed" => $this->i_loginBackendFailed,
                     "FrontendSuccess" => $this->i_loginFrontendSuccess,
                     "FrontendFailed" => $this->i_loginFrontendFailed,
+                    "FailedPercentage" => $this->i_loginFailedPercentage,
+                    "SuccessPercentage" => $this->i_loginSuccessPercentage,
                //     "Frontend" => $this->i_loginFrontend,
                //     "Backend" => $this->i_loginBackend,
                     "Total" => $this->i_totalLogins
@@ -325,7 +338,7 @@ namespace YAWK
                //  if ($login === "Backend") { $textcolor = "#f39c12"; }
                //  if ($login === "Frontend") { $textcolor = "#00c0ef"; }
 
-                // only browsers, not the total value
+                // only failed + successful logins, exclude all other values
                 if ($login !== ("Total") && ($login === ("Failed") || ($login === ("Successful"))))
                 {
                     $jsonData .= "
@@ -589,6 +602,12 @@ namespace YAWK
             switch ($login) {
                 case "Failed":
                     $textcolor = "text-red";
+                    break;
+                case "FailedPercentage":
+                    $textcolor = "text-red";
+                    break;
+                case "SuccessPercentage":
+                    $textcolor = "text-green";
                     break;
                 case "Successful":
                     $textcolor = "text-green";
@@ -1751,9 +1770,11 @@ namespace YAWK
             {   // get text colors
                 $textcolor = self::getLoginColors($login);
                 // show browsers their value is greater than zero and exclude totals
-                if ($value > 0 && ($login !== "Total") && ($login === "Failed") || ($login === "Successful"))
+                if ($value > 0 && ($login !== "Total") && ($login === "FailedPercentage") || ($login === "SuccessPercentage"))
                 {   // 1 line for every browser
-                    echo "<li><i class=\"fa fa-circle-o $textcolor\"></i> <b>$value</b> $login</li>";
+                    if ($login === "FailedPercentage") { $login = "Failed"; }
+                    if ($login === "SuccessPercentage") { $login = "Success"; }
+                    echo "<li><i class=\"fa fa-circle-o $textcolor\"></i> <b>$value%</b> $login</li>";
                 }
                 // show totals
                 if ($login === "Total")
@@ -1780,7 +1801,9 @@ namespace YAWK
                 if ($value !== 0 && $login !== 0)
                 {   // get different textcolors
                     $textcolor = self::getLoginColors($login);
-                    if ($login !== "Failed" && ($login !== "Successful") && ($login !== "Total"))
+                    if ($login !== "Failed"
+                        && ($login !== "Successful")
+                        && ($login !== "Total"))
                     {
                         $spacer = "&nbsp;&nbsp;&nbsp;&nbsp;<small>";
                         $spacerEnd ="</small>";
@@ -1790,8 +1813,12 @@ namespace YAWK
                             $spacer = '';
                             $spacerEnd = '';
                         }
-                    echo "<li><a href=\"#\" class=\"$textcolor\">$spacer$login$spacerEnd
-                          <span class=\"pull-right $textcolor\" ><i class=\"fa fa-angle-down\"></i>$value</span></a></li>";
+                        if ($login !== "FailedPercentage" && ($login !== "SuccessPercentage"))
+                        {
+                            echo "<li><a href=\"#\" class=\"$textcolor\">$spacer$login$spacerEnd
+                            <span class=\"pull-right $textcolor\" ><i class=\"fa fa-angle-down\"></i>$value</span></a></li>";
+
+                        }
                 }
             }
 
