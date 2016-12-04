@@ -113,14 +113,7 @@ else
 
 
         <!-- box -->
-        <div class="box">
-            <div class="box-header with-border">
-                Daytime
-            </div>
-            <div class="box-body">
-                pieChart (morgen, mittag, abend, nacht)
-            </div>
-        </div>
+        <?php $stats->drawDaytimeBox($db, $data, $limit); ?>
         <!-- / box -->
 
         <!-- box -->

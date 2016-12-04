@@ -84,6 +84,16 @@ namespace YAWK
         public $i_loginSuccessPercentage = 0;
         public $i_loginFailedPercentage = 0;
 
+        // date + time
+        public $i_morning = 0;
+        public $i_afternoon = 0;
+        public $i_evening = 0;
+        public $i_night = 0;
+        public $i_morningPercent = 0;
+        public $i_afternoonPercent = 0;
+        public $i_eveningPercent = 0;
+        public $i_nightPercent = 0;
+
 
         function construct()
         {
@@ -355,6 +365,46 @@ namespace YAWK
             echo $jsonData;
         }
 
+
+        static function getJsonDaytime($db, $daytimes)
+        {   /* @var $db \YAWK\db */
+            // check if logins are set
+            if (!isset($daytimes) || (empty($daytimes)))
+            {   // nope, get them from db
+                $daytimes = self::countDaytime($db, '', 200);
+            }
+            $jsonData = "[";
+            foreach ($daytimes AS $daytime => $value)
+            {
+                // init textcolor
+                $textcolor = '';
+                // set different colors for each status
+                if ($daytime === "Morning") { $textcolor = "#f39c12"; }
+                if ($daytime === "Afternoon") { $textcolor = "#00a65a"; }
+                if ($daytime === "Evening") { $textcolor = "#00c0ef"; }
+                if ($daytime === "Night") { $textcolor = "#003D4C"; }
+
+                // only failed + successful logins, exclude all other values
+                if ($daytime !== ("Total") &&
+                    ($daytime === ("Morning") ||
+                    ($daytime === ("Afternoon") ||
+                    ($daytime === ("Evening") ||
+                    ($daytime === ("Night"))))))
+                {
+                    $jsonData .= "
+                            {
+                                value: $value,
+                                color: \"$textcolor\",
+                                highlight: \"$textcolor\",
+                                label: \"$daytime\"
+                            },";
+                }
+            }
+
+            $jsonData .= "]";
+            echo $jsonData;
+        }
+
         static function getJsonBrowsers($db, $browsers)
         {   /* @var $db \YAWK\db */
             // check if browsers are set
@@ -597,6 +647,27 @@ namespace YAWK
             return $textcolor;
         }
 
+        static function getDaytimeColors($daytime)
+        {
+            switch ($daytime) {
+                case "Morning":
+                    $textcolor = "text-orange";
+                    break;
+                case "Afternoon":
+                    $textcolor = "text-green";
+                    break;
+                case "Evening":
+                    $textcolor = "text-blue";
+                    break;
+                case "Night":
+                    $textcolor = "text-navy";
+                    break;
+                default:
+                    $textcolor = "text-black";
+            }
+            return $textcolor;
+        }
+
         static function getLoginColors($login)
         {
             switch ($login) {
@@ -698,6 +769,124 @@ namespace YAWK
                     $textcolor = "text-black";
             }
             return $textcolor;
+        }
+
+
+        public function countDaytime($db, $data, $limit)
+        {   /* @var $db \YAWK\db */
+
+            // check if limit (i) is set
+            if (!isset($limit) || (empty($limit)))
+            {   // set default value
+                $limit = 100;
+            }
+
+            // check if data array is set, if not load data from db
+            if (!isset($data) || (empty($data) || (!is_array($data))))
+            {   // data is not set or in false format, try to get it from database
+                if ($res = $db->query("SELECT date_created FROM {stats} ORDER BY id DESC LIMIT $limit"))
+                {   // create array
+                    $data = array();
+                    while ($row = mysqli_fetch_assoc($res))
+                    {   // add data to array
+                        $data[] = $row;
+                    }
+                }
+                else
+                {   // data array not set and unable to get data from db
+                    return false;
+                }
+            }
+
+            // LIMIT the data to x entries
+            if (isset($limit) && (!empty($limit)))
+            {   // if limit is set, cut array to limited range
+                $data = array_slice($data, 0, $limit, true);
+            }
+
+            // break up the date & extract the hour to calculate
+            foreach ($data as $date => $value)
+            {
+                // get only the hour in a new array
+                $hour = substr($value['date_created'], 11, -6);
+
+                // identify morning, afternoon, evening + night
+                if ($hour === "06" ||
+                    ($hour === "07") ||
+                    ($hour === "08") ||
+                    ($hour === "09") ||
+                    ($hour === "10") ||
+                    ($hour === "11"))
+                {
+                    $this->i_morning++;
+                }
+                if ($hour === "12" ||
+                    ($hour === "13") ||
+                    ($hour === "14") ||
+                    ($hour === "15") ||
+                    ($hour === "16") ||
+                    ($hour === "17"))
+                {
+                    $this->i_afternoon++;
+                }
+                if ($hour === "18" ||
+                    ($hour === "19") ||
+                    ($hour === "20") ||
+                    ($hour === "21") ||
+                    ($hour === "22") ||
+                    ($hour === "23"))
+                {
+                    $this->i_evening++;
+                }
+                if ($hour === "00" ||
+                    ($hour === "01") ||
+                    ($hour === "02") ||
+                    ($hour === "03") ||
+                    ($hour === "04") ||
+                    ($hour === "05"))
+                {
+                    $this->i_night++;
+                }
+            }
+
+            // count daytimes
+            $total = $this->i_morning+$this->i_afternoon+$this->i_evening+$this->i_night;
+
+            // build an array, cointaining the daytimes
+            $dayTimes = array(
+                "Morning" => $this->i_morning,
+                "Afternoon" => $this->i_afternoon,
+                "Evening" => $this->i_evening,
+                "Night" => $this->i_night,
+                "Total" => $total
+            );
+
+            // return OS data array
+            return $dayTimes;
+        }
+
+        public function getDayTimesPercent()
+        {
+            // count daytimes
+            $total = $this->i_morning+$this->i_afternoon+$this->i_evening+$this->i_night;
+
+            // calculate percentage
+            $a = 100 / $total;
+            $this->i_morningPercent = round($a * $this->i_morning);
+            $this->i_afternoonPercent = round($a * $this->i_afternoon);
+            $this->i_eveningPercent = round($a * $this->i_evening);
+            $this->i_nightPercent = round($a * $this->i_night);
+
+
+            // build an array, cointaining the device types and the number how often it's been found
+            $dayTimesPercent = array(
+                "Morning" => $this->i_morningPercent,
+                "Afternoon" => $this->i_afternoonPercent,
+                "Evening" => $this->i_eveningPercent,
+                "Night" => $this->i_nightPercent
+            );
+            arsort($dayTimesPercent);
+            return $dayTimesPercent;
         }
 
 
@@ -1819,6 +2008,127 @@ namespace YAWK
                             <span class=\"pull-right $textcolor\" ><i class=\"fa fa-angle-down\"></i>$value</span></a></li>";
 
                         }
+                }
+            }
+
+            echo "</ul>
+            </div>
+            <!-- /.footer -->
+        </div>
+        <!-- /.box -->";
+        }
+
+
+        public function drawDaytimeBox($db, $data, $limit)
+        {   /** @var $db \YAWK\db */
+            // get data for this box
+            $dayTimes = \YAWK\stats::countDaytime($db, $data, $limit);
+            $dayTimesPercent = $this->getDayTimesPercent();
+
+            echo "<!-- donut box:  -->
+        <div class=\"box box-default\">
+            <div class=\"box-header with-border\">
+                <h3 class=\"box-title\">Daytime <small>when is your prime time?</small></h3>
+
+                <div class=\"box-tools pull-right\">
+                    <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"collapse\"><i class=\"fa fa-minus\"></i>
+                    </button>
+                    <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"remove\"><i class=\"fa fa-times\"></i></button>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class=\"box-body\">
+                <div class=\"row\">
+                    <div class=\"col-md-8\">
+                        <div class=\"chart-responsive\">
+                            <canvas id=\"pieChartDaytime\" height=\"150\"></canvas>
+                        </div>
+                        <!-- ./chart-responsive -->
+                    </div>
+                    <!-- /.col -->
+                    <div class=\"col-md-4\">
+                        <ul class=\"chart-legend clearfix\">
+
+                            <script> //-------------
+                                //- PIE CHART -
+                                //-------------
+
+                                // Get context with jQuery - using jQuery's .get() method.
+                                var pieChartCanvas = $('#pieChartDaytime').get(0).getContext('2d');
+                                var pieChart = new Chart(pieChartCanvas);
+                                // get browsers array
+                                // output js data with php function getJsonBrowsers
+                                var PieData = "; self::getJsonDaytime($db, $dayTimes);
+            echo"
+                                var pieOptions = {
+                                    //Boolean - Whether we should show a stroke on each segment
+                                    segmentShowStroke: true,
+                                    //String - The colour of each segment stroke
+                                    segmentStrokeColor: '#fff',
+                                    //Number - The width of each segment stroke
+                                    segmentStrokeWidth: 1,
+                                    //Number - The percentage of the chart that we cut out of the middle
+                                    percentageInnerCutout: 50, // This is 0 for Pie charts
+                                    //Number - Amount of animation steps
+                                    animationSteps: 100,
+                                    //String - Animation easing effect
+                                    animationEasing: 'easeOutBounce',
+                                    //Boolean - Whether we animate the rotation of the Doughnut
+                                    animateRotate: true,
+                                    //Boolean - Whether we animate scaling the Doughnut from the centre
+                                    animateScale: false,
+                                    //Boolean - whether to make the chart responsive to window resizing
+                                    responsive: true,
+                                    // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+                                    maintainAspectRatio: false,
+                                    //String - A legend template
+                                    legendTemplate: '<ul class=\"<%=name.toLowerCase() %>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor %>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>',
+                                    //String - A tooltip template
+                                    tooltipTemplate: '<%=value %> <%=label%>'
+                                };
+                                //Create pie or douhnut chart
+                                // You can switch between pie and douhnut using the method below.
+                                pieChart.Doughnut(PieData, pieOptions);
+                                //-----------------
+                                //- END PIE CHART -
+                                //-----------------</script>";
+
+            // walk through array and draw data beneath pie chart
+            foreach ($dayTimesPercent AS $daytime => $value)
+            {   // get text colors
+                $textcolor = self::getDaytimeColors($daytime);
+                // show browsers their value is greater than zero and exclude totals
+                if ($value > 0 && ($daytime !== "Total"))
+                {   // 1 line for every browser
+                    echo "<li><i class=\"fa fa-circle-o $textcolor\"></i> <b>$value%</b> $daytime</li>";
+                }
+                // show totals
+                if ($daytime === "Total")
+                {   // of how many visits
+                    echo "<li class=\"small\">latest $value hits</li>";
+                }
+            }
+            echo"
+                        </ul>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.box-body -->
+            <div class=\"box-footer no-padding\">
+                <ul class=\"nav nav-pills nav-stacked\">";
+
+            // sort array by value high to low to display most browsers first
+            $dayTimes[] = arsort($dayTimes);
+            // walk through array and display browsers as nav pills
+            foreach ($dayTimes as $dayTime => $value)
+            {   // show only items where browser got a value
+                if ($value !== 0 && $dayTime !== 0)
+                {   // get different textcolors
+                    $textcolor = self::getDaytimeColors($dayTime);
+                    echo "<li><a href=\"#\" class=\"$textcolor\">$dayTime
+                          <span class=\"pull-right $textcolor\" ><i class=\"fa fa-angle-down\"></i>$value</span></a></li>";
                 }
             }
 
