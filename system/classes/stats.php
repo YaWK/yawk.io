@@ -366,7 +366,7 @@ namespace YAWK
         }
 
 
-        static function getJsonDaytime($db, $daytimes)
+        static function getJsonDaytimePieChart($db, $daytimes)
         {   /* @var $db \YAWK\db */
             // check if logins are set
             if (!isset($daytimes) || (empty($daytimes)))
@@ -402,6 +402,55 @@ namespace YAWK
             }
 
             $jsonData .= "]";
+            echo $jsonData;
+        }
+
+        public function getJsonDaytimeLineChart($db, $daytimes)
+        {   /* @var $db \YAWK\db */
+            // check if device types are set
+            if (!isset($daytimes) || (empty($daytimes)))
+            {   // nope, get them from db
+                $daytimes = $this->countDaytime($db, '', 200);
+            }
+
+            $jsonData = "labels: ['Morning', 'Afternoon', 'Evening', 'Night'],
+            datasets: [
+                {
+                  label: 'Hits',
+                  fillColor: ['#f39c12', '#00a65a', '#00c0ef', '#003D4C'],
+                  strokeColor: 'rgba(210, 214, 222, 1)',
+                  pointColor: 'rgba(210, 214, 222, 1)',
+                  pointStrokeColor: '#c1c7d1',
+                  pointHighlightFill: '#fff',
+                  pointHighlightStroke: 'rgba(220,220,220,1)',  
+                  data: [$this->i_morning, $this->i_afternoon, $this->i_evening, $this->i_night]
+                }
+            ]";
+            echo $jsonData;
+        }
+
+
+        public function getJsonDaytimeBarChart($db, $daytimes)
+        {   /* @var $db \YAWK\db */
+            // check if device types are set
+            if (!isset($daytimes) || (empty($daytimes)))
+            {   // nope, get them from db
+                $daytimes = $this->countDaytime($db, '', 200);
+            }
+
+            $jsonData = "labels: ['Morning', 'Afternoon', 'Evening', 'Night'],
+            datasets: [
+                {
+                  label: 'Hits',
+                  fillColor: ['#f39c12', '#00a65a', '#00c0ef', '#003D4C'],
+                  strokeColor: 'rgba(210, 214, 222, 1)',
+                  pointColor: 'rgba(210, 214, 222, 1)',
+                  pointStrokeColor: '#c1c7d1',
+                  pointHighlightFill: '#fff',
+                  pointHighlightStroke: 'rgba(220,220,220,1)',  
+                  data: [$this->i_morning, $this->i_afternoon, $this->i_evening, $this->i_night]
+                }
+            ]";
             echo $jsonData;
         }
 
@@ -2025,6 +2074,7 @@ namespace YAWK
             $dayTimes = \YAWK\stats::countDaytime($db, $data, $limit);
             $dayTimesPercent = $this->getDayTimesPercent();
 
+
             echo "<!-- donut box:  -->
         <div class=\"box box-default\">
             <div class=\"box-header with-border\">
@@ -2042,14 +2092,23 @@ namespace YAWK
                     <div class=\"col-md-8\">
                         <div class=\"chart-responsive\">
                             <canvas id=\"pieChartDaytime\" height=\"150\"></canvas>
-                        </div>
-                        <!-- ./chart-responsive -->
+                        </div><!-- ./chart-responsive -->
+                        
+                        <div class=\"chart-responsive\">
+                            <canvas id=\"barChartDaytime\" height=\"150\"></canvas>
+                        </div><!-- ./chart-responsive -->
+                        
+                        <div class=\"chart-responsive\">
+                            <canvas id=\"lineChartDaytime\" height=\"150\"></canvas>
+                        </div><!-- ./chart-responsive -->
+                        
                     </div>
                     <!-- /.col -->
                     <div class=\"col-md-4\">
                         <ul class=\"chart-legend clearfix\">
 
-                            <script> //-------------
+                            <script> 
+                                //-------------
                                 //- PIE CHART -
                                 //-------------
 
@@ -2058,8 +2117,8 @@ namespace YAWK
                                 var pieChart = new Chart(pieChartCanvas);
                                 // get browsers array
                                 // output js data with php function getJsonBrowsers
-                                var PieData = "; self::getJsonDaytime($db, $dayTimes);
-            echo"
+                                var PieData = ";$this->getJsonDaytimePieChart($db, $dayTimes);
+                                echo "
                                 var pieOptions = {
                                     //Boolean - Whether we should show a stroke on each segment
                                     segmentShowStroke: true,
@@ -2068,7 +2127,7 @@ namespace YAWK
                                     //Number - The width of each segment stroke
                                     segmentStrokeWidth: 1,
                                     //Number - The percentage of the chart that we cut out of the middle
-                                    percentageInnerCutout: 50, // This is 0 for Pie charts
+                                    percentageInnerCutout: 0, // This is 0 for Pie charts
                                     //Number - Amount of animation steps
                                     animationSteps: 100,
                                     //String - Animation easing effect
@@ -2082,7 +2141,7 @@ namespace YAWK
                                     // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
                                     maintainAspectRatio: false,
                                     //String - A legend template
-                                    legendTemplate: '<ul class=\"<%=name.toLowerCase() %>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor %>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>',
+                                    legendTemplate: '<ul class=\" <%=name.toLowerCase() %>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor %>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>',
                                     //String - A tooltip template
                                     tooltipTemplate: '<%=value %> <%=label%>'
                                 };
@@ -2091,7 +2150,106 @@ namespace YAWK
                                 pieChart.Doughnut(PieData, pieOptions);
                                 //-----------------
                                 //- END PIE CHART -
-                                //-----------------</script>";
+                                //-----------------
+                                </script>";
+
+
+                        echo"<script>
+                            //-------------
+                            //- BAR CHART -
+                            //-------------
+                            
+                            var barChartData = {";$this->getJsonDaytimeBarChart($db, $dayTimes);echo "};
+                            var barChartCanvas = $('#barChartDaytime').get(0).getContext('2d');
+                            var barChart = new Chart(barChartCanvas);
+                            barChartData.datasets.fillColor = '#00a65a';
+                            barChartData.datasets.strokeColor = '#00a65a';
+                            barChartData.datasets.pointColor = '#00a65a';
+                            var barChartOptions = {
+                            //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+                            scaleBeginAtZero: true,
+                              //Boolean - Whether grid lines are shown across the chart
+                              scaleShowGridLines: true,
+                              //String - Colour of the grid lines
+                              scaleGridLineColor: 'rgba(0,0,0,.05)',
+                              //Number - Width of the grid lines
+                              scaleGridLineWidth: 1,
+                              //Boolean - Whether to show horizontal lines (except X axis)
+                              scaleShowHorizontalLines: true,
+                              //Boolean - Whether to show vertical lines (except Y axis)
+                              scaleShowVerticalLines: true,
+                              //Boolean - If there is a stroke on each bar
+                              barShowStroke: true,
+                              //Number - Pixel width of the bar stroke
+                              barStrokeWidth: 2,
+                              //Number - Spacing between each of the X value sets
+                              barValueSpacing: 5,
+                              //Number - Spacing between data sets within X values
+                              barDatasetSpacing: 1,
+                              //String - A legend template
+                              legendTemplate: '<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets.fillColor %>\"></span><%if(datasets[i].label){%><%=datasets.label%><%}%></li><%}%></ul>',
+                              //Boolean - whether to make the chart responsive
+                              responsive: true,
+                              maintainAspectRatio: true
+                            };
+                        
+                            barChartOptions.datasetFill = false;
+                            barChart.Bar(barChartData, barChartOptions);
+                        </script>";
+
+
+                            echo "<script> 
+                                //------------------
+                                // LINE CHART
+                                //------------------
+                               var lineChartData = {";$this->getJsonDaytimeLineChart($db, $dayTimes);echo "
+                               var lineChartOptions = {
+                                  //Boolean - If we should show the scale at all
+                                  showScale: true,
+                                  //Boolean - Whether grid lines are shown across the chart
+                                  scaleShowGridLines: false,
+                                  //String - Colour of the grid lines
+                                  scaleGridLineColor: 'rgba(0, 0, 0, .05)',
+                                  //Number - Width of the grid lines
+                                  scaleGridLineWidth: 1,
+                                  //Boolean - Whether to show horizontal lines (except X axis)
+                                  scaleShowHorizontalLines: true,
+                                  //Boolean - Whether to show vertical lines (except Y axis)
+                                  scaleShowVerticalLines: true,
+                                  //Boolean - Whether the line is curved between points
+                                  bezierCurve: true,
+                                  //Number - Tension of the bezier curve between points
+                                  bezierCurveTension: 0.3,
+                                  //Boolean - Whether to show a dot for each point
+                                  pointDot: false,
+                                  //Number - Radius of each point dot in pixels
+                                  pointDotRadius: 4,
+                                  //Number - Pixel width of point dot stroke
+                                  pointDotStrokeWidth: 1,
+                                  //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
+                                  pointHitDetectionRadius: 20,
+                                  //Boolean - Whether to show a stroke for datasets
+                                  datasetStroke: true,
+                                  //Number - Pixel width of dataset stroke
+                                  datasetStrokeWidth: 2,
+                                  //Boolean - Whether to fill the dataset with a color
+                                  datasetFill: true,
+                                  //String - A legend template
+                                  legendTemplate: '<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor %>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>',
+                                  //Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+                                  maintainAspectRatio: true,
+                                  //Boolean - whether to make the chart responsive to window resizing
+                                  responsive: true
+                                };
+                                
+                            // Create the line chart
+                            lineChart.Line(lineChartData, lineChartOptions);
+                            var lineChartCanvas = $('#lineChartDaytime').get(0).getContext('2d');
+                            var lineChart = new Chart(lineChartCanvas);
+                            lineChartOptions.datasetFill = false;
+                            lineChart.Line(lineChartData, lineChartOptions);
+                            
+                               </script>";
 
             // walk through array and draw data beneath pie chart
             foreach ($dayTimesPercent AS $daytime => $value)
@@ -2100,7 +2258,17 @@ namespace YAWK
                 // show browsers their value is greater than zero and exclude totals
                 if ($value > 0 && ($daytime !== "Total"))
                 {   // 1 line for every browser
-                    echo "<li><i class=\"fa fa-circle-o $textcolor\"></i> <b>$value%</b> $daytime</li>";
+                    $spacer = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+                    if ($daytime === "Morning")
+                    { $legend = "$spacer<small>06:00 - 11:00</small>"; }
+                    elseif ($daytime === "Afternoon")
+                    { $legend = "$spacer<small>12:00 - 17:00</small>"; }
+                    elseif ($daytime === "Evening")
+                    { $legend = "$spacer<small>18:00 - 23:00</small>"; }
+                    elseif ($daytime === "Night")
+                    { $legend = "$spacer<small>00:00 - 05:00</small>"; }
+                    else { $legend = ''; }
+                    echo "<li><i class=\"fa fa-circle-o $textcolor\"></i> <b>$value%</b> $daytime <br><small>$legend</small></li>";
                 }
                 // show totals
                 if ($daytime === "Total")
