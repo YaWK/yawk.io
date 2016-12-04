@@ -47,10 +47,8 @@ else
         $limit = $stats->i_hits;
     }
 ?>
-
 <div class="row">
-    <div class="col-md-8">
-
+    <div class="col-md-4">
         <!-- box -->
         <div class="box">
             <div class="box-header with-border">
@@ -66,6 +64,31 @@ else
             </div>
         </div>
         <!-- / box -->
+    </div>
+    <div class="col-md-4"><?php $stats->drawWeekdayBox($db, $data, $limit); ?></div>
+    <div class="col-md-4">
+
+        <!-- stats settings box -->
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Settings <small>filter your view</small></h3>
+            </div>
+            <div class="box-body">
+                <form action="index.php?page=stats" method="post">
+                    <label for="limit">view latest <small><i>n</i></small> hits, leave blank for all</label>
+                    <input id="limit" name="limit" value="<?php echo $limit; ?>" type="text" placeholder="<?php echo $limit; ?>" class="form-control">
+                    <br>
+                    <button type="submit" class="btn btn-success pull-right"><i class="glyphicon glyphicon-refresh"></i>&nbsp; Refresh Stats</button>
+                </form>
+            </div>
+        </div>
+        <!-- / stats settings box -->
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
 
         <!-- DEVICE TYPE box -->
         <?php $stats->drawDeviceTypeBox($db, $data, $limit); ?>
@@ -95,22 +118,6 @@ else
 
     </div>
     <div class="col-md-4">
-
-        <!-- box -->
-        <div class="box">
-            <div class="box-header with-border">
-                <h3 class="box-title">Statistics <small>Settings</small></h3>
-            </div>
-            <div class="box-body">
-                <form action="index.php?page=stats" method="post">
-                    <label for="limit">view latest <small><i>n</i></small> hits, leave blank for all</label>
-                    <input id="limit" name="limit" value="<?php echo $limit; ?>" type="text" placeholder="<?php echo $limit; ?>" class="form-control">
-                    <br>
-                    <button type="submit" class="btn btn-success pull-right"><i class="glyphicon glyphicon-refresh"></i>&nbsp; Refresh Stats</button>
-                </form>
-            </div>
-        </div>
-
 
         <!-- box -->
         <?php $stats->drawDaytimeBox($db, $data, $limit); ?>
@@ -157,10 +164,4 @@ else
     <!-- / login box -->
 
     </div>
-</div>
-
-<div class="row">
-    <div class="col-md-4">spalte 1</div>
-    <div class="col-md-4">spalte 2</div>
-    <div class="col-md-4">spalte 3</div>
 </div>

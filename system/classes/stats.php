@@ -94,6 +94,23 @@ namespace YAWK
         public $i_eveningPercent = 0;
         public $i_nightPercent = 0;
 
+        // weekdays
+        public $i_monday = 0;
+        public $i_tuesday = 0;
+        public $i_wednesday = 0;
+        public $i_thursday = 0;
+        public $i_friday = 0;
+        public $i_saturday = 0;
+        public $i_sunday = 0;
+        public $i_totalDays = 0;
+
+        public $i_mondayPercent = 0;
+        public $i_tuesdayPercent = 0;
+        public $i_wednesdayPercent = 0;
+        public $i_thursdayPercent = 0;
+        public $i_fridayPercent = 0;
+        public $i_saturdayPercent = 0;
+        public $i_sundayPercent = 0;
 
         function construct()
         {
@@ -449,6 +466,24 @@ namespace YAWK
                   pointHighlightFill: '#fff',
                   pointHighlightStroke: 'rgba(220,220,220,1)',  
                   data: [$this->i_morning, $this->i_afternoon, $this->i_evening, $this->i_night]
+                }
+            ]";
+            echo $jsonData;
+        }
+
+        public function getJsonWeekdayBarChart()
+        {   /* @var $db \YAWK\db */
+             $jsonData = "labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+            datasets: [
+                {
+                  label: 'Hits',
+                  fillColor: ['#ebebeb', '#ebebeb', '#ebebeb', '#ebebeb', '#ebebeb', '#ebebeb', '#ebebeb'],
+                  strokeColor: 'rgba(210, 214, 222, 1)',
+                  pointColor: 'rgba(210, 214, 222, 1)',
+                  pointStrokeColor: '#c1c7d1',
+                  pointHighlightFill: '#fff',
+                  pointHighlightStroke: 'rgba(220,220,220,1)',  
+                  data: [$this->i_monday, $this->i_tuesday, $this->i_wednesday, $this->i_thursday, $this->i_friday, $this->i_saturday, $this->i_sunday]
                 }
             ]";
             echo $jsonData;
@@ -820,6 +855,132 @@ namespace YAWK
             return $textcolor;
         }
 
+
+        public function countWeekdays($db, $data, $limit)
+        {   /* @var $db \YAWK\db */
+
+            // check if limit (i) is set
+            if (!isset($limit) || (empty($limit)))
+            {   // set default value
+                $limit = 100;
+            }
+
+            // check if data array is set, if not load data from db
+            if (!isset($data) || (empty($data) || (!is_array($data))))
+            {   // data is not set or in false format, try to get it from database
+                if ($res = $db->query("SELECT date_created FROM {stats} ORDER BY id DESC LIMIT $limit"))
+                {   // create array
+                    $data = array();
+                    while ($row = mysqli_fetch_assoc($res))
+                    {   // add data to array
+                        $data[] = $row;
+                    }
+                }
+                else
+                {   // data array not set and unable to get data from db
+                    return false;
+                }
+            }
+
+            // LIMIT the data to x entries
+            if (isset($limit) && (!empty($limit)))
+            {   // if limit is set, cut array to limited range
+                $data = array_slice($data, 0, $limit, true);
+            }
+
+            // break up the date & extract the hour to calculate
+            foreach ($data as $date => $value)
+            {
+                $weekday = \YAWK\sys::getWeekday($value['date_created']);
+
+                // identify days
+                if ($weekday === "Monday" ||
+                    ($weekday === "Montag"))
+                {
+                    $this->i_monday++;
+                }
+                elseif ($weekday === "Tuesday" ||
+                    ($weekday === "Dienstag"))
+                {
+                    $this->i_tuesday++;
+                }
+                elseif ($weekday === "Wednesday" ||
+                    ($weekday === "Mittwoch"))
+                {
+                    $this->i_wednesday++;
+                }
+                elseif ($weekday === "Thursday" ||
+                    ($weekday === "Donnerstag"))
+                {
+                    $this->i_thursday++;
+                }
+                elseif ($weekday === "Friday" ||
+                    ($weekday === "Freitag"))
+                {
+                    $this->i_friday++;
+                }
+                elseif ($weekday === "Saturday" ||
+                    ($weekday === "Samstag"))
+                {
+                    $this->i_saturday++;
+                }
+                elseif ($weekday === "Sunday" ||
+                    ($weekday === "Sonntag"))
+                {
+                    $this->i_sunday++;
+                }
+            }
+
+            // count daytimes
+            $this->i_totalDays = $this->i_monday
+                    +$this->i_tuesday
+                    +$this->i_wednesday
+                    +$this->i_thursday
+                    +$this->i_friday
+                    +$this->i_saturday
+                    +$this->i_sunday;
+
+            // build an array, cointaining the daytimes
+            $weekdays = array(
+                "Monday" => $this->i_monday,
+                "Tuesday" => $this->i_tuesday,
+                "Wednesday" => $this->i_wednesday,
+                "Thursday" => $this->i_thursday,
+                "Friday" => $this->i_friday,
+                "Saturday" => $this->i_saturday,
+                "Sunday" => $this->i_sunday,
+                "Total" => $this->i_totalDays
+            );
+
+            // return OS data array
+            return $weekdays;
+        }
+
+        public function getWeekdaysPercent()
+        {
+            // calculate percentage
+            $a = 100 / $this->i_totalDays;
+            $this->i_mondayPercent = round($a * $this->i_monday);
+            $this->i_tuesdayPercent = round($a * $this->i_tuesday);
+            $this->i_wednesdayPercent = round($a * $this->i_wednesday);
+            $this->i_thursdayPercent = round($a * $this->i_thursday);
+            $this->i_fridayPercent = round($a * $this->i_friday);
+            $this->i_saturdayPercent = round($a * $this->i_saturday);
+            $this->i_sundayPercent = round($a * $this->i_sunday);
+
+            // build an array, cointaining the device types and the number how often it's been found
+            $weekdaysPercent = array(
+                "Monday" => $this->i_mondayPercent,
+                "Tuesday" => $this->i_tuesdayPercent,
+                "Wednesday" => $this->i_wednesdayPercent,
+                "Thursday" => $this->i_thursdayPercent,
+                "Friday" => $this->i_fridayPercent,
+                "Saturday" => $this->i_saturdayPercent,
+                "Sunday" => $this->i_sundayPercent
+            );
+            arsort($weekdaysPercent);
+            return $weekdaysPercent;
+        }
 
         public function countDaytime($db, $data, $limit)
         {   /* @var $db \YAWK\db */
@@ -2098,10 +2259,11 @@ namespace YAWK
                             <canvas id=\"barChartDaytime\" height=\"150\"></canvas>
                         </div><!-- ./chart-responsive -->
                         
+                        <!--
                         <div class=\"chart-responsive\">
                             <canvas id=\"lineChartDaytime\" height=\"150\"></canvas>
-                        </div><!-- ./chart-responsive -->
-                        
+                        </div><!-- ./chart-responsive 
+                        -->
                     </div>
                     <!-- /.col -->
                     <div class=\"col-md-4\">
@@ -2303,6 +2465,105 @@ namespace YAWK
             echo "</ul>
             </div>
             <!-- /.footer -->
+        </div>
+        <!-- /.box -->";
+        }
+
+
+        public function drawWeekdayBox($db, $data, $limit)
+        {   /** @var $db \YAWK\db */
+            // get data for this box
+            $weekdays = $this->countWeekdays($db, $data, $limit);
+            $weekdaysPercent = $this->getWeekdaysPercent();
+
+            echo "<!-- donut box:  -->
+        <div class=\"box box-default\">
+            <div class=\"box-header with-border\">
+                <h3 class=\"box-title\">Weekdays <small>overview best days</small></h3>
+
+                <div class=\"box-tools pull-right\">
+                    <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"collapse\"><i class=\"fa fa-minus\"></i>
+                    </button>
+                    <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"remove\"><i class=\"fa fa-times\"></i></button>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class=\"box-body\">
+                <div class=\"row\">
+                    <div class=\"col-md-8\">
+                        <div class=\"chart-responsive\">
+                            <canvas id=\"barChartWeekdays\" height=\"150\"></canvas>
+                        </div>
+                        <!-- ./chart-responsive -->
+                    </div>
+                    <!-- /.col -->
+                    <div class=\"col-md-4\">
+                        <ul class=\"chart-legend clearfix\">
+
+                        <script>    
+                            //-------------
+                            //- BAR CHART -
+                            //-------------
+                            
+                            var barChartData = {";$this->getJsonWeekdayBarChart();echo "};
+                            var barChartCanvas = $('#barChartWeekdays').get(0).getContext('2d');
+                            var barChart = new Chart(barChartCanvas);
+                            barChartData.datasets.fillColor = '#00a65a';
+                            barChartData.datasets.strokeColor = '#00a65a';
+                            barChartData.datasets.pointColor = '#00a65a';
+                            var barChartOptions = {
+                              //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+                              scaleBeginAtZero: true,
+                              //Boolean - Whether grid lines are shown across the chart
+                              scaleShowGridLines: true,
+                              //String - Colour of the grid lines
+                              scaleGridLineColor: 'rgba(0,0,0,.05)',
+                              //Number - Width of the grid lines
+                              scaleGridLineWidth: 1,
+                              //Boolean - Whether to show horizontal lines (except X axis)
+                              scaleShowHorizontalLines: true,
+                              //Boolean - Whether to show vertical lines (except Y axis)
+                              scaleShowVerticalLines: true,
+                              //Boolean - If there is a stroke on each bar
+                              barShowStroke: true,
+                              //Number - Pixel width of the bar stroke
+                              barStrokeWidth: 2,
+                              //Number - Spacing between each of the X value sets
+                              barValueSpacing: 5,
+                              //Number - Spacing between data sets within X values
+                              barDatasetSpacing: 1,
+                              //String - A legend template
+                              legendTemplate: '<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets.fillColor %>\"></span><%if(datasets[i].label){%><%=datasets.label%><%}%></li><%}%></ul>',
+                              //Boolean - whether to make the chart responsive
+                              responsive: true,
+                              maintainAspectRatio: true
+                            };
+                        
+                            barChartOptions.datasetFill = false;
+                            barChart.Bar(barChartData, barChartOptions);
+                        </script>";
+            // walk through array and draw data beneath pie chart
+            foreach ($weekdaysPercent AS $weekday => $value)
+            {   // get text colors
+                // show browsers their value is greater than zero and exclude totals
+                if ($value > 0 && ($weekday !== "Total"))
+                {   // 1 line for every browser
+                    echo "<li><b>$value%</b> $weekday</li>";
+                }
+                // show totals
+                if ($weekday === "Total")
+                {   // of how many visits
+                    echo "<li class=\"small\">latest $value hits</li>";
+                }
+            }
+
+                        echo"</ul>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.box-body -->
         </div>
         <!-- /.box -->";
         }
