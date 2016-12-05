@@ -14,113 +14,207 @@ namespace YAWK
      */
     class stats
     {
+         /** * @var int id for every entry */
         public $id;
+        /** * @var int uid (user id) who affected this entry */
         public $uid;
+        /** * @var int gid (group id) who affected this entry */
         public $gid;
+        /** * @var int 0 |1 was the user logged in? */
         public $logged_in;
+        /** * @var string detected user language */
         public $acceptLanguage;
+        /** * @var string IP address who affected this entry */
         public $remoteAddr;
+        /** * @var string complete useragent info*/
         public $userAgent;
+        /** * @var string detected device (eg. iPhone, iPad, iPod) */
         public $device;
+        /** * @var string detected device type (desktop, phone, tablet) */
         public $deviceType;
+        /** * @var string detected users operating system */
         public $os;
+        /** * @var string detected users operating system version */
         public $osVersion;
+        /** * @var string detected users browser */
         public $browser;
+        /** * @var string detected users browser version */
         public $browserVersion;
+        /** * @var string datetime when entry was created */
         public $date_created;
+        /** * @var string users url referer string */
         public $referer;
+        /** * @var string page that the user requested */
         public $page;
 
 
         // stats variables
+        /** * @var int total hits overall */
         public $i_hits = 0;
+        /** * @var int how many logins were successful? */
         public $i_loggedUsers = 0;
+        /** * @var int how many logins were successful? (in percent) */
         public $i_loggedUsersPercentage = 0;
+        /** * @var int how many users did not log in and visited as public guest? */
         public $i_publicUsers = 0;
+        /** * @var int how many users did not log in and visited as public guest? (in percent) */
         public $i_publicUsersPercentage = 0;
 
         // os types
+        /** * @var int how many users came with windows? */
         public $i_osWindows = 0;
+        /** * @var int how many users came with macOS? */
         public $i_osMac = 0;
+        /** * @var int how many users came with linux? */
         public $i_osLinux = 0;
+        /** * @var int how many users came with android? */
         public $i_osAndroid = 0;
+        /** * @var int how many users came with iOS? */
         public $i_iOS = 0;
+        /** * @var int how many operating systems were unable to detect? */
         public $i_osUnknown = 0;
 
         // os versions
+        /** * @var int how many users came with windows8? */
         public $i_windows8 = 0;
+        /** * @var int how many users came with windows7? */
         public $i_windows7 = 0;
+        /** * @var int how many users came with windows vista? */
         public $i_windowsVista = 0;
+        /** * @var int how many users came with windows server? */
         public $i_windowsServer = 0;
+        /** * @var int how many users came with windows xp? */
         public $i_windowsXP = 0;
+        /** * @var int how many users came with windows 2000? */
         public $i_windows2000 = 0;
+        /** * @var int how many users came with windows me? */
         public $i_windowsME = 0;
+        /** * @var int how many users came with windows 98? */
         public $i_windows98 = 0;
+        /** * @var int how many users came with windows 95? */
         public $i_windows95 = 0;
+        /** * @var int how many users came with windows 3.11? */
         public $i_windows311 = 0;
+        /** * @var int how many users came with mac os x? */
         public $i_macosX = 0;
+        /** * @var int how many users came with mac os 9? */
         public $i_macos9 = 0;
+        /** * @var int how many users came with linux? */
         public $i_linux = 0;
+        /** * @var int how many users came with ubuntu? */
         public $i_ubuntu = 0;
+        /** * @var int how many users came with iPhone? */
         public $i_iPhone = 0;
+        /** * @var int how many users came with iPod? */
         public $i_iPod = 0;
+        /** * @var int how many users came with iPad? */
         public $i_iPad = 0;
+        /** * @var int how many users came with android? */
         public $i_android = 0;
+        /** * @var int how many users came with blackberry? */
         public $i_blackberry = 0;
+        /** * @var int how many users came with unknown mobile system? */
         public $i_mobile = 0;
+        /** * @var int how many users came with other systems? */
         public $i_others = 0;
 
         // devices
+        /** * @var int how many users came with desktop systems? */
         public $i_desktop = 0;
+        /** * @var int how many users came with tablet devices? */
         public $i_tablet = 0;
+        /** * @var int how many users came with mobile devices? */
         public $i_phone = 0;
 
         // logins
+        /** * @var int how logins were totally made? */
         public $i_totalLogins = 0;
+        /** * @var int how many logins were successful? */
         public $i_loginSuccessful = 0;
+        /** * @var int how many logins failed? */
         public $i_loginFailed = 0;
+        /** * @var int how many logins were made to frontend? */
         public $i_loginFrontend = 0;
+        /** * @var int how many logins were made to backend? */
         public $i_loginBackend = 0;
+        /** * @var int how many backend logins were successful? */
         public $i_loginBackendSuccess = 0;
+        /** * @var int how many backend logins failed? */
         public $i_loginBackendFailed = 0;
+        /** * @var int how many frontend logins were successful? */
         public $i_loginFrontendSuccess = 0;
+        /** * @var int how many frontend logins failed? */
         public $i_loginFrontendFailed = 0;
+        /** * @var int how many logins were successful? (in percent) */
         public $i_loginSuccessPercentage = 0;
+        /** * @var int how many logins failed? (in percent) */
         public $i_loginFailedPercentage = 0;
 
         // date + time
+        /** * @var int number of hits in the morningtime */
         public $i_morning = 0;
+        /** * @var int number of hits in the afternoon */
         public $i_afternoon = 0;
+        /** * @var int number of hits in the evening */
         public $i_evening = 0;
+        /** * @var int number of hits in the night */
         public $i_night = 0;
+        /** * @var int number of hits in the morningtime (in percent) */
         public $i_morningPercent = 0;
+        /** * @var int number of hits in the afternoon (in percent) */
         public $i_afternoonPercent = 0;
+        /** * @var int number of hits in the evening (in percent) */
         public $i_eveningPercent = 0;
+        /** * @var int number of hits in the night (in percent) */
         public $i_nightPercent = 0;
 
         // weekdays
+        /** * @var int number of hits on monday */
         public $i_monday = 0;
+        /** * @var int number of hits on tuesday */
         public $i_tuesday = 0;
+        /** * @var int number of hits on wednesday */
         public $i_wednesday = 0;
+        /** * @var int number of hits on thursday */
         public $i_thursday = 0;
+        /** * @var int number of hits on friday */
         public $i_friday = 0;
+        /** * @var int number of hits on saturday */
         public $i_saturday = 0;
+        /** * @var int number of hits on sunday */
         public $i_sunday = 0;
+        /** * @var int number of hits on all days (sum) */
         public $i_totalDays = 0;
 
+        /** * @var int number of hits on monday (in percent) */
         public $i_mondayPercent = 0;
+        /** * @var int number of hits on tuesday (in percent) */
         public $i_tuesdayPercent = 0;
+        /** * @var int number of hits on wednesday (in percent) */
         public $i_wednesdayPercent = 0;
+        /** * @var int number of hits on thursday (in percent) */
         public $i_thursdayPercent = 0;
+        /** * @var int number of hits on friday (in percent) */
         public $i_fridayPercent = 0;
+        /** * @var int number of hits on saturday (in percent) */
         public $i_saturdayPercent = 0;
+        /** * @var int number of hits on sunday (in percent) */
         public $i_sundayPercent = 0;
 
-        function construct()
+        public function construct()
         {
             // ...
         }
-        function setStats($db)
+
+        /**
+         * Insert statistics data into database
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @return null
+         */
+        public function setStats($db)
         {   /* @var $db \YAWK\db */
             // check if stats are enabled
             if (\YAWK\settings::getSetting($db, "statsEnable") === "1")
@@ -132,9 +226,18 @@ namespace YAWK
                     \YAWK\sys::setSyslog($db, 12, "could not insert stats into database.", "", "", "","");
                 }
             }
+            return null;
         }
 
-        function prepareData()
+
+        /**
+         * Prepare data: get and collect, detect OS and device type
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @return null
+         */
+        public function prepareData()
         {
             // check if a session is set
             if (isset($_SESSION) && (!empty($_SESSION)))
@@ -245,10 +348,19 @@ namespace YAWK
 
             // current datetime
             $this->date_created = \YAWK\sys::now();
+            return null;
         }
 
 
-        static function countMessages($db)
+        /**
+         * Count all messages that are stored in the database
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @return mixed
+         */
+        public function countMessages($db)
         {   /* @var $db \YAWK\db */
             if ($res = $db->query("SELECT COUNT(*) FROM {plugin_msg}"))
             {   // fetch and return how many messages have been sent
@@ -262,6 +374,15 @@ namespace YAWK
                 }
         }
 
+        /**
+         * Count system logins
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param int $limit Contains an i number to limit the sql request
+         * @return array|bool
+         */
         public function countLogins($db, $limit)
         {   /* @var $db \YAWK\db */
             if (!isset($limit) || (empty($limit)))
@@ -337,8 +458,6 @@ namespace YAWK
                     "FrontendFailed" => $this->i_loginFrontendFailed,
                     "FailedPercentage" => $this->i_loginFailedPercentage,
                     "SuccessPercentage" => $this->i_loginSuccessPercentage,
-               //     "Frontend" => $this->i_loginFrontend,
-               //     "Backend" => $this->i_loginBackend,
                     "Total" => $this->i_totalLogins
                 );
                 return $loginDataArray;
@@ -351,12 +470,21 @@ namespace YAWK
         }
 
 
-        static function getJsonLogins($db, $logins)
+        /**
+         * Output JS: PIE CHART login data
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param array $logins data array
+         * @return string output the javascript data
+         */
+        public function getJsonLogins($db, $logins)
         {   /* @var $db \YAWK\db */
             // check if logins are set
             if (!isset($logins) || (empty($logins)))
             {   // nope, get them from db
-                $logins = self::countLogins($db, 200);
+                $logins = $this->countLogins($db, 200);
             }
             $jsonData = "[";
             foreach ($logins AS $login => $value)
@@ -366,8 +494,6 @@ namespace YAWK
                 // set different colors for each status
                 if ($login === "Failed") { $textcolor = "#f56954"; }
                 if ($login === "Successful") { $textcolor = "#00a65a"; }
-               //  if ($login === "Backend") { $textcolor = "#f39c12"; }
-               //  if ($login === "Frontend") { $textcolor = "#00c0ef"; }
 
                 // only failed + successful logins, exclude all other values
                 if ($login !== ("Total") && ($login === ("Failed") || ($login === ("Successful"))))
@@ -383,16 +509,26 @@ namespace YAWK
             }
 
             $jsonData .= "]";
-            echo $jsonData;
+            return $jsonData;
         }
 
 
-        static function getJsonDaytimePieChart($db, $daytimes)
+
+        /**
+         * Output JS: PIE CHART daytime data
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param array $daytime data array
+         * @return string return the javascript data
+         */
+        public function getJsonDaytimePieChart($db, $daytimes)
         {   /* @var $db \YAWK\db */
             // check if logins are set
             if (!isset($daytimes) || (empty($daytimes)))
             {   // nope, get them from db
-                $daytimes = self::countDaytime($db, '', 200);
+                $daytimes = $this->countDaytime($db, '', 200);
             }
             $jsonData = "[";
             foreach ($daytimes AS $daytime => $value)
@@ -423,9 +559,19 @@ namespace YAWK
             }
 
             $jsonData .= "]";
-            echo $jsonData;
+            return $jsonData;
         }
 
+
+        /**
+         * Output JS: LINE CHART daytime data
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param array $daytimes data array
+         * @return string output the javascript data
+         */
         public function getJsonDaytimeLineChart($db, $daytimes)
         {   /* @var $db \YAWK\db */
             // check if device types are set
@@ -447,10 +593,19 @@ namespace YAWK
                   data: [$this->i_morning, $this->i_afternoon, $this->i_evening, $this->i_night]
                 }
             ]";
-            echo $jsonData;
+            return $jsonData;
         }
 
 
+        /**
+         * Output JS: BAR CHART daytime data
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param array $daytimes data array
+         * @return string output the javascript data
+         */
         public function getJsonDaytimeBarChart($db, $daytimes)
         {   /* @var $db \YAWK\db */
             // check if device types are set
@@ -472,9 +627,17 @@ namespace YAWK
                   data: [$this->i_morning, $this->i_afternoon, $this->i_evening, $this->i_night]
                 }
             ]";
-            echo $jsonData;
+            return $jsonData;
         }
 
+
+        /**
+         * Output JS: WEEKDAY BAR CHART
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @return string output the javascript data
+         */
         public function getJsonWeekdayBarChart()
         {   /* @var $db \YAWK\db */
              $jsonData = "labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
@@ -490,15 +653,25 @@ namespace YAWK
                   data: [$this->i_monday, $this->i_tuesday, $this->i_wednesday, $this->i_thursday, $this->i_friday, $this->i_saturday, $this->i_sunday]
                 }
             ]";
-            echo $jsonData;
+            return $jsonData;
         }
 
-        static function getJsonBrowsers($db, $browsers)
+
+        /**
+         * Output JS: PIE CHART browser data
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param array $browsers data array
+         * @return string output the javascript data
+         */
+        public function getJsonBrowsers($db, $browsers)
         {   /* @var $db \YAWK\db */
             // check if browsers are set
             if (!isset($browsers) || (empty($browsers)))
             {   // nope, get them from db
-                $browsers = self::countBrowsers($db, '', 200);
+                $browsers = $this->countBrowsers($db, '', 200);
             }
             $jsonData = "[";
             foreach ($browsers AS $browser => $value)
@@ -528,16 +701,25 @@ namespace YAWK
             }
 
             $jsonData .= "]";
-            echo $jsonData;
+            return $jsonData;
         }
 
 
-        static function getJsonOS($db, $oss)
+        /**
+         * Output JS: PIE CHART OS data
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param array $oss data array
+         * @return string output the javascript data
+         */
+        public function getJsonOS($db, $oss)
         {   /* @var $db \YAWK\db */
             // check if browsers are set
             if (!isset($oss) || (empty($oss)))
             {   // nope, get them from db
-                $oss = self::countOS($db, '', 200);
+                $oss = $this->countOS($db, '', 200);
             }
             $jsonData = "[";
             foreach ($oss AS $os => $value)
@@ -566,15 +748,25 @@ namespace YAWK
             }
 
             $jsonData .= "]";
-            echo $jsonData;
+            return $jsonData;
         }
 
-        static function getJsonOSVersions($db, $osVersions)
+
+        /**
+         * Output JS: BAR CHART OS versions
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param array $osVersions data array
+         * @return string output the javascript data
+         */
+        public function getJsonOSVersions($db, $osVersions)
         {   /* @var $db \YAWK\db */
             // check if browsers are set
             if (!isset($osVersions) || (empty($osVersions)))
             {   // nope, get them from db
-                $osVersions = self::countOSVersions($db, '', 200);
+                $osVersions = $this->countOSVersions($db, '', 200);
             }
             $jsonData = "[";
             foreach ($osVersions AS $osVersion => $value)
@@ -618,16 +810,25 @@ namespace YAWK
             }
 
             $jsonData .= "]";
-            echo $jsonData;
+            return $jsonData;
         }
 
 
+        /**
+         * Output JS: BAR CHART device types
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param array $deviceTypes data array
+         * @return string output the javascript
+         */
         public function getJsonDeviceTypes($db, $deviceTypes)
         {   /* @var $db \YAWK\db */
             // check if device types are set
             if (!isset($deviceTypes) || (empty($deviceTypes)))
             {   // nope, get them from db
-                $deviceTypes = self::countDeviceTypes($db, '', 200);
+                $deviceTypes = $this->countDeviceTypes($db, '', 200);
             }
 
             $jsonData = "labels: ['Desktop', 'Phone', 'Tablet'],
@@ -643,13 +844,20 @@ namespace YAWK
                   data: [$this->i_desktop, $this->i_phone, $this->i_tablet]
                 }
             ]";
-            echo $jsonData;
+            return $jsonData;
         }
 
 
-
-
-        static function getBrowserColors($browser)
+        /**
+         * Set and return the legend textcolor for each browser
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param string $browser contains the browser as string
+         * @return string returns the textcolor for this browser as string
+         */
+        public function getBrowserColors($browser)
         {
             switch ($browser) {
                 case "Chrome":
@@ -692,7 +900,15 @@ namespace YAWK
         }
 
 
-        static function getOsColors($os)
+        /**
+         * Set and return the legend textcolor for each operating system
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param string $os contains the operating system as string
+         * @return string returns the textcolor for this OS as string
+         */
+        public function getOsColors($os)
         {
             switch ($os) {
                 case "Windows":
@@ -717,7 +933,15 @@ namespace YAWK
         }
 
 
-        static function getDeviceTypeColors($deviceType)
+        /**
+         * Set and return the legend textcolor for each device type
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param string $deviceType contains the type (desktop, phone, tablet) as string
+         * @return string returns the textcolor for this device type as string
+         */
+        public function getDeviceTypeColors($deviceType)
         {
             switch ($deviceType) {
                 case "Desktop":
@@ -735,7 +959,15 @@ namespace YAWK
             return $textcolor;
         }
 
-        static function getDaytimeColors($daytime)
+        /**
+         * Set and return the legend textcolor for each daytime
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param string $daytime contains the daytime (morning, afternoon, evening, night) as string
+         * @return string returns the textcolor for this daytime as string
+         */
+        public function getDaytimeColors($daytime)
         {
             switch ($daytime) {
                 case "Morning":
@@ -756,7 +988,15 @@ namespace YAWK
             return $textcolor;
         }
 
-        static function getLoginColors($login)
+        /**
+         * Set and return the legend textcolor for logins (failed | success)
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param string $login contains the status (Failes, Successful...) as string
+         * @return string returns the textcolor for this login status as string
+         */
+        public function getLoginColors($login)
         {
             switch ($login) {
                 case "Failed":
@@ -784,7 +1024,15 @@ namespace YAWK
         }
 
 
-        static function getOsVersionsColors($osVersions)
+        /**
+         * Set and return the legend textcolor for each OS Version
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param string $osVersions contains the operating system as string
+         * @return string returns the textcolor for this os as string
+         */
+        public function getOsVersionsColors($osVersions)
         {
             switch ($osVersions) {
                 case "Windows 8":
@@ -860,6 +1108,16 @@ namespace YAWK
         }
 
 
+        /**
+         * Count and set the number of hits for each weekday
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db the database object
+         * @param string $data array containing all the stats data
+         * @param string $limit contains i number for sql limitation
+         * @return array|bool containing weekdays and number of hits
+         */
         public function countWeekdays($db, $data, $limit)
         {   /* @var $db \YAWK\db */
 
@@ -960,6 +1218,14 @@ namespace YAWK
             return $weekdays;
         }
 
+
+        /**
+         * Calculate hits in percent for each weekday
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @return array|bool containing weekdays and number of hits in percent
+         */
         public function getWeekdaysPercent()
         {
             // calculate percentage
@@ -986,6 +1252,17 @@ namespace YAWK
             return $weekdaysPercent;
         }
 
+
+        /**
+         * Count and set the number of hits for each daytime
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db the database object
+         * @param string $data array containing all the stats data
+         * @param string $limit contains i number for sql limitation
+         * @return array|bool containing daytimes (and number of hits
+         */
         public function countDaytime($db, $data, $limit)
         {   /* @var $db \YAWK\db */
 
@@ -1079,6 +1356,16 @@ namespace YAWK
             return $dayTimes;
         }
 
+
+
+        /**
+         * Calculate hits per daytime and return data in percent
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db the database object
+         * @return array containing daytimes and number of hits in percent
+         */
         public function getDayTimesPercent()
         {
             // count daytimes
@@ -1104,7 +1391,17 @@ namespace YAWK
         }
 
 
-        static function countBrowsers($db, $data, $limit)
+        /**
+         * Count and return browsers
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db the database object
+         * @param string $data array containing all the stats data
+         * @param string $limit contains i number for sql limitation
+         * @return array|bool returning array containing the browsers and their hits
+         */
+        public function countBrowsers($db, $data, $limit)
         {   /* @var $db \YAWK\db */
 
             // check if limit (i) is set
@@ -1122,7 +1419,6 @@ namespace YAWK
             $n_netscape = 0;
             $n_others = 0;
             $total = 0;
-
 
             // check if data array is set, if not load data from db
             if (!isset($data) || (empty($data) || (!is_array($data))))
@@ -1194,6 +1490,16 @@ namespace YAWK
         }
 
 
+        /**
+         * Count device types (desktop, phone or tablet)
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db the database object
+         * @param string $data array containing all the stats data
+         * @param string $limit contains i number for sql limitation
+         * @return array|bool returning array containing device types and their hits
+         */
         public function countDeviceTypes($db, $data, $limit)
         {   /* @var $db \YAWK\db */
 
@@ -1252,11 +1558,21 @@ namespace YAWK
                 "Total" => $total
             );
 
-            // return OS data array
+            // return device type array
             return $deviceTypes;
         }
 
 
+        /**
+         * Count operating systems
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db the database object
+         * @param string $data array containing all the stats data
+         * @param string $limit contains i number for sql limitation
+         * @return array|bool returning array containing all detected operating systems and their hits
+         */
         public function countOS($db, $data, $limit)
         {   /* @var $db \YAWK\db */
 
@@ -1331,6 +1647,16 @@ namespace YAWK
         }
 
 
+        /**
+         * Count operating systems versions
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db the database object
+         * @param string $data array containing all the stats data
+         * @param string $limit contains i number for sql limitation
+         * @return array|bool returning array containing all detected OS versions and their hits
+         */
         public function countOSVersions($db, $data, $limit)
         {   /* @var $db \YAWK\db */
 
@@ -1492,14 +1818,14 @@ namespace YAWK
             return $osVersions;
         }
 
+
         /**
          * Returns an array with all stats, ordered by date_created.
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
-         * @param string $property
-         * @return mixed
+         * @return bool|array containing all stats from database
          */
         public function getStatsArray($db) // get all settings from db like property
         {
@@ -1523,12 +1849,21 @@ namespace YAWK
             return $statsArray;
         }
 
+
+        /**
+         * Calculate some basic stats (almost outdated)
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param array $data Stats Data Array
+         */
         public function calculateStatsFromArray($db, $data)
         {   // get stats data
             if (!isset($data) || (empty($data)))
             {
                 // get statistics into array
-                $data = \YAWK\stats::getStatsArray($db);
+                $data = $this->getStatsArray($db);
             }
             // count and analyze the stats data in a loop
             foreach ($data as $value => $item)
@@ -1569,7 +1904,15 @@ namespace YAWK
         }
 
 
-        function insertData($db)
+        /**
+         * Insert data into database
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @return bool
+         */
+        public function insertData($db)
         {   /* @var $db \YAWK\db */
             if ($db->query("INSERT INTO {stats} 
                                     (uid, 
@@ -1612,10 +1955,19 @@ namespace YAWK
         }
 
 
-        function drawBrowserBox($db, $data, $limit)
+        /**
+         * Draw default box containing browser statistics
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param string $data array containing all the stats data
+         * @param string $limit contains i number for sql limitation
+         */
+        public function drawBrowserBox($db, $data, $limit)
         {   /** @var $db \YAWK\db */
             // get data for this box
-            $browsers = \YAWK\stats::countBrowsers($db, $data, $limit);
+            $browsers = $this->countBrowsers($db, $data, $limit);
 
             echo "<!-- donut box:  -->
         <div class=\"box box-default\">
@@ -1650,7 +2002,7 @@ namespace YAWK
                                 var pieChart = new Chart(pieChartCanvas);
                                 // get browsers array
                                 // output js data with php function getJsonBrowsers
-                                var PieData = "; self::getJsonBrowsers($db, $browsers);
+                                var PieData = "; echo $this->getJsonBrowsers($db, $browsers);
                                 echo"
                                 var pieOptions = {
                                     //Boolean - Whether we should show a stroke on each segment
@@ -1688,7 +2040,7 @@ namespace YAWK
             // walk through array and draw data beneath pie chart
             foreach ($browsers AS $browser => $value)
             {   // get text colors
-                $textcolor = self::getBrowserColors($browser);
+                $textcolor = $this->getBrowserColors($browser);
                 // show browsers their value is greater than zero and exclude totals
                 if ($value > 0 && ($browser !== "Total"))
                 {   // 1 line for every browser
@@ -1718,7 +2070,7 @@ namespace YAWK
             {   // show only items where browser got a value
                 if ($value !== 0 && $browser !== 0)
                 {   // get different textcolors
-                    $textcolor = self::getBrowserColors($browser);
+                    $textcolor = $this->getBrowserColors($browser);
                     echo "<li><a href=\"#\" class=\"$textcolor\">$browser
         <span class=\"pull-right $textcolor\" ><i class=\"fa fa-angle-down\"></i>$value</span></a></li>";
                 }
@@ -1733,10 +2085,19 @@ namespace YAWK
 
 
 
+        /**
+         * Draw default box containing OS Statistics
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param string $data array containing all the stats data
+         * @param string $limit contains i number for sql limitation
+         */
         public function drawOsBox($db, $data, $limit)
         {   /** @var $db \YAWK\db */
             // get data for this box
-            $oss = \YAWK\stats::countOS($db, $data, $limit);
+            $oss = $this->countOS($db, $data, $limit);
 
             echo "<!-- donut box:  -->
         <div class=\"box box-default\">
@@ -1771,7 +2132,7 @@ namespace YAWK
                                 var pieChart = new Chart(pieChartCanvas);
                                 // get browsers array
                                 // output js data with php function getJsonBrowsers
-                                var PieData = "; self::getJsonOS($db, $oss);
+                                var PieData = "; echo $this->getJsonOS($db, $oss);
                                 echo"
                                 var pieOptions = {
                                     //Boolean - Whether we should show a stroke on each segment
@@ -1809,7 +2170,7 @@ namespace YAWK
             // walk through array and draw data beneath pie chart
             foreach ($oss AS $os => $value)
             {   // get text colors
-                $textcolor = self::getOsColors($os);
+                $textcolor = $this->getOsColors($os);
                 // show browsers their value is greater than zero and exclude totals
                 if ($value > 0 && ($os !== "Total"))
                 {   // 1 line for every browser
@@ -1839,7 +2200,7 @@ namespace YAWK
             {   // show only items where browser got a value
                 if ($value !== 0 && $os !== 0)
                 {   // get different textcolors
-                    $textcolor = self::getOsColors($os);
+                    $textcolor = $this->getOsColors($os);
                     echo "<li><a href=\"#\" class=\"$textcolor\">$os
                           <span class=\"pull-right $textcolor\" ><i class=\"fa fa-angle-down\"></i>$value</span></a></li>";
                 }
@@ -1853,10 +2214,19 @@ namespace YAWK
         }
 
 
+        /**
+         * Draw default box containing OS versions statistics
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param string $data array containing all the stats data
+         * @param string $limit contains i number for sql limitation
+         */
         public function drawOsVersionBox($db, $data, $limit)
         {   /** @var $db \YAWK\db */
             // get data for this box
-            $osVersions = \YAWK\stats::countOSVersions($db, $data, $limit);
+            $osVersions = $this->countOSVersions($db, $data, $limit);
 
             echo "<!-- donut box:  -->
         <div class=\"box box-default\">
@@ -1891,7 +2261,7 @@ namespace YAWK
                                 var pieChart = new Chart(pieChartCanvas);
                                 // get browsers array
                                 // output js data with php function getJsonBrowsers
-                                var PieData = "; self::getJsonOSVersions($db, $osVersions);
+                                var PieData = "; echo $this->getJsonOSVersions($db, $osVersions);
                                 echo"
                                 var pieOptions = {
                                     //Boolean - Whether we should show a stroke on each segment
@@ -1929,7 +2299,7 @@ namespace YAWK
             // walk through array and draw data beneath pie chart
             foreach ($osVersions AS $osVersion => $value)
             {   // get text colors
-                $textcolor = self::getOsVersionsColors($osVersion);
+                $textcolor = $this->getOsVersionsColors($osVersion);
                 // show browsers their value is greater than zero and exclude totals
                 if ($value > 0 && ($osVersion !== "Total"))
                 {   // 1 line for every browser
@@ -1959,7 +2329,7 @@ namespace YAWK
             {   // show only items where browser got a value
                 if ($value !== 0 && $osVersion !== 0)
                 {   // get different textcolors
-                    $textcolor = self::getOsVersionsColors($osVersion);
+                    $textcolor = $this->getOsVersionsColors($osVersion);
                     echo "<li><a href=\"#\" class=\"$textcolor\">$osVersion
                           <span class=\"pull-right $textcolor\" ><i class=\"fa fa-angle-down\"></i>$value</span></a></li>";
                 }
@@ -1972,10 +2342,19 @@ namespace YAWK
         <!-- /.box -->";
         }
 
+        /**
+         * Draw default box containing device types
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param string $data array containing all the stats data
+         * @param string $limit contains i number for sql limitation
+         */
         public function drawDeviceTypeBox($db, $data, $limit)
         {   /** @var $db \YAWK\db */
             // get data for this box
-            $deviceTypes = \YAWK\stats::countDeviceTypes($db, $data, $limit);
+            $deviceTypes = $this->countDeviceTypes($db, $data, $limit);
 
             echo "<!-- donut box:  -->
         <div class=\"box box-default\">
@@ -2006,11 +2385,7 @@ namespace YAWK
                             //- BAR CHART -
                             //-------------
                             
-                            var barChartData = {
-                              ";
-                                    $this->getJsonDeviceTypes($db, $deviceTypes);
-                            echo "};
-                        
+                            var barChartData = {";echo $this->getJsonDeviceTypes($db, $deviceTypes); echo "};
                             var barChartCanvas = $('#barChartDeviceType').get(0).getContext('2d');
                             var barChart = new Chart(barChartCanvas);
                             barChartData.datasets.fillColor = '#00a65a';
@@ -2051,7 +2426,7 @@ namespace YAWK
             // walk through array and draw data beneath pie chart
             foreach ($deviceTypes AS $deviceType => $value)
             {   // get text colors
-                $textcolor = self::getDeviceTypeColors($deviceType);
+                $textcolor = $this->getDeviceTypeColors($deviceType);
                 // show browsers their value is greater than zero and exclude totals
                 if ($value > 0 && ($deviceType !== "Total"))
                 {   // 1 line for every browser
@@ -2081,7 +2456,7 @@ namespace YAWK
             {   // show only items where browser got a value
                 if ($value !== 0 && $deviceType !== 0)
                 {   // get different textcolors
-                    $textcolor = self::getDeviceTypeColors($deviceType);
+                    $textcolor = $this->getDeviceTypeColors($deviceType);
                     echo "<li><a href=\"#\" class=\"$textcolor\">$deviceType
                           <span class=\"pull-right $textcolor\" ><i class=\"fa fa-angle-down\"></i>$value</span></a></li>";
                 }
@@ -2095,6 +2470,15 @@ namespace YAWK
         }
 
 
+        /**
+         * Draw default box containing login statistics
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param string $data array containing all the stats data
+         * @param string $limit contains i number for sql limitation
+         */
         public function drawLoginBox($db, $limit)
         {   /** @var $db \YAWK\db */
             // get data for this box
@@ -2133,7 +2517,7 @@ namespace YAWK
                                 var pieChart = new Chart(pieChartCanvas);
                                 // get browsers array
                                 // output js data with php function getJsonBrowsers
-                                var PieData = ";self::getJsonLogins($db, $logins);
+                                var PieData = ";echo $this->getJsonLogins($db, $logins);
             echo"
                                 var pieOptions = {
                                     //Boolean - Whether we should show a stroke on each segment
@@ -2171,7 +2555,7 @@ namespace YAWK
             // walk through array and draw data beneath pie chart
             foreach ($logins AS $login => $value)
             {   // get text colors
-                $textcolor = self::getLoginColors($login);
+                $textcolor = $this->getLoginColors($login);
                 // show browsers their value is greater than zero and exclude totals
                 if ($value > 0 && ($login !== "Total") && ($login === "FailedPercentage") || ($login === "SuccessPercentage"))
                 {   // 1 line for every browser
@@ -2203,7 +2587,7 @@ namespace YAWK
             {   // show only items where browser got a value
                 if ($value !== 0 && $login !== 0)
                 {   // get different textcolors
-                    $textcolor = self::getLoginColors($login);
+                    $textcolor = $this->getLoginColors($login);
                     if ($login !== "Failed"
                         && ($login !== "Successful")
                         && ($login !== "Total"))
@@ -2233,10 +2617,19 @@ namespace YAWK
         }
 
 
+        /**
+         * Draw default box containing daytime statistics
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param string $data array containing all the stats data
+         * @param string $limit contains i number for sql limitation
+         */
         public function drawDaytimeBox($db, $data, $limit)
         {   /** @var $db \YAWK\db */
             // get data for this box
-            $dayTimes = \YAWK\stats::countDaytime($db, $data, $limit);
+            $dayTimes = $this->countDaytime($db, $data, $limit);
             $dayTimesPercent = $this->getDayTimesPercent();
 
 
@@ -2283,7 +2676,7 @@ namespace YAWK
                                 var pieChart = new Chart(pieChartCanvas);
                                 // get browsers array
                                 // output js data with php function getJsonBrowsers
-                                var PieData = ";$this->getJsonDaytimePieChart($db, $dayTimes);
+                                var PieData = ";echo $this->getJsonDaytimePieChart($db, $dayTimes);
                                 echo "
                                 var pieOptions = {
                                     //Boolean - Whether we should show a stroke on each segment
@@ -2325,7 +2718,7 @@ namespace YAWK
                             //- BAR CHART -
                             //-------------
                             
-                            var barChartData = {";$this->getJsonDaytimeBarChart($db, $dayTimes);echo "};
+                            var barChartData = {";echo $this->getJsonDaytimeBarChart($db, $dayTimes);echo "};
                             var barChartCanvas = $('#barChartDaytime').get(0).getContext('2d');
                             var barChart = new Chart(barChartCanvas);
                             barChartData.datasets.fillColor = '#00a65a';
@@ -2368,7 +2761,7 @@ namespace YAWK
                                 //------------------
                                 // LINE CHART
                                 //------------------
-                               var lineChartData = {";$this->getJsonDaytimeLineChart($db, $dayTimes);echo "
+                               var lineChartData = {";echo $this->getJsonDaytimeLineChart($db, $dayTimes);echo "
                                var lineChartOptions = {
                                   //Boolean - If we should show the scale at all
                                   showScale: true,
@@ -2420,7 +2813,7 @@ namespace YAWK
             // walk through array and draw data beneath pie chart
             foreach ($dayTimesPercent AS $daytime => $value)
             {   // get text colors
-                $textcolor = self::getDaytimeColors($daytime);
+                $textcolor = $this->getDaytimeColors($daytime);
                 // show browsers their value is greater than zero and exclude totals
                 if ($value > 0 && ($daytime !== "Total"))
                 {   // 1 line for every browser
@@ -2460,7 +2853,7 @@ namespace YAWK
             {   // show only items where browser got a value
                 if ($value !== 0 && $dayTime !== 0)
                 {   // get different textcolors
-                    $textcolor = self::getDaytimeColors($dayTime);
+                    $textcolor = $this->getDaytimeColors($dayTime);
                     echo "<li><a href=\"#\" class=\"$textcolor\">$dayTime
                           <span class=\"pull-right $textcolor\" ><i class=\"fa fa-angle-down\"></i>$value</span></a></li>";
                 }
@@ -2474,6 +2867,15 @@ namespace YAWK
         }
 
 
+        /**
+         * Draw default box containing weekday statistics
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param string $data array containing all the stats data
+         * @param string $limit contains i number for sql limitation
+         */
         public function drawWeekdayBox($db, $data, $limit)
         {   /** @var $db \YAWK\db */
             // get data for this box
@@ -2509,7 +2911,7 @@ namespace YAWK
                             //- BAR CHART -
                             //-------------
                             
-                            var barChartData = {";$this->getJsonWeekdayBarChart();echo "};
+                            var barChartData = {";echo $this->getJsonWeekdayBarChart();echo "};
                             var barChartCanvas = $('#barChartWeekdays').get(0).getContext('2d');
                             var barChart = new Chart(barChartCanvas);
                             barChartData.datasets.fillColor = '#00a65a';
