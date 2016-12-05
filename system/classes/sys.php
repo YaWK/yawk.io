@@ -7,14 +7,12 @@ namespace YAWK {
      * <p><i>Class covers both, backend & frontend functionality.
      * See Methods Summary for Details!</i></p>
      *
-     * @category   CMS
-     * @package    Plugins
+     * @package    YAWK
      * @author     Daniel Retzl <danielretzl@gmail.com>
-     * @copyright  2009-2016 Daniel Retzl yawk.goodconnect.net
+     * @copyright  2009-2016 Daniel Retzl yawk.io
      * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
      * @version    1.0.0
      * @link       http://yawk.io
-     * @since      File available since Release 0.0.2
      * @annotation The sys class - handles yawk's system core functions.
      */
     class sys {

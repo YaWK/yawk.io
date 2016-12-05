@@ -1,6 +1,23 @@
 <?php
 namespace YAWK
 {
+    /**
+     * <b>Admin LTE Dashboard Class</b>
+     *
+     * This class serves a few methods that build the Admin LTE Dashboard view in the backend.<br>
+     * <p>Methods are mostly draw functions that output html.</p>
+     *
+     * <p><i>Class covers backend template functionality.
+     * See Methods Summary for Details!</i></p>
+     *
+     * @package    YAWK
+     * @author     Daniel Retzl <danielretzl@gmail.com>
+     * @copyright  2009-2016 Daniel Retzl http://yawk.io
+     * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+     * @version    1.0.0
+     * @link       http://yawk.io/
+     * @annotation Dashboard class serves a few useful functions for the admin backend.
+     */
     class dashboard
     {
 

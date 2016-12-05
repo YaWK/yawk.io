@@ -13,9 +13,8 @@ namespace YAWK {
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2009-2015 Daniel Retzl yawk.io
      * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
-     * @version    1.1.3
+     * @version    1.0.0
      * @link       http://yawk.io
-     * @since      File available since Release 0.0.9
      * @annotation Email class serve function sendEmail() to send email
      */
     class email

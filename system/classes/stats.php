@@ -5,7 +5,11 @@ namespace YAWK
 
     /**
      * Class stats
+     * <b>methods to get and set yawk system settings</b>
      * @package YAWK
+     * @author Daniel Retzl <danielretzl@gmail.com>
+     * @version 1.0.0
+     * @link http://yawk.io
      *
      */
     class stats

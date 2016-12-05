@@ -12,7 +12,6 @@ namespace YAWK {
          * @param $db object Database object
          * @return array|bool
          */
-
         static function getEditor($db)
         {
             $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
