@@ -968,7 +968,7 @@ namespace YAWK {
 
                 // if position is globalmenu
                 if ($position == "globalmenu") {
-                    \YAWK\sys::displayGlobalMenu($db);
+                    \YAWK\menu::displayGlobalMenu($db);
                     $globalmenu_set = 1;
                 }
                 // in any other case, simply load a div box onto given position
