@@ -20,10 +20,9 @@ namespace YAWK {
      */
     class AdminLTE
     {
-        /**
-         * @var string
-         */
+        /** * @var string contains the backend skin (eg. skin-blue)*/
         public $backendSkin;
+        /** * @var string the desired layout (eg. sidebar-mini) */
         public $backendLayout;
 
         /**
@@ -137,7 +136,8 @@ namespace YAWK {
 
         /**
          * Draw logo in the top left corner
-         * @param object $db Database object
+         * @param object $db database object
+         * @param array $lang language array
          * @return null
          */
         function drawHtmlLogo($db, $lang)
