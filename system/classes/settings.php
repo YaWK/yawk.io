@@ -1,7 +1,7 @@
 <?php
 namespace YAWK {
     /**
-     * <b>methods to get and set yawk system settings</b>
+     * <b>Settings class: get and set YaWK system settings</b>
      * @author Daniel Retzl <danielretzl@gmail.com>
      * @version 1.0.0
      * @link http://yawk.io
@@ -265,6 +265,10 @@ namespace YAWK {
             }
         }
 
+        /**
+         * override the current language
+         * @param $lang
+         */
         static function getCurrentLanguageFormElements($lang)
         {
             echo "<h2>Language <small>override the selected language</small></h2>";
@@ -278,6 +282,12 @@ namespace YAWK {
             echo "Total: ".$i." language tags found.";
         }
 
+        /**
+         * get all settings by typeID
+         * @param $db object database
+         * @param $typeID int settings type to get settings for
+         * @return array|bool returns an array with requested settings or false
+         */
         public static function getSettingsByType($db, $typeID)
         {   /* @var $db \YAWK\db */
             if ($res = $db->query("SELECT * FROM {settings} WHERE type = $typeID"))
