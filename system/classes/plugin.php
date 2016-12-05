@@ -33,17 +33,36 @@ namespace YAWK {
      */
     class plugin
     {
+        /** * @var int plugin ID */
         public $id;
+        /** * @var string plugin name*/
         public $name;
+        /** * @var string plugin description */
         public $description;
+        /** * @var string plugin font awesome or glyph icon */
         public $icon;
+        /** * @var int plugin status ID */
         public $activated;
 
+        /**
+         * plugin constructor.
+         */
         function __construct()
         {
-            //   echo "plugin constructor";
+            // ...
         }
 
+        /**
+         * get and draw a list of all active plugins
+         * @author     Daniel Retzl <danielretzl@gmail.com>
+         * @copyright  2009-2016 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @version    1.0.0
+         * @param $db object database
+         * @param $lang array language array
+         * @param $manage int 0|1 if manage is 1, only active plugins will be shown
+         * @return null|string html output
+         */
         function getPlugins($db, $lang, $manage)
         {   /** @var $db \YAWK\db */
             if (isset($manage) && ($manage == 1))
@@ -100,6 +119,16 @@ namespace YAWK {
             /* EOFunction getPlugins */
         }
 
+        /**
+         * get requested plugin name for given plugin ID
+         * @author     Daniel Retzl <danielretzl@gmail.com>
+         * @copyright  2009-2016 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @version    1.0.0
+         * @param $db object database
+         * @param $pluginId int affected plugin ID
+         * @return string|bool returns the name or false
+         */
         static function getNameById($db, $pluginId)
         {   /** @var $db \YAWK\db $res */
             if ($res = $db->query("SELECT name FROM {plugins} WHERE id = '" . $pluginId . "'"))
@@ -118,6 +147,16 @@ namespace YAWK {
             return false;
         }
 
+        /**
+         * get requested plugin ID by given name
+         * @author     Daniel Retzl <danielretzl@gmail.com>
+         * @copyright  2009-2016 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @version    1.0.0
+         * @param $db object database
+         * @param $plugin string plugin name
+         * @return string|bool returns the plugin ID or false
+         */
         static function getIdByName($db, $plugin)
         {   /** @var $db \YAWK\db $res */
             if ($res = $db->query("SELECT id FROM {plugins} WHERE name ='".$plugin."'"))
@@ -135,6 +174,17 @@ namespace YAWK {
             return false;
         }
 
+        /**
+         * create a static page wich includes the according plugin content
+         * @author     Daniel Retzl <danielretzl@gmail.com>
+         * @copyright  2009-2016 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @version    1.0.0
+         * @param $db object database
+         * @param $alias string filename of the static page
+         * @param $plugin int plugin ID
+         * @return bool
+         */
         static function createPluginPage($db, $alias, $plugin)
         {   /** @var $db \YAWK\db */
         if (!isset($alias)){ $alias = ''; }

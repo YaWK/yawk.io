@@ -4,8 +4,7 @@ namespace YAWK
 {
 
     /**
-     * Class stats
-     * <b>methods to get and set yawk system settings</b>
+     * <b>Statistics - get and set user and page stats</b>
      * @package YAWK
      * @author Daniel Retzl <danielretzl@gmail.com>
      * @version 1.0.0

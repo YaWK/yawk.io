@@ -9,7 +9,7 @@
  */
 namespace YAWK {
     /**
-     * Class db extends \mysqli
+     * <b>Database class db</b> <i>extends \mysqli</i>
      * @package YAWK
      */
     final class db extends \mysqli {
