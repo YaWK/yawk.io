@@ -18,6 +18,11 @@ namespace YAWK {
     class filemanager
     {
 
+        /**
+         * draws the table header with labeling
+         * @param array $lang language array
+         * @param integer $i
+         */
         static function drawTableHeader($lang, $i)
         {
             print "<table width=\"100%\" cellpadding=\"4\" cellspacing=\"0\" border=\"0\" class=\"table table-hover\" id=\"table-sort$i\">
@@ -32,11 +37,22 @@ namespace YAWK {
   <tbody>";
         }
 
+        /**
+         * draw: output html end table body, end table
+         */
         static function drawTableFooter()
         {
             print "</tbody></table><br><br>";
         }
 
+        /**
+         * returns a list of all files in given folder. expect $folder as string
+         * @author     Daniel Retzl <danielretzl@gmail.com>
+         * @copyright  2009-2015 Daniel Retzl yawk.goodconnect.net
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @link       http://yawk.io
+         * @param string $folder folder to look for files
+         */
         static function getFilesFromFolder($folder)
         {
             global $file_value;
@@ -119,6 +135,15 @@ namespace YAWK {
             }
         }
 
+        /**
+         * delete file from folder
+         * @author     Daniel Retzl <danielretzl@gmail.com>
+         * @copyright  2009-2015 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @link       http://yawk.io
+         * @param string $file file to delete
+         * @param string $folder folder containing the file
+         */
         static function deleteItem($file, $folder)
         {
             $folder = mb_strtolower($folder);
@@ -138,6 +163,14 @@ namespace YAWK {
             }
         }
 
+        /**
+         * get and return PHP max file size setting
+         * @author     Daniel Retzl <danielretzl@gmail.com>
+         * @copyright  2009-2016 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @link       http://yawk.io
+         * @return bool|string
+         */
         static function getPhpMaxFileSize()
         {
             if ($postMaxSize = ini_get('post_max_size'))
@@ -153,6 +186,15 @@ namespace YAWK {
         }
 
 
+        /**
+         * count files from folder
+         * @author     Daniel Retzl <danielretzl@gmail.com>
+         * @copyright  2009-2016 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @link       http://yawk.io
+         * @param string $folder to search for files
+         * @return int number of files in folder
+         */
         static function countFilesFromFolder($folder)
         {
             $i = 0;
@@ -164,6 +206,14 @@ namespace YAWK {
             return $i;
         }
 
+        /**
+         * output a list showing only files from folder (no subfolders)
+         * @author     Daniel Retzl <danielretzl@gmail.com>
+         * @copyright  2009-2016 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @link       http://yawk.io
+         * @param string $folder to get files from
+         */
         static function getFilesOnlyFromFolder($folder)
         {
             foreach (new \DirectoryIterator($folder) as $fileInfo) {
@@ -173,6 +223,15 @@ namespace YAWK {
             }
         }
 
+        /**
+         * calculate filesize from bytes
+         * @author     Daniel Retzl <danielretzl@gmail.com>
+         * @copyright  2009-2016 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @link       http://yawk.io
+         * @param int|string $bytes
+         * @return string rounded, human-readable bytes
+         */
         public function sizeFilter($bytes)
         {
             $label = array('B', 'KB', 'MB', 'GB', 'TB', 'PB');
