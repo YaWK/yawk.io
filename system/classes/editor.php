@@ -9,6 +9,7 @@ namespace YAWK {
     class editor
     {
         /**
+         * load the editor and set it's settings
          * @param $db object Database object
          * @return array|bool
          */
@@ -20,6 +21,11 @@ namespace YAWK {
             return null;
         }
 
+        /**
+         * load all required javascript and css files
+         * @param array $editorSettings the editor theme
+         * @return string output html data
+         */
         static function loadJavascript($editorSettings)
         {   // returns the JS include HTML
             return "<!-- include codemirror) -->
@@ -36,6 +42,11 @@ namespace YAWK {
                     <script src=\"../system/engines/summernote/dist/summernote-floats-bs.js\"></script>";
         }
 
+        /**
+         *
+         * outputs a html script area with all editor options
+         * @param $editorSettings
+         */
         static function setEditorSettings($editorSettings)
         {   // returns the editor HTML
             echo "
