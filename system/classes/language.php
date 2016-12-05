@@ -7,20 +7,34 @@ namespace YAWK {
      * The language files are located in<br>
      * admin/language/lang-en-EN.ini
      *
-     * @global     $lang
+     *
      * @author     Daniel Retzl <danielretzl@gmail.com>
-     * @copyright  2009-2015 Daniel Retzl yawk.goodconnect.net
+     * @copyright  2009-2015 Daniel Retzl
      * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
      * @version    1.0.0
      * @link       http://yawk.io
-     * @since      File available since Release 0.0.9
      * @annotation The language class - support multilingual backend
      */
     class language
     {
+        /**
+         * @var string $lang language string
+         */
         public $lang;
+
+        /**
+         * @var string $lang current language string
+         */
         public $current;
 
+        /**
+         * initialize and return current language
+         * @author     Daniel Retzl <danielretzl@gmail.com>
+         * @copyright  2009-2016 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @link       http://yawk.io
+         * @return string
+         */
         public function init(){
             if (isset($_GET['lang']) && (!empty($_GET['lang']))) {
                 self::setLanguage($_GET['lang']);
@@ -33,12 +47,25 @@ namespace YAWK {
             return $this->lang;
         }
 
+        /**
+         * get and return client language
+         * @author     Daniel Retzl <danielretzl@gmail.com>
+         * @copyright  2009-2016 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @link       http://yawk.io
+         * @return string
+         */
         static function getClientLanguage()
         {
             $client_lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 5);
             return $client_lang;
         }
 
+        /**
+         * set client language and parse corresponding ini file to array $lang
+         * @param string $lang the language as string (eg en-US)
+         * @return array|string $lang returns a language array
+         */
         public function setLanguage($lang)
         {
             global $lang;
