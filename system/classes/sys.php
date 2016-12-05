@@ -17,16 +17,6 @@ namespace YAWK {
      */
     class sys {
 
-        static function displayGlobalMenu($db)
-        {   /** @var \YAWK\db  $db */
-            $res = $db->query("SELECT value FROM {settings}
-                               WHERE property = 'globalmenuid'");
-            if ($row = mysqli_fetch_row($res)) {
-                if ($published = \YAWK\menu::getMenuStatus($db, $row[0]) != '0') {
-                    menu::display($db, $row[0]);
-                }
-            }
-        }
 
         /**
          * Read a directory recursively

@@ -37,6 +37,26 @@ namespace YAWK {
          */
         public $parent;
 
+
+        /**
+         * display the global menu
+         * @copyright  2009-2016 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @version    1.0.0
+         * @link       http://yawk.io
+         * @param $db object database
+         */
+        static function displayGlobalMenu($db)
+        {   /** @var \YAWK\db  $db */
+            $res = $db->query("SELECT value FROM {settings}
+                               WHERE property = 'globalmenuid'");
+            if ($row = mysqli_fetch_row($res)) {
+                if ($published = self::getMenuStatus($db, $row[0]) != '0') {
+                    self::display($db, $row[0]);
+                }
+            }
+        }
+
         /**
          * create a new menu
          * @copyright  2009-2016 Daniel Retzl
