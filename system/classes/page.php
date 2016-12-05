@@ -16,24 +16,51 @@ namespace YAWK {
      */
     class page
     {
+        /** * @var int every page got its own id */
         public $id = -1;
+        /** * @var string page filename */
         public $alias = '';
+        /** * @var string page title */
         public $title = '';
-        public $published = '';
+        /** * @var int 0|1 published status */
+        public $published = 0;
+        /** * @var int uid (user id) of the page owner */
         public $ownerid = -1;
+        /** * @var string should the page owner be public */
         public $owner = false;
+        /** * @var int menu id according to this page */
         public $menu = -1;
+        /** * @var int group id for this page */
         public $gid;
+        /** * @var string date when the site is created */
+        public $date_created;
+        /** * @var string date when the site is published */
         public $date_publish;
+        /** * @var string date when the site should be unpublished */
         public $date_unpublish;
+        /** * @var int plugin ID of that page */
         public $plugin;
+        /** * @var int blog ID of that page*/
         public $blogid;
+        /** * @var int 0|1 to check if the page is locked */
         public $locked;
+        /** * @var string meta description for this page */
         public $metadescription;
+        /** * @var string meta keywords for this page*/
         public $metakeywords;
+        /** * @var string search string for this page */
         public $searchstring;
 
 
+        /**
+         * count and return the pages in database
+         * @copyright  2009-2016 Daniel Retzl
+         * @link       http://yawk.io
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @version    1.0.0
+         * @param $db object database
+         * @return bool
+         */
         static function countPages($db)
         {   /** @var $db \YAWK\db */
             if ($result = $db->query("SELECT count(id) FROM {pages}"))
@@ -47,6 +74,17 @@ namespace YAWK {
             }
         }
 
+        /**
+         * get and return meta tags for requested page
+         * @copyright  2009-2016 Daniel Retzl
+         * @link       http://yawk.io
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @version    1.0.0
+         * @param $db object database
+         * @param $id int affected page ID
+         * @param $type string meta description
+         * @return string|bool meta tags as string
+         */
         function getMetaTags($db, $id, $type)
         {   /** @var $db \YAWK\db $res */
             if (!isset($type) or (empty($type))) {
@@ -70,6 +108,19 @@ namespace YAWK {
             return false;
         }
 
+
+        /**
+         * toggle page status online or offline (plus corresponding menu entries)
+         * @copyright  2009-2016 Daniel Retzl
+         * @link       http://yawk.io
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @version    1.0.0
+         * @param $db object database
+         * @param $id int affected page ID
+         * @param $published int 0|1 page publish status
+         * @param $title string page title
+         * @return string|bool meta tags as string
+         */
         function toggleOffline($db, $id, $published, $title)
         {   /* @var $db \YAWK\db */
             // check data types
@@ -122,6 +173,17 @@ namespace YAWK {
             return true;
         }
 
+        /**
+         * toggle page lock to avoid unintended changes
+         * @copyright  2009-2016 Daniel Retzl
+         * @link       http://yawk.io
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @version    1.0.0
+         * @param $db object database
+         * @param $id int affected page id
+         * @param $locked int 0|1 lock status
+         * @return bool
+         */
         function toggleLock($db, $id, $locked)
         {
             /* @var $db \YAWK\db */
@@ -141,6 +203,15 @@ namespace YAWK {
             }
         }
 
+        /**
+         * make a copy of a page
+         * @copyright  2009-2016 Daniel Retzl
+         * @link       http://yawk.io
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @version    1.0.0
+         * @param $db object database
+         * @return bool
+         */
         function copy($db)
         {
             /** @var $db \YAWK\db */
@@ -290,6 +361,15 @@ namespace YAWK {
             return false;
         }
 
+        /**
+         * delete a page
+         * @copyright  2009-2016 Daniel Retzl
+         * @link       http://yawk.io
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @version    1.0.0
+         * @param $db object database
+         * @return bool
+         */
         function delete($db)
         {
             /** @var $db \YAWK\db */
@@ -323,6 +403,20 @@ namespace YAWK {
             return false;
         }
 
+        /**
+         * create a new page
+         * @copyright  2009-2016 Daniel Retzl
+         * @link       http://yawk.io
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @version    1.0.0
+         * @param $db object database
+         * @param $alias string page filename
+         * @param $menuID int menu ID
+         * @param $locked int 0|1 page lock status
+         * @param $blogid int blog ID, if any
+         * @param $plugin int plugin ID, if any
+         * @return bool
+         */
         function create($db, $alias, $menuID, $locked, $blogid, $plugin)
         {
             /** @var $db \YAWK\db */
@@ -520,6 +614,15 @@ namespace YAWK {
             return true;
         }
 
+        /**
+         * save a static page including all settings
+         * @copyright  2009-2016 Daniel Retzl
+         * @link       http://yawk.io
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @version    1.0.0
+         * @param $db object database
+         * @return bool
+         */
         function save($db)
         {
             /** @var $db \YAWK\db */
@@ -604,6 +707,14 @@ namespace YAWK {
             return false;
         } // ./ save function
 
+        /**
+         * delete a static content page
+         * @copyright  2009-2016 Daniel Retzl
+         * @link       http://yawk.io
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @version    1.0.0
+         * @param $dirprefix string directory prefix
+         */
         function deleteContent($dirprefix)
         {
             global $dirprefix;
@@ -613,6 +724,16 @@ namespace YAWK {
             }
         }
 
+        /**
+         * write content to static page
+         * @copyright  2009-2016 Daniel Retzl
+         * @link       http://yawk.io
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @version    1.0.0
+         * @param $dirprefix string directory prefix
+         * @param $content string the content to write
+         * @return int
+         */
         function writeContent($dirprefix, $content)
         {
             $alias = $this->alias;
@@ -632,15 +753,33 @@ namespace YAWK {
             return $res;
         }
 
-        function readContent($dirpraefix)
+        /**
+         * read content from static page
+         * @copyright  2009-2016 Daniel Retzl
+         * @link       http://yawk.io
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @version    1.0.0
+         * @param $dirprefix string directory prefix
+         * @return string html content
+         */
+        function readContent($dirprefix)
         {
-            $filename = $dirpraefix . "content/pages/" . $this->alias . ".php";
+            $filename = $dirprefix . "content/pages/" . $this->alias . ".php";
             $handle = @fopen($filename, "rw");
             $content = @fread($handle, filesize($filename));
             fclose($handle);
             return $content;
         }
 
+        /**
+         * load page properties and store as object properties
+         * @copyright  2009-2016 Daniel Retzl
+         * @link       http://yawk.io
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @version    1.0.0
+         * @param $db object database
+         * @param $alias string page filename
+         */
         function loadProperties($db, $alias)
         {
             /** @var $db \YAWK\db $res */
@@ -667,17 +806,27 @@ namespace YAWK {
             }
         }
 
-        static function getLatest($db, $count)
+        /**
+         * get latest pages
+         * @copyright  2009-2016 Daniel Retzl
+         * @link       http://yawk.io
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @version    1.0.0
+         * @param $db object database
+         * @param $limit int limit to n entries
+         * @return array|string
+         */
+        static function getLatest($db, $limit)
         {   /** @var $db \YAWK\db */
             // check and set default value
-            if (!isset($count) && (empty($count))) { $count = 4; }
+            if (!isset($limit) && (empty($limit))) { $limit = 4; }
             // select latest n page titles
             if ($res = $db->query("SELECT id, alias, title, published, date_publish 
                                    FROM {pages} 
                                    WHERE blogid = 0 
                                    AND plugin = 0
                                    ORDER BY date_created 
-                                   DESC LIMIT $count"))
+                                   DESC LIMIT $limit"))
             {
                 $latestPages = array();
                 while ($row = mysqli_fetch_assoc($res))
@@ -692,6 +841,17 @@ namespace YAWK {
                 }
         }
 
+        /**
+         * get any requested page property
+         * @copyright  2009-2016 Daniel Retzl
+         * @link       http://yawk.io
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @version    1.0.0
+         * @param $db object database
+         * @param $id int affected page ID
+         * @param $property string database field to get
+         * @return string|bool the selected property or false
+         */
         function getProperty($db, $id, $property)
         {   /** @var $db \YAWK\db $res */
             // select property from pages db
@@ -712,6 +872,15 @@ namespace YAWK {
             return null;
         }
 
+        /**
+         * get and include static page content
+         * @copyright  2009-2016 Daniel Retzl
+         * @link       http://yawk.io
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @version    1.0.0
+         * @param $db object database
+         * @return mixed
+         */
         function getContent($db)
         {
             global $currentpage;
