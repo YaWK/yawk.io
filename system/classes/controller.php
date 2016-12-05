@@ -17,6 +17,7 @@ namespace YAWK
 
 class controller
 {
+    /** * @var string the filename to filter */
     public $filename;
 
     function __construct()
