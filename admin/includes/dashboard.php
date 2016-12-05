@@ -1,5 +1,4 @@
 <?php
-require_once '../system/classes/stats.php';
 echo "<!-- Optionally, you can add Slimscroll and FastClick plugins.
 Both of these plugins are recommended to enhance the
              user experience. Slimscroll is required when using the
@@ -20,11 +19,13 @@ Both of these plugins are recommended to enhance the
         <script src=\"../system/engines/AdminLTE/plugins/dashboard2.js\"></script>";
 
 
-
-/* draw Title on top */
-// YAWK\backend::getTitle($lang['DASHBOARD'],$lang['DASHBOARD_SUBTEXT']);
-// echo \YAWK\sys::getCurrentUserName();
-global $lang;
+// check if stats object is here...
+if (!isset($stats) || (empty($stats)))
+{   // include stats class
+    require_once '../system/classes/stats.php';
+    // and create new stats object
+    $stats = new \YAWK\stats();
+}
 ?>
 <p><?php print $lang['DASH_WELCOMETEXT']; ?> </p>
 
@@ -639,7 +640,7 @@ global $lang;
 
             <div class="info-box-content">
                 <span class="info-box-text">Direct Messages</span>
-                <span class="info-box-number"><?php echo \YAWK\stats::countMessages($db); ?></span>
+                <span class="info-box-number"><?php echo $stats->countMessages($db); ?></span>
 
                 <div class="progress">
                     <div class="progress-bar" style="width: 40%"></div>
