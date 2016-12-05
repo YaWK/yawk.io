@@ -123,6 +123,9 @@ namespace YAWK {
 
         /**
          * Draw body and header Tag
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @return null
          */
         function drawHtmlBody(){
@@ -136,6 +139,9 @@ namespace YAWK {
 
         /**
          * Draw logo in the top left corner
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db database object
          * @param array $lang language array
          * @return null
@@ -175,6 +181,9 @@ namespace YAWK {
 
         /**
          * Draw the navbar (top)
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @return null
          */
         function drawHtmlNavbar(){
@@ -203,6 +212,9 @@ namespace YAWK {
 
         /**
          * Draw right navbar
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @return null
          */
         function drawHtmlNavbarRightMenu(){
@@ -215,6 +227,9 @@ namespace YAWK {
         /**
          * Messages Menu: the small icon in the right corner of top navigation
          * This is a facebook-ike messaging preview.
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db Database object
          * @return null
          */
@@ -300,6 +315,9 @@ namespace YAWK {
 
         /**
          * Draw navbar notification. This tells you whats going on in your project.
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db Database object
          * @param $user
          * @return null
@@ -446,6 +464,9 @@ namespace YAWK {
 
         /**
          * Show your user account details. Counts your friends and connections, let you log out.
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db Database object
          * @param object $user User object
          * @return null
@@ -529,6 +550,9 @@ namespace YAWK {
 
         /**
          * End Navbar
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @return null
          */
         function drawHtmlNavbarHeaderEnd(){
@@ -546,6 +570,9 @@ namespace YAWK {
 
         /**
          * Left sidebar navigation
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db Database object
          * @param object $user User object
          * @param array $lang Language array
@@ -637,6 +664,9 @@ namespace YAWK {
 
         /**
          * HTML Content Header (manually written in \includes)
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param array $lang Language Array
          * @return null
          */
@@ -647,6 +677,9 @@ namespace YAWK {
 
         /**
          * HTML Content Header Breadcrumbs (manually written in \includes)
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @return null
          */
         function drawHtmlContentBreadcrumbs(){
@@ -655,6 +688,10 @@ namespace YAWK {
         }
 
         /**
+         * output the html content - depending wheter its a plugin or a static admin page
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db Database object
          * @param array $lang Language array
          * @param object $user User object - not in use atm, check this!
@@ -716,6 +753,9 @@ namespace YAWK {
 
         /**
          * End Content
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @return null
          */
         function drawHtmlContentClose()
@@ -727,6 +767,9 @@ namespace YAWK {
 
         /**
          * Draw a Footer on every backend page.
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @return null
          */
         function drawHtmlFooter($db)
@@ -772,6 +815,9 @@ namespace YAWK {
 
         /**
          * Draw right, collapsable sidebar
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @return null
          */
         function drawHtmlRightSidebar(){
@@ -864,6 +910,9 @@ namespace YAWK {
 
         /**
          * Include needed JS files
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @return null
          */
         function drawHtmlJSIncludes(){
@@ -883,7 +932,10 @@ namespace YAWK {
         }
 
         /**
-         * SetUp Backend FX and end html body </body>
+         * SetUp Backend FX and end html body
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db Database
          * @return null
          */
@@ -904,6 +956,14 @@ namespace YAWK {
             return null;
         }
 
+        /**
+         * the collapseable sidebar
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param string $header
+         * @param string $content
+         */
         static function drawCollapsableBox($header, $content)
         {
             return "
