@@ -163,7 +163,12 @@ namespace YAWK {
             return $content;
         }
 
-        static function full_copy( $source, $target )
+        /**
+         * copy an entire folder including subdirectories
+         * @param $source string source directory
+         * @param $target string target directory
+         */
+        static function full_copy($source, $target )
         {   /** copy an entire folder into another location */
             if ( is_dir( $source ) ) {
                 @mkdir( $target );
