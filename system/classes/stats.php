@@ -20,7 +20,7 @@ namespace YAWK
         public $uid;
         /** * @var int gid (group id) who affected this entry */
         public $gid;
-        /** * @var int 0 |1 was the user logged in? */
+        /** * @var int 0|1 was the user logged in? */
         public $logged_in;
         /** * @var string detected user language */
         public $acceptLanguage;
