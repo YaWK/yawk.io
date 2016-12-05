@@ -18,13 +18,10 @@ namespace YAWK {
      * <p><i>Class covers backend functionality.
      * See Methods Summary for Details!</i></p>
      *
-     * @category   CMS
-     * @package    System
      * @author     Daniel Retzl <danielretzl@gmail.com>
-     * @copyright  2009-2015 Daniel Retzl yawk.website
+     * @copyright  2009-2015 Daniel Retzl yawk.io
      * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
-     * @version    1.2.0
-     * @link       http://yawk.website/
+     * @link       http://yawk.io/
      * @since      File available since Release 1.0.0
      * @annotation Backend class serves a few useful functions for the admin backend.
      */
