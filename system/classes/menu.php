@@ -16,13 +16,37 @@ namespace YAWK {
      */
     class menu
     {
+        /**
+         * @var int the menu id
+         */
         public $id;
+        /**
+         * @var string the menu name
+         */
         public $name;
+        /**
+         * @var int the menu ID
+         */
         public $menuID;
+        /**
+         * @var int 0|1 published - yes or no
+         */
         public $published;
+        /**
+         * @var int the parent menu ID
+         */
         public $parent;
 
-        /* CREATE A NEW MENU */
+        /**
+         * create a new menu
+         * @copyright  2009-2016 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @version    1.0.0
+         * @link       http://yawk.io
+         * @param $db object the database object
+         * @param $name string the name of the new menu
+         * @return bool
+         */
         static function createMenu($db, $name)
         {   /** @var $db \YAWK\db */
             // menu name not given
@@ -55,7 +79,17 @@ namespace YAWK {
             }
         }
 
-        /* CHANGE TITLE */
+        /**
+         * Change the menu title
+         * @copyright  2009-2016 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @version    1.0.0
+         * @link       http://yawk.io
+         * @param $db object the database oject
+         * @param $menu int affected menu ID
+         * @param $menutitle string new menu title
+         * @return bool
+         */
         static function changeTitle($db, $menu, $menutitle)
         {
             /** @var $db \YAWK\db $res */
@@ -73,7 +107,18 @@ namespace YAWK {
             }
         }
 
-        /* ADD MENU ENTRY */
+        /**
+         * add new entry to an existing menu
+         * @param $db object database object
+         * @copyright  2009-2016 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @version    1.0.0
+         * @link       http://yawk.io
+         * @param $menu int affected menu ID
+         * @param $title string new menu entry title
+         * @param $href string new menu link
+         * @return bool
+         */
         static function addEntry($db, $menu, $title, $href)
         {
             $menuName = \YAWK\menu::getMenuNameByID($db, $menu);
@@ -118,6 +163,16 @@ namespace YAWK {
             }
         }
 
+        /**
+         * check if a whole menu is published or not
+         * @copyright  2009-2016 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @version    1.0.0
+         * @link       http://yawk.io
+         * @param $db object database object
+         * @param $menuid int affected menu ID
+         * @return bool
+         */
         public static function getMenuStatus($db, $menuid)
         {
             /** @var $db \YAWK\db */
@@ -134,6 +189,16 @@ namespace YAWK {
             }
         }
 
+        /**
+         * check if a single menu entry is published or not
+         * @copyright  2009-2016 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @version    1.0.0
+         * @link       http://yawk.io
+         * @param $db object database object
+         * @param $menuid int affected menu id
+         * @return bool
+         */
         public static function getMenuEntryStatus($db, $menuid)
         {
             /** @var $db \YAWK\db */
@@ -149,6 +214,17 @@ namespace YAWK {
             }
         }
 
+        /**
+         * toggle a whole menu offline
+         * @copyright  2009-2016 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @version    1.0.0
+         * @link       http://yawk.io
+         * @param $db object database
+         * @param $id int affected menu id
+         * @param $published int menu status
+         * @return bool
+         */
         function toggleOffline($db, $id, $published)
         {
             /** @var $db \YAWK\db */
@@ -172,6 +248,18 @@ namespace YAWK {
             }
         }
 
+        /**
+         * toggle a menu entry offline
+         * @copyright  2009-2016 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @version    1.0.0
+         * @link       http://yawk.io
+         * @param $db object database
+         * @param $id int affected menu entry id
+         * @param $published int menu status
+         * @param $menuID int affected menu id
+         * @return bool
+         */
         function toggleItemOffline($db, $id, $published, $menuID)
         {
             /** @var $db \YAWK\db */
@@ -196,7 +284,24 @@ namespace YAWK {
             }
         }
 
-        /* EDIT MENU ENTRY */
+        /**
+         * edit a single menu entry
+         * @copyright  2009-2016 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @version    1.0.0
+         * @link       http://yawk.io
+         * @param $db object database
+         * @param $menu int affected menu ID
+         * @param $id int affected menu entry ID
+         * @param $title string menu title
+         * @param $href string menu link
+         * @param $sort int sortation order
+         * @param $gid int group id
+         * @param $published int 0|1 published status
+         * @param $parentID int id of the parent menu entry
+         * @param $target string link target (eg. _blank)
+         * @return bool
+         */
         static function editEntry($db, $menu, $id, $title, $href, $sort, $gid, $published, $parentID, $target)
         {   /** @var $db \YAWK\db */
             $menuName = \YAWK\menu::getMenuNameByID($db, $menu);
@@ -223,7 +328,17 @@ namespace YAWK {
             }
        }
 
-        /* DELETE MENU ENTRY */
+        /**
+         * delete a single menu entry
+         * @copyright  2009-2016 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @version    1.0.0
+         * @link       http://yawk.io
+         * @param $db object database
+         * @param $menu int affected menu ID
+         * @param $id int affected menu entry ID
+         * @return bool
+         */
         static function deleteEntry($db, $menu, $id)
         {   /** @var $db \YAWK\db */
             $menuName = \YAWK\menu::getMenuNameByID($db, $menu);
@@ -248,7 +363,16 @@ namespace YAWK {
             }
         }
 
-        /* DELETE MENU */
+        /**
+         * delete a whole menu
+         * @copyright  2009-2016 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @version    1.0.0
+         * @link       http://yawk.io
+         * @param $db object database
+         * @param $id int affected menu ID
+         * @return bool
+         */
         static function delete($db, $id)
         {
             /** @var $db \YAWK\db */
@@ -279,6 +403,12 @@ namespace YAWK {
         }
 
 
+        /**
+         * display menu entries for editing in backend
+         * @param $db object database
+         * @param $id int affected menuID
+         * @param $lang array language array
+         */
         static function displayEditable($db, $id, $lang) /* SHOW EDITABLEN MENU ENTRIES IN BACKEND */
         {
             /** UPDATE: OPTIMIZATION NEEDED
@@ -424,7 +554,15 @@ namespace YAWK {
             }
         }
 
-        /* DRAW MENU { init call from class::displayGlobalMenu }  */
+        /**
+         * get menu from database, build and draw it
+         * @copyright  2009-2016 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @version    1.0.0
+         * @link       http://yawk.io
+         * @param $db object database obj
+         * @param $id int affected menu ID
+         */
         static function display($db, $id)
         {   /** @var \YAWK\db $db */
             $divider = '';
@@ -456,6 +594,7 @@ namespace YAWK {
             }
 
             // Menu builder function, parentId 0 is the root
+
             function buildMenu($db, $parent, $menu, $id, $currentRole, $divider)
             {   /** @var \YAWK\db $db */
                 $titleCode = '';
@@ -547,6 +686,15 @@ namespace YAWK {
 
         }
 
+        /**
+         * draw the logout menu (if user is logged in...)
+         * @copyright  2009-2016 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @version    1.0.0
+         * @link       http://yawk.io
+         * @param $db object database
+         * @return bool|string
+         */
         static function drawLogoutMenu($db){
             if (isset($_SESSION['username']) && $_SESSION['logged_in']) {
                 if ($_SESSION['logged_in'] == true) {
@@ -569,6 +717,16 @@ namespace YAWK {
             return false;
         }
 
+        /**
+         * get menu name for given id
+         * @copyright  2009-2016 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @version    1.0.0
+         * @link       http://yawk.io
+         * @param $db object database obj
+         * @param $id int affected menu id
+         * @return string
+         */
         static function getMenuNameByID($db, $id)
         {   /* @var $db \YAWK\db */
             $menu = '';
@@ -586,6 +744,13 @@ namespace YAWK {
                 return $menu;
         }
 
+        /**
+         * returns the item title for given item and menu ID
+         * @param $db object database
+         * @param $itemID int the menu entry ID
+         * @param $menuID int the menu ID
+         * @return string title of the menu entry
+         */
         static function getMenuItemTitleByID($db, $itemID, $menuID)
         {   /* @var $db \YAWK\db */
             $menu = '';
