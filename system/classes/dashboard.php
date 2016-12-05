@@ -21,11 +21,16 @@ namespace YAWK
     class dashboard
     {
 
-        static function drawLatestPagesBox($db, $count)
+        /**
+         * Draws a box containing the recently added static pages
+         * @param $db object the database object
+         * @param $limit int number for sql limitation
+         */
+        static function drawLatestPagesBox($db, $limit)
         {   // default latest pages
-            if (!isset($count) || (empty($count))) { $count = 4; }
+            if (!isset($limit) || (empty($limit))) { $limit = 4; }
             $latestPages = array();
-            $latestPages = \YAWK\page::getLatest($db, $count);
+            $latestPages = \YAWK\page::getLatest($db, $limit);
             // print_r($latestPages);
 
             echo "<!-- PRODUCT LIST -->
@@ -80,10 +85,16 @@ namespace YAWK
         <!-- /.box -->";
 
         }
-        static function drawLatestUsers($db, $count)
+
+        /**
+         * Draws a box containing the recently added users
+         * @param $db object the database object
+         * @param $limit int number for sql limitation
+         */
+        static function drawLatestUsers($db, $limit)
         {
             // set default value
-            if (!isset($count) && (empty($count))) { $count = 8; }
+            if (!isset($limit) && (empty($limit))) { $limit = 8; }
             echo "
                 <!-- USERS LIST -->
                 <div class=\"box box-danger\">
@@ -91,7 +102,7 @@ namespace YAWK
                         <h3 class=\"box-title\">Latest Members</h3>
 
                         <div class=\"box-tools pull-right\">
-                            <span class=\"label label-danger\">$count New Members</span>
+                            <span class=\"label label-danger\">$limit New Members</span>
                             <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"collapse\"><i class=\"fa fa-minus\"></i>
                             </button>
                             <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"remove\"><i class=\"fa fa-times\"></i>
@@ -101,7 +112,7 @@ namespace YAWK
                     <!-- /.box-header -->
                     <div class=\"box-body no-padding\">
                         <ul class=\"users-list clearfix\">";
-                            $latestUsers = \YAWK\user::getLatestUsers($db, $count);
+                            $latestUsers = \YAWK\user::getLatestUsers($db, $limit);
                             foreach ($latestUsers AS $newUser)
                             {
                                 $userpic = \YAWK\user::getUserImage("backend", $newUser['username'], "img-circle", 50, 50);
