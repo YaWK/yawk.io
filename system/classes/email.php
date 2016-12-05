@@ -20,6 +20,15 @@ namespace YAWK {
     class email
     {
 
+        /**
+         * send an email
+         * @param string $email_from
+         * @param string $email_to
+         * @param string $email_cc
+         * @param string $email_subject
+         * @param string $email_message
+         * @return bool
+         */
         static function sendEmail($email_from, $email_to, $email_cc, $email_subject, $email_message)
         {
             /* SEND EMAIL WITH GIVEN PARAMS */
@@ -59,11 +68,6 @@ namespace YAWK {
                 return false;
             }
 
-            /*
-            if ($email_sent) {
-                backend::setTimeout("../../../thankyou.html", 20000);
-            }
-            */
         } /* end function sendEmail(); */
     } /* end class Email */
 }
