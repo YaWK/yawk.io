@@ -1,14 +1,42 @@
 <?php
 namespace YAWK\PLUGINS\FAQ {
-
+    /**
+     * <b>Build FAQ's for your users.</b>
+     *
+     * FAQs are useful. Beware to underrate this. You can answer the most interesting questions
+     * before your user can ask. This saves time - your website should be informative. If you answer
+     * a question on your website, users may not need to ask your email or phone support. If you do
+     * it clever, this could be a big selling helper for you!
+     *
+     * <p><i>This class covers backend functionality. See Methods Summary for Details!</i></p>
+     *
+     * @author     Daniel Retzl <danielretzl@gmail.com>
+     * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+     * @version    1.0.0
+     * @link       http://yawk.io
+     * @annotation Handles the Blog System.
+     */
     class faq {
+        /** * @var int faq ID */
         public $id;
+        /** * @var int order sortation number */
         public $sort;
+        /** * @var int category ID */
         public $cat;
+        /** * @var string question */
         public $question;
+        /** * @var string answer */
         public $answer;
+        /** * @var int 0|1 published or not */
         public $published;
 
+        /**
+         * get all FAQ data and draw (output) as html table
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         */
         function drawBackEndTableBody($db)
         {   /** @var $db \YAWK\db */
             if ($res = $db->query("SELECT * FROM {plugin_faq} ORDER BY id"))
@@ -52,6 +80,16 @@ namespace YAWK\PLUGINS\FAQ {
             }
         }
 
+        /**
+         * create a new question
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param string $question question
+         * @param string $answer answer
+         * @return bool|mixed
+         */
         function create($db, $question, $answer)
         {   /** @var $db \YAWK\db */
                 if ($res = $db->query("INSERT INTO {plugin_faq}
@@ -69,6 +107,15 @@ namespace YAWK\PLUGINS\FAQ {
                 }
         }
 
+        /**
+         * delete an FAQ entry
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $id faq ID to delete
+         * @return bool|mixed
+         */
         function delete($db, $id)
         {   /** @var $db \YAWK\db */
             // remove data from db
@@ -82,6 +129,14 @@ namespace YAWK\PLUGINS\FAQ {
             }
         }
 
+        /**
+         * save (update) an faq entry
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @return bool
+         */
         function save($db)
         {   /** @var $db \YAWK\db */
             if ($res = $db->query("UPDATE {plugin_faq} SET
@@ -98,6 +153,15 @@ namespace YAWK\PLUGINS\FAQ {
             }
         }
 
+        /**
+         * load faq item properties into faq object
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $id affected faq ID
+         * @return bool
+         */
         function loadItemProperties($db, $id)
         {   /** @var $db \YAWK\db */
             if ($res = $db->query("SELECT * FROM {plugin_faq}

@@ -1,11 +1,31 @@
 <?php
 namespace YAWK\PLUGINS\FAQ {
+    /**
+     * <b>Frontend FAQ Class</b>
+     *
+     * <p>This class extends \YAWK\PLUGINS\FAQ\faq.</p>
+     * <p><i>This class covers frontend functionality. See Methods Summary for Details!</i></p>
+     *
+     * @author     Daniel Retzl <danielretzl@gmail.com>
+     * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+     * @version    1.0.0
+     * @link       http://yawk.io
+     * @annotation Handles the Blog System.
+     */
     class frontend extends \YAWK\PLUGINS\FAQ\faq {
+        /** * @var int faq ID */
         public $id;
+        /** * @var int category ID */
         public $cat;
+        /** * @var string question */
         public $question;
+        /** * @var string answer */
         public $answer;
 
+        /**
+         * get all data from faq database and draw (output) a html list with all FAQ's
+         * @param object $db database
+         */
         function draw_faq($db) {
             /** @var $db \YAWK\db */
             echo "<h1><i class=\"fa fa-question-circle\"></i> &nbsp;F.A.Q. <small>H&auml;ufig gestellte Fragen &amp; Antworten...</small></h1><br>";
