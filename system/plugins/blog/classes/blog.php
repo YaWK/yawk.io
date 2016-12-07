@@ -34,60 +34,105 @@ namespace YAWK\PLUGINS\BLOG {
      */
     class blog
     {
-        /* init vars
-         * @set public
-         * doc
-         */
+        /** * @var int ID */
         public $id;
+        /** * @var string html */
         public $html;
+        /** * @var string html ext */
         public $html_ext;
+        /** * @var int blog ID */
         public $blogid;
+        /** * @var int item ID */
         public $itemid;
+        /** * @var int item group ID */
         public $itemgid;
-        public $category;
+        /** * @var string blog title */
         public $title;
+        /** * @var string blog filename */
         public $filename;
+        /** * @var string blog title */
         public $blogtitle;
+        /** * @var string blog name */
         public $name;
+        /** * @var int 0|1 published, 1 = published, 0 = not published */
         public $published;
+        /** * @var string blog content */
         public $content;
+        /** * @var string datetime when blog was published */
         public $date_publish;
+        /** * @var string datetime when blog was changed */
         public $date_changed;
+        /** * @var string datetime when blog is about to un-publish  */
         public $date_unpublish;
+        /** * @var string blog description  */
         public $description;
+        /** * @var string blog subtitle */
         public $subtitle;
+        /** * @var string datetime when blog was created */
         public $date_created;
+        /** * @var string year */
         public $year_created;
+        /** * @var string teaser text */
         public $teasertext;
+        /** * @var string blog text */
         public $blogtext;
+        /** * @var string blog author  */
         public $author;
+        /** * @var string ? blog vis */
         public $author_vis;
+        /** * @var string comment date */
         public $comment_date;
+        /** * @var string comment author */
         public $comment_author;
+        /** * @var string comment email */
         public $comment_email;
+        /** * @var string comment text */
         public $comment_text;
+        /** * @var int 0|1 show title, yes or no */
         public $showTitle;
+        /** * @var int 0|1 show description, yes or no */
         public $showDesc;
+        /** * @var int 0|1 show date, yes or no */
         public $showDate;
+        /** * @var int 0|1 show author, yes or no */
         public $showAuthor;
+        /** * @var int|string ? */
         public $sequence;
+        /** * @var int order sortation var */
         public $sortation;
+        /** * @var string blog icon (eg. fa fa-anyicon */
         public $icon;
+        /** * @var string permalink url */
         public $permaLink;
+        /** * @var int|string blog layout */
         public $layout;
+        /** * @var int 0|1 show comments, yes or no */
         public $comments;
+        /** * @var string any thumbnail beneath the blog item */
         public $thumbnail;
+        /** * @var string blog alias (filename) */
         public $alias;
+        /** * @var int order sortation number */
         public $sort;
+        /** * @var int group ID */
         public $gid;
+        /** * @var int page ID */
         public $pageid;
+        /** * @var int|string ?blog preview */
         public $preview;
+        /** * @var int|string 0|1 show voting, yes or no */
         public $voting;
+        /** * @var string youtube video link */
         public $youtubeUrl;
+        /** * @var string any external weblink */
         public $weblink;
+        /** * @var string meta keywords */
         public $metakeywords;
+        /** * @var string meta description */
         public $metadescription;
+        /** * @var int|string blog item layout */
         public $itemlayout;
+        /** * @var int|string show blog item comments, yes or no */
         public $itemcomments;
 
 
