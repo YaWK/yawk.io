@@ -14,27 +14,51 @@ namespace YAWK {
      *
      * @package    YAWK
      * @author     Daniel Retzl <danielretzl@gmail.com>
-     * @copyright  2009-2015 Daniel Retzl
+     * @copyright  2009-2016 Daniel Retzl
      * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
      * @version    1.0.0
      * @link       http://yawk.io
-     * @since      File available since Release 0.0.2
      * @annotation Widgets are small, useful tools that you can include everywhere in your website.
      */
     class widget
     {
+        /** * @var int 0|1 published or not */
         public $published;
+        /** * @var int widget ID */
         public $id;
+        /** * @var string widget name */
         public $name;
+        /** * @var int order sortation number */
         public $sort;
+        /** * @var string template position to appear */
         public $position;
+        /** * @var int widget type number */
         public $widgetType;
 
+        /**
+         * return current widget path
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @return string full path to widgets folder
+         */
         static function getCurrentWidgetPath($db)
         {
             return "" . \YAWK\sys::getDirPrefix($db) . "/system/widgets/";
         }
 
+        /**
+         * create new widget
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $widgetType widget type
+         * @param int $pageID page ID
+         * @param string $positions widget / template positions
+         * @return bool
+         */
         static function create($db, $widgetType, $pageID, $positions)
         {
             /** @var $db \YAWK\db */
@@ -104,6 +128,15 @@ namespace YAWK {
             return false;
         }
 
+        /**
+         * load a widget into given position
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param string $position template position where widget should appear
+         * @return null|bool include widget and return null or false
+         */
         static function loadWidgets($db, $position)
         {
             /** @var $db \YAWK\db */
@@ -130,6 +163,15 @@ namespace YAWK {
             // return true;
         }
 
+        /**
+         * return widget ID
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $id the ID
+         * @return bool
+         */
         static function getWidgetId($db, $id)
         {
             /** @var $db \YAWK\db */
@@ -150,6 +192,15 @@ namespace YAWK {
             return false;
         }
 
+        /**
+         * get widget title and page ID and output select option
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $id affected widget ID
+         * @return string|bool
+         */
         static function getWidget($db, $id)
         {
             /** @var $db \YAWK\db */
@@ -157,7 +208,7 @@ namespace YAWK {
             if ($res = $db->query("SELECT cw.pageID, cp.title
                     FROM {widgets} as cw
                     LEFT JOIN {pages} as cp on cp.id = cw.pageID
-                    WHERE cw.id = " . $id . "")
+                    WHERE cw.id = '" . $id . "'")
             ) {
                 while ($row = mysqli_fetch_array($res)) {
                     // if no result is given, prepare dropdown for all pages
@@ -177,6 +228,14 @@ namespace YAWK {
             return false;
         }
 
+        /**
+         * get widgets into array
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @return bool|mixed
+         */
         static function getWidgets($db)
         {   /** @var $db \YAWK\db */
             if ($res = $db->query("SELECT id, name, (
@@ -201,6 +260,16 @@ namespace YAWK {
             }
         }
 
+        /**
+         * TODO: OUTDATED??
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * load content widget
+         * @param object $db database
+         * @param int $id widget ID
+         * @return bool|mixed
+         */
         static function getContentWidget($db, $id)
         {
             /** @var $db \YAWK\db */
@@ -224,6 +293,16 @@ namespace YAWK {
             return false;
         }
 
+        /**
+         * TODO: OUTDATED??
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * load widget
+         * @param object $db database
+         * @param int $id widget ID
+         * @return bool|mixed
+         */
         static function loadWidget($db, $id)
         {
             /** @var $db \YAWK\db */
@@ -245,16 +324,32 @@ namespace YAWK {
             return false;
         }
 
+        /**
+         * return loginbox widget
+         */
         static function getLoginBox()
         {
-            include 'system/widgets/loginbox/loginbox.php';
+            return include 'system/widgets/loginbox/loginbox.php';
         }
 
+        /**
+         * return facebook box widget
+         */
         static function getFacebookBox()
         {
             include 'system/widgets/fb_box/fb_box.php';
         }
 
+        /**
+         * toggle widget online / offline
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $id widget ID
+         * @param int $published 0|1 1 is online, zero is offline
+         * @return bool
+         */
         function toggleOffline($db, $id, $published)
         {
             /** @var $db \YAWK\db */
@@ -271,6 +366,15 @@ namespace YAWK {
             }
         }
 
+        /**
+         * copy a widget
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $id widget ID to copy
+         * @return bool
+         */
         function copy($db, $id)
         {
             /** @var $db \YAWK\db */
@@ -311,6 +415,15 @@ namespace YAWK {
             }
         }
 
+        /**
+         * delete a widget
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $widget widget ID
+         * @return bool
+         */
         function delete($db, $widget)
         {
             /** @var $db \YAWK\db */
@@ -328,6 +441,15 @@ namespace YAWK {
             }
         }
 
+        /**
+         * load widget properties into widget object
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $id widget ID
+         * @return bool
+         */
         function loadProperties($db, $id)
         {   /** @var $db \YAWK\db */
             if (isset($id))
@@ -364,6 +486,14 @@ namespace YAWK {
             }
         }
 
+        /**
+         * save (update) widget settings
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @return bool
+         */
         function save($db)
         {
             /** @var $db \YAWK\db */
