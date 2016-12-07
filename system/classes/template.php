@@ -50,6 +50,9 @@ namespace YAWK {
 
         /**
          * return ID of current (active) template
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db
          * @return int the ID of the currently selected template
          */
@@ -60,6 +63,9 @@ namespace YAWK {
 
         /**
          * fetch positions of current (active) template, explode string and return positions array
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db
          * @return array|bool|mixed|string
          */
@@ -94,6 +100,9 @@ namespace YAWK {
 
         /**
          * save a template as new. It copies the tpl folder and all settings into a new one.
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db
          * @param object $template
          * @param string $new_template
@@ -143,9 +152,9 @@ namespace YAWK {
 
         /**
          * load properties into template object
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.website/
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db database object
          * @param int $id template id to load
          * @return bool true or false
@@ -182,6 +191,9 @@ namespace YAWK {
 
         /**
          * return array with all template id's + names.
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param $db object database
          * @return array|bool
          */
@@ -207,6 +219,9 @@ namespace YAWK {
 
         /**
          * count and return how many settings got this: template ID
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param $db object database
          * @param $templateID int affected template ID
          * @return int the number of settings for this template
@@ -222,6 +237,9 @@ namespace YAWK {
 
         /**
          * return template name for given ID
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param $db object database
          * @param $templateID int affected template ID
          * @return string|null
@@ -250,6 +268,9 @@ namespace YAWK {
 
         /**
          * return current active template name
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param $db object database
          * @param $location string frontend or backend
          * @param $templateID int affected template ID
@@ -311,6 +332,9 @@ namespace YAWK {
 
         /**
          * get, set and minify template css file
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param $db object database
          * @param $tplId int affected template ID
          * @param $content string contains the css file content
@@ -364,6 +388,9 @@ namespace YAWK {
 
         /**
          * get, set and minify custom.css file
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param $db object database
          * @param $content string contains the css file content
          * @param $minify int 0|1 if 1, the file gets minified before saving.
@@ -411,6 +438,9 @@ namespace YAWK {
 
         /**
          * return the content of custom.css
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param $db object database
          * @param $templateID int affected template ID
          * @return string the content of custom.css
@@ -424,6 +454,9 @@ namespace YAWK {
 
         /**
          * return filename of template css file
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param $db object database
          * @param $location string frontend or backend
          * @param $templateID int affected template ID
@@ -448,6 +481,9 @@ namespace YAWK {
 
         /**
          * return filename of custom css file
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param $db object database
          * @param $location string frontend or backend
          * @param $templateID int affected template ID
@@ -464,6 +500,9 @@ namespace YAWK {
 
         /**
          * return biggest ID from template database
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param $db object database
          * @return int|bool
          */
@@ -488,6 +527,9 @@ namespace YAWK {
         }
 
         /** delete template settings css file
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param $db object database
          * @param $filename string the filename (including path) you wish to delete
          * @return bool
@@ -521,6 +563,9 @@ namespace YAWK {
 
         /**
          * update (save) template settings
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param $db object database
          * @param $id int affected template ID
          * @param $property string template settings property
@@ -548,6 +593,9 @@ namespace YAWK {
 
         /**
          * set template active
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param $db object database
          * @param $templateID int affected template ID
          * @return bool
@@ -579,6 +627,9 @@ namespace YAWK {
 
         /**
          * copy template settings into a new template
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param $db object database
          * @param $templateID int template ID
          * @param $newID int template ID
@@ -613,6 +664,9 @@ namespace YAWK {
 
         /**
          * Add a new template setting to the database.
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db database
          * @param string $property template property
          * @param string $value template value
@@ -647,6 +701,9 @@ namespace YAWK {
 
         /**
          * set template details
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db object database
          * @param string $description template description
          * @param string $author author name
@@ -669,6 +726,9 @@ namespace YAWK {
 
         /**
          * delete template
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param $db object database
          * @param $templateID int template ID of the template you wish to delete
          * @return bool
@@ -729,6 +789,9 @@ namespace YAWK {
 
         /**
          * get setting from database and draw input field
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param $db object database
          * @param $filter string filter the search result (eg. all field w %-color)
          * @param $special string could be a slider *OUTDATED
@@ -850,6 +913,9 @@ namespace YAWK {
 
         /**
          * return a radio list of all registered google fonts
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param $db object database
          * @param $item string the font
          * @return bool
@@ -923,6 +989,9 @@ namespace YAWK {
 
         /**
          * delete google font with requested ID
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param $db object database
          * @param $gfontid int google font ID you wish to delete
          * @return bool
@@ -943,6 +1012,9 @@ namespace YAWK {
 
         /**
          * add google font to database
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param $db object database
          * @param $gfont string name of the google font you wish to add
          * @param $description string any description for the font (eg. YourFont, cursive)
@@ -977,6 +1049,9 @@ namespace YAWK {
 
         /**
          * return currently active google font
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param $db object database
          * @param $status string the url or font name
          * @param $property string affected settings property
@@ -1009,6 +1084,9 @@ namespace YAWK {
 
         /**
          * get settings for heading, menu and text font and output html to load font
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param $db object database
          */
         static function outputActivegFont($db)
@@ -1042,6 +1120,9 @@ namespace YAWK {
 
         /**
          * get any template setting from database
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param $db object database
          * @param $field string the setting (field) to get
          * @param $property string the property to get
@@ -1066,6 +1147,9 @@ namespace YAWK {
 
         /**
          * include header for html page *outdated? *moved to sys?
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param $db object database
          */
         static function includeHeader($db)
@@ -1100,6 +1184,9 @@ namespace YAWK {
 
         /**
          * set template position and output the correct data depending on position
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param $db object database
          * @param $position string the template position
          */
@@ -1158,6 +1245,9 @@ namespace YAWK {
 
         /**
          * get all template settings into an array and return it
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param $db object database
          * @param $templateID int affected template ID
          * @return array
