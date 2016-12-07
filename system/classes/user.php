@@ -93,6 +93,9 @@ namespace YAWK {
 
         /**
          * return current username
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @return string current username
          */
         static function getCurrentUserName()
@@ -109,6 +112,9 @@ namespace YAWK {
 
         /**
          * check, if a session username is set and if user is logged in
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @return bool return status
          */
         static function isAnybodyThere()
@@ -132,6 +138,9 @@ namespace YAWK {
 
         /**
          * template ID for given user ID
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db database
          * @param int $uid user ID
          * @return string|bool return template ID to corresponding user ID
@@ -162,6 +171,9 @@ namespace YAWK {
 
         /**
          * check if user ID is allowed to override template
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db database
          * @param int $uid user ID
          * @return bool
@@ -195,6 +207,9 @@ namespace YAWK {
 
         /**
          * set status and override template for this user ID
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db database
          * @param int $overrideTemplate 0|1 1 if template could be overridden by this user
          * @param int $userTemplateID the template ID you wish to set for this user
@@ -227,6 +242,15 @@ namespace YAWK {
                 }
         }
 
+        /**
+         * check if user template equals selected (active) template
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database
+         * @param int $userTemplateID the user template ID
+         * @return bool
+         */
         public function isTemplateEqual($db, $userTemplateID)
         {
             /* @var $db \YAWK\db */
@@ -242,6 +266,15 @@ namespace YAWK {
             }
         }
 
+        /**
+         * return an array with all login data
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param object $user
+         * @return array|bool
+         */
         static function getLoginData($db, $user)
         {   /* @var $db \YAWK\db */
             if (isset($user) && (!empty($user)))
@@ -283,6 +316,15 @@ namespace YAWK {
                 }
         }
 
+        /**
+         * check if username is already registered
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param string $user username to check
+         * @return bool
+         */
         static function isRegistered($db, $user)
         {   /** @var $db \YAWK\db */
             if ($res = $db->query("SELECT username FROM {users} WHERE username='$user'"))
@@ -302,6 +344,15 @@ namespace YAWK {
                 }
         }
 
+        /**
+         * check if user already has logged in
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param string $user username to check
+         * @return bool
+         */
         static function hasLoggedIn($db, $user)
         {   /** @var $db \YAWK\db */
             if ($res = $db->query("SELECT username FROM {logins} WHERE username='$user'"))
@@ -322,6 +373,14 @@ namespace YAWK {
         }
 
 
+        /**
+         * check if backend is allowed for current session user group
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @return bool
+         */
         static function isAdmin($db)
         {   /** @var $db \YAWK\db */
             // checks if backend login is allowed for this (logged in) Group ID
@@ -370,6 +429,14 @@ namespace YAWK {
             }
         }
 
+        /**
+         * return user data as an array
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @return array|string
+         */
         function getUserArray($db)
         {
             /* @var $db \YAWK\db */
@@ -392,6 +459,15 @@ namespace YAWK {
             return $userDataArray;
         }
 
+        /**
+         * get latest users and return as array
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $count limit the query
+         * @return array|string
+         */
         static function getLatestUsers($db, $count)
         {
             if (isset($count))
@@ -423,6 +499,14 @@ namespace YAWK {
             return $userDataArray;
         }
 
+        /**
+         * count and return all users
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @return string|bool
+         */
         static function countUsers($db)
         {
             /* @var $db \YAWK\db */
@@ -438,27 +522,16 @@ namespace YAWK {
             }
         }
 
-        function getAllUserData($db)
-        {
-        /* @var $db \YAWK\db */
-        if ($result = $db->query("SELECT * FROM {users} LIMIT 3"))
-        {
-            $userDataArray = array();
-            // cycle trough results
-            while ($row = $result->fetch_assoc()){
-                $userDataArray[] = $row;
-            }
-            /* free result set */
-            $result->close();
-        }
-        else {
-            $userDataArray = '';
-            \YAWK\sys::setSyslog($db, 5, "failed to fetch getAllUserData $db->error()", 0, 0, 0, 0);
-            echo \YAWK\alert::draw("danger", "Error", "Sorry, database error: fetch getAllUserData failed.","page=users","4800");
-        }
-        return $userDataArray;
-        } // ./getUserList
 
+        /**
+         * load user properties into object
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param string $username username to get the settings for
+         * @return bool
+         */
         function loadProperties($db, $username)
         {   /** @var $db \YAWK\db */
             if ($res = $db->query("SELECT * FROM {users}
@@ -512,6 +585,16 @@ namespace YAWK {
             return true;
         }
 
+        /**
+         * get any user property
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param string $property user property to get
+         * @param int $uid affected user ID
+         * @return string|bool
+         */
         function getProperty($db, $property, $uid)
         {   /** @var $db \YAWK\db */
             if ($res = $db->query("SELECT $property FROM {users}
@@ -528,6 +611,17 @@ namespace YAWK {
             }
         }
 
+        /**
+         * set any user property
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $id affected user ID
+         * @param string $property user property to set
+         * @param string $value user value of this property
+         * @return bool
+         */
         static function setProperty($db, $id, $property, $value)
         {   /** @var $db \YAWK\db */
             if (isset($property) && isset($value) && isset($id) && is_numeric($id))
@@ -556,6 +650,15 @@ namespace YAWK {
             }
         }
 
+        /**
+         * get group name for given $gid (group ID)
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $gid group ID
+         * @return string|bool
+         */
         static function getGroupNameFromID($db, $gid)
         {
             /** @var $db \YAWK\db */
@@ -570,6 +673,15 @@ namespace YAWK {
             return false;
         }
 
+        /**
+         * get username from given $uid (user ID)
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $uid user id to get the name for
+         * @return string|bool
+         */
         static function getUserNameFromID($db, $uid)
         {
             /** @var $db \YAWK\db */
@@ -584,6 +696,15 @@ namespace YAWK {
             return false;
         }
 
+        /**
+         * get ID for given user
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param string $user username to get the ID from
+         * @return string|bool
+         */
         static function getIdfromName($db, $user)
         {
             /** @var $db \YAWK\db */
@@ -598,6 +719,14 @@ namespace YAWK {
             return false;
         }
 
+        /**
+         * return all group IDs as an array
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @return array|bool
+         */
         static function getAllGroupIDs($db)
         {   /** @var $db \YAWK\db */
             if ($res = $db->query("SELECT id, value FROM {user_groups}"))
@@ -625,6 +754,15 @@ namespace YAWK {
             }
         }
 
+        /**
+         * check if a username is logged in
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param string $username username
+         * @return bool
+         */
         static function isLoggedIn($db, $username)
         {   /** @var $db \YAWK\db */
             if ($res = $db->query("SELECT id, logged_in FROM {users} WHERE username = '" . $username . "'"))
@@ -660,6 +798,14 @@ namespace YAWK {
             }
         }
 
+        /**
+         * get group data for given group ID
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @return array|null|string
+         */
         static function getGroup($db)
         {   /** @var $db \YAWK\db */
             if (isset($_SESSION['gid']))
@@ -674,13 +820,25 @@ namespace YAWK {
             }
         }
 
+        /**
+         * return and output user image
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param string $location frontend or backend
+         * @param string $user username
+         * @param string $cssClass image css class eg. img-circle
+         * @param int $w width in pixel
+         * @param int $h height in pixel
+         * @return string
+         */
         static function getUserImage($location, $user, $cssClass, $w, $h)
         {
             if (isset($w) && isset($h))
             {
                 if ($w === 0)
                 {
-                    $width = '';
+                    $width = 0;
                 }
                 else
                 {
@@ -688,7 +846,7 @@ namespace YAWK {
                 }
                 if ($h === 0)
                 {
-                    $height = '0';
+                    $height = 0;
                 }
                 else
                 {
@@ -771,6 +929,14 @@ namespace YAWK {
             }
         }
 
+        /**
+         * save object properties
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @return bool
+         */
         function save($db)
         {   /** @var $db \YAWK\db */
             $date_changed = date("Y-m-d G:i:s");
@@ -808,6 +974,16 @@ namespace YAWK {
             }
         }
 
+        /**
+         * block or unblock a user
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $id user ID to toggle
+         * @param int $blocked 0|1 status: 1 is blocked, 0 is not blocked
+         * @return bool
+         */
         function toggleOffline($db, $id, $blocked)
         {   /** @var $db \YAWK\db */
             // TOGGLE PAGE STATUS
@@ -829,6 +1005,15 @@ namespace YAWK {
             }
         }
 
+        /**
+         * return email address of $user
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param string $user username
+         * @return bool the emailadress of this $user
+         */
         static function getUserEmail($db, $user)
         {   /** @var $db \YAWK\db $res */
             if ($res = $db->query("SELECT email
@@ -845,6 +1030,31 @@ namespace YAWK {
             }
         }
 
+        /**
+         * create a new user
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param string $username username
+         * @param string $password1 password
+         * @param string $password2 password (must be same as password1)
+         * @param string $email email adress
+         * @param string $url url
+         * @param string $twitter user twitter url
+         * @param string $facebook user facebook url
+         * @param string $firstname user firstname
+         * @param string $lastname user lastname
+         * @param string $street street
+         * @param string $zipcode zip code
+         * @param string $city city
+         * @param string $country country
+         * @param int $blocked 0|1 1 sets user to blocked, 0 is not blocked
+         * @param int $privacy we need to accept users privacy: do not show email public, do not show on users online list
+         * @param string $job job description - can held any string
+         * @param int $gid user group ID
+         * @return bool
+         */
         static function create($db, $username, $password1, $password2, $email, $url, $twitter, $facebook, $firstname, $lastname, $street, $zipcode, $city, $country, $blocked, $privacy, $job, $gid)
         {   /** @var $db \YAWK\db */
             $date_created = date("Y-m-d G:i:s");
@@ -937,11 +1147,24 @@ namespace YAWK {
             }
         }
 
+        /**
+         * create a user from frontend
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param string $username username
+         * @param string $password1 password
+         * @param string $password2 password (must match w password1)
+         * @param string $email user email address
+         * @param int $gid user group ID
+         * @return bool
+         */
         static function createFromFrontend($db, $username, $password1, $password2, $email, $gid)
         {   /** @var $db \YAWK\db */
             if (empty($username) || (empty($password1) || (empty($password2) || (empty($email) || (empty($gid))))))
             {
-                echo \YAWK\alert::draw("danger", "Fehler!", "Fehlende Daten. Bitte f&uuml;ll das Formular vollst&auml;ndig aus. ","",4200);
+                echo \YAWK\alert::draw("danger", "Error!", "Missing Data. Please fill out the complete form.","",4200);
                 echo \YAWK\PLUGINS\SIGNUP\signup::signUp($db);
                 echo "</div></div><div style=\"background-image: url(media/images/bottom.png); height: 150px;\"></div>";
                 exit;
@@ -1025,6 +1248,15 @@ namespace YAWK {
             return false;
         }
 
+        /**
+         * delete a user from database
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param string $user username
+         * @return bool
+         */
         static function delete($db, $user)
         {   /** @var $db \YAWK\db */
             if ($res = $db->query("DELETE FROM {users} WHERE username = '" . $user . "'"))
@@ -1038,6 +1270,16 @@ namespace YAWK {
             }
         }
 
+        /**
+         * check if password is correct; check also if user is blocked or terminated.
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param string $username username
+         * @param string $password password
+         * @return bool
+         */
         function checkPassword($db, $username, $password)
         {   /** @var $db \YAWK\db */
             $adminEmail = \YAWK\settings::getSetting($db, "admin_email");
@@ -1055,7 +1297,7 @@ namespace YAWK {
                         \YAWK\sys::setSyslog($db, 3, "<b>blocked user $username</b> tried to login.", 0, 0, 0, 0);
                         echo "<div class=\"container bg-danger\"><br><h2>We're Sorry! <small>Your Account is blocked.</h2><b>If you think
                         this is a mistake, contact the admin via email: </b>(<a class=\"text-danger\" href=\"mailto:$adminEmail\">$adminEmail</a>)
-                        <b>for further information.</b><br><small>You will be redirected to <a class=\"small\" href=\"$host\">$host</a> in a few seconds.</small><br><br></div>";
+                        <b>for further information.</b><br><small>You will be redirected to <a class=\"small\" href=\"$host\">$host</a> in 30 seconds.</small><br><br></div>";
                         \YAWK\sys::setTimeout("index.html", 30000);
                         return false;
                     }
@@ -1065,7 +1307,7 @@ namespace YAWK {
                         \YAWK\sys::setSyslog($db, 3, "failed to login <b>$username</b> user has deleted his account before - it does not exist anymore.", 0, 0, 0, 0);
                         echo "<div class=\"container bg-danger\"><br><h2>We're Sorry! <small>This account does not exist.</h2><b>If you think
                         this is a mistake, contact the admin via email: </b>(<a class=\"text-danger\" href=\"mailto:$adminEmail\">$adminEmail</a>)
-                        <b>.</b><br><small>You will be redirected to <a class=\"small\" href=\"$host\">$host</a> in a few seconds.</small><br><br></div>";
+                        <b>.</b><br><small>You will be redirected to <a class=\"small\" href=\"$host\">$host</a> in 30 seconds.</small><br><br></div>";
                         \YAWK\sys::setTimeout("index.html", 30000);
                         return false;
                     }
@@ -1083,6 +1325,15 @@ namespace YAWK {
             }
         }
 
+        /**
+         * check if group ID is allowed to login to backend
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $gid group ID who needs to be checked
+         * @return bool
+         */
         function checkGroupId($db, $gid)
         {   /** @var $db \YAWK\db */
             // query data
@@ -1099,6 +1350,14 @@ namespace YAWK {
             }
         }
 
+        /**
+         * check if user is allowed to login
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db password
+         * @return bool
+         */
         static function checkLogin($db)
         {   /** @var $db \YAWK\db */
             /* check user login */
@@ -1125,6 +1384,16 @@ namespace YAWK {
             }
         }
 
+        /**
+         * login user
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param string $username username
+         * @param string $password password
+         * @return bool
+         */
         function login($db, $username, $password)
         {   /** @var $db \YAWK\db */
             if (empty($username && $password)){
@@ -1180,7 +1449,7 @@ namespace YAWK {
                 return true;
             } else {
                 \YAWK\sys::setSyslog($db, 3, "failed to login <b>$username</b> $db->error().", 0, 0, 0, 0);
-                \YAWK\alert::draw("warning", "Login failed...", "Please try to re-login in a few seconds...", "",3000);
+                return \YAWK\alert::draw("warning", "Login failed...", "Please try to re-login in a few seconds...", "",3000);
 /*
                 if (!isset($_SESSION['failed'])){
                     $_SESSION['failed']=1;
@@ -1254,6 +1523,16 @@ namespace YAWK {
             }
         }
 
+        /**
+         * login user to backend
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param string $username username
+         * @param string $password password
+         * @return bool
+         */
         function loginBackEnd($db, $username, $password)
         {   /** @var $db \YAWK\db */
             $password = $db->quote(trim($password));
@@ -1309,7 +1588,7 @@ namespace YAWK {
                     echo "<script>
                             // RE-LOGIN TIMER
                                 $('div *').prop('disabled', true);
-                                var count=7;
+                                var count=8;
                                 var counter=setInterval(timer, 1000); // 1000 will  run it every 1 second
                                 function timer()
                                 {
@@ -1328,7 +1607,7 @@ namespace YAWK {
                                     document.getElementById(\"timer\").innerHTML=count; // watch for spelling
                                 }
                             </script>";
-                    \YAWK\alert::draw("danger", "Login failed!", "Please check your login data and try to re-login in <span id=\"timer\"></span> seconds!","","6000");
+                    \YAWK\alert::draw("danger", "Login failed!", "Please check your login data and try to re-login in a few seconds!","","3500");
                     \YAWK\sys::setSyslog($db, 3, "failed to login <b>$username</b>.", 0, 0, 0, 0);
                     // \YAWK\alert::draw("danger", "Login failed!", "Please check your login data and try again.", "", 6000);
                     $this->storeLogin($db, 0, "backend", $username, $password);
@@ -1389,6 +1668,18 @@ namespace YAWK {
             return false;
         }
 
+        /**
+         * store user login in database
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $failed 0|1 failed status: 1 means login failed, 0 means NOT failed
+         * @param string $location frontend or backend
+         * @param string $username username
+         * @param string $password password
+         * @return bool
+         */
         function storeLogin($db, $failed, $location, $username, $password)
         {   /** @var $db \YAWK\db */
             if (!isset($location)){
@@ -1410,6 +1701,15 @@ namespace YAWK {
         }
 
 
+        /**
+         * return the html for a default login box
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param string $username username, as option
+         * @param string $password password, as option
+         * @return string
+         */
         static function drawLoginBox($username, $password){
             $html = "<div class=\"row\">
             <div class=\"col-md-4\">&nbsp;</div>
@@ -1424,6 +1724,16 @@ namespace YAWK {
             return $html;
         }
 
+        /**
+         * return the html for a menu login box
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param string $username username, as option
+         * @param string $password password, as option
+         * @param string $style menu styling: light or dark
+         * @return string htmnl that draws the menu login box
+         */
         static function drawMenuLoginBox($username, $password, $style)
         {
             if (!isset($style) || (empty($style)))
@@ -1460,6 +1770,14 @@ namespace YAWK {
             return $html;
         }
 
+        /**
+         * logout user
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @return bool
+         */
         public function logout($db)
         {   /** @var $db \YAWK\db */
             // set user offline in db
@@ -1495,8 +1813,14 @@ namespace YAWK {
             }
         }
 
-        /** GET USER LIST */
 
+        /**
+         * output a list of all users (who have not activated privacy switch)
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         */
         static function getUserList($db)
         {   /* @var \YAWK\db $db */
             // show ALL users
@@ -1525,8 +1849,16 @@ namespace YAWK {
         }
 
 
-        /** +++++ NEW FUNCTIONS +++++ */
-
+        /**
+         * check if a user follows another
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $uid user ID of the user who wants to know
+         * @param int $hunted user ID of the other user
+         * @return bool true, if they follow each other, false if not
+         */
         static function checkFollowStatus($db, $uid, $hunted)
         {   /** @var $db \YAWK\db */
             if ($sql = $db->query("SELECT id FROM {follower} WHERE follower='$uid' AND hunted = '".$hunted."'"))
@@ -1547,6 +1879,16 @@ namespace YAWK {
             }
         }
 
+        /**
+         * check if two users are friends
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $uid user ID who want to know
+         * @param int $hunted user ID of the other user
+         * @return bool
+         */
         static function isFriend($db, $uid, $hunted)
         {   /** @var $db \YAWK\db */
             if ($sql = $db->query("SELECT id FROM {friends}
@@ -1569,6 +1911,16 @@ namespace YAWK {
             }
         }
 
+        /**
+         * check if a friendship request was sent from a user to another
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $uid user ID who wants to know
+         * @param int $hunted user ID of the other user
+         * @return array|bool
+         */
         static function isFriendRequested($db, $uid, $hunted)
         {   /** @var $db \YAWK\db */
             if ($sql = $db->query("SELECT id, friendA, friendB, confirmed, aborted FROM {friends}
@@ -1589,6 +1941,14 @@ namespace YAWK {
             }
         }
 
+        /**
+         * count and return how many notifications are unseen
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @return int|bool the number of notifications or false
+         */
         static function countNotifications($db)
         {   /** @var $db \YAWK\db */
             if ($sql = $db->query("SELECT count(log_id) FROM {syslog}
@@ -1604,6 +1964,15 @@ namespace YAWK {
             }
         }
 
+        /**
+         * count and return notifications for user ID
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $uid user ID
+         * @return int|bool the number of personal notifications for user ID, or false
+         */
         static function countMyNotifications($db, $uid)
         {   /** @var $db \YAWK\db */
             if ($sql = $db->query("SELECT count(toUID) FROM {notifications}
@@ -1619,6 +1988,14 @@ namespace YAWK {
             }
         }
 
+        /**
+         * return an array with all notifications
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @return array|bool
+         */
         static function getAllNotifications($db)
         {   /** @var $db \YAWK\db */
             if (isset($_GET['page']) && ($_GET['page'] === "syslog"))
@@ -1652,6 +2029,15 @@ namespace YAWK {
             }
         }
 
+        /**
+         * get all personal notifications for given user ID
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $uid affected user ID
+         * @return array|bool returns an array with all entries or false
+         */
         static function getMyNotifications($db, $uid)
         {   /** @var $db \YAWK\db */
             if ($sql = $db->query("SELECT * FROM {notifications} AS log
@@ -1677,6 +2063,15 @@ namespace YAWK {
             }
         }
 
+        /**
+         * count followers of given user ID
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $uid affected user ID
+         * @return int|bool the number of followers for that user ID or false
+         */
         static function countMyFollowers($db, $uid)
         {   /** @var $db \YAWK\db */
             if ($sql = $db->query("SELECT count(id) FROM {follower} WHERE hunted = '".$uid."'"))
@@ -1691,6 +2086,15 @@ namespace YAWK {
             }
         }
 
+        /**
+         * count friends of given user ID
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $uid affected user ID
+         * @return int|bool the number of friends for that user ID or false
+         */
         static function countMyFriends($db, $uid)
         {   /** @var $db \YAWK\db */
             if ($sql = $db->query("SELECT count(id) FROM {friends}
@@ -1708,6 +2112,16 @@ namespace YAWK {
             }
         }
 
+        /**
+         * return an array with all confirmed friends for given user ID
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $uid affected user ID
+         * @param int $confirmed 0|1 1 is confirmed, 0 is not. therefore you can get all friends, confirmed and outstanding
+         * @return array|bool
+         */
         static function getMyFriends($db, $uid, $confirmed)
         {   /** @var $db \YAWK\db */
             // to just friend requests
@@ -1738,6 +2152,15 @@ namespace YAWK {
             }
         }
 
+        /**
+         * get an array with all followers for given user ID
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $uid user ID
+         * @return array|bool
+         */
         static function getMyFollower($db, $uid)
         {   /** @var $db \YAWK\db */
             // param UID is set
@@ -1774,6 +2197,15 @@ namespace YAWK {
             }
         }
 
+        /**
+         * count and return number of messages for given user ID
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $uid affected user ID
+         * @return int|bool number of messages or false
+         */
         static function countNewMessages($db, $uid)
         {   /** @var $db \YAWK\db */
             $i = 0;
@@ -1792,6 +2224,15 @@ namespace YAWK {
             }
         }
 
+        /**
+         * return array with all messages for given user ID
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $uid affected user ID
+         * @return array|bool
+         */
         static function getNewMessages($db, $uid)
         {   /** @var $db \YAWK\db */
 
