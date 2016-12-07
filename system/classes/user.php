@@ -16,36 +16,67 @@ namespace YAWK {
 
     class user
     {
+        /** * @var string current user name */
         public $currentuser;
+        /** * @var string username */
         public $username;
+        /** * @var int 0|1 if 1, user is blocked and cannot login anymore */
         public $blocked;
+        /** * @var int user ID */
         public $id;
+        /** * @var int 0|1 if 1, user is published (active) */
         public $published;
+        /** * @var int 0|1 if 1, user privacy needs to be respected */
         public $privacy;
+        /** * @var int 0|1 if 1, user is currently online (or at least: not logged out) */
         public $online;
+        /** * @var int group ID */
         public $gid;
+        /** * @var string user password */
         public $password;
+        /** * @var string datetime when user was created */
         public $date_created;
+        /** * @var string datetime when user has changed */
         public $date_changed;
+        /** * @var string datetime when user has last logged in */
         public $date_lastlogin;
+        /** * @var string datetime when user account is about to expire */
         public $date_expired;
+        /** * @var int how many times the user have logged in */
         public $login_count;
+        /** * @var string user email address*/
         public $email;
+        /** * @var string user URL */
         public $url;
+        /** * @var string user twitter url */
         public $twitter;
+        /** * @var string user facebook url */
         public $facebook;
+        /** * @var string user firstname */
         public $firstname;
+        /** * @var string user lastname */
         public $lastname;
+        /** * @var string street */
         public $street;
+        /** * @var string zip code */
         public $zipcode;
+        /** * @var string city */
         public $city;
+        /** * @var string country */
         public $country;
+        /** * @var string job description - can held any string */
         public $job;
+        /** * @var string datetime when user has last logged in */
         public $lastlogin;
+        /** * @var int 0|1 1 means the email is public and can be shown on the website */
         public $public_email;
+        /** * @var int 0|1 user is currently logged in - or at least: not logged out */
         public $logged_in;
+        /** * @var int how many likes the user has achieved */
         public $likes;
+        /** * @var int override the current template ID */
         public $overrideTemplate;
+        /** * @var int current template ID */
         public $templateID;
 
         function __construct()
