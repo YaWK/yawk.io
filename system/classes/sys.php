@@ -168,8 +168,8 @@ namespace YAWK {
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @param $source string source directory
-         * @param $target string target directory
+         * @param string $source source directory
+         * @param string $target target directory
          */
         static function full_copy($source, $target )
         {   /** copy an entire folder into another location */
@@ -199,9 +199,9 @@ namespace YAWK {
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @param $i int the status var
-         * @param $on string string for status 1 (online, published...)
-         * @param $off string string for status 0 (offline, not published...)
+         * @param int $i the status var
+         * @param string $on string for status 1 (online, published...)
+         * @param string $off string for status 0 (offline, not published...)
          * @return bool|string return the converted string or false
          */
         static function iStatusToString($i, $on, $off)
@@ -244,8 +244,8 @@ namespace YAWK {
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @param $replace string searchstring
-         * @param $string string replacestring
+         * @param string $replace searchstring
+         * @param string $string replacestring
          * @return string
          */
         static function replaceCarriageReturns($replace, $string)
@@ -258,7 +258,7 @@ namespace YAWK {
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @param $customCSS string
+         * @param string $customCSS
          * @return string
          */
         static function addPreTags($customCSS)
@@ -276,8 +276,8 @@ namespace YAWK {
 
         /**
          * removes all unnecessary HTML tags from custom.css
-         * @param $replace string
-         * @param $customCSS string
+         * @param string $replace
+         * @param string $customCSS
          * @return string
          */
         static function replacePreTags($replace, $customCSS)
@@ -290,7 +290,7 @@ namespace YAWK {
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @param $db object database
+         * @param object $db database
          * @return bool
          */
         static function isOffline($db)
@@ -318,7 +318,7 @@ namespace YAWK {
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @param $db object database
+         * @param object $db database
          */
         static function drawOfflineMessage($db)
         {   /** @var $db \YAWK\db */
@@ -338,8 +338,8 @@ namespace YAWK {
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @param $location string the url to redirect
-         * @param $wait int the time in ms to wait before redirect
+         * @param string $location the url to redirect
+         * @param int $wait the time in ms to wait before redirect
          * @return bool
          */
         static function setTimeout($location, $wait)
@@ -358,7 +358,7 @@ namespace YAWK {
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @param $useragent string full useragent
+         * @param string $useragent full useragent
          * @return bool|null
          */
         static function isBrowscapSet($useragent)
@@ -392,8 +392,8 @@ namespace YAWK {
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @param $useragent string the full useragent
-         * @return array with useragent, browser, version and platform
+         * @param string $useragent the full useragent
+         * @return array array with useragent, browser, version and platform
          */
         static function getBrowser($useragent)
         {
@@ -505,7 +505,7 @@ namespace YAWK {
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @param $useragent string full useragent string
+         * @param string $useragent full useragent string
          * @return mixed|string return string containing the OS (platform)
          */
         static function getOS($useragent) {
@@ -556,7 +556,7 @@ namespace YAWK {
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @param $debugTime string startin time
+         * @param string $debugTime starting time
          * @return string return formated time in milliseconds
          */
         static function getLoadingTime($debugTime)
@@ -572,7 +572,7 @@ namespace YAWK {
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @param $string string to encode
+         * @param string $string to encode
          * @return string return encoded string
          */
         static function encodeChars($string)
@@ -590,7 +590,7 @@ namespace YAWK {
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @param $db object database
+         * @param object $db database
          * @return string return the directory prefix
          */
         static function getDirPrefix($db)
@@ -604,7 +604,7 @@ namespace YAWK {
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @param $db object database
+         * @param object $db database
          * @return bool|string
          */
         static function getHost($db)
@@ -619,7 +619,7 @@ namespace YAWK {
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @param $dir string the directory to delete
+         * @param string $dir the directory to delete
          * @return bool
          */
         static function recurseRmdir($dir) {
@@ -635,7 +635,7 @@ namespace YAWK {
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @param $url string the url were the slash needs to be added
+         * @param string $url the url were the slash needs to be added
          * @return string return url containing the slash
          */
         static function addTrailingSlash($url)
@@ -653,10 +653,10 @@ namespace YAWK {
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @param $db object database
-         * @param $property string what to select (field)
-         * @param $table string from wich (table)
-         * @param $id string where id = (id)
+         * @param object $db database
+         * @param string $property what to select (field)
+         * @param string $table from wich (table)
+         * @param string $id where id = (id)
          * @return bool
          */
         static function getProperty($db, $property, $table, $id)
@@ -684,9 +684,9 @@ namespace YAWK {
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @param $db object database
-         * @param $id string page ID
-         * @param $table string the table to select from
+         * @param object $db database
+         * @param string $id page ID
+         * @param string $table the table to select from
          * @return string|bool return the group ID or false
          */
         static function getGroupId($db, $id, $table)
@@ -712,9 +712,9 @@ namespace YAWK {
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @param $db object database
-         * @param $id string page ID
-         * @param $table string the table to select from
+         * @param object $db database
+         * @param string $id page ID
+         * @param string $table the table to select from
          * @return string|bool return the group ID or false
          */
         static function getGroupFromId($db, $id, $table)
@@ -743,8 +743,8 @@ namespace YAWK {
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @param $db object database
-         * @param $table string the table to select from
+         * @param object $db database
+         * @param string $table the table to select from
          * @return array|bool|string
          */
         static function getGroups($db, $table)
@@ -773,7 +773,7 @@ namespace YAWK {
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @param $db object database
+         * @param object $db database
          */
         static function includeHeader($db)
         {   /** @var $db \YAWK\db */
@@ -826,8 +826,8 @@ namespace YAWK {
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @param $db object database
-         * @param $id string page ID
+         * @param object $db database
+         * @param string $id page ID
          * @return bool
          */
         static function getSubMenu($db, $id)
@@ -851,8 +851,8 @@ namespace YAWK {
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @param $db object database
-         * @param $id int page ID
+         * @param object $db database
+         * @param int $id page ID
          * @return bool
          */
         static function getMenuItem($db, $id)
@@ -877,7 +877,7 @@ namespace YAWK {
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @param $db object database
+         * @param object $db database
          * @return array|bool
          */
         static function getMenus($db)
@@ -907,8 +907,8 @@ namespace YAWK {
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @param $db object database
-         * @param $id int menu ID
+         * @param object $db database
+         * @param int $id menu ID
          * @return bool
          */
         static function getMenuName($db, $id)
@@ -931,7 +931,7 @@ namespace YAWK {
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @param $db object database
+         * @param object $db database
          * @return bool|mixed
          */
         static function getPages($db)
@@ -958,9 +958,9 @@ namespace YAWK {
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @param $db object database
-         * @param $id int page ID
-         * @param $table string from table
+         * @param object $db database
+         * @param int $id page ID
+         * @param string $table from table
          * @return mixed
          */
         static function getRole($db, $id, $table)
@@ -981,9 +981,9 @@ namespace YAWK {
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @param $db object database
-         * @param $id int affected page ID
-         * @param $table string from table
+         * @param object $db database
+         * @param int $id affected page ID
+         * @param string $table from table
          * @return string|bool
          */
         static function getRoleId($db, $id, $table)
@@ -1005,7 +1005,7 @@ namespace YAWK {
 
         /**
          * returns the current datetime
-         * @return false|string
+         * @return string datetime Y-m-d H:i:s
          */
         static function now()
         {   // return current datetime in mysql format
@@ -1017,7 +1017,7 @@ namespace YAWK {
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @param $date string the date to split
+         * @param string $date the date to split
          * @return array return an array w single items
          */
         static function splitDate($date)
@@ -1027,12 +1027,10 @@ namespace YAWK {
             $month = substr($date, 5, 2);
             $time = substr($date, 11, 5);
 
-            /* f�hrende null entfernen */
-            $day = 1 * $day; // Typ�nderung von String auf Integer
-            $i = strlen($day);
-            // if ($i <= 1) { $day = "".$day; }
+            /* remove leading null */
+            $day = 1 * $day; // to do that, change type from string to integer
 
-            /* monate umrechnen */
+            /* calculate months */
             switch ($month) {
                 case "01":
                     $month = "J&auml;nner";
@@ -1080,7 +1078,7 @@ namespace YAWK {
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @param $date string the date to split
+         * @param string $date the date to split
          * @return array return an array w single items
          */
         static function splitDateShort($date)
@@ -1090,10 +1088,8 @@ namespace YAWK {
             $month = substr($date, 5, 2);
             $time = substr($date, 11, 5);
 
-            /* f�hrende null entfernen */
-            $day = 1 * $day; // Typ�nderung von String auf Integer
-            $i = strlen($day);
-            // if ($i <= 1) { $day = "".$day; }
+            /* remove leading null */
+            $day = 1 * $day; // to do that, we change type from string to integer
 
             /* monate umrechnen */
             switch ($month) {
@@ -1142,7 +1138,7 @@ namespace YAWK {
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @param $userdate string date to calculate
+         * @param string $userdate date to calculate
          * @return string return how many time has gone since $userdate
          */
         static function time_ago($userdate)
@@ -1174,7 +1170,7 @@ namespace YAWK {
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @param $date string the date to calculate
+         * @param string $date the date to calculate
          * @return bool|false|string
          */
         static function getWeekday($date){
@@ -1216,13 +1212,13 @@ namespace YAWK {
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @param $db object database
-         * @param $log_type int which type to log?
-         * @param $message string logging message
-         * @param $fromUID int affected from UID
-         * @param $toUID int affected to UID
-         * @param $toGID int affected GID
-         * @param $seen int 0|1 status if this entry has been overviewed
+         * @param object $db database
+         * @param int $log_type type to log?
+         * @param string $message logging message
+         * @param int $fromUID affected from UID
+         * @param int $toUID affected to UID
+         * @param int $toGID affected GID
+         * @param int $seen 0|1 status if this entry has been overviewed
          * @return bool|null
          */
         static function setSyslog($db, $log_type, $message, $fromUID, $toUID, $toGID, $seen)
@@ -1284,13 +1280,13 @@ namespace YAWK {
 
         /**
          * set a system notification for any user or admin
-         * @param $db object database
-         * @param $log_type int type to log
-         * @param $msg_id int message id
-         * @param $fromUID int affected from user ID
-         * @param $toUID int affected to user ID
-         * @param $toGID int affected to group ID
-         * @param $seen int 0|1 status if notification has been seen
+         * @param object $db database
+         * @param int $log_type type to log
+         * @param int $msg_id message id
+         * @param int $fromUID affected from user ID
+         * @param int $toUID affected to user ID
+         * @param int $toGID affected to group ID
+         * @param int $seen 0|1 status if notification has been seen
          * @return bool
          */
         static function setNotification($db, $log_type, $msg_id, $fromUID, $toUID, $toGID, $seen)
@@ -1317,9 +1313,9 @@ namespace YAWK {
 
         /**
          * mark a notification as seen / unseen
-         * @param $db object database
-         * @param $id int the affected notification log_id
-         * @param $seen int 0|1 status if notification has been seen
+         * @param object $db database
+         * @param int $id the affected notification log_id
+         * @param int $seen 0|1 status if notification has been seen
          * @return bool
          */
         static function markNotification($db, $id, $seen)

@@ -58,9 +58,9 @@ namespace YAWK {
          * @copyright  2009-2016 Daniel Retzl
          * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
          * @version    1.0.0
-         * @param $db object database
-         * @param $lang array language array
-         * @param $manage int 0|1 if manage is 1, only active plugins will be shown
+         * @param object $db database
+         * @param array $lang language array
+         * @param int $manage 0|1 if manage is 1, only active plugins will be shown
          * @return null|string html output
          */
         function getPlugins($db, $lang, $manage)
@@ -125,8 +125,8 @@ namespace YAWK {
          * @copyright  2009-2016 Daniel Retzl
          * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
          * @version    1.0.0
-         * @param $db object database
-         * @param $pluginId int affected plugin ID
+         * @param object $db database
+         * @param int $pluginId affected plugin ID
          * @return string|bool returns the name or false
          */
         static function getNameById($db, $pluginId)
@@ -153,8 +153,8 @@ namespace YAWK {
          * @copyright  2009-2016 Daniel Retzl
          * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
          * @version    1.0.0
-         * @param $db object database
-         * @param $plugin string plugin name
+         * @param object $db database
+         * @param string $plugin plugin name
          * @return string|bool returns the plugin ID or false
          */
         static function getIdByName($db, $plugin)
@@ -180,9 +180,9 @@ namespace YAWK {
          * @copyright  2009-2016 Daniel Retzl
          * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
          * @version    1.0.0
-         * @param $db object database
-         * @param $alias string filename of the static page
-         * @param $plugin int plugin ID
+         * @param object $db database
+         * @param string $alias filename of the static page
+         * @param int $plugin plugin ID
          * @return bool
          */
         static function createPluginPage($db, $alias, $plugin)

@@ -23,8 +23,8 @@ namespace YAWK
 
         /**
          * Draws a box containing the recently added static pages
-         * @param $db object the database object
-         * @param $limit int number for sql limitation
+         * @param object $db the database object
+         * @param int $limit number for sql limitation
          */
         static function drawLatestPagesBox($db, $limit)
         {   // default latest pages
@@ -88,8 +88,8 @@ namespace YAWK
 
         /**
          * Draws a box containing the recently added users
-         * @param $db object the database object
-         * @param $limit int number for sql limitation
+         * @param object $db database
+         * @param int $limit number for sql limitation
          */
         static function drawLatestUsers($db, $limit)
         {

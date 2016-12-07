@@ -267,7 +267,7 @@ namespace YAWK {
 
         /**
          * override the current language
-         * @param $lang
+         * @param array $lang language array
          */
         static function getCurrentLanguageFormElements($lang)
         {
@@ -284,8 +284,8 @@ namespace YAWK {
 
         /**
          * get all settings by typeID
-         * @param $db object database
-         * @param $typeID int settings type to get settings for
+         * @param object $db database
+         * @param int $typeID settings type to get settings for
          * @return array|bool returns an array with requested settings or false
          */
         public static function getSettingsByType($db, $typeID)
@@ -308,10 +308,10 @@ namespace YAWK {
 
         /**
          * Returns an associative array containing the editor settings
-         * @param object $db Database object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
+         * @param object $db Database object
          * @param int $typeID The ID of settings type to get.
          * @return array|bool
          */

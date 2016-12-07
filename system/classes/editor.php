@@ -10,7 +10,7 @@ namespace YAWK {
     {
         /**
          * load the editor and set it's settings
-         * @param $db object Database object
+         * @param object $db Database object
          * @return array|bool
          */
         static function getEditor($db)

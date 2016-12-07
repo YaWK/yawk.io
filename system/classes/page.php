@@ -58,7 +58,7 @@ namespace YAWK {
          * @link       http://yawk.io
          * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
          * @version    1.0.0
-         * @param $db object database
+         * @param object $db database
          * @return bool
          */
         static function countPages($db)
@@ -80,9 +80,9 @@ namespace YAWK {
          * @link       http://yawk.io
          * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
          * @version    1.0.0
-         * @param $db object database
-         * @param $id int affected page ID
-         * @param $type string meta description
+         * @param object $db database
+         * @param int $id affected page ID
+         * @param string $type meta description
          * @return string|bool meta tags as string
          */
         function getMetaTags($db, $id, $type)
@@ -115,10 +115,10 @@ namespace YAWK {
          * @link       http://yawk.io
          * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
          * @version    1.0.0
-         * @param $db object database
-         * @param $id int affected page ID
-         * @param $published int 0|1 page publish status
-         * @param $title string page title
+         * @param object $db database
+         * @param int $id affected page ID
+         * @param int $published 0|1 page publish status
+         * @param string $title page title
          * @return string|bool meta tags as string
          */
         function toggleOffline($db, $id, $published, $title)
@@ -179,9 +179,9 @@ namespace YAWK {
          * @link       http://yawk.io
          * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
          * @version    1.0.0
-         * @param $db object database
-         * @param $id int affected page id
-         * @param $locked int 0|1 lock status
+         * @param object $db database
+         * @param int $id affected page id
+         * @param int $locked 0|1 lock status
          * @return bool
          */
         function toggleLock($db, $id, $locked)
@@ -209,7 +209,7 @@ namespace YAWK {
          * @link       http://yawk.io
          * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
          * @version    1.0.0
-         * @param $db object database
+         * @param object $db database
          * @return bool
          */
         function copy($db)
@@ -367,7 +367,7 @@ namespace YAWK {
          * @link       http://yawk.io
          * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
          * @version    1.0.0
-         * @param $db object database
+         * @param object $db database
          * @return bool
          */
         function delete($db)
@@ -409,12 +409,12 @@ namespace YAWK {
          * @link       http://yawk.io
          * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
          * @version    1.0.0
-         * @param $db object database
-         * @param $alias string page filename
-         * @param $menuID int menu ID
-         * @param $locked int 0|1 page lock status
-         * @param $blogid int blog ID, if any
-         * @param $plugin int plugin ID, if any
+         * @param object $db database
+         * @param string $alias page filename
+         * @param int $menuID menu ID
+         * @param int $locked 0|1 page lock status
+         * @param int $blogid blog ID, if any
+         * @param int $plugin plugin ID, if any
          * @return bool
          */
         function create($db, $alias, $menuID, $locked, $blogid, $plugin)
@@ -620,7 +620,7 @@ namespace YAWK {
          * @link       http://yawk.io
          * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
          * @version    1.0.0
-         * @param $db object database
+         * @param object $db database
          * @return bool
          */
         function save($db)
@@ -713,7 +713,7 @@ namespace YAWK {
          * @link       http://yawk.io
          * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
          * @version    1.0.0
-         * @param $dirprefix string directory prefix
+         * @param string $dirprefix directory prefix
          */
         function deleteContent($dirprefix)
         {
@@ -730,8 +730,8 @@ namespace YAWK {
          * @link       http://yawk.io
          * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
          * @version    1.0.0
-         * @param $dirprefix string directory prefix
-         * @param $content string the content to write
+         * @param string $dirprefix directory prefix
+         * @param string $content the content to write
          * @return int
          */
         function writeContent($dirprefix, $content)
@@ -759,7 +759,7 @@ namespace YAWK {
          * @link       http://yawk.io
          * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
          * @version    1.0.0
-         * @param $dirprefix string directory prefix
+         * @param string $dirprefix directory prefix
          * @return string html content
          */
         function readContent($dirprefix)
@@ -777,8 +777,8 @@ namespace YAWK {
          * @link       http://yawk.io
          * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
          * @version    1.0.0
-         * @param $db object database
-         * @param $alias string page filename
+         * @param object $db database
+         * @param string $alias page filename
          */
         function loadProperties($db, $alias)
         {
@@ -812,8 +812,8 @@ namespace YAWK {
          * @link       http://yawk.io
          * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
          * @version    1.0.0
-         * @param $db object database
-         * @param $limit int limit to n entries
+         * @param object $db database
+         * @param int $limit limit to n entries
          * @return array|string
          */
         static function getLatest($db, $limit)
@@ -847,9 +847,9 @@ namespace YAWK {
          * @link       http://yawk.io
          * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
          * @version    1.0.0
-         * @param $db object database
-         * @param $id int affected page ID
-         * @param $property string database field to get
+         * @param object $db database
+         * @param int $id affected page ID
+         * @param string $property database field to get
          * @return string|bool the selected property or false
          */
         function getProperty($db, $id, $property)
@@ -878,7 +878,7 @@ namespace YAWK {
          * @link       http://yawk.io
          * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
          * @version    1.0.0
-         * @param $db object database
+         * @param object $db database
          * @return mixed
          */
         function getContent($db)

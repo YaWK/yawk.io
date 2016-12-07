@@ -79,6 +79,9 @@ namespace YAWK {
         /** * @var int current template ID */
         public $templateID;
 
+        /**
+         * user constructor.
+         */
         function __construct()
         {
             if (!isset($db)){ $db = new \YAWK\db(); }
@@ -88,6 +91,10 @@ namespace YAWK {
             }
         }
 
+        /**
+         * return current username
+         * @return string current username
+         */
         static function getCurrentUserName()
         {
             if (isset($_SESSION['username']))
@@ -100,6 +107,10 @@ namespace YAWK {
             }
         }
 
+        /**
+         * check, if a session username is set and if user is logged in
+         * @return bool return status
+         */
         static function isAnybodyThere()
         {   // check if session username + uid is set
             if (isset($_SESSION['username']) && isset($_SESSION['uid']))
@@ -119,6 +130,12 @@ namespace YAWK {
                 }
         }
 
+        /**
+         * template ID for given user ID
+         * @param object $db database
+         * @param int $uid user ID
+         * @return string|bool return template ID to corresponding user ID
+         */
         static function getUserTemplateID($db, $uid)
         {   /* @var $db \YAWK\db */
             if (!isset($uid) && (empty($uid)))
@@ -143,6 +160,12 @@ namespace YAWK {
                 }
         }
 
+        /**
+         * check if user ID is allowed to override template
+         * @param object $db database
+         * @param int $uid user ID
+         * @return bool
+         */
         public function isAllowedToOverrideTemplate($db, $uid)
         {   /* @var $db \YAWK\db */
             if ($res = $db->query("SELECT overrideTemplate FROM {users} WHERE id = $uid"))
@@ -170,6 +193,14 @@ namespace YAWK {
             }
         }
 
+        /**
+         * set status and override template for this user ID
+         * @param object $db database
+         * @param int $overrideTemplate 0|1 1 if template could be overridden by this user
+         * @param int $userTemplateID the template ID you wish to set for this user
+         * @param int $uid user ID
+         * @return bool
+         */
         public function setUserTemplate($db, $overrideTemplate, $userTemplateID, $uid)
         {   /* @var $db \YAWK\db */
         if (!isset($overrideTemplate) && (!is_numeric($overrideTemplate)))
@@ -191,7 +222,7 @@ namespace YAWK {
             }
             else
                 {
-                    \YAWK\sys::setSyslog($db, 5, "failed to get templateID from user db $db->error()", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 5, "failed to set templateID from user db $db->error()", 0, 0, 0, 0);
                     return false;
                 }
         }
