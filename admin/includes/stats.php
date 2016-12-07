@@ -57,6 +57,7 @@ else
             <div class="box-body h3">
                 <?php
                 if ($stats->i_hits !== $limit) { $current = "<small><i>(view: $limit)</i></small>"; } else { $current = ''; }
+                $stats->i_hits = number_format($stats->i_hits, 0, '.', '.');
                 ?>
                 Hits overall: <b><?php echo $stats->i_hits; ?></b> <?php echo $current; ?> <br>
                 Guests: <b><?php echo $stats->i_publicUsersPercentage; ?>% </b> <small>(<?php echo $stats->i_publicUsers; ?>)</small><br>
