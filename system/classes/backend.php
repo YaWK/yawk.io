@@ -22,7 +22,6 @@ namespace YAWK {
      * @copyright  2009-2015 Daniel Retzl yawk.io
      * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
      * @link       http://yawk.io/
-     * @since      File available since Release 1.0.0
      * @annotation Backend class serves a few useful functions for the admin backend.
      */
     class backend

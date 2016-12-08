@@ -54,10 +54,9 @@ namespace YAWK {
 
         /**
          * count and return the pages in database
-         * @copyright  2009-2016 Daniel Retzl
-         * @link       http://yawk.io
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
-         * @version    1.0.0
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db database
          * @return bool
          */
@@ -76,10 +75,9 @@ namespace YAWK {
 
         /**
          * get and return meta tags for requested page
-         * @copyright  2009-2016 Daniel Retzl
-         * @link       http://yawk.io
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
-         * @version    1.0.0
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db database
          * @param int $id affected page ID
          * @param string $type meta description
@@ -111,10 +109,9 @@ namespace YAWK {
 
         /**
          * toggle page status online or offline (plus corresponding menu entries)
-         * @copyright  2009-2016 Daniel Retzl
-         * @link       http://yawk.io
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
-         * @version    1.0.0
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db database
          * @param int $id affected page ID
          * @param int $published 0|1 page publish status
@@ -175,10 +172,9 @@ namespace YAWK {
 
         /**
          * toggle page lock to avoid unintended changes
-         * @copyright  2009-2016 Daniel Retzl
-         * @link       http://yawk.io
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
-         * @version    1.0.0
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db database
          * @param int $id affected page id
          * @param int $locked 0|1 lock status
@@ -205,10 +201,9 @@ namespace YAWK {
 
         /**
          * make a copy of a page
-         * @copyright  2009-2016 Daniel Retzl
-         * @link       http://yawk.io
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
-         * @version    1.0.0
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db database
          * @return bool
          */
@@ -363,10 +358,9 @@ namespace YAWK {
 
         /**
          * delete a page
-         * @copyright  2009-2016 Daniel Retzl
-         * @link       http://yawk.io
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
-         * @version    1.0.0
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db database
          * @return bool
          */
@@ -405,10 +399,9 @@ namespace YAWK {
 
         /**
          * create a new page
-         * @copyright  2009-2016 Daniel Retzl
-         * @link       http://yawk.io
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
-         * @version    1.0.0
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db database
          * @param string $alias page filename
          * @param int $menuID menu ID
@@ -616,10 +609,9 @@ namespace YAWK {
 
         /**
          * save a static page including all settings
-         * @copyright  2009-2016 Daniel Retzl
-         * @link       http://yawk.io
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
-         * @version    1.0.0
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db database
          * @return bool
          */
@@ -709,10 +701,9 @@ namespace YAWK {
 
         /**
          * delete a static content page
-         * @copyright  2009-2016 Daniel Retzl
-         * @link       http://yawk.io
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
-         * @version    1.0.0
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param string $dirprefix directory prefix
          */
         function deleteContent($dirprefix)
@@ -726,10 +717,9 @@ namespace YAWK {
 
         /**
          * write content to static page
-         * @copyright  2009-2016 Daniel Retzl
-         * @link       http://yawk.io
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
-         * @version    1.0.0
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param string $dirprefix directory prefix
          * @param string $content the content to write
          * @return int
@@ -755,10 +745,9 @@ namespace YAWK {
 
         /**
          * read content from static page
-         * @copyright  2009-2016 Daniel Retzl
-         * @link       http://yawk.io
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
-         * @version    1.0.0
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param string $dirprefix directory prefix
          * @return string html content
          */
@@ -773,10 +762,9 @@ namespace YAWK {
 
         /**
          * load page properties and store as object properties
-         * @copyright  2009-2016 Daniel Retzl
-         * @link       http://yawk.io
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
-         * @version    1.0.0
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db database
          * @param string $alias page filename
          */
@@ -808,10 +796,9 @@ namespace YAWK {
 
         /**
          * get latest pages
-         * @copyright  2009-2016 Daniel Retzl
-         * @link       http://yawk.io
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
-         * @version    1.0.0
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db database
          * @param int $limit limit to n entries
          * @return array|string
@@ -843,10 +830,9 @@ namespace YAWK {
 
         /**
          * get any requested page property
-         * @copyright  2009-2016 Daniel Retzl
-         * @link       http://yawk.io
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
-         * @version    1.0.0
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db database
          * @param int $id affected page ID
          * @param string $property database field to get
@@ -874,10 +860,9 @@ namespace YAWK {
 
         /**
          * get and include static page content
-         * @copyright  2009-2016 Daniel Retzl
-         * @link       http://yawk.io
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
-         * @version    1.0.0
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db database
          * @return mixed
          */

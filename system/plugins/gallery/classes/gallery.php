@@ -1,40 +1,122 @@
 <?php
 namespace YAWK\PLUGINS\GALLERY {
-
+    /**
+     * <b>Gallery Plugin</b>
+     * <p>Whenever you build a website, sooner or later you get to the point where you need to put a few images on a page.
+     * YaWK's gallery plugin help you out! It can build image galleries automatically. It does a perfect batch
+     * job adding watermark or resizing images and much more. To add a new gallery, just place all your images
+     * in any folder and put that folder fia ftp to \media\images\yourfolder. In the backend, you can easily
+     * select any of your folders that are stored in the \media\images folder. The gallery will be automatically
+     * created for you.</p>
+     * <p><b>Basic Features:</b></p>
+     * <ul>
+     * <li>put a text watermark onto all your images</li>
+     * <li>change color and style of your watermark text</li>
+     * <li>use your own .ttf font (must be in \system\fonts)</li>
+     * <li>or watermark images overlaying any transparent image (eg. your logo as .png)</li>
+     * <li>watermark placement at bottom, middle or top, left or right with any margin</li>
+     * <li>change the size of your images</li>
+     * <li>flip horizontal or vertical</li>
+     * <li>rotate around 90 degrees</li>
+     * <li>fit to width</li>
+     * <li>fit to height</li>
+     * <li>fit to thumbnail</li>
+     * <li>auto create thumbnails with the size of your need</li></ul><br>
+     * <p><b>Image Manipulation: </b>irrespective from all of that, you can easy overview all images on a page and adjust</p>
+     * <ul><li>brightness</li>
+     * <li>contrast</li>
+     * <li>sharpen</li>
+     * <li>blur</li>
+     * <li>magic flatten</li>
+     * <li>sepia and much more <b>with just a few clicks!</b></li><br>
+     * </ul>
+     * <p>Try it out - this is a really biiiig time-saver! In most cases you don't need to open all images in
+     * photoshop. <i>(or something else)</i> Think about it: you <i>don't</i> need to open, edit and save every single
+     * image for each - Yet another WebKit's Gallery Plugin is here to do that automatically for you - you just need
+     * to set a few parameters, do a single click... - and everything will get set-up as you wish.</p>
+     * <p><i>Class covers backend functionality only.
+     * See Methods Summary for Details!</i></p>
+     *
+     * @author     Daniel Retzl <danielretzl@gmail.com>
+     * @copyright  2009-2016 Daniel Retzl
+     * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+     * @version    1.0.0
+     * @link       http://yawk.io/
+     * @since      File available since Release 1.0.0
+     * @annotation The Gallery Plugin Class. Help you building powerful image galleries nearly automatically.
+     */
     class gallery
     {
+        /** * @var int gallery ID */
         public $id;
+        /** * @var int item ID */
         public $itemID;
+        /** * @var int order sortation number */
         public $sort;
+        /** * @var string image manipulation action (eg. flip-horizontal) */
         public $action;
+        /** * @var string images folder */
         public $folder;
+        /** * @var string gallery title  */
         public $title;
+        /** * @var string item title */
         public $itemTitle;
+        /** * @var string gallery description  */
         public $description;
+        /** * @var string images author (originator, photographer) */
         public $author;
+        /** * @var string images author's url (originator, photographer) */
         public $authorUrl;
+        /** * @var string single image author (originator, photographer) */
         public $itemAuthor;
+        /** * @var string single image author's url (originator, photographer) */
         public $itemAuthorUrl;
+        /** * @var string image filename */
         public $filename;
+        /** * @var int 0|1 switch: 1 if thumbnails should be created, zero if not. */
         public $createThumbnails;
+        /** * @var int image width in px */
         public $imageWidth;
+        /** * @var int image height in px */
         public $imageHeight;
+        /** * @var int 0|1 switch: 1 if images should be resized, zero if not */
         public $resizeImages;
+        /** * @var string type of resizing (eg. thumbnail or fit to width...) */
         public $resizeType;
+        /** * @var int thumbnail width in px */
         public $thumbnailWidth;
+        /** * @var string watermark text */
         public $watermark;
+        /** * @var int 0|1 switch: 1 if watermark is enabled, zero if not */
         public $watermarkEnabled;
+        /** * @var string the image wich should be overlayed for watermarking */
         public $watermarkImage;
+        /** * @var string watermark position */
         public $watermarkPosition;
+        /** * @var int offset Y in px */
         public $offsetY;
+        /** * @var int offset X in px */
         public $offsetX;
+        /** * @var string path and filename of the .ttf font to use for text watermarking */
         public $watermarkFont;
+        /** * @var int watermark text size in pt */
         public $watermarkTextSize;
+        /** * @var int watermark opacity */
         public $watermarkOpacity;
+        /** * @var string watermark text color */
         public $watermarkColor;
+        /** * @var string watermark text border color */
         public $watermarkBorderColor;
+        /** * @var string watermark border thickness in px */
         public $watermarkBorder;
 
+        /**
+         * define JS function doImageAction
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * gallery constructor.
+         */
         public function __construct()
         {
             echo "<script type=\"text/javascript\">
@@ -80,6 +162,13 @@ namespace YAWK\PLUGINS\GALLERY {
                 </script>";
         }
 
+        /**
+         * draw (output) html folder select field, containing the sub folders of /media/images as value
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param string $path usually media/images/
+         */
         public function drawFolderSelect($path)
         {
             echo "<select name=\"folder\" class=\"form-control\" id=\"folder\">
@@ -88,6 +177,14 @@ namespace YAWK\PLUGINS\GALLERY {
                   </select>";
         }
 
+        /**
+         * draw (output) html folder select field, containing the current folder of /media/images as value
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param string $path usually media/images/
+         * @param string $folder the folder of this gallery
+         */
         public function drawFolderSelectFromGallery($path, $folder)
         {
             echo "<select name=\"folder\" class=\"form-control\" id=\"folder\">
@@ -96,6 +193,14 @@ namespace YAWK\PLUGINS\GALLERY {
                   </select>";
         }
 
+        /**
+         * check if folder exists and create it on demand
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param string $folder affected folder
+         * @return bool
+         */
         public function checkDir($folder)
         {   // check if directory exists
             if (!is_dir("$folder/"))
@@ -116,6 +221,14 @@ namespace YAWK\PLUGINS\GALLERY {
         }
 
 
+        /**
+         * scan system font directory for fonts and return fonts as select field option value
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param string $path the path to search for fonts. If its empty, the default folder will be ../system/fonts/
+         * @return string oprion value containing all fonts from font directory
+         */
         public function scanFonts($path)
         {
             $html = '';
@@ -136,6 +249,14 @@ namespace YAWK\PLUGINS\GALLERY {
             return $html;
         }
 
+        /**
+         * scan image directory and return images as select field option value
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param string $path usually media/images/
+         * @return string option value containing all fonts from font directory
+         */
         public function scanImageDirectory($path)
         {
             $html = '';
@@ -153,9 +274,17 @@ namespace YAWK\PLUGINS\GALLERY {
             return $html;
         }
 
+        /**
+         * delete a gallery
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @return bool
+         */
         public function delete($db)
         {   /** @var $db \YAWK\db **/
-            // delete a gallery
+            // check if a gallery ID is set and in correct format
             if (isset($_GET['id']) && (!empty($_GET['id']) && (is_numeric($_GET['id']))))
             {
                 // gallery folder
@@ -278,6 +407,15 @@ namespace YAWK\PLUGINS\GALLERY {
             return true;
         }
 
+        /**
+         * return gallery folder by given gallery ID
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $galleryID the gallery ID to get the folder from
+         * @return string|bool gallery folder or false
+         */
         public function getGalleryFolderByID($db, $galleryID)
         {   /** @var $db \YAWK\db **/
             if ($res = $db->query("SELECT folder from {plugin_gallery} WHERE id='$galleryID'"))
@@ -291,6 +429,15 @@ namespace YAWK\PLUGINS\GALLERY {
                 }
         }
 
+        /**
+         * re-scan a folder to check if there a new images added TODO: STILL BUGGY - needs to be fixed + finished
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $galleryID the gallery ID
+         * @return bool
+         */
         public function reScanFolder($db, $galleryID)
         {   /** @var $db \YAWK\db **/
             if (isset($galleryID) && (!empty($galleryID) && (is_numeric($galleryID))))
@@ -349,6 +496,15 @@ namespace YAWK\PLUGINS\GALLERY {
                 }
         }
 
+        /**
+         * add a new gallery
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @return bool
+         * @throws \Exception
+         */
         public function add($db)
         {   /** @var $db \YAWK\db **/
             // add a new gallery
@@ -689,6 +845,14 @@ namespace YAWK\PLUGINS\GALLERY {
             return true;
         }
 
+        /**
+         * load gallery settings into object properties
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $galleryID
+         */
         public function loadProperties($db, $galleryID)
         {   /** @var $db \YAWK\db * */
             // load all gallery properties
@@ -724,6 +888,16 @@ namespace YAWK\PLUGINS\GALLERY {
             }
         }
 
+        /**
+         * edit (update) a gallery
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $galleryID gallery ID to edit
+         * @return bool
+         * @throws \Exception
+         */
         public function edit($db, $galleryID)
         {   /** @var $db \YAWK\db * */
 
@@ -1230,6 +1404,15 @@ namespace YAWK\PLUGINS\GALLERY {
         return false;
         }
 
+        /**
+         * count and return the number of gallery entries
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $galleryID gallery ID to count
+         * @return int|bool number of entries or false
+         */
         public function countEntries($db, $galleryID)
         {   /** @var $db \YAWK\db **/
             // count gallery item entries
@@ -1248,6 +1431,15 @@ namespace YAWK\PLUGINS\GALLERY {
             return $i;
         }
 
+        /**
+         * get and draw (output) html gallery preview
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param array $lang language array
+         * @return null echo html output
+         */
         public function getPreview($db, $lang)
         {   /** @var $db \YAWK\db **/
             // get gallery titles...
@@ -1289,6 +1481,16 @@ namespace YAWK\PLUGINS\GALLERY {
         }
 
 
+        /**
+         * get and draw all editable images + edit controls
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param array $lang language array
+         * @param int $galleryID affected gallery ID
+         * @return null echo html output
+         */
         public function getEditableImages($db, $lang, $galleryID)
         {   /** @var $db \YAWK\db **/
             // get gallery titles...
