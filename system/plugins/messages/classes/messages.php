@@ -1,10 +1,42 @@
 <?PHP
 namespace YAWK\PLUGINS\MESSAGES {
-
-    use YAWK\backend;
-
+    /**
+     * <b>Messages Plugin</b>
+     * <p>Basic Messaging functions. This class serve functions fetch and draw messages, inbox and so on</p>
+     * <p><b>Basic Features:</b></p>
+     * <ul>
+     * <li>fetch all messages</li>
+     * <li>fetch a single message</li>
+     * <li>get Inbox Data</li>
+     * <li>draw Inbox</li>
+     * <li>mark messages as spam, read, unread</li>
+     * <li>trash messages</li>
+     * <li>flip horizontal or vertical</li>
+     * <li>rotate around 90 degrees</li>
+     * <li>fit to width</li>
+     * <li>fit to height</li>
+     * <li>fit to thumbnail</li>
+     * <li>auto create thumbnails with the size of your need</li></ul><br>
+     * <p>This plugin is definitly still in development.</i></p>
+     *
+     * @author     Daniel Retzl <danielretzl@gmail.com>
+     * @copyright  2009-2016 Daniel Retzl
+     * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+     * @version    1.0.0
+     * @link       http://yawk.io/
+     * @annotation The Messages Plugin Class. Allow your users to write messages to each other.
+     */
     class messages {
-        public function __construct($db, $location){
+        /**
+         * messages constructor - check if class is called from frontend or backend
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param string $location frontend or backend
+         */
+        public function __construct($db, $location)
+        {
             if (isset($location) && (!empty($location)))
             {   // check where the script is called from...
                 // get hostname
@@ -195,6 +227,14 @@ namespace YAWK\PLUGINS\MESSAGES {
                   </style> ";
         }
 
+        /**
+         * init the messaging page - check if user is logged in, else draw a login box
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @return string
+         */
         public function init($db)
         {
             /** @var \YAWK\db $db */
@@ -209,21 +249,39 @@ namespace YAWK\PLUGINS\MESSAGES {
                 {   // session vars are here, but user is not set online in db atm,
                     // that should not be, so invite the user to login
                     echo "<h2>SORRY! Diese Seite ist nur f&uuml;r Mitglieder. <small>Du musst Dich erst einloggen.</small></h2>";
-                    return \YAWK\user::drawLoginBox($username, $password);
+                    return \YAWK\user::drawLoginBox('', '');
                 }
             }
             else
             {   // session vars are not set. invite the user to login
                 echo "<h2>SORRY! Diese Seite ist nur f&uuml;r Mitglieder. <small>Du musst Dich erst einloggen.</small></h2>";
-                return \YAWK\user::drawLoginBox($username, $password);
+                return \YAWK\user::drawLoginBox('', '');
             }
         }
 
+        /**
+         * get inbox and draw menu
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @return string
+         */
         public function getInbox($db){
             $html = "";
             $html .= self::drawMenu($db);
             return $html;
         }
+
+        /**
+         * fetch messages into array
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param string $type all, trash or spam
+         * @return array|string
+         */
         public function fetchMessages($db, $type){
             /** @var $db \YAWK\db */
             $sql = '';
@@ -264,6 +322,15 @@ namespace YAWK\PLUGINS\MESSAGES {
             }
         }
 
+        /**
+         * fetch a single message from database
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $msg_id the message ID to get
+         * @return array|null
+         */
         public function fetchSingleMessage($db, $msg_id)
         {   /** @var $db \YAWK\db */
             $sql = $db->query("SELECT * FROM {plugin_msg} WHERE msg_id = '".$msg_id."'");
@@ -271,6 +338,18 @@ namespace YAWK\PLUGINS\MESSAGES {
             return $row;
         }
 
+
+        /**
+         * fetch related messages into array
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $fromUID from user ID
+         * @param int $toUID to user ID
+         * @param int $msg_id message ID
+         * @return array|string
+         */
         public function fetchRelatedMessages($db, $fromUID, $toUID, $msg_id)
         {   /** @var $db \YAWK\db */
             // query related messages from db
@@ -292,6 +371,16 @@ namespace YAWK\PLUGINS\MESSAGES {
                 return "Could not fetch more related messages from this user.";
             }
         }
+
+        /**
+         * draw html (output) related messages from array, each message as own box
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param array $relatedMessages related messages array
+         * @return string
+         */
         public function drawRelatedMessages($db, $relatedMessages)
         {   /** @var $db \YAWK\db */
             $i = '';
@@ -324,6 +413,15 @@ namespace YAWK\PLUGINS\MESSAGES {
             }
         }
 
+        /**
+         * view messages
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $msg_id message ID
+         * @return string
+         */
         public function MessageView($db, $msg_id)
         {
             $message = self::fetchSingleMessage($db, $msg_id);
@@ -355,17 +453,25 @@ namespace YAWK\PLUGINS\MESSAGES {
             $html .= "</div>
               <div class=\"col-md-4\">&nbsp;</div>
             </div>";
-
             return $html;
         }
 
+        /**
+         * draw the complete Inbox
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param string $type spam, trash or all
+         * @param array $messages messages array
+         * @return string
+         */
         public function drawInbox($type, $messages){
             $html = "<table class='table table-striped' id=\"table-sort\">
                      <tr style='font-weight:bold;' class='small'>
-                        <td width='15%'>Datum</td>
-                        <td width='25%'>von User</td>
-                        <td width='50%'>Nachricht <small>(Vorschau)</small></td>
-                        <td width='20%' style=\"text-align: center;\">Aktionen</td>
+                        <td width='15%'>Date </td>
+                        <td width='25%'>from User</td>
+                        <td width='50%'>Message <small>(Preview)</small></td>
+                        <td width='20%' style=\"text-align: center;\">Actions</td>
                      </tr>";
             foreach ($messages as $email){
                 if ($email['msg_read'] === '0') { $style = "bold"; $envelope = "fa fa-envelope"; }
@@ -436,6 +542,14 @@ namespace YAWK\PLUGINS\MESSAGES {
             return $html;
         }
 
+        /**
+         * draw html (output) messages menu
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @return string
+         */
         public function drawMenu($db)
         {   // check if there is an active tab request
             if (isset($_GET['active']) && (!empty($_GET['active'])))
@@ -512,6 +626,15 @@ namespace YAWK\PLUGINS\MESSAGES {
         </div>";
             return $html;
         }
+
+        /**
+         * draw a new message
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param string $to username to send
+         * @return string message fieldset
+         */
         public function drawNewMessage($to){
             $key = "U3E44ERG0H0M3";
             if (isset($_GET['to']) && (!empty($_GET['to'])))
@@ -539,6 +662,16 @@ namespace YAWK\PLUGINS\MESSAGES {
                       </fieldset>
                     ";
         }
+
+        /**
+         * mark a message as read
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $msg_id message ID
+         * @return bool
+         */
         public function markAsRead($db, $msg_id)
         {   /** @var $db \YAWK\db */
             if ($db->query("UPDATE {plugin_msg} SET msg_read = '1' WHERE msg_id = '".$msg_id."'"))
