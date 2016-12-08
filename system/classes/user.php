@@ -638,7 +638,7 @@ namespace YAWK {
                 }
                 else
                 {   // q failed
-                    \YAWK\sys::setSyslog($db, 5, "Could not set value <b>$value</b> of property <b>$property</b> $db->error()", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 5, "Could not set value <b>$value</b> of property <b>$property</b>", 0, 0, 0, 0);
                     \YAWK\alert::draw("danger","Error!","Could not set value ".$value." of property ".$property.".","","4800");
                     return false;
                 }
