@@ -4,7 +4,7 @@ namespace YAWK\PLUGINS\FAQ {
      * <b>Build FAQ's for your users.</b>
      *
      * FAQs are useful. Beware to underrate this. You can answer the most interesting questions
-     * before your user can ask. This saves time - your website should be informative. If you answer
+     * before your user even ask. This saves time - your website should be informative. If you answer
      * a question on your website, users may not need to ask your email or phone support. If you do
      * it clever, this could be a big selling helper for you!
      *
