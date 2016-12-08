@@ -1,11 +1,33 @@
 <?php
 /** Signup Backend Class */
 namespace YAWK\PLUGINS\USERPAGE {
+    /**
+     * <b>Stats class for userpage</b>
+     * <p>STATS TAB shows the user his account stats.</p>
+     * <p><i>Class covers frontend functionality.
+     * See Methods Summary for Details!</i></p>
+     *
+     * @author     Daniel Retzl <danielretzl@gmail.com>
+     * @copyright  2009-2015 Daniel Retzl
+     * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+     * @version    1.0.0
+     * @link       http://yawk.io
+     * @annotation Userpage Profile Class
+     */
     class stats
     {
+        /** * @var string html output */
         protected $html;
+        /** * @var object user object */
         protected $user;
 
+        /**
+         * stats constructor. load properties for username
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         */
         public function __construct($db){
             global $user;
             $this->username = $_SESSION['username'];
@@ -13,6 +35,13 @@ namespace YAWK\PLUGINS\USERPAGE {
             $user->loadProperties($db, $this->username);
         }
 
+        /**
+         * draw account stats.
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @return string account stats
+         */
         public function init(){
             global $user;
             if($user->blocked === '0') { $blocked = "Alles ok. Dein Account ist in Ordnung."; $blockedHtml = "text-success"; }

@@ -1,5 +1,9 @@
 <?php
 /** SIGNUP PLUGIN */
 include 'system/plugins/userpage/classes/userpage.php';
-$userpage = new \YAWK\PLUGINS\USERPAGE\userpage();
-$userpage->init();
+if (!isset($user) || (empty($user)))
+{
+    $user = new \YAWK\user();
+}
+$userpage = new \YAWK\PLUGINS\USERPAGE\userpage($db, $user);
+$userpage->init($db, $user);

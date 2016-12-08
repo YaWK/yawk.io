@@ -1,19 +1,39 @@
 <?php
-/** Signup Backend Class */
+/** Userpage Plugin  */
 namespace YAWK\PLUGINS\USERPAGE {
+    /**
+     * <b>Profile class extends class userpage</b>
+     * <p>serve functions to check if the user is logged in and display the profile page on wich he can change
+     * his personal settings such as username, password and so on. </p>
+     * <p><i>Class covers frontend functionality.
+     * See Methods Summary for Details!</i></p>
+     *
+     * @author     Daniel Retzl <danielretzl@gmail.com>
+     * @copyright  2009-2015 Daniel Retzl
+     * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+     * @version    1.0.0
+     * @link       http://yawk.io
+     * @annotation Userpage Profile Class
+     */
     class profile
     {
-        protected $form;
-        protected $html;
+        /** * @var string html content */
+        protected $html = '';
+        /** * @var object settings object */
         protected $settings;
-        protected $properties;
+        /** * @var string username */
         protected $username;
+        /** * @var object user object*/
         protected $user;
 
-        public function __construct(){
-            $this->html = "";
-        }
-
+        /**
+         * init: check if user is logged in and draw profile or show login box
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @return string html output
+         */
         public function init($db)
         {
             global $user;
@@ -32,6 +52,15 @@ namespace YAWK\PLUGINS\USERPAGE {
             }
         }
 
+        /**
+         * draw user profile for frontend editing
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param object $user user object
+         * @return null store in object setting: $this->html
+         */
         public function drawProfile($db, $user){
             // get profile settings
             $changeUsername = \YAWK\settings::getSetting($db, "userpage_changeUsername");

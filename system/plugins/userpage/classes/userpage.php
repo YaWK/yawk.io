@@ -1,13 +1,35 @@
 <?php
 namespace YAWK\PLUGINS\USERPAGE {
-
+    /**
+     * <b>Userpage Plugin </b>
+     * <p>Userpage Class check and build the userpage.</p>
+     * <p><i>Class covers frontend functionality.
+     * See Methods Summary for Details!</i></p>
+     *
+     * @author     Daniel Retzl <danielretzl@gmail.com>
+     * @copyright  2009-2015 Daniel Retzl
+     * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+     * @version    1.0.0
+     * @link       http://yawk.io
+     * @annotation Userpage Profile Class
+     */
     class userpage
     {
+        /** * @var string dashboard */
         protected $dashboard;
+        /** * @var string append tab */
         protected $appendTab;
+        /** * @var string append panel */
         protected $appendPanel;
-        protected $userpage;
 
+        /**
+         * userpage constructor.
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param object $user user object
+         */
         public function __construct($db, $user){
             /* property $user */
             if (isset($username) && (!empty($username)))
@@ -17,6 +39,15 @@ namespace YAWK\PLUGINS\USERPAGE {
             $this->usergroup = \YAWK\user::getGroup($db);
         }
 
+        /**
+         * init function check if backend is allowed and load userpage
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param object $user user
+         * @return bool|null|string
+         */
         public function init($db, $user){
             if ($this->usergroup['backend_allowed'] !== '1'){
                 // backend access not allowed
@@ -39,10 +70,28 @@ namespace YAWK\PLUGINS\USERPAGE {
             return null;
         }
 
+        /**
+         * getUserPage is a wrapper for buildPage
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param object $user object
+         * @return string buildPage function
+         */
         public function getUserPage($db, $user) {
-            return self::buildPage($db, $user->username, $user->gid, $this->appendTab, $this->appendPanel, $this->dashboard);
+            return $this->buildPage($db, $user->username, $user->gid, $this->appendTab, $this->appendPanel, $this->dashboard);
         }
 
+        /**
+         * detect admin and build a special 'ROOT' page with admin functions... TODO: in development
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param object $user object
+         * @return string buildPage with admin functions
+         */
         public function getRootPage($db, $user) {
             // check, if admin tab is enabled
             if (\YAWK\settings::getSetting($db, "userpage_admin") === '1'){
@@ -64,6 +113,19 @@ namespace YAWK\PLUGINS\USERPAGE {
             return self::buildPage($db, $user->username, $user->gid, $this->appendTab, $this->appendPanel, $this->dashboard);
         }
 
+        /**
+         * build the user page and draw html output
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param object $user object
+         * @param int $usergroup group ID
+         * @param string $appendTab the tab to append, if
+         * @param string $appendPanel the panel to append, if
+         * @param string $dashboard some dashboard content
+         * @return string draw html output
+         */
         public static function buildPage($db, $user, $usergroup, $appendTab, $appendPanel, $dashboard)
         {   /** @var $db \YAWK\db */
             // ADDITIONAL CODE ------------------
