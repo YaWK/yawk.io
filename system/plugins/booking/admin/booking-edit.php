@@ -58,25 +58,6 @@ if (isset($_GET['id'])){
     $booking->loadProperties($db, $_GET['id']);
     // get logic, a lot of if x then y....
     $year = date('Y');
-    // set to_do integer to str
-    if ($booking->todo === '0'){
-        $booking->todo = 'keine Angabe';
-    }
-    if ($booking->todo === '1'){
-        $booking->todo = "Solo Termin";
-    }
-    if ($booking->todo === '2'){
-        $booking->todo = "Dreier (MMF)";
-    }
-    if ($booking->todo === '3'){
-        $booking->todo = "Dreier (FFM)";
-    }
-    if ($booking->todo === '4'){
-        $booking->todo = "Handjob / Blowjob Quickie";
-    }
-    if ($booking->todo === '5'){
-        $booking->todo = 'keine Angabe';
-    }
     if ($booking->ip === '::1') {
         $booking->ip = "::1 (localhost)";
     }
@@ -100,18 +81,12 @@ if (isset($_GET['id'])){
     $time_alt = $splitDate_alternative['time'];
     // make dates pretty
     $prettydate_created = "$day_created.$month_created $year, $time_created";
-    $prettydate_wish = "$day_wish.$month_wish um $time_wish Uhr";
-    $prettydate_alternative = "$day_alt.$month_alt, $time_alt Uhr";
+    $prettydate_wish = "$day_wish.$month_wish, $time_wish ";
+    $prettydate_alternative = "$day_alt.$month_alt, $time_alt ";
 
     // if alternative is zero, make it empty for a better tbl view experience
     if ($prettydate_alternative === "0.00, 00:00 Uhr"){
-        $prettydate_alternative = 'keine Angabe';
-    }
-    if ($booking->cut === '1'){
-        $cutHtml = "checked";
-    }
-    else {
-        $cutHtml = "";
+        $prettydate_alternative = '&nbsp;';
     }
     if ($booking->invited === '1'){
         $inviteHtml = "<a class=\"btn btn-success\" href=\"index.php?plugin=booking&pluginpage=booking-toggle&id=$booking->id&invite=1\" style=\"float:right;\">
@@ -122,14 +97,14 @@ if (isset($_GET['id'])){
         <i class=\"fa fa-envelope-o\"></i> &nbsp;Send Invitation Email</a>";
     }
     if ($booking->confirmed === '1'){
-        $confirmedHtml = "<span class='text-success'>Termin fixiert</span>";
+        $confirmedHtml = "<span class='text-success'>Booking confirmed</span>";
         $confirmedIcon = "<i class='fa fa-check'></i>";
     } else {
-        $confirmedHtml = "<span class='text-warning'>nicht fixiert</span>";
+        $confirmedHtml = "<span class='text-warning'>Booking not confirmed</span>";
         $confirmedIcon = "<i class='fa fa-times'></i>";
     }
     if ($booking->success === '1'){
-        $confirmedHtml = "<span class='text-info'>erledigt</span>";
+        $confirmedHtml = "<span class='text-info'>successful</span>";
         $confirmedIcon = "<i class='fa fa-trophy'></i>";
     }
     if ($booking->outdated === '1'){
@@ -156,19 +131,18 @@ if (isset($_GET['id'])){
     <div class="row">
         <div class="col-md-8">
             <ul class="list-group">
-                <li class="list-group-item"><h4>Details <small>zu diesem Terminvorschlag</small></h4></li>
-                <li class="list-group-item"><h4><strong><?php echo $booking->name; ?></strong> hat einen Terminwunsch am <strong><?php echo $prettydate_wish; ?></strong></h4></li>
+                <li class="list-group-item"><h4>Details <small>of this Booking</small></h4></li>
+                <li class="list-group-item"><h4><strong><?php echo $booking->name; ?></strong> sent following booking: <strong><?php echo $prettydate_wish; ?></strong></h4></li>
                 <li class="list-group-item"><i class="fa fa-envelope"></i> &nbsp;<strong><?php echo "<a href=\"mailto:$booking->email\">$booking->email</a>"; ?></strong></li>
                 <li class="list-group-item"><i class="fa fa-phone"></i> &nbsp;<strong><?php echo $booking->phone; ?></strong></li>
-                <li class="list-group-item"><i class="fa fa-group"></i> &nbsp;<strong><?php echo $booking->todo; ?></strong></li>
                 <li class="list-group-item"><i class="fa fa-clock-o"></i> &nbsp;<strong><?php echo $prettydate_alternative; ?></strong> <small>[alternativ]</small></li>
             </ul>
             <ul class="list-group">
                 <li class="list-group-item"><i class="fa fa-comments-o"></i> &nbsp;<strong><?php echo $booking->text; ?></strong></li>
             </ul>
             <ul class="list-group">
-                <li class="list-group-item"><h6>gesendet von <strong>&nbsp;<?php echo $booking->name; ?>&nbsp;</strong>
-                    am <?php echo $prettydate_created; ?> via IP Adresse <?php echo $booking->ip; ?><br><small>
+                <li class="list-group-item"><h6>sent from<strong>&nbsp;<?php echo $booking->name; ?>&nbsp;</strong>
+                    am <?php echo $prettydate_created; ?> via IP Adress: <?php echo $booking->ip; ?><br><small>
                     <i><?php echo $booking->useragent; ?></i>
                    <br><?php echo $booking->referer; ?></small></h6></li>
             </ul>
@@ -176,10 +150,10 @@ if (isset($_GET['id'])){
                 <li class="list-group-item">
                     <form class="form-inline" method="post" action="index.php?plugin=booking&pluginpage=booking-edit&id=<?PHP echo $booking->id; ?>">
                         <label for="cut"><i class="fa fa-scissors"></i>&nbsp;</label>
-                        <input type="checkbox" id="cut" name="cut" class="form-control" value="1" <?PHP echo $cutHtml; ?>>&nbsp;
                         <label for="income">&euro;&nbsp;</label>
                         <input type="text" value="<?PHP echo $booking->income;?>" size="5" class="form-control" placeholder="150" id="income" name="income">&nbsp;&nbsp;&nbsp;
                         <label for="income"><i class="fa fa-line-chart"></i>&nbsp; </label>
+                        <label for="grade">Voting</label>
                         <select class="form-control" name="grade" id="grade">
                             <option value="0" selected disabled>&nbsp;</option>
                             <option value="1">1</option>
@@ -193,9 +167,9 @@ if (isset($_GET['id'])){
                         <br>
                         </li>
                 <li class="list-group-item">
-                    <label for="date_wish">Datum &auml;ndern</label>
+                    <label for="date_wish">Change Date</label>
                     <input type="text" class="form-control" name="date_wish" size="10" id="date_wish" value="<?PHP echo $booking->date_wish;?>"><br>
-                    <label for="date_alternative">Alternativdatum: </label>
+                    <label for="date_alternative">Alternative Date: </label>
                     <input type="text" class="form-control" name="date_alternative" size="10" id="date_alternative" value="<?PHP echo $booking->date_alternative;?>">
                         <!-- SAVE BUTTON -->
                         <input id="savebutton" class="btn btn-success" type="submit" name="create" style="margin-left:14px;" value="<?PHP echo $lang['SAVE']; ?>">

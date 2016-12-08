@@ -6,9 +6,10 @@ namespace YAWK\PLUGINS\BOOKING {
      * The Booking Plugin is a simple but nice, clean frontend form. Users
      * can submit appointments. The entries are managable in the backend.
      * Perfect for any kind of appointment requests. E.g. if you are a Hairdresser
-     * your customers can submit their wished dates. You can manage them in the Backend,
-     * and view data in a sortable, bootstraped table. You can set the Appointment to "done",
-     * rate it, count how many times you've met that user, and many more.
+     * your customers can submit their wished dates. If you are a musician, this is perfect
+     * to do your bookings. You can manage them in the Backend and view all bookings in a
+     * sortable, clean table. You can set the Appointment to "done", rate it, count how many
+     * times you've met that user, how many bookings were successful and many, many more.
      *
      * <p><i>Class covers both, backend & frontend functionality.
      * See Methods Summary for Details!</i></p>
@@ -20,51 +21,93 @@ namespace YAWK\PLUGINS\BOOKING {
      * @version    1.0.0
      * @link       http://yawk.io
      * @annotation Booking Plugin is perfect if you want to let your customers submit
-     * Appointments from Frontend. Entries can be viewed, setup and monitored in the Backend.
+     * appointments from frontend. Entries can be viewed, setup and monitored in the backend.
      */
     class booking
     {
+        /** * @var string language */
         public $lang;
+        /** * @var string booking day */
         public $day;
+        /** * @var string booking month */
         public $month;
+        /** * @var string booking time */
         public $time;
+        /** * @var string booking ID */
         public $id;
+        /** * @var string user ID who booked */
         public $uid;
+        /** * @var string group ID */
         public $gid;
+        /** * @var string date when the booking was created */
         public $date_created;
-        public $date_wish;
+        /** * @var int 0|1 is this a confirmed booking? */
         public $date_confirmed;
+        /** * @var string booking name */
         public $name;
+        /** * @var string booking email address */
         public $email;
+        /** * @var string booking phone number */
         public $phone;
+        /** * @var string booking text */
         public $text;
+        /** * @var int 0|1 was the booking successful? */
         public $success;
+        /** * @var int internal voting for this booking (school grades) */
         public $grade;
+        /** * @var int how often has this client (email adress) successful booked? */
         public $visits;
+        /** * @var string internal comment for this booking (max 255 chars) */
         public $comment;
+        /** * @var string IP Address of the user who booked */
         public $ip;
+        /** * @var string users hostname  */
         public $hostname;
+        /** * @var int how much is this booking worth? */
         public $income;
-        public $todo;
+        /** * @var int 0|1 is this booking confirmed? */
         public $confirmed;
+        /** * @var string user booking time */
         public $datewish_time;
-        public $alternative_time;
+        /** * @var string user booking month */
         public $datewish_month;
+        /** * @var string user booking day */
         public $datewish_day;
+        /** * @var string user booking year */
         public $datewish_year;
+        /** * @var string user booking date wish (full) */
+        public $date_wish;
+        /** * @var string alternative user booking time */
+        public $alternative_time;
+        /** * @var string alternative user booking month */
         public $alternative_month;
+        /** * @var string alternative user booking day */
         public $alternative_day;
+        /** * @var string alternative user booking year */
         public $alternative_year;
+        /** * @var string alternative user booking date (full) */
         public $date_alternative;
+        /** * @var string user booking message */
         public $message;
+        /** * @var string the complete useragent */
         public $useragent;
+        /** * @var string referer: where did the user came from? (last url) */
         public $referer;
+        /** * @var int expected money from outstanding bookings */
         public $outstanding_sum;
+        /** * @var int 0|1 is this booking set to outdated? */
         public $outdated;
+        /** * @var int 0|1 is this user (email adress) banned? */
         public $ban;
-        public $cut;
+        /** * @var int 0|1 is this user invited? */
         public $invited;
 
+        /**
+         * count and return how many successful booking an email adress made
+         * @param object $db database
+         * @param string $email email adress you wish to check
+         * @return int|bool
+         */
         public function countVisits($db, $email)
         {   /** @var $db \YAWK\db */
             $i = 0;
@@ -80,6 +123,10 @@ namespace YAWK\PLUGINS\BOOKING {
             }
         }
 
+        /**
+         * get statistics from all bookings
+         * @param object $db database
+         */
         public function getStats($db)
         {   /** @var $db \YAWK\db */
             $income_sum = 0;
@@ -133,16 +180,24 @@ namespace YAWK\PLUGINS\BOOKING {
 
 
                 echo "<ul class='list-group'>
-                        <li class='list-group-item'><h4><i class='fa fa-money'></i> &nbsp;ausstehende, fixe Termine im Wert von:&nbsp; <b class='text-green'>&euro; ".$confirmed_outstanding_sum.",-</b></li></h4>
-                        <li class='list-group-item'><h4><i class='fa fa-money'></i> &nbsp;neue, unbest&auml;tigte Termine im Wert von:&nbsp; <b class='text-orange'>&euro; ".$outstanding_sum.",- </b></li></h4>
-                        <li class='list-group-item'><h4><i class='fa fa-money'></i> &nbsp;erfolgreich eingenommen, total:&nbsp; <b class='text-green'>&euro; ".$income_sum.",- </b></li></h4>
-                        <li class='list-group-item'><h4><i class='fa fa-calendar'></i> &nbsp;insgesamt wurden <b>".$i_dates."</b> Termine angefragt. Davon sind <b class='text-green'>".$success_sum."</b> zustande gekommen. <b class='text-orange'>".$i_date_waiting_sum."</b> noch unbest&auml;tigt, <b class='text-green'>".$i_date_fix_sum."</b> sind fix. <b>".$i_date_outdated."</b> sind outdated.</li></h4>
-                        <li class='list-group-item'><h4><i class='fa fa-calendar'></i> &nbsp;die Durchschnittsbewertung &uuml;ber alle Termine und User ist im Moment: <b>".$avgGrade."</b></li></h4>
+                        <li class='list-group-item'><h4><i class='fa fa-money'></i> &nbsp;outstanding, fixated bookings are worth:&nbsp; <b class='text-green'>&euro; ".$confirmed_outstanding_sum.",-</b></li></h4>
+                        <li class='list-group-item'><h4><i class='fa fa-money'></i> &nbsp;new, not confirmed bookings are worth:&nbsp; <b class='text-orange'>&euro; ".$outstanding_sum.",- </b></li></h4>
+                        <li class='list-group-item'><h4><i class='fa fa-money'></i> &nbsp;successful earned, total:&nbsp; <b class='text-green'>&euro; ".$income_sum.",- </b></li></h4>
+                        <li class='list-group-item'><h4><i class='fa fa-calendar'></i> &nbsp;overall there were <b>".$i_dates."</b> booking inquires. Thereof were <b class='text-green'>".$success_sum."</b> successful bookings. <b class='text-orange'>".$i_date_waiting_sum."</b> are not confirmed, <b class='text-green'>".$i_date_fix_sum."</b> are confirmed. <b>".$i_date_outdated."</b> are outdated.</li></h4>
+                        <li class='list-group-item'><h4><i class='fa fa-calendar'></i> &nbsp;the average voting overall bookings and users: <b>".$avgGrade."</b></li></h4>
                       </ul>";
 
             }
         }
 
+        /**
+         * set a booking to banned (to see clearly: nope, we dont want this)
+         * this is useful to detect and handle fake bookings, fun bookings, nonsense entries...
+         * @param object $db database
+         * @param int $id the booking ID to ban
+         * @param string $email the email address you wish to ban
+         * @return bool
+         */
         function toggleBan($db, $id, $email)
         {   /** @var $db \YAWK\db */
             if ($res = $db->query("SELECT ban FROM {plugin_booking}
@@ -162,16 +217,24 @@ namespace YAWK\PLUGINS\BOOKING {
             return true;
         }
 
+        /**
+         * toggle a booking to outdated.
+         * @param object $db database
+         * @param int $id the booking id to toggle
+         * @return bool
+         */
         function toggleOutdated($db, $id)
         {   /** @var $db \YAWK\db */
             if ($res = $db->query("SELECT outdated FROM {plugin_booking}
                                                   WHERE id = '".$id."'"))
-                $row = mysqli_fetch_row($res);
-            $outdated = $row[0];
-            if ($outdated === '0') { $outdated = 1; } else { $outdated = 0; }
+                 if ($row = mysqli_fetch_row($res))
+                 {
+                     $this->outdated = $row[0];
+                 }
+            if ($this->outdated === '0') { $this->outdated = 1; } else { $this->outdated = 0; }
             // toggle outdated status
             if (!$res = $db->query("UPDATE {plugin_booking}
-              SET outdated = '" . $outdated . "'
+              SET outdated = '" . $this->outdated . "'
               WHERE id = '".$id."'"))
             {
                 print \YAWK\alert::draw("danger", "Error", "Outdated status could not be toggled.","",2000);
@@ -179,8 +242,18 @@ namespace YAWK\PLUGINS\BOOKING {
             return true;
         }
 
+        /**
+         * if you like, you can invite users to a private member area. allow users to register and become members
+         * after they did a successful booking. Whatever you put in your members area (eg. vip club) is on your own.
+         * @param object $db database
+         * @param int $id booking ID (unused, yet)
+         * @param string $email booking email address -> the user you wish to invite
+         * @param string $name the name that the user have set in the course of booking.
+         * @return bool
+         */
         function inviteUser($db, $id, $email, $name)
-        {   // get admin email adress from db
+        {   /** @var $db \YAWK\db */
+            // get admin email adress from db
             $admin_email = \YAWK\settings::getSetting($db, "admin_email");
             // set invite status in user db
             if ($res = $db->query("UPDATE {plugin_booking} SET invited = '1' WHERE email='".$email."'"))
@@ -210,73 +283,43 @@ namespace YAWK\PLUGINS\BOOKING {
             return false;
         }
 
+        /**
+         * draw (output) html of the frontend form. This is displayed to the user. He will use it for booking.
+         * @return string
+         */
         public function getFrontendForm()
         {
-            /**
-             * Data Table for Frontend Rendering
-             *
-             * This function  fetch data & render the Table to be called in the frontend.
-             *
-             * @access public
-             */
-
-$html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"hure-wien-buchen.html\">
+$html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"booking.html\">
         <div class=\"row\">
             <div class=\"col-md-4\">
-                <p>Wie kann ich Dich kontaktieren?</p>
-                <input type=\"\" name=\"name\" id=\"name\" class=\"form-control\" placeholder=\"Dein Name\">
+                <p>How can we contact you?</p>
+                <input type=\"\" name=\"name\" id=\"name\" class=\"form-control\" placeholder=\"Your name\">
                 <label for=\"name\"><strong>Name</strong></label>
                 <input type=\"\" name=\"email\" id=\"email\" class=\"form-control\" placeholder=\"you@email.com\">
                 <label for=\"email\">Email</label>
-                <input type=\"phone\" name=\"phone\" id=\"phone\" class=\"form-control\" placeholder=\"+43 664 / 1234567\">
-                <label >Telefonnummer</label>
+                <input type=\"phone\" name=\"phone\" id=\"phone\" class=\"form-control\" placeholder=\"+00 1234 / 1234567\">
+                <label >Phone Number</label>
 <br><br>
-                <select id=\"todo\" name=\"todo\" class=\"form-control\">
-                    <option value=\"0\" selected disabled>Was m&ouml;chtest Du tun?</option>
-                    <option value=\"1\">Date zu zweit</option>
-                    <option value=\"2\">Date zu zweit (Handjob)</option>
-                    <option value=\"4\">Date zu zweit (Quickie)</option>
-                    <option value=\"3\">Date zu dritt (FFM)</option>
-                    <option value=\"0\">Ich habe eine andere Idee...</option>
-                </select>
-
-                <div id=\"1_hidden\" style=\"display: none;\"><br>Zu zweit ist es ganz besonders sch&ouml;n, romantisch, kuschelig.
-                Eine Stunde, in der es nur um Deine Bed&uuml;rfnisse geht. Ich freue mich, wenn ich mich ausgiebig um Dich k&uuml;mmern kann.
-                    <p class=\"small text-success\">Kosten: &euro; 160.- / Dauer ca. 60 Minuten.</p></div>
-                    <div id=\"2_hidden\" style=\"display: none;\"><br>Ich nehme pjur light (Gleitgel) zur Hand und massiere Dein
-                    bestes St&uuml;ck mit meinen H&auml;nden nach allen Regeln der Kunst. Ich liebe es, einen Schwanz
-                    mit sanftem Druck abzuwichsen. Es wird Dir gefallen!
-                    <p class=\"small text-success\">Kosten: &euro; 100.- / Dauer ca. 30 Minuten.</p></div>
-                <div id=\"3_hidden\" style=\"display: none;\"><br>Welcher Mann tr&auml;umt nicht davon, mal mit 2 Frauen
-                gleichzeitig zu spielen? Ist das auch eine Phantasie von Dir? Lass es mich wissen, damit ich meiner
-                Freundin Bescheid geben kann! <i class='fa fa-smile-o'></i>
-                     <p class=\"small text-success\">Kosten: &euro; 320.- / Dauer ca. 60 Minuten.</p></div>
-                <div id=\"4_hidden\" style=\"display: none;\"><br>Wenn die Lust gro&szlig;, Deine freie Zeit aber knapp ist, bietet sich
-                eine halbe Stunde an. In der Zeit k&ouml;nnen wir all das machen, was auch in einer Stunde m&ouml;glich
-                ist. Ideal zur schnellen Entspannung.  <i class=\"fa fa-smile-o\"></i>
-                    <p class=\"small text-success\">Kosten: &euro; 100.- / Dauer ca. 30 Minuten.</p> </div>
-                <div id=\"5_hidden\" style=\"display: none;\"><br>Du m&ouml;chtest etwas anderes anstellen? Na dann, sei so lieb und
-                    schreib es mir in die Box hier rechts. Vielen Dank!</div>
             </div>
             <div class=\"col-md-8\">
-                <p>Dein Terminwunsch:</p>
+                <p>Select Date:</p>
                         <select name=\"datewish-month\" class=\"form-inline\">
-                            <option value=\"00\" selected disabled>- Monat -</option>
-                            <option value=\"01\">Januar</option>
-                            <option value=\"02\">Februar</option>
-                            <option value=\"03\">M&auml;rz</option>
+                            <option value=\"00\" selected disabled>- Month -</option>
+                            <option value=\"01\">January</option>
+                            <option value=\"02\">February</option>
+                            <option value=\"03\">March</option>
                             <option value=\"04\">April</option>
                             <option value=\"05\">May</option>
-                            <option value=\"06\">Juni</option>
-                            <option value=\"07\">Juli</option>
+                            <option value=\"06\">June</option>
+                            <option value=\"07\">July</option>
                             <option value=\"08\">August</option>
                             <option value=\"09\">September</option>
-                            <option value=\"10\">Oktober</option>
+                            <option value=\"10\">October</option>
                             <option value=\"11\">November</option>
-                            <option value=\"12\">Dezember</option>
+                            <option value=\"12\">December</option>
                         </select>
                         <select name=\"datewish-day\" class=\"form-inline\">
-                            <option value=\"00\" selected disabled>- Tag -</option>
+                            <option value=\"00\" selected disabled>- Day -</option>
                             <option value=\"01\">1</option>
                             <option value=\"02\">2</option>
                             <option value=\"03\">3</option>
@@ -310,7 +353,7 @@ $html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"hure-wien-buc
                             <option value=\"31\">31</option>
                         </select>
                         <select name=\"datewish-time\" class=\"form-inline\">
-                            <option value=\"00:00\" selected disabled>Uhrzeit</option>
+                            <option value=\"00:00\" selected disabled>Time</option>
                             <option value=\"08:30\">08:30</option>
                             <option value=\"09:00\">09:00</option>
                             <option value=\"09:30\">09:30</option>
@@ -326,7 +369,7 @@ $html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"hure-wien-buc
                             <option value=\"14:30\">14:30</option>
                             <option value=\"15:00\">15:00</option>
                             <option value=\"15:30\">15:30</option>
-                            <option value=\"16:00\">16:00</option> <!--
+                            <option value=\"16:00\">16:00</option>
                             <option value=\"16:30\">16:30</option>
                             <option value=\"17:00\">17:00</option>
                             <option value=\"17:30\">17:30</option>
@@ -340,27 +383,27 @@ $html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"hure-wien-buc
                             <option value=\"21:30\">21:30</option>
                             <option value=\"22:00\">22:00</option>
                             <option value=\"22:30\">22:30</option>
-                            <option value=\"23:00\">23:00</option> -->
+                            <option value=\"23:00\">23:00</option>
                         </select>
                 <br><br>
                 <p >Alternative?</p>
                         <select name=\"alternative-month\" class=\"form-inline\">
-                            <option value=\"00\" selected disabled>- Monat -</option>
-                            <option value=\"01\">Januar</option>
-                            <option value=\"02\">Februar</option>
-                            <option value=\"03\">M&auml;rz</option>
+                            <option value=\"00\" selected disabled>- Month -</option>
+                            <option value=\"01\">January</option>
+                            <option value=\"02\">February</option>
+                            <option value=\"03\">March</option>
                             <option value=\"04\">April</option>
                             <option value=\"05\">May</option>
-                            <option value=\"06\">Juni</option>
-                            <option value=\"07\">Juli</option>
+                            <option value=\"06\">June</option>
+                            <option value=\"07\">July</option>
                             <option value=\"08\">August</option>
                             <option value=\"09\">September</option>
-                            <option value=\"10\">Oktober</option>
+                            <option value=\"10\">October</option>
                             <option value=\"11\">November</option>
-                            <option value=\"12\">Dezember</option>
+                            <option value=\"12\">December</option>
                         </select>
                         <select name=\"alternative-day\" class=\"form-inline\">
-                            <option value=\"00\" selected disabled>- Tag -</option>
+                            <option value=\"00\" selected disabled>- Day -</option>
                             <option value=\"01\">1</option>
                             <option value=\"02\">2</option>
                             <option value=\"03\">3</option>
@@ -394,7 +437,7 @@ $html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"hure-wien-buc
                             <option value=\"31\">31</option>
                         </select>
                         <select name=\"alternative-time\" class=\"form-inline\">
-                            <option value=\"00:00\" selected disabled>Uhrzeit</option>
+                            <option value=\"00:00\" selected disabled>Time</option>
                             <option value=\"08:30\">08:30</option>
                             <option value=\"09:00\">09:00</option>
                             <option value=\"09:30\">09:30</option>
@@ -410,7 +453,7 @@ $html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"hure-wien-buc
                             <option value=\"14:30\">14:30</option>
                             <option value=\"15:00\">15:00</option>
                             <option value=\"15:30\">15:30</option>
-                            <option value=\"16:00\">16:00</option> <!--
+                            <option value=\"16:00\">16:00</option>
                             <option value=\"16:30\">16:30</option>
                             <option value=\"17:00\">17:00</option>
                             <option value=\"17:30\">17:30</option>
@@ -424,14 +467,14 @@ $html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"hure-wien-buc
                             <option value=\"21:30\">21:30</option>
                             <option value=\"22:00\">22:00</option>
                             <option value=\"22:30\">22:30</option>
-                            <option value=\"23:00\">23:00</option> -->
+                            <option value=\"23:00\">23:00</option>
                         </select>
                 <br><br><br>
-                <label>Deine Nachricht</label>
+                <label>Your Message</label>
                 <textarea name=\"message\" id=\"message\" class=\"form-control\" rows=\"10\" style=\"width: 96%\"></textarea>
-                <label for=\"mailCopy\">Kopie dieser Nachricht an mich senden. &nbsp;
+                <label for=\"mailCopy\">Send a copy of this message to myself. &nbsp;
                 <input type=\"checkbox\" name=\"mailCopy\" value=\"1\" checked aria-checked=\"true\" id=\"mailCopy\"></label>
-                <button type=\"submit\" class=\"btn btn-success\" style=\"margin-top:1%;margin-left: 32%;\" contenteditable=\"false\"><i class=\"fa fa-envelope-o\"></i> &nbsp;Terminvorschlag absenden</button>
+                <button type=\"submit\" class=\"btn btn-success\" style=\"margin-top:1%;margin-left: 32%;\" contenteditable=\"false\"><i class=\"fa fa-envelope-o\"></i> &nbsp;book now</button>
                 <input type=\"hidden\" name=\"sent\" value=\"1\">
                 </div>
                 </div>
@@ -439,6 +482,14 @@ $html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"hure-wien-buc
                 return $html;
             } /* EOFunction getTable */
 
+        /**
+         * get data and draw (output) html backend table of all bookings
+         * @param object $db database
+         * @param int $i sql limitation number
+         * @param string $field database field
+         * @param string $value value to get
+         * @return string
+         */
         public function getBackendTable($db, $i, $field, $value)
         {   /** @var $db \YAWK\db */
             global $lang;
@@ -460,7 +511,7 @@ $html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"hure-wien-buc
 
             if (!$res = $db->query($sql)) {
                 echo "<br><br>";
-                print \YAWK\alert::draw("warning", "Fehler:", "Entschuldigung, die Tabelle konnte nicht abgerufen werden. Offenbar liegt ein Datenbankproblem vor.","",3800);
+                print \YAWK\alert::draw("warning", "Could not get booking table data...", "Seems like there is a problem with the database.","",3800);
                 exit;
             } else {
                 /* TABLE HEADER */
@@ -478,7 +529,6 @@ $html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"hure-wien-buc
                     $this->email = $row['email'];
                     $this->phone = $row['phone'];
                     $this->text = $row['text'];
-                    $this->todo = $row['todo'];
                     $this->success = $row['success'];
                     $this->grade = $row['grade'];
                     $this->visits = $row['visits'];
@@ -519,41 +569,22 @@ $html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"hure-wien-buc
                     if ($prettydate_alternative === "0.00. 00:00"){
                     $prettydate_alternative = '';
                     }
-                    // set to_do integer to str
-                    if ($this->todo === '0'){
-                        $this->todo = '';
-                    }
-                    if ($this->todo === '1'){
-                        $this->todo = "Solo";
-                    }
-                    if ($this->todo === '2'){
-                        $this->todo = "Handjob";
-                    }
-                    if ($this->todo === '3'){
-                        $this->todo = "FFM";
-                    }
-                    if ($this->todo === '4'){
-                        $this->todo = "Quickie";
-                    }
-                    if ($this->todo === '5'){
-                        $this->todo = '';
-                    }
                     // check confirmed status
                     if ($this->confirmed === '1') {
                         $pub = "success";
-                        $pubtext = "<i class=\"fa fa-check\"> 2 fix</i>";
+                        $pubtext = "<i class=\"fa fa-check\"> 2 confirmed</i>";
                     }
                     else {
                         $pub = "warning";
-                        $pubtext = "<i class=\"fa fa-times\"> 1 nicht best.</i>";
+                        $pubtext = "<i class=\"fa fa-times\"> 1 not confirmed</i>";
                     }
                     if ($this->success === '1'){
                         $pub = "info";
-                        $pubtext = "<i class=\"fa fa-check-circle-o\" title='erledigt'> 3 erledigt</i>";
+                        $pubtext = "<i class=\"fa fa-check-circle-o\" title='erledigt'> 3 successful</i>";
                     }
                     if ($this->ban === '1'){
                         $pub = "danger";
-                        $pubtext = "<i class=\"fa fa-warning\" title='Vorsicht'> 4 vorsicht!</i>";
+                        $pubtext = "<i class=\"fa fa-warning\" title='careful'> 4 careful!</i>";
                     }
                     if ($this->outdated === '1'){
                         $pub = "inverse";
@@ -578,7 +609,6 @@ $html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"hure-wien-buc
                     <a href=\"index.php?plugin=booking&pluginpage=booking&phone=$this->phone\" target=\"_blank\">$this->phone</a></p>
                     </div></td>
                     <td class=\"text-center\">$prettydate_wish<p style=\"color:#707070;\">$prettydate_alternative</p></td>
-                    <td class=\"text-center\">$this->todo</td>
                     <td ".$msgstyle.">$this->text</td>
                     <td class=\"text-center\">".self::countVisits($db, $this->email)."</td>
                     <td class=\"text-center\"><a href=\"index.php?plugin=booking&pluginpage=booking&ip=$this->ip\" target=\"_blank\">$this->ip</a></td>
@@ -597,6 +627,11 @@ $html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"hure-wien-buc
             }
         } /* EOFunction getAdminTable */
 
+        /**
+         * save (update) booking data
+         * @param object $db database
+         * @return bool
+         */
         function save($db)
         {   /** @var $db \YAWK\db */
             if (!$res = $db->query("UPDATE {plugin_booking} SET
@@ -606,15 +641,22 @@ $html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"hure-wien-buc
                 date_wish = '".$this->date_wish."',
                 date_alternative = '".$this->date_alternative."',
                 comment = '".$this->comment."',
-                confirmed = '1',
-                cut = '".$this->cut."'
+                confirmed = '1'
                 WHERE id = '".$this->id."' "))
             {
-                print \YAWK\alert::draw("danger", "Error", "Could not save booking details."."",3800);
+                print \YAWK\alert::draw("danger", "Error", "Unable to save booking details.", "",3800);
             }
             return true;
         }
 
+        /**
+         * toggle a booking online or offline
+         * @param object $db database
+         * @param int $id booking ID to toggle
+         * @param int $confirmed 0|1 confirmed status
+         * @param int $success 0|1 success status
+         * @return bool
+         */
         function toggleOffline($db, $id, $confirmed, $success)
         {   /** @var $db \YAWK\db */
             // TOGGLE GIG STATUS
@@ -629,6 +671,11 @@ $html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"hure-wien-buc
         } /* EOFunction toggleOffline */
 
 
+        /**
+         * load booking data into object properties
+         * @param object $db database
+         * @param string $id the booking id to load
+         */
         function loadProperties($db, $id)
         {   /** @var $db \YAWK\db */
             $res = $db->query("SELECT * FROM {plugin_booking} WHERE id = '" . $id . "'");
@@ -660,6 +707,11 @@ $html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"hure-wien-buc
             }
         } /* EOFunction loadProperties */
 
+        /**
+         * get highest ID from booking table
+         * @param object $db database
+         * @return string|bool the max ID or false
+         */
         static function getMaxId($db)
         {   /** @var $db \YAWK\db */
             $booking = new booking();
@@ -673,6 +725,13 @@ $html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"hure-wien-buc
             }
         }
 
+        /**
+         * return any booking property
+         * @param object $db database
+         * @param int $id affected booking ID
+         * @param string $property the property to get
+         * @return string|bool the selected booking property or false
+         */
         function getProperty($db, $id, $property)
         {   /** @var $db \YAWK\db */
             $res = $db->query("SELECT " . $property . " FROM {plugin_booking}
@@ -686,6 +745,12 @@ $html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"hure-wien-buc
             }
         }
 
+
+        /**
+         * delete a single booking
+         * @param object $db database
+         * @return bool
+         */
         function delete($db)
         {   /** @var $db \YAWK\db */
             if (!$res = $db->query("DELETE FROM {plugin_booking} WHERE id = '" . $this->id . "'")) {
@@ -694,6 +759,11 @@ $html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"hure-wien-buc
             return true;
         } /* EOFunction delete */
 
+
+        /**
+         * create a new booking
+         * @param object $db database
+         */
         function create($db)
         {   /** @var $db \YAWK\db */
             if (!isset($_POST['todo'])){
@@ -831,37 +901,6 @@ $html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"hure-wien-buc
 
             // set income automatically based on selected todofield
 
-            if ($this->todo === '0'){
-                // solo
-                $this->income = "nach Vereinbarung";
-                $todotext = "nach Vereinbarung";
-                $duration = "nach Vereinbarung";
-            }
-            if ($this->todo === '1'){
-                // solo
-                $this->income = 160;
-                $todotext = "Date zu zweit";
-                $duration = "1 Stunde";
-            }
-            if ($this->todo === '2'){
-                // MMF
-                $this->income = 100;
-                $todotext = "Date zu zweit (Handjob)";
-                $duration = "1/2 Stunde";
-            }
-            if ($this->todo === '3'){
-                // FFM
-                $this->income = 320;
-                $todotext = "Date zu dritt (FFM)";
-                $duration = "1 Stunde";
-            }
-            if ($this->todo === '4'){
-               // quickie
-                $this->income = 100;
-                $todotext = "Date zu zweit (Quickie)";
-                $duration = "1/2 Stunde";
-            }
-
             // build datetime string out of form vars
             $year = date('Y');
             $this->date_wish = "$year-$this->datewish_month-$this->datewish_day $this->datewish_time:00";
@@ -876,7 +915,7 @@ $html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"hure-wien-buc
 
             // insert into db
             $res = $db->query("INSERT INTO {plugin_booking}
-                            (id, uid, gid, date_created, date_wish, date_alternative, name, email, phone, text, todo, income, ip, useragent, referer)
+                            (id, uid, gid, date_created, date_wish, date_alternative, name, email, phone, text, ip, useragent, referer)
 	                        VALUES('" . $this->id . "',
 	                        '" . $this->uid . "',
 	                        '" . $this->gid . "',
@@ -887,8 +926,6 @@ $html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"hure-wien-buc
 	                        '" . $this->email . "',
 	                        '" . $this->phone . "',
 	                        '" . $this->message . "',
-	                        '" . $this->todo . "',
-	                        '" . $this->income . "',
 	                        '" . $this->ip . "',
 	                        '" . $this->useragent . "',
 	                        '" . $this->referer . "')");
@@ -898,9 +935,6 @@ $html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"hure-wien-buc
             Ich werde mich so bald als moeglich bei Dir melden!\n\r
              Wunschtermin: ".$this->date_wish."\n
              Alternative : ".$this->date_alternative."\n
-             Kosten      : EUR ".$this->income."\n
-             Wunsch     : ".$todotext."\n
-             Dauer       : ".$duration."\n
              Email       : ".$this->email."\n
              Telefon     : ".$this->phone."\n
              Nachricht   : ".$this->message."\n";

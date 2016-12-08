@@ -74,11 +74,10 @@ echo"<ol class=\"breadcrumb\">
 <table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-hover" id="table-sort">
     <thead>
     <tr>
-        <td width="3%" style="text-align: center;"><strong>Fix?</strong></td>
+        <td width="8%" style="text-align: center;"><strong>Fix?</strong></td>
         <td width="14%"><strong><?PHP print $lang['DATE_CREATED']; ?></strong></td>
         <td width="10%"><strong><?PHP print $lang['NAME']; ?></strong></td>
         <td width="5%" class=\"text-center\"><strong><?PHP print $lang['BOOKING_DATEWISH']; ?></strong></td>
-        <td width="5%" class=\"text-center\"><strong><?PHP print $lang['BOOKING_TODO']; ?></strong></td>
         <td width="39%"><strong><?PHP print $lang['MESSAGE']; ?></strong></td>
         <td width="5%" class=\"text-center\"><strong><?PHP print $lang['BOOKING_VISITS']; ?></strong></td>
         <td width="5%" class=\"text-center\"><strong><?PHP print $lang['IP']; ?></strong></td>

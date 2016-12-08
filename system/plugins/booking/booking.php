@@ -18,14 +18,14 @@ if (isset($_POST['sent']) && $_POST['sent'] === '1'){
     // execute create method
     $booking = $booking->create($db);
     // thank you page...
-    echo "<div style='text-align: center; margin-top: 20%; margin-bottom: 600px;'><h1>Vielen Dank <small>f&uuml;r Deinen Terminvorschlag...</small></h1>
-          <p>Ich werde mich so bald als m&ouml;glich per Email bei Dir melden! <br><small><i>(Sofern Du nichts anderes angegeben hast)</i></small>
-            <br><a href=\"startseite.html\">Startseite</a></p></div>";
+    echo "<div style='text-align: center; margin-top: 20%; margin-bottom: 600px;'><h1>Thank you <small>for your booking...</small></h1>
+          <p>We will ge in contact with you soon! <br>
+            <br><a href=\"index.html\">Back to Home Page</a></p></div>";
 
 }
 else {
     // draw title + form -- FRONTEND --
-    echo "<h1><i class=\"fa fa-envelope-o\"></i> &nbsp;Kontakt <small>mach mir einen unverbindlichen Terminvorschlag...</small></h1><hr>";
+    echo "<h1><i class=\"fa fa-envelope-o\"></i> &nbsp;Contact <small>feel free to place your booking...</small></h1><hr>";
     echo $booking = $booking->getFrontendForm();
 }
 ?>
