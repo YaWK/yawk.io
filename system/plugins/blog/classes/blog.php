@@ -2,26 +2,25 @@
 namespace YAWK\PLUGINS\BLOG {
     /**
      * <b>Start blogging today! Very powerful app to create and manage any kind of blog.</b>
-     *
-     * The Blog Plugin is very useful if you want to build anything that is or acts actually like
+     * <p>The Blog Plugin is very useful if you want to build anything that is or acts actually like
      * blog. A bunch of pre-defined layouts are there to help you building a clean view to make
      * your pages good looking. A Blog got a title, subtitle, teaser text, longer text, an image
      * according left or right to the teaser text. It comes with a nice built in ajax-powered comment
      * feature. You can create many different blogs and much more entries. It is perfect to build up
      * a dynamic website. Blogs, pages, user comments and blog settings can be comfortably managed in
-     * a beautiful Backend. It is part of YaWK and integrates seamless.<br><br>
-     * There are four major layouts:<ul>
+     * a beautiful Backend. It is part of YaWK and integrates seamless.</p><br>
+     * <b>There are four major layouts:</b>
+     * <ul>
      * <li>1 col, default text blog</li>
      * <li>2 col, with preview image on the left</li>
      * <li>2 col, with preview image on the right</li>
-     * <li>3 col, basic newspaper style</li></ul>
-     * <br>
-     * Create as many blogs as you want to, gain user rights to blogs and / or to any single item.
+     * <li>3 col, basic newspaper style</li></ul><br>
+     * <p>Create as many blogs as you want to, gain user rights to blogs and / or to any single item.
      * Let users write down comments on every item. Comments can be turned on and off. There are many
      * settings available to sort content, show up a title and subline (or not) and much more. It is a
      * perfect choice to present content and -if needed- interact with users. You can manage everything
      * in a beautiful Backend with the typically YaWK-styled performant table design. Be sure to check
-     * out the Blog's Docs on our website or watch our blog screenscast for further information!
+     * out the Blog's Docs on our website or watch our blog screenscast for further information!</p>
      *
      * <p><i>This class covers both, backend + frontend functionality.
      * See Methods Summary for Details!</i></p>

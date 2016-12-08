@@ -10,13 +10,7 @@ namespace YAWK\PLUGINS\MESSAGES {
      * <li>get Inbox Data</li>
      * <li>draw Inbox</li>
      * <li>mark messages as spam, read, unread</li>
-     * <li>trash messages</li>
-     * <li>flip horizontal or vertical</li>
-     * <li>rotate around 90 degrees</li>
-     * <li>fit to width</li>
-     * <li>fit to height</li>
-     * <li>fit to thumbnail</li>
-     * <li>auto create thumbnails with the size of your need</li></ul><br>
+     * <li>trash messages and many more</li></ul><br>
      * <p>This plugin is definitly still in development.</i></p>
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>

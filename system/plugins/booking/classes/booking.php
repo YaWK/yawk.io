@@ -2,14 +2,13 @@
 namespace YAWK\PLUGINS\BOOKING {
     /**
      * <b>Let users submit appointments from frontend. You can view & manage them in backend.</b>
-     *
-     * The Booking Plugin is a simple but nice, clean frontend form. Users
+     * <p>The Booking Plugin is a simple but nice, clean frontend form. Users
      * can submit appointments. The entries are managable in the backend.
      * Perfect for any kind of appointment requests. E.g. if you are a Hairdresser
      * your customers can submit their wished dates. If you are a musician, this is perfect
      * to do your bookings. You can manage them in the Backend and view all bookings in a
      * sortable, clean table. You can set the Appointment to "done", rate it, count how many
-     * times you've met that user, how many bookings were successful and many, many more.
+     * times you've met that user, how many bookings were successful and many, many more.</p>
      *
      * <p><i>Class covers both, backend & frontend functionality.
      * See Methods Summary for Details!</i></p>

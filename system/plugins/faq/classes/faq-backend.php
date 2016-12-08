@@ -2,12 +2,10 @@
 namespace YAWK\PLUGINS\FAQ {
     /**
      * <b>Build FAQ's for your users.</b>
-     *
-     * FAQs are useful. Beware to underrate this. You can answer the most interesting questions
+     * <p>FAQs are useful. Beware to underrate this. You can answer the most interesting questions
      * before your user even ask. This saves time - your website should be informative. If you answer
      * a question on your website, users may not need to ask your email or phone support. If you do
-     * it clever, this could be a big selling helper for you!
-     *
+     * it clever, this could be a big selling helper for you!</p>
      * <p><i>This class covers backend functionality. See Methods Summary for Details!</i></p>
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>

@@ -2,10 +2,8 @@
 namespace YAWK\PLUGINS\FAQ {
     /**
      * <b>Frontend FAQ Class</b>
-     *
      * <p>This class extends \YAWK\PLUGINS\FAQ\faq.</p>
      * <p><i>This class covers frontend functionality. See Methods Summary for Details!</i></p>
-     *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
      * @version    1.0.0
