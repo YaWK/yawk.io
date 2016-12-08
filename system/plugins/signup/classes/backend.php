@@ -11,7 +11,7 @@ namespace YAWK\PLUGINS\SIGNUP {
      * @link       http://yawk.io
      * @annotation Handles the Blog System.
      */
-    class backend extends \YAWK\PLUGINS\SIGNUP\signup
+    class backend
     {
         /**
          * allow user group to signup
