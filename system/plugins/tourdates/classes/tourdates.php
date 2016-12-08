@@ -45,6 +45,9 @@ namespace YAWK\PLUGINS\TOURDATES {
 
         /**
          * get data and draw html return table for frontend
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db database
          * @return bool|string the html table, inclkuding data
          */
@@ -107,6 +110,9 @@ namespace YAWK\PLUGINS\TOURDATES {
 
         /**
          * get data and draw html return table for backend
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db database
          * @param array $lang language array
          * @return bool|string the html table, including data
@@ -177,6 +183,9 @@ namespace YAWK\PLUGINS\TOURDATES {
 
         /**
          * toggle an entry online/offline, depending on published status
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db database
          * @param int $id event ID to toggle
          * @param int $published 0|1 1 means published, zero is not published
@@ -201,6 +210,9 @@ namespace YAWK\PLUGINS\TOURDATES {
 
         /**
          * load settings into object properties
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db database
          * @param int $id event ID
          */
@@ -220,6 +232,9 @@ namespace YAWK\PLUGINS\TOURDATES {
 
         /**
          * get highest ID from events (tourdates) database
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db database
          * @return string|bool return highest ID or false
          */
@@ -244,6 +259,9 @@ namespace YAWK\PLUGINS\TOURDATES {
 
         /**
          * delete an entry
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db database
          * @return bool
          */
@@ -263,6 +281,9 @@ namespace YAWK\PLUGINS\TOURDATES {
 
         /**
          * copy an entry
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db database
          * @param int $id event ID to copy
          * @return bool
@@ -298,6 +319,9 @@ namespace YAWK\PLUGINS\TOURDATES {
 
         /**
          * create a new event (tourdate)
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db database
          * @param string $date datetime
          * @param string $band the band or artist
@@ -339,6 +363,9 @@ namespace YAWK\PLUGINS\TOURDATES {
 
         /**
          * edit an entry
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db database
          * @param int $id event ID
          * @param string $date event datetime

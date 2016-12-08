@@ -120,10 +120,16 @@ namespace YAWK
         // devices
         /** * @var int how many users came with desktop systems? */
         public $i_desktop = 0;
+        /** * @var int how many users came with desktopdevices (in percent) ? */
+        public $i_desktopPercent = 0;
         /** * @var int how many users came with tablet devices? */
         public $i_tablet = 0;
+        /** * @var int how many users came with tablet devices (in percent) ? */
+        public $i_tabletPercent = 0;
         /** * @var int how many users came with mobile devices? */
         public $i_phone = 0;
+        /** * @var int how many users came with mobile devices (in percent) ? */
+        public $i_phonePercent = 0;
 
         // logins
         /** * @var int how logins were totally made? */
@@ -1549,6 +1555,11 @@ namespace YAWK
 
             // count device types
             $total = $this->i_desktop+$this->i_tablet+$this->i_phone;
+            // calculate percentage of device types
+            $a = 100 / $total;
+            $this->i_desktopPercent = $a * $this->i_desktop;
+            $this->i_tabletPercent = $a * $this->i_tablet;
+            $this->i_phonePercent = $a * $this->i_phone;
             // build an array, cointaining the device types and the number how often it's been found
             $deviceTypes = array(
                 "Desktop" => $this->i_desktop,

@@ -95,6 +95,10 @@ namespace YAWK
         {
             // set default value
             if (!isset($limit) && (empty($limit))) { $limit = 8; }
+            // get latest users into array
+            $latestUsers = \YAWK\user::getLatestUsers($db, $limit);
+            // get n of members
+            $members = count($latestUsers);
             echo "
                 <!-- USERS LIST -->
                 <div class=\"box box-danger\">
@@ -102,7 +106,7 @@ namespace YAWK
                         <h3 class=\"box-title\">Latest Members</h3>
 
                         <div class=\"box-tools pull-right\">
-                            <span class=\"label label-danger\">$limit New Members</span>
+                            <span class=\"label label-danger\">$members New Members</span>
                             <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"collapse\"><i class=\"fa fa-minus\"></i>
                             </button>
                             <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"remove\"><i class=\"fa fa-times\"></i>
@@ -112,7 +116,6 @@ namespace YAWK
                     <!-- /.box-header -->
                     <div class=\"box-body no-padding\">
                         <ul class=\"users-list clearfix\">";
-                            $latestUsers = \YAWK\user::getLatestUsers($db, $limit);
                             foreach ($latestUsers AS $newUser)
                             {
                                 $userpic = \YAWK\user::getUserImage("backend", $newUser['username'], "img-circle", 50, 50);
