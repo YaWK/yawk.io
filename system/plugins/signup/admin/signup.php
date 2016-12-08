@@ -311,9 +311,9 @@ else {
             <fieldset>
                 <legend><i class="fa fa-exclamation-triangle"></i> &nbsp;Mandatory Fields <small>these are required</small></legend>
                 <input type="checkbox" id="username" name="username" checked="checked" class="form-control" title="Benutzername" disabled>
-                <label for="username">Benutzername <small class="text-danger">required</small></label><br>
+                <label for="username">Username <small class="text-danger">required</small></label><br>
                 <input type="checkbox" id="password" name="password" checked="checked" class="form-control" disabled>
-                <label for="password">Passwort <small class="text-danger">required</small>  </label><br>
+                <label for="password">Password <small class="text-danger">required</small>  </label><br>
                 <input type="checkbox" id="terms" name="terms" checked="checked" class="form-control" disabled>
                 <label for="terms">Terms of Service <small class="text-danger">required</small></label><br><br>
             </fieldset>

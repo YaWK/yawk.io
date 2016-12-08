@@ -1,48 +1,96 @@
 <?php
 namespace YAWK\PLUGINS\SIGNUP {
-    class buildForm
+    /**
+     * <b>Class buildForm</b>
+     * <p>serve all methods to draw the user signup form</p>
+     * @author Daniel Retzl <danielretzl@gmail.com>
+     * @version 1.0.0
+     * @link http://yawk.io
+     */
+    class buildForm extends \YAWK\PLUGINS\SIGNUP\signup
     {
-        public $html;
-        public $form;
-        function __construct()
-        {
-            $this->form = "";
-            $this->html = "";
-        }
+        /** * @var string html output */
+        public $html = '';
+        /** * @var string html form */
+        public $form = '';
 
+        /**
+         * initialize form (build it)
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @return string return html code
+         */
         public function init($db){
-            $this->form = self::buildForm($db);
+            $this->form = $this->buildForm($db);
             return $this->html;
         }
 
+        /**
+         * loads the header, layout and footer of the form
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @return string return html form
+         */
         public function buildForm($db){
-            $this->form .= self::getHeader();
-            $this->form .= self::getLayout($db);
-            $this->form .= self::getFooter();
+            $this->form .= $this->getHeader();
+            $this->form .= $this->getLayout($db);
+            $this->form .= $this->getFooter();
             return $this->form;
         }
 
+        /**
+         * build the form
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @return string return html form
+         */
         public function getForm($db){
-            $this->form .= self::getGroupSelect($db);
-            $this->form .= self::getMandatoryFields($db);
-            $this->form .= self::getAdditionalFields($db);
-            $this->form .= self::getTerms($db);
-            $this->form .= self::getSubmitButton($db);
+            $this->form .= $this->getGroupSelect($db);
+            $this->form .= $this->getMandatoryFields();
+            $this->form .= $this->getAdditionalFields($db);
+            $this->form .= $this->getTerms($db);
+            $this->form .= $this->getSubmitButton($db);
             return $this->form;
         }
 
+        /**
+         * get form header
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         */
         public function getHeader()
         {
             // form header
             $this->html .= "<form id=\"form\" action=\"welcome.html\" method=\"POST\">";
         }
 
+        /**
+         * get form title
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         */
         public function getTitle($db)
         {
             // form title
             $this->html .= \YAWK\settings::getSetting($db, "signup_title");
         }
 
+        /**
+         * get form legend
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         */
         public function getLegend($db)
         {
                 // gid 0 form legend (public) -- default --
@@ -71,6 +119,13 @@ namespace YAWK\PLUGINS\SIGNUP {
                 $this->html .= "</div>";
         }
 
+        /**
+         * build form on depending layout
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         */
         public function getLayout($db)
         {
             // get selected form layout (left, right, 1,2, or 3 cols...)
@@ -115,20 +170,30 @@ namespace YAWK\PLUGINS\SIGNUP {
             $this->html .= "</div>";
         }
 
+        /**
+         * html form footer (closing tag)
+         */
         public function getFooter(){
             // form end
             $this->html .= "</form>";
         }
 
+        /**
+         * get and return a select field with all groups as option values
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         */
         public function getGroupSelect($db)
         {   /** @var $db \YAWK\db */
             if (\YAWK\settings::getSetting($db, "signup_gid") === '1')
             {   // user group select field is allowed, fetch groups...
                 if ($res = $db->query("SELECT * FROM {user_groups} WHERE signup_allowed = '1'"))
                 {   // and build select field
-                    $this->html.= "<label for=\"gid\">Registriere Dich als:</label>
+                    $this->html.= "<label for=\"gid\">Signup as:</label>
                    <select id=\"gid\" name=\"gid\" class=\"form-control\">
-                   <option value=\"\" disabled selected>bitte w&auml;hle aus</option>";
+                   <option value=\"\" disabled selected>please select</option>";
                     while ($row = mysqli_fetch_assoc($res))
                     {   // loop items
                         $this->html .= "<option value=\"".$row['id']."\">".$row['value']."</option>";
@@ -142,21 +207,34 @@ namespace YAWK\PLUGINS\SIGNUP {
             }
         }
 
+        /**
+         * draw html output: all mandatory fields
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         */
         public function getMandatoryFields(){
-            $this->html .= "<label for=\"username\">Benutzername</label>
+            $this->html .= "<label for=\"username\">Username</label>
                             <input type=\"text\" id=\"username\" name=\"username\" class=\"form-control\" placeholder=\"Benutzername\">
 
-                            <label for=\"email\">Emailadresse</label>
+                            <label for=\"email\">Email</label>
                             <input type=\"text\" id=\"email\" name=\"email\" class=\"form-control\" placeholder=\"your@email.com\">
 
-                            <label for=\"password1\">Passwort</label>
+                            <label for=\"password1\">Password</label>
                             <input type=\"password\" id=\"password1\" name=\"password1\" class=\"form-control\" placeholder=\"Passwort\">
 
-                            <label for=\"password2\">Passwort wiederholen</label>
+                            <label for=\"password2\">Password (repeat)</label>
                             <input type=\"password\" id=\"password2\" name=\"password2\" class=\"form-control\" placeholder=\"Passwort wiederholen\">
                             <input type=\"hidden\" name=\"sent\" value=\"1\">";
         }
 
+        /**
+         * draw html output: checkbox for terms of service
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param $db
+         */
         public function getTerms($db){
             $this->html .= "<input type=\"checkbox\" id=\"checkTerms\" name=\"checkTerms\" class=\"form-control\" checked=\"checked\">
                              <div class=\"text-center\">
@@ -165,6 +243,13 @@ namespace YAWK\PLUGINS\SIGNUP {
                              </div>";
         }
 
+        /**
+         * draw html output of all additional fields
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         */
         public function getAdditionalFields($db){
             // get additional field settings from db
             $firstname = \YAWK\settings::getSetting($db, "signup_firstname");
@@ -175,31 +260,38 @@ namespace YAWK\PLUGINS\SIGNUP {
             $country = \YAWK\settings::getSetting($db, "signup_country");
             // check if fields are required
             if ($firstname ==='1'){
-                $this->html .= "<label for=\"firstname\">Vorname</label>
+                $this->html .= "<label for=\"firstname\">Firstname</label>
                             <input type=\"text\" id=\"firstname\" name=\"firstname\" class=\"form-control\" placeholder=\"Vorname\">";
             }
             if ($lastname ==='1'){
-                $this->html .= "<label for=\"lastname\">Nachname</label>
+                $this->html .= "<label for=\"lastname\">Lastname</label>
                             <input type=\"text\" id=\"lastname\" name=\"lastname\" class=\"form-control\" placeholder=\"Nachname\">";
             }
             if ($street ==='1'){
-                $this->html .= "<label for=\"street\">Stra&szlig;e</label>
+                $this->html .= "<label for=\"street\">Street</label>
                             <input type=\"text\" id=\"street\" name=\"street\" class=\"form-control\" placeholder=\"Stra&szlig;e\">";
             }
             if ($zipcode ==='1'){
-                $this->html .= "<label for=\"zipcode\">Postleitzahl</label>
+                $this->html .= "<label for=\"zipcode\">ZIP Code</label>
                             <input type=\"text\" id=\"zipcode\" name=\"zipcode\" class=\"form-control\" placeholder=\"Postleitzahl\">";
             }
             if ($city ==='1'){
-                $this->html .= "<label for=\"city\">Stadt</label>
+                $this->html .= "<label for=\"city\">City</label>
                             <input type=\"text\" id=\"city\" name=\"city\" class=\"form-control\" placeholder=\"Stadt\">";
             }
             if ($country ==='1'){
-                $this->html .= "<label for=\"country\">Land</label>
+                $this->html .= "<label for=\"country\">Country</label>
                             <input type=\"text\" id=\"country\" name=\"country\" class=\"form-control\" placeholder=\"Land\">";
             }
         }
 
+        /**
+         * draw the submit button
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         */
         public function getSubmitButton($db){
             // get selected form layout (left, right, 1,2, or 3 cols...)
             $layout = \YAWK\settings::getSetting($db, "signup_layout");

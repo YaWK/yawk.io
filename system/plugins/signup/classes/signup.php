@@ -36,6 +36,9 @@ namespace YAWK\PLUGINS\SIGNUP {
 
         /**
          * check if the user is logged in and load userpage on demand
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db database
          * @return bool|null|string
          */
@@ -78,6 +81,9 @@ namespace YAWK\PLUGINS\SIGNUP {
 
         /**
          * draw html output adultcheck or form on demand
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db database
          * @return string return html form
          */
@@ -87,13 +93,13 @@ namespace YAWK\PLUGINS\SIGNUP {
             {
                 echo"<script src=\"system/plugins/signup/js/adultCheck.js\"></script>";
 
-                echo "<div id=\"adultCheck\" class=\"text-center\"><h2>Kennen wir uns bereits pers&ouml;nlich?</h2>
-                        <h2><small id=\"yes\">Ja</small></h2>
-                        <h2><small id=\"no\">Nein</small></h2></div>";
+                echo "<div id=\"adultCheck\" class=\"text-center\"><h2>Are you over 18 years old?</h2>
+                        <h2><small id=\"yes\">yes</small></h2>
+                        <h2><small id=\"no\">no</small></h2></div>";
 
-                echo "<div id=\"alt\" class=\"text-center\"><h2>M&ouml;chtest Du mich kennenlernen?</h2>
-                        <h2><small id=\"contact\">Ja</small></h2>
-                        <h2><small id=\"home\">Nein</small></h2></div>";
+                echo "<div id=\"alt\" class=\"text-center\"><h2>Are you an adult, depending on the age of your country laws?</h2>
+                        <h2><small id=\"contact\">Yes</small></h2>
+                        <h2><small id=\"home\">No</small></h2></div>";
             }
 
             // include formbuilder class

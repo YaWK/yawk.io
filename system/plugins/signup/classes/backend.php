@@ -15,6 +15,9 @@ namespace YAWK\PLUGINS\SIGNUP {
     {
         /**
          * allow user group to signup
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db database
          * @param int $gid group ID to allow signup
          * @return bool
@@ -40,6 +43,9 @@ namespace YAWK\PLUGINS\SIGNUP {
 
         /**
          * get user groups and draw select option value
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db database
          * @return bool|null
          */
@@ -65,6 +71,9 @@ namespace YAWK\PLUGINS\SIGNUP {
 
         /**
          * frontend? group selector
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
          * @param object $db database
          * @return bool
          */
