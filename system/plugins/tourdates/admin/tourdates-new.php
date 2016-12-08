@@ -22,7 +22,7 @@ if (isset($_POST['date'])) {
 
     if (!$res = $tourdates->create($db, $tourdates->date, $tourdates->band, $tourdates->venue, $tourdates->fburl))
     {   // q failed
-        print \YAWK\alert::draw("danger", "Error", "Termin konnte nicht eingetragen werden.", "plugin=tourdates","4200");
+        print \YAWK\alert::draw("danger", "Error", "Could not add event. Maybe there is a database error. We're sorry!", "plugin=tourdates","4200");
         exit;
     }
     else

@@ -13,10 +13,10 @@ if ($_GET['copy'] === "true")
 {   // copy entry
     if ($tourdates->copy($db, $tourdates->id))
     {   // success
-        print \YAWK\alert::draw("success", "Erfolg!", "Der Gig " . $_GET['id'] . " wurde kopiert!","plugin=tourdates","2600");
+        print \YAWK\alert::draw("success", "Success!", "The event " . $_GET['id'] . " was copied !","plugin=tourdates","2600");
     }
     else
     {   // error
-        print \YAWK\alert::draw("danger", "Fehler!", "Der Gig " . $_GET['id'] . " konnte nicht kopiert werden!","plugin=tourdates","4800");
+        print \YAWK\alert::draw("danger", "Error!", "The event " . $_GET['id'] . " could not be copied!","plugin=tourdates","4800");
     }
 }

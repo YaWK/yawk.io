@@ -13,10 +13,10 @@ if ($_GET['delete'] === '1')
 {   // delete entry
     if ($tourdates->delete($db))
     {   // success
-        print \YAWK\alert::draw("success", "Erfolg!", "Der Gig " . $_GET['id'] . " wurde gel&ouml;scht!","plugin=tourdates","2000");
+        print \YAWK\alert::draw("success", "Success!", "The event " . $_GET['id'] . " is deleted!","plugin=tourdates","2000");
     }
     else
     {   // delete failed
-        print \YAWK\alert::draw("danger", "Fehler!", "Der Gig " . $_GET['id'] . " konnte nicht gel&ouml;scht werden!","plugin=tourdates","4200");
+        print \YAWK\alert::draw("danger", "Error!", "The event " . $_GET['id'] . " could not be deleted!","plugin=tourdates","4200");
     }
 }

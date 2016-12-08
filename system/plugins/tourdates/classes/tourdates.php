@@ -2,52 +2,54 @@
 namespace YAWK\PLUGINS\TOURDATES {
     /**
      * <b>Manage & render a list for any kind of events or band tourdates</b>
-     *
-     * Tour Dates Plugin hands you a simple but nice, clean bootstraped &
+     * <p>Tour Dates Plugin hands you a simple but nice, clean bootstraped and
      * sortable Data Table. You can use it to present Tour Dates or any
      * other different kind of Events. Perfect for a Band Website or if
      * you need to manage and display a tabluar list with fields like
      * date, time, artist, venue & facebook event url. Data can be easily
-     * managed, added, edited, copied & deleted in the admin backend.
+     * managed, added, edited, copied & deleted in the admin backend.</p>
      * <p><i>Class covers both, backend & frontend functionality.
      * See Methods Summary for Details!</i></p>
      *
-     * @category   CMS
-     * @package    Plugins
-     * @global     $connection
-     * @global     $dbprefix
      * @author     Daniel Retzl <danielretzl@gmail.com>
-     * @copyright  2009-2015 Daniel Retzl yawk.goodconnect.net
+     * @copyright  2009-2015 Daniel Retzl
      * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
-     * @version    1.1.3
+     * @version    1.0.0
      * @link       http://yawk.io
-     * @since      File available since Release 1.1.2
      * @annotation Tour Dates Plugin hands you a simple but nice, clean
      * bootstraped & sortable Data Table. You can use it to present Tour
      * Dates. (Or any other different kind of Events...) Perfect for a Band Website.
      */
     class tourdates
     {
+        /** * @var int tourdate/event ID  */
         public $id;
+        /** * @var string event day */
         public $day;
+        /** * @var string event month */
         public $month;
+        /** * @var string event time */
         public $time;
+        /** * @var string event date */
         public $date;
+        /** * @var string event band name */
         public $band;
+        /** * @var string event venue name */
         public $venue;
-        public $lang;
+        /** * @var string facebook icon */
+        public $fbicon;
+        /** * @var string facebook event url */
         public $fburl;
+        /** * @var int 0|1 1 means published, zero is not published */
         public $published;
 
+        /**
+         * get data and draw html return table for frontend
+         * @param object $db database
+         * @return bool|string the html table, inclkuding data
+         */
         public function getFrontendTable($db)
         {
-            /**
-             * Data Table for Frontend Rendering
-             *
-             * This function  fetch data & render the Table to be called in the frontend.
-             *
-             * @access public
-             */
             /** @var $db \YAWK\db */
             if (!$res = $db->query("SELECT * FROM {plugin_tourdates} WHERE published = '1' ORDER by date"))
             {   // q failed
@@ -103,6 +105,12 @@ namespace YAWK\PLUGINS\TOURDATES {
             }
         } /* EOFunction getTable */
 
+        /**
+         * get data and draw html return table for backend
+         * @param object $db database
+         * @param array $lang language array
+         * @return bool|string the html table, including data
+         */
         public function getBackendTable($db, $lang)
         {   /** @var $db \YAWK\db */
             if (!$res = $db->query("SELECT * FROM {plugin_tourdates} ORDER by date"))
@@ -167,6 +175,13 @@ namespace YAWK\PLUGINS\TOURDATES {
         } /* EOFunction getAdminTable */
 
 
+        /**
+         * toggle an entry online/offline, depending on published status
+         * @param object $db database
+         * @param int $id event ID to toggle
+         * @param int $published 0|1 1 means published, zero is not published
+         * @return bool
+         */
         function toggleOffline($db, $id, $published)
         {   /** @var $db \YAWK\db */
             // TOGGLE GIG STATUS
@@ -174,7 +189,7 @@ namespace YAWK\PLUGINS\TOURDATES {
               SET published = '" . $published . "'
               WHERE id = '" . $id . "'"))
             {   // q failed, throw error
-                print \YAWK\alert::draw("danger", "Error", "TourDates Status could not be toggled.","","4200");
+                print \YAWK\alert::draw("danger", "Error", "Event status could not be toggled.","","4200");
                 return false;
             }
             else
@@ -184,6 +199,11 @@ namespace YAWK\PLUGINS\TOURDATES {
         } /* EOFunction toggleOffline */
 
 
+        /**
+         * load settings into object properties
+         * @param object $db database
+         * @param int $id event ID
+         */
         function loadProperties($db, $id)
         {   /** @var $db \YAWK\db */
             $res = $db->query("SELECT * FROM {plugin_tourdates}
@@ -198,6 +218,11 @@ namespace YAWK\PLUGINS\TOURDATES {
             }
         } /* EOFunction loadProperties */
 
+        /**
+         * get highest ID from events (tourdates) database
+         * @param object $db database
+         * @return string|bool return highest ID or false
+         */
         static function getMaxId($db)
         {    /** @var $db \YAWK\db */
             $tourdates = new tourdates();
@@ -217,6 +242,11 @@ namespace YAWK\PLUGINS\TOURDATES {
             }
         }
 
+        /**
+         * delete an entry
+         * @param object $db database
+         * @return bool
+         */
         function delete($db)
         {    /** @var $db \YAWK\db */
             if (!$res = $db->query("DELETE FROM {plugin_tourdates} WHERE id = '" . $this->id . "'"))
@@ -230,6 +260,13 @@ namespace YAWK\PLUGINS\TOURDATES {
             }
         } /* EOFunction delete */
 
+
+        /**
+         * copy an entry
+         * @param object $db database
+         * @param int $id event ID to copy
+         * @return bool
+         */
         function copy($db, $id)
         {
             /** @var $db \YAWK\db */
@@ -259,6 +296,15 @@ namespace YAWK\PLUGINS\TOURDATES {
         } /* EOFunction copy($id);    */
 
 
+        /**
+         * create a new event (tourdate)
+         * @param object $db database
+         * @param string $date datetime
+         * @param string $band the band or artist
+         * @param string $venue venue where the event happens
+         * @param string $fburl URL to a facebook event (if any)
+         * @return bool
+         */
         function create($db, $date, $band, $venue, $fburl)
         {
             /** @var $db \YAWK\db */
@@ -290,6 +336,17 @@ namespace YAWK\PLUGINS\TOURDATES {
             }
         } /* EOFunction create();    */
 
+
+        /**
+         * edit an entry
+         * @param object $db database
+         * @param int $id event ID
+         * @param string $date event datetime
+         * @param string $band band or artist
+         * @param string $venue venue where the event happens
+         * @param string $fburl URL to a facebook event (if any)
+         * @return bool
+         */
         function edit($db, $id, $date, $band, $venue, $fburl)
         {
             /** @var $db \YAWK\db */
