@@ -121,7 +121,7 @@ if (isset($_POST['sent']) && $_POST['sent'] === '1')
     else
     {   // create user failed, so throw error
         // YAWK\backend::drawContentWrapper();
-        print \YAWK\alert::draw("danger", "Fehler!", "Der Benutzer <strong>".$username."</strong> konnte nicht angelegt werden!","","");
+        print \YAWK\alert::draw("danger", "Fehler!", "The User <strong>".$username."</strong> could not be registered!","","");
         // and display user registration form again...
         echo $signup->sayHello($db);
     }
