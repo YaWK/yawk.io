@@ -47,7 +47,7 @@ if (!isset($stats) || (empty($stats)))
 
             <div class="info-box-content">
                 <span class="info-box-text">DEVICES</span>
-                <span class="info-box-number"><?php $stats->countDeviceTypes($db, $data, 5000); echo round($stats->i_desktopPercent, 1); ?>% <small> Desktop</small></span>
+                <span class="info-box-number"><?php $stats->countDeviceTypes($db, $data, $limit); echo round($stats->i_desktopPercent, 1); ?>% <small> Desktop</small></span>
                 <span class="info-box-number"><?php echo round($stats->i_tabletPercent, 1); ?>% <small> Tablet</small></span>
             </div>
             <!-- /.info-box-content -->
