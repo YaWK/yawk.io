@@ -1,19 +1,44 @@
 <?php
 /** Signup Class */
 namespace YAWK\PLUGINS\SIGNUP {
+    /**
+     * <b>Let users signup to your website.</b>
+     * <p>Allow your users to register and login to your website. You can choose, which group they
+     * belong, or let them choose between a pre-defined list of groups for maximum flexibility.</p>
+     * <p><i>This class covers frontend functionality. See Methods Summary for Details!</i></p>
+     *
+     * @author     Daniel Retzl <danielretzl@gmail.com>
+     * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+     * @version    1.0.0
+     * @link       http://yawk.io
+     * @annotation Handles the Blog System.
+     */
     class signup
     {
+        /** * @var string username */
         protected $username;
+        /** * @var string userpage */
         public $userpage;
+        /** * @var string form */
         protected $form;
+        /** * @var string html */
         protected $html;
+        /** * @var string signup */
         protected $signup;
 
+        /**
+         * signup constructor.
+         */
         function __construct() {
             $this->html = "";
             $this->form = "";
         }
 
+        /**
+         * check if the user is logged in and load userpage on demand
+         * @param object $db database
+         * @return bool|null|string
+         */
         public function sayHello($db)
         {   /** @var $db \YAWK\db */
             // greets user and load welcome page for given role(gid)
@@ -51,6 +76,11 @@ namespace YAWK\PLUGINS\SIGNUP {
                 }
         }
 
+        /**
+         * draw html output adultcheck or form on demand
+         * @param object $db database
+         * @return string return html form
+         */
         public static function signUp($db)
         {
             if (\YAWK\settings::getSetting($db, "signup_adultcheck") == '1')

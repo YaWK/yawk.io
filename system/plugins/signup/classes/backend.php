@@ -1,8 +1,24 @@
 <?php
 /** Signup Backend Class */
 namespace YAWK\PLUGINS\SIGNUP {
-    class backend
+    /**
+     * <b>backend helper functions for signup plugin.</b>
+     * <p><i>This class covers backend functionality. See Methods Summary for Details!</i></p>
+     *
+     * @author     Daniel Retzl <danielretzl@gmail.com>
+     * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+     * @version    1.0.0
+     * @link       http://yawk.io
+     * @annotation Handles the Blog System.
+     */
+    class backend extends \YAWK\PLUGINS\SIGNUP\signup
     {
+        /**
+         * allow user group to signup
+         * @param object $db database
+         * @param int $gid group ID to allow signup
+         * @return bool
+         */
         public static function setAllowedGroup($db, $gid)
         {   /** @var $db \YAWK\db */
             foreach ($gid as $id) {
@@ -22,6 +38,11 @@ namespace YAWK\PLUGINS\SIGNUP {
             return true;
         }
 
+        /**
+         * get user groups and draw select option value
+         * @param object $db database
+         * @return bool|null
+         */
         static function getUserGroupSelector($db)
         {   /** @var $db \YAWK\db */
             if ($res = $db->query("SELECT id, value, signup_allowed FROM {user_groups}"))
@@ -42,6 +63,11 @@ namespace YAWK\PLUGINS\SIGNUP {
             }
         }
 
+        /**
+         * frontend? group selector
+         * @param object $db database
+         * @return bool
+         */
         static function getGroupSelector($db)
         {   /** @var $db \YAWK\db */
             if ($res = $db->query("SELECT id, value FROM {user_groups}"))
