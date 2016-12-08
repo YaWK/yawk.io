@@ -624,7 +624,7 @@ $html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"booking.html\
                         <a class=\"fa fa-ban\" title=\"".$lang['BAN']."\" href=\"index.php?plugin=booking&pluginpage=booking-toggle&ban=1&id=".$this->id."\"></a>&nbsp;
                         <a class=\"fa fa-edit\" title=\"" . $lang['EDIT'] . "\" href=\"index.php?plugin=booking&pluginpage=booking-edit&id=" . $this->id . "\"></a>&nbsp;
                         <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Den Termin &laquo;" . $this->name . " @ " . $this->date_wish . "&raquo; wirklich l&ouml;schen?\"
-                        title=\"" . $lang['DELETE'] . "\" href=\"index.php?plugin=booking&pluginpage=booking-delete&id=" . $this->id . "&delete=1\">
+                        title=\"" . $lang['DELETE'] . "\" href=\"index.php?plugin=booking&pluginpage=booking&id=" . $this->id . "&delete=1\">
                         </a>
                     </td>
                   </tr>";
@@ -756,12 +756,13 @@ $html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"booking.html\
         /**
          * delete a single booking
          * @param object $db database
+         * @param int $id the booking ID to delete
          * @return bool
          */
-        function delete($db)
+        function delete($db, $id)
         {   /** @var $db \YAWK\db */
-            if (!$res = $db->query("DELETE FROM {plugin_booking} WHERE id = '" . $this->id . "'")) {
-                print \YAWK\alert::draw("danger", "Error", "Appointment could not be deleted.","",3800);
+            if (!$res = $db->query("DELETE FROM {plugin_booking} WHERE id = '" . $id . "'")) {
+                return false;
             }
             return true;
         } /* EOFunction delete */

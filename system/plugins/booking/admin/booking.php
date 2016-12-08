@@ -23,6 +23,23 @@ if (isset($_GET['phone']))
     $field = "phone";
     $value = $_GET['phone'];
 }
+if (isset($_GET['delete']) && ($_GET['delete'] === '1')) {
+    if (isset($_GET['id']) && (!empty($_GET['id'])))
+    {
+        $id = $_GET['id'];
+    }
+    else
+        {
+            $id = 0;
+        }
+    if ($booking->delete($db, $id)) {
+        print \YAWK\alert::draw("success", "The Booking '".$_GET['id']."' was deleted", "delete successful","",4200);
+    }
+    else
+        {
+            print \YAWK\alert::draw("danger", "Error", "Appointment could not be deleted.","",3800);
+        }
+}
 ?>
 <script type="text/javascript">
     $(document).ready(function () {
