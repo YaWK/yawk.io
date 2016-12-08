@@ -64,6 +64,10 @@ namespace YAWK {
             }
             else
             {   // sending failed
+                if(!isset($db) || (empty($db)))
+                {
+                    $db = new \YAWK\db();
+                }
                 \YAWK\sys::setSyslog($db, 5, "send email to $email_to failed", 0, 0, 0, 0);
                 return false;
             }
