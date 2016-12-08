@@ -19,7 +19,7 @@ if (isset($_POST['sent']) && $_POST['sent'] === '1'){
     $booking = $booking->create($db);
     // thank you page...
     echo "<div style='text-align: center; margin-top: 20%; margin-bottom: 600px;'><h1>Thank you <small>for your booking...</small></h1>
-          <p>We will ge in contact with you soon! <br>
+          <p>We will get in contact with you soon! <br>
             <br><a href=\"index.html\">Back to Home Page</a></p></div>";
 
 }

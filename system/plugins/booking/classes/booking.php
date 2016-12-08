@@ -174,7 +174,14 @@ namespace YAWK\PLUGINS\BOOKING {
                 }
                 // calculate average grade
                 if (isset($this->grade)) {
-                    $avgGrade = $grade_sum / $i_date_success;
+                    if (isset($i_date_success) && (!empty($i_date_success)))
+                    {
+                        $avgGrade = $grade_sum / $i_date_success;
+                    }
+                    else
+                        {
+                            $avgGrade = 0;
+                        }
                     $avgGrade = substr("$avgGrade", 0, 3);
                 } else { $avgGrade = 0; }
 
@@ -293,17 +300,17 @@ $html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"booking.html\
         <div class=\"row\">
             <div class=\"col-md-4\">
                 <p>How can we contact you?</p>
-                <input type=\"\" name=\"name\" id=\"name\" class=\"form-control\" placeholder=\"Your name\">
+                <input type=\"text\" name=\"name\" id=\"name\" class=\"form-control\" placeholder=\"Your name\">
                 <label for=\"name\"><strong>Name</strong></label>
-                <input type=\"\" name=\"email\" id=\"email\" class=\"form-control\" placeholder=\"you@email.com\">
+                <input type=\"text\" name=\"email\" id=\"email\" class=\"form-control\" placeholder=\"you@email.com\">
                 <label for=\"email\">Email</label>
-                <input type=\"phone\" name=\"phone\" id=\"phone\" class=\"form-control\" placeholder=\"+00 1234 / 1234567\">
+                <input type=\"text\" name=\"phone\" id=\"phone\" class=\"form-control\" placeholder=\"+00 1234 / 1234567\">
                 <label >Phone Number</label>
 <br><br>
             </div>
             <div class=\"col-md-8\">
                 <p>Select Date:</p>
-                        <select name=\"datewish-month\" class=\"form-inline\">
+                        <select name=\"datewish-month\" class=\"form-control\">
                             <option value=\"00\" selected disabled>- Month -</option>
                             <option value=\"01\">January</option>
                             <option value=\"02\">February</option>
@@ -318,7 +325,7 @@ $html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"booking.html\
                             <option value=\"11\">November</option>
                             <option value=\"12\">December</option>
                         </select>
-                        <select name=\"datewish-day\" class=\"form-inline\">
+                        <select name=\"datewish-day\" class=\"form-control\">
                             <option value=\"00\" selected disabled>- Day -</option>
                             <option value=\"01\">1</option>
                             <option value=\"02\">2</option>
@@ -352,7 +359,7 @@ $html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"booking.html\
                             <option value=\"30\">30</option>
                             <option value=\"31\">31</option>
                         </select>
-                        <select name=\"datewish-time\" class=\"form-inline\">
+                        <select name=\"datewish-time\" class=\"form-control\">
                             <option value=\"00:00\" selected disabled>Time</option>
                             <option value=\"08:30\">08:30</option>
                             <option value=\"09:00\">09:00</option>
@@ -385,9 +392,9 @@ $html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"booking.html\
                             <option value=\"22:30\">22:30</option>
                             <option value=\"23:00\">23:00</option>
                         </select>
-                <br><br>
-                <p >Alternative?</p>
-                        <select name=\"alternative-month\" class=\"form-inline\">
+                <br>
+                <p>Alternative?</p>
+                        <select name=\"alternative-month\" class=\"form-control\">
                             <option value=\"00\" selected disabled>- Month -</option>
                             <option value=\"01\">January</option>
                             <option value=\"02\">February</option>
@@ -402,7 +409,7 @@ $html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"booking.html\
                             <option value=\"11\">November</option>
                             <option value=\"12\">December</option>
                         </select>
-                        <select name=\"alternative-day\" class=\"form-inline\">
+                        <select name=\"alternative-day\" class=\"form-control\">
                             <option value=\"00\" selected disabled>- Day -</option>
                             <option value=\"01\">1</option>
                             <option value=\"02\">2</option>
@@ -436,7 +443,7 @@ $html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"booking.html\
                             <option value=\"30\">30</option>
                             <option value=\"31\">31</option>
                         </select>
-                        <select name=\"alternative-time\" class=\"form-inline\">
+                        <select name=\"alternative-time\" class=\"form-control\">
                             <option value=\"00:00\" selected disabled>Time</option>
                             <option value=\"08:30\">08:30</option>
                             <option value=\"09:00\">09:00</option>
@@ -469,12 +476,12 @@ $html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"booking.html\
                             <option value=\"22:30\">22:30</option>
                             <option value=\"23:00\">23:00</option>
                         </select>
-                <br><br><br>
+                <br>
                 <label>Your Message</label>
-                <textarea name=\"message\" id=\"message\" class=\"form-control\" rows=\"10\" style=\"width: 96%\"></textarea>
+                <textarea name=\"message\" id=\"message\" class=\"form-control\" rows=\"10\"></textarea>
                 <label for=\"mailCopy\">Send a copy of this message to myself. &nbsp;
                 <input type=\"checkbox\" name=\"mailCopy\" value=\"1\" checked aria-checked=\"true\" id=\"mailCopy\"></label>
-                <button type=\"submit\" class=\"btn btn-success\" style=\"margin-top:1%;margin-left: 32%;\" contenteditable=\"false\"><i class=\"fa fa-envelope-o\"></i> &nbsp;book now</button>
+                <button type=\"submit\" class=\"btn btn-success pull-right\" style=\"margin-top:1%;\" contenteditable=\"false\"><i class=\"fa fa-envelope-o\"></i> &nbsp;Send Message</button>
                 <input type=\"hidden\" name=\"sent\" value=\"1\">
                 </div>
                 </div>
