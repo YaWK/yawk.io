@@ -1059,26 +1059,33 @@ namespace YAWK {
          */
         static function getActivegfont($db, $status, $property)
         {   /* @var \YAWK\db $db */
-            $res = $db->query("SELECT id, font
+            if ($res = $db->query("SELECT id, font
                      FROM {gfonts}
                      WHERE activated = 1
                       AND id = (SELECT ts.value
                       FROM {template_settings} ts
                       JOIN {settings} s on s.value = ts.templateID
-                      WHERE ts.activated = 1 && s.property = 'selectedTemplate' && ts.property = '$property')");
-            while ($row = mysqli_fetch_array($res)) {
-                // if no google font is selected
-                if ($row[1] === "0") {
-                    return "font-family: Arial";
+                      WHERE ts.activated = 1 && s.property = 'selectedTemplate' && ts.property = '$property')"))
+            {
+                while ($row = mysqli_fetch_array($res)) {
+                    // if no google font is selected
+                    if ($row[1] === "0") {
+                        return "font-family: Arial";
+                    }
+                    // css include output for index.php
+                    if ($status == "url") {
+                        return "
+                <link rel=\"stylesheet\" href=\"http://fonts.googleapis.com/css?family=$row[1]\" type=\"text/css\" media=\"all\">";
+                    } else {
+                        return "font-family: $row[1];";
+                    }
                 }
-                // css include output for index.php
-                if ($status == "url") {
-                    return "
-<link rel=\"stylesheet\" href=\"http://fonts.googleapis.com/css?family=$row[1]\" type=\"text/css\" media=\"all\">";
-                } else {
-                    return "font-family: $row[1];";
-                }
+
             }
+            else
+                {   // could not get active google font
+                    return "could not get active google font";
+                }
             return null;
         }
 
@@ -1206,12 +1213,12 @@ namespace YAWK {
                     if (isset($_GET['user'])){
                         // if var is set, but empty, show all users
                         if (empty($_GET['user'])){
-                            echo "<h2>Alle User anzeigen</h2>";
+                            echo "<h2>Show all users</h2>";
                             \YAWK\user::getUserList($db);
                         }
                         else {
                             // show userpage
-                            echo "<h2>Das Profil von $_GET[user] anzeigen...</h2>";
+                            echo "<h2>Show Profile of user $_GET[user]</h2>";
                         }
                     }
                     // if a blog is requested, load blog by given id
