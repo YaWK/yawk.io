@@ -76,7 +76,7 @@ namespace YAWK {
 
             if (!$res = $db->query("SELECT * FROM {plugins} $sqlcode ORDER by name"))
             {
-                \YAWK\sys::setSyslog($db, 5, "failed to select plugin $db->error()", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 5, "failed to select plugin ", 0, 0, 0, 0);
                 print \YAWK\alert::draw("danger", "Fehler:", "Es tut mir leid, die Plugins konnten nicht aus der Datenbank abgerufen werden.", "","");
                 $html = null;
             }
@@ -140,7 +140,7 @@ namespace YAWK {
             }
             else
             {   // q failed
-                \YAWK\sys::setSyslog($db, 5, "failed to get name of plugin $pluginId $db->error()", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 5, "failed to get name of plugin $pluginId ", 0, 0, 0, 0);
                 return false;
             }
             // something else happened
@@ -168,7 +168,7 @@ namespace YAWK {
             }
             else
             {   // q failed, throw error
-                \YAWK\sys::setSyslog($db, 5, "failed to get id of plugin $pluginId $db->error()", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 5, "failed to get id of plugin $pluginId ", 0, 0, 0, 0);
                 return \YAWK\alert::draw("danger", "Error!", "Could not get id of plugin: ".$plugin."","page=plugins","4800");
             }
             return false;

@@ -1503,7 +1503,7 @@ namespace YAWK\PLUGINS\GALLERY {
                                                          from {plugin_gallery_items} 
                                                          WHERE galleryID = $galleryID ORDER BY sort, filename DESC"))
                     {   // store info msg, if files could not be retrieved
-                        $previewError = "Sorry, ".$db->error()."";
+                        $previewError = "Sorry, ".."";
                     }
                     if (!isset($_GET['imageCount']) && (!empty($_GET['imageCount'])))
                     {

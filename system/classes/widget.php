@@ -111,17 +111,17 @@ namespace YAWK {
                         } // ./ while
                     } else {
                         // could not get widget defaults
-                        \YAWK\sys::setSyslog($db, 11, "failed to get widget defaults of widget id <b>#$id</b> $db->error().", 0, 0, 0, 0);
+                        \YAWK\sys::setSyslog($db, 11, "failed to get widget defaults of widget id <b>#$id</b> .", 0, 0, 0, 0);
                         return false;
                     }
                 } else {
                     // could not add new widget
-                    \YAWK\sys::setSyslog($db, 11, "failed to add new widget $db->error().", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 11, "failed to add new widget .", 0, 0, 0, 0);
                     return false;
                 }
             } else {
                 // could not get maxID
-                \YAWK\sys::setSyslog($db, 11, "failed to get MAX(id) of widgets db $db->error().", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 11, "failed to get MAX(id) of widgets db .", 0, 0, 0, 0);
                 return false;
             }
             // something else has happened
@@ -157,7 +157,7 @@ namespace YAWK {
             }
             else
             {
-                \YAWK\sys::setSyslog($db, 11, "failed to get widgets for position <b>$position</b> $db->error().", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 11, "failed to get widgets for position <b>$position</b> .", 0, 0, 0, 0);
                 return false;
             }
             // return true;
@@ -185,7 +185,7 @@ namespace YAWK {
                 }
             } else {
                 // q failed
-                \YAWK\sys::setSyslog($db, 11, "failed to get widget id <b>#$id</b> $db->error().", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 11, "failed to get widget id <b>#$id</b> .", 0, 0, 0, 0);
                 return false;
             }
             // something else has happened
@@ -224,7 +224,7 @@ namespace YAWK {
                 return $row[0];
             }
             // something else has happened
-            \YAWK\sys::setSyslog($db, 11, "failed to get widget id <b>#$id</b> $db->error().", 0, 0, 0, 0);
+            \YAWK\sys::setSyslog($db, 11, "failed to get widget id <b>#$id</b> .", 0, 0, 0, 0);
             return false;
         }
 
@@ -255,7 +255,7 @@ namespace YAWK {
             }
             else
             {
-                \YAWK\sys::setSyslog($db, 11, "failed to get widgets $db->error().", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 11, "failed to get widgets .", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -286,7 +286,7 @@ namespace YAWK {
                 }
 
             } else {   // \YAWK\alert::draw("danger", "Error", "Could not fetch widget ID: $id", "","");
-                \YAWK\sys::setSyslog($db, 11, "failed to get content widget id <b>#$id</b> $db->error().", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 11, "failed to get content widget id <b>#$id</b> .", 0, 0, 0, 0);
                 return false;
             }
             // something strange has happened
@@ -317,7 +317,7 @@ namespace YAWK {
                     return include("system/widgets/$row[4]/$row[4].php?widgetID=$id");
                 }
             } else {   // q failed
-                \YAWK\sys::setSyslog($db, 11, "failed to load widget <b>#$id</b> $db->error().", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 11, "failed to load widget <b>#$id</b> .", 0, 0, 0, 0);
                 return false;
             }
             // something strange has happened
@@ -361,7 +361,7 @@ namespace YAWK {
                 return true;
             } else {   // q failed
                 $status = \YAWK\sys::iStatusToString($published, "online", "offline");
-                \YAWK\sys::setSyslog($db, 11, "failed to toggle widget id <b>#$id</b> to $status $db->error().", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 11, "failed to toggle widget id <b>#$id</b> to $status .", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -406,11 +406,11 @@ namespace YAWK {
                     return true;
                 } else {
                     // copy widget failed
-                    \YAWK\sys::setSyslog($db, 11, "failed to copy widget id <b>#$id</b> $db->error().", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 11, "failed to copy widget id <b>#$id</b> .", 0, 0, 0, 0);
                     return false;
                 }
             } else {   // could not get widget settings
-                \YAWK\sys::setSyslog($db, 11, "failed to get settings of widget id <b>#$id</b> $db->error().", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 11, "failed to get settings of widget id <b>#$id</b> .", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -431,10 +431,10 @@ namespace YAWK {
                 // delete corresponding widget settings
                 if (!$res_settings = $db->query("DELETE FROM {widget_settings} WHERE widgetID = '" . $widget . "'")) {
                     // q failed
-                    \YAWK\sys::setSyslog($db, 11, "failed to delete settings of widget id <b>#$widget</b> $db->error().", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 11, "failed to delete settings of widget id <b>#$widget</b> .", 0, 0, 0, 0);
                     return false;
                 }
-                \YAWK\sys::setSyslog($db, 11, "failed to delete widget id <b>#$widget</b> $db->error().", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 11, "failed to delete widget id <b>#$widget</b> .", 0, 0, 0, 0);
                 return false;
             } else {
                 return true;
@@ -475,13 +475,13 @@ namespace YAWK {
                 }
                 else
                 {   // fetch failed
-                    \YAWK\sys::setSyslog($db, 11, "failed to fetch widget properties of id <b>#$id</b> $db->error().", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 11, "failed to fetch widget properties of id <b>#$id</b> .", 0, 0, 0, 0);
                     return false;
                 }
             }
             else
             {   // q failed
-                \YAWK\sys::setSyslog($db, 11, "failed to query widget properties of id <b>#$id</b> $db->error().", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 11, "failed to query widget properties of id <b>#$id</b> .", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -510,7 +510,7 @@ namespace YAWK {
             }
             else
             {   // q failed
-                \YAWK\sys::setSyslog($db, 11, "failed to save widget settings of id<b>#$this->id</b> $db->error().", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 11, "failed to save widget settings of id<b>#$this->id</b> .", 0, 0, 0, 0);
                 return false;
             }
         }

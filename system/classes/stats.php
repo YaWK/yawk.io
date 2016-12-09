@@ -247,12 +247,18 @@ namespace YAWK
             // check if a session is set
             if (isset($_SESSION) && (!empty($_SESSION)))
             {   // prepare all session user data
-                // user id (if logged in)
-                $this->uid = $_SESSION['uid'];
-                // user group id (if logged in)
-                $this->gid = $_SESSION['gid'];
-                // user logged in status (0|1)
-                $this->logged_in = $_SESSION['logged_in'];
+                if (isset($_SESSION['uid']) && (!empty($_SESSION['uid'])))
+                {   // user id (if logged in)
+                    $this->uid = $_SESSION['uid'];
+                }
+                if (isset($_SESSION['gid']) && (!empty($_SESSION['gid'])))
+                {   // user group id (if logged in)
+                    $this->gid = $_SESSION['gid'];
+                }
+                if (isset($_SESSION['logged_in']) && (!empty($_SESSION['logged_in'])))
+                {   // user group id (if logged in)
+                    $this->logged_in = $_SESSION['logged_in'];
+                }
             }
             else
                 {   // no session is set

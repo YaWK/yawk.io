@@ -93,7 +93,7 @@ namespace YAWK {
             else
             {
                 // q failed
-                \YAWK\sys::setSyslog($db, 5, "failed to get template positions of template id: <b>$tpl_id</b> $db->error()", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 5, "failed to get template positions of template id: <b>$tpl_id</b> ", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -142,7 +142,7 @@ namespace YAWK {
             }
             else
             {   // q failed, throw error
-                \YAWK\sys::setSyslog($db, 5, "failed to save <b>$new_template</b> as new template $db->error()", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 5, "failed to save <b>$new_template</b> as new template ", 0, 0, 0, 0);
                 \YAWK\alert::draw("warning", "Warning!", "Could not insert your template $new_template into database.", "", 6200);
                 return false;
             }
@@ -183,7 +183,7 @@ namespace YAWK {
             }
             else
             {   // could not fetch tpl properties, throw error...
-                \YAWK\sys::setSyslog($db, 5, "failed to load properties of template id: <b>$id</b> $db->error()", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 5, "failed to load properties of template id: <b>$id</b> ", 0, 0, 0, 0);
                 \YAWK\alert::draw("danger", "Warning!", "Could not fetch template properties. Expect a buggy view.", "", 3000);
                 return false;
             }
@@ -212,7 +212,7 @@ namespace YAWK {
             }
             else
             {   // could not fetch array
-                \YAWK\sys::setSyslog($db, 5, "failed get template id and name $db->error()", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 5, "failed get template id and name ", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -260,7 +260,7 @@ namespace YAWK {
                 }
                 else
                 {   // exit and throw error
-                    \YAWK\sys::setSyslog($db, 5, "failed to get template name by id <b>$templateID</b> $db->error()", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 5, "failed to get template name by id <b>$templateID</b> ", 0, 0, 0, 0);
                     die ("could not get template name");
                 }
             return null;
@@ -585,7 +585,7 @@ namespace YAWK {
             }
             else
             {   // q failed
-                \YAWK\sys::setSyslog($db, 5, "failed to set template #$id setting <b>$value</b> of <b>$property</b> $db->error()", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 5, "failed to set template #$id setting <b>$value</b> of <b>$property</b> ", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -619,7 +619,7 @@ namespace YAWK {
             }
             else
             {   // q failed
-                \YAWK\sys::setSyslog($db, 5, "failed to set template #$templateID active $db->error()", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 5, "failed to set template #$templateID active ", 0, 0, 0, 0);
                 return false;
             }
 
@@ -642,7 +642,7 @@ namespace YAWK {
                            WHERE templateID = '".$templateID."'");
             if (!$res)
             {
-                \YAWK\sys::setSyslog($db, 5, "failed to copy template settings of template #$templateID $db->error()", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 5, "failed to copy template settings of template #$templateID ", 0, 0, 0, 0);
                 \YAWK\alert::draw("danger", "Could not copy settings", "please try again.", "", 5000);
             }
             else
@@ -656,7 +656,7 @@ namespace YAWK {
                 }
                 else
                 {
-                    \YAWK\sys::setSyslog($db, 5, "failed to set new template settings of template #$templateID $db->error()", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 5, "failed to set new template settings of template #$templateID ", 0, 0, 0, 0);
                     \YAWK\alert::draw("warning", "Could not set new template settings", "unable to alter IDs.", "", 5000);
                 }
             }
@@ -694,7 +694,7 @@ namespace YAWK {
             }
             else
             {   // q failed
-                \YAWK\sys::setSyslog($db, 5, "failed to add template setting $db->error()", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 5, "failed to add template setting ", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -719,7 +719,7 @@ namespace YAWK {
             }
             else
                 {   // could not save template details
-                    \YAWK\sys::setSyslog($db, 5, "failed to set template details $db->error()", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 5, "failed to set template details", 0, 0, 0, 0);
                     return false;
                 }
         }
@@ -758,7 +758,7 @@ namespace YAWK {
                     // delete template from database {templates}
                     if (!$res = $db->query("DELETE FROM {templates} WHERE id = $templateID"))
                     {   // if failed
-                        \YAWK\sys::setSyslog($db, 5, "failed to delete template from database $db->error()", 0, 0, 0, 0);
+                        \YAWK\sys::setSyslog($db, 5, "failed to delete template from database ", 0, 0, 0, 0);
                         return false;
                     }
                     else
@@ -768,7 +768,7 @@ namespace YAWK {
                                 $row = mysqli_fetch_row($res);
                                 if (!$res = $db->query("ALTER TABLE {templates} AUTO_INCREMENT $row[0]"))
                                 {   // could not select auto encrement
-                                    \YAWK\sys::setSyslog($db, 5, "failed alter auto increment templates table $db->error()", 0, 0, 0, 0);
+                                    \YAWK\sys::setSyslog($db, 5, "failed alter auto increment templates table ", 0, 0, 0, 0);
                                     return false;
                                 }
                             }
@@ -777,7 +777,7 @@ namespace YAWK {
                     // delete template settings for requested templateID
                     if (!$res = $db->query("DELETE FROM {template_settings} WHERE templateID = $templateID"))
                     {   // delete settings failed...
-                        \YAWK\sys::setSyslog($db, 5, "delete template settings failed $db->error()", 0, 0, 0, 0);
+                        \YAWK\sys::setSyslog($db, 5, "delete template settings failed ", 0, 0, 0, 0);
                         return false;
                     }
                     else
@@ -851,7 +851,7 @@ namespace YAWK {
             }
             else
                 {
-                    \YAWK\sys::setSyslog($db, 5, "failed to get template setting $db->error()", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 5, "failed to get template setting ", 0, 0, 0, 0);
                     return false;
                 }
 
@@ -902,7 +902,7 @@ namespace YAWK {
             }
             else
             {   // q failed
-                \YAWK\sys::setSyslog($db, 5, "failed to get template setting $db->error()", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 5, "failed to get template setting ", 0, 0, 0, 0);
                 return false;
             }
             // all good, fin
@@ -979,7 +979,7 @@ namespace YAWK {
             }
             else
             {   // q failed;
-                \YAWK\sys::setSyslog($db, 5, "failed to get google fonts from database $db->error()", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 5, "failed to get google fonts from database ", 0, 0, 0, 0);
                 return false;
             }
             // fin
@@ -1005,7 +1005,7 @@ namespace YAWK {
             }
             else
             {   // q failed
-                \YAWK\sys::setSyslog($db, 5, "failed to delete google font id: $gfontid $db->error()", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 5, "failed to delete google font id: $gfontid ", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -1036,13 +1036,13 @@ namespace YAWK {
                 }
                 else
                 {   // fetch failed
-                    \YAWK\sys::setSyslog($db, 5, "failed to insert new google font to database $db->error()", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 5, "failed to insert new google font to database ", 0, 0, 0, 0);
                     return false;
                 }
             }
             else
             {   // q failed
-                \YAWK\sys::setSyslog($db, 5, "failed to get MAX(id) from google fonts database $db->error()", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 5, "failed to get MAX(id) from google fonts database ", 0, 0, 0, 0);
                 return false;
             }
         }

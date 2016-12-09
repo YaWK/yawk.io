@@ -22,11 +22,20 @@ namespace YAWK {
         public function __construct()
 		{
 		    // TODO: cfg file for installer!
-			$this->config['username'] = "root";
-			$this->config['password'] = "";
-			$this->config['dbname'] = "yawk_lte";
+			$this->config['server'] = "mysqlsvr45.world4you.com";
+			$this->config['username'] = "sql9032863";
+			$this->config['password'] = "th5es0k";
+			$this->config['dbname'] = "9032863db1";
 			$this->config['prefix'] = "cms_";
 			$this->config['port'] = "3306";
+            /*
+            $this->config['server'] = "localhost";
+            $this->config['username'] = "root";
+            $this->config['password'] = "";
+            $this->config['dbname'] = "yawk_lte";
+            $this->config['prefix'] = "cms_";
+            $this->config['port'] = "3306";
+            */
 		}
 
 		/**
@@ -38,7 +47,7 @@ namespace YAWK {
 		{
 			// Try and connect to the database
 			if (!isset($this->connection)) {
-				$this->connection = @new \mysqli('localhost', $this->config['username'], $this->config['password'], $this->config['dbname']);
+				$this->connection = @new \mysqli($this->config['server'], $this->config['username'], $this->config['password'], $this->config['dbname']);
 			}
             // If connection was not successful, die and show the error
             if (mysqli_connect_errno()) {
