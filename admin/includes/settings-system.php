@@ -307,6 +307,8 @@ echo"<ol class=\"breadcrumb\">
 				<div class="col-md-4">
 					<!-- publish settings -->
                     <?php \YAWK\settings::getFormElements($db, $settings, 7, $lang); ?>
+					<!-- user login settings -->
+					<?php \YAWK\settings::getFormElements($db, $settings, 17, $lang); ?>
 				</div>
 				<div class="col-md-4">
 					<!-- maintenance mode -->

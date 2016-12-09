@@ -691,7 +691,11 @@ namespace YAWK {
                     else {$html .= "</ul>
                             <ul class=\"nav navbar-nav navbar-collapse navbar-right\">
                              <li>";
-                        $html .= \YAWK\user::drawMenuLoginBox("","", "light");
+                           // check if userlogin is allowed
+                            if (\YAWK\settings::getSetting($db, 'userlogin') === '1')
+                            {   // load loginbox into navbar
+                                $html .= \YAWK\user::drawMenuLoginBox("","", "light");
+                            }
                         $html .= "</li></ul>";
                     }
                     $html .= "<!-- /.nav-collapse -->
