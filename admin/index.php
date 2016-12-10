@@ -37,7 +37,7 @@ if (!isset($db)) {
 if (!isset($user)) {
   $user = new \YAWK\user();
 }
-/* set user object */
+/* set page object */
 if (!isset($page)) {
   $page = new \YAWK\page();
 }

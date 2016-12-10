@@ -206,6 +206,8 @@ else
           <br><br><br><br>
           <br><br><br><br>
           </div>
+          <?php echo YAWK\template::setPosition($db, "analytics-pos"); ?>
+          <?php echo YAWK\template::setPosition($db, "bottom-pos"); ?>
           <?php echo YAWK\template::setPosition($db, "footer-pos"); ?>
       </div>
 
