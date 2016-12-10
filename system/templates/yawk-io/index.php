@@ -13,6 +13,31 @@
   db-positions:
   globalmenu:top:main:bottom:footer:hiddentoolbar:debug
 */
+if (isset($_POST['email']) && (!empty($_POST['email'])))
+{
+    if (!isset($db))
+    {
+        @require_once 'system/classes/db.php';
+        $db = new \YAWK\db();
+    }
+    $email = $db->quote($_POST['email']);
+    $now = \YAWK\sys::now();
+    if ($db->query("INSERT INTO {newsletter} (date_created, email) VALUES('".$now."', '".$email."')"))
+    {
+        $htmlcode = "<h2>Thank you $email</h2>";
+    }
+    else
+        {
+            $htmlcode = "<h2>Could not add your email address</h2>";
+        }
+}
+else
+    {
+        $htmlcode = "<form id=\"form\" class=\"form-inline animated fadeIn\" method=\"post\">
+                      <input type=\"text\" id=\"email\" placeholder=\"your@email.com\" name=\"email\" size=\"50\" class=\"form-control\">
+                      <button type=\"submit\" id=\"submit\" name=\"submit\" class=\"btn btn-success\"><i class=\"fa fa-twitter\"></i>&nbsp; Subscribe as early bird</button>
+                  </form>";
+    }
 if (isset($_GET['template']) && (!empty($template)))
 {
     $template = $_GET['template'];
@@ -83,10 +108,7 @@ else
       <div class="well text-center gradient-bg" id="home">
               <!-- 1st row -->
               <h1 class="white animated fadeIn">YaWK.io<small><br><label for="subscribe" class="white">Yet another WebKit CMS</label></small></h1><br>
-                  <form id="form" class="form-inline animated fadeIn" method="post">
-                      <input type="text" id="email" placeholder="your@email.com" name="email" size="50" class="form-control">
-                      <button type="button" id="submit" name="submit" class="btn btn-success"><i class="fa fa-twitter"></i>&nbsp; Subscribe as early bird</button>
-                  </form>
+                  <?php echo $htmlcode; ?>
           <br>
                 <h3 id="comingTeaser">...coming 1<sup>st</sup> Quarter 2017<br>signup now for closed beta-test</h3>
           <br>
@@ -157,8 +179,10 @@ else
           <div class="text-center slideanim">
               <br><br><br><h3 class="white">Screencast <br><small class="grey">...coming soon...</small></h3><br><br>
 
-              <img src="http://placehold.it/720x440" class="img-thumbnail">
+             <!-- <img src="http://placehold.it/720x440" class="img-thumbnail"> -->
+              <img src="media/images/yawk-alpha-screenshot.png" width="920" class="img-thumbnail">
           </div>
+          <br><br><br><br>
           <br><br><br><br>
       </div>
 
@@ -168,9 +192,7 @@ else
           <div class="text-center">
               <br><br><br><br>
               <br><br><br><br>
-              <br><br><br><br>
-              <br><br>
-              <h3 class="white">GitHub<br><a href="https://github.com/YaWK/" target="_blank" title="GitHub - opening soon">https://github.com/YaWK</a><br> <small>repository opening soon!</small><br><br>
+              <h3 class="white slideanim">GitHub<br><a href="https://github.com/YaWK/" target="_blank" title="GitHub - opening soon">https://github.com/YaWK</a><br> <small>repository opening soon!</small><br><br>
               <a href="#home"><i class="up white fa fa-chevron-up"></i></a> </h3><br><br>
 
           <p class="text-center">
@@ -179,7 +201,7 @@ else
                   <small><i class="fa fa-copyright"></i> <?PHP print date("Y"); ?> <?php echo YAWK\settings::getSetting($db, "host"); ?></small>
               </small>
           </p>
-              <br><br><br><br>
+          <br><br><br><br>
           <br><br><br><br>
           <br><br><br><br>
           <br><br><br><br>
@@ -187,18 +209,7 @@ else
           <?php echo YAWK\template::setPosition($db, "footer-pos"); ?>
       </div>
 
-
-
-
-
-
-
       <!-- <div class="container">  -->
-
-
-     <!--  <div class="footer-bg">
-      </div> -->
-
       <!--   </div> /container -->
     <div class="container">
     <?php // echo YAWK\template::setPosition($db, "debug-pos"); ?>

@@ -25,11 +25,11 @@ $(document).ready(function(){
                     error.insertBefore(element);
                 },
                 rules: {
-                 /*   name: {
+                   name: {
                         required: true,
                         minlength: 4,
                         maxlength: 48
-                    },*/
+                    },
                     email: {
                         required: true,
                         email: true,
@@ -51,18 +51,17 @@ $(document).ready(function(){
             {
                 checkForm();
             }
-        /*
+       /*
         if (!name.trim()) {
             alert('Please insert your name!');
             return false;
         }
         */
-
+    /*
         $.ajax({
             url:'system/widgets/newsletter/js/newsletter.php',
             type:'post',
-            //    data:'name='+name+'&comment='+comment+'&id='+id,
-            // data:'name='+name+'&email='+email,
+            crossOrigin: true,
             data:'email='+email,
             success:function(data){
                 if(! data ){
@@ -77,6 +76,8 @@ $(document).ready(function(){
                 }
             }
         });
-
+    */
     });
+
+
 });
