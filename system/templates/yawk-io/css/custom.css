@@ -1,0 +1,81 @@
+.orange
+{
+    color: #FF7D19;
+}
+.white
+{
+    color: #fff;
+}
+.blue {
+    color: #007CB7;
+}  
+.blue-bg 
+{
+    background-color: #007CB7;
+}
+.orange-bg 
+{
+    background-color: #007CB7;
+}
+.grey-bg 
+{
+    background-color: #f6f6f6;
+}
+.black-bg
+{
+    background-color: #000;
+}
+
+.up
+{
+    
+}
+
+.slideanim {visibility:hidden;}
+  .slide {
+      animation-name: slide;
+      -webkit-animation-name: slide;
+      animation-duration: 1s;
+      -webkit-animation-duration: 1s;
+      visibility: visible;
+  }
+  @keyframes slide {
+    0% {
+      opacity: 0;
+      transform: translateY(70%);
+    } 
+    100% {
+      opacity: 1;
+      transform: translateY(0%);
+    }
+  }
+  @-webkit-keyframes slide {
+    0% {
+      opacity: 0;
+      -webkit-transform: translateY(70%);
+    } 
+    100% {
+      opacity: 1;
+      -webkit-transform: translateY(0%);
+    }
+  }
+.gradient-bg 
+{
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#007cb7+50,00619e+99 */
+background: #007cb7; /* Old browsers */
+background: -moz-linear-gradient(top,  #007cb7 50%, #00619e 99%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top,  #007cb7 50%,#00619e 99%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom,  #007cb7 50%,#00619e 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#007cb7', endColorstr='#00619e',GradientType=0 ); /* IE6-9 */
+
+}
+
+.gradient-bg-dark {
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#474747+0,000000+100 */
+background: #474747; /* Old browsers */
+background: -moz-linear-gradient(top,  #474747 0%, #000000 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top,  #474747 0%,#000000 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom,  #474747 0%,#000000 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#474747', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
+
+}

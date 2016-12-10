@@ -25,11 +25,11 @@ $(document).ready(function(){
                     error.insertBefore(element);
                 },
                 rules: {
-                    name: {
+                 /*   name: {
                         required: true,
                         minlength: 4,
                         maxlength: 48
-                    },
+                    },*/
                     email: {
                         required: true,
                         email: true,
@@ -39,24 +39,31 @@ $(document).ready(function(){
             });
         }
 
+
     $('#submit').click(function(){
-        checkForm();
-        var	name 		=	$('#name').val();
-        var	email 		=	$('#email').val();
+        var	email =	$('#email').val();
         if (!email.trim()) {
-            alert('Bitte gib Deine Emailadresse ein!');
+        //    alert('Please insert your email!');
+            $( "#form" ).effect( "shake", {times:2}, 600 );
             return false;
         }
+        else
+            {
+                checkForm();
+            }
+        /*
         if (!name.trim()) {
-            alert('Bitte gib Deinen Namen ein!');
+            alert('Please insert your name!');
             return false;
         }
+        */
 
         $.ajax({
             url:'system/widgets/newsletter/js/newsletter.php',
             type:'post',
             //    data:'name='+name+'&comment='+comment+'&id='+id,
-            data:'name='+name+'&email='+email,
+            // data:'name='+name+'&email='+email,
+            data:'email='+email,
             success:function(data){
                 if(! data ){
                     alert('Something went wrong!');
@@ -64,11 +71,12 @@ $(document).ready(function(){
                 }
                 else {
                     $("#form").hide();
-                   // $("#newsletter").append(data);
-                    $(data).hide().prependTo("#newsletter").fadeIn(820);
-                    $("#newsletterTitle").hide();
+                    $("#comingTeaser").append('<h2>Thank you '+email+'</h2>');
+                     // $(data).hide().prependTo("#comingTeaser").fadeIn(820);
+                     // $("#newsletterTitle").hide();
                 }
             }
         });
+
     });
 });

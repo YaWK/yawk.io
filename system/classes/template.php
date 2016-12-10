@@ -1059,7 +1059,7 @@ namespace YAWK {
          */
         static function getActivegfont($db, $status, $property)
         {   /* @var \YAWK\db $db */
-            if ($res = $db->query("SELECT id, font
+            if ($res = $db->query("SELECT id, font, setting
                      FROM {gfonts}
                      WHERE activated = 1
                       AND id = (SELECT ts.value
@@ -1073,14 +1073,24 @@ namespace YAWK {
                         return "font-family: Arial";
                     }
                     // css include output for index.php
-                    if ($status == "url") {
-                        return "
-                <link rel=\"stylesheet\" href=\"http://fonts.googleapis.com/css?family=$row[1]\" type=\"text/css\" media=\"all\">";
-                    } else {
-                        return "font-family: $row[1];";
+                    if ($status == "url")
+                    {//
+                        if (isset($row[2]) || (!empty($row[2])))
+                        {
+                            return "
+<link rel=\"stylesheet\" href=\"http://fonts.googleapis.com/css?family=$row[1]:$row[2]\" type=\"text/css\" media=\"all\">";
+                        }
+                        else
+                            {
+                                return "
+<link rel=\"stylesheet\" href=\"http://fonts.googleapis.com/css?family=$row[1]\" type=\"text/css\" media=\"all\">";
+                            }
                     }
+                    else
+                        {
+                            return "font-family: $row[1];";
+                        }
                 }
-
             }
             else
                 {   // could not get active google font
