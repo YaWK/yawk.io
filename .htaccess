@@ -13,10 +13,11 @@ ErrorDocument 404 http://192.168.1.8/yawk-LTE/content/errors/404.html
 
 # SEO settings
 RewriteEngine On
-RewriteCond %{REQUEST_URI} /(.*).html
 #RewriteBase /webhosting_subfolder
-# rewrite all static pages
+RewriteCond %{REQUEST_URI} /(.*).html
+# rewrite all .html files to index.php?include={filename}
 RewriteRule ^(.*).html$ \index.php?include=$1 [NC,L]
+# rewrite all .htm files to index.php?include={filename}
 # if you wish to use tinymce, you need put a # in front of the next line
 RewriteRule ^(.*).htm$ \index.php?include=$1 [NC,L]
 # Allow Robots.txt to pass through

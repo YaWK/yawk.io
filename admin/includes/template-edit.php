@@ -1059,6 +1059,63 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
      .img-thumbnail:hover {
         -webkit-filter: brightness(".$tpl_settings['img-brightness'].");
      }
+     .list-group {
+        padding-left: ".$tpl_settings['listgroup-paddingLeft'].";
+        margin-bottom: ".$tpl_settings['listgroup-marginBottom'].";
+     }
+     .list-group-item {
+        position: ".$tpl_settings['listgroup-itemPosition'].";
+        display: ".$tpl_settings['listgroup-itemDisplay'].";
+        padding: ".$tpl_settings['listgroup-itemPadding'].";
+        margin-bottom: -1px;
+        background-color: #".$tpl_settings['listgroup-itemBackgroundColor'].";
+        border: ".$tpl_settings['listgroup-itemBorder'].";
+        color: #".$tpl_settings['listgroup-fontColor'].";
+        font-size: ".$tpl_settings['listgroup-fontSize'].";
+     }
+     .jumbotron {
+        padding-top: ".$tpl_settings['jumbotron-paddingTop'].";
+        padding-bottom: ".$tpl_settings['jumbotron-paddingBottom'].";
+        margin-bottom: ".$tpl_settings['jumbotron-marginBottom'].";
+        color: #".$tpl_settings['jumbotron-fontColor'].";
+        background-color: #".$tpl_settings['jumbotron-backgroundColor'].";
+    }
+    .jumbotron h1,
+    .jumbotron .h1 {
+        color: #".$tpl_settings['jumbotron-h1Color'].";
+    }
+    .jumbotron p {
+        margin-bottom: ".$tpl_settings['jumbotron-pMarginBottom'].";
+        font-size: ".$tpl_settings['jumbotron-pFontSize'].";
+        font-weight: ".$tpl_settings['jumbotron-pFontWeight'].";
+    }
+    .jumbotron > hr {
+        border-top-color: #".$tpl_settings['jumbotron-hrColor'].";
+    }
+    .container .jumbotron,
+    .container-fluid .jumbotron {
+        padding-right: ".$tpl_settings['jumbotron-containerPaddingRight'].";
+        padding-left: ".$tpl_settings['jumbotron-containerPaddingLeft'].";
+        border-radius: ".$tpl_settings['jumbotron-borderRadius'].";
+    }
+    .jumbotron .container {
+        max-width: ".$tpl_settings['jumbotron-containerMaxWidth'].";
+    }
+    @media screen and (min-width: 768px) {
+      .jumbotron {
+        padding-top: 48px;
+        padding-bottom: 48px;
+      }
+      .container .jumbotron,
+      .container-fluid .jumbotron {
+        padding-right: ".$tpl_settings['jumbotron-fluidPaddingRight'].";
+        padding-left: ".$tpl_settings['jumbotron-fluidPaddingLeft'].";
+      }
+      .jumbotron h1,
+      .jumbotron .h1 {
+        font-size: ".$tpl_settings['jumbotron-h1FontSize'].";
+      }
+    }
     ";
 
     if (isset($_POST['getID']))
@@ -1587,10 +1644,10 @@ else
                 <div class="col-md-3">
                     <div class="box box-default">
                         <div class="box-header">
-                            <h3 class="box-title">Jumbotron <small>Box Design</small></h3>
+                            <h3 class="box-title">List Group <small>Settings</small></h3>
                         </div>
                         <div class="box-body">
-                            <?PHP // $template->getSetting($db, "%-menubgcolor", "", ""); ?>
+                            <?PHP $template->getSetting($db, "listGroup-%", "", "", $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1598,10 +1655,10 @@ else
                 <div class="col-md-3">
                     <div class="box box-default">
                         <div class="box-header">
-                            <h3 class="box-title">Any <small>Other Thing</small></h3>
+                            <h3 class="box-title">Jumbotron <small>Box Design</small></h3>
                         </div>
                         <div class="box-body">
-                            <?PHP // $template->getSetting($db, "%-menudropdowncolor", "", ""); ?>
+                            <?PHP $template->getSetting($db, "jumbotron-%", "", "", $user); ?>
                         </div>
                     </div>
                 </div>
