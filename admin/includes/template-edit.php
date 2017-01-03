@@ -843,6 +843,9 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
 
 
    /* NAVBAR */
+   .navbar-fixed-top {
+    margin-top: ".$tpl_settings['navbar-marginTop'].";
+  }
    .navbar-default {
        text-shadow: 1px 0px #".$tpl_settings['fontshadow-menucolor'].";
        filter: dropshadow(color=#".$tpl_settings['fontshadow-menucolor'].", offx=1, offy=1);
@@ -1072,13 +1075,17 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         border: ".$tpl_settings['listgroup-itemBorder'].";
         color: #".$tpl_settings['listgroup-fontColor'].";
         font-size: ".$tpl_settings['listgroup-fontSize'].";
-     }
+    }
+
      .jumbotron {
         padding-top: ".$tpl_settings['jumbotron-paddingTop'].";
         padding-bottom: ".$tpl_settings['jumbotron-paddingBottom'].";
         margin-bottom: ".$tpl_settings['jumbotron-marginBottom'].";
         color: #".$tpl_settings['jumbotron-fontColor'].";
         background-color: #".$tpl_settings['jumbotron-backgroundColor'].";
+        padding-right: ".$tpl_settings['jumbotron-containerPaddingRight'].";
+        padding-left: ".$tpl_settings['jumbotron-containerPaddingLeft'].";
+        border-radius: ".$tpl_settings['jumbotron-borderRadius'].";
     }
     .jumbotron h1,
     .jumbotron .h1 {
@@ -1116,6 +1123,17 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         font-size: ".$tpl_settings['jumbotron-h1FontSize'].";
       }
     }
+    
+    .pos-topmenu
+    {
+        top: ".$tpl_settings['pos-topmenu-top'].";
+        margin-bottom: ".$tpl_settings['pos-topmenu-marginBottom'].";
+        position: ".$tpl_settings['pos-topmenu-position'].";
+        background-color: #".$tpl_settings['pos-topmenu-bgcolor'].";
+        width: ".$tpl_settings['pos-topmenu-width'].";
+        height: ".$tpl_settings['pos-topmenu-height'].";
+    }
+    
     ";
 
     if (isset($_POST['getID']))
@@ -1258,6 +1276,7 @@ else
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" id="tabs" role="tablist">
         <li role="presentation" class="active"><a href="#overview" aria-controls="overview" role="tab" data-toggle="tab"><i class="fa fa-home"></i>&nbsp; <?php echo $template->name; ?></a></li>
+        <li role="presentation"><a href="#positions" aria-controls="positions" role="tab" data-toggle="tab"><i class="fa fa-code"></i>&nbsp; Positions</a></li>
         <li role="presentation"><a href="#fonts" aria-controls="fonts" role="tab" data-toggle="tab"><i class="fa fa-font"></i>&nbsp; Fonts</a></li>
         <li role="presentation"><a href="#typo" aria-controls="typo" role="tab" data-toggle="tab"><i class="fa fa-text-width"></i>&nbsp; Typography</a></li>
         <li role="presentation"><a href="#body" aria-controls="layout" role="tab" data-toggle="tab"><i class="fa fa-object-group"></i>&nbsp; Body</a></li>
@@ -1411,6 +1430,44 @@ else
                               echo "$tpl<br>";
                           }*/
                     ?>
+                </div>
+            </div>
+        </div>
+
+        <!-- POSITIONS -->
+        <div role="tabpanel" class="tab-pane" id="positions">
+            <h3>Positions <small>set template positions settings</small></h3>
+            <!-- list GOOGLE FONTS -->
+            <div class="row animated fadeIn">
+                <div class="col-md-4">
+                    <div class="box box-default">
+                        <div class="box-header">
+                            <h3 class="box-title">Topmenu Position <small>this is the first position, before anything else</small></h3>
+                        </div>
+                        <div class="box-body">
+                            <?PHP $template->getSetting($db, "pos-topmenu-%", "", "", $user); ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="box box-default">
+                        <div class="box-header">
+                            <h3 class="box-title">Position <small>extend here</small></h3>
+                        </div>
+                        <div class="box-body">
+                            <?PHP // $template->getSetting($db, "%-link", "", "", $user); ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="box box-default">
+                        <div class="box-header">
+                            <h3 class="box-title">Position <small>extend here</small></h3>
+                        </div>
+                        <div class="box-body">
+                            <?PHP // $template->getSetting($db, "%-link", "", "", $user); ?>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1578,7 +1635,7 @@ else
 
         <!-- MENU -->
         <div role="tabpanel" class="tab-pane" id="menu">
-            <h3>Menu <small>Settings</small></h3>
+            <h3>Navbar <small>Settings</small></h3>
             <div class="row animated fadeIn">
                 <div class="col-md-3">
                     <div class="box box-default">
@@ -1616,10 +1673,10 @@ else
                 <div class="col-md-3">
                     <div class="box box-default">
                         <div class="box-header">
-                            <h3 class="box-title">Additional <small>Menu stuff here...</small></h3>
+                            <h3 class="box-title">Navbar <small>Positioning</small></h3>
                         </div>
                         <div class="box-body">
-                            ...fill this empty space with love...
+                            <?PHP $template->getSetting($db, "navbar-marginTop", "", "", $user); ?>
                         </div>
                     </div>
                 </div>
