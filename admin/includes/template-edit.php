@@ -303,12 +303,22 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
     }
 
     // get max ID from template db
-    foreach($_POST as $property=>$value){
+    // SAVE DATA
+    foreach($_POST as $property=>$value)
+    {
+        if (fnmatch('*-longValue', $property)) {
+            $longValue = 1;
+        }
+        else
+        {
+            $longValue = 0;
+        }
+
         if (isset($_POST['savenewtheme']))
         {
             if($property != "save" && $property != "customCSS")
             {   // save new theme settings to database
-                $template->setTemplateSetting($db, $newID, $property, $value);
+                $template->setTemplateSetting($db, $newID, $property, $value, $longValue);
             }
             // if save property is customCSS
             elseif ($property === "customCSS")
@@ -327,8 +337,9 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
                 {
                     $template->id = $_POST['getID'];
                 }
+
                 // save theme settings to database
-                $template->setTemplateSetting($db, $template->id, $property, $value);
+                $template->setTemplateSetting($db, $template->id, $property, $value, $longValue);
                 // to file
                 // $template->setTemplateCssFile($db, $template->id, $property, $value);
             }
@@ -1075,7 +1086,18 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         border: ".$tpl_settings['listgroup-itemBorder'].";
         color: #".$tpl_settings['listgroup-fontColor'].";
         font-size: ".$tpl_settings['listgroup-fontSize'].";
+        ".$tpl_settings['listgroup-bg-gradient-longValue'].";
     }
+    
+     .list-group-item:first-child {
+        border-top-left-radius: ".$tpl_settings['listgroup-firstChild-topLeft-radius'].";
+        border-top-right-radius: ".$tpl_settings['listgroup-firstChild-topRight-radius'].";
+     }
+     .list-group-item:last-child {
+        margin-bottom: 0;
+        border-bottom-right-radius: ".$tpl_settings['listgroup-lastChild-bottomRight-radius'].";
+        border-bottom-left-radius: ".$tpl_settings['listgroup-lastChild-bottomLeft-radius'].";
+     }
 
      .jumbotron {
         padding-top: ".$tpl_settings['jumbotron-paddingTop'].";
@@ -1128,10 +1150,12 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
     {
         top: ".$tpl_settings['pos-topmenu-top'].";
         margin-bottom: ".$tpl_settings['pos-topmenu-marginBottom'].";
-        position: ".$tpl_settings['pos-topmenu-position'].";
-        background-color: #".$tpl_settings['pos-topmenu-bgcolor'].";
+        position: ".$tpl_settings['pos-topmenu-property'].";
+        background-color: #".$tpl_settings['pos-topmenu-bg-color'].";
         width: ".$tpl_settings['pos-topmenu-width'].";
         height: ".$tpl_settings['pos-topmenu-height'].";
+        z-index: ".$tpl_settings['pos-topmenu-zindex'].";
+        ".$tpl_settings['pos-topmenu-bg-gradient-longValue'].";
     }
     
     ";
@@ -1445,7 +1469,14 @@ else
                             <h3 class="box-title">Topmenu Position <small>this is the first position, before anything else</small></h3>
                         </div>
                         <div class="box-body">
-                            <?PHP $template->getSetting($db, "pos-topmenu-%", "", "", $user); ?>
+                            <?PHP $template->getSetting($db, "pos-topmenu-top", "", "", $user); ?>
+                            <?PHP $template->getSetting($db, "pos-topmenu-marginBottom", "", "", $user); ?>
+                            <?PHP $template->getSetting($db, "pos-topmenu-property", "", "", $user); ?>
+                            <?PHP $template->getSetting($db, "pos-topmenu-bg-color", "", "", $user); ?>
+                            <?PHP $template->getSetting($db, "pos-topmenu-height", "", "", $user); ?>
+                            <?PHP $template->getSetting($db, "pos-topmenu-width", "", "", $user); ?>
+                            <?PHP $template->getSetting($db, "pos-topmenu-zindex", "", "", $user); ?>
+                            <?PHP $template->getSetting($db, "pos-topmenu-bg-gradient-longValue", "", "", $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1683,7 +1714,7 @@ else
             </div>
         </div>
 
-        <!-- WELL, JUMBOTRON -->
+        <!-- WELL,LISTGROUP, JUMBOTRON -->
         <div role="tabpanel" class="tab-pane" id="well">
             <h3>Well <small>Settings</small></h3>
             <div class="row animated fadeIn">
@@ -1705,6 +1736,7 @@ else
                         </div>
                         <div class="box-body">
                             <?PHP $template->getSetting($db, "listGroup-%", "", "", $user); ?>
+                            <?PHP $template->getSetting($db, "listgroup-bg-gradient-longValue", "", "", $user); ?>
                         </div>
                     </div>
                 </div>

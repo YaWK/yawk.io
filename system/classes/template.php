@@ -572,12 +572,22 @@ namespace YAWK {
          * @param string $value template settings value
          * @return bool
          */
-        function setTemplateSetting($db, $id, $property, $value)
+        function setTemplateSetting($db, $id, $property, $value, $longValue)
         {   /** @var $db \YAWK\db */
             $property = $db->quote($property);
             $value = $db->quote($value);
+            $longValue = $db->quote($longValue);
+            if ($longValue == "1")
+            {
+                $sql ="SET longValue = '".$value."'";
+            }
+            else
+                {
+                    $sql = "SET value = '".$value."'";
+                }
+
             if ($res = $db->query("UPDATE {template_settings}
-                                   SET value = '" . $value . "'
+                                   $sql
                                    WHERE property = '" . $property . "'
                                    AND templateID = '".$id."'"))
             {   // success
@@ -681,6 +691,7 @@ namespace YAWK {
             $active = 1;
             $sort = 0;
             $templateID = \YAWK\settings::getSetting($db, "selectedTemplate"); // self::getCurrentTemplateId($db);
+
             $property = $db->quote($property);
             $value = $db->quote($value);
             $valueDefault = $db->quote($valueDefault);
@@ -834,7 +845,7 @@ namespace YAWK {
             {
                 if ($user->overrideTemplate == 1)
                 {
-                    $sql = "SELECT ts.property, ts.value, ts.valueDefault, ts.description, ts.fieldClass, ts.placeholder
+                    $sql = "SELECT ts.property, ts.value, ts.longValue, ts.valueDefault, ts.description, ts.fieldClass, ts.placeholder
                                        FROM {template_settings} ts
                                        JOIN {users} u on u.templateID = ts.templateID
                                        WHERE ts.activated = 1 && u.id = $user->id && ts.property
@@ -842,7 +853,7 @@ namespace YAWK {
                 }
                 else
                     {
-                        $sql = "SELECT ts.property, ts.value, ts.valueDefault, ts.description, ts.fieldClass, ts.placeholder
+                        $sql = "SELECT ts.property, ts.value, ts.longValue, ts.valueDefault, ts.description, ts.fieldClass, ts.placeholder
                                        FROM {template_settings} ts
                                        JOIN {settings} s on s.value = ts.templateID
                                        WHERE ts.activated = 1 && s.property = 'selectedTemplate' && ts.property
@@ -875,6 +886,13 @@ namespace YAWK {
                         echo "<div id=\"slider$x\"></legend></div>";
                         $x++;
                     }
+                    if (fnmatch('*-longValue', $filter)) {
+                        // draw a textfield
+                        echo "<label for=\"".$row['property']."\"><small>" . $row['description'] . " <i class=\"h6 small\">default: ".$row['valueDefault']."</i></small></label><br>";
+                        echo "<div style=\"display:inline-block; width:90%;\"><label for=\"" . htmlentities($row['property']) . "\">";
+                        echo "<input type=\"hidden\" name=\"$row[property]-long\" id=\"longValue\" value=\"1\">";
+                        echo "<textarea cols=\"85\" rows=\"12\" id=\"".$row['property']."\" $readonly class=\"form-control\" style=\"font-weight:normal;\" name=\"" . htmlentities($row['property']) . "\">".$row['longValue']."</textarea>";
+                    }
                     else
                     {   // draw a textfield
                         echo "<label for=\"".$row['property']."\"><small>" . $row['description'] . " <i class=\"h6 small\">default: ".$row['valueDefault']."</i></small></label><br>";
@@ -885,7 +903,7 @@ namespace YAWK {
                         echo $row['placeholder'];
                         echo "\" class=\"form-control ";
                         echo $row['fieldClass'];
-                        echo "\" type=\"text\" size=\"64\" maxlength=\"255\"";
+                        echo "\" type=\"text\" size=\"88\" maxlength=\"255\"";
                         echo $readonly;
                         echo "name=\"" . htmlentities($row['property']) . "\" value=\"" . htmlentities($row['value']) . "\" /><br>";
                     }
@@ -1215,6 +1233,7 @@ namespace YAWK {
             // get template setting for given pos
             $setting = self::getTemplateSetting($db, $position, "");
             if (empty($setting)) {
+                // no property
                 // substr, because css definitions are without -pos (changefix?!)
                 $position = substr("$position", 0, -4);
                 // if main, we need to include the content page
@@ -1238,12 +1257,14 @@ namespace YAWK {
                         $blog->getFooter($db);
                         $blog->draw();
                         // in any other case, get content for requested static page
-                    } else {
-                        echo "<div id=\"$position\">";
-                        $currentpage->getContent($db);
-                        echo "</div>";
-                        $main_set = 1;
                     }
+                    else
+                        {
+                            echo "<div id=\"$position\">";
+                            $currentpage->getContent($db);
+                            echo "</div>";
+                            $main_set = 1;
+                        }
                 }
 
                 // if position is globalmenu
@@ -1276,13 +1297,14 @@ namespace YAWK {
                 $templateID = settings::getSetting($db, "selectedTemplate");
             }
             $array = '';
-            $res = $db->query("SELECT property, value
+            $res = $db->query("SELECT property, value, longValue
                         	FROM {template_settings}
                             WHERE templateID = $templateID");
 
             while ($row = mysqli_fetch_assoc($res)){
                 $prop = $row['property'];
                 $array[$prop] = $row['value'];
+                $array[$prop] .= $row['longValue'];
             }
             return $array;
         }
