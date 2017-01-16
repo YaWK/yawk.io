@@ -34,6 +34,10 @@ namespace YAWK {
         public $position;
         /** * @var int widget type number */
         public $widgetType;
+        /** * @var int margin from top in px */
+        public $marginTop;
+        /** * @var int margin from bottom in px */
+        public $marginBottom;
 
         /**
          * return current widget path
@@ -149,7 +153,7 @@ namespace YAWK {
     							ORDER BY cw.sort"))
             {   // fetch widget data
                 while ($row = mysqli_fetch_array($res)) {
-                    $wID = $row[0];
+                    $_GET['widgetID'] = $row[0];
                     $widgetFile = "system/widgets/$row[7]/$row[7].php";
                     include $widgetFile;
                 }
@@ -277,8 +281,8 @@ namespace YAWK {
     							FROM {widgets} as cw
     							JOIN {widget_types} as cwt on cw.widgetType = cwt.id
     							WHERE cw.id = '" . $id . "' AND published = '1'
-    							ORDER BY cw.sort")
-            ) {   // fetch data
+    							ORDER BY cw.sort"))
+            {   // fetch data
                 while ($row = mysqli_fetch_array($res)) {
                     $wID = $row[0];
                     $widgetFile = "system/widgets/$row[7]/$row[7].php";
@@ -318,6 +322,7 @@ namespace YAWK {
                 }
             } else {   // q failed
                 \YAWK\sys::setSyslog($db, 11, "failed to load widget <b>#$id</b> .", 0, 0, 0, 0);
+                echo "failed to load widget!";
                 return false;
             }
             // something strange has happened
@@ -457,7 +462,7 @@ namespace YAWK {
                 $id = $db->quote($id);
             }
             /** @var $db \YAWK\db $res */
-            if ($res = $db->query("SELECT cw.id,cw.published,cw.widgetType,cw.pageID,cw.sort,cw.position, cwt.name
+            if ($res = $db->query("SELECT cw.id,cw.published,cw.widgetType,cw.pageID,cw.sort,cw.position, cwt.name, cw.marginTop, cw.marginBottom
     							FROM {widgets} as cw
     							JOIN {widget_types} as cwt on cw.widgetType = cwt.id
                         WHERE cw.id = '" . $id . "'"))
@@ -471,6 +476,8 @@ namespace YAWK {
                     $this->sort = $row[4];
                     $this->position = $row[5];
                     $this->name = $row[6];
+                    $this->marginTop = $row[7];
+                    $this->marginBottom = $row[8];
                     return true;
                 }
                 else
