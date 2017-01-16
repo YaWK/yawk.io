@@ -13,7 +13,6 @@ if (isset($_GET['widgetID']))
     // widget ID
     $widgetID = $_GET['widgetID'];
 
-
     // get settings from database
     $res = $db->query("SELECT * FROM {widget_settings}
 	                        WHERE widgetID = '".$widgetID."'
@@ -60,23 +59,28 @@ if (isset($_GET['widgetID']))
 
 
 // include twitch video stream
-echo "<iframe
-        src=\"http://player.twitch.tv/?channel=$twitchChannel\"
-        height=\"$twitchChannelHeight\"
-        width=\"$twitchChannelWidth\"
-        frameborder=\"0\"
-        scrolling=\"no\"
-        allowfullscreen=\"true\">
-      </iframe>";
+echo "
+<!-- twitch video stream -->
+<iframe
+    src=\"http://player.twitch.tv/?channel=$twitchChannel\"
+    height=\"$twitchChannelHeight\"
+    width=\"$twitchChannelWidth\"
+    frameborder=\"0\"
+    scrolling=\"no\"
+    allowfullscreen=\"true\">
+</iframe>";
 
 if (isset($twitchChat) && ($twitchChat === "1"))
     {
         // include twitch chat for this channel
-        echo "<iframe frameborder=\"0\"
-        scrolling=\"no\"
-        id=\"chat_embed\"
-        src=\"http://www.twitch.tv/$twitchChannel/chat\"
-        height=\"$twitchChatHeight\"
-        width=\"$twitchChatWidth\">
-        </iframe>";
+        echo "
+
+<!-- twitch chat -->
+<iframe frameborder=\"0\"
+    scrolling=\"no\"
+    id=\"chat_embed\"
+    src=\"http://www.twitch.tv/$twitchChannel/chat\"
+    height=\"$twitchChatHeight\"
+    width=\"$twitchChatWidth\">
+</iframe>";
     }
