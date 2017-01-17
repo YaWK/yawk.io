@@ -2,7 +2,7 @@
 <script src="system/engines/jquery/lightbox2/js/lightbox.min.js"></script>
 <script type="text/javascript">
     lightbox.option({
-        'albumLabel': "Image %1 of %2 - you need to save to see changes take effect in fullscreen.",
+        'albumLabel': "Image %1 of %2",
         'wrapAround': true
     });
 </script>

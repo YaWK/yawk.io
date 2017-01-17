@@ -1480,6 +1480,70 @@ namespace YAWK\PLUGINS\GALLERY {
             return null;
         }
 
+        /**
+         * @param object $db database
+         * @param array $lang language array
+         * @param int $galleryID gallery ID to load
+         */
+        public function drawImageGallery($db, $galleryID)
+        {   /** @var $db \YAWK\db **/
+            if ($res = $db->query("SELECT * from {plugin_gallery} WHERE id = $galleryID"))
+            {
+                while ($row = mysqli_fetch_assoc($res))
+                {
+                    if (!$getPreviewImages = $db->query("SELECT id, galleryID, sort, filename, title, author, authorUrl
+                                                         from {plugin_gallery_items} 
+                                                         WHERE galleryID = $galleryID ORDER BY sort, filename DESC"))
+                    {   // store info msg, if files could not be retrieved
+                        $previewError = "Sorry, could not get preview images";
+                    }
+                    if (isset($previewError))
+                    {   // if files could not be loaded from db
+                        echo $previewError;
+                    }
+                    else
+                    {   // previewImage array is set, walk through it...
+                        $count = 3;
+                        echo '    
+                                    <div class="row">
+                                    ';
+                        foreach ($getPreviewImages as $property => $image)
+                        {   // display preview images
+                            for ($i = 0; $i < count($property); $i++)
+                            {
+                                $this->itemID = $image['id'];
+                                $this->sort = $image['sort'];
+                                $this->filename = $image['filename'];
+                                $this->itemTitle = $image['title'];
+                                $this->itemAuthor = $image['author'];
+                                $this->itemAuthorUrl = $image['authorUrl'];
+                                // $rnd = uniqid();
+
+                                if ($count % 3 == 0)
+                                { // time to break line
+                                    echo '
+                                    </div>';
+                                    echo '
+                                    <div class="row">
+                                      <div class="col-md-4" id="imgCol-'.$this->itemID.'">
+                                          <a href="'.$row['folder']."/".$this->filename.'" data-lightbox="'.$galleryID.'" data-title="'.$this->itemTitle.'"><img class="img-thumbnail" id="img-'.$this->itemID.'" width="400" alt="'.$this->itemTitle.'" title="'.$this->itemTitle.'" src="' . $row['folder']."/".$this->filename . '"></a><br><br>
+                                      </div>';
+                                }
+                                else
+                                {  echo '  
+                                      <div class="col-md-4" id="imgCol-'.$this->itemID.'">
+                                    <a href="'.$row['folder']."/".$this->filename.'" data-lightbox="'.$galleryID.'" data-title="'.$this->itemTitle.'"><img class="img-thumbnail" alt="'.$this->itemTitle.'" id="img-'.$this->itemID.'" width="400" title="'.$this->itemTitle.'" src="' . $row['folder']."/".$this->filename . '"></a>
+                                      </div>';
+                                }
+                                $count++;
+                            }
+                        }
+                    }
+                    echo"</div>";
+                }
+            }
+        }
+
 
         /**
          * get and draw all editable images + edit controls
