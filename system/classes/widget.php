@@ -38,6 +38,8 @@ namespace YAWK {
         public $marginTop;
         /** * @var int margin from bottom in px */
         public $marginBottom;
+        /** * @var int ID of the page where this widget should appear */
+        public $pageID;
 
         /**
          * return current widget path
@@ -90,8 +92,8 @@ namespace YAWK {
                     // get default settings for this widget
                     if ($res_defaults = $db->query("SELECT * FROM {widget_defaults}
 	                        WHERE widgetType = '" . $widgetType . "'
-	                        AND activated = '1'")
-                    ) {   // get widget settings
+	                        AND activated = '1'"))
+                    {   // get widget settings
                         while ($row = mysqli_fetch_assoc($res_defaults)) {
                             $w_property = $row['property'];
                             $w_value = $row['value'];
@@ -330,7 +332,7 @@ namespace YAWK {
         }
 
         /**
-         * return loginbox widget
+         * return the user login box widget
          */
         static function getLoginBox()
         {
@@ -338,11 +340,11 @@ namespace YAWK {
         }
 
         /**
-         * return facebook box widget
+         * return the facebook likebox widget
          */
-        static function getFacebookBox()
+        static function getFacebookLikeBox()
         {
-            include 'system/widgets/fb_box/fb_box.php';
+            include 'system/widgets/fb_like/fb_like.php';
         }
 
         /**
@@ -465,7 +467,7 @@ namespace YAWK {
             if ($res = $db->query("SELECT cw.id,cw.published,cw.widgetType,cw.pageID,cw.sort,cw.position, cwt.name, cw.marginTop, cw.marginBottom
     							FROM {widgets} as cw
     							JOIN {widget_types} as cwt on cw.widgetType = cwt.id
-                        WHERE cw.id = '" . $id . "'"))
+                                WHERE cw.id = '" . $id . "'"))
             {
                 if ($row = mysqli_fetch_row($res))
                 {   // set properties
@@ -521,7 +523,6 @@ namespace YAWK {
                 return false;
             }
         }
-
 
     } // end class Widget
 }
