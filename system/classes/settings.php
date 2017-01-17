@@ -608,7 +608,8 @@ namespace YAWK {
             if ($res = $db->query("UPDATE {widget_settings} SET value = '".$value."'
                                    WHERE property = '".$property."' AND widgetID = '".$widgetID."'"))
             {   // q successful
-                \YAWK\alert::draw("success", "Success!", "Widget Setting $property saved.", "","1200");
+                // uncomment following line, if you wish detailed save messages
+                // \YAWK\alert::draw("success", "Success!", "Widget Setting $property saved.", "","1200");
                 return true;
             }
             else

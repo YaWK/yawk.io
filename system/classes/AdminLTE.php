@@ -141,7 +141,7 @@ namespace YAWK {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db database object
-         * @param array $lang language array
+         * @param object $lang language array
          * @return null
          */
         function drawHtmlLogo($db, $lang)
@@ -573,7 +573,7 @@ namespace YAWK {
          * @link http://yawk.io
          * @param object $db Database object
          * @param object $user User object
-         * @param array $lang Language array
+         * @param object $lang Language object
          * @return null
          */
         function drawHtmlLeftSidebar($db, $user, $lang){
@@ -665,7 +665,7 @@ namespace YAWK {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @param array $lang Language Array
+         * @param object $lang Language object
          * @return null
          */
         function drawHtmlContentHeader($lang){
@@ -691,7 +691,7 @@ namespace YAWK {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database object
-         * @param array $lang Language array
+         * @param object $lang Language object
          * @param object $user User object - not in use atm, check this!
          * @return null
          */

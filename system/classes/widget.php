@@ -108,7 +108,7 @@ namespace YAWK {
 	                        '" . $w_activated . "')")
                             ) {
                                 // widget settings added
-                                return true;
+                                // return true;
                             } else {   // insert widget settings failed
                                 return false;
                             }
@@ -129,7 +129,7 @@ namespace YAWK {
                 return false;
             }
             // something else has happened
-            return false;
+            return true;
         }
 
         /**
@@ -432,17 +432,17 @@ namespace YAWK {
         function delete($db, $widget)
         {
             /** @var $db \YAWK\db */
-            if (!$res = $db->query("DELETE FROM {widgets} WHERE id = '" . $widget . "'")) {
+            if ($res = $db->query("DELETE FROM {widgets} WHERE id = '" . $widget . "'")) {
                 // delete corresponding widget settings
                 if (!$res_settings = $db->query("DELETE FROM {widget_settings} WHERE widgetID = '" . $widget . "'")) {
                     // q failed
                     \YAWK\sys::setSyslog($db, 11, "failed to delete settings of widget id <b>#$widget</b> .", 0, 0, 0, 0);
                     return false;
                 }
+                return true;
+            } else {
                 \YAWK\sys::setSyslog($db, 11, "failed to delete widget id <b>#$widget</b> .", 0, 0, 0, 0);
                 return false;
-            } else {
-                return true;
             }
         }
 
