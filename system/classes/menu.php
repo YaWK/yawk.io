@@ -37,6 +37,26 @@ namespace YAWK {
          */
         public $parent;
 
+        /**
+         * display any subMenu (used by widgets to get any menu in any position)
+         * @copyright  2009-2016 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @version    1.0.0
+         * @link       http://yawk.io
+         * @param object $db database
+         * @param int $menuID the menuID to get data
+         */
+        public function displaySubMenu($db, $menuID)
+        {   /** @var \YAWK\db  $db */
+            $res = $db->query("SELECT * FROM {menu}
+                               WHERE menuID = '".$menuID."' ORDER by sort, title");
+            echo "<ul class=\"hideLeft list-group\" id=\"leftMenu\">";
+            while ($row = mysqli_fetch_assoc($res))
+            {
+                echo "<li class=\"list-group-item\"><b>".$row['title']."</b></li>";
+            }
+            echo "</ul>";
+        }
 
         /**
          * display the global menu
