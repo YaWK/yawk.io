@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 29. Dez 2016 um 09:29
+-- Erstellungszeit: 19. Jan 2017 um 14:56
 -- Server-Version: 10.1.10-MariaDB
 -- PHP-Version: 5.6.19
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Datenbank: `yawk_lte`
+-- Datenbank: `yawk_mercedesgarage`
 --
 
 -- --------------------------------------------------------
@@ -47,6 +47,13 @@ CREATE TABLE `cms_blog` (
   `preview` int(1) NOT NULL DEFAULT '0',
   `voting` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Daten für Tabelle `cms_blog`
+--
+
+INSERT INTO `cms_blog` (`id`, `sort`, `published`, `name`, `description`, `icon`, `showtitle`, `showdesc`, `showdate`, `showauthor`, `sequence`, `sortation`, `footer`, `comments`, `gid`, `permalink`, `layout`, `preview`, `voting`) VALUES
+(1, 0, 1, 'Mercedes News', 'Youngtimer, Oldtimer, der letzte echte Benz ', 'fa-align-center', 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -104,6 +111,13 @@ CREATE TABLE `cms_blog_items` (
   `voteDown` int(11) NOT NULL DEFAULT '0',
   `primkey` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Daten für Tabelle `cms_blog_items`
+--
+
+INSERT INTO `cms_blog_items` (`blogid`, `id`, `uid`, `pageid`, `sort`, `published`, `itemgid`, `title`, `filename`, `subtitle`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `teasertext`, `blogtext`, `author`, `thumbnail`, `youtubeUrl`, `weblink`, `itemlayout`, `itemcomments`, `voteUp`, `voteDown`, `primkey`) VALUES
+(1, 1, 1, 23, 1, 1, 1, 'w126', 'w126', 'w126', '2017-01-17 05:46:48', '0000-00-00 00:00:00', '2017-01-17 05:46:26', '0000-00-00 00:00:00', 'W126....', '            ', '', '', '', 'admin', -1, -1, 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -265,30 +279,6 @@ CREATE TABLE `cms_logins` (
   `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Daten für Tabelle `cms_logins`
---
-
-INSERT INTO `cms_logins` (`id`, `datetime`, `location`, `failed`, `ip`, `useragent`, `username`, `password`) VALUES
-(1, '2016-12-09 22:06:56', 'backend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', 'admin', '12345'),
-(2, '2016-12-10 04:28:19', 'backend', 0, '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', 'admin', 'test'),
-(3, '2016-12-10 04:28:19', 'backend', 1, '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', 'admin', 'test'),
-(4, '2016-12-10 04:28:19', 'backend', 0, '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', 'admin', 'test'),
-(5, '2016-12-10 04:28:19', 'backend', 1, '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', 'admin', 'test'),
-(6, '2016-12-28 19:40:38', 'backend', 0, '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', 'admin', 'test'),
-(7, '2016-12-28 19:40:38', 'backend', 1, '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', 'admin', 'test'),
-(8, '2016-12-28 19:40:38', 'backend', 0, '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', 'admin', 'test'),
-(9, '2016-12-28 19:40:38', 'backend', 1, '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', 'admin', 'test'),
-(10, '2016-12-28 19:40:46', 'backend', 0, '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', 'admin', 'fifftpef2'),
-(11, '2016-12-28 19:40:46', 'backend', 1, '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', 'admin', 'fifftpef2'),
-(12, '2016-12-28 19:40:46', 'backend', 0, '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', 'admin', 'fifftpef2'),
-(13, '2016-12-28 19:40:46', 'backend', 1, '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', 'admin', 'fifftpef2'),
-(14, '2016-12-28 19:40:53', 'backend', 0, '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', 'admin', 'test'),
-(15, '2016-12-28 19:40:53', 'backend', 1, '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', 'admin', 'test'),
-(16, '2016-12-28 19:40:53', 'backend', 0, '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', 'admin', 'test'),
-(17, '2016-12-28 19:40:53', 'backend', 1, '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', 'admin', 'test'),
-(18, '2016-12-28 19:41:00', 'backend', 0, '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', 'admin', '12345');
-
 -- --------------------------------------------------------
 
 --
@@ -319,20 +309,30 @@ CREATE TABLE `cms_menu` (
 --
 
 INSERT INTO `cms_menu` (`TMPID`, `id`, `sort`, `gid`, `menuID`, `parentID`, `published`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `title`, `href`, `target`, `divider`, `blogid`) VALUES
-(1, 3, 1, 1, 1, 0, 1, '0000-00-00 00:00:00', '2016-12-09 21:33:01', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'YaWK', '#home', '_self', 0, 0),
-(2, 2, 2, 1, 1, 0, 0, '0000-00-00 00:00:00', '2016-12-09 21:33:01', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Styling', 'override-bootstrap-style-settings-theme-generator.html', '_self', 0, 0),
-(3, 1, 3, 2, 1, 0, 0, '0000-00-00 00:00:00', '2016-12-09 21:33:01', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Userpage', 'welcome.html', '_self', 0, 0),
-(30, 9, 8, 1, 1, 0, 0, '2016-10-11 13:55:40', '2016-12-09 21:33:01', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'logout', 'logout.html', '_self', 0, 0),
-(36, 1, 2, 1, 2, 0, 0, '2016-11-03 06:26:00', '2016-11-03 06:36:25', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'TesteintrÃ¤ge', '#', '_self', 0, 0),
-(37, 1, 3, 1, 2, 2, 0, '2016-11-03 06:26:06', '2016-11-03 06:36:25', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Eintrag 1', '#', '_self', 0, 0),
-(38, 2, 4, 1, 2, 2, 0, '2016-11-03 06:26:12', '2016-11-03 06:36:25', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Eintrag 2', '#', '_self', 0, 0),
-(39, 3, 5, 1, 2, 2, 0, '2016-11-03 06:26:18', '2016-11-03 06:36:25', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Eintrag 3', '#', '_self', 0, 0),
-(40, 13, 12, 1, 1, 0, 0, '0000-00-00 00:00:00', '2016-12-09 21:33:01', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'booking', 'booking.html', '_self', 0, 0),
-(44, 14, 4, 1, 1, 0, 1, '2016-12-09 19:24:57', '2016-12-09 21:33:01', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Features', '#features', '_self', 0, 0),
-(45, 15, 3, 1, 1, 0, 1, '2016-12-09 19:26:11', '2016-12-09 21:33:01', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Design', '#responsive', '_self', 0, 0),
-(46, 16, 6, 1, 1, 0, 1, '2016-12-09 19:27:07', '2016-12-09 21:33:01', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Screencast', '#screencast', '_self', 0, 0),
-(47, 17, 5, 1, 1, 0, 1, '2016-12-09 19:27:14', '2016-12-09 21:33:01', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Plugins', '#plugins', '_self', 0, 0),
-(48, 18, 13, 1, 1, 0, 1, '2016-12-10 03:03:41', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'GitHub', '#github', '_self', 0, 0);
+(2, 2, 2, 1, 1, 0, 0, '0000-00-00 00:00:00', '2017-01-11 16:58:29', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Styling', 'override-bootstrap-style-settings-theme-generator.html', '_self', 0, 0),
+(3, 1, 3, 2, 1, 0, 0, '0000-00-00 00:00:00', '2017-01-11 16:58:29', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Userpage', 'welcome.html', '_self', 0, 0),
+(30, 8, 8, 1, 1, 0, 0, '2016-10-11 13:55:40', '2017-01-11 16:58:29', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'logout', 'logout.html', '_self', 0, 0),
+(36, 1, 2, 1, 2, 0, 0, '2016-11-03 06:26:00', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'W168', '#', '_self', 0, 0),
+(37, 2, 4, 1, 2, 0, 0, '2016-11-03 06:26:06', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'W169', '#', '_self', 0, 0),
+(38, 2, 4, 1, 2, 0, 0, '2016-11-03 06:26:12', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'W169', '#', '_self', 0, 0),
+(39, 3, 5, 1, 2, 0, 1, '2016-11-03 06:26:18', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'B-Klasse', '#', '_self', 0, 0),
+(40, 12, 12, 1, 1, 0, 0, '0000-00-00 00:00:00', '2017-01-11 16:58:29', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'booking', 'booking.html', '_self', 0, 0),
+(49, 13, 13, 1, 1, 0, 0, '2016-12-28 22:16:35', '2017-01-11 16:58:29', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Startseite', 'index.html', '_self', 0, 0),
+(50, 14, 14, 1, 1, 0, 1, '2016-12-29 00:13:48', '2017-01-11 16:58:29', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Baureihe', 'mercedes-benz-pkw-baureihen-mercedes-modelle.html', '_self', 0, 0),
+(51, 15, 15, 1, 1, 14, 1, '2016-12-29 00:14:37', '2017-01-11 16:58:29', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Mercedes Benz W123 1976 bis 1986', 'mercedes-benz-w123-1976-1986.html', '_self', 0, 0),
+(53, 16, 17, 1, 1, 0, 0, '2016-12-29 00:16:48', '2017-01-11 16:58:29', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'W114/115', 'W114-115.html', '_self', 0, 0),
+(54, 17, 18, 1, 1, 14, 1, '0000-00-00 00:00:00', '2017-01-11 16:58:29', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Mercedes Benz W124 1985-1994', 'mercedes-benz-w124-1985-1994.html', '_self', 0, 0),
+(55, 18, 19, 1, 1, 0, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Twitch Stream Test', 'twitch-stream-test.html', '_self', 0, 0),
+(56, 19, 20, 1, 1, 0, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Mercedes News', 'mercedes-news.html', '_self', 0, 1),
+(57, 4, 6, 1, 2, 0, 1, '2017-01-18 06:13:59', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'W225', '#', '_self', 0, 0),
+(58, 5, 7, 1, 2, 0, 1, '2017-01-18 06:14:11', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'C-Klasse', '#', '_self', 0, 0),
+(59, 6, 8, 1, 2, 0, 1, '2017-01-18 06:14:19', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'W201', '#', '_self', 0, 0),
+(60, 7, 9, 1, 2, 0, 1, '2017-01-18 06:14:24', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'W202', '#', '_self', 0, 0),
+(61, 8, 10, 1, 2, 0, 0, '2017-01-18 06:14:30', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'W203', '#', '_self', 0, 0),
+(62, 9, 1, 1, 2, 0, 1, '2017-01-18 06:14:56', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'A-Klasse', '#', '_self', 0, 0),
+(63, 1, 1, 1, 3, 0, 0, '2017-01-18 19:59:05', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'test 1', '#', '_self', 0, 0),
+(64, 2, 2, 1, 3, 0, 0, '2017-01-18 19:59:09', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'test 2', '#', '_self', 0, 0),
+(65, 3, 3, 1, 3, 0, 1, '2017-01-18 19:59:12', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'test 3', '#', '_self', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -351,8 +351,9 @@ CREATE TABLE `cms_menu_names` (
 --
 
 INSERT INTO `cms_menu_names` (`id`, `name`, `published`) VALUES
-(1, '', 1),
-(2, 'Test Menu', 1);
+(1, 'Mercedesgarage.net', 1),
+(2, 'Mercedes Baureihen', 1),
+(3, 'test', 1);
 
 -- --------------------------------------------------------
 
@@ -403,7 +404,7 @@ INSERT INTO `cms_meta_local` (`id`, `name`, `page`, `content`) VALUES
 (11, 'description', 12, 'Test Menu'),
 (13, 'description', 14, 'Blog #2                                                                                             '),
 (18, 'description', 19, '333333'),
-(19, 'description', 20, 'sadasdasd'),
+(19, 'description', 20, 'W124'),
 (20, 'description', 21, 'sadasdasd'),
 (21, 'description', 22, 'asaasdasddd'),
 (22, 'description', 23, 'asd'),
@@ -444,7 +445,11 @@ INSERT INTO `cms_meta_local` (`id`, `name`, `page`, `content`) VALUES
 (65, 'description', 13, 'Testeintrag 2                                                                                       '),
 (66, 'keywords', 13, ''),
 (67, 'description', 2, ''),
-(68, 'keywords', 2, '');
+(68, 'keywords', 2, ''),
+(69, 'description', 20, 'W124'),
+(70, 'keywords', 20, ''),
+(71, 'description', 23, 'w126'),
+(72, 'keywords', 23, '');
 
 -- --------------------------------------------------------
 
@@ -532,13 +537,18 @@ CREATE TABLE `cms_pages` (
 --
 
 INSERT INTO `cms_pages` (`id`, `published`, `gid`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `alias`, `title`, `bgimage`, `owner`, `menu`, `locked`, `blogid`, `plugin`) VALUES
-(1, 1, 1, '2016-08-19 09:43:45', '2016-12-10 03:30:24', '2016-08-19 09:43:45', '0000-00-00 00:00:00', 'index', 'Startseite', '', -1, 0, 0, 0, '0'),
-(2, 1, 1, '2016-08-19 09:58:39', '2016-11-03 02:00:42', '2016-08-19 09:58:39', '0000-00-00 00:00:00', 'override-bootstrap-style-settings-theme-generator', 'Styling', '', -1, 0, 0, 0, '0'),
-(3, 1, 2, '2016-08-19 10:54:00', '2016-08-19 10:57:07', '2016-08-19 10:54:00', '0000-00-00 00:00:00', 'welcome', 'Userpage', '', -1, 0, 1, 0, '8'),
+(1, 1, 1, '2016-08-19 09:43:45', '2016-12-28 22:25:56', '2016-08-19 09:43:45', '0000-00-00 00:00:00', 'index', 'Startseite', '', -1, 0, 0, 0, '0'),
+(2, 0, 1, '2016-08-19 09:58:39', '2016-11-03 02:00:42', '2016-08-19 09:58:39', '0000-00-00 00:00:00', 'override-bootstrap-style-settings-theme-generator', 'Styling', '', -1, 0, 0, 0, '0'),
+(3, 0, 2, '2016-08-19 10:54:00', '2016-08-19 10:57:07', '2016-08-19 10:54:00', '0000-00-00 00:00:00', 'welcome', 'Userpage', '', -1, 0, 1, 0, '8'),
 (4, 0, 1, '2016-09-12 14:32:17', '2016-09-12 14:36:13', '2016-09-12 14:32:17', '0000-00-00 00:00:00', 'logout', 'logout', '', -1, 0, 1, 0, '0'),
 (5, 1, 1, '2016-09-15 02:58:56', '0000-00-00 00:00:00', '2016-09-15 02:58:56', '0000-00-00 00:00:00', 'terms-of-service', 'terms-of-service', '', -1, 0, 0, 0, '7'),
 (17, 1, 1, '2016-12-08 12:05:21', '2016-12-08 12:05:33', '2016-12-08 12:05:21', '0000-00-00 00:00:00', 'booking', 'booking', '', -1, 0, 1, 0, '0'),
-(18, 0, 1, '2016-12-09 17:35:25', '2016-12-09 17:35:42', '2016-12-09 17:35:25', '0000-00-00 00:00:00', 'working-process', 'working process', '', -1, 0, 0, 0, '0');
+(18, 0, 1, '2016-12-09 17:35:25', '2016-12-09 17:35:42', '2016-12-09 17:35:25', '0000-00-00 00:00:00', 'working-process', 'working process', '', -1, 0, 0, 0, '0'),
+(19, 1, 1, '2016-12-29 00:17:30', '2017-01-03 17:56:36', '2016-12-29 00:17:30', '0000-00-00 00:00:00', 'mercedes-benz-w123-1976-1986', 'Mercedes Benz W123 1976 bis 1986', '', -1, 0, 0, 0, '0'),
+(20, 1, 1, '2017-01-11 16:57:05', '2017-01-11 16:58:52', '2017-01-11 16:57:05', '0000-00-00 00:00:00', 'mercedes-benz-w124-1985-1994', 'Mercedes Benz W124 1985-1994', '', -1, 0, 0, 0, '0'),
+(21, 1, 1, '2017-01-16 11:45:37', '2017-01-16 11:46:42', '2017-01-16 11:45:37', '0000-00-00 00:00:00', 'twitch-stream-test', 'Twitch Stream Test', '', -1, 0, 0, 0, '0'),
+(22, 1, 1, '2017-01-17 05:46:23', '0000-00-00 00:00:00', '2017-01-17 05:46:23', '0000-00-00 00:00:00', 'mercedes-news', 'Mercedes News', '', -1, 0, 1, 1, '0'),
+(23, 1, 1, '2017-01-17 05:46:48', '0000-00-00 00:00:00', '2017-01-17 05:46:48', '0000-00-00 00:00:00', 'w126', 'w126', '', -1, 0, 1, 1, '');
 
 -- --------------------------------------------------------
 
@@ -668,6 +678,14 @@ CREATE TABLE `cms_plugin_gallery` (
   `watermarkBorder` varchar(12) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Daten für Tabelle `cms_plugin_gallery`
+--
+
+INSERT INTO `cms_plugin_gallery` (`id`, `sortItem`, `folder`, `title`, `description`, `author`, `authorUrl`, `createThumbnails`, `thumbnailWidth`, `resizeImages`, `resizeType`, `imageWidth`, `imageHeight`, `watermark`, `watermarkEnabled`, `watermarkPosition`, `watermarkImage`, `offsetY`, `offsetX`, `watermarkFont`, `watermarkTextSize`, `watermarkOpacity`, `watermarkColor`, `watermarkBorderColor`, `watermarkBorder`) VALUES
+(1, 0, 'media/images/W124', 'Mercedes-Benz W124 - 1985 bis 1994', 'Ob als Limousine, Kombi, CoupÃ© oder Cabrio - fÃ¼r viele Fans ist es die letzte echte E-Klasse.', '', '', 1, 300, 0, 'fit_to_width', 0, 0, 'www.mercedesgarage.at', 0, 'bottom right', '', '-12', '-12', '../system/fonts/delicious.ttf', '24', '.5', 'E8E8E8', '424242', '1'),
+(2, 0, 'media/images/W123', 'Mercedes Benz W123 1976 bis 1986', 'W123 Fotos: Interieur, Exterieur, Limousine, Kombi, Coupe, Cabrio', '', '', 1, 300, 1, 'thumbnail', 800, 800, 'www.mercedesgarage.at', 0, 'bottom right', '', '-12', '-12', '../system/fonts/delicious.ttf', '24', '.5', 'E8E8E8', '424242', '1');
+
 -- --------------------------------------------------------
 
 --
@@ -683,6 +701,50 @@ CREATE TABLE `cms_plugin_gallery_items` (
   `author` varchar(255) NOT NULL,
   `authorUrl` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Daten für Tabelle `cms_plugin_gallery_items`
+--
+
+INSERT INTO `cms_plugin_gallery_items` (`id`, `galleryID`, `sort`, `filename`, `title`, `author`, `authorUrl`) VALUES
+(1, 1, 8, '14590160_1239669666071912_8179583242988687574_o.jpg', 'Mercedes-Benz W124 - 1985 bis 1994', '', ''),
+(2, 1, 1, '14612479_1239669569405255_9117919262052317404_o.jpg', 'Mercedes-Benz W124 - 1985 bis 1994', '', ''),
+(3, 1, 3, '14633140_1239669742738571_4198600928007421943_o.jpg', 'Mercedes-Benz W124 - 1985 bis 1994', '', ''),
+(4, 1, 4, '14692139_1239669649405247_8313650990569687549_o.jpg', 'Mercedes-Benz W124 - 1985 bis 1994', '', ''),
+(5, 1, 5, '14711050_1239669566071922_7424829517892465911_o.jpg', 'Mercedes-Benz W124 - 1985 bis 1994', '', ''),
+(6, 1, 6, '14853293_1239669776071901_2429565509921052310_o.jpg', 'Mercedes-Benz W124 - 1985 bis 1994', '', ''),
+(7, 1, 7, '14859926_1239669726071906_1903680116334103920_o.jpg', 'Mercedes-Benz W124 - 1985 bis 1994', '', ''),
+(9, 1, 2, '14882310_1239669516071927_8527388114910782474_o.jpg', 'Mercedes-Benz W124 - 1985 bis 1994', '', ''),
+(10, 1, 10, '14883579_1239669522738593_1022388281581614206_o.jpg', 'Mercedes-Benz W124 - 1985 bis 1994', '', ''),
+(11, 1, 11, '14884718_1239669592738586_7713362563862732880_o.jpg', 'Mercedes-Benz W124 - 1985 bis 1994', '', ''),
+(12, 1, 12, '14890001_1239669519405260_4264550528377150564_o.jpg', 'Mercedes-Benz W124 - 1985 bis 1994', '', ''),
+(13, 1, 13, '14902923_1239669719405240_6225826415239546564_o.jpg', 'Mercedes-Benz W124 - 1985 bis 1994', '', ''),
+(14, 2, 1, 'W123-300D.jpg', 'Mercedes Benz W123 300D, s/w Foto', '', ''),
+(15, 2, 2, 'W123-breitbandscheinwerfer.jpg', 'Mercedes Benz W123 1976 bis 1986', '', ''),
+(16, 2, 3, 'W123-cockpit.jpg', 'Mercedes Benz W123 1976 bis 1986', '', ''),
+(17, 2, 4, 'W123-coupe-dreifach.jpg', 'Mercedes Benz W123 1976 bis 1986', '', ''),
+(18, 2, 5, 'W123-coupe-ohne-b-sauele.jpg', 'Mercedes Benz W123 1976 bis 1986', '', ''),
+(19, 2, 6, 'W123-coupe-schwarz.jpg', 'Mercedes Benz W123 1976 bis 1986', '', ''),
+(20, 2, 7, 'W123-coupe-sw.jpg', 'Mercedes Benz W123 1976 bis 1986', '', ''),
+(21, 2, 8, 'W123-crashfoto-vogelperspektive.jpg', 'Mercedes Benz W123 1976 bis 1986', '', ''),
+(22, 2, 9, 'W123-interieur-ruckbank.jpg', 'Mercedes Benz W123 1976 bis 1986', '', ''),
+(23, 2, 10, 'W123-interieur-vordersitze.jpg', 'Mercedes Benz W123 1976 bis 1986', '', ''),
+(24, 2, 11, 'W123-kofferraum.jpg', 'Mercedes Benz W123 1976 bis 1986', '', ''),
+(25, 2, 12, 'W123-kombi-01.jpg', 'Mercedes Benz W123 1976 bis 1986', '', ''),
+(26, 2, 13, 'W123-lenkrad.jpg', 'Mercedes Benz W123 1976 bis 1986', '', ''),
+(27, 2, 14, 'W123-mittelkonsole.jpg', 'Mercedes Benz W123 1976 bis 1986', '', ''),
+(28, 2, 15, 'W123-modellvielfalt.jpg', 'Mercedes Benz W123 1976 bis 1986', '', ''),
+(29, 2, 16, 'W123-pressefoto-braun-02.jpg', 'Mercedes Benz W123 1976 bis 1986', '', ''),
+(30, 2, 17, 'W123-pressefoto-braun.jpg', 'Mercedes Benz W123 1976 bis 1986', '', ''),
+(31, 2, 18, 'W123-pressefoto-L-g.jpg', 'Mercedes Benz W123 1976 bis 1986', '', ''),
+(32, 2, 19, 'W123-pressefoto-modern.jpg', 'Mercedes Benz W123 1976 bis 1986', '', ''),
+(33, 2, 20, 'W123-taxi.jpg', 'Mercedes Benz W123 1976 bis 1986', '', ''),
+(34, 2, 21, 'W123-tmodell-02.jpg', 'Mercedes Benz W123 1976 bis 1986', '', ''),
+(35, 2, 22, 'W123-tmodell-03-R.jpg', 'Mercedes Benz W123 1976 bis 1986', '', ''),
+(36, 2, 23, 'W123-tmodell-04.jpg', 'Mercedes Benz W123 1976 bis 1986', '', ''),
+(37, 2, 24, 'W123-tmodell-05.jpg', 'Mercedes Benz W123 1976 bis 1986', '', ''),
+(38, 2, 25, 'W123-tmodell-seitlich.jpg', 'Mercedes Benz W123 1976 bis 1986', '', ''),
+(39, 2, 26, 'W123-vogelperspektive.jpg', 'Mercedes Benz W123 1976 bis 1986', '', '');
 
 -- --------------------------------------------------------
 
@@ -711,8 +773,6 @@ INSERT INTO `cms_plugin_msg` (`msg_id`, `parentID`, `msg_date`, `fromUID`, `toUI
 (2, 0, '2016-11-22 06:47:47', 1, 1, 'asdasdasd', 1, 0, 0),
 (3, 0, '2016-11-22 06:48:00', 1, 2, 'twerwerwer', 1, 0, 0),
 (4, 0, '2016-11-22 06:48:28', 1, 1, 'test', 1, 0, 0),
-(5, 0, '2016-11-22 06:48:40', 1, 1, 'test 2', 1, 0, 0),
-(6, 0, '2016-11-22 13:37:36', 1, 1, 'test', 1, 0, 0),
 (7, 0, '2016-12-09 22:54:02', 2, 1, 'sooon ..... :-)', 1, 0, 0);
 
 -- --------------------------------------------------------
@@ -766,30 +826,31 @@ CREATE TABLE `cms_settings` (
 --
 
 INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation`, `activated`, `label`, `icon`, `heading`, `subtext`, `fieldClass`, `fieldType`, `placeholder`, `description`, `options`) VALUES
-('admin_email', 'youremail@domain.com', '', 1, 5, 1, 'ADMIN_EMAIL_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+('admin_email', 'danielretzl@gmail.com', '', 1, 5, 1, 'ADMIN_EMAIL_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('backendFooter', '0', '', 11, 1, 1, 'BACKENDFOOTER_LABEL', 'fa fa-chevron-down', 'BACKENDFOOTER_HEADING', 'BACKENDFOOTER_SUBTEXT', 'form-control', 'checkbox', '', '', ''),
 ('backendFooterCopyright', '0', '', 11, 2, 1, 'BACKENDFOOTERCOPYRIGHT_LABEL', '', '', '', 'form-control', 'checkbox', '', '', ''),
 ('backendFooterValueLeft', 'http://yawk.io', '', 11, 2, 1, 'BACKENDFOOTERVALUE_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('backendFooterValueRight', 'proudly presented by <b>YaWK :: <small> Yet another Web Kit</b></small>', '', 11, 2, 1, 'BACKENDFOOTERVALUERIGHT_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
-('backendFX', '0', '', 2, 3, 1, 'BACKENDFX_LABEL', 'fa fa-paper-plane-o', 'BACKENDFX_HEADING', 'BACKENDFX_SUBTEXT', 'form-control', 'checkbox', '', '', ''),
-('backendFXtime', '820', '', 2, 5, 1, 'BACKENDFXTIME_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
-('backendFXtype', 'fadeIn In', '', 2, 4, 1, 'BACKENDFXTYPE_LABEL', '', '', '', 'form-control', 'select', '', '', 'fadeIn,Fade In:slideDown,Slide Down'),
+('backendFX', '0', '', 2, 5, 1, 'BACKENDFX_LABEL', 'fa fa-paper-plane-o', 'BACKENDFX_HEADING', 'BACKENDFX_SUBTEXT', 'form-control', 'checkbox', '', '', ''),
+('backendFXtime', '820', '', 2, 7, 1, 'BACKENDFXTIME_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+('backendFXtype', 'fadeIn In', '', 2, 6, 1, 'BACKENDFXTYPE_LABEL', '', '', '', 'form-control', 'select', '', '', 'fadeIn,Fade In:slideDown,Slide Down'),
+('backendLanguage', 'en-EN', '', 2, 4, 1, 'BACKENDLANGUAGE_LABEL', 'fa fa-language', 'BACKENDLANGUAGE_HEADING', 'BACKENDLANGUAGE_SUBTEXT', 'form-control', 'select', '', '', 'en-EN,English (en-EN):de-DE,German (de-DE)'),
 ('backendLayout', 'sidebar-mini', '', 2, 2, 1, 'BACKENDLAYOUT_LABEL', '', '', '', 'form-control', 'select', '', 'BACKENDLAYOUT_DESC', 'fixed,Fixed:sidebar-collapse,Sidebar Collapse:sidebar-mini,Sidebar Mini:layout-boxed,Layout Boxed:layout-top-nav,Layout Top Nav'),
-('backendLogoSubText', 'frontend', '', 12, 2, 1, 'BACKENDLOGOSUBTEXT_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
-('backendLogoText', 'YaWK', '', 12, 1, 1, 'BACKENDLOGOTEXT_LABEL', 'fa fa-bars', 'BACKENDLOGOTEXT_HEADING', 'BACKENDLOGOTEXT_SUBTEXT', 'form-control', 'input', '', '', ''),
+('backendLogoSubText', '', '', 12, 2, 1, 'BACKENDLOGOSUBTEXT_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+('backendLogoText', 'mercedesgarage', '', 12, 1, 1, 'BACKENDLOGOTEXT_LABEL', 'fa fa-bars', 'BACKENDLOGOTEXT_HEADING', 'BACKENDLOGOTEXT_SUBTEXT', 'form-control', 'input', '', '', ''),
 ('backendLogoUrl', '0', '', 12, 3, 1, 'BACKENDLOGOURL_LABEL', '', '', '', 'form-control', 'checkbox', '', '', ''),
 ('backendMessagesMenu', '1', '', 12, 4, 1, 'BACKENDMSGMENU_LABEL', 'fa fa-bell-o', 'BACKENDMSGMENU_HEADING', 'BACKENDMSGMENU_SUBTEXT', 'form-control', 'checkbox', '', '', ''),
 ('backendNotificationMenu', '1', '', 12, 5, 1, 'BACKENDNOTIFYMENU_LABEL', '', '', '', 'form-control', 'checkbox', '', '', ''),
 ('backendSkin', 'skin-wp-style', '', 2, 1, 1, 'BACKENDSKIN_LABEL', 'fa fa-paint-brush', 'BACKENDSKIN_HEADING', 'BACKENDSKIN_SUBTEXT', 'form-control', 'select', '', '', 'skin-blue,Blue:skin-green,Green:skin-red,Red:skin-yellow,Yellow:skin-purple,Purple:skin-black,Black:skin-yellow-light,Yellow Light:skin-wp-style,Wordpress Style'),
 ('dbhost', 'http://localhost', '', 9, 2, 1, 'DBHOST_LABEL', 'fa fa-database', 'DATABASE_HEADING', 'DATABASE_SUBTEXT', 'form-control', 'input', 'http://localhost/', '', ''),
-('dbname', 'yawk_lte', '', 9, 1, 1, 'DBNAME_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+('dbname', 'yawk_mercedesgarage', '', 9, 1, 1, 'DBNAME_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('dbport', '3306', '', 9, 6, 1, 'DBPORT_LABEL', '', '', '', 'form-control', 'input', 'default:3306', '', ''),
 ('dbprefix', 'cms_', '', 9, 5, 1, 'DBPREFIX_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('dbpwd', 'test', '', 9, 4, 1, 'DBPWD_LABEL', '', '', '', 'form-control', 'password', '', '', ''),
 ('dbusername', 'root', '', 9, 3, 1, 'DBUSERNAME_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('defaultemailtext', '', 'Hello $user,\\n\\n\\Thank you for registering on site\\n\\n$url', 5, 0, 1, 'Default SignUp Email Message', '', '', '', 'form-control', 'textarea', '', '', ''),
-('dirprefix', '/yawk-LTE', '', 9, 0, 1, 'DIRPREFIX_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
-('domain', 'localhost.net', '', 1, 4, 1, 'DOMAIN_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+('dirprefix', '/mercedesgarage.net', '', 9, 0, 1, 'DIRPREFIX_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+('domain', '192.168.1.8/mercedesgarage.net', '', 1, 4, 1, 'DOMAIN_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('editorActiveLine', '1', '', 14, 2, 1, 'EDITOR_ACTIVE_LINE_LABEL', '', '', '', 'form-control', 'checkbox', '', 'EDITOR_ACTIVE_LINE_DESC', ''),
 ('editorAutoCodeview', '0', '', 14, 9, 1, 'EDITOR_AUTO_CODEVIEW_LABEL', '', '', '', 'form-control', 'checkbox', '', 'EDITOR_AUTO_CODEVIEW_DESC', ''),
 ('editorCloseBrackets', '1', '', 14, 11, 1, 'EDITOR_CLOSE_BRACKETS_LABEL', '', '', '', 'form-control', 'checkbox', '', 'EDITOR_CLOSE_BRACKETS_DESC', ''),
@@ -809,7 +870,7 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('globalmenuid', '1', '', 3, 2, 1, 'GLOBALMENUID_LABEL', 'fa fa-bars', 'GLOBALMENUID_HEADING', 'GLOBALMENUID_SUBTEXT', 'form-control', 'select', '', 'GLOBALMENUID_DESC', ''),
 ('globalmetakeywords', 'YAWK, CMS, WORDPRESS, JOOMLA', '', 10, 0, 1, 'Global Site Keywords', '', '', '', 'form-control', '', '', '', ''),
 ('globalmetatext', 'YAWK DEVELOPMENT VERSION', '', 10, 0, 1, 'Global Meta Description', '', '', '', 'form-control', '', '', '', ''),
-('host', 'http://192.168.1.8/yawk-LTE', '', 1, 3, 1, 'HOST_LABEL', '', '', '', 'form-control', 'input', '', 'DATABASE_DESC', ''),
+('host', 'http://192.168.1.8/mercedesgarage.net', '', 1, 3, 1, 'HOST_LABEL', '', '', '', 'form-control', 'input', '', 'DATABASE_DESC', ''),
 ('loadingTime', '0', '', 11, 3, 1, 'LOADINGTIME_LABEL', 'fa fa-signal', 'LOADINGTIME_HEADING', 'LOADINGTIME_SUBTEXT', 'form-control', 'checkbox', '', '', ''),
 ('logoutmenuid', '1', '', 6, 0, 1, 'Logout Menu ID for logged-in Users', '', '', '', 'form-control', '', '', '', ''),
 ('offline', '0', '', 8, 0, 1, 'OFFLINE_LABEL', 'fa fa-wrench', 'OFFLINE_HEADING', 'OFFLINE_SUBTEXT', 'form-control', 'checkbox', '', 'OFFLINE_DESC', ''),
@@ -841,12 +902,12 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('signup_tostext', 'Terms of service', '', 5, 0, 1, 'terms of service description', '', '', '', 'form-control', '', '', '', ''),
 ('signup_zipcode', '0', '', 5, 0, 1, 'require zipcode to signup', '', '', '', 'form-control', '', '', '', ''),
 ('siteauthor', 'YaWK', '', 10, 0, 1, 'Site Author', '', '', '', 'form-control', '', '', '', ''),
-('sitename', 'YaWK - yet another webkit - CMS', '', 1, 2, 1, 'SITENAME_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
-('statsEnable', '1', '', 13, 2, 1, 'STATS_LABEL', 'fa fa-bar-chart', 'STATS_HEADING', 'STATS_SUBTEXT', 'form-control', 'select', '', 'STATS_DESC', '0,off:1,on'),
-('syslogEnable', '1', '', 13, 1, 1, 'SYSLOG_LABEL', 'fa fa-terminal', 'SYSLOG_HEADING', 'SYSLOG_SUBTEXT', 'form-control', 'select', '', 'SYSLOG_DESC', '0,off:1,on'),
+('sitename', 'Das freie Magazin fÃ¼r Youngtimer und Oldtimer von Mercedes-Benz', '', 1, 2, 1, 'SITENAME_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+('statsEnable', '0', '', 13, 2, 1, 'STATS_LABEL', 'fa fa-bar-chart', 'STATS_HEADING', 'STATS_SUBTEXT', 'form-control', 'select', '', 'STATS_DESC', '0,off:1,on'),
+('syslogEnable', '0', '', 13, 1, 1, 'SYSLOG_LABEL', 'fa fa-terminal', 'SYSLOG_HEADING', 'SYSLOG_SUBTEXT', 'form-control', 'select', '', 'SYSLOG_DESC', '0,off:1,on'),
 ('timediff', '1', '', 7, 1, 1, 'TIMEDIFF_LABEL', 'fa fa-clock-o', 'TIMEDIFF_HEADING', 'TIMEDIFF_SUBTEXT', 'form-control', 'checkbox', '', 'TIMEDIFF_DESC', ''),
 ('timedifftext', 'This page is not online yet. Please come back in ', '', 7, 2, 1, 'TIMEDIFFTEXT_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
-('title', 'YAWK DEMO', '', 1, 1, 1, 'TITLE_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+('title', 'Mercedesgarage.net', '', 1, 1, 1, 'TITLE_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('twitterstatus', '0', '', 4, 0, 1, 'Twitter on/off', '', '', '', 'form-control', '', '', '', ''),
 ('twitterurl', 'http://www.twitter.com', '', 4, 0, 1, 'URL zu Twitter Profil', '', '', '', 'form-control', '', '', '', ''),
 ('userlogin', '0', '', 17, 1, 1, 'USERLOGIN_LABEL', 'fa fa-lock', 'USERLOGIN_HEADING', 'USERLOGIN_SUBTEXT', 'form-control', 'checkbox', '', 'USERLOGIN_DESC', ''),
@@ -877,7 +938,9 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('userpage_profile', '1', '', 6, 0, 1, 'userpage profile enabled?', '', '', '', 'form-control', '', '', '', ''),
 ('userpage_settings', '1', '', 6, 0, 1, 'userpage`settings', '', '', '', 'form-control', '', '', '', ''),
 ('userpage_stats', '1', '', 6, 0, 1, 'userpage stats enabled?', '', '', '', 'form-control', '', '', '', ''),
-('yawkversion', '0.7.0', '', 9, 2, 1, 'YAWKVERSION_LABEL', '', '', '', 'form-control', 'input', '', '', '');
+('yawkversion', '0.9.0', '', 9, 2, 1, 'YAWKVERSION_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+('youtubeChannelUrl', 'http://www.youtube.com', '', 4, 0, 1, 'YouTube Channel URL', '', '', '', 'form-control', '', '', '', ''),
+('youtubestatus', '0', '', 4, 0, 1, 'YouTube on/off', '', '', '', 'form-control', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -943,77 +1006,7 @@ CREATE TABLE `cms_stats` (
 --
 
 INSERT INTO `cms_stats` (`id`, `uid`, `gid`, `logged_in`, `acceptLanguage`, `remoteAddr`, `userAgent`, `device`, `deviceType`, `os`, `osVersion`, `browser`, `browserVersion`, `date_created`, `referer`, `page`) VALUES
-(1, 0, 0, 0, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 04:28:23', '', '/yawk-LTE/'),
-(2, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 04:28:48', '', '/yawk-LTE/'),
-(3, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 04:31:40', '', '/yawk-LTE/'),
-(4, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 04:31:41', '', '/yawk-LTE/'),
-(5, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 04:32:24', '', '/yawk-LTE/'),
-(6, 0, 0, 0, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 04:52:07', '', '/yawk-LTE/'),
-(7, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 04:52:12', '', '/yawk-LTE/'),
-(8, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 04:52:13', '', '/yawk-LTE/'),
-(9, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 04:52:40', '', '/yawk-LTE/'),
-(10, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 04:52:44', '', '/yawk-LTE/'),
-(11, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 04:52:52', '', '/yawk-LTE/'),
-(12, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 04:52:53', '', '/yawk-LTE/'),
-(13, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 04:53:09', '', '/yawk-LTE/'),
-(14, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 04:53:19', '', '/yawk-LTE/'),
-(15, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 05:02:52', '', '/yawk-LTE/'),
-(16, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 05:02:53', '', '/yawk-LTE/'),
-(17, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 05:02:58', '', '/yawk-LTE/'),
-(18, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 05:03:20', '', '/yawk-LTE/'),
-(19, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 05:03:25', '', '/yawk-LTE/'),
-(20, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 05:04:05', '', '/yawk-LTE/'),
-(21, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 05:04:23', '', '/yawk-LTE/'),
-(22, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 05:04:28', '', '/yawk-LTE/'),
-(23, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 05:05:42', '', '/yawk-LTE/'),
-(24, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 05:05:48', '', '/yawk-LTE/'),
-(25, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 05:05:50', '', '/yawk-LTE/'),
-(26, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 05:06:01', '', '/yawk-LTE/'),
-(27, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 05:06:05', '', '/yawk-LTE/'),
-(28, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 05:06:51', '', '/yawk-LTE/'),
-(29, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 05:07:31', '', '/yawk-LTE/'),
-(30, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 05:08:36', '', '/yawk-LTE/'),
-(31, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 05:09:41', '', '/yawk-LTE/'),
-(32, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 05:09:52', '', '/yawk-LTE/'),
-(33, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 05:09:55', '', '/yawk-LTE/'),
-(34, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 05:10:08', '', '/yawk-LTE/'),
-(35, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 05:10:41', '', '/yawk-LTE/'),
-(36, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 05:10:49', '', '/yawk-LTE/'),
-(37, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 05:11:14', '', '/yawk-LTE/'),
-(38, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 05:11:18', '', '/yawk-LTE/'),
-(39, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 05:11:22', '', '/yawk-LTE/'),
-(40, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 05:11:26', 'http://192.168.1.8/yawk-LTE/', '/yawk-LTE/'),
-(41, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 05:14:04', '', '/yawk-LTE/'),
-(42, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 05:14:10', '', '/yawk-LTE/'),
-(43, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 05:14:13', 'http://192.168.1.8/yawk-LTE/', '/yawk-LTE/'),
-(44, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 05:14:25', '', '/yawk-LTE/'),
-(45, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 05:14:36', '', '/yawk-LTE/'),
-(46, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-10 05:14:37', '', '/yawk-LTE/'),
-(47, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '54.0.2840.99', '2016-12-12 19:30:29', '', '/yawk-LTE/'),
-(48, 2, 4, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.3', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '55.0.2883.87', '2016-12-12 22:12:20', '', 'index'),
-(49, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '55.0.2883.87', '2016-12-21 04:55:45', 'http://192.168.1.8/yawk-LTE/admin/index.php?page=stats', 'index'),
-(50, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '55.0.2883.87', '2016-12-21 04:56:13', '', '/yawk-LTE/'),
-(51, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '55.0.2883.87', '2016-12-21 04:57:02', 'http://192.168.1.8/yawk-LTE/admin/index.php?page=template-edit&id=1', '/yawk-LTE/index.php'),
-(52, 0, 0, 0, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '55.0.2883.87', '2016-12-28 13:39:30', '', '/yawk-LTE/'),
-(53, 0, 0, 0, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '55.0.2883.87', '2016-12-28 19:33:34', '', '/yawk-LTE/'),
-(54, 0, 0, 0, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '55.0.2883.87', '2016-12-28 21:15:13', '', '/mercedesgarage.net/'),
-(55, 0, 0, 0, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '55.0.2883.87', '2016-12-28 21:20:25', '', '/mercedesgarage.net/'),
-(56, 0, 0, 0, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '55.0.2883.87', '2016-12-28 21:21:12', '', '/mercedesgarage.net/'),
-(57, 0, 0, 0, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '55.0.2883.87', '2016-12-28 21:21:14', '', '/mercedesgarage.net/'),
-(58, 0, 0, 0, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '55.0.2883.87', '2016-12-28 21:21:56', '', '/mercedesgarage.net/'),
-(59, 0, 0, 0, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '55.0.2883.87', '2016-12-28 21:21:57', '', '/mercedesgarage.net/'),
-(60, 0, 0, 0, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '55.0.2883.87', '2016-12-28 21:21:57', '', '/mercedesgarage.net/'),
-(61, 0, 0, 0, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '55.0.2883.87', '2016-12-28 21:21:57', '', '/mercedesgarage.net/'),
-(62, 0, 0, 0, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '55.0.2883.87', '2016-12-28 21:21:57', '', '/mercedesgarage.net/'),
-(63, 0, 0, 0, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '55.0.2883.87', '2016-12-28 21:21:58', '', '/mercedesgarage.net/'),
-(64, 0, 0, 0, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '55.0.2883.87', '2016-12-28 21:21:58', '', '/mercedesgarage.net/'),
-(65, 0, 0, 0, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '55.0.2883.87', '2016-12-28 21:21:58', '', '/mercedesgarage.net/'),
-(66, 0, 0, 0, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '55.0.2883.87', '2016-12-28 21:21:58', '', '/mercedesgarage.net/'),
-(67, 0, 0, 0, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '55.0.2883.87', '2016-12-28 21:21:58', '', '/mercedesgarage.net/'),
-(68, 0, 0, 0, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '55.0.2883.87', '2016-12-28 21:21:58', '', '/mercedesgarage.net/'),
-(69, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '55.0.2883.87', '2016-12-28 21:34:30', 'http://192.168.1.8/mercedesgarage.net/index.html', 'content/errors/404'),
-(70, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '55.0.2883.87', '2016-12-28 21:58:07', 'http://192.168.1.8/mercedesgarage.net/index.html', 'override-bootstrap-style-settings-theme-generator'),
-(71, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '55.0.2883.87', '2016-12-29 09:28:44', 'http://192.168.1.8/yawk-LTE/admin/index.php?page=template-edit&id=1', '/yawk-LTE/index.php');
+(1, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '55.0.2883.87', '2017-01-18 03:48:11', 'http://localhost/mercedesgarage.net/admin/index.php?page=settings-system', 'index');
 
 -- --------------------------------------------------------
 
@@ -1092,7 +1085,7 @@ CREATE TABLE `cms_templates` (
 --
 
 INSERT INTO `cms_templates` (`id`, `active`, `name`, `positions`, `description`, `releaseDate`, `author`, `authorUrl`, `weblink`, `subAuthor`, `subAuthorUrl`, `modifyDate`, `version`, `license`) VALUES
-(1, 1, 'yawk-io', 'menu:main:footer', '', '2016-09-29 00:00:00', 'Daniel Retzl ', 'https://github.com/YaWK/yawk-cms', 'http://yawk.io', '', '', '2016-10-01 02:30:00', '1.0.0', 'GNU General Public License (GPL)');
+(1, 1, 'yawk-bootstrap3', 'intro:globalmenu:top:leftMenu:mainTop:mainTopLeft:mainTopCenter:mainTopRight:main:mainBottom:mainBottomLeft:mainBottomCenter:mainBottomRight:mainFooter:mainFooterLeft:mainFooterCenter:mainFooterRight:rightMenu:bottom:footer:hiddentoolbar:debug', '', '2016-09-29 00:00:00', 'Daniel Retzl ', 'https://github.com/YaWK/mercedesgarage.net', 'http://www.mercedesgarage.net', '', '', '2016-10-01 02:30:00', '1.0.0', 'GNU General Public License (GPL)');
 
 -- --------------------------------------------------------
 
@@ -1106,6 +1099,7 @@ CREATE TABLE `cms_template_settings` (
   `property` varchar(256) NOT NULL,
   `value` varchar(256) NOT NULL,
   `valueDefault` varchar(255) NOT NULL,
+  `longValue` text NOT NULL,
   `description` varchar(256) NOT NULL,
   `activated` int(1) NOT NULL DEFAULT '1',
   `sort` int(11) NOT NULL,
@@ -1117,165 +1111,179 @@ CREATE TABLE `cms_template_settings` (
 -- Daten für Tabelle `cms_template_settings`
 --
 
-INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `valueDefault`, `description`, `activated`, `sort`, `fieldClass`, `placeholder`) VALUES
-(1, 1, 'heading-gfont', '76', '1', 'Global GoogleFont ID', 1, 0, 'form-control', 'Default Google Font'),
-(2, 1, 'menu-gfont', '76', '1', 'Menu GoogleFont ID', 1, 0, 'form-control', 'Menu Google Font'),
-(3, 1, 'text-gfont', '76', '1', 'Text GoogleFont ID', 1, 0, 'form-control', 'Text Google Font'),
-(4, 1, 'h1-fontcolor', '000000', '000000', 'H1 Color', 1, 0, 'color', 'pick a color or leave blank'),
-(6, 1, 'h2-fontcolor', '303030', '000000', 'H2 Color', 1, 0, 'color', 'pick a color or leave blank'),
-(7, 1, 'h3-fontcolor', '5C79A1', '000000', 'H3 Color', 1, 0, 'color', 'pick a color or leave blank'),
-(8, 1, 'h4-fontcolor', '303030', '000000', 'H4 Color', 1, 0, 'color', 'pick a color or leave blank'),
-(9, 1, 'h5-fontcolor', '303030', '000000', 'H5 Color', 1, 0, 'color', 'pick a color or leave blank'),
-(10, 1, 'h6-fontcolor', '303030', '000000', 'H6 Color', 1, 0, 'color', 'pick a color or leave blank'),
-(11, 1, 'body-bg-color', '2E3037', 'FFFFFF', 'Body Background Color', 1, 0, 'color', 'pick a color or leave blank'),
-(14, 1, 'well-bg-color', 'ECEFF0', 'f5f5f5', 'Well Background Color', 1, 0, 'color', 'pick a color or leave blank'),
-(15, 1, 'smalltag-fontcolor', '757575', '777777', 'Small Tag Font Color', 1, 0, 'color', 'pick a color or leave blank'),
-(16, 1, 'font-menucolor', 'FFFFFF', '777777', 'Font Color', 1, 0, 'color', 'pick a color or leave blank'),
-(17, 1, 'brand-menucolor', 'FFFFFF', '777777', 'Brand Color', 1, 0, 'color', 'pick a color or leave blank'),
-(18, 1, 'brandhover-menucolor', 'FFFFFF', '5e5e5e', 'Brand Hover Color', 1, 0, 'color', 'pick a color or leave blank'),
-(19, 1, 'fonthover-menucolor', 'DDDDDD', '333333', 'Font Hover Color', 1, 0, 'color', 'pick a color or leave blank'),
-(22, 1, 'fontactive-menucolor', '555555', '555555', 'Font Active Color', 1, 0, 'color', 'pick a color or leave blank'),
-(23, 1, 'fontdisabled-menucolor', 'CCCCCC', 'cccccc', 'Font Disabled Color', 1, 0, 'color', 'pick a color or leave blank'),
-(24, 1, 'default-menubgcolor', '454750', 'f8f8f8', 'Default Background Color', 1, 0, 'color', 'pick a color or leave blank'),
-(25, 1, 'border-menubgcolor', '000000', 'e7e7e7', 'Border Color', 1, 0, 'color', 'pick a color or leave blank'),
-(26, 1, 'active-menubgcolor', 'FFFFFF', 'e7e7e7', 'Active Background Color', 1, 0, 'color', 'pick a color or leave blank'),
-(27, 1, 'toggle-menubgcolor', 'DDDDDD', 'dddddd', 'Toggle Border Color', 1, 0, 'color', 'pick a color or leave blank'),
-(28, 1, 'iconbar-menubgcolor', '888888', '888888', 'IconBar Color', 1, 0, 'color', 'pick a color or leave blank'),
-(29, 1, 'background-menudropdowncolor', 'FFFFFF', 'ffffff', 'Dropdown Background Color', 1, 0, 'color', 'pick a color or leave blank'),
-(30, 1, 'border-menudropdowncolor', 'CCCCCC', 'cccccc', 'Dropdown Border Color', 1, 0, 'color', 'pick a color or leave blank'),
-(31, 1, 'font-menudropdowncolor', '333333', '333333', 'Dropdown Font Color', 1, 0, 'color', 'pick a color or leave blank'),
-(32, 1, 'fonthover-menudropdowncolor', '262626', '262626', 'Dropdown Font Hover Color', 1, 0, 'color', 'pick a color or leave blank'),
-(33, 1, 'hoverbg-menudropdowncolor', 'F5F5F5', 'f5f5f5', 'Hover Background Color', 1, 0, 'color', 'pick a color or leave blank'),
-(34, 1, 'fontactive-menudropdowncolor', 'FFFFFF', 'ffffff', 'Dropdown Font Active Color', 1, 0, 'color', 'pick a color or leave blank'),
-(35, 1, 'activebg-menudropdowncolor', 'FFFFFF', '337ab7', 'Dropdown Active Background Color', 1, 0, 'color', 'pick a color or leave blank'),
-(36, 1, 'disabled-menudropdowncolor', '777777', '777777', 'Dropdown Font Disabled Color', 1, 0, 'color', 'pick a color or leave blank'),
-(37, 1, 'a-link', '007CB7', '337ab7', 'Link Color', 1, 0, 'color', 'pick a color or leave blank'),
-(38, 1, 'visited-link', '0087C7', '337ab7', 'Visited Link', 1, 0, 'color', 'pick a color or leave blank'),
-(39, 1, 'hover-link', '00619E', '23527c', 'Link Hover Cover', 1, 0, 'color', 'pick a color or leave blank'),
-(40, 1, 'decoration-link', 'none', 'none', 'Link Decoration', 1, 0, 'form-control', 'none'),
-(41, 1, 'hoverdecoration-link', 'underline', 'underline', 'Hover Decoration', 1, 0, 'form-control', 'underline'),
-(42, 1, 'buttontext-link', 'FFFFFF', 'ffffff', 'Button Text Color', 1, 0, 'color', 'pick a color or leave blank'),
-(43, 1, 'background-listgroup', 'FFFFFF', 'ffffff', 'List Group Background Color', 1, 0, 'color', 'pick a color or leave blank'),
-(44, 1, 'fontcolor-listgroup', '000000', '000000', 'Font Color List Group', 1, 0, 'color', 'pick a color or leave blank'),
-(45, 1, 'text-fontcolor', '303030', '333333', 'Text Color', 1, 0, 'color', 'pick a color or leave blank'),
-(46, 1, 'fontshadow-menucolor', 'CCCCCC', '#CCCCCC', 'Menu Text Shadow Color', 1, 0, 'color', 'pick a color or leave blank'),
-(47, 1, 'form-valid', '009900', '009900', 'Form Valid Color', 1, 0, 'color', 'pick a color or leave blank'),
-(48, 1, 'form-error', 'FF0000', 'FF0000', 'Form Error Color', 1, 0, 'color', 'pick a color or leave blank'),
-(49, 1, 'body-text-shadow', '1px 0px', '1px 0px', 'Body Text Shadow Thickness', 1, 0, 'form-control', 'shadow size in pixels'),
-(50, 1, 'body-text-shadow-color', 'C7C7C7', 'CCCCCC', 'Body Text Shadow Color', 1, 0, 'color', 'pick a color or leave blank'),
-(51, 1, 'body-text-size', '1.8em', '1.7em', 'Body Font Size', 1, 0, 'form-control', 'size in 1.7em or 16px (for example)'),
-(52, 1, 'body-margin-top', '20px', '40px', 'Body Top Margin', 1, 0, 'form-control', 'value in px e.g. 40px'),
-(53, 1, 'body-bg-image', '', 'any .jpg or .png you want', 'Body Background Image', 1, 0, 'form-control', 'media/images/background.jpg'),
-(54, 1, 'body-bg-repeat', 'no-repeat', 'no-repeat', 'Body Background Repeat', 1, 0, 'form-control', 'repeat, repeat-x, repeat-y, no-repeat, inherit'),
-(55, 1, 'body-bg-position', 'center', 'center', 'Body Background Position', 1, 0, 'form-control', 'left-center, right-center, top-center, [top, bottom]'),
-(56, 1, 'body-bg-attachment', 'fixed', 'fixed', 'Body Background Attach', 1, 0, 'form-control', 'scroll, fixed, local, initial, inherit'),
-(57, 1, 'body-bg-size', 'cover', 'cover', 'Body Background Size', 1, 0, 'form-control', 'auto, cover, length, percentage, initial, inherit'),
-(58, 1, 'main-box-shadow', '6px 12px 16px 0px', '6px 12px 6px', 'Main Box Shadow', 1, 0, 'form-control', 'eg. 3px 6px 3px'),
-(59, 1, 'main-box-shadow-color', '141414', 'E8E8E8', 'Main Box Shadow Color', 1, 0, 'color', 'pick a color or leave blank'),
-(60, 1, 'well-min-height', '20px', '20px', 'Well Minimum Height', 1, 0, 'form-control', 'value in px eg. 20px'),
-(61, 1, 'well-padding', '1.5em', '19px', 'Well padding', 1, 0, 'form-control', 'value in px eg. 20px'),
-(62, 1, 'well-margin-top', '0px', '0px', 'Well Margin Top', 1, 0, 'form-control', 'value in px eg. 10px'),
-(63, 1, 'well-margin-bottom', '0px', '0px', 'Well Margin Bottom', 1, 0, 'form-control', 'value in px eg. 10px'),
-(64, 1, 'well-border', '0px solid', '1px solid', 'Well Border Style', 1, 0, 'form-control', 'value in px eg. 1px solid'),
-(65, 1, 'well-border-color', '000000', 'e3e3e3', 'Well Border Color', 1, 0, 'color', 'pick a color or leave blank'),
-(66, 1, 'well-border-radius', '8px', '0px', 'Well Border Radius', 1, 0, 'form-control', 'for rounded edges, value in px eg. 4px'),
-(67, 1, 'well-shadow', '8px 8px 20px -6px', '3px 3px 5px 6px', 'Well Shadow', 1, 0, 'form-control', 'value in px eg. x,y,blur,spread'),
-(68, 1, 'well-shadow-color', '000000', 'CCCCCC', 'Well Shadow Color', 1, 0, 'color', 'pick a color or leave blank'),
-(69, 1, 'h1-size', '48px', '36px', 'H1 Text Size', 1, 0, 'form-control', 'size in px eg. 36px'),
-(70, 1, 'h2-size', '36px', '30px', 'H2 Text Size', 1, 0, 'form-control', 'size in px eg. 30px'),
-(71, 1, 'h3-size', '32px', '24px', 'H3 Text Size', 1, 0, 'form-control', 'size in px eg. 24px'),
-(72, 1, 'h4-size', '24px', '18px', 'H4 Text Size', 1, 0, 'form-control', 'size in px eg. 18px'),
-(73, 1, 'h5-size', '18px', '14px', 'H5 Text Size', 1, 0, 'form-control', 'size in px eg. 14px'),
-(74, 1, 'h6-size', '14px', '12px', 'H6 Text Size', 1, 0, 'form-control', 'size in px eg. 12px'),
-(75, 1, 'btn-fontsize', '14px', '14px', 'Button Fontsize', 1, 0, 'form-control', 'size in px eg. 12px'),
-(76, 1, 'btn-font-weight', 'normal', 'normal', 'Button Font Weight', 1, 0, 'form-control', 'normal or bold'),
-(77, 1, 'btn-border', '1px', '1px', 'Button Border', 1, 0, 'form-control', 'value in px eg. 1px'),
-(78, 1, 'btn-border-style', 'solid', 'solid', 'Button Border Style', 1, 0, 'form-control', 'solid, dotted, dashed'),
-(79, 1, 'btn-border-radius', '4px', '4px', 'Button Border Radius', 1, 0, 'form-control', 'value in px eg. 4px'),
-(80, 1, 'btn-default-color', '333333', '333333', 'Text Color', 1, 0, 'color', 'pick a font or leave blank'),
-(81, 1, 'btn-default-background-color', 'FFFFFF', 'FFFFFF', 'BG Color', 1, 0, 'color', 'pick a font or leave blank'),
-(82, 1, 'btn-default-border-color', 'CCCCCC', 'CCCCCC', 'Border Color', 1, 0, 'color', 'pick a font or leave blank'),
-(83, 1, 'btn-default-focus-background-color', 'E6E6E6', 'E6E6E6', 'Focus BG Color', 1, 0, 'color', 'pick a font or leave blank'),
-(84, 1, 'btn-default-focus-border-color', '8C8C8C', '8C8C8C', 'Focus Border Color', 1, 0, 'color', 'pick a font or leave blank'),
-(85, 1, 'btn-default-hover-color', '333333', '333333', ':hover Text Color', 1, 0, 'color', 'pick a font or leave blank'),
-(86, 1, 'btn-default-hover-background-color', 'E6E6E6', 'E6E6E6', ':hover BG Color', 1, 0, 'color', 'pick a font or leave blank'),
-(87, 1, 'btn-default-hover-border-color', 'ADADAD', 'ADADAD', ':hover Border Color', 1, 0, 'color', 'pick a font or leave blank'),
-(88, 1, 'btn-primary-color', 'FFFFFF', 'FFFFFF', 'Text Color', 1, 0, 'color', 'pick a font or leave blank'),
-(89, 1, 'btn-primary-background-color', '337AB7', '337ab7', 'BG Color', 1, 0, 'color', 'pick a font or leave blank'),
-(90, 1, 'btn-primary-border-color', '2E6DA4', '2e6da4', 'Border Color', 1, 0, 'color', 'pick a font or leave blank'),
-(91, 1, 'btn-primary-focus-background-color', '286090', '286090', 'Focus BG Color', 1, 0, 'color', 'pick a font or leave blank'),
-(92, 1, 'btn-primary-focus-border-color', '122B40', '122b40', 'Focus Border Color', 1, 0, 'color', 'pick a font or leave blank'),
-(93, 1, 'btn-primary-hover-color', 'FFFFFF', 'FFFFFF', ':hover Text Color', 1, 0, 'color', 'pick a font or leave blank'),
-(94, 1, 'btn-primary-hover-background-color', '286090', '286090', 'Hover BG Color', 1, 0, 'color', 'pick a font or leave blank'),
-(95, 1, 'btn-primary-hover-border-color', '204D74', '204d74', 'Hover Border Color', 1, 0, 'color', 'pick a font or leave blank'),
-(96, 1, 'btn-success-color', 'FFFFFF', 'FFFFFF', 'Text Color', 1, 0, 'color', 'pick a font or leave blank'),
-(97, 1, 'btn-success-background-color', '5CB85C', '5cb85c', 'BG Color', 1, 0, 'color', 'pick a font or leave blank'),
-(98, 1, 'btn-success-border-color', '4CAE4C', '4cae4c', 'Border Color', 1, 0, 'color', 'pick a font or leave blank'),
-(99, 1, 'btn-success-focus-background-color', '449D44', '449d44', 'Focus BG Color', 1, 0, 'color', 'pick a font or leave blank'),
-(100, 1, 'btn-success-focus-border-color', '255625', '255625', 'Focus Border Color', 1, 0, 'color', 'pick a font or leave blank'),
-(101, 1, 'btn-success-hover-color', 'FFFFFF', 'FFFFFF', ':hover Text Color', 1, 0, 'color', 'pick a font or leave blank'),
-(102, 1, 'btn-success-hover-background-color', '449D44', '449d44', 'Hover BG Color', 1, 0, 'color', 'pick a font or leave blank'),
-(103, 1, 'btn-success-hover-border-color', '398439', '398439', 'Hover Border Color', 1, 0, 'color', 'pick a font or leave blank'),
-(104, 1, 'btn-info-color', 'FFFFFF', 'FFFFFF', 'Text Color', 1, 0, 'color', 'pick a font or leave blank'),
-(105, 1, 'btn-info-background-color', '5BC0DE', '5bc0de', 'BG Color', 1, 0, 'color', 'pick a font or leave blank'),
-(106, 1, 'btn-info-border-color', '46B8DA', '46b8da', 'Border Color', 1, 0, 'color', 'pick a font or leave blank'),
-(107, 1, 'btn-info-focus-background-color', '31B0D5', '31b0d5', 'Focus BG Color', 1, 0, 'color', 'pick a font or leave blank'),
-(108, 1, 'btn-info-focus-border-color', '1B6D85', '1b6d85', 'Focus Border Color', 1, 0, 'color', 'pick a font or leave blank'),
-(109, 1, 'btn-info-hover-color', 'FFFFFF', 'FFFFFF', ':hover Text Color', 1, 0, 'color', 'pick a font or leave blank'),
-(110, 1, 'btn-info-hover-background-color', '31B0D5', '31b0d5', 'Hover BG Color', 1, 0, 'color', 'pick a font or leave blank'),
-(111, 1, 'btn-info-hover-border-color', '269ABC', '269abc', 'Hover Border Color', 1, 0, 'color', 'pick a font or leave blank'),
-(112, 1, 'btn-warning-color', 'FFFFFF', 'FFFFFF', 'Text Color', 1, 0, 'color', 'pick a font or leave blank'),
-(113, 1, 'btn-warning-background-color', 'F0AD4E', 'f0ad4e', 'BG Color', 1, 0, 'color', 'pick a font or leave blank'),
-(114, 1, 'btn-warning-border-color', 'EEA236', 'eea236', 'Border Color', 1, 0, 'color', 'pick a font or leave blank'),
-(115, 1, 'btn-warning-focus-background-color', 'EC971F', 'ec971f', 'Focus BG Color', 1, 0, 'color', 'pick a font or leave blank'),
-(116, 1, 'btn-warning-focus-border-color', '985F0D', '985f0d', 'Focus Border Color', 1, 0, 'color', 'pick a font or leave blank'),
-(117, 1, 'btn-warning-hover-color', 'FFFFFF', 'FFFFFF', ':hover Text Color', 1, 0, 'color', 'pick a font or leave blank'),
-(118, 1, 'btn-warning-hover-background-color', 'EC971F', 'ec971f', 'Hover BG Color', 1, 0, 'color', 'pick a font or leave blank'),
-(119, 1, 'btn-warning-hover-border-color', 'D58512', 'd58512', 'Hover Border Color', 1, 0, 'color', 'pick a font or leave blank'),
-(120, 1, 'btn-danger-color', 'FFFFFF', 'FFFFFF', 'Text Color', 1, 0, 'color', 'pick a font or leave blank'),
-(121, 1, 'btn-danger-background-color', 'D9534F', 'd9534f', 'BG Color', 1, 0, 'color', 'pick a font or leave blank'),
-(122, 1, 'btn-danger-border-color', 'D43F3A', 'd43f3a', 'Border Color', 1, 0, 'color', 'pick a font or leave blank'),
-(123, 1, 'btn-danger-focus-background-color', 'C9302C', 'c9302c', 'Focus BG Color', 1, 0, 'color', 'pick a font or leave blank'),
-(124, 1, 'btn-danger-focus-border-color', '761C19', '761c19', 'Focus Border Color', 1, 0, 'color', 'pick a font or leave blank'),
-(125, 1, 'btn-danger-hover-color', 'FFFFFF', 'FFFFFF', ':hover Text Color', 1, 0, 'color', 'pick a font or leave blank'),
-(126, 1, 'btn-danger-hover-background-color', 'C9302C', 'c9302c', 'Hover BG Color', 1, 0, 'color', 'pick a font or leave blank'),
-(127, 1, 'btn-danger-hover-border-color', 'AC2925', 'ac2925', 'Hover Border Color', 1, 0, 'color', 'pick a font or leave blank'),
-(128, 1, 'body-margin-bottom', '0px', '0px', 'Body Bottom Margin', 1, 0, 'form-control', 'value in px eg. 0px'),
-(129, 1, 'body-margin-left', '0px', '0px', 'Body Left Margin', 1, 0, 'form-control', 'value in px eg. 0px'),
-(130, 1, 'body-margin-right', '0px', '0px', 'Body Right Margin', 1, 0, 'form-control', 'value in px eg. 0px'),
-(131, 1, 'img-shadow', '2px 2px 12px 2px', '2px 2px 12px 2px', 'Image Shadow', 1, 0, 'form-control', 'value in px eg. 2px 2px 12px 2px'),
-(132, 1, 'img-shadow-color', 'A8A8A8', '0A0A0A', 'Image Shadow Color', 1, 0, 'color', 'pick a color or leave blank'),
-(133, 1, 'img-righty', '7deg', '7deg', 'Angle to Right', 1, 0, 'form-control', 'value in degree e.g. 7deg'),
-(134, 1, 'img-lefty', '-7deg', '-7deg', 'Angle to Left', 1, 0, 'form-control', 'value in degree e.g. -7deg'),
-(135, 1, 'img-righty-less', '4deg', '4deg', 'Lesser Angle to Right', 1, 0, 'form-control', 'value in degree e.g. 4deg'),
-(136, 1, 'img-lefty-less', '-4deg', '-4deg', 'Lesser Angle to Left', 1, 0, 'form-control', 'value in degree e.g. -4deg'),
-(137, 1, 'img-brightness', '110%', '110%', 'Brightness On Hover', 1, 0, 'form-control', 'value in percent eg. 110%'),
-(138, 1, 'listgroup-paddingLeft', '0', '0', 'ListGroup Padding Left', 1, 0, 'form control', 'value in px eg. 0px'),
-(139, 1, 'listgroup-marginBottom', '20px', '0', 'ListGroup Padding Bottom', 1, 0, 'form control', 'value in px eg. 0px'),
-(140, 1, 'listgroup-itemPosition', 'relative', 'relative', 'ListGroup Item Position', 1, 0, 'form control', 'static, relative, fixed, absolute'),
-(141, 1, 'listgroup-itemDisplay', 'block', 'block', 'ListGroup Item Display', 1, 0, 'form control', 'block, inline, inline-block, flex'),
-(142, 1, 'listgroup-itemPadding', '10px 15px', '10px 15px', 'ListGroup Item Padding', 1, 0, 'form control', 'top, right, bottom left in px'),
-(143, 1, 'listgroup-itemBorder', '1px solid #ddd', '1px solid #ddd', 'ListGroup Item Border', 1, 0, 'form control', 'border width. type and color'),
-(144, 1, 'listgroup-itemBackgroundColor', '383638', 'FFF', 'ListGroup Item Background Color', 1, 0, 'color', 'pick a color or leave blank'),
-(145, 1, 'jumbotron-paddingTop', '30px', '30px', 'Jumbotron Padding Top', 1, 0, 'form control', 'value in px eg. 30px'),
-(146, 1, 'jumbotron-paddingBottom', '30px', '30px', 'Jumbotron Padding Bottom', 1, 0, 'form control', 'value in px eg. 30px'),
-(147, 1, 'jumbotron-marginBottom', '30px', '30px', 'Jumbotron Margin Bottom', 1, 0, 'form control', 'value in px eg. 30px'),
-(148, 1, 'jumbotron-backgroundColor', '383638', 'EEE', 'Jumbotron Background Color', 1, 0, 'color', 'pick a color or leave blank'),
-(149, 1, 'jumbotron-pMarginBottom', '15px', '15px', 'Jumbotron p Margin Bottom', 1, 0, 'form-control', 'value in px eg. 15px'),
-(150, 1, 'jumbotron-pFontSize', '21px', '21px', 'Jumbotron p Font Size', 1, 0, 'form-control', 'value in px eg. 21px'),
-(151, 1, 'jumbotron-pFontWeight', '200', '200', 'Jumbotron p Font Weight', 1, 0, 'form-control', 'value eg. 200'),
-(152, 1, 'jumbotron-hrColor', 'D5D5D5', 'D5D5D5', 'Jumbotron hr color', 1, 0, 'color', 'pick a color or leave blank'),
-(153, 1, 'jumbotron-containerPaddingRight', '15px', '15px', 'Jumbotron Container Padding Right', 1, 0, 'form-control', 'value in px eg. 15px'),
-(154, 1, 'jumbotron-containerPaddingLeft', '15px', '15px', 'Jumbotron Container Padding Left', 1, 0, 'form-control', 'value in px eg. 15px'),
-(155, 1, 'jumbotron-borderRadius', '6px', '6px', 'Jumbotron Border Radius', 1, 0, 'form-control', 'value in px eg. 6px'),
-(156, 1, 'jumbotron-containerMaxWidth', '100%', '100%', 'Jumbotron Container Max Width', 1, 0, 'form-control', 'value in percent, eg. 100%'),
-(157, 1, 'jumbotron-fluidPaddingRight', '60px', '60px', 'Jumbotron Fluid Padding Right', 1, 0, 'form-control', 'value in px eg. 60px'),
-(158, 1, 'jumbotron-fluidPaddingLeft', '60px', '60px', 'Jumbotron Fluid Padding Left', 1, 0, 'form-control', 'value in px eg. 60px'),
-(159, 1, 'jumbotron-h1FontSize', '63px', '63px', 'Jumbotron h1 Font Size', 1, 0, 'form-control', 'value in px eg. 63px'),
-(160, 1, 'jumbotron-h1Color', 'FFFFFF', 'FFFFFF', 'Jumbotron h1 Color', 1, 0, 'color', 'pick a color or leave blank'),
-(161, 1, 'jumbotron-fontColor', 'CCCCCC', 'ccc', 'Jumbotron Font Color', 1, 0, 'color', 'pick a color or leave blank'),
-(162, 1, 'listgroup-fontColor', 'FFFFFF', 'fff', 'ListGroup Font Color', 1, 0, 'color', 'pick a color or leave blank'),
-(163, 1, 'listgroup-fontSize', '0.8em', '1.2em', 'ListGroup Font Size', 1, 0, 'form control', 'font size in em or px eg 16px or 1.2em');
+INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `valueDefault`, `longValue`, `description`, `activated`, `sort`, `fieldClass`, `placeholder`) VALUES
+(1, 1, 'heading-gfont', '76', '1', '', 'Global GoogleFont ID', 1, 0, 'form-control', 'Default Google Font'),
+(2, 1, 'menu-gfont', '76', '1', '', 'Menu GoogleFont ID', 1, 0, 'form-control', 'Menu Google Font'),
+(3, 1, 'text-gfont', '76', '1', '', 'Text GoogleFont ID', 1, 0, 'form-control', 'Text Google Font'),
+(4, 1, 'h1-fontcolor', '303030', '000000', '', 'H1 Color', 1, 0, 'color', 'pick a color or leave blank'),
+(6, 1, 'h2-fontcolor', '303030', '000000', '', 'H2 Color', 1, 0, 'color', 'pick a color or leave blank'),
+(7, 1, 'h3-fontcolor', '5C79A1', '000000', '', 'H3 Color', 1, 0, 'color', 'pick a color or leave blank'),
+(8, 1, 'h4-fontcolor', '303030', '000000', '', 'H4 Color', 1, 0, 'color', 'pick a color or leave blank'),
+(9, 1, 'h5-fontcolor', '303030', '000000', '', 'H5 Color', 1, 0, 'color', 'pick a color or leave blank'),
+(10, 1, 'h6-fontcolor', '303030', '000000', '', 'H6 Color', 1, 0, 'color', 'pick a color or leave blank'),
+(11, 1, 'body-bg-color', '2E3037', 'FFFFFF', '', 'Body Background Color', 1, 0, 'color', 'pick a color or leave blank'),
+(14, 1, 'well-bg-color', 'ECEFF0', 'f5f5f5', '', 'Well Background Color', 1, 0, 'color', 'pick a color or leave blank'),
+(15, 1, 'smalltag-fontcolor', '757575', '777777', '', 'Small Tag Font Color', 1, 0, 'color', 'pick a color or leave blank'),
+(16, 1, 'font-menucolor', 'FFFFFF', '777777', '', 'Font Color', 1, 0, 'color', 'pick a color or leave blank'),
+(17, 1, 'brand-menucolor', 'FFFFFF', '777777', '', 'Brand Color', 1, 0, 'color', 'pick a color or leave blank'),
+(18, 1, 'brandhover-menucolor', 'FFFFFF', '5e5e5e', '', 'Brand Hover Color', 1, 0, 'color', 'pick a color or leave blank'),
+(19, 1, 'fonthover-menucolor', 'DDDDDD', '333333', '', 'Font Hover Color', 1, 0, 'color', 'pick a color or leave blank'),
+(22, 1, 'fontactive-menucolor', '555555', '555555', '', 'Font Active Color', 1, 0, 'color', 'pick a color or leave blank'),
+(23, 1, 'fontdisabled-menucolor', 'CCCCCC', 'cccccc', '', 'Font Disabled Color', 1, 0, 'color', 'pick a color or leave blank'),
+(24, 1, 'default-menubgcolor', '454750', 'f8f8f8', '', 'Default Background Color', 1, 0, 'color', 'pick a color or leave blank'),
+(25, 1, 'border-menubgcolor', '000000', 'e7e7e7', '', 'Border Color', 1, 0, 'color', 'pick a color or leave blank'),
+(26, 1, 'active-menubgcolor', 'FFFFFF', 'e7e7e7', '', 'Active Background Color', 1, 0, 'color', 'pick a color or leave blank'),
+(27, 1, 'toggle-menubgcolor', 'DDDDDD', 'dddddd', '', 'Toggle Border Color', 1, 0, 'color', 'pick a color or leave blank'),
+(28, 1, 'iconbar-menubgcolor', '888888', '888888', '', 'IconBar Color', 1, 0, 'color', 'pick a color or leave blank'),
+(29, 1, 'background-menudropdowncolor', 'FFFFFF', 'ffffff', '', 'Dropdown Background Color', 1, 0, 'color', 'pick a color or leave blank'),
+(30, 1, 'border-menudropdowncolor', 'CCCCCC', 'cccccc', '', 'Dropdown Border Color', 1, 0, 'color', 'pick a color or leave blank'),
+(31, 1, 'font-menudropdowncolor', '333333', '333333', '', 'Dropdown Font Color', 1, 0, 'color', 'pick a color or leave blank'),
+(32, 1, 'fonthover-menudropdowncolor', '262626', '262626', '', 'Dropdown Font Hover Color', 1, 0, 'color', 'pick a color or leave blank'),
+(33, 1, 'hoverbg-menudropdowncolor', 'F5F5F5', 'f5f5f5', '', 'Hover Background Color', 1, 0, 'color', 'pick a color or leave blank'),
+(34, 1, 'fontactive-menudropdowncolor', 'FFFFFF', 'ffffff', '', 'Dropdown Font Active Color', 1, 0, 'color', 'pick a color or leave blank'),
+(35, 1, 'activebg-menudropdowncolor', 'FFFFFF', '337ab7', '', 'Dropdown Active Background Color', 1, 0, 'color', 'pick a color or leave blank'),
+(36, 1, 'disabled-menudropdowncolor', '777777', '777777', '', 'Dropdown Font Disabled Color', 1, 0, 'color', 'pick a color or leave blank'),
+(37, 1, 'a-link', '007CB7', '337ab7', '', 'Link Color', 1, 0, 'color', 'pick a color or leave blank'),
+(38, 1, 'visited-link', '0087C7', '337ab7', '', 'Visited Link', 1, 0, 'color', 'pick a color or leave blank'),
+(39, 1, 'hover-link', '00619E', '23527c', '', 'Link Hover Cover', 1, 0, 'color', 'pick a color or leave blank'),
+(40, 1, 'decoration-link', 'none', 'none', '', 'Link Decoration', 1, 0, 'form-control', 'none'),
+(41, 1, 'hoverdecoration-link', 'underline', 'underline', '', 'Hover Decoration', 1, 0, 'form-control', 'underline'),
+(42, 1, 'buttontext-link', 'FFFFFF', 'ffffff', '', 'Button Text Color', 1, 0, 'color', 'pick a color or leave blank'),
+(43, 1, 'background-listgroup', 'FFFFFF', 'ffffff', '', 'List Group Background Color', 1, 0, 'color', 'pick a color or leave blank'),
+(44, 1, 'fontcolor-listgroup', 'FFFFFF', '000000', '', 'Font Color List Group', 1, 0, 'color', 'pick a color or leave blank'),
+(45, 1, 'text-fontcolor', '303030', '333333', '', 'Text Color', 1, 0, 'color', 'pick a color or leave blank'),
+(46, 1, 'fontshadow-menucolor', 'CCCCCC', '#CCCCCC', '', 'Menu Text Shadow Color', 1, 0, 'color', 'pick a color or leave blank'),
+(47, 1, 'form-valid', '009900', '009900', '', 'Form Valid Color', 1, 0, 'color', 'pick a color or leave blank'),
+(48, 1, 'form-error', 'FF0000', 'FF0000', '', 'Form Error Color', 1, 0, 'color', 'pick a color or leave blank'),
+(49, 1, 'body-text-shadow', '1px 0px', '1px 0px', '', 'Body Text Shadow Thickness', 1, 0, 'form-control', 'shadow size in pixels'),
+(50, 1, 'body-text-shadow-color', 'C7C7C7', 'CCCCCC', '', 'Body Text Shadow Color', 1, 0, 'color', 'pick a color or leave blank'),
+(51, 1, 'body-text-size', '1.8em', '1.7em', '', 'Body Font Size', 1, 0, 'form-control', 'size in 1.7em or 16px (for example)'),
+(52, 1, 'body-margin-top', '35px', '40px', '', 'Body Top Margin', 1, 0, 'form-control', 'value in px e.g. 40px'),
+(53, 1, 'body-bg-image', '', 'any .jpg or .png you want', '', 'Body Background Image', 1, 0, 'form-control', 'media/images/background.jpg'),
+(54, 1, 'body-bg-repeat', 'no-repeat', 'no-repeat', '', 'Body Background Repeat', 1, 0, 'form-control', 'repeat, repeat-x, repeat-y, no-repeat, inherit'),
+(55, 1, 'body-bg-position', 'center', 'center', '', 'Body Background Position', 1, 0, 'form-control', 'left-center, right-center, top-center, [top, bottom]'),
+(56, 1, 'body-bg-attachment', 'fixed', 'fixed', '', 'Body Background Attach', 1, 0, 'form-control', 'scroll, fixed, local, initial, inherit'),
+(57, 1, 'body-bg-size', 'cover', 'cover', '', 'Body Background Size', 1, 0, 'form-control', 'auto, cover, length, percentage, initial, inherit'),
+(58, 1, 'main-box-shadow', '6px 12px 16px 0px', '6px 12px 6px', '', 'Main Box Shadow', 1, 0, 'form-control', 'eg. 3px 6px 3px'),
+(59, 1, 'main-box-shadow-color', '141414', 'E8E8E8', '', 'Main Box Shadow Color', 1, 0, 'color', 'pick a color or leave blank'),
+(60, 1, 'well-min-height', '20px', '20px', '', 'Well Minimum Height', 1, 0, 'form-control', 'value in px eg. 20px'),
+(61, 1, 'well-padding', '1.5em', '19px', '', 'Well padding', 1, 0, 'form-control', 'value in px eg. 20px'),
+(62, 1, 'well-margin-top', '0px', '0px', '', 'Well Margin Top', 1, 0, 'form-control', 'value in px eg. 10px'),
+(63, 1, 'well-margin-bottom', '240px', '0px', '', 'Well Margin Bottom', 1, 0, 'form-control', 'value in px eg. 10px'),
+(64, 1, 'well-border', '0px solid', '1px solid', '', 'Well Border Style', 1, 0, 'form-control', 'value in px eg. 1px solid'),
+(65, 1, 'well-border-color', 'FFFFFF', 'e3e3e3', '', 'Well Border Color', 1, 0, 'color', 'pick a color or leave blank'),
+(66, 1, 'well-border-radius', '12px', '0px', '', 'Well Border Radius', 1, 0, 'form-control', 'for rounded edges, value in px eg. 4px'),
+(67, 1, 'well-shadow', '8px 8px 20px -6px', '3px 3px 5px 6px', '', 'Well Shadow', 1, 0, 'form-control', 'value in px eg. x,y,blur,spread'),
+(68, 1, 'well-shadow-color', 'FFFFFF', 'CCCCCC', '', 'Well Shadow Color', 1, 0, 'color', 'pick a color or leave blank'),
+(69, 1, 'h1-size', '48px', '36px', '', 'H1 Text Size', 1, 0, 'form-control', 'size in px eg. 36px'),
+(70, 1, 'h2-size', '36px', '30px', '', 'H2 Text Size', 1, 0, 'form-control', 'size in px eg. 30px'),
+(71, 1, 'h3-size', '32px', '24px', '', 'H3 Text Size', 1, 0, 'form-control', 'size in px eg. 24px'),
+(72, 1, 'h4-size', '24px', '18px', '', 'H4 Text Size', 1, 0, 'form-control', 'size in px eg. 18px'),
+(73, 1, 'h5-size', '18px', '14px', '', 'H5 Text Size', 1, 0, 'form-control', 'size in px eg. 14px'),
+(74, 1, 'h6-size', '14px', '12px', '', 'H6 Text Size', 1, 0, 'form-control', 'size in px eg. 12px'),
+(75, 1, 'btn-fontsize', '14px', '14px', '', 'Button Fontsize', 1, 0, 'form-control', 'size in px eg. 12px'),
+(76, 1, 'btn-font-weight', 'normal', 'normal', '', 'Button Font Weight', 1, 0, 'form-control', 'normal or bold'),
+(77, 1, 'btn-border', '1px', '1px', '', 'Button Border', 1, 0, 'form-control', 'value in px eg. 1px'),
+(78, 1, 'btn-border-style', 'solid', 'solid', '', 'Button Border Style', 1, 0, 'form-control', 'solid, dotted, dashed'),
+(79, 1, 'btn-border-radius', '4px', '4px', '', 'Button Border Radius', 1, 0, 'form-control', 'value in px eg. 4px'),
+(80, 1, 'btn-default-color', '333333', '333333', '', 'Text Color', 1, 0, 'color', 'pick a font or leave blank'),
+(81, 1, 'btn-default-background-color', 'FFFFFF', 'FFFFFF', '', 'BG Color', 1, 0, 'color', 'pick a font or leave blank'),
+(82, 1, 'btn-default-border-color', 'CCCCCC', 'CCCCCC', '', 'Border Color', 1, 0, 'color', 'pick a font or leave blank'),
+(83, 1, 'btn-default-focus-background-color', 'E6E6E6', 'E6E6E6', '', 'Focus BG Color', 1, 0, 'color', 'pick a font or leave blank'),
+(84, 1, 'btn-default-focus-border-color', '8C8C8C', '8C8C8C', '', 'Focus Border Color', 1, 0, 'color', 'pick a font or leave blank'),
+(85, 1, 'btn-default-hover-color', '333333', '333333', '', ':hover Text Color', 1, 0, 'color', 'pick a font or leave blank'),
+(86, 1, 'btn-default-hover-background-color', 'E6E6E6', 'E6E6E6', '', ':hover BG Color', 1, 0, 'color', 'pick a font or leave blank'),
+(87, 1, 'btn-default-hover-border-color', 'ADADAD', 'ADADAD', '', ':hover Border Color', 1, 0, 'color', 'pick a font or leave blank'),
+(88, 1, 'btn-primary-color', 'FFFFFF', 'FFFFFF', '', 'Text Color', 1, 0, 'color', 'pick a font or leave blank'),
+(89, 1, 'btn-primary-background-color', '337AB7', '337ab7', '', 'BG Color', 1, 0, 'color', 'pick a font or leave blank'),
+(90, 1, 'btn-primary-border-color', '2E6DA4', '2e6da4', '', 'Border Color', 1, 0, 'color', 'pick a font or leave blank'),
+(91, 1, 'btn-primary-focus-background-color', '286090', '286090', '', 'Focus BG Color', 1, 0, 'color', 'pick a font or leave blank'),
+(92, 1, 'btn-primary-focus-border-color', '122B40', '122b40', '', 'Focus Border Color', 1, 0, 'color', 'pick a font or leave blank'),
+(93, 1, 'btn-primary-hover-color', 'FFFFFF', 'FFFFFF', '', ':hover Text Color', 1, 0, 'color', 'pick a font or leave blank'),
+(94, 1, 'btn-primary-hover-background-color', '286090', '286090', '', 'Hover BG Color', 1, 0, 'color', 'pick a font or leave blank'),
+(95, 1, 'btn-primary-hover-border-color', '204D74', '204d74', '', 'Hover Border Color', 1, 0, 'color', 'pick a font or leave blank'),
+(96, 1, 'btn-success-color', 'FFFFFF', 'FFFFFF', '', 'Text Color', 1, 0, 'color', 'pick a font or leave blank'),
+(97, 1, 'btn-success-background-color', '5CB85C', '5cb85c', '', 'BG Color', 1, 0, 'color', 'pick a font or leave blank'),
+(98, 1, 'btn-success-border-color', '4CAE4C', '4cae4c', '', 'Border Color', 1, 0, 'color', 'pick a font or leave blank'),
+(99, 1, 'btn-success-focus-background-color', '449D44', '449d44', '', 'Focus BG Color', 1, 0, 'color', 'pick a font or leave blank'),
+(100, 1, 'btn-success-focus-border-color', '255625', '255625', '', 'Focus Border Color', 1, 0, 'color', 'pick a font or leave blank'),
+(101, 1, 'btn-success-hover-color', 'FFFFFF', 'FFFFFF', '', ':hover Text Color', 1, 0, 'color', 'pick a font or leave blank'),
+(102, 1, 'btn-success-hover-background-color', '449D44', '449d44', '', 'Hover BG Color', 1, 0, 'color', 'pick a font or leave blank'),
+(103, 1, 'btn-success-hover-border-color', '398439', '398439', '', 'Hover Border Color', 1, 0, 'color', 'pick a font or leave blank'),
+(104, 1, 'btn-info-color', 'FFFFFF', 'FFFFFF', '', 'Text Color', 1, 0, 'color', 'pick a font or leave blank'),
+(105, 1, 'btn-info-background-color', '5BC0DE', '5bc0de', '', 'BG Color', 1, 0, 'color', 'pick a font or leave blank'),
+(106, 1, 'btn-info-border-color', '46B8DA', '46b8da', '', 'Border Color', 1, 0, 'color', 'pick a font or leave blank'),
+(107, 1, 'btn-info-focus-background-color', '31B0D5', '31b0d5', '', 'Focus BG Color', 1, 0, 'color', 'pick a font or leave blank'),
+(108, 1, 'btn-info-focus-border-color', '1B6D85', '1b6d85', '', 'Focus Border Color', 1, 0, 'color', 'pick a font or leave blank'),
+(109, 1, 'btn-info-hover-color', 'FFFFFF', 'FFFFFF', '', ':hover Text Color', 1, 0, 'color', 'pick a font or leave blank'),
+(110, 1, 'btn-info-hover-background-color', '31B0D5', '31b0d5', '', 'Hover BG Color', 1, 0, 'color', 'pick a font or leave blank'),
+(111, 1, 'btn-info-hover-border-color', '269ABC', '269abc', '', 'Hover Border Color', 1, 0, 'color', 'pick a font or leave blank'),
+(112, 1, 'btn-warning-color', 'FFFFFF', 'FFFFFF', '', 'Text Color', 1, 0, 'color', 'pick a font or leave blank'),
+(113, 1, 'btn-warning-background-color', 'F0AD4E', 'f0ad4e', '', 'BG Color', 1, 0, 'color', 'pick a font or leave blank'),
+(114, 1, 'btn-warning-border-color', 'EEA236', 'eea236', '', 'Border Color', 1, 0, 'color', 'pick a font or leave blank'),
+(115, 1, 'btn-warning-focus-background-color', 'EC971F', 'ec971f', '', 'Focus BG Color', 1, 0, 'color', 'pick a font or leave blank'),
+(116, 1, 'btn-warning-focus-border-color', '985F0D', '985f0d', '', 'Focus Border Color', 1, 0, 'color', 'pick a font or leave blank'),
+(117, 1, 'btn-warning-hover-color', 'FFFFFF', 'FFFFFF', '', ':hover Text Color', 1, 0, 'color', 'pick a font or leave blank'),
+(118, 1, 'btn-warning-hover-background-color', 'EC971F', 'ec971f', '', 'Hover BG Color', 1, 0, 'color', 'pick a font or leave blank'),
+(119, 1, 'btn-warning-hover-border-color', 'D58512', 'd58512', '', 'Hover Border Color', 1, 0, 'color', 'pick a font or leave blank'),
+(120, 1, 'btn-danger-color', 'FFFFFF', 'FFFFFF', '', 'Text Color', 1, 0, 'color', 'pick a font or leave blank'),
+(121, 1, 'btn-danger-background-color', 'D9534F', 'd9534f', '', 'BG Color', 1, 0, 'color', 'pick a font or leave blank'),
+(122, 1, 'btn-danger-border-color', 'D43F3A', 'd43f3a', '', 'Border Color', 1, 0, 'color', 'pick a font or leave blank'),
+(123, 1, 'btn-danger-focus-background-color', 'C9302C', 'c9302c', '', 'Focus BG Color', 1, 0, 'color', 'pick a font or leave blank'),
+(124, 1, 'btn-danger-focus-border-color', '761C19', '761c19', '', 'Focus Border Color', 1, 0, 'color', 'pick a font or leave blank'),
+(125, 1, 'btn-danger-hover-color', 'FFFFFF', 'FFFFFF', '', ':hover Text Color', 1, 0, 'color', 'pick a font or leave blank'),
+(126, 1, 'btn-danger-hover-background-color', 'C9302C', 'c9302c', '', 'Hover BG Color', 1, 0, 'color', 'pick a font or leave blank'),
+(127, 1, 'btn-danger-hover-border-color', 'AC2925', 'ac2925', '', 'Hover Border Color', 1, 0, 'color', 'pick a font or leave blank'),
+(128, 1, 'body-margin-bottom', '0px', '0px', '', 'Body Bottom Margin', 1, 0, 'form-control', 'value in px eg. 0px'),
+(129, 1, 'body-margin-left', '0px', '0px', '', 'Body Left Margin', 1, 0, 'form-control', 'value in px eg. 0px'),
+(130, 1, 'body-margin-right', '0px', '0px', '', 'Body Right Margin', 1, 0, 'form-control', 'value in px eg. 0px'),
+(131, 1, 'img-shadow', '2px 2px 12px 2px', '2px 2px 12px 2px', '', 'Image Shadow', 1, 0, 'form-control', 'value in px eg. 2px 2px 12px 2px'),
+(132, 1, 'img-shadow-color', 'A8A8A8', '0A0A0A', '', 'Image Shadow Color', 1, 0, 'color', 'pick a color or leave blank'),
+(133, 1, 'img-righty', '7deg', '7deg', '', 'Angle to Right', 1, 0, 'form-control', 'value in degree e.g. 7deg'),
+(134, 1, 'img-lefty', '-7deg', '-7deg', '', 'Angle to Left', 1, 0, 'form-control', 'value in degree e.g. -7deg'),
+(135, 1, 'img-righty-less', '4deg', '4deg', '', 'Lesser Angle to Right', 1, 0, 'form-control', 'value in degree e.g. 4deg'),
+(136, 1, 'img-lefty-less', '-4deg', '-4deg', '', 'Lesser Angle to Left', 1, 0, 'form-control', 'value in degree e.g. -4deg'),
+(137, 1, 'img-brightness', '110%', '110%', '', 'Brightness On Hover', 1, 0, 'form-control', 'value in percent eg. 110%'),
+(138, 1, 'listgroup-paddingLeft', '0px', '0', '', 'ListGroup Padding Left', 1, 0, 'form-control', 'value in px eg. 0px'),
+(139, 1, 'listgroup-marginBottom', '20px', '0', '', 'ListGroup Padding Bottom', 1, 0, 'form-control', 'value in px eg. 0px'),
+(140, 1, 'listgroup-itemPosition', 'relative', 'relative', '', 'ListGroup Item Position', 1, 0, 'form-control', 'static, relative, fixed, absolute'),
+(141, 1, 'listgroup-itemDisplay', 'block', 'block', '', 'ListGroup Item Display', 1, 0, 'form-control', 'block, inline, inline-block, flex'),
+(142, 1, 'listgroup-itemPadding', '10px 15px', '10px 15px', '', 'ListGroup Item Padding', 1, 0, 'form-control', 'top, right, bottom left in px'),
+(143, 1, 'listgroup-itemBorder', '1px solid #2E3037', '1px solid #ddd', '', 'ListGroup Item Border', 1, 0, 'form-control', 'border width. type and color'),
+(144, 1, 'listgroup-itemBackgroundColor', '383638', 'FFF', '', 'ListGroup Item Background Color', 1, 0, 'color', 'pick a color or leave blank'),
+(145, 1, 'jumbotron-paddingTop', '30px', '30px', '', 'Jumbotron Padding Top', 1, 0, 'form-control', 'value in px eg. 30px'),
+(146, 1, 'jumbotron-paddingBottom', '30px', '30px', '', 'Jumbotron Padding Bottom', 1, 0, 'form-control', 'value in px eg. 30px'),
+(147, 1, 'jumbotron-marginBottom', '30px', '30px', '', 'Jumbotron Margin Bottom', 1, 0, 'form-control', 'value in px eg. 30px'),
+(148, 1, 'jumbotron-backgroundColor', '383638', 'EEE', '', 'Jumbotron Background Color', 1, 0, 'color', 'pick a color or leave blank'),
+(149, 1, 'jumbotron-pMarginBottom', '15px', '15px', '', 'Jumbotron p Margin Bottom', 1, 0, 'form-control', 'value in px eg. 15px'),
+(150, 1, 'jumbotron-pFontSize', '21px', '21px', '', 'Jumbotron p Font Size', 1, 0, 'form-control', 'value in px eg. 21px'),
+(151, 1, 'jumbotron-pFontWeight', '200', '200', '', 'Jumbotron p Font Weight', 1, 0, 'form-control', 'value eg. 200'),
+(152, 1, 'jumbotron-hrColor', 'D5D5D5', 'D5D5D5', '', 'Jumbotron hr color', 1, 0, 'color', 'pick a color or leave blank'),
+(153, 1, 'jumbotron-containerPaddingRight', '15px', '15px', '', 'Jumbotron Container Padding Right', 1, 0, 'form-control', 'value in px eg. 15px'),
+(154, 1, 'jumbotron-containerPaddingLeft', '15px', '15px', '', 'Jumbotron Container Padding Left', 1, 0, 'form-control', 'value in px eg. 15px'),
+(155, 1, 'jumbotron-borderRadius', '6px', '6px', '', 'Jumbotron Border Radius', 1, 0, 'form-control', 'value in px eg. 6px'),
+(156, 1, 'jumbotron-containerMaxWidth', '100%', '100%', '', 'Jumbotron Container Max Width', 1, 0, 'form-control', 'value in percent, eg. 100%'),
+(157, 1, 'jumbotron-fluidPaddingRight', '60px', '60px', '', 'Jumbotron Fluid Padding Right', 1, 0, 'form-control', 'value in px eg. 60px'),
+(158, 1, 'jumbotron-fluidPaddingLeft', '60px', '60px', '', 'Jumbotron Fluid Padding Left', 1, 0, 'form-control', 'value in px eg. 60px'),
+(159, 1, 'jumbotron-h1FontSize', '63px', '63px', '', 'Jumbotron h1 Font Size', 1, 0, 'form-control', 'value in px eg. 63px'),
+(160, 1, 'jumbotron-h1Color', 'FFFFFF', 'FFFFFF', '', 'Jumbotron h1 Color', 1, 0, 'color', 'pick a color or leave blank'),
+(161, 1, 'jumbotron-fontColor', 'CCCCCC', 'ccc', '', 'Jumbotron Font Color', 1, 0, 'color', 'pick a color or leave blank'),
+(162, 1, 'listgroup-fontColor', 'FFFFFF', 'fff', '', 'ListGroup Font Color', 1, 0, 'color', 'pick a color or leave blank'),
+(163, 1, 'listgroup-fontSize', '0.9em', '1.2em', '', 'ListGroup Font Size', 1, 0, 'form-control', 'font size in em or px eg 16px or 1.2em'),
+(164, 1, 'navbar-marginTop', '25px', '0px', '', 'Navbar margin from top in px', 1, 0, 'form-control', 'margin in em or px eg 20px or 1.2em'),
+(165, 1, 'pos-topmenu-top', '0', '0', '', 'Position from top in px or em', 1, 0, 'form-control', 'margin in em or px eg 20px or 1.2em'),
+(166, 1, 'pos-topmenu-marginBottom', '0', '0', '', 'Margin Bottom in px or em', 1, 0, 'form-control', 'margin in em or px eg 20px or 1.2em'),
+(167, 1, 'pos-topmenu-property', 'fixed', 'fixed', '', 'static, relative, fixed, absolute', 1, 0, 'form-control', 'position property'),
+(169, 1, 'pos-topmenu-bg-color', '3D383A', '00a65a', '', 'Background color of this position', 1, 0, 'color', 'pick a color or leave blank'),
+(170, 1, 'pos-topmenu-height', '25px', '20px', '', 'Height in px', 1, 0, 'form-control', 'height of this position in px eg. 20px'),
+(171, 1, 'pos-topmenu-width', '100%', '100%', '', 'Width in percent (eg. 100%)', 1, 0, 'form-control', 'width of this position in percent (default: 100%)'),
+(172, 1, 'pos-topmenu-zindex', '9999', '9999', '', 'z-index: auto|number|initial|inherit', 1, 0, 'form-control', 'eg. 9999'),
+(173, 1, 'pos-topmenu-bg-gradient-longValue', '', '', '/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#454b51+0,616971+48,454b51+100 */\r\nbackground: #454b51; /* Old browsers */\r\nbackground: -moz-linear-gradient(left,  #454b51 0%, #616971 48%, #454b51 100%); /* FF3.6-15 */\r\nbackground: -webkit-linear-gradient(left,  #454b51 0%,#616971 48%,#454b51 100%); /* Chrome10-25,Safari5.1-6 */\r\nbackground: linear-gradient(to right,  #454b51 0%,#616971 48%,#454b51 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */\r\nfilter: progid:DXImageTransform.Microsoft.gradient( startColorstr=''#454b51'', endColorstr=''#454b51'',GradientType=1 ); /* IE6-9 */\r\n', 'CSS gradient. Try <a href="http://www.colorzilla.com/gradient-editor/" target="_blank">colorzilla</a> to help generate code', 1, 0, 'form-control', ''),
+(174, 1, 'listgroup-bg-gradient-longValue', '', '', '/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#596068+0,373c41+93,373c41+100 */\r\nbackground: #596068; /* Old browsers */\r\nbackground: -moz-linear-gradient(left,  #596068 0%, #373c41 93%, #373c41 100%); /* FF3.6-15 */\r\nbackground: -webkit-linear-gradient(left,  #596068 0%,#373c41 93%,#373c41 100%); /* Chrome10-25,Safari5.1-6 */\r\nbackground: linear-gradient(to right,  #596068 0%,#373c41 93%,#373c41 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */\r\nfilter: progid:DXImageTransform.Microsoft.gradient( startColorstr=''#596068'', endColorstr=''#373c41'',GradientType=1 ); /* IE6-9 */', 'CSS gradient. Try <a href="http://www.colorzilla.com/gradient-editor/" target="_blank">colorzilla</a> to help generate code', 1, 0, 'form-control', ''),
+(175, 1, 'listgroup-firstChild-topLeft-radius', '12px', '4px', '', 'ListGroup First Child Top <i>LEFT Border Radius</i> in px', 1, 0, 'form-control', 'value in px eg. 4px'),
+(176, 1, 'listgroup-firstChild-topRight-radius', '12px', '4px', '', 'ListGroup First Child Top RIGHT Border Radius in px', 1, 0, 'form-control', 'value in px eg. 4px'),
+(177, 1, 'listgroup-lastChild-bottomRight-radius', '12px', '4px', '', 'ListGroup Last Child Bottom RIGHT Border Radius in px', 1, 0, 'form-control', 'value in px eg. 4px'),
+(178, 1, 'listgroup-lastChild-bottomLeft-radius', '12px', '4px', '', 'ListGroup Last Child Bottom LEFT Border Radius in px', 1, 0, 'form-control', 'value in px eg. 4px');
 
 -- --------------------------------------------------------
 
@@ -1322,7 +1330,7 @@ CREATE TABLE `cms_users` (
 --
 
 INSERT INTO `cms_users` (`id`, `blocked`, `privacy`, `online`, `gid`, `terms`, `username`, `password`, `date_created`, `date_changed`, `date_expired`, `date_lastlogin`, `login_count`, `email`, `url`, `twitter`, `facebook`, `firstname`, `lastname`, `street`, `zipcode`, `city`, `country`, `state`, `logged_in`, `public_email`, `terminatedByUser`, `job`, `likes`, `overrideTemplate`, `templateID`) VALUES
-(1, 0, 1, 1, 5, 1, 'admin', '827ccb0eea8a706c4c34a16891f84e7b', '2016-10-10 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2016-12-28 19:41:00', 82, 'danielretzl@gmail.com', 'http://yawk.io', '', '', 'Daniel', 'Retzl', '', '', '', '', '', 1, 1, 0, 'Main Developer', 0, 0, 1),
+(1, 0, 1, 1, 5, 1, 'admin', '827ccb0eea8a706c4c34a16891f84e7b', '2016-10-10 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2017-01-17 02:04:42', 85, 'danielretzl@gmail.com', 'http://yawk.io', '', '', 'Daniel', 'Retzl', '', '', '', '', '', 1, 1, 0, 'Main Developer', 0, 0, 1),
 (2, 0, 0, 1, 4, 1, 'claudia', '827ccb0eea8a706c4c34a16891f84e7b', '2016-09-13 13:54:26', '2016-10-10 04:02:11', '0000-00-00 00:00:00', '2016-12-08 21:58:26', 31, 'test@test.com', '', '', '', '', '', '', '', '', '', '', 1, 0, 0, '', 0, 0, 1);
 
 -- --------------------------------------------------------
@@ -1362,18 +1370,18 @@ CREATE TABLE `cms_widgets` (
   `widgetType` int(11) NOT NULL,
   `pageID` int(11) NOT NULL,
   `sort` int(11) NOT NULL,
-  `position` varchar(128) NOT NULL
+  `position` varchar(128) NOT NULL,
+  `marginTop` int(11) NOT NULL,
+  `marginBottom` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `cms_widgets`
 --
 
-INSERT INTO `cms_widgets` (`id`, `published`, `widgetType`, `pageID`, `sort`, `position`) VALUES
-(1, 0, 1, 1, 1, 'main'),
-(2, 0, 9, 3, 2, 'main'),
-(3, 0, 6, 6, 3, 'main'),
-(4, 1, 15, 1, 4, 'footer');
+INSERT INTO `cms_widgets` (`id`, `published`, `widgetType`, `pageID`, `sort`, `position`, `marginTop`, `marginBottom`) VALUES
+(1, 1, 13, 19, 1, 'main', 0, 0),
+(3, 1, 14, 21, 3, 'mainbottom', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1421,7 +1429,16 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('clockcolor', '999', 8, 1, 'Clock Text Color', 'form-control color', 23),
 ('float', 'right', 8, 1, 'Float (left / right or leave blank)', 'form-control', 24),
 ('textstyle', 'bold', 8, 1, 'bold or leave blank', 'form-control', 25),
-('htmlcode', '<div class="row">\r\n        <div class="col-md-4">\r\n          <h2>Heading</h2>\r\n          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>\r\n          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>\r\n        </div>\r\n        <div class="col-md-4">\r\n          <h2>Heading</h2>\r\n          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>\r\n          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>\r\n       </div>\r\n        <div class="col-md-4">\r\n          <h2>Heading</h2>\r\n          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>\r\n          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>\r\n        </div>\r\n      </div>', 11, 1, 'Custom HTML in a divbox', 'form-control', 27);
+('htmlcode', '<div class="row">\r\n        <div class="col-md-4">\r\n          <h2>Heading</h2>\r\n          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>\r\n          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>\r\n        </div>\r\n        <div class="col-md-4">\r\n          <h2>Heading</h2>\r\n          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>\r\n          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>\r\n       </div>\r\n        <div class="col-md-4">\r\n          <h2>Heading</h2>\r\n          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>\r\n          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>\r\n        </div>\r\n      </div>', 10, 1, 'Custom HTML in a divbox', 'form-control', 27),
+('galleryID', '1', 13, 1, 'the Gallery ID to show up', 'form-control', 28),
+('twitchChannel', 'salista_belladonna', 14, 1, 'the name of any twitch channel', 'form-control', 29),
+('twitchChat', '1', 14, 1, 'Include the Chat for this channel? 1|0', 'form-control', 30),
+('twitchChatHeight', '200', 14, 1, 'Height of the chat in px eg. 200px', 'form-control', 31),
+('twitchChatWidth', '100%', 14, 1, 'Width of the chat channel in px or percent eg. 100%', 'form-control', 32),
+('twitchChannelHeight', '720', 14, 1, 'Height of the video stream in px eg. 720', 'form-control', 33),
+('twitchChannelWidth', '100%', 14, 1, 'Width of the video stream in eg 100%', 'form-control', 34),
+('twitchChannelFullscreen', 'true', 14, 1, 'Allow fullscreen video mode? true|false', 'form-control', 35),
+('menuID', '1', 15, 1, 'the menu ID you wish to show', 'form-control', 36);
 
 -- --------------------------------------------------------
 
@@ -1443,28 +1460,14 @@ CREATE TABLE `cms_widget_settings` (
 --
 
 INSERT INTO `cms_widget_settings` (`id`, `widgetID`, `property`, `value`, `widgetType`, `activated`) VALUES
-(1, 2, 'trackingcode', 'UA-69471720-1', 6, 1),
-(12, 4, 'htmlcode', '<div class="row">        <div class="col-md-4">          <h2>Heading</h2>          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. ', 11, 1),
-(13, 9, 'clockcolor', '999999', 8, 1),
-(14, 10, 'clockcolor', '', 8, 1),
-(15, 9, 'clockcolor', '999999', 8, 1),
-(16, 10, 'clockcolor', '999', 8, 1),
-(17, 9, 'clockcolor', '999999', 8, 1),
-(18, 9, 'clockcolor', '999999', 8, 1),
-(19, 9, 'clockcolor', '999999', 8, 1),
-(20, 9, 'clockcolor', '999999', 8, 1),
-(21, 9, 'clockcolor', '999', 8, 1),
-(22, 9, 'clockcolor', '999', 8, 1),
-(23, 1, 'buttontitle', 'Login', 1, 1),
-(24, 3, 'clockcolor', '999999', 8, 1),
-(25, 3, 'clockcolor', '999999', 8, 1),
-(26, 3, 'width', '450', 4, 1),
-(27, 3, 'width', '450', 5, 1),
-(28, 3, 'clockcolor', '999', 8, 1),
-(29, 3, 'clockcolor', '999', 8, 1),
-(30, 3, 'clockcolor', '999', 8, 1),
-(31, 3, 'clockcolor', '999', 8, 1),
-(32, 3, 'trackingcode', 'UA-0000000-00', 6, 1);
+(1, 1, 'galleryID', '2', 13, 1),
+(30, 3, 'twitchChannel', 'salista_belladonna', 14, 1),
+(31, 3, 'twitchChat', '1', 14, 1),
+(32, 3, 'twitchChatHeight', '200', 14, 1),
+(33, 3, 'twitchChatWidth', '100%', 14, 1),
+(34, 3, 'twitchChannelHeight', '720', 14, 1),
+(35, 3, 'twitchChannelWidth', '100%', 14, 1),
+(36, 3, 'twitchChannelFullscreen', 'true', 14, 1);
 
 -- --------------------------------------------------------
 
@@ -1486,19 +1489,18 @@ INSERT INTO `cms_widget_types` (`id`, `name`, `folder`) VALUES
 (1, 'Loginbox', 'loginbox'),
 (2, 'Simple Contact Form', 'form_simple'),
 (3, 'Prezi', 'prezi'),
-(4, 'FacebookBox', 'fb_box'),
+(4, 'FacebookPage', 'fb_page'),
 (5, 'FacebookLike', 'fb_like'),
 (6, 'GoogleAnalytics', 'google_analytics'),
 (7, 'SimpleUpload', 'simple_upload'),
 (8, 'Clock', 'clock'),
 (9, 'Signup', 'signup'),
-(10, 'Slider', 'slider'),
-(11, 'Divbox', 'divbox'),
-(12, 'Header', 'header'),
-(13, 'Divbox 2', 'divbox2'),
-(14, 'News Blog Widget', 'news'),
-(15, 'Newsletter', 'newsletter'),
-(16, 'Gallery', 'Gallery');
+(10, 'Divbox', 'divbox'),
+(11, 'News Blog Widget', 'news'),
+(12, 'Newsletter', 'newsletter'),
+(13, 'Gallery', 'gallery'),
+(14, 'Twitch Stream', 'twitch'),
+(15, 'Sub Menu', 'submenu');
 
 --
 -- Indizes der exportierten Tabellen
@@ -1759,7 +1761,7 @@ ALTER TABLE `cms_widget_types`
 -- AUTO_INCREMENT für Tabelle `cms_blog_items`
 --
 ALTER TABLE `cms_blog_items`
-  MODIFY `primkey` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `primkey` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT für Tabelle `cms_follower`
 --
@@ -1774,17 +1776,17 @@ ALTER TABLE `cms_friends`
 -- AUTO_INCREMENT für Tabelle `cms_logins`
 --
 ALTER TABLE `cms_logins`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `cms_menu`
 --
 ALTER TABLE `cms_menu`
-  MODIFY `TMPID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `TMPID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 --
 -- AUTO_INCREMENT für Tabelle `cms_meta_local`
 --
 ALTER TABLE `cms_meta_local`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 --
 -- AUTO_INCREMENT für Tabelle `cms_newsletter`
 --
@@ -1809,12 +1811,12 @@ ALTER TABLE `cms_plugin_faq`
 -- AUTO_INCREMENT für Tabelle `cms_plugin_gallery`
 --
 ALTER TABLE `cms_plugin_gallery`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT für Tabelle `cms_plugin_gallery_items`
 --
 ALTER TABLE `cms_plugin_gallery_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 --
 -- AUTO_INCREMENT für Tabelle `cms_plugin_msg`
 --
@@ -1824,7 +1826,7 @@ ALTER TABLE `cms_plugin_msg`
 -- AUTO_INCREMENT für Tabelle `cms_stats`
 --
 ALTER TABLE `cms_stats`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT für Tabelle `cms_syslog`
 --
@@ -1844,7 +1846,7 @@ ALTER TABLE `cms_templates`
 -- AUTO_INCREMENT für Tabelle `cms_template_settings`
 --
 ALTER TABLE `cms_template_settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=164;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=179;
 --
 -- AUTO_INCREMENT für Tabelle `cms_users`
 --
@@ -1859,12 +1861,12 @@ ALTER TABLE `cms_user_groups`
 -- AUTO_INCREMENT für Tabelle `cms_widget_defaults`
 --
 ALTER TABLE `cms_widget_defaults`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 --
 -- AUTO_INCREMENT für Tabelle `cms_widget_settings`
 --
 ALTER TABLE `cms_widget_settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

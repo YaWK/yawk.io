@@ -227,7 +227,7 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
 			}
         }
     }
-    \YAWK\sys::setTimeout("index.php?page=settings-system", 0);
+    \YAWK\sys::setTimeout("index.php?page=settings-system&lang=$_POST[backendLanguage]", 0);
 }
 ?>
 
