@@ -327,7 +327,7 @@ namespace YAWK {
                     }
 
                     $link = "$alias" . ".html";
-                    if ($res = $db->query("INSERT INTO {menu} (id,sort,menuID,title,href)
+                    if ($res = $db->query("INSERT INTO {menu} (id,sort,menuID,text,href)
                           VALUES('" . $id . "','" . $sort . "', '" . $menuID . "', '" . $title_new . "', '" . $link . "')"))
                     {
                         \YAWK\sys::setSyslog($db, 2, "copy $newfile successful", 0, 0, 0, 0);
@@ -501,7 +501,7 @@ namespace YAWK {
                 }
                 $title = htmlentities($title);
                 // insert menu data
-                if (!$res = $db->query("INSERT INTO {menu} (id,sort,menuID,published,title,href,blogid)
+                if (!$res = $db->query("INSERT INTO {menu} (id,sort,menuID,published,text,href,blogid)
 	                                   VALUES('" . $id . "',
 	                                          '" . $sort . "',
 	                                          '" . $menuID . "',
@@ -510,8 +510,8 @@ namespace YAWK {
 	                                          '" . $link . "',
 	                                          '" . $blogid . "')"))
                 {   // throw error
-                    \YAWK\sys::setSyslog($db, 5, "Could not fetch MAX(id) FROM {menu} WHERE menuID = $menuID", 0, 0, 0, 0);
-                    \YAWK\alert::draw("danger", "Error:", "Could not fetch MAX(id) FROM {menu} WHERE menuID = $menuID", "page=page-new", "4300");
+                    \YAWK\sys::setSyslog($db, 5, "Could not insert data into {menu}", 0, 0, 0, 0);
+                    \YAWK\alert::draw("danger", "Error:", "Could not insert menu data", "page=page-new", "4300");
                 }
             } // ./ if menu != empty
 
@@ -663,7 +663,7 @@ namespace YAWK {
                 }
                 // update menu entry
                 if (!$result = $db->query("UPDATE {menu}
-  				    SET title = '". $this->title ."',
+  				    SET text = '". $this->title ."',
   				        href = '" . $this->alias . ".html',
   					 	gid = '" . $this->gid . "',
   						published = '" . $this->published . "'
