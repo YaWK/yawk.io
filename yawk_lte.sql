@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 19. Jan 2017 um 14:56
+-- Erstellungszeit: 20. Jan 2017 um 00:23
 -- Server-Version: 10.1.10-MariaDB
 -- PHP-Version: 5.6.19
 
@@ -279,6 +279,13 @@ CREATE TABLE `cms_logins` (
   `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Daten für Tabelle `cms_logins`
+--
+
+INSERT INTO `cms_logins` (`id`, `datetime`, `location`, `failed`, `ip`, `useragent`, `username`, `password`) VALUES
+(1, '2017-01-19 15:56:51', 'backend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', 'admin', '12345');
+
 -- --------------------------------------------------------
 
 --
@@ -297,7 +304,8 @@ CREATE TABLE `cms_menu` (
   `date_changed` datetime NOT NULL,
   `date_publish` datetime NOT NULL,
   `date_unpublish` datetime NOT NULL,
-  `title` varchar(100) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `text` varchar(100) NOT NULL,
   `href` varchar(255) NOT NULL,
   `target` varchar(64) NOT NULL DEFAULT '_self',
   `divider` int(11) NOT NULL DEFAULT '0',
@@ -308,31 +316,32 @@ CREATE TABLE `cms_menu` (
 -- Daten für Tabelle `cms_menu`
 --
 
-INSERT INTO `cms_menu` (`TMPID`, `id`, `sort`, `gid`, `menuID`, `parentID`, `published`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `title`, `href`, `target`, `divider`, `blogid`) VALUES
-(2, 2, 2, 1, 1, 0, 0, '0000-00-00 00:00:00', '2017-01-11 16:58:29', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Styling', 'override-bootstrap-style-settings-theme-generator.html', '_self', 0, 0),
-(3, 1, 3, 2, 1, 0, 0, '0000-00-00 00:00:00', '2017-01-11 16:58:29', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Userpage', 'welcome.html', '_self', 0, 0),
-(30, 8, 8, 1, 1, 0, 0, '2016-10-11 13:55:40', '2017-01-11 16:58:29', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'logout', 'logout.html', '_self', 0, 0),
-(36, 1, 2, 1, 2, 0, 0, '2016-11-03 06:26:00', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'W168', '#', '_self', 0, 0),
-(37, 2, 4, 1, 2, 0, 0, '2016-11-03 06:26:06', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'W169', '#', '_self', 0, 0),
-(38, 2, 4, 1, 2, 0, 0, '2016-11-03 06:26:12', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'W169', '#', '_self', 0, 0),
-(39, 3, 5, 1, 2, 0, 1, '2016-11-03 06:26:18', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'B-Klasse', '#', '_self', 0, 0),
-(40, 12, 12, 1, 1, 0, 0, '0000-00-00 00:00:00', '2017-01-11 16:58:29', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'booking', 'booking.html', '_self', 0, 0),
-(49, 13, 13, 1, 1, 0, 0, '2016-12-28 22:16:35', '2017-01-11 16:58:29', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Startseite', 'index.html', '_self', 0, 0),
-(50, 14, 14, 1, 1, 0, 1, '2016-12-29 00:13:48', '2017-01-11 16:58:29', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Baureihe', 'mercedes-benz-pkw-baureihen-mercedes-modelle.html', '_self', 0, 0),
-(51, 15, 15, 1, 1, 14, 1, '2016-12-29 00:14:37', '2017-01-11 16:58:29', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Mercedes Benz W123 1976 bis 1986', 'mercedes-benz-w123-1976-1986.html', '_self', 0, 0),
-(53, 16, 17, 1, 1, 0, 0, '2016-12-29 00:16:48', '2017-01-11 16:58:29', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'W114/115', 'W114-115.html', '_self', 0, 0),
-(54, 17, 18, 1, 1, 14, 1, '0000-00-00 00:00:00', '2017-01-11 16:58:29', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Mercedes Benz W124 1985-1994', 'mercedes-benz-w124-1985-1994.html', '_self', 0, 0),
-(55, 18, 19, 1, 1, 0, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Twitch Stream Test', 'twitch-stream-test.html', '_self', 0, 0),
-(56, 19, 20, 1, 1, 0, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Mercedes News', 'mercedes-news.html', '_self', 0, 1),
-(57, 4, 6, 1, 2, 0, 1, '2017-01-18 06:13:59', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'W225', '#', '_self', 0, 0),
-(58, 5, 7, 1, 2, 0, 1, '2017-01-18 06:14:11', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'C-Klasse', '#', '_self', 0, 0),
-(59, 6, 8, 1, 2, 0, 1, '2017-01-18 06:14:19', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'W201', '#', '_self', 0, 0),
-(60, 7, 9, 1, 2, 0, 1, '2017-01-18 06:14:24', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'W202', '#', '_self', 0, 0),
-(61, 8, 10, 1, 2, 0, 0, '2017-01-18 06:14:30', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'W203', '#', '_self', 0, 0),
-(62, 9, 1, 1, 2, 0, 1, '2017-01-18 06:14:56', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'A-Klasse', '#', '_self', 0, 0),
-(63, 1, 1, 1, 3, 0, 0, '2017-01-18 19:59:05', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'test 1', '#', '_self', 0, 0),
-(64, 2, 2, 1, 3, 0, 0, '2017-01-18 19:59:09', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'test 2', '#', '_self', 0, 0),
-(65, 3, 3, 1, 3, 0, 1, '2017-01-18 19:59:12', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'test 3', '#', '_self', 0, 0);
+INSERT INTO `cms_menu` (`TMPID`, `id`, `sort`, `gid`, `menuID`, `parentID`, `published`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `title`, `text`, `href`, `target`, `divider`, `blogid`) VALUES
+(2, 2, 2, 1, 1, 0, 0, '0000-00-00 00:00:00', '2017-01-19 21:41:55', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Styling', 'override-bootstrap-style-settings-theme-generator.html', '_self', 0, 0),
+(3, 1, 3, 2, 1, 0, 0, '0000-00-00 00:00:00', '2017-01-19 21:41:55', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Userpage', 'welcome.html', '_self', 0, 0),
+(30, 8, 8, 1, 1, 0, 0, '2016-10-11 13:55:40', '2017-01-19 21:41:55', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'logout', 'logout.html', '_self', 0, 0),
+(36, 1, 2, 1, 2, 0, 0, '2016-11-03 06:26:00', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'W168', '#', '_self', 0, 0),
+(37, 2, 4, 1, 2, 0, 0, '2016-11-03 06:26:06', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'W169', '#', '_self', 0, 0),
+(38, 2, 4, 1, 2, 0, 0, '2016-11-03 06:26:12', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'W169', '#', '_self', 0, 0),
+(39, 3, 5, 1, 2, 0, 1, '2016-11-03 06:26:18', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'B-Klasse', '#', '_self', 0, 0),
+(40, 12, 12, 1, 1, 0, 0, '0000-00-00 00:00:00', '2017-01-19 21:41:55', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'booking', 'booking.html', '_self', 0, 0),
+(49, 13, 13, 1, 1, 0, 0, '2016-12-28 22:16:35', '2017-01-19 21:41:55', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Startseite', 'index.html', '_self', 0, 0),
+(50, 14, 14, 1, 1, 0, 1, '2016-12-29 00:13:48', '2017-01-19 21:41:55', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Baureihe', 'mercedes-benz-pkw-baureihen-mercedes-modelle.html', '_self', 0, 0),
+(51, 15, 15, 1, 1, 14, 1, '2016-12-29 00:14:37', '2017-01-19 21:41:55', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Mercedes Benz W123 1976 bis 1986', 'mercedes-benz-w123-1976-1986.html', '_self', 0, 0),
+(53, 16, 17, 1, 1, 0, 0, '2016-12-29 00:16:48', '2017-01-19 21:41:55', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'W114/115', 'W114-115.html', '_self', 0, 0),
+(54, 17, 18, 1, 1, 14, 1, '0000-00-00 00:00:00', '2017-01-19 21:41:55', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Mercedes Benz W124 1985-1994', 'mercedes-benz-w124-1985-1994.html', '_self', 0, 0),
+(55, 18, 19, 1, 1, 0, 1, '0000-00-00 00:00:00', '2017-01-19 21:41:55', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Twitch TV', 'Twitch Stream Test', 'twitch-stream-test.html', '_self', 0, 0),
+(56, 19, 20, 1, 1, 0, 1, '0000-00-00 00:00:00', '2017-01-19 21:41:55', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Mercedes News', 'mercedes-news.html', '_self', 0, 1),
+(57, 4, 6, 1, 2, 0, 1, '2017-01-18 06:13:59', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'W225', '#', '_self', 0, 0),
+(58, 5, 7, 1, 2, 0, 1, '2017-01-18 06:14:11', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'C-Klasse', '#', '_self', 0, 0),
+(59, 6, 8, 1, 2, 0, 1, '2017-01-18 06:14:19', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'W201', '#', '_self', 0, 0),
+(60, 7, 9, 1, 2, 0, 1, '2017-01-18 06:14:24', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'W202', '#', '_self', 0, 0),
+(61, 8, 10, 1, 2, 0, 0, '2017-01-18 06:14:30', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'W203', '#', '_self', 0, 0),
+(62, 9, 1, 1, 2, 0, 1, '2017-01-18 06:14:56', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'A-Klasse', '#', '_self', 0, 0),
+(63, 1, 1, 1, 3, 0, 0, '2017-01-18 19:59:05', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'test 1', '#', '_self', 0, 0),
+(64, 2, 2, 1, 3, 0, 0, '2017-01-18 19:59:09', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'test 2', '#', '_self', 0, 0),
+(65, 3, 3, 1, 3, 0, 1, '2017-01-18 19:59:12', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'test 3', '#', '_self', 0, 0),
+(69, 20, 21, 1, 1, 0, 1, '0000-00-00 00:00:00', '2017-01-19 21:41:55', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'YouTube Test', 'youtube-test.html', '_self', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -408,7 +417,6 @@ INSERT INTO `cms_meta_local` (`id`, `name`, `page`, `content`) VALUES
 (20, 'description', 21, 'sadasdasd'),
 (21, 'description', 22, 'asaasdasddd'),
 (22, 'description', 23, 'asd'),
-(23, 'description', 24, 'sssss'),
 (24, 'keywords', 2, ''),
 (26, 'keywords', 4, 'keyword1, keyword2, keyword3, keyword4'),
 (27, 'keywords', 5, 'keyword1, keyword2, keyword3, keyword4'),
@@ -423,7 +431,6 @@ INSERT INTO `cms_meta_local` (`id`, `name`, `page`, `content`) VALUES
 (43, 'keywords', 21, ''),
 (44, 'keywords', 22, ''),
 (45, 'keywords', 23, ''),
-(46, 'keywords', 24, ''),
 (47, 'description', 3, 'microsoft bankrott-KOPIE'),
 (48, 'keywords', 3, ''),
 (49, 'description', 3, 'Galaxy 7 explodiert!-KOPIE'),
@@ -495,6 +502,15 @@ CREATE TABLE `cms_notifications` (
   `seen` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Daten für Tabelle `cms_notifications`
+--
+
+INSERT INTO `cms_notifications` (`log_id`, `log_date`, `log_type`, `msg_id`, `fromUID`, `toUID`, `toGID`, `seen`) VALUES
+(1, '0000-00-00 00:00:00', 1, 0, 1, 0, 0, 0),
+(2, '0000-00-00 00:00:00', 1, 0, 1, 0, 0, 0),
+(3, '0000-00-00 00:00:00', 1, 0, 1, 0, 0, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -548,7 +564,8 @@ INSERT INTO `cms_pages` (`id`, `published`, `gid`, `date_created`, `date_changed
 (20, 1, 1, '2017-01-11 16:57:05', '2017-01-11 16:58:52', '2017-01-11 16:57:05', '0000-00-00 00:00:00', 'mercedes-benz-w124-1985-1994', 'Mercedes Benz W124 1985-1994', '', -1, 0, 0, 0, '0'),
 (21, 1, 1, '2017-01-16 11:45:37', '2017-01-16 11:46:42', '2017-01-16 11:45:37', '0000-00-00 00:00:00', 'twitch-stream-test', 'Twitch Stream Test', '', -1, 0, 0, 0, '0'),
 (22, 1, 1, '2017-01-17 05:46:23', '0000-00-00 00:00:00', '2017-01-17 05:46:23', '0000-00-00 00:00:00', 'mercedes-news', 'Mercedes News', '', -1, 0, 1, 1, '0'),
-(23, 1, 1, '2017-01-17 05:46:48', '0000-00-00 00:00:00', '2017-01-17 05:46:48', '0000-00-00 00:00:00', 'w126', 'w126', '', -1, 0, 1, 1, '');
+(23, 1, 1, '2017-01-17 05:46:48', '0000-00-00 00:00:00', '2017-01-17 05:46:48', '0000-00-00 00:00:00', 'w126', 'w126', '', -1, 0, 1, 1, ''),
+(24, 1, 1, '2017-01-19 21:32:38', '2017-01-19 22:53:22', '2017-01-19 21:32:38', '0000-00-00 00:00:00', 'youtube-test', 'YouTube Test', '', -1, 0, 0, 0, '0');
 
 -- --------------------------------------------------------
 
@@ -1330,7 +1347,7 @@ CREATE TABLE `cms_users` (
 --
 
 INSERT INTO `cms_users` (`id`, `blocked`, `privacy`, `online`, `gid`, `terms`, `username`, `password`, `date_created`, `date_changed`, `date_expired`, `date_lastlogin`, `login_count`, `email`, `url`, `twitter`, `facebook`, `firstname`, `lastname`, `street`, `zipcode`, `city`, `country`, `state`, `logged_in`, `public_email`, `terminatedByUser`, `job`, `likes`, `overrideTemplate`, `templateID`) VALUES
-(1, 0, 1, 1, 5, 1, 'admin', '827ccb0eea8a706c4c34a16891f84e7b', '2016-10-10 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2017-01-17 02:04:42', 85, 'danielretzl@gmail.com', 'http://yawk.io', '', '', 'Daniel', 'Retzl', '', '', '', '', '', 1, 1, 0, 'Main Developer', 0, 0, 1),
+(1, 0, 1, 1, 5, 1, 'admin', '827ccb0eea8a706c4c34a16891f84e7b', '2016-10-10 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2017-01-19 15:56:51', 86, 'danielretzl@gmail.com', 'http://yawk.io', '', '', 'Daniel', 'Retzl', '', '', '', '', '', 1, 1, 0, 'Main Developer', 0, 0, 1),
 (2, 0, 0, 1, 4, 1, 'claudia', '827ccb0eea8a706c4c34a16891f84e7b', '2016-09-13 13:54:26', '2016-10-10 04:02:11', '0000-00-00 00:00:00', '2016-12-08 21:58:26', 31, 'test@test.com', '', '', '', '', '', '', '', '', '', '', 1, 0, 0, '', 0, 0, 1);
 
 -- --------------------------------------------------------
@@ -1381,7 +1398,9 @@ CREATE TABLE `cms_widgets` (
 
 INSERT INTO `cms_widgets` (`id`, `published`, `widgetType`, `pageID`, `sort`, `position`, `marginTop`, `marginBottom`) VALUES
 (1, 1, 13, 19, 1, 'main', 0, 0),
-(3, 1, 14, 21, 3, 'mainbottom', 0, 0);
+(3, 1, 14, 21, 3, 'mainbottom', 0, 0),
+(4, 1, 15, 0, 4, 'leftMenu', 0, 0),
+(5, 1, 16, 24, 5, 'main', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1438,7 +1457,14 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('twitchChannelHeight', '720', 14, 1, 'Height of the video stream in px eg. 720', 'form-control', 33),
 ('twitchChannelWidth', '100%', 14, 1, 'Width of the video stream in eg 100%', 'form-control', 34),
 ('twitchChannelFullscreen', 'true', 14, 1, 'Allow fullscreen video mode? true|false', 'form-control', 35),
-('menuID', '1', 15, 1, 'the menu ID you wish to show', 'form-control', 36);
+('menuID', '1', 15, 1, 'the menu ID you wish to show', 'form-control', 36),
+('youtubeWidth', '100%', 16, 1, 'YouTube video width in px or percent', 'form-control', 37),
+('youtubeHeight', '720', 16, 1, 'YouTube video height in px or percent', 'form-control', 38),
+('youtubeFullscreen', 'true', 16, 1, 'Allow fullscreen video? Set true or false', 'form-control', 39),
+('youtubeVideoUrl', 'https://www.youtube.com/watch?v=PK8sdl53GEA', 16, 1, 'YouTube URL', 'form-control', 40),
+('youtubeHeading', '', 16, 1, 'Heading above the video', 'form-control', 41),
+('youtubeSubtext', '', 16, 1, 'Small subtext beneath heading', 'form-control', 42),
+('youtubeDescription', '', 16, 1, 'Description under the video', 'form-control', 43);
 
 -- --------------------------------------------------------
 
@@ -1467,7 +1493,15 @@ INSERT INTO `cms_widget_settings` (`id`, `widgetID`, `property`, `value`, `widge
 (33, 3, 'twitchChatWidth', '100%', 14, 1),
 (34, 3, 'twitchChannelHeight', '720', 14, 1),
 (35, 3, 'twitchChannelWidth', '100%', 14, 1),
-(36, 3, 'twitchChannelFullscreen', 'true', 14, 1);
+(36, 3, 'twitchChannelFullscreen', 'true', 14, 1),
+(37, 4, 'menuID', '1', 15, 1),
+(79, 5, 'youtubeWidth', '100%', 16, 1),
+(80, 5, 'youtubeHeight', '720', 16, 1),
+(81, 5, 'youtubeFullscreen', 'true', 16, 1),
+(82, 5, 'youtubeVideoUrl', 'https://www.youtube.com/watch?v=PK8sdl53GEA', 16, 1),
+(83, 5, 'youtubeHeading', '', 16, 1),
+(84, 5, 'youtubeSubtext', '', 16, 1),
+(85, 5, 'youtubeDescription', '', 16, 1);
 
 -- --------------------------------------------------------
 
@@ -1500,7 +1534,8 @@ INSERT INTO `cms_widget_types` (`id`, `name`, `folder`) VALUES
 (12, 'Newsletter', 'newsletter'),
 (13, 'Gallery', 'gallery'),
 (14, 'Twitch Stream', 'twitch'),
-(15, 'Sub Menu', 'submenu');
+(15, 'Sub Menu', 'submenu'),
+(16, 'Youtube Stream', 'youtube');
 
 --
 -- Indizes der exportierten Tabellen
@@ -1557,7 +1592,7 @@ ALTER TABLE `cms_logins`
 --
 ALTER TABLE `cms_menu`
   ADD PRIMARY KEY (`TMPID`),
-  ADD KEY `id` (`id`,`sort`,`gid`,`menuID`,`parentID`,`published`,`date_created`,`date_changed`,`date_publish`,`date_unpublish`,`title`,`href`),
+  ADD KEY `id` (`id`,`sort`,`gid`,`menuID`,`parentID`,`published`,`date_created`,`date_changed`,`date_publish`,`date_unpublish`,`text`,`href`),
   ADD KEY `id_2` (`id`),
   ADD KEY `id_3` (`id`);
 
@@ -1776,17 +1811,17 @@ ALTER TABLE `cms_friends`
 -- AUTO_INCREMENT für Tabelle `cms_logins`
 --
 ALTER TABLE `cms_logins`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT für Tabelle `cms_menu`
 --
 ALTER TABLE `cms_menu`
-  MODIFY `TMPID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `TMPID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 --
 -- AUTO_INCREMENT für Tabelle `cms_meta_local`
 --
 ALTER TABLE `cms_meta_local`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 --
 -- AUTO_INCREMENT für Tabelle `cms_newsletter`
 --
@@ -1796,7 +1831,7 @@ ALTER TABLE `cms_newsletter`
 -- AUTO_INCREMENT für Tabelle `cms_notifications`
 --
 ALTER TABLE `cms_notifications`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT für Tabelle `cms_notifications_msg`
 --
@@ -1861,12 +1896,12 @@ ALTER TABLE `cms_user_groups`
 -- AUTO_INCREMENT für Tabelle `cms_widget_defaults`
 --
 ALTER TABLE `cms_widget_defaults`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 --
 -- AUTO_INCREMENT für Tabelle `cms_widget_settings`
 --
 ALTER TABLE `cms_widget_settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
