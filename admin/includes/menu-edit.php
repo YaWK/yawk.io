@@ -92,6 +92,9 @@ if(isset($_POST['add'])) {
         else if(substr($param,-7,7) === "_target"){
             $entries[substr($param,0,-7)]['target'] = $value;
         }
+        else if(strlen($param) >= 5 && substr($param,-5,5) === "_text"){
+            $entries[substr($param,0,-5)]['text'] = $value;
+        }
         else if(strlen($param) >= 7 && substr($param,-6,6) === "_title"){
          $entries[substr($param,0,-6)]['title'] = $value;
         }
@@ -114,6 +117,7 @@ if(isset($_POST['add'])) {
     // echo "<br>".$params['gid']; exit;
       $_GET['menu'] = $db->quote($_GET['menu']);
       $id = $db->quote($id);
+      $params['text'] = $db->quote($params['text']);
       $params['title'] = $db->quote($params['title']);
       $params['href'] = $db->quote($params['href']);
       $params['sort'] = $db->quote($params['sort']);
@@ -124,6 +128,7 @@ if(isset($_POST['add'])) {
       YAWK\menu::editEntry($db,
           $_GET['menu'],
           $id,
+          $params['text'],
           $params['title'],
           $params['href'],
           $params['sort'],

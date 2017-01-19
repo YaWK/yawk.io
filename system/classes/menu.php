@@ -49,11 +49,13 @@ namespace YAWK {
         public function displaySubMenu($db, $menuID)
         {   /** @var \YAWK\db  $db */
             $res = $db->query("SELECT * FROM {menu}
-                               WHERE menuID = '".$menuID."' ORDER by sort, title");
+                               WHERE menuID = '".$menuID."' 
+                               AND published = '1' 
+                               ORDER by sort, title");
             echo "<ul class=\"hideLeft list-group\" id=\"leftMenu\">";
             while ($row = mysqli_fetch_assoc($res))
             {
-                echo "<li class=\"list-group-item\"><b>".$row['title']."</b></li>";
+                echo "<li class=\"list-group-item\"><b><a href=\"".$row['href']."\" target=\"".$row['target']."\">".$row['text']."</a></b></li>";
             }
             echo "</ul>";
         }
@@ -155,11 +157,11 @@ namespace YAWK {
          * @version    1.0.0
          * @link       http://yawk.io
          * @param $menu int affected menu ID
-         * @param $title string new menu entry title
+         * @param $text string new menu entry title
          * @param $href string new menu link
          * @return bool
          */
-        static function addEntry($db, $menu, $title, $href)
+        static function addEntry($db, $menu, $text, $href)
         {
             $menuName = \YAWK\menu::getMenuNameByID($db, $menu);
             /** @var $db \YAWK\db */
@@ -189,16 +191,16 @@ namespace YAWK {
 
             /* do query */
             if ($res = $db->query("INSERT INTO {menu}
-               (id, sort, menuID, title, href, date_created, parentID)
-               VALUES ('" . $id . "','" . $sort . "','" . $menu . "','" . $title . "','" . $href . "','" . $date_created . "','" . $parentID . "')"))
+               (id, sort, menuID, text, href, date_created, parentID)
+               VALUES ('" . $id . "','" . $sort . "','" . $menu . "','" . $text . "','" . $href . "','" . $date_created . "','" . $parentID . "')"))
             {
                 // entry added
-                \YAWK\sys::setSyslog($db, 7, "added menu entry <b>$title</b> to <b>$menuName</b>", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 7, "added menu entry <b>$text</b> to <b>$menuName</b>", 0, 0, 0, 0);
                 return true;
             }
             else {
                 // failed
-                \YAWK\sys::setSyslog($db, 5, "failed to add menu entry <b>$title</b> to <b>$menuName</b>", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 5, "failed to add menu entry <b>$text</b> to <b>$menuName</b>", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -342,13 +344,14 @@ namespace YAWK {
          * @param string $target string link target (eg. _blank)
          * @return bool
          */
-        static function editEntry($db, $menu, $id, $title, $href, $sort, $gid, $published, $parentID, $target)
+        static function editEntry($db, $menu, $id, $text, $title, $href, $sort, $gid, $published, $parentID, $target)
         {   /** @var $db \YAWK\db */
             $menuName = \YAWK\menu::getMenuNameByID($db, $menu);
             $date_changed = date("Y-m-d G:i:s");
             if ($res = $db->query("UPDATE {menu} SET
     							  sort = '" . $sort . "',
     							  href = '" . $href . "',
+                                  text = '" . $text . "',
                                   title = '" . $title . "',
                                   gid = '" . $gid . "',
                                   published = '" . $published . "',
@@ -461,8 +464,9 @@ namespace YAWK {
     <tr>
       <td><strong>&nbsp;</strong></td>
       <td><strong>ID</strong></td>
-      <td><strong>Titel</strong></td>
+      <td><strong>Text</strong></td>
       <td><strong>Link</strong></td>
+      <td><strong>Title</strong></td>
       <td><strong>Group</strong></td>
       <td><strong>Target</strong></td>
       <td><strong>Sortation</strong></td>
@@ -472,7 +476,7 @@ namespace YAWK {
   </thead>
   <tbody>";
             // get menu entries from database
-            if ($res = $db->query("SELECT id, title, href, gid, target, sort, parentID, published
+            if ($res = $db->query("SELECT id, text, title, href, gid, target, sort, parentID, published
   							 FROM {menu}
   							 WHERE menuID = '".$id."'
   							 ORDER BY sort, parentID, title"))
@@ -507,7 +511,7 @@ namespace YAWK {
 
                     // prepare parentID select field
                     // get menu entry name for <option....> from menuID
-                        if($entries_res = $db->query("SELECT id, title, parentID FROM {menu} WHERE menuID = $id ORDER BY sort, parentID, title"))
+                        if($entries_res = $db->query("SELECT id, text, title, parentID FROM {menu} WHERE menuID = $id ORDER BY sort, parentID, title"))
                         {
                             $menuSelect = '';
                             $menuSelected = '';
@@ -516,7 +520,7 @@ namespace YAWK {
                             {   // only show data for
                                 if ($row['id'] !== $entries_row['id']){
                                     $menuSelect .= "
-                                    <option value=\"" . $entries_row['id'] . "\">" . $entries_row['title'] . "</option>";
+                                    <option value=\"" . $entries_row['id'] . "\">" . $entries_row['text'] . "</option>";
                                     $menuSelectAddon = "<option value=\"0\">--no parent item--</option>";
 
                                     if ($row['parentID'] === '0')
@@ -542,11 +546,13 @@ namespace YAWK {
      </td>
 
       <td>
-          <input type=\"text\" class=\"form-control\" name=\"" . $row['id'] . "_title\" value=\"" . $row['title'] . "\" size=\"12\" style=\"float:left;\" />
+          <input type=\"text\" class=\"form-control\" name=\"" . $row['id'] . "_text\" value=\"" . $row['text'] . "\" size=\"12\" style=\"float:left;\" />
       </td>
-
       <td>
           <input type=\"text\" class=\"form-control\" name=\"" . $row['id'] . "_href\" value=\"" . $row['href'] . "\" size=\"45\" style=\"float:left;\" />
+      </td>
+      <td>
+          <input type=\"text\" class=\"form-control\" name=\"" . $row['id'] . "_title\" value=\"" . $row['title'] . "\" size=\"12\" style=\"float:left;\" />
       </td>
 
       <td>
@@ -581,7 +587,7 @@ namespace YAWK {
       <td>
        <!-- <a href=\"index.php?page=menu-edit&menu=" . $id . "&entry=" . $row['id'] . "&deleteitem=1\"><i class=\"fa fa-trash-o\" alt=\"delete\"></i></a> -->
         
-       <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Den Eintrag &laquo; $row[title] / $row[href] &raquo; wirklich l&ouml;schen?\" 
+       <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Den Eintrag &laquo; $row[text] / $row[href] &raquo; wirklich l&ouml;schen?\" 
         title=\"$lang[DELETE]\" href=\"index.php?page=menu-edit&menu=" . $id . "&entry=" . $row['id'] . "&del=1&deleteitem=1delete=true\">
        </a>
 
@@ -611,7 +617,7 @@ namespace YAWK {
             } else $currentRole = 2;
 
             // Select entries from the menu table
-            $res = $db->query("SELECT id, title, href, parentID, divider
+            $res = $db->query("SELECT id, text, title, href, target, parentID, divider
                             FROM {menu}
                             WHERE menuID = '" . $id . "'
                             and gid <= '" . $currentRole . "'
@@ -637,6 +643,7 @@ namespace YAWK {
 
             function buildMenu($db, $parent, $menu, $id, $currentRole, $divider)
             {   /** @var \YAWK\db $db */
+           // echo "<pre>";print_r($menu);echo"</pre>"; exit;
                 $titleCode = '';
                 /*
                     if ($menu['items']['divider'] === '1')
@@ -675,23 +682,41 @@ namespace YAWK {
                     // Start Bootstrap menu markup
                     $html .= "<ul class=\"nav navbar-nav\">";
                     // repeat foreach menu entry
-                    foreach ($menu['parents'][$parent] as $itemId) {
+                    foreach ($menu['parents'][$parent] as $itemId)
+                    {
                         // set parent w/o child items
                         if (!isset($menu['parents'][$itemId])) {
-                            $html .= "<li>\n  <a href='" . $menu['items'][$itemId]['href'] . "'>" . $menu['items'][$itemId]['title'] . "</a>\n</li> \n";
+                            if (!isset($menu['items'][$itemId]['title']) || (empty($menu['items'][$itemId]['title'])))
+                            {
+                                $title = "";
+                            }
+                            else
+                            {
+                                $title = "title=\"".$menu['items'][$itemId]['title']."\"";
+                            }
+                            $html .= "<li>\n  <a href=\"".$menu['items'][$itemId]['href']."\" target=\"".$menu['items'][$itemId]['target']."\" $title>" . $menu['items'][$itemId]['text'] . "</a>\n</li> \n";
                             // vertical spacer
                             // $html .= "".$divider_html."";
 
                         }
+
                         // set parents w child items (dropdown lists)
                         if (isset($menu['parents'][$itemId])) {
                             $html .= "<li class=\"dropdown\">
-            				<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">" . $menu['items'][$itemId]['title'] . " <b class=\"caret\"></b></a>
+            				<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">" . $menu['items'][$itemId]['text'] . " <b class=\"caret\"></b></a>
             				<ul class=\"dropdown-menu\">";
 
                             // select child items from db
                             foreach ($menu['parents'][$itemId] as $child) {
-                                $html .= "<li>\n  <a href='" . $menu['items'][$child]['href'] . "'>" . $menu['items'][$child]['title'] . "</a>\n</li> \n";
+                                if (!isset($menu['items'][$itemId]['title']) || (empty($menu['items'][$itemId]['title'])))
+                                {
+                                    $title = "";
+                                }
+                                else
+                                {
+                                    $title = "title=\"$menu[items][$itemId][title]\"";
+                                }
+                                $html .= "<li><a href=\"" . $menu['items'][$child]['href']."\" target=\"".$menu['items'][$itemId]['target']."\" $title>".$menu['items'][$child]['text']."</a></li>\n";
                             }
                             // boostrap navi ends here
                             $html .= "</ul>
