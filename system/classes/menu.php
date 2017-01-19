@@ -528,7 +528,7 @@ namespace YAWK {
                                         $menuSelected = "<option value=\"0\" selected>--no parent item--</option>";
                                     }
                                     else {
-                                        $parentID2name = $db->query("SELECT title FROM {menu} WHERE menuID = $id AND id=$row[parentID]");
+                                        $parentID2name = $db->query("SELECT text FROM {menu} WHERE menuID = $id AND id=$row[parentID]");
                                         $parentName = mysqli_fetch_row($parentID2name);
                                         $menuSelected = "<option value=\"" . $row['parentID'] . "\" selected>" . $parentName[0] . "</option>";
                                     }
