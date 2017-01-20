@@ -90,7 +90,7 @@ if (!isset($AdminLTE)) {
   {   // user is not logged in -> throw login page
     // include 'includes/login.php';
     echo "<body style=\"background-color: #ecf0f5\">";
-    echo \YAWK\backend::drawLoginBox($db, "YaWK LTE", "", "");
+    echo \YAWK\backend::drawLoginBox($db, "YaWK", "", "");
     echo "<br><br></section></div>";
     echo $AdminLTE->drawHtmlJSIncludes();
 

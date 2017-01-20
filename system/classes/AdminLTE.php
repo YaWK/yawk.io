@@ -275,7 +275,7 @@ namespace YAWK {
 
                         $from = \YAWK\user::getUserNameFromID($db, $message['fromUID']);
                         $picture = \YAWK\user::getUserImage("backend", $from, "img-circle", 20,20);
-                        $timeago = \YAWK\sys::time_ago($message['msg_date']);
+                        $timeago = \YAWK\sys::time_ago($message['msg_date'], $lang);
                         $msg_id = $message['msg_id'];
                         // get 32 chars message preview
                         $preview = $message['msg_body'];
@@ -370,7 +370,7 @@ namespace YAWK {
                             $UID = 0;
 
                             // calculate datetime pretty
-                            $timeAgo = \YAWK\sys::time_ago($my_note['log_date']);
+                            $timeAgo = \YAWK\sys::time_ago($my_note['log_date'], $lang);
 
                             // PREPARE VARS FOR PERSONAL NOTIFICATIONS
                             // #user# wants to be your friend
@@ -434,7 +434,7 @@ namespace YAWK {
                     {   // if notifications are available
                         foreach ($notifications as $note)
                         {   // loop data
-                            $timeAgo = \YAWK\sys::time_ago($note['log_date']);
+                            $timeAgo = \YAWK\sys::time_ago($note['log_date'], $lang);
 
                             echo "<li><a href=\"#\" title=\"\">
                             <div class=\"pull-left\" id=\"note-$note[id]\">

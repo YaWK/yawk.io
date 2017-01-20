@@ -66,7 +66,7 @@ else
 
             foreach ($my_follower AS $follower)
             {
-                $time_ago = \YAWK\sys::time_ago($follower['requestDate']);
+                $time_ago = \YAWK\sys::time_ago($follower['requestDate'], $lang);
                 echo "<tr>
                         <td class=\"text-right\">"; echo \YAWK\user::getUserImage("backend", $follower['username'], "img-circle", 25, 25); echo "</a></td>
                         <td><b><a style=\"display: block;\" href=\"index.php?page=user-edit&user=$follower[username]\">$follower[username]</a></b></td>

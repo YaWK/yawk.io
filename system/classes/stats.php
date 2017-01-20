@@ -532,14 +532,15 @@ namespace YAWK
          * @link http://yawk.io
          * @param object $db Database Object
          * @param array $daytime data array
+         * @param array language array
          * @return string return the javascript data
          */
-        public function getJsonDaytimePieChart($db, $daytimes)
+        public function getJsonDaytimePieChart($db, $daytimes, $lang)
         {   /* @var $db \YAWK\db */
             // check if logins are set
             if (!isset($daytimes) || (empty($daytimes)))
             {   // nope, get them from db
-                $daytimes = $this->countDaytime($db, '', 200);
+                $daytimes = $this->countDaytime($db, '', 200, $lang);
             }
             $jsonData = "[";
             foreach ($daytimes AS $daytime => $value)
@@ -547,17 +548,17 @@ namespace YAWK
                 // init textcolor
                 $textcolor = '';
                 // set different colors for each status
-                if ($daytime === "Morning") { $textcolor = "#f39c12"; }
-                if ($daytime === "Afternoon") { $textcolor = "#00a65a"; }
-                if ($daytime === "Evening") { $textcolor = "#00c0ef"; }
-                if ($daytime === "Night") { $textcolor = "#003D4C"; }
+                if ($daytime === "$lang[MORNING]") { $textcolor = "#f39c12"; }
+                if ($daytime === "$lang[AFTERNOON]") { $textcolor = "#00a65a"; }
+                if ($daytime === "$lang[EVENING]") { $textcolor = "#00c0ef"; }
+                if ($daytime === "$lang[NIGHT]") { $textcolor = "#003D4C"; }
 
                 // only failed + successful logins, exclude all other values
-                if ($daytime !== ("Total") &&
-                    ($daytime === ("Morning") ||
-                    ($daytime === ("Afternoon") ||
-                    ($daytime === ("Evening") ||
-                    ($daytime === ("Night"))))))
+                if ($daytime !== ("$lang[TOTAL]") &&
+                    ($daytime === ("$lang[MORNING]") ||
+                    ($daytime === ("$lang[AFTERNOON]") ||
+                    ($daytime === ("$lang[EVENING]") ||
+                    ($daytime === ("$lang[NIGHT]"))))))
                 {
                     $jsonData .= "
                             {
@@ -581,20 +582,21 @@ namespace YAWK
          * @link http://yawk.io
          * @param object $db Database Object
          * @param array $daytimes data array
+         * @param array $lang language array
          * @return string output the javascript data
          */
-        public function getJsonDaytimeLineChart($db, $daytimes)
+        public function getJsonDaytimeLineChart($db, $daytimes, $lang)
         {   /* @var $db \YAWK\db */
             // check if device types are set
             if (!isset($daytimes) || (empty($daytimes)))
             {   // nope, get them from db
-                $daytimes = $this->countDaytime($db, '', 200);
+                $daytimes = $this->countDaytime($db, '', 200, $lang);
             }
 
-            $jsonData = "labels: ['Morning', 'Afternoon', 'Evening', 'Night'],
+            $jsonData = "labels: ['$lang[MORNING]', '$lang[AFTERNOON]', '$lang[EVENING]', '$lang[NIGHT]'],
             datasets: [
                 {
-                  label: 'Hits',
+                  label: '$lang[HITS]',
                   fillColor: ['#f39c12', '#00a65a', '#00c0ef', '#003D4C'],
                   strokeColor: 'rgba(210, 214, 222, 1)',
                   pointColor: 'rgba(210, 214, 222, 1)',
@@ -617,18 +619,18 @@ namespace YAWK
          * @param array $daytimes data array
          * @return string output the javascript data
          */
-        public function getJsonDaytimeBarChart($db, $daytimes)
+        public function getJsonDaytimeBarChart($db, $daytimes, $lang)
         {   /* @var $db \YAWK\db */
             // check if device types are set
             if (!isset($daytimes) || (empty($daytimes)))
             {   // nope, get them from db
-                $daytimes = $this->countDaytime($db, '', 200);
+                $daytimes = $this->countDaytime($db, '', 200, $lang);
             }
 
-            $jsonData = "labels: ['Morning', 'Afternoon', 'Evening', 'Night'],
+            $jsonData = "labels: ['$lang[MORNING]', '$lang[AFTERNOON]', '$lang[EVENING]', '$lang[NIGHT]'],
             datasets: [
                 {
-                  label: 'Hits',
+                  label: '$lang[HITS]',
                   fillColor: ['#f39c12', '#00a65a', '#00c0ef', '#003D4C'],
                   strokeColor: 'rgba(210, 214, 222, 1)',
                   pointColor: 'rgba(210, 214, 222, 1)',
@@ -649,9 +651,9 @@ namespace YAWK
          * @link http://yawk.io
          * @return string output the javascript data
          */
-        public function getJsonWeekdayBarChart()
+        public function getJsonWeekdayBarChart($lang)
         {   /* @var $db \YAWK\db */
-             $jsonData = "labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+             $jsonData = "labels: ['$lang[MONDAY]', '$lang[TUESDAY]', '$lang[WEDNESDAY]', '$lang[THURSDAY]', '$lang[FRIDAY]', '$lang[SATURDAY]', '$lang[SUNDAY]'],
             datasets: [
                 {
                   label: 'Hits',
@@ -978,19 +980,19 @@ namespace YAWK
          * @param string $daytime contains the daytime (morning, afternoon, evening, night) as string
          * @return string returns the textcolor for this daytime as string
          */
-        public function getDaytimeColors($daytime)
+        public function getDaytimeColors($daytime, $lang)
         {
             switch ($daytime) {
-                case "Morning":
+                case "$lang[MORNING]":
                     $textcolor = "text-orange";
                     break;
-                case "Afternoon":
+                case "$lang[AFTERNOON]":
                     $textcolor = "text-green";
                     break;
-                case "Evening":
+                case "$lang[EVENING]":
                     $textcolor = "text-blue";
                     break;
-                case "Night":
+                case "$lang[NIGHT]":
                     $textcolor = "text-navy";
                     break;
                 default:
@@ -1274,7 +1276,7 @@ namespace YAWK
          * @param string $limit contains i number for sql limitation
          * @return array|bool containing daytimes (and number of hits
          */
-        public function countDaytime($db, $data, $limit)
+        public function countDaytime($db, $data, $limit, $lang)
         {   /* @var $db \YAWK\db */
 
             // check if limit (i) is set
@@ -1356,11 +1358,11 @@ namespace YAWK
 
             // build an array, cointaining the daytimes
             $dayTimes = array(
-                "Morning" => $this->i_morning,
-                "Afternoon" => $this->i_afternoon,
-                "Evening" => $this->i_evening,
-                "Night" => $this->i_night,
-                "Total" => $total
+                "$lang[MORNING]" => $this->i_morning,
+                "$lang[AFTERNOON]" => $this->i_afternoon,
+                "$lang[EVENING]" => $this->i_evening,
+                "$lang[NIGHT]" => $this->i_night,
+                "$lang[TOTAL]" => $total
             );
 
             // return OS data array
@@ -1377,7 +1379,7 @@ namespace YAWK
          * @param object $db the database object
          * @return array containing daytimes and number of hits in percent
          */
-        public function getDayTimesPercent()
+        public function getDayTimesPercent($lang)
         {
             // count daytimes
             $total = $this->i_morning+$this->i_afternoon+$this->i_evening+$this->i_night;
@@ -1392,10 +1394,10 @@ namespace YAWK
 
             // build an array, cointaining the device types and the number how often it's been found
             $dayTimesPercent = array(
-                "Morning" => $this->i_morningPercent,
-                "Afternoon" => $this->i_afternoonPercent,
-                "Evening" => $this->i_eveningPercent,
-                "Night" => $this->i_nightPercent
+                "$lang[MORNING]" => $this->i_morningPercent,
+                "$lang[AFTERNOON]" => $this->i_afternoonPercent,
+                "$lang[EVENING]" => $this->i_eveningPercent,
+                "$lang[NIGHT]" => $this->i_nightPercent
             );
             arsort($dayTimesPercent);
             return $dayTimesPercent;
@@ -2641,18 +2643,18 @@ namespace YAWK
          * @param object $db Database Object
          * @param string $data array containing all the stats data
          * @param string $limit contains i number for sql limitation
+         * @param object $lang language object
          */
-        public function drawDaytimeBox($db, $data, $limit)
+        public function drawDaytimeBox($db, $data, $limit, $lang)
         {   /** @var $db \YAWK\db */
             // get data for this box
-            $dayTimes = $this->countDaytime($db, $data, $limit);
-            $dayTimesPercent = $this->getDayTimesPercent();
-
+            $dayTimes = $this->countDaytime($db, $data, $limit, $lang);
+            $dayTimesPercent = $this->getDayTimesPercent($lang);
 
             echo "<!-- donut box:  -->
         <div class=\"box box-default\">
             <div class=\"box-header with-border\">
-                <h3 class=\"box-title\">Daytime <small>when is your prime time?</small></h3>
+                <h3 class=\"box-title\">$lang[DAYTIME] <small>$lang[PRIMETIME_QUESTION]</small></h3>
 
                 <div class=\"box-tools pull-right\">
                     <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"collapse\"><i class=\"fa fa-minus\"></i>
@@ -2692,7 +2694,7 @@ namespace YAWK
                                 var pieChart = new Chart(pieChartCanvas);
                                 // get browsers array
                                 // output js data with php function getJsonBrowsers
-                                var PieData = ";echo $this->getJsonDaytimePieChart($db, $dayTimes);
+                                var PieData = ";echo $this->getJsonDaytimePieChart($db, $dayTimes, $lang);
                                 echo "
                                 var pieOptions = {
                                     //Boolean - Whether we should show a stroke on each segment
@@ -2734,7 +2736,7 @@ namespace YAWK
                             //- BAR CHART -
                             //-------------
                             
-                            var barChartData = {";echo $this->getJsonDaytimeBarChart($db, $dayTimes);echo "};
+                            var barChartData = {";echo $this->getJsonDaytimeBarChart($db, $dayTimes, $lang);echo "};
                             var barChartCanvas = $('#barChartDaytime').get(0).getContext('2d');
                             var barChart = new Chart(barChartCanvas);
                             barChartData.datasets.fillColor = '#00a65a';
@@ -2777,7 +2779,7 @@ namespace YAWK
                                 //------------------
                                 // LINE CHART
                                 //------------------
-                               var lineChartData = {";echo $this->getJsonDaytimeLineChart($db, $dayTimes);echo "
+                               var lineChartData = {";echo $this->getJsonDaytimeLineChart($db, $dayTimes, $lang);echo "
                                var lineChartOptions = {
                                   //Boolean - If we should show the scale at all
                                   showScale: true,
@@ -2829,18 +2831,18 @@ namespace YAWK
             // walk through array and draw data beneath pie chart
             foreach ($dayTimesPercent AS $daytime => $value)
             {   // get text colors
-                $textcolor = $this->getDaytimeColors($daytime);
+                $textcolor = $this->getDaytimeColors($daytime, $lang);
                 // show browsers their value is greater than zero and exclude totals
-                if ($value > 0 && ($daytime !== "Total"))
+                if ($value > 0 && ($daytime !== "$lang[TOTAL]"))
                 {   // 1 line for every browser
                     $spacer = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-                    if ($daytime === "Morning")
+                    if ($daytime === "$lang[MORNING]")
                     { $legend = "$spacer<small>06:00 - 11:00</small>"; }
-                    elseif ($daytime === "Afternoon")
+                    elseif ($daytime === "$lang[AFTERNOON]")
                     { $legend = "$spacer<small>12:00 - 17:00</small>"; }
-                    elseif ($daytime === "Evening")
+                    elseif ($daytime === "$lang[EVENING]")
                     { $legend = "$spacer<small>18:00 - 23:00</small>"; }
-                    elseif ($daytime === "Night")
+                    elseif ($daytime === "$lang[NIGHT]")
                     { $legend = "$spacer<small>00:00 - 05:00</small>"; }
                     else { $legend = ''; }
                     echo "<li><i class=\"fa fa-circle-o $textcolor\"></i> <b>$value%</b> $daytime <br><small>$legend</small></li>";
@@ -2869,7 +2871,7 @@ namespace YAWK
             {   // show only items where browser got a value
                 if ($value !== 0 && $dayTime !== 0)
                 {   // get different textcolors
-                    $textcolor = $this->getDaytimeColors($dayTime);
+                    $textcolor = $this->getDaytimeColors($dayTime, $lang);
                     echo "<li><a href=\"#\" class=\"$textcolor\">$dayTime
                           <span class=\"pull-right $textcolor\" ><i class=\"fa fa-angle-down\"></i>$value</span></a></li>";
                 }
@@ -2891,8 +2893,9 @@ namespace YAWK
          * @param object $db Database Object
          * @param string $data array containing all the stats data
          * @param string $limit contains i number for sql limitation
+         * @param object $lang language array
          */
-        public function drawWeekdayBox($db, $data, $limit)
+        public function drawWeekdayBox($db, $data, $limit, $lang)
         {   /** @var $db \YAWK\db */
             // get data for this box
             $weekdays = $this->countWeekdays($db, $data, $limit);
@@ -2901,7 +2904,7 @@ namespace YAWK
             echo "<!-- donut box:  -->
         <div class=\"box box-default\">
             <div class=\"box-header with-border\">
-                <h3 class=\"box-title\">Weekdays <small>overview best days</small></h3>
+                <h3 class=\"box-title\">$lang[WEEKDAYS] <small>$lang[WEEKDAY_OVERVIEW]</small></h3>
 
                 <div class=\"box-tools pull-right\">
                     <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"collapse\"><i class=\"fa fa-minus\"></i>
@@ -2927,7 +2930,7 @@ namespace YAWK
                             //- BAR CHART -
                             //-------------
                             
-                            var barChartData = {";echo $this->getJsonWeekdayBarChart();echo "};
+                            var barChartData = {";echo $this->getJsonWeekdayBarChart($lang);echo "};
                             var barChartCanvas = $('#barChartWeekdays').get(0).getContext('2d');
                             var barChart = new Chart(barChartCanvas);
                             barChartData.datasets.fillColor = '#00a65a';

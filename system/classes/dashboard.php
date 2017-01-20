@@ -24,9 +24,10 @@ namespace YAWK
         /**
          * Draws a box containing the recently added static pages
          * @param object $db the database object
+         * @param object $lang language object
          * @param int $limit number for sql limitation
          */
-        static function drawLatestPagesBox($db, $limit)
+        static function drawLatestPagesBox($db, $limit, $lang)
         {   // default latest pages
             if (!isset($limit) || (empty($limit))) { $limit = 4; }
             $latestPages = array();
@@ -36,7 +37,7 @@ namespace YAWK
             echo "<!-- PRODUCT LIST -->
         <div class=\"box box-primary\">
             <div class=\"box-header with-border\">
-                <h3 class=\"box-title\">Recently Added Static Pages</h3>
+                <h3 class=\"box-title\">$lang[RECENTLY_ADDED_PAGES]</h3>
 
                 <div class=\"box-tools pull-right\">
                     <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"collapse\"><i class=\"fa fa-minus\"></i>
@@ -58,7 +59,7 @@ namespace YAWK
                     {   // page is offline
                         $color = "danger"; $text= "offline";
                     }
-                $since = \YAWK\sys::time_ago($property['date_publish']);
+                $since = \YAWK\sys::time_ago($property['date_publish'], $lang);
                 echo"<li class=\"item\">
                         <div class=\"product-img\">
                             <img src=\"../system/engines/AdminLTE/dist/img/default-50x50.gif\" alt=\"Product Image\">
@@ -67,7 +68,7 @@ namespace YAWK
                             <a href=\"index.php?page=page-edit&alias=$property[alias]&id=$property[id]\" class=\"product-title\">$property[title]
                                 <span class=\"label label-$color pull-right\">$text</span></a>
                         <span class=\"product-description\">
-                          <small>published: $since<br><small>$property[date_publish]</small></small>
+                          <small>$lang[PUBLISHED]: $since<br><small>$property[date_publish]</small></small>
                         </span>
                         </div>
                     </li>";
@@ -78,7 +79,7 @@ namespace YAWK
             </div>
             <!-- /.box-body -->
             <div class=\"box-footer text-center\">
-                <a href=\"index.php?page=pages\" class=\"uppercase\">View All Pages</a>
+                <a href=\"index.php?page=pages\" class=\"uppercase\">$lang[VIEW_ALL_PAGES]</a>
             </div>
             <!-- /.box-footer -->
         </div>
@@ -90,8 +91,9 @@ namespace YAWK
          * Draws a box containing the recently added users
          * @param object $db database
          * @param int $limit number for sql limitation
+         * @param object $lang language object
          */
-        static function drawLatestUsers($db, $limit)
+        static function drawLatestUsers($db, $limit, $lang)
         {
             // set default value
             if (!isset($limit) && (empty($limit))) { $limit = 8; }
@@ -103,10 +105,10 @@ namespace YAWK
                 <!-- USERS LIST -->
                 <div class=\"box box-danger\">
                     <div class=\"box-header with-border\">
-                        <h3 class=\"box-title\">Latest Members</h3>
+                        <h3 class=\"box-title\">$lang[LATEST_MEMBERS]</h3>
 
                         <div class=\"box-tools pull-right\">
-                            <span class=\"label label-danger\">$members New Members</span>
+                            <span class=\"label label-danger\">$members $lang[NEW_MEMBERS]</span>
                             <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"collapse\"><i class=\"fa fa-minus\"></i>
                             </button>
                             <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"remove\"><i class=\"fa fa-times\"></i>
@@ -119,7 +121,7 @@ namespace YAWK
                             foreach ($latestUsers AS $newUser)
                             {
                                 $userpic = \YAWK\user::getUserImage("backend", $newUser['username'], "img-circle", 50, 50);
-                                $timeAgo = \YAWK\sys::time_ago($newUser['date_created']);
+                                $timeAgo = \YAWK\sys::time_ago($newUser['date_created'], $lang);
                                 echo "<li>
                                 <a href=\"index.php?page=user-edit&user=$newUser[username]\">$userpic</a>
                                 <br><a href=\"index.php?page=user-edit&user=$newUser[username]\">$newUser[username]</a>
@@ -131,7 +133,7 @@ namespace YAWK
                     </div>
                     <!-- /.box-body -->
                     <div class=\"box-footer text-center\">
-                        <a href=\"index.php?page=users\" class=\"uppercase\">View All Users</a>
+                        <a href=\"index.php?page=users\" class=\"uppercase\">$lang[VIEW_ALL_MEMBERS]</a>
                     </div>
                     <!-- /.box-footer -->
                 </div>

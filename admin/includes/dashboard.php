@@ -15,7 +15,7 @@ Both of these plugins are recommended to enhance the
 // check if stats object is here...
 if (!isset($stats) || (empty($stats)))
 {   // include stats class
-    require_once '../system/classes/stats.php';
+    @require_once '../system/classes/stats.php';
     // and create new stats object
     $stats = new \YAWK\stats();
     $data = $stats->getStatsArray($db);
@@ -32,8 +32,8 @@ if (!isset($stats) || (empty($stats)))
             <span class="info-box-icon bg-blue"><i class="fa fa-line-chart"></i></span>
 
             <div class="info-box-content">
-                <span class="info-box-text">TOTAL</span>
-                <span class="info-box-number"><?php echo number_format($stats->i_hits, 0, '.', '.'); ?> <small> Hits</small></span>
+                <span class="info-box-text"><?php echo $lang['TOTAL']; ?></span>
+                <span class="info-box-number"><?php echo number_format($stats->i_hits, 0, '.', '.'); ?> <small> <?php echo $lang['HITS']; ?></small></span>
             </div>
             <!-- /.info-box-content -->
         </div>
@@ -46,7 +46,7 @@ if (!isset($stats) || (empty($stats)))
             <span class="info-box-icon bg-aqua"><i class="fa fa-mobile-phone"></i></span>
 
             <div class="info-box-content">
-                <span class="info-box-text">DEVICES</span>
+                <span class="info-box-text"><?php echo $lang['DEVICES']; ?></span>
                 <span class="info-box-number"><?php $stats->countDeviceTypes($db, $data, $limit); echo round($stats->i_desktopPercent, 1); ?>% <small> Desktop</small></span>
                 <span class="info-box-number"><?php echo round($stats->i_tabletPercent, 1); ?>% <small> Tablet</small></span>
             </div>
@@ -64,7 +64,7 @@ if (!isset($stats) || (empty($stats)))
             <span class="info-box-icon bg-green"><i class="ion-ios-paper-outline"></i></span>
 
             <div class="info-box-content">
-                <span class="info-box-text">Pages</span>
+                <span class="info-box-text"><?php echo $lang['PAGES']; ?></span>
                 <span class="info-box-number"><?php echo \YAWK\page::countPages($db); ?></span>
             </div>
             <!-- /.info-box-content -->
@@ -77,7 +77,7 @@ if (!isset($stats) || (empty($stats)))
             <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
 
             <div class="info-box-content">
-                <span class="info-box-text">Members</span>
+                <span class="info-box-text"><?php echo $lang['USERS']; ?></span>
                 <span class="info-box-number"><?php echo \YAWK\user::countUsers($db); ?></span>
             </div>
             <!-- /.info-box-content -->
@@ -106,13 +106,13 @@ if (!isset($stats) || (empty($stats)))
 
     <div class="col-md-4">
         <!-- weekday stats -->
-        <?php $stats->drawWeekdayBox($db, $data, $limit); ?>
+        <?php $stats->drawWeekdayBox($db, $data, $limit, $lang); ?>
         <!-- latest users -->
-        <?php \YAWK\dashboard::drawLatestUsers($db, 8); ?>
+        <?php \YAWK\dashboard::drawLatestUsers($db, 8, $lang); ?>
         <!-- daytime stats -->
-        <?php $stats->drawDaytimeBox($db, $data, $limit); ?>
+        <?php $stats->drawDaytimeBox($db, $data, $limit, $lang); ?>
         <!-- latest pages stats-->
-        <?php \YAWK\dashboard::drawLatestPagesBox($db, 5); ?>
+        <?php \YAWK\dashboard::drawLatestPagesBox($db, 5, $lang); ?>
     </div>
     <!-- /.col -->
 </div>

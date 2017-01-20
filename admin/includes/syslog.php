@@ -78,7 +78,7 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
             // cpt. caps
             $log['property'] = strtoupper($log['property']);
             // calculate time ago view
-            $time_ago = \YAWK\sys::time_ago($log['log_date']);
+            $time_ago = \YAWK\sys::time_ago($log['log_date'], $lang);
 
             echo "<tr class=\"".$log['type']."\">
                     <td>".$log['log_id']."</td>

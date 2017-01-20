@@ -387,7 +387,7 @@ namespace YAWK\PLUGINS\MESSAGES {
                     // build message data
                     $from = \YAWK\user::getUserNameFromID($db, $relatedMessage['fromUID']);
                     $picture = \YAWK\user::getUserImage("backend", $from, "img-circle", 64, 64);
-                    $timeAgo = \YAWK\sys::time_ago($relatedMessage['msg_date']);
+                    $timeAgo = \YAWK\sys::time_ago($relatedMessage['msg_date'], $lang);
                     $splitDate = \YAWK\sys::splitDateShort($relatedMessage['msg_date']);
                     $html .= "
                      <div class=\"box box-primary\">
@@ -421,7 +421,7 @@ namespace YAWK\PLUGINS\MESSAGES {
             $message = self::fetchSingleMessage($db, $msg_id);
             $from = \YAWK\user::getUserNameFromID($db, $message['fromUID']);
             $picture = \YAWK\user::getUserImage("backend", $from, "img-circle", 64, 64);
-            $timeAgo = \YAWK\sys::time_ago($message['msg_date']);
+            $timeAgo = \YAWK\sys::time_ago($message['msg_date'], $lang);
             $splitDate = \YAWK\sys::splitDateShort($message['msg_date']);
             self::markAsRead($db, $msg_id);
 

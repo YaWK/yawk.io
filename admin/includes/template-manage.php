@@ -94,7 +94,6 @@ echo"<ol class=\"breadcrumb\">
     <tbody>
 
     <?PHP
-
     $i_pages = 0;
     $i_pages_published = 0;
     $i_pages_unpublished = 0;
@@ -140,6 +139,7 @@ echo"<ol class=\"breadcrumb\">
                 $screenshot = "<img src=\"../system/templates/".$activeTemplate."/img/screenshot.jpg\" width=\"200\" class=\"img-rounded\">";
             }
 
+            $row['positions'] = str_replace(':', '<br>',$row['positions']); //wordwrap($row['positions'], 20, "<br>\n");
             echo "<tr>
           <td class=\"text-center\">
             <a title=\"toggle&nbsp;status\" href=\"index.php?page=template-manage&toggle=1&templateID=".$row['id']."\">

@@ -1141,7 +1141,7 @@ namespace YAWK {
          * @param string $userdate date to calculate
          * @return string return how many time has gone since $userdate
          */
-        static function time_ago($userdate)
+        static function time_ago($userdate, $lang)
         {
             $time_ago = '';
 
@@ -1149,20 +1149,20 @@ namespace YAWK {
             $diff = $date->diff(new \DateTime('now'));
 
             if (($t = $diff->format("%m")) > 0)
-                $time_ago = (int)$t . ' months';
+                $time_ago = (int)$t . ' '.$lang['MONTHS'].'';
             else if (($t = $diff->format("%d")) > 0)
-                $time_ago = (int)$t . ' days';
+                $time_ago = (int)$t . ' '.$lang['DAYS'].'';
             else if (($t = $diff->format("%H")) > 0)
-                $time_ago = (int)$t . ' hours';
+                $time_ago = (int)$t . ' '.$lang['HOURS'].'';
             else if (($t = $diff->format("%i")) > 0)
-                $time_ago = (int)$t . ' minutes';
+                $time_ago = (int)$t . ' '.$lang['MINUTES'].'';
             else if (($t = $diff->format("%s")) > 0)
-                $time_ago = (int)$t . ' seconds';
+                $time_ago = (int)$t . ' '.$lang['SECONDS'].'';
             // else
             //    $time_ago = 'minutes';
 
            // return $time_ago . ' ago (' . $date->format('M j, Y') . ')';
-            return $time_ago . ' ago';
+            return $time_ago . ' '.$lang['AGO'].'';
         }
 
         /**

@@ -156,7 +156,7 @@ else
             // loop through friendship requests array
             foreach ($request_friends AS $request)
             {   // format datetime
-                $time_ago = \YAWK\sys::time_ago($request['requestDate']);
+                $time_ago = \YAWK\sys::time_ago($request['requestDate'], $lang);
                 if ($request['friendA'] !== $_SESSION['uid'])
                 {
                     $friendUID = $request['friendA'];
@@ -200,7 +200,7 @@ else
             // loop through friends array
             foreach ($my_friends AS $friend)
             {   // calculate time ago view
-                $time_ago = \YAWK\sys::time_ago($friend['confirmDate']);
+                $time_ago = \YAWK\sys::time_ago($friend['confirmDate'], $lang);
                 // PREPARE FRIENDS FOR LIST
                 if (isset($param_uid) && $param_uid === 1)
                 {   // prepare friendslist for given UID
