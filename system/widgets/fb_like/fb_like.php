@@ -1,11 +1,17 @@
 <?PHP
-global $dbprefix, $connection;
-if (isset($wID)) {
+$width="450";
+$height="35";
+$fblikeurl="http%3A%2F%2Fwww.facebook.com%2Fplatform";
+$fbappID="100710516666226";
+$colorscheme="light";
+
+if (isset($widgetID))
+{
 	
 	   /* get widget settings */    
 		/* ESSENTIAL TO GET WIDGETS TO WORK PROPERLY */
-	    $res = mysqli_query($connection, "SELECT * FROM ".$dbprefix."widget_settings 
-	                        WHERE widgetID = '".$wID."'
+	    $res = mysqli_query("SELECT * FROM {widget_settings}
+	                        WHERE widgetID = '".$widgetID."'
 	                        AND activated = '1'");
 	    while($row = mysqli_fetch_row($res)){
 	      $w_property = $row[1];   
@@ -42,13 +48,7 @@ if (isset($wID)) {
 	    
 	   } // end while fetch row (end get widget settings)
 } // if no widget ID is given or settings could not be retrieved, use this as defaults:
-else {
-		$width="450";
-		$height="35";
-		$fblikeurl="http%3A%2F%2Fwww.facebook.com%2Fplatform";
-		$fbappID="100710516666226";
-		$colorscheme="light";
-	  }
+
 //	 if (empty($fblikeurl)) { $fblikeurl="http%3A%2F%2Fwww.facebook.com%2Fplatform"; }
 ?>
 <br>

@@ -3,9 +3,9 @@
 if (isset($wID)) {
 /* get widget settings
  * ESSENTIAL TO GET WIDGETS TO WORK PROPERLY */
-   $res = mysqli_query($connection, "SELECT * FROM ".$dbprefix."widget_settings 
-	                        WHERE widgetID = '".$wID."'
-	                        AND activated = '1'");
+   $res = $db->query("SELECT * FROM {widget_settings} 
+								WHERE widgetID = '".$wID."'
+	                        	AND activated = '1'");
    while($row = mysqli_fetch_row($res)){
 	      $w_property = $row[1];   
 	      $w_value = $row[2];

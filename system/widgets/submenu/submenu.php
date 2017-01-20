@@ -24,11 +24,10 @@ if (isset($_GET['widgetID']))
         if (isset($w_property)){
             switch($w_property)
             {
-                /* name of the channel to stream */
+                /* name of the menu to show */
                 case 'menuID';
                     $menuID = $w_value;
                     break;
-
             }
         } /* END LOAD PROPERTIES */
     } // end while fetch row (fetch widget settings)
