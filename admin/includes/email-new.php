@@ -53,47 +53,47 @@ echo"<ol class=\"breadcrumb\">
             <div class="box-header"><h3 class="box-title"><?php echo $lang['EMAIL']." ".$lang['EMAILNEW_SUBTEXT']; ?></h3></div>
             <div class="box-body">
                 <form action="index.php?page=email-new" class="form" method="POST">
-                        <label for="email_from">From:</label>
+                        <label for="email_from"><?php echo $lang['FROM']; ?></label>
                         <input id="email_from"
                                type="text"
                                class="form-control"
                                name="email_from"
                                size="15"
-                               placeholder="from:"
+                               placeholder="<?php echo $lang['FROM']; ?>:"
                                value="<?php echo $email_from; ?>"
                                maxlength="64">
 
-                        <label for="email_to">To:</label>
+                        <label for="email_to"><?php echo $lang['TO']; ?>:</label>
                         <input id="email_to"
                                type="text"
                                class="form-control"
                                name="email_to"
                                size="15"
-                               placeholder="to:"
+                               placeholder="<?php echo $lang['TO']; ?>:"
                                value="<?php echo $email_to; ?>"
                                maxlength="64">
-                        <label for="email_subject">Subject:</label>
+                        <label for="email_subject"><?php echo $lang['SUBJECT']; ?>:</label>
                         <input id="email_subject"
                                type="text"
                                class="form-control"
                                name="email_subject"
                                size="15"
-                               placeholder="Subject"
+                               placeholder="<?php echo $lang['SUBJECT']; ?>"
                                maxlength="64">
-                        <label for="email_message">Message:</label>
+                        <label for="email_message"><?php echo $lang['MESSAGE']; ?>:</label>
                         <textarea id="email_message"
                                   name="email_message"
                                   class="form-control"
                                   cols="64"
-                                  rows="15">Message
+                                  rows="15"><?php echo $lang['MESSAGE']; ?>
                         </textarea><br>
                         <button type="submit"
                                 name="send"
-                                class="btn btn-success pull-right"><i class="fa fa-envelope-o"></i>&nbsp; Email&nbsp;an&nbsp;<?php echo $user; ?>&nbsp;senden</button>
+                                class="btn btn-success pull-right"><i class="fa fa-envelope-o"></i>
+                                &nbsp; <?php echo $lang['EMAIL_SEND']; ?>&nbsp;<?php echo $lang['TO']; ?>&nbsp;<?php echo $user; ?></button>
                 </form>
             </div>
         </div>
-
 
     </div>
     <div class="col-md-6">&nbsp;</div>
