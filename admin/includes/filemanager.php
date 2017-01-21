@@ -1,5 +1,4 @@
 <?php
-
 if (isset($_POST['upload']))
 {
     if (isset($_POST['folderselect']))
@@ -21,29 +20,42 @@ if (isset($_POST['upload']))
             if(move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target_path))
             {   // store uploaded file
                 $file = basename( $_FILES['uploadedfile']['name']);
-                \YAWK\sys::setSyslog($db, 7, "uploaded <b>$file</b>", 0, 0, 0, 0);
-                print \YAWK\alert::draw("success", "Erfolg!", "Datei <strong>".$file."</strong> erfolgreich hochgeladen!", "", 800);
+                \YAWK\sys::setSyslog($db, 7, "$lang[UPLOADED] <b>$file</b>", 0, 0, 0, 0);
+                print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[UPLOAD_SUCCESSFUL]: $lang[FILE] <strong>".$file."</strong>", "", 800);
             }
             else
             {   // could not upload file, throw error
-                \YAWK\sys::setSyslog($db, 5, "error uploading <b>$file</b>", 0, 0, 0, 0);
-                echo YAWK\alert::draw("danger", "Error!", "There was an error uploading $file, please try again.", "", 5800);
+                $file = basename( $_FILES['uploadedfile']['name']);
+                \YAWK\sys::setSyslog($db, 5, "$lang[UPLOAD_FAILED] <b>$file</b>", 0, 0, 0, 0);
+                echo YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[UPLOAD_FAILED]: $file", "", 5800);
             }
             break;
     }
 }
-// DELETE ITEM 
+
+// DELETE ITEM
 if (isset($_GET['delete']))
 {   // user clicked on delete
     if ($_GET['delete']==1 AND (isset($_GET['item'])))
-    {
+    {   // prepare vars
         $path=$_GET['path'];
         $item=$_GET['item'];
         $file="$path"."/"."$item";
-        YAWK\filemanager::deleteItem($file, $_GET['folder']);
+        // execute delete command
+        if (YAWK\filemanager::deleteItem($file, $_GET['folder']) === true)
+        {   // DELETE SUCCESSFUL, set syslog + throw success msg
+            print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[FILE] $file $lang[DELETE_SUCCESSFUL]","","2400");
+            \YAWK\sys::setSyslog($db, 8, "$lang[DELETED] $file", 0, 0, 0, 0);
+        }
+        else
+        {   // DELETE FAILED, set syslog + throw error msg
+            print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[FILE] $file $lang[DELETE_FAILED]","","2400");
+            \YAWK\sys::setSyslog($db, 5, "$lang[DELETE_FAILED] $file", 0, 0, 0, 0);
+        }
     }
 }
-// MOVE ITEM 
+
+// MOVE ITEM
 if (isset($_GET['move']))
 {   // user clicked on move
     if ($_GET['move']==1 AND (isset($_GET['file'])))
@@ -79,8 +91,8 @@ if (isset($_GET['move']))
         <!-- draw title on top-->
         <?php echo \YAWK\backend::getTitle($lang['FILEMAN_TITLE'], $lang['FILEMAN_SUBTEXT']); ?>
         <ol class="breadcrumb">
-            <li><a href="index.php?page=dashboard" title="Dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active"><a href="index.php?page=filemanager" title="Filemanager"> Filemanager</a></li>
+            <li><a href="index.php?page=dashboard" title="Dashboard"><i class="fa fa-dashboard"></i> <?php echo $lang['DASHBOARD']; ?></a></li>
+            <li class="active"><a href="index.php?page=filemanager" title="Filemanager"> <?php echo $lang['FILEMANAGER']; ?></a></li>
         </ol>
     </section>
     <!-- Main content -->
@@ -88,40 +100,40 @@ if (isset($_GET['move']))
         <!-- START CONTENT HERE -->
 <div class="box box-default">
     <div class="box-body">
-
 <!-- upload btn -->
 <a class="btn btn-success" data-toggle="modal" data-target="#myModal" href="#myModal" style="float:right;">
 <i class="glyphicon glyphicon-plus"></i> &nbsp;<?php print $lang['FILEMAN_UPLOAD']; ?></a>
 
+<?php $maxFileSize = \YAWK\filemanager::getPhpMaxFileSize(); ?>
 <!-- FILE UPLOAD MODAL DIALOG -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel"><?php print $lang['FILEMAN_UPLOAD']; ?> (max <?php print \YAWK\filemanager::getPhpMaxFileSize(); ?>)</h4>
+                <h4 class="modal-title" id="myModalLabel"><?php print $lang['FILEMAN_UPLOAD']; ?> (max <?php print $maxFileSize; ?>B)</h4>
             </div>
             <div class="modal-body">
                 <form enctype="multipart/form-data" class="form-inline" action="index.php?page=filemanager" method="POST">
 
-                            <input type="hidden" name="MAX_FILE_SIZE" value="<?php print $max_file_size; ?>" />
-                            <input type="hidden" name="upload" value="sent" />
+                            <input type="hidden" name="MAX_FILE_SIZE" value="">
+                            <input type="hidden" name="upload" value="sent">
                             <label for="uploadedfile"></label>
-                            <input class="btn btn-default btn-file" id="uploadedfile" name="uploadedfile" type="file" /><br>
+                            <input class="btn btn-default btn-file" id="uploadedfile" name="uploadedfile" type="file"><br>
 
-                    <label for="folderselect">to folder: </label>
+                    <label for="folderselect"><?php echo $lang['UPLOAD_TO']; ?>: </label>
                     <select id="folderselect" name="folderselect" class="form-control">
-                        <option value="audio">Audio</option>
-                        <option value="backup">Backup</option>
-                        <option value="documents">Documents</option>
-                        <option value="downloads">Downloads</option>
-                        <option value="images" selected>Images</option>
-                        <option value="uploads">Uploads</option>
-                        <option value="video">Videos</option>
+                        <option value="audio"><?php echo $lang['FILEMAN_AUDIO']; ?></option>
+                        <option value="backup"><?php echo $lang['FILEMAN_BACKUP']; ?></option>
+                        <option value="documents"><?php echo $lang['FILEMAN_DOCUMENTS']; ?></option>
+                        <option value="downloads"><?php echo $lang['FILEMAN_DOWNLOADS']; ?></option>
+                        <option value="images" selected><?php echo $lang['FILEMAN_IMAGES']; ?></option>
+                        <option value="uploads"><?php echo $lang['FILEMAN_UPLOADS']; ?></option>
+                        <option value="video"><?php echo $lang['FILEMAN_VIDEOS']; ?></option>
                     </select>
                     <br>
                     <div class="modal-footer">
-                        <input class="btn btn-large btn-success" style="float:right;" type="submit" value="Datei&nbsp;hochladen" />
+                        <input class="btn btn-large btn-success pull-right" type="submit" value="Datei&nbsp;hochladen" />
                     </div>
                 </form>
             </div>
@@ -139,21 +151,21 @@ if (isset($_GET['move']))
             </div>
             <div class="modal-body">
                 <form enctype="multipart/form-data" action="index.php?page=filemanager&move=1" method="POST">
-                    <h3>Folder ausw&auml;hlen: <small>wohin soll die Datei <?php print $_GET['item']; echo $_GET['$file_value'];  ?> verschoben werden?</small></h3>
+                    <h3><?php echo $lang['SELECT_FOLDER']; ?>: <small><?php print $lang['SELECT_MOVE']; print $_GET['item']; echo $_GET['$file_value'];  ?></small></h3>
                     <select id="folderselect" class="form-control" name="folderselect">
-                        <option value="audio"> Audio </option>
-                        <option value="documents"> Backup </option>
-                        <option value="documents"> Documents </option>
-                        <option value="downloads"> Downloads </option>
-                        <option value="images" selected> Images </option>
-                        <option value="uploads"> Uploads </option>
-                        <option value="video"> Video </option>
+                        <option value="audio"> ><?php echo $lang['FILEMAN_AUDIO']; ?> </option>
+                        <option value="documents"> ><?php echo $lang['FILEMAN_BACKUP']; ?> </option>
+                        <option value="documents"> ><?php echo $lang['FILEMAN_DOCUMENTS']; ?> </option>
+                        <option value="downloads"> ><?php echo $lang['FILEMAN_DOWNLOADS']; ?> </option>
+                        <option value="images" selected> ><?php echo $lang['FILEMAN_IMAGES']; ?> </option>
+                        <option value="uploads"> ><?php echo $lang['FILEMAN_UPLOADS']; ?> </option>
+                        <option value="video"> ><?php echo $lang['FILEMAN_VIDEOS']; ?> </option>
                     </select>
                 </form>
             </div>
             <div class="modal-footer">
-                <input type="hidden" name="move" value="sent" />
-                <input class="btn btn-large btn-success" type="submit" value="Datei&nbsp;verschieben"/>
+                <input type="hidden" name="move" value="sent">
+                <input class="btn btn-large btn-success" type="submit" value="<?php echo $lang['FILEMAN_MOVE']; ?>">
             </div>
         </div> <!-- modal content -->
   </div> <!-- modal dialog -->
@@ -161,13 +173,13 @@ if (isset($_GET['move']))
 
 <!-- Tabs -->
 <ul id="myTab" class="nav nav-tabs">
-    <li><a href="#audio" data-toggle="tab"><i class="fa fa-music"></i> &nbsp;Audio</a></li>
-    <li><a href="#backup" data-toggle="tab"><i class="fa fa-file-zip-o"></i> &nbsp;Backup</a></li>
-    <li><a href="#documents" data-toggle="tab"><i class="fa fa-file-text-o"></i> &nbsp;Documents</a></li>
-    <li><a href="#downloads" data-toggle="tab"><i class="fa fa-download"></i> &nbsp;Downloads</a></li>
-    <li class="active"><a href="#images" data-toggle="tab"><i class="fa fa-picture-o"></i> &nbsp;Images</a></li>
-    <li><a href="#uploads" data-toggle="tab"><i class="fa fa-upload"></i> &nbsp;Uploads</a></li>
-    <li><a href="#video" data-toggle="tab"><i class="fa fa-video-camera"></i> &nbsp;Video</a></li>
+    <li><a href="#audio" data-toggle="tab"><i class="fa fa-music"></i> &nbsp;<?php echo $lang['FILEMAN_AUDIO']; ?></a></li>
+    <li><a href="#backup" data-toggle="tab"><i class="fa fa-file-zip-o"></i> &nbsp;<?php echo $lang['FILEMAN_BACKUP']; ?></a></li>
+    <li><a href="#documents" data-toggle="tab"><i class="fa fa-file-text-o"></i> &nbsp;<?php echo $lang['FILEMAN_DOCUMENTS']; ?></a></li>
+    <li><a href="#downloads" data-toggle="tab"><i class="fa fa-download"></i> &nbsp;<?php echo $lang['FILEMAN_DOWNLOADS']; ?></a></li>
+    <li class="active"><a href="#images" data-toggle="tab"><i class="fa fa-picture-o"></i> &nbsp;<?php echo $lang['FILEMAN_IMAGES']; ?></a></li>
+    <li><a href="#uploads" data-toggle="tab"><i class="fa fa-upload"></i> &nbsp;<?php echo $lang['FILEMAN_UPLOADS']; ?></a></li>
+    <li><a href="#video" data-toggle="tab"><i class="fa fa-video-camera"></i> &nbsp;<?php echo $lang['FILEMAN_VIDEOS']; ?></a></li>
 </ul>
 
 <!-- content start -->

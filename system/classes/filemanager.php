@@ -148,18 +148,13 @@ namespace YAWK {
         {
             $folder = mb_strtolower($folder);
             @fclose($file);
-            if (unlink($file))
+            if (@unlink($file))
             {   // success
-                if (!isset($db)) { $db = new \YAWK\db(); }
-                \YAWK\sys::setSyslog($db, 8, "deleted $file", 0, 0, 0, 0);
-                print \YAWK\alert::draw("success", "Erfolg!", "Datei $file wurde erfolgreich gel&ouml;scht.","page=filemanager#$folder","2000");
-                exit;
+                return true;
             }
             else
-            {   // throw error
-                \YAWK\sys::setSyslog($db, 5, "failed to delete $file", 0, 0, 0, 0);
-                print \YAWK\alert::draw("danger", "Fehler!", "Datei $file konnte nicht erfolgreich gel&ouml;scht werden.","page=filemanager","4800");
-                exit;
+            {   // on error
+                return false;
             }
         }
 
@@ -175,7 +170,7 @@ namespace YAWK {
         {
             if ($postMaxSize = ini_get('post_max_size'))
             {   // return post max filesize
-                return "$postMaxSize B\n";
+                return "$postMaxSize";
             }
             else
                 {   // ini_get failed

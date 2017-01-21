@@ -8,8 +8,8 @@ echo "
 /* draw Title on top */
 echo \YAWK\backend::getTitle($lang['EMAIL'], $lang['EMAILNEW_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
-            <li class=\"active\"><a href=\"index.php?page=users\" title=\"Users\"> Users</a></li>
+            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+            <li class=\"active\"><a href=\"index.php?page=users\" title=\"Users\"> $lang[USERS]</a></li>
         </ol>
     </section>
     <!-- Main content -->
