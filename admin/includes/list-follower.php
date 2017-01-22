@@ -22,9 +22,9 @@ echo "
 /* draw Title on top */
 echo \YAWK\backend::getTitle($lang['FOLLOWERS'], $lang['FOLLOWERS_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
-            <li><a href=\"index.php?page=users\" title=\"Users\"> Users</a></li>
-            <li><a href=\"index.php?page=list-follower\" class=\"active\" title=\"Follower\"> Followers</a></li>
+            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+            <li><a href=\"index.php?page=users\" title=\"Users\"> $lang[USERS]</a></li>
+            <li><a href=\"index.php?page=list-follower\" class=\"active\" title=\"Follower\"> $lang[FOLLOWER]</a></li>
         </ol>
     </section>
     <!-- Main content -->
@@ -36,12 +36,12 @@ if (isset($_GET['uid']))
 {   // if it's set load friends for given user id
     $my_follower = \YAWK\user::getMyFollower($db, $_GET['uid']);
     $user = \YAWK\user::getUserNameFromID($db, $_GET['uid']);
-    $follower_title = "Followers of $user";
+    $follower_title = "$lang[FOLLOWERS_OF] $user";
 }
 else
 {   // otherwise, load friendlist for logged-in user
     $my_follower = \YAWK\user::getMyFollower($db, 0);
-    $follower_title = "Your followers";
+    $follower_title = $lang['YOUR_FOLLOWERS'];
 }
 ?>
 <!-- btn clear log -->
@@ -57,13 +57,12 @@ else
             <thead>
             <tr>
                 <td width="15%">&nbsp;</td>
-                <td width="65%"><strong>My Follower</strong></td>
-                <td id="since" width="20%" class="text-center"><strong>since</strong></td>
+                <td width="65%"><strong><?php echo $lang['MY_FOLLOWERS']; ?></strong></td>
+                <td id="since" width="20%" class="text-center"><strong><?php echo $lang['SINCE']; ?></strong></td>
             </tr>
             </thead>
             <tbody>
-            <?PHP
-
+            <?php
             foreach ($my_follower AS $follower)
             {
                 $time_ago = \YAWK\sys::time_ago($follower['requestDate'], $lang);
@@ -73,7 +72,6 @@ else
                         <td class=\"text-center\">$time_ago</td>
                       </tr>";
             }
-
             ?>
             </tbody>
         </table>

@@ -100,9 +100,9 @@ echo "
 /* draw Title on top */
 echo \YAWK\backend::getTitle($lang['FRIENDS'], $lang['FRIENDS_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
-            <li><a href=\"index.php?page=users\" title=\"Users\"> Users</a></li>
-            <li><a href=\"index.php?page=friendslist\" class=\"active\" title=\"Friendslist\"> Friends</a></li>
+            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+            <li><a href=\"index.php?page=users\" title=\"Users\"> $lang[USERS]</a></li>
+            <li><a href=\"index.php?page=friendslist\" class=\"active\" title=\"Friendslist\"> $lang[FRIENDS]</a></li>
         </ol>
     </section>
     <!-- Main content -->
@@ -112,16 +112,16 @@ echo"<ol class=\"breadcrumb\">
 // check if parameter UID is set
 if (isset($_GET['uid']))
 {   // if it's set load friends for given user id
-    $my_friends = \YAWK\user::getMyFriends($db, $_GET['uid'], 1);
+    $my_friends = \YAWK\user::getMyFriends($db, $_GET['uid'], 1, $lang);
     $param_uid = 1;
     $user = \YAWK\user::getUserNameFromID($db, $_GET['uid']);
-    $friends_title = "Friends of $user";
+    $friends_title = "$lang[FRIENDS_OF] $user";
 }
 else
 {   // otherwise, load friendlist for logged-in user
-    $my_friends = \YAWK\user::getMyFriends($db, $_SESSION['uid'], 1);
+    $my_friends = \YAWK\user::getMyFriends($db, $_SESSION['uid'], 1, $lang);
     $param_uid = 0;
-    $friends_title = "Your friends";
+    $friends_title = $lang['FRIENDS_YOURS'];
 }
 ?>
 <!-- btn clear log -->
@@ -137,16 +137,16 @@ else
             <thead>
             <tr>
                 <td width="5%" class="text-right">&nbsp;</td>
-                <td width="20%"><strong>My Friend</strong></td>
-                <td width="5%" class="text-center"><strong>Friendship</strong></td>
-                <td id="since" width="10%" class="text-center"><strong>since</strong></td>
+                <td width="20%"><strong><?php echo $lang['MY_FRIEND']; ?></strong></td>
+                <td width="5%" class="text-center"><strong><?php echo $lang['FRIENDSHIP']; ?></strong></td>
+                <td id="since" width="10%" class="text-center"><strong><?php echo $lang['SINCE']; ?></strong></td>
             </tr>
             </thead>
             <tbody>
             <?PHP
 
             // select friend requests
-            $request_friends = \YAWK\user::getMyFriends($db, $_SESSION['uid'], 0);
+            $request_friends = \YAWK\user::getMyFriends($db, $_SESSION['uid'], 0, $lang);
             // prepare vars
             $friend = '';
             $friendB = '';
@@ -176,7 +176,7 @@ else
 
                     if ($_SESSION['uid'] == $request['friendA'])
                     {   // request sent info btn
-                        $acceptBtn = "<button id=\"acceptBtn$request[id]\" class=\"btn btn-default\" disabled aria-disabled='true'>request sent...</button>";
+                        $acceptBtn = "<button id=\"acceptBtn$request[id]\" class=\"btn btn-default\" disabled aria-disabled='true'>$lang[REQUEST_SENT]</button>";
                         // $declineBtn = '';
                     }
                 }

@@ -1131,7 +1131,7 @@ namespace YAWK
          * @param string $limit contains i number for sql limitation
          * @return array|bool containing weekdays and number of hits
          */
-        public function countWeekdays($db, $data, $limit)
+        public function countWeekdays($db, $data, $limit, $lang)
         {   /* @var $db \YAWK\db */
 
             // check if limit (i) is set
@@ -1166,41 +1166,41 @@ namespace YAWK
             // break up the date & extract the hour to calculate
             foreach ($data as $date => $value)
             {
-                $weekday = \YAWK\sys::getWeekday($value['date_created']);
+                $weekday = \YAWK\sys::getWeekday($value['date_created'], $lang);
 
                 // identify days
                 if ($weekday === "Monday" ||
-                    ($weekday === "Montag"))
+                    ($weekday === "$lang[MONDAY]"))
                 {
                     $this->i_monday++;
                 }
                 elseif ($weekday === "Tuesday" ||
-                    ($weekday === "Dienstag"))
+                    ($weekday === "$lang[TUESDAY]"))
                 {
                     $this->i_tuesday++;
                 }
                 elseif ($weekday === "Wednesday" ||
-                    ($weekday === "Mittwoch"))
+                    ($weekday === "$lang[WEDNESDAY]"))
                 {
                     $this->i_wednesday++;
                 }
                 elseif ($weekday === "Thursday" ||
-                    ($weekday === "Donnerstag"))
+                    ($weekday === "$lang[THURSDAY]"))
                 {
                     $this->i_thursday++;
                 }
                 elseif ($weekday === "Friday" ||
-                    ($weekday === "Freitag"))
+                    ($weekday === "$lang[FRIDAY]"))
                 {
                     $this->i_friday++;
                 }
                 elseif ($weekday === "Saturday" ||
-                    ($weekday === "Samstag"))
+                    ($weekday === "$lang[SATURDAY]"))
                 {
                     $this->i_saturday++;
                 }
                 elseif ($weekday === "Sunday" ||
-                    ($weekday === "Sonntag"))
+                    ($weekday === "$lang[SUNDAY]"))
                 {
                     $this->i_sunday++;
                 }
@@ -1217,14 +1217,14 @@ namespace YAWK
 
             // build an array, cointaining the daytimes
             $weekdays = array(
-                "Monday" => $this->i_monday,
-                "Tuesday" => $this->i_tuesday,
-                "Wednesday" => $this->i_wednesday,
-                "Thursday" => $this->i_thursday,
-                "Friday" => $this->i_friday,
-                "Saturday" => $this->i_saturday,
-                "Sunday" => $this->i_sunday,
-                "Total" => $this->i_totalDays
+                "$lang[MONDAY]" => $this->i_monday,
+                "$lang[TUESDAY]" => $this->i_tuesday,
+                "$lang[WEDNESDAY]" => $this->i_wednesday,
+                "$lang[THURSDAY]" => $this->i_thursday,
+                "$lang[FRIDAY]" => $this->i_friday,
+                "$lang[SATURDAY]" => $this->i_saturday,
+                "$lang[SUNDAY]" => $this->i_sunday,
+                "$lang[TOTAL]" => $this->i_totalDays
             );
 
             // return OS data array
@@ -1239,7 +1239,7 @@ namespace YAWK
          * @link http://yawk.io
          * @return array|bool containing weekdays and number of hits in percent
          */
-        public function getWeekdaysPercent()
+        public function getWeekdaysPercent($lang)
         {
             // calculate percentage
             $a = 100 / $this->i_totalDays;
@@ -1253,13 +1253,13 @@ namespace YAWK
 
             // build an array, cointaining the device types and the number how often it's been found
             $weekdaysPercent = array(
-                "Monday" => $this->i_mondayPercent,
-                "Tuesday" => $this->i_tuesdayPercent,
-                "Wednesday" => $this->i_wednesdayPercent,
-                "Thursday" => $this->i_thursdayPercent,
-                "Friday" => $this->i_fridayPercent,
-                "Saturday" => $this->i_saturdayPercent,
-                "Sunday" => $this->i_sundayPercent
+                "$lang[MONDAY]" => $this->i_mondayPercent,
+                "$lang[TUESDAY]" => $this->i_tuesdayPercent,
+                "$lang[WEDNESDAY]" => $this->i_wednesdayPercent,
+                "$lang[THURSDAY]" => $this->i_thursdayPercent,
+                "$lang[FRIDAY]" => $this->i_fridayPercent,
+                "$lang[SATURDAY]" => $this->i_saturdayPercent,
+                "$lang[SUNDAY]" => $this->i_sundayPercent
             );
             arsort($weekdaysPercent);
             return $weekdaysPercent;
@@ -2898,8 +2898,8 @@ namespace YAWK
         public function drawWeekdayBox($db, $data, $limit, $lang)
         {   /** @var $db \YAWK\db */
             // get data for this box
-            $weekdays = $this->countWeekdays($db, $data, $limit);
-            $weekdaysPercent = $this->getWeekdaysPercent();
+            $weekdays = $this->countWeekdays($db, $data, $limit, $lang);
+            $weekdaysPercent = $this->getWeekdaysPercent($lang);
 
             echo "<!-- donut box:  -->
         <div class=\"box box-default\">
@@ -2971,7 +2971,7 @@ namespace YAWK
             foreach ($weekdaysPercent AS $weekday => $value)
             {   // get text colors
                 // show browsers their value is greater than zero and exclude totals
-                if ($value > 0 && ($weekday !== "Total"))
+                if ($value > 0 && ($weekday !== "$lang[TOTAL]"))
                 {   // 1 line for every browser
                     if (strlen($value) === 1) { $spacer = "&nbsp;&nbsp;"; } else { $spacer = ''; }
                     echo "<li><b>$spacer$value%</b> $weekday</li>";

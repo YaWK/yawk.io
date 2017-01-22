@@ -68,7 +68,7 @@ namespace YAWK
                             <a href=\"index.php?page=page-edit&alias=$property[alias]&id=$property[id]\" class=\"product-title\">$property[title]
                                 <span class=\"label label-$color pull-right\">$text</span></a>
                         <span class=\"product-description\">
-                          <small>$lang[PUBLISHED]: $since<br><small>$property[date_publish]</small></small>
+                          <small>$lang[PUBLISHED] $since<br><small>$property[date_publish]</small></small>
                         </span>
                         </div>
                     </li>";

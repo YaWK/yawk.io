@@ -8,5 +8,5 @@ if (!isset($user))
 }
   $user->logout($db);
   \YAWK\backend::drawContentWrapper();
-  \YAWK\alert::draw("success", "Thank you $_SESSION[username]! ","See you next time - check back soon!", "","8000");
+  \YAWK\alert::draw("success", "$lang[THANK_YOU]&nbsp;&nbsp;$_SESSION[username]! ","$lang[LOGOUT_MSG]", "","8000");
   \YAWK\backend::setTimeout("index.php","1600");

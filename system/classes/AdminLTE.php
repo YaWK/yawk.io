@@ -317,10 +317,11 @@ namespace YAWK {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database object
+         * @param object $lang Language object
          * @param $user
          * @return null
          */
-        function drawHtmlNavbarNotificationsMenu($db, $user)
+        function drawHtmlNavbarNotificationsMenu($db, $user, $lang)
         {
 
             echo "";

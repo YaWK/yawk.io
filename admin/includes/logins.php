@@ -24,8 +24,8 @@ echo "
 /* draw Title on top */
 echo \YAWK\backend::getTitle($lang['LOGINS'], $lang['LOGINS_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
-            <li class=\"active\"><a href=\"index.php?page=logins\" title=\"Logins\"> Logins</a></li>
+            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+            <li class=\"active\"><a href=\"index.php?page=logins\" title=\"Logins\"> $lang[LOGINS]</a></li>
          </ol>
     </section>
     <!-- Main content -->
@@ -37,14 +37,14 @@ echo"<ol class=\"breadcrumb\">
     <thead>
     <tr>
         <td width="3%"><strong>&nbsp;</strong></td>
-        <td width="3%" class="text-center"><strong>ID</strong></td>
-        <td width="15%"><strong>Datum</strong></td>
-        <td width="14%" class="text-center"><strong>IP</strong></td>
-        <td width="15%" class="text-center"><strong>Username</strong></td>
-        <td width="10%" class="text-center"><strong>Password</strong></td>
-        <td width="10%" class="text-center"><strong>Login from</strong></td>
-        <td width="2%" class="text-center"><strong>Failed</strong></td>
-        <td width="28%" class="text-center"><strong>Browser</strong></td>
+        <td width="3%" class="text-center"><strong><?php echo $lang['ID']; ?></strong></td>
+        <td width="15%" class="text-center"><strong><?php echo $lang['DATE']; ?></strong></td>
+        <td width="14%" class="text-center"><strong><?php echo $lang['IP']; ?></strong></td>
+        <td width="15%" class="text-center"><strong><?php echo $lang['USERNAME']; ?></strong></td>
+        <td width="10%" class="text-center"><strong><?php echo $lang['PASSWORD']; ?></strong></td>
+        <td width="10%" class="text-center"><strong><?php echo $lang['LOGIN_FROM']; ?></strong></td>
+        <td width="2%" class="text-center"><strong><?php echo $lang['FAILED']; ?></strong></td>
+        <td width="28%" class="text-center"><strong><?php echo $lang['BROWSER']; ?></strong></td>
     </tr>
     </thead>
     <tbody>

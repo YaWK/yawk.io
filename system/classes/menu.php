@@ -463,14 +463,14 @@ namespace YAWK {
   <thead>
     <tr>
       <td><strong>&nbsp;</strong></td>
-      <td><strong>ID</strong></td>
-      <td><strong>Text</strong></td>
-      <td><strong>Link</strong></td>
-      <td><strong>Title</strong></td>
-      <td><strong>Group</strong></td>
-      <td><strong>Target</strong></td>
-      <td><strong>Sortation</strong></td>
-      <td><strong>Parent Element</strong></td>
+      <td><strong>$lang[ID]</strong></td>
+      <td><strong>$lang[TEXT]</strong></td>
+      <td><strong>$lang[LINK]</strong></td>
+      <td><strong>$lang[TITLE]</strong></td>
+      <td><strong>$lang[GROUP]</strong></td>
+      <td><strong>$lang[TARGET]</strong></td>
+      <td><strong>$lang[SORTATION]</strong></td>
+      <td><strong>$lang[PARENT_ELEMENT]</strong></td>
       <td><strong>&nbsp;</td>
     </tr>
   </thead>
@@ -486,10 +486,12 @@ namespace YAWK {
                     // get published status
                     if ($row['published'] === '1') {
                         $pub = "success";
-                        $pubtext = "On";
+                        // $pubtext = "On";
+                        $pubtext = $lang['ON_'];
                     } else {
                         $pub = "danger";
-                        $pubtext = "Off";
+                        // $pubtext = "Off";
+                        $pubtext = $lang['OFF_'];
                     }
                     // get user groups
                     if ($group_res = $db->query("SELECT id, value FROM {user_groups} ORDER BY id")){
@@ -521,11 +523,11 @@ namespace YAWK {
                                 if ($row['id'] !== $entries_row['id']){
                                     $menuSelect .= "
                                     <option value=\"" . $entries_row['id'] . "\">" . $entries_row['text'] . "</option>";
-                                    $menuSelectAddon = "<option value=\"0\">--no parent item--</option>";
+                                    $menuSelectAddon = "<option value=\"0\">$lang[NO_PARENT]</option>";
 
                                     if ($row['parentID'] === '0')
                                     {
-                                        $menuSelected = "<option value=\"0\" selected>--no parent item--</option>";
+                                        $menuSelected = "<option value=\"0\" selected>$lang[NO_PARENT]</option>";
                                     }
                                     else {
                                         $parentID2name = $db->query("SELECT text FROM {menu} WHERE menuID = $id AND id=$row[parentID]");
@@ -542,17 +544,17 @@ namespace YAWK {
       <td><a href=\"index.php?page=menu-edit&toggleItem=1&menu=$id&id=$row[id]&published=$row[published]\">
           <span class=\"label label-$pub\">$pubtext</span></a></td>
       <td>
-          <input type=\"text\" class=\"form-control\" name=\"" . $row['id'] . "_id\" readonly value=\"" . $row['id'] . "\" size=\"1\" style=\"float:left;\" />
+          <input type=\"text\" class=\"form-control pull-left\" name=\"" . $row['id'] . "_id\" readonly value=\"" . $row['id'] . "\" size=\"1\">
      </td>
 
       <td>
-          <input type=\"text\" class=\"form-control\" name=\"" . $row['id'] . "_text\" value=\"" . $row['text'] . "\" size=\"12\" style=\"float:left;\" />
+          <input type=\"text\" class=\"form-control pull-left\" name=\"" . $row['id'] . "_text\" value=\"" . $row['text'] . "\" size=\"12\">
       </td>
       <td>
-          <input type=\"text\" class=\"form-control\" name=\"" . $row['id'] . "_href\" value=\"" . $row['href'] . "\" size=\"45\" style=\"float:left;\" />
+          <input type=\"text\" class=\"form-control pull-left\" name=\"" . $row['id'] . "_href\" value=\"" . $row['href'] . "\" size=\"45\">
       </td>
       <td>
-          <input type=\"text\" class=\"form-control\" name=\"" . $row['id'] . "_title\" value=\"" . $row['title'] . "\" size=\"12\" style=\"float:left;\" />
+          <input type=\"text\" class=\"form-control pull-left\" name=\"" . $row['id'] . "_title\" value=\"" . $row['title'] . "\" size=\"12\">
       </td>
 
       <td>
@@ -565,15 +567,15 @@ namespace YAWK {
       <td>
       <select class=\"form-control\" name=\"" . $row['id'] . "_target\">
       <option value=\"" . $row['target'] . "\" selected>" . $row['target'] . "</option>
-      <option value=\"_self\">_self</option>
-      <option value=\"_blank\">_blank</option>
-      <option value=\"_parent\">_parent</option>
-      <option value=\"_top\">_top</option>
+      <option value=\"_self\">$lang[SELF]</option>
+      <option value=\"_blank\">$lang[BLANK]</option>
+      <option value=\"_parent\">$lang[PARENT]</option>
+      <option value=\"_top\">$lang[TOP]</option>
       </select>
        </td>
       
       <td>
-        <input type=\"text\" class=\"form-control\" name=\"" . $row['id'] . "_sort\" value=\"" . $row['sort'] . "\" size=\"1\" maxlength=\"3\" style=\"float:left;\" />
+        <input type=\"text\" class=\"form-control pull-left\" name=\"" . $row['id'] . "_sort\" value=\"" . $row['sort'] . "\" size=\"1\" maxlength=\"3\">
       </td>
       
       <td>
@@ -587,7 +589,7 @@ namespace YAWK {
       <td>
        <!-- <a href=\"index.php?page=menu-edit&menu=" . $id . "&entry=" . $row['id'] . "&deleteitem=1\"><i class=\"fa fa-trash-o\" alt=\"delete\"></i></a> -->
         
-       <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Den Eintrag &laquo; $row[text] / $row[href] &raquo; wirklich l&ouml;schen?\" 
+       <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"$lang[DELETE] $lang[ENTRY] &laquo; $row[text] / $row[href] &raquo; $lang[FOR_SURE]?\" 
         title=\"$lang[DELETE]\" href=\"index.php?page=menu-edit&menu=" . $id . "&entry=" . $row['id'] . "&del=1&deleteitem=1delete=true\">
        </a>
 

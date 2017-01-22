@@ -20,22 +20,22 @@ if (isset($_GET['toggleItem']))
             // check status and toggle it
             if ($menu->published === '1') {
                 $menu->published = 0;
-                $status = "offline";
-                $color = "danger";
+                $status = $lang['OFFLINE'];
+                $color = "warning";
             }
             else {
                 $menu->published = 1;
-                $status = "online";
+                $status = $lang['ONLINE'];
                 $color = "success";
             }
             // all ok, now toggle that menu entry
             if($menu->toggleItemOffline($db, $menu->id, $menu->published, $menu->parent))
             {   // throw notification
-                \YAWK\alert::draw("$color", "Menu item is now $status", "Menu Item toggled to $status.", "", 800);
+                \YAWK\alert::draw("$color", "$lang[MENU_ITEM] $lang[IS_NOW] $status", "$lang[MENU_ITEM] $lang[TOGGLED_TO] $status.", "", 800);
             }
             else
             {   // throw error
-                \YAWK\alert::draw("danger", "Error", "Could not toggle menu item status.", "",5800);
+                \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[FAILED] $lang[TOGGLE] $lang[MENU_ITEM] $status.", "",5800);
             }
 
         }
@@ -51,11 +51,11 @@ if (isset($_GET['del']) && ($_GET['del'] === "1")) {
             $entry = $_GET['entry'];
             if (YAWK\menu::deleteEntry($db, $menuID, $entry) === true)
             {   // delete successful
-                \YAWK\alert::draw("success", "Item deleted.", "Its all good...", "", 800);
+                \YAWK\alert::draw("success", "$lang[ITEM] $lang[DELETED].", "$lang[MENU_ITEM] $lang[DELETED]", "", 800);
             }
             else
                 {   // could not delete - throw error
-                    \YAWK\alert::draw("danger", "Menu entry could not be deleted.", "Database Error. Something strange has happened. Please try again.", "", 5800);
+                    \YAWK\alert::draw("danger", "$lang[MENU_ITEM] $lang[DELETE] $lang[FAILED].", "$lang[DATABASE] $lang[ERROR].", "", 5800);
                 }
          break;
     }
@@ -64,7 +64,7 @@ if (isset($_GET['del']) && ($_GET['del'] === "1")) {
 if(isset($_POST['changetitle'])) {
     if (!$res = \YAWK\menu::changeTitle($db, $db->quote($_GET['menu']),$db->quote($_POST['menutitle'])))
     {   // throw error
-        \YAWK\alert::draw("warning", "Warning!", "Could not change menu title!", "page=menu-edit&menu=$_GET[menu]","4200");
+        \YAWK\alert::draw("warning", "$lang[WARNING]!", "$lang[MENU_CHANGE_FAILED]", "page=menu-edit&menu=$_GET[menu]","4200");
         exit;
     }
 }
@@ -74,7 +74,7 @@ if(isset($_POST['add'])) {
   trim($_POST['newurl']);
   if (!$res = YAWK\menu::addEntry($db, $db->quote($_GET['menu']),$db->quote($_POST['newtitle']),$db->quote($_POST['newurl'])))
   {
-      \YAWK\alert::draw("danger", "Fehler", "Datensatz konnte nicht hinzugef&uuml;gt werden.","page=menu-edit&menu=$_GET[menu]","2200");
+      \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[MENU_ADD_FAILED].","page=menu-edit&menu=$_GET[menu]","2200");
       exit;
   }
 }
@@ -173,9 +173,9 @@ if(isset($_POST['add'])) {
             echo \YAWK\backend::getTitle($menuName, $lang['EDIT']);
         ?>
         <ol class="breadcrumb">
-            <li><a href="./" title="Dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li><a href="index.php?page=menus" title="Menus"> Menus</a></li>
-            <li class="active"><a href="index.php?page=menu-edit&menu=<?php echo $_GET['menu']; ?>" title="edit Menu"> Edit Menu</a></li>
+            <li><a href="./" title="Dashboard"><i class="fa fa-dashboard"></i> <?php echo $lang['DASHBOARD']; ?></a></li>
+            <li><a href="index.php?page=menus" title="Menus"> <?php echo $lang['MENUS']; ?></a></li>
+            <li class="active"><a href="index.php?page=menu-edit&menu=<?php echo $_GET['menu']; ?>" title="edit Menu"> <?php echo $lang['EDIT_MENU']; ?></a></li>
         </ol>
     </section>
     <!-- Main content -->
@@ -191,7 +191,7 @@ if(isset($_POST['add'])) {
                 type="submit"><i class="fa fa-save"></i>&nbsp; <?php echo $lang['MENU_SAVE']; ?>
         </button>
         <!-- back btn -->
-        <a class="btn btn-default" href="index.php?page=menus" style="float:right;">
+        <a class="btn btn-default pull-right" href="index.php?page=menus">
         <i class="glyphicon glyphicon-backward"></i> &nbsp;<?php print $lang['BACK']; ?></a>
       <?php
       // DISPLAY EDITABLE MENU ENTRIES
@@ -207,7 +207,7 @@ if(isset($_POST['add'])) {
         <div class="col-md-6">
             <div class="box default">
                 <div class="box-header with border">
-                    <h3 class="box-title">Eintrag in Men&uuml; <?php print \YAWK\sys::getMenuName($db, $_GET['menu']); ?> hinzuf&uuml;gen</h3>
+                    <h3 class="box-title"><?php echo $lang['ADD']."&nbsp;".$lang['ENTRY']."&nbsp;".$lang['IN']."&nbsp;".$lang['MENU']."&nbsp;"; print \YAWK\sys::getMenuName($db, $_GET['menu']); ?></h3>
                 </div>
                 <div class="box-body">
                     <input type="text"
@@ -215,7 +215,7 @@ if(isset($_POST['add'])) {
                            class="form-control"
                            name="newtitle"
                            maxlength="128"
-                           placeholder="Title">
+                           placeholder="<?php echo $lang['TITLE']; ?>">
                     <input type="text"
                            id="newurl"
                            class="form-control"
@@ -227,7 +227,7 @@ if(isset($_POST['add'])) {
                            style="margin-top:5px;"
                            class="btn btn-default pull-right"
                            type="submit"
-                           value="Hinzuf&uuml;gen">
+                           value="<?php echo $lang['ADD']; ?>">
                 </div>
             </div>
          </div>
@@ -235,7 +235,7 @@ if(isset($_POST['add'])) {
         <div class="col-md-6">
             <div class="box default">
                 <div class="box-header with border">
-                    <h3 class="box-title">Men&uuml; Titel &auml;ndern</h3>
+                    <h3 class="box-title"><?php echo $lang['MENU_TITLE_CHANGE']; ?></h3>
                 </div>
                 <div class="box-body">
                     <input type="text"
@@ -248,7 +248,7 @@ if(isset($_POST['add'])) {
                            id="savebutton2"
                            class="btn btn-default pull-right"
                            type="submit"
-                           value="Speichern">
+                           value="<?php echo $lang['SAVE']; ?>">
                     </div>
             </div>
         </div>

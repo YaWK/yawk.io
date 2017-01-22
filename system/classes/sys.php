@@ -1139,6 +1139,7 @@ namespace YAWK {
          * @version     1.0.0
          * @link        http://yawk.io
          * @param string $userdate date to calculate
+         * @param object $lang language array
          * @return string return how many time has gone since $userdate
          */
         static function time_ago($userdate, $lang)
@@ -1161,7 +1162,12 @@ namespace YAWK {
             // else
             //    $time_ago = 'minutes';
 
-           // return $time_ago . ' ago (' . $date->format('M j, Y') . ')';
+            // if language is german, turn around the 'ago' term
+            if (\YAWK\language::getCurrentLanguage() === "de-DE")
+            {   // return reverse for germans
+                return $lang['AGO'] . ' '.$time_ago.'';
+            }
+            // default return string
             return $time_ago . ' '.$lang['AGO'].'';
         }
 
@@ -1173,31 +1179,31 @@ namespace YAWK {
          * @param string $date the date to calculate
          * @return bool|false|string
          */
-        static function getWeekday($date){
+        static function getWeekday($date, $lang){
             if (isset($date)){
                 // get weekday
                 $weekday = date("l",strtotime($date));
                 switch($weekday){
-                    case "Monday":
-                        $weekday = "Montag";
+                    case "$lang[MONDAY]":
+                        $weekday = "$lang[MONDAY]";
                         break;
-                    case "Tuesday":
-                        $weekday = "Dienstag";
+                    case "$lang[TUESDAY]":
+                        $weekday = "$lang[TUESDAY]";
                         break;
-                    case "Wednesday":
-                        $weekday = "Mittwoch";
+                    case "$lang[WEDNESDAY]":
+                        $weekday = "$lang[WEDNESDAY]";
                         break;
-                    case "Thursday":
-                        $weekday = "Donnerstag";
+                    case "$lang[THURSDAY]":
+                        $weekday = "$lang[THURSDAY]";
                         break;
-                    case "Friday":
-                        $weekday = "Freitag";
+                    case "$lang[FRIDAY]":
+                        $weekday = "$lang[FRIDAY]";
                         break;
-                    case "Saturday":
-                        $weekday = "Samstag";
+                    case "$lang[SATURDAY]":
+                        $weekday = "$lang[SATURDAY]";
                         break;
-                    case "Sunday":
-                        $weekday = "Sonntag";
+                    case "$lang[SUNDAY]":
+                        $weekday = "$lang[SUNDAY]";
                         break;
                 }
                 return $weekday;

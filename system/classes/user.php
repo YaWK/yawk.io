@@ -2118,11 +2118,12 @@ namespace YAWK {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db database
+         * @param object $lang language
          * @param int $uid affected user ID
          * @param int $confirmed 0|1 1 is confirmed, 0 is not. therefore you can get all friends, confirmed and outstanding
          * @return array|bool
          */
-        static function getMyFriends($db, $uid, $confirmed)
+        static function getMyFriends($db, $uid, $confirmed, $lang)
         {   /** @var $db \YAWK\db */
             // to just friend requests
             if (isset($confirmed) && $confirmed === 0)
@@ -2147,7 +2148,7 @@ namespace YAWK {
             }
             else
             {   // q failed
-                \YAWK\sys::setSyslog($db, 3, "failed to get friends of uid <b>#$uid</b> .", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 3, "$lang[SYSLOG_FRIENDS_FAILED] <b>#$uid</b> .", 0, 0, 0, 0);
                 return false;
             }
         }

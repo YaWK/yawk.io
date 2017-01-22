@@ -48,6 +48,33 @@ namespace YAWK {
         }
 
         /**
+         * returns the current set backend language
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @copyright 2017 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @link       http://yawk.io
+         * @return string|null
+         */
+        static function getCurrentLanguage()
+        {
+            if (isset($_SESSION) || (!empty($_SESSION)))
+            {
+                if (isset($_SESSION['lang']) || (!empty($_SESSION['lang'])))
+                {
+                    return $_SESSION['lang'];
+                }
+                else
+                    {   // no language is currently set
+                        return null;
+                    }
+            }
+            else
+                {   // no language is currently set
+                    return null;
+                }
+        }
+
+        /**
          * get and return client language
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
