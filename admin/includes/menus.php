@@ -8,29 +8,29 @@ if (!isset($menu))
 if (isset($_GET['toggle']) && ($_GET['toggle'] === "1"))
 {   // prepare vars
     $menu->id = ($db->quote($_GET['menuid']));
-    $menu->published = $menu->getMenuStatus($db, $menu->id);
+    $menu->published = $menu->getMenuStatus($db, $menu->id, $lang);
 
     // check status and toggle it
     if ($menu->published === '1')
     {   // set status to NOT published
         $menu->published = 0;
-        $status = "offline";
+        $status = "$lang[OFFLINE]";
         $color = "danger";
     }
     else
     {   // set status to PUBLISHED
         $menu->published = 1;
-        $status = "online";
+        $status = "$lang[ONLINE]";
         $color = "success";
     }
 
-    if($menu->toggleOffline($db, $menu->id, $menu->published))
+    if($menu->toggleOffline($db, $menu->id, $menu->published, $lang))
     {
-        \YAWK\alert::draw("$color", "Menu is now $status", "Menu Status toggled to $status.", "", 800);
+        \YAWK\alert::draw("$color", "$lang[MENU_IS_NOW] $status", "$lang[MENU_STATUS_TOGGLE_OK] $status.", "", 800);
     }
     else
     {
-        print \YAWK\alert::draw("danger", "Error", "Could not toggle menu status to $status.","page=menus","5800");
+        print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[MENU_STATUS_TOGGLE_FAILED] $status.","page=menus","5800");
     }
 }
 
@@ -38,13 +38,13 @@ if (isset($_GET['toggle']) && ($_GET['toggle'] === "1"))
 /* if user clicked create menu */
 if(isset($_GET['add']) && ($_GET['add'] === "1"))
 {
-    if (YAWK\menu::createMenu($db, $db->quote($_POST['name'])))
+    if (YAWK\menu::createMenu($db, $db->quote($_POST['name']), $lang))
     {   // menu created, do syslog + draw notify
-        print \YAWK\alert::draw("success", "Erfolg!", "Das Men&uuml; <strong>".$_POST['name']."</strong> wurde erstellt!", "","800");
+        print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[THE_MENU] <strong>".$_POST['name']."</strong> $lang[WAS_CREATED]!", "","2000");
     }
     else
     {   // throw error
-        print \YAWK\alert::draw("danger", "Fehler!", "Das Men&uuml; <strong>".$_POST['name']."</strong> konnte nicht erstellt werden!", "","5800");
+        print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[THE_MENU] <strong>".$_POST['name']."</strong> $lang[WAS_NOT_CREATED]!", "","5800");
     }
 }
 
@@ -53,14 +53,14 @@ if (isset($_GET['del']) && ($_GET['del'] === "1"))
 {   // check if delete is true
     if (isset($_GET['delete']) && ($_GET['delete'] == 'true'))
     {   // delete whole menu
-        $menuName = \YAWK\menu::getMenuNameByID($db, $_GET['menu']);
-        if(\YAWK\menu::delete($db, $db->quote($_GET['menu'])))
+        $menuName = \YAWK\menu::getMenuNameByID($db, $_GET['menu'], $lang);
+        if(\YAWK\menu::delete($db, $db->quote($_GET['menu']), $lang))
         {   // all good...
-            print \YAWK\alert::draw("success", "Erfolg", "Das Men&uuml; wurde gel&ouml;scht!","","800");
+            print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[MENU_DEL_OK]","","800");
         }
         else
         {   // throw error
-            print \YAWK\alert::draw("danger", "Fehler!", "Das Men&uuml; konnte nicht gel&ouml;scht werden!","","5800");
+            print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[MENU_DEL_FAILED]","","5800");
         }
     }
 }
@@ -85,8 +85,8 @@ if (isset($_GET['del']) && ($_GET['del'] === "1"))
         <!-- draw title on top-->
         <?php echo \YAWK\backend::getTitle($lang['MENUS'], $lang['MENUS_SUBTEXT']); ?>
         <ol class="breadcrumb">
-            <li><a href="./" title="Dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active"><a href="index.php?page=menus" title="Menus"> Menus</a></li>
+            <li><a href="./" title="Dashboard"><i class="fa fa-dashboard"></i> <?php echo $lang['DASHBOARD']; ?></a></li>
+            <li class="active"><a href="index.php?page=menus" title="Menus"> <?php echo $lang['MENUS']; ?></a></li>
         </ol>
     </section>
     <!-- Main content -->
@@ -100,11 +100,11 @@ if (isset($_GET['del']) && ($_GET['del'] === "1"))
   <thead>
     <tr>
       <td width="5%">&nbsp;</td>
-      <td width="5%"><strong>ID</strong></td>
-      <td width="10%"><strong>Status</strong></td>
-      <td width="30%"><strong>Name</strong></td>
-      <td width="30%"><strong>Eintr&auml;ge</strong></td>
-      <td width="20%" class="text-center"><strong>Aktionen</strong></td>
+      <td width="5%"><strong><?php echo $lang['ID']; ?></strong></td>
+      <td width="10%"><strong><?php echo $lang['STATUS']; ?></strong></td>
+      <td width="30%"><strong><?php echo $lang['NAME']; ?></strong></td>
+      <td width="30%"><strong><?php echo $lang['ENTRIES']; ?></strong></td>
+      <td width="20%" class="text-center"><strong><?php echo $lang['ACTIONS']; ?></strong></td>
     </tr>
   </thead>
   <tbody>
@@ -122,7 +122,7 @@ if (isset($_GET['del']) && ($_GET['del'] === "1"))
                 $result = mysqli_fetch_row($sql);
                 if ($result[0] == $row['id'])
                 {
-                    $subMenuLabel = "<i class=\"label label-default\">SubMenu</i>";
+                    $subMenuLabel = "<i class=\"label label-default\">$lang[SUBMENU]</i>";
                     $pageName = "<small><small>@</small> $result[1].html</small>";
                 }
                 else
@@ -135,11 +135,11 @@ if (isset($_GET['del']) && ($_GET['del'] === "1"))
             if ($row['published'] === '1')
             {   // set label to online
                 $pub = "success";
-                $pubtext = "On";
+                $pubtext = $lang['ON_'];
                 // if menu is set as globalmenu
                 if ($row['id'] === $globalMenuID)
                 {   // set colors and label text
-                    $globalMenuLabel = "<i class=\"label label-success\">Global Menu</i>";
+                    $globalMenuLabel = "<i class=\"label label-success\">$lang[GLOBAL_MENU]</i>";
                 }
                 else
                     {   // leave empty, because its not set as globalmenu
@@ -149,11 +149,11 @@ if (isset($_GET['del']) && ($_GET['del'] === "1"))
             else    // menu is offline
                 {   // set colors and label
                     $pub = "danger";
-                    $pubtext = "Off";
+                    $pubtext = $lang['OFF'];
                     // if menu is set as globalmenu
                     if ($row['id'] === $globalMenuID)
                     {   // set colors and label text
-                        $globalMenuLabel = "<i class=\"label label-success\">Global Menu</i>";
+                        $globalMenuLabel = "<i class=\"label label-success\">$lang[GLOBAL_MENU]</i>";
                     }
                     else
                     {   // leave empty, because its not set as globalmenu
@@ -162,20 +162,20 @@ if (isset($_GET['del']) && ($_GET['del'] === "1"))
                 }
 
             echo "<tr>
-    <td><a title=\"toggle&nbsp;status\" href=\"index.php?page=menus&toggle=1&menuid=" . $row['id'] . "\">
+    <td><a title=\"$lang[TOGGLE_STATUS]\" href=\"index.php?page=menus&toggle=1&menuid=" . $row['id'] . "\">
             <span class=\"label label-$pub\">" . $pubtext . "</span></a></td>
     <td>" . $row['id'] . "</td>
     <td>$globalMenuLabel $subMenuLabel</td>
-    <td><a title=\"Bearbeiten\" href=\"index.php?page=menu-edit&menu=" . $row['id'] . "\">
+    <td><a title=\"$lang[EDIT]\" href=\"index.php?page=menu-edit&menu=" . $row['id'] . "\">
             <div style=\"width:100%\"><b>" . $row['name'] . "</b><br>".$pageName."</div></a></td>
 
-    <td><a title=\"Bearbeiten\" href=\"index.php?page=menu-edit&menu=" . $row['id'] . "\">
+    <td><a title=\"$lang[EDIT]\" href=\"index.php?page=menu-edit&menu=" . $row['id'] . "\">
             <div style=\"width:100%\">" . $row['count'] . "</div></a></td>
     <td class=\"text-center\">
-    <a class=\"fa fa-edit\" title=\"Bearbeiten\" href=\"index.php?page=menu-edit&menu=" . $row['id'] . "\">
+    <a class=\"fa fa-edit\" title=\"$lang[EDIT]\" href=\"index.php?page=menu-edit&menu=" . $row['id'] . "\">
     </a>
     &nbsp;
-    <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Das Men&uuml; &laquo;$row[name]&raquo; wirklich l&ouml;schen?\"
+    <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"$lang[MENU_DEL_CONFIRM] &laquo;$row[name]&raquo;?\"
        title=\"$lang[DELETE]\" href=\"index.php?page=menus&del=1&menu=$row[id]&delete=true\">
     </a>
     </td>

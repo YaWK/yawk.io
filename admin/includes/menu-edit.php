@@ -49,7 +49,7 @@ if (isset($_GET['del']) && ($_GET['del'] === "1")) {
         case 1:
             $menuID = $_GET['menu'];
             $entry = $_GET['entry'];
-            if (YAWK\menu::deleteEntry($db, $menuID, $entry) === true)
+            if (YAWK\menu::deleteEntry($db, $menuID, $entry, $lang) === true)
             {   // delete successful
                 \YAWK\alert::draw("success", "$lang[ITEM] $lang[DELETED].", "$lang[MENU_ITEM] $lang[DELETED]", "", 800);
             }
@@ -135,14 +135,15 @@ if(isset($_POST['add'])) {
           $params['gid'],
           $params['published'],
           $params['parentID'],
-          $params['target']);
+          $params['target'],
+          $lang);
     }
   }
   else {
     foreach($_POST as $param=>$value){
       if(strlen($param) >= 8){
         if(substr($param,-7,7) === "_delete"){
-          YAWK\menu::deleteEntry($db, $_GET['menu'], substr($param,0,-7));
+          YAWK\menu::deleteEntry($db, $_GET['menu'], substr($param,0,-7), $lang);
         }
       }
     }
@@ -207,7 +208,7 @@ if(isset($_POST['add'])) {
         <div class="col-md-6">
             <div class="box default">
                 <div class="box-header with border">
-                    <h3 class="box-title"><?php echo $lang['ADD']."&nbsp;".$lang['ENTRY']."&nbsp;".$lang['IN']."&nbsp;".$lang['MENU']."&nbsp;"; print \YAWK\sys::getMenuName($db, $_GET['menu']); ?></h3>
+                    <h3 class="box-title"><?php echo $lang['ENTRY_ADD']; ?></h3>
                 </div>
                 <div class="box-body">
                     <input type="text"
@@ -221,7 +222,7 @@ if(isset($_POST['add'])) {
                            class="form-control"
                            name="newurl"
                            maxlength="128"
-                           placeholder="http://link or filename e.g. index.html">
+                           placeholder="<?php echo $lang['LINK_OR_FILENAME']; ?>">
                     <input name="add"
                            id="savebutton3"
                            style="margin-top:5px;"

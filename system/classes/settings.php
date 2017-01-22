@@ -179,7 +179,7 @@ namespace YAWK {
                             // GLOBALMENU ID SELECTOR
                             else if ($setting['property'] === "globalmenuid")
                             {
-                                $currentMenu = \YAWK\menu::getMenuNameByID($db, $setting['value']);
+                                $currentMenu = \YAWK\menu::getMenuNameByID($db, $setting['value'], $lang);
                                 echo "<label for=\"$setting[property]\">$setting[label]</label>
                                       <select name=\"$setting[property]\" class=\"form-control\" id=\"$setting[property]\">";
                                 echo "<option value=\"$setting[value]\">$currentMenu</option>";

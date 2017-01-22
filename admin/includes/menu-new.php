@@ -6,9 +6,9 @@
         <!-- draw title on top-->
         <?php echo \YAWK\backend::getTitle($lang['MENU'], $lang['MENU_CREATE']); ?>
 <ol class="breadcrumb">
-  <li><a href="./" title="Dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-  <li><a href="index.php?page=menus" title="Menus"> Menus</a></li>
-  <li class="active"><a href="index.php?page=menu-new" title="<?php echo $lang['MENU_CREATE'];?>"> Add a new Menu</a></li>
+  <li><a href="./" title="Dashboard"><i class="fa fa-dashboard"></i> <?php echo $lang['DASHBOARD']; ?></a></li>
+  <li><a href="index.php?page=menus" title="<?php echo $lang['MENUS']; ?>"> <?php echo $lang['MENUS']; ?></a></li>
+  <li class="active"><a href="index.php?page=menu-new" title="<?php echo $lang['MENU_CREATE'];?>"> <?php echo $lang['MENU+']; ?></a></li>
 </ol>
 </section>
 <!-- Main content -->
@@ -16,7 +16,7 @@
 <!-- START CONTENT HERE -->
 <div class="box box-default">
     <div class="box-header">
-        <h3 class="box-title"><?php echo $lang['MENU_ADD']; ?></h3>
+        <h3 class="box-title"><?php echo $lang['MENU+']; ?></h3>
     </div>
     <div class="box-body">
     <form action="index.php?page=menus&add=1" role="form" method="POST">
@@ -29,17 +29,17 @@
                value="menu-create"
                type="hidden">
 
-        <label>W&auml;hle einen aussagekr&auml;ftigen Namen f&uuml;r Dein neues Men&uuml;.
+        <label><?php echo $lang['MENU_ADD_SUBTEXT']; ?>
         <input type="text"
                class="form-control"
-               placeholder="Men&uuml; Name"
+               placeholder="<?php echo $lang['MENU_NAME']; ?>"
                id="name"
-               name="name" />
+               name="name">
         </label>
         <input class="btn btn-success"
                type="submit"
                name="create"
-               value="Men&uuml;&nbsp;anlegen" />
+               value="<?php echo $lang['MENU+']; ?>">
     </form>
     </div>
 </div>

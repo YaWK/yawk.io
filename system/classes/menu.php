@@ -86,10 +86,11 @@ namespace YAWK {
          * @version    1.0.0
          * @link       http://yawk.io
          * @param object $db the database object
+         * @param object $lang language
          * @param string $name the name of the new menu
          * @return bool
          */
-        static function createMenu($db, $name)
+        static function createMenu($db, $name, $lang)
         {   /** @var $db \YAWK\db */
             // menu name not given
             if (!$name) {
@@ -104,18 +105,18 @@ namespace YAWK {
                     $name = \YAWK\sys::encodeChars($name);
                     if ($res = $db->query("INSERT INTO {menu_names} (id, name) VALUES ('" . $menuID . "', '" . $name . "')"))
                     {   // data inserted
-                        \YAWK\sys::setSyslog($db, 7, "created menu id: $menuID <b>$name</b>", 0, 0, 0, 0);
+                        \YAWK\sys::setSyslog($db, 7, "$lang[MENU] $lang[ID]: $menuID <b>$name</b> $lang[CREATED]", 0, 0, 0, 0);
                         return true;
                     }
                     else {
                         // q insert failed
-                        \YAWK\sys::setSyslog($db, 5, "failed to create menu <b>$name</b>", 0, 0, 0, 0);
+                        \YAWK\sys::setSyslog($db, 5, "$lang[ERROR]: $lang[MENU] <b>$name</b> $lang[NOT] $lang[CREATED]", 0, 0, 0, 0);
                         return false;
                     }
                 }
                 else {
                     // q get maxID failed
-                    \YAWK\sys::setSyslog($db, 5, "failed to create menu - could not get MAX(id) from menu_names", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 5, "$lang[SYSLOG_MENU_NOMAXID]", 0, 0, 0, 0);
                     return false;
                 }
             }
@@ -212,6 +213,7 @@ namespace YAWK {
          * @version    1.0.0
          * @link       http://yawk.io
          * @param object $db database object
+         * @param object $lang language object
          * @param int $menuid affected menu ID
          * @return bool
          */
@@ -226,7 +228,7 @@ namespace YAWK {
             }
             else
             {   // q failed
-                \YAWK\sys::setSyslog($db, 5, "failed to get status of menu <b>id: $menuid</b> (menu::getMenuStatus)", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 5, "$lang[SYSLOG_FAILED_TO_GET_MENU_STATUS] <b>$lang[ID]: $menuid</b> (menu::getMenuStatus)", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -263,11 +265,12 @@ namespace YAWK {
          * @version    1.0.0
          * @link       http://yawk.io
          * @param object $db database
+         * @param object $lang language
          * @param int $id affected menu id
          * @param int $published menu status
          * @return bool
          */
-        function toggleOffline($db, $id, $published)
+        function toggleOffline($db, $id, $published, $lang)
         {
             /** @var $db \YAWK\db */
 
@@ -280,12 +283,12 @@ namespace YAWK {
               SET published = '" . $published . "'
               WHERE id = '" . $id . "'"))
             {
-                \YAWK\sys::setSyslog($db, 7, "toggled menu <b>$menuName</b> to <b>$status</b>", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 7, "$lang[OK]: <b>$menuName</b> $lang[TO] <b>$status</b>", 0, 0, 0, 0);
                 return true;
             }
             else
             {
-                \YAWK\sys::setSyslog($db, 5, "failed to get toggle <b>$menuName</b> to <b>$status</b>", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 5, "$lang[FAILED]: <b>$menuName</b> $lang[TO] <b>$status</b>", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -413,10 +416,11 @@ namespace YAWK {
          * @version    1.0.0
          * @link       http://yawk.io
          * @param object $db database
+         * @param object $lang language
          * @param int $id affected menu ID
          * @return bool
          */
-        static function delete($db, $id)
+        static function delete($db, $id, $lang)
         {
             /** @var $db \YAWK\db */
             $menuName = \YAWK\menu::getMenuNameByID($db, $id);
@@ -425,22 +429,20 @@ namespace YAWK {
             {   // delete according menu entries
                 if ($res = $db->query("DELETE FROM {menu} WHERE menuID = '" . $id . "'"))
                 {
-                    \YAWK\sys::setSyslog($db, 7, "deleted all entries of <b>$menuName</b>", 0, 0, 0, 0);
-                    \YAWK\sys::setSyslog($db, 7, "deleted menu <b>$menuName</b>", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 7, "$lang[SYSLOG_MENU_DEL_ALLENTRIES_OK] <b>$menuName</b>", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 7, "$lang[SYSLOG_MENU_DEL_OK] <b>$menuName</b>", 0, 0, 0, 0);
                     return true;
                 }
                 else
                 {
                     // q failed
-                    \YAWK\sys::setSyslog($db, 5, "failed to delete menu entries of <b>$menuName</b>", 0, 0, 0, 0);
-                    \YAWK\alert::draw("warning", "Warning!", "Could not delete menu entry id $id.","","2200");
+                    \YAWK\sys::setSyslog($db, 5, "$lang[SYSLOG_MENU_DEL_ALLENTRIES_FAILED] <b>$menuName</b>", 0, 0, 0, 0);
                     return false;
                 }
             }
             else
             {
-                \YAWK\sys::setSyslog($db, 5, "failed to delete menu <b>$menuName</b>", 0, 0, 0, 0);
-                \YAWK\alert::draw("warning", "Warning!", "Could not delete menu_name id $id.","","2200");
+                \YAWK\sys::setSyslog($db, 5, "$lang[SYSLOG_MENU_DEL_FAILED] <b>$menuName</b>", 0, 0, 0, 0);
             }
             return false;
         }
@@ -795,11 +797,13 @@ namespace YAWK {
          * @version    1.0.0
          * @link       http://yawk.io
          * @param object $db database
+         * @param object $lang language
          * @param int $id affected menu id
          * @return string
          */
         static function getMenuNameByID($db, $id)
         {   /* @var $db \YAWK\db */
+        global $lang;
             $menu = '';
             if ($res = $db->query("SELECT name from {menu_names} WHERE id = $id"))
             {
@@ -810,7 +814,7 @@ namespace YAWK {
             }
             else
                 {
-                    $menu = "could not select menu";
+                    $menu = $lang['MENU_SEL_FAILED'];
                 }
                 return $menu;
         }
