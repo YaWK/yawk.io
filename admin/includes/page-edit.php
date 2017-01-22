@@ -30,15 +30,15 @@ if(isset($_POST['save'])){
          $_POST['content'] = utf8_decode($_POST['content']);
         // write content to file
         if ($page->writeContent("../", stripslashes(str_replace('\r\n', '', ($_POST['content']))))) {
-            print YAWK\alert::draw("success", "Success!", "The page has been saved!","", 800);
+            print YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[PAGE_SAVED]","", 800);
           }
           else {
-              print YAWK\alert::draw("danger", "Error!", "File $page->alias could not be written. Please check chmod properties!", "", "8200");
+              print YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[FILE] $page->alias $lang[NOT_SAVED]. $lang[CHECK_CHMOD]", "", "8200");
 
           }
     }
     else {
-       print YAWK\alert::draw("danger", "Error!", "Could not store data of $page->alias into database!", "", "8200");
+       print YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[PAGE_DB_FAILED] $page->alias $lang[DB_WRITE_FAILED]", "", "8200");
     }
 }
 // path to cms	
@@ -242,9 +242,9 @@ echo "
         /* draw Title on top */
         echo \YAWK\backend::getTitle($page->title, $lang['PAGE_EDIT']);
         echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
-            <li><a href=\"index.php?page=pages\" title=\"Pages\"> Pages</a></li>
-            <li class=\"active\"><a href=\"index.php?page=page-edit\" title=\"Edit Page\"> Edit Page</a></li>
+            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+            <li><a href=\"index.php?page=pages\" title=\"Pages\"> $lang[PAGES]</a></li>
+            <li class=\"active\"><a href=\"index.php?page=page-edit\" title=\"Edit Page\"> $lang[PAGE_EDIT]</a></li>
         </ol>
     </section>
     <!-- Main content -->
@@ -275,7 +275,7 @@ echo "
           <div class="col-md-4">
           <!-- 2nd col -->
               <dl>
-                  <h4><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;Einstellungen <small>Titel und Dateiname</small></h4>
+                  <h4><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;<?php echo $lang['SETTINGS']; ?> <small><?php echo "$lang[TITLE] $lang[AND] $lang[FILENAME]"; ?></small></h4>
                   <dt> <!-- TITLE -->
                       <label for="title"><?php print $lang['TITLE']; ?></label>
                   </dt>
@@ -283,14 +283,14 @@ echo "
                       <input id="title" type="text" class="form-control" name="title" size="64" maxlength="255" value="<?php print $page->title; ?>" />
                   </dd>
                   <dt> <!-- ALIAS -->
-                      <label for="alias">Filename</label>
+                      <label for="alias"><?php echo $lang['FILENAME']; ?></label>
                   </dt>
                   <dd>
                       <input id="alias" type="text" class="form-control" name="alias" size="64" maxlength="255"
                       <?php if (isset($readonly)) { print $readonly; } ?> value="<?php print $page->alias; ?>">
                   </dd>
                     <hr>
-                  <h4><i class="fa fa-clock-o"></i>&nbsp;&nbsp;Ver&ouml;ffentlichung <small>Zeitpunkt & Privatsph&auml;re</small></h4>
+                  <h4><i class="fa fa-clock-o"></i>&nbsp;&nbsp;<?php echo $lang['PUBLISHING']; ?> <small><?php echo "$lang[EFFECTIVE_TIME] $lang[AND] $lang[PRIVACY]"; ?></small></h4>
                   <dt> <!-- PUBLISH DATE -->
                       <label for="datetimepicker1"><?php print $lang['START_PUBLISH']; ?>
                   </dt>
@@ -332,10 +332,10 @@ echo "
                   </dt>
                   <dd>
                       <?php if($page->published === '1'){
-                          $publishedHtml = "<option value=\"1\" selected=\"selected\">online</option>";
+                          $publishedHtml = "<option value=\"1\" selected=\"selected\">$lang[ONLINE]</option>";
                           $publishedHtml .= "<option value=\"0\" >offline</option>";
                       } else {
-                          $publishedHtml = "<option value=\"0\" selected=\"selected\">offline</option>";
+                          $publishedHtml = "<option value=\"0\" selected=\"selected\">$lang[OFFLINE]</option>";
                           $publishedHtml .= "<option value=\"1\" >online</option>";
                       } ?>
                       <select id="published" name="published" class="form-control">
@@ -346,28 +346,28 @@ echo "
 
               <!-- META TAGS -->
               <hr>
-              <h4><i class="fa fa-google"></i>&nbsp;&nbsp;Meta Tags <small>Suchmaschinenoptimierung f&uuml;r diese Seite.</small></h4>
+              <h4><i class="fa fa-google"></i>&nbsp;&nbsp;<?php echo $lang['META_TAGS']; ?> <small><?php echo $lang['PAGE_SEO']; ?> </small></h4>
               <!-- LOCAL META SITE DESCRIPTION -->
-              <label for="metadescription">Meta Description</label>
-              <input type="text" size="64" id="metadescription" class="form-control" maxlength="255" placeholder="Page Description shown on Google" name="metadescription" value="<?php print $page->getMetaTags($db, $page->id, "description");  ?>">
+              <label for="metadescription"><?php echo $lang['META_DESC']; ?></label>
+              <input type="text" size="64" id="metadescription" class="form-control" maxlength="255" placeholder="<?php echo $lang['META_DESC_PLACEHOLDER']; ?>" name="metadescription" value="<?php print $page->getMetaTags($db, $page->id, "description");  ?>">
               <!-- LOCAL META SITE KEYWORDS -->
-              <label for="metakeywords">Meta Keywords</label>
-              <input type="text" size="64" id="metakeywords" class="form-control" placeholder="The most important keywords of this site. Use , to seperate the words." name="metakeywords" value="<?php print $page->getMetaTags($db, $page->id, "keywords");  ?>">
+              <label for="metakeywords"><?php echo $lang['META_KEYWORDS']; ?></label>
+              <input type="text" size="64" id="metakeywords" class="form-control" placeholder="<?php echo $lang['META_KEYWORDS_PLACEHOLDER']; ?>" name="metakeywords" value="<?php print $page->getMetaTags($db, $page->id, "keywords");  ?>">
               <hr>
               <!-- ENDE META TAGS -->
 
               <!-- BACKGROUND IMAGE -->
-              <h4><i class="fa fa-photo"></i>&nbsp;&nbsp;Hintergrundbild <small>spezifisch für diese Seite</small></h4>
+              <h4><i class="fa fa-photo"></i>&nbsp;&nbsp;<?php echo $lang['BG_IMAGE']; ?> <small><?php echo $lang['SPECIFIC_PAGE']; ?></small></h4>
               <!-- SITE BG IMAGE -->
-              Background Image
+              <?php echo $lang['BG_IMAGE']; ?>
               <input type="text" size="64" class="form-control" placeholder="media/images/background.jpg" name="bgimage" value="<?php print $page->bgimage;  ?>">
 
               <hr>
               <!-- ENDE META TAGS -->
-              <h4><i class="fa fa-bars"></i>&nbsp;&nbsp;SubMen&uuml; <small>zusätzliches Men&uuml; auf dieser Seite</small></h4>
+              <h4><i class="fa fa-bars"></i>&nbsp;&nbsp;<?php echo $lang['SUBMENU']; ?> <small><?php echo $lang['ADD_PAGE_MENU'] ?></small></h4>
 
               <!-- SUB MENU SELECTOR -->
-              <label for="menu">SubMen&uuml;
+              <label for="menu"><?php echo $lang['SUBMENU']; ?>
                   <select name="menu" class="form-control">
                       <option value="<?php print \YAWK\sys::getSubMenu($db, $page->id); ?>"><?php print \YAWK\sys::getMenuItem($db, $page->id); ?></option>
                       <option value="0">-- Kein Men&uuml; --</option>

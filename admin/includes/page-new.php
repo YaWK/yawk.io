@@ -8,9 +8,9 @@
 /* draw Title on top */
 echo \YAWK\backend::getTitle($lang['PAGE'], $lang['PAGE_ADD_SMALL']);
 echo"<ol class=\"breadcrumb\">
-        <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
-        <li><a href=\"index.php?page=pages\" title=\"Pages\"> Pages</a></li>
-        <li class=\"active\"><a href=\"index.php?page=page-new\" title=\"New Page\"> New Page</a></li>
+        <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+        <li><a href=\"index.php?page=pages\" title=\"$lang[PAGES]\"> $lang[PAGES]</a></li>
+        <li class=\"active\"><a href=\"index.php?page=page-new\" title=\"".$lang['PAGE+']."\"> ".$lang['PAGE_ADD']."</a></li>
      </ol>
     </section>
     <!-- Main content -->
@@ -35,17 +35,17 @@ echo"<ol class=\"breadcrumb\">
     /* create page function */
     if($page->create($db, $alias, $menuID, $locked, $blogid, $plugin))
     {
-        if (!\YAWK\sys::setNotification($db, 1, "Page $alias.html created.", $user->id, 0, 0, 0))
+        if (!\YAWK\sys::setNotification($db, 1, "$lang[PAGE] $alias.html $lang[CREATED].", $user->id, 0, 0, 0))
         {
-            echo \YAWK\alert::draw("danger", "Fehler!", "nix gehta!", "",2000);
+            echo \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[SYSLOG] $lang[FAILED]", "",2000);
         }
 
-        \YAWK\alert::draw("success", "Success!", "Page created.","","420");
+        \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[PAGE] $lang[CREATED]","","420");
         \YAWK\backend::setTimeout("index.php?page=pages",1260);
     }
     else 
     {   // create new page failed
-        print \YAWK\alert::draw("danger", "Error!", "The page <strong>".$alias."</strong> could not be created!","page=page-new","4800");
+        print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[SAVE] $lang[OF] $lang[PAGE] <strong>".$alias."</strong> $lang[FAILED]","page=page-new","4800");
     }
   }
 ?>
@@ -77,7 +77,7 @@ echo"<ol class=\"breadcrumb\">
       echo ">".$menue['name']."</option>";
     }
     ?>
-    <option value="empty">-- no menu entry --</option>
+    <option value="empty"><?php echo $lang['NO_ENTRY']; ?></option>
   </select>
 
     <!-- SUBMIT BUTTON -->
