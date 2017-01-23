@@ -20,8 +20,8 @@ echo "
 /* draw Title on top */
 echo \YAWK\backend::getTitle($lang['PLUGINS'], $lang['PLUGINS_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
-            <li><a href=\"index.php?page=plugins\" class=\"active\" title=\"Users\"> Plugins</a></li>
+            <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+            <li><a href=\"index.php?page=plugins\" class=\"active\" title=\"$lang[PLUGINS]\"> $lang[PLUGINS]</a></li>
         </ol>
     </section>
     <!-- Main content -->
@@ -32,7 +32,7 @@ echo"<ol class=\"breadcrumb\">
 
 <div class="box box-default">
     <div class="box-body">
-        <a class="btn btn-success" href="index.php?page=plugins-manage" style="float:right;">
+        <a class="btn btn-success pull-right" href="index.php?page=plugins-manage">
             <i class="glyphicon glyphicon-cog"></i> &nbsp;<?php print $lang['PLUGIN_MANAGE']; ?></a>
 
 <table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-hover" id="table-sort">

@@ -77,7 +77,7 @@ namespace YAWK {
             if (!$res = $db->query("SELECT * FROM {plugins} $sqlcode ORDER by name"))
             {
                 \YAWK\sys::setSyslog($db, 5, "failed to select plugin ", 0, 0, 0, 0);
-                print \YAWK\alert::draw("danger", "Fehler:", "Es tut mir leid, die Plugins konnten nicht aus der Datenbank abgerufen werden.", "","");
+                print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[PLUGIN_DB_ERROR]", "","");
                 $html = null;
             }
             else
@@ -111,7 +111,7 @@ namespace YAWK {
                     else
                     {
                         $name = ucfirst($this->name);
-                        echo \YAWK\alert::draw("warning", "Fehler!", "Plugin: <b>\"$name\"</b> ist zwar registriert, aber offensichtlich nicht korrekt installiert. Ist der folder <b>system/plugins/$this->name/</b> &uuml;berhaupt vorhanden?","","4800");
+                        echo \YAWK\alert::draw("warning", "Fehler!", "$lang[PLUGIN]: <b>\"$name\"</b> $lang[PLUGIN_FALSE_INSTALLED] <b>system/plugins/$this->name/</b>","","4800");
                     }
                 }
             }

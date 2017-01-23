@@ -833,10 +833,11 @@ namespace YAWK
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
+         * @param object $lang language
          * @param array $deviceTypes data array
          * @return string output the javascript
          */
-        public function getJsonDeviceTypes($db, $deviceTypes)
+        public function getJsonDeviceTypes($db, $deviceTypes, $lang)
         {   /* @var $db \YAWK\db */
             // check if device types are set
             if (!isset($deviceTypes) || (empty($deviceTypes)))
@@ -844,7 +845,7 @@ namespace YAWK
                 $deviceTypes = $this->countDeviceTypes($db, '', 200);
             }
 
-            $jsonData = "labels: ['Desktop', 'Phone', 'Tablet'],
+            $jsonData = "labels: ['$lang[DESKTOP]', '$lang[PHONE]', '$lang[TABLET]'],
             datasets: [
                 {
                   label: 'Hits',
@@ -1974,145 +1975,16 @@ namespace YAWK
 
 
         /**
-         * Draw default box containing browser statistics
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
-         * @param object $db Database Object
-         * @param string $data array containing all the stats data
-         * @param string $limit contains i number for sql limitation
-         */
-        public function drawBrowserBox($db, $data, $limit)
-        {   /** @var $db \YAWK\db */
-            // get data for this box
-            $browsers = $this->countBrowsers($db, $data, $limit);
-
-            echo "<!-- donut box:  -->
-        <div class=\"box box-default\">
-            <div class=\"box-header with-border\">
-                <h3 class=\"box-title\">Browser Usage</h3>
-
-                <div class=\"box-tools pull-right\">
-                    <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"collapse\"><i class=\"fa fa-minus\"></i>
-                    </button>
-                    <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"remove\"><i class=\"fa fa-times\"></i></button>
-                </div>
-            </div>
-            <!-- /.box-header -->
-            <div class=\"box-body\">
-                <div class=\"row\">
-                    <div class=\"col-md-8\">
-                        <div class=\"chart-responsive\">
-                            <canvas id=\"pieChartBrowser\" height=\"150\"></canvas>
-                        </div>
-                        <!-- ./chart-responsive -->
-                    </div>
-                    <!-- /.col -->
-                    <div class=\"col-md-4\">
-                        <ul class=\"chart-legend clearfix\">
-
-                            <script> //-------------
-                                //- PIE CHART -
-                                //-------------
-
-                                // Get context with jQuery - using jQuery's .get() method.
-                                var pieChartCanvas = $('#pieChartBrowser').get(0).getContext('2d');
-                                var pieChart = new Chart(pieChartCanvas);
-                                // get browsers array
-                                // output js data with php function getJsonBrowsers
-                                var PieData = "; echo $this->getJsonBrowsers($db, $browsers);
-                                echo"
-                                var pieOptions = {
-                                    //Boolean - Whether we should show a stroke on each segment
-                                    segmentShowStroke: true,
-                                    //String - The colour of each segment stroke
-                                    segmentStrokeColor: '#fff',
-                                    //Number - The width of each segment stroke
-                                    segmentStrokeWidth: 1,
-                                    //Number - The percentage of the chart that we cut out of the middle
-                                    percentageInnerCutout: 50, // This is 0 for Pie charts
-                                    //Number - Amount of animation steps
-                                    animationSteps: 100,
-                                    //String - Animation easing effect
-                                    animationEasing: 'easeOutBounce',
-                                    //Boolean - Whether we animate the rotation of the Doughnut
-                                    animateRotate: true,
-                                    //Boolean - Whether we animate scaling the Doughnut from the centre
-                                    animateScale: false,
-                                    //Boolean - whether to make the chart responsive to window resizing
-                                    responsive: true,
-                                    // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-                                    maintainAspectRatio: false,
-                                    //String - A legend template
-                                    legendTemplate: '<ul class=\"<%=name.toLowerCase() %>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor %>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>',
-                                    //String - A tooltip template
-                                    tooltipTemplate: '<%=value %> <%=label%> users'
-                                };
-                                //Create pie or douhnut chart
-                                // You can switch between pie and douhnut using the method below.
-                                pieChart.Doughnut(PieData, pieOptions);
-                                //-----------------
-                                //- END PIE CHART -
-                                //-----------------</script>";
-
-            // walk through array and draw data beneath pie chart
-            foreach ($browsers AS $browser => $value)
-            {   // get text colors
-                $textcolor = $this->getBrowserColors($browser);
-                // show browsers their value is greater than zero and exclude totals
-                if ($value > 0 && ($browser !== "Total"))
-                {   // 1 line for every browser
-                    echo "<li><i class=\"fa fa-circle-o $textcolor\"></i> <b>$value</b> $browser</li>";
-                }
-                // show totals
-                if ($browser === "Total")
-                {   // of how many visits
-                    echo "<li class=\"small\">latest $value visitors</li>";
-                }
-            }
-            echo"
-                        </ul>
-                    </div>
-                    <!-- /.col -->
-                </div>
-                <!-- /.row -->
-            </div>
-            <!-- /.box-body -->
-            <div class=\"box-footer no-padding\">
-                <ul class=\"nav nav-pills nav-stacked\">";
-
-            // sort array by value high to low to display most browsers first
-            $browsers[] = arsort($browsers);
-            // walk through array and display browsers as nav pills
-            foreach ($browsers as $browser => $value)
-            {   // show only items where browser got a value
-                if ($value !== 0 && $browser !== 0)
-                {   // get different textcolors
-                    $textcolor = $this->getBrowserColors($browser);
-                    echo "<li><a href=\"#\" class=\"$textcolor\">$browser
-        <span class=\"pull-right $textcolor\" ><i class=\"fa fa-angle-down\"></i>$value</span></a></li>";
-                }
-            }
-
-            echo "</ul>
-            </div>
-            <!-- /.footer -->
-        </div>
-        <!-- /.box -->";
-        }
-
-
-
-        /**
          * Draw default box containing OS Statistics
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
+         * @param object $lang language
          * @param string $data array containing all the stats data
          * @param string $limit contains i number for sql limitation
          */
-        public function drawOsBox($db, $data, $limit)
+        public function drawOsBox($db, $data, $limit, $lang)
         {   /** @var $db \YAWK\db */
             // get data for this box
             $oss = $this->countOS($db, $data, $limit);
@@ -2120,7 +1992,7 @@ namespace YAWK
             echo "<!-- donut box:  -->
         <div class=\"box box-default\">
             <div class=\"box-header with-border\">
-                <h3 class=\"box-title\">Operating Systems <small>(experimental)</small></h3>
+                <h3 class=\"box-title\">$lang[OPERATING_SYSTEMS] <small>($lang[BETA])</small></h3>
 
                 <div class=\"box-tools pull-right\">
                     <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"collapse\"><i class=\"fa fa-minus\"></i>
@@ -2197,7 +2069,7 @@ namespace YAWK
                 // show totals
                 if ($os === "Total")
                 {   // of how many visits
-                    echo "<li class=\"small\">latest $value users</li>";
+                    echo "<li class=\"small\">$lang[LATEST] $value $lang[USERS]</li>";
                 }
             }
             echo"
@@ -2232,16 +2104,148 @@ namespace YAWK
         }
 
 
+
+        /**
+         * Draw default box containing browser statistics
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param object $db language
+         * @param string $data array containing all the stats data
+         * @param string $limit contains i number for sql limitation
+         */
+        public function drawBrowserBox($db, $data, $limit, $lang)
+        {   /** @var $db \YAWK\db */
+            // get data for this box
+            $browsers = $this->countBrowsers($db, $data, $limit);
+
+            echo "<!-- donut box:  -->
+        <div class=\"box box-default\">
+            <div class=\"box-header with-border\">
+                <h3 class=\"box-title\">$lang[BROWSER] <small>$lang[USAGE]</small></h3>
+
+                <div class=\"box-tools pull-right\">
+                    <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"collapse\"><i class=\"fa fa-minus\"></i>
+                    </button>
+                    <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"remove\"><i class=\"fa fa-times\"></i></button>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class=\"box-body\">
+                <div class=\"row\">
+                    <div class=\"col-md-8\">
+                        <div class=\"chart-responsive\">
+                            <canvas id=\"pieChartBrowser\" height=\"150\"></canvas>
+                        </div>
+                        <!-- ./chart-responsive -->
+                    </div>
+                    <!-- /.col -->
+                    <div class=\"col-md-4\">
+                        <ul class=\"chart-legend clearfix\">
+
+                            <script> //-------------
+                                //- PIE CHART -
+                                //-------------
+
+                                // Get context with jQuery - using jQuery's .get() method.
+                                var pieChartCanvas = $('#pieChartBrowser').get(0).getContext('2d');
+                                var pieChart = new Chart(pieChartCanvas);
+                                // get browsers array
+                                // output js data with php function getJsonBrowsers
+                                var PieData = "; echo $this->getJsonBrowsers($db, $browsers);
+            echo"
+                                var pieOptions = {
+                                    //Boolean - Whether we should show a stroke on each segment
+                                    segmentShowStroke: true,
+                                    //String - The colour of each segment stroke
+                                    segmentStrokeColor: '#fff',
+                                    //Number - The width of each segment stroke
+                                    segmentStrokeWidth: 1,
+                                    //Number - The percentage of the chart that we cut out of the middle
+                                    percentageInnerCutout: 50, // This is 0 for Pie charts
+                                    //Number - Amount of animation steps
+                                    animationSteps: 100,
+                                    //String - Animation easing effect
+                                    animationEasing: 'easeOutBounce',
+                                    //Boolean - Whether we animate the rotation of the Doughnut
+                                    animateRotate: true,
+                                    //Boolean - Whether we animate scaling the Doughnut from the centre
+                                    animateScale: false,
+                                    //Boolean - whether to make the chart responsive to window resizing
+                                    responsive: true,
+                                    // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+                                    maintainAspectRatio: false,
+                                    //String - A legend template
+                                    legendTemplate: '<ul class=\"<%=name.toLowerCase() %>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor %>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>',
+                                    //String - A tooltip template
+                                    tooltipTemplate: '<%=value %> <%=label%> users'
+                                };
+                                //Create pie or douhnut chart
+                                // You can switch between pie and douhnut using the method below.
+                                pieChart.Doughnut(PieData, pieOptions);
+                                //-----------------
+                                //- END PIE CHART -
+                                //-----------------</script>";
+
+            // walk through array and draw data beneath pie chart
+            foreach ($browsers AS $browser => $value)
+            {   // get text colors
+                $textcolor = $this->getBrowserColors($browser);
+                // show browsers their value is greater than zero and exclude totals
+                if ($value > 0 && ($browser !== "Total"))
+                {   // 1 line for every browser
+                    echo "<li><i class=\"fa fa-circle-o $textcolor\"></i> <b>$value</b> $browser</li>";
+                }
+                // show totals
+                if ($browser === "Total")
+                {   // of how many visits
+                    echo "<li class=\"small\">$lang[LATEST] $value $lang[VISITORS]</li>";
+                }
+            }
+            echo"
+                        </ul>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.box-body -->
+            <div class=\"box-footer no-padding\">
+                <ul class=\"nav nav-pills nav-stacked\">";
+
+            // sort array by value high to low to display most browsers first
+            $browsers[] = arsort($browsers);
+            // walk through array and display browsers as nav pills
+            foreach ($browsers as $browser => $value)
+            {   // show only items where browser got a value
+                if ($value !== 0 && $browser !== 0)
+                {   // get different textcolors
+                    $textcolor = $this->getBrowserColors($browser);
+                    echo "<li><a href=\"#\" class=\"$textcolor\">$browser
+        <span class=\"pull-right $textcolor\" ><i class=\"fa fa-angle-down\"></i>$value</span></a></li>";
+                }
+            }
+
+            echo "</ul>
+            </div>
+            <!-- /.footer -->
+        </div>
+        <!-- /.box -->";
+        }
+
+
         /**
          * Draw default box containing OS versions statistics
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
+         * @param object $lang language
          * @param string $data array containing all the stats data
          * @param string $limit contains i number for sql limitation
          */
-        public function drawOsVersionBox($db, $data, $limit)
+        public function drawOsVersionBox($db, $data, $limit, $lang)
         {   /** @var $db \YAWK\db */
             // get data for this box
             $osVersions = $this->countOSVersions($db, $data, $limit);
@@ -2249,7 +2253,7 @@ namespace YAWK
             echo "<!-- donut box:  -->
         <div class=\"box box-default\">
             <div class=\"box-header with-border\">
-                <h3 class=\"box-title\">OS Versions <small>(experimental)</small></h3>
+                <h3 class=\"box-title\">$lang[OPERATING_SYSTEM] $lang[VERSIONS] <small>($lang[BETA])</small></h3>
 
                 <div class=\"box-tools pull-right\">
                     <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"collapse\"><i class=\"fa fa-minus\"></i>
@@ -2326,7 +2330,7 @@ namespace YAWK
                 // show totals
                 if ($osVersion === "Total")
                 {   // of how many visits
-                    echo "<li class=\"small\">latest $value OSes</li>";
+                    echo "<li class=\"small\">$lang[LATEST] $value $lang[HITS]</li>";
                 }
             }
             echo"
@@ -2366,10 +2370,11 @@ namespace YAWK
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
+         * @param object $lang language
          * @param string $data array containing all the stats data
          * @param string $limit contains i number for sql limitation
          */
-        public function drawDeviceTypeBox($db, $data, $limit)
+        public function drawDeviceTypeBox($db, $data, $limit, $lang)
         {   /** @var $db \YAWK\db */
             // get data for this box
             $deviceTypes = $this->countDeviceTypes($db, $data, $limit);
@@ -2377,7 +2382,7 @@ namespace YAWK
             echo "<!-- donut box:  -->
         <div class=\"box box-default\">
             <div class=\"box-header with-border\">
-                <h3 class=\"box-title\">Device Type <small>(desktop, mobile or tablet)</small></h3>
+                <h3 class=\"box-title\">$lang[DEVICE_TYPE] <small>($lang[DESKTOP_MOBILE_TABLET])</small></h3>
 
                 <div class=\"box-tools pull-right\">
                     <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"collapse\"><i class=\"fa fa-minus\"></i>
@@ -2403,7 +2408,7 @@ namespace YAWK
                             //- BAR CHART -
                             //-------------
                             
-                            var barChartData = {";echo $this->getJsonDeviceTypes($db, $deviceTypes); echo "};
+                            var barChartData = {";echo $this->getJsonDeviceTypes($db, $deviceTypes, $lang); echo "};
                             var barChartCanvas = $('#barChartDeviceType').get(0).getContext('2d');
                             var barChart = new Chart(barChartCanvas);
                             barChartData.datasets.fillColor = '#00a65a';
@@ -2453,7 +2458,7 @@ namespace YAWK
                 // show totals
                 if ($deviceType === "Total")
                 {   // of how many visits
-                    echo "<li class=\"small\">latest $value Users</li>";
+                    echo "<li class=\"small\">latest $value $lang[USERS]</li>";
                 }
             }
             echo"

@@ -3,10 +3,27 @@ if (isset($_GET['save']) AND $_GET['save'] === 'true') {
 
     foreach ($_POST as $property => $value) {
         if ($property != "save") {
-            \YAWK\settings::setSetting($db, $property, $value);
+            \YAWK\settings::setSetting($db, $property, $value, $lang);
         }
     }
 }
+
+if (isset($_GET['toggle']) AND $_GET['toggle'] === 'true')
+{   /** toggle set to ON */
+    if ($_GET['set'] === '1')
+    {   // de-activate
+        $activated = 0;
+    }
+    else
+        {   // set to active
+            $activated = 1;
+        }
+    if(!YAWK\settings::toggleOffline($db, $_GET['property'], $activated, $lang))
+    {
+        \YAWK\alert::draw("danger", "$lang[ERROR]", "Could not toggle page $_GET[property]", "", 2000);
+    }
+}
+
 ?>
 <script type="text/javascript">
     $(document).ready(function() {
@@ -30,8 +47,8 @@ echo "
 /* draw Title on top */
 echo \YAWK\backend::getTitle($lang['SETTINGS_EXPERT'], $lang['SETTINGS_EXPERT_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
-            <li><a href=\"index.php?page=settings-backend\" class=\"active\" title=\"Backend Settings\"> Backend Settings</a></li>
+            <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+            <li><a href=\"index.php?page=settings-backend\" class=\"active\" title=\"$lang[BACKEND_SETTINGS] $lang[BACKEND_SETTINGS_SUBTEXT]\"> $lang[BACKEND_SETTINGS] $lang[BACKEND_SETTINGS_SUBTEXT]</a></li>
         </ol>
     </section>
     <!-- Main content -->
@@ -68,11 +85,11 @@ else
         while($row = mysqli_fetch_assoc($res)){
             /* check if settings is published and set badge-button text */
             if ($row['activated']==1)
-            { $pub = "success"; $pubtext="On"; }
-            else { $pub = "danger"; $pubtext="Off"; }
+            { $pub = "success"; $pubtext="$lang[ON_]"; }
+            else { $pub = "danger"; $pubtext="$lang[OFF_]"; }
 
             echo"<tr>
- <td><a title=\"toggle&nbsp;status\" href=\"index.php?page=settings-toggle&property=".$row['property']."&set=".$row['activated']."\">
+ <td><a title=\"toggle&nbsp;status\" href=\"index.php?page=settings-manage&toggle=true&property=".$row['property']."&set=".$row['activated']."\">
      <span class=\"label label-$pub\">$pubtext</span></a></td>
  <td>".$row['property']."</td>
  <td><input type=\"text\" name=\"".$row['property']."\" class=\"form-control\" value=\"".$row['value']."\"></td>

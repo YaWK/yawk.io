@@ -223,7 +223,7 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
 					\YAWK\template::setTemplateActive($db, $value);
 				}
 				// save value of property to database
-				\YAWK\settings::setSetting($db, $property, $value);
+				\YAWK\settings::setSetting($db, $property, $value, $lang);
 			}
         }
     }
@@ -242,8 +242,8 @@ echo "
 /* draw Title on top */
 echo \YAWK\backend::getTitle($lang['SETTINGS'], $lang['SETTINGS_SYSTEM_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
-            <li><a href=\"index.php?page=settings-system\" class=\"active\" title=\"Edit Settings\"> Settings</a></li>
+            <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+            <li><a href=\"index.php?page=settings-system\" class=\"active\" title=\"$lang[SETTINGS_EDIT]\"> $lang[SETTINGS_EDIT]</a></li>
         </ol></section>
     <!-- Main content -->
     <section class=\"content\">";

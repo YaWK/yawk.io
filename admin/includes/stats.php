@@ -18,8 +18,8 @@ echo "
 /* draw Title on top */
 echo \YAWK\backend::getTitle($lang['STATS'], $lang['STATS_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
-            <li class=\"active\"><a href=\"index.php?page=yawk-stats\" title=\"Pages\"> Statistics</a></li>
+            <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+            <li class=\"active\"><a href=\"index.php?page=yawk-stats\" title=\"$lang[STATS]\"> $lang[STATS]</a></li>
          </ol>
     </section>
     <!-- Main content -->
@@ -52,34 +52,34 @@ else
         <!-- box -->
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">Statistics <small>hits and user behavior</small></h3>
+                <h3 class="box-title"><?php echo $lang['STATS']; ?> <small><?php echo $lang['HITS_AND_USER_BEHAVIOR']; ?></small></h3>
             </div>
             <div class="box-body h3">
                 <?php
                 if ($stats->i_hits !== $limit) { $current = "<small><i>(view: $limit)</i></small>"; } else { $current = ''; }
                 $stats->i_hits = number_format($stats->i_hits, 0, '.', '.');
                 ?>
-                Hits overall: <b><?php echo $stats->i_hits; ?></b> <?php echo $current; ?> <br>
-                Guests: <b><?php echo $stats->i_publicUsersPercentage; ?>% </b> <small>(<?php echo $stats->i_publicUsers; ?>)</small><br>
-                Members: <b><?php echo $stats->i_loggedUsersPercentage; ?>%</b> <small>(<?php echo $stats->i_loggedUsers; ?>)</small><br>
+                <?php echo "$lang[HITS] $lang[OVERALL]:<b> $stats->i_hits</b>"; ?> <?php echo $current; ?> <br>
+                <?php echo "$lang[GUESTS]: <b> $stats->i_publicUsersPercentage</b>"; ?>% <small>(<?php echo $stats->i_publicUsers; ?>)</small><br>
+                <?php echo "$lang[MEMBERS]: <b> $stats->i_loggedUsersPercentage</b>"; ?>% <small>(<?php echo $stats->i_loggedUsers; ?>)</small><br>
             </div>
         </div>
         <!-- / box -->
     </div>
-    <div class="col-md-4"><?php $stats->drawWeekdayBox($db, $data, $limit); ?></div>
+    <div class="col-md-4"><?php $stats->drawWeekdayBox($db, $data, $limit, $lang); ?></div>
     <div class="col-md-4">
 
         <!-- stats settings box -->
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">Settings <small>filter your view</small></h3>
+                <h3 class="box-title"><?php echo "$lang[SETTINGS] <small>$lang[FILTER_YOUR_VIEW]</small>"; ?></h3>
             </div>
             <div class="box-body">
                 <form action="index.php?page=stats" method="post">
-                    <label for="limit">view latest <small><i>n</i></small> hits, leave blank for all</label>
+                    <label for="limit"><?php echo "$lang[VIEW_LATEST] <small><i>n</i></small> $lang[HITS], $lang[LEAVE_BLANK_FOR_ALL]"; ?></label>
                     <input id="limit" name="limit" value="<?php echo $limit; ?>" type="text" placeholder="<?php echo $limit; ?>" class="form-control">
                     <br>
-                    <button type="submit" class="btn btn-success pull-right"><i class="glyphicon glyphicon-refresh"></i>&nbsp; Refresh Stats</button>
+                    <button type="submit" class="btn btn-success pull-right"><i class="glyphicon glyphicon-refresh"></i>&nbsp; <?php echo "$lang[REFRESH_STATS]"; ?></button>
                 </form>
             </div>
         </div>
@@ -92,19 +92,19 @@ else
     <div class="col-md-8">
 
         <!-- DEVICE TYPE box -->
-        <?php $stats->drawDeviceTypeBox($db, $data, $limit); ?>
+        <?php $stats->drawDeviceTypeBox($db, $data, $limit, $lang); ?>
         <!-- / box -->
 
         <!-- OS box -->
         <div class="row">
-        <div class="col-md-6"><?php $stats->drawOsBox($db, $data, $limit); ?></div>
-        <div class="col-md-6"><?php $stats->drawOsVersionBox($db, $data, $limit); ?></div>
+        <div class="col-md-6"><?php $stats->drawOsBox($db, $data, $limit, $lang); ?></div>
+        <div class="col-md-6"><?php $stats->drawOsVersionBox($db, $data, $limit, $lang); ?></div>
         </div>
 
         <!-- / box -->
 
         <!-- box -->
-        <?php $stats->drawBrowserBox($db, $data, $limit); ?>
+        <?php $stats->drawBrowserBox($db, $data, $limit, $lang); ?>
 
         <!-- box -->
         <div class="box">
@@ -121,13 +121,13 @@ else
     <div class="col-md-4">
 
         <!-- box -->
-        <?php $stats->drawDaytimeBox($db, $data, $limit); ?>
+        <?php $stats->drawDaytimeBox($db, $data, $limit, $lang); ?>
         <!-- / box -->
 
         <!-- box -->
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">Pages <small>hits from most to least</small></h3>
+                <h3 class="box-title"><?php echo "$lang[PAGE_VIEWS] <small> $lang[HITS_FROM_MOST_TO_LEAST]</small>"; ?></h3>
             </div>
                 <?php
                     $erg = array();

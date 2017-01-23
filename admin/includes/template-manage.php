@@ -25,7 +25,7 @@ if (isset($_GET['toggle']) && ($_GET['toggle'] === "1"))
     if (isset($_GET['templateID']) && (is_numeric($_GET['templateID'])))
     {   // escape chars
         $_GET['templateID'] = $db->quote($_GET['templateID']);
-        if (\YAWK\settings::setSetting($db, "selectedTemplate", $_GET['templateID']))
+        if (\YAWK\settings::setSetting($db, "selectedTemplate", $_GET['templateID'], $lang))
         {   // additional: set this template as active in template database
             \YAWK\template::setTemplateActive($db, $_GET['templateID']);
             $user->setUserTemplate($db, 0, $_GET['templateID'], $user->id);

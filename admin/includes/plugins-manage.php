@@ -20,9 +20,9 @@ echo "
 /* draw Title on top */
 echo \YAWK\backend::getTitle($lang['PLUGINS_MANAGE'], $lang['PLUGINS_MANAGE_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
-            <li><a href=\"index.php?page=plugins\" itle=\"Users\"> Plugins</a></li>
-            <li><a href=\"index.php?page=plugins-manage\" class=\"active\" title=\"Users\"> Manage Plugins</a></li>
+            <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+            <li><a href=\"index.php?page=plugins\" title=\"$lang[PLUGINS]\"> $lang[PLUGINS]</a></li>
+            <li><a href=\"index.php?page=plugins-manage\" class=\"active\" title=\"$lang[PLUGINS_MANAGE]\"> $lang[PLUGINS_MANAGE]</a></li>
         </ol>
     </section>
     <!-- Main content -->
@@ -30,8 +30,7 @@ echo"<ol class=\"breadcrumb\">
 /* page content start here */
 ?>
 
-
-<a class="btn btn-success" href="index.php?plugins-manage" style="float:right;">
+<a class="btn btn-success pull-right" href="index.php?plugins-manage">
     <i class="glyphicon glyphicon-cog"></i> &nbsp;<?php print $lang['PLUGIN_MANAGE']; ?></a>
 
 <table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-hover" id="table-sort">
@@ -40,7 +39,7 @@ echo"<ol class=\"breadcrumb\">
         <td width="10%">&nbsp;</td>
         <td width="20%"><strong><i class="fa fa-caret-down"></i> <?PHP print $lang['PLUGIN']; ?></strong></td>
         <td width="60%"><strong><?PHP print $lang['DESCRIPTION']; ?></strong></td>
-        <td width="10%" style="text-align: center;"><strong><?PHP print $lang['ACTIONS']; ?></strong></td>
+        <td width="10%" class="text-center"><strong><?PHP print $lang['ACTIONS']; ?></strong></td>
     </tr>
     </thead>
     <tbody>
@@ -49,6 +48,7 @@ echo"<ol class=\"breadcrumb\">
     if (!isset($db))
     {
         include '../system/classes/db.php';
+        $db = new \YAWK\db();
     }
     print $plugin->getPlugins($db, $lang, 0);
     ?>

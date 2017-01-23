@@ -396,7 +396,7 @@ namespace YAWK {
             else
             {   // q failed, throw error
                 \YAWK\sys::setSyslog($db, 5, "could not get settings from database ", 0, 0, 0, 0);
-                \YAWK\alert::draw("warning", "Warning!", "Fetch database error: getSettingsArray failed.","","4800");
+                // \YAWK\alert::draw("warning", "Warning!", "Fetch database error: getSettingsArray failed.","","4800");
                 return false;
             }
             return $settingsArray;
@@ -431,23 +431,24 @@ namespace YAWK {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @link http://yawk.io
          * @param object $db Database object
+         * @param object $db language
          * @param string $property Property to set into database
          * @param string $value Value to set into database
          * @return bool
          */
-        public static function setSetting($db, $property, $value)
+        public static function setSetting($db, $property, $value, $lang)
         {   /* @var $db \YAWK\db */
             $property = $db->quote($property);
             $value = $db->quote($value);
             if ($res = $db->query("UPDATE {settings} SET value = '".$value."' WHERE property = '".$property."'")) {
                 // success
-                \YAWK\alert::draw("success", "Success!","Setting $property saved.","","120");
+                \YAWK\alert::draw("success", "$lang[SUCCESS]","$lang[SETTING] $property $lang[SAVED]","","120");
                 return true;
             }
             else
             {   // q failed
                 \YAWK\sys::setSyslog($db, 5, "failed to set <b>$value</b> to <b>$property</b> ", 0, 0, 0, 0);
-                \YAWK\alert::draw("warning", "Warning!", "Setting $property could not be saved.", "","4800");
+                \YAWK\alert::draw("warning", "$lang[WARNING]", "$lang[SETTING] $property $lang[NOT_SAVED]", "","4800");
                 return false;
             }
         }
@@ -628,11 +629,12 @@ namespace YAWK {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @link http://yawk.io
          * @param object $db Database object
+         * @param object $lang language
          * @param string $property Property to get value from.
          * @param string $new_status
          * @return bool
          */
-        public static function toggleOffline($db, $property, $new_status)
+        public static function toggleOffline($db, $property, $new_status, $lang)
         {
             /* @var $db \YAWK\db */
             $property = $db->quote($property);
@@ -644,8 +646,8 @@ namespace YAWK {
             }
             else
             {   // q failed, throw error
-                \YAWK\sys::setSyslog($db, 5, "failed to toggle <b>$value</b> of <b>$property</b> ", 0, 0, 0, 0);
-                \YAWK\alert::draw("danger", "Error!", "Could not toggle $property to status $new_status", "","4800");
+                \YAWK\sys::setSyslog($db, 5, "$lang[TOGGLE_FAILED] <b>$new_status</b> of <b>$property</b> ", 0, 0, 0, 0);
+                \YAWK\alert::draw("danger", "Error!", "$lang[TOGGLE_FAILED] $property $lang[TO] $new_status", "","4800");
                 return false;
             }
         }
