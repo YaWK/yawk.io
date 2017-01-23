@@ -329,7 +329,7 @@ namespace YAWK {
             $i_syslog = \YAWK\user::countNotifications($db);
             $i_notifications = \YAWK\user::countMyNotifications($db, $_SESSION['uid']);
             $i_total = $i_syslog + $i_notifications;
-            $notifications = \YAWK\user::getAllNotifications($db);
+            $notifications = \YAWK\user::getAllNotifications($db, $lang);
             $my_notifications = \YAWK\user::getMyNotifications($db, $_SESSION['uid']);
             if ($i_total !== 0)
             {   // if notification available, ring bell and show label...

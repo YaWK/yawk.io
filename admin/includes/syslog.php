@@ -20,8 +20,8 @@ echo "
 /* draw Title on top */
 echo \YAWK\backend::getTitle($lang['SYSLOG'], $lang['SYSLOG_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
-            <li><a href=\"index.php?page=syslog\" class=\"active\" title=\"Users\"> Syslog</a></li>
+            <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+            <li><a href=\"index.php?page=syslog\" class=\"active\" title=\"$lang[SYSLOG]\"> $lang[SYSLOG]</a></li>
         </ol>
     </section>
     <!-- Main content -->
@@ -34,42 +34,41 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
         {   // delete all user notifications
             if ($db->query("TRUNCATE TABLE {notifications}"))
             {   // success, reload page
-                \YAWK\alert::draw("success", "Log data deleted!!", "All syslog entries and user notifications are deleted.","index.php?page=syslog",4200);
-//                \YAWK\backend::setTimeout("index.php?page=syslog",250);
+                \YAWK\alert::draw("success", "$lang[SYSLOG_DATA_DEL]", "$lang[SYSLOG_DATA_DEL_SUBTEXT]","index.php?page=syslog",4200);
             }
         }
         else
         {   // q failed...
-            \YAWK\alert::draw("warning", "Warning!", "Error deleting syslog data. Please try again.", "",4200);
+            \YAWK\alert::draw("warning", "$lang[WARNING]", "$lang[SYSLOG_DATA_DEL_SUBTEXT]", "",4200);
         }
     }
 ?>
 
 <div class="box box-default">
     <div class="box-header with-border">
-        <h3 class="box-title">System Logfiles</h3>
+        <h3 class="box-title"><?php echo "$lang[SYSTEM_LOGFILES]"; ?></h3>
         </div>
         <div class="box-body">
 
             <!-- btn clear log -->
-            <a class="btn btn-success pull-right" role="dialog" data-confirm="Do you want to delete all syslog entries?" href="index.php?page=syslog&clear=1">
+            <a class="btn btn-success pull-right" role="dialog" data-confirm="<?php echo $lang['SYSLOG_DEL_CONFIRM']; ?>" href="index.php?page=syslog&clear=1">
                 <i class="fa fa-trash-o"></i> &nbsp;<?php print $lang['SYSLOG_CLEAR']; ?></a>
 
 <table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-hover" id="table-sort">
     <thead>
     <tr>
-        <td width="3%"><strong>ID</strong></td>
-        <td width="13%"><strong>Type</strong></td>
-        <td width="8%"><strong>Timestamp</strong></td>
-        <td width="10%" class="text-center"><strong>User</strong></td>
-        <td width="54%"><strong>Action</strong></td>
-        <td width="12%" class="text-center"><strong>Affected</strong></td>
+        <td width="3%"><strong><?php echo $lang['ID']; ?></strong></td>
+        <td width="13%"><strong><?php echo $lang['TYPE']; ?></strong></td>
+        <td width="8%"><strong><?php echo $lang['TIMESTAMP']; ?></strong></td>
+        <td width="10%" class="text-center"><strong><?php echo $lang['USER']; ?></strong></td>
+        <td width="54%"><strong><?php echo $lang['ACTION']; ?></strong></td>
+        <td width="12%" class="text-center"><strong><?php echo $lang['AFFECTED']; ?></strong></td>
     </tr>
     </thead>
     <tbody>
     <?PHP
     /* load complete syslog, get all notifications */
-    $syslog = \YAWK\user::getAllNotifications($db);
+    $syslog = \YAWK\user::getAllNotifications($db, $lang);
     if (is_array($syslog))
     {
         foreach ($syslog AS $log)
@@ -84,7 +83,7 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
                     <td>".$log['log_id']."</td>
                     <td><b>".$log['property']."</b></td>
                     <td><small>$log[log_date]<br><small>".$time_ago."</small></td>
-                    <td class=\"text-center\"><a href=\"index.php?page=user-edit&user=$log[username]\" title=\"$log[username] (in new window)\" target=\"_blank\">".$log['username']."</a></td>
+                    <td class=\"text-center\"><a href=\"index.php?page=user-edit&user=$log[username]\" title=\"$log[username] ($lang[IN_NEW_WINDOW])\" target=\"_blank\">".$log['username']."</a></td>
                     <td><i class=\"".$log['icon']."\"></i> &nbsp;&nbsp;".$log['message']."</td>
                     <td class=\"text-center\">".$affected_user."</td>
                   </tr>";

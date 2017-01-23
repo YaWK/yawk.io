@@ -90,32 +90,20 @@ else
 
 <div class="row">
     <div class="col-md-8">
-
-        <!-- DEVICE TYPE box -->
+        <!-- device type box -->
         <?php $stats->drawDeviceTypeBox($db, $data, $limit, $lang); ?>
-        <!-- / box -->
+        <!-- /device type box -->
 
         <!-- OS box -->
         <div class="row">
         <div class="col-md-6"><?php $stats->drawOsBox($db, $data, $limit, $lang); ?></div>
         <div class="col-md-6"><?php $stats->drawOsVersionBox($db, $data, $limit, $lang); ?></div>
         </div>
+        <!-- /OS box -->
 
-        <!-- / box -->
-
-        <!-- box -->
+        <!-- browser box -->
         <?php $stats->drawBrowserBox($db, $data, $limit, $lang); ?>
-
-        <!-- box -->
-        <div class="box">
-            <div class="box-header with-border">
-                Languages
-            </div>
-            <div class="box-body">
-                all users languages
-            </div>
-        </div>
-        <!-- / box -->
+        <!-- /browser box -->
 
     </div>
     <div class="col-md-4">
@@ -160,9 +148,8 @@ else
 
     <!-- login box -->
     <?php
-     $stats->drawLoginBox($db, $limit);
+     $stats->drawLoginBox($db, $limit, $lang);
     ?>
     <!-- / login box -->
 
     </div>
-</div>
