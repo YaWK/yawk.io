@@ -12,7 +12,7 @@ if (isset($_GET['toggle']) && ($_GET['toggle'] === "1"))
     {   // toggle page
         if(!$page->toggleOffline($db, $_GET['id'], $_GET['published'], $_GET['title']))
         {   // all good, notify msg
-            \YAWK\alert::draw("danger", "Could not toggle page item!", "Please try again.", "", 5800);
+            \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[PAGE_TOGGLE_FAILED]", "", 5800);
         }
     }
 }
@@ -27,19 +27,19 @@ if (isset($_GET['lock']) && ($_GET['lock']) === "1")
         $id = $db->quote($_GET['id']);
         $locked = $db->quote($_GET['locked']);
 
-        if ($locked === '1') { $setLock = 0; $status = "unlocked"; $color="success"; }
-        if ($locked === '0') { $setLock = 1; $status = "locked"; $color="danger"; }
+        if ($locked === '1') { $setLock = 0; $status = "$lang[UNLOCKED]"; $color="success"; }
+        if ($locked === '0') { $setLock = 1; $status = "$lang[LOCKED]"; $color="danger"; }
         else { $setLock = 0; }
 
         // execute page lock
         if ($page->toggleLock($db, $id, $setLock))
         {
             // successful, throw notification
-            \YAWK\alert::draw("$color", "Page is $status", "Page $status successfully.", "",800);
+            \YAWK\alert::draw("$color", "$lang[PAGE] $lang[IS] $status", "$lang[PAGE] $lang[IS] $status", "",800);
         }
         else
         {   // throw error msg
-            \YAWK\alert::draw("danger", "Error", "Could not toggle page lock.","page=pages", 4300);
+            \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[PAGE_LOCK_FAILED]","page=pages", 4300);
         }
     }
 }
@@ -57,12 +57,12 @@ if (isset($_GET['del']) && ($_GET['del'] === "1"))
         // ok, delete page
         if ($page->delete($db))
         {   // success
-            \YAWK\alert::draw("success", "Erfolg!", "Die Seite " . $_GET['alias'] . " wurde gel&ouml;scht!","", 800);
+            \YAWK\alert::draw("success", "Erfolg!", "$lang[PAGE] " . $_GET['alias'] . " $lang[PAGE_DEL_OK]","", 800);
            // \YAWK\backend::setTimeout("index.php?page=pages",1260);
         }
         else
         {   // failed
-            \YAWK\alert::draw("danger", "Error!", "Die Seite " . $_GET['alias'] . " konnte nicht gel&ouml;scht werden!", "", 6800);
+            \YAWK\alert::draw("danger", "Error!", "$lang[PAGE] " . $_GET['alias'] . " $lang[PAGE_DEL_FAILED]", "", 6800);
         }
     }
 }
@@ -79,11 +79,11 @@ if (isset($_GET['copy']) && ($_GET['copy'] === "true"))
         // copy page
         if($page->copy($db))
         {   // all good.
-            print \YAWK\alert::draw("success", "Erfolg!", "Die Seite ".$_GET['alias']." wurde kopiert!", "", "1200");
+            print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[PAGE] ".$_GET['alias']." $lang[PAGE_COPY_OK]", "", "1200");
         }
         else
             {   // copy failed, throw error
-                print \YAWK\alert::draw("danger", "Could not copy page $_GET[alias]", "Please try again.", "", "6800");
+                print \YAWK\alert::draw("danger", "$lang[ERROR]", "$_GET[alias] $lang[PAGE_COPY_FAILED]", "", "6800");
             }
     }
 }
@@ -111,8 +111,8 @@ echo "
     /* draw Title on top */
     echo \YAWK\backend::getTitle($lang['PAGES'], $lang['PAGES_SUBTEXT']);
     echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
-            <li class=\"active\"><a href=\"index.php?page=pages\" title=\"Pages\"> Pages</a></li>
+            <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+            <li class=\"active\"><a href=\"index.php?page=pages\" title=\"$lang[PAGES]\"> $lang[PAGES]</a></li>
          </ol>
     </section>
     <!-- Main content -->
@@ -134,9 +134,9 @@ echo "
 <table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-striped table-hover" id="table-sort">
   <thead>
     <tr>
-      <td width="3%"><strong>Status</strong></td>
+      <td width="3%"><strong><?php echo $lang['STATUS']; ?> </strong></td>
       <td width="3%"><strong>&nbsp;</strong></td>
-      <td width="3%"><strong>ID</strong></td>
+      <td width="3%"><strong><?php echo $lang['ID']; ?> </strong></td>
       <td width="30%"><strong><i class="fa fa-caret-down"></i> <?PHP print $lang['TITLE']; ?></strong></td>
       <td width="35%"><strong><i class="fa fa-caret-down"></i> <?PHP print $lang['FILENAME']; ?></strong></td>
       <td width="5%" class="text-center"><strong><?PHP print $lang['TYPE']; ?></strong></td>
@@ -167,13 +167,13 @@ $i_pages_unpublished = 0;
         // check type of page...
         // does it host a plugin?
         if ($row['plugin'] !== '0'){
-            $type = "<a href=\"index.php?plugin=".$row['plugin']."\">plugin</a>";
+            $type = "<a href=\"index.php?plugin=".$row['plugin']."\">$lang[PLUGIN]</a>";
         }
         else {
             // is it a blog?
             if ($row['blogid'] !== '0')
             {
-                $type = "<a href=\"index.php?plugin=blog&pluginpage=blog-entries&blogid=".$row['blogid']."\">blog</a>";
+                $type = "<a href=\"index.php?plugin=blog&pluginpage=blog-entries&blogid=".$row['blogid']."\">$lang[BLOG]</a>";
             } else {
                 // its surely a static page
                 $type = "page";
@@ -203,7 +203,7 @@ $i_pages_unpublished = 0;
             $lockLinkTitle = "title=\"".$lang['EDIT']."\"";
             $lockAction = "<a class=\"fa fa-lock\" ".$lockTitle." ".$lockLink."></a>&nbsp;";
             $lockCopyLink = "title=\"".$lang['PAGE_COPY']."\" href=\"index.php?page=pages&copy=1&title=".$row['title']."&alias=".$row['alias']."&copy=true\"";
-            $lockDeleteLink = "role=\"dialog\" data-confirm=\"Die Seite &laquo;".$row['title']." / ".$row['alias'].".html&raquo; wirklich l&ouml;schen?\"
+            $lockDeleteLink = "role=\"dialog\" data-confirm=\"$lang[PAGE] &laquo;".$row['title']." / ".$row['alias'].".html&raquo; $lang[PAGE_DEL_CONFIRM]\"
             title=\"".$lang['PAGE_DELETE']."\" href=\"index.php?page=pages&del=1&alias=".$row['alias']."&delete=true\"";
         }
 
@@ -250,15 +250,15 @@ $i_pages_unpublished = 0;
         $pages = $lang['PAGES'];
 
         if ($i_pages > 1) { $seiten="$i_pages $pages $lang[OVERALL]"; }
-        else if ($i_pages = 1) { $seiten="$i_pages $page angelegt"; }
-        else { $seiten = "Es wurde noch keine $page angelegt"; }
+        else if ($i_pages = 1) { $seiten="$i_pages $page"; }
+        else { $seiten = "$lang[NO_PAGE_CREATED]"; }
 
-        if ($i_pages_published > 1) { $pub="$i_pages_published $pages published"; }
-        else if ($i_pages_published === '1') { $pub="$i_pages_published $page published"; }
-        else { $pub = "Es wurde noch keine $page published"; }
+        if ($i_pages_published > 1) { $pub="$i_pages_published $pages $lang[PUBLISHED]"; }
+        else if ($i_pages_published === '1') { $pub="$i_pages_published $page $lang[PUBLISHED]"; }
+        else { $pub = "$lang[NO_PAGE_PUBLISHED]"; }
 
-        if ($i_pages_unpublished > 1) { $unpub="$i_pages_unpublished $pages sind offline"; }
-        else if ($i_pages_unpublished === '1') { $unpub="$i_pages_unpublished $page ist offline"; }
+        if ($i_pages_unpublished > 1) { $unpub="$i_pages_unpublished $pages $lang[OFFLINE]"; }
+        else if ($i_pages_unpublished === '1') { $unpub="$i_pages_unpublished $page "; }
         else { $unpub = $lang['PAGES_ONLINE']; }
 
         // stats on bottom of page
