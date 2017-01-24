@@ -408,6 +408,7 @@ namespace YAWK {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @link http://yawk.io
          * @param object $db Database object
+         * @param object $lang language array
          * @param string $property Property to select from database
          * @return bool
          */
@@ -420,7 +421,6 @@ namespace YAWK {
             }
             else
             {   // q failed, throw error
-                \YAWK\alert::draw("warning", "Warning!", "Fetch database error: getSetting failed.","","4800");
                 return false;
             }
         }

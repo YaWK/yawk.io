@@ -41,7 +41,7 @@
         window.onbeforeunload = confirmExit; // before close
         function confirmExit() {             // dialog
             if (formmodified == 1) {         // if form has changed
-                return "Your changes may not be saved. Do you wish to leave the page?";
+                return "<?php echo $lang['LEAVE_REQUEST']; ?>";
             }
         }
       // call tabCollapse: make the default bootstrap tabs responsive for handheld devices
@@ -207,7 +207,7 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
             $user->setUserTemplate($db, 0, $getID, $user->id);
             $user->overrideTemplate = 0;
             // info badge to inform user that this is HIS preview
-            $infoBadge = "<span class=\"label label-success\"><i class=\"fa fa-check\"></i>&nbsp;&nbsp;Visible to everyone</span>";
+            $infoBadge = "<span class=\"label label-success\"><i class=\"fa fa-check\"></i>&nbsp;&nbsp;$lang[VISIBLE_TO_EVERYONE]</span>";
             // info button on top
             $previewButton = "";
         }
@@ -216,9 +216,9 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
                 $user->setUserTemplate($db, 1, $getID, $user->id);
                 $user->overrideTemplate = 1;
                 // info badge to inform user that this is HIS preview
-                $infoBadge = "<span class=\"label label-danger\"><i class=\"fa fa-eye\"></i>&nbsp;&nbsp;Preview</span>";
+                $infoBadge = "<span class=\"label label-danger\"><i class=\"fa fa-eye\"></i>&nbsp;&nbsp;$lang[PREVIEW]</span>";
                 // close preview button on top
-                $previewButton = "<a class=\"btn btn-danger\" href=\"index.php?page=template-manage&overrideTemplate=0&id=$getID\"><i class=\"fa fa-times\"></i>&nbsp;&nbsp;Close Preview</a>";
+                $previewButton = "<a class=\"btn btn-danger\" href=\"index.php?page=template-manage&overrideTemplate=0&id=$getID\"><i class=\"fa fa-times\"></i>&nbsp;&nbsp;$lang[CLOSE_PREVIEW]</a>";
             }
 
         // check if user/admin is allowed to override the template
@@ -1235,9 +1235,9 @@ echo "
 /* draw Title on top */
 echo \YAWK\backend::getTitle("ReDesign", $lang['DESIGN_DETAILS']);
 echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
-            <li><a href=\"index.php?page=template-manage\" title=\"Themes\"> Theme Manager</a></li>
-            <li><a href=\"index.php?page=template-edit&id=$template->id\" class=\"active\" title=\"Edit Theme\"> Edit Theme</a></li>
+            <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+            <li><a href=\"index.php?page=template-manage\" title=\"$lang[TPL_MANAGER]\"> $lang[TPL_MANAGER]</a></li>
+            <li><a href=\"index.php?page=template-edit&id=$template->id\" class=\"active\" title=\"$lang[TPL_EDIT]\">$template->name</a></li>
         </ol></section>
     <!-- Main content -->
     <section class=\"content\">";
@@ -1299,33 +1299,72 @@ else
     <!-- FORM -->
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" id="tabs" role="tablist">
-        <li role="presentation" class="active"><a href="#overview" aria-controls="overview" role="tab" data-toggle="tab"><i class="fa fa-home"></i>&nbsp; <?php echo $template->name; ?></a></li>
-        <li role="presentation"><a href="#positions" aria-controls="positions" role="tab" data-toggle="tab"><i class="fa fa-code"></i>&nbsp; Positions</a></li>
-        <li role="presentation"><a href="#fonts" aria-controls="fonts" role="tab" data-toggle="tab"><i class="fa fa-font"></i>&nbsp; Fonts</a></li>
-        <li role="presentation"><a href="#typo" aria-controls="typo" role="tab" data-toggle="tab"><i class="fa fa-text-width"></i>&nbsp; Typography</a></li>
-        <li role="presentation"><a href="#body" aria-controls="layout" role="tab" data-toggle="tab"><i class="fa fa-object-group"></i>&nbsp; Body</a></li>
+        <li role="presentation" class="active">
+            <a href="#overview" aria-controls="overview" role="tab" data-toggle="tab"><i class="fa fa-home"></i>
+                &nbsp;<?php echo $template->name; ?></a>
+        </li>
+        <li role="presentation">
+            <a href="#positions" aria-controls="positions" role="tab" data-toggle="tab"><i class="fa fa-code"></i>
+                &nbsp; <?php echo $lang['POSITIONS']; ?></a>
+        </li>
+        <li role="presentation">
+            <a href="#fonts" aria-controls="fonts" role="tab" data-toggle="tab"><i class="fa fa-font"></i>
+                &nbsp; <?php echo $lang['FONTS_TYPES']; ?></a>
+        </li>
+        <li role="presentation">
+            <a href="#typo" aria-controls="typo" role="tab" data-toggle="tab"><i class="fa fa-text-width"></i>
+                &nbsp; <?php echo $lang['TYPOGRAPHY']; ?></a>
+        </li>
+        <li role="presentation">
+            <a href="#body" aria-controls="layout" role="tab" data-toggle="tab"><i class="fa fa-object-group"></i>
+                &nbsp; <?php echo $lang['BODY']; ?></a>
+        </li>
       <!--  <li role="presentation"><a href="#colors" aria-controls="colors" role="tab" data-toggle="tab"><i class="fa fa-paint-brush"></i>&nbsp; Colors</a></li> -->
-        <li role="presentation"><a href="#menu" aria-controls="menu" role="tab" data-toggle="tab"><i class="fa fa-bars"></i>&nbsp; Menu</a></li>
-        <li role="presentation"><a href="#well" aria-controls="menu" role="tab" data-toggle="tab"><i class="fa fa-sticky-note-o"></i>&nbsp; Well</a></li>
-        <li role="presentation"><a href="#buttons" aria-controls="menu" role="tab" data-toggle="tab"><i class="fa fa-toggle-on"></i>&nbsp; Buttons</a></li>
-        <li role="presentation"><a href="#images" aria-controls="menu" role="tab" data-toggle="tab"><i class="fa fa-picture-o"></i>&nbsp; Images</a></li>
-        <li role="presentation"><a href="#effects" aria-controls="effects" role="tab" data-toggle="tab"><i class="fa fa-paper-plane-o"></i>&nbsp; Effects</a></li>
-        <li role="presentation"><a href="#custom" aria-controls="menu" role="tab" data-toggle="tab"><i class="fa fa-css3"></i>&nbsp; Custom CSS</a></li>
-        <li role="presentation"><a href="#themes" aria-controls="themes" role="tab" data-toggle="tab"><i class="fa fa-adjust"></i>&nbsp; Themes</a></li>
-        <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab"><i class="fa fa-database"></i>&nbsp; Settings</a></li>
+        <li role="presentation">
+            <a href="#menu" aria-controls="menu" role="tab" data-toggle="tab"><i class="fa fa-bars"></i>
+                &nbsp; <?php echo $lang['MENU']; ?></a>
+        </li>
+        <li role="presentation">
+            <a href="#well" aria-controls="menu" role="tab" data-toggle="tab"><i class="fa fa-sticky-note-o"></i>
+                &nbsp; <?php echo $lang['WELL']; ?></a>
+        </li>
+        <li role="presentation">
+            <a href="#buttons" aria-controls="menu" role="tab" data-toggle="tab"><i class="fa fa-toggle-on"></i>
+                &nbsp; <?php echo $lang['BUTTONS']; ?></a>
+        </li>
+        <li role="presentation">
+            <a href="#images" aria-controls="menu" role="tab" data-toggle="tab"><i class="fa fa-picture-o"></i>
+                &nbsp; <?php echo $lang['IMAGES']; ?></a>
+        </li>
+        <li role="presentation">
+            <a href="#effects" aria-controls="effects" role="tab" data-toggle="tab"><i class="fa fa-paper-plane-o"></i>
+                &nbsp; <?php echo $lang['EFFECTS']; ?></a>
+        </li>
+        <li role="presentation">
+            <a href="#custom" aria-controls="menu" role="tab" data-toggle="tab"><i class="fa fa-css3"></i>
+                &nbsp; <?php echo $lang['CUSTOM_CSS']; ?></a>
+        </li>
+        <li role="presentation">
+            <a href="#themes" aria-controls="themes" role="tab" data-toggle="tab"><i class="fa fa-adjust"></i>
+                &nbsp; <?php echo $lang['THEME']; ?></a>
+        </li>
+        <li role="presentation">
+            <a href="#settings" aria-controls="settings" role="tab" data-toggle="tab"><i class="fa fa-database"></i>
+                &nbsp; <?php echo $lang['SETTINGS']; ?></a>
+        </li>
     </ul>
 
     <!-- Tab panes -->
     <div class="tab-content">
         <!-- OVERVIEW -->
         <div role="tabpanel" class="tab-pane active" id="overview">
-            <h3>Overview <small>Template Statistics</small></h3>
+            <h3><?php echo "$lang[OVERVIEW] <small>$lang[TPL] $lang[SUMMARY]</small>"; ?></h3>
             <!-- list GOOGLE FONTS -->
             <div class="row animated fadeIn">
                 <div class="col-md-6">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Template Details <small>of the current active theme</small></h3>
+                            <h3 class="box-title"><?php echo "$lang[DETAILS] <small>$lang[OF_CURRENT_ACTIVE_THEME]"; ?></small></h3>
                         </div>
                         <dl class="dl-horizontal">
                             <?php
@@ -1333,7 +1372,7 @@ else
                             // author URL
                             if (isset($template->authorUrl) && (!empty($template->authorUrl)))
                             {   // set author's link
-                                $authorUrl = "<small>&nbsp;<a href=\"$template->authorUrl\" target=\"_blank\" title=\"Author's weblink [in new tab]\"
+                                $authorUrl = "<small>&nbsp;<a href=\"$template->authorUrl\" target=\"_blank\" title=\"$lang[AUTHORS_WEBLINK_DESC]\"
                                 <i class=\"fa fa-external-link\"></i></a></small>";
                             }
                             else { $authorUrl = ""; }
@@ -1341,48 +1380,48 @@ else
                             // author
                             if (isset($template->author) && (!empty($template->author)))
                             {   // set author
-                                $author = "<dt>Author</dt><dd>$template->author&nbsp;$authorUrl</dd>";
+                                $author = "<dt>$lang[AUTHOR]</dt><dd>$template->author&nbsp;$authorUrl</dd>";
                             }
                             else { $author = ""; }
 
                             // weblink
                             if (isset($template->weblink) && (!empty($template->weblink)))
                             {   // set author's link
-                                $weblink = "<dt>Weblink</dt><dd><a href=\"$template->weblink\" target=\"_blank\" title=\"Project's weblink [in new tab]\">$template->weblink</a></dd>";
+                                $weblink = "<dt>$lang[WEBLINK]</dt><dd><a href=\"$template->weblink\" target=\"_blank\" title=\"$lang[PROJECT_WEBLINK_DESC]\">$template->weblink</a></dd>";
                             }
                             else { $weblink= ""; }
 
                             // modifyDate
                             if (isset($template->modifyDate) && ($template->modifyDate !== "0000-00-00 00:00:00"))
                             {   // set modifyDate
-                                $modifyDate = "<dt>modified</dt><dd>$template->modifyDate</dd>";
+                                $modifyDate = "<dt>$lang[MODIFIED]</dt><dd>$template->modifyDate</dd>";
                             }
                             else { $modifyDate = ''; }
 
                             // releaseDate
                             if (isset($template->releaseDate) && ($template->releaseDate !== "0000-00-00 00:00:00"))
                             {   // set release date
-                                $releaseDate = "<dt>Release</dt><dd>$template->releaseDate</dd>";
+                                $releaseDate = "<dt>$lang[RELEASED]</dt><dd>$template->releaseDate</dd>";
                             }
                             else { $releaseDate = ''; }
 
                             // description
                             if (isset($template->description) && (!empty($template->description)))
                             {   // set author
-                                $description = "<dt>Description</dt><dd>$template->description</dd>";
+                                $description = "<dt>$lang[DESCRIPTION]</dt><dd>$template->description</dd>";
                             }
                             else { $description = ""; }
 
                             // version
                             if (isset($template->version) && (!empty($template->version)))
                             {   // set author
-                                $version = "<dt>Version</dt><dd>$template->version</dd>";
+                                $version = "<dt>$lang[VERSION]</dt><dd>$template->version</dd>";
                             }
                             else { $version = ""; }
 
                             if (isset($template->subAuthorUrl) && (!empty($template->subAuthorUrl)))
                             {   // set author's link
-                                $subauthorurl = "<small>&nbsp;<a href=\"$template->subAuthorUrl\" target=\"_blanl\" title=\"Modified by weblink [in new tab]\"
+                                $subauthorurl = "<small>&nbsp;<a href=\"$template->subAuthorUrl\" target=\"_blank\" title=\"$lang[MODIFIED_BY_LINKDESC]\"
                                 <i class=\"fa fa-external-link\"></i></a></small>";
                             }
                             else { $subauthorurl = ""; }
@@ -1390,33 +1429,33 @@ else
                             // subAuthor
                             if (isset($template->subAuthor) && (!empty($template->subAuthor)))
                             {   // set subAuthor
-                                $subauthor = "<dt>Modified by</dt><dd>$template->subAuthor&nbsp;$subauthorurl</dd>";
+                                $subauthor = "<dt>$lang[MODIFIED_BY]</dt><dd>$template->subAuthor&nbsp;$subauthorurl</dd>";
                             }
                             else { $subauthor = ""; }
 
                             // subAuthor
                             if (isset($template->license) && (!empty($template->license)))
                             {   // set subAuthor
-                                $license = "<dt>License</dt><dd>$template->license</dd>";
+                                $license = "<dt>$lang[LICENSE]</dt><dd>$template->license</dd>";
                             }
                             else { $license = ""; }
 
-                            $settings = "<dt>Settings</dt>
-                            <dd>".$template->countTemplateSettings($db,    $template->id)."</dd>";
+                            $settings = "<dt>$lang[SETTINGS]</dt>
+                            <dd>".$template->countTemplateSettings($db, $template->id)."</dd>";
 
                             ?>
-                            <dt>Template Name</dt>
+                            <dt><?php echo "$lang[TEMPLATE] $lang[NAME]"; ?></dt>
                             <dd><b><?php echo $template->name; ?></b></dd>
-                            <dt>Status</dt>
+                            <dt><?php echo $lang['STATUS']; ?></dt>
                             <dd><b><?php echo $infoBadge; ?></b></dd>
 
                             <?php echo $description.$author.$weblink.$license.$version.$releaseDate.$settings."<br>".$subauthor.$modifyDate; ?>
 
                             <dt>&nbsp;</dt>
                             <dd>&nbsp;</dd>
-                            <dt>Engines</dt>
+                            <dt><?php echo $lang['TOOLS']; ?></dt>
                             <dd>
-                                <b>Brings together what belongs together: </b><small>the best tools of our open source world.</small><br>
+                                <b><?php echo $lang['YAWK_SLOGAN_TOGETHER']; ?><br>
                                 <i class="fa fa-check text-light-blue"></i> YaWK 16.9 <small>
                                 <a href="http://www.getbootstrap.com/" target="_blank" title="Official Bootstrap Website [in new tab]">
                                 <i class="fa fa-external-link"></i></a></small><br>
@@ -1460,13 +1499,13 @@ else
 
         <!-- POSITIONS -->
         <div role="tabpanel" class="tab-pane" id="positions">
-            <h3>Positions <small>set template positions settings</small></h3>
+            <h3><? echo "$lang[POSITIONS]"; ?> <small><?php echo "$lang[TPL_POSITION_SETTINGS]"; ?></small></h3>
             <!-- list GOOGLE FONTS -->
             <div class="row animated fadeIn">
                 <div class="col-md-4">
                     <div class="box box-default">
                         <div class="box-header">
-                            <h3 class="box-title">Topmenu Position <small>this is the first position, before anything else</small></h3>
+                            <h3 class="box-title"><?php echo $lang['TPL_TOPMENU_POS']; ?> <small>this is the first position, before anything else</small></h3>
                         </div>
                         <div class="box-body">
                             <?PHP $template->getSetting($db, "pos-topmenu-top", "", "", $user); ?>
@@ -1483,7 +1522,7 @@ else
                 <div class="col-md-4">
                     <div class="box box-default">
                         <div class="box-header">
-                            <h3 class="box-title">Position <small>extend here</small></h3>
+                            <h3 class="box-title"><?php echo $lang['POSITION']; ?> <small>...</small></h3>
                         </div>
                         <div class="box-body">
                             <?PHP // $template->getSetting($db, "%-link", "", "", $user); ?>
@@ -1493,7 +1532,7 @@ else
                 <div class="col-md-4">
                     <div class="box box-default">
                         <div class="box-header">
-                            <h3 class="box-title">Position <small>extend here</small></h3>
+                            <h3 class="box-title"><?php echo $lang['POSITION']; ?>  <small>...</small></h3>
                         </div>
                         <div class="box-body">
                             <?PHP // $template->getSetting($db, "%-link", "", "", $user); ?>
@@ -1505,13 +1544,13 @@ else
 
         <!-- FONTS -->
         <div role="tabpanel" class="tab-pane" id="fonts">
-            <h3>Fonts <small>set heading, menu and text fonts</small></h3>
+            <h3><?php echo "$lang[FONTS_TYPES] <small>$lang[TPL_FONTS_SUBTEXT]"; ?></small></h3>
             <!-- list GOOGLE FONTS -->
             <div class="row animated fadeIn">
                 <div class="col-md-4">
                     <div class="box box-default">
                         <div class="box-header">
-                            <h3 class="box-title">H1-H6 <small>Font</small></h3>
+                            <h3 class="box-title"><?php echo "$lang[H1_H6] <small>$lang[FONT_TYPE]"; ?></small></h3>
                         </div>
                         <div class="box-body">
                             <?PHP $template->getgFonts($db, "heading-gfont"); ?>
@@ -1521,7 +1560,7 @@ else
                 <div class="col-md-4">
                     <div class="box box-default">
                         <div class="box-header">
-                            <h3 class="box-title">Menu <small>Font</small></h3>
+                            <h3 class="box-title"><?php echo "$lang[MENU] <small>$lang[FONT_TYPE]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
                             <?PHP $template->getgFonts($db, "menu-gfont"); ?>
@@ -1531,7 +1570,7 @@ else
                 <div class="col-md-4">
                     <div class="box box-default">
                         <div class="box-header">
-                            <h3 class="box-title">Text <small>Font</small></h3>
+                            <h3 class="box-title"><?php echo "$lang[TEXT] <small>$lang[FONT_TYPE]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
                             <?PHP $template->getgFonts($db, "text-gfont"); ?>
@@ -1543,13 +1582,13 @@ else
 
         <!-- TYPO -->
         <div role="tabpanel" class="tab-pane" id="typo">
-            <h3>Typography <small>Settings</small></h3>
+            <h3><?php echo "$lang[TYPOGRAPHY] <small>$lang[SETTINGS]</small>"; ?></h3>
             <!-- typography styles -->
             <div class="row animated fadeIn">
                 <div class="col-md-4">
                     <div class="box box-default">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Global Text <small>Settings</small></h3>
+                            <h3 class="box-title"><?php echo "$lang[TPL_GLOBALTEXT] <small>$lang[TPL_GLOBALTEXT_SUBTEXT]"; ?></small></h3>
                         </div>
                         <div class="box-body">
                             <?PHP $template->getSetting($db, "body-text-size", "", "", $user); ?>
@@ -1560,7 +1599,7 @@ else
 
                     <div class="box box-default">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Link <small>Colors </small></h3>
+                            <h3 class="box-title"><?php echo "$lang[LINK] <small>$lang[COLORS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
                             <?PHP $template->getSetting($db, "%-link", "", "", $user); ?>
@@ -1571,7 +1610,7 @@ else
                 <div class="col-md-4">
                     <div class="box box-default">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Heading <small>Font Size</small></h3>
+                            <h3 class="box-title"><?php echo "$lang[HEADINGS] <small>$lang[H1_H6_FONT_SIZE]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
                             <?PHP $template->getSetting($db, "h1-size", "", "", $user); ?>
@@ -1587,7 +1626,7 @@ else
                 <div class="col-md-4">
                     <div class="box box-default">
                         <div class="box-header">
-                            <h3 class="box-title">Heading <small>Colors </small></h3>
+                            <h3 class="box-title"><?php echo "$lang[HEADING] <small>$lang[COLORS]"; ?></small></h3>
                         </div>
                         <div class="box-body">
                             <?PHP $template->getSetting($db, "%-fontcolor", "", "", $user); ?>
@@ -1599,13 +1638,13 @@ else
 
         <!-- BODY-->
         <div role="tabpanel" class="tab-pane" id="body">
-            <h3>Body <small>Global Settings</small></h3>
+            <h3><?php echo "$lang[BODY] <small>$lang[SETTINGS]</small>"; ?></h3>
             <!-- typography styles -->
             <div class="row animated fadeIn">
                 <div class="col-md-4">
                     <div class="box box-default">
                         <div class="box-header">
-                            <h3 class="box-title">Body <small>Settings</small></h3>
+                            <h3 class="box-title"><?php echo "$lang[BODY] <small>$lang[SETTINGS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
                             <?PHP $template->getSetting($db, "body-bg-color", "", "", $user); ?>
@@ -1614,7 +1653,7 @@ else
 
                     <div class="box box-default">
                         <div class="box-header">
-                            <h3 class="box-title">Body <small>Positioning</small></h3>
+                            <h3 class="box-title"><?php echo "$lang[BODY] <small>$lang[POSITIONING]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
                             <?PHP $template->getSetting($db, "body-margin-%", "", "", $user); ?>
@@ -1625,30 +1664,7 @@ else
                 <div class="col-md-4">
                     <div class="box box-default">
                         <div class="box-header">
-                            <h3 class="box-title">Main Shadow <small>around all positions</small></h3>
-                        </div>
-                        <div class="box-body">
-                            <?PHP
-                            $template->getSetting($db, "main-box-shadow", "", "", $user);
-                            $template->getSetting($db, "main-box-shadow-color", "", "", $user); ?>
-                        </div>
-                    </div>
-
-                    <div class="box box-default">
-                        <div class="box-header">
-                            <h3 class="box-title">List Group <small>Colors</small></h3>
-                        </div>
-                        <div class="box-body">
-                            <?PHP $template->getSetting($db, "%-listgroup", "", "", $user); ?>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-
-                    <div class="box box-default">
-                        <div class="box-header">
-                            <h3 class="box-title">Background <small>Image</small></h3>
+                            <h3 class="box-title"><?php echo "$lang[BG_IMAGE] <small>$lang[SETTINGS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
                             <?PHP
@@ -1660,18 +1676,44 @@ else
                             ?>
                         </div>
                     </div>
+
+                    <div class="box box-default">
+                        <div class="box-header">
+                            <h3 class="box-title"><?php echo "$lang[TPL_MAIN_POS_SHADOW] <small>$lang[TPL_AROUND_POSITION]</small>"; ?></h3>
+                        </div>
+                        <div class="box-body">
+                            <?PHP
+                            $template->getSetting($db, "main-box-shadow", "", "", $user);
+                            $template->getSetting($db, "main-box-shadow-color", "", "", $user); ?>
+                        </div>
+                    </div>
+
+
+
                 </div>
+
+                <div class="col-md-4">
+                    <div class="box box-default">
+                        <div class="box-header">
+                            <h3 class="box-title">...<?php // echo "$lang[LIST_GROUP] <small>$lang[COLORS]</small>"; ?></h3>
+                        </div>
+                        <div class="box-body">
+                            <?PHP // $template->getSetting($db, "%-listgroup", "", "", $user); ?>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
 
         <!-- MENU -->
         <div role="tabpanel" class="tab-pane" id="menu">
-            <h3>Navbar <small>Settings</small></h3>
+            <h3><?php echo "$lang[GLOBAL_MENU] <small>$lang[NAVBAR]"; ?></small></h3>
             <div class="row animated fadeIn">
                 <div class="col-md-3">
                     <div class="box box-default">
                         <div class="box-header">
-                            <h3 class="box-title">Menu Font <small>Colors </small></h3>
+                            <h3 class="box-title"><?php echo "$lang[MENU] $lang[FONT] <small>$lang[COLORS]"; ?></small></h3>
                         </div>
                         <div class="box-body">
                             <?PHP $template->getSetting($db, "%-menucolor", "", "", $user); ?>
@@ -1682,7 +1724,7 @@ else
                 <div class="col-md-3">
                     <div class="box box-default">
                         <div class="box-header">
-                            <h3 class="box-title">Menu Background <small>Colors</small></h3>
+                            <h3 class="box-title"><?php echo "$lang[MENU] $lang[BG] <small>$lang[COLORS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
                             <?PHP $template->getSetting($db, "%-menubgcolor", "", "", $user); ?>
@@ -1693,7 +1735,7 @@ else
                 <div class="col-md-3">
                     <div class="box box-default">
                         <div class="box-header">
-                            <h3 class="box-title">Dropdown <small>Colors</small></h3>
+                            <h3 class="box-title"><?php echo "$lang[MENU] $lang[DROPDOWN] <small>$lang[COLORS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
                             <?PHP $template->getSetting($db, "%-menudropdowncolor", "", "", $user); ?>
@@ -1704,7 +1746,7 @@ else
                 <div class="col-md-3">
                     <div class="box box-default">
                         <div class="box-header">
-                            <h3 class="box-title">Navbar <small>Positioning</small></h3>
+                            <h3 class="box-title"><?php echo "$lang[MENU] $lang[NAVBAR] <small>$lang[POSITIONING]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
                             <?PHP $template->getSetting($db, "navbar-marginTop", "", "", $user); ?>
@@ -1716,12 +1758,12 @@ else
 
         <!-- WELL,LISTGROUP, JUMBOTRON -->
         <div role="tabpanel" class="tab-pane" id="well">
-            <h3>Well <small>Settings</small></h3>
+            <h3><?php echo "$lang[WELL] <small>$lang[SETTINGS]</small>"; ?></h3>
             <div class="row animated fadeIn">
                 <div class="col-md-3">
                     <div class="box box-default">
                         <div class="box-header">
-                            <h3 class="box-title">Well <small>Box Design</small></h3>
+                            <h3 class="box-title"><?php echo "$lang[WELL] $lang[BOX] <small>$lang[DESIGN]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
                             <?PHP $template->getSetting($db, "well-%", "", "", $user); ?>
@@ -1732,7 +1774,7 @@ else
                 <div class="col-md-3">
                     <div class="box box-default">
                         <div class="box-header">
-                            <h3 class="box-title">List Group <small>Settings</small></h3>
+                            <h3 class="box-title"><?php echo "$lang[LIST_GROUP] <small>$lang[SETTINGS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
                             <?PHP $template->getSetting($db, "listGroup-%", "", "", $user); ?>
@@ -1744,7 +1786,7 @@ else
                 <div class="col-md-3">
                     <div class="box box-default">
                         <div class="box-header">
-                            <h3 class="box-title">Jumbotron <small>Box Design</small></h3>
+                            <h3 class="box-title"><?php echo "$lang[JUMBOTRON] <small>$lang[BOX] $lang[DESIGN]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
                             <?PHP $template->getSetting($db, "jumbotron-%", "", "", $user); ?>
@@ -1755,7 +1797,7 @@ else
                 <div class="col-md-3">
                     <div class="box box-default">
                         <div class="box-header">
-                            <h3 class="box-title">Any <small>Other Thing</small></h3>
+                            <h3 class="box-title">... <small>...</small></h3>
                         </div>
                         <div class="box-body">
                             <?PHP // $template->getSetting($db, "%-menudropdowncolor", "", ""); ?>
@@ -1767,14 +1809,14 @@ else
 
         <!-- BUTTONS -->
         <div role="tabpanel" class="tab-pane" id="buttons">
-            <h3>Button <small>Settings</small></h3>
+            <h3><?php echo "$lang[BUTTON] <small>$lang[SETTINGS]</small>"; ?></h3>
             <div class="row animated fadeIn">
 
                 <div class="col-md-4">
                 <!-- btn basic settings -->
                     <div class="box box-default">
                         <div class="box-header">
-                            <h3 class="box-title">Button <small>font and border settings</small></h3>
+                            <h3 class="box-title"><?php echo "$lang[BUTTON] <small>$lang[FONT] $lang[AND] $lang[BORDER] $lang[SETTINGS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
                             <?PHP
@@ -1877,12 +1919,12 @@ else
 
         <!-- IMAGES -->
         <div role="tabpanel" class="tab-pane" id="images">
-            <h3>Image <small>Settings</small></h3>
+            <h3><?php echo "$lang[IMAGE] <small>$lang[SETTINGS]</small>"; ?></h3>
             <div class="row animated fadeIn">
                 <div class="col-md-3">
                     <div class="box box-default">
                         <div class="box-header">
-                            <h3 class="box-title">Image <small>Effects</small></h3>
+                            <h3 class="box-title"><?php echo "$lang[IMAGE] <small>$lang[EFFECTS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
                             <?PHP $template->getSetting($db, "img-%", "", "", $user); ?>
@@ -1921,7 +1963,7 @@ else
 
         <!-- CUSTOM CSS -->
         <div role="tabpanel" class="tab-pane animated fadeIn" id="custom">
-            <h3>Custom.CSS <small>Override settings and add your own definitions to extend this template</small></h3>
+            <h3>Custom.CSS <small><?php echo $lang['TPL_CUSTOMCSS_SUBTEXT']; ?></small></h3>
             <div class="row">
 
                 <div class="col-md-8">
@@ -1936,16 +1978,14 @@ else
                             <h3 class="box-title"><?PHP echo $template->name; ?>/css/custom.css</h3>
                         </div>
                         <div class="box-body">
-                            <b>This file is loaded after any other css file.</b><br>The last link in the chain. This means
-                            you can override any CSS setting. (Even those you set here in the tabs before...!) Use the custom.css
-                            file to over-write any css definitions you need to fit the style to your corporate design.
+                            <?php echo $lang['CUSTOM_CSS_DESC']; ?>
                             <br><br>
-                            <i>If you need help w CSS take a look here:</i><br>
+                            <i><?php echo $lang['CUSTOM_CSS_HELP']; ?></i><br>
                             &raquo; <a href="http://www.w3schools.com/css/" title="open CSS overview in new TAB" target="_blank">w3schools.com/css/</a>
 
                             <hr>
-                            <b>Did you know?</b><br>
-                            <i>If your browser support it, you can save with [CTRL-S]. Try it!</i>
+                            <b><?php echo $lang['DID_YOU_KNOW']; ?></b><br>
+                            <i><?php echo $lang['TIP_STRG_S']; ?></i>
                 </div>
 
                     </div>
@@ -1955,13 +1995,13 @@ else
 
         <!-- THEMES -->
         <div role="tabpanel" class="tab-pane" id="themes">
-            <h3>Theme <small>Settings</small></h3>
+            <h3><?php echo "$lang[TPL] <small>$lang[SETTINGS]</small>"; ?></h3>
             <!-- list availalbe THEMES -->
             <div class="row animated fadeIn">
                 <div class="col-md-4">
                     <div class="box box-default">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Load <small>Theme</small></h3>
+                            <h3 class="box-title"><?php echo "$lang[LOAD]"; ?> <small>Theme</small></h3>
                         </div>
                         <div class="box-body">
                             ...
@@ -1971,18 +2011,18 @@ else
                 <div class="col-md-4">
                     <div class="box box-default">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Update Details <small>of this template</small></h3>
+                            <h3 class="box-title"><?php echo "$lang[TPL_UPDATE_DETAILS] <small>$lang[TPL_UPDATE_SUBTEXT]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <label for="Tname">Template Name</label>
-                            <input type="text" class="form-control" id="Tname" name="Tname" value="<?php echo $template->name; ?>" placeholder="Template Name" disabled>
-                            <label for="Tauthor">Template Author</label>
-                            <input type="text" class="form-control" id="Tauthor" name="Tauthor" value="<?php echo $template->author; ?>" placeholder="Template Author" disabled>
-                            <label for="Tversion">Template Version</label>
-                            <input type="text" class="form-control" id="Tversion" name="Tversion" value="<?php echo $template->version; ?>" placeholder="Template Version" disabled>
-                            <label for="Tname">Template Release Date</label>
-                            <input type="text" class="form-control" id="Treleasedate" name="Treleasedate" value="<?php echo $template->releaseDate; ?>" placeholder="Template Release Date" disabled>
-                            <label for="Tlicenese">Template License</label>
+                            <label for="Tname"><?php echo "$lang[TPL] $lang[NAME]"; ?></label>
+                            <input type="text" class="form-control" id="Tname" name="Tname" value="<?php echo $template->name; ?>" placeholder="<?php echo "$lang[TEMPLATE] $lang[NAME]"; ?>" disabled>
+                            <label for="Tauthor"><?php echo "$lang[TPL] $lang[AUTHOR]"; ?></label>
+                            <input type="text" class="form-control" id="Tauthor" name="Tauthor" value="<?php echo $template->author; ?>" placeholder="<?php echo "$lang[TEMPLATE] $lang[AUTHOR]"; ?>" disabled>
+                            <label for="Tversion"><?php echo "$lang[TPL] $lang[VERSION]"; ?></label>
+                            <input type="text" class="form-control" id="Tversion" name="Tversion" value="<?php echo $template->version; ?>" placeholder="<?php echo "$lang[TEMPLATE] $lang[VERSION]"; ?>" disabled>
+                            <label for="Treleasedate"><?php echo "$lang[TPL] $lang[RELEASE] $lang[DATE]"; ?></label>
+                            <input type="text" class="form-control" id="Treleasedate" name="Treleasedate" value="<?php echo $template->releaseDate; ?>" placeholder="<?php echo "$lang[TEMPLATE] $lang[RELEASE] $lang[DATE]"; ?>" disabled>
+                            <label for="Tlicenese"><?php echo "$lang[TPL] $lang[LICENSE]"; ?></label>
                             <select name="Tlicense" class="form-control" id="Tlicenese" disabled>
                                 <option value="GNU General Public License (GPL)">GNU General Public License (GPL) </option>
                                 <option value="GNU Lesser Public License (LGPL)">GNU Lesser Public License (LGPL)</option>
@@ -1990,26 +2030,26 @@ else
                                 <option value="Mozilla Public License 2.0">Mozilla Public License 2.0</option>
                                 <option value="Apache License 2.0">Apache License 2.0</option>
                             </select>
-                            <label for="Tdescription">Template Description</label>
+                            <label for="Tdescription"><?php echo "$lang[TPL] $lang[DESCRIPTION]"; ?></label>
                             <textarea class="form-control" id="Tdescription" rows="5" cols="64" name="Tdescription"><?php echo $template->description; ?></textarea>
-                            <label for="Tname">Modified by</label>
-                            <input type="text" class="form-control" id="Tsubauthor" name="Tsubauthor" value="<?php echo $template->subAuthor; ?>" placeholder="Sub Author">
-                            <label for="Tname">Sub Author URL</label>
-                            <input type="text" class="form-control" id="Tsubauthorurl" name="Tsubauthorurl" value="<?php echo $template->subAuthorUrl; ?>" placeholder="Co Author Url">
+                            <label for="Tsubauthor"><?php echo "$lang[MODIFIED] $lang[BY]"; ?></label>
+                            <input type="text" class="form-control" id="Tsubauthor" name="Tsubauthor" value="<?php echo $template->subAuthor; ?>" placeholder="<?php echo "$lang[MODIFIED] $lang[BY]"; ?>">
+                            <label for="Tsubauthorurl"><?php echo "$lang[SUB_AUTHOR_URL]"; ?></label>
+                            <input type="text" class="form-control" id="Tsubauthorurl" name="Tsubauthorurl" value="<?php echo $template->subAuthorUrl; ?>" placeholder="<?php echo "$lang[SUB_AUTHOR_URL]"; ?>">
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="box box-default">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Save as <small>new Theme</small></h3>
+                            <h3 class="box-title"><?php echo "$lang[SAVE_AS] <small>$lang[NEW_THEME]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <label for="savetheme">or save new theme as... </label>
-                            <input type="text" class="form-control" name="newthemename" value="<?php echo $template->name; ?>-copy" placeholder="New Theme Name">
-                            <input type="text" class="form-control" name="description" placeholder="Template Description">
-                            <input type="text" class="form-control" name="positions" placeholder="Positions eg. top:main:footer">
-                            <br><input id="addbutton" type="submit" class="btn btn-danger" name="savenewtheme" value="Add&nbsp;as new Theme">
+                            <label for="savetheme"><?php echo "$lang[SAVE_NEW_THEME_AS]"; ?></label>
+                            <input type="text" class="form-control" name="newthemename" value="<?php echo $template->name; ?>-copy" placeholder="<?php echo "$lang[NEW] $lang[TPL] $lang[NAME]"; ?>">
+                            <input type="text" class="form-control" name="description" placeholder="<?php echo "$lang[TPL] $lang[DESCRIPTION]"; ?>">
+                            <input type="text" class="form-control" name="positions" placeholder="<?php echo "$lang[POSITIONS] $lang[POS_DESCRIPTION]"; ?>">
+                            <br><input id="addbutton" type="submit" class="btn btn-danger" name="savenewtheme" value="<?php echo "$lang[SAVE_NEW_THEME_AS]"; ?>">
                         </div>
                     </div>
                 </div>
@@ -2018,7 +2058,7 @@ else
 
         <!-- SETTINGS -->
         <div role="tabpanel" class="tab-pane  animated fadeIn" id="settings">
-            <h3>Settings <small>add settings or fonts to database</small></h3>
+            <h3><?php echo "$lang[SETTINGS] <small>$lang[TPL_SETTINGS_SUBTEXT]</small>"; ?></h3>
             <div class="row animated fadeIn">
                 <div class="col-md-4">
                     <div class="box box-default">
@@ -2033,7 +2073,7 @@ else
                 <div class="col-md-4">
                     <div class="box box-default">
                         <div class="box-header with-border">
-                            <h3 class="box-title">add Setting <small>to active template</small></h3>
+                            <h3 class="box-title"><?php echo "$lang[TPL_ADD_SETTING] <small>$lang[TO_ACTIVE_TPL]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
                             <input type="text" class="form-control" id="property" name="property" placeholder="property">
@@ -2042,19 +2082,19 @@ else
                             <input type="text" class="form-control" name="description" placeholder="description">
                             <input type="text" class="form-control" name="fieldclass" placeholder="fieldClass e.g. input-xlarge">
                             <input type="text" class="form-control" name="placeholder" placeholder="placeholder">
-                            <br><input id="savebutton" type="submit" class="btn btn-danger" name="addsetting" value="Add&nbsp;Template&nbsp;Setting">
+                            <br><input id="savebutton" type="submit" class="btn btn-danger" name="addsetting" value="<?php echo "$lang[ADD_TPL_SETTINGS]";?>">
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="box box-default">
                         <div class="box-header with-border">
-                            <h3 class="box-title">add Google Font<small>to database</small></h3>
+                            <h3 class="box-title"><?php echo "$lang[TPL_ADD_GFONT] <small>$lang[TPL_ADD_GFONT_SUBTEXT]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
                             <input type="text" class="form-control" id="gfont" name="gfont" placeholder="font eg. Ubuntu">
                             <input type="text" class="form-control" name="gfontdescription" placeholder="description eg. Ubuntu, serif">
-                            <br><input id="savebutton" type="submit" class="btn btn-danger" name="addgfont" value="Add&nbsp;GoogleFont">
+                            <br><input id="savebutton" type="submit" class="btn btn-danger" name="addgfont" value="<?php echo "$lang[TPL_ADD_GFONT_BTN]"; ?>">
                         </div>
                     </div>
                 </div>
