@@ -119,9 +119,9 @@ echo"<ol class=\"breadcrumb\">
   <input type="text" class="form-control" name="sort" maxlength="6" value="<?PHP echo $widget->sort; ?>">
   </label><br><br>
 
-  <?PHP if ($widget->published === '1') { $code1="checked=\"checked\""; } else $code1=""; ?>
+  <?PHP if ($widget->published == "1") { $checkedHtml="checked=\"checked\""; } else $checkedHtml = ''; ?>
 
-  <label>Publish? &nbsp;<input name="publish" value="1" type="checkbox" <?PHP echo $code1 ?>>&nbsp;
+  <label>Publish? &nbsp;<input name="publish" value="1" type="checkbox" <?PHP echo $checkedHtml ?>>&nbsp;
   </label>
 
 
