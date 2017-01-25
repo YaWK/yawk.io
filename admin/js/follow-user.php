@@ -11,6 +11,7 @@ include '../../system/classes/db.php';
 include '../../system/classes/sys.php';
 include '../../system/classes/user.php';
 include '../../system/classes/alert.php';
+include '../../system/classes/settings.php';
 
 /* set database object */
 if (!isset($db))
