@@ -176,7 +176,7 @@ $i_pages_unpublished = 0;
                 $type = "<a href=\"index.php?plugin=blog&pluginpage=blog-entries&blogid=".$row['blogid']."\">$lang[BLOG]</a>";
             } else {
                 // its surely a static page
-                $type = "page";
+                $type = "$lang[PAGE]";
             }
         }
 

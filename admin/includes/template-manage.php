@@ -33,7 +33,7 @@ if (isset($_GET['toggle']) && ($_GET['toggle'] === "1"))
         }
         else
         {
-            \YAWK\alert::draw("warning", "Could not switch template.", "Please try it again or go to settings page.", "page=template-manage", 3000);
+            \YAWK\alert::draw("warning", "$lang[TPL_SWITCH_FAILED]", "$lang[TPL_SWITCH_FAILED_SUBTEXT]", "page=template-manage", 3000);
         }
     }
 }
@@ -46,11 +46,11 @@ if (isset($_GET['delete']) && ($_GET['delete'] === "1"))
         $_GET['templateID'] = $db->quote($_GET['templateID']);
         if (\YAWK\template::deleteTemplate($db, $_GET['templateID']))
         {   // throw success msg
-            \YAWK\alert::draw("success", "<i class=\"fa fa-trash-o\"></i> Template deleted.", "...all good things come to an end.", "", 3000);
+            \YAWK\alert::draw("success", "<i class=\"fa fa-trash-o\"></i> $lang[TPL] $lang[DELETED]", "$lang[SUCCESS]", "", 3000);
         }
         else
         {
-            \YAWK\alert::draw("danger", "Could not delete template ID $_GET[templateID]", "Please try it again.", "", 3000);
+            \YAWK\alert::draw("danger", "$lang[TPL_FAILED_TO_DELETE] $_GET[templateID]", "$lang[PLEASE_TRY_AGAIN]", "", 3000);
         }
     }
 }
@@ -64,10 +64,10 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 /* draw Title on top */
-echo \YAWK\backend::getTitle($lang['DESIGN'], $lang['TEMPLATES_SUBTEXT']);
+echo \YAWK\backend::getTitle($lang['TPL_MANAGER'], $lang['TEMPLATES_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
-            <li><a href=\"index.php?page=template-manage\" class=\"active\" title=\"Users\"> Themes</a></li>
+            <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+            <li><a href=\"index.php?page=template-manage\" class=\"active\" title=\"$lang[TPL_MANAGER]\"> $lang[TPL_MANAGER]</a></li>
         </ol>
     </section>
     <!-- Main content -->
@@ -84,11 +84,11 @@ echo"<ol class=\"breadcrumb\">
     <thead>
     <tr>
         <td width="3%"><strong>&nbsp;</strong></td>
-        <td width="3%"><strong>ID</strong></td>
+        <td width="3%"><strong><?php echo $lang['ID']; ?></strong></td>
         <td width="20%"><strong><i class="fa fa-caret-down"></i> <?PHP print $lang['TEMPLATE']; ?></strong></td>
         <td width="40%"><strong><i class="fa fa-caret-down"></i> <?PHP print $lang['DESCRIPTION']; ?></strong></td>
         <td width="24%"><strong><?PHP print $lang['SCREENSHOT']; ?></strong></td>
-        <td width="10%" class=\"text-center\"><strong><?PHP print $lang['ACTIONS']; ?></strong></td>
+        <td width="10%" class="text-center"><strong><?PHP print $lang['ACTIONS']; ?></strong></td>
     </tr>
     </thead>
     <tbody>
@@ -108,22 +108,22 @@ echo"<ol class=\"breadcrumb\">
 
             if ($row['id'] === $activeTemplateId)
             {   // set published online
-                $pub = "success"; $pubtext="On";
+                $pub = "success"; $pubtext="$lang[ONLINE]";
                 $i_pages_published = $i_pages_published + 1;
                 // do not allow to delete current active template
-                $deleteIcon = "<i class=\"fa fa-ban\" title=\"Delete not possible, because template is set to active.\"></i>";
+                $deleteIcon = "<i class=\"fa fa-ban\" title=\"$lang[TPL_DEL_FAILED_DUE_ACTIVE]\"></i>";
             }
             else if ($row['id'] === "1" && ($activeTemplateId !== $row['id']))
             {   // do not allow to delete default template
-                $pub = "danger"; $pubtext = "Off";
-                $deleteIcon = "<i class=\"fa fa-ban\" title=\"Cannot delete the default template.\"></i>";
+                $pub = "danger"; $pubtext = "$lang[OFFLINE]";
+                $deleteIcon = "<i class=\"fa fa-ban\" title=\"$lang[TPL_DEL_DEFAULT_FAILED]\"></i>";
             }
             else
             {   // set published offline
-                $pub = "danger"; $pubtext = "Off";
+                $pub = "danger"; $pubtext = "$lang[OFFLINE]";
                 $i_pages_unpublished = $i_pages_unpublished +1;
                 // delete template button
-                $deleteIcon = "<a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Das Template &laquo;".$row['name']." / ".$row['id']."&raquo; wirklich l&ouml;schen?\"
+                $deleteIcon = "<a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"$lang[TPL_DEL_CONFIRM] &laquo;".$row['name']." / ".$row['id']."&raquo;\"
                 title=\"".$lang['DELETE']."\" href=\"index.php?page=template-manage&delete=1&templateID=".$row['id']."\">
                 </a>";
             }
@@ -132,7 +132,7 @@ echo"<ol class=\"breadcrumb\">
             $screenshot = "../system/templates/".$activeTemplate."/img/screenshot.jpg";
             if (!file_exists($screenshot))
             {   // sorry, no screenshot available
-                $screenshot = "sorry, no screenshot available";
+                $screenshot = "$lang[NO_SCREENSHOT]";
             }
             else
             {   // screenshot found, display
@@ -147,7 +147,7 @@ echo"<ol class=\"breadcrumb\">
           <td>".$row['id']."</td>
           <td><a href=\"index.php?page=template-edit&overrideTemplate=1&id=".$row['id']."\"><div style=\"width:100%\">".$row['name']."</div></a></td>
           <td><a href=\"index.php?page=template-edit&id=".$row['id']."\" style=\"color: #7A7376;\"><div style=\"width:100%\">".$row['description']."<br><small>".$row['positions']."</small></div></a></td>
-          <td><a href=\"index.php?page=template-edit&id=".$row['id']."\" title=\"edit ".$row['name']."\">".$screenshot."</a></td>
+          <td><a href=\"index.php?page=template-edit&id=".$row['id']."\" title=\"$lang[EDIT]: ".$row['name']."\">".$screenshot."</a></td>
           <td class=\"text-center\">
             $deleteIcon
           </td>
