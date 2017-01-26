@@ -23,24 +23,24 @@ if (isset($_GET['toggle']) && $_GET['toggle'] === "1")
     {   // user is not blocked
         $user->blocked = 0;
         $color = "success";
-        $status = "un-blocked";
+        $status = "$lang[ACTIVE]";
     }
     else
     {   // set user status to blocked
         $user->blocked = 1;
         $color = "danger";
-        $status = "blocked";
+        $status = "$lang[BLOCKED]";
     }
     $user->username = \YAWK\user::getUserNameFromID($db, $user->id);
 
     // now toggle user status
     if($user->toggleOffline($db, $user->id, $user->blocked))
     {   // successful
-        print \YAWK\alert::draw("$color", "$user->username is now $status", "$status $user->username from login.", "", 800);
+        print \YAWK\alert::draw("$color", "$user->username $status", "$lang[USER] <b>$user->username</b> $lang[IS] $lang[NOW] $status", "", 1800);
     }
     else
     {   // throw error
-        print \YAWK\alert::draw("danger", "Error!", "Could not toggle user status.", "page=users", 5800);
+        print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[USER] $lang[TOGGLE_FAILED]", "page=users", 5800);
     }
 }
 
@@ -53,16 +53,16 @@ if (isset($_GET['delete']))
         {   // username is set, check forbidden names
             if ($_GET['user'] === 'admin' OR $_GET['user'] === 'root' OR $_GET['user'] === 'administrator')
             {   // throw forbidden user deletion warning
-                print \YAWK\alert::draw("danger", "Achtung:", "Es ist nicht m&ouml;glich, den Root-User (admin) zu l&ouml;schen.", "", 10000);
+                print \YAWK\alert::draw("danger", "$lang[WARNING]", "$lang[NOT_DELETEABLE]", "", 10000);
             }
             // delete user
             if($user->delete($db, $_GET['user']))
             {   // success
-                print \YAWK\alert::draw("success", "Erfolg!", "Der User <strong>".$_GET['user']."</strong> wurde gel&ouml;scht!", "", 800);
+                print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[USER] <strong>".$_GET['user']."</strong> $lang[DELETED]", "", 800);
             }
             else
             {   // throw error
-                print \YAWK\alert::draw("danger", "Fehler!", "Der User <strong>".$_GET['user']."</strong> konnte nicht gel&ouml;scht werden!", "", 5800);
+                print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[USER] <strong>".$_GET['user']."</strong> $lang[NOT] $lang[DELETED]", "", 5800);
             }
         }
         // draw success or error message
@@ -91,8 +91,8 @@ echo "
 /* draw Title on top */
 echo \YAWK\backend::getTitle($lang['USERS'], $lang['USERS_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
-            <li><a href=\"index.php?page=users\" class=\"active\" title=\"Users\"> Users</a></li>
+            <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+            <li><a href=\"index.php?page=users\" class=\"active\" title=\"$lang[USERS]\"> $lang[USERS]</a></li>
         </ol>
     </section>
     <!-- Main content -->
@@ -116,14 +116,14 @@ echo"<ol class=\"breadcrumb\">
   <thead>
     <tr>
       <td width="3%"><strong>&nbsp;</strong></td>
-      <td width="5%" class="text-center"><strong>ID</strong></td>
+      <td width="5%" class="text-center"><strong><?php echo $lang['ID']; ?></strong></td>
       <td width="3%"><strong>&nbsp;</strong></td>
-      <td width="29%"><strong>Name</strong></td>
-      <td width="10%"><strong>Gruppe</strong></td>
-      <td width="25%"><strong>Email</strong></td>
-      <td width="10%"><strong>zuletzt online</strong></td>
-      <td width="5%" class="text-center"><strong>Logins</strong></td>
-      <td width="10%" class="text-center"><strong>Aktionen</strong></td>
+      <td width="29%"><strong><?php echo $lang['NAME']; ?></strong></td>
+      <td width="10%"><strong><?php echo $lang['GROUP']; ?></strong></td>
+      <td width="25%"><strong><?php echo $lang['EMAIL']; ?></strong></td>
+      <td width="10%"><strong><?php echo $lang['LAST_ONLINE']; ?></strong></td>
+      <td width="5%" class="text-center"><strong><?php echo $lang['LOGINS']; ?></strong></td>
+      <td width="10%" class="text-center"><strong><?php echo $lang['ACTIONS']; ?></strong></td>
     </tr>
   </thead>
   <tbody>
@@ -134,10 +134,10 @@ echo"<ol class=\"breadcrumb\">
 
       if ($row['blocked'] === '0')
         { 
-          $pub = "success"; $pubtext="On";
+          $pub = "success"; $pubtext="$lang[ACTIVE]";
          } 
         else { 
-        $pub = "danger"; $pubtext = "Off";
+        $pub = "danger"; $pubtext = "$lang[BLOCKED]";
              }
 
         $userpic = \YAWK\user::getUserImage("backend", $row['username'], "img-circle", 25, 25);
@@ -150,7 +150,7 @@ echo"<ol class=\"breadcrumb\">
                 <td class=\"text-center\">".$row['id']."</td>
                 <td>$userpic</td>
                 <td><a title=\"".$row['username']."\" href=\"index.php?page=user-edit&user=".$row['username']."\">
-                <div style=\100%\">".$row['username']."</div></a></td>
+                <div style=\"width: 100%\">".$row['username']."</div></a></td>
                 <td>".$row['gid']."</td>
                 <td><a title=\"send Email\" href=\"index.php?page=email-new&user=".$row['username']."\">".$row['email']."</a></td>
                 <td>".$row['date_lastlogin']."</td>

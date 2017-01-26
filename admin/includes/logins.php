@@ -24,8 +24,8 @@ echo "
 /* draw Title on top */
 echo \YAWK\backend::getTitle($lang['LOGINS'], $lang['LOGINS_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
-            <li class=\"active\"><a href=\"index.php?page=logins\" title=\"Logins\"> $lang[LOGINS]</a></li>
+            <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+            <li class=\"active\"><a href=\"index.php?page=logins\" title=\"$lang[LOGINS]\"> $lang[LOGINS]</a></li>
          </ol>
     </section>
     <!-- Main content -->

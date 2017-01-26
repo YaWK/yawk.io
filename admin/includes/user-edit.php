@@ -47,13 +47,13 @@
                 $check = getimagesize($_FILES["userpicture"]["tmp_name"]);
                 if($check !== false)
                 {   // throw info
-                    echo "File is an image - " . $check["mime"] . ".";
+                    // echo "File is an image - " . $check["mime"] . ".";
                     // upload good
                     $uploadOk = 1;
                 }
                 else
                 {   // throw error
-                  echo "File is not an image.";
+                  // echo "File is not an image.";
                   $uploadOk = 0;
               }
           }
@@ -66,7 +66,7 @@
           */
           // Check file size
               if ($_FILES["userpicture"]["size"] > 2560000) {
-                  echo \YAWK\alert::draw("warning", "Sorry!", "Your file is too large. Your Image should be smaller than 2 MB.","page=users","4800");
+                  echo \YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[FILE_UPLOAD_TOO_LARGE]","page=users","4800");
                   $uploadOk = 0;
               }
 
@@ -74,17 +74,17 @@
 
             $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
                if($imageFileType != "jpg" && $imageFileType != "jpeg" && $imageFileType != "png" && $imageFileType != "gif") {
-                  echo \YAWK\alert::draw("warning", "Sorry!", "Only JPG, JPEG, PNG or GIF files are allowed.","page=users","4800");
+                  echo \YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[UPLOAD_ONLY_IMG_ALLOWED]","page=users","4800");
                   $uploadOk = 0;
               }
 
           // Check if $uploadOk is set to 0 by an error
               if ($uploadOk == 0) {
-                  echo \YAWK\alert::draw("danger", "Error!", "Your file was not uploaded!","page=users","4800");
+                  echo \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[FILE_UPLOAD_FAILED]","page=users","4800");
             // if everything is ok, try to upload file
               } else {
                   if (!move_uploaded_file($_FILES["userpicture"]["tmp_name"], $target_file)) {
-                      echo \YAWK\alert::draw("danger", "Error!", "There was an error uploading your file. Check folder chmod!","page=users","4800");
+                      echo \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[FILE_UPLOAD_ERROR_CHMOD]","page=users","4800");
                   }
               }
       }
@@ -144,12 +144,11 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
         /* draw Title on top */
-        $subtext = "$lang[EDIT] profile of "."&nbsp;"."$_GET[user]";
-        echo \YAWK\backend::getTitle($lang['USER_PROFILE'], $subtext);
+        echo \YAWK\backend::getTitle($lang['USER_PROFILE_EDIT'], $_GET['user']);
         echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
-            <li><a href=\"index.php?page=users\" title=\"Users\"> Users</a></li>
-            <li class=\"active\"><a href=\"index.php?page=user-edit&user=$_GET[user]\" title=\"Edit User\"> Edit User</a></li>
+            <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+            <li><a href=\"index.php?page=users\" title=\"$lang[USERS]\"> $lang[USERS]</a></li>
+            <li class=\"active\"><a href=\"index.php?page=user-edit&user=$_GET[user]\" title=\"$lang[EDIT]: $_GET[user]\"> $_GET[user]</a></li>
         </ol>
     </section>
     <!-- Main content -->
@@ -272,11 +271,11 @@ echo "<script type='text/javascript'>
                                 $i_followers = \YAWK\user::countMyFollowers($db, $user->id);
                                 if ($i_followers > 0)
                                 {
-                                    $followersLink = "<a href=\"index.php?page=list-follower&uid=$user->id\">Followers</a>";
+                                    $followersLink = "<a href=\"index.php?page=list-follower&uid=$user->id\">$lang[FOLLOWERS]</a>";
                                 }
                                 else
                                 {
-                                    $followersLink = "Follower";
+                                    $followersLink = "$lang[FOLLOWER]";
                                 }
                                 ?>
                                 <b><?php echo $followersLink; ?></b> <a class="pull-right"><?php echo $i_followers ?></a>
@@ -291,11 +290,11 @@ echo "<script type='text/javascript'>
                                 $i_friends = \YAWK\user::countMyFriends($db, $user->id);
                                 if ($i_friends > 0)
                                 {
-                                    $friendlistLink = "<a href=\"index.php?page=friendslist&uid=$user->id\">Friends</a>";
+                                    $friendlistLink = "<a href=\"index.php?page=friendslist&uid=$user->id\">$lang[FRIENDS]</a>";
                                 }
                                 else
                                 {
-                                    $friendlistLink = "Friends";
+                                    $friendlistLink = "$lang[FRIENDS]";
                                 }
                                 ?>
                                 <b><?php echo $friendlistLink; ?></b> <a class="pull-right"><?php echo $i_friends ?></a>
@@ -312,36 +311,34 @@ echo "<script type='text/javascript'>
 
                     if ($follow_status === true)
                     {
-                        $followBtn = "<a href=\"#\" id=\"unfollowBtn\" title=\"click to un-follow\" onclick=\"unfollowUser($_SESSION[uid], $user->id, '$user->username' )\" name=\"unfollowUser\" class=\"btn btn-success btn-block\"><b>You follow $user->username </b></a>";
+                        $followBtn = "<a href=\"#\" id=\"unfollowBtn\" title=\"click to un-follow\" onclick=\"unfollowUser($_SESSION[uid], $user->id, '$user->username' )\" name=\"unfollowUser\" class=\"btn btn-success btn-block\"><b>$lang[YOU_FOLLOW] $user->username </b></a>";
                     }
                     else
                     {   // avoid to show follow button to yourself
                         if ($_SESSION['uid'] != ($user->id))
                         {   // follow request btn
-                            $followBtn = "<a href=\"#\" id=\"followBtn\" onclick=\"followUser($_SESSION[uid], $user->id, '$user->username')\" name=\"followUser\" class=\"btn btn-primary btn-block\"><b>Follow me</b></a>";
+                            $followBtn = "<a href=\"#\" id=\"followBtn\" onclick=\"followUser($_SESSION[uid], $user->id, '$user->username')\" name=\"followUser\" class=\"btn btn-primary btn-block\"><b>$lang[FOLLOW_ME]</b></a>";
                         }
                         else
                         {
-                            $followBtn = 'You cannot follow yourself.<br>';
+                            $followBtn = $lang['FOLLOW_YOURSELF_FAIL'].'<br>';
                         }
                     }
                     echo $followBtn;
 
-
                     if ($isFriend === true)
                     {
-                       // $friendBtn = "<a href=\"#\" id=\"unfriendBtn\" title=\"click to un-friend\" onclick=\"unfriendUser($_SESSION[uid], $user->id, '$user->username' )\" name=\"unfriendUser\" class=\"btn btn-success btn-block\"><b>You are friend with $user->username </b></a>";
-                        $friendBtn = "<button id=\"unfriendBtn\" title=\"You are friends.\" class=\"btn btn-success btn-block\"><b>You are friend with $user->username </b></button>";
+                        $friendBtn = "<button id=\"unfriendBtn\" title=\"$lang[YOU_ARE_FRIENDS]\" class=\"btn btn-success btn-block\"><b>$lang[YOU_ARE_FRIEND_WITH] $user->username </b></button>";
                     }
                     else
                     {   // avoid to show friend request button to yourself
                         if ($_SESSION['uid'] != ($user->id))
                         {   // friend request btn
-                            $friendBtn = "<a href=\"#\" id=\"friendBtn\" onclick=\"friendUser($_SESSION[uid], $user->id, '$user->username')\" name=\"friendUser\" class=\"btn btn-primary btn-block\"><b>Ask for my friendship</b></a>";
+                            $friendBtn = "<a href=\"#\" id=\"friendBtn\" onclick=\"friendUser($_SESSION[uid], $user->id, '$user->username')\" name=\"friendUser\" class=\"btn btn-primary btn-block\"><b>$lang[ASK_FOR_MY_FRIENDSHIP]</b></a>";
                         }
                         else
                         {
-                            $friendBtn = 'You cannot send yourself a friend request.';
+                            $friendBtn = $lang['FRIENDSHIP_SELF_FAIL'];
                         }
                     }
 
@@ -349,40 +346,40 @@ echo "<script type='text/javascript'>
                     {
                         if ($_SESSION['uid'] == $friend['friendA'])
                         {
-                            $btnText = "Request has been sent to $user->username";
+                            $btnText = "$lang[FRIEND_REQUEST_SENT_TO] $user->username";
                         }
                         elseif ($_SESSION['uid'] == $friend['friendB'])
                         {
-                            $btnText = "Request has been sent from $user->username";
+                            $btnText = "$lang[FRIEND_REQUEST_SENT_TO] $user->username";
                         }
 
                         if ($friend['confirmed'] == 0)
                         {
-                            $friendBtn = "<a href=\"#\" id=\"confirmBtn\" title=\"waiting for $user->username to respond...\" name=\"unfriendUser\" class=\"btn btn-warning btn-block\"><b>$btnText</b></a>";
+                            $friendBtn = "<a href=\"#\" id=\"confirmBtn\" title=\"$lang[FRIEND_AWAITING_RESPONSE] $user->username\" name=\"unfriendUser\" class=\"btn btn-warning btn-block\"><b>$btnText</b></a>";
                         }
                         if ($friend['aborted'] == 1)
                         {
-                            $btnText = "$user->username declined your friend request.";
-                            $friendBtn = "<button id=\"blockedBtn\" title=\"aborted\" class=\"btn btn-danger btn-block\"><b>$btnText</b></button>";
-                            $friendBtn .= "<a id=\"askBtn\" class=\"btn btn-default btn-block\" title=\"$user->username rejected your request\" style=\"display: none;\" href=\"index.php?plugin=messages&pluginpage=mailbox&active=compose&to=$user->username\"><b>send a message and ask why</b></a>";
+                            $btnText = "$user->username $lang[DECLINED_FRIEND_REQUEST]";
+                            $friendBtn = "<button id=\"blockedBtn\" title=\"$lang[ABORTED]\" class=\"btn btn-danger btn-block\"><b>$btnText</b></button>";
+                            $friendBtn .= "<a id=\"askBtn\" class=\"btn btn-default btn-block\" title=\"$user->username $lang[FRIENDSHIP_REJECTED]\" style=\"display: none;\" href=\"index.php?plugin=messages&pluginpage=mailbox&active=compose&to=$user->username\"><b>$lang[ASK_WHY_REJECTED]</b></a>";
                         }
                     }
 
                     echo $friendBtn;
 
                     // follow btn
-                    echo "<a href=\"#\" id=\"followBtn\" onclick=\"followUser($_SESSION[uid], $user->id, '$user->username')\" style=\"display:none;\" name=\"followUser\" class=\"btn btn-primary btn-block\"><b>Follow me</b></a>";
+                    echo "<a href=\"#\" id=\"followBtn\" onclick=\"followUser($_SESSION[uid], $user->id, '$user->username')\" style=\"display:none;\" name=\"followUser\" class=\"btn btn-primary btn-block\"><b>$lang[FOLLOW_ME]</b></a>";
                     // un - follow btn
-                    echo "<a href=\"#\" id=\"unfollowBtn\" onclick=\"unfollowUser($_SESSION[uid], $user->id, '$user->username' )\" style=\"display: none;\" name=\"unfollowUser\" class=\"btn btn-success btn-block\"><b>You follow $user->username </b></a>";
+                    echo "<a href=\"#\" id=\"unfollowBtn\" onclick=\"unfollowUser($_SESSION[uid], $user->id, '$user->username' )\" style=\"display: none;\" name=\"unfollowUser\" class=\"btn btn-success btn-block\"><b>$lang[YOU_FOLLOW] $user->username </b></a>";
                     // avoid to show yourself friend request btn
                     if ($_SESSION['uid'] != ($user->id))
                     {   // friend request button
-                        echo "<a href=\"#\" id=\"friendBtn\" onclick=\"friendUser($_SESSION[uid], $user->id, '$user->username')\" style=\"display:none;\" name=\"friendUser\" class=\"btn btn-primary btn-block\"><b>Ask for my friendship</b></a>";
+                        echo "<a href=\"#\" id=\"friendBtn\" onclick=\"friendUser($_SESSION[uid], $user->id, '$user->username')\" style=\"display:none;\" name=\"friendUser\" class=\"btn btn-primary btn-block\"><b>$lang[ASK_FOR_MY_FRIENDSHIP]</b></a>";
                     }
                     // unfriend btn
-                    echo "<a href=\"#\" id=\"unfriendBtn\" title=\"You are friends!\" style=\"display:none;\" class=\"btn btn-success btn-block\"><b>You are friend with $user->username </b></a>";
+                    echo "<a href=\"#\" id=\"unfriendBtn\" title=\"You are friends!\" style=\"display:none;\" class=\"btn btn-success btn-block\"><b>$lang[YOU_ARE_FRIEND_WITH] $user->username </b></a>";
                     // confirm btn
-                    echo "<a href=\"#\" id=\"confirmBtn\" title=\"click to un-friend\" style=\"display:none;\" name=\"unfriendUser\" class=\"btn btn-warning btn-block\"><b>Request has been sent to $user->username </b></a>";
+                    echo "<a href=\"#\" id=\"confirmBtn\" title=\"click to un-friend\" style=\"display:none;\" name=\"unfriendUser\" class=\"btn btn-warning btn-block\"><b>$lang[REQUEST_HAS_BEEN_SENT] $user->username </b></a>";
 
                     ?>
 
@@ -397,7 +394,7 @@ echo "<script type='text/javascript'>
 
             <div class="box box-default">
              <div class="box-body">
-            <label>Assign to Group
+            <label><?php echo $lang['ASSIGN_TO_GROUP']; ?>
                 <select name="gid" style="width: 240px;" class="form-control">
                     <option value="<?PHP echo $user->gid; ?>"><?php echo $user->getGroupNameFromID($db, $user->gid); ?></option>
                     <option value="1">---</option>
@@ -411,12 +408,12 @@ echo "<script type='text/javascript'>
                 </select>
             </label>
 
-            <label for="job">Admin Job Description<input type="text" id="job" name="job" value="<?php echo $user->job; ?>" placeholder="eg. Comment Observer" class="form-control"></label>
+            <label for="job"><?php echo $lang['JOB_DESCRIPTION']; ?><input type="text" id="job" name="job" value="<?php echo $user->job; ?>" placeholder="<?php echo $lang['JOB_PLACEHOLDER']; ?>" class="form-control"></label>
             <?PHP if ($user->blocked === '1') { $code1="checked=\"checked\""; } else $code1=""; ?>
             <?PHP if ($user->privacy === '1') { $code2="checked=\"checked\""; } else $code2=""; ?>
 
-            <label for="mystatus"><input type="checkbox" id="mystatus" name="mystatus" value="1" <?PHP echo $code1 ?>> Login sperren?</label>&nbsp;&nbsp;&nbsp;&nbsp;
-            <label for="privacy"><input type="checkbox" id="privacy" name="privacy" value="1" <?PHP echo $code2 ?>> Hide from Who is online?</label>&nbsp;
+            <label for="mystatus"><input type="checkbox" id="mystatus" name="mystatus" value="1" <?PHP echo $code1 ?>> <?php echo $lang['LOGIN_LOCK']; ?></label>&nbsp;&nbsp;&nbsp;&nbsp;
+            <label for="privacy"><input type="checkbox" id="privacy" name="privacy" value="1" <?PHP echo $code2 ?>> <?php echo $lang['HIDE_FROM_WHOIS_ONLINE']; ?></label>&nbsp;
 
                 </div>
             </div>
@@ -424,7 +421,7 @@ echo "<script type='text/javascript'>
             <!-- ##### USER PIC UPLOAD ##### -->
             <div class="box box-default">
                 <div class="box-header with-border">
-                    <h3 class="box-title"><i class="fa fa-photo"></i><i class="fa fa-user"></i> Your Photo <small>upload a new picture</small></h3>
+                    <h3 class="box-title"><i class="fa fa-photo"></i> <?php echo "$lang[YOUR_PHOTO] <small>$lang[UPLOAD_A_NEW_PIC]</small>"; ?></h3>
                 </div>
                 <div class="box-body">
                   <?php  echo YAWK\user::getUserImage("backend","$user->username", "img-circle", 140, 140); ?>
@@ -438,12 +435,12 @@ echo "<script type='text/javascript'>
             <br>
             <div class="box box-default">
             <div class="box-header with-border">
-                <h3 class="box-title">Essential User Data <small>username, email & password</small></h3>
+                <h3 class="box-title"><?php echo "$lang[USER_DATA] <small>$lang[USERNAME_EMAIL_PWD]</small>"; ?></h3>
             </div>
                 <div class="box-body">
             <?PHP if ($user->username === "admin" OR $user->username === "root")
                   {
-                      $disabled="disabled aria-disabled=\"true\" title=\"$user->username is the only username that shall not be changed.\" readonly=\"readonly\"";
+                      $disabled="disabled aria-disabled=\"true\" title=\"$user->username $lang[NOT_CHANGEABLE]\" readonly=\"readonly\"";
                   }
                   else
                   {
@@ -452,16 +449,16 @@ echo "<script type='text/javascript'>
             ?>
 
             <dl class="dl-horizontal">
-                <dt><label for="username"><b class="fa fa-user"></b> &nbsp;Username</label></dt>
+                <dt><label for="username"><b class="fa fa-user"></b> &nbsp;<?php echo $lang['USERNAME']; ?></label></dt>
                 <dd><input type="text" id="username" name="username" class="form-control" maxlength="100" <?PHP echo $disabled; ?> value="<?PHP echo $user->username; ?>"></dd>
 
-                <dt><label for="email"><b class="fa fa-envelope-o"></b> &nbsp;Email</label></dt>
+                <dt><label for="email"><b class="fa fa-envelope-o"></b> &nbsp;<?php echo $lang['EMAIL']; ?></label></dt>
                 <dd><input type="text" id="email" name="email" class="form-control" maxlength="100" value="<?PHP echo $user->email; ?>"></dd>
 
-                <dt><label for="password1"><b class="fa fa-key"></b> &nbsp;Password</label></dt>
+                <dt><label for="password1"><b class="fa fa-key"></b> &nbsp;<?php echo $lang['PASSWORD']; ?></label></dt>
                 <dd><input name="password1" id="password1" type="password" class="form-control" maxlength="100" value="<?PHP echo $user->password; ?>"></dd>
 
-                <dt><label for="password2"><b class="fa fa-key"></b> &nbsp;Password <small>(again)</small></label></dt>
+                <dt><label for="password2"><b class="fa fa-key"></b> &nbsp;<?php echo $lang['PASSWORD']; ?><br><small><?php echo $lang['REPEAT']; ?></small></label></dt>
                 <dd><input name="password2" id="password2" type="password" class="form-control"maxlength="100" value="<?PHP echo $user->password; ?>">&nbsp; </dd>
             </dl>
 
@@ -471,26 +468,26 @@ echo "<script type='text/javascript'>
 <!-- OPTIONAL USER SETTINGS -->
   <div class="box box-default">
     <div class="box-header with-border">
-        <h3 class="box-title"><i class="fa fa-home"></i> Optional personal data <small>firstname, lastname & address</small></h3>
+        <h3 class="box-title"><i class="fa fa-home"></i> <?php echo "$lang[OPTIONAL_PERSONAL_DATA] <small>$lang[FIRSTNAME_LASTNAME_ADDRESS]"; ?></small></h3>
     </div>
     <div class="box-body">
         <dl class="dl-horizontal">
-            <dt><label for="firstname">Firstname</label></dt>
+            <dt><label for="firstname"><?php echo $lang['FIRSTNAME']; ?></label></dt>
             <dd><input type="text" class="form-control" id="firstname" name="firstname" maxlength="100" value="<?PHP echo $user->firstname; ?>"></dd>
 
-            <dt><label for="lastname">Lastname</label></dt>
+            <dt><label for="lastname"><?php echo $lang['LASTNAME']; ?></label></dt>
             <dd><input type="text" class="form-control" id="lastname" name="lastname" maxlength="100" value="<?PHP echo $user->lastname; ?>"></dd>
 
-            <dt><label for="street">Street</label></dt>
+            <dt><label for="street"><?php echo $lang['STREET']; ?></label></dt>
             <dd><input type="text" class="form-control" id="street" name="street" maxlength="100" value="<?PHP echo $user->street; ?>"></dd>
 
-            <dt><label for="zipcode">ZIP code</label></dt>
+            <dt><label for="zipcode"><?php echo $lang['ZIPCODE']; ?></label></dt>
             <dd><input type="text" class="form-control" id="zipcode" name="zipcode" maxlength="12" value="<?PHP echo $user->zipcode; ?>"></dd>
 
-            <dt><label for="city">City</label></dt>
+            <dt><label for="city"><?php echo $lang['CITY']; ?></label></dt>
             <dd><input type="text" class="form-control" id="city" name="city" maxlength="100" value="<?PHP echo $user->city; ?>"></dd>
 
-            <dt><label for="country">Country</label></dt>
+            <dt><label for="country"><?php echo $lang['COUNTRY']; ?></label></dt>
             <dd><input type="text" class="form-control" id="country" name="country" maxlength="100" value="<?PHP echo $user->country; ?>"></dd>
         </dl>
     </div>
@@ -499,17 +496,17 @@ echo "<script type='text/javascript'>
 <!-- SOCIAL MEDIA USER SETTINGS -->
     <div class="box box-default">
         <div class="box-header with-border">
-            <h3 class="box-title"><i class="fa fa-facebook-official"></i> Social Media Links <small>website, twitter, facebook</small></h3>
+            <h3 class="box-title"><i class="fa fa-facebook-official"></i> <?php echo "$lang[SOCIAL_MEDIA_LINKS] <small>$lang[WEBSITE], $lang[TWITTER], $lang[FACEBOOK]</small>"; ?></h3>
         </div>
         <div class="box-body">
             <dl class="dl-horizontal">
-                <dt><label for="url"><i class="fa fa-globe"></i> Website</label></dt>
+                <dt><label for="url"><i class="fa fa-globe"></i> <?php echo "$lang[WEBSITE]"; ?></label></dt>
                 <dd><input type="text" class="form-control" placeholder="http://www.yourdomain.com/" id="url" name="url" maxlength="100" value="<?PHP echo $user->url; ?>"></dd>
 
-                <dt><label for="twitter"><i class="fa fa-twitter"></i> Twitter</label></dt>
+                <dt><label for="twitter"><i class="fa fa-twitter"></i> <?php echo "$lang[TWITTER]"; ?></label></dt>
                 <dd><input type="text" class="form-control" placeholder="http://www.twitter.com/yourprofile" id="twitter" name="twitter" maxlength="100" value="<?PHP echo $user->twitter; ?>"></dd>
 
-                <dt><label for="facebook"><i class="fa fa-facebook-official"></i> Facebook</label></dt>
+                <dt><label for="facebook"><i class="fa fa-facebook-official"></i> <?php echo "$lang[FACEBOOK]"; ?></label></dt>
                 <dd><input type="text" class="form-control" placeholder="http://www.facebook.com/yourprofile" id="facebook" name="facebook" maxlength="100" value="<?PHP echo $user->facebook; ?>"></dd>
             </dl>
 

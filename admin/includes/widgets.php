@@ -1,4 +1,4 @@
-<?php
+ <?php
 // ADD WIDGET
 if (isset($_GET['add']) && ($_GET['add'] === "1"))
 {   // prepare vars
@@ -8,11 +8,11 @@ if (isset($_GET['add']) && ($_GET['add'] === "1"))
 
     if (YAWK\widget::create($db, $widgetType, $pageID, $positions))
     {    // success
-        print \YAWK\alert::draw("success", "Erfolg", "Das Widget wurde erfolgreich erstellt.", "", 800);
+        print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[WIDGET_CREATE_OK]", "", 800);
     }
     else
     {   // throw error
-        print \YAWK\alert::draw("danger", "Fehler", "Das Widget konnte nicht erstellt werden.", "", 5800);
+        print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[WIDGET_CREATE_FAILED]", "", 5800);
     }
 }
 
@@ -27,11 +27,11 @@ if (isset($_GET['del']) && ($_GET['del'] === "1"))
   {   // delete widget
     if($widget->delete($db, $_GET['widget']))
     {   // delete successful
-      YAWK\alert::draw("success", "Erfolg", "Das Widget ".$_GET['widget']." wurde gel&ouml;scht!","","800");
+      YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[WIDGET] $lang[ID]: ".$_GET['widget']." $lang[DELETED]","","800");
     }
     else
     {   // q failed, throw error
-      \YAWK\alert::draw("danger", "Error!", "Could not delete widget ".$_GET['widget']."!","","5800");
+      \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[WIDGET_DEL_FAILED] $lang[WIDGET] $lang[ID]: ".$_GET['widget']."","","5800");
     }
   }
 }
@@ -58,8 +58,8 @@ echo "
 /* draw Title on top */
 echo \YAWK\backend::getTitle($lang['WIDGETS'], $lang['WIDGETS_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
-            <li class=\"active\"><a href=\"index.php?page=widgets\" title=\"Widgets\"> Widgets</a></li>
+            <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+            <li class=\"active\"><a href=\"index.php?page=widgets\" title=\"$lang[WIDGETS]\"> $lang[WIDGETS]</a></li>
          </ol>
     </section>
     <!-- Main content -->
@@ -76,17 +76,17 @@ echo"<ol class=\"breadcrumb\">
   <thead>
     <tr>
       <td width="3%"><strong>&nbsp;</strong></td>
-      <td width="5%" class="text-center"><strong>ID</strong></td>
-      <td width="25%"><strong>Widget</strong></td>
-      <td width="30%"><strong>on page</strong></td>
-      <td width="7%" class="text-center"><strong>Sort</strong></td>
-      <td width="20%" class="text-center"><strong>Position</strong></td>
-      <td width="10%" class="text-center"><strong>Aktionen</strong></td>
+      <td width="5%" class="text-center"><strong><?php echo "$lang[ID]"; ?></strong></td>
+      <td width="25%"><strong><?php echo "$lang[WIDGET]"; ?></strong></td>
+      <td width="30%"><strong><?php echo "$lang[ON_PAGE]"; ?></strong></td>
+      <td width="7%" class="text-center"><strong><?php echo "$lang[SORTATION]"; ?></strong></td>
+      <td width="20%" class="text-center"><strong><?php echo "$lang[AT_POSITION]"; ?></strong></td>
+      <td width="10%" class="text-center"><strong><?php echo "$lang[ACTIONS]"; ?></strong></td>
     </tr>
   </thead>
   <tbody>
   <?PHP
-  if ($res = $db->query("SELECT cw.*, cwt.name, CASE WHEN cp.title IS NULL THEN '-- all pages --'
+  if ($res = $db->query("SELECT cw.*, cwt.name, CASE WHEN cp.title IS NULL THEN '$lang[ON_ALL_PAGES]'
                                                               ELSE cp.title END as title
       						  FROM {widgets} as cw
       						  JOIN {widget_types} as cwt on cw.widgetType = cwt.id
@@ -96,9 +96,9 @@ echo"<ol class=\"breadcrumb\">
       while($row = mysqli_fetch_assoc($res)){
           if ($row['published']==1)
           {
-              $pub = "success"; $pubtext="On";
+              $pub = "success"; $pubtext="$lang[ONLINE]";
           } else {
-              $pub = "danger"; $pubtext="Off";}
+              $pub = "danger"; $pubtext="$lang[OFFLINE]";}
           echo "<tr>
                 <td class=\"text-center\">
                 <a href=\"index.php?page=widget-toggle&widget=".$row['id']."&published=".$row['published']."\">
@@ -113,7 +113,7 @@ echo"<ol class=\"breadcrumb\">
 
                 <a class=\"fa fa-copy\" title=\"".$lang['WIDGET_COPY']."\" href=\"index.php?page=widget-copy&copy=true&widget=".$row['id']."\"></a>&nbsp;
                 <a class=\"fa fa-edit\" title=\"EDIT: ".$row['name']."\" href=\"index.php?page=widget-edit&widget=".$row['id']."\"></a>&nbsp;
-                <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Das Widget &laquo; # $row[id] &raquo; wirklich l&ouml;schen?\"
+                <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"".$lang['WIDGET']." &laquo; # $row[id] &raquo; ".$lang['DELETE']."?\"
                    title=\"$lang[DELETE]\" href=\"index.php?page=widgets&del=1&widget=$row[id]&delete=true\">
                 </a>
                 </td>

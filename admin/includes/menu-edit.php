@@ -174,9 +174,9 @@ if(isset($_POST['add'])) {
             echo \YAWK\backend::getTitle($menuName, $lang['EDIT']);
         ?>
         <ol class="breadcrumb">
-            <li><a href="./" title="Dashboard"><i class="fa fa-dashboard"></i> <?php echo $lang['DASHBOARD']; ?></a></li>
-            <li><a href="index.php?page=menus" title="Menus"> <?php echo $lang['MENUS']; ?></a></li>
-            <li class="active"><a href="index.php?page=menu-edit&menu=<?php echo $_GET['menu']; ?>" title="edit Menu"> <?php echo $lang['EDIT_MENU']; ?></a></li>
+            <li><a href="./" title="<?php echo $lang['DASHBOARD']; ?>"><i class="fa fa-dashboard"></i> <?php echo $lang['DASHBOARD']; ?></a></li>
+            <li><a href="index.php?page=menus" title="<?php echo $lang['MENUS']; ?>"> <?php echo $lang['MENUS']; ?></a></li>
+            <li class="active"><a href="index.php?page=menu-edit&menu=<?php echo $_GET['menu']; ?>" title="<?php echo $lang['EDIT_MENU']; ?>"> <?php echo $lang['EDIT_MENU']; ?></a></li>
         </ol>
     </section>
     <!-- Main content -->

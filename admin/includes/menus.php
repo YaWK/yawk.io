@@ -85,8 +85,8 @@ if (isset($_GET['del']) && ($_GET['del'] === "1"))
         <!-- draw title on top-->
         <?php echo \YAWK\backend::getTitle($lang['MENUS'], $lang['MENUS_SUBTEXT']); ?>
         <ol class="breadcrumb">
-            <li><a href="./" title="Dashboard"><i class="fa fa-dashboard"></i> <?php echo $lang['DASHBOARD']; ?></a></li>
-            <li class="active"><a href="index.php?page=menus" title="Menus"> <?php echo $lang['MENUS']; ?></a></li>
+            <li><a href="./" title="<?php echo $lang['DASHBOARD']; ?>"><i class="fa fa-dashboard"></i> <?php echo $lang['DASHBOARD']; ?></a></li>
+            <li class="active"><a href="index.php?page=menus" title="<?php echo $lang['MENUS']; ?>"> <?php echo $lang['MENUS']; ?></a></li>
         </ol>
     </section>
     <!-- Main content -->

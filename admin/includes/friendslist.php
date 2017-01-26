@@ -100,9 +100,9 @@ echo "
 /* draw Title on top */
 echo \YAWK\backend::getTitle($lang['FRIENDS'], $lang['FRIENDS_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
-            <li><a href=\"index.php?page=users\" title=\"Users\"> $lang[USERS]</a></li>
-            <li><a href=\"index.php?page=friendslist\" class=\"active\" title=\"Friendslist\"> $lang[FRIENDS]</a></li>
+            <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+            <li><a href=\"index.php?page=users\" title=\"$lang[USERS]\"> $lang[USERS]</a></li>
+            <li><a href=\"index.php?page=friendslist\" class=\"active\" title=\"$lang[FRIENDS]\"> $lang[FRIENDS]</a></li>
         </ol>
     </section>
     <!-- Main content -->

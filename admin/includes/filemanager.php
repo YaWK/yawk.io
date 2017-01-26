@@ -91,8 +91,8 @@ if (isset($_GET['move']))
         <!-- draw title on top-->
         <?php echo \YAWK\backend::getTitle($lang['FILEMAN_TITLE'], $lang['FILEMAN_SUBTEXT']); ?>
         <ol class="breadcrumb">
-            <li><a href="index.php?page=dashboard" title="Dashboard"><i class="fa fa-dashboard"></i> <?php echo $lang['DASHBOARD']; ?></a></li>
-            <li class="active"><a href="index.php?page=filemanager" title="Filemanager"> <?php echo $lang['FILEMANAGER']; ?></a></li>
+            <li><a href="index.php?page=dashboard" title="<?php echo $lang['DASHBOARD']; ?>"><i class="fa fa-dashboard"></i> <?php echo $lang['DASHBOARD']; ?></a></li>
+            <li class="active"><a href="index.php?page=filemanager" title="<?php echo $lang['FILEMANAGER']; ?>"> <?php echo $lang['FILEMANAGER']; ?></a></li>
         </ol>
     </section>
     <!-- Main content -->

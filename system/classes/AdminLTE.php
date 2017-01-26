@@ -623,7 +623,7 @@ namespace YAWK {
                 <li ";echo (isset($_GET['page']) && $_GET['page'] == 'menus') || (isset($_GET['page']) && ($_GET['page'] == 'menu-edit')) ? "class='active'" : ""; echo">
                     <a href=\"index.php?page=menus\" title=\"add or edit menu entries\"><i class=\"fa fa-bars\"></i> <span>$lang[MENUS]</span></a>
                 </li>
-                <li ";echo (isset($_GET['page']) && $_GET['page'] == 'users') || (isset($_GET['page']) && ($_GET['page'] == 'user-edit')) || (isset($_GET['page']) && ($_GET['page'] == 'user-new')) ? "class='active'" : ""; echo">
+                <li ";echo (isset($_GET['page']) && $_GET['page'] == 'users') || (isset($_GET['page']) && ($_GET['page'] == 'user-edit')) || (isset($_GET['page']) && ($_GET['page'] == 'user-new')) || (isset($_GET['page']) && ($_GET['page'] == 'user-groups')) ? "class='active'" : ""; echo">
                     <a href=\"index.php?page=users\" title=\"add or modify users\"><i class=\"fa fa-user\"></i> <span>$lang[USERS]</span></a>
                 </li>
                 <!-- plugins -->

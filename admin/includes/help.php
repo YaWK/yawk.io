@@ -20,8 +20,8 @@ echo "
 /* draw Title on top */
 echo \YAWK\backend::getTitle($lang['HELP'], $lang['HELP_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
-            <li class=\"active\"><a href=\"index.php?page=help\" title=\"Help\"> Help</a></li>
+            <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+            <li class=\"active\"><a href=\"index.php?page=help\" title=\"$lang[HELP]\"> $lang[HELP]</a></li>
          </ol>
     </section>
     <!-- Main content -->

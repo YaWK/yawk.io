@@ -28,5 +28,5 @@ if($widget->toggleOffline($db, $_GET['widget'], $widget->published))
   }
   else
   {   // q failed, throw error
-      print \YAWK\alert::draw("danger", "Error", "Could not toggle widget status.", "page=widgets","4800");
+      print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[WIDGET_TOGGLE_FAILED]", "page=widgets","4800");
   }

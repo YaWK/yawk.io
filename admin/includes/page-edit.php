@@ -242,9 +242,9 @@ echo "
         /* draw Title on top */
         echo \YAWK\backend::getTitle($page->title, $lang['PAGE_EDIT']);
         echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
-            <li><a href=\"index.php?page=pages\" title=\"Pages\"> $lang[PAGES]</a></li>
-            <li class=\"active\"><a href=\"index.php?page=page-edit\" title=\"Edit Page\"> $lang[PAGE_EDIT]</a></li>
+            <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+            <li><a href=\"index.php?page=pages\" title=\"$lang[PAGES]\"> $lang[PAGES]</a></li>
+            <li class=\"active\"><a href=\"index.php?page=page-edit\" title=\"$lang[PAGE_EDIT]\"> $lang[PAGE_EDIT]</a></li>
         </ol>
     </section>
     <!-- Main content -->

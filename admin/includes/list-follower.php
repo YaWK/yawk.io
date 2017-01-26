@@ -22,9 +22,9 @@ echo "
 /* draw Title on top */
 echo \YAWK\backend::getTitle($lang['FOLLOWERS'], $lang['FOLLOWERS_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
-            <li><a href=\"index.php?page=users\" title=\"Users\"> $lang[USERS]</a></li>
-            <li><a href=\"index.php?page=list-follower\" class=\"active\" title=\"Follower\"> $lang[FOLLOWER]</a></li>
+            <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+            <li><a href=\"index.php?page=users\" title=\"$lang[USERS]\"> $lang[USERS]</a></li>
+            <li><a href=\"index.php?page=list-follower\" class=\"active\" title=\"$lang[FOLLOWER]\"> $lang[FOLLOWER]</a></li>
         </ol>
     </section>
     <!-- Main content -->

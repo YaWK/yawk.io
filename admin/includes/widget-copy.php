@@ -9,10 +9,10 @@ $widget->loadProperties($db, $_GET['widget']);
 if($_GET['copy'] === "true") {
   if ($widget->copy($db, $_GET['widget']))
   {   // widget copied
-      print \YAWK\alert::draw("success", "Erfolg!", "Das Widget ".$_GET['widget']." wurde dupliziert!","page=widgets","1800");
+      print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[WIDGET] ".$_GET['widget']." $lang[COPIED]","page=widgets","1800");
   }
   else
   {   // throw error
-  	  print \YAWK\alert::draw("danger", "Fehler", "Das Widget ".$_GET['widget']." konnte nicht dupliziert werden.","page=widgets","4800");
+  	  print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[WIDGET] ".$_GET['widget']." <b>$lang[NOT] $lang[COPIED]</b>","page=widgets","4800");
   }
 }
