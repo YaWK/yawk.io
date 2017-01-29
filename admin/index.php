@@ -24,14 +24,15 @@ require_once '../system/classes/controller.php';
 require_once '../system/classes/filemanager.php';
 require_once '../system/classes/sys.php';
 
-/* set language object */
-if (!isset($lang)) {
-  $lang = new YAWK\language();
-  $lang->init();
-}
 /* set database object */
 if (!isset($db)) {
   $db = new \YAWK\db();
+}
+
+/* set language object */
+if (!isset($lang) || (empty($lang))) {
+    $language = new YAWK\language();
+    $language->init();
 }
 /* set user object */
 if (!isset($user)) {
@@ -41,6 +42,9 @@ if (!isset($user)) {
 if (!isset($page)) {
   $page = new \YAWK\page();
 }
+
+/* convert object param to array */
+$lang = (array) $language->lang;
 
 /* set AdminLTE object */
 if (!isset($AdminLTE)) {
@@ -65,7 +69,7 @@ if (!isset($AdminLTE)) {
       }
       if (\YAWK\settings::getSetting($db, "backendNotificationMenu") == 1)
       {   // draw notification menu, if enabled
-          echo $AdminLTE->drawHtmlNavbarNotificationsMenu($db, $user);
+          echo $AdminLTE->drawHtmlNavbarNotificationsMenu($db, $user, $lang);
       }
       echo $AdminLTE->drawHtmlNavbarUserAccountMenu($db, $user);
       echo $AdminLTE->drawHtmlNavbarHeaderEnd();
