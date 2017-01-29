@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 20. Jan 2017 um 00:23
+-- Erstellungszeit: 29. Jan 2017 um 06:17
 -- Server-Version: 10.1.10-MariaDB
 -- PHP-Version: 5.6.19
 
@@ -47,13 +47,6 @@ CREATE TABLE `cms_blog` (
   `preview` int(1) NOT NULL DEFAULT '0',
   `voting` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Daten für Tabelle `cms_blog`
---
-
-INSERT INTO `cms_blog` (`id`, `sort`, `published`, `name`, `description`, `icon`, `showtitle`, `showdesc`, `showdate`, `showauthor`, `sequence`, `sortation`, `footer`, `comments`, `gid`, `permalink`, `layout`, `preview`, `voting`) VALUES
-(1, 0, 1, 'Mercedes News', 'Youngtimer, Oldtimer, der letzte echte Benz ', 'fa-align-center', 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -112,13 +105,6 @@ CREATE TABLE `cms_blog_items` (
   `primkey` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Daten für Tabelle `cms_blog_items`
---
-
-INSERT INTO `cms_blog_items` (`blogid`, `id`, `uid`, `pageid`, `sort`, `published`, `itemgid`, `title`, `filename`, `subtitle`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `teasertext`, `blogtext`, `author`, `thumbnail`, `youtubeUrl`, `weblink`, `itemlayout`, `itemcomments`, `voteUp`, `voteDown`, `primkey`) VALUES
-(1, 1, 1, 23, 1, 1, 1, 'w126', 'w126', 'w126', '2017-01-17 05:46:48', '0000-00-00 00:00:00', '2017-01-17 05:46:26', '0000-00-00 00:00:00', 'W126....', '            ', '', '', '', 'admin', -1, -1, 0, 0, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -137,7 +123,8 @@ CREATE TABLE `cms_follower` (
 --
 
 INSERT INTO `cms_follower` (`id`, `requestDate`, `follower`, `hunted`) VALUES
-(1, '0000-00-00 00:00:00', 1, 3);
+(1, '0000-00-00 00:00:00', 1, 3),
+(8, '0000-00-00 00:00:00', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -160,7 +147,8 @@ CREATE TABLE `cms_friends` (
 --
 
 INSERT INTO `cms_friends` (`id`, `requestDate`, `confirmDate`, `friendA`, `friendB`, `confirmed`, `aborted`) VALUES
-(1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 3, 0, 1);
+(1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 3, 0, 1),
+(2, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 2, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -279,13 +267,6 @@ CREATE TABLE `cms_logins` (
   `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Daten für Tabelle `cms_logins`
---
-
-INSERT INTO `cms_logins` (`id`, `datetime`, `location`, `failed`, `ip`, `useragent`, `username`, `password`) VALUES
-(1, '2017-01-19 15:56:51', 'backend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', 'admin', '12345');
-
 -- --------------------------------------------------------
 
 --
@@ -317,31 +298,27 @@ CREATE TABLE `cms_menu` (
 --
 
 INSERT INTO `cms_menu` (`TMPID`, `id`, `sort`, `gid`, `menuID`, `parentID`, `published`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `title`, `text`, `href`, `target`, `divider`, `blogid`) VALUES
-(2, 2, 2, 1, 1, 0, 0, '0000-00-00 00:00:00', '2017-01-19 21:41:55', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Styling', 'override-bootstrap-style-settings-theme-generator.html', '_self', 0, 0),
-(3, 1, 3, 2, 1, 0, 0, '0000-00-00 00:00:00', '2017-01-19 21:41:55', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Userpage', 'welcome.html', '_self', 0, 0),
-(30, 8, 8, 1, 1, 0, 0, '2016-10-11 13:55:40', '2017-01-19 21:41:55', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'logout', 'logout.html', '_self', 0, 0),
-(36, 1, 2, 1, 2, 0, 0, '2016-11-03 06:26:00', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'W168', '#', '_self', 0, 0),
-(37, 2, 4, 1, 2, 0, 0, '2016-11-03 06:26:06', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'W169', '#', '_self', 0, 0),
-(38, 2, 4, 1, 2, 0, 0, '2016-11-03 06:26:12', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'W169', '#', '_self', 0, 0),
-(39, 3, 5, 1, 2, 0, 1, '2016-11-03 06:26:18', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'B-Klasse', '#', '_self', 0, 0),
-(40, 12, 12, 1, 1, 0, 0, '0000-00-00 00:00:00', '2017-01-19 21:41:55', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'booking', 'booking.html', '_self', 0, 0),
-(49, 13, 13, 1, 1, 0, 0, '2016-12-28 22:16:35', '2017-01-19 21:41:55', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Startseite', 'index.html', '_self', 0, 0),
-(50, 14, 14, 1, 1, 0, 1, '2016-12-29 00:13:48', '2017-01-19 21:41:55', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Baureihe', 'mercedes-benz-pkw-baureihen-mercedes-modelle.html', '_self', 0, 0),
-(51, 15, 15, 1, 1, 14, 1, '2016-12-29 00:14:37', '2017-01-19 21:41:55', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Mercedes Benz W123 1976 bis 1986', 'mercedes-benz-w123-1976-1986.html', '_self', 0, 0),
-(53, 16, 17, 1, 1, 0, 0, '2016-12-29 00:16:48', '2017-01-19 21:41:55', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'W114/115', 'W114-115.html', '_self', 0, 0),
-(54, 17, 18, 1, 1, 14, 1, '0000-00-00 00:00:00', '2017-01-19 21:41:55', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Mercedes Benz W124 1985-1994', 'mercedes-benz-w124-1985-1994.html', '_self', 0, 0),
-(55, 18, 19, 1, 1, 0, 1, '0000-00-00 00:00:00', '2017-01-19 21:41:55', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Twitch TV', 'Twitch Stream Test', 'twitch-stream-test.html', '_self', 0, 0),
-(56, 19, 20, 1, 1, 0, 1, '0000-00-00 00:00:00', '2017-01-19 21:41:55', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Mercedes News', 'mercedes-news.html', '_self', 0, 1),
-(57, 4, 6, 1, 2, 0, 1, '2017-01-18 06:13:59', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'W225', '#', '_self', 0, 0),
-(58, 5, 7, 1, 2, 0, 1, '2017-01-18 06:14:11', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'C-Klasse', '#', '_self', 0, 0),
-(59, 6, 8, 1, 2, 0, 1, '2017-01-18 06:14:19', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'W201', '#', '_self', 0, 0),
-(60, 7, 9, 1, 2, 0, 1, '2017-01-18 06:14:24', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'W202', '#', '_self', 0, 0),
-(61, 8, 10, 1, 2, 0, 0, '2017-01-18 06:14:30', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'W203', '#', '_self', 0, 0),
-(62, 9, 1, 1, 2, 0, 1, '2017-01-18 06:14:56', '2017-01-18 06:16:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'A-Klasse', '#', '_self', 0, 0),
-(63, 1, 1, 1, 3, 0, 0, '2017-01-18 19:59:05', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'test 1', '#', '_self', 0, 0),
-(64, 2, 2, 1, 3, 0, 0, '2017-01-18 19:59:09', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'test 2', '#', '_self', 0, 0),
-(65, 3, 3, 1, 3, 0, 1, '2017-01-18 19:59:12', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'test 3', '#', '_self', 0, 0),
-(69, 20, 21, 1, 1, 0, 1, '0000-00-00 00:00:00', '2017-01-19 21:41:55', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'YouTube Test', 'youtube-test.html', '_self', 0, 0);
+(2, 1, 3, 2, 1, 0, 0, '0000-00-00 00:00:00', '2017-01-23 19:45:08', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Userpage', 'welcome.html', '_self', 0, 0),
+(3, 1, 3, 2, 1, 0, 0, '0000-00-00 00:00:00', '2017-01-23 19:45:08', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Userpage', 'welcome.html', '_self', 0, 0),
+(30, 5, 8, 1, 1, 0, 0, '2016-10-11 13:55:40', '2017-01-23 19:45:08', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'logout', 'logout.html', '_self', 0, 0),
+(36, 1, 6, 1, 2, 0, 0, '2016-11-03 06:26:00', '2017-01-22 22:22:14', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'W225', '#', '_self', 0, 0),
+(37, 1, 6, 1, 2, 0, 0, '2016-11-03 06:26:06', '2017-01-22 22:22:14', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'W225', '#', '_self', 0, 0),
+(38, 1, 6, 1, 2, 0, 0, '2016-11-03 06:26:12', '2017-01-22 22:22:14', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'W225', '#', '_self', 0, 0),
+(39, 1, 6, 1, 2, 0, 0, '2016-11-03 06:26:18', '2017-01-22 22:22:14', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'W225', '#', '_self', 0, 0),
+(40, 8, 12, 1, 1, 0, 0, '0000-00-00 00:00:00', '2017-01-23 19:45:08', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'booking', 'booking.html', '_self', 0, 0),
+(49, 9, 13, 1, 1, 0, 0, '2016-12-28 22:16:35', '2017-01-23 19:45:08', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Startseite', 'index.html', '_self', 0, 0),
+(50, 10, 14, 1, 1, 0, 1, '2016-12-29 00:13:48', '2017-01-23 19:45:08', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Baureihe', '#', '_self', 0, 0),
+(51, 11, 15, 1, 1, 10, 1, '2016-12-29 00:14:37', '2017-01-23 19:45:08', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Mercedes Benz W123 1976 bis 1986', 'mercedes-benz-w123-1976-1986.html', '_self', 0, 0),
+(53, 12, 17, 1, 1, 0, 0, '2016-12-29 00:16:48', '2017-01-23 19:45:08', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'W114/115', 'W114-115.html', '_self', 0, 0),
+(54, 13, 18, 1, 1, 10, 1, '0000-00-00 00:00:00', '2017-01-23 19:45:08', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Mercedes Benz W124 1985-1994', 'mercedes-benz-w124-1985-1994.html', '_self', 0, 0),
+(55, 14, 19, 1, 1, 0, 1, '0000-00-00 00:00:00', '2017-01-23 19:45:08', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Twitch TV', 'Twitch Stream Test', 'twitch-stream-test.html', '_self', 0, 0),
+(57, 1, 6, 1, 2, 0, 0, '2017-01-18 06:13:59', '2017-01-22 22:22:14', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'W225', '#', '_self', 0, 0),
+(58, 2, 7, 1, 2, 0, 1, '2017-01-18 06:14:11', '2017-01-22 22:22:14', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'C-Klasse', '#', '_self', 0, 0),
+(59, 3, 8, 1, 2, 0, 1, '2017-01-18 06:14:19', '2017-01-22 22:22:14', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'W201', '#', '_self', 0, 0),
+(60, 4, 9, 1, 2, 0, 1, '2017-01-18 06:14:24', '2017-01-22 22:22:14', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'W202', '#', '_self', 0, 0),
+(61, 5, 10, 1, 2, 0, 0, '2017-01-18 06:14:30', '2017-01-22 22:22:14', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'W203', '#', '_self', 0, 0),
+(62, 6, 1, 1, 2, 0, 1, '2017-01-18 06:14:56', '2017-01-22 22:22:14', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'A-Klasse', '#', '_self', 0, 0),
+(71, 16, 21, 1, 1, 0, 1, '0000-00-00 00:00:00', '2017-01-23 19:45:08', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'YouTube Streaming Test', 'YouTube Test', 'youtube-test.html', '_self', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -361,8 +338,7 @@ CREATE TABLE `cms_menu_names` (
 
 INSERT INTO `cms_menu_names` (`id`, `name`, `published`) VALUES
 (1, 'Mercedesgarage.net', 1),
-(2, 'Mercedes Baureihen', 1),
-(3, 'test', 1);
+(2, 'Mercedes Baureihen', 1);
 
 -- --------------------------------------------------------
 
@@ -507,9 +483,15 @@ CREATE TABLE `cms_notifications` (
 --
 
 INSERT INTO `cms_notifications` (`log_id`, `log_date`, `log_type`, `msg_id`, `fromUID`, `toUID`, `toGID`, `seen`) VALUES
-(1, '0000-00-00 00:00:00', 1, 0, 1, 0, 0, 0),
-(2, '0000-00-00 00:00:00', 1, 0, 1, 0, 0, 0),
-(3, '0000-00-00 00:00:00', 1, 0, 1, 0, 0, 0);
+(1, '0000-00-00 00:00:00', 3, 5, 1, 2, 0, 0),
+(2, '0000-00-00 00:00:00', 3, 6, 1, 2, 0, 0),
+(3, '0000-00-00 00:00:00', 3, 5, 1, 2, 0, 0),
+(4, '0000-00-00 00:00:00', 3, 6, 1, 2, 0, 0),
+(5, '0000-00-00 00:00:00', 3, 5, 1, 2, 0, 0),
+(6, '0000-00-00 00:00:00', 3, 6, 1, 2, 0, 0),
+(7, '0000-00-00 00:00:00', 3, 1, 1, 2, 0, 0),
+(8, '0000-00-00 00:00:00', 3, 5, 1, 2, 0, 0),
+(9, '0000-00-00 00:00:00', 1, 0, 1, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -561,11 +543,9 @@ INSERT INTO `cms_pages` (`id`, `published`, `gid`, `date_created`, `date_changed
 (17, 1, 1, '2016-12-08 12:05:21', '2016-12-08 12:05:33', '2016-12-08 12:05:21', '0000-00-00 00:00:00', 'booking', 'booking', '', -1, 0, 1, 0, '0'),
 (18, 0, 1, '2016-12-09 17:35:25', '2016-12-09 17:35:42', '2016-12-09 17:35:25', '0000-00-00 00:00:00', 'working-process', 'working process', '', -1, 0, 0, 0, '0'),
 (19, 1, 1, '2016-12-29 00:17:30', '2017-01-03 17:56:36', '2016-12-29 00:17:30', '0000-00-00 00:00:00', 'mercedes-benz-w123-1976-1986', 'Mercedes Benz W123 1976 bis 1986', '', -1, 0, 0, 0, '0'),
-(20, 1, 1, '2017-01-11 16:57:05', '2017-01-11 16:58:52', '2017-01-11 16:57:05', '0000-00-00 00:00:00', 'mercedes-benz-w124-1985-1994', 'Mercedes Benz W124 1985-1994', '', -1, 0, 0, 0, '0'),
+(20, 1, 1, '2017-01-11 16:57:05', '2017-01-26 22:37:03', '2017-01-11 16:57:05', '0000-00-00 00:00:00', 'mercedes-benz-w124-1985-1994', 'Mercedes Benz W124 1985-1994', '', -1, 0, 0, 0, '0'),
 (21, 1, 1, '2017-01-16 11:45:37', '2017-01-16 11:46:42', '2017-01-16 11:45:37', '0000-00-00 00:00:00', 'twitch-stream-test', 'Twitch Stream Test', '', -1, 0, 0, 0, '0'),
-(22, 1, 1, '2017-01-17 05:46:23', '0000-00-00 00:00:00', '2017-01-17 05:46:23', '0000-00-00 00:00:00', 'mercedes-news', 'Mercedes News', '', -1, 0, 1, 1, '0'),
-(23, 1, 1, '2017-01-17 05:46:48', '0000-00-00 00:00:00', '2017-01-17 05:46:48', '0000-00-00 00:00:00', 'w126', 'w126', '', -1, 0, 1, 1, ''),
-(24, 1, 1, '2017-01-19 21:32:38', '2017-01-19 22:53:22', '2017-01-19 21:32:38', '0000-00-00 00:00:00', 'youtube-test', 'YouTube Test', '', -1, 0, 0, 0, '0');
+(24, 1, 1, '2017-01-20 00:31:51', '2017-01-22 22:52:52', '2017-01-20 00:31:51', '0000-00-00 00:00:00', 'youtube-test', 'YouTube Test', '', -1, 0, 0, 0, '0');
 
 -- --------------------------------------------------------
 
@@ -701,7 +681,8 @@ CREATE TABLE `cms_plugin_gallery` (
 
 INSERT INTO `cms_plugin_gallery` (`id`, `sortItem`, `folder`, `title`, `description`, `author`, `authorUrl`, `createThumbnails`, `thumbnailWidth`, `resizeImages`, `resizeType`, `imageWidth`, `imageHeight`, `watermark`, `watermarkEnabled`, `watermarkPosition`, `watermarkImage`, `offsetY`, `offsetX`, `watermarkFont`, `watermarkTextSize`, `watermarkOpacity`, `watermarkColor`, `watermarkBorderColor`, `watermarkBorder`) VALUES
 (1, 0, 'media/images/W124', 'Mercedes-Benz W124 - 1985 bis 1994', 'Ob als Limousine, Kombi, CoupÃ© oder Cabrio - fÃ¼r viele Fans ist es die letzte echte E-Klasse.', '', '', 1, 300, 0, 'fit_to_width', 0, 0, 'www.mercedesgarage.at', 0, 'bottom right', '', '-12', '-12', '../system/fonts/delicious.ttf', '24', '.5', 'E8E8E8', '424242', '1'),
-(2, 0, 'media/images/W123', 'Mercedes Benz W123 1976 bis 1986', 'W123 Fotos: Interieur, Exterieur, Limousine, Kombi, Coupe, Cabrio', '', '', 1, 300, 1, 'thumbnail', 800, 800, 'www.mercedesgarage.at', 0, 'bottom right', '', '-12', '-12', '../system/fonts/delicious.ttf', '24', '.5', 'E8E8E8', '424242', '1');
+(2, 0, 'media/images/W123', 'Mercedes Benz W123 1976 bis 1986', 'W123 Fotos: Interieur, Exterieur, Limousine, Kombi, Coupe, Cabrio', '', '', 1, 400, 0, '', 0, 0, 'www.mercedesgarage.at', 0, 'bottom right', '', '-12', '-12', '../system/fonts/delicious.ttf', '18', '.5', 'E8E8E8', '424242', '1'),
+(3, 0, 'media/images/event-mitananda', 'Fotos vom Konzert im Event', 'die Band heisst Mitananda', '', '', 1, 400, 0, '', 0, 0, '(C) Thomas Krejci', 0, 'bottom right', '', '-12', '-12', '../system/fonts/delicious.ttf', '24', '.5', 'E80000', '424242', '1');
 
 -- --------------------------------------------------------
 
@@ -736,7 +717,7 @@ INSERT INTO `cms_plugin_gallery_items` (`id`, `galleryID`, `sort`, `filename`, `
 (11, 1, 11, '14884718_1239669592738586_7713362563862732880_o.jpg', 'Mercedes-Benz W124 - 1985 bis 1994', '', ''),
 (12, 1, 12, '14890001_1239669519405260_4264550528377150564_o.jpg', 'Mercedes-Benz W124 - 1985 bis 1994', '', ''),
 (13, 1, 13, '14902923_1239669719405240_6225826415239546564_o.jpg', 'Mercedes-Benz W124 - 1985 bis 1994', '', ''),
-(14, 2, 1, 'W123-300D.jpg', 'Mercedes Benz W123 300D, s/w Foto', '', ''),
+(14, 2, 1, 'W123-300D.jpg', 'Mercedes Benz W123 1976 bis 1986', '', ''),
 (15, 2, 2, 'W123-breitbandscheinwerfer.jpg', 'Mercedes Benz W123 1976 bis 1986', '', ''),
 (16, 2, 3, 'W123-cockpit.jpg', 'Mercedes Benz W123 1976 bis 1986', '', ''),
 (17, 2, 4, 'W123-coupe-dreifach.jpg', 'Mercedes Benz W123 1976 bis 1986', '', ''),
@@ -761,7 +742,15 @@ INSERT INTO `cms_plugin_gallery_items` (`id`, `galleryID`, `sort`, `filename`, `
 (36, 2, 23, 'W123-tmodell-04.jpg', 'Mercedes Benz W123 1976 bis 1986', '', ''),
 (37, 2, 24, 'W123-tmodell-05.jpg', 'Mercedes Benz W123 1976 bis 1986', '', ''),
 (38, 2, 25, 'W123-tmodell-seitlich.jpg', 'Mercedes Benz W123 1976 bis 1986', '', ''),
-(39, 2, 26, 'W123-vogelperspektive.jpg', 'Mercedes Benz W123 1976 bis 1986', '', '');
+(39, 2, 26, 'W123-vogelperspektive.jpg', 'Mercedes Benz W123 1976 bis 1986', '', ''),
+(40, 3, 1, 'P1019204.jpg', 'Fotos vom Konzert im Event', '', ''),
+(41, 3, 2, 'P1019210.jpg', 'Fotos vom Konzert im Event', '', ''),
+(43, 3, 4, 'P1019214.jpg', 'Fotos vom Konzert im Event', '', ''),
+(44, 3, 5, 'P1019219.jpg', 'Fotos vom Konzert im Event', '', ''),
+(45, 3, 6, 'P1019225.jpg', 'Fotos vom Konzert im Event', '', ''),
+(46, 3, 7, 'P1019235.jpg', 'Fotos vom Konzert im Event', '', ''),
+(47, 3, 8, 'P1019236.jpg', 'Fotos vom Konzert im Event', '', ''),
+(48, 3, 9, 'P1019240.jpg', 'Fotos vom Konzert im Event', '', '');
 
 -- --------------------------------------------------------
 
@@ -844,10 +833,10 @@ CREATE TABLE `cms_settings` (
 
 INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation`, `activated`, `label`, `icon`, `heading`, `subtext`, `fieldClass`, `fieldType`, `placeholder`, `description`, `options`) VALUES
 ('admin_email', 'danielretzl@gmail.com', '', 1, 5, 1, 'ADMIN_EMAIL_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
-('backendFooter', '0', '', 11, 1, 1, 'BACKENDFOOTER_LABEL', 'fa fa-chevron-down', 'BACKENDFOOTER_HEADING', 'BACKENDFOOTER_SUBTEXT', 'form-control', 'checkbox', '', '', ''),
-('backendFooterCopyright', '0', '', 11, 2, 1, 'BACKENDFOOTERCOPYRIGHT_LABEL', '', '', '', 'form-control', 'checkbox', '', '', ''),
-('backendFooterValueLeft', 'http://yawk.io', '', 11, 2, 1, 'BACKENDFOOTERVALUE_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
-('backendFooterValueRight', 'proudly presented by <b>YaWK :: <small> Yet another Web Kit</b></small>', '', 11, 2, 1, 'BACKENDFOOTERVALUERIGHT_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+('backendFooter', '0', '', 11, 5, 1, 'BACKENDFOOTER_LABEL', 'fa fa-chevron-down', 'BACKENDFOOTER_HEADING', 'BACKENDFOOTER_SUBTEXT', 'form-control', 'checkbox', '', '', ''),
+('backendFooterCopyright', '0', '', 11, 6, 1, 'BACKENDFOOTERCOPYRIGHT_LABEL', '', '', '', 'form-control', 'checkbox', '', '', ''),
+('backendFooterValueLeft', 'http://yawk.io', '', 11, 7, 1, 'BACKENDFOOTERVALUE_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+('backendFooterValueRight', 'proudly presented by <b>YaWK :: <small> Yet another Web Kit</b></small>', '', 11, 8, 1, 'BACKENDFOOTERVALUERIGHT_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('backendFX', '0', '', 2, 5, 1, 'BACKENDFX_LABEL', 'fa fa-paper-plane-o', 'BACKENDFX_HEADING', 'BACKENDFX_SUBTEXT', 'form-control', 'checkbox', '', '', ''),
 ('backendFXtime', '820', '', 2, 7, 1, 'BACKENDFXTIME_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('backendFXtype', 'fadeIn In', '', 2, 6, 1, 'BACKENDFXTYPE_LABEL', '', '', '', 'form-control', 'select', '', '', 'fadeIn,Fade In:slideDown,Slide Down'),
@@ -888,11 +877,14 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('globalmetakeywords', 'YAWK, CMS, WORDPRESS, JOOMLA', '', 10, 0, 1, 'Global Site Keywords', '', '', '', 'form-control', '', '', '', ''),
 ('globalmetatext', 'YAWK DEVELOPMENT VERSION', '', 10, 0, 1, 'Global Meta Description', '', '', '', 'form-control', '', '', '', ''),
 ('host', 'http://192.168.1.8/mercedesgarage.net', '', 1, 3, 1, 'HOST_LABEL', '', '', '', 'form-control', 'input', '', 'DATABASE_DESC', ''),
-('loadingTime', '0', '', 11, 3, 1, 'LOADINGTIME_LABEL', 'fa fa-signal', 'LOADINGTIME_HEADING', 'LOADINGTIME_SUBTEXT', 'form-control', 'checkbox', '', '', ''),
+('loadingTime', '0', '', 11, 10, 1, 'LOADINGTIME_LABEL', 'fa fa-signal', 'LOADINGTIME_HEADING', 'LOADINGTIME_SUBTEXT', 'form-control', 'checkbox', '', '', ''),
 ('logoutmenuid', '1', '', 6, 0, 1, 'Logout Menu ID for logged-in Users', '', '', '', 'form-control', '', '', '', ''),
 ('offline', '0', '', 8, 0, 1, 'OFFLINE_LABEL', 'fa fa-wrench', 'OFFLINE_HEADING', 'OFFLINE_SUBTEXT', 'form-control', 'checkbox', '', 'OFFLINE_DESC', ''),
 ('offlineimage', 'media/images/closed-sign-tm.jpg', '', 8, 0, 1, 'OFFLINEIMAGE_LABEL', '', '', '', 'form-control', 'input', 'media/images/logo.jpg', 'OFFLINEIMAGE_DESC', ''),
 ('offlinemsg', '<h1>Wartungsarbeiten</h1><h3>Bitte schau spÃ¤ter nochmal vorbei.</h3>', '', 8, 0, 1, 'OFFLINEMSG_LABEL', '', '', '', 'form-control', 'textarea', '', '', ''),
+('paceLoader', 'enabled', '', 11, 1, 1, 'PACELOADER_LABEL', 'fa fa-spinner', 'PACELOADER_HEADING', 'PACELOADER_SUBTEXT', 'form-control', 'select', '', '', 'disabled,disabled:enabled,enabled'),
+('paceLoaderColor', '0073aa', '', 11, 2, 1, 'PACELOADER_COLOR_LABEL', '', '', '', 'form-control color', 'input', '0073aa', '', ''),
+('paceLoaderHeight', '3px', '', 11, 3, 1, 'PACELOADER_HEIGHT_LABEL', '', '', '', 'form-control', 'input', 'PACELOADER_HEIGHT_PLACEHOLDER', '', ''),
 ('selectedTemplate', '1', '', 3, 1, 1, 'SELECTEDTEMPLATE_LABEL', 'fa fa-photo', 'SELECTEDTEMPLATE_HEADING', 'SELECTEDTEMPLATE_SUBTEXT', 'form-control', 'select', '', 'SELECTEDTEMPLATE_DESC', ''),
 ('sessiontime', '60', '', 9, 1, 1, 'SESSIONTIME_LABEL', '', '', '', 'form-control', 'select', '', 'SESSIONTIME_DESC', '10,10 Minutes:20,20 Minutes:30,30 Minutes:40,40 Minutes:50,50 Minutes:60,60 Minutes:120,120 Minutes:320,320 Minutes'),
 ('signup_adultcheck', '1', '', 5, 0, 1, 'display adultcheck question before registration form', '', '', '', 'form-control', '', '', '', ''),
@@ -920,14 +912,14 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('signup_zipcode', '0', '', 5, 0, 1, 'require zipcode to signup', '', '', '', 'form-control', '', '', '', ''),
 ('siteauthor', 'YaWK', '', 10, 0, 1, 'Site Author', '', '', '', 'form-control', '', '', '', ''),
 ('sitename', 'Das freie Magazin fÃ¼r Youngtimer und Oldtimer von Mercedes-Benz', '', 1, 2, 1, 'SITENAME_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
-('statsEnable', '0', '', 13, 2, 1, 'STATS_LABEL', 'fa fa-bar-chart', 'STATS_HEADING', 'STATS_SUBTEXT', 'form-control', 'select', '', 'STATS_DESC', '0,off:1,on'),
-('syslogEnable', '0', '', 13, 1, 1, 'SYSLOG_LABEL', 'fa fa-terminal', 'SYSLOG_HEADING', 'SYSLOG_SUBTEXT', 'form-control', 'select', '', 'SYSLOG_DESC', '0,off:1,on'),
+('statsEnable', '1', '', 13, 2, 1, 'STATS_LABEL', 'fa fa-bar-chart', 'STATS_HEADING', 'STATS_SUBTEXT', 'form-control', 'select', '', 'STATS_DESC', '0,off:1,on'),
+('syslogEnable', '1', '', 13, 1, 1, 'SYSLOG_LABEL', 'fa fa-terminal', 'SYSLOG_HEADING', 'SYSLOG_SUBTEXT', 'form-control', 'select', '', 'SYSLOG_DESC', '0,off:1,on'),
 ('timediff', '1', '', 7, 1, 1, 'TIMEDIFF_LABEL', 'fa fa-clock-o', 'TIMEDIFF_HEADING', 'TIMEDIFF_SUBTEXT', 'form-control', 'checkbox', '', 'TIMEDIFF_DESC', ''),
 ('timedifftext', 'This page is not online yet. Please come back in ', '', 7, 2, 1, 'TIMEDIFFTEXT_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('title', 'Mercedesgarage.net', '', 1, 1, 1, 'TITLE_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('twitterstatus', '0', '', 4, 0, 1, 'Twitter on/off', '', '', '', 'form-control', '', '', '', ''),
 ('twitterurl', 'http://www.twitter.com', '', 4, 0, 1, 'URL zu Twitter Profil', '', '', '', 'form-control', '', '', '', ''),
-('userlogin', '0', '', 17, 1, 1, 'USERLOGIN_LABEL', 'fa fa-lock', 'USERLOGIN_HEADING', 'USERLOGIN_SUBTEXT', 'form-control', 'checkbox', '', 'USERLOGIN_DESC', ''),
+('userlogin', '1', '', 17, 1, 1, 'USERLOGIN_LABEL', 'fa fa-lock', 'USERLOGIN_HEADING', 'USERLOGIN_SUBTEXT', 'form-control', 'checkbox', '', 'USERLOGIN_DESC', ''),
 ('userpage_activeTab', 'Profile', '', 6, 0, 1, 'Userpage Active Tab', '', '', '', 'form-control', '', '', '', ''),
 ('userpage_admin', '1', '', 6, 0, 1, 'userpage admin tab enabled?', '', '', '', 'form-control', '', '', '', ''),
 ('userpage_changeCity', '1', '', 6, 0, 1, 'allow user to change city', '', '', '', 'form-control', '', '', '', ''),
@@ -1018,13 +1010,6 @@ CREATE TABLE `cms_stats` (
   `page` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Daten für Tabelle `cms_stats`
---
-
-INSERT INTO `cms_stats` (`id`, `uid`, `gid`, `logged_in`, `acceptLanguage`, `remoteAddr`, `userAgent`, `device`, `deviceType`, `os`, `osVersion`, `browser`, `browserVersion`, `date_created`, `referer`, `page`) VALUES
-(1, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '55.0.2883.87', '2017-01-18 03:48:11', 'http://localhost/mercedesgarage.net/admin/index.php?page=settings-system', 'index');
-
 -- --------------------------------------------------------
 
 --
@@ -1102,7 +1087,7 @@ CREATE TABLE `cms_templates` (
 --
 
 INSERT INTO `cms_templates` (`id`, `active`, `name`, `positions`, `description`, `releaseDate`, `author`, `authorUrl`, `weblink`, `subAuthor`, `subAuthorUrl`, `modifyDate`, `version`, `license`) VALUES
-(1, 1, 'yawk-bootstrap3', 'intro:globalmenu:top:leftMenu:mainTop:mainTopLeft:mainTopCenter:mainTopRight:main:mainBottom:mainBottomLeft:mainBottomCenter:mainBottomRight:mainFooter:mainFooterLeft:mainFooterCenter:mainFooterRight:rightMenu:bottom:footer:hiddentoolbar:debug', '', '2016-09-29 00:00:00', 'Daniel Retzl ', 'https://github.com/YaWK/mercedesgarage.net', 'http://www.mercedesgarage.net', '', '', '2016-10-01 02:30:00', '1.0.0', 'GNU General Public License (GPL)');
+(1, 1, 'yawk-bootstrap3', 'intro:globalmenu:top:leftMenu:mainTop:mainTopLeft:mainTopCenter:mainTopRight:main:mainBottom:mainBottomLeft:mainBottomCenter:mainBottomRight:mainFooter:mainFooterLeft:mainFooterCenter:mainFooterRight:rightMenu:bottom:footer:hiddentoolbar:debug', 'YaWK Bootstrap 3 Default Theme.', '2016-09-29 00:00:00', 'Daniel Retzl ', 'https://github.com/YaWK/mercedesgarage.net', 'http://www.mercedesgarage.net', 'Daniel Retzl', '', '2016-10-01 02:30:00', '1.0.0', 'GNU General Public License (GPL)');
 
 -- --------------------------------------------------------
 
@@ -1129,9 +1114,9 @@ CREATE TABLE `cms_template_settings` (
 --
 
 INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `valueDefault`, `longValue`, `description`, `activated`, `sort`, `fieldClass`, `placeholder`) VALUES
-(1, 1, 'heading-gfont', '76', '1', '', 'Global GoogleFont ID', 1, 0, 'form-control', 'Default Google Font'),
+(1, 1, 'heading-gfont', '63', '1', '', 'Global GoogleFont ID', 1, 0, 'form-control', 'Default Google Font'),
 (2, 1, 'menu-gfont', '76', '1', '', 'Menu GoogleFont ID', 1, 0, 'form-control', 'Menu Google Font'),
-(3, 1, 'text-gfont', '76', '1', '', 'Text GoogleFont ID', 1, 0, 'form-control', 'Text Google Font'),
+(3, 1, 'text-gfont', '63', '1', '', 'Text GoogleFont ID', 1, 0, 'form-control', 'Text Google Font'),
 (4, 1, 'h1-fontcolor', '303030', '000000', '', 'H1 Color', 1, 0, 'color', 'pick a color or leave blank'),
 (6, 1, 'h2-fontcolor', '303030', '000000', '', 'H2 Color', 1, 0, 'color', 'pick a color or leave blank'),
 (7, 1, 'h3-fontcolor', '5C79A1', '000000', '', 'H3 Color', 1, 0, 'color', 'pick a color or leave blank'),
@@ -1347,7 +1332,7 @@ CREATE TABLE `cms_users` (
 --
 
 INSERT INTO `cms_users` (`id`, `blocked`, `privacy`, `online`, `gid`, `terms`, `username`, `password`, `date_created`, `date_changed`, `date_expired`, `date_lastlogin`, `login_count`, `email`, `url`, `twitter`, `facebook`, `firstname`, `lastname`, `street`, `zipcode`, `city`, `country`, `state`, `logged_in`, `public_email`, `terminatedByUser`, `job`, `likes`, `overrideTemplate`, `templateID`) VALUES
-(1, 0, 1, 1, 5, 1, 'admin', '827ccb0eea8a706c4c34a16891f84e7b', '2016-10-10 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2017-01-19 15:56:51', 86, 'danielretzl@gmail.com', 'http://yawk.io', '', '', 'Daniel', 'Retzl', '', '', '', '', '', 1, 1, 0, 'Main Developer', 0, 0, 1),
+(1, 0, 1, 1, 5, 1, 'admin', '827ccb0eea8a706c4c34a16891f84e7b', '2016-10-10 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2017-01-29 04:59:03', 97, 'danielretzl@gmail.com', 'http://yawk.io', '', '', 'Daniel', 'Retzl', '', '', '', '', '', 1, 1, 0, 'Main Developer', 0, 0, 1),
 (2, 0, 0, 1, 4, 1, 'claudia', '827ccb0eea8a706c4c34a16891f84e7b', '2016-09-13 13:54:26', '2016-10-10 04:02:11', '0000-00-00 00:00:00', '2016-12-08 21:58:26', 31, 'test@test.com', '', '', '', '', '', '', '', '', '', '', 1, 0, 0, '', 0, 0, 1);
 
 -- --------------------------------------------------------
@@ -1399,8 +1384,9 @@ CREATE TABLE `cms_widgets` (
 INSERT INTO `cms_widgets` (`id`, `published`, `widgetType`, `pageID`, `sort`, `position`, `marginTop`, `marginBottom`) VALUES
 (1, 1, 13, 19, 1, 'main', 0, 0),
 (3, 1, 14, 21, 3, 'mainbottom', 0, 0),
-(4, 1, 15, 0, 4, 'leftMenu', 0, 0),
-(5, 1, 16, 24, 5, 'main', 0, 0);
+(4, 1, 15, 0, 4, 'leftmenu', 0, 0),
+(5, 1, 16, 24, 5, 'main', 0, 0),
+(6, 1, 13, 20, 6, 'mainBottom', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1494,14 +1480,15 @@ INSERT INTO `cms_widget_settings` (`id`, `widgetID`, `property`, `value`, `widge
 (34, 3, 'twitchChannelHeight', '720', 14, 1),
 (35, 3, 'twitchChannelWidth', '100%', 14, 1),
 (36, 3, 'twitchChannelFullscreen', 'true', 14, 1),
-(37, 4, 'menuID', '1', 15, 1),
+(37, 4, 'menuID', '2', 15, 1),
 (79, 5, 'youtubeWidth', '100%', 16, 1),
 (80, 5, 'youtubeHeight', '720', 16, 1),
 (81, 5, 'youtubeFullscreen', 'true', 16, 1),
-(82, 5, 'youtubeVideoUrl', 'https://www.youtube.com/watch?v=PK8sdl53GEA', 16, 1),
-(83, 5, 'youtubeHeading', '', 16, 1),
-(84, 5, 'youtubeSubtext', '', 16, 1),
-(85, 5, 'youtubeDescription', '', 16, 1);
+(82, 5, 'youtubeVideoUrl', 'https://www.youtube.com/watch?v=UGONO-vPnCk', 16, 1),
+(83, 5, 'youtubeHeading', 'Am Schauplatz', 16, 1),
+(84, 5, 'youtubeSubtext', 'KaisermÃ¼hlen', 16, 1),
+(85, 5, 'youtubeDescription', 'E. Spira (1994)', 16, 1),
+(86, 6, 'galleryID', '1', 13, 1);
 
 -- --------------------------------------------------------
 
@@ -1796,32 +1783,32 @@ ALTER TABLE `cms_widget_types`
 -- AUTO_INCREMENT für Tabelle `cms_blog_items`
 --
 ALTER TABLE `cms_blog_items`
-  MODIFY `primkey` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `primkey` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `cms_follower`
 --
 ALTER TABLE `cms_follower`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT für Tabelle `cms_friends`
 --
 ALTER TABLE `cms_friends`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT für Tabelle `cms_logins`
 --
 ALTER TABLE `cms_logins`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `cms_menu`
 --
 ALTER TABLE `cms_menu`
-  MODIFY `TMPID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `TMPID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 --
 -- AUTO_INCREMENT für Tabelle `cms_meta_local`
 --
 ALTER TABLE `cms_meta_local`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 --
 -- AUTO_INCREMENT für Tabelle `cms_newsletter`
 --
@@ -1831,7 +1818,7 @@ ALTER TABLE `cms_newsletter`
 -- AUTO_INCREMENT für Tabelle `cms_notifications`
 --
 ALTER TABLE `cms_notifications`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT für Tabelle `cms_notifications_msg`
 --
@@ -1846,12 +1833,12 @@ ALTER TABLE `cms_plugin_faq`
 -- AUTO_INCREMENT für Tabelle `cms_plugin_gallery`
 --
 ALTER TABLE `cms_plugin_gallery`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT für Tabelle `cms_plugin_gallery_items`
 --
 ALTER TABLE `cms_plugin_gallery_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 --
 -- AUTO_INCREMENT für Tabelle `cms_plugin_msg`
 --
@@ -1861,7 +1848,7 @@ ALTER TABLE `cms_plugin_msg`
 -- AUTO_INCREMENT für Tabelle `cms_stats`
 --
 ALTER TABLE `cms_stats`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `cms_syslog`
 --
@@ -1901,7 +1888,7 @@ ALTER TABLE `cms_widget_defaults`
 -- AUTO_INCREMENT für Tabelle `cms_widget_settings`
 --
 ALTER TABLE `cms_widget_settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

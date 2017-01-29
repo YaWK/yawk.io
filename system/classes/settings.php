@@ -260,6 +260,18 @@ namespace YAWK {
                                   <input type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
 										 value=\"$setting[value]\" placeholder=\"$setting[placeholder]\"><p>$setting[description]</p>";
                         }
+
+                        /* INPUT TEXT FIELD */
+                        else if ($setting['fieldType'] === "color")
+                        {    // draw an input field
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                            {
+                                echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
+                            }
+                            echo "<label for=\"$setting[property]\">$setting[label]</label>
+                                  <input type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
+										 value=\"$setting[value]\" placeholder=\"$setting[placeholder]\"><p>$setting[description]</p>";
+                        }
                     }
                 }
             }
