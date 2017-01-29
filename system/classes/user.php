@@ -1996,7 +1996,7 @@ namespace YAWK {
          * @param object $db database
          * @return array|bool
          */
-        static function getAllNotifications($db)
+        static function getAllNotifications($db, $lang)
         {   /** @var $db \YAWK\db */
             if (isset($_GET['page']) && ($_GET['page'] === "syslog"))
             {   // is call comes from syslog backend page,
@@ -2024,7 +2024,7 @@ namespace YAWK {
             }
             else
             {   // q failed
-                \YAWK\sys::setSyslog($db, 3, "failed to get all notifications.", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 3, "$lang[SYSLOG_GET_FAILED]", 0, 0, 0, 0);
                 return false;
             }
         }

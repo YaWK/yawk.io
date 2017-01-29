@@ -17,15 +17,14 @@ namespace YAWK {
      */
     class language
     {
-        /**
-         * @var string $lang language string
-         */
+        /** * @var array $lang language array */
         public $lang;
-
-        /**
-         * @var string $lang current language string
-         */
-        public $current;
+        /** * @var string $currentLanguage current setted language in format: en-EN */
+        public $currentLanguage;
+        /** * @var string $httpAcceptedLanguage current $_SERVER['HTTP_ACCEPTED_LANGUAGE'] in format: en-EN */
+        public $httpAcceptedLanguage;
+        /** * @var string $pathToFile the path to the language file */
+        public $pathToFile;
 
         /**
          * initialize and return current language
@@ -35,43 +34,73 @@ namespace YAWK {
          * @link       http://yawk.io
          * @return string
          */
-        public function init(){
-            if (isset($_GET['lang']) && (!empty($_GET['lang']))) {
-                self::setLanguage($_GET['lang']);
-                    $this->current = $_GET['lang'];
-            }
-            else {
-                self::setLanguage("en-EN");
-                $this->current = "en-EN";
-            }
-            return $this->lang;
+        public function init()
+        {
+            // set current language
+            $this->httpAcceptedLanguage = $this->getClientLanguage();
+            $this->currentLanguage = $this->getCurrentLanguage();
+            return $this->lang = $this->setLanguage($this->currentLanguage);
         }
 
         /**
-         * returns the current set backend language
+         * returns the currently set backend language
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @copyright 2017 Daniel Retzl
          * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
          * @link       http://yawk.io
-         * @return string|null
+         * @return string
          */
-        static function getCurrentLanguage()
+        public function getCurrentLanguage()
         {
-            if (isset($_SESSION) || (!empty($_SESSION)))
+            $currentLanguage = '';
+            // check if a GET param is set
+            if (isset($_GET['lang']) && (!empty($_GET['lang'])))
             {
-                if (isset($_SESSION['lang']) || (!empty($_SESSION['lang'])))
-                {
-                    return $_SESSION['lang'];
-                }
-                else
-                    {   // no language is currently set
-                        return null;
-                    }
+                $currentLanguage = $_GET['lang'];     // sst GET param as current language
+                // register and overwrite session var
+                $_SESSION['lang'] = $currentLanguage;
+                // and set cookie
+                setcookie('lang', $currentLanguage, time() + (60 * 60 * 24 * 1460));
+                /* language set, cookie set */
+                return $currentLanguage;
             }
             else
-                {   // no language is currently set
-                    return null;
+            {
+                // GET param not set, check if there is a $_SESSION[lang]
+                if (isset($_SESSION['lang']) || (!empty($_SESSION['lang'])))
+                {
+                    // session var is set
+                    $currentLanguage = $_SESSION['lang'];
+                    return $currentLanguage;
                 }
+                // SESSION param not set, check if there is a $_COOKIE[lang]
+                elseif (isset($_COOKIE['lang']) || (!empty($_COOKIE['lang'])))
+                {
+                    // cookie var is set
+                    $currentLanguage = $_COOKIE['lang'];
+                    return $currentLanguage;
+                }
+                else
+                {
+                    // get language setting from database
+                    if (!isset($db))
+                    {   // create new db object
+                        $db = new \YAWK\db();
+                    }
+                    // get backend language setting and save string eg. (en-EN) in $this->current
+                    if ($currentLanguage = (\YAWK\settings::getSetting($db, "backendLanguage")) === true)
+                    {
+                        // return current db-settings language
+                        return $currentLanguage;
+                    }
+                    else
+                    {   // failed to get backend language
+                        $currentLanguage = "en-EN";   // default: en-EN
+                        // return default value (en-EN)
+                        return $currentLanguage;
+                    }
+                }
+            }
         }
 
         /**
@@ -82,10 +111,46 @@ namespace YAWK {
          * @link       http://yawk.io
          * @return string
          */
-        static function getClientLanguage()
+        public function getClientLanguage()
         {
-            $client_lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 5);
-            return $client_lang;
+            // check if browser tells any accepted language
+            if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) || (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])))
+            {   // format the string to eg: en-EN
+                $this->httpAcceptedLanguage = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 5);
+                return $this->httpAcceptedLanguage;
+            }
+            else
+                {   // var empty - cannot detect -
+                    return null;
+                }
+        }
+
+        public function getPathToLanguageFile()
+        {
+            // check if call comes from frontend or backend
+            if(stristr($_SERVER['PHP_SELF'], '/admin/') == TRUE)
+            {
+                // call seem to come from BACKEND
+                // check if directory is reachable
+                if (is_dir("language/"))
+                {
+                    // set path to backend
+                    $this->pathToFile = "language/";
+                }
+                elseif (is_dir("admin/language/"))
+                {
+                    $this->pathToFile = "admin/language";
+                }
+                else
+                {
+                    $this->pathToFile = '';
+                }
+            }
+            else
+            {   // set path to frontend
+                $this->pathToFile = "admin/language/";
+            }
+            return $this->pathToFile;
         }
 
         /**
@@ -93,46 +158,16 @@ namespace YAWK {
          * @param string $lang the language as string (eg en-US)
          * @return array|string $lang returns a language array
          */
-        public function setLanguage($lang)
+        public function setLanguage($currentLanguage)
         {
-            global $lang;
-
-            /* LANGUAGE TASKS */
-            /* is the language switched right now */
-            if (isset($_GET['lang'])) {
-                $lang = $_GET['lang'];
-                // register and overwrite session var
-                $_SESSION['lang'] = $lang;
-                // and set cookie
-                setcookie('lang', $lang, time() + (60 * 60 * 24 * 1460));
-            } /* language set, cookie set */
-            else if (isSet($_SESSION['lang'])) {
-                $lang = $_SESSION['lang'];
-            } else if (isSet($_COOKIE['lang'])) {
-                $lang = $_COOKIE['lang'];
-            } /* if language cannot be set, set en as default */
-            else
-                {
-                $lang = 'en-EN';
-                $_SESSION['lang'] = $lang;
+            $this->pathToFile = $this->getPathToLanguageFile();
+            if (is_file("$this->pathToFile"."lang-"."$currentLanguage".".ini"))
+            {
+                $this->lang = parse_ini_file("$this->pathToFile"."lang-"."$currentLanguage".".ini");
             }
-
-            /* parse the language file */
-            switch ($lang) {
-                case 'en-EN':
-                    $lang = parse_ini_file("language/lang-en-EN.ini");
-                    break;
-
-                case 'de-DE';
-                    $lang = parse_ini_file("language/lang-de-DE.ini");
-                    break;
-
-                default:
-                    $lang = parse_ini_file("language/lang-en-EN.ini");
-            }
-
-            return $lang;
+            return $this->lang;
         } /* end setLanguage */
+
 
     } /* END CLASS */
 }

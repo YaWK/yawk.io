@@ -487,10 +487,11 @@ namespace YAWK
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
+         * @param object $lang language
          * @param array $logins data array
          * @return string output the javascript data
          */
-        public function getJsonLogins($db, $logins)
+        public function getJsonLogins($db, $logins, $lang)
         {   /* @var $db \YAWK\db */
             // check if logins are set
             if (!isset($logins) || (empty($logins)))
@@ -2499,10 +2500,11 @@ namespace YAWK
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
+         * @param object $lang language
          * @param string $data array containing all the stats data
          * @param string $limit contains i number for sql limitation
          */
-        public function drawLoginBox($db, $limit)
+        public function drawLoginBox($db, $limit, $lang)
         {   /** @var $db \YAWK\db */
             // get data for this box
             $logins = $this->countLogins($db, $limit);
@@ -2510,7 +2512,7 @@ namespace YAWK
             echo "<!-- donut box:  -->
         <div class=\"box box-default\">
             <div class=\"box-header with-border\">
-                <h3 class=\"box-title\">Logins <small>overview user logins</small></h3>
+                <h3 class=\"box-title\">$lang[LOGINS] <small>$lang[OVERVIEW_LOGINS]</small></h3>
 
                 <div class=\"box-tools pull-right\">
                     <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"collapse\"><i class=\"fa fa-minus\"></i>
@@ -2540,7 +2542,7 @@ namespace YAWK
                                 var pieChart = new Chart(pieChartCanvas);
                                 // get browsers array
                                 // output js data with php function getJsonBrowsers
-                                var PieData = ";echo $this->getJsonLogins($db, $logins);
+                                var PieData = ";echo $this->getJsonLogins($db, $logins, $lang);
             echo"
                                 var pieOptions = {
                                     //Boolean - Whether we should show a stroke on each segment
@@ -2582,14 +2584,14 @@ namespace YAWK
                 // show browsers their value is greater than zero and exclude totals
                 if ($value > 0 && ($login !== "Total") && ($login === "FailedPercentage") || ($login === "SuccessPercentage"))
                 {   // 1 line for every browser
-                    if ($login === "FailedPercentage") { $login = "Failed"; }
-                    if ($login === "SuccessPercentage") { $login = "Success"; }
+                    if ($login === "FailedPercentage") { $login = $lang['FAILED']; }
+                    if ($login === "SuccessPercentage") { $login = $lang['SUCCESSFUL']; }
                     echo "<li><i class=\"fa fa-circle-o $textcolor\"></i> <b>$value%</b> $login</li>";
                 }
                 // show totals
                 if ($login === "Total")
                 {   // of how many visits
-                    echo "<li class=\"small\">latest $value Logins</li>";
+                    echo "<li class=\"small\">$lang[LATEST] $value $lang[LOGINS]</li>";
                 }
             }
             echo"

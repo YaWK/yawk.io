@@ -20,8 +20,10 @@ namespace YAWK {
     {
         /** * @var string contains the backend skin (eg. skin-blue)*/
         public $backendSkin;
-        /** * @var string the desired layout (eg. sidebar-mini) */
+        /** * @var string the desired layout (eg. sidebar-mini ) */
         public $backendLayout;
+        /** * @paceLoader string pace loader on top of page - true or false */
+        public $paceLoader;
 
         /**
          * AdminLTE constructor.
@@ -38,6 +40,40 @@ namespace YAWK {
             if (empty($this->backendLayout)){
                 $this->backendSkin = "sidebar-mini"; // default
             }
+            // get pace loading setting
+            if (\YAWK\settings::getSetting($db, "paceLoader") == "enabled")
+            {
+                $this->paceLoader = "
+                    <!-- PACE JS -->
+                    <script src=\"../system/engines/pace/pace.min.js\"></script>
+                    <!-- PACE.css-->
+                    <link rel=\"stylesheet\" href=\"../system/engines/pace/pace-minimal.css\">";
+
+                $paceLoaderColor = "background: #".\YAWK\settings::getSetting($db, "paceLoaderColor").";";
+                $paceLoaderHeight = "height: ".\YAWK\settings::getSetting($db, "paceLoaderHeight");
+                if (isset($paceLoaderColor) || (!empty($paceLoaderColor)))
+                {
+                    $this->paceLoader .= "
+                        <style>
+                            .pace .pace-progress {
+                            ".$paceLoaderColor."";
+                }
+                if (isset($paceLoaderHeight) || (!empty($paceLoaderHeight)))
+                {
+                    $this->paceLoader .= "
+                            ".$paceLoaderHeight."
+                            }
+                            </style>";
+                }
+                else
+                    {
+                        $this->paceLoader .= "}</style>";
+                    }
+            }
+            else
+                {
+                    $this->paceLoader = '';
+                }
         }
 
         /**
@@ -60,6 +96,9 @@ namespace YAWK {
     <!-- windows tiles -->
     <meta name=\"msapplication-TileColor\" content=\"#ff6600\">
     <meta name=\"msapplication-TileImage\" content=\"mstile-144x144.png\">
+    
+    ".$this->paceLoader."
+        
     <!-- Bootstrap 3.3.5 -->
     <link rel=\"stylesheet\" href=\"../system/engines/bootstrap/dist/css/bootstrap.min.css\">
     <!-- Animate CSS -->
@@ -85,7 +124,7 @@ namespace YAWK {
 
     <!-- Notify JS -->
     <script src=\"../system/engines/jquery/notify/bootstrap-notify.min.js\"></script>
-
+    
     <!-- YaWK Backend JS Functions -->
     <script type=\"text/javascript\" src=\"js/yawk-backend.js\"></script>
 
