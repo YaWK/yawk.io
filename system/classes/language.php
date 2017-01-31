@@ -169,5 +169,38 @@ namespace YAWK {
         } /* end setLanguage */
 
 
+        /**
+         * allow plugins to inject language tags to $lang array
+         * @param array $lang the core language array
+         * @param string $pathToFile absolute path to the injectable language file
+         * @return array $lang returns pushed language array
+         */
+        public function inject($lang, $pathToFile)
+        {
+            // check if language is saved in session or cookie to prevent unneccessary db actions
+            if (isset($_SESSION['lang']))
+            {   // set from session setting
+                $currentLanguage = $_SESSION['lang'];
+            }
+            elseif (isset($_COOKIE['lang']))
+            {   // set from cookie setting
+                $currentLanguage = $_COOKIE['lang'];
+            }
+            else
+                {   // get current language from db
+                    $currentLanguage = $this->getCurrentLanguage();
+                }
+
+            // get injectable tags from additional language file
+            $additionalTags = parse_ini_file("$pathToFile"."$currentLanguage".".ini");
+            // add every tag, once per row
+            foreach ($additionalTags AS $tag => $value)
+            {   // add data to $lang array
+                $lang[$tag] = $value;
+            }
+            // fin -
+            return $lang;
+        } /* end setLanguage */
+        
     } /* END CLASS */
 }
