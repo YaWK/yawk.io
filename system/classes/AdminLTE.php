@@ -1002,7 +1002,7 @@ namespace YAWK {
         }
 
         /**
-         * the collapseable sidebar
+         * draw a simple collapse box
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

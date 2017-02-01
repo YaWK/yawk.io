@@ -8,6 +8,13 @@
 </script>
 <?php
 include '../system/plugins/blog/classes/blog.php';
+// check if blog object is set
+if (!isset($blog)) { $blog = new \YAWK\PLUGINS\BLOG\blog(); }
+// check if language is set
+if (!isset($language) || (!isset($lang)))
+{   // inject (add) language tags to core $lang array
+    $lang = $blog->injectLanguageTags(@$lang, @$language);
+}
 
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
@@ -18,10 +25,10 @@ echo "
 /* draw Title on top */
 echo \YAWK\backend::getTitle($lang['BLOG'], $lang['BLOGS_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
-            <li><a href=\"index.php?page=plugins\" title=\"Plugins\"> Plugins</a></li>
-            <li><a href=\"index.php?plugin=blog\" title=\"Blog\"> Blog</a></li>
-            <li class=\"active\"><a href=\"index.php?plugin=blog&pluginpage=blog-new\" title=\"Blog\"> New</a></li>
+            <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+            <li><a href=\"index.php?page=plugins\" title=\"$lang[PLUGINS]\"> $lang[PLUGINS]</a></li>
+            <li><a href=\"index.php?plugin=blog\" title=\"$lang[BLOG]\"> $lang[BLOG]</a></li>
+            <li class=\"active\"><a href=\"index.php?plugin=blog&pluginpage=blog-new\" title=\"".$lang['BLOG_ADD']."\"> ".$lang['BLOG_ADD']."</a></li>
          </ol>
     </section>
     <!-- Main content -->
@@ -36,8 +43,8 @@ echo"<ol class=\"breadcrumb\">
     <input type="text" class="form-control" size="90" style="margin-bottom:5px;" placeholder="<?PHP echo $lang['BLOG_NAME']; ?>" name="name"><br>
     <input type="text" class="form-control" size="90" placeholder="<?PHP echo $lang['BLOG_DESCRIPTION']; ?>" name="description"><br>
     <input type="text" style="margin-top:5px; margin-bottom:5px;" size="45" class="form-control icp icp-auto iconpicker-element iconpicker-input" placeholder="<?PHP echo $lang['BLOG_ICON']; ?>" id="icon" name="icon"><br>
-    <input id="savebutton" class="btn btn-success" type="submit" name="create" value="Blog&nbsp;anlegen"><!-- MENU SELECTOR -->
-    &nbsp;&nbsp;im Men&uuml;&nbsp; <select name="menuID" class="btn btn-default">
+    <input id="savebutton" class="btn btn-success" type="submit" name="create" value="<?php echo $lang['BLOG_ADD']; ?>"><!-- MENU SELECTOR -->
+    &nbsp;&nbsp;<label for="menuID" class="small">im Men&uuml;:</label>&nbsp; <select id="menuID" name="menuID" class="btn btn-default">
         <?PHP
         foreach (YAWK\sys::getMenus($db) as $menue) {
             echo "<option value=\"" . $menue['id'] . "\"";

@@ -1,6 +1,12 @@
 <?php
 include '../system/plugins/blog/classes/blog.php';
+// check if blog object is set
 if (!isset($blog)) { $blog = new \YAWK\PLUGINS\BLOG\blog(); }
+// check if language is set
+if (!isset($language) || (!isset($lang)))
+{   // inject (add) language tags to core $lang array
+    $lang = $blog->injectLanguageTags(@$lang, @$language);
+}
 
 // ADD BLOG
 if (isset($_GET['addblog']))
@@ -135,7 +141,7 @@ echo"<ol class=\"breadcrumb\">
             $commentIcon = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
         }
         // count item entries to view in blog overview table
-        if ($res2 = $db->query("SELECT COUNT(id) FROM {blog_items} WHERE blogid = " . $blog->blogid . ""))
+        if ($res2 = $db->query("SELECT COUNT(id) FROM {blog_items} WHERE blogid = '".$blog->blogid."'"))
         {
         $item_count = mysqli_fetch_row($res2);
         $items = $item_count[0];

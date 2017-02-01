@@ -7,11 +7,16 @@
     });
 </script>
 <?php
-global $lang;
 include '../system/plugins/blog/classes/blog.php';
+// check if blog object is set
+if (!isset($blog)) { $blog = new \YAWK\PLUGINS\BLOG\blog(); }
+// check if language is set
+if (!isset($language) || (!isset($lang)))
+{   // inject (add) language tags to core $lang array
+    $lang = $blog->injectLanguageTags(@$lang, @$language);
+}
 YAWK\backend::getTitle($lang['BLOG'], $lang['BLOG_SETUP']);
-// create new blog object
-$blog = new \YAWK\PLUGINS\BLOG\blog();
+
 if (isset($_GET['blogid'])) { // if blog is set,
     $blog->id = $_GET['blogid']; // load id to object
 } else {

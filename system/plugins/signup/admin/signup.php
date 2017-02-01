@@ -50,7 +50,7 @@ if (isset($_POST['sent']))
                     $value="terms-of-service"; // set default value
                 }
                 // set terms of service setting
-                if (!\YAWK\settings::setSetting($db, $property, $value))
+                if (!\YAWK\settings::setSetting($db, $property, $value, $lang))
                 {   // throw error
                     \YAWK\alert::draw("warning", "Error!", "Settings: Could not set value <b>$value</b> of property <b>$property</b>","plugin=signup","4800");
                 }
@@ -68,7 +68,7 @@ if (isset($_POST['sent']))
             }
             else
             {   // any other setting
-                \YAWK\settings::setSetting($db, $property, $value);
+                \YAWK\settings::setSetting($db, $property, $value, $lang);
             }
         }
     }   // ./ end foreach

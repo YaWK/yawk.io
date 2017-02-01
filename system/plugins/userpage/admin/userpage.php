@@ -25,82 +25,82 @@ if (isset($_POST['sent'])){
             \YAWK\settings::setLongSetting($db, "userpage_helptext", $_POST['helptext']);
         }
         if (isset($_POST['hellotext'])) {
-            \YAWK\settings::setSetting($db, "userpage_hellotext", $_POST['hellotext']);
+            \YAWK\settings::setSetting($db, "userpage_hellotext", $_POST['hellotext'], $lang);
         }
         if (isset($_POST['hellotextsub'])) {
-            \YAWK\settings::setSetting($db, "userpage_hellotextsub", $_POST['hellotextsub']);
+            \YAWK\settings::setSetting($db, "userpage_hellotextsub", $_POST['hellotextsub'], $lang);
         }
         if (isset($_POST['hello'])) {
-            \YAWK\settings::setSetting($db, "userpage_hello", $_POST['hello']);
+            \YAWK\settings::setSetting($db, "userpage_hello", $_POST['hello'], $lang);
         }
         if (isset($_POST['hellogroup'])) {
-            \YAWK\settings::setSetting($db, "userpage_hellogroup", $_POST['hellogroup']);
+            \YAWK\settings::setSetting($db, "userpage_hellogroup", $_POST['hellogroup'], $lang);
         }
         if (isset($_POST['settings'])) {
-            \YAWK\settings::setSetting($db, "userpage_settings", $_POST['settings']);
+            \YAWK\settings::setSetting($db, "userpage_settings", $_POST['settings'], $lang);
         }
         if (isset($_POST['help'])) {
-            \YAWK\settings::setSetting($db, "userpage_help", $_POST['help']);
+            \YAWK\settings::setSetting($db, "userpage_help", $_POST['help'], $lang);
         }
         if (isset($_POST['profile'])) {
-            \YAWK\settings::setSetting($db, "userpage_profile", $_POST['profile']);
+            \YAWK\settings::setSetting($db, "userpage_profile", $_POST['profile'], $lang);
         }
         if (isset($_POST['admin'])) {
-            \YAWK\settings::setSetting($db, "userpage_admin", $_POST['admin']);
+            \YAWK\settings::setSetting($db, "userpage_admin", $_POST['admin'], $lang);
         }
         if (isset($_POST['dashboard'])) {
-            \YAWK\settings::setSetting($db, "userpage_dashboard", $_POST['dashboard']);
+            \YAWK\settings::setSetting($db, "userpage_dashboard", $_POST['dashboard'], $lang);
         }
         if (isset($_POST['messageplugin'])) {
-            \YAWK\settings::setSetting($db, "userpage_msgplugin", $_POST['messageplugin']);
+            \YAWK\settings::setSetting($db, "userpage_msgplugin", $_POST['messageplugin'], $lang);
         }
         if (isset($_POST['stats'])) {
-            \YAWK\settings::setSetting($db, "userpage_stats", $_POST['stats']);
+            \YAWK\settings::setSetting($db, "userpage_stats", $_POST['stats'], $lang);
         }
         if (isset($_POST['changeUsername'])) {
-            \YAWK\settings::setSetting($db, "userpage_changeUsername", $_POST['changeUsername']);
+            \YAWK\settings::setSetting($db, "userpage_changeUsername", $_POST['changeUsername'], $lang);
         }
         if (isset($_POST['changePassword'])) {
-            \YAWK\settings::setSetting($db, "userpage_changePassword", $_POST['changePassword']);
+            \YAWK\settings::setSetting($db, "userpage_changePassword", $_POST['changePassword'], $lang);
         }
         if (isset($_POST['changeEmail'])) {
-            \YAWK\settings::setSetting($db, "userpage_changeEmail", $_POST['changeEmail']);
+            \YAWK\settings::setSetting($db, "userpage_changeEmail", $_POST['changeEmail'], $lang);
         }
         if (isset($_POST['changeFirstname'])) {
-            \YAWK\settings::setSetting($db, "userpage_changeFirstname", $_POST['changeFirstname']);
+            \YAWK\settings::setSetting($db, "userpage_changeFirstname", $_POST['changeFirstname'], $lang);
         }
         if (isset($_POST['changeLastname'])) {
-            \YAWK\settings::setSetting($db, "userpage_changeLastname", $_POST['changeLastname']);
+            \YAWK\settings::setSetting($db, "userpage_changeLastname", $_POST['changeLastname'], $lang);
         }
         if (isset($_POST['changeStreet'])) {
-            \YAWK\settings::setSetting($db, "userpage_changeStreet", $_POST['changeStreet']);
+            \YAWK\settings::setSetting($db, "userpage_changeStreet", $_POST['changeStreet'], $lang);
         }
         if (isset($_POST['changeZipcode'])) {
-            \YAWK\settings::setSetting($db, "userpage_changeZipcode", $_POST['changeZipcode']);
+            \YAWK\settings::setSetting($db, "userpage_changeZipcode", $_POST['changeZipcode'], $lang);
         }
         if (isset($_POST['changeCity'])) {
-            \YAWK\settings::setSetting($db, "userpage_changeCity", $_POST['changeCity']);
+            \YAWK\settings::setSetting($db, "userpage_changeCity", $_POST['changeCity'], $lang);
         }
         if (isset($_POST['changeCountry'])) {
-            \YAWK\settings::setSetting($db, "userpage_changeCountry", $_POST['changeCountry']);
+            \YAWK\settings::setSetting($db, "userpage_changeCountry", $_POST['changeCountry'], $lang);
         }
         if (isset($_POST['changeState'])) {
-            \YAWK\settings::setSetting($db, "userpage_changeState", $_POST['changeState']);
+            \YAWK\settings::setSetting($db, "userpage_changeState", $_POST['changeState'], $lang);
         }
         if (isset($_POST['changeUrl'])) {
-            \YAWK\settings::setSetting($db, "userpage_changeUrl", $_POST['changeUrl']);
+            \YAWK\settings::setSetting($db, "userpage_changeUrl", $_POST['changeUrl'], $lang);
         }
         if (isset($_POST['changeFacebook'])) {
-            \YAWK\settings::setSetting($db, "userpage_changeFacebook", $_POST['changeFacebook']);
+            \YAWK\settings::setSetting($db, "userpage_changeFacebook", $_POST['changeFacebook'], $lang);
         }
         if (isset($_POST['changeTwitter'])) {
-            \YAWK\settings::setSetting($db, "userpage_changeTwitter", $_POST['changeTwitter']);
+            \YAWK\settings::setSetting($db, "userpage_changeTwitter", $_POST['changeTwitter'], $lang);
         }
         if (isset($_POST['logoutmenu'])) {
-            \YAWK\settings::setSetting($db, "userpage_logoutmenu", $_POST['logoutmenu']);
+            \YAWK\settings::setSetting($db, "userpage_logoutmenu", $_POST['logoutmenu'], $lang);
         }
         if (isset($_POST['activeTab'])) {
-            \YAWK\settings::setSetting($db, "userpage_activeTab", $_POST['activeTab']);
+            \YAWK\settings::setSetting($db, "userpage_activeTab", $_POST['activeTab'], $lang);
         }
     }
 } // end if $_POST['sent']

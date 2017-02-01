@@ -1,8 +1,14 @@
 <?php
-// include blog class
 include '../system/plugins/blog/classes/blog.php';
-// create object if needed
+// check if blog object is set
 if (!isset($blog)) { $blog = new \YAWK\PLUGINS\BLOG\blog(); }
+// check if page object is set
+if (!isset($page)) { $page = new \YAWK\page(); }
+// check if language is set
+if (!isset($language) || (!isset($lang)))
+{   // inject (add) language tags to core $lang array
+    $lang = $blog->injectLanguageTags(@$lang, @$language);
+}
 // load blog properties
 $blog->loadItemProperties($db, $_GET['blogid'], $_GET['itemid']);
 
@@ -57,11 +63,11 @@ if (isset($_POST['save'])) {
     // Summernot Editor \r\n removal
     if ($blog->save($db))
     {   // throw success notify
-        YAWK\alert::draw("success", "Hooray!", "Der Eintrag wurde erfolgreich gespeichert!", "", "800");
+        YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[ENTRY] $lang[SAVED]", "", "800");
     }
     else
     {   // saving failed, throw error
-        YAWK\alert::draw("danger", "Fehler", "Das Blog ID " . $_GET['blogid'] . " " . $_POST['title'] . " - " . $_POST['subtitle'] . " konnte nicht gespeichert werden.","","3800");
+        YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[BLOG] " . $_GET['blogid'] . " " . $_POST['title'] . " - " . $_POST['subtitle'] . " $lang[NOT] $lang[SAVED]","","3800");
     }
 }
 // path to cms
@@ -78,9 +84,9 @@ echo "
 /* draw Title on top */
 \YAWK\PLUGINS\BLOG\blog::getBlogTitle($blog->blogtitle, $lang['EDIT'], $blog->icon);
 echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
-            <li><a href=\"index.php?page=plugins\" title=\"Plugins\"> Plugins</a></li>
-            <li class=\"active\"><a href=\"index.php?plugin=blog\" title=\"Blog\"> Blog</a></li>
+            <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+            <li><a href=\"index.php?page=plugins\" title=\"$lang[PLUGINS]\"> $lang[PLUGINS]</a></li>
+            <li class=\"active\"><a href=\"index.php?plugin=blog\" title=\"$lang[BLOG]\"> $lang[BLOG]</a></li>
          </ol>
     </section>
     <!-- Main content -->
@@ -366,7 +372,7 @@ $blog->layout = $blog->getBlogProperty($db, $blog->blogid, "layout");
     {
         echo "
         <!-- EDITOR -->
-        <label for=\"summernote\">Teaser Text</label>
+        <label for=\"summernote\">$lang[TEASER_TEXT]</label>
         <textarea
             id=\"summernote\"
             class=\"form-control\"
@@ -375,7 +381,7 @@ $blog->layout = $blog->getBlogProperty($db, $blog->blogid, "layout");
     }
         ?>
     <!-- EDITOR -->
-    <label for="summernote2">Blog Text</label>
+    <label for="summernote2"><?php echo $lang['BLOG_TEXT']; ?></label>
     <textarea
         id="summernote2"
         class="form-control"
@@ -404,7 +410,7 @@ $blog->layout = $blog->getBlogProperty($db, $blog->blogid, "layout");
 
             <?php
             // SETTINGS: filename + subtitle
-            $header = "<i class=\"fa fa-file-text-o\"></i>&nbsp; Einstellungen <small>Titel & Dateiname</small>";
+            $header = "<i class=\"fa fa-file-text-o\"></i>&nbsp; $lang[SETTINGS] <small>$lang[TITLE] &amp; $lang[FILENAME]</small>";
             $content = "<label for=\"filename\">$lang[FILENAME]</label><br>
                     <input type=\"text\"
                                class=\"form-control\"
@@ -427,7 +433,9 @@ $blog->layout = $blog->getBlogProperty($db, $blog->blogid, "layout");
             <!-- PUBLISHING -->
             <div class="box box-default">
                 <div class="box-header with-border">
-                    <h3 class="box-title"><i class="fa fa-clock-o"></i>&nbsp;&nbsp;Ver&ouml;ffentlichung <small>Zeitpunkt & Privatsph&auml;re</small></h3>
+                    <h3 class="box-title"><i class="fa fa-clock-o"></i>
+                        &nbsp;<?php echo "$lang[PUBLISHING] <small>$lang[EFFECTIVE_TIME] &amp; $lang[PRIVACY]</small>"; ?>
+                    </h3>
                     <!-- box-tools -->
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -483,11 +491,11 @@ $blog->layout = $blog->getBlogProperty($db, $blog->blogid, "layout");
                     <!-- PAGE ON / OFF STATUS -->
                     <label for="published"><i class="fa fa-eye"></i> <?php print $lang['ENTRY'];print"&nbsp;";print $lang['ONLINE']; ?></label><br>
                     <?php if($blog->published == 1){
-                        $publishedHtml = "<option value=\"1\" selected=\"selected\">online</option>";
-                        $publishedHtml .= "<option value=\"0\" >offline</option>";
+                        $publishedHtml = "<option value=\"1\" selected=\"selected\">$lang[ONLINE]</option>";
+                        $publishedHtml .= "<option value=\"0\" >$lang[OFFLINE]</option>";
                     } else {
-                        $publishedHtml = "<option value=\"0\" selected=\"selected\">offline</option>";
-                        $publishedHtml .= "<option value=\"1\" >online</option>";
+                        $publishedHtml = "<option value=\"0\" selected=\"selected\">$lang[OFFLINE]</option>";
+                        $publishedHtml .= "<option value=\"1\" >$lang[ONLINE]</option>";
                     } ?>
                     <select id="published" name="published" class="form-control">
                         <?php echo $publishedHtml; ?>
@@ -499,7 +507,7 @@ $blog->layout = $blog->getBlogProperty($db, $blog->blogid, "layout");
             <!-- META TAGS -->
             <div class="box box-default">
                 <div class="box-header with-border">
-                    <h3 class="box-title"><i class="fa fa-google"></i>&nbsp;&nbsp;Meta Tags <small>Suchmaschinenoptimierung f&uuml;r diese Seite.</small></h3>
+                    <h3 class="box-title"><i class="fa fa-google"></i>&nbsp;&nbsp;<?php echo "$lang[META_TAGS] <small>$lang[SEO]"; ?></h3>
                     <!-- box-tools -->
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -510,22 +518,22 @@ $blog->layout = $blog->getBlogProperty($db, $blog->blogid, "layout");
                 <!-- /.box-header -->
                 <div class="box-body" style="display: block;">
                     <!-- LOCAL META SITE DESCRIPTION -->
-                    <label for="metadescription">Meta Description</label><br>
+                    <label for="metadescription"><?php echo "$lang[META_DESC]"; ?></label><br>
                     <textarea cols="64"
                               rows="2"
                               id="metadescription"
                               class="form-control"
                               maxlength="255"
-                              placeholder="Page Description shown on Google"
-                              name="metadescription"><?php $page = new \YAWK\page(); print $page->getMetaTags($db, $blog->pageid, "description"); ?>
+                              placeholder="<?php echo "$lang[PAGE_DESC_PLACEHOLDER]"; ?>"
+                              name="metadescription"><?php print $page->getMetaTags($db, $blog->pageid, "description"); ?>
                     </textarea>
                     <!-- LOCAL META SITE KEYWORDS -->
-                    <label for="metakeywords">Meta Keywords</label>
+                    <label for="metakeywords"><?php echo "$lang[META_KEYWORDS]"; ?></label>
                     <input type="text"
                            size="64"
                            id="metakeywords"
                            class="form-control"
-                           placeholder="keyword1, keyword2, keyword3..."
+                           placeholder="<?php echo "$lang[KEYWORD] 1, $lang[KEYWORD] 2, $lang[KEYWORD] 3..."; ?>"
                            name="metakeywords"
                            value="<?php print $page->getMetaTags($db, $blog->pageid, "keywords");  ?>">
                 </div>
@@ -535,7 +543,7 @@ $blog->layout = $blog->getBlogProperty($db, $blog->blogid, "layout");
             <!-- blog thumbnail -->
             <div class="box box-default">
                 <div class="box-header with-border">
-                    <h3 class="box-title"><i class="fa fa-photo"></i>&nbsp;&nbsp;Vorschau <small>Foto im Teaser</small></h3>
+                    <h3 class="box-title"><i class="fa fa-photo"></i>&nbsp;&nbsp;<?php echo "$lang[TEASER] <small>$lang[TEASER_IMG]</small>"; ?></h3>
                     <!-- box-tools -->
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -546,7 +554,7 @@ $blog->layout = $blog->getBlogProperty($db, $blog->blogid, "layout");
                 <!-- /.box-header -->
                 <div class="box-body" style="display: block;">
                     <!-- THUMBNAIL IMAGE -->
-                    <label for="thumbnail"><?php print $lang['THUMBNAIL']; ?>:&nbsp;</label><br>
+                    <label for="thumbnail"><?php print $lang['THUMBNAIL']; ?>&nbsp;</label><br>
                     <input
                         type="text"
                         class="form-control"
@@ -556,7 +564,7 @@ $blog->layout = $blog->getBlogProperty($db, $blog->blogid, "layout");
                         maxlength="255"
                         placeholder="media/images/anyfile.jpg"
                         value="<?php print $blog->thumbnail; ?>">
-                    <label for="thumbnail"><i class="fa fa-youtube"></i> &nbsp;<?php print $lang['YOUTUBEURL']; ?>:&nbsp;</label><br>
+                    <label for="thumbnail"><i class="fa fa-youtube"></i> &nbsp;<?php print $lang['YOUTUBEURL']; ?>&nbsp;</label><br>
                     <!-- YouTube Link -->
                     <input
                         type="text"
@@ -574,7 +582,7 @@ $blog->layout = $blog->getBlogProperty($db, $blog->blogid, "layout");
             <!-- blog thumbnail -->
             <div class="box box-default">
                 <div class="box-header with-border">
-                    <h3 class="box-title"><i class="fa fa-bars"></i>&nbsp;&nbsp;SubMen&uuml; <small>zusätzliches Men&uuml; auf dieser Seite</small></h3>
+                    <h3 class="box-title"><i class="fa fa-bars"></i>&nbsp;&nbsp;<?php echo "$lang[SUBMENU] <small>$lang[SUBMENU_SUBTEXT]</small>"; ?></h3>
                     <!-- box-tools -->
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -585,10 +593,10 @@ $blog->layout = $blog->getBlogProperty($db, $blog->blogid, "layout");
                 <!-- /.box-header -->
                 <div class="box-body" style="display: block;">
                     <!-- SUB MENU SELECTOR -->
-                    <label for="menu">SubMen&uuml;</label>
+                    <label for="menu"><?php echo $lang['SUBMENU']; ?></label>
                         <select name="menu" class="form-control">
                             <option value="<?php print \YAWK\sys::getSubMenu($db, $page->id); ?>"><?php print \YAWK\sys::getMenuItem($db, $page->id); ?></option>
-                            <option value="0">-- Kein Men&uuml; --</option>
+                            <option value="0"><?php echo $lang['NO_MENU_SELECTED']; ?></option>
                             <?php
                             foreach(YAWK\sys::getMenus($db) as $menue){
                                 print "<option value=\"".$menue['id']."\"";
@@ -612,7 +620,7 @@ $blog->layout = $blog->getBlogProperty($db, $blog->blogid, "layout");
         <!-- blog thumbnail -->
         <div class="box box-default">
             <div class="box-header with-border">
-                <h3 class="box-title"><i class="fa fa-object-ungroup"></i>&nbsp;&nbsp;Layout <small>und Kommentare</small></h3>
+                <h3 class="box-title"><i class="fa fa-object-ungroup"></i>&nbsp;&nbsp;<?php echo "$lang[LAYOUT] <small>$lang[AND] $lang[COMMENTS]</small>"; ?></h3>
                 <!-- box-tools -->
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -623,17 +631,17 @@ $blog->layout = $blog->getBlogProperty($db, $blog->blogid, "layout");
             <!-- /.box-header -->
             <div class="box-body" style="display: block;">
                 <!-- LAYOUT -->
-                <label for="itemlayout"><?php print $lang['LAYOUT']; ?>:&nbsp;</label><br>
+                <label for="itemlayout"><?php print $lang['LAYOUT']; ?>&nbsp;</label><br>
                 <select name="itemlayout" id="itemlayout" class="form-control"><?php
                     $layoutOptions = '';
                     $currentLayout = '';
                     $layouts = array(
-                        "-1" => "Blog Vorgabe",
-                        "0" => "1 spaltig, Textblog",
-                        "1" => "2 spaltig, Vorschaubild links",
-                        "2" => "2 spaltig, Vorschaubild rechts",
-                        "3" => "3 spaltig, Newspaper Layout",
-                        "4" => "1 spaltig, YouTube Blog Layout");
+                        "-1" => "$lang[BLOG_SETTING]",
+                        "0" => "1 $lang[COL], Textblog",
+                        "1" => "2 $lang[COLS], Vorschaubild links",
+                        "2" => "2 $lang[COLS], Vorschaubild rechts",
+                        "3" => "3 $lang[COLS], Newspaper Layout",
+                        "4" => "1 $lang[COL], YouTube Blog Layout");
                     foreach ($layouts as $id => $layout)
                     {
                         if ($blog->itemlayout == $id)
@@ -652,17 +660,16 @@ $blog->layout = $blog->getBlogProperty($db, $blog->blogid, "layout");
                     ?>
 
                 </select>
-                <label for="itemcomments"><i class="fa fa-comment-o"></i> &nbsp;<?php print $lang['COMMENTS']; ?>:&nbsp;</label><br>
+                <label for="itemcomments"><i class="fa fa-comment-o"></i> &nbsp;<?php print $lang['COMMENTS']; ?>&nbsp;</label><br>
                 <!-- YouTube Link -->
                 <select name="itemcomments" id="itemcomments" class="form-control">
-                    <option value="-1">Blog Vorgabe</option>
-                    <option value="1">Kommentare erlaubt</option>
-                    <option value="0">Kommentare verboten</option>
+                    <option value="-1"><?php echo $lang['BLOG_SETTING']; ?></option>
+                    <option value="1"><?php echo $lang['COMMENTS_ALLOWED']; ?></option>
+                    <option value="0"><?php echo $lang['COMMENTS_FORBIDDEN']; ?></option>
                 </select>
             </div>
             <!-- /.box-body -->
         </div>
-
         <!-- /. ADDITIONAL BOXES-->
 
     <!-- HIDDEN FIELDS -->

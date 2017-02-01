@@ -1,6 +1,12 @@
 <?PHP
 include '../system/plugins/blog/classes/blog.php';
-$blog = new \YAWK\PLUGINS\BLOG\blog();
+// check if blog object is set
+if (!isset($blog)) { $blog = new \YAWK\PLUGINS\BLOG\blog(); }
+// check if language is set
+if (!isset($language) || (!isset($lang)))
+{   // inject (add) language tags to core $lang array
+    $lang = $blog->injectLanguageTags(@$lang, @$language);
+}
 
 $blog->published = $_GET['published'];
 

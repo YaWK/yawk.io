@@ -149,7 +149,7 @@ if (isset($_GET['del']) && ($_GET['del'] === "1"))
             else    // menu is offline
                 {   // set colors and label
                     $pub = "danger";
-                    $pubtext = $lang['OFF'];
+                    $pubtext = $lang['OFF_'];
                     // if menu is set as globalmenu
                     if ($row['id'] === $globalMenuID)
                     {   // set colors and label text

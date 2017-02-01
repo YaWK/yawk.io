@@ -1,8 +1,17 @@
+<?php
+if (!isset($lang))
+{
+    @require_once 'system/classes/language.php';
+    $lang = new \YAWK\language();
+    $lang = $lang->init();
+}
+?>
 <link href="system/engines/jquery/lightbox2/css/lightbox.min.css" rel="stylesheet">
 <script src="system/engines/jquery/lightbox2/js/lightbox.min.js"></script>
 <script type="text/javascript">
     lightbox.option({
-        'albumLabel': "Image %1 of %2",
+     //   'albumLabel': "<?php echo $lang['IMAGES']; ?> %1 of %2",
+      //  'albumLabel': "Image %1 of %2",
         'wrapAround': true
     });
 </script>

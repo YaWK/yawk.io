@@ -1,6 +1,12 @@
 <?php
-include '../system/plugins/blog/classes/blog.php';                  // include blog class
-if (!isset($blog)) { $blog = new \YAWK\PLUGINS\BLOG\blog(); }       // generate new blog object
+include '../system/plugins/blog/classes/blog.php';
+// check if blog object is set
+if (!isset($blog)) { $blog = new \YAWK\PLUGINS\BLOG\blog(); }
+// check if language is set
+if (!isset($language) || (!isset($lang)))
+{   // inject (add) language tags to core $lang array
+    $lang = $blog->injectLanguageTags(@$lang, @$language);
+}
 
 // TOGGLE COMMENT ON/OFF
 if (isset($_GET['toggle']))
@@ -82,10 +88,10 @@ echo "
 /* draw Title on top */
 \YAWK\PLUGINS\BLOG\blog::getBlogTitle($lang['COMMENTS'], "$lang[IN_BLOG] $blog->name", $blog->icon);
 echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
-            <li><a href=\"index.php?page=plugins\" title=\"Plugins\"> Plugins</a></li>
-            <li><a href=\"index.php?plugin=blog\" title=\"Blog\"> Blog</a></li>
-            <li class=\"active\"><a href=\"index.php?plugin=&pluginpage=blog-comments\" title=\"Comments\"> Comments</a></li>
+            <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+            <li><a href=\"index.php?page=plugins\" title=\"$lang[PLUGINS]\"> $lang[PLUGINS]</a></li>
+            <li><a href=\"index.php?plugin=blog\" title=\"$lang[BLOG]\"> $lang[BLOG]</a></li>
+            <li class=\"active\"><a href=\"index.php?plugin=&pluginpage=blog-comments\" title=\"$lang[COMMENTS]\"> $lang[COMMENTS]</a></li>
          </ol>
     </section>
     <!-- Main content -->
@@ -104,12 +110,12 @@ echo"<ol class=\"breadcrumb\">
     <thead>
     <tr>
         <td width="3%"><strong>&nbsp;</strong></td>
-        <td width="3%" class=\"text-center\"><strong>Group</strong></td>
-        <td width="13%" class=\"text-center\"><strong>User</strong></td>
-        <td width="14%" class=\"text-center\"><strong>Date</strong></td>
-        <td width="57%"><strong>Comment</strong></td>
-        <td width="5%" class=\"text-center\"><strong>ID</strong></td>
-        <td width="5%" class=\"text-center\"><strong>Aktionen</strong></td>
+        <td width="3%" class=\"text-center\"><strong><?php echo $lang['GROUP']; ?></strong></td>
+        <td width="13%" class=\"text-center\"><strong><?php echo $lang['USER']; ?></strong></td>
+        <td width="14%" class=\"text-center\"><strong><?php echo $lang['DATE']; ?></strong></td>
+        <td width="57%"><strong><?php echo $lang['COMMENT']; ?></strong></td>
+        <td width="5%" class=\"text-center\"><strong><?php echo $lang['ID']; ?></strong></td>
+        <td width="5%" class=\"text-center\"><strong><?php echo $lang['ACTIONS']; ?></strong></td>
     </tr>
     </thead>
     <tbody>
@@ -139,11 +145,11 @@ echo"<ol class=\"breadcrumb\">
         switch ($row['published']) {
             case 0:
                 $pub = "danger";
-                $pubtext = "Off";
+                $pubtext = "$lang[OFFLINE]";
                 break;
             case 1:
                 $pub = "success";
-                $pubtext = "On";
+                $pubtext = "$lang[ONLINE]";
                 break;
         }
 
@@ -181,9 +187,9 @@ echo"<ol class=\"breadcrumb\">
                 <span class=\"label label-$pub\">$pubtext</span></a>&nbsp;</td>
                 
                 <td class=\"text-center\">
-                <span class=\"label label-$color\">" . $label . "</span></td>
+                <span class=\"label label-$color\">".$label."</span></td>
                 
-                <td class=\"text-center\">" . $comment_user . "</td>
+                <td class=\"text-center\">".$comment_user."</td>
 
                 <td><a href=\"index.php?plugin=blog&pluginpage=blog-edit&itemid=" . $row['id'] . "&blogid=" . $blog->id . "\"><div style=\"width:100%\">" . $row['date_created'] . "</div></a></td>
                 <td><a href=\"index.php?plugin=blog&pluginpage=blog-edit&itemid=" . $row['id'] . "&blogid=" . $blog->id . "\" style=\"color: #7A7376;\"><div style=\"width:100%\">" . $row['comment'] . "</div></a></td>
@@ -192,10 +198,10 @@ echo"<ol class=\"breadcrumb\">
 
                 <td class=\"text-center\"> 
 
-                  <a class=\"icon icon-trash\" data-confirm=\"Soll der Eintrag &laquo;" . $comment_user . " - " . $row['comment'] . "&raquo; wirklich gel&ouml;scht werden?\" title=\"DELETE " . $row['id'] . "\" href=\"index.php?plugin=blog&pluginpage=blog-deletecomment&item=kill&commentid=" . $row['id'] . "&blogid=" . $blog->id . "&itemid=" . $row['itemid'] . "&delete=true\">
+                  <a class=\"icon icon-trash\" data-confirm=\"$lang[DEL_COMMENT] &laquo;" . $comment_user . " - " . $row['comment'] . "&raquo;\" title=\"DELETE " . $row['id'] . "\" href=\"index.php?plugin=blog&pluginpage=blog-deletecomment&item=kill&commentid=" . $row['id'] . "&blogid=" . $blog->id . "&itemid=" . $row['itemid'] . "&delete=true\">
                   </a>
 
-                  <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Soll der Eintrag &laquo;" . $row['id'] . " / " . $row['comment'] . "&raquo; wirklich gel&ouml;scht werden?\"
+                  <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"$lang[DEL_ENTRY] &laquo;" . $row['id'] . " / " . $row['comment'] . "&raquo;\"
                   title=\"" . $lang['DEL'] . "\" href=\"index.php?plugin=blog&pluginpage=blog-comments&blogid=" . $blog->id . "&commentid=" . $row['id'] . "&itemid=" . $row['itemid'] . "&deletecomment=true\">
                   </a>
                 </td>

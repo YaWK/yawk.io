@@ -1,5 +1,11 @@
 <?PHP
 include '../system/plugins/blog/classes/blog.php';
+// check if language is set
+if (!isset($language) || (!isset($lang)))
+{   // inject (add) language tags to core $lang array
+    $blog = new \YAWK\PLUGINS\BLOG\blog();
+    $lang = $blog->injectLanguageTags(@$lang, @$language);
+}
 $item = new \YAWK\PLUGINS\BLOG\blog();
 $item->gid = $_GET['itemgid'];
 $item->blogid = $_GET['blogid'];
@@ -40,5 +46,5 @@ if ($item->toggleRole($db, $item->gid, $item->id, $item->blogid))
 }
 else
 {   // failed, throw error
-    print \YAWK\alert::draw("danger", "Error", "Could not toggle blog status.","plugin=blog&pluginpage=blog-entries&blogid=" . $item->blogid . "","3800");
+    print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[TOGGLE_FAILED]","plugin=blog&pluginpage=blog-entries&blogid=" . $item->blogid . "","3800");
 }

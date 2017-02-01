@@ -1,6 +1,12 @@
 <?php
 include '../system/plugins/blog/classes/blog.php';
+// check if blog object is set
 if (!isset($blog)) { $blog = new \YAWK\PLUGINS\BLOG\blog(); }
+// check if language is set
+if (!isset($language) || (!isset($lang)))
+{   // inject (add) language tags to core $lang array
+    $lang = $blog->injectLanguageTags(@$lang, @$language);
+}
 // SET BLOG ITEM PROPERTIES
 if (isset($_GET['blogid']))
     {   // pickup + store the blog ID from GET variable
@@ -24,21 +30,21 @@ if (isset($_GET['toggle']))
 // check status and toggle it
     if ($published === '1') {
         $published = 0;
-        $status = "offline";
+        $status = "$lang[OFFLINE]";
         $color = "danger";
     } else {
         $published = 1;
-        $status = "online";
+        $status = "$lang[ONLINE]";
         $color = "success";
     }
 
     if ($blog->toggleItemOffline($db, $blogid, $published))
     {   //
-        print \YAWK\alert::draw($color, "Page is now $status", "Toggle page status successful.", "", 800);
+        print \YAWK\alert::draw($color, "$lang[PAGE] $lang[IS] $lang[NOW] $status", "$lang[PAGE_TOGGLE] $lang[SUCCESSFUL]", "", 800);
     }
     else
     {
-        print \YAWK\alert::draw("danger", "Error", "Could not toggle status of this page.", "", 6800);
+        print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[PAGE_TOGGLE_FAILED]", "", 6800);
     }
 
 }
@@ -63,11 +69,11 @@ if (isset($_GET['copy']))
         {
             if($blog->copyItem($db))
             {   // success
-                \YAWK\alert::draw("success", "Erfolg!", "Der Blogeintrag ".$_GET['itemid']." wurde kopiert!","","2000");
+                \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[BLOG] $lang[ITEM] ".$_GET['itemid']." $lang[COPIED]","","2000");
             }
             else
             {   // copy failed, throw error
-                \YAWK\alert::draw("danger", "Fehler!", "Der Blogeintrag konnte nicht kopiert werden.", "plugin=blog&pluginpage=blog-entries&blogid=$blog->id","3800");
+                \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[BLOG] $lang[ITEM]", "plugin=blog&pluginpage=blog-entries&blogid=$blog->id $lang[COPY] $lang[FAILED]","3800");
             }
         }
     }
@@ -85,7 +91,7 @@ if (isset($_GET['delete']) || ($_GET === "1"))
     {   // delete blog item
         if (!$blog->deleteItem($db, $_GET['blogid'], $_GET['itemid'], $_GET['pageid']))
         {   // delete item failed, throw error
-            \YAWK\alert::draw("danger", "Could not delete blog page: #$_GET[itemid] / $_GET[title]", "Is the entry even still there? Please try again.", "", 5800);
+            \YAWK\alert::draw("danger", "$lang[ERROR] $lang[ID] #$_GET[itemid] / $_GET[title]", "$lang[PAGE_DEL_FAILED]", "", 5800);
         }
     }
 }
@@ -97,11 +103,11 @@ if (isset($_GET['deletecomment']))
         // delete comment
         if (isset($_GET['commentid']) && (isset($_GET['itemid']) && (isset($_GET['blogid'])))) {
             if ($blog->deleteComment($db, $_GET['blogid'], $_GET['itemid'], $_GET['commentid'])) {
-                \YAWK\alert::draw("success", "Success! ", "Comment ID " . $_GET['id'] . " deleted.", "","1200");
+                \YAWK\alert::draw("success", "$lang[SUCCESS] ", "$lang[COMMENT] $lang[ID] " . $_GET['id'] . " $lang[DELETED]", "","1200");
             }
             else
             {
-                \YAWK\alert::draw("danger", "Error: ", "Could not delete comment ID: " . $_GET['id'] . " ", "","3800");
+                \YAWK\alert::draw("danger", "$lang[ERROR] ", "$lang[DELETE] $lang[COMMENT] $lang[ID] " . $_GET['id'] . " ", "","3800");
             }
         }
     }
@@ -131,9 +137,9 @@ echo "
         /* draw Title on top */
         \YAWK\PLUGINS\BLOG\blog::getBlogTitle($blog->name, $lang['MANAGE'], $blog->icon);
         echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
-            <li><a href=\"index.php?page=plugins\" title=\"Plugins\"> Plugins</a></li>
-            <li class=\"active\"><a href=\"index.php?plugin=blog\" title=\"Blog\"> Blog</a></li>
+            <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+            <li><a href=\"index.php?page=plugins\" title=\"$lang[PLUGINS]\"> $lang[PLUGINS]</a></li>
+            <li class=\"active\"><a href=\"index.php?plugin=blog\" title=\"$lang[BLOG]\"> $lang[BLOG]</a></li>
         </ol>
     </section>
     <!-- Main content -->
@@ -181,11 +187,11 @@ echo "
             switch ($row['published']) {
                 case 0:
                     $pub = "danger";
-                    $pubtext = "Off";
+                    $pubtext = "$lang[OFFLINE]";
                     break;
                 case 1:
                     $pub = "success";
-                    $pubtext = "On";
+                    $pubtext = "$lang[ONLINE]";
                     break;
             }
 
@@ -204,12 +210,12 @@ echo "
 
           if ($atm < $date_publish) {
               $pub = "warning";
-              $pubtext = "in queue";
+              $pubtext = "$lang[IN_QUEUE]";
           }
           if ($date_unpublish !== "0000-00-00 00:00:00"){
               if ($atm >= $date_unpublish) {
               $pub = "default";
-              $pubtext = "xpired";
+              $pubtext = "$lang[EXPIRED]";
               }
           }
 
@@ -245,7 +251,7 @@ echo "
                      
 
                       <a class=\"fa fa-edit\" title=\"" . $lang['EDIT'] . ": " . $row['title'] . "\" href=\"index.php?plugin=blog&pluginpage=blog-edit&itemid=" . $row['id'] . "&blogid=" . $blog->id . "\"></a>&nbsp;
-                      <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Soll der Eintrag &laquo;" . $row['id'] . " / " . $row['title'] . "&raquo; wirklich gel&ouml;scht werden?\"
+                      <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"".$lang['ENTRY']." &laquo;" . $row['id'] . " / " . $row['title'] . "&raquo; ".$lang['BLOG_ITEM_DEL_REQUEST']."\"
                       title=\"" . $lang['DEL'] . "\" href=\"index.php?plugin=blog&pluginpage=blog-entries&title=".$row['title']."&pageid=" . $row['pageid'] . "&itemid=" . $row['id'] . "&blogid=" . $blog->id . "&delete=1\">
                       </a>
                     </td>
@@ -254,7 +260,7 @@ echo "
     }
     else
     {
-        \YAWK\alert::draw("warning", "Warning: ", "Could not fetch blog entries from database", "","3800");
+        \YAWK\alert::draw("warning", "$lang[WARNING] ", "$lang[BLOG_ENTRY_DEL_FAILED]", "","3800");
     }
     ?>
     </tbody>
