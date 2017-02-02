@@ -101,12 +101,12 @@ if (isset($_POST['setup'])) {
     // finally: save blog settings
     if ($blog->setup($db, $blog->blogid))
     {   // success
-        echo YAWK\alert::draw("success", "Hooray!", "Entry saved successfully.","plugin=blog","1200");
+        echo YAWK\alert::draw("success", "$lang[ERROR]", "$lang[ENTRY_SAVED]","plugin=blog","1200");
         exit;
     }
     else
     {   // setup failed, throw error
-        echo YAWK\alert::draw("danger", "Error: ", "Settings for Blog ID " . $_POST['blogid'] . " " . $blog->name . " - " . $blog->description . " could not be saved.","plugin=blog","3800");
+        echo YAWK\alert::draw("danger", "$lang[ERROR] ", "$lang[SETTINGS] $lang[BLOG] $lang[ID] " . $_POST['blogid'] . " " . $blog->name . " - " . $blog->description . " $lang[NOT_SAVED]","plugin=blog","3800");
         exit;
     }
 }
@@ -246,10 +246,10 @@ echo "
         /* draw Title on top */
         echo \YAWK\backend::getTitle($lang['BLOG'], $lang['BLOG_SETUP']);
         echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
-            <li><a href=\"index.php?page=plugins\" title=\"Plugins\"> Plugins</a></li>
-            <li><a href=\"index.php?plugin=blog\" title=\"Blog\"> Blog</a></li>
-            <li class=\"active\"><a href=\"index.php?plugin=blog&pluginpage=blog-setup\" title=\"Blog\"> Setup</a></li>
+            <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+            <li><a href=\"index.php?page=plugins\" title=\"$lang[PLUGINS]\"> $lang[PLUGINS]</a></li>
+            <li><a href=\"index.php?plugin=blog\" title=\"$lang[BLOG]\"> $lang[BLOG]</a></li>
+            <li class=\"active\"><a href=\"index.php?plugin=blog&pluginpage=blog-setup\" title=\"$lang[SETUP]\"> $lang[SETUP]</a></li>
         </ol>
     </section>
     <!-- Main content -->
@@ -304,11 +304,11 @@ echo "
            placeholder="<?PHP echo $lang['BLOG_ICON']; ?>"
            id="icon"
            name="icon"
-           value="<?PHP echo $blog->icon; ?>"/><br><br>
+           value="<?PHP echo $blog->icon; ?>"><br><br>
 
     <!-- FRONTEND SETTINGS -->
     <hr>
-    <h3><i class="fa fa-television"></i> Frontend Einstellungen</h3>
+    <h3><i class="fa fa-television"></i> <?PHP echo $lang['FRONTEND']."&nbsp;".$lang['SETTINGS']; ?></h3>
 
     <div class="checkbox">
         <label for="showTitle">
@@ -317,7 +317,7 @@ echo "
                    id="showTitle"
                    name="showTitle"
                    value="1"
-                <?PHP echo $titleChecked; ?> /> Titel im Frontend anzeigen?
+                <?PHP echo $titleChecked; ?>> <?PHP echo $lang['SHOW_TITLE_IN_FRONTEND']; ?>
         </label><br>
 
         <label for="showDesc">
@@ -326,7 +326,7 @@ echo "
                    id="showDesc"
                    name="showDesc"
                    value="1"
-                <?PHP echo $descCheckbox; ?> /> Beschreibung im Frontend anzeigen?
+                <?PHP echo $descCheckbox; ?>> <?PHP echo $lang['SHOW_DESC_IN_FRONTEND']; ?>
         </label><br>
 
         <label for="showDate">
@@ -335,7 +335,7 @@ echo "
                    id="showDate"
                    name="showDate"
                    value="1"
-                <?PHP echo $dateChecked; ?> /> Datum im Frontend anzeigen?<br>
+                <?PHP echo $dateChecked; ?>> <?PHP echo $lang['SHOW_DATE_IN_FRONTEND']; ?><br>
 
             <label for="showAuthor">
                 <input type="checkbox"
@@ -343,7 +343,7 @@ echo "
                        id="showAuthor"
                        name="showAuthor"
                        value="1"
-                    <?PHP echo $authorChecked; ?> /> Autor im Frontend anzeigen?<br>
+                    <?PHP echo $authorChecked; ?>> <?PHP echo $lang['SHOW_AUTHOR_IN_FRONTEND']; ?><br>
 
                 <label for="permaLink">
                     <input type="checkbox"
@@ -351,7 +351,7 @@ echo "
                            id="permaLink"
                            name="permaLink"
                            value="1"
-                        <?PHP echo $permaLinkChecked; ?> /> Permalink im Frontend anzeigen?<br>
+                        <?PHP echo $permaLinkChecked; ?>> <?PHP echo $lang['SHOW_PERMALINK_IN_FRONTEND']; ?><br>
 
                 <label for="preview">
                     <input type="checkbox"
@@ -359,95 +359,95 @@ echo "
                            id="preview"
                            name="preview"
                            value="1"
-                       <?PHP echo $previewChecked; ?> /> Nur Preview anzeigen? <small>(&laquo;alles anzeigen&raquo; button verstecken)</small><br>
+                       <?PHP echo $previewChecked; ?>> Nur Preview anzeigen? <small>(&laquo;alles anzeigen&raquo; button verstecken)</small><br>
     </div>
 
     <!-- BLOG LAYOUT -->
     <hr>
-    <h3><i class="fa fa-object-group"></i> Layout</h3>
+    <h3><i class="fa fa-object-group"></i> <?php echo $lang['LAYOUT']; ?></h3>
 
     <div class="radio">
         <label for="layout0">
             <input type="radio" name="layout" id="layout0" value="0" <?PHP echo $layout0Checked; ?>>
-            <img src="http://placehold.it/120x80">&nbsp;&nbsp; 1 spaltig, Text Blog
+            <img src="http://placehold.it/120x80">&nbsp;&nbsp; <?PHP echo $lang['BLOG_LAYOUT_1COL_TEXTBLOG']; ?>
         </label><br><br>
         <label for="layout1">
             <input type="radio" name="layout" id="layout1" value="1" <?PHP echo $layout1Checked; ?>>
-            <img src="http://placehold.it/120x80">&nbsp;&nbsp; 2 spaltig, Vorschaubild links
+            <img src="http://placehold.it/120x80">&nbsp;&nbsp; <?PHP echo $lang['BLOG_LAYOUT_2COL_TEASER_L']; ?>
         </label><br><br>
         <label for="layout2">
             <input type="radio" name="layout" id="layout2" value="2" <?PHP echo $layout2Checked; ?>>
-            <img src="http://placehold.it/120x80">&nbsp;&nbsp; 2 spaltig, Vorschaubild rechts
+            <img src="http://placehold.it/120x80">&nbsp;&nbsp; <?PHP echo $lang['BLOG_LAYOUT_2COL_TEASER_R']; ?>
         </label><br><br>
         <label for="layout3">
             <input type="radio" name="layout" id="layout3" value="3" <?PHP echo $layout3Checked; ?>>
-            <img src="http://placehold.it/120x80">&nbsp;&nbsp; 3 spaltig, Newspaper Style
+            <img src="http://placehold.it/120x80">&nbsp;&nbsp; <?PHP echo $lang['BLOG_LAYOUT_3COL_NEWSPAPER']; ?>
         </label><br><br>
         <label for="layout4">
             <input type="radio" name="layout" id="layout4" value="4" <?PHP echo $layout4Checked; ?>>
-            <img src="http://placehold.it/120x80">&nbsp;&nbsp; 1 spaltig, Responsive YouTube Blog
+            <img src="http://placehold.it/120x80">&nbsp;&nbsp; <?PHP echo $lang['BLOG_LAYOUT_1COL_YOUTUBE']; ?>
         </label><br><br>
     </div>
 
     <!-- BLOG ENTRY SORTATION -->
     <hr>
-    <h3><i class="fa fa-sort-alpha-asc"></i> Sortierung</h3>
+    <h3><i class="fa fa-sort-alpha-asc"></i> <?PHP echo $lang['SORTATION']; ?></h3>
 
     <div class="radio">
         <label for="sequenceDate">
             <input type="radio" name="sequence" id="sequenceDate" value="0" <?PHP echo $sequenceDateChecked; ?>>
-            Beitr&auml;ge chronologisch (nach Datum) sortieren
+            <?PHP echo $lang['SORTATION_CHRONOLOGIC']; ?>
         </label><br><br>
         <label for="sequenceTitle">
             <input type="radio" name="sequence" id="sequenceTitle" value="1" <?PHP echo $sequenceTitleChecked; ?>>
-            Beitr&auml;ge alphabetisch (nach Titel) sortieren
+            <?PHP echo $lang['SORTATION_ALPHABETICAL']; ?>
         </label>
     </div>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <div class="radio">
         <label for="asc">
             <input type="radio" name="sortation" id="asc" value="0" <?PHP echo $ascChecked; ?>>
-            aufsteigend
+            <?PHP echo $lang['ASC']; ?>
         </label><br><br>
         <label for="desc">
             <input type="radio" name="sortation" id="desc" value="1" <?PHP echo $descChecked; ?>>
-            absteigend
+            <?PHP echo $lang['DESC']; ?>
         </label>
     </div>
 
     <!-- COMMENTS -->
     <hr>
-    <h3><i class="fa fa-comment-o"></i> Kommentare</h3>
+    <h3><i class="fa fa-comment-o"></i> <?PHP echo $lang['COMMENTS']; ?></h3>
 
     <div class="radio">
         <label for="comment_off">
             <input type="radio" name="comments" id="comment_off" value="0" <?PHP echo $commentsOffChecked; ?>>
-            Comments verboten
+            <?PHP echo $lang['COMMENTS']."&nbsp;".$lang['ALLOWED']; ?>
         </label><br><br>
         <label for="comment_on">
             <input type="radio" name="comments" id="comment_on" value="1" <?PHP echo $commentsOnChecked; ?>>
-            Comments erlaubt
+            <?PHP echo $lang['COMMENTS']."&nbsp;".$lang['FORBIDDEN']; ?>
         </label>
     </div>
 
     <!-- VOTING -->
     <hr>
-    <h3><i class="fa fa-thumbs-o-up"></i> Kommentare</h3>
+    <h3><i class="fa fa-thumbs-o-up"></i> <?PHP echo $lang['VOTING']; ?></h3>
 
     <div class="radio">
         <label for="voting_off">
             <input type="radio" name="voting" id="voting_off" value="0" <?PHP echo $votingOffChecked; ?>>
-            Voting verboten
+            <?PHP echo $lang['VOTING']."&nbsp;".$lang['ALLOWED']; ?>
         </label><br><br>
         <label for="voting_on">
             <input type="radio" name="voting" id="voting_on" value="1" <?PHP echo $votingOnChecked; ?>>
-            Voting erlaubt
+            <?PHP echo $lang['VOTING']."&nbsp;".$lang['FORBIDDEN']; ?>
         </label>
     </div>
 
     <!-- ACCESS CONTROL / PRIVACY -->
     <hr>
-    <h3><i class="fa fa-eye"></i> Privatsph&auml;re</h3>
+    <h3><i class="fa fa-eye"></i><?PHP echo $lang['PRIVACY']; ?></h3>
     <select name="gid" class="form-control">
         <option value="<?php print \YAWK\sys::getRoleId($db, $blog->gid, "blog"); ?>"><?php print \YAWK\sys::getRole($db, $blog->gid, "blog"); ?></option>
 

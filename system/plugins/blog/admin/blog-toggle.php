@@ -25,5 +25,5 @@ if ($blog->toggleOffline($db, $_GET['blog'], $blog->published))
 }
 else
 {   // failed, throw error
-    print \YAWK\alert::draw("danger", "Error", "Could not toggle blog status.","plugin=blog","3800");
+    print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[TOGGLE_BLOG_FAILED].","plugin=blog","3800");
 }

@@ -46,5 +46,5 @@ if ($item->toggleRole($db, $item->gid, $item->id, $item->blogid))
 }
 else
 {   // failed, throw error
-    print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[TOGGLE_FAILED]","plugin=blog&pluginpage=blog-entries&blogid=" . $item->blogid . "","3800");
+    print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[GROUPS] $lang[TOGGLE_FAILED]","plugin=blog&pluginpage=blog-entries&blogid=" . $item->blogid . "","3800");
 }

@@ -637,11 +637,11 @@ $blog->layout = $blog->getBlogProperty($db, $blog->blogid, "layout");
                     $currentLayout = '';
                     $layouts = array(
                         "-1" => "$lang[BLOG_SETTING]",
-                        "0" => "1 $lang[COL], Textblog",
-                        "1" => "2 $lang[COLS], Vorschaubild links",
-                        "2" => "2 $lang[COLS], Vorschaubild rechts",
-                        "3" => "3 $lang[COLS], Newspaper Layout",
-                        "4" => "1 $lang[COL], YouTube Blog Layout");
+                        "0" => "$lang[BLOG_LAYOUT_1COL_TEXTBLOG]",
+                        "1" => "$lang[BLOG_LAYOUT_2COL_TEASER_L]",
+                        "2" => "$lang[BLOG_LAYOUT_2COL_TEASER_R]",
+                        "3" => "$lang[BLOG_LAYOUT_3COL_NEWSPAPER]",
+                        "4" => "$lang[BLOG_LAYOUT_1COL_YOUTUBE]");
                     foreach ($layouts as $id => $layout)
                     {
                         if ($blog->itemlayout == $id)
