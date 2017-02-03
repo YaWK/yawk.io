@@ -161,6 +161,8 @@ $(document).ready(function() {
             // icon:'<i class=\"note-icon\">[Your Button]</i>'            // Display an icon
         }
     }); // end summernote
+    
+    
 }); // end document ready
 </script>";
         }

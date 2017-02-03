@@ -1,4 +1,9 @@
 <?php
+// check if language is set
+if (!isset($language) || (!isset($lang)))
+{   // inject (add) language tags to core $lang array
+    $lang = \YAWK\language::inject(@$lang, "../system/plugins/gallery/language/");
+}
 require_once '../system/plugins/gallery/classes/gallery.php';
 /** GALLERY PLUGIN  */
 if (!isset($gallery))
@@ -22,11 +27,11 @@ if (isset($_POST))
     {   // re-scan folder an re-write database
         if ($gallery->reScanFolder($db, $_GET['id']))
         {   // deletion successfull
-            \YAWK\alert::draw("success", "Refresh of $_GET[folder] successful.", "Gallery has been updated.", "", 5800);
+            \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[GALLERY_REFRESH_OK] $_GET[folder] $lang[UPDATED]", "", 5800);
         }
         else
             {   // could not re-scan gallery
-                \YAWK\alert::draw("danger", "Refresh of $_GET[folder] not successful.", "Could not update Gallery.", "", 5800);
+                \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[GALLERY_REFRESH_FAILED]", "", 5800);
             }
     }
 }
@@ -35,7 +40,7 @@ if (isset($_POST))
 <script src="../system/engines/jquery/lightbox2/js/lightbox.min.js"></script>
 <script type="text/javascript">
     lightbox.option({
-        'albumLabel': "Image %1 of %2 - you need to save to see changes take effect in fullscreen.",
+        'albumLabel': "<?php echo $lang['IMAGE']; ?> %1 <?php echo $lang['OF']; ?> %2 - <?php echo $lang['GALLERY_SAVE_INFO']; ?>",
         'wrapAround': true
     });
 </script>
@@ -49,10 +54,10 @@ echo "
 /* draw Title on top */
 echo \YAWK\backend::getTitle($lang['GALLERY'], $lang['GALLERY_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
-            <li><a href=\"index.php?page=plugins\" title=\"Plugins\"> Plugins</a></li>
-            <li><a href=\"index.php?plugin=gallery\" title=\"Gallery\"> Gallery</a></li>
-            <li class=\"active\"><a href=\"index.php?plugin=gallery&pluginpage=edit&id=$gallery->id\" title=\"edit $gallery->title\"> reload gallery</a></li>
+            <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+            <li><a href=\"index.php?page=plugins\" title=\"$lang[PLUGINS]\"> $lang[PLUGINS]</a></li>
+            <li><a href=\"index.php?plugin=gallery\" title=\"$lang[GALLERY]\"> $lang[GALLERY]</a></li>
+            <li class=\"active\"><a href=\"index.php?plugin=gallery&pluginpage=edit&id=$gallery->id\" title=\"$lang[REFRESH]\"> $lang[GALLERY_REFRESH]</a></li>
          </ol>
     </section>
     <!-- Main content -->
@@ -75,30 +80,30 @@ echo"<ol class=\"breadcrumb\">
         <div class="col-md-4">
             <div class="box box-default">
                 <div class="box-header">
-                    <h3 class="box-title">Edit this gallery</h3>
+                    <h3 class="box-title"><?php echo $lang['GALLERY_EDIT']; ?></h3>
                 </div>
                 <div class="box-body">
 
-                    <label for="folder">Select the folder where your images are located</label>
+                    <label for="folder"><?php echo $lang['SELECT_FOLDER']; ?></label>
                     <?php echo $gallery->drawFolderSelectFromGallery("media/images/", "$gallery->folder")?>
-                    <label for="customFolder">or set any different folder</label>
+                    <label for="customFolder"><?php echo $lang['OR_SET_DIFFERENT_FOLDER']; ?></label>
                     <input id="customFolder"
                            name="customFolder"
                            type="text"
                            placeholder="media/images/your-images-folder"
                            class="form-control">
-                    <label for="title">Gallery Title</label>
+                    <label for="title"><?php echo $lang['GALLERY_TITLE']; ?></label>
                     <input id="title"
                            name="title"
                            type="text"
-                           placeholder="What is your gallery about?"
+                           placeholder="<?php echo $lang['GALLERY_ABOUT']; ?>"
                            value="<?php echo $gallery->title; ?>"
                            class="form-control">
-                    <label for="description">Gallery Description <small>(optional)</small></label>
+                    <label for="description"><?php echo $lang['GALLERY_DESC']; ?><small> <?php echo $lang['OPTIONAL']; ?></small></label>
                     <input id="description"
                            name="description"
                            type="text"
-                           placeholder="Description (can be displayed before the gallery)"
+                           placeholder="<?php echo $lang['GALLERY_DESC_PLACEHOLDER']; ?>"
                            value="<?php echo $gallery->description; ?>"
                            class="form-control"><br>
                     <!-- SAVE BUTTON -->
@@ -113,7 +118,7 @@ echo"<ol class=\"breadcrumb\">
 
             <div class="box box-default">
                 <div class="box-header">
-                    <h3 class="box-title"><i class="fa fa-wrench text-muted"></i>&nbsp; Thumbnails <small>and image resize</small></h3>
+                    <h3 class="box-title"><i class="fa fa-wrench text-muted"></i>&nbsp; <?php echo $lang['THUMBNAILS']; ?> <small><?php echo $lang['GALLERY_IMG_RESIZE']; ?></small></h3>
                 </div>
                 <div class="box-body">
                     <input type="hidden" value="0" name="createThumbnails">
@@ -137,28 +142,28 @@ echo"<ol class=\"breadcrumb\">
                         }
                     ?>
                     <input type="checkbox" value="1" id="createThumbnails" name="createThumbnails" <?php echo $createThumbnailsChecked; ?>>
-                    <label for="createThumbnails">Create thumbnails from images?</label>
+                    <label for="createThumbnails"><?php echo $lang['CREATE_THUMBNAILS']; ?></label>
                     <br>
-                    <label for="thumbnailWidth">Thumbnail width in px</label>
+                    <label for="thumbnailWidth"><?php echo $lang['THUMBNAIL_WIDTH_PX']; ?></label>
                     <input type="text" id="thumbnailWidth" maxlength="11" name="thumbnailWidth" class="form-control" placeholder="200px" value="<?php echo $gallery->thumbnailWidth; ?>">
                     <input type="hidden" id="thumbnailWidth-old" maxlength="11" name="thumbnailWidth-old" class="form-control" value="<?php echo $gallery->thumbnailWidth; ?>">
 
                     <br>
                     <input type="hidden" value="0" name="resizeImages">
                     <input type="checkbox" value="1" id="resizeImages" name="resizeImages" <?php echo $resizeImagesChecked; ?>>
-                    <label for="resizeImages">Resize all images to</label>
+                    <label for="resizeImages"><?php echo $lang['RESIZE_ALL_IMAGES']; ?></label>
                     <br>
-                    <label for="imageWidth">Fullscreen image width in px</label>
+                    <label for="imageWidth"><?php echo $lang['FULLSCREEN_WIDTH']; ?></label>
                     <?php if ($gallery->imageWidth === '0') $gallery->imageWidth = ''; ?>
                     <input type="text" id="imageWidth" maxlength="11" name="imageWidth" class="form-control" placeholder="eg. 1024px" value="<?php echo $gallery->imageWidth; ?>">
                     <input type="hidden" id="imageWidth-old" maxlength="11" name="imageWidth-old" class="form-control" value="<?php echo $gallery->imageWidth; ?>">
 
-                    <label for="imageHeight">Fullscreen image height in px</label>
+                    <label for="imageHeight"><?php echo $lang['FULLSCREEN_HEIGHT']; ?></label>
                     <?php if ($gallery->imageHeight === '0') $gallery->imageHeight = ''; ?>
                     <input type="text" id="imageHeight" maxlength="11" name="imageHeight" class="form-control" placeholder="eg. 1024px" value="<?php echo $gallery->imageHeight; ?>">
                     <input type="hidden" id="imageHeight-old" maxlength="11" name="imageHeight-old" class="form-control" value="<?php echo $gallery->imageHeight; ?>">
 
-                    <label for="resizeType">Resize Type</label>
+                    <label for="resizeType"><?php echo $lang['RESIZE_TYPE']; ?></label>
                     <select class="form-control" id="resizeType" name="resizeType">
                         <?php
                         $resizeTypes = array("fit_to_width", "fit_to_height", "thumbnail", "resize");
@@ -184,7 +189,7 @@ echo"<ol class=\"breadcrumb\">
 
             <div class="box box-default">
                 <div class="box-header">
-                    <h3 class="box-title"><i class="fa fa-copyright text-muted"></i> Watermark <small>and copyright settings</small></h3>
+                    <h3 class="box-title"><i class="fa fa-copyright text-muted"></i> <?php echo "$lang[WATERMARK] <small>$lang[AND_COPYRIGHT_SETTINGS]</small>"; ?></h3>
                 </div>
                 <div class="box-body">
                     <input type="hidden" value="0" name="watermarkEnable">
@@ -201,15 +206,15 @@ echo"<ol class=\"breadcrumb\">
                     ?>
                     <input type="hidden" value="0" name="watermarkEnabled">
                     <input type="checkbox" value="1" id="watermarkEnabled" name="watermarkEnabled" <?php echo $watermarkEnabledChecked; ?>>
-                    <label for="watermarkEnabled">Enable Watermark?</label>
+                    <label for="watermarkEnabled"><?php echo $lang['WATERMARK_ENABLE']; ?></label>
                     <br>
-                    <label for="watermark">Watermark from custom text</label>
+                    <label for="watermark"><?php echo $lang['WATERMARK_FROM_CUSTOM_TEXT']; ?></label>
                     <input type="text" id="watermark" name="watermark" class="form-control" placeholder="(C) <?php echo date("Y")." photographer"; ?>" value="<?php echo $gallery->watermark; ?>">
                     <input type="hidden" id="watermark-old" name="watermark-old" class="form-control" value="<?php echo $gallery->watermark; ?>">
-                    <label for="watermarkImage">OR from any image</label>
+                    <label for="watermarkImage"><?php echo $lang['OR_FROM_ANY_IMG']; ?></label>
                     <input type="text" id="watermarkImage" name="watermarkImage" class="form-control" placeholder="media/images/yourfile.png" value="<?php echo $gallery->watermarkImage; ?>">
                     <input type="hidden" id="watermarkImage-old" name="watermarkImage-old" class="form-control" value="<?php echo $gallery->watermarkImage; ?>">
-                    <label for="watermarkOpacity">Overlay opacity (only with watermark from image)</label>
+                    <label for="watermarkOpacity"><?php echo $lang['OVERLAY_OPACITY']; ?></label>
                     <select id="watermarkOpacity" name="watermarkOpacity" class="form-control">
 
                         <option value="<?php echo $gallery->watermarkOpacity; ?>" aria-selected="true" selected><?php echo $gallery->watermarkOpacity; ?></option>
@@ -224,22 +229,22 @@ echo"<ol class=\"breadcrumb\">
                         <option value=".9">90%</option>
                         <option value="1">100%</option>
                     </select>
-                    <label for="watermarkPosition">Watermark Position</label>
+                    <label for="watermarkPosition"><?php echo $lang['WATERMARK_POSITION']; ?></label>
                     <select id="watermarkPosition" name="watermarkPosition" class="form-control">
                         <option value="<?php echo $gallery->watermarkPosition; ?>"><?php echo $gallery->watermarkPosition; ?></option>
-                        <option value="bottom right">Bottom right</option>
-                        <option value="bottom left">Bottom left</option>
-                        <option value="top left">Top left</option>
-                        <option value="top right">Top right</option>
-                        <option value="bottom">Bottom</option>
-                        <option value="center">Center</option>
-                        <option value="top">Top</option>
+                        <option value="bottom right"><?php echo $lang['BOTTOM_RIGHT']; ?></option>
+                        <option value="bottom left"><?php echo $lang['BOTTOM_LEFT']; ?></option>
+                        <option value="top left"><?php echo $lang['TOP_LEFT']; ?></option>
+                        <option value="top right"><?php echo $lang['TOP_RIGHT']; ?></option>
+                        <option value="bottom"><?php echo $lang['BOTTOM']; ?></option>
+                        <option value="center"><?php echo $lang['CENTER']; ?></option>
+                        <option value="top"><?php echo $lang['TOP']; ?></option>
                     </select>
-                    <label for="offsetX">Offset X-axis</label>
+                    <label for="offsetX"><?php echo $lang['OFFSET_X_AXIS']; ?></label>
                     <input type="text" id="offsetX" name="offsetX" class="form-control" placeholder="-12" value="<?php echo $gallery->offsetX; ?>">
-                    <label for="offsetY">Offset Y-axis</label>
+                    <label for="offsetY"><?php echo $lang['OFFSET_Y_AXIS']; ?></label>
                     <input type="text" id="offsetY" name="offsetY" class="form-control" placeholder="-12" value="<?php echo $gallery->offsetY; ?>">
-                    <label for="watermarkFont">Watermark Font</label>
+                    <label for="watermarkFont"><?php echo $lang['WATERMARK_FONT']; ?></label>
                     <select id="watermarkFont" name="watermarkFont" class="form-control">
                         <option value="<?php echo $gallery->watermarkFont; ?>"><?php echo $gallery->watermarkFont; ?></option>
                         <?php
@@ -247,8 +252,7 @@ echo"<ol class=\"breadcrumb\">
                         ?>
                     </select>
 
-
-                    <label for="watermarkTextSize">Watermark Text Size</label>
+                    <label for="watermarkTextSize"><?php echo $lang['WATERMARK_TEXT_SIZE']; ?></label>
                     <select id="watermarkTextSize" name="watermarkTextSize" class="form-control">
                         <?php
                         $i = 0;
@@ -261,11 +265,11 @@ echo"<ol class=\"breadcrumb\">
 
                         ?>
                     </select>
-                    <label for="watermarkColor">Watermark Text Color</label>
+                    <label for="watermarkColor"><?php echo $lang['WATERMARK_TEXT_COLOR']; ?></label>
                     <input type="text" id="watermarkColor" name="watermarkColor" class="form-control color" placeholder="pick a color or leave blank" value="<?php echo $gallery->watermarkColor; ?>">
-                    <label for="watermarkBorderColor">Watermark Border Color</label>
+                    <label for="watermarkBorderColor"><?php echo $lang['WATERMARK_TEXT_BORDERCOLOR']; ?></label>
                     <input type="text" id="watermarkBorderColor" name="watermarkBorderColor" class="form-control color" placeholder="pick a color or leave blank" value="<?php echo $gallery->watermarkBorderColor; ?>">
-                    <label for="watermarkBorder">Watermark Border Thickness</label>
+                    <label for="watermarkBorder"><?php echo $lang['WATERMARK_BORDER_THICKNESS']; ?></label>
                     <select id="watermarkBorder" name="watermarkBorder" class="form-control">
                         <?php
                         $i = 0;
@@ -279,9 +283,9 @@ echo"<ol class=\"breadcrumb\">
                         ?>
                     </select>
 
-                    <label for="author">Photographer</label>
-                    <input type="text" id="author" name="author" class="form-control" value="<?php echo $gallery->author; ?>" placeholder="Originator of this picture">
-                    <label for="author">Photographer URL</label>
+                    <label for="author"><?php echo $lang['PHOTOGRAPHER']; ?></label>
+                    <input type="text" id="author" name="author" class="form-control" value="<?php echo $gallery->author; ?>" placeholder="<?php echo $lang['PHOTOGRAPHER_PLACEHOLDER']; ?>">
+                    <label for="author"><?php echo $lang['PHOTOGRAPHER_URL']; ?></label>
                     <input type="text" id="authorUrl" name="authorUrl" class="form-control" value="<?php echo $gallery->authorUrl; ?>" placeholder="http://">
 
                 </div>

@@ -175,7 +175,7 @@ namespace YAWK {
          * @param string $pathToFile absolute path to the injectable language file
          * @return array $lang returns pushed language array
          */
-        public function inject($lang, $pathToFile)
+        static function inject($lang, $pathToFile)
         {
             // check if language is saved in session or cookie to prevent unneccessary db actions
             if (isset($_SESSION['lang']))
