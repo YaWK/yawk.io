@@ -1,4 +1,9 @@
 <?php
+// check if language is set
+if (!isset($language) || (!isset($lang)))
+{   // inject (add) language tags to core $lang array
+    $lang = \YAWK\language::inject(@$lang, "../system/plugins/booking/language/");
+}
 include '../system/plugins/booking/classes/booking.php';
 // get db vars
 
@@ -14,9 +19,9 @@ echo "
 /* draw Title on top */
 echo \YAWK\backend::getTitle($lang['BOOKING'], $lang['BOOKING_DETAILS']);
 echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
-            <li><a href=\"index.php?page=plugins\" title=\"Pages\"> Plugins</a></li>
-            <li class=\"active\"><a href=\"index.php?plugin=booking\" title=\"Booking\"> Booking</a></li>
+            <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+            <li><a href=\"index.php?page=plugins\" title=\"$lang[PLUGINS]\"> $lang[PLUGINS]</a></li>
+            <li class=\"active\"><a href=\"index.php?plugin=booking\" title=\"$lang[BOOKING]\"> $lang[BOOKING]</a></li>
          </ol>
     </section>
     <!-- Main content -->
@@ -49,7 +54,7 @@ if (isset($_POST['create'])){
         $booking->date_alternative = $db->quote($_POST['date_alternative']);
     }
     if(!$booking->save($db)){
-        \YAWK\alert::draw("warning", "Achtung", "Der Termin konnte nicht gespeichert werden.","",4200);
+        \YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[BOOKING_SAVE_FAILED]","",4200);
     }
 }
 
@@ -90,25 +95,25 @@ if (isset($_GET['id'])){
     }
     if ($booking->invited === '1'){
         $inviteHtml = "<a class=\"btn btn-success\" href=\"index.php?plugin=booking&pluginpage=booking-toggle&id=$booking->id&invite=1\" style=\"float:right;\">
-        <i class=\"fa fa-envelope-o\"></i> &nbsp;Invitation Email sent</a>";
+        <i class=\"fa fa-envelope-o\"></i> &nbsp;$lang[BOOKING_INVITATION_SENT]</a>";
     }
     else {
         $inviteHtml = "<a class=\"btn btn-warning\" href=\"index.php?plugin=booking&pluginpage=booking-toggle&id=$booking->id&invite=1\" style=\"float:right;\">
-        <i class=\"fa fa-envelope-o\"></i> &nbsp;Send Invitation Email</a>";
+        <i class=\"fa fa-envelope-o\"></i> &nbsp;$lang[BOOKING_INVITATION_SEND]</a>";
     }
     if ($booking->confirmed === '1'){
-        $confirmedHtml = "<span class='text-success'>Booking confirmed</span>";
+        $confirmedHtml = "<span class='text-success'>$lang[CONFIRMED]</span>";
         $confirmedIcon = "<i class='fa fa-check'></i>";
     } else {
-        $confirmedHtml = "<span class='text-warning'>Booking not confirmed</span>";
+        $confirmedHtml = "<span class='text-warning'>$lang[NOT_CONFIRMED]</span>";
         $confirmedIcon = "<i class='fa fa-times'></i>";
     }
     if ($booking->success === '1'){
-        $confirmedHtml = "<span class='text-info'>successful</span>";
+        $confirmedHtml = "<span class='text-info'>$lang[SUCCESSFUL]</span>";
         $confirmedIcon = "<i class='fa fa-trophy'></i>";
     }
     if ($booking->outdated === '1'){
-        $confirmedHtml = "<span class='text-inverse'>outdated</span>";
+        $confirmedHtml = "<span class='text-inverse'>$lang[OUTDATED]</span>";
     }
     if (!isset($booking->referer)) { $booking->referer = ""; }
 
@@ -131,8 +136,8 @@ if (isset($_GET['id'])){
     <div class="row">
         <div class="col-md-8">
             <ul class="list-group">
-                <li class="list-group-item"><h4>Details <small>of this Booking</small></h4></li>
-                <li class="list-group-item"><h4><strong><?php echo $booking->name; ?></strong> sent following booking: <strong><?php echo $prettydate_wish; ?></strong></h4></li>
+                <li class="list-group-item"><h4><?php echo "$lang[DETAILS] <small>$lang[OF_THIS_BOOKING]</small>"; ?></h4></li>
+                <li class="list-group-item"><h4><strong><?php echo $booking->name; ?></strong> <?php echo "$lang[SENT_FOLLOWING_BOOKING] :"; ?> <strong><?php echo $prettydate_wish; ?></strong></h4></li>
                 <li class="list-group-item"><i class="fa fa-envelope"></i> &nbsp;<strong><?php echo "<a href=\"mailto:$booking->email\">$booking->email</a>"; ?></strong></li>
                 <li class="list-group-item"><i class="fa fa-phone"></i> &nbsp;<strong><?php echo $booking->phone; ?></strong></li>
                 <li class="list-group-item"><i class="fa fa-clock-o"></i> &nbsp;<strong><?php echo $prettydate_alternative; ?></strong> <small>[alternativ]</small></li>
@@ -142,7 +147,7 @@ if (isset($_GET['id'])){
             </ul>
             <ul class="list-group">
                 <li class="list-group-item"><h6>sent from<strong>&nbsp;<?php echo $booking->name; ?>&nbsp;</strong>
-                    am <?php echo $prettydate_created; ?> via IP Adress: <?php echo $booking->ip; ?><br><small>
+                    am <?php echo "$prettydate_created $lang[VIA_IP_ADDRESS]"; ?> <?php echo $booking->ip; ?><br><small>
                     <i><?php echo $booking->useragent; ?></i>
                    <br><?php echo $booking->referer; ?></small></h6></li>
             </ul>
@@ -153,7 +158,7 @@ if (isset($_GET['id'])){
                         <label for="income">&euro;&nbsp;</label>
                         <input type="text" value="<?PHP echo $booking->income;?>" size="5" class="form-control" placeholder="150" id="income" name="income">&nbsp;&nbsp;&nbsp;
                         <label for="income"><i class="fa fa-line-chart"></i>&nbsp; </label>
-                        <label for="grade">Voting</label>
+                        <label for="grade"><?php echo "$lang[VOTING]"; ?></label>
                         <select class="form-control" name="grade" id="grade">
                             <option value="0" selected disabled>&nbsp;</option>
                             <option value="1">1</option>
@@ -167,9 +172,9 @@ if (isset($_GET['id'])){
                         <br>
                         </li>
                 <li class="list-group-item">
-                    <label for="date_wish">Change Date</label>
+                    <label for="date_wish"><?php echo "$lang[EDIT_DATE]"; ?></label>
                     <input type="text" class="form-control" name="date_wish" size="10" id="date_wish" value="<?PHP echo $booking->date_wish;?>"><br>
-                    <label for="date_alternative">Alternative Date: </label>
+                    <label for="date_alternative"><?php echo "$lang[ALT_DATE]"; ?> </label>
                     <input type="text" class="form-control" name="date_alternative" size="10" id="date_alternative" value="<?PHP echo $booking->date_alternative;?>">
                         <!-- SAVE BUTTON -->
                         <input id="savebutton" class="btn btn-success" type="submit" name="create" style="margin-left:14px;" value="<?PHP echo $lang['SAVE']; ?>">

@@ -1,4 +1,9 @@
 <?php
+// check if language is set
+if (!isset($language) || (!isset($lang)))
+{   // inject (add) language tags to core $lang array
+    $lang = \YAWK\language::inject(@$lang, "../system/plugins/gallery/language/");
+}
 require_once '../system/plugins/gallery/classes/gallery.php';
 /** GALLERY PLUGIN  */
 if (!isset($gallery))

@@ -3,8 +3,7 @@ include '../system/plugins/blog/classes/blog.php';
 // check if language is set
 if (!isset($language) || (!isset($lang)))
 {   // inject (add) language tags to core $lang array
-    $blog = new \YAWK\PLUGINS\BLOG\blog();
-    $lang = $blog->injectLanguageTags(@$lang, @$language);
+    $lang = \YAWK\language::inject(@$lang, "../system/plugins/blog/language/");
 }
 $item = new \YAWK\PLUGINS\BLOG\blog();
 $item->gid = $_GET['itemgid'];

@@ -1,4 +1,9 @@
 <?php
+// check if language is set
+if (!isset($language) || (!isset($lang)))
+{   // inject (add) language tags to core $lang array
+    $lang = \YAWK\language::inject(@$lang, "../system/plugins/faq/language/");
+}
 include '../system/plugins/faq/classes/faq-backend.php';
 /* page content start here */
 if (!isset($faq))
@@ -22,12 +27,12 @@ if (isset($_POST['save']))
 
     if ($faq->save($db))
     {   // success
-        echo YAWK\alert::draw("success", "Hooray!", "Der FAQ-Eintrag wurde erfolgreich aktualisiert!","plugin=faq","2000");
+        echo YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[FAQ_SAVE_OK]","plugin=faq","2000");
         exit;
     }
     else
     {   // save faq item failed, throw error
-        echo YAWK\alert::draw("danger", "Fehler", "Der FAQ Eintrag " . $faq->question . " konnte nicht aktualisiertwerden.", "","4200");
+        echo YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[FAQ_SAVE_FAILED] : " . $faq->question . " ", "","4200");
         exit;
     }
 }
@@ -41,10 +46,10 @@ echo "
         /* draw Title on top */
         echo \YAWK\backend::getTitle($lang['FAQ'], $lang['FAQ_SUBTEXT']);
         echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
-            <li><a href=\"index.php?page=plugins\" title=\"Plugins\"> Plugins</a></li>
-            <li><a href=\"index.php?plugin=faq\" title=\"Faq\"> Faq</a></li>
-            <li class=\"active\"><a href=\"index.php?plugin=faq&pluginpage=faq-edit\" title=\"Edit Question\"> Edit Question</a></li>
+            <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+            <li><a href=\"index.php?page=plugins\" title=\"$lang[PLUGINS]\"> $lang[PLUGINS]</a></li>
+            <li><a href=\"index.php?plugin=faq\" title=\"$lang[FAQ]\"> $lang[FAQ]</a></li>
+            <li class=\"active\"><a href=\"index.php?plugin=faq&pluginpage=faq-edit\" title=\"$lang[EDIT_QUESTION]\"> $lang[EDIT_QUESTION]</a></li>
         </ol>
     </section>
     <!-- Main content -->
@@ -62,7 +67,7 @@ echo "
             <input type="text" name="sort" class="form-control" value="<?PHP echo $faq->sort; ?>"><br>
             <textarea class="form-control" cols="55" rows="1" name="question"><?PHP echo $faq->question; ?></textarea><br>
             <textarea class="form-control" cols="55" rows="4" name="answer"><?PHP echo $faq->answer; ?></textarea><br>
-            <input id="savebutton" class="btn btn-success" type="submit" name="save" value="FAQ&nbsp;Eintrag&nbsp;bearbeiten">&nbsp;
+            <input id="savebutton" class="btn btn-success" type="submit" name="save" value="<?php echo $lang['FAQ_EDIT_BTN']; ?>">&nbsp;
         <br><br>
         </div>
     </div>

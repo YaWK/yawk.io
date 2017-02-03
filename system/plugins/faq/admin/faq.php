@@ -1,4 +1,9 @@
 <?php
+// check if language is set
+if (!isset($language) || (!isset($lang)))
+{   // inject (add) language tags to core $lang array
+    $lang = \YAWK\language::inject(@$lang, "../system/plugins/faq/language/");
+}
 include '../system/plugins/faq/classes/faq-backend.php';
 if (isset($_GET['addpage'])){
     if ($_GET['addpage']==='1')
@@ -29,9 +34,9 @@ echo "
 /* draw Title on top */
 echo \YAWK\backend::getTitle($lang['FAQ'], $lang['FAQ_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
-            <li><a href=\"index.php?page=plugins\" title=\"Plugins\"> Plugins</a></li>
-            <li class=\"active\"><a href=\"index.php?plugin=faq\" title=\"Faq\"> Faq</a></li>
+            <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+            <li><a href=\"index.php?page=plugins\" title=\"$lang[PLUGINS]\"> $lang[PLUGINS]</a></li>
+            <li class=\"active\"><a href=\"index.php?plugin=faq\" title=\"$lang[FAQ]\"> $lang[FAQ]</a></li>
          </ol>
     </section>
     <!-- Main content -->
@@ -52,15 +57,15 @@ echo"<ol class=\"breadcrumb\">
     <thead>
     <tr>
         <td width="3%"><strong>&nbsp;</strong></td>
-        <td width="5%" class=\"text-center\"><strong>ID</strong></td>
-        <td width="5%" class=\"text-center\"><strong>Sort</strong></td>
+        <td width="5%" class=\"text-center\"><strong><?php echo $lang['ID']; ?></strong></td>
+        <td width="5%" class=\"text-center\"><strong><?php echo $lang['SORTATION']; ?></strong></td>
         <td width="70%"><strong><?PHP echo $lang['FAQ_QUESTION']; ?></strong></td>
         <td width="7%" class=\"text-center\"><strong><?PHP echo $lang['CATEGORY']; ?></strong></td>
         <td width="10%" class=\"text-center\"><strong><?PHP echo $lang['ACTIONS']; ?></strong></td>
     </tr>
     </thead>
     <tbody>
-<?PHP
+<?php
 $faq = new \YAWK\PLUGINS\FAQ\faq();
 $faq->drawBackEndTableBody($db);
 ?>

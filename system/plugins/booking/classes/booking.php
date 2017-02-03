@@ -124,9 +124,10 @@ namespace YAWK\PLUGINS\BOOKING {
 
         /**
          * get statistics from all bookings
+         * @param array $lang language array
          * @param object $db database
          */
-        public function getStats($db)
+        public function getStats($db, $lang)
         {   /** @var $db \YAWK\db */
             $income_sum = 0;
             $success_sum = 0;
@@ -186,11 +187,11 @@ namespace YAWK\PLUGINS\BOOKING {
 
 
                 echo "<ul class='list-group'>
-                        <li class='list-group-item'><h4><i class='fa fa-money'></i> &nbsp;outstanding, fixated bookings are worth:&nbsp; <b class='text-green'>&euro; ".$confirmed_outstanding_sum.",-</b></li></h4>
-                        <li class='list-group-item'><h4><i class='fa fa-money'></i> &nbsp;new, not confirmed bookings are worth:&nbsp; <b class='text-orange'>&euro; ".$outstanding_sum.",- </b></li></h4>
-                        <li class='list-group-item'><h4><i class='fa fa-money'></i> &nbsp;successful earned, total:&nbsp; <b class='text-green'>&euro; ".$income_sum.",- </b></li></h4>
-                        <li class='list-group-item'><h4><i class='fa fa-calendar'></i> &nbsp;overall there were <b>".$i_dates."</b> booking inquires. Thereof were <b class='text-green'>".$success_sum."</b> successful bookings. <b class='text-orange'>".$i_date_waiting_sum."</b> are not confirmed, <b class='text-green'>".$i_date_fix_sum."</b> are confirmed. <b>".$i_date_outdated."</b> are outdated.</li></h4>
-                        <li class='list-group-item'><h4><i class='fa fa-calendar'></i> &nbsp;the average voting overall bookings and users: <b>".$avgGrade."</b></li></h4>
+                        <li class='list-group-item'><h4><i class='fa fa-money'></i> &nbsp;$lang[BOOKING_STATS_OUTSTANDING]&nbsp; <b class='text-green'>&euro; ".$confirmed_outstanding_sum.",-</b></li></h4>
+                        <li class='list-group-item'><h4><i class='fa fa-money'></i> &nbsp;$lang[BOOKING_STATS_CONFIRMED]&nbsp; <b class='text-orange'>&euro; ".$outstanding_sum.",- </b></li></h4>
+                        <li class='list-group-item'><h4><i class='fa fa-money'></i> &nbsp;$lang[BOOKING_STATS_EARNED]&nbsp; <b class='text-green'>&euro; ".$income_sum.",- </b></li></h4>
+                        <li class='list-group-item'><h4><i class='fa fa-calendar'></i> &nbsp;$lang[OVERALL] <b>".$i_dates."</b> $lang[BOOKING_INQUIRES] <b class='text-green'>".$success_sum."</b> $lang[BOOKINGS] $lang[SUCCESSFUL]. <b class='text-orange'>".$i_date_waiting_sum."</b> $lang[NOT_CONFIRMED], <b class='text-green'>".$i_date_fix_sum."</b> $lang[CONFIRMED]. <b>".$i_date_outdated."</b> $lang[OUTDATED].</li></h4>
+                        <li class='list-group-item'><h4><i class='fa fa-calendar'></i> &nbsp;$lang[BOOKING_AVG_VOTING] <b>".$avgGrade."</b></li></h4>
                       </ul>";
 
             }

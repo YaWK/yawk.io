@@ -44,6 +44,37 @@ namespace YAWK\PLUGINS\TOURDATES {
         public $published;
 
         /**
+         * Inject Language Tags
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @link http://yawk.io
+         * @param array $lang language data array
+         * @param object $language the language object
+         * @return null
+         */
+        public function injectLanguageTags($lang, $language)
+        {
+            // #####################################################################################
+            // prepare language tag injection
+            // check if lang array is set
+            if (!isset($lang) || (empty($lang) || (!is_array($lang) || (!isset($language) || (empty($language))))))
+            {   // if no lang array is set
+                // check if language object is set
+                if (!isset($language))
+                {   // if not, include language class
+                    require_once '../system/classes/language.php';
+                    // and create new language object
+                    $language = new \YAWK\language();
+                }
+                // ok...
+                $language->init();
+                // convert lang object param to array
+                $lang = (array) $language->lang;
+            }
+            // all should be set ok - finally: inject additional language tags
+            return $lang = $language->inject($lang, "../system/plugins/tourdates/language/");
+        }
+
+        /**
          * get data and draw html return table for frontend
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0

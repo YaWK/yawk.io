@@ -1,4 +1,9 @@
 <?php
+// check if language is set
+if (!isset($language) || (!isset($lang)))
+{   // inject (add) language tags to core $lang array
+    $lang = \YAWK\language::inject(@$lang, "../system/plugins/tourdates/language/");
+}
 /* draw Title on top */
 \YAWK\backend::getTitle($lang['TOUR_DATES'], $lang['TOUR_DATES_SUBTEXT']);
 if (isset($_GET['addpage']))
@@ -30,9 +35,9 @@ echo "
 /* draw Title on top */
 echo \YAWK\backend::getTitle($lang['TOUR_DATES'], $lang['TOUR_DATES_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
-            <li><a href=\"index.php?page=plugins\" title=\"Plugins\"> Plugins</a></li>
-            <li class=\"active\"><a href=\"index.php?plugin=tourdates\" title=\"Tourdates\"> Tourdates</a></li>
+            <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+            <li><a href=\"index.php?page=plugins\" title=\"$lang[PLUGINS]\"> $lang[PLUGINS]</a></li>
+            <li class=\"active\"><a href=\"index.php?plugin=tourdates\" title=\"$lang[TOUR_DATES]\"> $lang[TOUR_DATES]</a></li>
          </ol>
     </section>
     <!-- Main content -->

@@ -1,4 +1,9 @@
 <?php
+// check if language is set
+if (!isset($language) || (!isset($lang)))
+{   // inject (add) language tags to core $lang array
+    $lang = \YAWK\language::inject(@$lang, "../system/plugins/faq/language/");
+}
 include '../system/plugins/faq/classes/faq-backend.php';
 if (isset($_POST['create']))
 {   // if faq object is not set
@@ -25,12 +30,12 @@ if (isset($_POST['create']))
 
     if ($faq->create($db, $faq->question, $faq->answer))
     {   // success
-        print \YAWK\alert::draw("success", "Erfolg!", "FAQ Eintrag wurde erfolgreich angelegt.","plugin=faq","2000");
+        print \YAWK\alert::draw("success", "$lang[SUCCESS]!", "$lang[FAQ_ADD_SUCCESS]","plugin=faq","2000");
         exit;
     }
     else
     {   // create faq failed, throw error
-        \YAWK\alert::draw("danger", "Fehler!", "Faq Eintrag konnte nicht angelegt werden.", "plugin=faq&pluginpage=faq-new","2400");
+        \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[FAQ_ADD_FAILED]", "plugin=faq&pluginpage=faq-new","2400");
         exit;
     }
 }
@@ -44,10 +49,10 @@ echo "
     /* draw Title on top */
     echo \YAWK\backend::getTitle($lang['FAQ'], $lang['FAQ_SUBTEXT']);
     echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
-            <li><a href=\"index.php?page=plugins\" title=\"Plugins\"> Plugins</a></li>
-            <li><a href=\"index.php?plugin=faq\" title=\"Faq\"> Faq</a></li>
-            <li class=\"active\"><a href=\"index.php?plugin=faq&pluginpage=faq-new\" title=\"Add Question\"> Add Question</a></li>
+            <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+            <li><a href=\"index.php?page=plugins\" title=\"$lang[PLUGINS]\"> $lang[PLUGINS]</a></li>
+            <li><a href=\"index.php?plugin=faq\" title=\"$lang[FAQ]\"> $lang[FAQ]</a></li>
+            <li class=\"active\"><a href=\"index.php?plugin=faq&pluginpage=faq-new\" title=\"$lang[ADD_QUESTION]\"> $lang[ADD_QUESTION]</a></li>
          </ol>
     </section>
     <!-- Main content -->
@@ -66,7 +71,7 @@ echo "
     <input name="create" value="faq-create" type="hidden"/>
     <textarea class="form-control" cols="55" rows="1" name="question"><?PHP echo $lang['FAQ_QUESTION']; ?></textarea><br>
     <textarea class="form-control" cols="55" rows="4" name="answer"><?PHP echo $lang['FAQ_ANSWER']; ?></textarea><br>
-    <input id="savebutton" class="btn btn-success" type="submit" name="create" value="FAQ&nbsp;Eintrag&nbsp;anlegen"/>&nbsp;
+    <input id="savebutton" class="btn btn-success" type="submit" name="create" value="<?PHP echo $lang['FAQ_ADD_BTN']; ?>"/>&nbsp;
 
 
         </div>

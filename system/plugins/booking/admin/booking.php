@@ -1,4 +1,9 @@
 <?php
+// check if language is set
+if (!isset($language) || (!isset($lang)))
+{   // inject (add) language tags to core $lang array
+    $lang = \YAWK\language::inject(@$lang, "../system/plugins/booking/language/");
+}
 include '../system/plugins/booking/classes/booking.php';
 $booking = new \YAWK\PLUGINS\BOOKING\booking();
 $field = '';
@@ -33,11 +38,11 @@ if (isset($_GET['delete']) && ($_GET['delete'] === '1')) {
             $id = 0;
         }
     if ($booking->delete($db, $id)) {
-        print \YAWK\alert::draw("success", "The Booking '".$_GET['id']."' was deleted", "delete successful","",4200);
+        print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[BOOKING] $lang[ID] #'".$_GET['id']."' $lang[DELETED]\"","",4200);
     }
     else
         {
-            print \YAWK\alert::draw("danger", "Error", "Appointment could not be deleted.","",3800);
+            print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[BOOKING_DEL_FAILED].","",3800);
         }
 }
 ?>
@@ -63,9 +68,9 @@ echo "
 /* draw Title on top */
 echo \YAWK\backend::getTitle($lang['BOOKINGS'], $lang['BOOKING_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
-            <li><a href=\"index.php?page=plugins\" title=\"Pages\"> Plugins</a></li>
-            <li class=\"active\"><a href=\"index.php?plugin=booking\" title=\"Booking\"> Booking</a></li>
+            <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+            <li><a href=\"index.php?page=plugins\" title=\"$lang[PLUGINS]\"> $lang[PLUGINS]</a></li>
+            <li class=\"active\"><a href=\"index.php?plugin=booking\" title=\"$lang[BOOKING]\"> $lang[BOOKING]</a></li>
          </ol>
     </section>
     <!-- Main content -->
@@ -91,18 +96,18 @@ echo"<ol class=\"breadcrumb\">
 <table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-hover" id="table-sort">
     <thead>
     <tr>
-        <td width="8%" style="text-align: center;"><strong>Fix?</strong></td>
-        <td width="14%"><strong><?PHP print $lang['DATE_CREATED']; ?></strong></td>
-        <td width="10%"><strong><?PHP print $lang['NAME']; ?></strong></td>
-        <td width="5%" class=\"text-center\"><strong><?PHP print $lang['BOOKING_DATEWISH']; ?></strong></td>
-        <td width="39%"><strong><?PHP print $lang['MESSAGE']; ?></strong></td>
-        <td width="5%" class=\"text-center\"><strong><?PHP print $lang['BOOKING_VISITS']; ?></strong></td>
-        <td width="5%" class=\"text-center\"><strong><?PHP print $lang['IP']; ?></strong></td>
-        <td width="14%" class=\"text-center\"><strong><?PHP print $lang['ACTIONS']; ?></strong></td>
+        <td width="8%" style="text-align: center;"><strong><?php echo $lang['FIXATED']; ?></strong></td>
+        <td width="14%"><strong><?php print $lang['DATE_CREATED']; ?></strong></td>
+        <td width="10%"><strong><?php print $lang['NAME']; ?></strong></td>
+        <td width="5%" class=\"text-center\"><strong><?php print $lang['BOOKING_DATEWISH']; ?></strong></td>
+        <td width="39%"><strong><?php print $lang['MESSAGE']; ?></strong></td>
+        <td width="5%" class=\"text-center\"><strong><?php print $lang['BOOKING_VISITS']; ?></strong></td>
+        <td width="5%" class=\"text-center\"><strong><?php print $lang['IP']; ?></strong></td>
+        <td width="14%" class=\"text-center\"><strong><?php print $lang['ACTIONS']; ?></strong></td>
     </tr>
     </thead>
     <tbody>
-    <?PHP print $booking->getBackendTable($db, $i, $field, $value); ?>
+    <?php print $booking->getBackendTable($db, $i, $field, $value); ?>
     </tbody>
 </table>
 

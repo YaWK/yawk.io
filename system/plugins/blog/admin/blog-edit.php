@@ -7,7 +7,7 @@ if (!isset($page)) { $page = new \YAWK\page(); }
 // check if language is set
 if (!isset($language) || (!isset($lang)))
 {   // inject (add) language tags to core $lang array
-    $lang = $blog->injectLanguageTags(@$lang, @$language);
+    $lang = \YAWK\language::inject(@$lang, "../system/plugins/blog/language/");
 }
 // load blog properties
 $blog->loadItemProperties($db, $_GET['blogid'], $_GET['itemid']);

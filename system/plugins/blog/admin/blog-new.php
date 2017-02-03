@@ -13,7 +13,7 @@ if (!isset($blog)) { $blog = new \YAWK\PLUGINS\BLOG\blog(); }
 // check if language is set
 if (!isset($language) || (!isset($lang)))
 {   // inject (add) language tags to core $lang array
-    $lang = $blog->injectLanguageTags(@$lang, @$language);
+    $lang = \YAWK\language::inject(@$lang, "../system/plugins/blog/language/");
 }
 
 // TEMPLATE WRAPPER - HEADER & breadcrumbs

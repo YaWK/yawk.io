@@ -1,4 +1,9 @@
-<?PHP
+<?php
+// check if language is set
+if (!isset($language) || (!isset($lang)))
+{   // inject (add) language tags to core $lang array
+    $lang = \YAWK\language::inject(@$lang, "../system/plugins/booking/language/");
+}
 include '../system/plugins/booking/classes/booking.php';
 $booking = new YAWK\PLUGINS\BOOKING\booking();
 
@@ -37,7 +42,7 @@ if (isset($_GET['id'])){
         if ($booking->toggleOffline($db, $booking->id, $booking->confirmed, $booking->success)) {
             \YAWK\backend::setTimeout("index.php?plugin=booking&pluginpage=booking-edit&id=$booking->id", 0);
         } else {
-            print \YAWK\alert::draw("danger", "Error", "Could not toggle booking status.","",4200);
+            print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[BOOKING_TOGGLE_FAILED]","",4200);
         }
     }
 }

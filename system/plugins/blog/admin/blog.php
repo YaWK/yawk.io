@@ -5,7 +5,7 @@ if (!isset($blog)) { $blog = new \YAWK\PLUGINS\BLOG\blog(); }
 // check if language is set
 if (!isset($language) || (!isset($lang)))
 {   // inject (add) language tags to core $lang array
-    $lang = $blog->injectLanguageTags(@$lang, @$language);
+    $lang = \YAWK\language::inject(@$lang, "../system/plugins/blog/language/");
 }
 
 // ADD BLOG
@@ -100,7 +100,7 @@ echo"<ol class=\"breadcrumb\">
     <thead>
     <tr>
         <td width="3%"><strong>&nbsp;</strong></td>
-        <td width="5%" class="text-center"><strong>$lang[ID]</strong></td>
+        <td width="5%" class="text-center"><strong><?php echo $lang['ID']; ?></strong></td>
         <td width="3%" class="text-center"><strong>&nbsp;</strong></td>
         <td width="15%"><strong><?PHP echo $lang['BLOG']; ?></strong></td>
         <td width="57%"><strong><?PHP echo $lang['DESCRIPTION']; ?></strong></td>

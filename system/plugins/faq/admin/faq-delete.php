@@ -1,4 +1,9 @@
 <?PHP
+// check if language is set
+if (!isset($language) || (!isset($lang)))
+{   // inject (add) language tags to core $lang array
+    $lang = \YAWK\language::inject(@$lang, "../system/plugins/faq/language/");
+}
 include '../system/plugins/faq/classes/faq-backend.php';
 if (!isset($faq))
 {   // crate object
@@ -10,11 +15,11 @@ if (isset($_GET['delete']))
     {   //
         if ($faq->delete($db, $_GET['id']))
         {   // success
-            print \YAWK\alert::draw("success", "Erfolg!", "Der Eintrag " . $_GET['id'] . " wurde gel&ouml;scht!", "plugin=faq","2000");
+            print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[ENTRY] " . $_GET['id'] . " $lang[DELETED]", "plugin=faq","2000");
         }
         else
         {   // delete item failed, throw error
-            print \YAWK\alert::draw("danger", "Fehler!", "Der Eintrag ".$_GET['id']." konnte nicht gel&ouml;scht werden.", "plugin=faq","3800");
+            print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[ENTRY] ".$_GET['id']." $lang[NOT_DELETED]", "plugin=faq","3800");
         }
     }
 }

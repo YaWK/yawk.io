@@ -10,6 +10,11 @@
     });//]]>  /* END document.ready */
 </script>
 <?php
+// check if language is set
+if (!isset($language) || (!isset($lang)))
+{   // inject (add) language tags to core $lang array
+    $lang = \YAWK\language::inject(@$lang, "../system/plugins/tourdates/language/");
+}
 include '../system/plugins/tourdates/classes/tourdates.php';
 
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
@@ -21,10 +26,10 @@ echo "
 /* draw Title on top */
 echo \YAWK\backend::getTitle($lang['TOUR_DATES'], $lang['TOUR_DATES_EDIT']);
 echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
-            <li><a href=\"index.php?page=plugins\" title=\"Plugins\"> Plugins</a></li>
-            <li><a href=\"index.php?plugin=tourdates\" title=\"Tourdates\"> Tourdates</a></li>
-            <li class=\"active\"><a href=\"index.php?plugin=tourdates&pluginpage=tourdates-edit&id=$_GET[id]\" title=\"Edit Date\"> Edit</a></li>
+            <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+            <li><a href=\"index.php?page=plugins\" title=\"$lang[PLUGINS]\"> $lang[PLUGINS]</a></li>
+            <li><a href=\"index.php?plugin=tourdates\" title=\"$lang[TOUR_DATES]\"> $lang[TOUR_DATES]</a></li>
+            <li class=\"active\"><a href=\"index.php?plugin=tourdates&pluginpage=tourdates-edit&id=$_GET[id]\" title=\"$lang[EDIT]\"> $lang[EDIT]</a></li>
          </ol>
     </section>
     <!-- Main content -->

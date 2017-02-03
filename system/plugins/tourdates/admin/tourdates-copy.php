@@ -1,4 +1,10 @@
-<?PHP
+<?php
+// check if language is set
+if (!isset($language) || (!isset($lang)))
+{   // inject (add) language tags to core $lang array
+    $lang = \YAWK\language::inject(@$lang, "../system/plugins/tourdates/language/");
+}
+
 include '../system/plugins/tourdates/classes/tourdates.php';
 if (!isset($tourdates))
 {   // create new obj
