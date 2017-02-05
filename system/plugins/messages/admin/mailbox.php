@@ -1,4 +1,9 @@
 <?php
+// check if language is set
+if (!isset($language) || (!isset($lang)))
+{   // inject (add) language tags to core $lang array
+    $lang = \YAWK\language::inject(@$lang, "../system/plugins/messages/language/");
+}
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
     <!-- Content Wrapper. Contains page content -->
@@ -8,10 +13,10 @@ echo "
 /* draw Title on top */
 echo \YAWK\backend::getTitle($lang['MSG_MAILBOX'], $lang['MSG_INBOX_SUBTITLE']);
 echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
-            <li><a href=\"index.php?page=plugins\" title=\"Pages\"> Plugins</a></li>
-            <li><a href=\"index.php?plugin=messages\" title=\"Messaging\"> Messaging</a></li>
-            <li class=\"active\"><a href=\"index.php?plugin=messages&pluginpage=mailbox\" title=\"Mailbox\"> Mailbox</a></li>
+            <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+            <li><a href=\"index.php?page=plugins\" title=\"$lang[PLUGINS]\"> $lang[PLUGINS]</a></li>
+            <li><a href=\"index.php?plugin=messages\" title=\"$lang[MESSAGING]\"> $lang[MESSAGING]</a></li>
+            <li class=\"active\"><a href=\"index.php?plugin=messages&pluginpage=mailbox\" title=\"Mailbox\"> $lang[MAILBOX]</a></li>
          </ol>
     </section>
     <!-- Main content -->
@@ -32,10 +37,10 @@ $messages = new \YAWK\PLUGINS\MESSAGES\messages($db, "backend");
 // check if a msg ID is sent via GET
 if (isset($_GET['msg_id']) && is_numeric($_GET['msg_id']))
 {   // single message view
-    echo $messages->MessageView($db, $_GET['msg_id']);
+    echo $messages->MessageView($db, $_GET['msg_id'], $lang);
 }
 else
 // no message to display
 {   // therefor init mailbox
-    echo $messages->init($db);
+    echo $messages->init($db, $lang);
 }

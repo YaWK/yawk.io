@@ -59,8 +59,11 @@ namespace YAWK {
                 $currentLanguage = $_GET['lang'];     // sst GET param as current language
                 // register and overwrite session var
                 $_SESSION['lang'] = $currentLanguage;
-                // and set cookie
-                setcookie('lang', $currentLanguage, time() + (60 * 60 * 24 * 1460));
+                // and check if cookie is set
+                if (!isset($_COOKIE['lang']) || (empty($_COOKIE['lang'])))
+                {   // if not, try to set it - with error supressor to avoid notices if output started before
+                    @setcookie('lang', $currentLanguage, time() + (60 * 60 * 24 * 1460));
+                }
                 /* language set, cookie set */
                 return $currentLanguage;
             }

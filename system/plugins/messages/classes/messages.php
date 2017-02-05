@@ -229,7 +229,7 @@ namespace YAWK\PLUGINS\MESSAGES {
          * @param object $db database
          * @return string
          */
-        public function init($db)
+        public function init($db, $lang)
         {
             /** @var \YAWK\db $db */
             // check if session vars exist
@@ -237,18 +237,18 @@ namespace YAWK\PLUGINS\MESSAGES {
             {   // check if user is logged in
                 if (\YAWK\user::isLoggedIn($db, $_SESSION['username']))
                 {   // ok, load inbox
-                    return self::getInbox($db);
+                    return self::getInbox($db, $lang);
                 }
                 else
                 {   // session vars are here, but user is not set online in db atm,
                     // that should not be, so invite the user to login
-                    echo "<h2>SORRY! Diese Seite ist nur f&uuml;r Mitglieder. <small>Du musst Dich erst einloggen.</small></h2>";
+                    echo "<h2>$lang[REGISTERED_ONLY]</h2>";
                     return \YAWK\user::drawLoginBox('', '');
                 }
             }
             else
             {   // session vars are not set. invite the user to login
-                echo "<h2>SORRY! Diese Seite ist nur f&uuml;r Mitglieder. <small>Du musst Dich erst einloggen.</small></h2>";
+                echo "<h2>$lang[REGISTERED_ONLY]</h2>";
                 return \YAWK\user::drawLoginBox('', '');
             }
         }
@@ -261,9 +261,9 @@ namespace YAWK\PLUGINS\MESSAGES {
          * @param object $db database
          * @return string
          */
-        public function getInbox($db){
+        public function getInbox($db, $lang){
             $html = "";
-            $html .= self::drawMenu($db);
+            $html .= self::drawMenu($db, $lang);
             return $html;
         }
 
@@ -375,7 +375,7 @@ namespace YAWK\PLUGINS\MESSAGES {
          * @param array $relatedMessages related messages array
          * @return string
          */
-        public function drawRelatedMessages($db, $relatedMessages)
+        public function drawRelatedMessages($db, $relatedMessages, $lang)
         {   /** @var $db \YAWK\db */
             $i = '';
             $html = '';
@@ -392,10 +392,10 @@ namespace YAWK\PLUGINS\MESSAGES {
                     $html .= "
                      <div class=\"box box-primary\">
                        <div class=\"box-header with-border\">
-                         <h3 class=\"box-title\">$picture &nbsp;Message from <b>$from</b> $timeAgo <small>($splitDate[month], $splitDate[day] $splitDate[year], $splitDate[time])</small> </h3>
+                         <h3 class=\"box-title\">$picture &nbsp;$lang[MESSAGE] $lang[FROM] <b>$from</b> $timeAgo <small>($splitDate[month], $splitDate[day] $splitDate[year], $splitDate[time])</small> </h3>
                          <div class=\"box-tools pull-right\">
                            <span class=\"label label-primary\">$relatedMessage[msg_date]</span>
-                           <button class=\"btn btn-box-tool\" data-widget=\"remove\" onclick=\"closeMessage('$relatedMessage[msg_id]')\" data-toggle=\"tooltip\" title=\"Close\"><i class=\"fa fa-times\"></i></button>
+                           <button class=\"btn btn-box-tool\" data-widget=\"remove\" onclick=\"closeMessage('$relatedMessage[msg_id]')\" data-toggle=\"tooltip\" title=\"$lang[CLOSE]\"><i class=\"fa fa-times\"></i></button>
                          </div>
                          <div class=\"box-body\">
                             <h3>$relatedMessage[msg_body]</h3><hr>
@@ -416,7 +416,7 @@ namespace YAWK\PLUGINS\MESSAGES {
          * @param int $msg_id message ID
          * @return string
          */
-        public function MessageView($db, $msg_id)
+        public function MessageView($db, $msg_id, $lang)
         {
             $message = self::fetchSingleMessage($db, $msg_id);
             $from = \YAWK\user::getUserNameFromID($db, $message['fromUID']);
@@ -429,20 +429,20 @@ namespace YAWK\PLUGINS\MESSAGES {
             <div class=\"row\">
              <div class=\"col-md-8\"><div class=\"box box-primary\">
                        <div class=\"box-header with-border\">
-                         <h3 class=\"box-title\">$picture &nbsp;Message from <b><a href=\"index.php?page=user-edit&user=$from\">$from</a></b> $timeAgo <small>($splitDate[month], $splitDate[day] $splitDate[year], $splitDate[time])</small> </h3>
+                         <h3 class=\"box-title\">$picture &nbsp;$lang[MESSAGE] $lang[FROM] <b><a href=\"index.php?page=user-edit&user=$from\">$from</a></b> $timeAgo <small>($splitDate[month], $splitDate[day] $splitDate[year], $splitDate[time])</small> </h3>
                          <div class=\"box-tools pull-right\">
                            <span class=\"label label-primary\">$message[msg_date]</span>
-                           <button class=\"btn btn-box-tool\" data-widget=\"remove\" onclick=\"closeMessage('$message[msg_id]')\" data-toggle=\"tooltip\" title=\"Close\"><i class=\"fa fa-times\"></i></button>
+                           <button class=\"btn btn-box-tool\" data-widget=\"remove\" onclick=\"closeMessage('$message[msg_id]')\" data-toggle=\"tooltip\" title=\"$lang[CLOSE]\"><i class=\"fa fa-times\"></i></button>
                          </div>
                          <div class=\"box-body\"><h3>$message[msg_body]</h3><hr></div></div></div></div>
             <div class=\"col-md-4\" id=\"messagebox\">";
-            $html .= self::drawNewMessage($from); $html .="</div>
+            $html .= self::drawNewMessage($from, $lang); $html .="</div>
             </div>";
 
             $html .= "
             <div class=\"row\">
               <div class=\"col-md-8\">";
-            $html .= self::drawRelatedMessages($db, self::fetchRelatedMessages($db, $message['fromUID'], $message['toUID'], $message['msg_id']));
+            $html .= self::drawRelatedMessages($db, self::fetchRelatedMessages($db, $message['fromUID'], $message['toUID'], $message['msg_id']), $lang);
 
             $html .= "</div>
               <div class=\"col-md-4\">&nbsp;</div>
@@ -459,13 +459,13 @@ namespace YAWK\PLUGINS\MESSAGES {
          * @param array $messages messages array
          * @return string
          */
-        public function drawInbox($type, $messages){
+        public function drawInbox($type, $messages, $lang){
             $html = "<table class='table table-striped' id=\"table-sort\">
                      <tr style='font-weight:bold;' class='small'>
-                        <td width='15%'>Date </td>
-                        <td width='25%'>from User</td>
-                        <td width='50%'>Message <small>(Preview)</small></td>
-                        <td width='20%' style=\"text-align: center;\">Actions</td>
+                        <td width='15%'>$lang[DATE]</td>
+                        <td width='25%'>$lang[FROM] $lang[USER]</td>
+                        <td width='50%'>$lang[MESSAGE] <small>($lang[PREVIEW])</small></td>
+                        <td width='20%' style=\"text-align: center;\">$lang[ACTIONS]</td>
                      </tr>";
             foreach ($messages as $email){
                 if ($email['msg_read'] === '0') { $style = "bold"; $envelope = "fa fa-envelope"; }
@@ -494,21 +494,21 @@ namespace YAWK\PLUGINS\MESSAGES {
 
                     $revert_icon = "fa fa-undo";
                     $revert_action = "restoreFromTrash('$email[msg_id]')";
-                    $revert_title = "restore message";
+                    $revert_title = "$lang[RESTORE_MSG]";
 
                     $trash_icon = "fa fa-trash";
                     $trash_action = "markAsDeleted('$email[msg_id]')";
-                    $trash_title = "delete this";
+                    $trash_title = "$lang[DEL_MSG]";
                 }
                 else
                 {
                     $revert_icon = $envelope;
                     $revert_action = "messageToggle('$email[msg_id]')";
-                    $revert_title = "mark as read";
+                    $revert_title = "$lang[MARK_AS_READ]";
 
                     $trash_icon = "fa fa-trash-o";
                     $trash_action = "markAsTrash('$email[msg_id]')";
-                    $trash_title = "move to trash";
+                    $trash_title = "$lang[MOVE_TO_TRASH]";
 
                     // $reply_icon = "fa fa-reply";
                     // $reply_action = "replyMessage('$email[msg_id]')";
@@ -518,7 +518,7 @@ namespace YAWK\PLUGINS\MESSAGES {
 
                     $spam_icon = "fa fa-user-secret";
                     $spam_action = "markAsSpam('$email[msg_id]')";
-                    $spam_title = "mark as SPAM / FAKE";
+                    $spam_title = "$lang[MARK_AS_SPAM]";
                 }
                 $msg_preview = substr($email['msg_body'],0 -64);
                 $html .= "
@@ -544,7 +544,7 @@ namespace YAWK\PLUGINS\MESSAGES {
          * @param object $db database
          * @return string
          */
-        public function drawMenu($db)
+        public function drawMenu($db, $lang)
         {   // check if there is an active tab request
             if (isset($_GET['active']) && (!empty($_GET['active'])))
             {   // switch vars
@@ -575,16 +575,16 @@ namespace YAWK\PLUGINS\MESSAGES {
           <!-- Nav tabs -->
           <ul class=\"nav nav-tabs\" role=\"tablist\">
             <li role=\"presentation\" $active_inbox onclick=\"refreshInbox('all')\"><a href=\"#inbox\" aria-controls=\"home\" role=\"tab\" data-toggle=\"tab\">
-            <i class=\"fa fa-envelope-o\"></i> &nbsp;Inbox</a></li>
+            <i class=\"fa fa-envelope-o\"></i> &nbsp;$lang[INBOX]</a></li>
 
             <li role=\"presentation\" $active_compose><a href=\"#newmessage\" aria-controls=\"newmessage\" role=\"tab\" data-toggle=\"tab\">
-            <i class=\"fa fa-plus-square-o\"></i> &nbsp;Message</a></li>
+            <i class=\"fa fa-plus-square-o\"></i> &nbsp;$lang[MESSAGE]</a></li>
 
             <li role=\"presentation\"><a href=\"#trash\" aria-controls=\"messages\" role=\"tab\" data-toggle=\"tab\">
-            <i class=\"fa fa-trash-o\"></i> &nbsp;Recycle Bin</a></li>
+            <i class=\"fa fa-trash-o\"></i> &nbsp;$lang[RECYCLE_BIN]</a></li>
 
             <li role=\"presentation\"><a href=\"#spam\" aria-controls=\"messages\" role=\"tab\" data-toggle=\"tab\">
-            <i class=\"fa fa-user-secret\"></i> &nbsp;Spam / Fake</a></li>
+            <i class=\"fa fa-user-secret\"></i> &nbsp;$lang[SPAM]</a></li>
           </ul>
 
           <!-- Tab panes -->
@@ -592,29 +592,29 @@ namespace YAWK\PLUGINS\MESSAGES {
 
             <!-- inbox -->
             <div role=\"tabpanel\" $active_inbox_tab_pane id=\"inbox\">
-            <h4><i class=\"fa fa-envelope-o fa-2x\"></i> &nbsp;Inbox</h4>";
+            <h4><i class=\"fa fa-envelope-o fa-2x\"></i> &nbsp;$lang[INBOX]</h4>";
             // get inbox
-            $html .= self::drawInbox('all', self::fetchMessages($db, 'all'));
+            $html .= self::drawInbox('all', self::fetchMessages($db, 'all'), $lang);
             $html .= "
             </div>
 
             <!-- new msg -->
             <div role=\"tabpanel\" $active_compose_tab_pane id=\"newmessage\">
-            <h4><i class=\"fa fa-envelope fa-2x\"></i> &nbsp;new message</h4>";
+            <h4><i class=\"fa fa-envelope fa-2x\"></i> &nbsp;$lang[MSG_COMPOSE]</h4>";
             // get new message form
-            $html .= self::drawNewMessage('');
+            $html .= self::drawNewMessage('', $lang);
             $html .= "</div>
             <!-- trash -->
             <div role=\"tabpanel\" class=\"tab-pane\" id=\"trash\">
-            <h4><i class=\"fa fa-trash fa-2x\"></i> &nbsp;Recycle Bin <small>(Messages will be deleted after 30 days.)</small></h4>";
+            <h4><i class=\"fa fa-trash fa-2x\"></i> &nbsp;$lang[RECYCLE_BIN_HEADING]</h4>";
             // get trashed items
-            $html .= self::drawInbox('trash', self::fetchMessages($db, 'trash'));
+            $html .= self::drawInbox('trash', self::fetchMessages($db, 'trash'), $lang);
             $html .="</div>
             <!-- spam -->
             <div role=\"tabpanel\" class=\"tab-pane\" id=\"spam\">
-            <h4><i class=\"fa fa-user-secret fa-2x\"></i> &nbsp;SPAM / FAKE <small>(Messages will be automatically deleted after 30 days.)</small></h4>";
+            <h4><i class=\"fa fa-user-secret fa-2x\"></i> &nbsp;$lang[SPAM_HEADING]</h4>";
             // get spam items
-            $html .= self::drawInbox('spam', self::fetchMessages($db, 'spam'));
+            $html .= self::drawInbox('spam', self::fetchMessages($db, 'spam'), $lang);
             $html .= "</div>
           </div>
         </div>";
@@ -629,7 +629,7 @@ namespace YAWK\PLUGINS\MESSAGES {
          * @param string $to username to send
          * @return string message fieldset
          */
-        public function drawNewMessage($to){
+        public function drawNewMessage($to, $lang){
             $key = "U3E44ERG0H0M3";
             if (isset($_GET['to']) && (!empty($_GET['to'])))
             {   // set new message recipient from given GET var
@@ -637,19 +637,19 @@ namespace YAWK\PLUGINS\MESSAGES {
             }
             if (isset($to) && (!empty($to)))
             {
-                $replyLabel = "Reply to:";
+                $replyLabel = "$lang[REPLY_TO]";
                 $msg_to = "value=\"$to\"";
             }
             else
             {
-                $replyLabel = "Recipient (username)";
+                $replyLabel = "$lang[RECIPIENT_USERNAME]";
                 $msg_to = '';
             }
             return "
                     <fieldset id=\"comment_thread\" class=\"animated zoomInDown\">
                       <label for=\"msg_to\">$replyLabel</label> <input id=\"msg_to\" type=\"text\" $msg_to class=\"form-control\" name=\"msg_to\" size=\"16\" placeholder=\"to:\" maxlength=\"64\">
-                      <label for=\"msg_body\">Your message:</label> <textarea id=\"msg_body\" name=\"msg_body\" class=\"form-control\" cols=\"68\" rows=\"12\"></textarea><br>
-                      <input type=\"button\" class=\"btn btn-success\" id=\"submit_post\" name=\"save_comment\" title=\"absenden\" value=\"Send&nbsp;message\">
+                      <label for=\"msg_body\">$lang[YOUR_MSG]</label> <textarea id=\"msg_body\" name=\"msg_body\" class=\"form-control\" cols=\"68\" rows=\"12\"></textarea><br>
+                      <input type=\"button\" class=\"btn btn-success\" id=\"submit_post\" name=\"save_comment\" title=\"$lang[SEND]\" value=\"$lang[MSG_SEND_BTN]\">
                       <input type=\"hidden\" name=\"msg_from\" value=\"$_SESSION[username]\" id=\"msg_from\">
                       <input type=\"hidden\" name=\"fromUID\" value=\"$_SESSION[uid]\" id=\"fromUID\">
                       <input type=\"hidden\" name=\"token\" value=\"".$key."\" id=\"token\">
