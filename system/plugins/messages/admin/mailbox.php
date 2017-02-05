@@ -22,10 +22,10 @@ echo"<ol class=\"breadcrumb\">
     <!-- Main content -->
     <section class=\"content\">";
 ?>
-<a class="btn btn-default pull-right" title="rescan" href="index.php?plugin=messages&pluginpage=mailbox">
+<a class="btn btn-default pull-right" title="<?php echo $lang['REFRESH'];?>" href="index.php?plugin=messages&pluginpage=mailbox">
 <i class="fa fa-refresh"></i></a>
 
-<a class="btn btn-success pull-right" title="new message" href="index.php?plugin=messages&pluginpage=mailbox&active=compose">
+<a class="btn btn-success pull-right" title="<?php echo $lang['MSG_COMPOSE'];?>" href="index.php?plugin=messages&pluginpage=mailbox&active=compose">
 <i class="fa fa-plus"></i> &nbsp;<?php print $lang['MSG_COMPOSE']; ?></a>
 
 
