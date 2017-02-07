@@ -5,5 +5,9 @@ if (!isset($user) || (empty($user)))
 {
     $user = new \YAWK\user();
 }
+if (!isset($lang) || (empty($lang)))
+{
+    $lang = new \YAWK\language();
+}
 $userpage = new \YAWK\PLUGINS\USERPAGE\userpage($db, $user);
-$userpage->init($db, $user);
+$userpage->init($db, $user, $lang);

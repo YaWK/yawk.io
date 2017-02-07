@@ -1,4 +1,9 @@
 <?php
+// check if language is set
+if (!isset($language) || (!isset($lang)))
+{   // inject (add) language tags to core $lang array
+    $lang = \YAWK\language::inject(@$lang, "../system/plugins/userpage/language/");
+}
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
     <!-- Content Wrapper. Contains page content -->
@@ -8,9 +13,9 @@ echo "
 /* draw Title on top */
 echo \YAWK\backend::getTitle($lang['USERPAGE'], $lang['USERPAGE_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
-            <li><a href=\"index.php?page=plugins\" title=\"Pages\"> Plugins</a></li>
-            <li class=\"active\"><a href=\"index.php?plugin=userpage\" title=\"Booking\"> Userpage</a></li>
+            <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+            <li><a href=\"index.php?page=plugins\" title=\"$lang[PLUGINS]\"> $lang[PLUGINS]</a></li>
+            <li class=\"active\"><a href=\"index.php?plugin=userpage\" title=\"$lang[USERPAGE]\"> $lang[USERPAGE]</a></li>
          </ol>
     </section>
     <!-- Main content -->
@@ -274,9 +279,9 @@ else {
 <form action="index.php?plugin=userpage" class="form-inline" role="form" name="settings" method="POST">
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
-       <li role="presentation" class="active"><a href="#greeting" aria-controls="greeting" role="tab" data-toggle="tab"><i class="fa fa-commenting-o"></i> &nbsp;Greeting Text</a></li>
-       <li role="presentation"><a href="#dash" aria-controls="dash" role="tab" data-toggle="tab"><i class="fa fa-folder-open"></i> &nbsp;Userpage Tabs</a></li>
-       <li role="presentation"><a href="#menu" aria-controls="menu" role="tab" data-toggle="tab"><i class="fa fa-bars"></i> &nbsp;Logout Menu</a></li>
+       <li role="presentation" class="active"><a href="#greeting" aria-controls="greeting" role="tab" data-toggle="tab"><i class="fa fa-commenting-o"></i> &nbsp;<?php echo "$lang[USERPAGE_GREETING_TEXT]"; ?></a></li>
+       <li role="presentation"><a href="#dash" aria-controls="dash" role="tab" data-toggle="tab"><i class="fa fa-folder-open"></i> &nbsp;<?php echo "$lang[USERPAGE_TABS]"; ?></a></li>
+       <li role="presentation"><a href="#menu" aria-controls="menu" role="tab" data-toggle="tab"><i class="fa fa-bars"></i> &nbsp;<?php echo "$lang[LOGOUT_MENU]"; ?></a></li>
     </ul>
 
     <!-- Tab panes -->
@@ -288,18 +293,18 @@ else {
                 <input type="hidden" name="sent" value="1">
             </fieldset>
             <fieldset>
-                <legend><i class="fa fa-commenting-o"></i> &nbsp;Greeting Text <small>set user welcome</small></legend>
-                <label for="hellotext">Greeting </label><br>
+                <legend><i class="fa fa-commenting-o"></i> &nbsp;<?php echo "$lang[USERPAGE_GREETING_TEXT]"; ?> <small><?php echo "$lang[USERPAGE_GREETING_SUBTEXT]"; ?></small></legend>
+                <label for="hellotext"><?php echo "$lang[USERPAGE_GREETING]"; ?> </label><br>
                 <input type="text" id="hellotext" size="16" name="hellotext" class="form-control" placeholder="Welcome" value="<?PHP echo \YAWK\settings::getSetting($db, "userpage_hellotext");?>" title="Greeting">
                 &nbsp;$USERNAME &nbsp;
                 <input type="text" id="hellotextsub" size="32" name="hellotextsub" class="form-control" placeholder="good to see you again!" value="<?PHP echo \YAWK\settings::getSetting($db, "userpage_hellotextsub");?>" title="Greeting Subtext">
                 <label for="hellotextsub">&nbsp;</label><br><br>
                 <input type="hidden" value='0' name="hello">
                 <input type="checkbox" id="hello" name="hello" class="form-control" value="1" title="Enable User Greeting" <?PHP echo $helloHtml; ?>>
-                <label for="hello">Enable User Greeting</label><br>
+                <label for="hello"><?php echo $lang['USERPAGE_GREETING_ENABLE']; ?></label><br>
                 <input type="hidden" value='0' name="hellogroup">
                 <input type="checkbox" id="hellogroup" name="hellogroup" class="form-control" value="1" title="Enable User Group Greeting" <?PHP echo $hellogroupHtml; ?>>
-                <label for="hellogroup">Enable User Group Greeting</label><br><br><br>
+                <label for="hellogroup"><?php echo $lang['USERPAGE_GRP_GREETING_ENABLE']; ?></label><br><br><br>
             </fieldset>
         </div>
 
@@ -312,19 +317,19 @@ else {
 
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#homeTab" aria-controls="homeTab" role="tab" data-toggle="tab"><i class="fa fa-home"></i> &nbsp;Home</a></li>
-                <li role="presentation"><a href="#profileTab" aria-controls="profileTab" role="tab" data-toggle="tab"><i class="fa fa-user"></i> &nbsp;Profile</a></li>
-                <li role="presentation"><a href="#messagesTab" aria-controls="messagesTab" role="tab" data-toggle="tab"><i class="fa fa-envelope"></i> &nbsp;Messages</a></li>
-                <li role="presentation"><a href="#settingsTab" aria-controls="settingsTab" role="tab" data-toggle="tab"><i class="fa fa-cog"></i> &nbsp;Settings</a></li>
-                <li role="presentation"><a href="#statsTab" aria-controls="statsTab" role="tab" data-toggle="tab"><i class="fa fa-line-chart"></i> &nbsp;Stats</a></li>
-                <li role="presentation"><a href="#helpTab" aria-controls="helpTab" role="tab" data-toggle="tab"><i class="fa fa-question-circle"></i> &nbsp;Help</a></li>
-                <li role="presentation"><a href="#adminTab" aria-controls="adminTab" role="tab" data-toggle="tab"><i class="fa fa-question-wrench"></i> &nbsp;Admin</a></li>
+                <li role="presentation" class="active"><a href="#homeTab" aria-controls="homeTab" role="tab" data-toggle="tab"><i class="fa fa-home"></i> &nbsp;<?PHP print $lang['USERPAGE_TAB_HOME']; ?></a></li>
+                <li role="presentation"><a href="#profileTab" aria-controls="profileTab" role="tab" data-toggle="tab"><i class="fa fa-user"></i> &nbsp;<?PHP print $lang['USERPAGE_TAB_PROFILE']; ?></a></li>
+                <li role="presentation"><a href="#messagesTab" aria-controls="messagesTab" role="tab" data-toggle="tab"><i class="fa fa-envelope"></i> &nbsp;<?PHP print $lang['USERPAGE_TAB_MESSAGES']; ?></a></li>
+                <li role="presentation"><a href="#settingsTab" aria-controls="settingsTab" role="tab" data-toggle="tab"><i class="fa fa-cog"></i> &nbsp;<?PHP print $lang['USERPAGE_TAB_SETTINGS']; ?></a></li>
+                <li role="presentation"><a href="#statsTab" aria-controls="statsTab" role="tab" data-toggle="tab"><i class="fa fa-line-chart"></i> &nbsp;<?PHP print $lang['USERPAGE_TAB_STATS']; ?></a></li>
+                <li role="presentation"><a href="#helpTab" aria-controls="helpTab" role="tab" data-toggle="tab"><i class="fa fa-question-circle"></i> &nbsp;<?PHP print $lang['USERPAGE_TAB_HELP']; ?></a></li>
+                <li role="presentation"><a href="#adminTab" aria-controls="adminTab" role="tab" data-toggle="tab"><i class="fa fa-question-wrench"></i> &nbsp;<?PHP print $lang['USERPAGE_TAB_ADMIN']; ?></a></li>
             </ul>
 
             <!-- Tab panes -->
             <div class="tab-content">
                 <fieldset>
-                    <legend><br><i class="fa fa-gears"></i><small><i class="fa fa-user"></i></small> &nbsp;Userpage Tabs <small>set visible tabs</small></legend>
+                    <legend><br><i class="fa fa-gears"></i><small><i class="fa fa-user"></i></small> &nbsp;<?php echo "$lang[USERPAGE_SINGLE] <small>$lang[USERPAGE_TABS_SUBTEXT]</small>"; ?></legend>
                 </fieldset>
 
                 <!-- home -->
@@ -332,77 +337,77 @@ else {
                     <!-- HOME (dashboard) TAB ENABLE -->
                     <input type="hidden" value='0' name="dashboard">
                     <input type="checkbox" id="dashboard" name="dashboard" class="form-control" value="1" title="Enable Dashboard Tab" <?PHP echo $dashboardHtml; ?>>
-                    <label for="dashboard"> Enable Dashboard Tab</label><br>
+                    <label for="dashboard"> <?php echo "$lang[USERPAGE_TAB_DASH_ENABLE]"; ?></label><br>
                     <!-- DASHBOARD ACTIVE TAB -->
                     <label class="radio radio-inline control-label">
-                    <input type="radio" id="activeTab" name="activeTab" class="form-control" value="Dashboard" title="Set This Tab Active" <?PHP echo $activeDashboardHtml; ?>>
-                    Set This Tab Active</label><br>
+                    <input type="radio" id="activeTab" name="activeTab" class="form-control" value="Dashboard" title="<?php echo "$lang[SET_THIS_TAB_ACTIVE]"; ?>" <?PHP echo $activeDashboardHtml; ?>>
+                        <?php echo "$lang[SET_THIS_TAB_ACTIVE]"; ?></label><br>
                 </div>
                 <!-- profile -->
                 <div role="tabpanel" class="tab-pane" id="profileTab">
                     <!-- PROFILE ENABLE -->
                     <input type="hidden" value='0' name="profile">
                     <input type="checkbox" id="profile" name="profile" class="form-control" value="1" title="Enable Profile Tab" <?PHP echo $profileHtml; ?>>
-                    <label for="profile"> Enable Profile Tab</label><br>
+                    <label for="profile"> <?php echo "$lang[USERPAGE_TAB_PROFILE_ENABLE]"; ?></label><br>
                     <!-- PROFILE ACTIVE TAB -->
                     <label class="radio radio-inline control-label">
-                    <input type="radio" id="activeTab" name="activeTab" class="form-control" value="Profile" title="Set This Tab Active" <?PHP echo $activeProfileHtml; ?>>
-                    Set This Tab Active</label><br>
+                    <input type="radio" id="activeTab" name="activeTab" class="form-control" value="Profile" title="<?php echo "$lang[SET_THIS_TAB_ACTIVE]"; ?>" <?PHP echo $activeProfileHtml; ?>>
+                        <?php echo "$lang[SET_THIS_TAB_ACTIVE]"; ?></label><br>
 
                     <fieldset>
-                        <legend><i class="fa fa-user"></i> &nbsp;Set up <small>Profile Page</small></legend>
+                        <legend><i class="fa fa-user"></i> &nbsp;<?php echo "$lang[USERPAGE_SETUP_PROFILE_PAGE] <small>$lang[USERPAGE_SETUP_PROFILE_PAGE_SUBTEXT]</small>"; ?></legend>
                         <!-- change username -->
                         <input type="hidden" value='0' name="changeUsername">
-                        <input type="checkbox" id="changeUsername" name="changeUsername" class="form-control" value="1" title="Change Username allowed?" <?PHP echo $changeUsernameHtml; ?>>
-                        <label for="changeUsername">Allow user to change the username.</label><br>
+                        <input type="checkbox" id="changeUsername" name="changeUsername" class="form-control" value="1" title="<?php echo "$lang[USERPAGE_ALLOW_CHANGE_USERNAME]"; ?>" <?PHP echo $changeUsernameHtml; ?>>
+                        <label for="changeUsername"><?php echo "$lang[USERPAGE_ALLOW_CHANGE_USERNAME]"; ?></label><br>
                         <!-- change email -->
                         <input type="hidden" value='0' name="changeEmail">
-                        <input type="checkbox" id="changeEmail" name="changeEmail" class="form-control" value="1" title="Change Email allowed?" <?PHP echo $changeEmailHtml; ?>>
-                        <label for="changeEmail">Allow user to change email adress.</label><br>
+                        <input type="checkbox" id="changeEmail" name="changeEmail" class="form-control" value="1" title="<?php echo "$lang[USERPAGE_ALLOW_CHANGE_EMAIL]"; ?>" <?PHP echo $changeEmailHtml; ?>>
+                        <label for="changeEmail"><?php echo "$lang[USERPAGE_ALLOW_CHANGE_EMAIL]"; ?></label><br>
                         <!-- change password -->
                         <input type="hidden" value='0' name="changePassword">
-                        <input type="checkbox" id="changePassword" name="changePassword" class="form-control" value="1" title="Change Password allowed?" <?PHP echo $changePasswordHtml; ?>>
-                        <label for="changePassword">Allow user to change password.</label><br><br>
+                        <input type="checkbox" id="changePassword" name="changePassword" class="form-control" value="1" title="<?php echo "$lang[USERPAGE_ALLOW_CHANGE_PWD]"; ?>" <?PHP echo $changePasswordHtml; ?>>
+                        <label for="changePassword"><?php echo "$lang[USERPAGE_ALLOW_CHANGE_PWD]"; ?></label><br><br>
                         <!-- change firstname -->
                         <input type="hidden" value='0' name="changeFirstname">
-                        <input type="checkbox" id="changeFirstname" name="changeFirstname" class="form-control" value="1" title="Change Firstname allowed?" <?PHP echo $changeFirstnameHtml; ?>>
-                        <label for="changeFirstname">Allow user to change firstname.</label><br>
+                        <input type="checkbox" id="changeFirstname" name="changeFirstname" class="form-control" value="1" title="<?php echo "$lang[USERPAGE_ALLOW_CHANGE_FIRSTNAME]"; ?>" <?PHP echo $changeFirstnameHtml; ?>>
+                        <label for="changeFirstname"><?php echo "$lang[USERPAGE_ALLOW_CHANGE_FIRSTNAME]"; ?></label><br>
                         <!-- change lastname -->
                         <input type="hidden" value='0' name="changeLastname">
-                        <input type="checkbox" id="changeLastname" name="changeLastname" class="form-control" value="1" title="Change Lastname allowed?" <?PHP echo $changeLastnameHtml; ?>>
-                        <label for="changeLastname">Allow user to change lastname.</label><br><br>
+                        <input type="checkbox" id="changeLastname" name="changeLastname" class="form-control" value="1" title="<?php echo "$lang[USERPAGE_ALLOW_CHANGE_LASTNAME]"; ?>" <?PHP echo $changeLastnameHtml; ?>>
+                        <label for="changeLastname"><?php echo "$lang[USERPAGE_ALLOW_CHANGE_LASTNAME]"; ?></label><br><br>
                         <!-- change street -->
                         <input type="hidden" value='0' name="changeStreet">
-                        <input type="checkbox" id="changeStreet" name="changeStreet" class="form-control" value="1" title="Change Street allowed?" <?PHP echo $changeStreetHtml; ?>>
-                        <label for="changeStreet">Allow user to change street.</label><br>
+                        <input type="checkbox" id="changeStreet" name="changeStreet" class="form-control" value="1" title="<?php echo "$lang[USERPAGE_ALLOW_CHANGE_STREET]"; ?>" <?PHP echo $changeStreetHtml; ?>>
+                        <label for="changeStreet"><?php echo "$lang[USERPAGE_ALLOW_CHANGE_STREET]"; ?></label><br>
                         <!-- change zipcode -->
                         <input type="hidden" value='0' name="changeZipcode">
-                        <input type="checkbox" id="changeZipcode" name="changeZipcode" class="form-control" value="1" title="Change Zipcode allowed?" <?PHP echo $changeZipcodeHtml; ?>>
-                        <label for="changeZipcode">Allow user to change zipcode.</label><br>
+                        <input type="checkbox" id="changeZipcode" name="changeZipcode" class="form-control" value="1" title="<?php echo "$lang[USERPAGE_ALLOW_CHANGE_ZIPCODE]"; ?>" <?PHP echo $changeZipcodeHtml; ?>>
+                        <label for="changeZipcode"><?php echo "$lang[USERPAGE_ALLOW_CHANGE_ZIPCODE]"; ?></label><br>
                         <!-- city city -->
                         <input type="hidden" value='0' name="changeCity">
-                        <input type="checkbox" id="changeCity" name="changeCity" class="form-control" value="1" title="Change City allowed?" <?PHP echo $changeCityHtml; ?>>
-                        <label for="changeCity">Allow user to change city.</label><br>
+                        <input type="checkbox" id="changeCity" name="changeCity" class="form-control" value="1" title="<?php echo "$lang[USERPAGE_ALLOW_CHANGE_CITY]"; ?>" <?PHP echo $changeCityHtml; ?>>
+                        <label for="changeCity"><?php echo "$lang[USERPAGE_ALLOW_CHANGE_CITY]"; ?></label><br>
                         <!-- change country -->
                         <input type="hidden" value='0' name="changeCountry">
-                        <input type="checkbox" id="changeCountry" name="changeCountry" class="form-control" value="1" title="Change Country allowed?" <?PHP echo $changeCountryHtml; ?>>
-                        <label for="changeCountry">Allow user to change country.</label><br>
+                        <input type="checkbox" id="changeCountry" name="changeCountry" class="form-control" value="1" title="<?php echo "$lang[USERPAGE_ALLOW_CHANGE_COUNTRY]"; ?>" <?PHP echo $changeCountryHtml; ?>>
+                        <label for="changeCountry"><?php echo "$lang[USERPAGE_ALLOW_CHANGE_COUNTRY]"; ?></label><br>
                         <!-- change state -->
                         <input type="hidden" value='0' name="changeState">
-                        <input type="checkbox" id="changeState" name="changeState" class="form-control" value="1" title="Change State allowed?" <?PHP echo $changeStateHtml; ?>>
-                        <label for="changeState">Allow user to change state.</label><br><br>
+                        <input type="checkbox" id="changeState" name="changeState" class="form-control" value="1" title="<?php echo "$lang[USERPAGE_ALLOW_CHANGE_STATE]"; ?>" <?PHP echo $changeStateHtml; ?>>
+                        <label for="changeState"><?php echo "$lang[USERPAGE_ALLOW_CHANGE_STATE]"; ?></label><br><br>
                         <!-- change url -->
                         <input type="hidden" value='0' name="changeUrl">
-                        <input type="checkbox" id="changeUrl" name="changeUrl" class="form-control" value="1" title="Change Website Url allowed?" <?PHP echo $changeUrlHtml; ?>>
-                        <label for="changeUrl">Allow user to change url.</label><br>
+                        <input type="checkbox" id="changeUrl" name="changeUrl" class="form-control" value="1" title="<?php echo "$lang[USERPAGE_ALLOW_CHANGE_URL]"; ?>" <?PHP echo $changeUrlHtml; ?>>
+                        <label for="changeUrl"><?php echo "$lang[USERPAGE_ALLOW_CHANGE_URL]"; ?></label><br>
                         <!-- change facebook -->
                         <input type="hidden" value='0' name="changeFacebook">
-                        <input type="checkbox" id="changeFacebook" name="changeFacebook" class="form-control" value="1" title="Change Facebook URL allowed?" <?PHP echo $changeFacebookHtml; ?>>
-                        <label for="changeFacebook">Allow user to change facebook url.</label><br>
+                        <input type="checkbox" id="changeFacebook" name="changeFacebook" class="form-control" value="1" title="<?php echo "$lang[USERPAGE_ALLOW_CHANGE_FACEBOOK]"; ?>" <?PHP echo $changeFacebookHtml; ?>>
+                        <label for="changeFacebook"><?php echo "$lang[USERPAGE_ALLOW_CHANGE_FACEBOOK]"; ?></label><br>
                         <!-- change twitter -->
                         <input type="hidden" value='0' name="changeTwitter">
-                        <input type="checkbox" id="changeTwitter" name="changeTwitter" class="form-control" value="1" title="Change Twitter allowed?" <?PHP echo $changeTwitterHtml; ?>>
-                        <label for="changeTwitter">Allow user to change twitter url.</label><br><br><br>
+                        <input type="checkbox" id="changeTwitter" name="changeTwitter" class="form-control" value="1" title="<?php echo "$lang[USERPAGE_ALLOW_CHANGE_TWITTER]"; ?>" <?PHP echo $changeTwitterHtml; ?>>
+                        <label for="changeTwitter"><?php echo "$lang[USERPAGE_ALLOW_CHANGE_TWITTER]"; ?></label><br><br><br>
                     </fieldset>
                 </div>
                 <!-- messages -->
@@ -410,52 +415,52 @@ else {
                     <!-- MESSAGE PLUGIN ENABLE -->
                     <input type="hidden" value='0' name="messageplugin">
                     <input type="checkbox" id="messageplugin" name="messageplugin" class="form-control" value="1" title="Enable Message Plugin" <?PHP echo $msgpluginHtml; ?>>
-                    <label for="messageplugin"> Enable Message Tab</label><br>
+                    <label for="messageplugin"> <?php echo "$lang[USERPAGE_TAB_MESSAGES_ENABLE]"; ?></label><br>
                     <!-- MESSAGE ACTIVE TAB -->
                     <label class="radio radio-inline control-label">
-                        <input type="radio" id="activeTab" name="activeTab" class="form-control" value="Messages" title="Set This Tab Active" <?PHP echo $activeMessagesHtml; ?>>
-                        Set This Tab Active</label><br>
+                        <input type="radio" id="activeTab" name="activeTab" class="form-control" value="Messages" title="<?php echo "$lang[SET_THIS_TAB_ACTIVE]"; ?>" <?PHP echo $activeMessagesHtml; ?>>
+                        <?php echo "$lang[SET_THIS_TAB_ACTIVE]"; ?></label><br>
                     <!-- link to plg settings -->
                     <h4><i class="fa fa-wrench"></i><small><i class="fa fa-envelope-o"></i></small> &nbsp;
-                    <a href="index.php?plugin=messages" title="change names, login access, frontend access and colors">Message Plugin Settings</a>
-                    <small>(edit all messaging options here)</small></h4><br><br>
+                    <a href="index.php?plugin=messages"><?php echo $lang['USERPAGE_MESSAGE_PLUGIN_SETTINGS']; ?></a>
+                    <small><?php echo $lang['USERPAGE_MESSAGE_PLUGIN_SETTINGS_SUBTEXT']; ?></small></h4><br><br>
                 </div>
                 <!-- settings -->
                 <div role="tabpanel" class="tab-pane" id="settingsTab">
                     <!-- SETTINGS ENABLE -->
                     <input type="hidden" value='0' name="settings">
                     <input type="checkbox" id="settings" name="settings" class="form-control" value="1" title="Enable Settings Tab" <?PHP echo $settingsHtml; ?>>
-                    <label for="settings"> Enable Settings Tab</label><br>
+                    <label for="settings"> <?php echo "$lang[USERPAGE_TAB_SETTINGS_ENABLE]"; ?></label><br>
                     <!-- SETTINGS ACTIVE TAB -->
                     <label class="radio radio-inline control-label">
-                    <input type="radio" id="activeTab" name="activeTab" class="form-control" value="Settings" title="Set This Tab Active" <?PHP echo $activeSettingsHtml; ?>>
-                    Set This Tab Active</label><br>
+                    <input type="radio" id="activeTab" name="activeTab" class="form-control" value="Settings" title="<?php echo "$lang[SET_THIS_TAB_ACTIVE]"; ?>" <?PHP echo $activeSettingsHtml; ?>>
+                        <?php echo "$lang[SET_THIS_TAB_ACTIVE]"; ?></label><br>
                 </div>
                 <!-- stats -->
                 <div role="tabpanel" class="tab-pane" id="statsTab">
                     <!-- STATS ENABLE -->
                     <input type="hidden" value='0' name="stats">
                     <input type="checkbox" id="stats" name="stats" class="form-control" value="1" title="Enable Stats Tab" <?PHP echo $statsHtml; ?>>
-                    <label for="stats"> Enable Stats Tab</label><br>
+                    <label for="stats"> <?php echo "$lang[USERPAGE_TAB_STATS_ENABLE]"; ?></label><br>
                     <!-- STATS ACTIVE TAB -->
                     <label class="radio radio-inline control-label">
-                    <input type="radio" id="activeTab" name="activeTab" class="form-control" value="Stats" title="Set This Tab Active" <?PHP echo $activeStatsHtml; ?>>
-                    Set This Tab Active</label><br>
+                    <input type="radio" id="activeTab" name="activeTab" class="form-control" value="Stats" title="<?php echo "$lang[SET_THIS_TAB_ACTIVE]"; ?>" <?PHP echo $activeStatsHtml; ?>>
+                    <?php echo "$lang[SET_THIS_TAB_ACTIVE]"; ?></label><br>
                 </div>
                 <!-- help -->
                 <div role="tabpanel" class="tab-pane" id="helpTab">
                     <!-- HELP ENABLE -->
                     <input type="hidden" value='0' name="help">
                     <input type="checkbox" id="help" name="help" class="form-control" value="1" title="Enable Help Tab" <?PHP echo $helpHtml; ?>>
-                    <label for="help"> HELP Tab enabled</label><br>
+                    <label for="help"> <?php echo "$lang[USERPAGE_TAB_HELP_ENABLE]"; ?></label><br>
                     <!-- HELP ACTIVE TAB -->
                     <label class="radio radio-inline control-label">
-                    <input type="radio" id="activeTab" name="activeTab" class="form-control" value="Help" title="Set This Tab Active" <?PHP echo $activeHelpHtml; ?>>
-                    Set This Tab Active</label><br>
+                    <input type="radio" id="activeTab" name="activeTab" class="form-control" value="Help" title="<?php echo "$lang[SET_THIS_TAB_ACTIVE]"; ?>" <?PHP echo $activeHelpHtml; ?>>
+                    <?php echo "$lang[SET_THIS_TAB_ACTIVE]"; ?></label><br>
                     <fieldset>
-                        <legend><i class="fa fa-question-circle"></i> &nbsp;User Help <small>write your own user help</small></legend>
+                        <legend><i class="fa fa-question-circle"></i> &nbsp;<?php echo "$lang[USERPAGE_USER_HELP] <small>$lang[USERPAGE_USER_HELP_SUBTEXT]</small>"; ?></legend>
                         <!-- USER HELP TEXTAREA -->
-                        <label for="helptext"> User Help Text <small>(html allowed)</small></label><br>
+                        <label for="helptext"> <?php echo "$lang[USERPAGE_USER_HELP] <small>$lang[USERPAGE_USER_HELP_SUBTEXT_LABEL]</small>"; ?></label><br>
                         <textarea name="helptext" id="helptext" class="form-control" cols="70" rows="10" title="User Help Text"><?php echo \YAWK\settings::getLongSetting($db, "userpage_helptext"); ?></textarea>
                         <br><br><br><br>
                     </fieldset>
@@ -465,11 +470,11 @@ else {
                     <!-- ADMIN TAB ENABLE -->
                     <input type="hidden" value='0' name="admin">
                     <input type="checkbox" id="admin" name="admin" class="form-control" value="1" title="Enable Admin Tab" <?PHP echo $adminHtml; ?>>
-                    <label for="admin"> Enable Admin Tab</label><br>
+                    <label for="admin"> <?php echo "$lang[USERPAGE_TAB_ADMIN_ENABLE]"; ?></label><br>
                     <!-- ADMIN ACTIVE TAB -->
                     <label class="radio radio-inline control-label">
-                    <input type="radio" id="activeTab" name="activeTab" class="form-control" value="Admin" title="Set This Tab Active" <?PHP echo $activeAdminHtml; ?>>
-                    Set This Tab Active</label><br>
+                    <input type="radio" id="activeTab" name="activeTab" class="form-control" value="Admin" title="<?php echo "$lang[SET_THIS_TAB_ACTIVE]"; ?>" <?PHP echo $activeAdminHtml; ?>>
+                    <?php echo "$lang[SET_THIS_TAB_ACTIVE]"; ?></label><br>
                 </div>
             </div>
         </div>
@@ -490,10 +495,10 @@ else {
                     <input type="hidden" name="sent" value="1">
                 </fieldset>
                 <fieldset>
-                    <legend><i class="fa fa-bars"></i> &nbsp;Logout Menu <small>when user is logged in</small></legend>
+                    <legend><i class="fa fa-bars"></i> &nbsp;<?php echo "$lang[USERPAGE_LOGOUTMENU] <small>$lang[USERPAGE_LOGOUTMENU_SUBTEXT]</small>"; ?></legend>
                     <input type="hidden" value='0' name="logoutmenu">
-                    <input type="checkbox" id="logoutmenu" name="logoutmenu" class="form-control" value="1" title="Enable Logout Menu" <?PHP echo $logoutmenuHtml; ?>>
-                    <label for="logoutmenu">Enable Logout Menu</label>
+                    <input type="checkbox" id="logoutmenu" name="logoutmenu" class="form-control" value="1" title="<?PHP print $lang['LOGOUTMENU_ENABLE']; ?>" <?PHP echo $logoutmenuHtml; ?>>
+                    <label for="logoutmenu"><?PHP print $lang['USERPAGE_LOGOUTMENU_ENABLE']; ?></label>
                    <br><br><br>
                 </fieldset>
             </div>

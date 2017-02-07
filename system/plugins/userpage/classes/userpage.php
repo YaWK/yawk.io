@@ -48,13 +48,13 @@ namespace YAWK\PLUGINS\USERPAGE {
          * @param object $user user
          * @return bool|null|string
          */
-        public function init($db, $user){
+        public function init($db, $user, $lang){
             if ($this->usergroup['backend_allowed'] !== '1'){
                 // backend access not allowed
                 // check usergroup
                 if ($this->usergroup['backend_allowed'] === '0') {
                     // load userpage
-                    return $this->getUserPage($db, $user);
+                    return $this->getUserPage($db, $user, $lang);
                 }
                 else
                 {   // throw error
@@ -77,10 +77,11 @@ namespace YAWK\PLUGINS\USERPAGE {
          * @link http://yawk.io
          * @param object $db database
          * @param object $user object
+         * @param object $lang language
          * @return string buildPage function
          */
-        public function getUserPage($db, $user) {
-            return $this->buildPage($db, $user->username, $user->gid, $this->appendTab, $this->appendPanel, $this->dashboard);
+        public function getUserPage($db, $user, $lang) {
+            return $this->buildPage($db, $user->username, $user->gid, $this->appendTab, $this->appendPanel, $this->dashboard, $lang);
         }
 
         /**
@@ -110,7 +111,7 @@ namespace YAWK\PLUGINS\USERPAGE {
                 $this->appendTab = "";
                 $this->appendPanel = "";
             }
-            return self::buildPage($db, $user->username, $user->gid, $this->appendTab, $this->appendPanel, $this->dashboard);
+            return self::buildPage($db, $user->username, $user->gid, $this->appendTab, $this->appendPanel, $this->dashboard, $lang);
         }
 
         /**
@@ -126,7 +127,7 @@ namespace YAWK\PLUGINS\USERPAGE {
          * @param string $dashboard some dashboard content
          * @return string draw html output
          */
-        public static function buildPage($db, $user, $usergroup, $appendTab, $appendPanel, $dashboard)
+        public static function buildPage($db, $user, $usergroup, $appendTab, $appendPanel, $dashboard, $lang)
         {   /** @var $db \YAWK\db */
             // ADDITIONAL CODE ------------------
             // IF ADMINs SHOULD GET THEIR OWN WELCOME-USERPAGE
