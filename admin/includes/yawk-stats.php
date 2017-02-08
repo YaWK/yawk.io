@@ -47,7 +47,7 @@ echo"<ol class=\"breadcrumb\">
 
 <!-- ################################################# -->
 
-<?PHP
+<?php
 /*
 if (\YAWK\sys::isBrowscapSet($_SERVER['HTTP_USER_AGENT']) === false)
 {

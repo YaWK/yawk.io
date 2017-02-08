@@ -102,14 +102,14 @@ echo"<ol class=\"breadcrumb\">
         <td width="3%"><strong>&nbsp;</strong></td>
         <td width="5%" class="text-center"><strong><?php echo $lang['ID']; ?></strong></td>
         <td width="3%" class="text-center"><strong>&nbsp;</strong></td>
-        <td width="15%"><strong><?PHP echo $lang['BLOG']; ?></strong></td>
-        <td width="57%"><strong><?PHP echo $lang['DESCRIPTION']; ?></strong></td>
-        <td width="7%" class="text-center"><strong><?PHP echo $lang['ENTRIES']; ?></strong></td>
-        <td width="10%" class="text-center"><strong><?PHP echo $lang['ACTIONS']; ?></strong></td>
+        <td width="15%"><strong><?php echo $lang['BLOG']; ?></strong></td>
+        <td width="57%"><strong><?php echo $lang['DESCRIPTION']; ?></strong></td>
+        <td width="7%" class="text-center"><strong><?php echo $lang['ENTRIES']; ?></strong></td>
+        <td width="10%" class="text-center"><strong><?php echo $lang['ACTIONS']; ?></strong></td>
     </tr>
     </thead>
     <tbody>
-    <?PHP
+    <?php
     $blog = new \YAWK\PLUGINS\BLOG\blog();
 
     if ($res = $db->query("SELECT * FROM {blog} ORDER BY id"))

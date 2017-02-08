@@ -1,4 +1,4 @@
-<?PHP
+<?php
 if (!isset($widget))
 {   // create new widget object
     $widget = new \YAWK\widget();

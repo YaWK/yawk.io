@@ -1,4 +1,4 @@
-<?PHP
+<?php
 include '../system/plugins/blog/classes/blog.php';
 // check if language is set
 if (!isset($language) || (!isset($lang)))

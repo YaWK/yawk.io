@@ -137,16 +137,16 @@ echo "
       <td width="3%"><strong><?php echo $lang['STATUS']; ?> </strong></td>
       <td width="3%"><strong>&nbsp;</strong></td>
       <td width="3%"><strong><?php echo $lang['ID']; ?> </strong></td>
-      <td width="30%"><strong><i class="fa fa-caret-down"></i> <?PHP print $lang['TITLE']; ?></strong></td>
-      <td width="35%"><strong><i class="fa fa-caret-down"></i> <?PHP print $lang['FILENAME']; ?></strong></td>
-      <td width="5%" class="text-center"><strong><?PHP print $lang['TYPE']; ?></strong></td>
-      <td width="5%" class="text-center"><strong><?PHP print $lang['RIGHTS']; ?></strong></td>
-      <td width="16%" class="text-center"><strong><?PHP print $lang['ACTIONS']; ?></strong></td>
+      <td width="30%"><strong><i class="fa fa-caret-down"></i> <?php print $lang['TITLE']; ?></strong></td>
+      <td width="35%"><strong><i class="fa fa-caret-down"></i> <?php print $lang['FILENAME']; ?></strong></td>
+      <td width="5%" class="text-center"><strong><?php print $lang['TYPE']; ?></strong></td>
+      <td width="5%" class="text-center"><strong><?php print $lang['RIGHTS']; ?></strong></td>
+      <td width="16%" class="text-center"><strong><?php print $lang['ACTIONS']; ?></strong></td>
     </tr>
   </thead>
   <tbody>
 
-<?PHP
+<?php
 $i_pages = 0;
 $i_pages_published = 0;
 $i_pages_unpublished = 0;
@@ -243,10 +243,10 @@ $i_pages_unpublished = 0;
 <!-- Start FOOTER -->
 <div class="box box-default">
     <div class="box-header with-border">
-        <h3 class="box-title"><i class="glyphicon glyphicon-stats"></i> &nbsp;<?PHP print $lang['PAGE_STATS']; ?></h3>
+        <h3 class="box-title"><i class="glyphicon glyphicon-stats"></i> &nbsp;<?php print $lang['PAGE_STATS']; ?></h3>
     </div>
     <div class="box-body">
-        <?PHP  $page = $lang['PAGE'];
+        <?php  $page = $lang['PAGE'];
         $pages = $lang['PAGES'];
 
         if ($i_pages > 1) { $seiten="$i_pages $pages $lang[OVERALL]"; }

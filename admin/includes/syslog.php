@@ -66,7 +66,7 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
     </tr>
     </thead>
     <tbody>
-    <?PHP
+    <?php
     /* load complete syslog, get all notifications */
     $syslog = \YAWK\user::getAllNotifications($db, $lang);
     if (is_array($syslog))

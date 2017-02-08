@@ -85,7 +85,7 @@ echo"<ol class=\"breadcrumb\">
     </tr>
   </thead>
   <tbody>
-  <?PHP
+  <?php
   if ($res = $db->query("SELECT cw.*, cwt.name, CASE WHEN cp.title IS NULL THEN '$lang[ON_ALL_PAGES]'
                                                               ELSE cp.title END as title
       						  FROM {widgets} as cw

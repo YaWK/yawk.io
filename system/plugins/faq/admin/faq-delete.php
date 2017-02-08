@@ -1,4 +1,4 @@
-<?PHP
+<?php
 // check if language is set
 if (!isset($language) || (!isset($lang)))
 {   // inject (add) language tags to core $lang array

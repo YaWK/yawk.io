@@ -1508,14 +1508,14 @@ else
                             <h3 class="box-title"><?php echo $lang['TPL_TOPMENU_POS']; ?> <small>this is the first position, before anything else</small></h3>
                         </div>
                         <div class="box-body">
-                            <?PHP $template->getSetting($db, "pos-topmenu-top", "", "", $user); ?>
-                            <?PHP $template->getSetting($db, "pos-topmenu-marginBottom", "", "", $user); ?>
-                            <?PHP $template->getSetting($db, "pos-topmenu-property", "", "", $user); ?>
-                            <?PHP $template->getSetting($db, "pos-topmenu-bg-color", "", "", $user); ?>
-                            <?PHP $template->getSetting($db, "pos-topmenu-height", "", "", $user); ?>
-                            <?PHP $template->getSetting($db, "pos-topmenu-width", "", "", $user); ?>
-                            <?PHP $template->getSetting($db, "pos-topmenu-zindex", "", "", $user); ?>
-                            <?PHP $template->getSetting($db, "pos-topmenu-bg-gradient-longValue", "", "", $user); ?>
+                            <?php $template->getSetting($db, "pos-topmenu-top", "", "", $user); ?>
+                            <?php $template->getSetting($db, "pos-topmenu-marginBottom", "", "", $user); ?>
+                            <?php $template->getSetting($db, "pos-topmenu-property", "", "", $user); ?>
+                            <?php $template->getSetting($db, "pos-topmenu-bg-color", "", "", $user); ?>
+                            <?php $template->getSetting($db, "pos-topmenu-height", "", "", $user); ?>
+                            <?php $template->getSetting($db, "pos-topmenu-width", "", "", $user); ?>
+                            <?php $template->getSetting($db, "pos-topmenu-zindex", "", "", $user); ?>
+                            <?php $template->getSetting($db, "pos-topmenu-bg-gradient-longValue", "", "", $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1525,7 +1525,7 @@ else
                             <h3 class="box-title"><?php echo $lang['POSITION']; ?> <small>...</small></h3>
                         </div>
                         <div class="box-body">
-                            <?PHP // $template->getSetting($db, "%-link", "", "", $user); ?>
+                            <?php // $template->getSetting($db, "%-link", "", "", $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1535,7 +1535,7 @@ else
                             <h3 class="box-title"><?php echo $lang['POSITION']; ?>  <small>...</small></h3>
                         </div>
                         <div class="box-body">
-                            <?PHP // $template->getSetting($db, "%-link", "", "", $user); ?>
+                            <?php // $template->getSetting($db, "%-link", "", "", $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1553,7 +1553,7 @@ else
                             <h3 class="box-title"><?php echo "$lang[H1_H6] <small>$lang[FONT_TYPE]"; ?></small></h3>
                         </div>
                         <div class="box-body">
-                            <?PHP $template->getgFonts($db, "heading-gfont"); ?>
+                            <?php $template->getgFonts($db, "heading-gfont"); ?>
                         </div>
                     </div>
                 </div>
@@ -1563,7 +1563,7 @@ else
                             <h3 class="box-title"><?php echo "$lang[MENU] <small>$lang[FONT_TYPE]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?PHP $template->getgFonts($db, "menu-gfont"); ?>
+                            <?php $template->getgFonts($db, "menu-gfont"); ?>
                         </div>
                     </div>
                 </div>
@@ -1573,7 +1573,7 @@ else
                             <h3 class="box-title"><?php echo "$lang[TEXT] <small>$lang[FONT_TYPE]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?PHP $template->getgFonts($db, "text-gfont"); ?>
+                            <?php $template->getgFonts($db, "text-gfont"); ?>
                         </div>
                     </div>
                 </div>
@@ -1591,9 +1591,9 @@ else
                             <h3 class="box-title"><?php echo "$lang[TPL_GLOBALTEXT] <small>$lang[TPL_GLOBALTEXT_SUBTEXT]"; ?></small></h3>
                         </div>
                         <div class="box-body">
-                            <?PHP $template->getSetting($db, "body-text-size", "", "", $user); ?>
-                            <?PHP $template->getSetting($db, "body-text-shadow", "", "", $user); ?>
-                            <?PHP $template->getSetting($db, "body-text-shadow-color", "", "", $user); ?>
+                            <?php $template->getSetting($db, "body-text-size", "", "", $user); ?>
+                            <?php $template->getSetting($db, "body-text-shadow", "", "", $user); ?>
+                            <?php $template->getSetting($db, "body-text-shadow-color", "", "", $user); ?>
                         </div>
                     </div>
 
@@ -1602,7 +1602,7 @@ else
                             <h3 class="box-title"><?php echo "$lang[LINK] <small>$lang[COLORS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?PHP $template->getSetting($db, "%-link", "", "", $user); ?>
+                            <?php $template->getSetting($db, "%-link", "", "", $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1613,12 +1613,12 @@ else
                             <h3 class="box-title"><?php echo "$lang[HEADINGS] <small>$lang[H1_H6_FONT_SIZE]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?PHP $template->getSetting($db, "h1-size", "", "", $user); ?>
-                            <?PHP $template->getSetting($db, "h2-size", "", "", $user); ?>
-                            <?PHP $template->getSetting($db, "h3-size", "", "", $user); ?>
-                            <?PHP $template->getSetting($db, "h4-size", "", "", $user); ?>
-                            <?PHP $template->getSetting($db, "h5-size", "", "", $user); ?>
-                            <?PHP $template->getSetting($db, "h6-size", "", "", $user); ?>
+                            <?php $template->getSetting($db, "h1-size", "", "", $user); ?>
+                            <?php $template->getSetting($db, "h2-size", "", "", $user); ?>
+                            <?php $template->getSetting($db, "h3-size", "", "", $user); ?>
+                            <?php $template->getSetting($db, "h4-size", "", "", $user); ?>
+                            <?php $template->getSetting($db, "h5-size", "", "", $user); ?>
+                            <?php $template->getSetting($db, "h6-size", "", "", $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1629,7 +1629,7 @@ else
                             <h3 class="box-title"><?php echo "$lang[HEADING] <small>$lang[COLORS]"; ?></small></h3>
                         </div>
                         <div class="box-body">
-                            <?PHP $template->getSetting($db, "%-fontcolor", "", "", $user); ?>
+                            <?php $template->getSetting($db, "%-fontcolor", "", "", $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1647,7 +1647,7 @@ else
                             <h3 class="box-title"><?php echo "$lang[BODY] <small>$lang[SETTINGS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?PHP $template->getSetting($db, "body-bg-color", "", "", $user); ?>
+                            <?php $template->getSetting($db, "body-bg-color", "", "", $user); ?>
                         </div>
                     </div>
 
@@ -1656,7 +1656,7 @@ else
                             <h3 class="box-title"><?php echo "$lang[BODY] <small>$lang[POSITIONING]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?PHP $template->getSetting($db, "body-margin-%", "", "", $user); ?>
+                            <?php $template->getSetting($db, "body-margin-%", "", "", $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1667,7 +1667,7 @@ else
                             <h3 class="box-title"><?php echo "$lang[BG_IMAGE] <small>$lang[SETTINGS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?PHP
+                            <?php
                             $template->getSetting($db, "body-bg-image", "", "", $user);
                             $template->getSetting($db, "body-bg-repeat", "", "", $user);
                             $template->getSetting($db, "body-bg-position", "", "", $user);
@@ -1682,7 +1682,7 @@ else
                             <h3 class="box-title"><?php echo "$lang[TPL_MAIN_POS_SHADOW] <small>$lang[TPL_AROUND_POSITION]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?PHP
+                            <?php
                             $template->getSetting($db, "main-box-shadow", "", "", $user);
                             $template->getSetting($db, "main-box-shadow-color", "", "", $user); ?>
                         </div>
@@ -1698,7 +1698,7 @@ else
                             <h3 class="box-title">...<?php // echo "$lang[LIST_GROUP] <small>$lang[COLORS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?PHP // $template->getSetting($db, "%-listgroup", "", "", $user); ?>
+                            <?php // $template->getSetting($db, "%-listgroup", "", "", $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1716,7 +1716,7 @@ else
                             <h3 class="box-title"><?php echo "$lang[MENU] $lang[FONT] <small>$lang[COLORS]"; ?></small></h3>
                         </div>
                         <div class="box-body">
-                            <?PHP $template->getSetting($db, "%-menucolor", "", "", $user); ?>
+                            <?php $template->getSetting($db, "%-menucolor", "", "", $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1727,7 +1727,7 @@ else
                             <h3 class="box-title"><?php echo "$lang[MENU] $lang[BG] <small>$lang[COLORS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?PHP $template->getSetting($db, "%-menubgcolor", "", "", $user); ?>
+                            <?php $template->getSetting($db, "%-menubgcolor", "", "", $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1738,7 +1738,7 @@ else
                             <h3 class="box-title"><?php echo "$lang[MENU] $lang[DROPDOWN] <small>$lang[COLORS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?PHP $template->getSetting($db, "%-menudropdowncolor", "", "", $user); ?>
+                            <?php $template->getSetting($db, "%-menudropdowncolor", "", "", $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1749,7 +1749,7 @@ else
                             <h3 class="box-title"><?php echo "$lang[MENU] $lang[NAVBAR] <small>$lang[POSITIONING]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?PHP $template->getSetting($db, "navbar-marginTop", "", "", $user); ?>
+                            <?php $template->getSetting($db, "navbar-marginTop", "", "", $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1766,7 +1766,7 @@ else
                             <h3 class="box-title"><?php echo "$lang[WELL] $lang[BOX] <small>$lang[DESIGN]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?PHP $template->getSetting($db, "well-%", "", "", $user); ?>
+                            <?php $template->getSetting($db, "well-%", "", "", $user); ?>
                         </div>
                     </div>
                  </div>
@@ -1777,8 +1777,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[LIST_GROUP] <small>$lang[SETTINGS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?PHP $template->getSetting($db, "listGroup-%", "", "", $user); ?>
-                            <?PHP $template->getSetting($db, "listgroup-bg-gradient-longValue", "", "", $user); ?>
+                            <?php $template->getSetting($db, "listGroup-%", "", "", $user); ?>
+                            <?php $template->getSetting($db, "listgroup-bg-gradient-longValue", "", "", $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1789,7 +1789,7 @@ else
                             <h3 class="box-title"><?php echo "$lang[JUMBOTRON] <small>$lang[BOX] $lang[DESIGN]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?PHP $template->getSetting($db, "jumbotron-%", "", "", $user); ?>
+                            <?php $template->getSetting($db, "jumbotron-%", "", "", $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1800,7 +1800,7 @@ else
                             <h3 class="box-title">... <small>...</small></h3>
                         </div>
                         <div class="box-body">
-                            <?PHP // $template->getSetting($db, "%-menudropdowncolor", "", ""); ?>
+                            <?php // $template->getSetting($db, "%-menudropdowncolor", "", ""); ?>
                         </div>
                     </div>
                 </div>
@@ -1819,7 +1819,7 @@ else
                             <h3 class="box-title"><?php echo "$lang[BUTTON] <small>$lang[FONT] $lang[AND] $lang[BORDER] $lang[SETTINGS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?PHP
+                            <?php
                                 $template->getSetting($db, "btn-fontsize", "", "", $user);
                                 $template->getSetting($db, "btn-font-weight", "", "", $user);
                                 $template->getSetting($db, "btn-border", "", "", $user);
@@ -1860,7 +1860,7 @@ else
                             <h3 class="box-title">Default <small>Button</small></h3>
                         </div>
                         <div class="box-body">
-                            <?PHP $template->getSetting($db, "btn-default-%", "", "", $user); ?>
+                            <?php $template->getSetting($db, "btn-default-%", "", "", $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1870,7 +1870,7 @@ else
                             <h3 class="box-title">Primary <small>Button</small></h3>
                         </div>
                         <div class="box-body">
-                            <?PHP $template->getSetting($db, "btn-primary-%", "", "", $user); ?>
+                            <?php $template->getSetting($db, "btn-primary-%", "", "", $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1880,7 +1880,7 @@ else
                             <h3 class="box-title">Success <small>Button</small></h3>
                         </div>
                         <div class="box-body">
-                            <?PHP $template->getSetting($db, "btn-success-%", "", "", $user); ?>
+                            <?php $template->getSetting($db, "btn-success-%", "", "", $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1890,7 +1890,7 @@ else
                             <h3 class="box-title">Warning <small>Button</small></h3>
                         </div>
                         <div class="box-body">
-                            <?PHP $template->getSetting($db, "btn-warning-%", "", "", $user); ?>
+                            <?php $template->getSetting($db, "btn-warning-%", "", "", $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1900,7 +1900,7 @@ else
                             <h3 class="box-title">Danger <small>Button</small></h3>
                         </div>
                         <div class="box-body">
-                            <?PHP $template->getSetting($db, "btn-danger-%", "", "", $user); ?>
+                            <?php $template->getSetting($db, "btn-danger-%", "", "", $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1910,7 +1910,7 @@ else
                             <h3 class="box-title">Info <small>Button</small></h3>
                         </div>
                         <div class="box-body">
-                            <?PHP $template->getSetting($db, "btn-info-%", "", "", $user); ?>
+                            <?php $template->getSetting($db, "btn-info-%", "", "", $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1927,7 +1927,7 @@ else
                             <h3 class="box-title"><?php echo "$lang[IMAGE] <small>$lang[EFFECTS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?PHP $template->getSetting($db, "img-%", "", "", $user); ?>
+                            <?php $template->getSetting($db, "img-%", "", "", $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1938,7 +1938,7 @@ else
                             <h3 class="box-title">Any other thing <small>here...</small></h3>
                         </div>
                         <div class="box-body">
-                            <?PHP // $template->getSetting($db, "%-menubgcolor", "", ""); ?>
+                            <?php // $template->getSetting($db, "%-menubgcolor", "", ""); ?>
                         </div>
                     </div>
                 </div>
@@ -1949,7 +1949,7 @@ else
                             <h3 class="box-title">Any other thing <small>here...</small></h3>
                         </div>
                         <div class="box-body">
-                            <?PHP // $template->getSetting($db, "%-menudropdowncolor", "", ""); ?>
+                            <?php // $template->getSetting($db, "%-menudropdowncolor", "", ""); ?>
                         </div>
                     </div>
                 </div>
@@ -1975,7 +1975,7 @@ else
                 <div class="col-md-4">
                     <div class="box box-default">
                         <div class="box-header with-border">
-                            <h3 class="box-title"><?PHP echo $template->name; ?>/css/custom.css</h3>
+                            <h3 class="box-title"><?php echo $template->name; ?>/css/custom.css</h3>
                         </div>
                         <div class="box-body">
                             <?php echo $lang['CUSTOM_CSS_DESC']; ?>

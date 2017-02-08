@@ -39,13 +39,13 @@ echo"<ol class=\"breadcrumb\">
     <thead>
     <tr>
         <td width="10%">&nbsp;</td>
-        <td width="20%"><strong><i class="fa fa-caret-down"></i> <?PHP print $lang['PLUGIN']; ?></strong></td>
-        <td width="60%"><strong><?PHP print $lang['DESCRIPTION']; ?></strong></td>
-        <td width="10%" style="text-align: center;"><strong><?PHP print $lang['ACTIONS']; ?></strong></td>
+        <td width="20%"><strong><i class="fa fa-caret-down"></i> <?php print $lang['PLUGIN']; ?></strong></td>
+        <td width="60%"><strong><?php print $lang['DESCRIPTION']; ?></strong></td>
+        <td width="10%" style="text-align: center;"><strong><?php print $lang['ACTIONS']; ?></strong></td>
     </tr>
     </thead>
     <tbody>
-    <?PHP
+    <?php
     $plugin = new \YAWK\plugin();
     if (!isset($db))
     {

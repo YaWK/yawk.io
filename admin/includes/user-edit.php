@@ -248,7 +248,7 @@ echo "<script type='text/javascript'>
 ?>
 
 <!-- FORM -->
-<form name="form" enctype="multipart/form-data" class="form" action="index.php?page=user-edit&user=<?PHP echo $user->username; ?>" method="post">
+<form name="form" enctype="multipart/form-data" class="form" action="index.php?page=user-edit&user=<?php echo $user->username; ?>" method="post">
     <input name="save" id="savebutton" type="submit" class="btn btn-success pull-right" value="speichern" />
     <a class="btn btn-default pull-right" href="index.php?page=users">zur&uuml;ck</a>
     <div class="row">
@@ -390,15 +390,15 @@ echo "<script type='text/javascript'>
             </div>
             <!-- /.box -->
 
-            <?PHP // if ($user->gid <= 5) { ?>
+            <?php // if ($user->gid <= 5) { ?>
 
             <div class="box box-default">
              <div class="box-body">
             <label><?php echo $lang['ASSIGN_TO_GROUP']; ?>
                 <select name="gid" style="width: 240px;" class="form-control">
-                    <option value="<?PHP echo $user->gid; ?>"><?php echo $user->getGroupNameFromID($db, $user->gid); ?></option>
+                    <option value="<?php echo $user->gid; ?>"><?php echo $user->getGroupNameFromID($db, $user->gid); ?></option>
                     <option value="1">---</option>
-                    <?PHP
+                    <?php
                     foreach(YAWK\sys::getGroups($db, "users") as $role){
 
                         echo "<option value=\"".$role['id']."\"";
@@ -409,11 +409,11 @@ echo "<script type='text/javascript'>
             </label>
 
             <label for="job"><?php echo $lang['JOB_DESCRIPTION']; ?><input type="text" id="job" name="job" value="<?php echo $user->job; ?>" placeholder="<?php echo $lang['JOB_PLACEHOLDER']; ?>" class="form-control"></label>
-            <?PHP if ($user->blocked === '1') { $code1="checked=\"checked\""; } else $code1=""; ?>
-            <?PHP if ($user->privacy === '1') { $code2="checked=\"checked\""; } else $code2=""; ?>
+            <?php if ($user->blocked === '1') { $code1="checked=\"checked\""; } else $code1=""; ?>
+            <?php if ($user->privacy === '1') { $code2="checked=\"checked\""; } else $code2=""; ?>
 
-            <label for="mystatus"><input type="checkbox" id="mystatus" name="mystatus" value="1" <?PHP echo $code1 ?>> <?php echo $lang['LOGIN_LOCK']; ?></label>&nbsp;&nbsp;&nbsp;&nbsp;
-            <label for="privacy"><input type="checkbox" id="privacy" name="privacy" value="1" <?PHP echo $code2 ?>> <?php echo $lang['HIDE_FROM_WHOIS_ONLINE']; ?></label>&nbsp;
+            <label for="mystatus"><input type="checkbox" id="mystatus" name="mystatus" value="1" <?php echo $code1 ?>> <?php echo $lang['LOGIN_LOCK']; ?></label>&nbsp;&nbsp;&nbsp;&nbsp;
+            <label for="privacy"><input type="checkbox" id="privacy" name="privacy" value="1" <?php echo $code2 ?>> <?php echo $lang['HIDE_FROM_WHOIS_ONLINE']; ?></label>&nbsp;
 
                 </div>
             </div>
@@ -438,7 +438,7 @@ echo "<script type='text/javascript'>
                 <h3 class="box-title"><?php echo "$lang[USER_DATA] <small>$lang[USERNAME_EMAIL_PWD]</small>"; ?></h3>
             </div>
                 <div class="box-body">
-            <?PHP if ($user->username === "admin" OR $user->username === "root")
+            <?php if ($user->username === "admin" OR $user->username === "root")
                   {
                       $disabled="disabled aria-disabled=\"true\" title=\"$user->username $lang[NOT_CHANGEABLE]\" readonly=\"readonly\"";
                   }
@@ -450,16 +450,16 @@ echo "<script type='text/javascript'>
 
             <dl class="dl-horizontal">
                 <dt><label for="username"><b class="fa fa-user"></b> &nbsp;<?php echo $lang['USERNAME']; ?></label></dt>
-                <dd><input type="text" id="username" name="username" class="form-control" maxlength="100" <?PHP echo $disabled; ?> value="<?PHP echo $user->username; ?>"></dd>
+                <dd><input type="text" id="username" name="username" class="form-control" maxlength="100" <?php echo $disabled; ?> value="<?php echo $user->username; ?>"></dd>
 
                 <dt><label for="email"><b class="fa fa-envelope-o"></b> &nbsp;<?php echo $lang['EMAIL']; ?></label></dt>
-                <dd><input type="text" id="email" name="email" class="form-control" maxlength="100" value="<?PHP echo $user->email; ?>"></dd>
+                <dd><input type="text" id="email" name="email" class="form-control" maxlength="100" value="<?php echo $user->email; ?>"></dd>
 
                 <dt><label for="password1"><b class="fa fa-key"></b> &nbsp;<?php echo $lang['PASSWORD']; ?></label></dt>
-                <dd><input name="password1" id="password1" type="password" class="form-control" maxlength="100" value="<?PHP echo $user->password; ?>"></dd>
+                <dd><input name="password1" id="password1" type="password" class="form-control" maxlength="100" value="<?php echo $user->password; ?>"></dd>
 
                 <dt><label for="password2"><b class="fa fa-key"></b> &nbsp;<?php echo $lang['PASSWORD']; ?><br><small><?php echo $lang['REPEAT']; ?></small></label></dt>
-                <dd><input name="password2" id="password2" type="password" class="form-control"maxlength="100" value="<?PHP echo $user->password; ?>">&nbsp; </dd>
+                <dd><input name="password2" id="password2" type="password" class="form-control"maxlength="100" value="<?php echo $user->password; ?>">&nbsp; </dd>
             </dl>
 
                 </div>
@@ -473,22 +473,22 @@ echo "<script type='text/javascript'>
     <div class="box-body">
         <dl class="dl-horizontal">
             <dt><label for="firstname"><?php echo $lang['FIRSTNAME']; ?></label></dt>
-            <dd><input type="text" class="form-control" id="firstname" name="firstname" maxlength="100" value="<?PHP echo $user->firstname; ?>"></dd>
+            <dd><input type="text" class="form-control" id="firstname" name="firstname" maxlength="100" value="<?php echo $user->firstname; ?>"></dd>
 
             <dt><label for="lastname"><?php echo $lang['LASTNAME']; ?></label></dt>
-            <dd><input type="text" class="form-control" id="lastname" name="lastname" maxlength="100" value="<?PHP echo $user->lastname; ?>"></dd>
+            <dd><input type="text" class="form-control" id="lastname" name="lastname" maxlength="100" value="<?php echo $user->lastname; ?>"></dd>
 
             <dt><label for="street"><?php echo $lang['STREET']; ?></label></dt>
-            <dd><input type="text" class="form-control" id="street" name="street" maxlength="100" value="<?PHP echo $user->street; ?>"></dd>
+            <dd><input type="text" class="form-control" id="street" name="street" maxlength="100" value="<?php echo $user->street; ?>"></dd>
 
             <dt><label for="zipcode"><?php echo $lang['ZIPCODE']; ?></label></dt>
-            <dd><input type="text" class="form-control" id="zipcode" name="zipcode" maxlength="12" value="<?PHP echo $user->zipcode; ?>"></dd>
+            <dd><input type="text" class="form-control" id="zipcode" name="zipcode" maxlength="12" value="<?php echo $user->zipcode; ?>"></dd>
 
             <dt><label for="city"><?php echo $lang['CITY']; ?></label></dt>
-            <dd><input type="text" class="form-control" id="city" name="city" maxlength="100" value="<?PHP echo $user->city; ?>"></dd>
+            <dd><input type="text" class="form-control" id="city" name="city" maxlength="100" value="<?php echo $user->city; ?>"></dd>
 
             <dt><label for="country"><?php echo $lang['COUNTRY']; ?></label></dt>
-            <dd><input type="text" class="form-control" id="country" name="country" maxlength="100" value="<?PHP echo $user->country; ?>"></dd>
+            <dd><input type="text" class="form-control" id="country" name="country" maxlength="100" value="<?php echo $user->country; ?>"></dd>
         </dl>
     </div>
   </div>
@@ -501,13 +501,13 @@ echo "<script type='text/javascript'>
         <div class="box-body">
             <dl class="dl-horizontal">
                 <dt><label for="url"><i class="fa fa-globe"></i> <?php echo "$lang[WEBSITE]"; ?></label></dt>
-                <dd><input type="text" class="form-control" placeholder="http://www.yourdomain.com/" id="url" name="url" maxlength="100" value="<?PHP echo $user->url; ?>"></dd>
+                <dd><input type="text" class="form-control" placeholder="http://www.yourdomain.com/" id="url" name="url" maxlength="100" value="<?php echo $user->url; ?>"></dd>
 
                 <dt><label for="twitter"><i class="fa fa-twitter"></i> <?php echo "$lang[TWITTER]"; ?></label></dt>
-                <dd><input type="text" class="form-control" placeholder="http://www.twitter.com/yourprofile" id="twitter" name="twitter" maxlength="100" value="<?PHP echo $user->twitter; ?>"></dd>
+                <dd><input type="text" class="form-control" placeholder="http://www.twitter.com/yourprofile" id="twitter" name="twitter" maxlength="100" value="<?php echo $user->twitter; ?>"></dd>
 
                 <dt><label for="facebook"><i class="fa fa-facebook-official"></i> <?php echo "$lang[FACEBOOK]"; ?></label></dt>
-                <dd><input type="text" class="form-control" placeholder="http://www.facebook.com/yourprofile" id="facebook" name="facebook" maxlength="100" value="<?PHP echo $user->facebook; ?>"></dd>
+                <dd><input type="text" class="form-control" placeholder="http://www.facebook.com/yourprofile" id="facebook" name="facebook" maxlength="100" value="<?php echo $user->facebook; ?>"></dd>
             </dl>
 
         </div>

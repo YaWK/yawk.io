@@ -69,9 +69,9 @@ echo "
         </div>
         <div class="box-body">
     <input name="create" value="faq-create" type="hidden"/>
-    <textarea class="form-control" cols="55" rows="1" name="question"><?PHP echo $lang['FAQ_QUESTION']; ?></textarea><br>
-    <textarea class="form-control" cols="55" rows="4" name="answer"><?PHP echo $lang['FAQ_ANSWER']; ?></textarea><br>
-    <input id="savebutton" class="btn btn-success" type="submit" name="create" value="<?PHP echo $lang['FAQ_ADD_BTN']; ?>"/>&nbsp;
+    <textarea class="form-control" cols="55" rows="1" name="question"><?php echo $lang['FAQ_QUESTION']; ?></textarea><br>
+    <textarea class="form-control" cols="55" rows="4" name="answer"><?php echo $lang['FAQ_ANSWER']; ?></textarea><br>
+    <input id="savebutton" class="btn btn-success" type="submit" name="create" value="<?php echo $lang['FAQ_ADD_BTN']; ?>"/>&nbsp;
 
 
         </div>

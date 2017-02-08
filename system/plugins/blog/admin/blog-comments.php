@@ -103,7 +103,7 @@ echo"<ol class=\"breadcrumb\">
 
 <a class="btn btn-default" href="index.php?plugin=blog" style="float:right;">
     <i class="glyphicon glyphicon-backward"></i> &nbsp;<?php print $lang['BACK']; ?></a>
-<a class="btn btn-success" href="index.php?plugin=blog&pluginpage=blog-comments<?PHP echo $refreshBtnAddon; ?>&blogid=<?php echo $blog->id; ?>" style="float:right;">
+<a class="btn btn-success" href="index.php?plugin=blog&pluginpage=blog-comments<?php echo $refreshBtnAddon; ?>&blogid=<?php echo $blog->id; ?>" style="float:right;">
     <i class="glyphicon glyphicon-repeat"></i> &nbsp;<?php print $lang['REFRESH']; ?></a>
 
 <table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-hover" id="table-sort">

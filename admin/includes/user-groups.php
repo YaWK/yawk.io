@@ -114,7 +114,7 @@ if(isset($_GET['backend']) && (isset($_GET['gid'])))
     </tr>
     </thead>
     <tbody>
-    <?PHP
+    <?php
     if ($res = $db->query("SELECT * FROM {user_groups} ORDER BY id"))
     {
         while($row = mysqli_fetch_assoc($res)){

@@ -58,17 +58,17 @@ echo"<ol class=\"breadcrumb\">
     <thead>
     <tr>
         <td width="6%"><strong>&nbsp;</strong></td>
-        <td width="10%"><strong><i class="fa fa-caret-down"></i> <?PHP print $lang['TOUR_DATE']; ?></strong></td>
-        <td width="36%" class="text-left"><strong><i class="fa fa-caret-down"></i> <?PHP print $lang['TOUR_BAND']; ?></strong></td>
-        <td width="5%" class="text-left"><strong><?PHP print $lang['TOUR_TIME']; ?></strong></td>
-        <td width="24%" class="text-left"><strong><?PHP print $lang['TOUR_VENUE']; ?></strong></td>
-        <td width="4%" class="text-center"><strong><?PHP print $lang['FACEBOOK']; ?></strong></td>
-        <td width="10%" class="text-center"><strong><?PHP print $lang['ACTIONS']; ?></strong></td>
+        <td width="10%"><strong><i class="fa fa-caret-down"></i> <?php print $lang['TOUR_DATE']; ?></strong></td>
+        <td width="36%" class="text-left"><strong><i class="fa fa-caret-down"></i> <?php print $lang['TOUR_BAND']; ?></strong></td>
+        <td width="5%" class="text-left"><strong><?php print $lang['TOUR_TIME']; ?></strong></td>
+        <td width="24%" class="text-left"><strong><?php print $lang['TOUR_VENUE']; ?></strong></td>
+        <td width="4%" class="text-center"><strong><?php print $lang['FACEBOOK']; ?></strong></td>
+        <td width="10%" class="text-center"><strong><?php print $lang['ACTIONS']; ?></strong></td>
     </tr>
     </thead>
     <tbody>
 
-    <?PHP
+    <?php
     include '../system/plugins/tourdates/classes/tourdates.php';
     $tourdates = new \YAWK\PLUGINS\TOURDATES\tourdates();
     print $tourdates->getBackendTable($db, $lang);

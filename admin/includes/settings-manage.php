@@ -1,4 +1,4 @@
-<?PHP
+<?php
 if (isset($_GET['save']) AND $_GET['save'] === 'true') {
 
     foreach ($_POST as $property => $value) {
@@ -63,10 +63,10 @@ echo"<ol class=\"breadcrumb\">
   <thead>
     <tr>
       <td width="3%"><strong>&nbsp;</strong></td>
-      <td width="20%"><strong><i class="fa fa-caret-down"></i> <?PHP print $lang['SETTING']; ?></strong></td>
-      <td width="27%"><strong><i class="fa fa-caret-down"></i> <?PHP print $lang['SETTING_VALUE']; ?></strong></td>
-      <td width="25%"><strong><?PHP print $lang['LABEL']; ?></strong></td>
-      <td width="25%"><strong><?PHP print $lang['DESCRIPTION']; ?></strong></td>
+      <td width="20%"><strong><i class="fa fa-caret-down"></i> <?php print $lang['SETTING']; ?></strong></td>
+      <td width="27%"><strong><i class="fa fa-caret-down"></i> <?php print $lang['SETTING_VALUE']; ?></strong></td>
+      <td width="25%"><strong><?php print $lang['LABEL']; ?></strong></td>
+      <td width="25%"><strong><?php print $lang['DESCRIPTION']; ?></strong></td>
     </tr>
   </thead>
   <tbody>

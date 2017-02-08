@@ -1,4 +1,4 @@
-<?PHP
+<?php
 if (!isset($db) || (empty($db)))
 {
 	@require_once '../../classes/db.php';

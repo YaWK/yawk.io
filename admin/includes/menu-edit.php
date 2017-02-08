@@ -1,4 +1,4 @@
-<?PHP
+<?php
 // TOGGLE MENU ITEM
 if (isset($_GET['toggleItem']))
 {

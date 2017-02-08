@@ -1,4 +1,4 @@
-<?PHP
+<?php
 $width="450";
 $height="35";
 $fblikeurl="http%3A%2F%2Fwww.facebook.com%2Fplatform";
@@ -52,4 +52,4 @@ if (isset($widgetID))
 //	 if (empty($fblikeurl)) { $fblikeurl="http%3A%2F%2Fwww.facebook.com%2Fplatform"; }
 ?>
 <br>
-<iframe src="//www.facebook.com/plugins/like.php?href=<?PHP echo $fblikeurl; ?>&amp;send=false&amp;layout=standard&amp;width=<?PHP echo $width; ?>&amp;show_faces=false&amp;action=like&amp;colorscheme=<?php echo $colorscheme; ?>&amp;font&amp;height=<?php echo $height; ?>&amp;appId=<?php echo $fbappID; ?>" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:<?php echo $width; ?>px; height:<?php echo $height; ?>px;" allowTransparency="true"></iframe>
+<iframe src="//www.facebook.com/plugins/like.php?href=<?php echo $fblikeurl; ?>&amp;send=false&amp;layout=standard&amp;width=<?php echo $width; ?>&amp;show_faces=false&amp;action=like&amp;colorscheme=<?php echo $colorscheme; ?>&amp;font&amp;height=<?php echo $height; ?>&amp;appId=<?php echo $fbappID; ?>" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:<?php echo $width; ?>px; height:<?php echo $height; ?>px;" allowTransparency="true"></iframe>

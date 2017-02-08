@@ -1,4 +1,4 @@
-<?PHP
+<?php
 session_start();
 include '../../classes/settings.php';
 include '../../classes/alert.php';
@@ -72,7 +72,7 @@ if (!isset($db)) {
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="<?PHP echo $host; ?>"><?PHP echo $host; ?></a>
+          <a class="navbar-brand" href="<?php echo $host; ?>"><?php echo $host; ?></a>
         </div>
         <div class="navbar-collapse collapse">
         <br>
@@ -81,14 +81,14 @@ if (!isset($db)) {
       </div>
     </div>
 
-<?PHP
+<?php
   	// set user offline in db
    	if (!$res=$db->query("UPDATE {users}
   									 SET online = '0',
   									     logged_in = '0'
    							         WHERE username = '".$_GET['user']."'")) {
 		 \YAWK\alert::draw("warning", "Achtung:", "Userstatus konnte nicht gesetzt werden.", "", 5000);
-		 // $fehler = in var für fehlerklasse speichern?             	
+		 // $fehler = in var fï¿½r fehlerklasse speichern?             	
    	} 
 session_destroy();
 YAWK\backend::setTimeout("$host","1600");
@@ -96,7 +96,7 @@ YAWK\backend::setTimeout("$host","1600");
 
 <noscript>
 Im Browser muss javascript aktiviert sein, um die Seite richtig nutzen zu k&ouml;nnen.
-<meta http-equiv="refresh" content="1; URL=<?PHP echo $host; ?>">
+<meta http-equiv="refresh" content="1; URL=<?php echo $host; ?>">
 </noscript>
 
 </body>

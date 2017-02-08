@@ -1,4 +1,4 @@
-<?PHP
+<?php
 include '../system/plugins/blog/classes/blog.php';
 // check if blog object is set
 if (!isset($blog)) { $blog = new \YAWK\PLUGINS\BLOG\blog(); }

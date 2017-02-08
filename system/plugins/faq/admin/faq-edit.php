@@ -56,17 +56,17 @@ echo "
     <section class=\"content\">";
 ?>
 
-<form action="index.php?plugin=faq&pluginpage=faq-edit&id=<?PHP echo $_GET['id']; ?>" role="form" method="POST"
+<form action="index.php?plugin=faq&pluginpage=faq-edit&id=<?php echo $_GET['id']; ?>" role="form" method="POST"
       xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
     <div class="box box-default">
     <div class="box-header with-border">
-        <h3 class="box-title"><?PHP echo "$lang[FAQ] <small>$lang[EDIT]"; ?></h3>
+        <h3 class="box-title"><?php echo "$lang[FAQ] <small>$lang[EDIT]"; ?></h3>
     </div>
         <div class="box-body">
             <input name="create" value="faq-create" type="hidden">
-            <input type="text" name="sort" class="form-control" value="<?PHP echo $faq->sort; ?>"><br>
-            <textarea class="form-control" cols="55" rows="1" name="question"><?PHP echo $faq->question; ?></textarea><br>
-            <textarea class="form-control" cols="55" rows="4" name="answer"><?PHP echo $faq->answer; ?></textarea><br>
+            <input type="text" name="sort" class="form-control" value="<?php echo $faq->sort; ?>"><br>
+            <textarea class="form-control" cols="55" rows="1" name="question"><?php echo $faq->question; ?></textarea><br>
+            <textarea class="form-control" cols="55" rows="4" name="answer"><?php echo $faq->answer; ?></textarea><br>
             <input id="savebutton" class="btn btn-success" type="submit" name="save" value="<?php echo $lang['FAQ_EDIT_BTN']; ?>">&nbsp;
         <br><br>
         </div>

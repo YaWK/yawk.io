@@ -1,4 +1,4 @@
-<?PHP
+<?php
 namespace YAWK\PLUGINS\MESSAGES {
     /**
      * <b>Messages Plugin</b>

@@ -89,7 +89,7 @@ else
     <script src="system/engines/bootstrap/dist/js/bootstrap.min.js"></script>
 <noscript><br><br><h2 style="text-align: center;">This page requires a modern browser with javascript. <br><small>Please activate Javascript or use a better browser.</small></h2></noscript>
 <!-- gfonts -->
-<?PHP
+<?php
 // include additional html header stuff & local meta tags
 \YAWK\sys::includeHeader($db);
 // load active google font code
@@ -97,9 +97,9 @@ else
 ?>
 <!-- /gfonts -->
   </head>
-  <body style="<?PHP echo YAWK\template::getActivegfont($db, "", "text-gfont"); ?>" ondragstart="return false">
+  <body style="<?php echo YAWK\template::getActivegfont($db, "", "text-gfont"); ?>" ondragstart="return false">
       <!-- YAWK NAV -->
-    <div style="<?PHP echo YAWK\template::getActivegfont($db, "", "menu-gfont"); ?>">
+    <div style="<?php echo YAWK\template::getActivegfont($db, "", "menu-gfont"); ?>">
     <?php echo YAWK\template::setPosition($db, "globalmenu-pos"); ?>  <!-- GLOBALMENU -->
       <!--/ END NAV -->
     </div>
@@ -198,7 +198,7 @@ else
           <p class="text-center">
               <small class="white">
                   proudly presented by YaWK :: Yet another WebKit <br>
-                  <small><i class="fa fa-copyright"></i> <?PHP print date("Y"); ?> <?php echo YAWK\settings::getSetting($db, "host"); ?></small>
+                  <small><i class="fa fa-copyright"></i> <?php print date("Y"); ?> <?php echo YAWK\settings::getSetting($db, "host"); ?></small>
               </small>
           </p>
           <br><br><br><br>

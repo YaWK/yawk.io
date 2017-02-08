@@ -1,4 +1,4 @@
-<?PHP
+<?php
 /* #######################
 simple_upload.php
 A SIMPLE UPLOAD WIDGET */

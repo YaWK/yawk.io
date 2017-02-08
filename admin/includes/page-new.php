@@ -54,15 +54,15 @@ echo"<ol class=\"breadcrumb\">
     <div class="box-body">
 <br>
 <form role="form" class="form-inline" action="index.php?page=page-new" method="post">
-  <label for "alias"><?PHP print $lang['PAGE_ADD_SUBTEXT']; ?>  </label><br>
+  <label for "alias"><?php print $lang['PAGE_ADD_SUBTEXT']; ?>  </label><br>
   <!-- TEXT FIELD -->
   <input type="text" id="alias" size="84" name="alias" class="form-control" maxlength="255" 
-  placeholder="<?PHP print $lang['PAGE_ADD_PLACEHOLDER']; ?>" /> .html
+  placeholder="<?php print $lang['PAGE_ADD_PLACEHOLDER']; ?>" /> .html
 
   <br><br>
   <!-- MENU SELECTOR -->
-  &nbsp;&nbsp;<?PHP print $lang['IN_MENU']; ?>&nbsp; <select name="menuID" class="btn btn-default">
-    <?PHP
+  &nbsp;&nbsp;<?php print $lang['IN_MENU']; ?>&nbsp; <select name="menuID" class="btn btn-default">
+    <?php
     foreach (YAWK\backend::getMenusArray($db) AS $menue){
 //    foreach(YAWK\sys::getMenus() as $menue){
       echo "<option value=\"".$menue['id']."\"";
@@ -81,7 +81,7 @@ echo"<ol class=\"breadcrumb\">
   </select>
 
     <!-- SUBMIT BUTTON -->
-    <input type="submit" class="btn btn-success" value="<?PHP print $lang['PAGE_ADD_BTN']; ?>" />
+    <input type="submit" class="btn btn-success" value="<?php print $lang['PAGE_ADD_BTN']; ?>" />
 
     <input type="hidden" name="blogid" value="0">
   <input type="hidden" name="locked" value="0">

@@ -153,10 +153,10 @@ if (isset($_GET['id'])){
             </ul>
             <ul class="list-group">
                 <li class="list-group-item">
-                    <form class="form-inline" method="post" action="index.php?plugin=booking&pluginpage=booking-edit&id=<?PHP echo $booking->id; ?>">
+                    <form class="form-inline" method="post" action="index.php?plugin=booking&pluginpage=booking-edit&id=<?php echo $booking->id; ?>">
                         <label for="cut"><i class="fa fa-scissors"></i>&nbsp;</label>
                         <label for="income">&euro;&nbsp;</label>
-                        <input type="text" value="<?PHP echo $booking->income;?>" size="5" class="form-control" placeholder="150" id="income" name="income">&nbsp;&nbsp;&nbsp;
+                        <input type="text" value="<?php echo $booking->income;?>" size="5" class="form-control" placeholder="150" id="income" name="income">&nbsp;&nbsp;&nbsp;
                         <label for="income"><i class="fa fa-line-chart"></i>&nbsp; </label>
                         <label for="grade"><?php echo "$lang[VOTING]"; ?></label>
                         <select class="form-control" name="grade" id="grade">
@@ -168,16 +168,16 @@ if (isset($_GET['id'])){
                             <option value="5">5</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <label for="comment"><i class="fa fa-commenting-o"></i></label>
-                        <textarea name="comment" id="comment" class="form-control" cols="46" rows="2"><?PHP echo $booking->comment;?></textarea>
+                        <textarea name="comment" id="comment" class="form-control" cols="46" rows="2"><?php echo $booking->comment;?></textarea>
                         <br>
                         </li>
                 <li class="list-group-item">
                     <label for="date_wish"><?php echo "$lang[EDIT_DATE]"; ?></label>
-                    <input type="text" class="form-control" name="date_wish" size="10" id="date_wish" value="<?PHP echo $booking->date_wish;?>"><br>
+                    <input type="text" class="form-control" name="date_wish" size="10" id="date_wish" value="<?php echo $booking->date_wish;?>"><br>
                     <label for="date_alternative"><?php echo "$lang[ALT_DATE]"; ?> </label>
-                    <input type="text" class="form-control" name="date_alternative" size="10" id="date_alternative" value="<?PHP echo $booking->date_alternative;?>">
+                    <input type="text" class="form-control" name="date_alternative" size="10" id="date_alternative" value="<?php echo $booking->date_alternative;?>">
                         <!-- SAVE BUTTON -->
-                        <input id="savebutton" class="btn btn-success" type="submit" name="create" style="margin-left:14px;" value="<?PHP echo $lang['SAVE']; ?>">
+                        <input id="savebutton" class="btn btn-success" type="submit" name="create" style="margin-left:14px;" value="<?php echo $lang['SAVE']; ?>">
                     </form>
                 </li>
             </ul>
@@ -188,7 +188,7 @@ if (isset($_GET['id'])){
             </ul>
 
             <ul class="list-group">
-                <li class="list-group-item"><?PHP echo $confirmedIcon; ?>
+                <li class="list-group-item"><?php echo $confirmedIcon; ?>
                     &nbsp;Status: <h3 style="margin-top:-4%; margin-left: 50%;"><?php echo $confirmedHtml; ?></h3>
 
                 <li class="list-group-item"><i class="fa fa-trophy"></i>
@@ -208,7 +208,7 @@ if (isset($_GET['id'])){
                 </li>
             </ul>
             <?php echo $inviteHtml; ?>
-            <a class="btn btn-info" href="index.php?plugin=booking&pluginpage=booking-toggle&toggle=1&id=<?PHP echo $booking->id; ?>&success=1" style="float:right;">
+            <a class="btn btn-info" href="index.php?plugin=booking&pluginpage=booking-toggle&toggle=1&id=<?php echo $booking->id; ?>&success=1" style="float:right;">
             <i class="fa fa-trophy"></i> &nbsp;<?php print $lang['BOOKING_TOGGLE']; ?></a>
             <a class="btn btn-default" href="index.php?plugin=booking" style="float:right;">
             <i class="glyphicon glyphicon-backward"></i> &nbsp;<?php print $lang['BACK']; ?></a>
@@ -216,7 +216,7 @@ if (isset($_GET['id'])){
     </div>
     </div>
     </div>
-<?PHP
+<?php
 }
 
 ?>

@@ -82,7 +82,7 @@ else
                    value="<?php print $tourdates->band; ?>"
                    class="form-control"
                    maxlength="128"
-                   placeholder="<?PHP print $lang['TOUR_BAND_INPUT']; ?>">
+                   placeholder="<?php print $lang['TOUR_BAND_INPUT']; ?>">
         </label>
         <!-- TEXT FIELD -->
         <label for="venue"><?php print $lang['TOUR_VENUE']; ?>&nbsp;
@@ -93,7 +93,7 @@ else
                    class="form-control"
                    value="<?php print $tourdates->venue; ?>"
                    maxlength="128"
-                   placeholder="<?PHP print $lang['TOUR_VENUE_INPUT']; ?>">
+                   placeholder="<?php print $lang['TOUR_VENUE_INPUT']; ?>">
         </label>
         <!-- TEXT FIELD -->
         <label for="fburl"><?php print $lang['TOUR_FBLINK']; ?>&nbsp;
@@ -104,13 +104,13 @@ else
                    class="form-control"
                    value="<?php print $tourdates->fburl; ?>"
                    maxlength="255"
-                   placeholder="<?PHP print $lang['TOUR_FBLINK']; ?>">
+                   placeholder="<?php print $lang['TOUR_FBLINK']; ?>">
         </label>
         <!-- SUBMIT BUTTON -->
         <input type="hidden" name="id" value="<?php echo $tourdates->id; ?>">
         <input type="submit"
                class="btn btn-success"
-               value="<?PHP print $lang['TOUR_DATES_EDIT']; ?>">
+               value="<?php print $lang['TOUR_DATES_EDIT']; ?>">
     </form>
     </div>
 </div>

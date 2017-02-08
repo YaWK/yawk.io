@@ -48,7 +48,7 @@ echo"<ol class=\"breadcrumb\">
     </tr>
     </thead>
     <tbody>
-    <?PHP
+    <?php
     // check if a user is specified via get param
     if (isset($_GET['user']) && (!empty($_GET['user'])))
     { $user = $_GET['user']; } else { $user = ''; } // if not, show all logins

@@ -85,15 +85,15 @@ echo"<ol class=\"breadcrumb\">
     <tr>
         <td width="3%"><strong>&nbsp;</strong></td>
         <td width="3%"><strong><?php echo $lang['ID']; ?></strong></td>
-        <td width="20%"><strong><i class="fa fa-caret-down"></i> <?PHP print $lang['TEMPLATE']; ?></strong></td>
-        <td width="40%"><strong><i class="fa fa-caret-down"></i> <?PHP print $lang['DESCRIPTION']; ?></strong></td>
-        <td width="24%"><strong><?PHP print $lang['SCREENSHOT']; ?></strong></td>
-        <td width="10%" class="text-center"><strong><?PHP print $lang['ACTIONS']; ?></strong></td>
+        <td width="20%"><strong><i class="fa fa-caret-down"></i> <?php print $lang['TEMPLATE']; ?></strong></td>
+        <td width="40%"><strong><i class="fa fa-caret-down"></i> <?php print $lang['DESCRIPTION']; ?></strong></td>
+        <td width="24%"><strong><?php print $lang['SCREENSHOT']; ?></strong></td>
+        <td width="10%" class="text-center"><strong><?php print $lang['ACTIONS']; ?></strong></td>
     </tr>
     </thead>
     <tbody>
 
-    <?PHP
+    <?php
     $i_pages = 0;
     $i_pages_published = 0;
     $i_pages_unpublished = 0;

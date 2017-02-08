@@ -40,12 +40,12 @@ echo"<ol class=\"breadcrumb\">
 
 <form action="index.php?plugin=blog&pluginpage=blog&addblog=1" class="form-inline" role="form" method="POST">
     <input name="create" value="blog-create" type="hidden"/>
-    <input type="text" class="form-control" size="90" style="margin-bottom:5px;" placeholder="<?PHP echo $lang['BLOG_NAME']; ?>" name="name"><br>
-    <input type="text" class="form-control" size="90" placeholder="<?PHP echo $lang['BLOG_DESCRIPTION']; ?>" name="description"><br>
-    <input type="text" style="margin-top:5px; margin-bottom:5px;" size="45" class="form-control icp icp-auto iconpicker-element iconpicker-input" placeholder="<?PHP echo $lang['BLOG_ICON']; ?>" id="icon" name="icon"><br>
+    <input type="text" class="form-control" size="90" style="margin-bottom:5px;" placeholder="<?php echo $lang['BLOG_NAME']; ?>" name="name"><br>
+    <input type="text" class="form-control" size="90" placeholder="<?php echo $lang['BLOG_DESCRIPTION']; ?>" name="description"><br>
+    <input type="text" style="margin-top:5px; margin-bottom:5px;" size="45" class="form-control icp icp-auto iconpicker-element iconpicker-input" placeholder="<?php echo $lang['BLOG_ICON']; ?>" id="icon" name="icon"><br>
     <input id="savebutton" class="btn btn-success" type="submit" name="create" value="<?php echo $lang['BLOG_ADD']; ?>"><!-- MENU SELECTOR -->
     &nbsp;&nbsp;<label for="menuID" class="small">im Men&uuml;:</label>&nbsp; <select id="menuID" name="menuID" class="btn btn-default">
-        <?PHP
+        <?php
         foreach (YAWK\sys::getMenus($db) as $menue) {
             echo "<option value=\"" . $menue['id'] . "\"";
             if (isset($_POST['menu'])) {

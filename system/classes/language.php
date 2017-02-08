@@ -1,4 +1,4 @@
-<?PHP
+<?php
 namespace YAWK {
     /**
      * <b>Get and set the backend language.</b>

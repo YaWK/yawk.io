@@ -1,4 +1,4 @@
-<?PHP
+<?php
 if (isset($wID)) {
 	
 	/* OPTIMIZE THIS SHIT!!! 
@@ -97,12 +97,12 @@ else {
 
 	}
 ?>
-<?PHP // echo $preziNR; exit; ?> 
-<object id="<?PHP echo $preziID; ?>" name="<?PHP echo $preziID; ?>" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="<?PHP echo $width; ?>" height="<?PHP echo $height; ?>">
-<param name="movie" value="http://prezi.com/bin/preziloader.swf"/><param name="allowfullscreen" value="<?PHP echo $allowfullscreen; ?>"/>
+<?php // echo $preziNR; exit; ?> 
+<object id="<?php echo $preziID; ?>" name="<?php echo $preziID; ?>" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="<?php echo $width; ?>" height="<?php echo $height; ?>">
+<param name="movie" value="http://prezi.com/bin/preziloader.swf"/><param name="allowfullscreen" value="<?php echo $allowfullscreen; ?>"/>
 <param name="allowscriptaccess" value="always"/>
-<param name="bgcolor" value="#<?PHP echo $bgcolor; ?>"/>
-<param name="flashvars" value="<?PHP echo $preziID; ?>&amp;lock_to_path=1&amp;color=<?PHP echo $bgcolor; ?>&amp;autoplay=<?PHP echo $autoplay; ?>&amp;autohide_ctrls=<?PHP echo $autohidectrl; ?>"/>
-<embed id="preziEmbed_<?PHP echo $preziNR; ?>" name="preziEmbed_<?PHP echo $preziNR; ?>" src="http://prezi.com/bin/preziloader.swf" type="application/x-shockwave-flash" allowfullscreen="<?PHP echo $allowfullscreen; ?>" allowscriptaccess="always" width="<?PHP echo $width; ?>" height="<?PHP echo $height; ?>" bgcolor="#<?PHP echo $bgcolor; ?>" flashvars="prezi_id=<?PHP echo $preziNR; ?>&amp;lock_to_path=1&amp;color=<?PHP echo $bgcolor; ?>&amp;autoplay=<?PHP echo $autoplay; ?>&amp;autohide_ctrls=<?PHP echo $autohidectrl; ?>"></embed>
+<param name="bgcolor" value="#<?php echo $bgcolor; ?>"/>
+<param name="flashvars" value="<?php echo $preziID; ?>&amp;lock_to_path=1&amp;color=<?php echo $bgcolor; ?>&amp;autoplay=<?php echo $autoplay; ?>&amp;autohide_ctrls=<?php echo $autohidectrl; ?>"/>
+<embed id="preziEmbed_<?php echo $preziNR; ?>" name="preziEmbed_<?php echo $preziNR; ?>" src="http://prezi.com/bin/preziloader.swf" type="application/x-shockwave-flash" allowfullscreen="<?php echo $allowfullscreen; ?>" allowscriptaccess="always" width="<?php echo $width; ?>" height="<?php echo $height; ?>" bgcolor="#<?php echo $bgcolor; ?>" flashvars="prezi_id=<?php echo $preziNR; ?>&amp;lock_to_path=1&amp;color=<?php echo $bgcolor; ?>&amp;autoplay=<?php echo $autoplay; ?>&amp;autohide_ctrls=<?php echo $autohidectrl; ?>"></embed>
 </object>
 

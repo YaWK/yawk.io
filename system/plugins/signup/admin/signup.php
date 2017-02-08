@@ -229,26 +229,26 @@ else {
             <!-- layout -->
             <fieldset>
                 <legend><i class="fa fa-object-group"></i> &nbsp;<?php print "$lang[LAYOUT] <small>$lang[LAYOUT_SUBTEXT]</small>"; ?></legend>
-                <input type="radio" id="layout_p" name="signup_layout" class="form-control" value="plain" <?PHP echo $plainHtml;?>>
+                <input type="radio" id="layout_p" name="signup_layout" class="form-control" value="plain" <?php echo $plainHtml;?>>
                 <label for="layout_p"><?php print "$lang[COL_LAYOUT_1]"; ?></label><br>
-                <input type="radio" id="layout_r" name="signup_layout" class="form-control" value="right" <?PHP echo $rightHtml;?>>
+                <input type="radio" id="layout_r" name="signup_layout" class="form-control" value="right" <?php echo $rightHtml;?>>
                 <label for="layout_r"><?php print "$lang[COL_LAYOUT_2]"; ?></label><br>
-                <input type="radio" id="layout_l" name="signup_layout" class="form-control" value="left" <?PHP echo $leftHtml;?>>
+                <input type="radio" id="layout_l" name="signup_layout" class="form-control" value="left" <?php echo $leftHtml;?>>
                 <label for="layout_l"><?php print "$lang[COL_LAYOUT_3]"; ?></label><br>
-                <input type="radio" id="layout_c" name="signup_layout" class="form-control" value="center" <?PHP echo $centerHtml;?>>
+                <input type="radio" id="layout_c" name="signup_layout" class="form-control" value="center" <?php echo $centerHtml;?>>
                 <label for="layout_c"><?php print "$lang[COL_LAYOUT_4]"; ?></label><br><br><br>
             </fieldset>
             <!-- title text  -->
             <fieldset>
                 <legend><i class="fa fa-header"></i> &nbsp;<?php echo "$lang[SIGNUP_TITLE_TEXT] <small>$lang[SIGNUP_TITLE_SUBTEXT]</small>"; ?></legend>
                 <label for="title"><?php echo "$lang[SIGNUP_TITLE_TEXT] <small>($lang[SIGNUP_TITLE_LABEL_SUBTEXT])</small>"; ?></label><br>
-                <input type="text" id="title" name="signup_title" class="form-control" size="64" value="<?PHP echo \YAWK\settings::getSetting($db, "signup_title");?>" title="<?php echo "$lang[SIGNUP_TITLE_TEXT]"; ?>"><br><br><br>
+                <input type="text" id="title" name="signup_title" class="form-control" size="64" value="<?php echo \YAWK\settings::getSetting($db, "signup_title");?>" title="<?php echo "$lang[SIGNUP_TITLE_TEXT]"; ?>"><br><br><br>
             </fieldset>
             <!-- adultcheck -->
             <fieldset>
                 <legend><i class="fa fa-question-circle"></i> &nbsp;<?php echo "$lang[SIGNUP_ADULT_CHECK] <small>$lang[SIGNUP_ADULT_CHECK_SUBTEXT]</small>"; ?></legend>
                 <input type="hidden" value='0' name="signup_adultcheck">
-                <input type="checkbox" id="adultCheck" name="signup_adultcheck" class="form-control" value="1" title="<?php echo "$lang[SIGNUP_ADULT_CHECK]"; ?>" <?PHP echo $adultCheckHtml; ?>>
+                <input type="checkbox" id="adultCheck" name="signup_adultcheck" class="form-control" value="1" title="<?php echo "$lang[SIGNUP_ADULT_CHECK]"; ?>" <?php echo $adultCheckHtml; ?>>
                 <label for="adultCheck"><?php echo "$lang[ENABLE]?"; ?> <small><?php echo "$lang[SIGNUP_ADULT_CHECK]"; ?></small></label>
             </fieldset>
         </div>
@@ -261,9 +261,9 @@ else {
             <!-- group selector -->
             <fieldset>
                 <legend><i class="fa fa-users"></i> &nbsp;<?php echo "$lang[SIGNUP_GROUP_TITLE] <small>$lang[SIGNUP_GROUP_TITLE_SUBTEXT]</small>";?></legend>
-                <input type="radio" id="gidselect1" name="signup_gid" class="form-control" value="1" <?PHP echo $gidHtmlOn; ?>>
+                <input type="radio" id="gidselect1" name="signup_gid" class="form-control" value="1" <?php echo $gidHtmlOn; ?>>
                 <label for="gidselect1"><?php print $lang['ENABLED']; ?> </label>&nbsp;&nbsp;<small><?php print $lang['OR']; ?></small>&nbsp;
-                <input type="radio" id="gidselect2" name="signup_gid" class="form-control" value="0" <?PHP echo $gidHtmlOff; ?>>
+                <input type="radio" id="gidselect2" name="signup_gid" class="form-control" value="0" <?php echo $gidHtmlOff; ?>>
                 <label for="gidselect2"><?php print $lang['DISABLED']; ?> </label><br>
                 <!-- ACCESS CONTROL / PRIVACY -->
                 <select name="gid[]" class="form-control" aria-multiselectable="true" multiple>
@@ -322,71 +322,71 @@ else {
             <fieldset>
                 <legend><i class="fa fa-toggle-down"></i> &nbsp;<?php echo $lang['OPTIONAL']; ?> <small><?php echo $lang['OPTIONAL_SUBTEXT']; ?></small></legend>
                 <input type="hidden" value='0' name="signup_firstname">
-                <input type="checkbox" id="firstname" name="signup_firstname" class="form-control" value="1" title="<?php echo $lang['FIRSTNAME']; ?>" <?PHP echo $firstnameHtml; ?>>
+                <input type="checkbox" id="firstname" name="signup_firstname" class="form-control" value="1" title="<?php echo $lang['FIRSTNAME']; ?>" <?php echo $firstnameHtml; ?>>
                 <label for="firstname"><?php echo $lang['FIRSTNAME']; ?></label><br>
 
                 <input type="hidden" value='0' name="signup_lastname">
-                <input type="checkbox" id="lastname" name="signup_lastname" class="form-control" value="1" title="<?php echo $lang['LASTNAME']; ?>" <?PHP echo $lastnameHtml; ?>>
+                <input type="checkbox" id="lastname" name="signup_lastname" class="form-control" value="1" title="<?php echo $lang['LASTNAME']; ?>" <?php echo $lastnameHtml; ?>>
                 <label for="lastname"><?php echo $lang['LASTNAME']; ?></label><br>
 
                 <input type="hidden" value='0' name="signup_street">
-                <input type="checkbox" id="street" name="signup_street" class="form-control" value="1" title="<?php echo $lang['STREET']; ?>" <?PHP echo $streetHtml; ?>>
+                <input type="checkbox" id="street" name="signup_street" class="form-control" value="1" title="<?php echo $lang['STREET']; ?>" <?php echo $streetHtml; ?>>
                 <label for="street"><?php echo $lang['STREET']; ?></label><br>
 
                 <input type="hidden" value='0' name="signup_zipcode">
-                <input type="checkbox" id="zipcode" name="signup_zipcode" class="form-control" value="1" title="<?php echo $lang['ZIPCODE']; ?>" <?PHP echo $zipcodeHtml; ?>>
+                <input type="checkbox" id="zipcode" name="signup_zipcode" class="form-control" value="1" title="<?php echo $lang['ZIPCODE']; ?>" <?php echo $zipcodeHtml; ?>>
                 <label for="zipcode"><?php echo $lang['ZIPCODE']; ?></label><br>
 
                 <input type="hidden" value='0' name="signup_city">
-                <input type="checkbox" id="city" name="signup_city" class="form-control" title="<?php echo $lang['CITY']; ?>" value="1" <?PHP echo $cityHtml; ?>>
+                <input type="checkbox" id="city" name="signup_city" class="form-control" title="<?php echo $lang['CITY']; ?>" value="1" <?php echo $cityHtml; ?>>
                 <label for="city"><?php echo $lang['CITY']; ?></label><br>
 
                 <input type="hidden" value='0' name="signup_country">
-                <input type="checkbox" id="country" name="signup_country" class="form-control" value="1" title="<?php echo $lang['COUNTRY']; ?>" <?PHP echo $countryHtml; ?>>
+                <input type="checkbox" id="country" name="signup_country" class="form-control" value="1" title="<?php echo $lang['COUNTRY']; ?>" <?php echo $countryHtml; ?>>
                 <label for="country"><?php echo $lang['COUNTRY']; ?></label><br><br>
             </fieldset>
         </div>
         <div role="tabpanel" class="tab-pane fade in" id="text">
             <fieldset>
                 <!-- SUBMIT BUTTON -->
-                <input type="submit" class="btn btn-success pull-right" value="<?PHP print $lang['SETTINGS_SAVE']; ?>">
+                <input type="submit" class="btn btn-success pull-right" value="<?php print $lang['SETTINGS_SAVE']; ?>">
                 <input type="hidden" name="sent" value="1">
             </fieldset>
                 <!-- submit button text & style -->
                 <fieldset>
                     <legend><i class="fa fa-check-square-o"></i> &nbsp;<?php echo $lang['SIGNUP_SUBMIT_BTN']; ?> <small><?php echo $lang['SIGNUP_SUBMIT_BTN_SUBTEXT']; ?></small></legend>
                     <label for="submittext"><?php echo $lang['SIGNUP_SUBMIT_BTN']." ".$lang['TEXT']; ?></label><br>
-                    <input type="text" id="submittext" name="signup_submittext" class="form-control" value="<?PHP echo \YAWK\settings::getSetting($db, "signup_submittext");?>" title="<?php echo $lang['SIGNUP_SUBMIT_BTN']." ".$lang['TEXT']; ?>"><br>
+                    <input type="text" id="submittext" name="signup_submittext" class="form-control" value="<?php echo \YAWK\settings::getSetting($db, "signup_submittext");?>" title="<?php echo $lang['SIGNUP_SUBMIT_BTN']." ".$lang['TEXT']; ?>"><br>
                     <label for="submitstyle"><?php echo $lang['SIGNUP_SUBMIT_BTN']." ".$lang['SIGNUP_SUBMIT_BTN_SUBTEXT']; ?> <small><?php echo $lang['SIGNUP_SUBMIT_BTN_STYLES']; ?></small></label><br>
-                    <input type="text" id="submitstyle" name="signup_submitstyle" class="form-control" value="<?PHP echo \YAWK\settings::getSetting($db, "signup_submitstyle");?>" title="<?php echo $lang['SIGNUP_SUBMIT_BTN']." ".$lang['SIGNUP_SUBMIT_BTN_SUBTEXT']; ?>">
+                    <input type="text" id="submitstyle" name="signup_submitstyle" class="form-control" value="<?php echo \YAWK\settings::getSetting($db, "signup_submitstyle");?>" title="<?php echo $lang['SIGNUP_SUBMIT_BTN']." ".$lang['SIGNUP_SUBMIT_BTN_SUBTEXT']; ?>">
                     <br><br><br>
                 </fieldset>
             <!-- error / valid text color -->
             <fieldset>
                 <legend><i class="glyphicon glyphicon-text-color"></i> &nbsp;<?php echo "$lang[COLORS] <small>$lang[SIGNUP_COLORS_SUBTEXT]</small>"; ?></legend>
                 <label for="formerror"><?php echo $lang['ERROR_TEXT_COLOR']; ?> <small>default: #<?php echo \YAWK\template::getTemplateSetting($db, "valueDefault", "form-error") ;?></small></label><br>
-                <input type="text" id="formerror" name="formerror-tpl" class="form-control color" value="<?PHP echo \YAWK\template::getTemplateSetting($db, "value", "form-error");?>" title="Error Text Color"><br>
+                <input type="text" id="formerror" name="formerror-tpl" class="form-control color" value="<?php echo \YAWK\template::getTemplateSetting($db, "value", "form-error");?>" title="Error Text Color"><br>
                 <label for="formvalid"><?php echo $lang['VALID_TEXT_COLOR']; ?> <small>default: #<?php echo \YAWK\template::getTemplateSetting($db, "valueDefault", "form-valid") ;?></small></label><br>
-                <input type="text" id="formvalid" name="formvalid-tpl" class="form-control color" value="<?PHP echo \YAWK\template::getTemplateSetting($db, "value", "form-valid");?>" title="Valid Text Color"><br>
+                <input type="text" id="formvalid" name="formvalid-tpl" class="form-control color" value="<?php echo \YAWK\template::getTemplateSetting($db, "value", "form-valid");?>" title="Valid Text Color"><br>
             </fieldset>
         </div>
         <div role="tabpanel" class="tab-pane fade in" id="termstab">
             <fieldset>
                 <!-- SUBMIT BUTTON -->
-                <input type="submit" class="btn btn-success pull-right" value="<?PHP print $lang['SETTINGS_SAVE']; ?>">
+                <input type="submit" class="btn btn-success pull-right" value="<?php print $lang['SETTINGS_SAVE']; ?>">
                 <input type="hidden" name="sent" value="1">
             </fieldset>
             <!-- terms of service settings -->
             <fieldset>
-                <legend><i class="fa fa-legal"></i> &nbsp;<?PHP print $lang['TERMS_OF_SERVICE']; ?> <small><?PHP print $lang['SETTINGS']; ?></small></legend>
+                <legend><i class="fa fa-legal"></i> &nbsp;<?php print $lang['TERMS_OF_SERVICE']; ?> <small><?php print $lang['SETTINGS']; ?></small></legend>
                 <label for="tos-long"><?php echo $lang['TOS_TITLE']; ?></label><br>
-                <textarea id="tos-long" name="signup_terms-long" class="form-control" cols="60" rows="10"><?PHP echo \YAWK\settings::getLongSetting($db, "signup_terms-long");?></textarea><br><br>
+                <textarea id="tos-long" name="signup_terms-long" class="form-control" cols="60" rows="10"><?php echo \YAWK\settings::getLongSetting($db, "signup_terms-long");?></textarea><br><br>
                 <label for="tospage"><?php echo $lang['TOS_FILENAME']; ?> <small>default: tos.html</small></label><br>
-                <input type="text" id="tospage" name="signup_tospage" size="40" class="form-control" value="<?PHP echo \YAWK\settings::getSetting($db, "signup_tospage");?>" title="Terms of Service Page Name"> .html<br><br>
+                <input type="text" id="tospage" name="signup_tospage" size="40" class="form-control" value="<?php echo \YAWK\settings::getSetting($db, "signup_tospage");?>" title="Terms of Service Page Name"> .html<br><br>
                 <label for="tostext"><?php echo $lang['TOS_LINK_DESC']; ?> <small><?php echo $lang['TOS_LINK_DESC_SUBTEXT']; ?></small></label><br>
-                <input type="text" id="tostext" name="signup_tostext" size="40" class="form-control" value="<?PHP echo \YAWK\settings::getSetting($db, "signup_tostext");?>" title="Terms of Service Link Description"><br><br>
+                <input type="text" id="tostext" name="signup_tostext" size="40" class="form-control" value="<?php echo \YAWK\settings::getSetting($db, "signup_tostext");?>" title="Terms of Service Link Description"><br><br>
                 <label for="toscolor"><?php echo "$lang[LINK] $lang[COLOR]"; ?></label><br>
-                <input type="text" id="toscolor" name="signup_toscolor" class="form-control color" value="<?PHP echo \YAWK\settings::getSetting($db, "signup_toscolor");?>" title="Terms of Service Link Color"><br>
+                <input type="text" id="toscolor" name="signup_toscolor" class="form-control color" value="<?php echo \YAWK\settings::getSetting($db, "signup_toscolor");?>" title="Terms of Service Link Color"><br>
                 <br><br><br>
             </fieldset>
         </div>

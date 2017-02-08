@@ -1,4 +1,4 @@
-<?PHP
+<?php
 if (!isset($user))
 {   // generate new user object
     $user = new YAWK\user();
@@ -127,7 +127,7 @@ echo"<ol class=\"breadcrumb\">
     </tr>
   </thead>
   <tbody>
-    <?PHP
+    <?php
     /* get all users */
     $rows = $user->getUserArray($db);
     foreach ($rows AS $row) {

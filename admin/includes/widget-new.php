@@ -28,7 +28,7 @@ if(!isset($_POST['widgetType'])){
       <dl class="dl-horizontal">
           <dt><label for="widgetType"><?php echo $lang['CREATE']; ?>:</label> </dt>
           <dd><select id="widgetType" name="widgetType" class="btn btn-default">
-                  <?PHP
+                  <?php
                   foreach(YAWK\widget::getWidgets($db) as $widget){
                       echo "<option value=\"".$widget['id']."\"";
 
@@ -49,7 +49,7 @@ if(!isset($_POST['widgetType'])){
           <dd>
               <select id="pageID" name="pageID" class="btn btn-default">
                   <option value="0"><?php echo $lang['ON_ALL_PAGES']; ?></option>
-                  <?PHP
+                  <?php
                   foreach(YAWK\sys::getPages($db) as $page){
                       echo "<option value=\"".$page['id']."\"";
 
@@ -70,7 +70,7 @@ if(!isset($_POST['widgetType'])){
           <dd>
               <select id="position" name="positions" class="btn btn-default">
                   <option value=""></option>
-                  <?PHP
+                  <?php
                   $i = 0;
                   foreach(YAWK\template::getTemplatePositions($db) as $position[]){
                       echo "<option value=\"".$position[$i]."\"";
@@ -98,7 +98,7 @@ if(!isset($_POST['widgetType'])){
 
     </div>
 </div>
-<?PHP
+<?php
   }
   else
   {

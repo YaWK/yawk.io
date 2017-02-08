@@ -59,9 +59,9 @@ echo"<ol class=\"breadcrumb\">
         <td width="3%"><strong>&nbsp;</strong></td>
         <td width="5%" class=\"text-center\"><strong><?php echo $lang['ID']; ?></strong></td>
         <td width="5%" class=\"text-center\"><strong><?php echo $lang['SORTATION']; ?></strong></td>
-        <td width="70%"><strong><?PHP echo $lang['FAQ_QUESTION']; ?></strong></td>
-        <td width="7%" class=\"text-center\"><strong><?PHP echo $lang['CATEGORY']; ?></strong></td>
-        <td width="10%" class=\"text-center\"><strong><?PHP echo $lang['ACTIONS']; ?></strong></td>
+        <td width="70%"><strong><?php echo $lang['FAQ_QUESTION']; ?></strong></td>
+        <td width="7%" class=\"text-center\"><strong><?php echo $lang['CATEGORY']; ?></strong></td>
+        <td width="10%" class=\"text-center\"><strong><?php echo $lang['ACTIONS']; ?></strong></td>
     </tr>
     </thead>
     <tbody>

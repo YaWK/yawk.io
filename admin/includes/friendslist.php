@@ -143,7 +143,7 @@ else
             </tr>
             </thead>
             <tbody>
-            <?PHP
+            <?php
 
             // select friend requests
             $request_friends = \YAWK\user::getMyFriends($db, $_SESSION['uid'], 0, $lang);

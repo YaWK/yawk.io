@@ -71,20 +71,20 @@ echo"<ol class=\"breadcrumb\">
         <!-- BAND -->
         <label for="band"><?php print $lang['TOUR_BAND']; ?>&nbsp;
             <input type="text" id="band" size="28" name="band" class="form-control" maxlength="128"
-                   placeholder="<?PHP print $lang['TOUR_BAND_INPUT']; ?>"/>
+                   placeholder="<?php print $lang['TOUR_BAND_INPUT']; ?>"/>
         </label>
         <!-- VENUE -->
         <label for="venue"><?php print $lang['TOUR_VENUE']; ?>&nbsp;
             <input type="text" id="venue" size="28" name="venue" class="form-control" maxlength="128"
-                   placeholder="<?PHP print $lang['TOUR_VENUE_INPUT']; ?>"/>
+                   placeholder="<?php print $lang['TOUR_VENUE_INPUT']; ?>"/>
         </label>
         <!-- FB LINK -->
         <label for="fburl"><?php print $lang['TOUR_FBLINK']; ?>&nbsp;
             <input type="text" id="fblink" size="28" name="fburl" class="form-control" maxlength="255"
-                   placeholder="<?PHP print $lang['TOUR_FBLINK']; ?>"/>
+                   placeholder="<?php print $lang['TOUR_FBLINK']; ?>"/>
         </label>
         <!-- SUBMIT BUTTON -->
-        <input type="submit" class="btn btn-success" value="<?PHP print $lang['TOUR_DATES_ADD']; ?>"/>
+        <input type="submit" class="btn btn-success" value="<?php print $lang['TOUR_DATES_ADD']; ?>"/>
     </form>
     </div>
 </div>

@@ -38,7 +38,7 @@ echo"<ol class=\"breadcrumb\">
             <select name="gid" style="width: 240px;" class="form-control" >
 	   		    <option value="2"><?php echo "$lang[USER]"; ?></option>
 	   		    <option value="1">---</option>
-					<?PHP
+					<?php
 					  foreach(YAWK\sys::getGroups($db, "users") as $role){
 					  
 					    echo "<option value=\"".$role['id']."\"";
@@ -75,7 +75,7 @@ echo"<ol class=\"breadcrumb\">
 </div>
 </div>
 
-<?PHP
+<?php
   }
   else {
       $username = $db->quote($_POST['username']);

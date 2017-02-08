@@ -1,4 +1,4 @@
-<?PHP
+<?php
 global $dbprefix, $connection;
 if (isset($wID)) {
 	
@@ -80,7 +80,7 @@ else {
 <div class="fb-page" data-href="https://www.facebook.com/StephanHeinerMusic" data-width="500" data-height="300" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true" data-show-posts="true"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/StephanHeinerMusic"><a href="https://www.facebook.com/StephanHeinerMusic">Stephan Heiner</a></blockquote></div></div>
 
 <!--
-<div style="padding-left:<?PHP echo $x_offset; ?>px; padding-top:<?PHP echo $y_offset; ?>px; <?PHP echo $float_code; ?>">
-<iframe src="//www.facebook.com/plugins/likebox.php?href=<?PHP echo $fbpageurl; ?>&amp;width=<?PHP echo $width; ?>&amp;height=<?php echo $height; ?>&amp;colorscheme=<?php echo $colorscheme; ?>&amp;show_faces=true&amp;border_color=ffffff&amp;stream=false&amp;header=false&amp;appId=<?php echo $fbappID; ?>" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:<?php echo $width; ?>px; height:<?php echo $height; ?>px;" allowTransparency="true"></iframe>
+<div style="padding-left:<?php echo $x_offset; ?>px; padding-top:<?php echo $y_offset; ?>px; <?php echo $float_code; ?>">
+<iframe src="//www.facebook.com/plugins/likebox.php?href=<?php echo $fbpageurl; ?>&amp;width=<?php echo $width; ?>&amp;height=<?php echo $height; ?>&amp;colorscheme=<?php echo $colorscheme; ?>&amp;show_faces=true&amp;border_color=ffffff&amp;stream=false&amp;header=false&amp;appId=<?php echo $fbappID; ?>" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:<?php echo $width; ?>px; height:<?php echo $height; ?>px;" allowTransparency="true"></iframe>
 </div>
 -->
