@@ -29,7 +29,7 @@ if(!isset($_POST['widgetType'])){
           <dt><label for="widgetType"><?php echo $lang['CREATE']; ?>:</label> </dt>
           <dd><select id="widgetType" name="widgetType" class="btn btn-default">
                   <?php
-                  foreach(YAWK\widget::getWidgets($db) as $widget){
+                  foreach(YAWK\widget::getWidgetsArray($db) as $widget){
                       echo "<option value=\"".$widget['id']."\"";
 
                       if (isset($_POST['widget'])) {

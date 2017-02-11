@@ -26,6 +26,8 @@ else
         $widget->position = $db->quote($_POST['positions']);
         $widget->marginTop = $db->quote($_POST['marginTop']);
         $widget->marginBottom = $db->quote($_POST['marginBottom']);
+        $widget->date_publish = $db->quote($_POST['date_publish']);
+        $widget->date_unpublish = $db->quote($_POST['date_unpublish']);
         $widget->blocked = isset($_POST['mystatus']);
         // save widget state
   	    $widget->save($db);
@@ -41,6 +43,8 @@ else
             }
    	    }
  	  }
+
+
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
     <!-- Content Wrapper. Contains page content -->
@@ -58,6 +62,25 @@ echo"<ol class=\"breadcrumb\">
     <!-- Main content -->
     <section class=\"content\">";
 ?>
+
+<!-- bootstrap date-timepicker -->
+<link type="text/css" href="../system/engines/datetimepicker/css/datetimepicker.min.css" rel="stylesheet">
+<script type="text/javascript" src="../system/engines/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+
+<script type="text/javascript" >
+    $(document).ready(function() {
+// load datetimepicker  (start time)
+        $('#datetimepicker1').datetimepicker({
+            format: 'yyyy-mm-dd hh:ii:ss'
+        });
+// load 2nd datetimepicker (end time)
+        $('#datetimepicker2').datetimepicker({
+            format: 'yyyy-mm-dd hh:ii:ss'
+        });
+
+    }); //]]>  /* END document.ready */
+    /* ...end admin jQ controlls  */
+</script>
 <!-- FORM -->
 <form name="form" role="form" action="index.php?page=widget-edit&widget=<?php echo $widget->id; ?>" method="post">
 
@@ -104,6 +127,17 @@ echo"<ol class=\"breadcrumb\">
       }
     ?>
    </select>
+  </label>
+
+  <br>
+  <!-- DATE_PUBLISH -->
+  <label for ="date_publish"><?php echo $lang['START_PUBLISH']; ?> &nbsp;
+      <input id="datetimepicker1" name="date_publish" class="form-control" value="<?php echo $widget->date_publish; ?>">
+  </label>
+  <br>
+  <!-- DATE_UNPUBLISH -->
+  <label for ="date_unpublish"><?php echo $lang['END_PUBLISH']; ?> &nbsp;
+    <input id="datetimepicker2" name="date_unpublish" class="form-control" value="<?php echo $widget->date_unpublish; ?>">
   </label>
   <br><br>
       <!-- MARGIN TOP -->

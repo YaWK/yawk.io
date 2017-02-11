@@ -110,7 +110,7 @@ echo"<ol class=\"breadcrumb\">
 <i class="fa fa-users"></i> &nbsp;<?php print $lang['GROUPS_SETUP']; ?></a>
 <!-- btn signup plugin -->
 <a class="btn btn-default pull-right" href="index.php?plugin=signup">
-<i class="fa fa-plug"></i> &nbsp;<?php print $lang['SIGNUP']; ?></a>
+<i class="fa fa-plug"></i> &nbsp;<?php print $lang['SIGNUP_PLUGIN']; ?></a>
 
 <table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-hover" id="table-sort">
   <thead>

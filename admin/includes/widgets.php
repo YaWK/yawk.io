@@ -5,8 +5,9 @@ if (isset($_GET['add']) && ($_GET['add'] === "1"))
     $pageID = $db->quote($_POST['pageID']);
     $widgetType = $db->quote($_POST['widgetType']);
     $positions = $db->quote($_POST['positions']);
+    $date_publish = \YAWK\sys::now();
 
-    if (YAWK\widget::create($db, $widgetType, $pageID, $positions))
+    if (YAWK\widget::create($db, $widgetType, $pageID, $positions, $date_publish))
     {    // success
         print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[WIDGET_CREATE_OK]", "", 800);
     }
@@ -87,7 +88,7 @@ echo"<ol class=\"breadcrumb\">
   <tbody>
   <?php
   if ($res = $db->query("SELECT cw.*, cwt.name, CASE WHEN cp.title IS NULL THEN '$lang[ON_ALL_PAGES]'
-                                                              ELSE cp.title END as title
+                              ELSE cp.title END as title
       						  FROM {widgets} as cw
       						  JOIN {widget_types} as cwt on cw.widgetType = cwt.id
       						  LEFT JOIN {pages} as cp on cw.pageID = cp.id
