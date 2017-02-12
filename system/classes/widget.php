@@ -40,6 +40,10 @@ namespace YAWK {
         public $marginBottom;
         /** * @var int ID of the page where this widget should appear */
         public $pageID;
+        /** * @var string date when widget publishing starts */
+        public $date_publish;
+        /** * @var string date when widget publishing ends */
+        public $date_unpublish;
 
         /**
          * return current widget path
@@ -65,7 +69,7 @@ namespace YAWK {
          * @param string $positions widget / template positions
          * @return bool
          */
-        static function create($db, $widgetType, $pageID, $positions)
+        static function create($db, $widgetType, $pageID, $positions, $date_publish)
         {
             /** @var $db \YAWK\db */
             global $status;
@@ -81,13 +85,14 @@ namespace YAWK {
                 }
                 // add new widget to db
                 if ($res_widgets = $db->query("INSERT INTO {widgets}
-                                (id, published, widgetType, pageID, sort, position)
+                                (id, published, widgetType, pageID, sort, position, date_publish)
 	                        VALUES('" . $id . "',
 	                        '" . $published . "',
 	                        '" . $widgetType . "',
 	                        '" . $pageID . "',
 	                        '" . $sort . "',
-	                        '" . $positions . "')")
+	                        '" . $positions . "',
+	                        '" . $date_publish . "')")
                 ) {
                     // get default settings for this widget
                     if ($res_defaults = $db->query("SELECT * FROM {widget_defaults}
@@ -117,7 +122,7 @@ namespace YAWK {
                         } // ./ while
                     } else {
                         // could not get widget defaults
-                        \YAWK\sys::setSyslog($db, 11, "failed to get widget defaults of widget id <b>#$id</b> .", 0, 0, 0, 0);
+                        \YAWK\sys::setSyslog($db, 11, "failed to set widget defaults of widget id <b>#$id</b> .", 0, 0, 0, 0);
                         return false;
                     }
                 } else {
@@ -242,7 +247,7 @@ namespace YAWK {
          * @param object $db database
          * @return bool|mixed
          */
-        static function getWidgets($db)
+        static function getWidgetsArray($db)
         {   /** @var $db \YAWK\db */
             if ($res = $db->query("SELECT id, name, (
                              SELECT COUNT( * )
@@ -384,42 +389,85 @@ namespace YAWK {
          */
         function copy($db, $id)
         {
+            $originalWidgetID = $id;
             /** @var $db \YAWK\db */
-            if ($res_widgets = $db->query("SELECT * FROM {widgets} WHERE id = '" . $id . "'")) {
+            if ($res_widgets = $db->query("SELECT * FROM {widgets} WHERE id = '" . $id . "'"))
+            {
                 // get MAX id from widgets db
-                if ($res_id = $db->query("SELECT MAX(id), MAX(sort) FROM {widgets}")) {   // set ID + sort var
+                if ($res_id = $db->query("SELECT MAX(id), MAX(sort) FROM {widgets}"))
+                {   // set ID + sort var
                     $row = mysqli_fetch_row($res_id);
                     $id = $row[0] + 1;
                     $sort = $row[1] + 1;
-                } else {   // error getting new ID
+                }
+                else
+                {   // error getting new ID
                     return false;
                 }
+
                 // get data from given widget id
                 $row = mysqli_fetch_assoc($res_widgets);
                 $published = $row['published'];
                 $widgetType = $row['widgetType'];
                 $pageID = $row['pageID'];
                 $positions = $row['position'];
+                $date_publish = $row['date_publish'];
+                $date_unpublish = $row['date_unpublish'];
+
                 // all good so far... now: copy widget
                 if ($res = $db->query("INSERT INTO {widgets}
-                    (id, published, widgetType, pageID, sort, position)
+                    (id, published, widgetType, pageID, sort, position, date_publish, date_unpublish)
                     VALUES('" . $id . "',
                           '" . $published . "',
                           '" . $widgetType . "',
                           '" . $pageID . "',
                           '" . $sort . "',
-                          '" . $positions . "')")
-                ) {   // copy widget successful
+                          '" . $positions . "',
+                          '" . $date_publish . "',
+                          '" . $date_unpublish . "')"))
+                {   // copy widget successful// now we need to copy all settings of that widget into the new one
+                    // first, we gonna get the settings of oldWidgetID
+                    if ($settings = $db->query("SELECT * FROM {widget_settings} WHERE widgetID = '".$originalWidgetID."'"))
+                    {
+                        while ($settingsResult = mysqli_fetch_assoc($settings))
+                        {
+                            $widgetID = $settingsResult['widgetID'];
+                            $property = $settingsResult['property'];
+                            $value = $settingsResult['value'];
+                            $widgetType = $settingsResult['widgetType'];
+                            $activated = $settingsResult['activated'];
+
+                            // copy the widget's settings
+                            $db->query("INSERT INTO {widget_settings} (widgetID, property, value, widgetType, activated)
+	                        VALUES('" . $id . "',
+	                        '" . $property . "',
+	                        '" . $value . "',
+	                        '" . $widgetType . "',
+	                        '" . $activated . "')");
+                        }
+                    // all finished
                     return true;
-                } else {
-                    // copy widget failed
-                    \YAWK\sys::setSyslog($db, 11, "failed to copy widget id <b>#$id</b> .", 0, 0, 0, 0);
+                    }
+
+                    else
+                    {
+                        // copy widget failed
+                        \YAWK\sys::setSyslog($db, 11, "failed to copy settings of widget ID <b>#$id</b> .", 0, 0, 0, 0);
+                        return false;
+                    }
+                }
+                    else
+                    {
+                        // copy widget failed
+                        \YAWK\sys::setSyslog($db, 11, "failed to copy widget id <b>#$id</b> .", 0, 0, 0, 0);
+                        return false;
+                    }
+            }
+            else
+                {   // could not get widget settings
+                    \YAWK\sys::setSyslog($db, 11, "failed to get widget id <b>#$id</b> .", 0, 0, 0, 0);
                     return false;
                 }
-            } else {   // could not get widget settings
-                \YAWK\sys::setSyslog($db, 11, "failed to get settings of widget id <b>#$id</b> .", 0, 0, 0, 0);
-                return false;
-            }
         }
 
         /**
@@ -464,22 +512,24 @@ namespace YAWK {
                 $id = $db->quote($id);
             }
             /** @var $db \YAWK\db $res */
-            if ($res = $db->query("SELECT cw.id,cw.published,cw.widgetType,cw.pageID,cw.sort,cw.position, cwt.name, cw.marginTop, cw.marginBottom
+            if ($res = $db->query("SELECT cw.id, cw.published,cw.widgetType,cw.pageID,cw.sort,cw.position, cw.date_publish, cw.date_unpublish, cwt.name, cw.marginTop, cw.marginBottom
     							FROM {widgets} as cw
     							JOIN {widget_types} as cwt on cw.widgetType = cwt.id
                                 WHERE cw.id = '" . $id . "'"))
             {
-                if ($row = mysqli_fetch_row($res))
+                if ($row = mysqli_fetch_assoc($res))
                 {   // set properties
-                    $this->id = $row[0];
-                    $this->published = $row[1];
-                    $this->widgetType = $row[2];
-                    $this->pageID = $row[3];
-                    $this->sort = $row[4];
-                    $this->position = $row[5];
-                    $this->name = $row[6];
-                    $this->marginTop = $row[7];
-                    $this->marginBottom = $row[8];
+                    $this->id = $row['id'];
+                    $this->published = $row['published'];
+                    $this->widgetType = $row['widgetType'];
+                    $this->pageID = $row['pageID'];
+                    $this->sort = $row['sort'];
+                    $this->position = $row['position'];
+                    $this->name = $row['name'];
+                    $this->marginTop = $row['marginTop'];
+                    $this->marginBottom = $row['marginBottom'];
+                    $this->date_publish = $row['date_publish'];
+                    $this->date_unpublish = $row['date_unpublish'];
                     return true;
                 }
                 else
@@ -512,7 +562,9 @@ namespace YAWK {
                                         widgetType = '" . $this->widgetType . "',
                                         pageID = '" . $this->pageID . "',
                                         sort = '" . $this->sort . "',
-                                        position = '" . $this->position . "'
+                                        position = '" . $this->position . "',
+                                        date_publish = '" . $this->date_publish. "',
+                                        date_unpublish = '" . $this->date_unpublish. "'
                       WHERE id = '" . $this->id . "'"))
             {   // save successful
                 return true;
