@@ -75,14 +75,17 @@ namespace YAWK {
             global $status;
             if ($res_widgets = $db->query("SELECT MAX(id), MAX(sort) FROM {widgets}")) {
                 // generate ID
-                if ($row = mysqli_fetch_row($res_widgets)) {
+                if ($row = mysqli_fetch_row($res_widgets))
+                {
                     $id = $row[0] + 1;
                     $sort = $row[1] + 1;
                     $published = 1;
-                } else {
-                    // could not get MAX id
-                    return false;
                 }
+                else
+                    {
+                        // could not get MAX id
+                        return false;
+                    }
                 // add new widget to db
                 if ($res_widgets = $db->query("INSERT INTO {widgets}
                                 (id, published, widgetType, pageID, sort, position, date_publish)
@@ -92,14 +95,15 @@ namespace YAWK {
 	                        '" . $pageID . "',
 	                        '" . $sort . "',
 	                        '" . $positions . "',
-	                        '" . $date_publish . "')")
-                ) {
+	                        '" . $date_publish . "')"))
+                {
                     // get default settings for this widget
                     if ($res_defaults = $db->query("SELECT * FROM {widget_defaults}
 	                        WHERE widgetType = '" . $widgetType . "'
 	                        AND activated = '1'"))
                     {   // get widget settings
-                        while ($row = mysqli_fetch_assoc($res_defaults)) {
+                        while ($row = mysqli_fetch_assoc($res_defaults))
+                        {   // widget properties
                             $w_property = $row['property'];
                             $w_value = $row['value'];
                             $w_widgetType = $row['widgetType'];
@@ -112,32 +116,37 @@ namespace YAWK {
 	                        '" . $w_property . "',
 	                        '" . $w_value . "',
 	                        '" . $w_widgetType . "',
-	                        '" . $w_activated . "')")
-                            ) {
+	                        '" . $w_activated . "')"))
+                            {
                                 // widget settings added
-                                // return true;
-                            } else {   // insert widget settings failed
-                                return false;
                             }
+                            else
+                                {   // insert widget settings failed
+                                    return false;
+                                }
                         } // ./ while
-                    } else {
-                        // could not get widget defaults
-                        \YAWK\sys::setSyslog($db, 11, "failed to set widget defaults of widget id <b>#$id</b> .", 0, 0, 0, 0);
+                    }
+                    else
+                        {   // could not get widget defaults
+                            \YAWK\sys::setSyslog($db, 11, "failed to set widget defaults of widget id <b>#$id</b> .", 0, 0, 0, 0);
+                            return false;
+                        }
+                }
+                else
+                    {   // could not add new widget
+                        \YAWK\sys::setSyslog($db, 11, "failed to add new widget .", 0, 0, 0, 0);
                         return false;
                     }
-                } else {
-                    // could not add new widget
-                    \YAWK\sys::setSyslog($db, 11, "failed to add new widget .", 0, 0, 0, 0);
+            }
+            else
+                {   // could not get maxID
+                    \YAWK\sys::setSyslog($db, 11, "failed to get MAX(id) of widgets db .", 0, 0, 0, 0);
                     return false;
                 }
-            } else {
-                // could not get maxID
-                \YAWK\sys::setSyslog($db, 11, "failed to get MAX(id) of widgets db .", 0, 0, 0, 0);
-                return false;
-            }
             // something else has happened
             return $id;
         }
+
 
         /**
          * load a widget into given position
@@ -150,21 +159,38 @@ namespace YAWK {
          */
         static function loadWidgets($db, $position)
         {
+            // current date + time
+            $atm = date("Y-m-d G:i:s");
+
             /** @var $db \YAWK\db */
             global $currentpage;
-            if ($res = $db->query("SELECT cw.id,cw.published,cw.widgetType,cw.pageID,cw.sort,cw.position, cwt.name, cwt.folder
+            if ($res = $db->query("SELECT cw.id,cw.published,cw.widgetType,cw.pageID,cw.sort,cw.position, cw.date_publish, cw.date_unpublish, cwt.name, cwt.folder
     							FROM {widgets} as cw
     							JOIN {widget_types} as cwt on cw.widgetType = cwt.id
     							WHERE (cw.pageID = '" . $currentpage->id . "' OR cw.pageID = '0')
     							AND cw.position = '" . $position . "' AND published = '1'
     							ORDER BY cw.sort"))
             {   // fetch widget data
-                while ($row = mysqli_fetch_array($res)) {
+                while ($row = mysqli_fetch_array($res))
+                {
                     $_GET['widgetID'] = $row[0];
-                    $widgetFile = "system/widgets/$row[7]/$row[7].php";
-                    include $widgetFile;
+
+                    // check publish date and show entry
+                    if ($atm > $row[6] || ($row[6] === "0000-00-00 00:00:00") || (empty($row[6])))
+                    {
+                        // if current date is bigger than unpublish date
+                        if ($atm < $row[7] || ($row[7] === "0000-00-00 00:00:00") || (empty($row[7])))
+                        {
+                            $widgetFile = "system/widgets/$row[9]/$row[9].php";
+                            include $widgetFile;
+                        }
+                    }
+                    else
+                        {   //
+                            return null;
+                        }
+                    return null;
                 }
-                return null;
             }
             else
             {
@@ -189,16 +215,18 @@ namespace YAWK {
             if ($res = $db->query("SELECT cp.id
                     FROM {pages} as cp
                     JOIN {widgets} as cw on cp.id = cw.pageID
-                    WHERE cw.id = $id")
-            ) {   // fetch data
-                while ($row = mysqli_fetch_row($res)) {   // return ID
+                    WHERE cw.id = $id"))
+            {   // fetch data
+                while ($row = mysqli_fetch_row($res))
+                {   // return ID
                     return $row[0];
                 }
-            } else {
-                // q failed
-                \YAWK\sys::setSyslog($db, 11, "failed to get widget id <b>#$id</b> .", 0, 0, 0, 0);
-                return false;
             }
+            else
+                {   // q failed
+                    \YAWK\sys::setSyslog($db, 11, "failed to get widget id <b>#$id</b> .", 0, 0, 0, 0);
+                    return false;
+                }
             // something else has happened
             return false;
         }
@@ -219,17 +247,21 @@ namespace YAWK {
             if ($res = $db->query("SELECT cw.pageID, cp.title
                     FROM {widgets} as cw
                     LEFT JOIN {pages} as cp on cp.id = cw.pageID
-                    WHERE cw.id = '" . $id . "'")
-            ) {
-                while ($row = mysqli_fetch_array($res)) {
+                    WHERE cw.id = '" . $id . "'"))
+            {
+                while ($row = mysqli_fetch_array($res))
+                {
                     // if no result is given, prepare dropdown for all pages
-                    if (!isset($row[1])) {
+                    if (!isset($row[1]))
+                    {
                         $row[1] = "--all pages--";
                         $allpagescode = "";
                         // delete last entry from array?
-                    } else {
-                        $allpagescode = "<option value=\"0\">-- all pages--</option>";
                     }
+                    else
+                        {
+                            $allpagescode = "<option value=\"0\">-- all pages--</option>";
+                        }
                     echo $row[1];
                 }
                 return $row[0];
