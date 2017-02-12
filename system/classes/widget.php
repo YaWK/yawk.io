@@ -136,7 +136,7 @@ namespace YAWK {
                 return false;
             }
             // something else has happened
-            return true;
+            return $id;
         }
 
         /**
