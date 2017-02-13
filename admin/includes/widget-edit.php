@@ -28,6 +28,7 @@ else
         $widget->marginBottom = $db->quote($_POST['marginBottom']);
         $widget->date_publish = $db->quote($_POST['date_publish']);
         $widget->date_unpublish = $db->quote($_POST['date_unpublish']);
+        $widget->widgetTitle = $db->quote($_POST['widgetTitle']);
         $widget->blocked = isset($_POST['mystatus']);
         // save widget state
   	    $widget->save($db);
@@ -151,7 +152,13 @@ echo"<ol class=\"breadcrumb\">
   <!-- SORT -->
   <label><?php echo $lang['SORTATION']; ?> &nbsp;
   <input type="text" class="form-control" name="sort" maxlength="6" value="<?php echo $widget->sort; ?>">
-  </label><br><br>
+  </label><br>
+
+      <!-- TITLE -->
+      <label for ="widgetTitle"><?php echo $lang['DESCRIPTION']; ?> &nbsp;
+          <input id="widgetTitle" name="widgetTitle" class="form-control" value="<?php echo $widget->widgetTitle; ?>">
+      </label>
+      <br><br>
 
   <?php if ($widget->published == "1") { $checkedHtml="checked=\"checked\""; } else $checkedHtml = ''; ?>
 

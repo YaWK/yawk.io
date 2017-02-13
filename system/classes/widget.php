@@ -44,6 +44,8 @@ namespace YAWK {
         public $date_publish;
         /** * @var string date when widget publishing ends */
         public $date_unpublish;
+        /** * @var string title to identify the widget */
+        public $widgetTitle;
 
         /**
          * return current widget path
@@ -544,7 +546,7 @@ namespace YAWK {
                 $id = $db->quote($id);
             }
             /** @var $db \YAWK\db $res */
-            if ($res = $db->query("SELECT cw.id, cw.published,cw.widgetType,cw.pageID,cw.sort,cw.position, cw.date_publish, cw.date_unpublish, cwt.name, cw.marginTop, cw.marginBottom
+            if ($res = $db->query("SELECT cw.id, cw.published,cw.widgetType,cw.pageID,cw.sort,cw.position, cw.date_publish, cw.date_unpublish, cw.widgetTitle, cwt.name, cw.marginTop, cw.marginBottom
     							FROM {widgets} as cw
     							JOIN {widget_types} as cwt on cw.widgetType = cwt.id
                                 WHERE cw.id = '" . $id . "'"))
@@ -562,6 +564,7 @@ namespace YAWK {
                     $this->marginBottom = $row['marginBottom'];
                     $this->date_publish = $row['date_publish'];
                     $this->date_unpublish = $row['date_unpublish'];
+                    $this->widgetTitle = $row['widgetTitle'];
                     return true;
                 }
                 else
@@ -596,7 +599,8 @@ namespace YAWK {
                                         sort = '" . $this->sort . "',
                                         position = '" . $this->position . "',
                                         date_publish = '" . $this->date_publish. "',
-                                        date_unpublish = '" . $this->date_unpublish. "'
+                                        date_unpublish = '" . $this->date_unpublish. "',
+                                        widgetTitle = '" . $this->widgetTitle. "'
                       WHERE id = '" . $this->id . "'"))
             {   // save successful
                 return true;
