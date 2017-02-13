@@ -171,17 +171,17 @@ namespace YAWK {
     							AND cw.position = '" . $position . "' AND published = '1'
     							ORDER BY cw.sort"))
             {   // fetch widget data
-                while ($row = mysqli_fetch_array($res))
+                while ($row = mysqli_fetch_assoc($res))
                 {
-                    $_GET['widgetID'] = $row[0];
+                    $_GET['widgetID'] = $row['id'];
 
                     // check publish date and show entry
-                    if ($atm > $row[6] || ($row[6] === "0000-00-00 00:00:00") || (empty($row[6])))
+                    if ($atm > $row['date_publish'] || ($row['date_publish'] === "0000-00-00 00:00:00") || (empty($row['date_publish'])))
                     {
                         // if current date is bigger than unpublish date
-                        if ($atm < $row[7] || ($row[7] === "0000-00-00 00:00:00") || (empty($row[7])))
+                        if ($atm < $row['date_unpublish'] || ($row['date_unpublish'] === "0000-00-00 00:00:00") || (empty($row['date_unpublish'])))
                         {
-                            $widgetFile = "system/widgets/$row[9]/$row[9].php";
+                            $widgetFile = "system/widgets/".$row['folder']."/".$row['folder'].".php";
                             include $widgetFile;
                         }
                     }
@@ -197,7 +197,7 @@ namespace YAWK {
                 \YAWK\sys::setSyslog($db, 11, "failed to get widgets for position <b>$position</b> .", 0, 0, 0, 0);
                 return false;
             }
-            // return true;
+            return null;
         }
 
         /**

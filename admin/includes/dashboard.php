@@ -32,8 +32,8 @@ if (!isset($stats) || (empty($stats)))
             <span class="info-box-icon bg-blue"><i class="fa fa-line-chart"></i></span>
 
             <div class="info-box-content">
-                <span class="info-box-text"><?php echo $lang['TOTAL']; ?></span>
-                <span class="info-box-number"><?php echo number_format($stats->i_hits, 0, '.', '.'); ?> <small> <?php echo $lang['HITS']; ?></small></span>
+                <span class="info-box-text"><?php echo "$lang[HITS]&nbsp;$lang[TOTAL]"; ?></span>
+                <span class="info-box-number"><?php echo number_format($stats->i_hits, 0, '.', '.'); ?> <small> <?php echo $lang['HITS_EN']; ?></small></span>
             </div>
             <!-- /.info-box-content -->
         </div>

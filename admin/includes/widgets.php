@@ -73,6 +73,8 @@ echo"<ol class=\"breadcrumb\">
     <div class="box-body">
 <a class="btn btn-success pull-right" title="<?php $lang['WIDGET+']; ?>" href="index.php?page=widget-new">
 <i class="glyphicon glyphicon-plus"></i> &nbsp;<?php print $lang['WIDGET']; ?></a>
+<a class="btn btn-success pull-right" title="<?php $lang['WIDGET_MANAGER']; ?>" href="index.php?page=widgets-manage">
+<i class="glyphicon glyphicon-folder-open"></i> &nbsp;&nbsp;<?php print $lang['WIDGET_MANAGER']; ?></a>
 
 <table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-hover" id="table-sort">
   <thead>
@@ -93,7 +95,7 @@ echo"<ol class=\"breadcrumb\">
       						  FROM {widgets} as cw
       						  JOIN {widget_types} as cwt on cw.widgetType = cwt.id
       						  LEFT JOIN {pages} as cp on cw.pageID = cp.id
-      						  ORDER BY cw.pageID,cw.sort LIMIT 0,30"))
+      						  ORDER BY cw.pageID,cw.sort"))
   {
       while($row = mysqli_fetch_assoc($res)){
           if ($row['published']==1)
