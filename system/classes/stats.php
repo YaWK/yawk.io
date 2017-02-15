@@ -2538,7 +2538,7 @@ namespace YAWK
                 // show totals
                 if ($deviceType === "Total")
                 {   // of how many visits
-                    echo "<li class=\"small\">latest $value $lang[USERS]</li>";
+                    echo "<li class=\"small\">$lang[LATEST] $value $lang[USERS]</li>";
                 }
             }
             echo"
