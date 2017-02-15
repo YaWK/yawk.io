@@ -54,14 +54,16 @@ else
             <div class="box-header with-border">
                 <h3 class="box-title"><?php echo $lang['STATS']; ?> <small><?php echo $lang['HITS_AND_USER_BEHAVIOR']; ?></small></h3>
             </div>
-            <div class="box-body h3">
+            <div class="box-body">
                 <?php
                 if ($stats->i_hits !== $limit) { $current = "<small><i>(view: $limit)</i></small>"; } else { $current = ''; }
                 $stats->i_hits = number_format($stats->i_hits, 0, '.', '.');
                 ?>
+                <?php echo "$lang[ACTIVE_SESSIONS]: <b>".$stats->getActiveSessions()."</b> "; ?> <br>
                 <?php echo "$lang[HITS] $lang[OVERALL]:<b> $stats->i_hits</b>"; ?> <?php echo $current; ?> <br>
                 <?php echo "$lang[GUESTS]: <b> $stats->i_publicUsersPercentage</b>"; ?>% <small>(<?php echo $stats->i_publicUsers; ?>)</small><br>
                 <?php echo "$lang[MEMBERS]: <b> $stats->i_loggedUsersPercentage</b>"; ?>% <small>(<?php echo $stats->i_loggedUsers; ?>)</small><br>
+
             </div>
         </div>
         <!-- / box -->
@@ -85,6 +87,10 @@ else
         </div>
         <!-- / stats settings box -->
 
+        <!-- user settings box -->
+        <?php $stats->drawUserStats($db, $lang); ?>
+        <!-- / user settings box -->
+        
     </div>
 </div>
 

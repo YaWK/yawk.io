@@ -45,7 +45,8 @@ namespace YAWK
         public $referer;
         /** * @var string page that the user requested */
         public $page;
-
+        /** * @var string the currently open sessions (active users) */
+        public $activeSessions;
 
         // stats variables
         /** * @var int total hits overall */
@@ -58,6 +59,14 @@ namespace YAWK
         public $i_publicUsers = 0;
         /** * @var int how many users did not log in and visited as public guest? (in percent) */
         public $i_publicUsersPercentage = 0;
+
+        // user stats
+        /** *@var int total users overall */
+        public $i_users = 0;
+        /** *@var int total logged in users */
+        public $i_loggedInUsers = 0;
+        /** *@var int total blocked users */
+        public $i_blockedUsers = 0;
 
         // os types
         /** * @var int how many users came with windows? */
@@ -209,6 +218,18 @@ namespace YAWK
         public function construct()
         {
             // ...
+        }
+
+        public function getActiveSessions()
+        {
+            if ($this->activeSessions = count(scandir(ini_get("session.save_path"))) - 2)
+            {
+                return $this->activeSessions;
+            }
+            else
+                {
+                    return "0";
+                }
         }
 
         /**
@@ -383,6 +404,64 @@ namespace YAWK
                     $messageCount = "db error: could not count messages";
                     return $messageCount;
                 }
+        }
+
+        /**
+         * Count and set user stats like, how many users are registered, currently online or blocked
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @return bool
+         */
+        public function getUserStats($db)
+        {   /* @var $db \YAWK\db */
+            // count all users
+            if ($res = $db->query("SELECT id, blocked, online, logged_in  FROM {users}"))
+            {
+                while ($user = mysqli_fetch_assoc($res))
+                {
+                    // add user
+                    $this->i_users++;
+
+                    // add blocked users
+                    if ($user['blocked'] === "1")
+                    {
+                        $this->i_blockedUsers++;
+                    }
+
+                    // add current online users
+                    if ($user['online'] === "1")
+                    {
+                        $this->i_loggedInUsers++;
+                    }
+                }
+                return true;
+            }
+            else
+                {
+                    return false;
+                }
+        }
+
+        public function drawUserStats($db, $lang)
+        {
+            if (self::getUserStats($db))
+            {
+                echo "<!-- user settings box -->
+        <div class=\"box\">
+            <div class=\"box-header with-border\">
+                <h3 class=\"box-title\">$lang[USER] $lang[STATS] <small>$lang[TOTAL_LOGGED_BLOCKED]</small></h3>
+            </div>
+            <div class=\"box-body\">
+                $lang[USERS]: <b>$this->i_users</b><br>
+                $lang[BLOCKED]: <b>$this->i_blockedUsers</b><br>
+                $lang[LOGGED_IN]: <b>$this->i_loggedInUsers</b>
+            </div>
+        </div>
+        <!-- / stats settings box -->";
+
+            }
         }
 
         /**
@@ -2902,7 +2981,7 @@ namespace YAWK
          * @param string $limit contains i number for sql limitation
          * @param object $lang language array
          */
-        public function drawWeekdayBox($db, $data, $limit, $lang)
+            public function drawWeekdayBox($db, $data, $limit, $lang)
         {   /** @var $db \YAWK\db */
             // get data for this box
             $weekdays = $this->countWeekdays($db, $data, $limit, $lang);

@@ -1,5 +1,37 @@
+<script type="text/javascript">
+    function saveHotkey() {
+        // simply disables save event for chrome
+        $(window).keypress(function (event) {
+            if (!(event.which == 115 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) && !(event.which == 19)) return true;
+            event.preventDefault();
+            formmodified=0; // do not warn user, just save.
+            return false;
+        });
+        // used to process the cmd+s and ctrl+s events
+        $(document).keydown(function (event) {
+            if (event.which == 83 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) {
+                event.preventDefault();
+                $('#savebutton').click(); // SAVE FORM AFTER PRESSING STRG-S hotkey
+                formmodified=0; // do not warn user, just save.
+                // save(event);
+                return false;
+            }
+        });
+    }
+    saveHotkey();
+    $(document).ready(function() {
+        // textarea that will be transformed into editor
+        var savebutton = ('#savebutton');
+        var savebuttonIcon = ('#savebuttonIcon');
+        // ok, lets go...
+        // we need to check if user clicked on save button
+        $(savebutton).click(function() {
+            $(savebutton).removeClass('btn btn-success').addClass('btn btn-warning');
+            $(savebuttonIcon).removeClass('fa fa-check').addClass('fa fa-spinner fa-spin fa-fw');
+        });
+    });
+</script>
 <?php
-
 /* page content start here */
 // check if widget obj is set
 if (!isset($widget))
@@ -196,7 +228,10 @@ echo"<ol class=\"breadcrumb\">
   ?>
   <br><input type="hidden" name="widgetID" value="<?php echo $widget->id; ?>">
   <br>
-  <input name="save" id="savebutton" style="margin-top:10px;" type="submit" class="btn btn-danger" value="<?php echo $lang['WIDGETS_SAVE_BTN']; ?>">
+
+      <button type="submit" id="savebutton" name="save" class="btn btn-success">
+          <i id="savebuttonIcon" class="fa fa-check"></i> &nbsp;<?php echo $lang['WIDGETS_SAVE_BTN']; ?>
+      </button>
   </div>
 </div>
 
