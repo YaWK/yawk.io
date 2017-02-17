@@ -17,8 +17,6 @@ namespace YAWK {
     {
         /** * @searchString string contains the search term */
         public $string;
-        /** * @searchResult array contains the search result */
-        public $searchResult;
 
         /**
          * search pages and draw box
@@ -140,6 +138,40 @@ namespace YAWK {
                 }
             }
             echo "</h4><b>$i</b> $lang[WIDGETS_ENTRIES_WITH_TAG] <i><b>&laquo;$string&raquo;</b></i></div>
+                </div>";
+        } /* end function searchPages(); */
+
+
+        /**
+         * search blogs
+         * @param string $searchString
+         * @param object $db database object
+         */
+        public function searchBlogs($db, $string, $lang)
+        {
+            $i = 0;
+            echo "
+            <div class=\"box\">
+                <div class=\"box-header with-border\">
+                    <h3 class=\"box-title\">$lang[BLOG] <small>$lang[ALL_ELEMENTS]</small></h3>
+                </div>
+            <div class=\"box-body\">";
+            echo "<h4>";
+            if (isset($string) && (!empty($string)))
+            {
+                if ($res = $db->query("SELECT blogid, title, subtitle, teasertext FROM {blog_items} 
+                                       WHERE title LIKE '%".$string."%' OR
+                                       subtitle LIKE '%".$string."%' OR
+                                       teasertext LIKE '%".$string."%'"))
+                {
+                    while ($row = mysqli_fetch_assoc($res))
+                    {
+                        $i++;
+                        echo "<a href=\"index.php?plugin=blog&pluginpage=blog-entries&blogid=$row[blogid]\" target=\"_self\"><i class=\"fa fa-edit\"></i> $row[title]</a><br>";
+                    }
+                }
+            }
+            echo "</h4><b>$i</b> $lang[BLOG_ENTRIES_WITH_TAG] <i><b>&laquo;$string&raquo;</b></i></div>
                 </div>";
         } /* end function searchPages(); */
 

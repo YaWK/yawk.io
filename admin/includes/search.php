@@ -52,22 +52,66 @@ else
             </div>
         </div>
         <!-- / search box -->
+        <?php
+        if (isset($_POST['all']) && ($_POST['all'] === "true"))
+        {
+            // display all search results
+            echo $search->searchPages($db, $search->string, $lang);
+            echo $search->searchBlogs($db, $search->string, $lang);
+            echo $search->searchMenus($db, $search->string, $lang);
+            echo $search->searchUsers($db, $search->string, $lang);
+            echo $search->searchWidgets($db, $search->string, $lang);
 
-        <!-- pages results box -->
-            <?php echo $search->searchPages($db, $search->string, $lang); ?>
-        <!-- / pages results box -->
+            $pagesChecked = "checked";
+            $blogsChecked = "checked";
+            $menusChecked = "checked";
+            $usersChecked = "checked";
+            $widgetsChecked = "checked";
+        }
+        else
+            {   // display results of selected categories only
+                if (isset($_POST['pages']))
+                {
+                    echo $search->searchPages($db, $search->string, $lang);
+                    $pagesChecked = "checked";
+                }
+                else
+                    { $pagesChecked = ''; }
 
-        <!-- menus results box -->
-        <?php echo $search->searchMenus($db, $search->string, $lang); ?>
-        <!-- / menus results box -->
+                if (isset($_POST['blogs']))
+                {
+                    echo $search->searchBlogs($db, $search->string, $lang);
+                    $blogsChecked = "checked";
+                }
+                else
+                    { $blogsChecked = ''; }
 
-        <!-- menus results box -->
-        <?php echo $search->searchUsers($db, $search->string, $lang); ?>
-        <!-- / menus results box -->
+                if (isset($_POST['menus']))
+                {
+                    echo $search->searchMenus($db, $search->string, $lang);
+                    $menusChecked = "checked";
+                }
+                else
+                    { $menusChecked = ''; }
 
-        <!-- widgets results box -->
-        <?php echo $search->searchWidgets($db, $search->string, $lang); ?>
-        <!-- / widgets results box -->
+                if (isset($_POST['users']))
+                {
+                    echo $search->searchUsers($db, $search->string, $lang);
+                    $usersChecked = "checked";
+                }
+                else
+                    { $usersChecked = ''; }
+
+                if (isset($_POST['widgets']))
+                {
+                    echo $search->searchWidgets($db, $search->string, $lang);
+                    $widgetsChecked = "checked";
+                }
+                else
+                    { $widgetsChecked = ''; }
+            }
+
+        ?>
     </div>
     <div class="col-md-4">
         <!-- box -->
@@ -78,33 +122,33 @@ else
             <div class="box-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <input id="pages" name="pages" type="checkbox" checked>
+                            <input id="pages" name="pages" type="checkbox" <?php echo $pagesChecked; ?>>
                             <label for="pages"><?php echo $lang['PAGES']; ?></label>
                         </div>
                         <div class="col-md-6">
-                            <input id="menus" name="menus" type="checkbox" checked>
+                            <input id="menus" name="menus" type="checkbox" <?php echo $menusChecked; ?>>
                             <label for="menus"><?php echo $lang['MENUS']; ?></label>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6">
-                            <input id="users" name="users" type="checkbox" checked>
+                            <input id="users" name="users" type="checkbox" <?php echo $usersChecked; ?>>
                             <label for="users"><?php echo $lang['USERS']; ?></label>
                         </div>
                         <div class="col-md-6">
-                            <input id="widgets" name="widgets" type="checkbox" checked>
+                            <input id="widgets" name="widgets" type="checkbox" <?php echo $widgetsChecked; ?>>
                             <label for="widgets"><?php echo $lang['WIDGETS']; ?></label>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6">
-                            <input id="blogs" name="blogs" type="checkbox" checked>
+                            <input id="blogs" name="blogs" type="checkbox" <?php echo $blogsChecked; ?>>
                             <label for="blogs"><?php echo $lang['BLOG']; ?></label>
                         </div>
                         <div class="col-md-6">
-                            <input id="files" name="files" type="checkbox" checked>
+                            <input id="files" name="files" type="checkbox" checked disabled aria-disabled="true">
                             <label for="files"><?php echo $lang['FILES']; ?></label>
                         </div>
                     </div>

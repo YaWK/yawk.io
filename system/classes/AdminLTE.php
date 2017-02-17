@@ -641,7 +641,8 @@ namespace YAWK {
               <!-- search form (Optional) -->
               <form action=\"index.php?page=search\" method=\"post\" class=\"sidebar-form\">
                 <div class=\"input-group\">
-                  <input type=\"text\" name=\"q\" class=\"form-control\" placeholder=\"$lang[SEARCH_DOTDOTDOT]\">
+                  <input type=\"text\" name=\"searchString\" class=\"form-control\" placeholder=\"$lang[SEARCH_DOTDOTDOT]\">
+                  <input type=\"hidden\" name=\"all\" value=\"true\">
                   <span class=\"input-group-btn\">
                     <button type=\"submit\" name=\"search\" id=\"search-btn\" class=\"btn btn-flat\"><i class=\"fa fa-search\"></i></button>
                   </span>
