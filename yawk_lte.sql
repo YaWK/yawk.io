@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 13. Feb 2017 um 02:09
+-- Erstellungszeit: 17. Feb 2017 um 10:00
 -- Server-Version: 10.1.10-MariaDB
 -- PHP-Version: 5.6.19
 
@@ -311,7 +311,8 @@ INSERT INTO `cms_logins` (`id`, `datetime`, `location`, `failed`, `ip`, `userage
 (22, '2017-02-13 00:51:19', 'backend', 1, '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', 'admin', 'test'),
 (23, '2017-02-13 00:51:19', 'backend', 0, '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', 'admin', 'test'),
 (24, '2017-02-13 00:51:19', 'backend', 1, '::1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', 'admin', 'test'),
-(25, '2017-02-13 01:48:32', 'backend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', 'admin', '12345');
+(25, '2017-02-13 01:48:32', 'backend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', 'admin', '12345'),
+(26, '2017-02-14 08:28:20', 'backend', 0, '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', 'admin', '12345');
 
 -- --------------------------------------------------------
 
@@ -1368,7 +1369,59 @@ INSERT INTO `cms_stats` (`id`, `uid`, `gid`, `logged_in`, `acceptLanguage`, `rem
 (318, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-13 01:52:49', 'http://192.168.1.8/mercedesgarage.net/admin/index.php?page=template-edit&id=1', '/mercedesgarage.net/index.php'),
 (319, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-13 01:52:55', 'http://192.168.1.8/mercedesgarage.net/admin/index.php?page=template-edit&id=1', '/mercedesgarage.net/index.php'),
 (320, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-13 01:53:33', 'http://192.168.1.8/mercedesgarage.net/youtube-test.html', 'mercedes-benz-w123-1976-1986'),
-(321, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-13 01:54:38', 'http://192.168.1.8/mercedesgarage.net/admin/index.php?page=template-edit&id=1', '/mercedesgarage.net/index.php');
+(321, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-13 01:54:38', 'http://192.168.1.8/mercedesgarage.net/admin/index.php?page=template-edit&id=1', '/mercedesgarage.net/index.php'),
+(322, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-13 03:38:01', 'http://192.168.1.8/mercedesgarage.net/mercedes-benz-w123-1976-1986.html', 'twitch-stream-test'),
+(323, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-13 05:54:36', 'http://192.168.1.8/mercedesgarage.net/admin/index.php?page=template-edit&id=1', '/mercedesgarage.net/index.php'),
+(324, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-13 05:55:20', 'http://192.168.1.8/mercedesgarage.net/admin/index.php?page=widgets', 'index'),
+(325, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-13 05:55:22', 'http://192.168.1.8/mercedesgarage.net/index.html', 'mercedes-benz-w124-1985-1994'),
+(326, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-13 05:55:31', 'http://192.168.1.8/mercedesgarage.net/index.html', 'mercedes-benz-w124-1985-1994'),
+(327, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-13 05:55:57', 'http://192.168.1.8/mercedesgarage.net/index.html', 'mercedes-benz-w124-1985-1994'),
+(328, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-13 05:56:02', 'http://192.168.1.8/mercedesgarage.net/admin/index.php?page=template-edit&id=1', '/mercedesgarage.net/index.php'),
+(329, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-13 05:56:12', 'http://192.168.1.8/mercedesgarage.net/mercedes-benz-w124-1985-1994.html', 'mercedes-benz-w123-1976-1986'),
+(330, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-13 05:56:13', 'http://192.168.1.8/mercedesgarage.net/mercedes-benz-w123-1976-1986.html', 'mercedes-benz-w124-1985-1994'),
+(331, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-13 05:56:14', 'http://192.168.1.8/mercedesgarage.net/mercedes-benz-w124-1985-1994.html', 'twitch-stream-test'),
+(332, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-13 05:56:23', 'http://192.168.1.8/mercedesgarage.net/twitch-stream-test.html', 'youtube-test'),
+(333, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-13 05:56:28', 'http://192.168.1.8/mercedesgarage.net/youtube-test.html', 'index'),
+(334, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-13 05:56:29', 'http://192.168.1.8/mercedesgarage.net/index.html', 'youtube-test'),
+(335, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-13 05:56:31', 'http://192.168.1.8/mercedesgarage.net/youtube-test.html', 'twitch-stream-test'),
+(336, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-13 05:56:35', 'http://192.168.1.8/mercedesgarage.net/twitch-stream-test.html', 'index'),
+(337, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-13 05:57:03', 'http://192.168.1.8/mercedesgarage.net/admin/index.php?page=template-edit&id=1', '/mercedesgarage.net/index.php'),
+(338, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-13 05:58:35', 'http://192.168.1.8/mercedesgarage.net/admin/index.php?page=template-edit&id=1', '/mercedesgarage.net/index.php'),
+(339, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-13 05:59:45', 'http://192.168.1.8/mercedesgarage.net/twitch-stream-test.html', 'index'),
+(340, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-13 06:00:22', '', '/yawk-LTE/'),
+(341, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-13 06:00:25', 'http://192.168.1.8/yawk-LTE/', 'mercedes-benz-w123-1976-1986'),
+(342, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-13 17:21:31', 'http://192.168.1.8/mercedesgarage.net/admin/index.php?page=widgets', 'index'),
+(343, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-13 17:21:34', 'http://192.168.1.8/mercedesgarage.net/index.html', 'mercedes-benz-w123-1976-1986'),
+(344, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-13 18:58:40', 'http://192.168.1.8/mercedesgarage.net/index.html', 'mercedes-benz-w123-1976-1986'),
+(345, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-13 19:05:58', 'http://192.168.1.8/mercedesgarage.net/mercedes-benz-w123-1976-1986.html', 'mercedes-benz-w124-1985-1994'),
+(346, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-13 19:06:00', 'http://192.168.1.8/mercedesgarage.net/mercedes-benz-w124-1985-1994.html', 'mercedes-benz-w123-1976-1986'),
+(347, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-13 19:06:01', 'http://192.168.1.8/mercedesgarage.net/mercedes-benz-w123-1976-1986.html', 'index'),
+(348, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-13 19:06:06', 'http://192.168.1.8/mercedesgarage.net/index.html', 'youtube-test'),
+(349, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-13 19:06:07', 'http://192.168.1.8/mercedesgarage.net/youtube-test.html', 'twitch-stream-test'),
+(350, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-13 19:06:12', 'http://192.168.1.8/mercedesgarage.net/twitch-stream-test.html', 'mercedes-benz-w123-1976-1986'),
+(351, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-13 19:06:13', 'http://192.168.1.8/mercedesgarage.net/mercedes-benz-w123-1976-1986.html', 'twitch-stream-test'),
+(352, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-13 20:58:03', 'http://192.168.1.8/mercedesgarage.net/admin/index.php?page=widgets', 'index'),
+(353, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-13 20:58:08', 'http://192.168.1.8/mercedesgarage.net/index.html', 'mercedes-benz-w123-1976-1986'),
+(354, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-14 06:36:41', '', '/mercedesgarage.net/'),
+(355, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-14 06:36:43', 'http://192.168.1.8/mercedesgarage.net/', 'mercedes-benz-w124-1985-1994'),
+(356, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-14 07:45:18', 'http://192.168.1.8/mercedesgarage.net/admin/index.php?page=stats', 'index'),
+(357, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-14 07:45:20', 'http://192.168.1.8/mercedesgarage.net/index.html', 'mercedes-benz-w123-1976-1986'),
+(358, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-14 07:45:22', 'http://192.168.1.8/mercedesgarage.net/mercedes-benz-w123-1976-1986.html', 'mercedes-benz-w124-1985-1994'),
+(359, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-14 08:03:59', 'http://192.168.1.8/mercedesgarage.net/admin/index.php?page=template-edit&id=1', '/mercedesgarage.net/index.php'),
+(360, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-14 08:04:24', 'http://192.168.1.8/mercedesgarage.net/admin/index.php?page=template-edit&id=1', '/mercedesgarage.net/index.php'),
+(361, 0, 0, 0, 'de,en-US;q=0.7,en;q=0.3', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:50.0) Gecko/20100101 Firefox/50.0', '', 'Desktop', 'Windows', 'Windows 7', 'Mozilla Firefox', '50.0', '2017-02-14 08:26:51', '', 'mercedes-benz-w124-1985-1994'),
+(362, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-14 08:28:32', 'http://192.168.1.8/mercedesgarage.net/mercedes-benz-w124-1985-1994.html', 'twitch-stream-test'),
+(363, 0, 0, 0, 'de,en-US;q=0.7,en;q=0.3', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:50.0) Gecko/20100101 Firefox/50.0', '', 'Desktop', 'Windows', 'Windows 7', 'Mozilla Firefox', '50.0', '2017-02-14 08:28:43', '', 'mercedes-benz-w124-1985-1994'),
+(364, 0, 0, 0, 'de,en-US;q=0.7,en;q=0.3', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:50.0) Gecko/20100101 Firefox/50.0', '', 'Desktop', 'Windows', 'Windows 7', 'Mozilla Firefox', '50.0', '2017-02-14 08:28:46', 'http://192.168.1.8/mercedesgarage.net/mercedes-benz-w124-1985-1994.html', 'twitch-stream-test'),
+(365, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-15 18:43:15', 'http://192.168.1.8/mercedesgarage.net/mercedes-benz-w124-1985-1994.html', 'twitch-stream-test'),
+(366, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-15 21:11:03', 'http://192.168.1.8/mercedesgarage.net/admin/index.php?page=stats', 'index'),
+(367, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-15 21:11:04', 'http://192.168.1.8/mercedesgarage.net/index.html', 'twitch-stream-test'),
+(368, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-15 22:11:28', '', '/mercedesgarage.net/'),
+(369, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-15 22:24:32', 'http://192.168.1.8/mercedesgarage.net/admin/index.php?page=stats', 'index'),
+(370, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-16 23:08:47', 'http://192.168.1.8/mercedesgarage.net/admin/index.php?page=stats', 'index'),
+(371, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-16 23:15:33', 'http://192.168.1.8/mercedesgarage.net/admin/index.php?page=template-edit&id=1', '/mercedesgarage.net/index.php'),
+(372, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-17 00:41:05', 'http://192.168.1.8/mercedesgarage.net/admin/index.php?page=template-edit&id=1', '/mercedesgarage.net/index.php'),
+(373, 1, 5, 1, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-02-17 05:23:22', 'http://192.168.1.8/mercedesgarage.net/admin/index.php?page=stats', 'index');
 
 -- --------------------------------------------------------
 
@@ -1386,6 +1439,13 @@ CREATE TABLE `cms_syslog` (
   `toGID` int(11) NOT NULL DEFAULT '0',
   `seen` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Daten für Tabelle `cms_syslog`
+--
+
+INSERT INTO `cms_syslog` (`log_id`, `log_date`, `log_type`, `message`, `fromUID`, `toUID`, `toGID`, `seen`) VALUES
+(1, '2017-02-16 23:15:02', 5, '404 ERROR includes/search.php', 1, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1692,7 +1752,7 @@ CREATE TABLE `cms_users` (
 --
 
 INSERT INTO `cms_users` (`id`, `blocked`, `privacy`, `online`, `gid`, `terms`, `username`, `password`, `date_created`, `date_changed`, `date_expired`, `date_lastlogin`, `login_count`, `email`, `url`, `twitter`, `facebook`, `firstname`, `lastname`, `street`, `zipcode`, `city`, `country`, `state`, `logged_in`, `public_email`, `terminatedByUser`, `job`, `likes`, `overrideTemplate`, `templateID`) VALUES
-(1, 0, 1, 1, 5, 1, 'admin', '827ccb0eea8a706c4c34a16891f84e7b', '2016-10-10 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2017-02-13 01:48:32', 102, 'danielretzl@gmail.com', 'http://yawk.io', '', '', 'Daniel', 'Retzl', '', '', '', '', '', 1, 1, 0, 'Main Developer', 0, 0, 1),
+(1, 0, 1, 1, 5, 1, 'admin', '827ccb0eea8a706c4c34a16891f84e7b', '2016-10-10 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2017-02-14 08:28:20', 103, 'danielretzl@gmail.com', 'http://yawk.io', '', '', 'Daniel', 'Retzl', '', '', '', '', '', 1, 1, 0, 'Main Developer', 0, 0, 1),
 (2, 0, 0, 1, 4, 1, 'claudia', '827ccb0eea8a706c4c34a16891f84e7b', '2016-09-13 13:54:26', '2016-10-10 04:02:11', '0000-00-00 00:00:00', '2016-12-08 21:58:26', 31, 'test@test.com', '', '', '', '', '', '', '', '', '', '', 1, 0, 0, '', 0, 0, 1);
 
 -- --------------------------------------------------------
@@ -1736,20 +1796,20 @@ CREATE TABLE `cms_widgets` (
   `marginTop` int(11) NOT NULL,
   `marginBottom` int(11) NOT NULL,
   `date_publish` datetime NOT NULL,
-  `date_unpublish` datetime NOT NULL
+  `date_unpublish` datetime NOT NULL,
+  `widgetTitle` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `cms_widgets`
 --
 
-INSERT INTO `cms_widgets` (`id`, `published`, `widgetType`, `pageID`, `sort`, `position`, `marginTop`, `marginBottom`, `date_publish`, `date_unpublish`) VALUES
-(1, 1, 13, 19, 1, 'main', 0, 0, '2017-02-07 05:00:12', '0000-00-00 00:00:00'),
-(3, 1, 14, 21, 3, 'mainbottom', 0, 0, '2017-02-10 12:00:01', '0000-00-00 00:00:00'),
-(4, 1, 15, 0, 4, 'leftmenu', 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(5, 1, 16, 24, 5, 'main', 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(6, 1, 13, 20, 6, 'mainbottom', 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(7, 1, 8, 24, 7, 'mainfooterleft', 0, 0, '2017-02-12 15:46:38', '0000-00-00 00:00:00');
+INSERT INTO `cms_widgets` (`id`, `published`, `widgetType`, `pageID`, `sort`, `position`, `marginTop`, `marginBottom`, `date_publish`, `date_unpublish`, `widgetTitle`) VALUES
+(1, 1, 13, 19, 1, 'main', 0, 0, '2017-02-07 05:00:12', '0000-00-00 00:00:00', '123er galerie'),
+(3, 1, 14, 21, 3, 'mainbottom', 0, 0, '2017-02-10 12:00:01', '0000-00-00 00:00:00', 'Twitch Beispiel'),
+(4, 1, 15, 0, 4, 'leftmenu', 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'modelle menÃ¼ links'),
+(5, 1, 16, 24, 5, 'main', 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'YouTube Beispiel'),
+(6, 1, 13, 20, 6, 'mainbottom', 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '124er Galerie');
 
 -- --------------------------------------------------------
 
@@ -1851,10 +1911,7 @@ INSERT INTO `cms_widget_settings` (`id`, `widgetID`, `property`, `value`, `widge
 (83, 5, 'youtubeHeading', 'Am Schauplatz', 16, 1),
 (84, 5, 'youtubeSubtext', 'KaisermÃ¼hlen', 16, 1),
 (85, 5, 'youtubeDescription', 'E. Spira (1994)', 16, 1),
-(86, 6, 'galleryID', '1', 13, 1),
-(120, 7, 'clockcolor', '999999', 8, 1),
-(121, 7, 'float', 'left', 8, 1),
-(122, 7, 'textstyle', 'bold', 8, 1);
+(86, 6, 'galleryID', '1', 13, 1);
 
 -- --------------------------------------------------------
 
@@ -2166,7 +2223,7 @@ ALTER TABLE `cms_friends`
 -- AUTO_INCREMENT für Tabelle `cms_logins`
 --
 ALTER TABLE `cms_logins`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 --
 -- AUTO_INCREMENT für Tabelle `cms_menu`
 --
@@ -2216,12 +2273,12 @@ ALTER TABLE `cms_plugin_msg`
 -- AUTO_INCREMENT für Tabelle `cms_stats`
 --
 ALTER TABLE `cms_stats`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=322;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=374;
 --
 -- AUTO_INCREMENT für Tabelle `cms_syslog`
 --
 ALTER TABLE `cms_syslog`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT für Tabelle `cms_syslog_types`
 --
@@ -2256,7 +2313,7 @@ ALTER TABLE `cms_widget_defaults`
 -- AUTO_INCREMENT für Tabelle `cms_widget_settings`
 --
 ALTER TABLE `cms_widget_settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
