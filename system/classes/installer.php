@@ -223,6 +223,7 @@ namespace YAWK {
                                 require_once('system/classes/db.php');
                                 $db = new \YAWK\db();
                             }
+                            // include other core classes
                             require_once('system/classes/settings.php');
                             require_once('system/classes/alert.php');
                             require_once('system/classes/email.php');
@@ -230,11 +231,16 @@ namespace YAWK {
                             // ok, lets test the database connection...
                             if ($db->connect())
                             {
-                                echo "Datenbank $_POST[DB_NAME] ist erreichbar.";
+                                // import .sql data
+                                if ($db->import("yawk_mercedesgarage.sql"))
+                                {
+                                    echo "db import worked!";
+                                }
+                                else
+                                    {
+                                        echo "db-import failed!";
+                                    }
                             }
-
-
-                            exit;
 
 
                             echo"<div class=\"container-fluid animated fadeIn\">
