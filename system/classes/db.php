@@ -17,13 +17,7 @@ namespace YAWK {
          */
         public function __construct()
         {
-            // TODO: cfg file for installer!
-            $this->config['server'] = "localhost";
-            $this->config['username'] = "root";
-            $this->config['password'] = "";
-            $this->config['dbname'] = "yawk_mercedesgarage";
-            $this->config['prefix'] = "cms_";
-            $this->config['port'] = "3306";
+            require_once ("dbconfig.php");
         }
 
         /**
@@ -104,5 +98,95 @@ namespace YAWK {
             $connection = $this->connect();
             return $connection->real_escape_string($value);
         }
+
+        public function import($sqlfile)
+        {
+            // http://stackoverflow.com/questions/19751354/how-to-import-sql-file-in-mysql-database-using-php
+            if (!isset($sqlfile) || (empty($sqlfile)))
+            {
+                $filename = 'database.sql';
+            }
+            else
+                {
+                    $filename = $sqlfile;
+                }
+            // filename
+            $maxRuntime = 8; // less then your max script execution limit
+
+            $deadline = time()+$maxRuntime;
+            $progressFilename = $filename.'_filepointer'; // tmp file for progress
+            $errorFilename = $filename.'_error'; // tmp file for erro
+
+            ($fp = fopen($filename, 'r')) OR die('failed to open file:'.$filename);
+
+            // check for previous error
+            if(file_exists($errorFilename) )
+            {
+               // die('<pre> previous error: '.file_get_contents($errorFilename));
+            }
+
+            // go to previous file position
+            $filePosition = 0;
+            if(file_exists($progressFilename))
+            {
+                $filePosition = file_get_contents($progressFilename);
+                fseek($fp, $filePosition);
+            }
+
+            $queryCount = 0;
+            $query = '';
+            while($deadline>time() AND ($line=fgets($fp, 1024000)))
+            {
+                if(substr($line,0,2)=='--' OR trim($line)=='' )
+                {
+                    continue;
+                }
+
+                $query .= $line;
+                if( substr(trim($query),-1)==';' )
+                {
+                    if(!$this->query($query))
+                    {
+                       // $error = 'Error performing query \'<strong>' . $query . '\': ' . mysqli_error($this);
+                       // file_put_contents($errorFilename, $error."\n");
+                       //exit;
+                    }
+                    $query = '';
+                    file_put_contents($progressFilename, ftell($fp)); // save the current file position for
+                    $queryCount++;
+                }
+            }
+
+            if(feof($fp))
+            {
+                echo 'Database successfully imported!';
+            }
+            else
+                {
+                    echo ftell($fp).'/'.filesize($filename).' '.(round(ftell($fp)/filesize($filename), 2)*100).'%'."\n";
+                    echo $queryCount.' queries processed!';
+                }
+                return true;
+        } // ./ import
+
+
+        public function deleteDatabase($database)
+        {
+            $result = $this->query("SHOW TABLES IN `$database`");
+            // $result = mysqli_query($db, "SHOW TABLES IN `$databaseName`");
+            while ($table = mysqli_fetch_array($result))
+            {
+                $tableName = $table[0];
+                if ($this->query("TRUNCATE TABLE `$database`.`$tableName`"))
+                {
+                    echo "$tableName was cleared <br>";
+                }
+                else
+                    {
+                        echo mysqli_errno($this). ' ' . mysqli_error($this).'<br>';
+                    }
+            }
+        }
+
     } // ./dbclass
 }// ./namespace
