@@ -62,9 +62,9 @@ namespace YAWK {
             *	expect var $folder as string
             */
             if (!isset($folder)) {
-                $folder = "images";
+                $folder = "../media/images";
             }
-            $path = "../media/" . "$folder";
+            $path = "$folder";
             foreach (new \DirectoryIterator($path) as $file) {
                 if ($file->isFile()) {
                     // create files array
@@ -216,6 +216,25 @@ namespace YAWK {
                 if($fileInfo->isDir()) continue;
                 echo $fileInfo->getFilename() . "<br>\n";
             }
+        }
+
+        /**
+         * returns an array containing only files from folder (no subfolders)
+         * @author     Daniel Retzl <danielretzl@gmail.com>
+         * @copyright  2009-2016 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @link       http://yawk.io
+         * @param string $folder to get files from
+         */
+        static function getFilesFromFolderToArray($folder)
+        {
+            $files = array();
+            foreach (new \DirectoryIterator($folder) as $fileInfo) {
+                if($fileInfo->isDot()) continue;
+                if($fileInfo->isDir()) continue;
+                $files[] = $fileInfo->getFilename();
+            }
+            return $files;
         }
 
         /**

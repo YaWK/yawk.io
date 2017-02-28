@@ -1067,12 +1067,14 @@ namespace YAWK {
             // lowercase username
             $username = mb_strtolower($username);
 
+            /*
             if ($username === "administrator" xor $username === "admin" or $username === "root")
             {   // forbidden username, throw error
                 \YAWK\sys::setSyslog($db, 5, "somebody tried to register as <b>$username</b>", 0, 0, 0, 0);
                 \YAWK\alert::draw("danger","Warning!","This username is not allowed!","page=user-new","4800");
                 exit;
             }
+            */
 
             // prepare password
             $password1 = htmlentities($password1);
@@ -1097,15 +1099,15 @@ namespace YAWK {
                     exit;
                 }
                 // prepare vars
-                $twitter = htmlentities($_POST['twitter']);
-                $facebook = htmlentities($_POST['facebook']);
-                $firstname = htmlentities($_POST['firstname']);
-                $lastname = htmlentities($_POST['lastname']);
-                $street = htmlentities($_POST['street']);
-                $zipcode = htmlentities($_POST['zipcode']);
-                $city = htmlentities($_POST['city']);
-                $country = htmlentities($_POST['country']);
-                $job = htmlentities($job);
+                if (isset($_POST['twitter']) && (!empty($_POST['twitter']))) { $twitter = htmlentities($_POST['twitter']); }
+                if (isset($_POST['facebook']) && (!empty($_POST['facebook']))) { $facebook = htmlentities($_POST['facebook']); }
+                if (isset($_POST['firstname']) && (!empty($_POST['firstname']))) { $firstname = htmlentities($_POST['firstname']); }
+                if (isset($_POST['lastname']) && (!empty($_POST['lastname']))) { $lastname = htmlentities($_POST['lastname']); }
+                if (isset($_POST['street']) && (!empty($_POST['street']))) { $street = htmlentities($_POST['street']); }
+                if (isset($_POST['zipcode']) && (!empty($_POST['zipcode']))) { $zipcode = htmlentities($_POST['zipcode']); }
+                if (isset($_POST['city']) && (!empty($_POST['city']))) { $city = htmlentities($_POST['city']); }
+                if (isset($_POST['country']) && (!empty($_POST['country']))) { $country = htmlentities($_POST['country']); }
+                if (isset($_POST['job']) && (!empty($_POST['job']))) { $job = htmlentities($_POST['job']); }
                 // prepare url vars
                 if ($url === "http://") $url = "";
                 if ($twitter === "http://www.twitter.com/username") $twitter = "";

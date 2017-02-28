@@ -1,0 +1,15 @@
+#Options +FollowSymlinks
+Order allow,deny
+Allow from all
+
+# custom error page
+ErrorDocument 404 http://192.168.1.8/mercedesgarage.net/content/errors/404.html
+
+RewriteEngine on
+RewriteCond %{REQUEST_URI} /(.*).html
+RewriteRule ^(.*).html$ \index.php?include=$1
+# Rewrite .html - no extension needed e.g. you can use http://www.yoursite/gallery instead of /gallery.html
+RewriteRule ^([^\.]+)$ \index.php?page=$1 [NC,L]
+
+# off for tinymce
+#RewriteRule ^(.*).htm$ \index.php?include=$1

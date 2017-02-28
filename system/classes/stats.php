@@ -444,25 +444,6 @@ namespace YAWK
                 }
         }
 
-        public function drawUserStats($db, $lang)
-        {
-            if (self::getUserStats($db))
-            {
-                echo "<!-- user settings box -->
-        <div class=\"box\">
-            <div class=\"box-header with-border\">
-                <h3 class=\"box-title\">$lang[USER] $lang[STATS] <small>$lang[TOTAL_LOGGED_BLOCKED]</small></h3>
-            </div>
-            <div class=\"box-body\">
-                $lang[USERS]: <b>$this->i_users</b><br>
-                $lang[BLOCKED]: <b>$this->i_blockedUsers</b><br>
-                $lang[LOGGED_IN]: <b>$this->i_loggedInUsers</b>
-            </div>
-        </div>
-        <!-- / stats settings box -->";
-
-            }
-        }
 
         /**
          * Count system logins
@@ -529,13 +510,16 @@ namespace YAWK
                         $this->i_loginFailed++;
                     }
                 }
-                // calculate percentage
-                $total = $this->i_totalLogins;
-                $failed = $this->i_loginFailed;
-                $success = $this->i_loginSuccessful;
-                $total = 100 / $total;
-                $this->i_loginFailedPercentage = round($total * $failed);
-                $this->i_loginSuccessPercentage = round($total * $success);
+                if ($this->i_totalLogins > 0)
+                {
+                    // calculate percentage
+                    $total = $this->i_totalLogins;
+                    $failed = $this->i_loginFailed;
+                    $success = $this->i_loginSuccessful;
+                    $total = 100 / $total;
+                    $this->i_loginFailedPercentage = round($total * $failed);
+                    $this->i_loginSuccessPercentage = round($total * $success);
+                }
 
 
                 // build an array, cointaining the failed and successful logins
@@ -921,7 +905,7 @@ namespace YAWK
         {   /* @var $db \YAWK\db */
             // check if device types are set
             if (!isset($deviceTypes) || (empty($deviceTypes)))
-            {   // nope, get them from db
+            {   // device types are note set - get them from db
                 $deviceTypes = $this->countDeviceTypes($db, '', 200);
             }
 
@@ -1322,28 +1306,35 @@ namespace YAWK
          */
         public function getWeekdaysPercent($lang)
         {
-            // calculate percentage
-            $a = 100 / $this->i_totalDays;
-            $this->i_mondayPercent = round($a * $this->i_monday);
-            $this->i_tuesdayPercent = round($a * $this->i_tuesday);
-            $this->i_wednesdayPercent = round($a * $this->i_wednesday);
-            $this->i_thursdayPercent = round($a * $this->i_thursday);
-            $this->i_fridayPercent = round($a * $this->i_friday);
-            $this->i_saturdayPercent = round($a * $this->i_saturday);
-            $this->i_sundayPercent = round($a * $this->i_sunday);
+            if ($this->i_totalDays > 0)
+            {
+                // calculate percentage
+                $a = 100 / $this->i_totalDays;
+                $this->i_mondayPercent = round($a * $this->i_monday);
+                $this->i_tuesdayPercent = round($a * $this->i_tuesday);
+                $this->i_wednesdayPercent = round($a * $this->i_wednesday);
+                $this->i_thursdayPercent = round($a * $this->i_thursday);
+                $this->i_fridayPercent = round($a * $this->i_friday);
+                $this->i_saturdayPercent = round($a * $this->i_saturday);
+                $this->i_sundayPercent = round($a * $this->i_sunday);
 
-            // build an array, cointaining the device types and the number how often it's been found
-            $weekdaysPercent = array(
-                "$lang[MONDAY]" => $this->i_mondayPercent,
-                "$lang[TUESDAY]" => $this->i_tuesdayPercent,
-                "$lang[WEDNESDAY]" => $this->i_wednesdayPercent,
-                "$lang[THURSDAY]" => $this->i_thursdayPercent,
-                "$lang[FRIDAY]" => $this->i_fridayPercent,
-                "$lang[SATURDAY]" => $this->i_saturdayPercent,
-                "$lang[SUNDAY]" => $this->i_sundayPercent
-            );
-            arsort($weekdaysPercent);
-            return $weekdaysPercent;
+                // build an array, cointaining the device types and the number how often it's been found
+                $weekdaysPercent = array(
+                    "$lang[MONDAY]" => $this->i_mondayPercent,
+                    "$lang[TUESDAY]" => $this->i_tuesdayPercent,
+                    "$lang[WEDNESDAY]" => $this->i_wednesdayPercent,
+                    "$lang[THURSDAY]" => $this->i_thursdayPercent,
+                    "$lang[FRIDAY]" => $this->i_fridayPercent,
+                    "$lang[SATURDAY]" => $this->i_saturdayPercent,
+                    "$lang[SUNDAY]" => $this->i_sundayPercent
+                );
+                arsort($weekdaysPercent);
+                return $weekdaysPercent;
+            }
+            else
+                {
+                    return null;
+                }
         }
 
 
@@ -1465,23 +1456,30 @@ namespace YAWK
             // count daytimes
             $total = $this->i_morning+$this->i_afternoon+$this->i_evening+$this->i_night;
 
-            // calculate percentage
-            $a = 100 / $total;
-            $this->i_morningPercent = round($a * $this->i_morning);
-            $this->i_afternoonPercent = round($a * $this->i_afternoon);
-            $this->i_eveningPercent = round($a * $this->i_evening);
-            $this->i_nightPercent = round($a * $this->i_night);
+            if ($total > 0)
+            {
+                // calculate percentage
+                $a = 100 / $total;
+                $this->i_morningPercent = round($a * $this->i_morning);
+                $this->i_afternoonPercent = round($a * $this->i_afternoon);
+                $this->i_eveningPercent = round($a * $this->i_evening);
+                $this->i_nightPercent = round($a * $this->i_night);
 
 
-            // build an array, cointaining the device types and the number how often it's been found
-            $dayTimesPercent = array(
-                "$lang[MORNING]" => $this->i_morningPercent,
-                "$lang[AFTERNOON]" => $this->i_afternoonPercent,
-                "$lang[EVENING]" => $this->i_eveningPercent,
-                "$lang[NIGHT]" => $this->i_nightPercent
-            );
-            arsort($dayTimesPercent);
-            return $dayTimesPercent;
+                // build an array, cointaining the device types and the number how often it's been found
+                $dayTimesPercent = array(
+                    "$lang[MORNING]" => $this->i_morningPercent,
+                    "$lang[AFTERNOON]" => $this->i_afternoonPercent,
+                    "$lang[EVENING]" => $this->i_eveningPercent,
+                    "$lang[NIGHT]" => $this->i_nightPercent
+                );
+                arsort($dayTimesPercent);
+                return $dayTimesPercent;
+            }
+            else
+                {
+                    return null;
+                }
         }
 
 
@@ -1517,7 +1515,7 @@ namespace YAWK
             // check if data array is set, if not load data from db
             if (!isset($data) || (empty($data) || (!is_array($data))))
             {   // data is not set or in false format, try to get it from database
-                \YAWK\alert::draw("warning", "database needed", "need to get browser data - array not set, empty or not an array.", "", 0);
+                // \YAWK\alert::draw("warning", "database needed", "need to get browser data - array not set, empty or not an array.", "", 0);
                 if ($res = $db->query("SELECT browser FROM {stats} ORDER BY id DESC LIMIT $limit"))
                 {   // create array
                     $data = array();
@@ -1645,20 +1643,26 @@ namespace YAWK
             // count device types
             $total = $this->i_desktop+$this->i_tablet+$this->i_phone;
             // calculate percentage of device types
-            $a = 100 / $total;
-            $this->i_desktopPercent = $a * $this->i_desktop;
-            $this->i_tabletPercent = $a * $this->i_tablet;
-            $this->i_phonePercent = $a * $this->i_phone;
-            // build an array, cointaining the device types and the number how often it's been found
-            $deviceTypes = array(
-                "Desktop" => $this->i_desktop,
-                "Tablet" => $this->i_tablet,
-                "Phone" => $this->i_phone,
-                "Total" => $total
-            );
-
-            // return device type array
-            return $deviceTypes;
+            if ($total > 0)
+            {
+                $a = 100 / $total;
+                $this->i_desktopPercent = $a * $this->i_desktop;
+                $this->i_tabletPercent = $a * $this->i_tablet;
+                $this->i_phonePercent = $a * $this->i_phone;
+                // build an array, cointaining the device types and the number how often it's been found
+                $deviceTypes = array(
+                    "Desktop" => $this->i_desktop,
+                    "Tablet" => $this->i_tablet,
+                    "Phone" => $this->i_phone,
+                    "Total" => $total
+                );
+                // return device type array
+                return $deviceTypes;
+            }
+            else
+                {   // no result,
+                    return null;
+                }
         }
 
 
@@ -1684,7 +1688,7 @@ namespace YAWK
             // check if data array is set, if not load data from db
             if (!isset($data) || (empty($data) || (!is_array($data))))
             {   // data is not set or in false format, try to get it from database
-                \YAWK\alert::draw("warning", "database needed", "need to get browser data - array not set, empty or not an array.", "", 0);
+                // \YAWK\alert::draw("warning", "database needed", "need to get browser data - array not set, empty or not an array.", "", 0);
                 if ($res = $db->query("SELECT os FROM {stats} ORDER BY id DESC LIMIT $limit"))
                 {   // create array
                     $data = array();
@@ -1768,7 +1772,7 @@ namespace YAWK
             // check if data array is set, if not load data from db
             if (!isset($data) || (empty($data) || (!is_array($data))))
             {   // data is not set or in false format, try to get it from database
-                \YAWK\alert::draw("warning", "database needed", "need to get browser data - array not set, empty or not an array.", "", 0);
+                // \YAWK\alert::draw("warning", "database needed", "need to get browser data - array not set, empty or not an array.", "", 0);
                 if ($res = $db->query("SELECT osVersion FROM {stats} ORDER BY id DESC LIMIT $limit"))
                 {   // create array
                     $data = array();
@@ -1944,8 +1948,16 @@ namespace YAWK
                 return false;
             }
 
-            $this->calculateStatsFromArray($db, $statsArray);
-            return $statsArray;
+            if (is_array($statsArray) && (!empty($statsArray)))
+            {
+                $this->calculateStatsFromArray($db, $statsArray);
+                return $statsArray;
+            }
+            else
+                {
+                    return null;
+                }
+
         }
 
 
@@ -2051,6 +2063,35 @@ namespace YAWK
                 {
                     return false;
                 }
+        }
+
+
+        /**
+         * Draw a default box containing user statistics
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param object $lang language object
+         */
+        public function drawUserStats($db, $lang)
+        {
+            if (self::getUserStats($db))
+            {
+                echo "<!-- user settings box -->
+        <div class=\"box\">
+            <div class=\"box-header with-border\">
+                <h3 class=\"box-title\">$lang[USER] $lang[STATS] <small>$lang[TOTAL_LOGGED_BLOCKED]</small></h3>
+            </div>
+            <div class=\"box-body\">
+                $lang[USERS]: <b>$this->i_users</b><br>
+                $lang[BLOCKED]: <b>$this->i_blockedUsers</b><br>
+                $lang[LOGGED_IN]: <b>$this->i_loggedInUsers</b>
+            </div>
+        </div>
+        <!-- / stats settings box -->";
+
+            }
         }
 
 
@@ -2527,18 +2568,21 @@ namespace YAWK
                         </script>";
 
             // walk through array and draw data beneath pie chart
-            foreach ($deviceTypes AS $deviceType => $value)
-            {   // get text colors
-                $textcolor = $this->getDeviceTypeColors($deviceType);
-                // show browsers their value is greater than zero and exclude totals
-                if ($value > 0 && ($deviceType !== "Total"))
-                {   // 1 line for every browser
-                    echo "<li><i class=\"fa fa-circle-o $textcolor\"></i> <b>$value</b> $deviceType</li>";
-                }
-                // show totals
-                if ($deviceType === "Total")
-                {   // of how many visits
-                    echo "<li class=\"small\">$lang[LATEST] $value $lang[USERS]</li>";
+            if ($deviceTypes)
+            {
+                foreach ($deviceTypes AS $deviceType => $value)
+                {   // get text colors
+                    $textcolor = $this->getDeviceTypeColors($deviceType);
+                    // show browsers their value is greater than zero and exclude totals
+                    if ($value > 0 && ($deviceType !== "Total"))
+                    {   // 1 line for every browser
+                        echo "<li><i class=\"fa fa-circle-o $textcolor\"></i> <b>$value</b> $deviceType</li>";
+                    }
+                    // show totals
+                    if ($deviceType === "Total")
+                    {   // of how many visits
+                        echo "<li class=\"small\">$lang[LATEST] $value $lang[USERS]</li>";
+                    }
                 }
             }
             echo"
@@ -2553,15 +2597,18 @@ namespace YAWK
                 <ul class=\"nav nav-pills nav-stacked\">";
 
             // sort array by value high to low to display most browsers first
-            $deviceTypes[] = arsort($deviceTypes);
-            // walk through array and display browsers as nav pills
-            foreach ($deviceTypes as $deviceType => $value)
-            {   // show only items where browser got a value
-                if ($value !== 0 && $deviceType !== 0)
-                {   // get different textcolors
-                    $textcolor = $this->getDeviceTypeColors($deviceType);
-                    echo "<li><a href=\"#\" class=\"$textcolor\">$deviceType
-                          <span class=\"pull-right $textcolor\" ><i class=\"fa fa-angle-down\"></i>$value</span></a></li>";
+            if (is_array($deviceTypes) && (!empty($deviceTypes)))
+            {
+                $deviceTypes[] = arsort($deviceTypes);
+                // walk through array and display browsers as nav pills
+                foreach ($deviceTypes as $deviceType => $value)
+                {   // show only items where browser got a value
+                    if ($value !== 0 && $deviceType !== 0)
+                    {   // get different textcolors
+                        $textcolor = $this->getDeviceTypeColors($deviceType);
+                        echo "<li><a href=\"#\" class=\"$textcolor\">$deviceType
+                              <span class=\"pull-right $textcolor\" ><i class=\"fa fa-angle-down\"></i>$value</span></a></li>";
+                    }
                 }
             }
 
@@ -2915,28 +2962,31 @@ namespace YAWK
                                </script>";
 
             // walk through array and draw data beneath pie chart
-            foreach ($dayTimesPercent AS $daytime => $value)
-            {   // get text colors
-                $textcolor = $this->getDaytimeColors($daytime, $lang);
-                // show browsers their value is greater than zero and exclude totals
-                if ($value > 0 && ($daytime !== "$lang[TOTAL]"))
-                {   // 1 line for every browser
-                    $spacer = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-                    if ($daytime === "$lang[MORNING]")
-                    { $legend = "$spacer<small>06:00 - 11:00</small>"; }
-                    elseif ($daytime === "$lang[AFTERNOON]")
-                    { $legend = "$spacer<small>12:00 - 17:00</small>"; }
-                    elseif ($daytime === "$lang[EVENING]")
-                    { $legend = "$spacer<small>18:00 - 23:00</small>"; }
-                    elseif ($daytime === "$lang[NIGHT]")
-                    { $legend = "$spacer<small>00:00 - 05:00</small>"; }
-                    else { $legend = ''; }
-                    echo "<li><i class=\"fa fa-circle-o $textcolor\"></i> <b>$value%</b> $daytime <br><small>$legend</small></li>";
-                }
-                // show totals
-                if ($daytime === "Total")
-                {   // of how many visits
-                    echo "<li class=\"small\">latest $value hits</li>";
+            if ($dayTimesPercent)
+            {
+                foreach ($dayTimesPercent AS $daytime => $value)
+                {   // get text colors
+                    $textcolor = $this->getDaytimeColors($daytime, $lang);
+                    // show browsers their value is greater than zero and exclude totals
+                    if ($value > 0 && ($daytime !== "$lang[TOTAL]"))
+                    {   // 1 line for every browser
+                        $spacer = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+                        if ($daytime === "$lang[MORNING]")
+                        { $legend = "$spacer<small>06:00 - 11:00</small>"; }
+                        elseif ($daytime === "$lang[AFTERNOON]")
+                        { $legend = "$spacer<small>12:00 - 17:00</small>"; }
+                        elseif ($daytime === "$lang[EVENING]")
+                        { $legend = "$spacer<small>18:00 - 23:00</small>"; }
+                        elseif ($daytime === "$lang[NIGHT]")
+                        { $legend = "$spacer<small>00:00 - 05:00</small>"; }
+                        else { $legend = ''; }
+                        echo "<li><i class=\"fa fa-circle-o $textcolor\"></i> <b>$value%</b> $daytime <br><small>$legend</small></li>";
+                    }
+                    // show totals
+                    if ($daytime === "Total")
+                    {   // of how many visits
+                        echo "<li class=\"small\">latest $value hits</li>";
+                    }
                 }
             }
             echo"
@@ -3053,19 +3103,22 @@ namespace YAWK
                             barChartOptions.datasetFill = false;
                             barChart.Bar(barChartData, barChartOptions);
                         </script>";
-            // walk through array and draw data beneath pie chart
-            foreach ($weekdaysPercent AS $weekday => $value)
-            {   // get text colors
-                // show browsers their value is greater than zero and exclude totals
-                if ($value > 0 && ($weekday !== "$lang[TOTAL]"))
-                {   // 1 line for every browser
-                    if (strlen($value) === 1) { $spacer = "&nbsp;&nbsp;"; } else { $spacer = ''; }
-                    echo "<li><b>$spacer$value%</b> $weekday</li>";
-                }
-                // show totals
-                if ($weekday === "Total")
-                {   // of how many visits
-                    echo "<li class=\"small\">latest $value hits</li>";
+            if ($weekdaysPercent)
+            {
+                // walk through array and draw data beneath pie chart
+                foreach ($weekdaysPercent AS $weekday => $value)
+                {   // get text colors
+                    // show browsers their value is greater than zero and exclude totals
+                    if ($value > 0 && ($weekday !== "$lang[TOTAL]"))
+                    {   // 1 line for every browser
+                        if (strlen($value) === 1) { $spacer = "&nbsp;&nbsp;"; } else { $spacer = ''; }
+                        echo "<li><b>$spacer$value%</b> $weekday</li>";
+                    }
+                    // show totals
+                    if ($weekday === "Total")
+                    {   // of how many visits
+                        echo "<li class=\"small\">latest $value hits</li>";
+                    }
                 }
             }
 

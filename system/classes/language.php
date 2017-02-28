@@ -21,10 +21,20 @@ namespace YAWK {
         public $lang;
         /** * @var string $currentLanguage current setted language in format: en-EN */
         public $currentLanguage;
+        /** * @var string $currentLanguageGlobal current setted language in format: en */
+        public $currentLanguageGlobal;
+        /** * @var string $detectedLanguage current detected language in format: en-EN */
+        public $detectedLanguage;
+        /** * @var string $detectedLanguageGlobal current detected language in format: en */
+        public $detectedLanguageGlobal;
         /** * @var string $httpAcceptedLanguage current $_SERVER['HTTP_ACCEPTED_LANGUAGE'] in format: en-EN */
         public $httpAcceptedLanguage;
         /** * @var string $pathToFile the path to the language file */
         public $pathToFile;
+        /** * @var array $supportedLanguagesGlobal array that contains all supported languages, shortened to the first 2 chars eg. (en) */
+        public $supportedLanguagesGlobal;
+        /** * @var array $supportedLanguages array that contains all supported languages, but the full tag eg. (en-EN) */
+        public $supportedLanguages;
 
         /**
          * initialize and return current language
@@ -88,6 +98,8 @@ namespace YAWK {
                     // get language setting from database
                     if (!isset($db))
                     {   // create new db object
+                        require_once 'system/classes/db.php';
+                        require_once 'system/classes/settings.php';
                         $db = new \YAWK\db();
                     }
                     // get backend language setting and save string eg. (en-EN) in $this->current
@@ -120,12 +132,105 @@ namespace YAWK {
             if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) || (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])))
             {   // format the string to eg: en-EN
                 $this->httpAcceptedLanguage = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 5);
+                $this->currentLanguageGlobal = substr($this->httpAcceptedLanguage, 0, 2);
                 return $this->httpAcceptedLanguage;
             }
             else
                 {   // var empty - cannot detect -
                     return null;
                 }
+        }
+
+        /**
+         * sets object supportedLanguages as array including all supported languages
+         * @author     Daniel Retzl <danielretzl@gmail.com>
+         * @copyright  2009-2016 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @link       http://yawk.io
+         * @return bool
+         */
+        public function getSupportedLanguages()
+        {
+            // walk /admin/language folder and get all language files into an array
+            require_once ('system/classes/filemanager.php');
+            $languageFiles = filemanager::getFilesFromFolderToArray('admin/language');
+            foreach ($languageFiles AS $file)
+            {
+                if ($file === ".htaccess")
+                {
+
+                }
+                else
+                {
+                    $globalLanguageTag = substr($file, 5, -7);
+                    $this->supportedLanguagesGlobal[] = $globalLanguageTag;
+                    $localLanguageTag = substr($file, 5, -4);
+                    $this->supportedLanguages[] = $localLanguageTag;
+                }
+            }
+            if (is_array($this->supportedLanguagesGlobal) && (is_array($this->supportedLanguages)))
+            {
+                return true;
+            }
+            else
+                {
+                    return false;
+                }
+        }
+
+        public function isSupported($currentLanguage)
+        {
+            // create arrays with supported languages, one in format "en", the other one "en-EN"
+            $this->getSupportedLanguages();
+
+            // check if language is set and not empty
+            if (isset($currentLanguage) && (!empty($currentLanguage)))
+            {
+                // if language is submitted as global language tag (short, like: en instead of en-EN)
+                if (strlen($currentLanguage) <= 2)
+                {
+                    // check if supportedLanguages match with language
+                    if (in_array($currentLanguage, $this->supportedLanguagesGlobal))
+                    {
+                        // language is supported
+                        // $language->setLanguage($language->currentLanguageGlobal); // set language
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                        // detected language is not supported, set en-EN as default
+                        // $language->currentLanguage = "en-EN";
+                        // $language->currentLanguageGlobal = "en";
+                        // $language->setLanguage("en-EN");
+                    }
+                } // end global language tag (en)
+                else
+                    {   // check supportedLanguagesLocal match with detected user language
+                        if (in_array($currentLanguage, $this->supportedLanguages))
+                        {   // language supported
+                            return true;
+                        }
+                        else
+                            {   // language not supported
+                                return false;
+                            }
+                    }
+            }
+            else
+                {   // language is not set
+                    return false;
+                }
+        }
+
+        public function setDefault($defaultLanguage)
+        {
+            if (isset($defaultLanguage) && (!empty($defaultLanguage)))
+            {
+                // set default language
+                $this->currentLanguage = $defaultLanguage;
+                $this->setLanguage($defaultLanguage);
+            }
         }
 
         public function getPathToLanguageFile()
@@ -164,6 +269,14 @@ namespace YAWK {
         public function setLanguage($currentLanguage)
         {
             $this->pathToFile = $this->getPathToLanguageFile();
+
+            //  language string global (just 2 chars) sent
+            if (strlen($currentLanguage) == 2)
+            {   // build a proper currentLanguage string
+                $global = $currentLanguage;
+                $local = strtoupper($currentLanguage);
+                $currentLanguage = "$global-$local";
+            }
             if (is_file("$this->pathToFile"."lang-"."$currentLanguage".".ini"))
             {
                 $this->lang = parse_ini_file("$this->pathToFile"."lang-"."$currentLanguage".".ini");
@@ -178,7 +291,7 @@ namespace YAWK {
          * @param string $pathToFile absolute path to the injectable language file
          * @return array $lang returns pushed language array
          */
-        static function inject($lang, $pathToFile)
+        public function inject($lang, $pathToFile)
         {
             // check if language is saved in session or cookie to prevent unneccessary db actions
             if (isset($_SESSION['lang']))

@@ -32,8 +32,9 @@ namespace YAWK {
                 $this->connection = @new \mysqli($this->config['server'], $this->config['username'], $this->config['password'], $this->config['dbname']);
             }
             // If connection was not successful, die and show the error
-            if (mysqli_connect_errno()) {
-                die ('Database error: '.mysqli_connect_error().'('.mysqli_connect_errno().')');
+            if (mysqli_connect_errno())
+            {
+                return false;
             }
             return $this->connection;
         }
@@ -47,12 +48,18 @@ namespace YAWK {
         public function query($query)
         {
             // connect to the database
-            $connection = $this->connect();
-            // replace {} in str for db prefix
-            $query = str_replace("}", "", $query);
-            $query = str_replace("{", $this->config['prefix'], $query);
-            // query the database
-            return $connection->query($query);
+            if ($connection = $this->connect())
+            {   // if connection is successful
+                // replace {} in str for db prefix
+                $query = str_replace("}", "", $query);
+                $query = str_replace("{", $this->config['prefix'], $query);
+                // query the database
+                return $connection->query($query);
+            }
+            else
+                {   // could not connect to database, exit with error
+                    die ('Database error: '.mysqli_connect_error().'('.mysqli_connect_errno().')');
+                }
         }
 
         /**
@@ -157,16 +164,17 @@ namespace YAWK {
                 }
             }
 
+            $status = '';
             if(feof($fp))
             {
-                echo 'Database successfully imported!';
+                $status .= 'Database successfully imported!';
             }
             else
                 {
-                    echo ftell($fp).'/'.filesize($filename).' '.(round(ftell($fp)/filesize($filename), 2)*100).'%'."\n";
-                    echo $queryCount.' queries processed!';
+                    $status .= ftell($fp).'/'.filesize($filename).' '.(round(ftell($fp)/filesize($filename), 2)*100).'%'."\n";
+                    $status .= $queryCount.' queries processed!';
                 }
-                return true;
+            return $status;
         } // ./ import
 
 
