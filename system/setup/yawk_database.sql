@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 03. Mrz 2017 um 05:20
+-- Erstellungszeit: 03. Mrz 2017 um 17:33
 -- Server-Version: 10.1.10-MariaDB
 -- PHP-Version: 5.6.19
 
@@ -269,7 +269,8 @@ CREATE TABLE `cms_menu` (
   `date_changed` datetime NOT NULL,
   `date_publish` datetime NOT NULL,
   `date_unpublish` datetime NOT NULL,
-  `title` varchar(100) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `text` varchar(100) NOT NULL,
   `href` varchar(255) NOT NULL,
   `target` varchar(64) NOT NULL DEFAULT '_self',
   `divider` int(11) NOT NULL DEFAULT '0',
@@ -280,21 +281,29 @@ CREATE TABLE `cms_menu` (
 -- Daten für Tabelle `cms_menu`
 --
 
-INSERT INTO `cms_menu` (`TMPID`, `id`, `sort`, `gid`, `menuID`, `parentID`, `published`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `title`, `href`, `target`, `divider`, `blogid`) VALUES
-(1, 3, 1, 1, 1, 0, 1, '0000-00-00 00:00:00', '2016-12-09 21:33:01', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'YaWK', '#home', '_self', 0, 0),
-(2, 2, 2, 1, 1, 0, 0, '0000-00-00 00:00:00', '2016-12-09 21:33:01', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Styling', 'override-bootstrap-style-settings-theme-generator.html', '_self', 0, 0),
-(3, 1, 3, 2, 1, 0, 0, '0000-00-00 00:00:00', '2016-12-09 21:33:01', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Userpage', 'welcome.html', '_self', 0, 0),
-(30, 9, 8, 1, 1, 0, 0, '2016-10-11 13:55:40', '2016-12-09 21:33:01', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'logout', 'logout.html', '_self', 0, 0),
-(36, 1, 2, 1, 2, 0, 0, '2016-11-03 06:26:00', '2016-11-03 06:36:25', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'TesteintrÃ¤ge', '#', '_self', 0, 0),
-(37, 1, 3, 1, 2, 2, 0, '2016-11-03 06:26:06', '2016-11-03 06:36:25', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Eintrag 1', '#', '_self', 0, 0),
-(38, 2, 4, 1, 2, 2, 0, '2016-11-03 06:26:12', '2016-11-03 06:36:25', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Eintrag 2', '#', '_self', 0, 0),
-(39, 3, 5, 1, 2, 2, 0, '2016-11-03 06:26:18', '2016-11-03 06:36:25', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Eintrag 3', '#', '_self', 0, 0),
-(40, 13, 12, 1, 1, 0, 0, '0000-00-00 00:00:00', '2016-12-09 21:33:01', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'booking', 'booking.html', '_self', 0, 0),
-(44, 14, 4, 1, 1, 0, 1, '2016-12-09 19:24:57', '2016-12-09 21:33:01', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Features', '#features', '_self', 0, 0),
-(45, 15, 3, 1, 1, 0, 1, '2016-12-09 19:26:11', '2016-12-09 21:33:01', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Design', '#responsive', '_self', 0, 0),
-(46, 16, 6, 1, 1, 0, 1, '2016-12-09 19:27:07', '2016-12-09 21:33:01', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Screencast', '#screencast', '_self', 0, 0),
-(47, 17, 5, 1, 1, 0, 1, '2016-12-09 19:27:14', '2016-12-09 21:33:01', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Plugins', '#plugins', '_self', 0, 0),
-(48, 18, 13, 1, 1, 0, 1, '2016-12-10 03:03:41', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'GitHub', '#github', '_self', 0, 0);
+INSERT INTO `cms_menu` (`TMPID`, `id`, `sort`, `gid`, `menuID`, `parentID`, `published`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `title`, `text`, `href`, `target`, `divider`, `blogid`) VALUES
+(2, 1, 3, 2, 1, 0, 0, '0000-00-00 00:00:00', '2017-01-23 19:45:08', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Userpage', 'welcome.html', '_self', 0, 0),
+(3, 1, 3, 2, 1, 0, 0, '0000-00-00 00:00:00', '2017-01-23 19:45:08', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Userpage', 'welcome.html', '_self', 0, 0),
+(30, 5, 8, 1, 1, 0, 0, '2016-10-11 13:55:40', '2017-01-23 19:45:08', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'logout', 'logout.html', '_self', 0, 0),
+(36, 1, 6, 1, 2, 0, 0, '2016-11-03 06:26:00', '2017-01-22 22:22:14', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'W225', '#', '_self', 0, 0),
+(37, 1, 6, 1, 2, 0, 0, '2016-11-03 06:26:06', '2017-01-22 22:22:14', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'W225', '#', '_self', 0, 0),
+(38, 1, 6, 1, 2, 0, 0, '2016-11-03 06:26:12', '2017-01-22 22:22:14', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'W225', '#', '_self', 0, 0),
+(39, 1, 6, 1, 2, 0, 0, '2016-11-03 06:26:18', '2017-01-22 22:22:14', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'W225', '#', '_self', 0, 0),
+(40, 8, 12, 1, 1, 0, 0, '0000-00-00 00:00:00', '2017-01-23 19:45:08', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'booking', 'booking.html', '_self', 0, 0),
+(49, 9, 13, 1, 1, 0, 0, '2016-12-28 22:16:35', '2017-01-23 19:45:08', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Startseite', 'index.html', '_self', 0, 0),
+(50, 10, 14, 1, 1, 0, 1, '2016-12-29 00:13:48', '2017-01-23 19:45:08', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Baureihe', '#', '_self', 0, 0),
+(51, 11, 15, 1, 1, 10, 1, '2016-12-29 00:14:37', '2017-01-23 19:45:08', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Mercedes Benz W123 1976 bis 1986', 'mercedes-benz-w123-1976-1986.html', '_self', 0, 0),
+(53, 12, 17, 1, 1, 0, 0, '2016-12-29 00:16:48', '2017-01-23 19:45:08', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'W114/115', 'W114-115.html', '_self', 0, 0),
+(54, 13, 18, 1, 1, 10, 1, '0000-00-00 00:00:00', '2017-01-23 19:45:08', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Mercedes Benz W124 1985-1994', 'mercedes-benz-w124-1985-1994.html', '_self', 0, 0),
+(55, 14, 19, 1, 1, 0, 1, '0000-00-00 00:00:00', '2017-01-23 19:45:08', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Twitch TV', 'Twitch Stream Test', 'twitch-stream-test.html', '_self', 0, 0),
+(57, 1, 6, 1, 2, 0, 0, '2017-01-18 06:13:59', '2017-01-22 22:22:14', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'W225', '#', '_self', 0, 0),
+(58, 2, 7, 1, 2, 0, 1, '2017-01-18 06:14:11', '2017-01-22 22:22:14', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'C-Klasse', '#', '_self', 0, 0),
+(59, 3, 8, 1, 2, 0, 1, '2017-01-18 06:14:19', '2017-01-22 22:22:14', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'W201', '#', '_self', 0, 0),
+(60, 4, 9, 1, 2, 0, 1, '2017-01-18 06:14:24', '2017-01-22 22:22:14', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'W202', '#', '_self', 0, 0),
+(61, 5, 10, 1, 2, 0, 0, '2017-01-18 06:14:30', '2017-01-22 22:22:14', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'W203', '#', '_self', 0, 0),
+(62, 6, 1, 1, 2, 0, 1, '2017-01-18 06:14:56', '2017-01-22 22:22:14', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'A-Klasse', '#', '_self', 0, 0),
+(71, 16, 21, 1, 1, 0, 1, '0000-00-00 00:00:00', '2017-01-23 19:45:08', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'YouTube Streaming Test', 'YouTube Test', 'youtube-test.html', '_self', 0, 0),
+(72, 17, 22, 1, 1, 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'asdasd', 'asdasd.html', '_self', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -313,8 +322,7 @@ CREATE TABLE `cms_menu_names` (
 --
 
 INSERT INTO `cms_menu_names` (`id`, `name`, `published`) VALUES
-(1, '', 1),
-(2, 'Test Menu', 1);
+(1, 'Main Menu', 1);
 
 -- --------------------------------------------------------
 
@@ -349,65 +357,6 @@ CREATE TABLE `cms_meta_local` (
   `content` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Daten für Tabelle `cms_meta_local`
---
-
-INSERT INTO `cms_meta_local` (`id`, `name`, `page`, `content`) VALUES
-(1, 'description', 2, ''),
-(2, 'description', 3, ''),
-(3, 'description', 4, 'logout'),
-(4, 'description', 5, 'terms-of-service'),
-(6, 'description', 7, 'Test'),
-(7, 'description', 8, 'test'),
-(8, 'description', 9, 'test'),
-(9, 'description', 10, 'test'),
-(11, 'description', 12, 'Test Menu'),
-(13, 'description', 14, 'Blog #2                                                                                             '),
-(18, 'description', 19, '333333'),
-(19, 'description', 20, 'sadasdasd'),
-(20, 'description', 21, 'sadasdasd'),
-(21, 'description', 22, 'asaasdasddd'),
-(22, 'description', 23, 'asd'),
-(23, 'description', 24, 'sssss'),
-(24, 'keywords', 2, ''),
-(26, 'keywords', 4, 'keyword1, keyword2, keyword3, keyword4'),
-(27, 'keywords', 5, 'keyword1, keyword2, keyword3, keyword4'),
-(29, 'keywords', 7, 'keyword1, keyword2, keyword3, keyword4'),
-(30, 'keywords', 8, ''),
-(31, 'keywords', 9, ''),
-(32, 'keywords', 10, ''),
-(34, 'keywords', 12, 'keyword1, keyword2, keyword3, keyword4'),
-(36, 'keywords', 14, 'keyword1, keyword2, keyword3, keyword4'),
-(41, 'keywords', 19, ''),
-(42, 'keywords', 20, ''),
-(43, 'keywords', 21, ''),
-(44, 'keywords', 22, ''),
-(45, 'keywords', 23, ''),
-(46, 'keywords', 24, ''),
-(47, 'description', 3, 'microsoft bankrott-KOPIE'),
-(48, 'keywords', 3, ''),
-(49, 'description', 3, 'Galaxy 7 explodiert!-KOPIE'),
-(50, 'keywords', 3, ''),
-(51, 'description', 3, 'Microsoft bankrott-KOPIE'),
-(52, 'keywords', 3, ''),
-(53, 'description', 3, 'Microsoft bankrott-KOPIE'),
-(54, 'keywords', 3, ''),
-(55, 'description', 4, 'Microsoft bankrott-KOPIE'),
-(56, 'keywords', 4, ''),
-(57, 'description', 13, 'Testeintrag 2                                                                                       '),
-(58, 'keywords', 13, ''),
-(59, 'description', 13, 'Testeintrag 2                                                                                       '),
-(60, 'keywords', 13, ''),
-(61, 'description', 2, ''),
-(62, 'keywords', 2, ''),
-(63, 'description', 13, 'Testeintrag 2                                                                                       '),
-(64, 'keywords', 13, ''),
-(65, 'description', 13, 'Testeintrag 2                                                                                       '),
-(66, 'keywords', 13, ''),
-(67, 'description', 2, ''),
-(68, 'keywords', 2, '');
-
 -- --------------------------------------------------------
 
 --
@@ -421,19 +370,6 @@ CREATE TABLE `cms_newsletter` (
   `email` varchar(255) NOT NULL,
   `active` int(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Daten für Tabelle `cms_newsletter`
---
-
-INSERT INTO `cms_newsletter` (`id`, `date_created`, `name`, `email`, `active`) VALUES
-(1, '2016-12-10 04:28:26', '', 'unknown', 1),
-(2, '2016-12-10 04:28:51', '', 'danielretzl@gmail.com', 1),
-(3, '2016-12-10 04:31:44', '', 'danielretzl@gmail.com', 1),
-(4, '2016-12-10 04:32:27', '', 'danielretzl@gmail.com', 1),
-(5, '2016-12-10 04:52:16', '', 'danielretzl@gmail.com', 1),
-(6, '2016-12-10 05:11:26', '', 'danielretzl@gmail.com', 1),
-(7, '2016-12-10 05:14:13', '', 'danielretzl@gmail.com', 1);
 
 -- --------------------------------------------------------
 
@@ -494,13 +430,19 @@ CREATE TABLE `cms_pages` (
 --
 
 INSERT INTO `cms_pages` (`id`, `published`, `gid`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `alias`, `title`, `bgimage`, `owner`, `menu`, `locked`, `blogid`, `plugin`) VALUES
-(1, 1, 1, '2016-08-19 09:43:45', '2016-12-10 03:30:24', '2016-08-19 09:43:45', '0000-00-00 00:00:00', 'index', 'Startseite', '', -1, 0, 0, 0, '0'),
-(2, 1, 1, '2016-08-19 09:58:39', '2016-11-03 02:00:42', '2016-08-19 09:58:39', '0000-00-00 00:00:00', 'override-bootstrap-style-settings-theme-generator', 'Styling', '', -1, 0, 0, 0, '0'),
-(3, 1, 2, '2016-08-19 10:54:00', '2016-08-19 10:57:07', '2016-08-19 10:54:00', '0000-00-00 00:00:00', 'welcome', 'Userpage', '', -1, 0, 1, 0, '8'),
+(1, 1, 1, '2016-08-19 09:43:45', '2016-12-28 22:25:56', '2016-08-19 09:43:45', '0000-00-00 00:00:00', 'index', 'Startseite', '', -1, 0, 0, 0, '0'),
+(2, 0, 1, '2016-08-19 09:58:39', '2016-11-03 02:00:42', '2016-08-19 09:58:39', '0000-00-00 00:00:00', 'override-bootstrap-style-settings-theme-generator', 'Styling', '', -1, 0, 0, 0, '0'),
+(3, 0, 2, '2016-08-19 10:54:00', '2016-08-19 10:57:07', '2016-08-19 10:54:00', '0000-00-00 00:00:00', 'welcome', 'Userpage', '', -1, 0, 1, 0, '8'),
 (4, 0, 1, '2016-09-12 14:32:17', '2016-09-12 14:36:13', '2016-09-12 14:32:17', '0000-00-00 00:00:00', 'logout', 'logout', '', -1, 0, 1, 0, '0'),
 (5, 1, 1, '2016-09-15 02:58:56', '0000-00-00 00:00:00', '2016-09-15 02:58:56', '0000-00-00 00:00:00', 'terms-of-service', 'terms-of-service', '', -1, 0, 0, 0, '7'),
 (17, 1, 1, '2016-12-08 12:05:21', '2016-12-08 12:05:33', '2016-12-08 12:05:21', '0000-00-00 00:00:00', 'booking', 'booking', '', -1, 0, 1, 0, '0'),
-(18, 0, 1, '2016-12-09 17:35:25', '2016-12-09 17:35:42', '2016-12-09 17:35:25', '0000-00-00 00:00:00', 'working-process', 'working process', '', -1, 0, 0, 0, '0');
+(18, 0, 1, '2016-12-09 17:35:25', '2016-12-09 17:35:42', '2016-12-09 17:35:25', '0000-00-00 00:00:00', 'working-process', 'working process', '', -1, 0, 0, 0, '0'),
+(19, 1, 1, '2016-12-29 00:17:30', '2017-01-03 17:56:36', '2016-12-29 00:17:30', '0000-00-00 00:00:00', 'mercedes-benz-w123-1976-1986', 'Mercedes Benz W123 1976 bis 1986', '', -1, 0, 0, 0, '0'),
+(20, 1, 1, '2017-01-11 16:57:05', '2017-01-26 22:37:03', '2017-01-11 16:57:05', '0000-00-00 00:00:00', 'mercedes-benz-w124-1985-1994', 'Mercedes Benz W124 1985-1994', '', -1, 0, 0, 0, '0'),
+(21, 1, 1, '2017-01-16 11:45:37', '2017-01-16 11:46:42', '2017-01-16 11:45:37', '0000-00-00 00:00:00', 'twitch-stream-test', 'Twitch Stream Test', '', -1, 0, 0, 0, '0'),
+(24, 1, 1, '2017-01-20 00:31:51', '2017-01-22 22:52:52', '2017-01-20 00:31:51', '0000-00-00 00:00:00', 'youtube-test', 'YouTube Test', '', -1, 0, 0, 0, '0'),
+(25, 0, 1, '2017-01-30 05:00:45', '0000-00-00 00:00:00', '2017-01-30 05:00:45', '0000-00-00 00:00:00', 'asdasd', 'asdasd', '', -1, 0, 1, 1, '0'),
+(26, 1, 1, '2017-01-30 16:04:34', '0000-00-00 00:00:00', '2017-01-30 16:04:34', '0000-00-00 00:00:00', 'asdasd', 'asdasd', '', -1, 0, 1, 1, '');
 
 -- --------------------------------------------------------
 
@@ -564,13 +506,6 @@ CREATE TABLE `cms_plugin_booking` (
   `invited` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Daten für Tabelle `cms_plugin_booking`
---
-
-INSERT INTO `cms_plugin_booking` (`id`, `uid`, `gid`, `date_created`, `date_wish`, `date_alternative`, `confirmed`, `name`, `email`, `phone`, `text`, `todo`, `success`, `income`, `grade`, `visits`, `comment`, `ip`, `useragent`, `ban`, `outdated`, `referer`, `cut`, `invited`) VALUES
-(1, 1, 5, '2016-12-08 13:56:37', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 'admin', 'danielretzl@gmail.com', '6642262575', 'tfhdtzjfzjnfhnfdhn', 0, 0, 0, 0, 0, '', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', 0, 0, 'http://192.168.1.8/yawk-LTE/booking.html', 0, 0);
-
 -- --------------------------------------------------------
 
 --
@@ -585,16 +520,6 @@ CREATE TABLE `cms_plugin_faq` (
   `question` text NOT NULL,
   `answer` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Daten für Tabelle `cms_plugin_faq`
---
-
-INSERT INTO `cms_plugin_faq` (`id`, `sort`, `published`, `cat`, `question`, `answer`) VALUES
-(7, 0, 1, 1, 'Question', 'Answer'),
-(8, 0, 1, 1, 'Question 2', 'Answer 2'),
-(9, 0, 1, 1, 'Question 3', 'Answer 3'),
-(10, 0, 1, 1, 'Question 4', 'Answer 4');
 
 -- --------------------------------------------------------
 
@@ -664,19 +589,6 @@ CREATE TABLE `cms_plugin_msg` (
   `spam` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Daten für Tabelle `cms_plugin_msg`
---
-
-INSERT INTO `cms_plugin_msg` (`msg_id`, `parentID`, `msg_date`, `fromUID`, `toUID`, `msg_body`, `msg_read`, `trash`, `spam`) VALUES
-(1, 0, '2016-09-14 00:36:26', 1, 1, 'test', 1, 0, 0),
-(2, 0, '2016-11-22 06:47:47', 1, 1, 'asdasdasd', 1, 0, 0),
-(3, 0, '2016-11-22 06:48:00', 1, 2, 'twerwerwer', 1, 0, 0),
-(4, 0, '2016-11-22 06:48:28', 1, 1, 'test', 1, 0, 0),
-(5, 0, '2016-11-22 06:48:40', 1, 1, 'test 2', 1, 0, 0),
-(6, 0, '2016-11-22 13:37:36', 1, 1, 'test', 1, 0, 0),
-(7, 0, '2016-12-09 22:54:02', 2, 1, 'sooon ..... :-)', 1, 0, 0);
-
 -- --------------------------------------------------------
 
 --
@@ -691,13 +603,6 @@ CREATE TABLE `cms_plugin_tourdates` (
   `published` int(1) NOT NULL DEFAULT '1',
   `fburl` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Daten für Tabelle `cms_plugin_tourdates`
---
-
-INSERT INTO `cms_plugin_tourdates` (`id`, `date`, `band`, `venue`, `published`, `fburl`) VALUES
-(1, '2016-10-23 06:45:00', 'Stephan & B&ouml;rns', 'Casablanca', 1, '');
 
 -- --------------------------------------------------------
 
@@ -728,17 +633,18 @@ CREATE TABLE `cms_settings` (
 --
 
 INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation`, `activated`, `label`, `icon`, `heading`, `subtext`, `fieldClass`, `fieldType`, `placeholder`, `description`, `options`) VALUES
-('admin_email', 'youremail@domain.com', '', 1, 5, 1, 'ADMIN_EMAIL_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
-('backendFooter', '0', '', 11, 1, 1, 'BACKENDFOOTER_LABEL', 'fa fa-chevron-down', 'BACKENDFOOTER_HEADING', 'BACKENDFOOTER_SUBTEXT', 'form-control', 'checkbox', '', '', ''),
-('backendFooterCopyright', '0', '', 11, 2, 1, 'BACKENDFOOTERCOPYRIGHT_LABEL', '', '', '', 'form-control', 'checkbox', '', '', ''),
-('backendFooterValueLeft', 'http://yawk.io', '', 11, 2, 1, 'BACKENDFOOTERVALUE_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
-('backendFooterValueRight', 'proudly presented by <b>YaWK :: <small> Yet another Web Kit</b></small>', '', 11, 2, 1, 'BACKENDFOOTERVALUERIGHT_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
-('backendFX', '0', '', 2, 3, 1, 'BACKENDFX_LABEL', 'fa fa-paper-plane-o', 'BACKENDFX_HEADING', 'BACKENDFX_SUBTEXT', 'form-control', 'checkbox', '', '', ''),
-('backendFXtime', '820', '', 2, 5, 1, 'BACKENDFXTIME_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
-('backendFXtype', 'fadeIn In', '', 2, 4, 1, 'BACKENDFXTYPE_LABEL', '', '', '', 'form-control', 'select', '', '', 'fadeIn,Fade In:slideDown,Slide Down'),
+('admin_email', 'danielretzl@gmail.com', '', 1, 5, 1, 'ADMIN_EMAIL_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+('backendFooter', '0', '', 11, 5, 1, 'BACKENDFOOTER_LABEL', 'fa fa-chevron-down', 'BACKENDFOOTER_HEADING', 'BACKENDFOOTER_SUBTEXT', 'form-control', 'checkbox', '', '', ''),
+('backendFooterCopyright', '0', '', 11, 6, 1, 'BACKENDFOOTERCOPYRIGHT_LABEL', '', '', '', 'form-control', 'checkbox', '', '', ''),
+('backendFooterValueLeft', 'http://yawk.io', '', 11, 7, 1, 'BACKENDFOOTERVALUE_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+('backendFooterValueRight', 'proudly presented by <b>YaWK :: <small> Yet another Web Kit</b></small>', '', 11, 8, 1, 'BACKENDFOOTERVALUERIGHT_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+('backendFX', '0', '', 2, 5, 1, 'BACKENDFX_LABEL', 'fa fa-paper-plane-o', 'BACKENDFX_HEADING', 'BACKENDFX_SUBTEXT', 'form-control', 'checkbox', '', '', ''),
+('backendFXtime', '820', '', 2, 7, 1, 'BACKENDFXTIME_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+('backendFXtype', 'fadeIn In', '', 2, 6, 1, 'BACKENDFXTYPE_LABEL', '', '', '', 'form-control', 'select', '', '', 'fadeIn,Fade In:slideDown,Slide Down'),
+('backendLanguage', 'de-DE', '', 2, 4, 1, 'BACKENDLANGUAGE_LABEL', 'fa fa-language', 'BACKENDLANGUAGE_HEADING', 'BACKENDLANGUAGE_SUBTEXT', 'form-control', 'select', '', '', 'en-EN,English (en-EN):de-DE,German (de-DE)'),
 ('backendLayout', 'sidebar-mini', '', 2, 2, 1, 'BACKENDLAYOUT_LABEL', '', '', '', 'form-control', 'select', '', 'BACKENDLAYOUT_DESC', 'fixed,Fixed:sidebar-collapse,Sidebar Collapse:sidebar-mini,Sidebar Mini:layout-boxed,Layout Boxed:layout-top-nav,Layout Top Nav'),
-('backendLogoSubText', 'frontend', '', 12, 2, 1, 'BACKENDLOGOSUBTEXT_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
-('backendLogoText', 'YaWK', '', 12, 1, 1, 'BACKENDLOGOTEXT_LABEL', 'fa fa-bars', 'BACKENDLOGOTEXT_HEADING', 'BACKENDLOGOTEXT_SUBTEXT', 'form-control', 'input', '', '', ''),
+('backendLogoSubText', '', '', 12, 2, 1, 'BACKENDLOGOSUBTEXT_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+('backendLogoText', 'mercedesgarage', '', 12, 1, 1, 'BACKENDLOGOTEXT_LABEL', 'fa fa-bars', 'BACKENDLOGOTEXT_HEADING', 'BACKENDLOGOTEXT_SUBTEXT', 'form-control', 'input', '', '', ''),
 ('backendLogoUrl', '0', '', 12, 3, 1, 'BACKENDLOGOURL_LABEL', '', '', '', 'form-control', 'checkbox', '', '', ''),
 ('backendMessagesMenu', '1', '', 12, 4, 1, 'BACKENDMSGMENU_LABEL', 'fa fa-bell-o', 'BACKENDMSGMENU_HEADING', 'BACKENDMSGMENU_SUBTEXT', 'form-control', 'checkbox', '', '', ''),
 ('backendNotificationMenu', '1', '', 12, 5, 1, 'BACKENDNOTIFYMENU_LABEL', '', '', '', 'form-control', 'checkbox', '', '', ''),
@@ -751,9 +657,9 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('dbusername', 'root', '', 9, 3, 1, 'DBUSERNAME_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('defaultemailtext', '', 'Hello $user,\\n\\n\\Thank you for registering on site\\n\\n$url', 5, 0, 1, 'Default SignUp Email Message', '', '', '', 'form-control', 'textarea', '', '', ''),
 ('dirprefix', '/yawk-LTE', '', 9, 0, 1, 'DIRPREFIX_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
-('domain', 'localhost.net', '', 1, 4, 1, 'DOMAIN_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+('domain', '192.168.1.8/yawk-LTE', '', 1, 4, 1, 'DOMAIN_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('editorActiveLine', '1', '', 14, 2, 1, 'EDITOR_ACTIVE_LINE_LABEL', '', '', '', 'form-control', 'checkbox', '', 'EDITOR_ACTIVE_LINE_DESC', ''),
-('editorAutoCodeview', '0', '', 14, 9, 1, 'EDITOR_AUTO_CODEVIEW_LABEL', '', '', '', 'form-control', 'checkbox', '', 'EDITOR_AUTO_CODEVIEW_DESC', ''),
+('editorAutoCodeview', '1', '', 14, 9, 1, 'EDITOR_AUTO_CODEVIEW_LABEL', '', '', '', 'form-control', 'checkbox', '', 'EDITOR_AUTO_CODEVIEW_DESC', ''),
 ('editorCloseBrackets', '1', '', 14, 11, 1, 'EDITOR_CLOSE_BRACKETS_LABEL', '', '', '', 'form-control', 'checkbox', '', 'EDITOR_CLOSE_BRACKETS_DESC', ''),
 ('editorCloseTags', '1', '', 14, 10, 1, 'EDITOR_CLOSE_TAGS_LABEL', '', '', '', 'form-control', 'checkbox', '', 'EDITOR_CLOSE_TAGS_DESC', ''),
 ('editorHeight', '670', '', 14, 5, 1, 'EDITOR_HEIGHT_LABEL', '', '', '', 'form-control', 'input', '', 'EDITOR_HEIGHT_DESC', ''),
@@ -772,11 +678,14 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('globalmetakeywords', 'YAWK, CMS, WORDPRESS, JOOMLA', '', 10, 0, 1, 'Global Site Keywords', '', '', '', 'form-control', '', '', '', ''),
 ('globalmetatext', 'YAWK DEVELOPMENT VERSION', '', 10, 0, 1, 'Global Meta Description', '', '', '', 'form-control', '', '', '', ''),
 ('host', 'http://192.168.1.8/yawk-LTE', '', 1, 3, 1, 'HOST_LABEL', '', '', '', 'form-control', 'input', '', 'DATABASE_DESC', ''),
-('loadingTime', '0', '', 11, 3, 1, 'LOADINGTIME_LABEL', 'fa fa-signal', 'LOADINGTIME_HEADING', 'LOADINGTIME_SUBTEXT', 'form-control', 'checkbox', '', '', ''),
+('loadingTime', '0', '', 11, 10, 1, 'LOADINGTIME_LABEL', 'fa fa-signal', 'LOADINGTIME_HEADING', 'LOADINGTIME_SUBTEXT', 'form-control', 'checkbox', '', '', ''),
 ('logoutmenuid', '1', '', 6, 0, 1, 'Logout Menu ID for logged-in Users', '', '', '', 'form-control', '', '', '', ''),
 ('offline', '0', '', 8, 0, 1, 'OFFLINE_LABEL', 'fa fa-wrench', 'OFFLINE_HEADING', 'OFFLINE_SUBTEXT', 'form-control', 'checkbox', '', 'OFFLINE_DESC', ''),
 ('offlineimage', 'media/images/closed-sign-tm.jpg', '', 8, 0, 1, 'OFFLINEIMAGE_LABEL', '', '', '', 'form-control', 'input', 'media/images/logo.jpg', 'OFFLINEIMAGE_DESC', ''),
 ('offlinemsg', '<h1>Wartungsarbeiten</h1><h3>Bitte schau spÃ¤ter nochmal vorbei.</h3>', '', 8, 0, 1, 'OFFLINEMSG_LABEL', '', '', '', 'form-control', 'textarea', '', '', ''),
+('paceLoader', 'enabled', '', 11, 1, 1, 'PACELOADER_LABEL', 'fa fa-spinner', 'PACELOADER_HEADING', 'PACELOADER_SUBTEXT', 'form-control', 'select', '', '', 'disabled,disabled:enabled,enabled'),
+('paceLoaderColor', '0073AA', '', 11, 2, 1, 'PACELOADER_COLOR_LABEL', '', '', '', 'form-control color', 'input', '0073aa', '', ''),
+('paceLoaderHeight', '4px', '', 11, 3, 1, 'PACELOADER_HEIGHT_LABEL', '', '', '', 'form-control', 'input', 'PACELOADER_HEIGHT_PLACEHOLDER', '', ''),
 ('selectedTemplate', '1', '', 3, 1, 1, 'SELECTEDTEMPLATE_LABEL', 'fa fa-photo', 'SELECTEDTEMPLATE_HEADING', 'SELECTEDTEMPLATE_SUBTEXT', 'form-control', 'select', '', 'SELECTEDTEMPLATE_DESC', ''),
 ('sessiontime', '60', '', 9, 1, 1, 'SESSIONTIME_LABEL', '', '', '', 'form-control', 'select', '', 'SESSIONTIME_DESC', '10,10 Minutes:20,20 Minutes:30,30 Minutes:40,40 Minutes:50,50 Minutes:60,60 Minutes:120,120 Minutes:320,320 Minutes'),
 ('signup_adultcheck', '1', '', 5, 0, 1, 'display adultcheck question before registration form', '', '', '', 'form-control', '', '', '', ''),
@@ -803,15 +712,15 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('signup_tostext', 'Terms of service', '', 5, 0, 1, 'terms of service description', '', '', '', 'form-control', '', '', '', ''),
 ('signup_zipcode', '0', '', 5, 0, 1, 'require zipcode to signup', '', '', '', 'form-control', '', '', '', ''),
 ('siteauthor', 'YaWK', '', 10, 0, 1, 'Site Author', '', '', '', 'form-control', '', '', '', ''),
-('sitename', 'YaWK - yet another webkit - CMS', '', 1, 2, 1, 'SITENAME_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+('sitename', 'Das freie Magazin fÃ¼r Youngtimer und Oldtimer von Mercedes-Benz', '', 1, 2, 1, 'SITENAME_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('statsEnable', '1', '', 13, 2, 1, 'STATS_LABEL', 'fa fa-bar-chart', 'STATS_HEADING', 'STATS_SUBTEXT', 'form-control', 'select', '', 'STATS_DESC', '0,off:1,on'),
 ('syslogEnable', '1', '', 13, 1, 1, 'SYSLOG_LABEL', 'fa fa-terminal', 'SYSLOG_HEADING', 'SYSLOG_SUBTEXT', 'form-control', 'select', '', 'SYSLOG_DESC', '0,off:1,on'),
 ('timediff', '1', '', 7, 1, 1, 'TIMEDIFF_LABEL', 'fa fa-clock-o', 'TIMEDIFF_HEADING', 'TIMEDIFF_SUBTEXT', 'form-control', 'checkbox', '', 'TIMEDIFF_DESC', ''),
 ('timedifftext', 'This page is not online yet. Please come back in ', '', 7, 2, 1, 'TIMEDIFFTEXT_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
-('title', 'YAWK DEMO', '', 1, 1, 1, 'TITLE_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+('title', 'YaWK.io - Open Source CMS Content Management System', '', 1, 1, 1, 'TITLE_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('twitterstatus', '0', '', 4, 0, 1, 'Twitter on/off', '', '', '', 'form-control', '', '', '', ''),
 ('twitterurl', 'http://www.twitter.com', '', 4, 0, 1, 'URL zu Twitter Profil', '', '', '', 'form-control', '', '', '', ''),
-('userlogin', '0', '', 17, 1, 1, 'USERLOGIN_LABEL', 'fa fa-lock', 'USERLOGIN_HEADING', 'USERLOGIN_SUBTEXT', 'form-control', 'checkbox', '', 'USERLOGIN_DESC', ''),
+('userlogin', '1', '', 17, 1, 1, 'USERLOGIN_LABEL', 'fa fa-lock', 'USERLOGIN_HEADING', 'USERLOGIN_SUBTEXT', 'form-control', 'checkbox', '', 'USERLOGIN_DESC', ''),
 ('userpage_activeTab', 'Profile', '', 6, 0, 1, 'Userpage Active Tab', '', '', '', 'form-control', '', '', '', ''),
 ('userpage_admin', '1', '', 6, 0, 1, 'userpage admin tab enabled?', '', '', '', 'form-control', '', '', '', ''),
 ('userpage_changeCity', '1', '', 6, 0, 1, 'allow user to change city', '', '', '', 'form-control', '', '', '', ''),
@@ -839,7 +748,9 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('userpage_profile', '1', '', 6, 0, 1, 'userpage profile enabled?', '', '', '', 'form-control', '', '', '', ''),
 ('userpage_settings', '1', '', 6, 0, 1, 'userpage`settings', '', '', '', 'form-control', '', '', '', ''),
 ('userpage_stats', '1', '', 6, 0, 1, 'userpage stats enabled?', '', '', '', 'form-control', '', '', '', ''),
-('yawkversion', '0.7.0', '', 9, 2, 1, 'YAWKVERSION_LABEL', '', '', '', 'form-control', 'input', '', '', '');
+('yawkversion', '0.9.0', '', 9, 2, 1, 'YAWKVERSION_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+('youtubeChannelUrl', 'http://www.youtube.com', '', 4, 0, 1, 'YouTube Channel URL', '', '', '', 'form-control', '', '', '', ''),
+('youtubestatus', '0', '', 4, 0, 1, 'YouTube on/off', '', '', '', 'form-control', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -977,7 +888,7 @@ CREATE TABLE `cms_templates` (
 --
 
 INSERT INTO `cms_templates` (`id`, `active`, `name`, `positions`, `description`, `releaseDate`, `author`, `authorUrl`, `weblink`, `subAuthor`, `subAuthorUrl`, `modifyDate`, `version`, `license`) VALUES
-(1, 1, 'yawk-io', 'menu:main:footer', '', '2016-09-29 00:00:00', 'Daniel Retzl ', 'https://github.com/YaWK/yawk-cms', 'http://yawk.io', '', '', '2016-10-01 02:30:00', '1.0.0', 'GNU General Public License (GPL)');
+(1, 1, 'yawk-bootstrap3', 'intro:globalmenu:top:leftMenu:mainTop:mainTopLeft:mainTopCenter:mainTopRight:main:mainBottom:mainBottomLeft:mainBottomCenter:mainBottomRight:mainFooter:mainFooterLeft:mainFooterCenter:mainFooterRight:rightMenu:bottom:footer:hiddentoolbar:debug', 'YaWK Bootstrap 3 Default Theme.', '2016-09-29 00:00:00', 'Daniel Retzl ', 'https://github.com/YaWK/mercedesgarage.net', 'http://www.mercedesgarage.net', 'Daniel Retzl', '', '2016-10-01 02:30:00', '1.0.0', 'GNU General Public License (GPL)');
 
 -- --------------------------------------------------------
 
@@ -1004,9 +915,9 @@ CREATE TABLE `cms_template_settings` (
 --
 
 INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `valueDefault`, `longValue`, `description`, `activated`, `sort`, `fieldClass`, `placeholder`) VALUES
-(1, 1, 'heading-gfont', '76', '1', '', 'Global GoogleFont ID', 1, 0, 'form-control', 'Default Google Font'),
+(1, 1, 'heading-gfont', '63', '1', '', 'Global GoogleFont ID', 1, 0, 'form-control', 'Default Google Font'),
 (2, 1, 'menu-gfont', '76', '1', '', 'Menu GoogleFont ID', 1, 0, 'form-control', 'Menu Google Font'),
-(3, 1, 'text-gfont', '76', '1', '', 'Text GoogleFont ID', 1, 0, 'form-control', 'Text Google Font'),
+(3, 1, 'text-gfont', '63', '1', '', 'Text GoogleFont ID', 1, 0, 'form-control', 'Text Google Font'),
 (4, 1, 'h1-fontcolor', '303030', '000000', '', 'H1 Color', 1, 0, 'color', 'pick a color or leave blank'),
 (6, 1, 'h2-fontcolor', '303030', '000000', '', 'H2 Color', 1, 0, 'color', 'pick a color or leave blank'),
 (7, 1, 'h3-fontcolor', '5C79A1', '000000', '', 'H3 Color', 1, 0, 'color', 'pick a color or leave blank'),
@@ -1050,7 +961,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (49, 1, 'body-text-shadow', '1px 0px', '1px 0px', '', 'Body Text Shadow Thickness', 1, 0, 'form-control', 'shadow size in pixels'),
 (50, 1, 'body-text-shadow-color', 'C7C7C7', 'CCCCCC', '', 'Body Text Shadow Color', 1, 0, 'color', 'pick a color or leave blank'),
 (51, 1, 'body-text-size', '1.8em', '1.7em', '', 'Body Font Size', 1, 0, 'form-control', 'size in 1.7em or 16px (for example)'),
-(52, 1, 'body-margin-top', '20px', '40px', '', 'Body Top Margin', 1, 0, 'form-control', 'value in px e.g. 40px'),
+(52, 1, 'body-margin-top', '35px', '40px', '', 'Body Top Margin', 1, 0, 'form-control', 'value in px e.g. 40px'),
 (53, 1, 'body-bg-image', '', 'any .jpg or .png you want', '', 'Body Background Image', 1, 0, 'form-control', 'media/images/background.jpg'),
 (54, 1, 'body-bg-repeat', 'no-repeat', 'no-repeat', '', 'Body Background Repeat', 1, 0, 'form-control', 'repeat, repeat-x, repeat-y, no-repeat, inherit'),
 (55, 1, 'body-bg-position', 'center', 'center', '', 'Body Background Position', 1, 0, 'form-control', 'left-center, right-center, top-center, [top, bottom]'),
@@ -1064,7 +975,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (63, 1, 'well-margin-bottom', '240px', '0px', '', 'Well Margin Bottom', 1, 0, 'form-control', 'value in px eg. 10px'),
 (64, 1, 'well-border', '0px solid', '1px solid', '', 'Well Border Style', 1, 0, 'form-control', 'value in px eg. 1px solid'),
 (65, 1, 'well-border-color', 'FFFFFF', 'e3e3e3', '', 'Well Border Color', 1, 0, 'color', 'pick a color or leave blank'),
-(66, 1, 'well-border-radius', '8px', '0px', '', 'Well Border Radius', 1, 0, 'form-control', 'for rounded edges, value in px eg. 4px'),
+(66, 1, 'well-border-radius', '12px', '0px', '', 'Well Border Radius', 1, 0, 'form-control', 'for rounded edges, value in px eg. 4px'),
 (67, 1, 'well-shadow', '8px 8px 20px -6px', '3px 3px 5px 6px', '', 'Well Shadow', 1, 0, 'form-control', 'value in px eg. x,y,blur,spread'),
 (68, 1, 'well-shadow-color', 'FFFFFF', 'CCCCCC', '', 'Well Shadow Color', 1, 0, 'color', 'pick a color or leave blank'),
 (69, 1, 'h1-size', '48px', '36px', '', 'H1 Text Size', 1, 0, 'form-control', 'size in px eg. 36px'),
@@ -1136,16 +1047,16 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (135, 1, 'img-righty-less', '4deg', '4deg', '', 'Lesser Angle to Right', 1, 0, 'form-control', 'value in degree e.g. 4deg'),
 (136, 1, 'img-lefty-less', '-4deg', '-4deg', '', 'Lesser Angle to Left', 1, 0, 'form-control', 'value in degree e.g. -4deg'),
 (137, 1, 'img-brightness', '110%', '110%', '', 'Brightness On Hover', 1, 0, 'form-control', 'value in percent eg. 110%'),
-(138, 1, 'listgroup-paddingLeft', '0px', '0', '', 'ListGroup Padding Left', 1, 0, 'form control', 'value in px eg. 0px'),
-(139, 1, 'listgroup-marginBottom', '20px', '0', '', 'ListGroup Padding Bottom', 1, 0, 'form control', 'value in px eg. 0px'),
-(140, 1, 'listgroup-itemPosition', 'relative', 'relative', '', 'ListGroup Item Position', 1, 0, 'form control', 'static, relative, fixed, absolute'),
-(141, 1, 'listgroup-itemDisplay', 'block', 'block', '', 'ListGroup Item Display', 1, 0, 'form control', 'block, inline, inline-block, flex'),
-(142, 1, 'listgroup-itemPadding', '10px 15px', '10px 15px', '', 'ListGroup Item Padding', 1, 0, 'form control', 'top, right, bottom left in px'),
-(143, 1, 'listgroup-itemBorder', '1px solid #777', '1px solid #ddd', '', 'ListGroup Item Border', 1, 0, 'form control', 'border width. type and color'),
+(138, 1, 'listgroup-paddingLeft', '0px', '0', '', 'ListGroup Padding Left', 1, 0, 'form-control', 'value in px eg. 0px'),
+(139, 1, 'listgroup-marginBottom', '20px', '0', '', 'ListGroup Padding Bottom', 1, 0, 'form-control', 'value in px eg. 0px'),
+(140, 1, 'listgroup-itemPosition', 'relative', 'relative', '', 'ListGroup Item Position', 1, 0, 'form-control', 'static, relative, fixed, absolute'),
+(141, 1, 'listgroup-itemDisplay', 'block', 'block', '', 'ListGroup Item Display', 1, 0, 'form-control', 'block, inline, inline-block, flex'),
+(142, 1, 'listgroup-itemPadding', '10px 15px', '10px 15px', '', 'ListGroup Item Padding', 1, 0, 'form-control', 'top, right, bottom left in px'),
+(143, 1, 'listgroup-itemBorder', '1px solid #2E3037', '1px solid #ddd', '', 'ListGroup Item Border', 1, 0, 'form-control', 'border width. type and color'),
 (144, 1, 'listgroup-itemBackgroundColor', '383638', 'FFF', '', 'ListGroup Item Background Color', 1, 0, 'color', 'pick a color or leave blank'),
-(145, 1, 'jumbotron-paddingTop', '30px', '30px', '', 'Jumbotron Padding Top', 1, 0, 'form control', 'value in px eg. 30px'),
-(146, 1, 'jumbotron-paddingBottom', '30px', '30px', '', 'Jumbotron Padding Bottom', 1, 0, 'form control', 'value in px eg. 30px'),
-(147, 1, 'jumbotron-marginBottom', '30px', '30px', '', 'Jumbotron Margin Bottom', 1, 0, 'form control', 'value in px eg. 30px'),
+(145, 1, 'jumbotron-paddingTop', '30px', '30px', '', 'Jumbotron Padding Top', 1, 0, 'form-control', 'value in px eg. 30px'),
+(146, 1, 'jumbotron-paddingBottom', '30px', '30px', '', 'Jumbotron Padding Bottom', 1, 0, 'form-control', 'value in px eg. 30px'),
+(147, 1, 'jumbotron-marginBottom', '30px', '30px', '', 'Jumbotron Margin Bottom', 1, 0, 'form-control', 'value in px eg. 30px'),
 (148, 1, 'jumbotron-backgroundColor', '383638', 'EEE', '', 'Jumbotron Background Color', 1, 0, 'color', 'pick a color or leave blank'),
 (149, 1, 'jumbotron-pMarginBottom', '15px', '15px', '', 'Jumbotron p Margin Bottom', 1, 0, 'form-control', 'value in px eg. 15px'),
 (150, 1, 'jumbotron-pFontSize', '21px', '21px', '', 'Jumbotron p Font Size', 1, 0, 'form-control', 'value in px eg. 21px'),
@@ -1170,7 +1081,12 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (170, 1, 'pos-topmenu-height', '25px', '20px', '', 'Height in px', 1, 0, 'form-control', 'height of this position in px eg. 20px'),
 (171, 1, 'pos-topmenu-width', '100%', '100%', '', 'Width in percent (eg. 100%)', 1, 0, 'form-control', 'width of this position in percent (default: 100%)'),
 (172, 1, 'pos-topmenu-zindex', '9999', '9999', '', 'z-index: auto|number|initial|inherit', 1, 0, 'form-control', 'eg. 9999'),
-(173, 1, 'pos-topmenu-bg-gradient-longValue', '', '', '/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#454b51+0,616971+48,454b51+100 */\r\nbackground: #454b51; /* Old browsers */\r\nbackground: -moz-linear-gradient(left,  #454b51 0%, #616971 48%, #454b51 100%); /* FF3.6-15 */\r\nbackground: -webkit-linear-gradient(left,  #454b51 0%,#616971 48%,#454b51 100%); /* Chrome10-25,Safari5.1-6 */\r\nbackground: linear-gradient(to right,  #454b51 0%,#616971 48%,#454b51 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */\r\nfilter: progid:DXImageTransform.Microsoft.gradient( startColorstr=''#454b51'', endColorstr=''#454b51'',GradientType=1 ); /* IE6-9 */\r\n', 'CSS gradient. Use <a href="http://www.colorzilla.com/gradient-editor/" target="_blank">colorzilla</a> to help generate code', 1, 0, 'form-control', '');
+(173, 1, 'pos-topmenu-bg-gradient-longValue', '', '', '/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#454b51+0,616971+48,454b51+100 */\r\nbackground: #454b51; /* Old browsers */\r\nbackground: -moz-linear-gradient(left,  #454b51 0%, #616971 48%, #454b51 100%); /* FF3.6-15 */\r\nbackground: -webkit-linear-gradient(left,  #454b51 0%,#616971 48%,#454b51 100%); /* Chrome10-25,Safari5.1-6 */\r\nbackground: linear-gradient(to right,  #454b51 0%,#616971 48%,#454b51 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */\r\nfilter: progid:DXImageTransform.Microsoft.gradient( startColorstr=''#454b51'', endColorstr=''#454b51'',GradientType=1 ); /* IE6-9 */\r\n', 'CSS gradient. Try <a href="http://www.colorzilla.com/gradient-editor/" target="_blank">colorzilla</a> to help generate code', 1, 0, 'form-control', ''),
+(174, 1, 'listgroup-bg-gradient-longValue', '', '', '/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#596068+0,373c41+93,373c41+100 */\r\nbackground: #596068; /* Old browsers */\r\nbackground: -moz-linear-gradient(left,  #596068 0%, #373c41 93%, #373c41 100%); /* FF3.6-15 */\r\nbackground: -webkit-linear-gradient(left,  #596068 0%,#373c41 93%,#373c41 100%); /* Chrome10-25,Safari5.1-6 */\r\nbackground: linear-gradient(to right,  #596068 0%,#373c41 93%,#373c41 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */\r\nfilter: progid:DXImageTransform.Microsoft.gradient( startColorstr=''#596068'', endColorstr=''#373c41'',GradientType=1 ); /* IE6-9 */', 'CSS gradient. Try <a href="http://www.colorzilla.com/gradient-editor/" target="_blank">colorzilla</a> to help generate code', 1, 0, 'form-control', ''),
+(175, 1, 'listgroup-firstChild-topLeft-radius', '12px', '4px', '', 'ListGroup First Child Top <i>LEFT Border Radius</i> in px', 1, 0, 'form-control', 'value in px eg. 4px'),
+(176, 1, 'listgroup-firstChild-topRight-radius', '12px', '4px', '', 'ListGroup First Child Top RIGHT Border Radius in px', 1, 0, 'form-control', 'value in px eg. 4px'),
+(177, 1, 'listgroup-lastChild-bottomRight-radius', '12px', '4px', '', 'ListGroup Last Child Bottom RIGHT Border Radius in px', 1, 0, 'form-control', 'value in px eg. 4px'),
+(178, 1, 'listgroup-lastChild-bottomLeft-radius', '12px', '4px', '', 'ListGroup Last Child Bottom LEFT Border Radius in px', 1, 0, 'form-control', 'value in px eg. 4px');
 
 -- --------------------------------------------------------
 
@@ -1249,18 +1165,13 @@ CREATE TABLE `cms_widgets` (
   `widgetType` int(11) NOT NULL,
   `pageID` int(11) NOT NULL,
   `sort` int(11) NOT NULL,
-  `position` varchar(128) NOT NULL
+  `position` varchar(128) NOT NULL,
+  `marginTop` int(11) NOT NULL,
+  `marginBottom` int(11) NOT NULL,
+  `date_publish` datetime NOT NULL,
+  `date_unpublish` datetime NOT NULL,
+  `widgetTitle` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Daten für Tabelle `cms_widgets`
---
-
-INSERT INTO `cms_widgets` (`id`, `published`, `widgetType`, `pageID`, `sort`, `position`) VALUES
-(1, 0, 1, 1, 1, 'main'),
-(2, 0, 9, 3, 2, 'main'),
-(3, 0, 6, 6, 3, 'main'),
-(4, 1, 15, 1, 4, 'footer');
 
 -- --------------------------------------------------------
 
@@ -1308,7 +1219,23 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('clockcolor', '999', 8, 1, 'Clock Text Color', 'form-control color', 23),
 ('float', 'right', 8, 1, 'Float (left / right or leave blank)', 'form-control', 24),
 ('textstyle', 'bold', 8, 1, 'bold or leave blank', 'form-control', 25),
-('htmlcode', '<div class="row">\r\n        <div class="col-md-4">\r\n          <h2>Heading</h2>\r\n          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>\r\n          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>\r\n        </div>\r\n        <div class="col-md-4">\r\n          <h2>Heading</h2>\r\n          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>\r\n          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>\r\n       </div>\r\n        <div class="col-md-4">\r\n          <h2>Heading</h2>\r\n          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>\r\n          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>\r\n        </div>\r\n      </div>', 11, 1, 'Custom HTML in a divbox', 'form-control', 27);
+('htmlcode', '<div class="row">\r\n        <div class="col-md-4">\r\n          <h2>Heading</h2>\r\n          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>\r\n          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>\r\n        </div>\r\n        <div class="col-md-4">\r\n          <h2>Heading</h2>\r\n          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>\r\n          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>\r\n       </div>\r\n        <div class="col-md-4">\r\n          <h2>Heading</h2>\r\n          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>\r\n          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>\r\n        </div>\r\n      </div>', 10, 1, 'Custom HTML in a divbox', 'form-control', 27),
+('galleryID', '1', 13, 1, 'the Gallery ID to show up', 'form-control', 28),
+('twitchChannel', 'salista_belladonna', 14, 1, 'the name of any twitch channel', 'form-control', 29),
+('twitchChat', '1', 14, 1, 'Include the Chat for this channel? 1|0', 'form-control', 30),
+('twitchChatHeight', '200', 14, 1, 'Height of the chat in px eg. 200px', 'form-control', 31),
+('twitchChatWidth', '100%', 14, 1, 'Width of the chat channel in px or percent eg. 100%', 'form-control', 32),
+('twitchChannelHeight', '720', 14, 1, 'Height of the video stream in px eg. 720', 'form-control', 33),
+('twitchChannelWidth', '100%', 14, 1, 'Width of the video stream in eg 100%', 'form-control', 34),
+('twitchChannelFullscreen', 'true', 14, 1, 'Allow fullscreen video mode? true|false', 'form-control', 35),
+('menuID', '1', 15, 1, 'the menu ID you wish to show', 'form-control', 36),
+('youtubeWidth', '100%', 16, 1, 'YouTube video width in px or percent', 'form-control', 37),
+('youtubeHeight', '720', 16, 1, 'YouTube video height in px or percent', 'form-control', 38),
+('youtubeFullscreen', 'true', 16, 1, 'Allow fullscreen video? Set true or false', 'form-control', 39),
+('youtubeVideoUrl', 'https://www.youtube.com/watch?v=PK8sdl53GEA', 16, 1, 'YouTube URL', 'form-control', 40),
+('youtubeHeading', '', 16, 1, 'Heading above the video', 'form-control', 41),
+('youtubeSubtext', '', 16, 1, 'Small subtext beneath heading', 'form-control', 42),
+('youtubeDescription', '', 16, 1, 'Description under the video', 'form-control', 43);
 
 -- --------------------------------------------------------
 
@@ -1325,34 +1252,6 @@ CREATE TABLE `cms_widget_settings` (
   `activated` int(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Daten für Tabelle `cms_widget_settings`
---
-
-INSERT INTO `cms_widget_settings` (`id`, `widgetID`, `property`, `value`, `widgetType`, `activated`) VALUES
-(1, 2, 'trackingcode', 'UA-69471720-1', 6, 1),
-(12, 4, 'htmlcode', '<div class="row">        <div class="col-md-4">          <h2>Heading</h2>          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. ', 11, 1),
-(13, 9, 'clockcolor', '999999', 8, 1),
-(14, 10, 'clockcolor', '', 8, 1),
-(15, 9, 'clockcolor', '999999', 8, 1),
-(16, 10, 'clockcolor', '999', 8, 1),
-(17, 9, 'clockcolor', '999999', 8, 1),
-(18, 9, 'clockcolor', '999999', 8, 1),
-(19, 9, 'clockcolor', '999999', 8, 1),
-(20, 9, 'clockcolor', '999999', 8, 1),
-(21, 9, 'clockcolor', '999', 8, 1),
-(22, 9, 'clockcolor', '999', 8, 1),
-(23, 1, 'buttontitle', 'Login', 1, 1),
-(24, 3, 'clockcolor', '999999', 8, 1),
-(25, 3, 'clockcolor', '999999', 8, 1),
-(26, 3, 'width', '450', 4, 1),
-(27, 3, 'width', '450', 5, 1),
-(28, 3, 'clockcolor', '999', 8, 1),
-(29, 3, 'clockcolor', '999', 8, 1),
-(30, 3, 'clockcolor', '999', 8, 1),
-(31, 3, 'clockcolor', '999', 8, 1),
-(32, 3, 'trackingcode', 'UA-0000000-00', 6, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -1361,31 +1260,33 @@ INSERT INTO `cms_widget_settings` (`id`, `widgetID`, `property`, `value`, `widge
 
 CREATE TABLE `cms_widget_types` (
   `id` int(11) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '1',
   `name` varchar(128) NOT NULL,
-  `folder` varchar(128) NOT NULL
+  `folder` varchar(128) NOT NULL,
+  `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `cms_widget_types`
 --
 
-INSERT INTO `cms_widget_types` (`id`, `name`, `folder`) VALUES
-(1, 'Loginbox', 'loginbox'),
-(2, 'Simple Contact Form', 'form_simple'),
-(3, 'Prezi', 'prezi'),
-(4, 'FacebookBox', 'fb_box'),
-(5, 'FacebookLike', 'fb_like'),
-(6, 'GoogleAnalytics', 'google_analytics'),
-(7, 'SimpleUpload', 'simple_upload'),
-(8, 'Clock', 'clock'),
-(9, 'Signup', 'signup'),
-(10, 'Slider', 'slider'),
-(11, 'Divbox', 'divbox'),
-(12, 'Header', 'header'),
-(13, 'Divbox 2', 'divbox2'),
-(14, 'News Blog Widget', 'news'),
-(15, 'Newsletter', 'newsletter'),
-(16, 'Gallery', 'Gallery');
+INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`) VALUES
+(1, 1, 'Loginbox', 'loginbox', ''),
+(2, 1, 'Simple Contact Form', 'form_simple', ''),
+(3, 1, 'Prezi', 'prezi', ''),
+(4, 1, 'FacebookPage', 'fb_page', ''),
+(5, 1, 'FacebookLike', 'fb_like', ''),
+(6, 1, 'GoogleAnalytics', 'google_analytics', ''),
+(7, 1, 'SimpleUpload', 'simple_upload', ''),
+(8, 1, 'Clock', 'clock', ''),
+(9, 1, 'Signup', 'signup', ''),
+(10, 1, 'Divbox', 'divbox', ''),
+(11, 1, 'News Blog Widget', 'news', ''),
+(12, 1, 'Newsletter', 'newsletter', ''),
+(13, 1, 'Gallery', 'gallery', ''),
+(14, 1, 'Twitch Stream', 'twitch', ''),
+(15, 1, 'Sub Menu', 'submenu', ''),
+(16, 1, 'Youtube Stream', 'youtube', '');
 
 --
 -- Indizes der exportierten Tabellen
@@ -1442,7 +1343,7 @@ ALTER TABLE `cms_logins`
 --
 ALTER TABLE `cms_menu`
   ADD PRIMARY KEY (`TMPID`),
-  ADD KEY `id` (`id`,`sort`,`gid`,`menuID`,`parentID`,`published`,`date_created`,`date_changed`,`date_publish`,`date_unpublish`,`title`,`href`),
+  ADD KEY `id` (`id`,`sort`,`gid`,`menuID`,`parentID`,`published`,`date_created`,`date_changed`,`date_publish`,`date_unpublish`,`text`,`href`),
   ADD KEY `id_2` (`id`),
   ADD KEY `id_3` (`id`);
 
@@ -1666,17 +1567,17 @@ ALTER TABLE `cms_logins`
 -- AUTO_INCREMENT für Tabelle `cms_menu`
 --
 ALTER TABLE `cms_menu`
-  MODIFY `TMPID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `TMPID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 --
 -- AUTO_INCREMENT für Tabelle `cms_meta_local`
 --
 ALTER TABLE `cms_meta_local`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `cms_newsletter`
 --
 ALTER TABLE `cms_newsletter`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `cms_notifications`
 --
@@ -1691,7 +1592,7 @@ ALTER TABLE `cms_notifications_msg`
 -- AUTO_INCREMENT für Tabelle `cms_plugin_faq`
 --
 ALTER TABLE `cms_plugin_faq`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `cms_plugin_gallery`
 --
@@ -1706,7 +1607,7 @@ ALTER TABLE `cms_plugin_gallery_items`
 -- AUTO_INCREMENT für Tabelle `cms_plugin_msg`
 --
 ALTER TABLE `cms_plugin_msg`
-  MODIFY `msg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `msg_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `cms_stats`
 --
@@ -1731,7 +1632,7 @@ ALTER TABLE `cms_templates`
 -- AUTO_INCREMENT für Tabelle `cms_template_settings`
 --
 ALTER TABLE `cms_template_settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=174;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=179;
 --
 -- AUTO_INCREMENT für Tabelle `cms_users`
 --
@@ -1746,12 +1647,12 @@ ALTER TABLE `cms_user_groups`
 -- AUTO_INCREMENT für Tabelle `cms_widget_defaults`
 --
 ALTER TABLE `cms_widget_defaults`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 --
 -- AUTO_INCREMENT für Tabelle `cms_widget_settings`
 --
 ALTER TABLE `cms_widget_settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

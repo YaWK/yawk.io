@@ -1,3 +1,4 @@
+
 # SEO settings
 # to work correctly, you need +FollowSymLinks or at least +SymLinksIfOwnerMatch enabled.
 # if you get an ERROR 500, try ifownermatch (slower) and/or ask you webhoster to enable mod_rewrite + symlinks
@@ -13,7 +14,7 @@ ErrorDocument 404 http://192.168.1.8/yawk-LTE/content/errors/404.html
 
 # SEO settings
 RewriteEngine On
-#RewriteBase /webhosting_subfolder
+RewriteBase /yawk-LTE/
 RewriteCond %{REQUEST_URI} /(.*).html
 # rewrite all .html files to index.php?include={filename}
 RewriteRule ^(.*).html$ \index.php?include=$1 [NC,L]
@@ -31,7 +32,6 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
 # any other plugin...
 # RewriteRule ^plugin([^/]*)$ \index.php?plugin=$1 [L]
 
-
 # CACHE + THREAD SETTINGS
  <ifModule mod_headers.c>
     Header set Connection keep-alive
@@ -46,7 +46,7 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
 # in your httpd.conf look for the following line:
 # #LoadModule expires_module modules/mod_expires.so -- uncomment it & restart server.
 # if you cannot load the modules, comment out all lines til #END CACHING -- and it will work (w/o caching)
-# <IfModule mod_expires.c>
+ <IfModule mod_expires.c>
     ExpiresActive On
     ExpiresDefault A86400
     ExpiresByType image/x-icon A2592000
@@ -60,7 +60,7 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
     ExpiresByType video/x-flv A2592000
     ExpiresByType application/pdf A2592000
     ExpiresByType text/html A86400
-   # </IfModule>
+    </IfModule>
 
 ## Turn on Expires and set default expires to 1 day
 ExpiresActive On
@@ -127,3 +127,4 @@ ExpiresDefault A86400
 # override max upload file size
 # php_value upload_max_filesize 32M
 
+            

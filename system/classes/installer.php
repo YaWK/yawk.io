@@ -323,7 +323,7 @@ namespace YAWK {
                                      <input type=\"checkbox\" id=\"installCoreData\" name=\"installCoreData\" checked disabled>
                                      <label for=\"installCoreData\" style=\"font-weight: normal;\">$lang[YAWK_INSTALLATION_FILES] <small>($setup[VERSION])</small></label>
                                      <br>
-                                     <input type=\"checkbox\" id=\"installSampleData\" name=\"installSampleData\" checked disabled>
+                                     <input type=\"checkbox\" id=\"installSampleData\" name=\"installSampleData\" disabled>
                                      <label for=\"installSampleData\" style=\"font-weight: normal;\">$lang[YAWK_EXAMPLE_FILES] <small><small><i>$lang[USERS_PAGES_MENUS]</i></small></small></label>
                                      <br><br><b>$lang[DB_CHECK]</b><br><br><br><br><br><br></div> <!-- end col -->
                             </div> <!-- end jumbotron -->
