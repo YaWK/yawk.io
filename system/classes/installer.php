@@ -362,7 +362,7 @@ namespace YAWK {
                     // import .sql data
                     if ($status = $db->import("system/setup/yawk_database.sql"))
                     {   // delete filepointer, because it is not needed anymore
-                        unlink("yawk_database.sql_filepointer");
+                        unlink("system/setup/yawk_database.sql_filepointer");
                         \YAWK\alert::draw("success", "$lang[DB_IMPORT_OK]", "$status", "", 2000);
                     }
                 }
