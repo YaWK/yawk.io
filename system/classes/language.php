@@ -19,6 +19,8 @@ namespace YAWK {
     {
         /** * @var array $lang language array */
         public $lang;
+        /** * @var string $defaultLanguage default language if no supported language can be detected */
+        public $defaultLanguage;
         /** * @var string $currentLanguage current setted language in format: en-EN */
         public $currentLanguage;
         /** * @var string $currentLanguageGlobal current setted language in format: en */
@@ -98,8 +100,8 @@ namespace YAWK {
                     // get language setting from database
                     if (!isset($db))
                     {   // create new db object
-                        require_once 'system/classes/db.php';
-                        require_once 'system/classes/settings.php';
+                        require_once '../system/classes/db.php';
+                        require_once '../system/classes/settings.php';
                         $db = new \YAWK\db();
                     }
                     // get backend language setting and save string eg. (en-EN) in $this->current
@@ -166,6 +168,7 @@ namespace YAWK {
                     $this->supportedLanguagesGlobal[] = $globalLanguageTag;
                     $localLanguageTag = substr($file, 5, -4);
                     $this->supportedLanguages[] = $localLanguageTag;
+                    // $this->supportedLanguages[] = $globalLanguageTag;
                 }
             }
             if (is_array($this->supportedLanguagesGlobal) && (is_array($this->supportedLanguages)))
@@ -270,15 +273,16 @@ namespace YAWK {
         {
             $this->pathToFile = $this->getPathToLanguageFile();
 
-            //  language string global (just 2 chars) sent
+            //  short language identify string global (just 2 chars) sent
             if (strlen($currentLanguage) == 2)
             {   // build a proper currentLanguage string
                 $global = $currentLanguage;
                 $local = strtoupper($currentLanguage);
                 $currentLanguage = "$global-$local";
             }
+            // if language file exists...
             if (is_file("$this->pathToFile"."lang-"."$currentLanguage".".ini"))
-            {
+            {   // parse language file into array
                 $this->lang = parse_ini_file("$this->pathToFile"."lang-"."$currentLanguage".".ini");
             }
             return $this->lang;

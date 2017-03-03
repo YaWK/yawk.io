@@ -28,14 +28,16 @@ namespace YAWK {
         public function connect()
         {
             // Try and connect to the database
-            if (!isset($this->connection)) {
-                $this->connection = @new \mysqli($this->config['server'], $this->config['username'], $this->config['password'], $this->config['dbname']);
+            if (!isset($this->connection))
+            {
+                $this->connection = @new \mysqli($this->config['server'], $this->config['username'], $this->config['password'], $this->config['dbname'], $this->config['port']);
             }
-            // If connection was not successful, die and show the error
+            // if connection was not successful, return false
             if (mysqli_connect_errno())
             {
                 return false;
             }
+            // connection established -
             return $this->connection;
         }
 

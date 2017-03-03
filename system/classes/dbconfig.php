@@ -1,9 +1,9 @@
 
 <?php
     $this->config['server'] = "localhost";
-    $this->config['username'] = "database user";
-    $this->config['password'] = "database password";
-    $this->config['dbname'] = "database name";
+    $this->config['username'] = "root";
+    $this->config['password'] = "";
+    $this->config['dbname'] = "yawk_mercedesgarage";
     $this->config['prefix'] = "cms_";
     $this->config['port'] = "3306";
 ?>

@@ -454,7 +454,7 @@ namespace YAWK {
             $value = $db->quote($value);
             if ($res = $db->query("UPDATE {settings} SET value = '".$value."' WHERE property = '".$property."'")) {
                 // success
-                \YAWK\alert::draw("success", "$lang[SUCCESS]","$lang[SETTING] $property $lang[SAVED]","","120");
+                // \YAWK\alert::draw("success", "$lang[SUCCESS]","$lang[SETTING] $property $lang[SAVED]","","120");
                 return true;
             }
             else

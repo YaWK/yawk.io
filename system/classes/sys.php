@@ -15,7 +15,20 @@ namespace YAWK {
      * @link       http://yawk.io
      * @annotation The sys class - handles yawk's system core functions.
      */
-    class sys {
+    class sys
+    {
+
+        /**
+         * Return current base directory
+         * @author      Daniel Retzl <danielretzl@gmail.com>
+         * @version     1.0.0
+         * @link        http://yawk.io
+         * @return string
+         */
+        public static function getBaseDir()
+        {
+            return substr($_SERVER['SCRIPT_NAME'], 0, strpos($_SERVER['SCRIPT_NAME'],basename($_SERVER['SCRIPT_NAME'])));
+        }
 
 
         /**

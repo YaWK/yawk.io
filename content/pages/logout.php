@@ -1,0 +1,1 @@
+<h1>Danke, <small>du hast dich ausgeloggt.</small> </h1>

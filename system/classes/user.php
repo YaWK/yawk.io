@@ -1089,14 +1089,18 @@ namespace YAWK {
                 {
                     $row = mysqli_fetch_row($res); // username is already taken
                     if ($row[0]) {
-                        \YAWK\alert::draw("danger","Warning!","Please choose another username!","page=user-new","4800");
-                        exit;
+                        // \YAWK\alert::draw("danger","Warning!","Please choose another username!","page=user-new","4800");
+                        \YAWK\alert::draw("warning","Warning!","Please choose another username!","","4800");
+                        // exit;
+                        return false;
                     }
                 }
                 else {
                     \YAWK\sys::setSyslog($db, 5, "could not fetch username <b>$username</b> ", 0, 0, 0, 0);
-                    \YAWK\alert::draw("danger","Warning!","Could not fetch username! Database error?","page=user-new","4800");
-                    exit;
+                    // \YAWK\alert::draw("danger","Warning!","Could not fetch username! Database error?","page=user-new","4800");
+                    // exit;
+                    \YAWK\alert::draw("warning","Warning!","Could not fetch username! Database error?","","4800");
+                    return false;
                 }
                 // prepare vars
                 if (isset($_POST['twitter']) && (!empty($_POST['twitter']))) { $twitter = htmlentities($_POST['twitter']); }
@@ -1141,11 +1145,13 @@ namespace YAWK {
                 {   // q failed
                     return false;
                 }
-            } // passwords do not match
+            }
             else
-            {   //
-                \YAWK\alert::draw("warning", "Warning!", "Passwords do not match!", "page=user-new", "4800");
-                exit;
+            {   // passwords do not match
+                // \YAWK\alert::draw("warning", "Warning!", "Passwords do not match!", "page=user-new", "4800");
+                // exit;
+                \YAWK\alert::draw("warning", "Warning!", "Passwords do not match!", "", "4000");
+                return false;
             }
         }
 
