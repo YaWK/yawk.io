@@ -38,6 +38,14 @@ namespace YAWK {
         /** * @var string $serverRequirements does the server fulfil requirements? true or false */
         public $serverRequirements;
 
+        /**
+         * installer constructor.
+         * build and return the html head
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @copyright 2017 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @link       http://yawk.io
+         */
         function __construct()
         {
             echo "
@@ -79,6 +87,14 @@ namespace YAWK {
     ";
         }
 
+        /**
+         * Initialize the installer.
+         * check and set the current / supported language, check if install.ini exists and start setup process
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @copyright 2017 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @link       http://yawk.io
+         */
         public function init()
         {
             /* INSTALLER SCRIPT */
@@ -143,9 +159,13 @@ namespace YAWK {
         }   // ./ end installer init()
 
         /**
-         * Check if installation is needed
-         *
-        */
+         * Start the setup process.
+         * include core functions and check server requirements. handles the installation steps
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @copyright 2017 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @link       http://yawk.io
+         */
         public function setup($language, $lang)
         {   /* CHECK + SET LANGUAGE */
 
