@@ -227,6 +227,13 @@ namespace YAWK {
         }
 
 
+        /** step 1 - draw the language select options
+         * @param $language language object
+         * @param $lang language data array
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @link       http://yawk.io
+         */
         public function step1($language, $lang)
         {
             $this->step = 1;
