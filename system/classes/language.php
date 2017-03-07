@@ -7,9 +7,8 @@ namespace YAWK {
      * The language files are located in<br>
      * admin/language/lang-en-EN.ini
      *
-     *
      * @author     Daniel Retzl <danielretzl@gmail.com>
-     * @copyright  2009-2015 Daniel Retzl
+     * @copyright  2017 Daniel Retzl
      * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
      * @version    1.0.0
      * @link       http://yawk.io
