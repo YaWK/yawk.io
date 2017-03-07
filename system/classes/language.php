@@ -181,6 +181,15 @@ namespace YAWK {
                 }
         }
 
+        /**
+         * Check if a language is supported. This functions expect currentLanguage string in format "en-EN" or "en"
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @copyright 2017 Daniel Retzl
+         * @param string $currentLanguage language in format: en-EN or en
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @link       http://yawk.io
+         * @return string
+         */
         public function isSupported($currentLanguage)
         {
             // create arrays with supported languages, one in format "en", the other one "en-EN"
@@ -201,11 +210,8 @@ namespace YAWK {
                     }
                     else
                     {
-                        return false;
                         // detected language is not supported, set en-EN as default
-                        // $language->currentLanguage = "en-EN";
-                        // $language->currentLanguageGlobal = "en";
-                        // $language->setLanguage("en-EN");
+                        return false;
                     }
                 } // end global language tag (en)
                 else
@@ -226,6 +232,14 @@ namespace YAWK {
                 }
         }
 
+        /**
+         * Set a language as default and load (set) it current language
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @copyright 2017 Daniel Retzl
+         * @param string $defaultLanguage language in format: en-EN or en
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @link       http://yawk.io
+         */
         public function setDefault($defaultLanguage)
         {
             if (isset($defaultLanguage) && (!empty($defaultLanguage)))
@@ -236,6 +250,14 @@ namespace YAWK {
             }
         }
 
+        /**
+         * Returns the path to the language file
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @copyright 2017 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @link       http://yawk.io
+         * return string
+         */
         public function getPathToLanguageFile()
         {
             // check if call comes from frontend or backend
@@ -265,9 +287,9 @@ namespace YAWK {
         }
 
         /**
-         * set client language and parse corresponding ini file to array $lang
-         * @param string $lang the language as string (eg en-US)
-         * @return array|string $lang returns a language array
+         * set client language and parse corresponding ini file to an array called $lang
+         * @param string $currentLanguage the current language as string (eg en-US)
+         * @return array|bool $lang returns a language array
          */
         public function setLanguage($currentLanguage)
         {
@@ -283,15 +305,39 @@ namespace YAWK {
             // if language file exists...
             if (is_file("$this->pathToFile"."lang-"."$currentLanguage".".ini"))
             {   // parse language file into array
-                $this->lang = parse_ini_file("$this->pathToFile"."lang-"."$currentLanguage".".ini");
+                if ($this->lang = parse_ini_file("$this->pathToFile"."lang-"."$currentLanguage".".ini"))
+                {   // file loaded, return language array
+                    return $this->lang;
+                }
+                else
+                    {   // file could not be parsed into array - abort with error
+                        die ("could not load language file: $this->pathToFile"."lang-"."$currentLanguage".".ini");
+                    }
             }
-            return $this->lang;
+            // language file does not exist - check if an en-EN file exists...
+            elseif (is_file("$this->pathToFile"."lang-en-EN.ini"))
+            {   // parse language file into array
+                if ($this->lang = parse_ini_file("$this->pathToFile"."lang-en-EN.ini"))
+                {   // file loaded, return language array
+                    return $this->lang;
+                }
+                else
+                    {   // file could not be parsed into array - abort with error
+                        die ("ERROR: Could not load language file: $this->pathToFile"."lang-en-EN.ini");
+                    }
+            }
+            else
+                {   // language file not found
+                    // english (default) language file not found
+                    // abort with error
+                    die ("CRITICAL ERROR: No language file found. It should be there, but it isn't. This is strange. Please check $this->pathToFile and install a language file.");
+                }
         } /* end setLanguage */
 
 
         /**
          * allow plugins to inject language tags to $lang array
-         * @param array $lang the core language array
+         * @param array $lang the language data array
          * @param string $pathToFile absolute path to the injectable language file
          * @return array $lang returns pushed language array
          */
