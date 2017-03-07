@@ -158,9 +158,12 @@ namespace YAWK {
                 }
         }   // ./ end installer init()
 
+
         /**
          * Start the setup process.
          * include core functions and check server requirements. handles the installation steps
+         * @param object $language language object
+         * @param array $lang language data array
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @copyright 2017 Daniel Retzl
          * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
@@ -227,9 +230,9 @@ namespace YAWK {
         }
 
 
-        /** step 1 - draw the language select options
-         * @param $language language object
-         * @param $lang language data array
+        /** step 1 - SELECT LANGUAGE
+         * @param object $language language object
+         * @param array $lang language data array
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
          * @link       http://yawk.io
@@ -261,6 +264,14 @@ namespace YAWK {
                   </div>";
         }
 
+        /** step 2 - DB DATA + SERVER REQUIREMENTS
+         * @param array $setup installation settings
+         * @param object $language language object
+         * @param array $lang language data array
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @link       http://yawk.io
+         */
         public function step2($setup, $language, $lang)
         {
             $this->step = 2;
@@ -358,6 +369,14 @@ namespace YAWK {
                           ";
         }
 
+        /** step 3 - write db-config, check + import db connection If all went good, a form with project settings gets drawn.
+         * @param array $setup installation settings
+         * @param object $language language object
+         * @param array $lang language data array
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @link       http://yawk.io
+         */
         public function step3($setup, $language, $lang)
         {
             $this->step = 3;
@@ -441,6 +460,14 @@ namespace YAWK {
             }
         }
 
+        /** step 4 - save prjects settings and draw a form to enter user data (email, name, password...)
+         * @param array $setup installation settings
+         * @param object $language language object
+         * @param array $lang language data array
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @link       http://yawk.io
+         */
         public function step4($setup, $language, $lang)
         {
             $this->step = 4;
@@ -528,6 +555,14 @@ namespace YAWK {
                           </div>";
         }
 
+        /** step 5 - save data, write .htaccess files and redirect to backend login - FIN
+         * @param array $setup installation settings
+         * @param object $language language object
+         * @param array $lang array language data array
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @link       http://yawk.io
+         */
         public function step5($setup, $language, $lang)
         {
             $this->step = 5;
@@ -545,7 +580,6 @@ namespace YAWK {
             {
                 $this->rootPath = $_POST['rootPath'];
             }
-
 
             if (isset($_POST['EMAIL']) && (!empty($_POST['EMAIL'])))
             {
@@ -619,6 +653,11 @@ namespace YAWK {
 
         /* GET + CHECK functions */
 
+        /** this function writes the .htaccess file to the admin/ folder
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @link       http://yawk.io
+         */
         public function  writeHtaccessFileToAdminFolder()
         {
             $file = 'admin/.htaccess';
@@ -650,6 +689,9 @@ RewriteRule ^([^\\.]+)$ \\index.php?page=$1 [NC,L]
             }
         }
 
+        /**
+         * @return bool
+         */
         public function writeHtaccessFileToRootFolder()
         {
             $host = $this->url;
@@ -785,21 +827,25 @@ ExpiresDefault A86400
 # php_value upload_max_filesize 32M
 
             ";
-            // Schreibt den Inhalt in die Datei
-            // unter Verwendung des Flags FILE_APPEND, um den Inhalt an das Ende der Datei anzufügen
-            // und das Flag LOCK_EX, um ein Schreiben in die selbe Datei zur gleichen Zeit zu verhindern
+            // write to file
+            // using the flag LOCK_EX, to ensure safe writing on file
             if (file_put_contents($file, $data, LOCK_EX))
-            {
+            {   // all good
                 return true;
             }
             else
-                {
+                {   // could not write file
                     return false;
                 }
 
         }
 
 
+        /** check server requirements and set object params
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @link       http://yawk.io
+         */
         public function checkServerRequirements()
         {
             $i = 0;
@@ -862,6 +908,11 @@ ExpiresDefault A86400
             }
         }
 
+        /** Check supported languages and build options for select field
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @link       http://yawk.io
+         */
         public function getLanguageSelectOptions($language, $lang)
         {
             $selectOptions = '';
@@ -884,6 +935,12 @@ ExpiresDefault A86400
                 return $selectOptions;
         }
 
+        /** Check if php version is bigger than required
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @link       http://yawk.io
+         * return bool
+         */
         public function checkPhpVersion()
         {
             if (version_compare(phpversion(), $this->phpVersionRequired, '<')) {
@@ -898,6 +955,12 @@ ExpiresDefault A86400
             }
         }
 
+        /** Check if the weberver is running on apache
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @link       http://yawk.io
+         * return bool
+         */
         public function checkApacheVersion()
         {
             if ($this->apacheVersion = apache_get_version())
@@ -955,6 +1018,12 @@ ExpiresDefault A86400
             }
         }
 
+        /**
+         * Draw the installer's footer with links to yawk.io and github
+         * @author      Daniel Retzl <danielretzl@gmail.com>
+         * @version     1.0.0
+         * @link        http://yawk.io
+         */
         public function footer()
         {
             echo "<footer class=\"animated fadeIn\" style=\"position: relative; bottom: -8em; width: 100%; height: auto; background-color: #f1f1f1;\">
@@ -971,6 +1040,12 @@ ExpiresDefault A86400
                   </footer>";
         }
 
+        /**
+         * Call the footer and end the html body and file
+         * @author      Daniel Retzl <danielretzl@gmail.com>
+         * @version     1.0.0
+         * @link        http://yawk.io
+         */
         function __destruct()
         {
                 $this->footer();
