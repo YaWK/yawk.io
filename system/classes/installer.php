@@ -81,7 +81,7 @@ namespace YAWK {
         <link rel=\"stylesheet\" href=\"system/engines/pace/pace-minimal-installer.css\">
                 
     </head>
-    <body style=\"background-color: #f1f1f1;\">
+    <body style=\"background-color: #ebebeb;\">
     <div class=\"container-fluid animated fadeIn\">
     <form method=\"POST\">
     ";
@@ -379,12 +379,27 @@ namespace YAWK {
          */
         public function step3($setup, $language, $lang)
         {
-            $this->step = 3;
-            // get base path
-            $this->rootPath = \YAWK\sys::getBaseDir();
+            // server-side check if user has filled out all required fields of step 2
+            if (!isset($_POST['DB_HOST']) || empty($_POST['DB_HOST'])
+            || (!isset($_POST['DB_USER']) || empty($_POST['DB_USER'])
+            || (!isset($_POST['DB_NAME']) || empty($_POST['DB_NAME'])
+            || (!isset($_POST['DB_PREFIX']) || empty($_POST['DB_PREFIX'])
+            || (!isset($_POST['DB_PORT']) || empty($_POST['DB_PORT'])
+            )))))
+            {   // kick user back to step 2, due missing or empty settings
+                if (isset($_POST['step']) && (!empty($_POST['step']))) { $_POST['step']--; }
+                $this->step2($setup, $language, $lang);
+                \YAWK\alert::draw("danger", "$lang[DB_ERROR]", "$lang[DB_ERROR_MISSING_FIELDS]", "", 5000);
+                exit;
+            }
+            else
+                {   // data from step 2 seem to be OK...
+                    $this->step = 3;
+                    // get root base path
+                    $this->rootPath = \YAWK\sys::getBaseDir();
 
-            // write DB connection into db-config.php
-            $data = "
+                    // write DB connection into db-config.php
+                    $data = "
 <?php
     \$this->config['server'] = \"".$_POST['DB_HOST']."\";
     \$this->config['username'] = \"".$_POST['DB_USER']."\";
@@ -393,35 +408,34 @@ namespace YAWK {
     \$this->config['prefix'] = \"".$_POST['DB_PREFIX']."\";
     \$this->config['port'] = \"".$_POST['DB_PORT']."\";
 ?>";
-            // check if dbconfig file was successfully written...
-            if (file_put_contents("system/classes/dbconfig.php", $data))
-            {
-                // include database and settings class
-                if (!isset($db)) {
-                    require_once('system/classes/db.php');
-                    $db = new \YAWK\db();
-                }
+                    // check if dbconfig file was successfully written...
+                    if (file_put_contents("system/classes/dbconfig.php", $data))
+                    {
+                        // include database and settings class
+                        if (!isset($db)) {
+                            require_once('system/classes/db.php');
+                            $db = new \YAWK\db();
+                        }
 
-                // ok, lets test the database connection...
-                if ($db->connect())
-                {
-                    // import .sql data
-                    if ($status = $db->import("system/setup/yawk_database.sql"))
-                    {   // delete filepointer, because it is not needed anymore
-                        unlink("system/setup/yawk_database.sql_filepointer");
-                        \YAWK\alert::draw("success", "$lang[DB_IMPORT_OK]", "$status", "", 2000);
-                    }
-                }
-                else
-                {
-                    if (isset($_POST['step']) && (!empty($_POST['step']))) { $_POST['step']--; }
-                    $this->step2($setup, $language, $lang);
-                    \YAWK\alert::draw("warning", "$lang[DB_ERROR]", "$lang[DB_ERROR_SUBTEXT]", "", 5000);
-                    exit;
-                }
+                        // ok, lets test the database connection...
+                        if ($db->connect())
+                        {
+                            // import .sql data
+                            if ($status = $db->import("system/setup/yawk_database.sql"))
+                            {   // delete filepointer, because it is not needed anymore
+                                unlink("system/setup/yawk_database.sql_filepointer");
+                                \YAWK\alert::draw("success", "$lang[DB_IMPORT_OK]", "$status", "", 2000);
+                            }
+                        }
+                        else
+                        {   // kick user back to step 2, due missing or empty settings
+                            if (isset($_POST['step']) && (!empty($_POST['step']))) { $_POST['step']--; }
+                            $this->step2($setup, $language, $lang);
+                            \YAWK\alert::draw("danger", "$lang[DB_ERROR]", "$lang[DB_ERROR_SUBTEXT]", "", 5000);
+                            exit;
+                        }
 
-
-                echo"
+                        echo"
                           <div class=\"row\">
                             <div class=\"jumbotron\">
                                 <div class=\"col-md-8 text-justify\">
@@ -452,12 +466,14 @@ namespace YAWK {
                                 </div>
                             </div>
                           </div>";
-            }
-            else
-            {   // if not - draw error
-                echo "Could not write file: dbconfig.php - please check folder permissions and try again or setup the file manually.";
-                exit;
-            }
+                    }
+                    else
+                    {   // if not - draw error
+                        \YAWK\alert::draw("danger", "Could not write file: dbconfig.php", "Please check folder permissions and try again or setup the file manually.", "","");
+                        $this->step2($setup, $language, $lang);
+                        exit;
+                    }
+                }
         }
 
         /** step 4 - save prjects settings and draw a form to enter user data (email, name, password...)
@@ -637,7 +653,6 @@ namespace YAWK {
                                 exit;
                             }
                         }
-
                 }
                 else
                 {
@@ -1026,7 +1041,7 @@ ExpiresDefault A86400
          */
         public function footer()
         {
-            echo "<footer class=\"animated fadeIn\" style=\"position: relative; bottom: -8em; width: 100%; height: auto; background-color: #f1f1f1;\">
+            echo "<footer class=\"animated fadeIn\" style=\"position: relative; bottom: -8em; width: 100%; height: auto; background-color: #ebebeb;\">
                         <div class=\"container-fluid\">
                         <div class=\"row\">
                             <div class=\"col-md-12 text-center small\">
