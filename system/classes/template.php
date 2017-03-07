@@ -261,7 +261,7 @@ namespace YAWK {
                 else
                 {   // exit and throw error
                     \YAWK\sys::setSyslog($db, 5, "failed to get template name by id <b>$templateID</b> ", 0, 0, 0, 0);
-                    die ("could not get template name");
+                    // die ("Please check database connection.");
                 }
             return null;
         }
