@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 08. Mrz 2017 um 21:57
+-- Erstellungszeit: 08. Mrz 2017 um 23:25
 -- Server-Version: 10.1.10-MariaDB
 -- PHP-Version: 5.6.19
 
@@ -777,13 +777,6 @@ CREATE TABLE `cms_stats` (
   `referer` varchar(255) NOT NULL,
   `page` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Daten für Tabelle `cms_stats`
---
-
-INSERT INTO `cms_stats` (`id`, `uid`, `gid`, `logged_in`, `acceptLanguage`, `remoteAddr`, `userAgent`, `device`, `deviceType`, `os`, `osVersion`, `browser`, `browserVersion`, `date_created`, `referer`, `page`) VALUES
-(1, 0, 0, 0, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-03-08 21:57:06', '', 'index');
 
 -- --------------------------------------------------------
 
@@ -1586,7 +1579,7 @@ ALTER TABLE `cms_plugin_msg`
 -- AUTO_INCREMENT für Tabelle `cms_stats`
 --
 ALTER TABLE `cms_stats`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `cms_syslog`
 --

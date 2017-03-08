@@ -97,63 +97,65 @@ namespace YAWK {
          */
         public function init()
         {
+            /* CHECK + SET LANGUAGE */
+            // include language class
+            $language = '';
+            require_once ('system/classes/language.php');
+            /* check if language object is set*/
+            if (!isset($lang) || (empty($lang)))
+            {   // set new language object
+                $language = new \YAWK\language();
+                // default language if detection not works
+                $language->defaultLanguage = "en-EN";
+                // set the path to the language file
+                $language->pathToFile = "admin/language/";
+
+                // try to get the client language
+                if ($language->detectedLanguage = $language->getClientLanguage())
+                {   // currentLanguageGlobal is set due call of getClientLanguage
+                    if ($language->isSupported($language->currentLanguageGlobal))
+                    {
+                        // client language is supported, set it
+                        $language->currentLanguage = $language->currentLanguageGlobal;
+                        $language->setLanguage($language->currentLanguageGlobal);
+                    }
+                    else
+                    {
+                        // client language is not supported - set default (eg. en-EN)
+                        $language->setDefault($language->defaultLanguage);
+                    }
+                }
+                // if current language is sent via form (POST data)
+                if (isset($_POST['currentLanguage']) && (!empty($_POST['currentLanguage'])))
+                {   // check if POST language is supported
+                    if ($language->isSupported($_POST['currentLanguage']))
+                    {
+                        // POST language is supported
+                        $language->detectedLanguage = $_POST['currentLanguage'];
+                        $language->setLanguage($language->detectedLanguage);
+                    }
+                    else
+                    {
+                        // POST language is NOT supported - set default (eg. en-EN)
+                        $language->currentLanguage = $language->defaultLanguage;
+                        $language->setDefault($language->defaultLanguage);
+                    }
+                }
+                // convert language object param to array $lang[] that contains all the language data
+                $lang = (array) $language->lang;
+            }
+
             /* INSTALLER SCRIPT */
+            // check if install configuration file is available
             if (file_exists("system/setup/install.ini"))
             {
-                /* CHECK + SET LANGUAGE */
-                // include language class
-                require_once ('system/classes/language.php');
-                /* check if language object is set*/
-                if (!isset($lang) || (empty($lang)))
-                {   // set new language object
-                    $language = new \YAWK\language();
-                    // default language if detection not works
-                    $language->defaultLanguage = "en-EN";
-                    // set the path to the language file
-                    $language->pathToFile = "admin/language/";
-
-                    // try to get the client language
-                    if ($language->detectedLanguage = $language->getClientLanguage())
-                    {   // currentLanguageGlobal is set due call of getClientLanguage
-                        if ($language->isSupported($language->currentLanguageGlobal))
-                        {
-                            // client language is supported, set it
-                            $language->currentLanguage = $language->currentLanguageGlobal;
-                            $language->setLanguage($language->currentLanguageGlobal);
-                        }
-                        else
-                            {
-                                // client language is not supported - set default (eg. en-EN)
-                                $language->setDefault($language->defaultLanguage);
-                            }
-                    }
-                    // if current language is sent via form (POST data)
-                    if (isset($_POST['currentLanguage']) && (!empty($_POST['currentLanguage'])))
-                    {   // check if POST language is supported
-                        if ($language->isSupported($_POST['currentLanguage']))
-                        {
-                            // POST language is supported
-                            $language->detectedLanguage = $_POST['currentLanguage'];
-                            $language->setLanguage($language->detectedLanguage);
-                        }
-                        else
-                            {
-                                // POST language is NOT supported - set default (eg. en-EN)
-                                $language->currentLanguage = $language->defaultLanguage;
-                                $language->setDefault($language->defaultLanguage);
-                            }
-                    }
-                    // convert language object param to array $lang[] that contains all the language data
-                    $lang = (array) $language->lang;
-
-                    /* LOAD INSTALLER */
-                    $this->setup($language, $lang);
-                }
+                /* LOAD INSTALLER */
+                $this->setup($language, $lang);
             }
             else
                 {   // init() failed - INSTALL.INI is not found or not readable
                     require_once('system/classes/alert.php');
-                    \YAWK\alert::draw("danger", "Installer seems to be broken.", "Please check if <b><i>system/setup/install.ini</i></b> is readable. If file is not here, there could be a problem with the package due unzip or uploading. In that case try to download, unzip and upload again.", "","");
+                    \YAWK\alert::draw("danger", "$lang[INSTALLER_BROKEN]", "$lang[INSTALLER_BROKEN_SUBTEXT]", "","");
                     exit;
                 }
         }   // ./ end installer init()
@@ -612,7 +614,7 @@ namespace YAWK {
                     {
                         $htaccessAdminStatus = 0;
                         // failed to write /admin/.htaccess - throw warning
-                        \YAWK\alert::draw("warning", ".htaccess file nicht geschrieben", "seem not ok", "", "");
+                        \YAWK\alert::draw("warning", "$lang[HTACCESS_WRITE_FAILED_ADMIN]", "$lang[HTACCESS_WRITE_FAILED_ADMIN_SUBTEXT]", "", "");
                     }
                     else { $htaccessAdminStatus = 1; }
 
@@ -620,7 +622,7 @@ namespace YAWK {
                     if ($this->writeHtaccessFileToRootFolder() === false)
                     {   $htaccessRootStatus = 0;
                         // failed to write .htaccess - throw warning
-                        \YAWK\alert::draw("warning", ".htaccess file nicht geschrieben", "seem not ok", "", "");
+                        \YAWK\alert::draw("warning", "$lang[HTACCESS_WRITE_FAILED_ROOT]", "$lang[HTACCESS_WRITE_FAILED_ROOT_SUBTEXT]", "", "");
                     }
                     else { $htaccessRootStatus = 1; }
 
