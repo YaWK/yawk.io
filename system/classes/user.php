@@ -579,7 +579,7 @@ namespace YAWK {
             else
             {   // q failed
                 \YAWK\sys::setSyslog($db, 5, "failed to load user settings ", 0, 0, 0, 0);
-                \YAWK\alert::draw("danger","Error!","Could not select data for user <b>$username</b> from database...","","4800");
+                // \YAWK\alert::draw("danger","Error!","Could not select data for user <b>$username</b> from database...","","4800");
                 return false;
             }
             return true;
