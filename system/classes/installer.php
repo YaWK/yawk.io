@@ -232,7 +232,7 @@ namespace YAWK {
             }
                 else
                     {
-                        \YAWK\alert::draw("danger", "Installation Error", "Install.ini is not readable. It seems that the package is corrupt. Please try to delete, re-download and re-install the whole package.", "","");
+                        \YAWK\alert::draw("danger", "$lang[INSTALLER_BROKEN]", "$lang[INSTALLER_BROKEN_SUBTEXT]", "","");
                         exit;
                     }
                     // prevent display anything else than the single steps
@@ -479,7 +479,7 @@ namespace YAWK {
                     }
                     else
                     {   // if not - draw error
-                        \YAWK\alert::draw("danger", "Could not write file: dbconfig.php", "Please check folder permissions and try again or setup the file manually.", "","");
+                        \YAWK\alert::draw("danger", "$lang[DBCONFIG_WRITE_FAILED]", "$lang[DBCONFIG_WRITE_FAILED]", "","");
                         $this->step2($setup, $language, $lang);
                         exit;
                     }
@@ -526,6 +526,7 @@ namespace YAWK {
                     $this->url = rtrim($this->url, '/') . '';
                     // save website host (URL) setting to database
                     \YAWK\settings::setSetting($db, "host", $this->url, $lang);
+                    \YAWK\settings::setSetting($db, "backendLogoText", $this->url, $lang);
                 }
                 else
                     {   // FILTER FAILED - process anway, but throw warning afterwards.
@@ -534,7 +535,8 @@ namespace YAWK {
                         // ensure that there is no trailing slash at the end
                         $this->url = rtrim($this->url, '/') . '';
                         \YAWK\settings::setSetting($db, "host", $this->url, $lang);
-                        \YAWK\alert::draw("warning", "URL seems to be faulty", "URL not passed filter test. This could be a problem. (maybe)", "", 5000);
+                        \YAWK\settings::setSetting($db, "backendLogoText", $this->url, $lang);
+                        \YAWK\alert::draw("warning", "$lang[FAULTY_URL]", "$lang[FAULTY_URL_SUBTEXT]", "", 5000);
                     }
             }
 
@@ -542,10 +544,17 @@ namespace YAWK {
             {
                 \YAWK\settings::setSetting($db, "title", $_POST['TITLE'], $lang);
             }
+
             if (isset($_POST['DESC']) && (!empty($_POST['DESC'])))
             {
                 \YAWK\settings::setSetting($db, "globalmetatext", $_POST['DESC'], $lang);
             }
+
+            if (isset($language->currentLanguage))
+            {
+                \YAWK\settings::setSetting($db, "backendLanguage", $language->currentLanguage, $lang);
+            }
+
             echo"
                           <div class=\"row\">
                             <div class=\"jumbotron\">
@@ -639,13 +648,13 @@ namespace YAWK {
                     {
                         if (unlink('setup.php'))
                         {
-                            \YAWK\alert::draw("success", "Installation complete!", "Please login with your username and password.", "", 3000);
+                            \YAWK\alert::draw("success", "$lang[INSTALL_COMPLETE]", "$lang[STANDBY_AND_LOGIN]", "", 3000);
                             \YAWK\sys::setTimeout("admin/index.php", 3000);
                             exit;
                         }
                         else
                             {
-                                \YAWK\alert::draw("warning", "Installation complete!", "IMPORTANT NOTICE: please delete the file setup.php for security reasons!<br>You will be redirected in a few seconds, please wait.", "", 5000);
+                                \YAWK\alert::draw("warning", "$lang[INSTALL_COMPLETE]", "$lang[SETUP_UNLINK_FAILED]", "", 5000);
                                 \YAWK\sys::setTimeout("admin/index.php", 5000);
                                 exit;
                             }
@@ -654,12 +663,12 @@ namespace YAWK {
                         {   // check which .htaccess file could not be written
                             if ($htaccessAdminStatus === 0)
                             {   // admin file could not be written, throw error
-                                \YAWK\alert::draw("warning", "admin/.htaccess ERROR", "File could not be written! This could mean trouble with the backend.", "", 3000);
+                                \YAWK\alert::draw("warning", "$lang[HTACCESS_WRITE_FAILED_ADMIN]", "$lang[HTACCESS_WRITE_FAILED_ADMIN_SUBTEXT]", "", "");
                                 exit;
                             }
                             if ($htaccessRootStatus === 0)
                             {
-                                \YAWK\alert::draw("warning", ".htaccess ERROR", "File could not be written. Expect troubles.", "", 3000);
+                                \YAWK\alert::draw("warning", "$lang[HTACCESS_WRITE_FAILED_ROOT]", "$lang[HTACCESS_WRITE_FAILED_ROOT_SUBTEXT]", "", "");
                                 exit;
                             }
                         }
@@ -667,10 +676,9 @@ namespace YAWK {
                 else
                 {
                     if (isset($_POST['step']) && (!empty($_POST['step']))) { $_POST['step']--; }
-                    // \YAWK\alert::draw("warning", "Please choose another username", "Could not add user, please try again.", "", 5000);
+                    \YAWK\alert::draw("warning", "$lang[INSTALL_USERNAME_FAILED]", "$lang[INSTALL_USERNAME_FAILED_SUBTEXT]", "", 5000);
                     $this->step4($setup, $language, $lang);
                     exit;
-                    // \YAWK\alert::draw("success", "User $_POST[USERNAME] added.", "Now you are able to login. Welcome o'board Captain!", "", "");
                 }
             }
         }
