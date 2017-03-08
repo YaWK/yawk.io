@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 08. Mrz 2017 um 17:53
+-- Erstellungszeit: 08. Mrz 2017 um 21:57
 -- Server-Version: 10.1.10-MariaDB
 -- PHP-Version: 5.6.19
 
@@ -277,6 +277,13 @@ CREATE TABLE `cms_menu` (
   `blogid` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Daten für Tabelle `cms_menu`
+--
+
+INSERT INTO `cms_menu` (`TMPID`, `id`, `sort`, `gid`, `menuID`, `parentID`, `published`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `title`, `text`, `href`, `target`, `divider`, `blogid`) VALUES
+(1, 1, 1, 1, 1, 0, 1, '2017-03-08 19:02:19', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Home', 'index.html', '_self', 0, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -303,8 +310,8 @@ INSERT INTO `cms_menu_names` (`id`, `name`, `published`) VALUES
 --
 
 CREATE TABLE `cms_meta_global` (
-  `name` varchar(100) NOT NULL,
-  `content` varchar(100) NOT NULL
+  `name` varchar(255) NOT NULL,
+  `content` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -313,7 +320,7 @@ CREATE TABLE `cms_meta_global` (
 
 INSERT INTO `cms_meta_global` (`name`, `content`) VALUES
 ('author', 'YaWK'),
-('description', 'Dieser Beschreibungstext soll einem Anwender im Suchdienst bei Auffinden dieser Datei erscheinen.'),
+('description', 'This Text appears on search engines. It is the typical description of your page underneath the link or title of every search result.'),
 ('robots', 'all');
 
 -- --------------------------------------------------------
@@ -402,7 +409,7 @@ CREATE TABLE `cms_pages` (
 --
 
 INSERT INTO `cms_pages` (`id`, `published`, `gid`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `alias`, `title`, `bgimage`, `owner`, `menu`, `locked`, `blogid`, `plugin`) VALUES
-(1, 0, 1, '2017-03-08 00:00:00', '0000-00-00 00:00:00', '2017-03-08 00:00:00', '0000-00-00 00:00:00', 'index.html', 'Welcome to YaWK CMS!', '', -1, 0, 0, 0, '');
+(1, 1, 1, '2017-03-08 00:00:00', '0000-00-00 00:00:00', '2017-03-08 00:00:00', '0000-00-00 00:00:00', 'index', 'Welcome to YaWK CMS!', '', -1, 0, 0, 0, '0');
 
 -- --------------------------------------------------------
 
@@ -616,7 +623,7 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('dbpwd', 'test', '', 9, 4, 1, 'DBPWD_LABEL', '', '', '', 'form-control', 'password', '', '', ''),
 ('dbusername', 'root', '', 9, 3, 1, 'DBUSERNAME_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('defaultemailtext', '', 'Hello $user,\\n\\n\\Thank you for registering on site\\n\\n$url', 5, 0, 1, 'Default SignUp Email Message', '', '', '', 'form-control', 'textarea', '', '', ''),
-('dirprefix', '/yawk-LTE', '', 9, 0, 1, 'DIRPREFIX_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+('dirprefix', '/yawk-LTE/', '', 9, 0, 1, 'DIRPREFIX_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('domain', 'yourwebsite', '', 1, 4, 1, 'DOMAIN_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('editorActiveLine', '1', '', 14, 2, 1, 'EDITOR_ACTIVE_LINE_LABEL', '', '', '', 'form-control', 'checkbox', '', 'EDITOR_ACTIVE_LINE_DESC', ''),
 ('editorAutoCodeview', '1', '', 14, 9, 1, 'EDITOR_AUTO_CODEVIEW_LABEL', '', '', '', 'form-control', 'checkbox', '', 'EDITOR_AUTO_CODEVIEW_DESC', ''),
@@ -636,13 +643,13 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('frontendFX', '0', '', 3, 3, 1, 'FRONTENDFX_LABEL', '', '', '', 'form-control', '', '', '', ''),
 ('globalmenuid', '1', '', 3, 2, 1, 'GLOBALMENUID_LABEL', 'fa fa-bars', 'GLOBALMENUID_HEADING', 'GLOBALMENUID_SUBTEXT', 'form-control', 'select', '', 'GLOBALMENUID_DESC', ''),
 ('globalmetakeywords', 'YAWK, CMS, WORDPRESS, JOOMLA', '', 10, 0, 1, 'Global Site Keywords', '', '', '', 'form-control', '', '', '', ''),
-('globalmetatext', 'YAWK Yet another WebKit CMS', '', 10, 0, 1, 'Global Meta Description', '', '', '', 'form-control', '', '', '', ''),
-('host', 'http://yourwebsite', '', 1, 3, 1, 'HOST_LABEL', '', '', '', 'form-control', 'input', '', 'DATABASE_DESC', ''),
+('globalmetatext', 'official yawk website', '', 10, 0, 1, 'Global Meta Description', '', '', '', 'form-control', '', '', '', ''),
+('host', 'http://192.168.1.8/yawk-LTE', '', 1, 3, 1, 'HOST_LABEL', '', '', '', 'form-control', 'input', '', 'DATABASE_DESC', ''),
 ('loadingTime', '0', '', 11, 10, 1, 'LOADINGTIME_LABEL', 'fa fa-signal', 'LOADINGTIME_HEADING', 'LOADINGTIME_SUBTEXT', 'form-control', 'checkbox', '', '', ''),
 ('logoutmenuid', '1', '', 6, 0, 1, 'Logout Menu ID for logged-in Users', '', '', '', 'form-control', '', '', '', ''),
 ('offline', '0', '', 8, 0, 1, 'OFFLINE_LABEL', 'fa fa-wrench', 'OFFLINE_HEADING', 'OFFLINE_SUBTEXT', 'form-control', 'checkbox', '', 'OFFLINE_DESC', ''),
 ('offlineimage', 'media/images/closed-sign-tm.jpg', '', 8, 0, 1, 'OFFLINEIMAGE_LABEL', '', '', '', 'form-control', 'input', 'media/images/logo.jpg', 'OFFLINEIMAGE_DESC', ''),
-('offlinemsg', '<h1>Wartungsarbeiten</h1><h3>Bitte schau spÃ¤ter nochmal vorbei.</h3>', '', 8, 0, 1, 'OFFLINEMSG_LABEL', '', '', '', 'form-control', 'textarea', '', '', ''),
+('offlinemsg', '<h1>Maintenance Downtime</h1><h3>We are sorry, right now we are going to do some housekeeping at our website. Please come back later.</h3>', '', 8, 0, 1, 'OFFLINEMSG_LABEL', '', '', '', 'form-control', 'textarea', '', '', ''),
 ('paceLoader', 'enabled', '', 11, 1, 1, 'PACELOADER_LABEL', 'fa fa-spinner', 'PACELOADER_HEADING', 'PACELOADER_SUBTEXT', 'form-control', 'select', '', '', 'disabled,disabled:enabled,enabled'),
 ('paceLoaderColor', '0073AA', '', 11, 2, 1, 'PACELOADER_COLOR_LABEL', '', '', '', 'form-control color', 'input', '0073aa', '', ''),
 ('paceLoaderHeight', '4px', '', 11, 3, 1, 'PACELOADER_HEIGHT_LABEL', '', '', '', 'form-control', 'input', 'PACELOADER_HEIGHT_PLACEHOLDER', '', ''),
@@ -656,7 +663,7 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('signup_gid', '1', '', 5, 0, 1, 'Adds a GroupID select field to SignUp Form', '', '', '', 'form-control', '', '', '', ''),
 ('signup_lastname', '0', '', 5, 0, 1, 'require lastname to signUp', '', '', '', 'form-control', '', '', '', ''),
 ('signup_layout', 'right', '', 5, 0, 1, 'Layout of User SignUp Form (left, right or plain)', '', '', '', 'form-control', '', '', '', ''),
-('signup_legend0-long', '', '<h2>...fÃ¼r geladene GÃ¤ste <small>- become a VIP!</small></h2><p>\r\nDas bedeutet, dass Du an meinem exklusiven FSK-18 Members-Club teilnehmen kannst. Es erwarten Dich:\r\n\r\n<ul>\r\n<li class="fa fa-check"> geile Bilder</li><br>\r\n<li class="fa fa-check"> sexy Videos</li><br>\r\n<li class="fa fa-check"> private Einblicke</li><br>\r\n<li class="fa fa-check"> behind the scenes uvm...</li><br>\r\n</ul>\r\n\r\nVIP sein ist kostenlos und verpflichtet zu nichts.</p>\r\n<b>ABER ACHTUNG! Bitte beachte: Erst dann, wenn wir einander bereits persÃ¶nlich kennengelernt haben <u>und Du von mir via Email eine Einladung erhalten hast,</u> kannst Du dich hier anmelden.</b>', 5, 0, 1, 'signUp legend text', '', '', '', 'form-control', '', '', '', ''),
+('signup_legend0-long', '', '<h2>Membership  <small>- become a VIP!</small></h2><p>\nIf you signup today, you can\n<ul>\n<li class="fa fa-check"> login to Website</li><br>\n<li class="fa fa-check"> get your own profile page</li><br>\n<li class="fa fa-check"> additional exclusive Member''s Stuff</li><br>\n<li class="fa fa-check"> super-douper-whatever you want to sell or show</li><br>\n</ul>\n\nBeein VIP is free. As long as you want it. Expect nothing, get all!</p>\n<b>But beware! You need an email invitation to register here - its exclusive! (: </b>', 5, 0, 1, 'signUp legend text', '', '', '', 'form-control', '', '', '', ''),
 ('signup_legend1-long', '', '<h2>SignUp as Guest</h2>', 5, 0, 1, 'signUp legend text', '', '', '', 'form-control', '', '', '', ''),
 ('signup_legend2-long', '', '<h2>SignUp as User <br><small>all the good things...</small></h2>\r\n<ul>\r\n<li>Item 1</li>\r\n<li>Item 2</li>\r\n<li>Item 3</li>\r\n</ul>', 5, 0, 1, 'signUp legend text', '', '', '', 'form-control', '', '', '', ''),
 ('signup_legend3-long', '', '<h2>SignUp as Provider</h2>', 5, 0, 1, 'signUp legend text', '', '', '', 'form-control', '', '', '', ''),
@@ -674,10 +681,10 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('siteauthor', 'YaWK', '', 10, 0, 1, 'Site Author', '', '', '', 'form-control', '', '', '', ''),
 ('sitename', 'YaWK Yet another WebKit CMS', '', 1, 2, 1, 'SITENAME_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('statsEnable', '1', '', 13, 2, 1, 'STATS_LABEL', 'fa fa-bar-chart', 'STATS_HEADING', 'STATS_SUBTEXT', 'form-control', 'select', '', 'STATS_DESC', '0,off:1,on'),
-('syslogEnable', '1', '', 13, 1, 1, 'SYSLOG_LABEL', 'fa fa-terminal', 'SYSLOG_HEADING', 'SYSLOG_SUBTEXT', 'form-control', 'select', '', 'SYSLOG_DESC', '0,off:1,on'),
+('syslogEnable', '0', '', 13, 1, 1, 'SYSLOG_LABEL', 'fa fa-terminal', 'SYSLOG_HEADING', 'SYSLOG_SUBTEXT', 'form-control', 'select', '', 'SYSLOG_DESC', '0,off:1,on'),
 ('timediff', '1', '', 7, 1, 1, 'TIMEDIFF_LABEL', 'fa fa-clock-o', 'TIMEDIFF_HEADING', 'TIMEDIFF_SUBTEXT', 'form-control', 'checkbox', '', 'TIMEDIFF_DESC', ''),
 ('timedifftext', 'This page is not online yet. Please come back in ', '', 7, 2, 1, 'TIMEDIFFTEXT_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
-('title', 'YaWK Yet another WebKit CMS', '', 1, 1, 1, 'TITLE_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+('title', 'YaWK.io - official Website  of Yet another WebKit CMS', '', 1, 1, 1, 'TITLE_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('twitterstatus', '0', '', 4, 0, 1, 'Twitter on/off', '', '', '', 'form-control', '', '', '', ''),
 ('twitterurl', 'http://www.twitter.com', '', 4, 0, 1, 'URL zu Twitter Profil', '', '', '', 'form-control', '', '', '', ''),
 ('userlogin', '1', '', 17, 1, 1, 'USERLOGIN_LABEL', 'fa fa-lock', 'USERLOGIN_HEADING', 'USERLOGIN_SUBTEXT', 'form-control', 'checkbox', '', 'USERLOGIN_DESC', ''),
@@ -771,6 +778,13 @@ CREATE TABLE `cms_stats` (
   `page` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Daten für Tabelle `cms_stats`
+--
+
+INSERT INTO `cms_stats` (`id`, `uid`, `gid`, `logged_in`, `acceptLanguage`, `remoteAddr`, `userAgent`, `device`, `deviceType`, `os`, `osVersion`, `browser`, `browserVersion`, `date_created`, `referer`, `page`) VALUES
+(1, 0, 0, 0, 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '56.0.2924.87', '2017-03-08 21:57:06', '', 'index');
+
 -- --------------------------------------------------------
 
 --
@@ -848,7 +862,7 @@ CREATE TABLE `cms_templates` (
 --
 
 INSERT INTO `cms_templates` (`id`, `active`, `name`, `positions`, `description`, `releaseDate`, `author`, `authorUrl`, `weblink`, `subAuthor`, `subAuthorUrl`, `modifyDate`, `version`, `license`) VALUES
-(1, 1, 'yawk-bootstrap3', 'intro:globalmenu:top:leftMenu:mainTop:mainTopLeft:mainTopCenter:mainTopRight:main:mainBottom:mainBottomLeft:mainBottomCenter:mainBottomRight:mainFooter:mainFooterLeft:mainFooterCenter:mainFooterRight:rightMenu:bottom:footer:hiddentoolbar:debug', 'YaWK Bootstrap 3 Default Theme.', '2016-09-29 00:00:00', 'Daniel Retzl ', 'https://github.com/yawk-LTE', 'http://www.yawk.io', 'Daniel Retzl', '', '2016-10-01 02:30:00', '1.0.0', 'GNU General Public License (GPL)');
+(1, 1, 'yawk-bootstrap3', 'intro:globalmenu:top:leftMenu:mainTop:mainTopLeft:mainTopCenter:mainTopRight:main:mainBottom:mainBottomLeft:mainBottomCenter:mainBottomRight:mainFooter:mainFooterLeft:mainFooterCenter:mainFooterRight:rightMenu:bottom:footer:hiddentoolbar:debug', 'YaWK Bootstrap 3 Default Theme.', '2016-09-29 00:00:00', 'Daniel Retzl ', 'https://github.com/YaWK', 'http://www.yawk.io', 'Daniel Retzl', '', '2016-10-01 02:30:00', '1.0.0', 'GNU General Public License (GPL)');
 
 -- --------------------------------------------------------
 
@@ -1527,7 +1541,7 @@ ALTER TABLE `cms_logins`
 -- AUTO_INCREMENT für Tabelle `cms_menu`
 --
 ALTER TABLE `cms_menu`
-  MODIFY `TMPID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `TMPID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT für Tabelle `cms_meta_local`
 --
@@ -1572,7 +1586,7 @@ ALTER TABLE `cms_plugin_msg`
 -- AUTO_INCREMENT für Tabelle `cms_stats`
 --
 ALTER TABLE `cms_stats`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT für Tabelle `cms_syslog`
 --

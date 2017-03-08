@@ -132,16 +132,16 @@ if (\YAWK\user::isAnybodyThere())
         // get template by user templateID
         $templateName = \YAWK\template::getTemplateNameById($db, $user->templateID);
         // include page, based on user templateID
-        if(!@include("system/templates/$templateName"."index.php"))
+        if(!@include("system/templates/$templateName/index.php"))
         {   // if template not exists, show selectedTemplate
             $templateName = \YAWK\template::getTemplateNameById($db, $selectedTemplate);
-            include("system/templates/$templateName"."index.php");
+            include("system/templates/$templateName/index.php");
         }
     }
     else
         {   // user is not allowed to overrule template, show global default (selectedTemplate) instead.
             $templateName = \YAWK\template::getTemplateNameById($db, $selectedTemplate);
-            if(!include("system/templates/$templateName"."index.php"))
+            if(!include("system/templates/$templateName/index.php"))
             {
                 die("Unable to include template. Either database config is faulty or YaWK is not correctly installed.");
             }
@@ -150,7 +150,7 @@ if (\YAWK\user::isAnybodyThere())
 else
     {   // user is NOT logged in, load default template (selectedTemplate) from settings db
         $templateName = \YAWK\template::getTemplateNameById($db, $selectedTemplate);
-        if(!include("system/templates/$templateName"."index.php"))
+        if(!include("system/templates/$templateName/index.php"))
         {
             die("Unable to include template. Either database config is faulty or YaWK is not correctly installed.");
         }

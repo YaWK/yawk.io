@@ -187,49 +187,49 @@ if (isset($_GET['move']))
     <div class="tab-pane fade in" id="audio">
         <br>
         <?php YAWK\filemanager::drawTableHeader($lang, 1); ?>
-        <?php YAWK\filemanager::getFilesFromFolder("audio");  ?>
+        <?php YAWK\filemanager::getFilesFromFolder("../media/audio");  ?>
         <?php YAWK\filemanager::drawTableFooter(); ?>
     </div>
 
     <div class="tab-pane fade in" id="backup">
         <br>
         <?php YAWK\filemanager::drawTableHeader($lang, 2); ?>
-        <?php YAWK\filemanager::getFilesFromFolder("backup");  ?>
+        <?php YAWK\filemanager::getFilesFromFolder("../media/backup");  ?>
         <?php YAWK\filemanager::drawTableFooter(); ?>
     </div>
 
     <div class="tab-pane fade in" id="documents">
         <br>
         <?php YAWK\filemanager::drawTableHeader($lang, 3); ?>
-        <?php YAWK\filemanager::getFilesFromFolder("documents");	?>
+        <?php YAWK\filemanager::getFilesFromFolder("../media/documents");	?>
         <?php YAWK\filemanager::drawTableFooter(); ?>
     </div>
 
     <div class="tab-pane fade in" id="downloads">
         <br>
         <?php YAWK\filemanager::drawTableHeader($lang, 4); ?>
-        <?php YAWK\filemanager::getFilesFromFolder("downloads");  ?>
+        <?php YAWK\filemanager::getFilesFromFolder("../media/downloads");  ?>
         <?php YAWK\filemanager::drawTableFooter(); ?>
     </div>
 
     <div class="tab-pane fade in active" id="images">
         <br>
         <?php YAWK\filemanager::drawTableHeader($lang, 5); ?>
-        <?php YAWK\filemanager::getFilesFromFolder("images");  ?>
+        <?php YAWK\filemanager::getFilesFromFolder("../media/images");  ?>
         <?php YAWK\filemanager::drawTableFooter(); ?>
     </div>
 
     <div class="tab-pane fade in" id="uploads">
         <br>
         <?php YAWK\filemanager::drawTableHeader($lang, 6); ?>
-        <?php YAWK\filemanager::getFilesFromFolder("uploads");  ?>
+        <?php YAWK\filemanager::getFilesFromFolder("../media/uploads");  ?>
         <?php YAWK\filemanager::drawTableFooter(); ?>
     </div>
 
     <div class="tab-pane fade in" id="video">
         <br>
         <?php YAWK\filemanager::drawTableHeader($lang, 7); ?>
-        <?php YAWK\filemanager::getFilesFromFolder("video");  ?>
+        <?php YAWK\filemanager::getFilesFromFolder("../media/video");  ?>
         <?php YAWK\filemanager::drawTableFooter(); ?>
     </div>
 </div>

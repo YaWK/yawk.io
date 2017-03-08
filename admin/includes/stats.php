@@ -125,10 +125,13 @@ else
             </div>
                 <?php
                     $erg = array();
-                    $data = array_slice($data, 0, $limit, true);
-                    foreach ($data AS $page => $value)
+                    if (is_array($data))
                     {
-                        $erg[] = $value['page'];
+                        $data = array_slice($data, 0, $limit, true);
+                        foreach ($data AS $page => $value)
+                        {
+                            $erg[] = $value['page'];
+                        }
                     }
 
                     $erg = (array_count_values($erg));

@@ -135,15 +135,14 @@ if(isset($_POST['add'])) {
           $params['gid'],
           $params['published'],
           $params['parentID'],
-          $params['target'],
-          $lang);
+          $params['target']);
     }
   }
   else {
     foreach($_POST as $param=>$value){
       if(strlen($param) >= 8){
         if(substr($param,-7,7) === "_delete"){
-          YAWK\menu::deleteEntry($db, $_GET['menu'], substr($param,0,-7), $lang);
+          YAWK\menu::deleteEntry($db, $_GET['menu'], substr($param,0,-7));
         }
       }
     }
