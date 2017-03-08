@@ -13,6 +13,14 @@ namespace YAWK {
         public $url;
         /** * @var string $rootPath the root path where yawk is installed*/
         public $rootPath;
+        /** * @var string $configFile the path and filename to install.ini which helds the setup configuration */
+        public $configFile = "system/setup/install.ini";
+        /** * @var string $dbConfigPhp the path and filename to dbconfig.php which helds the mysql configuration */
+        public $dbConfigPhp = "system/classes/dbconfig.php";
+        /** * @var string $sqlFile the path and filename to yawk's core sql database file */
+        public $sqlFile = "system/setup/yawk_database.sql";
+        /** * @var string $filePointer the path and filename to the sql file's filepointer */
+        public $filePointer = "system/setup/yawk_database.sql_filepointer";
         /** * @var string $yawkVersion detected from install.ini */
         public $yawkVersion;
         /** * @var string $version Installer version */
@@ -146,8 +154,8 @@ namespace YAWK {
             }
 
             /* INSTALLER SCRIPT */
-            // check if install configuration file is available
-            if (file_exists("system/setup/install.ini"))
+            // check if system/setup/install.ini file is available
+            if (file_exists($this->configFile))
             {
                 /* LOAD INSTALLER */
                 $this->setup($language, $lang);
@@ -184,7 +192,7 @@ namespace YAWK {
             self::checkServerRequirements();
 
             // get install data into array
-            if ($setup = parse_ini_file("system/setup/install.ini", FALSE))
+            if ($setup = parse_ini_file($this->configFile, FALSE))
             {
                 $this->yawkVersion = $setup['VERSION']; // get the yawk version
                 // if INSTALL is set to true
@@ -411,7 +419,7 @@ namespace YAWK {
     \$this->config['port'] = \"".$_POST['DB_PORT']."\";
 ?>";
                     // check if dbconfig file was successfully written...
-                    if (file_put_contents("system/classes/dbconfig.php", $data))
+                    if (file_put_contents($this->dbConfigPhp, $data))
                     {
                         // include database and settings class
                         if (!isset($db)) {
@@ -423,9 +431,9 @@ namespace YAWK {
                         if ($db->connect())
                         {
                             // import .sql data
-                            if ($status = $db->import("system/setup/yawk_database.sql"))
+                            if ($status = $db->import($this->sqlFile))
                             {   // delete filepointer, because it is not needed anymore
-                                unlink("system/setup/yawk_database.sql_filepointer");
+                                unlink($this->filePointer);
                                 \YAWK\alert::draw("success", "$lang[DB_IMPORT_OK]", "$status", "", 2000);
                             }
                         }
