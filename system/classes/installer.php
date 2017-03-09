@@ -648,7 +648,7 @@ namespace YAWK {
                     {
                         if (unlink('setup.php'))
                         {
-                            \YAWK\alert::draw("success", "$lang[INSTALL_COMPLETE]", "$lang[STANDBY_AND_LOGIN]", "", 3000);
+                            \YAWK\alert::draw("success", "$lang[INSTALL_COMPLETE]", "$lang[INSTALL_COMPLETE_SUBTEXT]", "", 3000);
                             \YAWK\sys::setTimeout("admin/index.php", 3000);
                             exit;
                         }
