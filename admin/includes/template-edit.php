@@ -1680,7 +1680,7 @@ else
                             <h3 class="box-title"><?php echo "$lang[TPL_MAIN_POS_SHADOW] <small>$lang[TPL_AROUND_POSITION]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                                <!-- main box shadow -->
+                            <!-- main box shadow -->
                             <?php $template->getFormElements($db, $templateSettings, 9, $lang, $user); ?>
                         </div>
                     </div>
@@ -1713,7 +1713,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[MENU] $lang[FONT] <small>$lang[COLORS]"; ?></small></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "%-menucolor", "", "", $user); ?>
+                            <!-- menu font colors -menucolor -->
+                            <?php $template->getFormElements($db, $templateSettings, 10, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1724,7 +1725,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[MENU] $lang[BG] <small>$lang[COLORS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "%-menubgcolor", "", "", $user); ?>
+                            <!-- menu background color -menubgcolor -->
+                            <?php $template->getFormElements($db, $templateSettings, 11, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1735,7 +1737,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[MENU] $lang[DROPDOWN] <small>$lang[COLORS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "%-menudropdowncolor", "", "", $user); ?>
+                            <!-- menu background color -menudropdowncolor -->
+                            <?php $template->getFormElements($db, $templateSettings, 12, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1746,7 +1749,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[MENU] $lang[NAVBAR] <small>$lang[POSITIONING]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "navbar-marginTop", "", "", $user); ?>
+                            <!-- menu navbar margin top -navbar-marginTop -->
+                            <?php $template->getFormElements($db, $templateSettings, 13, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1763,7 +1767,9 @@ else
                             <h3 class="box-title"><?php echo "$lang[WELL] $lang[BOX] <small>$lang[DESIGN]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "well-%", "", "", $user); ?>
+                            <!-- menu navbar margin top -navbar-marginTop -->
+                            <?php $template->getFormElements($db, $templateSettings, 14, $lang, $user); ?>
+                            <?php // $template->getSetting($db, "well-%", "", "", $user); ?>
                         </div>
                     </div>
                  </div>
