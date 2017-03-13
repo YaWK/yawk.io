@@ -1146,16 +1146,16 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
       }
     }
     
-    .pos-topmenu
+    .pos-intro
     {
-        top: ".$tpl_settings['pos-topmenu-top'].";
-        margin-bottom: ".$tpl_settings['pos-topmenu-marginBottom'].";
-        position: ".$tpl_settings['pos-topmenu-property'].";
-        background-color: #".$tpl_settings['pos-topmenu-bg-color'].";
-        width: ".$tpl_settings['pos-topmenu-width'].";
-        height: ".$tpl_settings['pos-topmenu-height'].";
-        z-index: ".$tpl_settings['pos-topmenu-zindex'].";
-        ".$tpl_settings['pos-topmenu-bg-gradient-longValue'].";
+        top: ".$tpl_settings['pos-intro-top'].";
+        margin-bottom: ".$tpl_settings['pos-intro-marginBottom'].";
+        position: ".$tpl_settings['pos-intro-position'].";
+        background-color: #".$tpl_settings['pos-intro-bg-color'].";
+        width: ".$tpl_settings['pos-intro-width'].";
+        height: ".$tpl_settings['pos-intro-height'].";
+        z-index: ".$tpl_settings['pos-intro-zindex'].";
+        ".$tpl_settings['pos-intro-bg-gradient-longValue'].";
     }
     
     ";
@@ -1294,7 +1294,7 @@ else
         <button type="submit" id="savebutton" name="save" class="btn btn-success">
             <i id="savebuttonIcon" class="fa fa-check"></i> &nbsp;<?php print $lang['DESIGN_SAVE']; ?>
         </button>
-       <!-- <input id="savebutton" type="submit" class="btn btn-success" name="save" value="<?php echo $lang['DESIGN_SAVE']; ?>"> -->
+       <!-- <input id="savebutton" type="submit" class="btn btn-success" name="save" value="<?php // echo $lang['DESIGN_SAVE']; ?>"> -->
     </div>
     <!-- FORM -->
     <!-- Nav tabs -->
@@ -1497,26 +1497,30 @@ else
             </div>
         </div>
 
+        <?php
+            // GET ALL TEMPLATE SETTINGS INTO ARRAY
+            $templateSettings = \YAWK\template::getAllSettingsIntoArray($db, $user);
+        ?>
+
         <!-- POSITIONS -->
         <div role="tabpanel" class="tab-pane" id="positions">
             <h3><? echo "$lang[POSITIONS]"; ?> <small><?php echo "$lang[TPL_POSITION_SETTINGS]"; ?></small></h3>
             <!-- list GOOGLE FONTS -->
             <div class="row animated fadeIn">
                 <div class="col-md-4">
-                    <div class="box box-default">
-                        <div class="box-header">
-                            <h3 class="box-title"><?php echo $lang['TPL_TOPMENU_POS']; ?> <small>this is the first position, before anything else</small></h3>
+                    <div class="box box-with-border">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><?php echo "$lang[TPL_POS_INTRO] <small>$lang[TPL_POS_INTRO_SUBTEXT]</small>"; ?></h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "pos-topmenu-top", "", "", $user); ?>
-                            <?php $template->getSetting($db, "pos-topmenu-marginBottom", "", "", $user); ?>
-                            <?php $template->getSetting($db, "pos-topmenu-property", "", "", $user); ?>
-                            <?php $template->getSetting($db, "pos-topmenu-bg-color", "", "", $user); ?>
-                            <?php $template->getSetting($db, "pos-topmenu-height", "", "", $user); ?>
-                            <?php $template->getSetting($db, "pos-topmenu-width", "", "", $user); ?>
-                            <?php $template->getSetting($db, "pos-topmenu-zindex", "", "", $user); ?>
-                            <?php $template->getSetting($db, "pos-topmenu-bg-gradient-longValue", "", "", $user); ?>
+                            <?php $template->getFormElements($db, $templateSettings, 1, $lang, $user); ?>
                         </div>
+                        <br>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -1591,9 +1595,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[TPL_GLOBALTEXT] <small>$lang[TPL_GLOBALTEXT_SUBTEXT]"; ?></small></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "body-text-size", "", "", $user); ?>
-                            <?php $template->getSetting($db, "body-text-shadow", "", "", $user); ?>
-                            <?php $template->getSetting($db, "body-text-shadow-color", "", "", $user); ?>
+                            <!-- common text settings (size, shadow, color...) -->
+                            <?php $template->getFormElements($db, $templateSettings, 2, $lang, $user); ?>
                         </div>
                     </div>
 
@@ -1602,7 +1605,9 @@ else
                             <h3 class="box-title"><?php echo "$lang[LINK] <small>$lang[COLORS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "%-link", "", "", $user); ?>
+                            <!-- link colors and settings (color, decoration, hover, btn text color...) -->
+                            <?php $template->getFormElements($db, $templateSettings, 3, $lang, $user); ?>
+                            <?php // $template->getSetting($db, "%-link", "", "", $user); ?>
                         </div>
                     </div>
                 </div>
