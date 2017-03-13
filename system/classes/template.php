@@ -872,15 +872,7 @@ namespace YAWK {
          * @param object $db Database Object
          */
         public function getFormElements($db, $settings, $type, $lang, $user)
-        {
-            // echo "<pre>";
-
-          //  print_r($user);
-          //  print_r($settings);
-            // echo "</pre>";
-
-
-            // loop trough array
+        {   // loop trough array
             $i_settings = 0;
             if(!isset($settings) || (empty($settings)) || (!is_array($settings)))
             {	// if settings are not set, try to get them...
