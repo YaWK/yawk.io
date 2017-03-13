@@ -1316,7 +1316,7 @@ else
                 &nbsp; <?php echo $lang['TYPOGRAPHY']; ?></a>
         </li>
         <li role="presentation">
-            <a href="#body" aria-controls="layout" role="tab" data-toggle="tab"><i class="fa fa-object-group"></i>
+            <a href="#body" aria-controls="body" role="tab" data-toggle="tab"><i class="fa fa-object-group"></i>
                 &nbsp; <?php echo $lang['BODY']; ?></a>
         </li>
       <!--  <li role="presentation"><a href="#colors" aria-controls="colors" role="tab" data-toggle="tab"><i class="fa fa-paint-brush"></i>&nbsp; Colors</a></li> -->
@@ -1325,15 +1325,15 @@ else
                 &nbsp; <?php echo $lang['MENU']; ?></a>
         </li>
         <li role="presentation">
-            <a href="#well" aria-controls="menu" role="tab" data-toggle="tab"><i class="fa fa-sticky-note-o"></i>
-                &nbsp; <?php echo $lang['WELL']; ?></a>
+            <a href="#bootstrap" aria-controls="bootstrap" role="tab" data-toggle="tab"><i class="fa fa-sticky-note-o"></i>
+                &nbsp; <?php echo $lang['BOOTSTRAP3']; ?></a>
         </li>
         <li role="presentation">
-            <a href="#buttons" aria-controls="menu" role="tab" data-toggle="tab"><i class="fa fa-toggle-on"></i>
+            <a href="#buttons" aria-controls="buttons" role="tab" data-toggle="tab"><i class="fa fa-toggle-on"></i>
                 &nbsp; <?php echo $lang['BUTTONS']; ?></a>
         </li>
         <li role="presentation">
-            <a href="#images" aria-controls="menu" role="tab" data-toggle="tab"><i class="fa fa-picture-o"></i>
+            <a href="#images" aria-controls="images" role="tab" data-toggle="tab"><i class="fa fa-picture-o"></i>
                 &nbsp; <?php echo $lang['IMAGES']; ?></a>
         </li>
         <li role="presentation">
@@ -1341,7 +1341,7 @@ else
                 &nbsp; <?php echo $lang['EFFECTS']; ?></a>
         </li>
         <li role="presentation">
-            <a href="#custom" aria-controls="menu" role="tab" data-toggle="tab"><i class="fa fa-css3"></i>
+            <a href="#custom" aria-controls="custom" role="tab" data-toggle="tab"><i class="fa fa-css3"></i>
                 &nbsp; <?php echo $lang['CUSTOM_CSS']; ?></a>
         </li>
         <li role="presentation">
@@ -1607,7 +1607,6 @@ else
                         <div class="box-body">
                             <!-- link colors and settings (color, decoration, hover, btn text color...) -->
                             <?php $template->getFormElements($db, $templateSettings, 3, $lang, $user); ?>
-                            <?php // $template->getSetting($db, "%-link", "", "", $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1618,12 +1617,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[HEADINGS] <small>$lang[H1_H6_FONT_SIZE]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "h1-size", "", "", $user); ?>
-                            <?php $template->getSetting($db, "h2-size", "", "", $user); ?>
-                            <?php $template->getSetting($db, "h3-size", "", "", $user); ?>
-                            <?php $template->getSetting($db, "h4-size", "", "", $user); ?>
-                            <?php $template->getSetting($db, "h5-size", "", "", $user); ?>
-                            <?php $template->getSetting($db, "h6-size", "", "", $user); ?>
+                            <!-- H1-H6 Text sizes (font size of headings in px or em) -->
+                            <?php $template->getFormElements($db, $templateSettings, 4, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1634,7 +1629,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[HEADING] <small>$lang[COLORS]"; ?></small></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "%-fontcolor", "", "", $user); ?>
+                            <!-- Font Colors (h1-h6 colors, smalltag, font, jumbotron + listgroup fontcolor) -->
+                            <?php $template->getFormElements($db, $templateSettings, 5, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1652,7 +1648,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[BODY] <small>$lang[SETTINGS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "body-bg-color", "", "", $user); ?>
+                            <!-- body bg color -->
+                            <?php $template->getFormElements($db, $templateSettings, 6, $lang, $user); ?>
                         </div>
                     </div>
 
@@ -1661,7 +1658,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[BODY] <small>$lang[POSITIONING]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "body-margin-%", "", "", $user); ?>
+                            <!-- body margin -->
+                            <?php $template->getFormElements($db, $templateSettings, 7, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1672,13 +1670,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[BG_IMAGE] <small>$lang[SETTINGS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php
-                            $template->getSetting($db, "body-bg-image", "", "", $user);
-                            $template->getSetting($db, "body-bg-repeat", "", "", $user);
-                            $template->getSetting($db, "body-bg-position", "", "", $user);
-                            $template->getSetting($db, "body-bg-attachment", "", "", $user);
-                            $template->getSetting($db, "body-bg-size", "", "", $user);
-                            ?>
+                            <!-- body background image -->
+                            <?php $template->getFormElements($db, $templateSettings, 8, $lang, $user); ?>
                         </div>
                     </div>
 
@@ -1687,9 +1680,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[TPL_MAIN_POS_SHADOW] <small>$lang[TPL_AROUND_POSITION]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php
-                            $template->getSetting($db, "main-box-shadow", "", "", $user);
-                            $template->getSetting($db, "main-box-shadow-color", "", "", $user); ?>
+                                <!-- main box shadow -->
+                            <?php $template->getFormElements($db, $templateSettings, 9, $lang, $user); ?>
                         </div>
                     </div>
 
@@ -1762,8 +1754,8 @@ else
         </div>
 
         <!-- WELL,LISTGROUP, JUMBOTRON -->
-        <div role="tabpanel" class="tab-pane" id="well">
-            <h3><?php echo "$lang[WELL] <small>$lang[SETTINGS]</small>"; ?></h3>
+        <div role="tabpanel" class="tab-pane" id="bootstrap">
+            <h3><?php echo "$lang[BOOTSTRAP3] <small>$lang[SETTINGS]</small>"; ?></h3>
             <div class="row animated fadeIn">
                 <div class="col-md-3">
                     <div class="box box-default">
