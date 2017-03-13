@@ -1767,9 +1767,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[WELL] $lang[BOX] <small>$lang[DESIGN]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <!-- menu navbar margin top -navbar-marginTop -->
+                            <!-- well box design  well- -->
                             <?php $template->getFormElements($db, $templateSettings, 14, $lang, $user); ?>
-                            <?php // $template->getSetting($db, "well-%", "", "", $user); ?>
                         </div>
                     </div>
                  </div>
@@ -1777,11 +1776,13 @@ else
                 <div class="col-md-3">
                     <div class="box box-default">
                         <div class="box-header">
-                            <h3 class="box-title"><?php echo "$lang[LIST_GROUP] <small>$lang[SETTINGS]</small>"; ?></h3>
+                            <h3 class="box-title"><?php echo "$lang[LIST_GROUP] <small>$lang[DESIGN]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "listGroup-%", "", "", $user); ?>
-                            <?php $template->getSetting($db, "listgroup-bg-gradient-longValue", "", "", $user); ?>
+                            <!-- well box design  well- -->
+                            <?php $template->getFormElements($db, $templateSettings, 15, $lang, $user); ?>
+                            <?php // $template->getSetting($db, "listGroup-%", "", "", $user); ?>
+                            <?php // $template->getSetting($db, "listgroup-bg-gradient-longValue", "", "", $user); ?>
                         </div>
                     </div>
                 </div>
