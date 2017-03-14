@@ -1779,10 +1779,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[LIST_GROUP] <small>$lang[DESIGN]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <!-- well box design  well- -->
+                            <!-- listgroup design  listgroup-  -->
                             <?php $template->getFormElements($db, $templateSettings, 15, $lang, $user); ?>
-                            <?php // $template->getSetting($db, "listGroup-%", "", "", $user); ?>
-                            <?php // $template->getSetting($db, "listgroup-bg-gradient-longValue", "", "", $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1793,7 +1791,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[JUMBOTRON] <small>$lang[BOX] $lang[DESIGN]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "jumbotron-%", "", "", $user); ?>
+                            <!-- jumbotron design  jumbotron-  -->
+                            <?php $template->getFormElements($db, $templateSettings, 16, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1823,13 +1822,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[BUTTON] <small>$lang[FONT] $lang[AND] $lang[BORDER] $lang[SETTINGS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php
-                                $template->getSetting($db, "btn-fontsize", "", "", $user);
-                                $template->getSetting($db, "btn-font-weight", "", "", $user);
-                                $template->getSetting($db, "btn-border", "", "", $user);
-                                $template->getSetting($db, "btn-border-style", "", "", $user);
-                                $template->getSetting($db, "btn-border-radius", "", "", $user);
-                            ?>
+                            <!-- btn settings    btn-   -->
+                            <?php $template->getFormElements($db, $templateSettings, 17, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1864,7 +1858,8 @@ else
                             <h3 class="box-title">Default <small>Button</small></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "btn-default-%", "", "", $user); ?>
+                            <!-- btn default    btn-default   -->
+                            <?php $template->getFormElements($db, $templateSettings, 18, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1874,7 +1869,8 @@ else
                             <h3 class="box-title">Primary <small>Button</small></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "btn-primary-%", "", "", $user); ?>
+                            <!-- btn primary    btn-primary   -->
+                            <?php $template->getFormElements($db, $templateSettings, 19, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1884,7 +1880,8 @@ else
                             <h3 class="box-title">Success <small>Button</small></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "btn-success-%", "", "", $user); ?>
+                            <!-- btn success   btn-success   -->
+                            <?php $template->getFormElements($db, $templateSettings, 20, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1894,7 +1891,8 @@ else
                             <h3 class="box-title">Warning <small>Button</small></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "btn-warning-%", "", "", $user); ?>
+                            <!-- btn warning   btn-warning   -->
+                            <?php $template->getFormElements($db, $templateSettings, 21, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1904,7 +1902,8 @@ else
                             <h3 class="box-title">Danger <small>Button</small></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "btn-danger-%", "", "", $user); ?>
+                            <!-- btn danger   btn-danger   -->
+                            <?php $template->getFormElements($db, $templateSettings, 22, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1914,7 +1913,8 @@ else
                             <h3 class="box-title">Info <small>Button</small></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "btn-info-%", "", "", $user); ?>
+                            <!-- btn info   btn-info   -->
+                            <?php $template->getFormElements($db, $templateSettings, 23, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1931,7 +1931,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[IMAGE] <small>$lang[EFFECTS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "img-%", "", "", $user); ?>
+                            <!-- image settings   img-   -->
+                            <?php $template->getFormElements($db, $templateSettings, 24, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
