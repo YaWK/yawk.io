@@ -1,6 +1,11 @@
 <!-- color picker -->
 <script type="text/javascript" src="../system/engines/jquery/jscolor/jscolor.js"></script>
-<!-- --><script type="text/javascript" src="../system/engines/jquery/bootstrap-tabcollapse.js"></script>
+<!-- TAB collapse -->
+<script type="text/javascript" src="../system/engines/jquery/bootstrap-tabcollapse.js"></script>
+<!-- Bootstrap toggle css -->
+<link rel="stylesheet" href="../system/engines/bootstrap-toggle/css/bootstrap-toggle.css">
+<!-- Bootstrap toggle js -->
+<script type="text/javascript" src="../system/engines/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
 <!-- JS GO -->
 <script type="text/javascript">
 /* reminder: check if form has changed and warns the user that he needs to save. */
@@ -1507,25 +1512,20 @@ else
             <h3><? echo "$lang[POSITIONS]"; ?> <small><?php echo "$lang[TPL_POSITION_SETTINGS]"; ?></small></h3>
             <!-- list GOOGLE FONTS -->
             <div class="row animated fadeIn">
-                <!--
-                <div class="col-md-4">
+
+                <div class="col-md-3">
                     <div class="box box-with-border">
                         <div class="box-header with-border">
-                            <h3 class="box-title"><?php // echo "$lang[TPL_POS_INTRO] <small>$lang[TPL_POS_INTRO_SUBTEXT]</small>"; ?></h3>
-
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                            </div>
+                            <h3 class="box-title"><?php echo "$lang[TPL_POS_INTRO] <small>$lang[TPL_POS_ACTIVE]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php // $template->getFormElements($db, $templateSettings, 1, $lang, $user); ?>
+                            <?php $template->getFormElements($db, $templateSettings, 1, $lang, $user); ?>
                         </div>
                         <br>
                     </div>
                 </div>
-                -->
-                <div class="col-md-12">
+
+                <div class="col-md-9">
                     <div class="box box-default">
                         <div class="box-header">
                             <h3 class="box-title"><?php echo "$lang[POSITIONS] <small>$lang[SETTINGS]</small>"; ?></h3>
@@ -1534,13 +1534,13 @@ else
                         <div class="box-body">
                             <div class="container-fluid">
                                 <div class="row text-center">
-                                    <div class="col-md-12" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; border-style: dotted; border-color: #ccc">&laquo;outerTop&raquo;</div>
+                                    <div class="col-md-12" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; border-style: dotted; border-color: #ccc;">&laquo;outerTop&raquo;</div>
                                 </div>
                                 <div class="row text-center">
                                     <div class="col-md-2" style="height: 630px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;outerLeft&raquo;</div>
                                     <div class="col-md-8">
                                         <div class="row">
-                                            <div class="col-md-12" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; border-style: dotted; border-color: #ccc">&laquo;intro&raquo;</div>
+                                            <div class="col-md-12 text-bold" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; border: 2px solid #888; display: block;">&laquo;intro&raquo;</div>
                                             <div class="col-md-12" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; border-style: dotted; border-color: #ccc">&laquo;globalmenu&raquo;</div>
                                             <div class="col-md-12" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; border-style: dotted; border-color: #ccc">&laquo;top&raquo;</div>
                                         </div>
@@ -1548,45 +1548,45 @@ else
                                             <div class="col-md-2" style="height: 410px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;leftMenu&raquo;</div>
                                             <div class="col-md-8" style="height: auto; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">
                                                 <div class="row">
-                                                    <div class="col-md-12" style="height: auto; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">MainTop </div>
+                                                    <div class="col-md-12" style="height: auto; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;MainTop&raquo;</div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-4" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">mainTopLeft</div>
-                                                    <div class="col-md-4" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">mainTopCenter</div>
-                                                    <div class="col-md-4" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">mainTopRight</div>
+                                                    <div class="col-md-4" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;mainTopLeft&raquo;</div>
+                                                    <div class="col-md-4" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;mainTopCenter&raquo;</div>
+                                                    <div class="col-md-4" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;mainTopRight&raquo;</div>
                                                 </div>
 
                                                 <div class="row">
-                                                    <div class="col-md-12" style="height: 200px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">Main</div>
+                                                    <div class="col-md-12" style="height: 200px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;Main&raquo;</div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-12" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">MainBottom</div>
+                                                    <div class="col-md-12" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;MainBottom&raquo;</div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-4" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">mainBottomLeft</div>
-                                                    <div class="col-md-4" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">mainBottomCenter</div>
-                                                    <div class="col-md-4" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">mainBottomRight</div>
+                                                    <div class="col-md-4" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;mainBottomLeft&raquo;</div>
+                                                    <div class="col-md-4" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;mainBottomCenter&raquo;</div>
+                                                    <div class="col-md-4" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;mainBottomRight&raquo;</div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-12" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">MainFooter</div>
+                                                    <div class="col-md-12" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;MainFooter&raquo;</div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-4" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">mainFooterLeft</div>
-                                                    <div class="col-md-4" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">mainFooterCenter</div>
-                                                    <div class="col-md-4" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">mainFooterRight</div>
+                                                    <div class="col-md-4" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;mainFooterLeft&raquo;</div>
+                                                    <div class="col-md-4" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;mainFooterCenter&raquo;</div>
+                                                    <div class="col-md-4" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;mainFooterRight&raquo;</div>
                                                 </div>
                                             </div>
                                             <div class="col-md-2" style="height: 410px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;rightMenu&raquo;</div>
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-md-12" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">Footer</div>
+                                            <div class="col-md-12" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;Footer&raquo;</div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-12" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">HiddenToolbar</div>
+                                            <div class="col-md-12" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;HiddenToolbar&raquo;</div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-12" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">Debug</div>
+                                            <div class="col-md-12" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;Debug&raquo;</div>
                                         </div>
                                     </div>
                                     <div class="col-md-2" style="height: 630px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;outerRight&raquo;</div>
