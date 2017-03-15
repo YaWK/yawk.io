@@ -1534,7 +1534,10 @@ else
                         <div class="box-body">
                             <div class="container-fluid">
                                 <div class="row text-center">
-                                    <div class="col-md-2" style="height: 400px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">outerLeft</div>
+                                    <div class="col-md-12" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; border-style: dotted; border-color: #ccc">&laquo;outerTop&raquo;</div>
+                                </div>
+                                <div class="row text-center">
+                                    <div class="col-md-2" style="height: 630px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;outerLeft&raquo;</div>
                                     <div class="col-md-8">
                                         <div class="row">
                                             <div class="col-md-12" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; border-style: dotted; border-color: #ccc">&laquo;intro&raquo;</div>
@@ -1542,16 +1545,56 @@ else
                                             <div class="col-md-12" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; border-style: dotted; border-color: #ccc">&laquo;top&raquo;</div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-2" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;leftMenu&raquo;</div>
-                                            <div class="col-md-8" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;middle&raquo;</div>
-                                            <div class="col-md-2" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;rightMenu&raquo;</div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; border-style: dotted; border-color: #ccc">&laquo;bottom&raquo;</div>
+                                            <div class="col-md-2" style="height: 410px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;leftMenu&raquo;</div>
+                                            <div class="col-md-8" style="height: auto; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">
+                                                <div class="row">
+                                                    <div class="col-md-12" style="height: auto; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">MainTop </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">mainTopLeft</div>
+                                                    <div class="col-md-4" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">mainTopCenter</div>
+                                                    <div class="col-md-4" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">mainTopRight</div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-12" style="height: 200px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">Main</div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">MainBottom</div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">mainBottomLeft</div>
+                                                    <div class="col-md-4" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">mainBottomCenter</div>
+                                                    <div class="col-md-4" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">mainBottomRight</div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">MainFooter</div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">mainFooterLeft</div>
+                                                    <div class="col-md-4" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">mainFooterCenter</div>
+                                                    <div class="col-md-4" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">mainFooterRight</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2" style="height: 410px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;rightMenu&raquo;</div>
                                         </div>
 
+                                        <div class="row">
+                                            <div class="col-md-12" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">Footer</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">HiddenToolbar</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">Debug</div>
+                                        </div>
                                     </div>
-                                    <div class="col-md-2" style="height: 400px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">outerRight</div>
+                                    <div class="col-md-2" style="height: 630px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;outerRight&raquo;</div>
+
+                                </div>
+
+                                <div class="row text-center">
+                                    <div class="col-md-12" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; border-style: dotted; border-color: #ccc">&laquo;outerBottom&raquo;</div>
                                 </div>
                             </div>
                         </div>
