@@ -969,6 +969,7 @@ namespace YAWK {
                               <input type=\"checkbox\" id=\"$setting[property]\" name=\"$setting[property]\" value=\"1\" $checked>
                               <label for=\"$setting[property]\">&nbsp; $setting[label]</label><p>$setting[description]</p>";
                         }
+
                         /* RADIO BUTTTONS */
                         if ($setting['fieldType'] === "radio")
                         {
@@ -1018,6 +1019,27 @@ namespace YAWK {
                                 echo "</select>";
                                 echo "<p>$setting[description]</p>";
                             }
+
+
+                        // CHECKBOX as toggle switch
+                        else if ($setting['fieldType'] === "checkbox toggle")
+                        {    // build a checkbox
+                            if ($setting['value'] === "1")
+                            {   // set checkbox to checked
+                                $checked = "checked";
+                            }
+                            else
+                            {   // checkbox not checked
+                                $checked = "";
+                            }
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                            {
+                                echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
+                            }
+                            echo "<input type=\"hidden\" name=\"$setting[property]\" value=\"0\">
+                              <input type=\"checkbox\" data-on=\"$lang[ON]\" data-off=\"$lang[OFF]\" data-toggle=\"toggle\" data-onstyle=\"success\" data-offstyle=\"danger\" id=\"$setting[property]\" name=\"$setting[property]\" value=\"1\" $checked>
+                              <label for=\"$setting[property]\">&nbsp; $setting[label]</label><p>$setting[description]</p>";
+                        }
 
                         /* TEXTAREA */
                         else if ($setting['fieldType'] === "textarea")
