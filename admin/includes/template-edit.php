@@ -1507,10 +1507,11 @@ else
             <h3><? echo "$lang[POSITIONS]"; ?> <small><?php echo "$lang[TPL_POSITION_SETTINGS]"; ?></small></h3>
             <!-- list GOOGLE FONTS -->
             <div class="row animated fadeIn">
+                <!--
                 <div class="col-md-4">
                     <div class="box box-with-border">
                         <div class="box-header with-border">
-                            <h3 class="box-title"><?php echo "$lang[TPL_POS_INTRO] <small>$lang[TPL_POS_INTRO_SUBTEXT]</small>"; ?></h3>
+                            <h3 class="box-title"><?php // echo "$lang[TPL_POS_INTRO] <small>$lang[TPL_POS_INTRO_SUBTEXT]</small>"; ?></h3>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -1518,29 +1519,75 @@ else
                             </div>
                         </div>
                         <div class="box-body">
-                            <?php $template->getFormElements($db, $templateSettings, 1, $lang, $user); ?>
+                            <?php // $template->getFormElements($db, $templateSettings, 1, $lang, $user); ?>
                         </div>
                         <br>
                     </div>
                 </div>
-                <div class="col-md-4">
+                -->
+                <div class="col-md-12">
                     <div class="box box-default">
                         <div class="box-header">
-                            <h3 class="box-title"><?php echo $lang['POSITION']; ?> <small>...</small></h3>
+                            <h3 class="box-title"><?php echo "$lang[POSITIONS] <small>$lang[SETTINGS]</small>"; ?></h3>
                         </div>
+
                         <div class="box-body">
-                            <?php // $template->getSetting($db, "%-link", "", "", $user); ?>
+                            <div class="container-fluid">
+                                <div class="row text-center">
+                                    <div class="col-md-2" style="height: 400px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">outerLeft</div>
+                                    <div class="col-md-8">
+                                        <div class="row">
+                                            <div class="col-md-12" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; border-style: dotted; border-color: #ccc">&laquo;intro&raquo;</div>
+                                            <div class="col-md-12" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; border-style: dotted; border-color: #ccc">&laquo;globalmenu&raquo;</div>
+                                            <div class="col-md-12" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; border-style: dotted; border-color: #ccc">&laquo;top&raquo;</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-2" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;leftMenu&raquo;</div>
+                                            <div class="col-md-8" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;middle&raquo;</div>
+                                            <div class="col-md-2" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;rightMenu&raquo;</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; border-style: dotted; border-color: #ccc">&laquo;bottom&raquo;</div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-2" style="height: 400px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">outerRight</div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="box box-default">
-                        <div class="box-header">
-                            <h3 class="box-title"><?php echo $lang['POSITION']; ?>  <small>...</small></h3>
-                        </div>
+                        <!--
                         <div class="box-body">
-                            <?php // $template->getSetting($db, "%-link", "", "", $user); ?>
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-12" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; border-style: dotted; border-color: #ccc">&laquo;intro&raquo;</div>
+                                    <div class="col-md-12" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; border-style: dotted; border-color: #ccc">&laquo;globalmenu&raquo;</div>
+                                    <div class="col-md-12" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; border-style: dotted; border-color: #ccc">&laquo;top&raquo;</div>
+                                    <div class="col-md-2" style="height: 190px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">leftMenu</div>
+                                    <div class="col-md-8" style="height: 30px; margin-bottom:5px; text-align: center;">
+                                        <div class="row">
+                                            <div class="col-md-4" style="height: 30px; text-align: center; border-style: dotted; border-color: #ccc">mainTopLeft</div>
+                                            <div class="col-md-4" style="height: 30px; text-align: center; border-style: dotted; border-color: #ccc">mainTopCenter</div>
+                                            <div class="col-md-4" style="height: 30px; text-align: center; border-style: dotted; border-color: #ccc">mainTopRight</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12" style="height: 160px; text-align: center; border-style: dotted; border-color: #ccc">main</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12" style="height: 30px; text-align: center; border-style: dotted; border-color: #ccc">mainFooter</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4" style="height: 30px; text-align: center; border-style: dotted; border-color: #ccc">mainFooterLeft</div>
+                                            <div class="col-md-4" style="height: 30px; text-align: center; border-style: dotted; border-color: #ccc">mainFooterCenter</div>
+                                            <div class="col-md-4" style="height: 30px; text-align: center; border-style: dotted; border-color: #ccc">mainFooterRight</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" style="height: 190px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">rightMenu</div>
+
+                                </div>
+                            </div>
                         </div>
+                        -->
+
                     </div>
                 </div>
             </div>
