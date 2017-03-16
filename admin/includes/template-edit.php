@@ -1,10 +1,142 @@
 <!-- color picker -->
 <script type="text/javascript" src="../system/engines/jquery/jscolor/jscolor.js"></script>
-<!-- --><script type="text/javascript" src="../system/engines/jquery/bootstrap-tabcollapse.js"></script>
+<!-- TAB collapse -->
+<script type="text/javascript" src="../system/engines/jquery/bootstrap-tabcollapse.js"></script>
+<!-- Bootstrap toggle css -->
+<link rel="stylesheet" href="../system/engines/bootstrap-toggle/css/bootstrap-toggle.css">
+<!-- Bootstrap toggle js -->
+<script type="text/javascript" src="../system/engines/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
 <!-- JS GO -->
+
+<style>
+    .posbox
+    {
+        font-weight:normal;
+        border-style: dotted; border-color: #ccc;
+    }
+
+    .posbox:hover
+    {
+        border: dotted #888888;
+        font-weight: bold;
+        cursor:pointer;
+    }
+
+    .posboxActive
+    {
+        background-color: #E3E3E3;
+        border: 2px solid #888888;
+        font-weight: bold;
+    }
+</style>
 <script type="text/javascript">
 /* reminder: check if form has changed and warns the user that he needs to save. */
     $(document).ready(function() {
+        posboxSettings = "#posboxSettings";
+        pos_outerTop = "#pos_outerTop";
+        pos_outerLeft = "#pos_outerLeft";
+        pos_outerRight = "#pos_outerRight";
+        pos_leftMenu = "#pos_leftMenu";
+        pos_rightMenu = "#pos_rightMenu";
+        pos_intro = "#pos_intro";
+        pos_globalmenu = "#pos_globalmenu";
+        pos_top = "#pos_top";
+        pos_mainTop = "#pos_mainTop";
+        pos_mainTopLeft = "#pos_mainTopLeft";
+        pos_mainTopCenter = "#pos_mainTopCenter";
+        pos_mainTopRight = "#pos_mainTopRight";
+        pos_main = "#pos_main";
+        pos_mainBottom = "#pos_mainBottom";
+        pos_mainBottomLeft = "#pos_mainBottomLeft";
+        pos_mainBottomCenter = "#pos_mainBottomCenter";
+        pos_mainBottomRight = "#pos_mainBottomRight";
+        pos_mainFooter = "#pos_mainFooter";
+        pos_mainFooterLeft = "#pos_mainFooterLeft";
+        pos_mainFooterCenter = "#pos_mainFooterCenter";
+        pos_mainFooterRight = "#pos_mainFooterRight";
+        pos_footer = "#pos_footer";
+        pos_hiddenToolbar = "#pos_hiddenToolbar";
+        pos_debug = "#pos_debug";
+        pos_outerBottom = "#pos_outerBottom";
+
+        $(pos_outerTop).click(function () {
+            $(posboxSettings).slideUp();
+            $(posboxSettings).slideDown();
+            $(pos_outerTop).toggleClass("posboxActive");
+        });
+        $(pos_outerLeft).click(function () {
+            $(pos_outerLeft).toggleClass("posboxActive");
+        });
+        $(pos_outerRight).click(function () {
+            $(pos_outerRight).toggleClass("posboxActive");
+        });
+        $(pos_intro).click(function () {
+            $(pos_intro).toggleClass("posboxActive");
+        });
+        $(pos_globalmenu).click(function () {
+            $(pos_globalmenu).toggleClass("posboxActive");
+        });
+        $(pos_top).click(function () {
+            $(pos_top).toggleClass("posboxActive");
+        });
+        $(pos_mainTop).click(function () {
+            $(pos_mainTop).toggleClass("posboxActive");
+        });
+        $(pos_mainTopLeft).click(function () {
+            $(pos_mainTopLeft).toggleClass("posboxActive");
+        });
+        $(pos_mainTopCenter).click(function () {
+            $(pos_mainTopCenter).toggleClass("posboxActive");
+        });
+        $(pos_mainTopRight).click(function () {
+            $(pos_mainTopRight).toggleClass("posboxActive");
+        });
+        $(pos_main).click(function () {
+            $(pos_main).toggleClass("posboxActive");
+        });
+        $(pos_mainBottom).click(function () {
+            $(pos_mainBottom).toggleClass("posboxActive");
+        });
+        $(pos_mainBottomLeft).click(function () {
+            $(pos_mainBottomLeft).toggleClass("posboxActive");
+        });
+        $(pos_mainBottomCenter).click(function () {
+            $(pos_mainBottomCenter).toggleClass("posboxActive");
+        });
+        $(pos_mainBottomRight).click(function () {
+            $(pos_mainBottomRight).toggleClass("posboxActive");
+        });
+        $(pos_mainFooter).click(function () {
+            $(pos_mainFooter).toggleClass("posboxActive");
+        });
+        $(pos_mainFooterLeft).click(function () {
+            $(pos_mainFooterLeft).toggleClass("posboxActive");
+        });
+        $(pos_mainFooterCenter).click(function () {
+            $(pos_mainFooterCenter).toggleClass("posboxActive");
+        });
+        $(pos_mainFooterRight).click(function () {
+            $(pos_mainFooterRight).toggleClass("posboxActive");
+        });
+        $(pos_footer).click(function () {
+            $(pos_footer).toggleClass("posboxActive");
+        });
+        $(pos_hiddenToolbar).click(function () {
+            $(pos_hiddenToolbar).toggleClass("posboxActive");
+        });
+        $(pos_debug).click(function () {
+            $(pos_debug).toggleClass("posboxActive");
+        });
+        $(pos_outerBottom).click(function () {
+            $(pos_outerBottom).toggleClass("posboxActive");
+        });
+        $(pos_leftMenu).click(function () {
+            $(pos_leftMenu).toggleClass("posboxActive");
+        });
+        $(pos_rightMenu).click(function () {
+            $(pos_rightMenu).toggleClass("posboxActive");
+        });
+
     // TRY TP DISABLE CTRL-S browser hotkey
         function saveHotkey() {
             // simply disables save event for chrome
@@ -1146,16 +1278,16 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
       }
     }
     
-    .pos-topmenu
+    .pos-intro
     {
-        top: ".$tpl_settings['pos-topmenu-top'].";
-        margin-bottom: ".$tpl_settings['pos-topmenu-marginBottom'].";
-        position: ".$tpl_settings['pos-topmenu-property'].";
-        background-color: #".$tpl_settings['pos-topmenu-bg-color'].";
-        width: ".$tpl_settings['pos-topmenu-width'].";
-        height: ".$tpl_settings['pos-topmenu-height'].";
-        z-index: ".$tpl_settings['pos-topmenu-zindex'].";
-        ".$tpl_settings['pos-topmenu-bg-gradient-longValue'].";
+        top: ".$tpl_settings['pos-intro-top'].";
+        margin-bottom: ".$tpl_settings['pos-intro-marginBottom'].";
+        position: ".$tpl_settings['pos-intro-position'].";
+        background-color: #".$tpl_settings['pos-intro-bg-color'].";
+        width: ".$tpl_settings['pos-intro-width'].";
+        height: ".$tpl_settings['pos-intro-height'].";
+        z-index: ".$tpl_settings['pos-intro-zindex'].";
+        ".$tpl_settings['pos-intro-bg-gradient-longValue'].";
     }
     
     ";
@@ -1294,7 +1426,7 @@ else
         <button type="submit" id="savebutton" name="save" class="btn btn-success">
             <i id="savebuttonIcon" class="fa fa-check"></i> &nbsp;<?php print $lang['DESIGN_SAVE']; ?>
         </button>
-       <!-- <input id="savebutton" type="submit" class="btn btn-success" name="save" value="<?php echo $lang['DESIGN_SAVE']; ?>"> -->
+       <!-- <input id="savebutton" type="submit" class="btn btn-success" name="save" value="<?php // echo $lang['DESIGN_SAVE']; ?>"> -->
     </div>
     <!-- FORM -->
     <!-- Nav tabs -->
@@ -1316,7 +1448,7 @@ else
                 &nbsp; <?php echo $lang['TYPOGRAPHY']; ?></a>
         </li>
         <li role="presentation">
-            <a href="#body" aria-controls="layout" role="tab" data-toggle="tab"><i class="fa fa-object-group"></i>
+            <a href="#body" aria-controls="body" role="tab" data-toggle="tab"><i class="fa fa-object-group"></i>
                 &nbsp; <?php echo $lang['BODY']; ?></a>
         </li>
       <!--  <li role="presentation"><a href="#colors" aria-controls="colors" role="tab" data-toggle="tab"><i class="fa fa-paint-brush"></i>&nbsp; Colors</a></li> -->
@@ -1325,15 +1457,15 @@ else
                 &nbsp; <?php echo $lang['MENU']; ?></a>
         </li>
         <li role="presentation">
-            <a href="#well" aria-controls="menu" role="tab" data-toggle="tab"><i class="fa fa-sticky-note-o"></i>
-                &nbsp; <?php echo $lang['WELL']; ?></a>
+            <a href="#bootstrap" aria-controls="bootstrap" role="tab" data-toggle="tab"><i class="fa fa-sticky-note-o"></i>
+                &nbsp; <?php echo $lang['BOOTSTRAP3']; ?></a>
         </li>
         <li role="presentation">
-            <a href="#buttons" aria-controls="menu" role="tab" data-toggle="tab"><i class="fa fa-toggle-on"></i>
+            <a href="#buttons" aria-controls="buttons" role="tab" data-toggle="tab"><i class="fa fa-toggle-on"></i>
                 &nbsp; <?php echo $lang['BUTTONS']; ?></a>
         </li>
         <li role="presentation">
-            <a href="#images" aria-controls="menu" role="tab" data-toggle="tab"><i class="fa fa-picture-o"></i>
+            <a href="#images" aria-controls="images" role="tab" data-toggle="tab"><i class="fa fa-picture-o"></i>
                 &nbsp; <?php echo $lang['IMAGES']; ?></a>
         </li>
         <li role="presentation">
@@ -1341,7 +1473,7 @@ else
                 &nbsp; <?php echo $lang['EFFECTS']; ?></a>
         </li>
         <li role="presentation">
-            <a href="#custom" aria-controls="menu" role="tab" data-toggle="tab"><i class="fa fa-css3"></i>
+            <a href="#custom" aria-controls="custom" role="tab" data-toggle="tab"><i class="fa fa-css3"></i>
                 &nbsp; <?php echo $lang['CUSTOM_CSS']; ?></a>
         </li>
         <li role="presentation">
@@ -1497,46 +1629,135 @@ else
             </div>
         </div>
 
+        <?php
+            // GET ALL TEMPLATE SETTINGS INTO ARRAY
+            $templateSettings = \YAWK\template::getAllSettingsIntoArray($db, $user);
+        ?>
+
         <!-- POSITIONS -->
         <div role="tabpanel" class="tab-pane" id="positions">
             <h3><? echo "$lang[POSITIONS]"; ?> <small><?php echo "$lang[TPL_POSITION_SETTINGS]"; ?></small></h3>
             <!-- list GOOGLE FONTS -->
             <div class="row animated fadeIn">
-                <div class="col-md-4">
-                    <div class="box box-default">
-                        <div class="box-header">
-                            <h3 class="box-title"><?php echo $lang['TPL_TOPMENU_POS']; ?> <small>this is the first position, before anything else</small></h3>
+
+                <div class="col-md-3">
+                    <div class="box box-with-border" id="posboxSettings">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><?php echo "$lang[TPL_POS_INTRO] <small>$lang[TPL_POS_ACTIVE]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "pos-topmenu-top", "", "", $user); ?>
-                            <?php $template->getSetting($db, "pos-topmenu-marginBottom", "", "", $user); ?>
-                            <?php $template->getSetting($db, "pos-topmenu-property", "", "", $user); ?>
-                            <?php $template->getSetting($db, "pos-topmenu-bg-color", "", "", $user); ?>
-                            <?php $template->getSetting($db, "pos-topmenu-height", "", "", $user); ?>
-                            <?php $template->getSetting($db, "pos-topmenu-width", "", "", $user); ?>
-                            <?php $template->getSetting($db, "pos-topmenu-zindex", "", "", $user); ?>
-                            <?php $template->getSetting($db, "pos-topmenu-bg-gradient-longValue", "", "", $user); ?>
+                            <?php $template->getFormElements($db, $templateSettings, 1, $lang, $user); ?>
                         </div>
+                        <br>
                     </div>
                 </div>
-                <div class="col-md-4">
+
+                <div class="col-md-9">
                     <div class="box box-default">
                         <div class="box-header">
-                            <h3 class="box-title"><?php echo $lang['POSITION']; ?> <small>...</small></h3>
+                            <h3 class="box-title"><?php echo "$lang[POSITIONS] <small>$lang[SETTINGS]</small>"; ?></h3>
                         </div>
+
                         <div class="box-body">
-                            <?php // $template->getSetting($db, "%-link", "", "", $user); ?>
+                            <div class="container-fluid">
+                                <div class="row text-center">
+                                    <div class="col-md-12 posbox" id="pos_outerTop" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center;">&laquo;outerTop&raquo;</div>
+                                </div>
+                                <div class="row text-center">
+                                    <div class="col-md-2 posbox" id="pos_outerLeft" style="height: 630px; margin-bottom:5px; text-align: center;">&laquo;outerLeft&raquo;</div>
+                                    <div class="col-md-8">
+                                        <div class="row">
+                                            <div class="col-md-12 posbox" id="pos_intro" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center;">&laquo;intro&raquo;</div>
+                                            <div class="col-md-12 posbox" id="pos_globalmenu" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center;">&laquo;globalmenu&raquo;</div>
+                                            <div class="col-md-12 posbox" id="pos_top" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center;">&laquo;top&raquo;</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-2 posbox" id="pos_leftMenu" style="height: 410px; margin-bottom:5px; text-align: center;">&laquo;leftMenu&raquo;</div>
+                                            <div class="col-md-8" style="height: auto; margin-bottom:5px; text-align: center;">
+                                                <div class="row">
+                                                    <div class="col-md-12 posbox" id="pos_mainTop" style="height: auto; margin-bottom:5px; text-align: center;">&laquo;MainTop&raquo;</div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4 posbox" id="pos_mainTopLeft" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainTopLeft&raquo;</div>
+                                                    <div class="col-md-4 posbox" id="pos_mainTopCenter" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainTopCenter&raquo;</div>
+                                                    <div class="col-md-4 posbox" id="pos_mainTopRight" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainTopRight&raquo;</div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-12 posbox" id="pos_main" style="height: 200px; margin-bottom:5px; text-align: center;">&laquo;Main&raquo;</div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12 posbox" id="pos_mainBottom" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;MainBottom&raquo;</div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4 posbox" id="pos_mainBottomLeft" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainBottomLeft&raquo;</div>
+                                                    <div class="col-md-4 posbox" id="pos_mainBottomCenter" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainBottomCenter&raquo;</div>
+                                                    <div class="col-md-4 posbox" id="pos_mainBottomRight" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainBottomRight&raquo;</div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12 posbox" id="pos_mainFooter" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;MainFooter&raquo;</div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4 posbox" id="pos_mainFooterLeft" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainFooterLeft&raquo;</div>
+                                                    <div class="col-md-4 posbox" id="pos_mainFooterCenter" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainFooterCenter&raquo;</div>
+                                                    <div class="col-md-4 posbox" id="pos_mainFooterRight" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainFooterRight&raquo;</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2 posbox" id="pos_rightMenu" style="height: 410px; margin-bottom:5px; text-align: center;">&laquo;rightMenu&raquo;</div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12 posbox" id="pos_footer" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;Footer&raquo;</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 posbox" id="pos_hiddenToolbar" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;HiddenToolbar&raquo;</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 posbox" id="pos_debug" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;Debug&raquo;</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 posbox" id="pos_outerRight" style="height: 630px; margin-bottom:5px; text-align: center;">&laquo;outerRight&raquo;</div>
+
+                                </div>
+
+                                <div class="row text-center">
+                                    <div class="col-md-12 posbox" id="pos_outerBottom" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center;">&laquo;outerBottom&raquo;</div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="box box-default">
-                        <div class="box-header">
-                            <h3 class="box-title"><?php echo $lang['POSITION']; ?>  <small>...</small></h3>
-                        </div>
+                        <!--
                         <div class="box-body">
-                            <?php // $template->getSetting($db, "%-link", "", "", $user); ?>
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-12" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; border-style: dotted; border-color: #ccc">&laquo;intro&raquo;</div>
+                                    <div class="col-md-12" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; border-style: dotted; border-color: #ccc">&laquo;globalmenu&raquo;</div>
+                                    <div class="col-md-12" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; border-style: dotted; border-color: #ccc">&laquo;top&raquo;</div>
+                                    <div class="col-md-2" style="height: 190px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">leftMenu</div>
+                                    <div class="col-md-8" style="height: 30px; margin-bottom:5px; text-align: center;">
+                                        <div class="row">
+                                            <div class="col-md-4" style="height: 30px; text-align: center; border-style: dotted; border-color: #ccc">mainTopLeft</div>
+                                            <div class="col-md-4" style="height: 30px; text-align: center; border-style: dotted; border-color: #ccc">mainTopCenter</div>
+                                            <div class="col-md-4" style="height: 30px; text-align: center; border-style: dotted; border-color: #ccc">mainTopRight</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12" style="height: 160px; text-align: center; border-style: dotted; border-color: #ccc">main</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12" style="height: 30px; text-align: center; border-style: dotted; border-color: #ccc">mainFooter</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4" style="height: 30px; text-align: center; border-style: dotted; border-color: #ccc">mainFooterLeft</div>
+                                            <div class="col-md-4" style="height: 30px; text-align: center; border-style: dotted; border-color: #ccc">mainFooterCenter</div>
+                                            <div class="col-md-4" style="height: 30px; text-align: center; border-style: dotted; border-color: #ccc">mainFooterRight</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" style="height: 190px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">rightMenu</div>
+
+                                </div>
+                            </div>
                         </div>
+                        -->
+
                     </div>
                 </div>
             </div>
@@ -1591,9 +1812,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[TPL_GLOBALTEXT] <small>$lang[TPL_GLOBALTEXT_SUBTEXT]"; ?></small></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "body-text-size", "", "", $user); ?>
-                            <?php $template->getSetting($db, "body-text-shadow", "", "", $user); ?>
-                            <?php $template->getSetting($db, "body-text-shadow-color", "", "", $user); ?>
+                            <!-- common text settings (size, shadow, color...) -->
+                            <?php $template->getFormElements($db, $templateSettings, 2, $lang, $user); ?>
                         </div>
                     </div>
 
@@ -1602,7 +1822,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[LINK] <small>$lang[COLORS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "%-link", "", "", $user); ?>
+                            <!-- link colors and settings (color, decoration, hover, btn text color...) -->
+                            <?php $template->getFormElements($db, $templateSettings, 3, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1613,12 +1834,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[HEADINGS] <small>$lang[H1_H6_FONT_SIZE]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "h1-size", "", "", $user); ?>
-                            <?php $template->getSetting($db, "h2-size", "", "", $user); ?>
-                            <?php $template->getSetting($db, "h3-size", "", "", $user); ?>
-                            <?php $template->getSetting($db, "h4-size", "", "", $user); ?>
-                            <?php $template->getSetting($db, "h5-size", "", "", $user); ?>
-                            <?php $template->getSetting($db, "h6-size", "", "", $user); ?>
+                            <!-- H1-H6 Text sizes (font size of headings in px or em) -->
+                            <?php $template->getFormElements($db, $templateSettings, 4, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1629,7 +1846,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[HEADING] <small>$lang[COLORS]"; ?></small></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "%-fontcolor", "", "", $user); ?>
+                            <!-- Font Colors (h1-h6 colors, smalltag, font, jumbotron + listgroup fontcolor) -->
+                            <?php $template->getFormElements($db, $templateSettings, 5, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1647,7 +1865,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[BODY] <small>$lang[SETTINGS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "body-bg-color", "", "", $user); ?>
+                            <!-- body bg color -->
+                            <?php $template->getFormElements($db, $templateSettings, 6, $lang, $user); ?>
                         </div>
                     </div>
 
@@ -1656,7 +1875,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[BODY] <small>$lang[POSITIONING]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "body-margin-%", "", "", $user); ?>
+                            <!-- body margin -->
+                            <?php $template->getFormElements($db, $templateSettings, 7, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1667,13 +1887,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[BG_IMAGE] <small>$lang[SETTINGS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php
-                            $template->getSetting($db, "body-bg-image", "", "", $user);
-                            $template->getSetting($db, "body-bg-repeat", "", "", $user);
-                            $template->getSetting($db, "body-bg-position", "", "", $user);
-                            $template->getSetting($db, "body-bg-attachment", "", "", $user);
-                            $template->getSetting($db, "body-bg-size", "", "", $user);
-                            ?>
+                            <!-- body background image -->
+                            <?php $template->getFormElements($db, $templateSettings, 8, $lang, $user); ?>
                         </div>
                     </div>
 
@@ -1682,9 +1897,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[TPL_MAIN_POS_SHADOW] <small>$lang[TPL_AROUND_POSITION]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php
-                            $template->getSetting($db, "main-box-shadow", "", "", $user);
-                            $template->getSetting($db, "main-box-shadow-color", "", "", $user); ?>
+                            <!-- main box shadow -->
+                            <?php $template->getFormElements($db, $templateSettings, 9, $lang, $user); ?>
                         </div>
                     </div>
 
@@ -1716,7 +1930,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[MENU] $lang[FONT] <small>$lang[COLORS]"; ?></small></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "%-menucolor", "", "", $user); ?>
+                            <!-- menu font colors -menucolor -->
+                            <?php $template->getFormElements($db, $templateSettings, 10, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1727,7 +1942,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[MENU] $lang[BG] <small>$lang[COLORS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "%-menubgcolor", "", "", $user); ?>
+                            <!-- menu background color -menubgcolor -->
+                            <?php $template->getFormElements($db, $templateSettings, 11, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1738,7 +1954,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[MENU] $lang[DROPDOWN] <small>$lang[COLORS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "%-menudropdowncolor", "", "", $user); ?>
+                            <!-- menu background color -menudropdowncolor -->
+                            <?php $template->getFormElements($db, $templateSettings, 12, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1749,7 +1966,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[MENU] $lang[NAVBAR] <small>$lang[POSITIONING]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "navbar-marginTop", "", "", $user); ?>
+                            <!-- menu navbar margin top -navbar-marginTop -->
+                            <?php $template->getFormElements($db, $templateSettings, 13, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1757,8 +1975,8 @@ else
         </div>
 
         <!-- WELL,LISTGROUP, JUMBOTRON -->
-        <div role="tabpanel" class="tab-pane" id="well">
-            <h3><?php echo "$lang[WELL] <small>$lang[SETTINGS]</small>"; ?></h3>
+        <div role="tabpanel" class="tab-pane" id="bootstrap">
+            <h3><?php echo "$lang[BOOTSTRAP3] <small>$lang[SETTINGS]</small>"; ?></h3>
             <div class="row animated fadeIn">
                 <div class="col-md-3">
                     <div class="box box-default">
@@ -1766,7 +1984,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[WELL] $lang[BOX] <small>$lang[DESIGN]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "well-%", "", "", $user); ?>
+                            <!-- well box design  well- -->
+                            <?php $template->getFormElements($db, $templateSettings, 14, $lang, $user); ?>
                         </div>
                     </div>
                  </div>
@@ -1774,11 +1993,11 @@ else
                 <div class="col-md-3">
                     <div class="box box-default">
                         <div class="box-header">
-                            <h3 class="box-title"><?php echo "$lang[LIST_GROUP] <small>$lang[SETTINGS]</small>"; ?></h3>
+                            <h3 class="box-title"><?php echo "$lang[LIST_GROUP] <small>$lang[DESIGN]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "listGroup-%", "", "", $user); ?>
-                            <?php $template->getSetting($db, "listgroup-bg-gradient-longValue", "", "", $user); ?>
+                            <!-- listgroup design  listgroup-  -->
+                            <?php $template->getFormElements($db, $templateSettings, 15, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1789,7 +2008,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[JUMBOTRON] <small>$lang[BOX] $lang[DESIGN]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "jumbotron-%", "", "", $user); ?>
+                            <!-- jumbotron design  jumbotron-  -->
+                            <?php $template->getFormElements($db, $templateSettings, 16, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1819,13 +2039,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[BUTTON] <small>$lang[FONT] $lang[AND] $lang[BORDER] $lang[SETTINGS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php
-                                $template->getSetting($db, "btn-fontsize", "", "", $user);
-                                $template->getSetting($db, "btn-font-weight", "", "", $user);
-                                $template->getSetting($db, "btn-border", "", "", $user);
-                                $template->getSetting($db, "btn-border-style", "", "", $user);
-                                $template->getSetting($db, "btn-border-radius", "", "", $user);
-                            ?>
+                            <!-- btn settings    btn-   -->
+                            <?php $template->getFormElements($db, $templateSettings, 17, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1860,7 +2075,8 @@ else
                             <h3 class="box-title">Default <small>Button</small></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "btn-default-%", "", "", $user); ?>
+                            <!-- btn default    btn-default   -->
+                            <?php $template->getFormElements($db, $templateSettings, 18, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1870,7 +2086,8 @@ else
                             <h3 class="box-title">Primary <small>Button</small></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "btn-primary-%", "", "", $user); ?>
+                            <!-- btn primary    btn-primary   -->
+                            <?php $template->getFormElements($db, $templateSettings, 19, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1880,7 +2097,8 @@ else
                             <h3 class="box-title">Success <small>Button</small></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "btn-success-%", "", "", $user); ?>
+                            <!-- btn success   btn-success   -->
+                            <?php $template->getFormElements($db, $templateSettings, 20, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1890,7 +2108,8 @@ else
                             <h3 class="box-title">Warning <small>Button</small></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "btn-warning-%", "", "", $user); ?>
+                            <!-- btn warning   btn-warning   -->
+                            <?php $template->getFormElements($db, $templateSettings, 21, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1900,7 +2119,8 @@ else
                             <h3 class="box-title">Danger <small>Button</small></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "btn-danger-%", "", "", $user); ?>
+                            <!-- btn danger   btn-danger   -->
+                            <?php $template->getFormElements($db, $templateSettings, 22, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1910,7 +2130,8 @@ else
                             <h3 class="box-title">Info <small>Button</small></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "btn-info-%", "", "", $user); ?>
+                            <!-- btn info   btn-info   -->
+                            <?php $template->getFormElements($db, $templateSettings, 23, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1927,7 +2148,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[IMAGE] <small>$lang[EFFECTS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "img-%", "", "", $user); ?>
+                            <!-- image settings   img-   -->
+                            <?php $template->getFormElements($db, $templateSettings, 24, $lang, $user); ?>
                         </div>
                     </div>
                 </div>

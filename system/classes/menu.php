@@ -797,11 +797,11 @@ namespace YAWK {
          * @version    1.0.0
          * @link       http://yawk.io
          * @param object $db database
-         * @param object $lang language
+         * @param array $lang language
          * @param int $id affected menu id
          * @return string
          */
-        static function getMenuNameByID($db, $id)
+        static function getMenuNameByID($db, $id, $lang)
         {   /* @var $db \YAWK\db */
         global $lang;
             $menu = '';
