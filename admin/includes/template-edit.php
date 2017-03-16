@@ -7,9 +7,136 @@
 <!-- Bootstrap toggle js -->
 <script type="text/javascript" src="../system/engines/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
 <!-- JS GO -->
+
+<style>
+    .posbox
+    {
+        font-weight:normal;
+        border-style: dotted; border-color: #ccc;
+    }
+
+    .posbox:hover
+    {
+        border: dotted #888888;
+        font-weight: bold;
+        cursor:pointer;
+    }
+
+    .posboxActive
+    {
+        background-color: #E3E3E3;
+        border: 2px solid #888888;
+        font-weight: bold;
+    }
+</style>
 <script type="text/javascript">
 /* reminder: check if form has changed and warns the user that he needs to save. */
     $(document).ready(function() {
+        posboxSettings = "#posboxSettings";
+        pos_outerTop = "#pos_outerTop";
+        pos_outerLeft = "#pos_outerLeft";
+        pos_outerRight = "#pos_outerRight";
+        pos_leftMenu = "#pos_leftMenu";
+        pos_rightMenu = "#pos_rightMenu";
+        pos_intro = "#pos_intro";
+        pos_globalmenu = "#pos_globalmenu";
+        pos_top = "#pos_top";
+        pos_mainTop = "#pos_mainTop";
+        pos_mainTopLeft = "#pos_mainTopLeft";
+        pos_mainTopCenter = "#pos_mainTopCenter";
+        pos_mainTopRight = "#pos_mainTopRight";
+        pos_main = "#pos_main";
+        pos_mainBottom = "#pos_mainBottom";
+        pos_mainBottomLeft = "#pos_mainBottomLeft";
+        pos_mainBottomCenter = "#pos_mainBottomCenter";
+        pos_mainBottomRight = "#pos_mainBottomRight";
+        pos_mainFooter = "#pos_mainFooter";
+        pos_mainFooterLeft = "#pos_mainFooterLeft";
+        pos_mainFooterCenter = "#pos_mainFooterCenter";
+        pos_mainFooterRight = "#pos_mainFooterRight";
+        pos_footer = "#pos_footer";
+        pos_hiddenToolbar = "#pos_hiddenToolbar";
+        pos_debug = "#pos_debug";
+        pos_outerBottom = "#pos_outerBottom";
+
+        $(pos_outerTop).click(function () {
+            $(posboxSettings).slideUp();
+            $(posboxSettings).slideDown();
+            $(pos_outerTop).toggleClass("posboxActive");
+        });
+        $(pos_outerLeft).click(function () {
+            $(pos_outerLeft).toggleClass("posboxActive");
+        });
+        $(pos_outerRight).click(function () {
+            $(pos_outerRight).toggleClass("posboxActive");
+        });
+        $(pos_intro).click(function () {
+            $(pos_intro).toggleClass("posboxActive");
+        });
+        $(pos_globalmenu).click(function () {
+            $(pos_globalmenu).toggleClass("posboxActive");
+        });
+        $(pos_top).click(function () {
+            $(pos_top).toggleClass("posboxActive");
+        });
+        $(pos_mainTop).click(function () {
+            $(pos_mainTop).toggleClass("posboxActive");
+        });
+        $(pos_mainTopLeft).click(function () {
+            $(pos_mainTopLeft).toggleClass("posboxActive");
+        });
+        $(pos_mainTopCenter).click(function () {
+            $(pos_mainTopCenter).toggleClass("posboxActive");
+        });
+        $(pos_mainTopRight).click(function () {
+            $(pos_mainTopRight).toggleClass("posboxActive");
+        });
+        $(pos_main).click(function () {
+            $(pos_main).toggleClass("posboxActive");
+        });
+        $(pos_mainBottom).click(function () {
+            $(pos_mainBottom).toggleClass("posboxActive");
+        });
+        $(pos_mainBottomLeft).click(function () {
+            $(pos_mainBottomLeft).toggleClass("posboxActive");
+        });
+        $(pos_mainBottomCenter).click(function () {
+            $(pos_mainBottomCenter).toggleClass("posboxActive");
+        });
+        $(pos_mainBottomRight).click(function () {
+            $(pos_mainBottomRight).toggleClass("posboxActive");
+        });
+        $(pos_mainFooter).click(function () {
+            $(pos_mainFooter).toggleClass("posboxActive");
+        });
+        $(pos_mainFooterLeft).click(function () {
+            $(pos_mainFooterLeft).toggleClass("posboxActive");
+        });
+        $(pos_mainFooterCenter).click(function () {
+            $(pos_mainFooterCenter).toggleClass("posboxActive");
+        });
+        $(pos_mainFooterRight).click(function () {
+            $(pos_mainFooterRight).toggleClass("posboxActive");
+        });
+        $(pos_footer).click(function () {
+            $(pos_footer).toggleClass("posboxActive");
+        });
+        $(pos_hiddenToolbar).click(function () {
+            $(pos_hiddenToolbar).toggleClass("posboxActive");
+        });
+        $(pos_debug).click(function () {
+            $(pos_debug).toggleClass("posboxActive");
+        });
+        $(pos_outerBottom).click(function () {
+            $(pos_outerBottom).toggleClass("posboxActive");
+        });
+        $(pos_leftMenu).click(function () {
+            $(pos_leftMenu).toggleClass("posboxActive");
+        });
+        $(pos_rightMenu).click(function () {
+            $(pos_rightMenu).toggleClass("posboxActive");
+        });
+
     // TRY TP DISABLE CTRL-S browser hotkey
         function saveHotkey() {
             // simply disables save event for chrome
@@ -1514,7 +1641,7 @@ else
             <div class="row animated fadeIn">
 
                 <div class="col-md-3">
-                    <div class="box box-with-border">
+                    <div class="box box-with-border" id="posboxSettings">
                         <div class="box-header with-border">
                             <h3 class="box-title"><?php echo "$lang[TPL_POS_INTRO] <small>$lang[TPL_POS_ACTIVE]</small>"; ?></h3>
                         </div>
@@ -1534,67 +1661,67 @@ else
                         <div class="box-body">
                             <div class="container-fluid">
                                 <div class="row text-center">
-                                    <div class="col-md-12" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; border-style: dotted; border-color: #ccc;">&laquo;outerTop&raquo;</div>
+                                    <div class="col-md-12 posbox" id="pos_outerTop" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center;">&laquo;outerTop&raquo;</div>
                                 </div>
                                 <div class="row text-center">
-                                    <div class="col-md-2" style="height: 630px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;outerLeft&raquo;</div>
+                                    <div class="col-md-2 posbox" id="pos_outerLeft" style="height: 630px; margin-bottom:5px; text-align: center;">&laquo;outerLeft&raquo;</div>
                                     <div class="col-md-8">
                                         <div class="row">
-                                            <div class="col-md-12 text-bold" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; border: 2px solid #888; display: block;">&laquo;intro&raquo;</div>
-                                            <div class="col-md-12" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; border-style: dotted; border-color: #ccc">&laquo;globalmenu&raquo;</div>
-                                            <div class="col-md-12" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; border-style: dotted; border-color: #ccc">&laquo;top&raquo;</div>
+                                            <div class="col-md-12 posbox" id="pos_intro" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center;">&laquo;intro&raquo;</div>
+                                            <div class="col-md-12 posbox" id="pos_globalmenu" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center;">&laquo;globalmenu&raquo;</div>
+                                            <div class="col-md-12 posbox" id="pos_top" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center;">&laquo;top&raquo;</div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-2" style="height: 410px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;leftMenu&raquo;</div>
-                                            <div class="col-md-8" style="height: auto; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">
+                                            <div class="col-md-2 posbox" id="pos_leftMenu" style="height: 410px; margin-bottom:5px; text-align: center;">&laquo;leftMenu&raquo;</div>
+                                            <div class="col-md-8" style="height: auto; margin-bottom:5px; text-align: center;">
                                                 <div class="row">
-                                                    <div class="col-md-12" style="height: auto; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;MainTop&raquo;</div>
+                                                    <div class="col-md-12 posbox" id="pos_mainTop" style="height: auto; margin-bottom:5px; text-align: center;">&laquo;MainTop&raquo;</div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-4" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;mainTopLeft&raquo;</div>
-                                                    <div class="col-md-4" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;mainTopCenter&raquo;</div>
-                                                    <div class="col-md-4" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;mainTopRight&raquo;</div>
+                                                    <div class="col-md-4 posbox" id="pos_mainTopLeft" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainTopLeft&raquo;</div>
+                                                    <div class="col-md-4 posbox" id="pos_mainTopCenter" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainTopCenter&raquo;</div>
+                                                    <div class="col-md-4 posbox" id="pos_mainTopRight" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainTopRight&raquo;</div>
                                                 </div>
 
                                                 <div class="row">
-                                                    <div class="col-md-12" style="height: 200px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;Main&raquo;</div>
+                                                    <div class="col-md-12 posbox" id="pos_main" style="height: 200px; margin-bottom:5px; text-align: center;">&laquo;Main&raquo;</div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-12" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;MainBottom&raquo;</div>
+                                                    <div class="col-md-12 posbox" id="pos_mainBottom" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;MainBottom&raquo;</div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-4" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;mainBottomLeft&raquo;</div>
-                                                    <div class="col-md-4" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;mainBottomCenter&raquo;</div>
-                                                    <div class="col-md-4" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;mainBottomRight&raquo;</div>
+                                                    <div class="col-md-4 posbox" id="pos_mainBottomLeft" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainBottomLeft&raquo;</div>
+                                                    <div class="col-md-4 posbox" id="pos_mainBottomCenter" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainBottomCenter&raquo;</div>
+                                                    <div class="col-md-4 posbox" id="pos_mainBottomRight" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainBottomRight&raquo;</div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-12" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;MainFooter&raquo;</div>
+                                                    <div class="col-md-12 posbox" id="pos_mainFooter" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;MainFooter&raquo;</div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-4" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;mainFooterLeft&raquo;</div>
-                                                    <div class="col-md-4" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;mainFooterCenter&raquo;</div>
-                                                    <div class="col-md-4" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;mainFooterRight&raquo;</div>
+                                                    <div class="col-md-4 posbox" id="pos_mainFooterLeft" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainFooterLeft&raquo;</div>
+                                                    <div class="col-md-4 posbox" id="pos_mainFooterCenter" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainFooterCenter&raquo;</div>
+                                                    <div class="col-md-4 posbox" id="pos_mainFooterRight" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainFooterRight&raquo;</div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-2" style="height: 410px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;rightMenu&raquo;</div>
+                                            <div class="col-md-2 posbox" id="pos_rightMenu" style="height: 410px; margin-bottom:5px; text-align: center;">&laquo;rightMenu&raquo;</div>
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-md-12" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;Footer&raquo;</div>
+                                            <div class="col-md-12 posbox" id="pos_footer" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;Footer&raquo;</div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-12" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;HiddenToolbar&raquo;</div>
+                                            <div class="col-md-12 posbox" id="pos_hiddenToolbar" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;HiddenToolbar&raquo;</div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-12" style="height: 30px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;Debug&raquo;</div>
+                                            <div class="col-md-12 posbox" id="pos_debug" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;Debug&raquo;</div>
                                         </div>
                                     </div>
-                                    <div class="col-md-2" style="height: 630px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">&laquo;outerRight&raquo;</div>
+                                    <div class="col-md-2 posbox" id="pos_outerRight" style="height: 630px; margin-bottom:5px; text-align: center;">&laquo;outerRight&raquo;</div>
 
                                 </div>
 
                                 <div class="row text-center">
-                                    <div class="col-md-12" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; border-style: dotted; border-color: #ccc">&laquo;outerBottom&raquo;</div>
+                                    <div class="col-md-12 posbox" id="pos_outerBottom" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center;">&laquo;outerBottom&raquo;</div>
                                 </div>
                             </div>
                         </div>
