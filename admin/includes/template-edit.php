@@ -1686,7 +1686,7 @@ else
                             <dd>
                                 <b><?php echo $lang['YAWK_SLOGAN_TOGETHER']; ?><br>
                                 <i class="fa fa-check text-light-blue"></i> YaWK 16.9 <small>
-                                <a href="http://www.getbootstrap.com/" target="_blank" title="Official Bootstrap Website [in new tab]">
+                                <a href="http://www.yawk.io/" target="_blank" title="Official YaWK Website [in new tab]">
                                 <i class="fa fa-external-link"></i></a></small><br>
 
                                 <i class="fa fa-check text-light-blue"></i> Boostrap 3.3.7<small>
