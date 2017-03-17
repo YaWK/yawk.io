@@ -814,7 +814,7 @@ namespace YAWK {
             {   // get template settings for this user
                 if ($user->overrideTemplate == 1)
                 {
-                    $sql = "SELECT ts.property, ts.value, ts.longValue, ts.valueDefault, ts.type, ts.label, ts.sort, ts.fieldClass, ts.fieldType, ts.placeholder, ts.description, ts.options, ts.activated
+                    $sql = "SELECT ts.property, ts.value, ts.longValue, ts.valueDefault, ts.type, ts.label, ts.sort, ts.fieldClass, ts.fieldType, ts.placeholder, ts.description, ts.options, ts.activated, ts.icon, ts.heading, ts.subtext
                                        FROM {template_settings} ts
                                        JOIN {users} u on u.templateID = ts.templateID
                                        WHERE ts.activated = 1 && u.id = $user->id
@@ -822,7 +822,7 @@ namespace YAWK {
                 }
                 else
                 {
-                    $sql = "SELECT ts.property, ts.value, ts.longValue, ts.valueDefault, ts.type, ts.label, ts.sort, ts.fieldClass, ts.fieldType, ts.placeholder, ts.description, ts.options, ts.activated
+                    $sql = "SELECT ts.property, ts.value, ts.longValue, ts.valueDefault, ts.type, ts.label, ts.sort, ts.fieldClass, ts.fieldType, ts.placeholder, ts.description, ts.options, ts.activated, ts.icon, ts.heading, ts.subtext
                                        FROM {template_settings} ts
                                        JOIN {settings} s on s.value = ts.templateID
                                        WHERE ts.activated = 1 && s.property = 'selectedTemplate'
@@ -950,53 +950,13 @@ namespace YAWK {
                             $setting['description'] = '';
                         }
 
-                        // CHECKBOX
-                        if ($setting['fieldType'] === "checkbox")
-                        {    // build a checkbox
-                            if ($setting['value'] === "1")
-                            {   // set checkbox to checked
-                                $checked = "checked";
-                            }
-                            else
-                            {   // checkbox not checked
-                                $checked = "";
-                            }
-                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
-                            {
-                                echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
-                            }
-                            echo "<input type=\"hidden\" name=\"$setting[property]\" value=\"0\">
-                              <input type=\"checkbox\" id=\"$setting[property]\" name=\"$setting[property]\" value=\"1\" $checked>
-                              <label for=\"$setting[property]\">&nbsp; $setting[label]</label><p>$setting[description]</p>";
-                        }
-
-                        /* RADIO BUTTTONS */
-                        if ($setting['fieldType'] === "radio")
-                        {
-                            echo "<label for=\"$setting[property]\">$setting[label]</label>
-                                  <input type=\"radio\" id=\"$setting[property]\" name=\"$setting[property]\">";
-                            echo "<input type=\"radio\" value=\"$setting[value]\">$lang[SETTING_CURRENT] $setting[value]</option>";
-                            // explode option string into array
-                            $optionValues = explode(":", $setting['options']);
-                            foreach ($optionValues as $value)
-                            {
-                                // extract value from option setting string
-                                $optionValue = preg_replace("/,[a-zA-Z0-9]*/", "", $value);
-                                // extract description from option setting
-                                $optionDesc = preg_replace('/.*,(.*)/','$1',$value);
-
-                                echo "<option value=\"$optionValue\">$optionDesc</option>";
-                            }
-                            echo "</select>";
-                            echo "<p>$setting[description]</p>";
-                        }
 
                         /* SELECT FIELD */
                         if ($setting['fieldType'] === "select")
                         {   // display icon, heading and subtext, if its set
                             if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
                             {
-                                echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
+                                echo "<h3 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
                             }
                             // begin draw select
                             echo "<label for=\"$setting[property]\">$setting[label]</label>
@@ -1018,8 +978,52 @@ namespace YAWK {
                                 }
                                 echo "</select>";
                                 echo "<p>$setting[description]</p>";
-                            }
+                        }
 
+                        /* RADIO BUTTTONS */
+                        else if ($setting['fieldType'] === "radio")
+                        {
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                            {
+                                echo "<h3 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
+                            }
+                            echo "<label for=\"$setting[property]\">$setting[label]</label>
+                                  <input type=\"radio\" id=\"$setting[property]\" name=\"$setting[property]\">";
+                            echo "<input type=\"radio\" value=\"$setting[value]\">$lang[SETTING_CURRENT] $setting[value]</option>";
+                            // explode option string into array
+                            $optionValues = explode(":", $setting['options']);
+                            foreach ($optionValues as $value)
+                            {
+                                // extract value from option setting string
+                                $optionValue = preg_replace("/,[a-zA-Z0-9]*/", "", $value);
+                                // extract description from option setting
+                                $optionDesc = preg_replace('/.*,(.*)/','$1',$value);
+
+                                echo "<option value=\"$optionValue\">$optionDesc</option>";
+                            }
+                            echo "</select>";
+                            echo "<p>$setting[description]</p>";
+                        }
+
+                        // CHECKBOX
+                        else if ($setting['fieldType'] === "checkbox")
+                        {    // build a checkbox
+                            if ($setting['value'] === "1")
+                            {   // set checkbox to checked
+                                $checked = "checked";
+                            }
+                            else
+                            {   // checkbox not checked
+                                $checked = "";
+                            }
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                            {
+                                echo "<h3 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
+                            }
+                            echo "<input type=\"hidden\" name=\"$setting[property]\" value=\"0\">
+                              <input type=\"checkbox\" id=\"$setting[property]\" name=\"$setting[property]\" value=\"1\" $checked>
+                              <label for=\"$setting[property]\">&nbsp; $setting[label]</label><p>$setting[description]</p>";
+                        }
 
                         // CHECKBOX as toggle switch
                         else if ($setting['fieldType'] === "checkbox toggle")
@@ -1034,7 +1038,7 @@ namespace YAWK {
                             }
                             if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
                             {
-                                echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
+                                echo "<h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
                             }
                             echo "<input type=\"hidden\" name=\"$setting[property]\" value=\"0\">
                               <input type=\"checkbox\" data-on=\"$lang[ON]\" data-off=\"$lang[OFF]\" data-toggle=\"toggle\" data-onstyle=\"success\" data-offstyle=\"danger\" id=\"$setting[property]\" name=\"$setting[property]\" value=\"1\" $checked>
@@ -1048,6 +1052,10 @@ namespace YAWK {
                             if (isset($setting['longValue']) && (!empty($setting['longValue'])))
                             {   // build a longValue tagged textarea and fill with longValue
                                 $setting['longValue'] = nl2br($setting['longValue']);
+                                if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                                {
+                                    echo "<h3 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
+                                }
                                 echo "<label for=\"$setting[property]-long\">$setting[label]</label>
                                       <textarea cols=\"64\" rows=\"4\" class=\"$setting[fieldClass]\" placeholder=\"$lang[$placeholder]\" id=\"$setting[property]-long\" name=\"$setting[property]-long\">$setting[longValue]</textarea>";
                                 echo "<p>$setting[description]</p>";
@@ -1055,6 +1063,10 @@ namespace YAWK {
                             else
                             {   // draw default textarea
                                 $setting['value'] = nl2br($setting['value']);
+                                if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                                {
+                                    echo "<h3 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
+                                }
                                 echo "<label for=\"$setting[property]-long\">$setting[label]</label>
                                       <textarea cols=\"64\" rows=\"4\" class=\"$setting[fieldClass]\" placeholder=\"$lang[$placeholder]\" id=\"$setting[property]\" name=\"$setting[property]\">$setting[value]</textarea>";
                                 echo "<p>$setting[description]</p>";
@@ -1067,7 +1079,7 @@ namespace YAWK {
                             $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
                             if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
                             {
-                                echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
+                                echo "<h3 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
                             }
                             echo "<label for=\"$setting[property]\">$setting[label]</label>
                                   <input type=\"password\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
@@ -1080,7 +1092,7 @@ namespace YAWK {
                             $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
                             if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
                             {
-                                echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
+                                echo "<h3 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
                             }
                             echo "<label for=\"$setting[property]\">$setting[label]
                                   <small><i class=\"small\" style=\"font-weight:normal\">$lang[DEFAULT]: $setting[valueDefault]</i></small></label>
@@ -1094,7 +1106,7 @@ namespace YAWK {
                             $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
                             if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
                             {
-                                echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
+                                echo "<h3 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
                             }
                             echo "<label for=\"$setting[property]\">$setting[label]
                                   <small><i class=\"small\" style=\"font-weight:normal\">$lang[DEFAULT]: $setting[valueDefault]</i></small></label>
@@ -1106,7 +1118,7 @@ namespace YAWK {
                             $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
                             if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
                             {
-                                echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
+                                echo "<h3 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
                             }
                             echo "<label for=\"$setting[property]\">$setting[label]
                                   <small><i class=\"small\" style=\"font-weight:normal\">$lang[DEFAULT]: $setting[valueDefault]</i></small></label>

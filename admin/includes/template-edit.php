@@ -28,11 +28,46 @@
         border: 2px solid #888888;
         font-weight: bold;
     }
+    .hidden
+    {
+        visibility:hidden;
+    }
+    .visible
+    {
+        visibility:visible;
+    }
 </style>
 <script type="text/javascript">
 /* reminder: check if form has changed and warns the user that he needs to save. */
     $(document).ready(function() {
-        posboxSettings = "#posboxSettings";
+        // store settings position box id's in vars
+        settings_pos_outerTop = "#settings_pos_outerTop";
+        settings_pos_outerLeft = "#settings_pos_outerLeft";
+        settings_pos_outerRight = "#settings_pos_outerRight";
+        settings_pos_leftMenu = "#settings_pos_leftMenu";
+        settings_pos_rightMenu = "#settings_pos_rightMenu";
+        settings_pos_intro = "#settings_pos_intro";
+        settings_pos_globalmenu = "#settings_pos_globalmenu";
+        settings_pos_top = "#settings_pos_top";
+        settings_pos_mainTop = "#settings_pos_mainTop";
+        settings_pos_mainTopLeft = "#settings_pos_mainTopLeft";
+        settings_pos_mainTopCenter = "#settings_pos_mainTopCenter";
+        settings_pos_mainTopRight = "#settings_pos_mainTopRight";
+        settings_pos_main = "#settings_pos_main";
+        settings_pos_mainBottom = "#settings_pos_mainBottom";
+        settings_pos_mainBottomLeft = "#settings_pos_mainBottomLeft";
+        settings_pos_mainBottomCenter = "#settings_pos_mainBottomCenter";
+        settings_pos_mainBottomRight = "#settings_pos_mainBottomRight";
+        settings_pos_mainFooter = "#settings_pos_mainFooter";
+        settings_pos_mainFooterLeft = "#settings_pos_mainFooterLeft";
+        settings_pos_mainFooterCenter = "#settings_pos_mainFooterCenter";
+        settings_pos_mainFooterRight = "#settings_pos_mainFooterRight";
+        settings_pos_footer = "#settings_pos_footer";
+        settings_pos_hiddenToolbar = "#settings_pos_hiddenToolbar";
+        settings_pos_debug = "#settings_pos_debug";
+        settings_pos_outerBottom = "#settings_pos_outerBottom";
+
+        // store position selector in vars
         pos_outerTop = "#pos_outerTop";
         pos_outerLeft = "#pos_outerLeft";
         pos_outerRight = "#pos_outerRight";
@@ -59,81 +94,139 @@
         pos_debug = "#pos_debug";
         pos_outerBottom = "#pos_outerBottom";
 
+        // hide all settings boxes on default
+        // they will appear by clicking on a postion selector
+        $(settings_pos_outerTop).hide();
+        $(settings_pos_outerLeft).hide();
+        $(settings_pos_outerRight).hide();
+        $(settings_pos_leftMenu).hide();
+        $(settings_pos_rightMenu).hide();
+        $(settings_pos_intro).hide();
+        $(settings_pos_globalmenu).hide();
+        $(settings_pos_top).hide();
+        $(settings_pos_mainTop).hide();
+        $(settings_pos_mainTopLeft).hide();
+        $(settings_pos_mainTopCenter).hide();
+        $(settings_pos_mainTopRight).hide();
+        $(settings_pos_main).hide();
+        $(settings_pos_mainBottom).hide();
+        $(settings_pos_mainBottomLeft).hide();
+        $(settings_pos_mainBottomCenter).hide();
+        $(settings_pos_mainBottomRight).hide();
+        $(settings_pos_mainFooter).hide();
+        $(settings_pos_mainFooterLeft).hide();
+        $(settings_pos_mainFooterCenter).hide();
+        $(settings_pos_mainFooterRight).hide();
+        $(settings_pos_footer).hide();
+        $(settings_pos_hiddenToolbar).hide();
+        $(settings_pos_debug).hide();
+        $(settings_pos_outerBottom).hide();
+
         $(pos_outerTop).click(function () {
-            $(posboxSettings).slideUp();
-            $(posboxSettings).slideDown();
+            $("#selectPositionRequestInfo").hide();
+            $(settings_pos_outerTop).fadeToggle();
             $(pos_outerTop).toggleClass("posboxActive");
         });
+
         $(pos_outerLeft).click(function () {
+            $("#selectPositionRequestInfo").hide();
+            $(settings_pos_outerLeft).fadeToggle();
             $(pos_outerLeft).toggleClass("posboxActive");
         });
         $(pos_outerRight).click(function () {
+            $("#selectPositionRequestInfo").hide();
+            $(settings_pos_outerRight).fadeToggle();
             $(pos_outerRight).toggleClass("posboxActive");
         });
         $(pos_intro).click(function () {
+            $("#selectPositionRequestInfo").hide();
+            $(settings_pos_intro).fadeToggle();
             $(pos_intro).toggleClass("posboxActive");
         });
         $(pos_globalmenu).click(function () {
+            $("#selectPositionRequestInfo").hide();
+            $(settings_pos_globalmenu).fadeToggle();
             $(pos_globalmenu).toggleClass("posboxActive");
         });
         $(pos_top).click(function () {
+            $("#selectPositionRequestInfo").hide();
+            $(settings_pos_top).fadeToggle();
             $(pos_top).toggleClass("posboxActive");
         });
         $(pos_mainTop).click(function () {
+            $("#selectPositionRequestInfo").hide();
             $(pos_mainTop).toggleClass("posboxActive");
         });
         $(pos_mainTopLeft).click(function () {
+            $("#selectPositionRequestInfo").hide();
             $(pos_mainTopLeft).toggleClass("posboxActive");
         });
         $(pos_mainTopCenter).click(function () {
+            $("#selectPositionRequestInfo").hide();
             $(pos_mainTopCenter).toggleClass("posboxActive");
         });
         $(pos_mainTopRight).click(function () {
+            $("#selectPositionRequestInfo").hide();
             $(pos_mainTopRight).toggleClass("posboxActive");
         });
         $(pos_main).click(function () {
+            $("#selectPositionRequestInfo").hide();
             $(pos_main).toggleClass("posboxActive");
         });
         $(pos_mainBottom).click(function () {
+            $("#selectPositionRequestInfo").hide();
             $(pos_mainBottom).toggleClass("posboxActive");
         });
         $(pos_mainBottomLeft).click(function () {
+            $("#selectPositionRequestInfo").hide();
             $(pos_mainBottomLeft).toggleClass("posboxActive");
         });
         $(pos_mainBottomCenter).click(function () {
+            $("#selectPositionRequestInfo").hide();
             $(pos_mainBottomCenter).toggleClass("posboxActive");
         });
         $(pos_mainBottomRight).click(function () {
+            $("#selectPositionRequestInfo").hide();
             $(pos_mainBottomRight).toggleClass("posboxActive");
         });
         $(pos_mainFooter).click(function () {
+            $("#selectPositionRequestInfo").hide();
             $(pos_mainFooter).toggleClass("posboxActive");
         });
         $(pos_mainFooterLeft).click(function () {
+            $("#selectPositionRequestInfo").hide();
             $(pos_mainFooterLeft).toggleClass("posboxActive");
         });
         $(pos_mainFooterCenter).click(function () {
+            $("#selectPositionRequestInfo").hide();
             $(pos_mainFooterCenter).toggleClass("posboxActive");
         });
         $(pos_mainFooterRight).click(function () {
+            $("#selectPositionRequestInfo").hide();
             $(pos_mainFooterRight).toggleClass("posboxActive");
         });
         $(pos_footer).click(function () {
+            $("#selectPositionRequestInfo").hide();
             $(pos_footer).toggleClass("posboxActive");
         });
         $(pos_hiddenToolbar).click(function () {
+            $("#selectPositionRequestInfo").hide();
             $(pos_hiddenToolbar).toggleClass("posboxActive");
         });
         $(pos_debug).click(function () {
+            $("#selectPositionRequestInfo").hide();
             $(pos_debug).toggleClass("posboxActive");
         });
         $(pos_outerBottom).click(function () {
+            $("#selectPositionRequestInfo").hide();
             $(pos_outerBottom).toggleClass("posboxActive");
         });
         $(pos_leftMenu).click(function () {
+            $("#selectPositionRequestInfo").hide();
             $(pos_leftMenu).toggleClass("posboxActive");
         });
         $(pos_rightMenu).click(function () {
+            $("#selectPositionRequestInfo").hide();
             $(pos_rightMenu).toggleClass("posboxActive");
         });
 
@@ -1642,11 +1735,19 @@ else
 
                 <div class="col-md-3">
                     <div class="box box-with-border" id="posboxSettings">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><?php echo "$lang[TPL_POS_INTRO] <small>$lang[TPL_POS_ACTIVE]</small>"; ?></h3>
-                        </div>
                         <div class="box-body">
-                            <?php $template->getFormElements($db, $templateSettings, 1, $lang, $user); ?>
+                            <div id="selectPositionRequestInfo">
+                                <h4 class="box-title"><?php echo "$lang[TPL_SELECT_POSITIONS_REQUEST]"; ?></h4>
+                            </div>
+                            <!-- settings outerTop -->
+                            <div id="settings_pos_outerTop">
+                                <?php $template->getFormElements($db, $templateSettings, 26, $lang, $user); ?>
+                            </div>
+                            <!-- settings intro-->
+                            <div id="settings_pos_intro">
+                                <?php $template->getFormElements($db, $templateSettings, 27, $lang, $user); ?>
+                            </div>
+
                         </div>
                         <br>
                     </div>
