@@ -72,15 +72,31 @@ else
 \YAWK\sys::includeHeader($db);
 // load active google font code
 \YAWK\template::outputActivegFont($db);
+
+$positions = \YAWK\template::getPositionStates($db);
+
 ?>
 <!-- /gfonts -->
   </head>
   <body style="<?php echo YAWK\template::getActivegfont($db, "", "text-gfont"); ?>" ondragstart="return false">
 
-  <!-- :TOPMENU small nav before everything else on top of page -->
-  <div class="pos-topmenu" id="pos-topmenu">
-      <?php echo YAWK\template::setPosition($db, "intro-pos"); ?>
-  </div>
+  <?php
+  // :INTRO before everything else, on top of page
+  if ($positions['pos-outerTop-enabled'] === "1")
+  {
+      echo "<div class=\"pos-outerTop\" id=\"pos-outerTop\">";
+      echo YAWK\template::setPosition($db, "outerTop-pos");
+      echo "</div>";
+  }
+
+  // :INTRO before everything else, on top of page
+  if ($positions['pos-intro-enabled'] === "1")
+  {
+    echo "<div class=\"pos-intro\" id=\"pos-intro\">";
+    echo YAWK\template::setPosition($db, "intro-pos");
+    echo "</div>";
+  }
+  ?>
 
   <!-- :GLOBALMENU -->
     <div style="<?php echo YAWK\template::getActivegfont($db, "", "menu-gfont"); ?>">
