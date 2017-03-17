@@ -1381,12 +1381,24 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
       }
     }
     
+    .pos-outerTop
+    {
+        top: ".$tpl_settings['pos-outerTop-top'].";
+        margin-bottom: ".$tpl_settings['pos-outerTop-marginBottom'].";
+        position: ".$tpl_settings['pos-outerTop-position'].";
+        background-color: #".$tpl_settings['pos-outerTop-bgcolor'].";
+        width: ".$tpl_settings['pos-outerTop-width'].";
+        height: ".$tpl_settings['pos-outerTop-height'].";
+        z-index: ".$tpl_settings['pos-outerTop-zindex'].";
+        ".$tpl_settings['pos-outerTop-bg-gradient-longValue'].";
+    }
+    
     .pos-intro
     {
         top: ".$tpl_settings['pos-intro-top'].";
         margin-bottom: ".$tpl_settings['pos-intro-marginBottom'].";
         position: ".$tpl_settings['pos-intro-position'].";
-        background-color: #".$tpl_settings['pos-intro-bg-color'].";
+        background-color: #".$tpl_settings['pos-intro-bgcolor'].";
         width: ".$tpl_settings['pos-intro-width'].";
         height: ".$tpl_settings['pos-intro-height'].";
         z-index: ".$tpl_settings['pos-intro-zindex'].";
