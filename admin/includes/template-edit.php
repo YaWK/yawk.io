@@ -21,6 +21,12 @@
         font-weight: bold;
         cursor:pointer;
     }
+    .posboxActive
+    {
+        background-color: #E3E3E3;
+        border: 2px solid #888888;
+        font-weight: bold;
+    }
 </style>
 <script type="text/javascript">
 /* reminder: check if form has changed and warns the user that he needs to save. */
