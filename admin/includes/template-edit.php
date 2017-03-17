@@ -21,21 +21,6 @@
         font-weight: bold;
         cursor:pointer;
     }
-
-    .posboxActive
-    {
-        background-color: #E3E3E3;
-        border: 2px solid #888888;
-        font-weight: bold;
-    }
-    .hidden
-    {
-        visibility:hidden;
-    }
-    .visible
-    {
-        visibility:visible;
-    }
 </style>
 <script type="text/javascript">
 /* reminder: check if form has changed and warns the user that he needs to save. */
@@ -155,78 +140,97 @@
         });
         $(pos_mainTop).click(function () {
             $("#selectPositionRequestInfo").hide();
+            $(settings_pos_mainTop).fadeToggle();
             $(pos_mainTop).toggleClass("posboxActive");
         });
         $(pos_mainTopLeft).click(function () {
             $("#selectPositionRequestInfo").hide();
+            $(settings_pos_mainTopLeft).fadeToggle();
             $(pos_mainTopLeft).toggleClass("posboxActive");
         });
         $(pos_mainTopCenter).click(function () {
             $("#selectPositionRequestInfo").hide();
+            $(settings_pos_mainTopCenter).fadeToggle();
             $(pos_mainTopCenter).toggleClass("posboxActive");
         });
         $(pos_mainTopRight).click(function () {
             $("#selectPositionRequestInfo").hide();
+            $(settings_pos_mainTopRight).fadeToggle();
             $(pos_mainTopRight).toggleClass("posboxActive");
         });
         $(pos_main).click(function () {
             $("#selectPositionRequestInfo").hide();
+            $(settings_pos_main).fadeToggle();
             $(pos_main).toggleClass("posboxActive");
         });
         $(pos_mainBottom).click(function () {
             $("#selectPositionRequestInfo").hide();
+            $(settings_pos_mainBottom).fadeToggle();
             $(pos_mainBottom).toggleClass("posboxActive");
         });
         $(pos_mainBottomLeft).click(function () {
             $("#selectPositionRequestInfo").hide();
+            $(settings_pos_mainBottomLeft).fadeToggle();
             $(pos_mainBottomLeft).toggleClass("posboxActive");
         });
         $(pos_mainBottomCenter).click(function () {
             $("#selectPositionRequestInfo").hide();
+            $(settings_pos_mainBottomCenter).fadeToggle();
             $(pos_mainBottomCenter).toggleClass("posboxActive");
         });
         $(pos_mainBottomRight).click(function () {
             $("#selectPositionRequestInfo").hide();
+            $(settings_pos_mainBottomRight).fadeToggle();
             $(pos_mainBottomRight).toggleClass("posboxActive");
         });
         $(pos_mainFooter).click(function () {
             $("#selectPositionRequestInfo").hide();
+            $(settings_pos_mainFooter).fadeToggle();
             $(pos_mainFooter).toggleClass("posboxActive");
         });
         $(pos_mainFooterLeft).click(function () {
             $("#selectPositionRequestInfo").hide();
+            $(settings_pos_mainFooterLeft).fadeToggle();
             $(pos_mainFooterLeft).toggleClass("posboxActive");
         });
         $(pos_mainFooterCenter).click(function () {
             $("#selectPositionRequestInfo").hide();
+            $(settings_pos_mainFooterCenter).fadeToggle();
             $(pos_mainFooterCenter).toggleClass("posboxActive");
         });
         $(pos_mainFooterRight).click(function () {
             $("#selectPositionRequestInfo").hide();
+            $(settings_pos_mainFooterRight).fadeToggle();
             $(pos_mainFooterRight).toggleClass("posboxActive");
         });
         $(pos_footer).click(function () {
             $("#selectPositionRequestInfo").hide();
+            $(settings_pos_footer).fadeToggle();
             $(pos_footer).toggleClass("posboxActive");
         });
         $(pos_hiddenToolbar).click(function () {
             $("#selectPositionRequestInfo").hide();
+            $(settings_pos_hiddenToolbar).fadeToggle();
             $(pos_hiddenToolbar).toggleClass("posboxActive");
         });
         $(pos_debug).click(function () {
             $("#selectPositionRequestInfo").hide();
+            $(settings_pos_debug).fadeToggle();
             $(pos_debug).toggleClass("posboxActive");
         });
         $(pos_outerBottom).click(function () {
             $("#selectPositionRequestInfo").hide();
+            $(settings_pos_outerBottom).fadeToggle();
             $(pos_outerBottom).toggleClass("posboxActive");
         });
         $(pos_leftMenu).click(function () {
             $("#selectPositionRequestInfo").hide();
+            $(settings_pos_leftMenu).fadeToggle();
             $(pos_leftMenu).toggleClass("posboxActive");
         });
         $(pos_rightMenu).click(function () {
             $("#selectPositionRequestInfo").hide();
+            $(settings_pos_rightMenu).fadeToggle();
             $(pos_rightMenu).toggleClass("posboxActive");
         });
 
@@ -1743,11 +1747,102 @@ else
                             <div id="settings_pos_outerTop">
                                 <?php $template->getFormElements($db, $templateSettings, 26, $lang, $user); ?>
                             </div>
-                            <!-- settings intro-->
+                            <!-- settings intro -->
                             <div id="settings_pos_intro">
                                 <?php $template->getFormElements($db, $templateSettings, 27, $lang, $user); ?>
                             </div>
-
+                            <!-- settings globalmenu -->
+                            <div id="settings_pos_globalmenu">
+                                <?php $template->getFormElements($db, $templateSettings, 28, $lang, $user); ?>
+                            </div>
+                            <!-- settings top -->
+                            <div id="settings_pos_top">
+                                <?php $template->getFormElements($db, $templateSettings, 29, $lang, $user); ?>
+                            </div>
+                            <!-- settings outerLeft -->
+                            <div id="settings_pos_outerLeft">
+                                <?php $template->getFormElements($db, $templateSettings, 30, $lang, $user); ?>
+                            </div>
+                            <!-- settings outerRight -->
+                            <div id="settings_pos_outerRight">
+                                <?php $template->getFormElements($db, $templateSettings, 31, $lang, $user); ?>
+                            </div>
+                            <!-- settings leftMenu -->
+                            <div id="settings_pos_leftMenu">
+                                <?php $template->getFormElements($db, $templateSettings, 32, $lang, $user); ?>
+                            </div>
+                            <!-- settings rightMenu -->
+                            <div id="settings_pos_rightMenu">
+                                <?php $template->getFormElements($db, $templateSettings, 33, $lang, $user); ?>
+                            </div>
+                            <!-- settings mainTop -->
+                            <div id="settings_pos_mainTop">
+                                <?php $template->getFormElements($db, $templateSettings, 34, $lang, $user); ?>
+                            </div>
+                            <!-- settings mainTopLeft -->
+                            <div id="settings_pos_mainTopLeft">
+                                <?php $template->getFormElements($db, $templateSettings, 35, $lang, $user); ?>
+                            </div>
+                            <!-- settings mainTopCenter -->
+                            <div id="settings_pos_mainTopCenter">
+                                <?php $template->getFormElements($db, $templateSettings, 36, $lang, $user); ?>
+                            </div>
+                            <!-- settings mainTopRight -->
+                            <div id="settings_pos_mainTopRight">
+                                <?php $template->getFormElements($db, $templateSettings, 37, $lang, $user); ?>
+                            </div>
+                            <!-- settings main -->
+                            <div id="settings_pos_main">
+                                <?php $template->getFormElements($db, $templateSettings, 38, $lang, $user); ?>
+                            </div>
+                            <!-- settings mainBottom -->
+                            <div id="settings_pos_mainBottom">
+                                <?php $template->getFormElements($db, $templateSettings, 39, $lang, $user); ?>
+                            </div>
+                            <!-- settings mainBottomLeft -->
+                            <div id="settings_pos_mainBottomLeft">
+                                <?php $template->getFormElements($db, $templateSettings, 40, $lang, $user); ?>
+                            </div>
+                            <!-- settings mainBottomCenter -->
+                            <div id="settings_pos_mainBottomCenter">
+                                <?php $template->getFormElements($db, $templateSettings, 41, $lang, $user); ?>
+                            </div>
+                            <!-- settings mainBottomRight -->
+                            <div id="settings_pos_mainBottomRight">
+                                <?php $template->getFormElements($db, $templateSettings, 42, $lang, $user); ?>
+                            </div>
+                            <!-- settings mainFooter -->
+                            <div id="settings_pos_mainFooter">
+                                <?php $template->getFormElements($db, $templateSettings, 43, $lang, $user); ?>
+                            </div>
+                            <!-- settings mainFooterLeft -->
+                            <div id="settings_pos_mainFooterLeft">
+                                <?php $template->getFormElements($db, $templateSettings, 44, $lang, $user); ?>
+                            </div>
+                            <!-- settings mainFooterCenter -->
+                            <div id="settings_pos_mainFooterCenter">
+                                <?php $template->getFormElements($db, $templateSettings, 45, $lang, $user); ?>
+                            </div>
+                            <!-- settings mainFooterRight -->
+                            <div id="settings_pos_mainFooterRight">
+                                <?php $template->getFormElements($db, $templateSettings, 46, $lang, $user); ?>
+                            </div>
+                            <!-- settings footer -->
+                            <div id="settings_pos_footer">
+                                <?php $template->getFormElements($db, $templateSettings, 47, $lang, $user); ?>
+                            </div>
+                            <!-- settings hiddenToolbar -->
+                            <div id="settings_pos_hiddenToolbar">
+                                <?php $template->getFormElements($db, $templateSettings, 48, $lang, $user); ?>
+                            </div>
+                            <!-- settings debug -->
+                            <div id="settings_pos_debug">
+                                <?php $template->getFormElements($db, $templateSettings, 49, $lang, $user); ?>
+                            </div>
+                            <!-- settings outerBottom  -->
+                            <div id="settings_pos_outerBottom">
+                                <?php $template->getFormElements($db, $templateSettings, 50, $lang, $user); ?>
+                            </div>
                         </div>
                         <br>
                     </div>
@@ -1776,7 +1871,7 @@ else
                                             <div class="col-md-2 posbox" id="pos_leftMenu" style="height: 410px; margin-bottom:5px; text-align: center;">&laquo;leftMenu&raquo;</div>
                                             <div class="col-md-8" style="height: auto; margin-bottom:5px; text-align: center;">
                                                 <div class="row">
-                                                    <div class="col-md-12 posbox" id="pos_mainTop" style="height: auto; margin-bottom:5px; text-align: center;">&laquo;MainTop&raquo;</div>
+                                                    <div class="col-md-12 posbox" id="pos_mainTop" style="height: auto; margin-bottom:5px; text-align: center;">&laquo;mainTop&raquo;</div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-4 posbox" id="pos_mainTopLeft" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainTopLeft&raquo;</div>
@@ -1785,10 +1880,10 @@ else
                                                 </div>
 
                                                 <div class="row">
-                                                    <div class="col-md-12 posbox" id="pos_main" style="height: 200px; margin-bottom:5px; text-align: center;">&laquo;Main&raquo;</div>
+                                                    <div class="col-md-12 posbox" id="pos_main" style="height: 200px; margin-bottom:5px; text-align: center;">&laquo;main&raquo;</div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-12 posbox" id="pos_mainBottom" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;MainBottom&raquo;</div>
+                                                    <div class="col-md-12 posbox" id="pos_mainBottom" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainBottom&raquo;</div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-4 posbox" id="pos_mainBottomLeft" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainBottomLeft&raquo;</div>
@@ -1796,7 +1891,7 @@ else
                                                     <div class="col-md-4 posbox" id="pos_mainBottomRight" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainBottomRight&raquo;</div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-12 posbox" id="pos_mainFooter" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;MainFooter&raquo;</div>
+                                                    <div class="col-md-12 posbox" id="pos_mainFooter" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainFooter&raquo;</div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-4 posbox" id="pos_mainFooterLeft" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainFooterLeft&raquo;</div>
@@ -1808,13 +1903,13 @@ else
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-md-12 posbox" id="pos_footer" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;Footer&raquo;</div>
+                                            <div class="col-md-12 posbox" id="pos_footer" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;footer&raquo;</div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-12 posbox" id="pos_hiddenToolbar" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;HiddenToolbar&raquo;</div>
+                                            <div class="col-md-12 posbox" id="pos_hiddenToolbar" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;hiddenToolbar&raquo;</div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-12 posbox" id="pos_debug" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;Debug&raquo;</div>
+                                            <div class="col-md-12 posbox" id="pos_debug" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;debug&raquo;</div>
                                         </div>
                                     </div>
                                     <div class="col-md-2 posbox" id="pos_outerRight" style="height: 630px; margin-bottom:5px; text-align: center;">&laquo;outerRight&raquo;</div>
@@ -1826,39 +1921,6 @@ else
                                 </div>
                             </div>
                         </div>
-                        <!--
-                        <div class="box-body">
-                            <div class="container-fluid">
-                                <div class="row">
-                                    <div class="col-md-12" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; border-style: dotted; border-color: #ccc">&laquo;intro&raquo;</div>
-                                    <div class="col-md-12" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; border-style: dotted; border-color: #ccc">&laquo;globalmenu&raquo;</div>
-                                    <div class="col-md-12" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; border-style: dotted; border-color: #ccc">&laquo;top&raquo;</div>
-                                    <div class="col-md-2" style="height: 190px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">leftMenu</div>
-                                    <div class="col-md-8" style="height: 30px; margin-bottom:5px; text-align: center;">
-                                        <div class="row">
-                                            <div class="col-md-4" style="height: 30px; text-align: center; border-style: dotted; border-color: #ccc">mainTopLeft</div>
-                                            <div class="col-md-4" style="height: 30px; text-align: center; border-style: dotted; border-color: #ccc">mainTopCenter</div>
-                                            <div class="col-md-4" style="height: 30px; text-align: center; border-style: dotted; border-color: #ccc">mainTopRight</div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12" style="height: 160px; text-align: center; border-style: dotted; border-color: #ccc">main</div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12" style="height: 30px; text-align: center; border-style: dotted; border-color: #ccc">mainFooter</div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-4" style="height: 30px; text-align: center; border-style: dotted; border-color: #ccc">mainFooterLeft</div>
-                                            <div class="col-md-4" style="height: 30px; text-align: center; border-style: dotted; border-color: #ccc">mainFooterCenter</div>
-                                            <div class="col-md-4" style="height: 30px; text-align: center; border-style: dotted; border-color: #ccc">mainFooterRight</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2" style="height: 190px; margin-bottom:5px; text-align: center; border-style: dotted; border-color: #ccc">rightMenu</div>
-
-                                </div>
-                            </div>
-                        </div>
-                        -->
-
                     </div>
                 </div>
             </div>
