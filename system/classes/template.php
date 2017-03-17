@@ -1553,6 +1553,33 @@ namespace YAWK {
         }
 
         /**
+         * get the position states of all templates. This is used on index.php to render only templates that are enabled (1)
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @return array|bool $array template positions 0|1
+         */
+        static function getPositionStates($db)
+        {
+            $array = '';
+            $sql = $db->query("SELECT property, value FROM {template_settings} WHERE property LIKE 'pos-%-enabled'");
+            while ($row = mysqli_fetch_assoc($sql))
+            {
+                $prop = $row['property'];
+                $array[$prop] = $row['value'];
+            }
+            if (is_array($array))
+            {
+                return $array;
+            }
+            else
+                {
+                    return false;
+                }
+        }
+
+        /**
          * set template position and output the correct data depending on position
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
@@ -1566,13 +1593,14 @@ namespace YAWK {
             $main_set = 0;
             $globalmenu_set = 0;
             // get template setting for given pos
-            $setting = self::getTemplateSetting($db, $position, "");
+            // $setting = self::getTemplateSetting($db, $position, "");
             if (empty($setting)) {
                 // no property
                 // substr, because css definitions are without -pos (changefix?!)
                 $position = substr("$position", 0, -4);
                 // if main, we need to include the content page
-                if ($position == "main") {
+                if ($position == "main")
+                {
                     // if user is given to index.php, load userpage
                     if (isset($_GET['user'])){
                         // if var is set, but empty, show all users
