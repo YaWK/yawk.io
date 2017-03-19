@@ -84,7 +84,7 @@ $positions = \YAWK\template::getPositionStates($db);
 
   <div class="container-fluid">
           <?php
-          // :INTRO before everything else, on top of page
+          // outerTop - fist position outside container
           if ($positions['pos-outerTop-enabled'] === "1")
           {
               echo "<div class=\"row\">";
@@ -98,7 +98,19 @@ $positions = \YAWK\template::getPositionStates($db);
           <div class="col-md-2 posbox" id="pos_outerLeft" style="height: 630px; margin-bottom:5px; text-align: center;">&laquo;outerLeft&raquo;</div>
           <div class="col-md-8">
               <div class="row">
-                  <div class="col-md-12 posbox" id="pos_intro" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center;">&laquo;intro&raquo;</div>
+                  <!-- position: intro -->
+
+                  <?php
+                  // intro - fist position inside container
+                  if ($positions['pos-intro-enabled'] === "1")
+                  {
+                      echo "<div class=\"col-md-12 pos-intro\" id=\"pos_intro\">intro";
+                      echo YAWK\template::setPosition($db, "intro-pos");
+                      echo "</div>";
+                  }
+                  ?>
+
+
                   <div class="col-md-12 pos_globalmenu" id="pos_globalmenu">globalmenu
                       <?php // echo YAWK\template::setPosition($db, "globalmenu-pos"); ?>  <!-- GLOBALMENU -->
                   </div>

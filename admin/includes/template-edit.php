@@ -1383,6 +1383,9 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
     
     .pos-outerTop
     {   
+        padding: ".$tpl_settings['pos-outerTop-padding'].";
+        overflow: ".$tpl_settings['pos-outerTop-overflow'].";
+        visibility: ".$tpl_settings['pos-outerTop-visibility'].";
         text-align: ".$tpl_settings['pos-outerTop-text-align'].";
         margin-top: ".$tpl_settings['pos-outerTop-marginTop'].";
         margin-bottom: ".$tpl_settings['pos-outerTop-marginBottom'].";
