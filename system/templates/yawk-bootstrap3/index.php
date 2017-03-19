@@ -83,10 +83,17 @@ $positions = \YAWK\template::getPositionStates($db);
   <!-- LAYOUT START -->
 
   <div class="container-fluid">
-      <div class="row text-center">
-          <div class="col-md-12" id="pos_outerTop" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center;">outerTop
-              <?php echo YAWK\template::setPosition($db, "outerTop-pos"); ?> </div>
-      </div>
+          <?php
+          // :INTRO before everything else, on top of page
+          if ($positions['pos-outerTop-enabled'] === "1")
+          {
+              echo "<div class=\"row\">";
+              echo "<div class=\"col-md-12 pos-outerTop\" id=\"pos_outerTop\">outerTop";
+              echo YAWK\template::setPosition($db, "outerTop-pos");
+              echo "</div>";
+              echo "</div>";
+          }
+          ?>
       <div class="row text-center">
           <div class="col-md-2 posbox" id="pos_outerLeft" style="height: 630px; margin-bottom:5px; text-align: center;">&laquo;outerLeft&raquo;</div>
           <div class="col-md-8">
@@ -161,17 +168,17 @@ $positions = \YAWK\template::getPositionStates($db);
   // :INTRO before everything else, on top of page
   if ($positions['pos-outerTop-enabled'] === "1")
   {
-      echo "<div class=\"pos-outerTop\" id=\"pos-outerTop\">";
-      echo YAWK\template::setPosition($db, "outerTop-pos");
-      echo "</div>";
+   //   echo "<div class=\"pos-outerTop\" id=\"pos-outerTop\">";
+   //   echo YAWK\template::setPosition($db, "outerTop-pos");
+   //   echo "</div>";
   }
 
   // :INTRO before everything else, on top of page
   if ($positions['pos-intro-enabled'] === "1")
   {
-    echo "<div class=\"pos-intro\" id=\"pos-intro\">";
-    echo YAWK\template::setPosition($db, "intro-pos");
-    echo "</div>";
+    // echo "<div class=\"pos-intro\" id=\"pos-intro\">";
+    // echo YAWK\template::setPosition($db, "intro-pos");
+    // echo "</div>";
   }
   ?>
 
