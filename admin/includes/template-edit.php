@@ -1382,8 +1382,9 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
     }
     
     .pos-outerTop
-    {
-        top: ".$tpl_settings['pos-outerTop-top'].";
+    {   
+        text-align: ".$tpl_settings['pos-outerTop-text-align'].";
+        margin-top: ".$tpl_settings['pos-outerTop-marginTop'].";
         margin-bottom: ".$tpl_settings['pos-outerTop-marginBottom'].";
         position: ".$tpl_settings['pos-outerTop-position'].";
         background-color: #".$tpl_settings['pos-outerTop-bgcolor'].";
@@ -1395,7 +1396,7 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
     
     .pos-intro
     {
-        top: ".$tpl_settings['pos-intro-top'].";
+        margin-top: ".$tpl_settings['pos-intro-marginTop'].";
         margin-bottom: ".$tpl_settings['pos-intro-marginBottom'].";
         position: ".$tpl_settings['pos-intro-position'].";
         background-color: #".$tpl_settings['pos-intro-bgcolor'].";
