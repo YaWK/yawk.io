@@ -72,7 +72,7 @@ else
 \YAWK\sys::includeHeader($db);
 // load active google font code
 \YAWK\template::outputActivegFont($db);
-
+// load position
 $positions = \YAWK\template::getPositionStates($db);
 
 ?>
@@ -80,27 +80,123 @@ $positions = \YAWK\template::getPositionStates($db);
   </head>
   <body style="<?php echo YAWK\template::getActivegfont($db, "", "text-gfont"); ?>" ondragstart="return false">
 
+  <!-- LAYOUT START -->
+
+  <div class="container-fluid">
+          <?php
+          // outerTop - fist position outside container
+          if ($positions['pos-outerTop-enabled'] === "1")
+          {
+              echo "<div class=\"row\">";
+              echo "<div class=\"col-md-12 pos-outerTop\" id=\"pos_outerTop\">outerTop";
+              echo YAWK\template::setPosition($db, "outerTop-pos");
+              echo "</div>";
+              echo "</div>";
+          }
+          ?>
+      <div class="row text-center">
+          <div class="col-md-2 posbox" id="pos_outerLeft" style="height: 630px; margin-bottom:5px; text-align: center;">&laquo;outerLeft&raquo;</div>
+          <div class="col-md-8">
+              <div class="row">
+                  <!-- position: intro -->
+
+                  <?php
+                  // intro - fist position inside container
+                  if ($positions['pos-intro-enabled'] === "1")
+                  {
+                      echo "<div class=\"col-md-12 pos-intro\" id=\"pos_intro\">intro";
+                      echo YAWK\template::setPosition($db, "intro-pos");
+                      echo "</div>";
+                  }
+                  ?>
+
+
+                  <div class="col-md-12 pos_globalmenu" id="pos_globalmenu">globalmenu
+                      <?php // echo YAWK\template::setPosition($db, "globalmenu-pos"); ?>  <!-- GLOBALMENU -->
+                  </div>
+                  <div class="col-md-12 posbox" id="pos_top" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center;">&laquo;top&raquo;</div>
+              </div>
+              <div class="row">
+                  <div class="col-md-2 posbox" id="pos_leftMenu" style="height: 410px; margin-bottom:5px; text-align: center;">&laquo;leftMenu&raquo;</div>
+                  <div class="col-md-8" style="height: auto; margin-bottom:5px; text-align: center;">
+                      <div class="row">
+                          <div class="col-md-12 posbox" id="pos_mainTop" style="height: auto; margin-bottom:5px; text-align: center;">&laquo;mainTop&raquo;</div>
+                      </div>
+                      <div class="row">
+                          <div class="col-md-4 posbox" id="pos_mainTopLeft" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainTopLeft&raquo;</div>
+                          <div class="col-md-4 posbox" id="pos_mainTopCenter" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainTopCenter&raquo;</div>
+                          <div class="col-md-4 posbox" id="pos_mainTopRight" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainTopRight&raquo;</div>
+                      </div>
+
+                      <div class="row">
+                          <div class="col-md-12" id="pos_main">&laquo;main&raquo;
+                              <?php echo YAWK\template::setPosition($db, "main-pos"); ?>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-md-12 posbox" id="pos_mainBottom" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainBottom&raquo;</div>
+                      </div>
+                      <div class="row">
+                          <div class="col-md-4 posbox" id="pos_mainBottomLeft" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainBottomLeft&raquo;</div>
+                          <div class="col-md-4 posbox" id="pos_mainBottomCenter" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainBottomCenter&raquo;</div>
+                          <div class="col-md-4 posbox" id="pos_mainBottomRight" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainBottomRight&raquo;</div>
+                      </div>
+                      <div class="row">
+                          <div class="col-md-12 posbox" id="pos_mainFooter" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainFooter&raquo;</div>
+                      </div>
+                      <div class="row">
+                          <div class="col-md-4 posbox" id="pos_mainFooterLeft" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainFooterLeft&raquo;</div>
+                          <div class="col-md-4 posbox" id="pos_mainFooterCenter" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainFooterCenter&raquo;</div>
+                          <div class="col-md-4 posbox" id="pos_mainFooterRight" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainFooterRight&raquo;</div>
+                      </div>
+                  </div>
+                  <div class="col-md-2 posbox" id="pos_rightMenu" style="height: 410px; margin-bottom:5px; text-align: center;">&laquo;rightMenu&raquo;</div>
+              </div>
+
+              <div class="row">
+                  <div class="col-md-12 posbox" id="pos_footer" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;footer&raquo;</div>
+              </div>
+              <div class="row">
+                  <div class="col-md-12 posbox" id="pos_hiddenToolbar" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;hiddenToolbar&raquo;</div>
+              </div>
+              <div class="row">
+                  <div class="col-md-12 posbox" id="pos_debug" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;debug&raquo;</div>
+              </div>
+          </div>
+          <div class="col-md-2 posbox" id="pos_outerRight" style="height: 630px; margin-bottom:5px; text-align: center;">&laquo;outerRight&raquo;</div>
+
+      </div>
+
+      <div class="row text-center">
+          <div class="col-md-12 posbox" id="pos_outerBottom" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center;">&laquo;outerBottom&raquo;</div>
+      </div>
+  </div>
+
+  <!-- LAYOUT END -->
+
+
+
   <?php
   // :INTRO before everything else, on top of page
   if ($positions['pos-outerTop-enabled'] === "1")
   {
-      echo "<div class=\"pos-outerTop\" id=\"pos-outerTop\">";
-      echo YAWK\template::setPosition($db, "outerTop-pos");
-      echo "</div>";
+   //   echo "<div class=\"pos-outerTop\" id=\"pos-outerTop\">";
+   //   echo YAWK\template::setPosition($db, "outerTop-pos");
+   //   echo "</div>";
   }
 
   // :INTRO before everything else, on top of page
   if ($positions['pos-intro-enabled'] === "1")
   {
-    echo "<div class=\"pos-intro\" id=\"pos-intro\">";
-    echo YAWK\template::setPosition($db, "intro-pos");
-    echo "</div>";
+    // echo "<div class=\"pos-intro\" id=\"pos-intro\">";
+    // echo YAWK\template::setPosition($db, "intro-pos");
+    // echo "</div>";
   }
   ?>
 
   <!-- :GLOBALMENU -->
     <div style="<?php echo YAWK\template::getActivegfont($db, "", "menu-gfont"); ?>">
-    <?php echo YAWK\template::setPosition($db, "globalmenu-pos"); ?>  <!-- GLOBALMENU -->
+    <?php // echo YAWK\template::setPosition($db, "globalmenu-pos"); ?>  <!-- GLOBALMENU -->
       <!--/ END NAV -->
     </div>
 

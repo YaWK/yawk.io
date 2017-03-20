@@ -1382,8 +1382,19 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
     }
     
     .pos-outerTop
-    {
-        top: ".$tpl_settings['pos-outerTop-top'].";
+    {   
+        -webkit-box-shadow: ".$tpl_settings['pos-outerTop-box-shadow-width']." #".$tpl_settings['pos-outerTop-box-shadow-color'].";
+        -moz-box-shadow: ".$tpl_settings['pos-outerTop-box-shadow-width']." #".$tpl_settings['pos-outerTop-box-shadow-color'].";
+        box-shadow: ".$tpl_settings['pos-outerTop-box-shadow-width']." #".$tpl_settings['pos-outerTop-box-shadow-color'].";
+        border-width: ".$tpl_settings['pos-outerTop-border-width'].";
+        border-color: #".$tpl_settings['pos-outerTop-border-color'].";
+        border-style: ".$tpl_settings['pos-outerTop-border-style'].";
+        border-radius: ".$tpl_settings['pos-outerTop-border-radius'].";
+        padding: ".$tpl_settings['pos-outerTop-padding'].";
+        overflow: ".$tpl_settings['pos-outerTop-overflow'].";
+        visibility: ".$tpl_settings['pos-outerTop-visibility'].";
+        text-align: ".$tpl_settings['pos-outerTop-text-align'].";
+        margin-top: ".$tpl_settings['pos-outerTop-marginTop'].";
         margin-bottom: ".$tpl_settings['pos-outerTop-marginBottom'].";
         position: ".$tpl_settings['pos-outerTop-position'].";
         background-color: #".$tpl_settings['pos-outerTop-bgcolor'].";
@@ -1395,7 +1406,7 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
     
     .pos-intro
     {
-        top: ".$tpl_settings['pos-intro-top'].";
+        margin-top: ".$tpl_settings['pos-intro-marginTop'].";
         margin-bottom: ".$tpl_settings['pos-intro-marginBottom'].";
         position: ".$tpl_settings['pos-intro-position'].";
         background-color: #".$tpl_settings['pos-intro-bgcolor'].";
