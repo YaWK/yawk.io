@@ -577,7 +577,7 @@ namespace YAWK {
             $property = $db->quote($property);
             $value = $db->quote($value);
             $longValue = $db->quote($longValue);
-            if ($longValue == "1")
+            if ($longValue === "1")
             {
                 $sql ="SET longValue = '".$value."'";
             }
@@ -1056,8 +1056,8 @@ namespace YAWK {
                                 {
                                     echo "<h3 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
                                 }
-                                echo "<label for=\"$setting[property]-long\">$setting[label]</label>
-                                      <textarea cols=\"64\" rows=\"4\" class=\"$setting[fieldClass]\" placeholder=\"$lang[$placeholder]\" id=\"$setting[property]-long\" name=\"$setting[property]-long\">$setting[longValue]</textarea>";
+                                echo "<label for=\"$setting[property]\">$setting[label]</label>
+                                      <textarea cols=\"64\" rows=\"4\" class=\"$setting[fieldClass]\" placeholder=\"$lang[$placeholder]\" id=\"$setting[property]\" name=\"$setting[property]\">$setting[longValue]</textarea>";
                                 echo "<p>$setting[description]</p>";
                             }
                             else
