@@ -575,8 +575,6 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
 
                 // save theme settings to database
                 $template->setTemplateSetting($db, $template->id, $property, $value, $longValue);
-                // to file
-                // $template->setTemplateCssFile($db, $template->id, $property, $value);
             }
             // if save property is customCSS
             elseif ($property == "customCSS")
@@ -1404,6 +1402,7 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         height: ".$tpl_settings['pos-outerTop-height'].";
         z-index: ".$tpl_settings['pos-outerTop-zindex'].";
         ".$tpl_settings['pos-outerTop-bg-gradient-longValue'].";
+        ".$tpl_settings['pos-outerTop-customCSS-longValue'].";
     }
     
     .pos-intro
