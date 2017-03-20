@@ -1383,6 +1383,12 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
     
     .pos-outerTop
     {   
+        -webkit-box-shadow: ".$tpl_settings['pos-outerTop-box-shadow-width']." #".$tpl_settings['pos-outerTop-box-shadow-color'].";
+        -moz-box-shadow: ".$tpl_settings['pos-outerTop-box-shadow-width']." #".$tpl_settings['pos-outerTop-box-shadow-color'].";
+        box-shadow: ".$tpl_settings['pos-outerTop-box-shadow-width']." #".$tpl_settings['pos-outerTop-box-shadow-color'].";
+        border-width: ".$tpl_settings['pos-outerTop-border-width'].";
+        border-color: #".$tpl_settings['pos-outerTop-border-color'].";
+        border-style: ".$tpl_settings['pos-outerTop-border-style'].";
         padding: ".$tpl_settings['pos-outerTop-padding'].";
         overflow: ".$tpl_settings['pos-outerTop-overflow'].";
         visibility: ".$tpl_settings['pos-outerTop-visibility'].";
