@@ -72,8 +72,10 @@ else
 \YAWK\sys::includeHeader($db);
 // load active google font code
 \YAWK\template::outputActivegFont($db);
-// load position
+// load position stats (0|1)
 $positions = \YAWK\template::getPositionStates($db);
+// load position indicators
+$indicators = \YAWK\template::getPositionIndicator($db);
 
 ?>
 <!-- /gfonts -->
@@ -87,8 +89,18 @@ $positions = \YAWK\template::getPositionStates($db);
           // outerTop - fist position outside container
           if ($positions['pos-outerTop-enabled'] === "1")
           {
+              if ($indicators['pos-outerTop-indicator'] === "1")
+              {
+                  $indicatorStyle = "style=\"border: 2px solid red;\"";
+                  $indicatorText = "<i>position: <b>outerTop</b></i> <small><small></small></small>";
+              }
+              else
+                  {
+                      $indicatorStyle = '';
+                      $indicatorText = '';
+                  }
               echo "<div class=\"row\">";
-              echo "<div class=\"col-md-12 pos-outerTop\" id=\"pos_outerTop\">outerTop";
+              echo "<div class=\"col-md-12 pos-outerTop\" id=\"pos_outerTop\" $indicatorStyle>$indicatorText";
               echo YAWK\template::setPosition($db, "outerTop-pos");
               echo "</div>";
               echo "</div>";

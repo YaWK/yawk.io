@@ -1394,6 +1394,7 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         overflow: ".$tpl_settings['pos-outerTop-overflow'].";
         visibility: ".$tpl_settings['pos-outerTop-visibility'].";
         text-align: ".$tpl_settings['pos-outerTop-text-align'].";
+        vertical-align: ".$tpl_settings['pos-outerTop-vertical-align'].";
         margin-top: ".$tpl_settings['pos-outerTop-marginTop'].";
         margin-bottom: ".$tpl_settings['pos-outerTop-marginBottom'].";
         position: ".$tpl_settings['pos-outerTop-position'].";
@@ -1401,8 +1402,8 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         width: ".$tpl_settings['pos-outerTop-width'].";
         height: ".$tpl_settings['pos-outerTop-height'].";
         z-index: ".$tpl_settings['pos-outerTop-zindex'].";
-        ".$tpl_settings['pos-outerTop-bg-gradient-longValue'].";
-        ".$tpl_settings['pos-outerTop-customCSS-longValue'].";
+        ".$tpl_settings['pos-outerTop-bg-gradient-longValue']."
+        ".$tpl_settings['pos-outerTop-customCSS-longValue']."
     }
     
     .pos-intro
@@ -1414,7 +1415,7 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         width: ".$tpl_settings['pos-intro-width'].";
         height: ".$tpl_settings['pos-intro-height'].";
         z-index: ".$tpl_settings['pos-intro-zindex'].";
-        ".$tpl_settings['pos-intro-bg-gradient-longValue'].";
+        ".$tpl_settings['pos-intro-bg-gradient-longValue']."
     }
     
     ";
