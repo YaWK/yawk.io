@@ -341,7 +341,7 @@ namespace YAWK {
          * @param int $minify 0|1 if 1, file gets minified before saving.
          * @return bool
          */
-        public function setTemplateCssFile($db, $tplId, $content, $minify)
+        public function writeTemplateCssFile($db, $tplId, $content, $minify)
         {   /** @var $db \YAWK\db */
             // check whether templateID is not set or empty
             if (!isset($tplId) || (empty($tplId)))
