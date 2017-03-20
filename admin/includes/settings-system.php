@@ -217,11 +217,12 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
 					\YAWK\alert::draw("warning", "Error", "Long Settings: Could not set long value <b>$value</b> of property <b>$property</b>","plugin=signup","4800");
 				}
 			}
-			else {
-				if ($property === "selectedTemplate")
+			else
 				{
-					\YAWK\template::setTemplateActive($db, $value);
-				}
+					if ($property === "selectedTemplate")
+					{
+						\YAWK\template::setTemplateActive($db, $value);
+					}
 				// save value of property to database
 				\YAWK\settings::setSetting($db, $property, $value, $lang);
 			}
