@@ -1389,6 +1389,7 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         border-width: ".$tpl_settings['pos-outerTop-border-width'].";
         border-color: #".$tpl_settings['pos-outerTop-border-color'].";
         border-style: ".$tpl_settings['pos-outerTop-border-style'].";
+        border-radius: ".$tpl_settings['pos-outerTop-border-radius'].";
         padding: ".$tpl_settings['pos-outerTop-padding'].";
         overflow: ".$tpl_settings['pos-outerTop-overflow'].";
         visibility: ".$tpl_settings['pos-outerTop-visibility'].";
