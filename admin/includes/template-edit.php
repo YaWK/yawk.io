@@ -1884,10 +1884,22 @@ else
                             <h3 class="box-title"><?php echo "$lang[POSITIONS] <small>$lang[SETTINGS]</small>"; ?></h3>
                         </div>
 
+
+                        <?php
+                        if ($templateSettings['pos-outerTop-enabled']['value'] === "1")
+                        {
+                            $outerTopEnabled = "border: 2px solid #4CAE4C;";
+                        }
+                        else
+                        {
+                            $outerTopEnabled = "";
+                        }
+                        ?>
+
                         <div class="box-body">
                             <div class="container-fluid">
                                 <div class="row text-center">
-                                    <div class="col-md-12 posbox" id="pos_outerTop" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center;">&laquo;outerTop&raquo;</div>
+                                    <div class="col-md-12 posbox" id="pos_outerTop" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; <?php echo $outerTopEnabled; ?>">&laquo;outerTop&raquo;</div>
                                 </div>
                                 <div class="row text-center">
                                     <div class="col-md-2 posbox" id="pos_outerLeft" style="height: 630px; margin-bottom:5px; text-align: center;">&laquo;outerLeft&raquo;</div>
