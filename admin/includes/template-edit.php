@@ -1897,6 +1897,120 @@ else
                         else
                         {   $introEnabled = ''; }
 
+                        if ($templateSettings['pos-outerLeft-enabled']['value'] === "1")
+                        {   $outerLeftEnabled = $enabledBorder; }
+                        else
+                        {   $outerLeftEnabled = ''; }
+
+                        if ($templateSettings['pos-globalmenu-enabled']['value'] === "1")
+                        {   $globalmenuEnabled = $enabledBorder; }
+                        else
+                        {   $globalmenuEnabled = ''; }
+
+                        if ($templateSettings['pos-top-enabled']['value'] === "1")
+                        {   $topEnabled = $enabledBorder; }
+                        else
+                        {   $topEnabled = ''; }
+
+                        if ($templateSettings['pos-leftMenu-enabled']['value'] === "1")
+                        {   $leftMenuEnabled = $enabledBorder; }
+                        else
+                        {   $leftMenuEnabled = ''; }
+
+                        if ($templateSettings['pos-mainTop-enabled']['value'] === "1")
+                        {   $mainTopEnabled = $enabledBorder; }
+                        else
+                        {   $mainTopEnabled = ''; }
+
+                        if ($templateSettings['pos-mainTopLeft-enabled']['value'] === "1")
+                        {   $mainTopLeftEnabled = $enabledBorder; }
+                        else
+                        {   $mainTopLeftEnabled = ''; }
+
+                        if ($templateSettings['pos-mainTopCenter-enabled']['value'] === "1")
+                        {   $mainTopCenterEnabled = $enabledBorder; }
+                        else
+                        {   $mainTopCenterEnabled = ''; }
+
+                        if ($templateSettings['pos-mainTopRight-enabled']['value'] === "1")
+                        {   $mainTopRightEnabled = $enabledBorder; }
+                        else
+                        {   $mainTopRightEnabled = ''; }
+
+                        if ($templateSettings['pos-main-enabled']['value'] === "1")
+                        {   $mainEnabled = $enabledBorder; }
+                        else
+                        {   $mainEnabled = ''; }
+
+                        if ($templateSettings['pos-mainBottom-enabled']['value'] === "1")
+                        {   $mainBottomEnabled = $enabledBorder; }
+                        else
+                        {   $mainBottomEnabled = ''; }
+
+                        if ($templateSettings['pos-mainBottomLeft-enabled']['value'] === "1")
+                        {   $mainBottomLeftEnabled = $enabledBorder; }
+                        else
+                        {   $mainBottomLeftEnabled = ''; }
+
+                        if ($templateSettings['pos-mainBottomCenter-enabled']['value'] === "1")
+                        {   $mainBottomCenterEnabled = $enabledBorder; }
+                        else
+                        {   $mainBottomCenterEnabled = ''; }
+
+                        if ($templateSettings['pos-mainBottomRight-enabled']['value'] === "1")
+                        {   $mainBottomRightEnabled = $enabledBorder; }
+                        else
+                        {   $mainBottomRightEnabled = ''; }
+
+                        if ($templateSettings['pos-mainFooter-enabled']['value'] === "1")
+                        {   $mainFooterEnabled = $enabledBorder; }
+                        else
+                        {   $mainFooterEnabled = ''; }
+
+                        if ($templateSettings['pos-mainFooterLeft-enabled']['value'] === "1")
+                        {   $mainFooterLeftEnabled = $enabledBorder; }
+                        else
+                        {   $mainFooterLeftEnabled = ''; }
+
+                        if ($templateSettings['pos-mainFooterCenter-enabled']['value'] === "1")
+                        {   $mainFooterCenterEnabled = $enabledBorder; }
+                        else
+                        {   $mainFooterCenterEnabled = ''; }
+
+                        if ($templateSettings['pos-mainFooterRight-enabled']['value'] === "1")
+                        {   $mainFooterRightEnabled = $enabledBorder; }
+                        else
+                        {   $mainFooterRightEnabled = ''; }
+
+                        if ($templateSettings['pos-rightMenu-enabled']['value'] === "1")
+                        {   $rightMenuEnabled = $enabledBorder; }
+                        else
+                        {   $rightMenuEnabled = ''; }
+
+                        if ($templateSettings['pos-footer-enabled']['value'] === "1")
+                        {   $footerEnabled = $enabledBorder; }
+                        else
+                        {   $footerEnabled = ''; }
+
+                        if ($templateSettings['pos-hiddenToolbar-enabled']['value'] === "1")
+                        {   $hiddenToolbarEnabled = $enabledBorder; }
+                        else
+                        {   $hiddenToolbarEnabled = ''; }
+
+                        if ($templateSettings['pos-debug-enabled']['value'] === "1")
+                        {   $debugEnabled = $enabledBorder; }
+                        else
+                        {   $debugEnabled = ''; }
+
+                        if ($templateSettings['pos-outerRight-enabled']['value'] === "1")
+                        {   $outerRightEnabled = $enabledBorder; }
+                        else
+                        {   $outerRightEnabled = ''; }
+
+                        if ($templateSettings['pos-outerBottom-enabled']['value'] === "1")
+                        {   $outerBottomEnabled = $enabledBorder; }
+                        else
+                        {   $outerBottomEnabled = ''; }
                         ?>
 
                         <div class="box-body">
@@ -1905,64 +2019,64 @@ else
                                     <div class="col-md-12 posbox" id="pos_outerTop" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; <?php echo $outerTopEnabled; ?>">&laquo;outerTop&raquo;</div>
                                 </div>
                                 <div class="row text-center">
-                                    <div class="col-md-2 posbox" id="pos_outerLeft" style="height: 630px; margin-bottom:5px; text-align: center;">&laquo;outerLeft&raquo;</div>
+                                    <div class="col-md-2 posbox" id="pos_outerLeft" style="height: 630px; margin-bottom:5px; text-align: center; <?php echo $outerLeftEnabled; ?>">&laquo;outerLeft&raquo;</div>
                                     <div class="col-md-8">
                                         <div class="row">
                                             <div class="col-md-12 posbox" id="pos_intro" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; <?php echo $introEnabled; ?>">&laquo;intro&raquo;</div>
-                                            <div class="col-md-12 posbox" id="pos_globalmenu" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center;">&laquo;globalmenu&raquo;</div>
-                                            <div class="col-md-12 posbox" id="pos_top" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center;">&laquo;top&raquo;</div>
+                                            <div class="col-md-12 posbox" id="pos_globalmenu" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; <?php echo $globalmenuEnabled; ?>">&laquo;globalmenu&raquo;</div>
+                                            <div class="col-md-12 posbox" id="pos_top" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; <?php echo $topEnabled; ?>">&laquo;top&raquo;</div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-2 posbox" id="pos_leftMenu" style="height: 410px; margin-bottom:5px; text-align: center;">&laquo;leftMenu&raquo;</div>
+                                            <div class="col-md-2 posbox" id="pos_leftMenu" style="height: 410px; margin-bottom:5px; text-align: center; <?php echo $leftMenuEnabled; ?>">&laquo;leftMenu&raquo;</div>
                                             <div class="col-md-8" style="height: auto; margin-bottom:5px; text-align: center;">
                                                 <div class="row">
-                                                    <div class="col-md-12 posbox" id="pos_mainTop" style="height: auto; margin-bottom:5px; text-align: center;">&laquo;mainTop&raquo;</div>
+                                                    <div class="col-md-12 posbox" id="pos_mainTop" style="height: auto; margin-bottom:5px; text-align: center; <?php echo $mainTopEnabled; ?>">&laquo;mainTop&raquo;</div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-4 posbox" id="pos_mainTopLeft" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainTopLeft&raquo;</div>
-                                                    <div class="col-md-4 posbox" id="pos_mainTopCenter" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainTopCenter&raquo;</div>
-                                                    <div class="col-md-4 posbox" id="pos_mainTopRight" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainTopRight&raquo;</div>
+                                                    <div class="col-md-4 posbox" id="pos_mainTopLeft" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainTopLeftEnabled; ?>">&laquo;mainTopLeft&raquo;</div>
+                                                    <div class="col-md-4 posbox" id="pos_mainTopCenter" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainTopCenterEnabled; ?>">&laquo;mainTopCenter&raquo;</div>
+                                                    <div class="col-md-4 posbox" id="pos_mainTopRight" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainTopRightEnabled; ?>">&laquo;mainTopRight&raquo;</div>
                                                 </div>
 
                                                 <div class="row">
-                                                    <div class="col-md-12 posbox" id="pos_main" style="height: 200px; margin-bottom:5px; text-align: center;">&laquo;main&raquo;</div>
+                                                    <div class="col-md-12 posbox" id="pos_main" style="height: 200px; margin-bottom:5px; text-align: center; <?php echo $mainEnabled; ?>">&laquo;main&raquo;</div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-12 posbox" id="pos_mainBottom" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainBottom&raquo;</div>
+                                                    <div class="col-md-12 posbox" id="pos_mainBottom" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainBottomEnabled; ?>">&laquo;mainBottom&raquo;</div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-4 posbox" id="pos_mainBottomLeft" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainBottomLeft&raquo;</div>
-                                                    <div class="col-md-4 posbox" id="pos_mainBottomCenter" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainBottomCenter&raquo;</div>
-                                                    <div class="col-md-4 posbox" id="pos_mainBottomRight" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainBottomRight&raquo;</div>
+                                                    <div class="col-md-4 posbox" id="pos_mainBottomLeft" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainBottomLeftEnabled; ?>">&laquo;mainBottomLeft&raquo;</div>
+                                                    <div class="col-md-4 posbox" id="pos_mainBottomCenter" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainBottomCenterEnabled; ?>">&laquo;mainBottomCenter&raquo;</div>
+                                                    <div class="col-md-4 posbox" id="pos_mainBottomRight" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainBottomRightEnabled; ?>">&laquo;mainBottomRight&raquo;</div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-12 posbox" id="pos_mainFooter" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainFooter&raquo;</div>
+                                                    <div class="col-md-12 posbox" id="pos_mainFooter" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainFooterEnabled; ?>">&laquo;mainFooter&raquo;</div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-4 posbox" id="pos_mainFooterLeft" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainFooterLeft&raquo;</div>
-                                                    <div class="col-md-4 posbox" id="pos_mainFooterCenter" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainFooterCenter&raquo;</div>
-                                                    <div class="col-md-4 posbox" id="pos_mainFooterRight" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainFooterRight&raquo;</div>
+                                                    <div class="col-md-4 posbox" id="pos_mainFooterLeft" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainFooterLeftEnabled; ?>">&laquo;mainFooterLeft&raquo;</div>
+                                                    <div class="col-md-4 posbox" id="pos_mainFooterCenter" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainFooterCenterEnabled; ?>">&laquo;mainFooterCenter&raquo;</div>
+                                                    <div class="col-md-4 posbox" id="pos_mainFooterRight" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainFooterRightEnabled; ?>">&laquo;mainFooterRight&raquo;</div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-2 posbox" id="pos_rightMenu" style="height: 410px; margin-bottom:5px; text-align: center;">&laquo;rightMenu&raquo;</div>
+                                            <div class="col-md-2 posbox" id="pos_rightMenu" style="height: 410px; margin-bottom:5px; text-align: center; <?php echo $rightMenuEnabled; ?>">&laquo;rightMenu&raquo;</div>
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-md-12 posbox" id="pos_footer" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;footer&raquo;</div>
+                                            <div class="col-md-12 posbox" id="pos_footer" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $footerEnabled; ?>">&laquo;footer&raquo;</div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-12 posbox" id="pos_hiddenToolbar" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;hiddenToolbar&raquo;</div>
+                                            <div class="col-md-12 posbox" id="pos_hiddenToolbar" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $hiddenToolbarEnabled; ?>">&laquo;hiddenToolbar&raquo;</div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-12 posbox" id="pos_debug" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;debug&raquo;</div>
+                                            <div class="col-md-12 posbox" id="pos_debug" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $debugEnabled; ?>">&laquo;debug&raquo;</div>
                                         </div>
                                     </div>
-                                    <div class="col-md-2 posbox" id="pos_outerRight" style="height: 630px; margin-bottom:5px; text-align: center;">&laquo;outerRight&raquo;</div>
+                                    <div class="col-md-2 posbox" id="pos_outerRight" style="height: 630px; margin-bottom:5px; text-align: center; <?php echo $outerRightEnabled; ?>">&laquo;outerRight&raquo;</div>
 
                                 </div>
 
                                 <div class="row text-center">
-                                    <div class="col-md-12 posbox" id="pos_outerBottom" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center;">&laquo;outerBottom&raquo;</div>
+                                    <div class="col-md-12 posbox" id="pos_outerBottom" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; <?php echo $outerBottomEnabled; ?>">&laquo;outerBottom&raquo;</div>
                                 </div>
                             </div>
                         </div>
