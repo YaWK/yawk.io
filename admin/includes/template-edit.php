@@ -1886,7 +1886,7 @@ else
 
 
                         <?php
-                        $enabledBorder = "border: 2px solid #4CAE4C;";
+                        $enabledBorder = "border: 1px solid #4CAE4C;";
                         if ($templateSettings['pos-outerTop-enabled']['value'] === "1")
                         {   $outerTopEnabled = $enabledBorder; }
                         else
