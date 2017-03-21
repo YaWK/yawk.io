@@ -341,7 +341,7 @@ namespace YAWK {
          * @param int $minify 0|1 if 1, file gets minified before saving.
          * @return bool
          */
-        public function setTemplateCssFile($db, $tplId, $content, $minify)
+        public function writeTemplateCssFile($db, $tplId, $content, $minify)
         {   /** @var $db \YAWK\db */
             // check whether templateID is not set or empty
             if (!isset($tplId) || (empty($tplId)))
@@ -577,7 +577,7 @@ namespace YAWK {
             $property = $db->quote($property);
             $value = $db->quote($value);
             $longValue = $db->quote($longValue);
-            if ($longValue == "1")
+            if ($longValue === "1")
             {
                 $sql ="SET longValue = '".$value."'";
             }
@@ -950,16 +950,16 @@ namespace YAWK {
                             $setting['description'] = '';
                         }
 
-
                         /* SELECT FIELD */
                         if ($setting['fieldType'] === "select")
                         {   // display icon, heading and subtext, if its set
                             if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
                             {
-                                echo "<h3 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
+                                echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
                             }
                             // begin draw select
-                            echo "<label for=\"$setting[property]\">$setting[label]</label>
+                            echo "<label for=\"$setting[property]\">$setting[label]
+                                  <small><i class=\"small\" style=\"font-weight:normal\">$lang[DEFAULT]: $setting[valueDefault]</i></small></label>
                                   <select class=\"form-control\" id=\"$setting[property]\" name=\"$setting[property]\">";
                                 echo "<option value=\"$setting[value]\">$lang[SETTING_CURRENT] $setting[value]</option>";
                                 // explode option string into array
@@ -985,7 +985,7 @@ namespace YAWK {
                         {
                             if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
                             {
-                                echo "<h3 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
+                                echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
                             }
                             echo "<label for=\"$setting[property]\">$setting[label]</label>
                                   <input type=\"radio\" id=\"$setting[property]\" name=\"$setting[property]\">";
@@ -1018,7 +1018,7 @@ namespace YAWK {
                             }
                             if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
                             {
-                                echo "<h3 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
+                                echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
                             }
                             echo "<input type=\"hidden\" name=\"$setting[property]\" value=\"0\">
                               <input type=\"checkbox\" id=\"$setting[property]\" name=\"$setting[property]\" value=\"1\" $checked>
@@ -1038,7 +1038,7 @@ namespace YAWK {
                             }
                             if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
                             {
-                                echo "<h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
+                                echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
                             }
                             echo "<input type=\"hidden\" name=\"$setting[property]\" value=\"0\">
                               <input type=\"checkbox\" data-on=\"$lang[ON]\" data-off=\"$lang[OFF]\" data-toggle=\"toggle\" data-onstyle=\"success\" data-offstyle=\"danger\" id=\"$setting[property]\" name=\"$setting[property]\" value=\"1\" $checked>
@@ -1054,10 +1054,10 @@ namespace YAWK {
                                 $setting['longValue'] = nl2br($setting['longValue']);
                                 if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
                                 {
-                                    echo "<h3 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
+                                    echo "<h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
                                 }
-                                echo "<label for=\"$setting[property]-long\">$setting[label]</label>
-                                      <textarea cols=\"64\" rows=\"4\" class=\"$setting[fieldClass]\" placeholder=\"$lang[$placeholder]\" id=\"$setting[property]-long\" name=\"$setting[property]-long\">$setting[longValue]</textarea>";
+                                echo "<label for=\"$setting[property]\">$setting[label]</label>
+                                      <textarea cols=\"64\" rows=\"4\" class=\"$setting[fieldClass]\" placeholder=\"$lang[$placeholder]\" id=\"$setting[property]\" name=\"$setting[property]\">$setting[longValue]</textarea>";
                                 echo "<p>$setting[description]</p>";
                             }
                             else
@@ -1065,7 +1065,7 @@ namespace YAWK {
                                 $setting['value'] = nl2br($setting['value']);
                                 if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
                                 {
-                                    echo "<h3 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
+                                    echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
                                 }
                                 echo "<label for=\"$setting[property]-long\">$setting[label]</label>
                                       <textarea cols=\"64\" rows=\"4\" class=\"$setting[fieldClass]\" placeholder=\"$lang[$placeholder]\" id=\"$setting[property]\" name=\"$setting[property]\">$setting[value]</textarea>";
@@ -1079,7 +1079,7 @@ namespace YAWK {
                             $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
                             if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
                             {
-                                echo "<h3 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
+                                echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
                             }
                             echo "<label for=\"$setting[property]\">$setting[label]</label>
                                   <input type=\"password\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
@@ -1092,7 +1092,7 @@ namespace YAWK {
                             $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
                             if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
                             {
-                                echo "<h3 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
+                                echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
                             }
                             echo "<label for=\"$setting[property]\">$setting[label]
                                   <small><i class=\"small\" style=\"font-weight:normal\">$lang[DEFAULT]: $setting[valueDefault]</i></small></label>
@@ -1106,7 +1106,7 @@ namespace YAWK {
                             $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
                             if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
                             {
-                                echo "<h3 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
+                                echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
                             }
                             echo "<label for=\"$setting[property]\">$setting[label]
                                   <small><i class=\"small\" style=\"font-weight:normal\">$lang[DEFAULT]: $setting[valueDefault]</i></small></label>
@@ -1118,7 +1118,7 @@ namespace YAWK {
                             $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
                             if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
                             {
-                                echo "<h3 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
+                                echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
                             }
                             echo "<label for=\"$setting[property]\">$setting[label]
                                   <small><i class=\"small\" style=\"font-weight:normal\">$lang[DEFAULT]: $setting[valueDefault]</i></small></label>
@@ -1577,6 +1577,33 @@ namespace YAWK {
                 {
                     return false;
                 }
+        }
+
+        /**
+         * get the position indicators. This is used on index.php to mark indicated positions
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @return array|bool $array position indicator 0|1
+         */
+        static function getPositionIndicator($db)
+        {
+            $array = '';
+            $sql = $db->query("SELECT property, value FROM {template_settings} WHERE property LIKE 'pos-%-indicator'");
+            while ($row = mysqli_fetch_assoc($sql))
+            {
+                $prop = $row['property'];
+                $array[$prop] = $row['value'];
+            }
+            if (is_array($array))
+            {
+                return $array;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /**
