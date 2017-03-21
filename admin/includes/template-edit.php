@@ -1886,14 +1886,17 @@ else
 
 
                         <?php
+                        $enabledBorder = "border: 2px solid #4CAE4C;";
                         if ($templateSettings['pos-outerTop-enabled']['value'] === "1")
-                        {
-                            $outerTopEnabled = "border: 2px solid #4CAE4C;";
-                        }
+                        {   $outerTopEnabled = $enabledBorder; }
                         else
-                        {
-                            $outerTopEnabled = "";
-                        }
+                        {   $outerTopEnabled = ''; }
+
+                        if ($templateSettings['pos-intro-enabled']['value'] === "1")
+                        {   $introEnabled = $enabledBorder; }
+                        else
+                        {   $introEnabled = ''; }
+
                         ?>
 
                         <div class="box-body">
@@ -1905,7 +1908,7 @@ else
                                     <div class="col-md-2 posbox" id="pos_outerLeft" style="height: 630px; margin-bottom:5px; text-align: center;">&laquo;outerLeft&raquo;</div>
                                     <div class="col-md-8">
                                         <div class="row">
-                                            <div class="col-md-12 posbox" id="pos_intro" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center;">&laquo;intro&raquo;</div>
+                                            <div class="col-md-12 posbox" id="pos_intro" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; <?php echo $introEnabled; ?>">&laquo;intro&raquo;</div>
                                             <div class="col-md-12 posbox" id="pos_globalmenu" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center;">&laquo;globalmenu&raquo;</div>
                                             <div class="col-md-12 posbox" id="pos_top" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center;">&laquo;top&raquo;</div>
                                         </div>
