@@ -73,9 +73,9 @@ else
 // load active google font code
 \YAWK\template::outputActivegFont($db);
 // load position stats (0|1)
-$positions = \YAWK\template::getPositionStates($db);
+$positions = \YAWK\template::getPositionStatesArray($db);
 // load position indicators
-$indicators = \YAWK\template::getPositionIndicator($db);
+$indicators = \YAWK\template::getPositionIndicatorStatusArray($db);
 
 ?>
 <!-- /gfonts -->
@@ -85,48 +85,45 @@ $indicators = \YAWK\template::getPositionIndicator($db);
   <!-- LAYOUT START -->
 
   <div class="container-fluid">
-          <?php
-          // outerTop - fist position outside container
-          if ($positions['pos-outerTop-enabled'] === "1")
-          {
-              if ($indicators['pos-outerTop-indicator'] === "1")
-              {
-                  $indicatorStyle = "style=\"border: 2px solid red;\"";
-                  $indicatorText = "<i>position: <b>outerTop</b></i> <small><small></small></small>";
-              }
-              else
-                  {
-                      $indicatorStyle = '';
-                      $indicatorText = '';
-                  }
-              echo "<div class=\"row\">";
-              echo "<div class=\"col-md-12 pos-outerTop\" id=\"pos_outerTop\" $indicatorStyle>$indicatorText";
-              echo YAWK\template::setPosition($db, "outerTop-pos");
-              echo "</div>";
-              echo "</div>";
-          }
-          ?>
+      <div class="row">
+      <?php
+        // POSITION: outerTop
+        \YAWK\template::getPositionDivBox($db, "outerTop", 1, "col-md-12", $positions, $indicators);
+      ?>
+      </div>
       <div class="row text-center">
-          <div class="col-md-2 posbox" id="pos_outerLeft" style="height: 630px; margin-bottom:5px; text-align: center;">&laquo;outerLeft&raquo;</div>
-          <div class="col-md-8">
+          <?php
+              // POSITION: outerLeft
+              \YAWK\template::getPositionDivBox($db, "outerLeft", 0, "col-md-2", $positions, $indicators);
+          ?>
+          <!-- <div class="col-md-2 posbox" id="pos_outerLeft" style="height: 630px; margin-bottom:5px; text-align: center;">&laquo;outerLeft&raquo;</div> -->
+          <?php
+          if ($positions['pos-outerLeft-enabled'] === "1" && ($positions['pos-outerRight-enabled'] === "1"))
+          {
+              $col = "col-md-8";
+          }
+          else if ($positions['pos-outerLeft-enabled'] === "0" && ($positions['pos-outerRight-enabled'] === "1")
+          ||      ($positions['pos-outerLeft-enabled'] === "1" && ($positions['pos-outerRight-enabled'] === "0")))
+          {
+            $col = "col-md-10";
+          }
+          else if ($positions['pos-outerLeft-enabled'] === "0" && ($positions['pos-outerRight-enabled'] === "0"))
+              {
+                  $col = "col-md-12";
+              }
+          ?>
+          <div class="<?php echo $col; ?>">
               <div class="row">
-                  <!-- position: intro -->
-
                   <?php
-                  // intro - fist position inside container
-                  if ($positions['pos-intro-enabled'] === "1")
-                  {
-                      echo "<div class=\"col-md-12 pos-intro\" id=\"pos_intro\">intro";
-                      echo YAWK\template::setPosition($db, "intro-pos");
-                      echo "</div>";
-                  }
+                  // POSITION: intro
+                  \YAWK\template::getPositionDivBox($db, "intro", 1, "col-md-12", $positions, $indicators);
+
+                  // POSITION: globalmenu
+                  \YAWK\template::getPositionDivBox($db, "globalmenu", 1, "col-md-12", $positions, $indicators);
+
+                  // POSITION: top
+                  \YAWK\template::getPositionDivBox($db, "top", 1, "col-md-12", $positions, $indicators);
                   ?>
-
-
-                  <div class="col-md-12 pos_globalmenu" id="pos_globalmenu">globalmenu
-                      <?php // echo YAWK\template::setPosition($db, "globalmenu-pos"); ?>  <!-- GLOBALMENU -->
-                  </div>
-                  <div class="col-md-12 posbox" id="pos_top" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center;">&laquo;top&raquo;</div>
               </div>
               <div class="row">
                   <div class="col-md-2 posbox" id="pos_leftMenu" style="height: 410px; margin-bottom:5px; text-align: center;">&laquo;leftMenu&raquo;</div>
@@ -175,7 +172,11 @@ $indicators = \YAWK\template::getPositionIndicator($db);
                   <div class="col-md-12 posbox" id="pos_debug" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;debug&raquo;</div>
               </div>
           </div>
-          <div class="col-md-2 posbox" id="pos_outerRight" style="height: 630px; margin-bottom:5px; text-align: center;">&laquo;outerRight&raquo;</div>
+
+          <?php
+          // POSITION: outerRight
+          \YAWK\template::getPositionDivBox($db, "outerRight", 0, "col-md-2", $positions, $indicators);
+          ?>
 
       </div>
 
