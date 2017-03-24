@@ -1779,6 +1779,171 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         ".$tpl_settings['pos-mainBottomRight-bg-gradient-longValue']."
         ".$tpl_settings['pos-mainBottomRight-customCSS-longValue']."
     }
+    .pos-mainFooter
+    {   
+        -webkit-box-shadow: ".$tpl_settings['pos-mainFooter-box-shadow-width']." #".$tpl_settings['pos-mainFooter-box-shadow-color'].";
+        -moz-box-shadow: ".$tpl_settings['pos-mainFooter-box-shadow-width']." #".$tpl_settings['pos-mainFooter-box-shadow-color'].";
+        box-shadow: ".$tpl_settings['pos-mainFooter-box-shadow-width']." #".$tpl_settings['pos-mainFooter-box-shadow-color'].";
+        border-width: ".$tpl_settings['pos-mainFooter-border-width'].";
+        border-color: #".$tpl_settings['pos-mainFooter-border-color'].";
+        border-style: ".$tpl_settings['pos-mainFooter-border-style'].";
+        border-radius: ".$tpl_settings['pos-mainFooter-border-radius'].";
+        padding: ".$tpl_settings['pos-mainFooter-padding'].";
+        overflow: ".$tpl_settings['pos-mainFooter-overflow'].";
+        visibility: ".$tpl_settings['pos-mainFooter-visibility'].";
+        text-align: ".$tpl_settings['pos-mainFooter-text-align'].";
+        vertical-align: ".$tpl_settings['pos-mainFooter-vertical-align'].";
+        margin-top: ".$tpl_settings['pos-mainFooter-marginTop'].";
+        margin-bottom: ".$tpl_settings['pos-mainFooter-marginBottom'].";
+        position: ".$tpl_settings['pos-mainFooter-position'].";
+        background-color: #".$tpl_settings['pos-mainFooter-bgcolor'].";
+        width: ".$tpl_settings['pos-mainFooter-width'].";
+        height: ".$tpl_settings['pos-mainFooter-height'].";
+        z-index: ".$tpl_settings['pos-mainFooter-zindex'].";
+        ".$tpl_settings['pos-mainFooter-bg-gradient-longValue']."
+        ".$tpl_settings['pos-mainFooter-customCSS-longValue']."
+    }
+    .pos-mainFooterLeft
+    {   
+        -webkit-box-shadow: ".$tpl_settings['pos-mainFooterLeft-box-shadow-width']." #".$tpl_settings['pos-mainFooterLeft-box-shadow-color'].";
+        -moz-box-shadow: ".$tpl_settings['pos-mainFooterLeft-box-shadow-width']." #".$tpl_settings['pos-mainFooterLeft-box-shadow-color'].";
+        box-shadow: ".$tpl_settings['pos-mainFooterLeft-box-shadow-width']." #".$tpl_settings['pos-mainFooterLeft-box-shadow-color'].";
+        border-width: ".$tpl_settings['pos-mainFooterLeft-border-width'].";
+        border-color: #".$tpl_settings['pos-mainFooterLeft-border-color'].";
+        border-style: ".$tpl_settings['pos-mainFooterLeft-border-style'].";
+        border-radius: ".$tpl_settings['pos-mainFooterLeft-border-radius'].";
+        padding: ".$tpl_settings['pos-mainFooterLeft-padding'].";
+        overflow: ".$tpl_settings['pos-mainFooterLeft-overflow'].";
+        visibility: ".$tpl_settings['pos-mainFooterLeft-visibility'].";
+        text-align: ".$tpl_settings['pos-mainFooterLeft-text-align'].";
+        vertical-align: ".$tpl_settings['pos-mainFooterLeft-vertical-align'].";
+        margin-top: ".$tpl_settings['pos-mainFooterLeft-marginTop'].";
+        margin-bottom: ".$tpl_settings['pos-mainFooterLeft-marginBottom'].";
+        position: ".$tpl_settings['pos-mainFooterLeft-position'].";
+        background-color: #".$tpl_settings['pos-mainFooterLeft-bgcolor'].";
+        height: ".$tpl_settings['pos-mainFooterLeft-height'].";
+        z-index: ".$tpl_settings['pos-mainFooterLeft-zindex'].";
+        ".$tpl_settings['pos-mainFooterLeft-bg-gradient-longValue']."
+        ".$tpl_settings['pos-mainFooterLeft-customCSS-longValue']."
+    }
+    .pos-mainFooterCenter
+    {   
+        -webkit-box-shadow: ".$tpl_settings['pos-mainFooterCenter-box-shadow-width']." #".$tpl_settings['pos-mainFooterCenter-box-shadow-color'].";
+        -moz-box-shadow: ".$tpl_settings['pos-mainFooterCenter-box-shadow-width']." #".$tpl_settings['pos-mainFooterCenter-box-shadow-color'].";
+        box-shadow: ".$tpl_settings['pos-mainFooterCenter-box-shadow-width']." #".$tpl_settings['pos-mainFooterCenter-box-shadow-color'].";
+        border-width: ".$tpl_settings['pos-mainFooterCenter-border-width'].";
+        border-color: #".$tpl_settings['pos-mainFooterCenter-border-color'].";
+        border-style: ".$tpl_settings['pos-mainFooterCenter-border-style'].";
+        border-radius: ".$tpl_settings['pos-mainFooterCenter-border-radius'].";
+        padding: ".$tpl_settings['pos-mainFooterCenter-padding'].";
+        overflow: ".$tpl_settings['pos-mainFooterCenter-overflow'].";
+        visibility: ".$tpl_settings['pos-mainFooterCenter-visibility'].";
+        text-align: ".$tpl_settings['pos-mainFooterCenter-text-align'].";
+        vertical-align: ".$tpl_settings['pos-mainFooterCenter-vertical-align'].";
+        margin-top: ".$tpl_settings['pos-mainFooterCenter-marginTop'].";
+        margin-bottom: ".$tpl_settings['pos-mainFooterCenter-marginBottom'].";
+        position: ".$tpl_settings['pos-mainFooterCenter-position'].";
+        background-color: #".$tpl_settings['pos-mainFooterCenter-bgcolor'].";
+        height: ".$tpl_settings['pos-mainFooterCenter-height'].";
+        z-index: ".$tpl_settings['pos-mainFooterCenter-zindex'].";
+        ".$tpl_settings['pos-mainFooterCenter-bg-gradient-longValue']."
+        ".$tpl_settings['pos-mainFooterCenter-customCSS-longValue']."
+    }
+    .pos-mainFooterRight
+    {   
+        -webkit-box-shadow: ".$tpl_settings['pos-mainFooterRight-box-shadow-width']." #".$tpl_settings['pos-mainFooterRight-box-shadow-color'].";
+        -moz-box-shadow: ".$tpl_settings['pos-mainFooterRight-box-shadow-width']." #".$tpl_settings['pos-mainFooterRight-box-shadow-color'].";
+        box-shadow: ".$tpl_settings['pos-mainFooterRight-box-shadow-width']." #".$tpl_settings['pos-mainFooterRight-box-shadow-color'].";
+        border-width: ".$tpl_settings['pos-mainFooterRight-border-width'].";
+        border-color: #".$tpl_settings['pos-mainFooterRight-border-color'].";
+        border-style: ".$tpl_settings['pos-mainFooterRight-border-style'].";
+        border-radius: ".$tpl_settings['pos-mainFooterRight-border-radius'].";
+        padding: ".$tpl_settings['pos-mainFooterRight-padding'].";
+        overflow: ".$tpl_settings['pos-mainFooterRight-overflow'].";
+        visibility: ".$tpl_settings['pos-mainFooterRight-visibility'].";
+        text-align: ".$tpl_settings['pos-mainFooterRight-text-align'].";
+        vertical-align: ".$tpl_settings['pos-mainFooterRight-vertical-align'].";
+        margin-top: ".$tpl_settings['pos-mainFooterRight-marginTop'].";
+        margin-bottom: ".$tpl_settings['pos-mainFooterRight-marginBottom'].";
+        position: ".$tpl_settings['pos-mainFooterRight-position'].";
+        background-color: #".$tpl_settings['pos-mainFooterRight-bgcolor'].";
+        height: ".$tpl_settings['pos-mainFooterRight-height'].";
+        z-index: ".$tpl_settings['pos-mainFooterRight-zindex'].";
+        ".$tpl_settings['pos-mainFooterRight-bg-gradient-longValue']."
+        ".$tpl_settings['pos-mainFooterRight-customCSS-longValue']."
+    }
+    .pos-footer
+    {   
+        -webkit-box-shadow: ".$tpl_settings['pos-footer-box-shadow-width']." #".$tpl_settings['pos-footer-box-shadow-color'].";
+        -moz-box-shadow: ".$tpl_settings['pos-footer-box-shadow-width']." #".$tpl_settings['pos-footer-box-shadow-color'].";
+        box-shadow: ".$tpl_settings['pos-footer-box-shadow-width']." #".$tpl_settings['pos-footer-box-shadow-color'].";
+        border-width: ".$tpl_settings['pos-footer-border-width'].";
+        border-color: #".$tpl_settings['pos-footer-border-color'].";
+        border-style: ".$tpl_settings['pos-footer-border-style'].";
+        border-radius: ".$tpl_settings['pos-footer-border-radius'].";
+        padding: ".$tpl_settings['pos-footer-padding'].";
+        overflow: ".$tpl_settings['pos-footer-overflow'].";
+        visibility: ".$tpl_settings['pos-footer-visibility'].";
+        text-align: ".$tpl_settings['pos-footer-text-align'].";
+        vertical-align: ".$tpl_settings['pos-footer-vertical-align'].";
+        margin-top: ".$tpl_settings['pos-footer-marginTop'].";
+        margin-bottom: ".$tpl_settings['pos-footer-marginBottom'].";
+        position: ".$tpl_settings['pos-footer-position'].";
+        background-color: #".$tpl_settings['pos-footer-bgcolor'].";
+        width: ".$tpl_settings['pos-footer-width'].";
+        height: ".$tpl_settings['pos-footer-height'].";
+        z-index: ".$tpl_settings['pos-footer-zindex'].";
+        ".$tpl_settings['pos-footer-bg-gradient-longValue']."
+        ".$tpl_settings['pos-footer-customCSS-longValue']."
+    }
+    .pos-hiddenToolbar
+    {   
+        -webkit-box-shadow: ".$tpl_settings['pos-hiddenToolbar-box-shadow-width']." #".$tpl_settings['pos-hiddenToolbar-box-shadow-color'].";
+        -moz-box-shadow: ".$tpl_settings['pos-hiddenToolbar-box-shadow-width']." #".$tpl_settings['pos-hiddenToolbar-box-shadow-color'].";
+        box-shadow: ".$tpl_settings['pos-hiddenToolbar-box-shadow-width']." #".$tpl_settings['pos-hiddenToolbar-box-shadow-color'].";
+        border-width: ".$tpl_settings['pos-hiddenToolbar-border-width'].";
+        border-color: #".$tpl_settings['pos-hiddenToolbar-border-color'].";
+        border-style: ".$tpl_settings['pos-hiddenToolbar-border-style'].";
+        border-radius: ".$tpl_settings['pos-hiddenToolbar-border-radius'].";
+        padding: ".$tpl_settings['pos-hiddenToolbar-padding'].";
+        overflow: ".$tpl_settings['pos-hiddenToolbar-overflow'].";
+        visibility: ".$tpl_settings['pos-hiddenToolbar-visibility'].";
+        text-align: ".$tpl_settings['pos-hiddenToolbar-text-align'].";
+        vertical-align: ".$tpl_settings['pos-hiddenToolbar-vertical-align'].";
+        margin-top: ".$tpl_settings['pos-hiddenToolbar-marginTop'].";
+        margin-bottom: ".$tpl_settings['pos-hiddenToolbar-marginBottom'].";
+        position: ".$tpl_settings['pos-hiddenToolbar-position'].";
+        background-color: #".$tpl_settings['pos-hiddenToolbar-bgcolor'].";
+        width: ".$tpl_settings['pos-hiddenToolbar-width'].";
+        height: ".$tpl_settings['pos-hiddenToolbar-height'].";
+        z-index: ".$tpl_settings['pos-hiddenToolbar-zindex'].";
+        ".$tpl_settings['pos-hiddenToolbar-bg-gradient-longValue']."
+        ".$tpl_settings['pos-hiddenToolbar-customCSS-longValue']."
+    }
+    .pos-debug
+    {   
+        -webkit-box-shadow: ".$tpl_settings['pos-debug-box-shadow-width']." #".$tpl_settings['pos-debug-box-shadow-color'].";
+        -moz-box-shadow: ".$tpl_settings['pos-debug-box-shadow-width']." #".$tpl_settings['pos-debug-box-shadow-color'].";
+        box-shadow: ".$tpl_settings['pos-debug-box-shadow-width']." #".$tpl_settings['pos-debug-box-shadow-color'].";
+        border-width: ".$tpl_settings['pos-debug-border-width'].";
+        border-color: #".$tpl_settings['pos-debug-border-color'].";
+        border-style: ".$tpl_settings['pos-debug-border-style'].";
+        border-radius: ".$tpl_settings['pos-debug-border-radius'].";
+        padding: ".$tpl_settings['pos-debug-padding'].";
+        overflow: ".$tpl_settings['pos-debug-overflow'].";
+        visibility: ".$tpl_settings['pos-debug-visibility'].";
+        text-align: ".$tpl_settings['pos-debug-text-align'].";
+        vertical-align: ".$tpl_settings['pos-debug-vertical-align'].";
+        margin-top: ".$tpl_settings['pos-debug-marginTop'].";
+        margin-bottom: ".$tpl_settings['pos-debug-marginBottom'].";
+        position: ".$tpl_settings['pos-debug-position'].";
+        background-color: #".$tpl_settings['pos-debug-bgcolor'].";
+        width: ".$tpl_settings['pos-debug-width'].";
+        height: ".$tpl_settings['pos-debug-height'].";
+        z-index: ".$tpl_settings['pos-debug-zindex'].";
+        ".$tpl_settings['pos-debug-bg-gradient-longValue']."
+        ".$tpl_settings['pos-debug-customCSS-longValue']."
+    }
     
     ";
 
