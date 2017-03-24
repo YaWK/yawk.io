@@ -207,17 +207,66 @@ $indicators = \YAWK\template::getPositionIndicatorStatusArray($db);
                       </div>
 
                       <div class="row">
-                          <div class="col-md-12" id="pos_main">&laquo;main&raquo;
-                              <?php echo YAWK\template::setPosition($db, "main-pos"); ?>
-                          </div>
+                          <?php
+                          // POSITION: main
+                          \YAWK\template::getPositionDivBox($db, "main", 0, "col-md-12", $positions, $indicators);
+                          ?>
                       </div>
                       <div class="row">
-                          <div class="col-md-12 posbox" id="pos_mainBottom" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainBottom&raquo;</div>
+                          <?php
+                          // POSITION: main
+                          \YAWK\template::getPositionDivBox($db, "mainBottom", 0, "col-md-12", $positions, $indicators);
+                          ?>
                       </div>
                       <div class="row">
-                          <div class="col-md-4 posbox" id="pos_mainBottomLeft" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainBottomLeft&raquo;</div>
-                          <div class="col-md-4 posbox" id="pos_mainBottomCenter" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainBottomCenter&raquo;</div>
-                          <div class="col-md-4 posbox" id="pos_mainBottomRight" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainBottomRight&raquo;</div>
+
+                          <?php
+                          if ($positions['pos-mainBottomLeft-enabled'] === "1" && ($positions['pos-mainBottomCenter-enabled'] === "1") && ($positions['pos-mainBottomRight-enabled'] === "1"))
+                          {
+                              // POSITION: mainBottomLeft
+                              \YAWK\template::getPositionDivBox($db, "mainBottomLeft", 0, "col-md-4", $positions, $indicators);
+                              // POSITION: mainBottomCenter
+                              \YAWK\template::getPositionDivBox($db, "mainBottomCenter", 0, "col-md-4", $positions, $indicators);
+                              // POSITION: mainBottomRight
+                              \YAWK\template::getPositionDivBox($db, "mainBottomRight", 0, "col-md-4", $positions, $indicators);
+                          }
+                          else if ($positions['pos-mainBottomLeft-enabled'] === "1" && ($positions['pos-mainBottomCenter-enabled'] === "0") && ($positions['pos-mainBottomRight-enabled'] === "0"))
+                          {
+                              // POSITION: mainTopLeft
+                              \YAWK\template::getPositionDivBox($db, "mainBottomLeft", 0, "col-md-12", $positions, $indicators);
+                          }
+                          else if ($positions['pos-mainBottomLeft-enabled'] === "0" && ($positions['pos-mainBottomCenter-enabled'] === "1") && ($positions['pos-mainBottomRight-enabled'] === "0"))
+                          {
+                              // POSITION: mainTopCenter
+                              \YAWK\template::getPositionDivBox($db, "mainBottomCenter", 0, "col-md-12", $positions, $indicators);
+                          }
+                          else if ($positions['pos-mainBottomLeft-enabled'] === "0" && ($positions['pos-mainBottomCenter-enabled'] === "0") && ($positions['pos-mainBottomRight-enabled'] === "1"))
+                          {
+                              // POSITION: mainTopRight
+                              \YAWK\template::getPositionDivBox($db, "mainBottomRight", 0, "col-md-12", $positions, $indicators);
+                          }
+                          else if ($positions['pos-mainBottomLeft-enabled'] === "1" && ($positions['pos-mainBottomCenter-enabled'] === "1") && ($positions['pos-mainBottomRight-enabled'] === "0"))
+                          {
+                              // POSITION: mainTopLeft
+                              \YAWK\template::getPositionDivBox($db, "mainBottomLeft", 0, "col-md-6", $positions, $indicators);
+                              // POSITION: mainTopCenter
+                              \YAWK\template::getPositionDivBox($db, "mainBottomCenter", 0, "col-md-6", $positions, $indicators);
+                          }
+                          else if ($positions['pos-mainBottomLeft-enabled'] === "0" && ($positions['pos-mainBottomCenter-enabled'] === "1") && ($positions['pos-mainBottomRight-enabled'] === "1"))
+                          {
+                              // POSITION: mainTopCenter
+                              \YAWK\template::getPositionDivBox($db, "mainBottomCenter", 0, "col-md-6", $positions, $indicators);
+                              // POSITION: mainTopRight
+                              \YAWK\template::getPositionDivBox($db, "mainBottomRight", 0, "col-md-6", $positions, $indicators);
+                          }
+                          else if ($positions['pos-mainBottomLeft-enabled'] === "1" && ($positions['pos-mainBottomCenter-enabled'] === "0") && ($positions['pos-mainBottomRight-enabled'] === "1"))
+                          {
+                              // POSITION: mainTopCenter
+                              \YAWK\template::getPositionDivBox($db, "mainBottomLeft", 0, "col-md-6", $positions, $indicators);
+                              // POSITION: mainTopRight
+                              \YAWK\template::getPositionDivBox($db, "mainBottomRight", 0, "col-md-6", $positions, $indicators);
+                          }
+                          ?>
                       </div>
                       <div class="row">
                           <div class="col-md-12 posbox" id="pos_mainFooter" style="height: 30px; margin-bottom:5px; text-align: center;">&laquo;mainFooter&raquo;</div>
