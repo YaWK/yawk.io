@@ -863,6 +863,57 @@ namespace YAWK {
                 }
         }
 
+        /**
+         * return div box with postition settings
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database object
+         * @param string $position The position to load
+         * @param array $positions Positions [enabled] status array
+         * @param array $indicators Positions [indicator] status array
+         */
+        public static function getPositionDivBox($db, $position, $row, $bootstrapGrid, $positions, $indicators)
+        {
+            if (isset($row) && (!empty($row)))
+            {
+                if ($row === "1")
+                {
+                    $startRow = "<div class=\"row\">";
+                    $endRow = "</div>";
+                }
+                else
+                    {
+                        $startRow = '';
+                        $endRow = '';
+                    }
+            }
+            else
+                {
+                    $startRow = '';
+                    $endRow = '';
+                }
+            // outerTop - fist position outside container
+            if ($positions["pos-$position-enabled"] === "1")
+            {
+                if ($indicators["pos-$position-indicator"] === "1")
+                {
+                    $indicatorStyle = "style=\"border: 2px solid red;\"";
+                    $indicatorText = "<i>position: <b>$position</b></i> <small><small></small></small>";
+                }
+                else
+                {
+                    $indicatorStyle = '';
+                    $indicatorText = '';
+                }
+                echo "$startRow";
+                echo "<div class=\"$bootstrapGrid pos-$position\" id=\"$position\" $indicatorStyle>$indicatorText";
+                      \YAWK\template::setPosition($db, "$position-pos");
+                echo "</div>";
+                echo "$endRow";
+            }
+        }
+
 
         /**
          * return html form field, depending on fieldClass
@@ -1560,7 +1611,7 @@ namespace YAWK {
          * @param object $db database
          * @return array|bool $array template positions 0|1
          */
-        static function getPositionStates($db)
+        static function getPositionStatesArray($db)
         {
             $array = '';
             $sql = $db->query("SELECT property, value FROM {template_settings} WHERE property LIKE 'pos-%-enabled'");
@@ -1587,7 +1638,7 @@ namespace YAWK {
          * @param object $db database
          * @return array|bool $array position indicator 0|1
          */
-        static function getPositionIndicator($db)
+        static function getPositionIndicatorStatusArray($db)
         {
             $array = '';
             $sql = $db->query("SELECT property, value FROM {template_settings} WHERE property LIKE 'pos-%-indicator'");
