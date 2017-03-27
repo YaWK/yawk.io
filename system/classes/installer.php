@@ -492,7 +492,7 @@ namespace YAWK {
                 }
         }
 
-        /** step 4 - save prjects settings and draw a form to enter user data (email, name, password...)
+        /** step 4 - save project settings and draw a form to enter user data (email, name, password...)
          * @param array $setup installation settings
          * @param object $language language object
          * @param array $lang language data array
