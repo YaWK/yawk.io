@@ -6,8 +6,7 @@
 <link rel="stylesheet" href="../system/engines/bootstrap-toggle/css/bootstrap-toggle.css">
 <!-- Bootstrap toggle js -->
 <script type="text/javascript" src="../system/engines/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
-<!-- JS GO -->
-
+<!-- CSS for positions tab -->
 <style>
     .posbox
     {
@@ -28,6 +27,7 @@
         font-weight: bold;
     }
 </style>
+<!-- Javascript for positions tab -->
 <script type="text/javascript">
 /* reminder: check if form has changed and warns the user that he needs to save. */
     $(document).ready(function() {
@@ -1944,6 +1944,30 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         ".$tpl_settings['pos-debug-bg-gradient-longValue']."
         ".$tpl_settings['pos-debug-customCSS-longValue']."
     }
+    .pos-outerBottom
+    {   
+        -webkit-box-shadow: ".$tpl_settings['pos-outerBottom-box-shadow-width']." #".$tpl_settings['pos-outerBottom-box-shadow-color'].";
+        -moz-box-shadow: ".$tpl_settings['pos-outerBottom-box-shadow-width']." #".$tpl_settings['pos-outerBottom-box-shadow-color'].";
+        box-shadow: ".$tpl_settings['pos-outerBottom-box-shadow-width']." #".$tpl_settings['pos-outerBottom-box-shadow-color'].";
+        border-width: ".$tpl_settings['pos-outerBottom-border-width'].";
+        border-color: #".$tpl_settings['pos-outerBottom-border-color'].";
+        border-style: ".$tpl_settings['pos-outerBottom-border-style'].";
+        border-radius: ".$tpl_settings['pos-outerBottom-border-radius'].";
+        padding: ".$tpl_settings['pos-outerBottom-padding'].";
+        overflow: ".$tpl_settings['pos-outerBottom-overflow'].";
+        visibility: ".$tpl_settings['pos-outerBottom-visibility'].";
+        text-align: ".$tpl_settings['pos-outerBottom-text-align'].";
+        vertical-align: ".$tpl_settings['pos-outerBottom-vertical-align'].";
+        margin-top: ".$tpl_settings['pos-outerBottom-marginTop'].";
+        margin-bottom: ".$tpl_settings['pos-outerBottom-marginBottom'].";
+        position: ".$tpl_settings['pos-outerBottom-position'].";
+        background-color: #".$tpl_settings['pos-outerBottom-bgcolor'].";
+        width: ".$tpl_settings['pos-outerBottom-width'].";
+        height: ".$tpl_settings['pos-outerBottom-height'].";
+        z-index: ".$tpl_settings['pos-outerBottom-zindex'].";
+        ".$tpl_settings['pos-outerBottom-bg-gradient-longValue']."
+        ".$tpl_settings['pos-outerBottom-customCSS-longValue']."
+    }
     
     ";
 
@@ -1957,7 +1981,7 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
     }
     // WRITE CSS FILES
     // create settings.css for development purpose (css/settings.css)
-    $template->writeTemplateCssFile($db, $template->id, $content, 0); // 0 = no minify
+    $template->writeTemplateCssFile($db, $template->id, $content, 0); // 0 = do no minify
     // create minified version for production environments (css/settings.min.css)
     $template->writeTemplateCssFile($db, $template->id, $content, 1); // 1 = minify
 
@@ -2071,7 +2095,7 @@ else
 <div class="box box-default">
     <div class="box-body">
 
-<form id="template-edit-form" action="index.php?page=template-edit&<?php echo $overrideTemplate; ?>id=<?php echo $template->id; // echo $id; ?>" method="POST">
+<form id="template-edit-form" action="index.php?page=template-edit&<?php echo $overrideTemplate; ?>id=<?php echo $template->id; ?>" method="POST">
     <input type="hidden" name="getID" value="<?php echo $getID; ?>">
     <!-- <div class="nav-tabs-custom"> <!-- admin LTE tab style -->
     <div id="btn-wrapper" class="text-right">
@@ -2411,7 +2435,6 @@ else
                             <h3 class="box-title"><?php echo "$lang[POSITIONS] <small>$lang[SETTINGS]</small>"; ?></h3>
                         </div>
 
-
                         <?php
                         $enabledBorder = "border: 1px solid #4CAE4C;";
                         if ($templateSettings['pos-outerTop-enabled']['value'] === "1")
@@ -2557,7 +2580,7 @@ else
                                             <div class="col-md-2 posbox" id="pos_leftMenu" style="height: 410px; margin-bottom:5px; text-align: center; <?php echo $leftMenuEnabled; ?>">&laquo;leftMenu&raquo;</div>
                                             <div class="col-md-8" style="height: auto; margin-bottom:5px; text-align: center;">
                                                 <div class="row">
-                                                    <div class="col-md-12 posbox" id="pos_mainTop" style="height: auto; margin-bottom:5px; text-align: center; <?php echo $mainTopEnabled; ?>">&laquo;mainTop&raquo;</div>
+                                                    <div class="col-md-12 posbox" id="pos_mainTop" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainTopEnabled; ?>">&laquo;mainTop&raquo;</div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-4 posbox" id="pos_mainTopLeft" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainTopLeftEnabled; ?>">&laquo;mainTopLeft&raquo;</div>
@@ -3171,12 +3194,9 @@ else
                 </div>
             </div>
         </div>
-
     </div>
-
     <br><br><br><br><br><br><br><br>
       <!-- </div> <!-- ./ nav-tabs-custom -->
      </form>
-
     </div>
 </div>
