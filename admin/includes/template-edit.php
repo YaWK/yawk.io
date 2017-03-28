@@ -1091,12 +1091,14 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
    /* NAVBAR */
    .navbar-fixed-top {
     margin-top: ".$tpl_settings['navbar-marginTop'].";
+    margin-bottom: ".$tpl_settings['navbar-marginBottom'].";
   }
    .navbar-default {
        text-shadow: 1px 0px #".$tpl_settings['fontshadow-menucolor'].";
        filter: dropshadow(color=#".$tpl_settings['fontshadow-menucolor'].", offx=1, offy=1);
        background-color: #".$tpl_settings['default-menubgcolor'].";
        border-color: #".$tpl_settings['border-menubgcolor'].";
+       margin-bottom: ".$tpl_settings['navbar-marginBottom'].";
    }
    .navbar-default .navbar-brand {
        color: #".$tpl_settings['brand-menucolor'].";
