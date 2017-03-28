@@ -605,7 +605,7 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         margin-bottom: ".$tpl_settings['body-margin-bottom'].";
         margin-left: ".$tpl_settings['body-margin-left'].";
         margin-right: ".$tpl_settings['body-margin-right'].";
-
+        
         /* BACKGROUND IMAGE */
         background-image: url('".$tpl_settings['body-bg-image']."');
         background-repeat:".$tpl_settings['body-bg-repeat'].";
@@ -1085,9 +1085,6 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
       background-color: #".$tpl_settings['btn-danger-color'].";
     }
 
-
-
-
    /* NAVBAR */
    .navbar-fixed-top {
     margin-top: ".$tpl_settings['navbar-marginTop'].";
@@ -1406,6 +1403,12 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         z-index: ".$tpl_settings['pos-outerTop-zindex'].";
         ".$tpl_settings['pos-outerTop-bg-gradient-longValue']."
         ".$tpl_settings['pos-outerTop-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-outerTop-bg-image']."');
+        background-repeat:".$tpl_settings['pos-outerTop-bg-repeat'].";
+        background-position:".$tpl_settings['pos-outerTop-bg-position'].";
+        background-attachment:".$tpl_settings['pos-outerTop-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-outerTop-bg-attachment'].";
     }
     .pos-intro
     {   
@@ -1430,6 +1433,12 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         z-index: ".$tpl_settings['pos-intro-zindex'].";
         ".$tpl_settings['pos-intro-bg-gradient-longValue']."
         ".$tpl_settings['pos-intro-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-intro-bg-image']."');
+        background-repeat:".$tpl_settings['pos-intro-bg-repeat'].";
+        background-position:".$tpl_settings['pos-intro-bg-position'].";
+        background-attachment:".$tpl_settings['pos-intro-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-intro-bg-attachment'].";
     }
     .pos-globalmenu
     {   
@@ -1454,6 +1463,12 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         z-index: ".$tpl_settings['pos-globalmenu-zindex'].";
         ".$tpl_settings['pos-globalmenu-bg-gradient-longValue']."
         ".$tpl_settings['pos-globalmenu-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-globalmenu-bg-image']."');
+        background-repeat:".$tpl_settings['pos-globalmenu-bg-repeat'].";
+        background-position:".$tpl_settings['pos-globalmenu-bg-position'].";
+        background-attachment:".$tpl_settings['pos-globalmenu-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-globalmenu-attachment'].";
     }
     .pos-top
     {   
@@ -1478,6 +1493,12 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         z-index: ".$tpl_settings['pos-top-zindex'].";
         ".$tpl_settings['pos-top-bg-gradient-longValue']."
         ".$tpl_settings['pos-top-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-top-bg-image']."');
+        background-repeat:".$tpl_settings['pos-top-bg-repeat'].";
+        background-position:".$tpl_settings['pos-top-bg-position'].";
+        background-attachment:".$tpl_settings['pos-top-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-top-attachment'].";
     }
     .pos-outerLeft
     {   
@@ -1501,6 +1522,12 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         z-index: ".$tpl_settings['pos-outerLeft-zindex'].";
         ".$tpl_settings['pos-outerLeft-bg-gradient-longValue']."
         ".$tpl_settings['pos-outerLeft-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-outerLeft-bg-image']."');
+        background-repeat:".$tpl_settings['pos-outerLeft-bg-repeat'].";
+        background-position:".$tpl_settings['pos-outerLeft-bg-position'].";
+        background-attachment:".$tpl_settings['pos-outerLeft-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-outerLeft-attachment'].";
     }
     .pos-outerRight
     {   
@@ -1524,6 +1551,12 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         z-index: ".$tpl_settings['pos-outerRight-zindex'].";
         ".$tpl_settings['pos-outerRight-bg-gradient-longValue']."
         ".$tpl_settings['pos-outerRight-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-outerRight-bg-image']."');
+        background-repeat:".$tpl_settings['pos-outerRight-bg-repeat'].";
+        background-position:".$tpl_settings['pos-outerRight-bg-position'].";
+        background-attachment:".$tpl_settings['pos-outerRight-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-outerRight-attachment'].";
     }
     .pos-leftMenu
     {   
@@ -1547,6 +1580,12 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         z-index: ".$tpl_settings['pos-leftMenu-zindex'].";
         ".$tpl_settings['pos-leftMenu-bg-gradient-longValue']."
         ".$tpl_settings['pos-leftMenu-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-leftMenu-bg-image']."');
+        background-repeat:".$tpl_settings['pos-leftMenu-bg-repeat'].";
+        background-position:".$tpl_settings['pos-leftMenu-bg-position'].";
+        background-attachment:".$tpl_settings['pos-leftMenu-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-leftMenu-attachment'].";
     }
     .pos-rightMenu
     {   
@@ -1570,6 +1609,12 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         z-index: ".$tpl_settings['pos-rightMenu-zindex'].";
         ".$tpl_settings['pos-rightMenu-bg-gradient-longValue']."
         ".$tpl_settings['pos-rightMenu-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-rightMenu-bg-image']."');
+        background-repeat:".$tpl_settings['pos-rightMenu-bg-repeat'].";
+        background-position:".$tpl_settings['pos-rightMenu-bg-position'].";
+        background-attachment:".$tpl_settings['pos-rightMenu-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-rightMenu-attachment'].";
     }
     .pos-mainTop
     {   
@@ -1594,6 +1639,12 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         z-index: ".$tpl_settings['pos-mainTop-zindex'].";
         ".$tpl_settings['pos-mainTop-bg-gradient-longValue']."
         ".$tpl_settings['pos-mainTop-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-mainTop-bg-image']."');
+        background-repeat:".$tpl_settings['pos-mainTop-bg-repeat'].";
+        background-position:".$tpl_settings['pos-mainTop-bg-position'].";
+        background-attachment:".$tpl_settings['pos-mainTop-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-mainTop-attachment'].";
     }
     .pos-mainTopLeft
     {   
@@ -1617,6 +1668,12 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         z-index: ".$tpl_settings['pos-mainTopLeft-zindex'].";
         ".$tpl_settings['pos-mainTopLeft-bg-gradient-longValue']."
         ".$tpl_settings['pos-mainTopLeft-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-mainTopLeft-bg-image']."');
+        background-repeat:".$tpl_settings['pos-mainTopLeft-bg-repeat'].";
+        background-position:".$tpl_settings['pos-mainTopLeft-bg-position'].";
+        background-attachment:".$tpl_settings['pos-mainTopLeft-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-mainTopLeft-attachment'].";
     }
     .pos-mainTopCenter
     {   
@@ -1640,6 +1697,12 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         z-index: ".$tpl_settings['pos-mainTopCenter-zindex'].";
         ".$tpl_settings['pos-mainTopCenter-bg-gradient-longValue']."
         ".$tpl_settings['pos-mainTopCenter-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-mainTopCenter-bg-image']."');
+        background-repeat:".$tpl_settings['pos-mainTopCenter-bg-repeat'].";
+        background-position:".$tpl_settings['pos-mainTopCenter-bg-position'].";
+        background-attachment:".$tpl_settings['pos-mainTopCenter-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-mainTopCenter-attachment'].";
     }
     .pos-mainTopRight
     {   
@@ -1663,6 +1726,12 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         z-index: ".$tpl_settings['pos-mainTopRight-zindex'].";
         ".$tpl_settings['pos-mainTopRight-bg-gradient-longValue']."
         ".$tpl_settings['pos-mainTopRight-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-mainTopRight-bg-image']."');
+        background-repeat:".$tpl_settings['pos-mainTopRight-bg-repeat'].";
+        background-position:".$tpl_settings['pos-mainTopRight-bg-position'].";
+        background-attachment:".$tpl_settings['pos-mainTopRight-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-mainTopRight-attachment'].";
     }
     .pos-main
     {   
@@ -1687,6 +1756,12 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         z-index: ".$tpl_settings['pos-main-zindex'].";
         ".$tpl_settings['pos-main-bg-gradient-longValue']."
         ".$tpl_settings['pos-main-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-main-bg-image']."');
+        background-repeat:".$tpl_settings['pos-main-bg-repeat'].";
+        background-position:".$tpl_settings['pos-main-bg-position'].";
+        background-attachment:".$tpl_settings['pos-main-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-main-attachment'].";
     }
     .pos-mainBottom
     {   
@@ -1711,6 +1786,12 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         z-index: ".$tpl_settings['pos-mainBottom-zindex'].";
         ".$tpl_settings['pos-mainBottom-bg-gradient-longValue']."
         ".$tpl_settings['pos-mainBottom-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-mainBottom-bg-image']."');
+        background-repeat:".$tpl_settings['pos-mainBottom-bg-repeat'].";
+        background-position:".$tpl_settings['pos-mainBottom-bg-position'].";
+        background-attachment:".$tpl_settings['pos-mainBottom-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-mainBottom-attachment'].";
     }
     .pos-mainBottomLeft
     {   
@@ -1734,6 +1815,12 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         z-index: ".$tpl_settings['pos-mainBottomLeft-zindex'].";
         ".$tpl_settings['pos-mainBottomLeft-bg-gradient-longValue']."
         ".$tpl_settings['pos-mainBottomLeft-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-mainBottomLeft-bg-image']."');
+        background-repeat:".$tpl_settings['pos-mainBottomLeft-bg-repeat'].";
+        background-position:".$tpl_settings['pos-mainBottomLeft-bg-position'].";
+        background-attachment:".$tpl_settings['pos-mainBottomLeft-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-mainBottomLeft-attachment'].";
     }
     .pos-mainBottomCenter
     {   
@@ -1756,7 +1843,13 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         height: ".$tpl_settings['pos-mainBottomCenter-height'].";
         z-index: ".$tpl_settings['pos-mainBottomCenter-zindex'].";
         ".$tpl_settings['pos-mainBottomCenter-bg-gradient-longValue']."
-        ".$tpl_settings['pos-mainBottomCenter-customCSS-longValue']."
+        ".$tpl_settings['pos-mainBottomCenter-customCSS-longValue']."        
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-mainBottomCenter-bg-image']."');
+        background-repeat:".$tpl_settings['pos-mainBottomCenter-bg-repeat'].";
+        background-position:".$tpl_settings['pos-mainBottomCenter-bg-position'].";
+        background-attachment:".$tpl_settings['pos-mainBottomCenter-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-mainBottomCenter-attachment'].";
     }
     .pos-mainBottomRight
     {   
@@ -1780,6 +1873,12 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         z-index: ".$tpl_settings['pos-mainBottomRight-zindex'].";
         ".$tpl_settings['pos-mainBottomRight-bg-gradient-longValue']."
         ".$tpl_settings['pos-mainBottomRight-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-mainBottomRight-bg-image']."');
+        background-repeat:".$tpl_settings['pos-mainBottomRight-bg-repeat'].";
+        background-position:".$tpl_settings['pos-mainBottomRight-bg-position'].";
+        background-attachment:".$tpl_settings['pos-mainBottomRight-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-mainBottomRight-attachment'].";
     }
     .pos-mainFooter
     {   
@@ -1804,6 +1903,12 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         z-index: ".$tpl_settings['pos-mainFooter-zindex'].";
         ".$tpl_settings['pos-mainFooter-bg-gradient-longValue']."
         ".$tpl_settings['pos-mainFooter-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-mainFooter-bg-image']."');
+        background-repeat:".$tpl_settings['pos-mainFooter-bg-repeat'].";
+        background-position:".$tpl_settings['pos-mainFooter-bg-position'].";
+        background-attachment:".$tpl_settings['pos-mainFooter-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-mainFooter-attachment'].";
     }
     .pos-mainFooterLeft
     {   
@@ -1827,6 +1932,12 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         z-index: ".$tpl_settings['pos-mainFooterLeft-zindex'].";
         ".$tpl_settings['pos-mainFooterLeft-bg-gradient-longValue']."
         ".$tpl_settings['pos-mainFooterLeft-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-mainFooterLeft-bg-image']."');
+        background-repeat:".$tpl_settings['pos-mainFooterLeft-bg-repeat'].";
+        background-position:".$tpl_settings['pos-mainFooterLeft-bg-position'].";
+        background-attachment:".$tpl_settings['pos-mainFooterLeft-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-mainFooterLeft-attachment'].";
     }
     .pos-mainFooterCenter
     {   
@@ -1850,6 +1961,12 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         z-index: ".$tpl_settings['pos-mainFooterCenter-zindex'].";
         ".$tpl_settings['pos-mainFooterCenter-bg-gradient-longValue']."
         ".$tpl_settings['pos-mainFooterCenter-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-mainFooterCenter-bg-image']."');
+        background-repeat:".$tpl_settings['pos-mainFooterCenter-bg-repeat'].";
+        background-position:".$tpl_settings['pos-mainFooterCenter-bg-position'].";
+        background-attachment:".$tpl_settings['pos-mainFooterCenter-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-mainFooterCenter-attachment'].";
     }
     .pos-mainFooterRight
     {   
@@ -1873,6 +1990,12 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         z-index: ".$tpl_settings['pos-mainFooterRight-zindex'].";
         ".$tpl_settings['pos-mainFooterRight-bg-gradient-longValue']."
         ".$tpl_settings['pos-mainFooterRight-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-mainFooterRight-bg-image']."');
+        background-repeat:".$tpl_settings['pos-mainFooterRight-bg-repeat'].";
+        background-position:".$tpl_settings['pos-mainFooterRight-bg-position'].";
+        background-attachment:".$tpl_settings['pos-mainFooterRight-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-mainFooterRight-attachment'].";
     }
     .pos-footer
     {   
@@ -1897,6 +2020,12 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         z-index: ".$tpl_settings['pos-footer-zindex'].";
         ".$tpl_settings['pos-footer-bg-gradient-longValue']."
         ".$tpl_settings['pos-footer-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-footer-bg-image']."');
+        background-repeat:".$tpl_settings['pos-footer-bg-repeat'].";
+        background-position:".$tpl_settings['pos-footer-bg-position'].";
+        background-attachment:".$tpl_settings['pos-footer-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-footer-attachment'].";
     }
     .pos-hiddenToolbar
     {   
@@ -1921,6 +2050,12 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         z-index: ".$tpl_settings['pos-hiddenToolbar-zindex'].";
         ".$tpl_settings['pos-hiddenToolbar-bg-gradient-longValue']."
         ".$tpl_settings['pos-hiddenToolbar-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-hiddenToolbar-bg-image']."');
+        background-repeat:".$tpl_settings['pos-hiddenToolbar-bg-repeat'].";
+        background-position:".$tpl_settings['pos-hiddenToolbar-bg-position'].";
+        background-attachment:".$tpl_settings['pos-hiddenToolbar-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-hiddenToolbar-attachment'].";
     }
     .pos-debug
     {   
@@ -1945,6 +2080,12 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         z-index: ".$tpl_settings['pos-debug-zindex'].";
         ".$tpl_settings['pos-debug-bg-gradient-longValue']."
         ".$tpl_settings['pos-debug-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-debug-bg-image']."');
+        background-repeat:".$tpl_settings['pos-debug-bg-repeat'].";
+        background-position:".$tpl_settings['pos-debug-bg-position'].";
+        background-attachment:".$tpl_settings['pos-debug-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-debug-attachment'].";
     }
     .pos-outerBottom
     {   
@@ -1969,6 +2110,12 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         z-index: ".$tpl_settings['pos-outerBottom-zindex'].";
         ".$tpl_settings['pos-outerBottom-bg-gradient-longValue']."
         ".$tpl_settings['pos-outerBottom-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-outerBottom-bg-image']."');
+        background-repeat:".$tpl_settings['pos-outerBottom-bg-repeat'].";
+        background-position:".$tpl_settings['pos-outerBottom-bg-position'].";
+        background-attachment:".$tpl_settings['pos-outerBottom-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-outerBottom-attachment'].";
     }
     
     ";
