@@ -751,7 +751,7 @@ namespace YAWK {
                     $html .= "<!-- /.nav-collapse -->
   </div><!-- /navbar-inn -->
  <!-- </div><!-- /container -->
-</nav><!-- navbar --> \n";
+</nav><!-- navbar -->";
                 }
                 return $html;
             }
