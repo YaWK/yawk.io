@@ -6,7 +6,6 @@
 namespace YAWK {
     /**
      * <b>Database class db</b> <i>extends \mysqli</i>
-     * @package YAWK
      */
     final class db extends \mysqli {
         private $config;
