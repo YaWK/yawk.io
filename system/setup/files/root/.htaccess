@@ -13,7 +13,7 @@ ErrorDocument 404 /content/errors/404.html
 
 # SEO settings
 RewriteEngine On
-RewriteBase /mercedesgarage.net/
+RewriteBase /yourdomain.com/
 RewriteCond %{REQUEST_URI} /(.*).html
 # rewrite all .html files to index.php?include={filename}
 RewriteRule ^(.*).html$ \index.php?include=$1 [NC,L]
