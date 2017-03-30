@@ -924,6 +924,7 @@ namespace YAWK {
          */
         public function getFormElements($db, $settings, $type, $lang, $user)
         {   // loop trough array
+            // removed not needed checkup
             if(!isset($type) && (empty($type)))
             {	// if param 'type' is missing, set type 1 as default
                 $type = 1;

@@ -159,7 +159,7 @@ namespace YAWK {
                 if( substr(trim($query),-1)==';' )
                 {
                     if(!$this->query($query))
-                    {
+                    {   // error handling
                        $error = 'Error performing query \'<strong>' . $query . '\': ' . @mysqli_error($this);
                        @file_put_contents($errorFilename, $error."\n");
                        //exit;

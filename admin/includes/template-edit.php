@@ -2486,7 +2486,6 @@ else
                 </div>
             </div>
         </div>
-
         <?php
             // GET ALL TEMPLATE SETTINGS INTO ARRAY
             $templateSettings = \YAWK\template::getAllSettingsIntoArray($db, $user);
