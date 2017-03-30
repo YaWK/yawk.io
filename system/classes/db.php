@@ -160,8 +160,8 @@ namespace YAWK {
                 {
                     if(!$this->query($query))
                     {
-                       $error = 'Error performing query \'<strong>' . $query . '\': ' . mysqli_error($this);
-                       file_put_contents($errorFilename, $error."\n");
+                       $error = 'Error performing query \'<strong>' . $query . '\': ' . @mysqli_error($this);
+                       @file_put_contents($errorFilename, $error."\n");
                        //exit;
                     }
                     $query = '';

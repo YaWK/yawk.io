@@ -924,11 +924,6 @@ namespace YAWK {
          */
         public function getFormElements($db, $settings, $type, $lang, $user)
         {   // loop trough array
-            $i_settings = 0;
-            if(!isset($settings) || (empty($settings)) || (!is_array($settings)))
-            {	// if settings are not set, try to get them...
-                $settings = \YAWK\template::getAllSettingsIntoArray($db, $user);
-            }
             if(!isset($type) && (empty($type)))
             {	// if param 'type' is missing, set type 1 as default
                 $type = 1;

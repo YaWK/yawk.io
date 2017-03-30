@@ -314,7 +314,7 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
         // ok, lets go...
         // we need to check if user clicked on save button
         $(savebutton).click(function() {
-            $(savebutton).removeClass('btn btn-success').addClass('btn btn-warning');
+            $(savebutton).removeClass('btn btn-success').addClass('btn btn-warning disabled');
             $(savebuttonIcon).removeClass('fa fa-check').addClass('fa fa-spinner fa-spin fa-fw');
             // to save, even if the editor is currently opened in code view
             // we need to check if codeview is currently active:
@@ -428,6 +428,7 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
     // This is pretty cool when working on a new design: because you see changes, while others wont.
     // In theory, thereby every user can have a different frontend template activated.
 
+
     // OVERRIDE TEMPLATE
     // check if call comes from template-manage or template-edit form
     if (isset($_GET['id']) && (is_numeric($_GET['id']) || (isset($_POST['id']) && (is_numeric($_POST['id'])))))
@@ -485,6 +486,7 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
     else {
         $previewButton = "";
     }
+
 
 $newID = '';
 $getID = '';
@@ -1083,6 +1085,42 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
     .btn-danger .badge {
       color: #".$tpl_settings['btn-danger-background-color'].";
       background-color: #".$tpl_settings['btn-danger-color'].";
+    }
+    
+    /* FORMS */
+    .form-control {
+      display: block;
+      width: 100%;
+      height: 34px;
+      padding: 6px 12px;
+      font-size: 14px;
+      line-height: 1.42857143;
+      color: #555;
+      background-color: #fff;
+      background-image: none;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+              box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+      -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+           -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+              transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    }
+    .form-control:focus {
+      border-color: #66afe9;
+      outline: 0;
+      -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+              box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+    }
+    .form-control::-moz-placeholder {
+      color: #999;
+      opacity: 1;
+    }
+    .form-control:-ms-input-placeholder {
+      color: #999;
+    }
+    .form-control::-webkit-input-placeholder {
+      color: #999;
     }
 
    /* NAVBAR */
@@ -2445,13 +2483,6 @@ else
                     <div class="embed-responsive embed-responsive-4by3">
                         <iframe id="preview" class="embed-responsive-item" src="../index.php"></iframe>
                     </div>
-                    <?php
-                    // $tpl = \YAWK\template::getTemplateSettingsArray($db);
-                    // echo "<pre title=\"Template Settings of $template->name\"><h3>Template Settings of $template->name</h3>";print_r($tpl);echo"</pre>";
-                          /* foreach (\YAWK\template::getTemplateSettingsArray($db) as $tpl) {
-                              echo "$tpl<br>";
-                          }*/
-                    ?>
                 </div>
             </div>
         </div>
