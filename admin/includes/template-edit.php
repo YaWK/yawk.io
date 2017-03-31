@@ -1089,13 +1089,13 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
     
     /* FORMS */
     .form-control {
-      display: block;
-      width: 100%;
-      height: 34px;
-      padding: 6px 12px;
-      font-size: 14px;
-      line-height: 1.42857143;
-      color: #555;
+      display: ".$tpl_settings['form-display'].";
+      width: ".$tpl_settings['form-width'].";
+      height: ".$tpl_settings['form-height'].";
+      padding: ".$tpl_settings['form-padding'].";
+      font-size: ".$tpl_settings['form-fontSize'].";
+      line-height: ".$tpl_settings['form-lineHeight'].";
+      color: #".$tpl_settings['form-textColor'].";
       background-color: #fff;
       background-image: none;
       border: 1px solid #ccc;
@@ -3099,10 +3099,11 @@ else
                 <div class="col-md-4">
                     <div class="box box-default">
                         <div class="box-header">
-                            <h3 class="box-title">Any other thing <small>here ...</small></h3>
+                            <h3 class="box-title"><?php echo "$lang[FORM] <small>$lang[SETTINGS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            ...fill this empty space with love...
+                            <!-- form settings    form-   -->
+                            <?php $template->getFormElements($db, $templateSettings, 25, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -3110,10 +3111,11 @@ else
                 <div class="col-md-4">
                     <div class="box box-default">
                         <div class="box-header">
-                            <h3 class="box-title">Any other thing <small>here ...</small></h3>
+                            <h3 class="box-title"><?php echo "$lang[FORM] <small>$lang[SETTINGS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            ...fill this empty space with love...
+                            <!-- form settings    form-   -->
+                            <?php $template->getFormElements($db, $templateSettings, 51, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
