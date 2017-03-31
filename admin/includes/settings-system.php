@@ -30,7 +30,7 @@
 		// ok, lets go...
 		// we need to check if user clicked on save button
 		$(savebutton).click(function() {
-			$(savebutton).removeClass('btn btn-success').addClass('btn btn-warning');
+			$(savebutton).removeClass('btn btn-success').addClass('btn btn-warning disabled');
 			$(savebuttonIcon).removeClass('fa fa-check').addClass('fa fa-spinner fa-spin fa-fw');
 		});
 
