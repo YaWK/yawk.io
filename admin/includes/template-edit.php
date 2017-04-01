@@ -1096,10 +1096,10 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
       font-size: ".$tpl_settings['form-fontSize'].";
       line-height: ".$tpl_settings['form-lineHeight'].";
       color: #".$tpl_settings['form-textColor'].";
-      background-color: #fff;
+      background-color: #".$tpl_settings['form-bgcolor'].";
       background-image: none;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+      border: ".$tpl_settings['form-border'].";
+      border-radius: ".$tpl_settings['form-border-radius'].";
       -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
               box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
       -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
@@ -1107,13 +1107,13 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
               transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
     }
     .form-control:focus {
-      border-color: #66afe9;
+      border-color: #".$tpl_settings['form-activeBorderColor'].";
       outline: 0;
       -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
               box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
     }
     .form-control::-moz-placeholder {
-      color: #999;
+      color: #".$tpl_settings['form-placeholderColor'].";
       opacity: 1;
     }
     .form-control:-ms-input-placeholder {
