@@ -1,93 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a54ff858-9b8f-44b5-a09d-917a6067f783" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/.name" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/copyright/COPY.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/deployment.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/dictionaries/dretzl.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/jsLinters/jscs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/yawk-development.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/classes/dbconfig.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/engines/AdminLTE/plugins/chartjs/Chart.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/engines/AdminLTE/plugins/chartjs/Chart.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/engines/AdminLTE/plugins/jvectormap/jquery-jvectormap-1.2.2.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/engines/AdminLTE/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/engines/AdminLTE/plugins/jvectormap/jquery-jvectormap-usa-en.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/engines/AdminLTE/plugins/jvectormap/jquery-jvectormap-world-mill-en.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/engines/AdminLTE/plugins/slimScroll/jquery.slimscroll.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/engines/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/engines/bootstrap-toggle/LICENSE" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/engines/bootstrap-toggle/css/bootstrap-toggle.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/engines/bootstrap-toggle/css/bootstrap-toggle.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/engines/bootstrap-toggle/css/bootstrap2-toggle.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/engines/bootstrap-toggle/css/bootstrap2-toggle.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/engines/bootstrap-toggle/js/bootstrap-toggle.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/engines/bootstrap-toggle/js/bootstrap-toggle.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/engines/bootstrap-toggle/js/bootstrap-toggle.min.js.map" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/engines/bootstrap-toggle/js/bootstrap2-toggle.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/engines/bootstrap-toggle/js/bootstrap2-toggle.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/engines/bootstrap-toggle/js/bootstrap2-toggle.min.js.map" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/engines/summernote/dist/lang/summernote-gl-ES.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/engines/summernote/dist/lang/summernote-gl-ES.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/engines/summernote/dist/lang/summernote-hr-HR.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/engines/summernote/dist/lang/summernote-hr-HR.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/engines/summernote/dist/lang/summernote-lt-LV.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/engines/summernote/dist/lang/summernote-lt-LV.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/engines/summernote/dist/plugin/databasic/summernote-ext-databasic.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/engines/summernote/dist/plugin/databasic/summernote-ext-databasic.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/engines/summernote/dist/plugin/databasic/summernote-ext-databasic.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/engines/summernote/dist/plugin/databasic/summernote-ext-databasic.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/engines/summernote/dist/plugin/hello/summernote-ext-hello.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/engines/summernote/dist/plugin/hello/summernote-ext-hello.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/engines/summernote/dist/plugin/specialchars/summernote-ext-specialchars.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/engines/summernote/dist/plugin/specialchars/summernote-ext-specialchars.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/engines/summernote/dist/summernote-cleaner.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/engines/summernote/dist/summernote-floats-bs.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/engines/summernote/dist/summernote-image-attributes.js" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/setup.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/system/templates/yawk-io/css/custom.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/system/templates/yawk-io/css/custom.min.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/system/templates/yawk-io/css/settings.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/system/templates/yawk-io/css/settings.min.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/system/templates/yawk-io/index.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/system/templates/yawk-io/js/block-user.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/system/templates/yawk-io/js/custom.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/system/templates/yawk-io/js/custom.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/system/templates/yawk-io/js/email.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/system/templates/yawk-io/js/terminate-user.php" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.htaccess" afterPath="$PROJECT_DIR$/.htaccess" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/.htaccess" afterPath="$PROJECT_DIR$/admin/.htaccess" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/includes/settings-system.php" afterPath="$PROJECT_DIR$/admin/includes/settings-system.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/includes/template-edit.php" afterPath="$PROJECT_DIR$/admin/includes/template-edit.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/index.php" afterPath="$PROJECT_DIR$/admin/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/language/lang-de-DE.ini" afterPath="$PROJECT_DIR$/admin/language/lang-de-DE.ini" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/language/lang-en-EN.ini" afterPath="$PROJECT_DIR$/admin/language/lang-en-EN.ini" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/content/pages/index.php" afterPath="$PROJECT_DIR$/content/pages/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/system/classes/db.php" afterPath="$PROJECT_DIR$/system/classes/db.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/system/classes/installer.php" afterPath="$PROJECT_DIR$/system/classes/installer.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/system/classes/menu.php" afterPath="$PROJECT_DIR$/system/classes/menu.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/system/classes/settings.php" afterPath="$PROJECT_DIR$/system/classes/settings.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/system/classes/template.php" afterPath="$PROJECT_DIR$/system/classes/template.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/system/setup/files/admin/.htaccess" afterPath="$PROJECT_DIR$/system/setup/files/admin/.htaccess" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/system/setup/files/admin/index.php" afterPath="$PROJECT_DIR$/system/setup/files/admin/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/system/setup/files/root/.htaccess" afterPath="$PROJECT_DIR$/system/setup/files/root/.htaccess" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/system/setup/files/root/index.php" afterPath="$PROJECT_DIR$/system/setup/files/root/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/system/setup/install.ini" afterPath="$PROJECT_DIR$/system/setup/install.ini" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/system/setup/yawk_database.sql" afterPath="$PROJECT_DIR$/system/setup/yawk_database.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/system/templates/yawk-bootstrap3/css/settings.css" afterPath="$PROJECT_DIR$/system/templates/yawk-bootstrap3/css/settings.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/system/templates/yawk-bootstrap3/css/settings.min.css" afterPath="$PROJECT_DIR$/system/templates/yawk-bootstrap3/css/settings.min.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/system/templates/yawk-bootstrap3/index.php" afterPath="$PROJECT_DIR$/system/templates/yawk-bootstrap3/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/system/widgets/loginbox/loginbox.php" afterPath="$PROJECT_DIR$/system/widgets/loginbox/loginbox.php" />
+    <list default="true" id="a54ff858-9b8f-44b5-a09d-917a6067f783" name="Default" comment="added setup file">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/copyright/COPY.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/deployment.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/dictionaries/dretzl.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/jsLinters/jscs.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/yawk-development.iml" afterPath="" />
     </list>
     <ignored path="yawk-LTE.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -130,7 +58,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="266">
@@ -140,7 +68,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/admin/index.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="38">
@@ -388,38 +316,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="system" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yawk-development" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yawk-LTE" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yawk-development" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yawk-LTE" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="language" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -795,28 +691,7 @@
       <workItem from="1490886288751" duration="6356000" />
       <workItem from="1490911273027" duration="3181000" />
       <workItem from="1490987534359" duration="11127000" />
-      <workItem from="1491006232914" duration="86000" />
-    </task>
-    <task id="LOCAL-00586" summary="deleted a database call in setPosition (still something toDo)">
-      <created>1489792314548</created>
-      <option name="number" value="00586" />
-      <option name="presentableId" value="LOCAL-00586" />
-      <option name="project" value="LOCAL" />
-      <updated>1489792314548</updated>
-    </task>
-    <task id="LOCAL-00587" summary="updated template index (still in dev)">
-      <created>1489956459861</created>
-      <option name="number" value="00587" />
-      <option name="presentableId" value="LOCAL-00587" />
-      <option name="project" value="LOCAL" />
-      <updated>1489956459862</updated>
-    </task>
-    <task id="LOCAL-00588" summary="updated language files">
-      <created>1489962003387</created>
-      <option name="number" value="00588" />
-      <option name="presentableId" value="LOCAL-00588" />
-      <option name="project" value="LOCAL" />
-      <updated>1489962003387</updated>
+      <workItem from="1491006232914" duration="596000" />
     </task>
     <task id="LOCAL-00589" summary="updated css of outerTop position">
       <created>1489962320732</created>
@@ -1140,11 +1015,32 @@
       <option name="project" value="LOCAL" />
       <updated>1491005753093</updated>
     </task>
-    <option name="localTasksCounter" value="635" />
+    <task id="LOCAL-00635" summary="updated dev version&#10;">
+      <created>1491006392840</created>
+      <option name="number" value="00635" />
+      <option name="presentableId" value="LOCAL-00635" />
+      <option name="project" value="LOCAL" />
+      <updated>1491006392842</updated>
+    </task>
+    <task id="LOCAL-00636" summary="updated dev version&#10;">
+      <created>1491006583761</created>
+      <option name="number" value="00636" />
+      <option name="presentableId" value="LOCAL-00636" />
+      <option name="project" value="LOCAL" />
+      <updated>1491006583763</updated>
+    </task>
+    <task id="LOCAL-00637" summary="added setup file">
+      <created>1491006653579</created>
+      <option name="number" value="00637" />
+      <option name="presentableId" value="LOCAL-00637" />
+      <option name="project" value="LOCAL" />
+      <updated>1491006653579</updated>
+    </task>
+    <option name="localTasksCounter" value="638" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1873337000" />
+    <option name="totallyTimeSpent" value="1873847000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1194,8 +1090,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="added method: getPositionDivBox" />
-    <MESSAGE value="added maintTopLeft/Center/Right positions" />
     <MESSAGE value="added positions to template index file" />
     <MESSAGE value="added remaining positions" />
     <MESSAGE value="updated buildMenu function to fit the new template layout / positioning system" />
@@ -1219,7 +1113,9 @@
     <MESSAGE value="updated template-edit: added form elements" />
     <MESSAGE value="fixed issue #6 - added form settings to template" />
     <MESSAGE value="updated .htaccess (prepard for setup)" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated .htaccess (prepard for setup)" />
+    <MESSAGE value="updated dev version&#10;" />
+    <MESSAGE value="added setup file" />
+    <option name="LAST_COMMIT_MESSAGE" value="added setup file" />
     <option name="PRESELECT_EXISTING_CHANGELIST" value="false" />
   </component>
   <component name="XDebuggerManager">
@@ -1545,7 +1441,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/setup.php" />
     <entry file="file://$PROJECT_DIR$/system/classes/installer.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="304">
@@ -1826,14 +1721,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="31" column="3" selection-start-line="31" selection-start-column="3" selection-end-line="31" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/admin/index.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="38">
@@ -1841,6 +1728,22 @@
           <folding>
             <marker date="1491006315064" expanded="true" signature="3474:3499" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/setup.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="31" column="3" selection-start-line="31" selection-start-column="3" selection-end-line="31" selection-end-column="3" />
+          <folding />
         </state>
       </provider>
     </entry>
