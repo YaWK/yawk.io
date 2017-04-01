@@ -86,6 +86,7 @@ namespace YAWK {
                 else
                     {
                         // could not get MAX id
+                        \YAWK\sys::setSyslog($db, 11, "could not get max ID.", 0, 0, 0, 0);
                         return false;
                     }
                 // add new widget to db
@@ -112,7 +113,7 @@ namespace YAWK {
                             $w_activated = $row['activated'];
 
                             // insert widget settings
-                            if ($status = $db->query("INSERT INTO {widget_settings}
+                            if ($db->query("INSERT INTO {widget_settings}
 							      (widgetID, property, value, widgetType, activated)
 	                        VALUES('" . $id . "',
 	                        '" . $w_property . "',
@@ -124,13 +125,14 @@ namespace YAWK {
                             }
                             else
                                 {   // insert widget settings failed
+                                    \YAWK\sys::setSyslog($db, 11, "insert widget settings failed. id:$id property:$w_property value: $w_value type: $w_widgetType active: $w_activated", 0, 0, 0, 0);
                                     return false;
                                 }
                         } // ./ while
                     }
                     else
                         {   // could not get widget defaults
-                            \YAWK\sys::setSyslog($db, 11, "failed to set widget defaults of widget id <b>#$id</b> .", 0, 0, 0, 0);
+                            \YAWK\sys::setSyslog($db, 11, "failed to set widget defaults of widget id <b>#$id</b>.", 0, 0, 0, 0);
                             return false;
                         }
                 }
@@ -146,6 +148,7 @@ namespace YAWK {
                     return false;
                 }
             // something else has happened
+            \YAWK\sys::setSyslog($db, 11, "return $id in case of widget create.", 0, 0, 0, 0);
             return $id;
         }
 

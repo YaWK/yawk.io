@@ -722,9 +722,9 @@ namespace YAWK {
          * @param int    $id affected template ID
          * @return bool
          */
-        public function setTemplateDetails($db, $description = "", $author = "", $authorUrl ="", $id)
+        public function setTemplateDetails($db, $description, $author, $authorUrl, $id)
         {    /** @var $db \YAWK\db  */
-            if ($res = $db->query("UPDATE {templates} SET label = '$description', subAuthor = '$author', subAuthorUrl = '$authorUrl' WHERE id = $id"))
+            if ($res = $db->query("UPDATE {templates} SET description = '".$description."', subAuthor = '".$author."', subAuthorUrl = '".$authorUrl."' WHERE id = '".$id."'"))
             {   // template details updated...
                 return true;
             }

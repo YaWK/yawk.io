@@ -14,7 +14,7 @@ if (isset($_GET['add']) && ($_GET['add'] === "1"))
     }
     else
     {   // throw error
-        print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[WIDGET_CREATE_FAILED]", "", 5800);
+        print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[WIDGET_CREATE_FAILED]<br>Widget ID: $newWidgetID", "", 5800);
     }
 }
 

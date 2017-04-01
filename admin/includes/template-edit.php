@@ -536,7 +536,7 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
 
     if (isset($_POST['Tdescription']) || isset($_POST['Tsubauthor']) || isset($_POST['Tsubauthorurl']))
     {   // save template details
-        $template->setTemplateDetails($db, $_POST['Tdescription'], $_POST['Tsubauthor'], $_POST['Tsubauthorurl'], $template->id);
+        // $template->setTemplateDetails($db, $_POST['Tdescription'], $_POST['Tsubauthor'], $_POST['Tsubauthorurl'], $template->id);
     }
 
     // get max ID from template db
@@ -3286,7 +3286,7 @@ else
                 <div class="col-md-4">
                     <div class="box box-default">
                         <div class="box-header with-border">
-                            <h3 class="box-title"><?php echo "$lang[TPL_UPDATE_DETAILS] <small>$lang[TPL_UPDATE_SUBTEXT]</small>"; ?></h3>
+                            <h3 class="box-title"><?php echo "$lang[TPL] $lang[DETAILS] <small>$lang[TPL_UPDATE_SUBTEXT]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
                             <label for="Tname"><?php echo "$lang[TPL] $lang[NAME]"; ?></label>
@@ -3306,11 +3306,11 @@ else
                                 <option value="Apache License 2.0">Apache License 2.0</option>
                             </select>
                             <label for="Tdescription"><?php echo "$lang[TPL] $lang[DESCRIPTION]"; ?></label>
-                            <textarea class="form-control" id="Tdescription" rows="5" cols="64" name="Tdescription"><?php echo $template->description; ?></textarea>
+                            <textarea class="form-control" id="Tdescription" rows="5" cols="64" name="Tdescription" disabled aria-disabled="true"><?php echo $template->description; ?></textarea>
                             <label for="Tsubauthor"><?php echo "$lang[MODIFIED] $lang[BY]"; ?></label>
-                            <input type="text" class="form-control" id="Tsubauthor" name="Tsubauthor" value="<?php echo $template->subAuthor; ?>" placeholder="<?php echo "$lang[MODIFIED] $lang[BY]"; ?>">
+                            <input type="text" class="form-control" id="Tsubauthor" name="Tsubauthor" value="<?php echo $template->subAuthor; ?>" placeholder="<?php echo "$lang[MODIFIED] $lang[BY]"; ?>" disabled aria-disabled="true">
                             <label for="Tsubauthorurl"><?php echo "$lang[SUB_AUTHOR_URL]"; ?></label>
-                            <input type="text" class="form-control" id="Tsubauthorurl" name="Tsubauthorurl" value="<?php echo $template->subAuthorUrl; ?>" placeholder="<?php echo "$lang[SUB_AUTHOR_URL]"; ?>">
+                            <input type="text" class="form-control" id="Tsubauthorurl" name="Tsubauthorurl" value="<?php echo $template->subAuthorUrl; ?>" placeholder="<?php echo "$lang[SUB_AUTHOR_URL]"; ?>" disabled aria-disabled="true">
                         </div>
                     </div>
                 </div>
