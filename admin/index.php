@@ -1,10 +1,6 @@
 <?php
 session_start();
 header('Cache-control: private'); // IE 6 FIX
-<<<<<<< HEAD
-error_reporting(E_ALL ^ E_STRICT); // just for development purpose!!!
-ini_set('display_errors', 0); // DISPLAY ALL ERRORS - DEVELOPMENT ONLY!!!
-=======
 // error_reporting(E_ALL ^ E_STRICT); // just for development purpose!!!
 ini_set('display_errors', 0); // DISPLAY ALL ERRORS - DEVELOPMENT ONLY!!!
 error_reporting(0);
