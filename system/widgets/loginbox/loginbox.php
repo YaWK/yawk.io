@@ -44,7 +44,7 @@ $user = new YAWK\user();
 // if user logged in, draw logout link
 if(isset($_SESSION['username']) && $_SESSION['logged_in'] == true)
 	{
-		echo "<form name=\"login\" class=\"navbar-form text-center\" role=\"form\">
+		echo "<form name=\"login\" class=\"navbar-form text-center\" style=\"text-align: inherit;\" role=\"form\">
 		Hallo "; echo"<a href=\"welcome.html\" target=\"_self\">";echo YAWK\sys::getCurrentUserName();echo"</a>";
 		echo"!&nbsp;&nbsp;<a href=\"welcome.html\" target=\"_self\"><i class=\"glyphicon glyphicon-home\"></i></a>&nbsp;&nbsp;
 		<a href=\"".$currentWidgetPath."".$logoutFile."\" class=\"btn btn-danger active\" target_\"self\">logout</a></form>";

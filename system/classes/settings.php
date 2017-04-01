@@ -58,9 +58,9 @@ namespace YAWK {
             }
             // loop trough settings array
             foreach ($settings as $setting)
-            {	// check if field type is not set or empty
+            {	// field type not set or empty
                 if (!isset($setting['fieldType']) && (empty($fieldType)))
-                {   // set input field as default
+                {   // set input field as common default
                     $setting['fieldType'] = "input";
                 }
                 else
@@ -221,18 +221,20 @@ namespace YAWK {
                         /* TEXTAREA */
                         else if ($setting['fieldType'] === "textarea")
                         {    // if a long value is set
+                            $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
                             if (isset($setting['longValue']) && (!empty($setting['longValue'])))
                             {   // build a longValue tagged textarea and fill with longValue
                                 $setting['longValue'] = nl2br($setting['longValue']);
                                 echo "<label for=\"$setting[property]-long\">$setting[label]</label>
-                                      <textarea cols=\"64\" rows=\"4\" class=\"$setting[fieldClass]\" id=\"$setting[property]-long\" name=\"$setting[property]-long\">$setting[longValue]</textarea>";
+                                      <textarea cols=\"64\" rows=\"4\" placeholder=\"$lang[$placeholder]\" class=\"$setting[fieldClass]\" id=\"$setting[property]-long\" name=\"$setting[property]-long\">$setting[longValue]</textarea>";
                                 echo "<p>$setting[description]</p>";
                             }
                             else
                             {   // draw default textarea
+                                $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
                                 $setting['value'] = nl2br($setting['value']);
                                 echo "<label for=\"$setting[property]-long\">$setting[label]</label>
-                                      <textarea cols=\"64\" rows=\"4\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\">$setting[value]</textarea>";
+                                      <textarea cols=\"64\" rows=\"4\" placeholder=\"$lang[$placeholder]\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\">$setting[value]</textarea>";
                                 echo "<p>$setting[description]</p>";
                             }
                         }
@@ -240,37 +242,40 @@ namespace YAWK {
                         /* INPUT PASSWORD FIELD */
                         else if ($setting['fieldType'] === "password")
                         {    // draw an input field
+                            $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
                             if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
                             {
                                 echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
                             }
                             echo "<label for=\"$setting[property]\">$setting[label]</label>
                                   <input type=\"password\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
-										 value=\"$setting[value]\" placeholder=\"$setting[placeholder]\"><p>$setting[description]</p>";
+										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\"><p>$setting[description]</p>";
                         }
 
                         /* INPUT TEXT FIELD */
                         else if ($setting['fieldType'] === "input")
                         {    // draw an input field
+                            $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
                             if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
                             {
                                 echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
                             }
                             echo "<label for=\"$setting[property]\">$setting[label]</label>
                                   <input type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
-										 value=\"$setting[value]\" placeholder=\"$setting[placeholder]\"><p>$setting[description]</p>";
+										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\"><p>$setting[description]</p>";
                         }
 
                         /* INPUT TEXT FIELD */
                         else if ($setting['fieldType'] === "color")
                         {    // draw an input field
+                            $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
                             if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
                             {
                                 echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
                             }
                             echo "<label for=\"$setting[property]\">$setting[label]</label>
                                   <input type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
-										 value=\"$setting[value]\" placeholder=\"$setting[placeholder]\"><p>$setting[description]</p>";
+										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\"><p>$setting[description]</p>";
                         }
                     }
                 }

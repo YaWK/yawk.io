@@ -6,7 +6,6 @@
 namespace YAWK {
     /**
      * <b>Database class db</b> <i>extends \mysqli</i>
-     * @package YAWK
      */
     final class db extends \mysqli {
         private $config;
@@ -113,7 +112,7 @@ namespace YAWK {
             return $connection->real_escape_string($value);
         }
 
-        public function import($sqlfile)
+        public function import($sqlfile, $lang)
         {
             // http://stackoverflow.com/questions/19751354/how-to-import-sql-file-in-mysql-database-using-php
             if (!isset($sqlfile) || (empty($sqlfile)))
@@ -160,9 +159,9 @@ namespace YAWK {
                 if( substr(trim($query),-1)==';' )
                 {
                     if(!$this->query($query))
-                    {
-                       // $error = 'Error performing query \'<strong>' . $query . '\': ' . mysqli_error($this);
-                       // file_put_contents($errorFilename, $error."\n");
+                    {   // error handling
+                       $error = 'Error performing query \'<strong>' . $query . '\': ' . @mysqli_error($this);
+                       @file_put_contents($errorFilename, $error."\n");
                        //exit;
                     }
                     $query = '';
@@ -174,12 +173,12 @@ namespace YAWK {
             $status = '';
             if(feof($fp))
             {
-                $status .= 'Database successfully imported!';
+                $status .= "$lang[DB_IMPORT_OK]";
             }
             else
                 {
                     $status .= ftell($fp).'/'.filesize($filename).' '.(round(ftell($fp)/filesize($filename), 2)*100).'%'."\n";
-                    $status .= $queryCount.' queries processed!';
+                    $status .= $queryCount." $lang[DB_QUERIES_PROCESSED]";
                 }
             return $status;
         } // ./ import

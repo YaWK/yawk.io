@@ -670,8 +670,9 @@ namespace YAWK {
 
                 $html = "";
                 $html .= "
-             <nav class=\"navbar navbar-default navbar-fixed-top\" role=\"navigation\" id=\"topnavbar\">
-             <div class=\"container\">
+             <!-- <nav class=\"navbar navbar-default navbar-fixed-top\" role=\"navigation\" id=\"topnavbar\"> -->
+             <nav class=\"navbar navbar-default\" role=\"navigation\" id=\"topnavbar\">
+             <!-- <div class=\"container\"> -->
              <div class=\"navbar-header\">
              <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\".navbar-collapse\">
                 <span class=\"sr-only\">Toggle navigation</span>
@@ -749,8 +750,8 @@ namespace YAWK {
                     }
                     $html .= "<!-- /.nav-collapse -->
   </div><!-- /navbar-inn -->
-  </div><!-- /container -->
-</nav><!-- navbar --> \n";
+ <!-- </div><!-- /container -->
+</nav><!-- navbar -->";
                 }
                 return $html;
             }
@@ -797,11 +798,11 @@ namespace YAWK {
          * @version    1.0.0
          * @link       http://yawk.io
          * @param object $db database
-         * @param object $lang language
+         * @param array $lang language
          * @param int $id affected menu id
          * @return string
          */
-        static function getMenuNameByID($db, $id)
+        static function getMenuNameByID($db, $id, $lang)
         {   /* @var $db \YAWK\db */
         global $lang;
             $menu = '';

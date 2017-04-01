@@ -341,7 +341,7 @@ namespace YAWK {
          * @param int $minify 0|1 if 1, file gets minified before saving.
          * @return bool
          */
-        public function setTemplateCssFile($db, $tplId, $content, $minify)
+        public function writeTemplateCssFile($db, $tplId, $content, $minify)
         {   /** @var $db \YAWK\db */
             // check whether templateID is not set or empty
             if (!isset($tplId) || (empty($tplId)))
@@ -577,7 +577,7 @@ namespace YAWK {
             $property = $db->quote($property);
             $value = $db->quote($value);
             $longValue = $db->quote($longValue);
-            if ($longValue == "1")
+            if ($longValue === "1")
             {
                 $sql ="SET longValue = '".$value."'";
             }
@@ -647,8 +647,8 @@ namespace YAWK {
         public static function copyTemplateSettings($db, $templateID, $newID)
         {   /** @var $db \YAWK\db */
 
-        $res = $db->query("INSERT INTO {template_settings} (templateID, property, value, valueDefault, description, activated, sort, fieldClass, placeholder)
-                           SELECT NULL, property, value, valueDefault, description, activated, sort, fieldClass, placeholder FROM {template_settings}
+        $res = $db->query("INSERT INTO {template_settings} (templateID, property, value, valueDefault, label, activated, sort, fieldClass, placeholder)
+                           SELECT NULL, property, value, valueDefault, label, activated, sort, fieldClass, placeholder FROM {template_settings}
                            WHERE templateID = '".$templateID."'");
             if (!$res)
             {
@@ -681,12 +681,12 @@ namespace YAWK {
          * @param string $property template property
          * @param string $value template value
          * @param string $valueDefault default value
-         * @param string $description setting description
+         * @param string $label setting label
          * @param string $fieldclass class for the input field (eg. color or form-control)
          * @param string $placeholder placeholder for the input field
          * @return bool
          */
-        function addTemplateSetting($db, $property, $value, $valueDefault, $description, $fieldclass, $placeholder)
+        function addTemplateSetting($db, $property, $value, $valueDefault, $label, $fieldclass, $placeholder)
         {   /** @var $db \YAWK\db  */
             $active = 1;
             $sort = 0;
@@ -695,11 +695,11 @@ namespace YAWK {
             $property = $db->quote($property);
             $value = $db->quote($value);
             $valueDefault = $db->quote($valueDefault);
-            $description = $db->quote($description);
+            $label = $db->quote($label);
             $fieldclass = $db->quote($fieldclass);
             $placeholder = $db->quote($placeholder);
-            if ($res = $db->query("INSERT INTO {template_settings} (templateID, property, value, valueDefault, description, activated, sort, fieldClass, placeholder)
-                                   VALUES('" . $templateID . "','" . $property . "', '" . $value . "', '" . $valueDefault . "', '" . $description . "', '" . $active . "', '" . $sort . "', '" . $fieldclass . "', '" . $placeholder . "')"))
+            if ($res = $db->query("INSERT INTO {template_settings} (templateID, property, value, valueDefault, label, activated, sort, fieldClass, placeholder)
+                                   VALUES('" . $templateID . "','" . $property . "', '" . $value . "', '" . $valueDefault . "', '" . $label . "', '" . $active . "', '" . $sort . "', '" . $fieldclass . "', '" . $placeholder . "')"))
             {   // success
                 return true;
             }
@@ -724,7 +724,7 @@ namespace YAWK {
          */
         public function setTemplateDetails($db, $description = "", $author = "", $authorUrl ="", $id)
         {    /** @var $db \YAWK\db  */
-            if ($res = $db->query("UPDATE {templates} SET description = '$description', subAuthor = '$author', subAuthorUrl = '$authorUrl' WHERE id = $id"))
+            if ($res = $db->query("UPDATE {templates} SET label = '$description', subAuthor = '$author', subAuthorUrl = '$authorUrl' WHERE id = $id"))
             {   // template details updated...
                 return true;
             }
@@ -798,6 +798,388 @@ namespace YAWK {
                 }
         }
 
+
+        /**
+         * Returns an array with all template settings.
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @return array|bool
+         */
+        public static function getAllSettingsIntoArray($db, $user) // get all settings from db like property
+        {
+            // get template settings
+            if (isset($user))
+            {   // get template settings for this user
+                if ($user->overrideTemplate == 1)
+                {
+                    $sql = "SELECT ts.property, ts.value, ts.longValue, ts.valueDefault, ts.type, ts.label, ts.sort, ts.fieldClass, ts.fieldType, ts.placeholder, ts.description, ts.options, ts.activated, ts.icon, ts.heading, ts.subtext
+                                       FROM {template_settings} ts
+                                       JOIN {users} u on u.templateID = ts.templateID
+                                       WHERE ts.activated = 1 && u.id = $user->id
+                                       ORDER BY ts.sort";
+                }
+                else
+                {
+                    $sql = "SELECT ts.property, ts.value, ts.longValue, ts.valueDefault, ts.type, ts.label, ts.sort, ts.fieldClass, ts.fieldType, ts.placeholder, ts.description, ts.options, ts.activated, ts.icon, ts.heading, ts.subtext
+                                       FROM {template_settings} ts
+                                       JOIN {settings} s on s.value = ts.templateID
+                                       WHERE ts.activated = 1 && s.property = 'selectedTemplate'
+                                       ORDER BY ts.sort";
+                }
+            }
+            else
+            {
+                \YAWK\sys::setSyslog($db, 5, "BACKEND: failed to get template setting - user is not set or empty.", 0, 0, 0, 0);
+                return false;
+            }
+
+            /* @var $db \YAWK\db */
+           // if ($res= $db->query("SELECT * FROM {template_settings} ORDER by property"))
+            if ($res = $db->query($sql))
+            {
+                $settingsArray = array();
+                while ($row = $res->fetch_assoc())
+                {   // fill array
+                    $settingsArray[$row['property']] = $row;
+                }
+            }
+            else
+            {   // q failed, throw error
+                \YAWK\sys::setSyslog($db, 5, "get template settings failed.", 0, 0, 0, 0);
+                // \YAWK\alert::draw("warning", "Warning!", "Fetch database error: getSettingsArray failed.","","4800");
+                return false;
+            }
+
+            // check if array has been generated
+            if (is_array($settingsArray) && (!empty($settingsArray)))
+            {   // all good -
+                return $settingsArray;
+            }
+            else
+                {   // error generating settings array -
+                    return false;
+                }
+        }
+
+        /**
+         * return div box with postition settings
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database object
+         * @param string $position The position to load
+         * @param array $positions Positions [enabled] status array
+         * @param array $indicators Positions [indicator] status array
+         */
+        public static function getPositionDivBox($db, $position, $row, $bootstrapGrid, $positions, $indicators)
+        {
+            if (isset($row) && (!empty($row)))
+            {
+                if ($row === "1")
+                {
+                    $startRow = "<div class=\"row\">";
+                    $endRow = "</div>";
+                }
+                else
+                    {
+                        $startRow = '';
+                        $endRow = '';
+                    }
+            }
+            else
+                {
+                    $startRow = '';
+                    $endRow = '';
+                }
+            // outerTop - fist position outside container
+            if ($positions["pos-$position-enabled"] === "1")
+            {
+                if ($indicators["pos-$position-indicator"] === "1")
+                {
+                    $indicatorStyle = "style=\"border: 2px solid red;\"";
+                    $indicatorText = "<i>position: <b>$position</b></i> <small><small></small></small>";
+                }
+                else
+                {
+                    $indicatorStyle = '';
+                    $indicatorText = '';
+                }
+                echo "$startRow";
+                echo "<div class=\"$bootstrapGrid pos-$position\" id=\"$position\" $indicatorStyle>$indicatorText";
+                      \YAWK\template::setPosition($db, "$position-pos");
+                echo "</div>";
+                echo "$endRow";
+            }
+        }
+
+
+        /**
+         * return html form field, depending on fieldClass
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         */
+        public function getFormElements($db, $settings, $type, $lang, $user)
+        {   // loop trough array
+            // removed not needed checkup
+            if(!isset($type) && (empty($type)))
+            {	// if param 'type' is missing, set type 1 as default
+                $type = 1;
+            }
+            // loop trough settings array
+            foreach ($settings as $setting)
+            {
+                // field type not set or empty
+                if (!isset($setting['fieldType']) && (empty($fieldType)))
+                {   // set input field as common default
+                    $setting['fieldType'] = "input";
+                }
+                else
+                {   // settings type must be equal to param $type
+                    // equals settings category
+                    if ($setting['type'] === "$type" && ($setting['activated'] === "1"))
+                    {
+                        // check if ICON is set
+                        // if an icon is set, it will be drawn before the heading, to the left.
+                        if (isset($setting['icon']) && (!empty($setting['icon'])))
+                        {   // fill it w icon
+                            $setting['icon'] = "<i class=\"$setting[icon]\"></i>";
+                        }
+                        else
+                        {   // leave empty - no icon available
+                            $setting['icon'] = '';
+                        }
+
+                        // check if LABEL is set
+                        // The label sits directly above, relative to the setting form element
+                        if (isset($setting['label']) && (!empty($setting['label'])))
+                        {   // if its set, put it into $lang array for L11n
+                            $setting['label'] = $lang[$setting['label']];
+                        }
+                        else
+                        {   // otherwise throw error
+                            $setting['label'] = 'sorry, there is not label set. meh!';
+                        }
+
+                        // check if HEADING is set
+                        // if set, a <H3>Heading</H3> will be shown above the setting
+                        if (isset($setting['heading']) && (!empty($setting['heading'])))
+                        {   // L11n
+                            $setting['heading'] = $lang[$setting['heading']];
+                        }
+                        else
+                        {   // leave empty - no heading for that setting
+                            $setting['heading'] = '';
+                        }
+
+                        // check if SUBTEXT is set
+                        // this is shown in <small>tags</small> beneath the heading
+                        if (isset($setting['subtext']) && (!empty($setting['subtext'])))
+                        {   // L11n
+                            $setting['subtext'] = $lang[$setting['subtext']];
+                        }
+                        else
+                        {   // leave empty - no subtext beneath the heading
+                            $setting['subtext'] = '';
+                        }
+
+                        // check if description is set
+                        // the description will be shown underneath the form element
+                        if (isset($setting['description']) && (!empty($setting['description'])))
+                        {   // L11n
+                            $setting['description'] = $lang[$setting['description']];
+                        }
+                        else
+                        {   // leave empty - no description available
+                            $setting['description'] = '';
+                        }
+
+                        /* SELECT FIELD */
+                        if ($setting['fieldType'] === "select")
+                        {   // display icon, heading and subtext, if its set
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                            {
+                                echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
+                            }
+                            // begin draw select
+                            echo "<label for=\"$setting[property]\">$setting[label]
+                                  <small><i class=\"small\" style=\"font-weight:normal\">$lang[DEFAULT]: $setting[valueDefault]</i></small></label>
+                                  <select class=\"form-control\" id=\"$setting[property]\" name=\"$setting[property]\">";
+                                echo "<option value=\"$setting[value]\">$lang[SETTING_CURRENT] $setting[value]</option>";
+                                // explode option string into array
+                                $optionValues = explode(":", $setting['options']);
+                                foreach ($optionValues as $value)
+                                {
+                                    // extract value from option setting string
+                                    // $optionValue = preg_replace("/,[a-zA-Z0-9]*/", "", $value);
+                                    // extract description from option setting
+                                    $optionDesc = preg_replace('/.*,(.*)/','$1', $value);
+                                    $optionValue = preg_split("/,[a-zA-Z0-9]*/", $value);
+
+                                    echo "<option value=\"$optionValue[0]\">$optionDesc</option>";
+                                    // echo "<option value=\"$optionValue[0]\">$optionDesc</option>";
+                                    // echo "<option value=\"$value\">$value</option>";
+                                }
+                                echo "</select>";
+                                echo "<p>$setting[description]</p>";
+                        }
+
+                        /* RADIO BUTTTONS */
+                        else if ($setting['fieldType'] === "radio")
+                        {
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                            {
+                                echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
+                            }
+                            echo "<label for=\"$setting[property]\">$setting[label]</label>
+                                  <input type=\"radio\" id=\"$setting[property]\" name=\"$setting[property]\">";
+                            echo "<input type=\"radio\" value=\"$setting[value]\">$lang[SETTING_CURRENT] $setting[value]</option>";
+                            // explode option string into array
+                            $optionValues = explode(":", $setting['options']);
+                            foreach ($optionValues as $value)
+                            {
+                                // extract value from option setting string
+                                $optionValue = preg_replace("/,[a-zA-Z0-9]*/", "", $value);
+                                // extract description from option setting
+                                $optionDesc = preg_replace('/.*,(.*)/','$1',$value);
+
+                                echo "<option value=\"$optionValue\">$optionDesc</option>";
+                            }
+                            echo "</select>";
+                            echo "<p>$setting[description]</p>";
+                        }
+
+                        // CHECKBOX
+                        else if ($setting['fieldType'] === "checkbox")
+                        {    // build a checkbox
+                            if ($setting['value'] === "1")
+                            {   // set checkbox to checked
+                                $checked = "checked";
+                            }
+                            else
+                            {   // checkbox not checked
+                                $checked = "";
+                            }
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                            {
+                                echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
+                            }
+                            echo "<input type=\"hidden\" name=\"$setting[property]\" value=\"0\">
+                              <input type=\"checkbox\" id=\"$setting[property]\" name=\"$setting[property]\" value=\"1\" $checked>
+                              <label for=\"$setting[property]\">&nbsp; $setting[label]</label><p>$setting[description]</p>";
+                        }
+
+                        // CHECKBOX as toggle switch
+                        else if ($setting['fieldType'] === "checkbox toggle")
+                        {    // build a checkbox
+                            if ($setting['value'] === "1")
+                            {   // set checkbox to checked
+                                $checked = "checked";
+                            }
+                            else
+                            {   // checkbox not checked
+                                $checked = "";
+                            }
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                            {
+                                echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
+                            }
+                            echo "<input type=\"hidden\" name=\"$setting[property]\" value=\"0\">
+                              <input type=\"checkbox\" data-on=\"$lang[ON]\" data-off=\"$lang[OFF]\" data-toggle=\"toggle\" data-onstyle=\"success\" data-offstyle=\"danger\" id=\"$setting[property]\" name=\"$setting[property]\" value=\"1\" $checked>
+                              <label for=\"$setting[property]\">&nbsp; $setting[label]</label><p>$setting[description]</p>";
+                        }
+
+                        /* TEXTAREA */
+                        else if ($setting['fieldType'] === "textarea")
+                        {    // if a long value is set
+                            $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
+                            if (isset($setting['longValue']) && (!empty($setting['longValue'])))
+                            {   // build a longValue tagged textarea and fill with longValue
+                                $setting['longValue'] = nl2br($setting['longValue']);
+                                if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                                {
+                                    echo "<h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
+                                }
+                                echo "<label for=\"$setting[property]\">$setting[label]</label>
+                                      <textarea cols=\"64\" rows=\"4\" class=\"$setting[fieldClass]\" placeholder=\"$lang[$placeholder]\" id=\"$setting[property]\" name=\"$setting[property]\">$setting[longValue]</textarea>";
+                                echo "<p>$setting[description]</p>";
+                            }
+                            else
+                            {   // draw default textarea
+                                $setting['value'] = nl2br($setting['value']);
+                                if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                                {
+                                    echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
+                                }
+                                echo "<label for=\"$setting[property]-long\">$setting[label]</label>
+                                      <textarea cols=\"64\" rows=\"4\" class=\"$setting[fieldClass]\" placeholder=\"$lang[$placeholder]\" id=\"$setting[property]\" name=\"$setting[property]\">$setting[value]</textarea>";
+                                echo "<p>$setting[description]</p>";
+                            }
+                        }
+
+                        /* INPUT PASSWORD FIELD */
+                        else if ($setting['fieldType'] === "password")
+                        {    // draw an input field
+                            $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                            {
+                                echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
+                            }
+                            echo "<label for=\"$setting[property]\">$setting[label]</label>
+                                  <input type=\"password\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
+										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\"><p>$setting[description]</p>";
+                        }
+
+                        /* INPUT TEXT FIELD */
+                        else if ($setting['fieldType'] === "input")
+                        {   // draw an input field
+                            $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                            {
+                                echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
+                            }
+                            echo "<label for=\"$setting[property]\">$setting[label]
+                                  <small><i class=\"small\" style=\"font-weight:normal\">$lang[DEFAULT]: $setting[valueDefault]</i></small></label>
+                                  <input type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
+										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\"><p>$setting[description]</p>";
+                        }
+
+                        /* COLOR TEXT FIELD */
+                        else if ($setting['fieldType'] === "color")
+                        {    // draw a color input field
+                            $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                            {
+                                echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
+                            }
+                            echo "<label for=\"$setting[property]\">$setting[label]
+                                  <small><i class=\"small\" style=\"font-weight:normal\">$lang[DEFAULT]: $setting[valueDefault]</i></small></label>
+                                  <input type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
+										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\"><p>$setting[description]</p>";
+                        }
+                        else
+                        {    // draw an input field
+                            $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                            {
+                                echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
+                            }
+                            echo "<label for=\"$setting[property]\">$setting[label]
+                                  <small><i class=\"small\" style=\"font-weight:normal\">$lang[DEFAULT]: $setting[valueDefault]</i></small></label>
+                                  <input type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
+										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\"><p>$setting[description]</p>";
+
+                         }
+
+                        }
+                    }
+                }
+            }
+
+
         /**
          * get setting from database and draw input field
          * @author Daniel Retzl <danielretzl@gmail.com>
@@ -845,7 +1227,7 @@ namespace YAWK {
             {
                 if ($user->overrideTemplate == 1)
                 {
-                    $sql = "SELECT ts.property, ts.value, ts.longValue, ts.valueDefault, ts.description, ts.fieldClass, ts.placeholder
+                    $sql = "SELECT ts.property, ts.value, ts.longValue, ts.valueDefault, ts.label, ts.fieldClass, ts.placeholder
                                        FROM {template_settings} ts
                                        JOIN {users} u on u.templateID = ts.templateID
                                        WHERE ts.activated = 1 && u.id = $user->id && ts.property
@@ -853,7 +1235,7 @@ namespace YAWK {
                 }
                 else
                     {
-                        $sql = "SELECT ts.property, ts.value, ts.longValue, ts.valueDefault, ts.description, ts.fieldClass, ts.placeholder
+                        $sql = "SELECT ts.property, ts.value, ts.longValue, ts.valueDefault, ts.label, ts.fieldClass, ts.placeholder
                                        FROM {template_settings} ts
                                        JOIN {settings} s on s.value = ts.templateID
                                        WHERE ts.activated = 1 && s.property = 'selectedTemplate' && ts.property
@@ -862,7 +1244,7 @@ namespace YAWK {
             }
             else
                 {
-                    \YAWK\sys::setSyslog($db, 5, "failed to get template setting ", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 5, "BACKEND: failed to get template setting - user is not set or empty.", 0, 0, 0, 0);
                     return false;
                 }
 
@@ -888,14 +1270,14 @@ namespace YAWK {
                     }
                     if (fnmatch('*-longValue', $filter)) {
                         // draw a textfield
-                        echo "<label for=\"".$row['property']."\"><small>" . $row['description'] . " <i class=\"h6 small\">default: ".$row['valueDefault']."</i></small></label><br>";
+                        echo "<label for=\"".$row['property']."\"><small>" . $row['label'] . " <i class=\"h6 small\">default: ".$row['valueDefault']."</i></small></label><br>";
                         echo "<div style=\"display:inline-block; width:90%;\"><label for=\"" . htmlentities($row['property']) . "\">";
                         echo "<input type=\"hidden\" name=\"$row[property]-long\" id=\"longValue\" value=\"1\">";
                         echo "<textarea cols=\"85\" rows=\"12\" id=\"".$row['property']."\" $readonly class=\"form-control\" style=\"font-weight:normal;\" name=\"" . htmlentities($row['property']) . "\">".$row['longValue']."</textarea>";
                     }
                     else
                     {   // draw a textfield
-                        echo "<label for=\"".$row['property']."\"><small>" . $row['description'] . " <i class=\"h6 small\">default: ".$row['valueDefault']."</i></small></label><br>";
+                        echo "<label for=\"".$row['property']."\"><small>" . $row['label'] . " <i class=\"h6 small\">default: ".$row['valueDefault']."</i></small></label><br>";
                         echo "<div style=\"display:inline-block; \">";
                         echo "<input id=\"";
                         echo $row['property'];
@@ -1218,6 +1600,60 @@ namespace YAWK {
         }
 
         /**
+         * get the position states of all templates. This is used on index.php to render only templates that are enabled (1)
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @return array|bool $array template positions 0|1
+         */
+        static function getPositionStatesArray($db)
+        {
+            $array = '';
+            $sql = $db->query("SELECT property, value FROM {template_settings} WHERE property LIKE 'pos-%-enabled'");
+            while ($row = mysqli_fetch_assoc($sql))
+            {
+                $prop = $row['property'];
+                $array[$prop] = $row['value'];
+            }
+            if (is_array($array))
+            {
+                return $array;
+            }
+            else
+                {
+                    return false;
+                }
+        }
+
+        /**
+         * get the position indicators. This is used on index.php to mark indicated positions
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @return array|bool $array position indicator 0|1
+         */
+        static function getPositionIndicatorStatusArray($db)
+        {
+            $array = '';
+            $sql = $db->query("SELECT property, value FROM {template_settings} WHERE property LIKE 'pos-%-indicator'");
+            while ($row = mysqli_fetch_assoc($sql))
+            {
+                $prop = $row['property'];
+                $array[$prop] = $row['value'];
+            }
+            if (is_array($array))
+            {
+                return $array;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /**
          * set template position and output the correct data depending on position
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
@@ -1231,13 +1667,14 @@ namespace YAWK {
             $main_set = 0;
             $globalmenu_set = 0;
             // get template setting for given pos
-            $setting = self::getTemplateSetting($db, $position, "");
+            // $setting = self::getTemplateSetting($db, $position, "");
             if (empty($setting)) {
                 // no property
                 // substr, because css definitions are without -pos (changefix?!)
                 $position = substr("$position", 0, -4);
                 // if main, we need to include the content page
-                if ($position == "main") {
+                if ($position == "main")
+                {
                     // if user is given to index.php, load userpage
                     if (isset($_GET['user'])){
                         // if var is set, but empty, show all users

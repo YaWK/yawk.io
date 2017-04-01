@@ -30,7 +30,7 @@
 		// ok, lets go...
 		// we need to check if user clicked on save button
 		$(savebutton).click(function() {
-			$(savebutton).removeClass('btn btn-success').addClass('btn btn-warning');
+			$(savebutton).removeClass('btn btn-success').addClass('btn btn-warning disabled');
 			$(savebuttonIcon).removeClass('fa fa-check').addClass('fa fa-spinner fa-spin fa-fw');
 		});
 
@@ -217,11 +217,12 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
 					\YAWK\alert::draw("warning", "Error", "Long Settings: Could not set long value <b>$value</b> of property <b>$property</b>","plugin=signup","4800");
 				}
 			}
-			else {
-				if ($property === "selectedTemplate")
+			else
 				{
-					\YAWK\template::setTemplateActive($db, $value);
-				}
+					if ($property === "selectedTemplate")
+					{
+						\YAWK\template::setTemplateActive($db, $value);
+					}
 				// save value of property to database
 				\YAWK\settings::setSetting($db, $property, $value, $lang);
 			}

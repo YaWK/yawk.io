@@ -30,10 +30,9 @@
 session_start();
 /* Error Reporting - this is for DEVELOPMENT PURPOSE ONLY! */
 error_reporting(E_ALL ^ E_STRICT);
-// error_reporting(0);                               // turn all errors OFF - DEFAULT FOR PRODUCTION USE!
-ini_set('display_errors', 1);
-
-/* include core classes */
+ini_set('display_errors', 0);
+//error_reporting(0);
+/* include core files */
 require_once('system/classes/db.php');               // database connection
 require_once('system/classes/settings.php');         // get/set settings from settings db
 require_once('system/classes/alert.php');            // draw fancy JS-notification alert class
@@ -142,11 +141,17 @@ if (\YAWK\user::isAnybodyThere())
     else
         {   // user is not allowed to overrule template, show global default (selectedTemplate) instead.
             $templateName = \YAWK\template::getTemplateNameById($db, $selectedTemplate);
-            include("system/templates/$templateName/index.php");
+            if(!include("system/templates/$templateName/index.php"))
+            {
+                die("Unable to include template. Either database config is faulty or YaWK is not correctly installed.");
+            }
         }
 }
 else
     {   // user is NOT logged in, load default template (selectedTemplate) from settings db
         $templateName = \YAWK\template::getTemplateNameById($db, $selectedTemplate);
-        include("system/templates/$templateName/index.php");
+        if(!include("system/templates/$templateName/index.php"))
+        {
+            die("Unable to include template. Either database config is faulty or YaWK is not correctly installed.");
+        }
     }

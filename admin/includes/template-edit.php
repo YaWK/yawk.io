@@ -1,10 +1,245 @@
 <!-- color picker -->
 <script type="text/javascript" src="../system/engines/jquery/jscolor/jscolor.js"></script>
-<!-- --><script type="text/javascript" src="../system/engines/jquery/bootstrap-tabcollapse.js"></script>
-<!-- JS GO -->
+<!-- TAB collapse -->
+<script type="text/javascript" src="../system/engines/jquery/bootstrap-tabcollapse.js"></script>
+<!-- Bootstrap toggle css -->
+<link rel="stylesheet" href="../system/engines/bootstrap-toggle/css/bootstrap-toggle.css">
+<!-- Bootstrap toggle js -->
+<script type="text/javascript" src="../system/engines/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
+<!-- CSS for positions tab -->
+<style>
+    .posbox
+    {
+        font-weight:normal;
+        border-style: dotted; border-color: #ccc;
+    }
+
+    .posbox:hover
+    {
+        border: dotted #888888;
+        font-weight: bold;
+        cursor:pointer;
+    }
+    .posboxActive
+    {
+        background-color: #E3E3E3;
+        border: 2px solid #888888;
+        font-weight: bold;
+    }
+</style>
+<!-- Javascript for positions tab -->
 <script type="text/javascript">
 /* reminder: check if form has changed and warns the user that he needs to save. */
     $(document).ready(function() {
+        // store settings position box id's in vars
+        settings_pos_outerTop = "#settings_pos_outerTop";
+        settings_pos_outerLeft = "#settings_pos_outerLeft";
+        settings_pos_outerRight = "#settings_pos_outerRight";
+        settings_pos_leftMenu = "#settings_pos_leftMenu";
+        settings_pos_rightMenu = "#settings_pos_rightMenu";
+        settings_pos_intro = "#settings_pos_intro";
+        settings_pos_globalmenu = "#settings_pos_globalmenu";
+        settings_pos_top = "#settings_pos_top";
+        settings_pos_mainTop = "#settings_pos_mainTop";
+        settings_pos_mainTopLeft = "#settings_pos_mainTopLeft";
+        settings_pos_mainTopCenter = "#settings_pos_mainTopCenter";
+        settings_pos_mainTopRight = "#settings_pos_mainTopRight";
+        settings_pos_main = "#settings_pos_main";
+        settings_pos_mainBottom = "#settings_pos_mainBottom";
+        settings_pos_mainBottomLeft = "#settings_pos_mainBottomLeft";
+        settings_pos_mainBottomCenter = "#settings_pos_mainBottomCenter";
+        settings_pos_mainBottomRight = "#settings_pos_mainBottomRight";
+        settings_pos_mainFooter = "#settings_pos_mainFooter";
+        settings_pos_mainFooterLeft = "#settings_pos_mainFooterLeft";
+        settings_pos_mainFooterCenter = "#settings_pos_mainFooterCenter";
+        settings_pos_mainFooterRight = "#settings_pos_mainFooterRight";
+        settings_pos_footer = "#settings_pos_footer";
+        settings_pos_hiddenToolbar = "#settings_pos_hiddenToolbar";
+        settings_pos_debug = "#settings_pos_debug";
+        settings_pos_outerBottom = "#settings_pos_outerBottom";
+
+        // store position selector in vars
+        pos_outerTop = "#pos_outerTop";
+        pos_outerLeft = "#pos_outerLeft";
+        pos_outerRight = "#pos_outerRight";
+        pos_leftMenu = "#pos_leftMenu";
+        pos_rightMenu = "#pos_rightMenu";
+        pos_intro = "#pos_intro";
+        pos_globalmenu = "#pos_globalmenu";
+        pos_top = "#pos_top";
+        pos_mainTop = "#pos_mainTop";
+        pos_mainTopLeft = "#pos_mainTopLeft";
+        pos_mainTopCenter = "#pos_mainTopCenter";
+        pos_mainTopRight = "#pos_mainTopRight";
+        pos_main = "#pos_main";
+        pos_mainBottom = "#pos_mainBottom";
+        pos_mainBottomLeft = "#pos_mainBottomLeft";
+        pos_mainBottomCenter = "#pos_mainBottomCenter";
+        pos_mainBottomRight = "#pos_mainBottomRight";
+        pos_mainFooter = "#pos_mainFooter";
+        pos_mainFooterLeft = "#pos_mainFooterLeft";
+        pos_mainFooterCenter = "#pos_mainFooterCenter";
+        pos_mainFooterRight = "#pos_mainFooterRight";
+        pos_footer = "#pos_footer";
+        pos_hiddenToolbar = "#pos_hiddenToolbar";
+        pos_debug = "#pos_debug";
+        pos_outerBottom = "#pos_outerBottom";
+
+        // hide all settings boxes on default
+        // they will appear by clicking on a postion selector
+        $(settings_pos_outerTop).hide();
+        $(settings_pos_outerLeft).hide();
+        $(settings_pos_outerRight).hide();
+        $(settings_pos_leftMenu).hide();
+        $(settings_pos_rightMenu).hide();
+        $(settings_pos_intro).hide();
+        $(settings_pos_globalmenu).hide();
+        $(settings_pos_top).hide();
+        $(settings_pos_mainTop).hide();
+        $(settings_pos_mainTopLeft).hide();
+        $(settings_pos_mainTopCenter).hide();
+        $(settings_pos_mainTopRight).hide();
+        $(settings_pos_main).hide();
+        $(settings_pos_mainBottom).hide();
+        $(settings_pos_mainBottomLeft).hide();
+        $(settings_pos_mainBottomCenter).hide();
+        $(settings_pos_mainBottomRight).hide();
+        $(settings_pos_mainFooter).hide();
+        $(settings_pos_mainFooterLeft).hide();
+        $(settings_pos_mainFooterCenter).hide();
+        $(settings_pos_mainFooterRight).hide();
+        $(settings_pos_footer).hide();
+        $(settings_pos_hiddenToolbar).hide();
+        $(settings_pos_debug).hide();
+        $(settings_pos_outerBottom).hide();
+
+        $(pos_outerTop).click(function () {
+            $("#selectPositionRequestInfo").hide();
+            $(settings_pos_outerTop).fadeToggle();
+            $(pos_outerTop).toggleClass("posboxActive");
+        });
+
+        $(pos_outerLeft).click(function () {
+            $("#selectPositionRequestInfo").hide();
+            $(settings_pos_outerLeft).fadeToggle();
+            $(pos_outerLeft).toggleClass("posboxActive");
+        });
+        $(pos_outerRight).click(function () {
+            $("#selectPositionRequestInfo").hide();
+            $(settings_pos_outerRight).fadeToggle();
+            $(pos_outerRight).toggleClass("posboxActive");
+        });
+        $(pos_intro).click(function () {
+            $("#selectPositionRequestInfo").hide();
+            $(settings_pos_intro).fadeToggle();
+            $(pos_intro).toggleClass("posboxActive");
+        });
+        $(pos_globalmenu).click(function () {
+            $("#selectPositionRequestInfo").hide();
+            $(settings_pos_globalmenu).fadeToggle();
+            $(pos_globalmenu).toggleClass("posboxActive");
+        });
+        $(pos_top).click(function () {
+            $("#selectPositionRequestInfo").hide();
+            $(settings_pos_top).fadeToggle();
+            $(pos_top).toggleClass("posboxActive");
+        });
+        $(pos_mainTop).click(function () {
+            $("#selectPositionRequestInfo").hide();
+            $(settings_pos_mainTop).fadeToggle();
+            $(pos_mainTop).toggleClass("posboxActive");
+        });
+        $(pos_mainTopLeft).click(function () {
+            $("#selectPositionRequestInfo").hide();
+            $(settings_pos_mainTopLeft).fadeToggle();
+            $(pos_mainTopLeft).toggleClass("posboxActive");
+        });
+        $(pos_mainTopCenter).click(function () {
+            $("#selectPositionRequestInfo").hide();
+            $(settings_pos_mainTopCenter).fadeToggle();
+            $(pos_mainTopCenter).toggleClass("posboxActive");
+        });
+        $(pos_mainTopRight).click(function () {
+            $("#selectPositionRequestInfo").hide();
+            $(settings_pos_mainTopRight).fadeToggle();
+            $(pos_mainTopRight).toggleClass("posboxActive");
+        });
+        $(pos_main).click(function () {
+            $("#selectPositionRequestInfo").hide();
+            $(settings_pos_main).fadeToggle();
+            $(pos_main).toggleClass("posboxActive");
+        });
+        $(pos_mainBottom).click(function () {
+            $("#selectPositionRequestInfo").hide();
+            $(settings_pos_mainBottom).fadeToggle();
+            $(pos_mainBottom).toggleClass("posboxActive");
+        });
+        $(pos_mainBottomLeft).click(function () {
+            $("#selectPositionRequestInfo").hide();
+            $(settings_pos_mainBottomLeft).fadeToggle();
+            $(pos_mainBottomLeft).toggleClass("posboxActive");
+        });
+        $(pos_mainBottomCenter).click(function () {
+            $("#selectPositionRequestInfo").hide();
+            $(settings_pos_mainBottomCenter).fadeToggle();
+            $(pos_mainBottomCenter).toggleClass("posboxActive");
+        });
+        $(pos_mainBottomRight).click(function () {
+            $("#selectPositionRequestInfo").hide();
+            $(settings_pos_mainBottomRight).fadeToggle();
+            $(pos_mainBottomRight).toggleClass("posboxActive");
+        });
+        $(pos_mainFooter).click(function () {
+            $("#selectPositionRequestInfo").hide();
+            $(settings_pos_mainFooter).fadeToggle();
+            $(pos_mainFooter).toggleClass("posboxActive");
+        });
+        $(pos_mainFooterLeft).click(function () {
+            $("#selectPositionRequestInfo").hide();
+            $(settings_pos_mainFooterLeft).fadeToggle();
+            $(pos_mainFooterLeft).toggleClass("posboxActive");
+        });
+        $(pos_mainFooterCenter).click(function () {
+            $("#selectPositionRequestInfo").hide();
+            $(settings_pos_mainFooterCenter).fadeToggle();
+            $(pos_mainFooterCenter).toggleClass("posboxActive");
+        });
+        $(pos_mainFooterRight).click(function () {
+            $("#selectPositionRequestInfo").hide();
+            $(settings_pos_mainFooterRight).fadeToggle();
+            $(pos_mainFooterRight).toggleClass("posboxActive");
+        });
+        $(pos_footer).click(function () {
+            $("#selectPositionRequestInfo").hide();
+            $(settings_pos_footer).fadeToggle();
+            $(pos_footer).toggleClass("posboxActive");
+        });
+        $(pos_hiddenToolbar).click(function () {
+            $("#selectPositionRequestInfo").hide();
+            $(settings_pos_hiddenToolbar).fadeToggle();
+            $(pos_hiddenToolbar).toggleClass("posboxActive");
+        });
+        $(pos_debug).click(function () {
+            $("#selectPositionRequestInfo").hide();
+            $(settings_pos_debug).fadeToggle();
+            $(pos_debug).toggleClass("posboxActive");
+        });
+        $(pos_outerBottom).click(function () {
+            $("#selectPositionRequestInfo").hide();
+            $(settings_pos_outerBottom).fadeToggle();
+            $(pos_outerBottom).toggleClass("posboxActive");
+        });
+        $(pos_leftMenu).click(function () {
+            $("#selectPositionRequestInfo").hide();
+            $(settings_pos_leftMenu).fadeToggle();
+            $(pos_leftMenu).toggleClass("posboxActive");
+        });
+        $(pos_rightMenu).click(function () {
+            $("#selectPositionRequestInfo").hide();
+            $(settings_pos_rightMenu).fadeToggle();
+            $(pos_rightMenu).toggleClass("posboxActive");
+        });
+
     // TRY TP DISABLE CTRL-S browser hotkey
         function saveHotkey() {
             // simply disables save event for chrome
@@ -79,7 +314,7 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
         // ok, lets go...
         // we need to check if user clicked on save button
         $(savebutton).click(function() {
-            $(savebutton).removeClass('btn btn-success').addClass('btn btn-warning');
+            $(savebutton).removeClass('btn btn-success').addClass('btn btn-warning disabled');
             $(savebuttonIcon).removeClass('fa fa-check').addClass('fa fa-spinner fa-spin fa-fw');
             // to save, even if the editor is currently opened in code view
             // we need to check if codeview is currently active:
@@ -193,6 +428,7 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
     // This is pretty cool when working on a new design: because you see changes, while others wont.
     // In theory, thereby every user can have a different frontend template activated.
 
+
     // OVERRIDE TEMPLATE
     // check if call comes from template-manage or template-edit form
     if (isset($_GET['id']) && (is_numeric($_GET['id']) || (isset($_POST['id']) && (is_numeric($_POST['id'])))))
@@ -250,6 +486,7 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
     else {
         $previewButton = "";
     }
+
 
 $newID = '';
 $getID = '';
@@ -340,8 +577,6 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
 
                 // save theme settings to database
                 $template->setTemplateSetting($db, $template->id, $property, $value, $longValue);
-                // to file
-                // $template->setTemplateCssFile($db, $template->id, $property, $value);
             }
             // if save property is customCSS
             elseif ($property == "customCSS")
@@ -359,7 +594,9 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
     // get HEADER FONT from db
     $headingFont = YAWK\template::getActivegfont($db, "", "heading-gfont");
 
-    $content = "/* auto generated */
+    $content = "
+    /* ATTENTION: THIS FILE IS AUTO-GENERATED. */
+    /* DO NOT EDIT THIS FILE DIRECTLY. USE RE-DESIGN INSTEAD. */
     body {   /* BODY SETTINGS */
         color: #".$tpl_settings['text-fontcolor'].";
         background-color: #".$tpl_settings['body-bg-color'].";
@@ -370,7 +607,7 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         margin-bottom: ".$tpl_settings['body-margin-bottom'].";
         margin-left: ".$tpl_settings['body-margin-left'].";
         margin-right: ".$tpl_settings['body-margin-right'].";
-
+        
         /* BACKGROUND IMAGE */
         background-image: url('".$tpl_settings['body-bg-image']."');
         background-repeat:".$tpl_settings['body-bg-repeat'].";
@@ -849,19 +1086,54 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
       color: #".$tpl_settings['btn-danger-background-color'].";
       background-color: #".$tpl_settings['btn-danger-color'].";
     }
-
-
-
+    
+    /* FORMS */
+    .form-control {
+      display: ".$tpl_settings['form-display'].";
+      width: ".$tpl_settings['form-width'].";
+      height: ".$tpl_settings['form-height'].";
+      padding: ".$tpl_settings['form-padding'].";
+      font-size: ".$tpl_settings['form-fontSize'].";
+      line-height: ".$tpl_settings['form-lineHeight'].";
+      color: #".$tpl_settings['form-textColor'].";
+      background-color: #".$tpl_settings['form-bgcolor'].";
+      background-image: none;
+      border: ".$tpl_settings['form-border'].";
+      border-radius: ".$tpl_settings['form-border-radius'].";
+      -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+              box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+      -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+           -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+              transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    }
+    .form-control:focus {
+      border-color: #".$tpl_settings['form-activeBorderColor'].";
+      outline: 0;
+      -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+              box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+    }
+    .form-control::-moz-placeholder {
+      color: #".$tpl_settings['form-placeholderColor'].";
+      opacity: 1;
+    }
+    .form-control:-ms-input-placeholder {
+      color: #999;
+    }
+    .form-control::-webkit-input-placeholder {
+      color: #999;
+    }
 
    /* NAVBAR */
    .navbar-fixed-top {
     margin-top: ".$tpl_settings['navbar-marginTop'].";
+    margin-bottom: ".$tpl_settings['navbar-marginBottom'].";
   }
    .navbar-default {
        text-shadow: 1px 0px #".$tpl_settings['fontshadow-menucolor'].";
        filter: dropshadow(color=#".$tpl_settings['fontshadow-menucolor'].", offx=1, offy=1);
        background-color: #".$tpl_settings['default-menubgcolor'].";
        border-color: #".$tpl_settings['border-menubgcolor'].";
+       margin-bottom: ".$tpl_settings['navbar-marginBottom'].";
    }
    .navbar-default .navbar-brand {
        color: #".$tpl_settings['brand-menucolor'].";
@@ -1146,16 +1418,742 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
       }
     }
     
-    .pos-topmenu
-    {
-        top: ".$tpl_settings['pos-topmenu-top'].";
-        margin-bottom: ".$tpl_settings['pos-topmenu-marginBottom'].";
-        position: ".$tpl_settings['pos-topmenu-property'].";
-        background-color: #".$tpl_settings['pos-topmenu-bg-color'].";
-        width: ".$tpl_settings['pos-topmenu-width'].";
-        height: ".$tpl_settings['pos-topmenu-height'].";
-        z-index: ".$tpl_settings['pos-topmenu-zindex'].";
-        ".$tpl_settings['pos-topmenu-bg-gradient-longValue'].";
+    .pos-outerTop
+    {   
+        -webkit-box-shadow: ".$tpl_settings['pos-outerTop-box-shadow-width']." #".$tpl_settings['pos-outerTop-box-shadow-color'].";
+        -moz-box-shadow: ".$tpl_settings['pos-outerTop-box-shadow-width']." #".$tpl_settings['pos-outerTop-box-shadow-color'].";
+        box-shadow: ".$tpl_settings['pos-outerTop-box-shadow-width']." #".$tpl_settings['pos-outerTop-box-shadow-color'].";
+        border-width: ".$tpl_settings['pos-outerTop-border-width'].";
+        border-color: #".$tpl_settings['pos-outerTop-border-color'].";
+        border-style: ".$tpl_settings['pos-outerTop-border-style'].";
+        border-radius: ".$tpl_settings['pos-outerTop-border-radius'].";
+        padding: ".$tpl_settings['pos-outerTop-padding'].";
+        overflow: ".$tpl_settings['pos-outerTop-overflow'].";
+        visibility: ".$tpl_settings['pos-outerTop-visibility'].";
+        text-align: ".$tpl_settings['pos-outerTop-text-align'].";
+        vertical-align: ".$tpl_settings['pos-outerTop-vertical-align'].";
+        margin-top: ".$tpl_settings['pos-outerTop-marginTop'].";
+        margin-bottom: ".$tpl_settings['pos-outerTop-marginBottom'].";
+        position: ".$tpl_settings['pos-outerTop-position'].";
+        background-color: #".$tpl_settings['pos-outerTop-bgcolor'].";
+        width: ".$tpl_settings['pos-outerTop-width'].";
+        height: ".$tpl_settings['pos-outerTop-height'].";
+        z-index: ".$tpl_settings['pos-outerTop-zindex'].";
+        ".$tpl_settings['pos-outerTop-bg-gradient-longValue']."
+        ".$tpl_settings['pos-outerTop-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-outerTop-bg-image']."');
+        background-repeat:".$tpl_settings['pos-outerTop-bg-repeat'].";
+        background-position:".$tpl_settings['pos-outerTop-bg-position'].";
+        background-attachment:".$tpl_settings['pos-outerTop-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-outerTop-bg-attachment'].";
+    }
+    .pos-intro
+    {   
+        -webkit-box-shadow: ".$tpl_settings['pos-intro-box-shadow-width']." #".$tpl_settings['pos-intro-box-shadow-color'].";
+        -moz-box-shadow: ".$tpl_settings['pos-intro-box-shadow-width']." #".$tpl_settings['pos-intro-box-shadow-color'].";
+        box-shadow: ".$tpl_settings['pos-intro-box-shadow-width']." #".$tpl_settings['pos-intro-box-shadow-color'].";
+        border-width: ".$tpl_settings['pos-intro-border-width'].";
+        border-color: #".$tpl_settings['pos-intro-border-color'].";
+        border-style: ".$tpl_settings['pos-intro-border-style'].";
+        border-radius: ".$tpl_settings['pos-intro-border-radius'].";
+        padding: ".$tpl_settings['pos-intro-padding'].";
+        overflow: ".$tpl_settings['pos-intro-overflow'].";
+        visibility: ".$tpl_settings['pos-intro-visibility'].";
+        text-align: ".$tpl_settings['pos-intro-text-align'].";
+        vertical-align: ".$tpl_settings['pos-intro-vertical-align'].";
+        margin-top: ".$tpl_settings['pos-intro-marginTop'].";
+        margin-bottom: ".$tpl_settings['pos-intro-marginBottom'].";
+        position: ".$tpl_settings['pos-intro-position'].";
+        background-color: #".$tpl_settings['pos-intro-bgcolor'].";
+        width: ".$tpl_settings['pos-intro-width'].";
+        height: ".$tpl_settings['pos-intro-height'].";
+        z-index: ".$tpl_settings['pos-intro-zindex'].";
+        ".$tpl_settings['pos-intro-bg-gradient-longValue']."
+        ".$tpl_settings['pos-intro-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-intro-bg-image']."');
+        background-repeat:".$tpl_settings['pos-intro-bg-repeat'].";
+        background-position:".$tpl_settings['pos-intro-bg-position'].";
+        background-attachment:".$tpl_settings['pos-intro-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-intro-bg-attachment'].";
+    }
+    .pos-globalmenu
+    {   
+        -webkit-box-shadow: ".$tpl_settings['pos-globalmenu-box-shadow-width']." #".$tpl_settings['pos-globalmenu-box-shadow-color'].";
+        -moz-box-shadow: ".$tpl_settings['pos-globalmenu-box-shadow-width']." #".$tpl_settings['pos-globalmenu-box-shadow-color'].";
+        box-shadow: ".$tpl_settings['pos-globalmenu-box-shadow-width']." #".$tpl_settings['pos-globalmenu-box-shadow-color'].";
+        border-width: ".$tpl_settings['pos-globalmenu-border-width'].";
+        border-color: #".$tpl_settings['pos-globalmenu-border-color'].";
+        border-style: ".$tpl_settings['pos-globalmenu-border-style'].";
+        border-radius: ".$tpl_settings['pos-globalmenu-border-radius'].";
+        padding: ".$tpl_settings['pos-globalmenu-padding'].";
+        overflow: ".$tpl_settings['pos-globalmenu-overflow'].";
+        visibility: ".$tpl_settings['pos-globalmenu-visibility'].";
+        text-align: ".$tpl_settings['pos-globalmenu-text-align'].";
+        vertical-align: ".$tpl_settings['pos-globalmenu-vertical-align'].";
+        margin-top: ".$tpl_settings['pos-globalmenu-marginTop'].";
+        margin-bottom: ".$tpl_settings['pos-globalmenu-marginBottom'].";
+        position: ".$tpl_settings['pos-globalmenu-position'].";
+        background-color: #".$tpl_settings['pos-globalmenu-bgcolor'].";
+        width: ".$tpl_settings['pos-globalmenu-width'].";
+        height: ".$tpl_settings['pos-globalmenu-height'].";
+        z-index: ".$tpl_settings['pos-globalmenu-zindex'].";
+        ".$tpl_settings['pos-globalmenu-bg-gradient-longValue']."
+        ".$tpl_settings['pos-globalmenu-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-globalmenu-bg-image']."');
+        background-repeat:".$tpl_settings['pos-globalmenu-bg-repeat'].";
+        background-position:".$tpl_settings['pos-globalmenu-bg-position'].";
+        background-attachment:".$tpl_settings['pos-globalmenu-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-globalmenu-attachment'].";
+    }
+    .pos-top
+    {   
+        -webkit-box-shadow: ".$tpl_settings['pos-top-box-shadow-width']." #".$tpl_settings['pos-top-box-shadow-color'].";
+        -moz-box-shadow: ".$tpl_settings['pos-top-box-shadow-width']." #".$tpl_settings['pos-top-box-shadow-color'].";
+        box-shadow: ".$tpl_settings['pos-top-box-shadow-width']." #".$tpl_settings['pos-top-box-shadow-color'].";
+        border-width: ".$tpl_settings['pos-top-border-width'].";
+        border-color: #".$tpl_settings['pos-top-border-color'].";
+        border-style: ".$tpl_settings['pos-top-border-style'].";
+        border-radius: ".$tpl_settings['pos-top-border-radius'].";
+        padding: ".$tpl_settings['pos-top-padding'].";
+        overflow: ".$tpl_settings['pos-top-overflow'].";
+        visibility: ".$tpl_settings['pos-top-visibility'].";
+        text-align: ".$tpl_settings['pos-top-text-align'].";
+        vertical-align: ".$tpl_settings['pos-top-vertical-align'].";
+        margin-top: ".$tpl_settings['pos-top-marginTop'].";
+        margin-bottom: ".$tpl_settings['pos-top-marginBottom'].";
+        position: ".$tpl_settings['pos-top-position'].";
+        background-color: #".$tpl_settings['pos-top-bgcolor'].";
+        width: ".$tpl_settings['pos-top-width'].";
+        height: ".$tpl_settings['pos-top-height'].";
+        z-index: ".$tpl_settings['pos-top-zindex'].";
+        ".$tpl_settings['pos-top-bg-gradient-longValue']."
+        ".$tpl_settings['pos-top-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-top-bg-image']."');
+        background-repeat:".$tpl_settings['pos-top-bg-repeat'].";
+        background-position:".$tpl_settings['pos-top-bg-position'].";
+        background-attachment:".$tpl_settings['pos-top-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-top-attachment'].";
+    }
+    .pos-outerLeft
+    {   
+        -webkit-box-shadow: ".$tpl_settings['pos-outerLeft-box-shadow-width']." #".$tpl_settings['pos-outerLeft-box-shadow-color'].";
+        -moz-box-shadow: ".$tpl_settings['pos-outerLeft-box-shadow-width']." #".$tpl_settings['pos-outerLeft-box-shadow-color'].";
+        box-shadow: ".$tpl_settings['pos-outerLeft-box-shadow-width']." #".$tpl_settings['pos-outerLeft-box-shadow-color'].";
+        border-width: ".$tpl_settings['pos-outerLeft-border-width'].";
+        border-color: #".$tpl_settings['pos-outerLeft-border-color'].";
+        border-style: ".$tpl_settings['pos-outerLeft-border-style'].";
+        border-radius: ".$tpl_settings['pos-outerLeft-border-radius'].";
+        padding: ".$tpl_settings['pos-outerLeft-padding'].";
+        overflow: ".$tpl_settings['pos-outerLeft-overflow'].";
+        visibility: ".$tpl_settings['pos-outerLeft-visibility'].";
+        text-align: ".$tpl_settings['pos-outerLeft-text-align'].";
+        vertical-align: ".$tpl_settings['pos-outerLeft-vertical-align'].";
+        margin-top: ".$tpl_settings['pos-outerLeft-marginTop'].";
+        margin-bottom: ".$tpl_settings['pos-outerLeft-marginBottom'].";
+        position: ".$tpl_settings['pos-outerLeft-position'].";
+        background-color: #".$tpl_settings['pos-outerLeft-bgcolor'].";
+        height: ".$tpl_settings['pos-outerLeft-height'].";
+        z-index: ".$tpl_settings['pos-outerLeft-zindex'].";
+        ".$tpl_settings['pos-outerLeft-bg-gradient-longValue']."
+        ".$tpl_settings['pos-outerLeft-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-outerLeft-bg-image']."');
+        background-repeat:".$tpl_settings['pos-outerLeft-bg-repeat'].";
+        background-position:".$tpl_settings['pos-outerLeft-bg-position'].";
+        background-attachment:".$tpl_settings['pos-outerLeft-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-outerLeft-attachment'].";
+    }
+    .pos-outerRight
+    {   
+        -webkit-box-shadow: ".$tpl_settings['pos-outerRight-box-shadow-width']." #".$tpl_settings['pos-outerRight-box-shadow-color'].";
+        -moz-box-shadow: ".$tpl_settings['pos-outerRight-box-shadow-width']." #".$tpl_settings['pos-outerRight-box-shadow-color'].";
+        box-shadow: ".$tpl_settings['pos-outerRight-box-shadow-width']." #".$tpl_settings['pos-outerRight-box-shadow-color'].";
+        border-width: ".$tpl_settings['pos-outerRight-border-width'].";
+        border-color: #".$tpl_settings['pos-outerRight-border-color'].";
+        border-style: ".$tpl_settings['pos-outerRight-border-style'].";
+        border-radius: ".$tpl_settings['pos-outerRight-border-radius'].";
+        padding: ".$tpl_settings['pos-outerRight-padding'].";
+        overflow: ".$tpl_settings['pos-outerRight-overflow'].";
+        visibility: ".$tpl_settings['pos-outerRight-visibility'].";
+        text-align: ".$tpl_settings['pos-outerRight-text-align'].";
+        vertical-align: ".$tpl_settings['pos-outerRight-vertical-align'].";
+        margin-top: ".$tpl_settings['pos-outerRight-marginTop'].";
+        margin-bottom: ".$tpl_settings['pos-outerRight-marginBottom'].";
+        position: ".$tpl_settings['pos-outerRight-position'].";
+        background-color: #".$tpl_settings['pos-outerRight-bgcolor'].";
+        height: ".$tpl_settings['pos-outerRight-height'].";
+        z-index: ".$tpl_settings['pos-outerRight-zindex'].";
+        ".$tpl_settings['pos-outerRight-bg-gradient-longValue']."
+        ".$tpl_settings['pos-outerRight-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-outerRight-bg-image']."');
+        background-repeat:".$tpl_settings['pos-outerRight-bg-repeat'].";
+        background-position:".$tpl_settings['pos-outerRight-bg-position'].";
+        background-attachment:".$tpl_settings['pos-outerRight-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-outerRight-attachment'].";
+    }
+    .pos-leftMenu
+    {   
+        -webkit-box-shadow: ".$tpl_settings['pos-leftMenu-box-shadow-width']." #".$tpl_settings['pos-leftMenu-box-shadow-color'].";
+        -moz-box-shadow: ".$tpl_settings['pos-leftMenu-box-shadow-width']." #".$tpl_settings['pos-leftMenu-box-shadow-color'].";
+        box-shadow: ".$tpl_settings['pos-leftMenu-box-shadow-width']." #".$tpl_settings['pos-leftMenu-box-shadow-color'].";
+        border-width: ".$tpl_settings['pos-leftMenu-border-width'].";
+        border-color: #".$tpl_settings['pos-leftMenu-border-color'].";
+        border-style: ".$tpl_settings['pos-leftMenu-border-style'].";
+        border-radius: ".$tpl_settings['pos-leftMenu-border-radius'].";
+        padding: ".$tpl_settings['pos-leftMenu-padding'].";
+        overflow: ".$tpl_settings['pos-leftMenu-overflow'].";
+        visibility: ".$tpl_settings['pos-leftMenu-visibility'].";
+        text-align: ".$tpl_settings['pos-leftMenu-text-align'].";
+        vertical-align: ".$tpl_settings['pos-leftMenu-vertical-align'].";
+        margin-top: ".$tpl_settings['pos-leftMenu-marginTop'].";
+        margin-bottom: ".$tpl_settings['pos-leftMenu-marginBottom'].";
+        position: ".$tpl_settings['pos-leftMenu-position'].";
+        background-color: #".$tpl_settings['pos-leftMenu-bgcolor'].";
+        height: ".$tpl_settings['pos-leftMenu-height'].";
+        z-index: ".$tpl_settings['pos-leftMenu-zindex'].";
+        ".$tpl_settings['pos-leftMenu-bg-gradient-longValue']."
+        ".$tpl_settings['pos-leftMenu-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-leftMenu-bg-image']."');
+        background-repeat:".$tpl_settings['pos-leftMenu-bg-repeat'].";
+        background-position:".$tpl_settings['pos-leftMenu-bg-position'].";
+        background-attachment:".$tpl_settings['pos-leftMenu-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-leftMenu-attachment'].";
+    }
+    .pos-rightMenu
+    {   
+        -webkit-box-shadow: ".$tpl_settings['pos-rightMenu-box-shadow-width']." #".$tpl_settings['pos-rightMenu-box-shadow-color'].";
+        -moz-box-shadow: ".$tpl_settings['pos-rightMenu-box-shadow-width']." #".$tpl_settings['pos-rightMenu-box-shadow-color'].";
+        box-shadow: ".$tpl_settings['pos-rightMenu-box-shadow-width']." #".$tpl_settings['pos-rightMenu-box-shadow-color'].";
+        border-width: ".$tpl_settings['pos-rightMenu-border-width'].";
+        border-color: #".$tpl_settings['pos-rightMenu-border-color'].";
+        border-style: ".$tpl_settings['pos-rightMenu-border-style'].";
+        border-radius: ".$tpl_settings['pos-rightMenu-border-radius'].";
+        padding: ".$tpl_settings['pos-rightMenu-padding'].";
+        overflow: ".$tpl_settings['pos-rightMenu-overflow'].";
+        visibility: ".$tpl_settings['pos-rightMenu-visibility'].";
+        text-align: ".$tpl_settings['pos-rightMenu-text-align'].";
+        vertical-align: ".$tpl_settings['pos-rightMenu-vertical-align'].";
+        margin-top: ".$tpl_settings['pos-rightMenu-marginTop'].";
+        margin-bottom: ".$tpl_settings['pos-rightMenu-marginBottom'].";
+        position: ".$tpl_settings['pos-rightMenu-position'].";
+        background-color: #".$tpl_settings['pos-rightMenu-bgcolor'].";
+        height: ".$tpl_settings['pos-rightMenu-height'].";
+        z-index: ".$tpl_settings['pos-rightMenu-zindex'].";
+        ".$tpl_settings['pos-rightMenu-bg-gradient-longValue']."
+        ".$tpl_settings['pos-rightMenu-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-rightMenu-bg-image']."');
+        background-repeat:".$tpl_settings['pos-rightMenu-bg-repeat'].";
+        background-position:".$tpl_settings['pos-rightMenu-bg-position'].";
+        background-attachment:".$tpl_settings['pos-rightMenu-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-rightMenu-attachment'].";
+    }
+    .pos-mainTop
+    {   
+        -webkit-box-shadow: ".$tpl_settings['pos-mainTop-box-shadow-width']." #".$tpl_settings['pos-mainTop-box-shadow-color'].";
+        -moz-box-shadow: ".$tpl_settings['pos-mainTop-box-shadow-width']." #".$tpl_settings['pos-mainTop-box-shadow-color'].";
+        box-shadow: ".$tpl_settings['pos-mainTop-box-shadow-width']." #".$tpl_settings['pos-mainTop-box-shadow-color'].";
+        border-width: ".$tpl_settings['pos-mainTop-border-width'].";
+        border-color: #".$tpl_settings['pos-mainTop-border-color'].";
+        border-style: ".$tpl_settings['pos-mainTop-border-style'].";
+        border-radius: ".$tpl_settings['pos-mainTop-border-radius'].";
+        padding: ".$tpl_settings['pos-mainTop-padding'].";
+        overflow: ".$tpl_settings['pos-mainTop-overflow'].";
+        visibility: ".$tpl_settings['pos-mainTop-visibility'].";
+        text-align: ".$tpl_settings['pos-mainTop-text-align'].";
+        vertical-align: ".$tpl_settings['pos-mainTop-vertical-align'].";
+        margin-top: ".$tpl_settings['pos-mainTop-marginTop'].";
+        margin-bottom: ".$tpl_settings['pos-mainTop-marginBottom'].";
+        position: ".$tpl_settings['pos-mainTop-position'].";
+        background-color: #".$tpl_settings['pos-mainTop-bgcolor'].";
+        width: ".$tpl_settings['pos-mainTop-width'].";
+        height: ".$tpl_settings['pos-mainTop-height'].";
+        z-index: ".$tpl_settings['pos-mainTop-zindex'].";
+        ".$tpl_settings['pos-mainTop-bg-gradient-longValue']."
+        ".$tpl_settings['pos-mainTop-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-mainTop-bg-image']."');
+        background-repeat:".$tpl_settings['pos-mainTop-bg-repeat'].";
+        background-position:".$tpl_settings['pos-mainTop-bg-position'].";
+        background-attachment:".$tpl_settings['pos-mainTop-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-mainTop-attachment'].";
+    }
+    .pos-mainTopLeft
+    {   
+        -webkit-box-shadow: ".$tpl_settings['pos-mainTopLeft-box-shadow-width']." #".$tpl_settings['pos-mainTopLeft-box-shadow-color'].";
+        -moz-box-shadow: ".$tpl_settings['pos-mainTopLeft-box-shadow-width']." #".$tpl_settings['pos-mainTopLeft-box-shadow-color'].";
+        box-shadow: ".$tpl_settings['pos-mainTopLeft-box-shadow-width']." #".$tpl_settings['pos-mainTopLeft-box-shadow-color'].";
+        border-width: ".$tpl_settings['pos-mainTopLeft-border-width'].";
+        border-color: #".$tpl_settings['pos-mainTopLeft-border-color'].";
+        border-style: ".$tpl_settings['pos-mainTopLeft-border-style'].";
+        border-radius: ".$tpl_settings['pos-mainTopLeft-border-radius'].";
+        padding: ".$tpl_settings['pos-mainTopLeft-padding'].";
+        overflow: ".$tpl_settings['pos-mainTopLeft-overflow'].";
+        visibility: ".$tpl_settings['pos-mainTopLeft-visibility'].";
+        text-align: ".$tpl_settings['pos-mainTopLeft-text-align'].";
+        vertical-align: ".$tpl_settings['pos-mainTopLeft-vertical-align'].";
+        margin-top: ".$tpl_settings['pos-mainTopLeft-marginTop'].";
+        margin-bottom: ".$tpl_settings['pos-mainTopLeft-marginBottom'].";
+        position: ".$tpl_settings['pos-mainTopLeft-position'].";
+        background-color: #".$tpl_settings['pos-mainTopLeft-bgcolor'].";
+        height: ".$tpl_settings['pos-mainTopLeft-height'].";
+        z-index: ".$tpl_settings['pos-mainTopLeft-zindex'].";
+        ".$tpl_settings['pos-mainTopLeft-bg-gradient-longValue']."
+        ".$tpl_settings['pos-mainTopLeft-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-mainTopLeft-bg-image']."');
+        background-repeat:".$tpl_settings['pos-mainTopLeft-bg-repeat'].";
+        background-position:".$tpl_settings['pos-mainTopLeft-bg-position'].";
+        background-attachment:".$tpl_settings['pos-mainTopLeft-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-mainTopLeft-attachment'].";
+    }
+    .pos-mainTopCenter
+    {   
+        -webkit-box-shadow: ".$tpl_settings['pos-mainTopCenter-box-shadow-width']." #".$tpl_settings['pos-mainTopCenter-box-shadow-color'].";
+        -moz-box-shadow: ".$tpl_settings['pos-mainTopCenter-box-shadow-width']." #".$tpl_settings['pos-mainTopCenter-box-shadow-color'].";
+        box-shadow: ".$tpl_settings['pos-mainTopCenter-box-shadow-width']." #".$tpl_settings['pos-mainTopCenter-box-shadow-color'].";
+        border-width: ".$tpl_settings['pos-mainTopCenter-border-width'].";
+        border-color: #".$tpl_settings['pos-mainTopCenter-border-color'].";
+        border-style: ".$tpl_settings['pos-mainTopCenter-border-style'].";
+        border-radius: ".$tpl_settings['pos-mainTopCenter-border-radius'].";
+        padding: ".$tpl_settings['pos-mainTopCenter-padding'].";
+        overflow: ".$tpl_settings['pos-mainTopCenter-overflow'].";
+        visibility: ".$tpl_settings['pos-mainTopCenter-visibility'].";
+        text-align: ".$tpl_settings['pos-mainTopCenter-text-align'].";
+        vertical-align: ".$tpl_settings['pos-mainTopCenter-vertical-align'].";
+        margin-top: ".$tpl_settings['pos-mainTopCenter-marginTop'].";
+        margin-bottom: ".$tpl_settings['pos-mainTopCenter-marginBottom'].";
+        position: ".$tpl_settings['pos-mainTopCenter-position'].";
+        background-color: #".$tpl_settings['pos-mainTopCenter-bgcolor'].";
+        height: ".$tpl_settings['pos-mainTopCenter-height'].";
+        z-index: ".$tpl_settings['pos-mainTopCenter-zindex'].";
+        ".$tpl_settings['pos-mainTopCenter-bg-gradient-longValue']."
+        ".$tpl_settings['pos-mainTopCenter-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-mainTopCenter-bg-image']."');
+        background-repeat:".$tpl_settings['pos-mainTopCenter-bg-repeat'].";
+        background-position:".$tpl_settings['pos-mainTopCenter-bg-position'].";
+        background-attachment:".$tpl_settings['pos-mainTopCenter-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-mainTopCenter-attachment'].";
+    }
+    .pos-mainTopRight
+    {   
+        -webkit-box-shadow: ".$tpl_settings['pos-mainTopRight-box-shadow-width']." #".$tpl_settings['pos-mainTopRight-box-shadow-color'].";
+        -moz-box-shadow: ".$tpl_settings['pos-mainTopRight-box-shadow-width']." #".$tpl_settings['pos-mainTopRight-box-shadow-color'].";
+        box-shadow: ".$tpl_settings['pos-mainTopRight-box-shadow-width']." #".$tpl_settings['pos-mainTopRight-box-shadow-color'].";
+        border-width: ".$tpl_settings['pos-mainTopRight-border-width'].";
+        border-color: #".$tpl_settings['pos-mainTopRight-border-color'].";
+        border-style: ".$tpl_settings['pos-mainTopRight-border-style'].";
+        border-radius: ".$tpl_settings['pos-mainTopRight-border-radius'].";
+        padding: ".$tpl_settings['pos-mainTopRight-padding'].";
+        overflow: ".$tpl_settings['pos-mainTopRight-overflow'].";
+        visibility: ".$tpl_settings['pos-mainTopRight-visibility'].";
+        text-align: ".$tpl_settings['pos-mainTopRight-text-align'].";
+        vertical-align: ".$tpl_settings['pos-mainTopRight-vertical-align'].";
+        margin-top: ".$tpl_settings['pos-mainTopRight-marginTop'].";
+        margin-bottom: ".$tpl_settings['pos-mainTopRight-marginBottom'].";
+        position: ".$tpl_settings['pos-mainTopRight-position'].";
+        background-color: #".$tpl_settings['pos-mainTopRight-bgcolor'].";
+        height: ".$tpl_settings['pos-mainTopRight-height'].";
+        z-index: ".$tpl_settings['pos-mainTopRight-zindex'].";
+        ".$tpl_settings['pos-mainTopRight-bg-gradient-longValue']."
+        ".$tpl_settings['pos-mainTopRight-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-mainTopRight-bg-image']."');
+        background-repeat:".$tpl_settings['pos-mainTopRight-bg-repeat'].";
+        background-position:".$tpl_settings['pos-mainTopRight-bg-position'].";
+        background-attachment:".$tpl_settings['pos-mainTopRight-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-mainTopRight-attachment'].";
+    }
+    .pos-main
+    {   
+        -webkit-box-shadow: ".$tpl_settings['pos-main-box-shadow-width']." #".$tpl_settings['pos-main-box-shadow-color'].";
+        -moz-box-shadow: ".$tpl_settings['pos-main-box-shadow-width']." #".$tpl_settings['pos-main-box-shadow-color'].";
+        box-shadow: ".$tpl_settings['pos-main-box-shadow-width']." #".$tpl_settings['pos-main-box-shadow-color'].";
+        border-width: ".$tpl_settings['pos-main-border-width'].";
+        border-color: #".$tpl_settings['pos-main-border-color'].";
+        border-style: ".$tpl_settings['pos-main-border-style'].";
+        border-radius: ".$tpl_settings['pos-main-border-radius'].";
+        padding: ".$tpl_settings['pos-main-padding'].";
+        overflow: ".$tpl_settings['pos-main-overflow'].";
+        visibility: ".$tpl_settings['pos-main-visibility'].";
+        text-align: ".$tpl_settings['pos-main-text-align'].";
+        vertical-align: ".$tpl_settings['pos-main-vertical-align'].";
+        margin-top: ".$tpl_settings['pos-main-marginTop'].";
+        margin-bottom: ".$tpl_settings['pos-main-marginBottom'].";
+        position: ".$tpl_settings['pos-main-position'].";
+        background-color: #".$tpl_settings['pos-main-bgcolor'].";
+        width: ".$tpl_settings['pos-main-width'].";
+        height: ".$tpl_settings['pos-main-height'].";
+        z-index: ".$tpl_settings['pos-main-zindex'].";
+        ".$tpl_settings['pos-main-bg-gradient-longValue']."
+        ".$tpl_settings['pos-main-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-main-bg-image']."');
+        background-repeat:".$tpl_settings['pos-main-bg-repeat'].";
+        background-position:".$tpl_settings['pos-main-bg-position'].";
+        background-attachment:".$tpl_settings['pos-main-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-main-attachment'].";
+    }
+    .pos-mainBottom
+    {   
+        -webkit-box-shadow: ".$tpl_settings['pos-mainBottom-box-shadow-width']." #".$tpl_settings['pos-mainBottom-box-shadow-color'].";
+        -moz-box-shadow: ".$tpl_settings['pos-mainBottom-box-shadow-width']." #".$tpl_settings['pos-mainBottom-box-shadow-color'].";
+        box-shadow: ".$tpl_settings['pos-mainBottom-box-shadow-width']." #".$tpl_settings['pos-mainBottom-box-shadow-color'].";
+        border-width: ".$tpl_settings['pos-mainBottom-border-width'].";
+        border-color: #".$tpl_settings['pos-mainBottom-border-color'].";
+        border-style: ".$tpl_settings['pos-mainBottom-border-style'].";
+        border-radius: ".$tpl_settings['pos-mainBottom-border-radius'].";
+        padding: ".$tpl_settings['pos-mainBottom-padding'].";
+        overflow: ".$tpl_settings['pos-mainBottom-overflow'].";
+        visibility: ".$tpl_settings['pos-mainBottom-visibility'].";
+        text-align: ".$tpl_settings['pos-mainBottom-text-align'].";
+        vertical-align: ".$tpl_settings['pos-mainBottom-vertical-align'].";
+        margin-top: ".$tpl_settings['pos-mainBottom-marginTop'].";
+        margin-bottom: ".$tpl_settings['pos-mainBottom-marginBottom'].";
+        position: ".$tpl_settings['pos-mainBottom-position'].";
+        background-color: #".$tpl_settings['pos-mainBottom-bgcolor'].";
+        width: ".$tpl_settings['pos-mainBottom-width'].";
+        height: ".$tpl_settings['pos-mainBottom-height'].";
+        z-index: ".$tpl_settings['pos-mainBottom-zindex'].";
+        ".$tpl_settings['pos-mainBottom-bg-gradient-longValue']."
+        ".$tpl_settings['pos-mainBottom-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-mainBottom-bg-image']."');
+        background-repeat:".$tpl_settings['pos-mainBottom-bg-repeat'].";
+        background-position:".$tpl_settings['pos-mainBottom-bg-position'].";
+        background-attachment:".$tpl_settings['pos-mainBottom-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-mainBottom-attachment'].";
+    }
+    .pos-mainBottomLeft
+    {   
+        -webkit-box-shadow: ".$tpl_settings['pos-mainBottomLeft-box-shadow-width']." #".$tpl_settings['pos-mainBottomLeft-box-shadow-color'].";
+        -moz-box-shadow: ".$tpl_settings['pos-mainBottomLeft-box-shadow-width']." #".$tpl_settings['pos-mainBottomLeft-box-shadow-color'].";
+        box-shadow: ".$tpl_settings['pos-mainBottomLeft-box-shadow-width']." #".$tpl_settings['pos-mainBottomLeft-box-shadow-color'].";
+        border-width: ".$tpl_settings['pos-mainBottomLeft-border-width'].";
+        border-color: #".$tpl_settings['pos-mainBottomLeft-border-color'].";
+        border-style: ".$tpl_settings['pos-mainBottomLeft-border-style'].";
+        border-radius: ".$tpl_settings['pos-mainBottomLeft-border-radius'].";
+        padding: ".$tpl_settings['pos-mainBottomLeft-padding'].";
+        overflow: ".$tpl_settings['pos-mainBottomLeft-overflow'].";
+        visibility: ".$tpl_settings['pos-mainBottomLeft-visibility'].";
+        text-align: ".$tpl_settings['pos-mainBottomLeft-text-align'].";
+        vertical-align: ".$tpl_settings['pos-mainBottomLeft-vertical-align'].";
+        margin-top: ".$tpl_settings['pos-mainBottomLeft-marginTop'].";
+        margin-bottom: ".$tpl_settings['pos-mainBottomLeft-marginBottom'].";
+        position: ".$tpl_settings['pos-mainBottomLeft-position'].";
+        background-color: #".$tpl_settings['pos-mainBottomLeft-bgcolor'].";
+        height: ".$tpl_settings['pos-mainBottomLeft-height'].";
+        z-index: ".$tpl_settings['pos-mainBottomLeft-zindex'].";
+        ".$tpl_settings['pos-mainBottomLeft-bg-gradient-longValue']."
+        ".$tpl_settings['pos-mainBottomLeft-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-mainBottomLeft-bg-image']."');
+        background-repeat:".$tpl_settings['pos-mainBottomLeft-bg-repeat'].";
+        background-position:".$tpl_settings['pos-mainBottomLeft-bg-position'].";
+        background-attachment:".$tpl_settings['pos-mainBottomLeft-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-mainBottomLeft-attachment'].";
+    }
+    .pos-mainBottomCenter
+    {   
+        -webkit-box-shadow: ".$tpl_settings['pos-mainBottomCenter-box-shadow-width']." #".$tpl_settings['pos-mainBottomCenter-box-shadow-color'].";
+        -moz-box-shadow: ".$tpl_settings['pos-mainBottomCenter-box-shadow-width']." #".$tpl_settings['pos-mainBottomCenter-box-shadow-color'].";
+        box-shadow: ".$tpl_settings['pos-mainBottomCenter-box-shadow-width']." #".$tpl_settings['pos-mainBottomCenter-box-shadow-color'].";
+        border-width: ".$tpl_settings['pos-mainBottomCenter-border-width'].";
+        border-color: #".$tpl_settings['pos-mainBottomCenter-border-color'].";
+        border-style: ".$tpl_settings['pos-mainBottomCenter-border-style'].";
+        border-radius: ".$tpl_settings['pos-mainBottomCenter-border-radius'].";
+        padding: ".$tpl_settings['pos-mainBottomCenter-padding'].";
+        overflow: ".$tpl_settings['pos-mainBottomCenter-overflow'].";
+        visibility: ".$tpl_settings['pos-mainBottomCenter-visibility'].";
+        text-align: ".$tpl_settings['pos-mainBottomCenter-text-align'].";
+        vertical-align: ".$tpl_settings['pos-mainBottomCenter-vertical-align'].";
+        margin-top: ".$tpl_settings['pos-mainBottomCenter-marginTop'].";
+        margin-bottom: ".$tpl_settings['pos-mainBottomCenter-marginBottom'].";
+        position: ".$tpl_settings['pos-mainBottomCenter-position'].";
+        background-color: #".$tpl_settings['pos-mainBottomCenter-bgcolor'].";
+        height: ".$tpl_settings['pos-mainBottomCenter-height'].";
+        z-index: ".$tpl_settings['pos-mainBottomCenter-zindex'].";
+        ".$tpl_settings['pos-mainBottomCenter-bg-gradient-longValue']."
+        ".$tpl_settings['pos-mainBottomCenter-customCSS-longValue']."        
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-mainBottomCenter-bg-image']."');
+        background-repeat:".$tpl_settings['pos-mainBottomCenter-bg-repeat'].";
+        background-position:".$tpl_settings['pos-mainBottomCenter-bg-position'].";
+        background-attachment:".$tpl_settings['pos-mainBottomCenter-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-mainBottomCenter-attachment'].";
+    }
+    .pos-mainBottomRight
+    {   
+        -webkit-box-shadow: ".$tpl_settings['pos-mainBottomRight-box-shadow-width']." #".$tpl_settings['pos-mainBottomRight-box-shadow-color'].";
+        -moz-box-shadow: ".$tpl_settings['pos-mainBottomRight-box-shadow-width']." #".$tpl_settings['pos-mainBottomRight-box-shadow-color'].";
+        box-shadow: ".$tpl_settings['pos-mainBottomRight-box-shadow-width']." #".$tpl_settings['pos-mainBottomRight-box-shadow-color'].";
+        border-width: ".$tpl_settings['pos-mainBottomRight-border-width'].";
+        border-color: #".$tpl_settings['pos-mainBottomRight-border-color'].";
+        border-style: ".$tpl_settings['pos-mainBottomRight-border-style'].";
+        border-radius: ".$tpl_settings['pos-mainBottomRight-border-radius'].";
+        padding: ".$tpl_settings['pos-mainBottomRight-padding'].";
+        overflow: ".$tpl_settings['pos-mainBottomRight-overflow'].";
+        visibility: ".$tpl_settings['pos-mainBottomRight-visibility'].";
+        text-align: ".$tpl_settings['pos-mainBottomRight-text-align'].";
+        vertical-align: ".$tpl_settings['pos-mainBottomRight-vertical-align'].";
+        margin-top: ".$tpl_settings['pos-mainBottomRight-marginTop'].";
+        margin-bottom: ".$tpl_settings['pos-mainBottomRight-marginBottom'].";
+        position: ".$tpl_settings['pos-mainBottomRight-position'].";
+        background-color: #".$tpl_settings['pos-mainBottomRight-bgcolor'].";
+        height: ".$tpl_settings['pos-mainBottomRight-height'].";
+        z-index: ".$tpl_settings['pos-mainBottomRight-zindex'].";
+        ".$tpl_settings['pos-mainBottomRight-bg-gradient-longValue']."
+        ".$tpl_settings['pos-mainBottomRight-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-mainBottomRight-bg-image']."');
+        background-repeat:".$tpl_settings['pos-mainBottomRight-bg-repeat'].";
+        background-position:".$tpl_settings['pos-mainBottomRight-bg-position'].";
+        background-attachment:".$tpl_settings['pos-mainBottomRight-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-mainBottomRight-attachment'].";
+    }
+    .pos-mainFooter
+    {   
+        -webkit-box-shadow: ".$tpl_settings['pos-mainFooter-box-shadow-width']." #".$tpl_settings['pos-mainFooter-box-shadow-color'].";
+        -moz-box-shadow: ".$tpl_settings['pos-mainFooter-box-shadow-width']." #".$tpl_settings['pos-mainFooter-box-shadow-color'].";
+        box-shadow: ".$tpl_settings['pos-mainFooter-box-shadow-width']." #".$tpl_settings['pos-mainFooter-box-shadow-color'].";
+        border-width: ".$tpl_settings['pos-mainFooter-border-width'].";
+        border-color: #".$tpl_settings['pos-mainFooter-border-color'].";
+        border-style: ".$tpl_settings['pos-mainFooter-border-style'].";
+        border-radius: ".$tpl_settings['pos-mainFooter-border-radius'].";
+        padding: ".$tpl_settings['pos-mainFooter-padding'].";
+        overflow: ".$tpl_settings['pos-mainFooter-overflow'].";
+        visibility: ".$tpl_settings['pos-mainFooter-visibility'].";
+        text-align: ".$tpl_settings['pos-mainFooter-text-align'].";
+        vertical-align: ".$tpl_settings['pos-mainFooter-vertical-align'].";
+        margin-top: ".$tpl_settings['pos-mainFooter-marginTop'].";
+        margin-bottom: ".$tpl_settings['pos-mainFooter-marginBottom'].";
+        position: ".$tpl_settings['pos-mainFooter-position'].";
+        background-color: #".$tpl_settings['pos-mainFooter-bgcolor'].";
+        width: ".$tpl_settings['pos-mainFooter-width'].";
+        height: ".$tpl_settings['pos-mainFooter-height'].";
+        z-index: ".$tpl_settings['pos-mainFooter-zindex'].";
+        ".$tpl_settings['pos-mainFooter-bg-gradient-longValue']."
+        ".$tpl_settings['pos-mainFooter-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-mainFooter-bg-image']."');
+        background-repeat:".$tpl_settings['pos-mainFooter-bg-repeat'].";
+        background-position:".$tpl_settings['pos-mainFooter-bg-position'].";
+        background-attachment:".$tpl_settings['pos-mainFooter-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-mainFooter-attachment'].";
+    }
+    .pos-mainFooterLeft
+    {   
+        -webkit-box-shadow: ".$tpl_settings['pos-mainFooterLeft-box-shadow-width']." #".$tpl_settings['pos-mainFooterLeft-box-shadow-color'].";
+        -moz-box-shadow: ".$tpl_settings['pos-mainFooterLeft-box-shadow-width']." #".$tpl_settings['pos-mainFooterLeft-box-shadow-color'].";
+        box-shadow: ".$tpl_settings['pos-mainFooterLeft-box-shadow-width']." #".$tpl_settings['pos-mainFooterLeft-box-shadow-color'].";
+        border-width: ".$tpl_settings['pos-mainFooterLeft-border-width'].";
+        border-color: #".$tpl_settings['pos-mainFooterLeft-border-color'].";
+        border-style: ".$tpl_settings['pos-mainFooterLeft-border-style'].";
+        border-radius: ".$tpl_settings['pos-mainFooterLeft-border-radius'].";
+        padding: ".$tpl_settings['pos-mainFooterLeft-padding'].";
+        overflow: ".$tpl_settings['pos-mainFooterLeft-overflow'].";
+        visibility: ".$tpl_settings['pos-mainFooterLeft-visibility'].";
+        text-align: ".$tpl_settings['pos-mainFooterLeft-text-align'].";
+        vertical-align: ".$tpl_settings['pos-mainFooterLeft-vertical-align'].";
+        margin-top: ".$tpl_settings['pos-mainFooterLeft-marginTop'].";
+        margin-bottom: ".$tpl_settings['pos-mainFooterLeft-marginBottom'].";
+        position: ".$tpl_settings['pos-mainFooterLeft-position'].";
+        background-color: #".$tpl_settings['pos-mainFooterLeft-bgcolor'].";
+        height: ".$tpl_settings['pos-mainFooterLeft-height'].";
+        z-index: ".$tpl_settings['pos-mainFooterLeft-zindex'].";
+        ".$tpl_settings['pos-mainFooterLeft-bg-gradient-longValue']."
+        ".$tpl_settings['pos-mainFooterLeft-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-mainFooterLeft-bg-image']."');
+        background-repeat:".$tpl_settings['pos-mainFooterLeft-bg-repeat'].";
+        background-position:".$tpl_settings['pos-mainFooterLeft-bg-position'].";
+        background-attachment:".$tpl_settings['pos-mainFooterLeft-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-mainFooterLeft-attachment'].";
+    }
+    .pos-mainFooterCenter
+    {   
+        -webkit-box-shadow: ".$tpl_settings['pos-mainFooterCenter-box-shadow-width']." #".$tpl_settings['pos-mainFooterCenter-box-shadow-color'].";
+        -moz-box-shadow: ".$tpl_settings['pos-mainFooterCenter-box-shadow-width']." #".$tpl_settings['pos-mainFooterCenter-box-shadow-color'].";
+        box-shadow: ".$tpl_settings['pos-mainFooterCenter-box-shadow-width']." #".$tpl_settings['pos-mainFooterCenter-box-shadow-color'].";
+        border-width: ".$tpl_settings['pos-mainFooterCenter-border-width'].";
+        border-color: #".$tpl_settings['pos-mainFooterCenter-border-color'].";
+        border-style: ".$tpl_settings['pos-mainFooterCenter-border-style'].";
+        border-radius: ".$tpl_settings['pos-mainFooterCenter-border-radius'].";
+        padding: ".$tpl_settings['pos-mainFooterCenter-padding'].";
+        overflow: ".$tpl_settings['pos-mainFooterCenter-overflow'].";
+        visibility: ".$tpl_settings['pos-mainFooterCenter-visibility'].";
+        text-align: ".$tpl_settings['pos-mainFooterCenter-text-align'].";
+        vertical-align: ".$tpl_settings['pos-mainFooterCenter-vertical-align'].";
+        margin-top: ".$tpl_settings['pos-mainFooterCenter-marginTop'].";
+        margin-bottom: ".$tpl_settings['pos-mainFooterCenter-marginBottom'].";
+        position: ".$tpl_settings['pos-mainFooterCenter-position'].";
+        background-color: #".$tpl_settings['pos-mainFooterCenter-bgcolor'].";
+        height: ".$tpl_settings['pos-mainFooterCenter-height'].";
+        z-index: ".$tpl_settings['pos-mainFooterCenter-zindex'].";
+        ".$tpl_settings['pos-mainFooterCenter-bg-gradient-longValue']."
+        ".$tpl_settings['pos-mainFooterCenter-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-mainFooterCenter-bg-image']."');
+        background-repeat:".$tpl_settings['pos-mainFooterCenter-bg-repeat'].";
+        background-position:".$tpl_settings['pos-mainFooterCenter-bg-position'].";
+        background-attachment:".$tpl_settings['pos-mainFooterCenter-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-mainFooterCenter-attachment'].";
+    }
+    .pos-mainFooterRight
+    {   
+        -webkit-box-shadow: ".$tpl_settings['pos-mainFooterRight-box-shadow-width']." #".$tpl_settings['pos-mainFooterRight-box-shadow-color'].";
+        -moz-box-shadow: ".$tpl_settings['pos-mainFooterRight-box-shadow-width']." #".$tpl_settings['pos-mainFooterRight-box-shadow-color'].";
+        box-shadow: ".$tpl_settings['pos-mainFooterRight-box-shadow-width']." #".$tpl_settings['pos-mainFooterRight-box-shadow-color'].";
+        border-width: ".$tpl_settings['pos-mainFooterRight-border-width'].";
+        border-color: #".$tpl_settings['pos-mainFooterRight-border-color'].";
+        border-style: ".$tpl_settings['pos-mainFooterRight-border-style'].";
+        border-radius: ".$tpl_settings['pos-mainFooterRight-border-radius'].";
+        padding: ".$tpl_settings['pos-mainFooterRight-padding'].";
+        overflow: ".$tpl_settings['pos-mainFooterRight-overflow'].";
+        visibility: ".$tpl_settings['pos-mainFooterRight-visibility'].";
+        text-align: ".$tpl_settings['pos-mainFooterRight-text-align'].";
+        vertical-align: ".$tpl_settings['pos-mainFooterRight-vertical-align'].";
+        margin-top: ".$tpl_settings['pos-mainFooterRight-marginTop'].";
+        margin-bottom: ".$tpl_settings['pos-mainFooterRight-marginBottom'].";
+        position: ".$tpl_settings['pos-mainFooterRight-position'].";
+        background-color: #".$tpl_settings['pos-mainFooterRight-bgcolor'].";
+        height: ".$tpl_settings['pos-mainFooterRight-height'].";
+        z-index: ".$tpl_settings['pos-mainFooterRight-zindex'].";
+        ".$tpl_settings['pos-mainFooterRight-bg-gradient-longValue']."
+        ".$tpl_settings['pos-mainFooterRight-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-mainFooterRight-bg-image']."');
+        background-repeat:".$tpl_settings['pos-mainFooterRight-bg-repeat'].";
+        background-position:".$tpl_settings['pos-mainFooterRight-bg-position'].";
+        background-attachment:".$tpl_settings['pos-mainFooterRight-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-mainFooterRight-attachment'].";
+    }
+    .pos-footer
+    {   
+        -webkit-box-shadow: ".$tpl_settings['pos-footer-box-shadow-width']." #".$tpl_settings['pos-footer-box-shadow-color'].";
+        -moz-box-shadow: ".$tpl_settings['pos-footer-box-shadow-width']." #".$tpl_settings['pos-footer-box-shadow-color'].";
+        box-shadow: ".$tpl_settings['pos-footer-box-shadow-width']." #".$tpl_settings['pos-footer-box-shadow-color'].";
+        border-width: ".$tpl_settings['pos-footer-border-width'].";
+        border-color: #".$tpl_settings['pos-footer-border-color'].";
+        border-style: ".$tpl_settings['pos-footer-border-style'].";
+        border-radius: ".$tpl_settings['pos-footer-border-radius'].";
+        padding: ".$tpl_settings['pos-footer-padding'].";
+        overflow: ".$tpl_settings['pos-footer-overflow'].";
+        visibility: ".$tpl_settings['pos-footer-visibility'].";
+        text-align: ".$tpl_settings['pos-footer-text-align'].";
+        vertical-align: ".$tpl_settings['pos-footer-vertical-align'].";
+        margin-top: ".$tpl_settings['pos-footer-marginTop'].";
+        margin-bottom: ".$tpl_settings['pos-footer-marginBottom'].";
+        position: ".$tpl_settings['pos-footer-position'].";
+        background-color: #".$tpl_settings['pos-footer-bgcolor'].";
+        width: ".$tpl_settings['pos-footer-width'].";
+        height: ".$tpl_settings['pos-footer-height'].";
+        z-index: ".$tpl_settings['pos-footer-zindex'].";
+        ".$tpl_settings['pos-footer-bg-gradient-longValue']."
+        ".$tpl_settings['pos-footer-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-footer-bg-image']."');
+        background-repeat:".$tpl_settings['pos-footer-bg-repeat'].";
+        background-position:".$tpl_settings['pos-footer-bg-position'].";
+        background-attachment:".$tpl_settings['pos-footer-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-footer-attachment'].";
+    }
+    .pos-hiddenToolbar
+    {   
+        -webkit-box-shadow: ".$tpl_settings['pos-hiddenToolbar-box-shadow-width']." #".$tpl_settings['pos-hiddenToolbar-box-shadow-color'].";
+        -moz-box-shadow: ".$tpl_settings['pos-hiddenToolbar-box-shadow-width']." #".$tpl_settings['pos-hiddenToolbar-box-shadow-color'].";
+        box-shadow: ".$tpl_settings['pos-hiddenToolbar-box-shadow-width']." #".$tpl_settings['pos-hiddenToolbar-box-shadow-color'].";
+        border-width: ".$tpl_settings['pos-hiddenToolbar-border-width'].";
+        border-color: #".$tpl_settings['pos-hiddenToolbar-border-color'].";
+        border-style: ".$tpl_settings['pos-hiddenToolbar-border-style'].";
+        border-radius: ".$tpl_settings['pos-hiddenToolbar-border-radius'].";
+        padding: ".$tpl_settings['pos-hiddenToolbar-padding'].";
+        overflow: ".$tpl_settings['pos-hiddenToolbar-overflow'].";
+        visibility: ".$tpl_settings['pos-hiddenToolbar-visibility'].";
+        text-align: ".$tpl_settings['pos-hiddenToolbar-text-align'].";
+        vertical-align: ".$tpl_settings['pos-hiddenToolbar-vertical-align'].";
+        margin-top: ".$tpl_settings['pos-hiddenToolbar-marginTop'].";
+        margin-bottom: ".$tpl_settings['pos-hiddenToolbar-marginBottom'].";
+        position: ".$tpl_settings['pos-hiddenToolbar-position'].";
+        background-color: #".$tpl_settings['pos-hiddenToolbar-bgcolor'].";
+        width: ".$tpl_settings['pos-hiddenToolbar-width'].";
+        height: ".$tpl_settings['pos-hiddenToolbar-height'].";
+        z-index: ".$tpl_settings['pos-hiddenToolbar-zindex'].";
+        ".$tpl_settings['pos-hiddenToolbar-bg-gradient-longValue']."
+        ".$tpl_settings['pos-hiddenToolbar-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-hiddenToolbar-bg-image']."');
+        background-repeat:".$tpl_settings['pos-hiddenToolbar-bg-repeat'].";
+        background-position:".$tpl_settings['pos-hiddenToolbar-bg-position'].";
+        background-attachment:".$tpl_settings['pos-hiddenToolbar-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-hiddenToolbar-attachment'].";
+    }
+    .pos-debug
+    {   
+        -webkit-box-shadow: ".$tpl_settings['pos-debug-box-shadow-width']." #".$tpl_settings['pos-debug-box-shadow-color'].";
+        -moz-box-shadow: ".$tpl_settings['pos-debug-box-shadow-width']." #".$tpl_settings['pos-debug-box-shadow-color'].";
+        box-shadow: ".$tpl_settings['pos-debug-box-shadow-width']." #".$tpl_settings['pos-debug-box-shadow-color'].";
+        border-width: ".$tpl_settings['pos-debug-border-width'].";
+        border-color: #".$tpl_settings['pos-debug-border-color'].";
+        border-style: ".$tpl_settings['pos-debug-border-style'].";
+        border-radius: ".$tpl_settings['pos-debug-border-radius'].";
+        padding: ".$tpl_settings['pos-debug-padding'].";
+        overflow: ".$tpl_settings['pos-debug-overflow'].";
+        visibility: ".$tpl_settings['pos-debug-visibility'].";
+        text-align: ".$tpl_settings['pos-debug-text-align'].";
+        vertical-align: ".$tpl_settings['pos-debug-vertical-align'].";
+        margin-top: ".$tpl_settings['pos-debug-marginTop'].";
+        margin-bottom: ".$tpl_settings['pos-debug-marginBottom'].";
+        position: ".$tpl_settings['pos-debug-position'].";
+        background-color: #".$tpl_settings['pos-debug-bgcolor'].";
+        width: ".$tpl_settings['pos-debug-width'].";
+        height: ".$tpl_settings['pos-debug-height'].";
+        z-index: ".$tpl_settings['pos-debug-zindex'].";
+        ".$tpl_settings['pos-debug-bg-gradient-longValue']."
+        ".$tpl_settings['pos-debug-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-debug-bg-image']."');
+        background-repeat:".$tpl_settings['pos-debug-bg-repeat'].";
+        background-position:".$tpl_settings['pos-debug-bg-position'].";
+        background-attachment:".$tpl_settings['pos-debug-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-debug-attachment'].";
+    }
+    .pos-outerBottom
+    {   
+        -webkit-box-shadow: ".$tpl_settings['pos-outerBottom-box-shadow-width']." #".$tpl_settings['pos-outerBottom-box-shadow-color'].";
+        -moz-box-shadow: ".$tpl_settings['pos-outerBottom-box-shadow-width']." #".$tpl_settings['pos-outerBottom-box-shadow-color'].";
+        box-shadow: ".$tpl_settings['pos-outerBottom-box-shadow-width']." #".$tpl_settings['pos-outerBottom-box-shadow-color'].";
+        border-width: ".$tpl_settings['pos-outerBottom-border-width'].";
+        border-color: #".$tpl_settings['pos-outerBottom-border-color'].";
+        border-style: ".$tpl_settings['pos-outerBottom-border-style'].";
+        border-radius: ".$tpl_settings['pos-outerBottom-border-radius'].";
+        padding: ".$tpl_settings['pos-outerBottom-padding'].";
+        overflow: ".$tpl_settings['pos-outerBottom-overflow'].";
+        visibility: ".$tpl_settings['pos-outerBottom-visibility'].";
+        text-align: ".$tpl_settings['pos-outerBottom-text-align'].";
+        vertical-align: ".$tpl_settings['pos-outerBottom-vertical-align'].";
+        margin-top: ".$tpl_settings['pos-outerBottom-marginTop'].";
+        margin-bottom: ".$tpl_settings['pos-outerBottom-marginBottom'].";
+        position: ".$tpl_settings['pos-outerBottom-position'].";
+        background-color: #".$tpl_settings['pos-outerBottom-bgcolor'].";
+        width: ".$tpl_settings['pos-outerBottom-width'].";
+        height: ".$tpl_settings['pos-outerBottom-height'].";
+        z-index: ".$tpl_settings['pos-outerBottom-zindex'].";
+        ".$tpl_settings['pos-outerBottom-bg-gradient-longValue']."
+        ".$tpl_settings['pos-outerBottom-customCSS-longValue']."
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tpl_settings['pos-outerBottom-bg-image']."');
+        background-repeat:".$tpl_settings['pos-outerBottom-bg-repeat'].";
+        background-position:".$tpl_settings['pos-outerBottom-bg-position'].";
+        background-attachment:".$tpl_settings['pos-outerBottom-bg-attachment'].";
+        background-size: ".$tpl_settings['pos-outerBottom-attachment'].";
     }
     
     ";
@@ -1168,12 +2166,11 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
     {   // if id is set
     $template->id = $_GET['id'];
     }
-    // minify content
-    // $content = \YAWK\sys::minify($content);
+    // WRITE CSS FILES
     // create settings.css for development purpose (css/settings.css)
-    $template->setTemplateCssFile($db, $template->id, $content, 0);
+    $template->writeTemplateCssFile($db, $template->id, $content, 0); // 0 = do no minify
     // create minified version for production environments (css/settings.min.css)
-    $template->setTemplateCssFile($db, $template->id, $content, 1);
+    $template->writeTemplateCssFile($db, $template->id, $content, 1); // 1 = minify
 
     //////////////////////////////////////////////////////////////////////////////////////
 }
@@ -1285,7 +2282,7 @@ else
 <div class="box box-default">
     <div class="box-body">
 
-<form id="template-edit-form" action="index.php?page=template-edit&<?php echo $overrideTemplate; ?>id=<?php echo $template->id; // echo $id; ?>" method="POST">
+<form id="template-edit-form" action="index.php?page=template-edit&<?php echo $overrideTemplate; ?>id=<?php echo $template->id; ?>" method="POST">
     <input type="hidden" name="getID" value="<?php echo $getID; ?>">
     <!-- <div class="nav-tabs-custom"> <!-- admin LTE tab style -->
     <div id="btn-wrapper" class="text-right">
@@ -1294,7 +2291,7 @@ else
         <button type="submit" id="savebutton" name="save" class="btn btn-success">
             <i id="savebuttonIcon" class="fa fa-check"></i> &nbsp;<?php print $lang['DESIGN_SAVE']; ?>
         </button>
-       <!-- <input id="savebutton" type="submit" class="btn btn-success" name="save" value="<?php echo $lang['DESIGN_SAVE']; ?>"> -->
+       <!-- <input id="savebutton" type="submit" class="btn btn-success" name="save" value="<?php // echo $lang['DESIGN_SAVE']; ?>"> -->
     </div>
     <!-- FORM -->
     <!-- Nav tabs -->
@@ -1316,7 +2313,7 @@ else
                 &nbsp; <?php echo $lang['TYPOGRAPHY']; ?></a>
         </li>
         <li role="presentation">
-            <a href="#body" aria-controls="layout" role="tab" data-toggle="tab"><i class="fa fa-object-group"></i>
+            <a href="#body" aria-controls="body" role="tab" data-toggle="tab"><i class="fa fa-object-group"></i>
                 &nbsp; <?php echo $lang['BODY']; ?></a>
         </li>
       <!--  <li role="presentation"><a href="#colors" aria-controls="colors" role="tab" data-toggle="tab"><i class="fa fa-paint-brush"></i>&nbsp; Colors</a></li> -->
@@ -1325,15 +2322,15 @@ else
                 &nbsp; <?php echo $lang['MENU']; ?></a>
         </li>
         <li role="presentation">
-            <a href="#well" aria-controls="menu" role="tab" data-toggle="tab"><i class="fa fa-sticky-note-o"></i>
-                &nbsp; <?php echo $lang['WELL']; ?></a>
+            <a href="#bootstrap" aria-controls="bootstrap" role="tab" data-toggle="tab"><i class="fa fa-sticky-note-o"></i>
+                &nbsp; <?php echo $lang['BOOTSTRAP3']; ?></a>
         </li>
         <li role="presentation">
-            <a href="#buttons" aria-controls="menu" role="tab" data-toggle="tab"><i class="fa fa-toggle-on"></i>
+            <a href="#buttons" aria-controls="buttons" role="tab" data-toggle="tab"><i class="fa fa-toggle-on"></i>
                 &nbsp; <?php echo $lang['BUTTONS']; ?></a>
         </li>
         <li role="presentation">
-            <a href="#images" aria-controls="menu" role="tab" data-toggle="tab"><i class="fa fa-picture-o"></i>
+            <a href="#images" aria-controls="images" role="tab" data-toggle="tab"><i class="fa fa-picture-o"></i>
                 &nbsp; <?php echo $lang['IMAGES']; ?></a>
         </li>
         <li role="presentation">
@@ -1341,7 +2338,7 @@ else
                 &nbsp; <?php echo $lang['EFFECTS']; ?></a>
         </li>
         <li role="presentation">
-            <a href="#custom" aria-controls="menu" role="tab" data-toggle="tab"><i class="fa fa-css3"></i>
+            <a href="#custom" aria-controls="custom" role="tab" data-toggle="tab"><i class="fa fa-css3"></i>
                 &nbsp; <?php echo $lang['CUSTOM_CSS']; ?></a>
         </li>
         <li role="presentation">
@@ -1457,7 +2454,7 @@ else
                             <dd>
                                 <b><?php echo $lang['YAWK_SLOGAN_TOGETHER']; ?><br>
                                 <i class="fa fa-check text-light-blue"></i> YaWK 16.9 <small>
-                                <a href="http://www.getbootstrap.com/" target="_blank" title="Official Bootstrap Website [in new tab]">
+                                <a href="http://www.yawk.io/" target="_blank" title="Official YaWK Website [in new tab]">
                                 <i class="fa fa-external-link"></i></a></small><br>
 
                                 <i class="fa fa-check text-light-blue"></i> Boostrap 3.3.7<small>
@@ -1486,56 +2483,331 @@ else
                     <div class="embed-responsive embed-responsive-4by3">
                         <iframe id="preview" class="embed-responsive-item" src="../index.php"></iframe>
                     </div>
-                    <?php
-                    // $tpl = \YAWK\template::getTemplateSettingsArray($db);
-                    // echo "<pre title=\"Template Settings of $template->name\"><h3>Template Settings of $template->name</h3>";print_r($tpl);echo"</pre>";
-                          /* foreach (\YAWK\template::getTemplateSettingsArray($db) as $tpl) {
-                              echo "$tpl<br>";
-                          }*/
-                    ?>
                 </div>
             </div>
         </div>
+        <?php
+            // GET ALL TEMPLATE SETTINGS INTO ARRAY
+            $templateSettings = \YAWK\template::getAllSettingsIntoArray($db, $user);
+        ?>
 
         <!-- POSITIONS -->
         <div role="tabpanel" class="tab-pane" id="positions">
             <h3><? echo "$lang[POSITIONS]"; ?> <small><?php echo "$lang[TPL_POSITION_SETTINGS]"; ?></small></h3>
             <!-- list GOOGLE FONTS -->
             <div class="row animated fadeIn">
-                <div class="col-md-4">
-                    <div class="box box-default">
-                        <div class="box-header">
-                            <h3 class="box-title"><?php echo $lang['TPL_TOPMENU_POS']; ?> <small>this is the first position, before anything else</small></h3>
-                        </div>
+
+                <div class="col-md-3">
+                    <div class="box box-with-border" id="posboxSettings">
                         <div class="box-body">
-                            <?php $template->getSetting($db, "pos-topmenu-top", "", "", $user); ?>
-                            <?php $template->getSetting($db, "pos-topmenu-marginBottom", "", "", $user); ?>
-                            <?php $template->getSetting($db, "pos-topmenu-property", "", "", $user); ?>
-                            <?php $template->getSetting($db, "pos-topmenu-bg-color", "", "", $user); ?>
-                            <?php $template->getSetting($db, "pos-topmenu-height", "", "", $user); ?>
-                            <?php $template->getSetting($db, "pos-topmenu-width", "", "", $user); ?>
-                            <?php $template->getSetting($db, "pos-topmenu-zindex", "", "", $user); ?>
-                            <?php $template->getSetting($db, "pos-topmenu-bg-gradient-longValue", "", "", $user); ?>
+                            <div id="selectPositionRequestInfo">
+                                <h4 class="box-title"><?php echo "$lang[TPL_SELECT_POSITIONS_REQUEST]"; ?></h4>
+                            </div>
+                            <!-- settings outerTop -->
+                            <div id="settings_pos_outerTop">
+                                <?php $template->getFormElements($db, $templateSettings, 26, $lang, $user); ?>
+                            </div>
+                            <!-- settings intro -->
+                            <div id="settings_pos_intro">
+                                <?php $template->getFormElements($db, $templateSettings, 27, $lang, $user); ?>
+                            </div>
+                            <!-- settings globalmenu -->
+                            <div id="settings_pos_globalmenu">
+                                <?php $template->getFormElements($db, $templateSettings, 28, $lang, $user); ?>
+                            </div>
+                            <!-- settings top -->
+                            <div id="settings_pos_top">
+                                <?php $template->getFormElements($db, $templateSettings, 29, $lang, $user); ?>
+                            </div>
+                            <!-- settings outerLeft -->
+                            <div id="settings_pos_outerLeft">
+                                <?php $template->getFormElements($db, $templateSettings, 30, $lang, $user); ?>
+                            </div>
+                            <!-- settings outerRight -->
+                            <div id="settings_pos_outerRight">
+                                <?php $template->getFormElements($db, $templateSettings, 31, $lang, $user); ?>
+                            </div>
+                            <!-- settings leftMenu -->
+                            <div id="settings_pos_leftMenu">
+                                <?php $template->getFormElements($db, $templateSettings, 32, $lang, $user); ?>
+                            </div>
+                            <!-- settings rightMenu -->
+                            <div id="settings_pos_rightMenu">
+                                <?php $template->getFormElements($db, $templateSettings, 33, $lang, $user); ?>
+                            </div>
+                            <!-- settings mainTop -->
+                            <div id="settings_pos_mainTop">
+                                <?php $template->getFormElements($db, $templateSettings, 34, $lang, $user); ?>
+                            </div>
+                            <!-- settings mainTopLeft -->
+                            <div id="settings_pos_mainTopLeft">
+                                <?php $template->getFormElements($db, $templateSettings, 35, $lang, $user); ?>
+                            </div>
+                            <!-- settings mainTopCenter -->
+                            <div id="settings_pos_mainTopCenter">
+                                <?php $template->getFormElements($db, $templateSettings, 36, $lang, $user); ?>
+                            </div>
+                            <!-- settings mainTopRight -->
+                            <div id="settings_pos_mainTopRight">
+                                <?php $template->getFormElements($db, $templateSettings, 37, $lang, $user); ?>
+                            </div>
+                            <!-- settings main -->
+                            <div id="settings_pos_main">
+                                <?php $template->getFormElements($db, $templateSettings, 38, $lang, $user); ?>
+                            </div>
+                            <!-- settings mainBottom -->
+                            <div id="settings_pos_mainBottom">
+                                <?php $template->getFormElements($db, $templateSettings, 39, $lang, $user); ?>
+                            </div>
+                            <!-- settings mainBottomLeft -->
+                            <div id="settings_pos_mainBottomLeft">
+                                <?php $template->getFormElements($db, $templateSettings, 40, $lang, $user); ?>
+                            </div>
+                            <!-- settings mainBottomCenter -->
+                            <div id="settings_pos_mainBottomCenter">
+                                <?php $template->getFormElements($db, $templateSettings, 41, $lang, $user); ?>
+                            </div>
+                            <!-- settings mainBottomRight -->
+                            <div id="settings_pos_mainBottomRight">
+                                <?php $template->getFormElements($db, $templateSettings, 42, $lang, $user); ?>
+                            </div>
+                            <!-- settings mainFooter -->
+                            <div id="settings_pos_mainFooter">
+                                <?php $template->getFormElements($db, $templateSettings, 43, $lang, $user); ?>
+                            </div>
+                            <!-- settings mainFooterLeft -->
+                            <div id="settings_pos_mainFooterLeft">
+                                <?php $template->getFormElements($db, $templateSettings, 44, $lang, $user); ?>
+                            </div>
+                            <!-- settings mainFooterCenter -->
+                            <div id="settings_pos_mainFooterCenter">
+                                <?php $template->getFormElements($db, $templateSettings, 45, $lang, $user); ?>
+                            </div>
+                            <!-- settings mainFooterRight -->
+                            <div id="settings_pos_mainFooterRight">
+                                <?php $template->getFormElements($db, $templateSettings, 46, $lang, $user); ?>
+                            </div>
+                            <!-- settings footer -->
+                            <div id="settings_pos_footer">
+                                <?php $template->getFormElements($db, $templateSettings, 47, $lang, $user); ?>
+                            </div>
+                            <!-- settings hiddenToolbar -->
+                            <div id="settings_pos_hiddenToolbar">
+                                <?php $template->getFormElements($db, $templateSettings, 48, $lang, $user); ?>
+                            </div>
+                            <!-- settings debug -->
+                            <div id="settings_pos_debug">
+                                <?php $template->getFormElements($db, $templateSettings, 49, $lang, $user); ?>
+                            </div>
+                            <!-- settings outerBottom  -->
+                            <div id="settings_pos_outerBottom">
+                                <?php $template->getFormElements($db, $templateSettings, 50, $lang, $user); ?>
+                            </div>
                         </div>
+                        <br>
                     </div>
                 </div>
-                <div class="col-md-4">
+
+                <div class="col-md-9">
                     <div class="box box-default">
                         <div class="box-header">
-                            <h3 class="box-title"><?php echo $lang['POSITION']; ?> <small>...</small></h3>
+                            <h3 class="box-title"><?php echo "$lang[POSITIONS] <small>$lang[SETTINGS]</small>"; ?></h3>
                         </div>
+
+                        <?php
+                        $enabledBorder = "border: 1px solid #4CAE4C;";
+                        if ($templateSettings['pos-outerTop-enabled']['value'] === "1")
+                        {   $outerTopEnabled = $enabledBorder; }
+                        else
+                        {   $outerTopEnabled = ''; }
+
+                        if ($templateSettings['pos-intro-enabled']['value'] === "1")
+                        {   $introEnabled = $enabledBorder; }
+                        else
+                        {   $introEnabled = ''; }
+
+                        if ($templateSettings['pos-outerLeft-enabled']['value'] === "1")
+                        {   $outerLeftEnabled = $enabledBorder; }
+                        else
+                        {   $outerLeftEnabled = ''; }
+
+                        if ($templateSettings['pos-globalmenu-enabled']['value'] === "1")
+                        {   $globalmenuEnabled = $enabledBorder; }
+                        else
+                        {   $globalmenuEnabled = ''; }
+
+                        if ($templateSettings['pos-top-enabled']['value'] === "1")
+                        {   $topEnabled = $enabledBorder; }
+                        else
+                        {   $topEnabled = ''; }
+
+                        if ($templateSettings['pos-leftMenu-enabled']['value'] === "1")
+                        {   $leftMenuEnabled = $enabledBorder; }
+                        else
+                        {   $leftMenuEnabled = ''; }
+
+                        if ($templateSettings['pos-mainTop-enabled']['value'] === "1")
+                        {   $mainTopEnabled = $enabledBorder; }
+                        else
+                        {   $mainTopEnabled = ''; }
+
+                        if ($templateSettings['pos-mainTopLeft-enabled']['value'] === "1")
+                        {   $mainTopLeftEnabled = $enabledBorder; }
+                        else
+                        {   $mainTopLeftEnabled = ''; }
+
+                        if ($templateSettings['pos-mainTopCenter-enabled']['value'] === "1")
+                        {   $mainTopCenterEnabled = $enabledBorder; }
+                        else
+                        {   $mainTopCenterEnabled = ''; }
+
+                        if ($templateSettings['pos-mainTopRight-enabled']['value'] === "1")
+                        {   $mainTopRightEnabled = $enabledBorder; }
+                        else
+                        {   $mainTopRightEnabled = ''; }
+
+                        if ($templateSettings['pos-main-enabled']['value'] === "1")
+                        {   $mainEnabled = $enabledBorder; }
+                        else
+                        {   $mainEnabled = ''; }
+
+                        if ($templateSettings['pos-mainBottom-enabled']['value'] === "1")
+                        {   $mainBottomEnabled = $enabledBorder; }
+                        else
+                        {   $mainBottomEnabled = ''; }
+
+                        if ($templateSettings['pos-mainBottomLeft-enabled']['value'] === "1")
+                        {   $mainBottomLeftEnabled = $enabledBorder; }
+                        else
+                        {   $mainBottomLeftEnabled = ''; }
+
+                        if ($templateSettings['pos-mainBottomCenter-enabled']['value'] === "1")
+                        {   $mainBottomCenterEnabled = $enabledBorder; }
+                        else
+                        {   $mainBottomCenterEnabled = ''; }
+
+                        if ($templateSettings['pos-mainBottomRight-enabled']['value'] === "1")
+                        {   $mainBottomRightEnabled = $enabledBorder; }
+                        else
+                        {   $mainBottomRightEnabled = ''; }
+
+                        if ($templateSettings['pos-mainFooter-enabled']['value'] === "1")
+                        {   $mainFooterEnabled = $enabledBorder; }
+                        else
+                        {   $mainFooterEnabled = ''; }
+
+                        if ($templateSettings['pos-mainFooterLeft-enabled']['value'] === "1")
+                        {   $mainFooterLeftEnabled = $enabledBorder; }
+                        else
+                        {   $mainFooterLeftEnabled = ''; }
+
+                        if ($templateSettings['pos-mainFooterCenter-enabled']['value'] === "1")
+                        {   $mainFooterCenterEnabled = $enabledBorder; }
+                        else
+                        {   $mainFooterCenterEnabled = ''; }
+
+                        if ($templateSettings['pos-mainFooterRight-enabled']['value'] === "1")
+                        {   $mainFooterRightEnabled = $enabledBorder; }
+                        else
+                        {   $mainFooterRightEnabled = ''; }
+
+                        if ($templateSettings['pos-rightMenu-enabled']['value'] === "1")
+                        {   $rightMenuEnabled = $enabledBorder; }
+                        else
+                        {   $rightMenuEnabled = ''; }
+
+                        if ($templateSettings['pos-footer-enabled']['value'] === "1")
+                        {   $footerEnabled = $enabledBorder; }
+                        else
+                        {   $footerEnabled = ''; }
+
+                        if ($templateSettings['pos-hiddenToolbar-enabled']['value'] === "1")
+                        {   $hiddenToolbarEnabled = $enabledBorder; }
+                        else
+                        {   $hiddenToolbarEnabled = ''; }
+
+                        if ($templateSettings['pos-debug-enabled']['value'] === "1")
+                        {   $debugEnabled = $enabledBorder; }
+                        else
+                        {   $debugEnabled = ''; }
+
+                        if ($templateSettings['pos-outerRight-enabled']['value'] === "1")
+                        {   $outerRightEnabled = $enabledBorder; }
+                        else
+                        {   $outerRightEnabled = ''; }
+
+                        if ($templateSettings['pos-outerBottom-enabled']['value'] === "1")
+                        {   $outerBottomEnabled = $enabledBorder; }
+                        else
+                        {   $outerBottomEnabled = ''; }
+                        ?>
+
                         <div class="box-body">
-                            <?php // $template->getSetting($db, "%-link", "", "", $user); ?>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="box box-default">
-                        <div class="box-header">
-                            <h3 class="box-title"><?php echo $lang['POSITION']; ?>  <small>...</small></h3>
-                        </div>
-                        <div class="box-body">
-                            <?php // $template->getSetting($db, "%-link", "", "", $user); ?>
+                            <div class="container-fluid">
+                                <div class="row text-center">
+                                    <div class="col-md-12 posbox" id="pos_outerTop" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; <?php echo $outerTopEnabled; ?>">&laquo;outerTop&raquo;</div>
+                                </div>
+                                <div class="row text-center">
+                                    <div class="col-md-2 posbox" id="pos_outerLeft" style="height: 630px; margin-bottom:5px; text-align: center; <?php echo $outerLeftEnabled; ?>">&laquo;outerLeft&raquo;</div>
+                                    <div class="col-md-8">
+                                        <div class="row">
+                                            <div class="col-md-12 posbox" id="pos_intro" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; <?php echo $introEnabled; ?>">&laquo;intro&raquo;</div>
+                                            <div class="col-md-12 posbox" id="pos_globalmenu" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; <?php echo $globalmenuEnabled; ?>">&laquo;globalmenu&raquo;</div>
+                                            <div class="col-md-12 posbox" id="pos_top" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; <?php echo $topEnabled; ?>">&laquo;top&raquo;</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-2 posbox" id="pos_leftMenu" style="height: 410px; margin-bottom:5px; text-align: center; <?php echo $leftMenuEnabled; ?>">&laquo;leftMenu&raquo;</div>
+                                            <div class="col-md-8" style="height: auto; margin-bottom:5px; text-align: center;">
+                                                <div class="row">
+                                                    <div class="col-md-12 posbox" id="pos_mainTop" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainTopEnabled; ?>">&laquo;mainTop&raquo;</div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4 posbox" id="pos_mainTopLeft" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainTopLeftEnabled; ?>">&laquo;mainTopLeft&raquo;</div>
+                                                    <div class="col-md-4 posbox" id="pos_mainTopCenter" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainTopCenterEnabled; ?>">&laquo;mainTopCenter&raquo;</div>
+                                                    <div class="col-md-4 posbox" id="pos_mainTopRight" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainTopRightEnabled; ?>">&laquo;mainTopRight&raquo;</div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-12 posbox" id="pos_main" style="height: 200px; margin-bottom:5px; text-align: center; <?php echo $mainEnabled; ?>">&laquo;main&raquo;</div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12 posbox" id="pos_mainBottom" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainBottomEnabled; ?>">&laquo;mainBottom&raquo;</div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4 posbox" id="pos_mainBottomLeft" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainBottomLeftEnabled; ?>">&laquo;mainBottomLeft&raquo;</div>
+                                                    <div class="col-md-4 posbox" id="pos_mainBottomCenter" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainBottomCenterEnabled; ?>">&laquo;mainBottomCenter&raquo;</div>
+                                                    <div class="col-md-4 posbox" id="pos_mainBottomRight" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainBottomRightEnabled; ?>">&laquo;mainBottomRight&raquo;</div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12 posbox" id="pos_mainFooter" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainFooterEnabled; ?>">&laquo;mainFooter&raquo;</div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4 posbox" id="pos_mainFooterLeft" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainFooterLeftEnabled; ?>">&laquo;mainFooterLeft&raquo;</div>
+                                                    <div class="col-md-4 posbox" id="pos_mainFooterCenter" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainFooterCenterEnabled; ?>">&laquo;mainFooterCenter&raquo;</div>
+                                                    <div class="col-md-4 posbox" id="pos_mainFooterRight" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainFooterRightEnabled; ?>">&laquo;mainFooterRight&raquo;</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2 posbox" id="pos_rightMenu" style="height: 410px; margin-bottom:5px; text-align: center; <?php echo $rightMenuEnabled; ?>">&laquo;rightMenu&raquo;</div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12 posbox" id="pos_footer" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $footerEnabled; ?>">&laquo;footer&raquo;</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 posbox" id="pos_hiddenToolbar" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $hiddenToolbarEnabled; ?>">&laquo;hiddenToolbar&raquo;</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 posbox" id="pos_debug" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $debugEnabled; ?>">&laquo;debug&raquo;</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 posbox" id="pos_outerRight" style="height: 630px; margin-bottom:5px; text-align: center; <?php echo $outerRightEnabled; ?>">&laquo;outerRight&raquo;</div>
+
+                                </div>
+
+                                <div class="row text-center">
+                                    <div class="col-md-12 posbox" id="pos_outerBottom" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; <?php echo $outerBottomEnabled; ?>">&laquo;outerBottom&raquo;</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1591,9 +2863,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[TPL_GLOBALTEXT] <small>$lang[TPL_GLOBALTEXT_SUBTEXT]"; ?></small></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "body-text-size", "", "", $user); ?>
-                            <?php $template->getSetting($db, "body-text-shadow", "", "", $user); ?>
-                            <?php $template->getSetting($db, "body-text-shadow-color", "", "", $user); ?>
+                            <!-- common text settings (size, shadow, color...) -->
+                            <?php $template->getFormElements($db, $templateSettings, 2, $lang, $user); ?>
                         </div>
                     </div>
 
@@ -1602,7 +2873,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[LINK] <small>$lang[COLORS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "%-link", "", "", $user); ?>
+                            <!-- link colors and settings (color, decoration, hover, btn text color...) -->
+                            <?php $template->getFormElements($db, $templateSettings, 3, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1613,12 +2885,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[HEADINGS] <small>$lang[H1_H6_FONT_SIZE]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "h1-size", "", "", $user); ?>
-                            <?php $template->getSetting($db, "h2-size", "", "", $user); ?>
-                            <?php $template->getSetting($db, "h3-size", "", "", $user); ?>
-                            <?php $template->getSetting($db, "h4-size", "", "", $user); ?>
-                            <?php $template->getSetting($db, "h5-size", "", "", $user); ?>
-                            <?php $template->getSetting($db, "h6-size", "", "", $user); ?>
+                            <!-- H1-H6 Text sizes (font size of headings in px or em) -->
+                            <?php $template->getFormElements($db, $templateSettings, 4, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1629,7 +2897,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[HEADING] <small>$lang[COLORS]"; ?></small></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "%-fontcolor", "", "", $user); ?>
+                            <!-- Font Colors (h1-h6 colors, smalltag, font, jumbotron + listgroup fontcolor) -->
+                            <?php $template->getFormElements($db, $templateSettings, 5, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1647,7 +2916,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[BODY] <small>$lang[SETTINGS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "body-bg-color", "", "", $user); ?>
+                            <!-- body bg color -->
+                            <?php $template->getFormElements($db, $templateSettings, 6, $lang, $user); ?>
                         </div>
                     </div>
 
@@ -1656,7 +2926,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[BODY] <small>$lang[POSITIONING]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "body-margin-%", "", "", $user); ?>
+                            <!-- body margin -->
+                            <?php $template->getFormElements($db, $templateSettings, 7, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1667,13 +2938,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[BG_IMAGE] <small>$lang[SETTINGS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php
-                            $template->getSetting($db, "body-bg-image", "", "", $user);
-                            $template->getSetting($db, "body-bg-repeat", "", "", $user);
-                            $template->getSetting($db, "body-bg-position", "", "", $user);
-                            $template->getSetting($db, "body-bg-attachment", "", "", $user);
-                            $template->getSetting($db, "body-bg-size", "", "", $user);
-                            ?>
+                            <!-- body background image -->
+                            <?php $template->getFormElements($db, $templateSettings, 8, $lang, $user); ?>
                         </div>
                     </div>
 
@@ -1682,9 +2948,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[TPL_MAIN_POS_SHADOW] <small>$lang[TPL_AROUND_POSITION]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php
-                            $template->getSetting($db, "main-box-shadow", "", "", $user);
-                            $template->getSetting($db, "main-box-shadow-color", "", "", $user); ?>
+                            <!-- main box shadow -->
+                            <?php $template->getFormElements($db, $templateSettings, 9, $lang, $user); ?>
                         </div>
                     </div>
 
@@ -1716,7 +2981,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[MENU] $lang[FONT] <small>$lang[COLORS]"; ?></small></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "%-menucolor", "", "", $user); ?>
+                            <!-- menu font colors -menucolor -->
+                            <?php $template->getFormElements($db, $templateSettings, 10, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1727,7 +2993,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[MENU] $lang[BG] <small>$lang[COLORS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "%-menubgcolor", "", "", $user); ?>
+                            <!-- menu background color -menubgcolor -->
+                            <?php $template->getFormElements($db, $templateSettings, 11, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1738,7 +3005,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[MENU] $lang[DROPDOWN] <small>$lang[COLORS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "%-menudropdowncolor", "", "", $user); ?>
+                            <!-- menu background color -menudropdowncolor -->
+                            <?php $template->getFormElements($db, $templateSettings, 12, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1749,7 +3017,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[MENU] $lang[NAVBAR] <small>$lang[POSITIONING]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "navbar-marginTop", "", "", $user); ?>
+                            <!-- menu navbar margin top -navbar-marginTop -->
+                            <?php $template->getFormElements($db, $templateSettings, 13, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1757,8 +3026,8 @@ else
         </div>
 
         <!-- WELL,LISTGROUP, JUMBOTRON -->
-        <div role="tabpanel" class="tab-pane" id="well">
-            <h3><?php echo "$lang[WELL] <small>$lang[SETTINGS]</small>"; ?></h3>
+        <div role="tabpanel" class="tab-pane" id="bootstrap">
+            <h3><?php echo "$lang[BOOTSTRAP3] <small>$lang[SETTINGS]</small>"; ?></h3>
             <div class="row animated fadeIn">
                 <div class="col-md-3">
                     <div class="box box-default">
@@ -1766,7 +3035,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[WELL] $lang[BOX] <small>$lang[DESIGN]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "well-%", "", "", $user); ?>
+                            <!-- well box design  well- -->
+                            <?php $template->getFormElements($db, $templateSettings, 14, $lang, $user); ?>
                         </div>
                     </div>
                  </div>
@@ -1774,11 +3044,11 @@ else
                 <div class="col-md-3">
                     <div class="box box-default">
                         <div class="box-header">
-                            <h3 class="box-title"><?php echo "$lang[LIST_GROUP] <small>$lang[SETTINGS]</small>"; ?></h3>
+                            <h3 class="box-title"><?php echo "$lang[LIST_GROUP] <small>$lang[DESIGN]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "listGroup-%", "", "", $user); ?>
-                            <?php $template->getSetting($db, "listgroup-bg-gradient-longValue", "", "", $user); ?>
+                            <!-- listgroup design  listgroup-  -->
+                            <?php $template->getFormElements($db, $templateSettings, 15, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1789,7 +3059,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[JUMBOTRON] <small>$lang[BOX] $lang[DESIGN]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "jumbotron-%", "", "", $user); ?>
+                            <!-- jumbotron design  jumbotron-  -->
+                            <?php $template->getFormElements($db, $templateSettings, 16, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1819,13 +3090,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[BUTTON] <small>$lang[FONT] $lang[AND] $lang[BORDER] $lang[SETTINGS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php
-                                $template->getSetting($db, "btn-fontsize", "", "", $user);
-                                $template->getSetting($db, "btn-font-weight", "", "", $user);
-                                $template->getSetting($db, "btn-border", "", "", $user);
-                                $template->getSetting($db, "btn-border-style", "", "", $user);
-                                $template->getSetting($db, "btn-border-radius", "", "", $user);
-                            ?>
+                            <!-- btn settings    btn-   -->
+                            <?php $template->getFormElements($db, $templateSettings, 17, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1833,10 +3099,11 @@ else
                 <div class="col-md-4">
                     <div class="box box-default">
                         <div class="box-header">
-                            <h3 class="box-title">Any other thing <small>here ...</small></h3>
+                            <h3 class="box-title"><?php echo "$lang[FORM] <small>$lang[SETTINGS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            ...fill this empty space with love...
+                            <!-- form settings    form-   -->
+                            <?php $template->getFormElements($db, $templateSettings, 25, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1844,10 +3111,11 @@ else
                 <div class="col-md-4">
                     <div class="box box-default">
                         <div class="box-header">
-                            <h3 class="box-title">Any other thing <small>here ...</small></h3>
+                            <h3 class="box-title"><?php echo "$lang[FORM] <small>$lang[SETTINGS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            ...fill this empty space with love...
+                            <!-- form settings    form-   -->
+                            <?php $template->getFormElements($db, $templateSettings, 51, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1860,7 +3128,8 @@ else
                             <h3 class="box-title">Default <small>Button</small></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "btn-default-%", "", "", $user); ?>
+                            <!-- btn default    btn-default   -->
+                            <?php $template->getFormElements($db, $templateSettings, 18, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1870,7 +3139,8 @@ else
                             <h3 class="box-title">Primary <small>Button</small></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "btn-primary-%", "", "", $user); ?>
+                            <!-- btn primary    btn-primary   -->
+                            <?php $template->getFormElements($db, $templateSettings, 19, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1880,7 +3150,8 @@ else
                             <h3 class="box-title">Success <small>Button</small></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "btn-success-%", "", "", $user); ?>
+                            <!-- btn success   btn-success   -->
+                            <?php $template->getFormElements($db, $templateSettings, 20, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1890,7 +3161,8 @@ else
                             <h3 class="box-title">Warning <small>Button</small></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "btn-warning-%", "", "", $user); ?>
+                            <!-- btn warning   btn-warning   -->
+                            <?php $template->getFormElements($db, $templateSettings, 21, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1900,7 +3172,8 @@ else
                             <h3 class="box-title">Danger <small>Button</small></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "btn-danger-%", "", "", $user); ?>
+                            <!-- btn danger   btn-danger   -->
+                            <?php $template->getFormElements($db, $templateSettings, 22, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1910,7 +3183,8 @@ else
                             <h3 class="box-title">Info <small>Button</small></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "btn-info-%", "", "", $user); ?>
+                            <!-- btn info   btn-info   -->
+                            <?php $template->getFormElements($db, $templateSettings, 23, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -1927,7 +3201,8 @@ else
                             <h3 class="box-title"><?php echo "$lang[IMAGE] <small>$lang[EFFECTS]</small>"; ?></h3>
                         </div>
                         <div class="box-body">
-                            <?php $template->getSetting($db, "img-%", "", "", $user); ?>
+                            <!-- image settings   img-   -->
+                            <?php $template->getFormElements($db, $templateSettings, 24, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -2100,12 +3375,9 @@ else
                 </div>
             </div>
         </div>
-
     </div>
-
     <br><br><br><br><br><br><br><br>
       <!-- </div> <!-- ./ nav-tabs-custom -->
      </form>
-
     </div>
 </div>
