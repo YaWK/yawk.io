@@ -202,5 +202,16 @@ namespace YAWK {
             }
         }
 
+        public function get_tables()
+        {
+            $tableList = array();
+            $res = $this->query("SHOW TABLES");
+            while($row = mysqli_fetch_array($res))
+            {
+                $tableList[] = $row[0];
+            }
+            return $tableList;
+        }
+
     } // ./dbclass
 }// ./namespace
