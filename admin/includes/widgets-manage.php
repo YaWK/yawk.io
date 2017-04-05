@@ -111,7 +111,7 @@ echo"<ol class=\"breadcrumb\">
                 <small>system/widgets/<b>".$row['folder']."</b></small>
                 </td>
                 
-                <td>...</td>
+                <td>".$row['description']."</td>
                 <td class=\"text-center\">
 
                 <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"".$lang['WIDGET']." &laquo; $row[name] &raquo; ".$lang['DELETE']."?\"
