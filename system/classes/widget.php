@@ -148,7 +148,7 @@ namespace YAWK {
                     return false;
                 }
             // something else has happened
-            \YAWK\sys::setSyslog($db, 11, "return $id in case of widget create.", 0, 0, 0, 0);
+            // \YAWK\sys::setSyslog($db, 11, "return $id in case of widget create.", 0, 0, 0, 0);
             return $id;
         }
 
