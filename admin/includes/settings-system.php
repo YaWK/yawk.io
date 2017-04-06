@@ -264,10 +264,11 @@ echo"<ol class=\"breadcrumb\">
 	<!-- Nav tabs -->
 	<ul class="nav nav-tabs" id="tabs" role="tablist">
 		<li role="presentation" class="active"><a href="#overview" aria-controls="overview" role="tab" data-toggle="tab"><i class="fa fa-home"></i>&nbsp; <?php echo $lang['OVERVIEW'] ?></a></li>
-		<li role="presentation"><a href="#frontend" aria-controls="fonts" role="tab" data-toggle="tab"><i class="fa fa-globe"></i>&nbsp; <?php echo $lang['FRONTEND'] ?></a></li>
-		<li role="presentation"><a href="#backend" aria-controls="typo" role="tab" data-toggle="tab"><i class="fa fa-wrench"></i>&nbsp; <?php echo $lang['BACKEND'] ?></a></li>
-		<li role="presentation"><a href="#system" aria-controls="layout" role="tab" data-toggle="tab"><i class="fa fa-gears"></i>&nbsp; <?php echo $lang['SYSTEM'] ?></a></li>
-		<li role="presentation"><a href="#info" aria-controls="layout" role="tab" data-toggle="tab"><i class="fa fa-info-circle"></i>&nbsp; <?php echo $lang['INFO'] ?></a></li>
+		<li role="presentation"><a href="#frontend" aria-controls="frontend" role="tab" data-toggle="tab"><i class="fa fa-globe"></i>&nbsp; <?php echo $lang['FRONTEND'] ?></a></li>
+		<li role="presentation"><a href="#backend" aria-controls="backend" role="tab" data-toggle="tab"><i class="fa fa-wrench"></i>&nbsp; <?php echo $lang['BACKEND'] ?></a></li>
+		<li role="presentation"><a href="#system" aria-controls="system" role="tab" data-toggle="tab"><i class="fa fa-gears"></i>&nbsp; <?php echo $lang['SYSTEM'] ?></a></li>
+		<li role="presentation"><a href="#database" aria-controls="database" role="tab" data-toggle="tab"><i class="fa fa-database"></i>&nbsp; <?php echo $lang['DATABASE'] ?></a></li>
+		<li role="presentation"><a href="#info" aria-controls="info" role="tab" data-toggle="tab"><i class="fa fa-info-circle"></i>&nbsp; <?php echo $lang['INFO'] ?></a></li>
 	</ul>
 
 	<!-- Tab panes -->
@@ -286,6 +287,7 @@ echo"<ol class=\"breadcrumb\">
 							$i_settings = 0;
 							$settings = \YAWK\settings::getAllSettingsIntoArray($db);
 							// echo "<pre>"; echo print_r($lang); echo "</pre>";
+
 							?>
 							</div>
 					</div>
@@ -359,7 +361,42 @@ echo"<ol class=\"breadcrumb\">
 			</div>
 		</div>
 
-		<!-- OVERVIEW -->
+		<!-- DATABASE -->
+		<div role="tabpanel" class="tab-pane" id="database">
+			<h3><?php echo $lang['DATABASE']; ?> <small><?php echo $lang['DATABASE_SUBTEXT']; ?></small></h3>
+			<div class="row animated fadeIn">
+				<div class="col-md-8">
+					<div class="box">
+						<div class="box-header with-border">
+							<h3 class="box-title"><?php echo $lang['SETTINGS']; ?>  <small><?php echo $lang['SETTINGS_SUBTEXT']; ?> </small></h3>
+						</div>
+						<div class="box-body">
+							<?php
+							// echo "<h2>Language Array</h2><pre>"; echo print_r($lang); echo "</pre>";
+
+							$dbTables = $db->get_tables();
+							echo "<table class=\"table table-striped table-hover table-condensed table-responsive table-bordered\">
+									<tr class=\"text-bold\"><td>ID</td>
+										<td>TABLE</td>
+									</tr>";
+							foreach ($dbTables AS $id=>$table)
+							{
+								echo "<tr><td>$id</td><td>$table</td></tr>";
+							}
+							echo "</table>";
+							?>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<!-- syslog settings -->
+					<h3><?php // echo $lang['SYSLOG']; ?> <small> <?php // echo $lang['SETTINGS']; ?></small></h3>
+					<?php // \YAWK\settings::getFormElements($db, $settings, 0, $lang); ?>
+				</div>
+			</div>
+		</div>
+
+		<!-- INFO -->
 		<div role="tabpanel" class="tab-pane" id="info">
 			<h3><?php echo $lang['INFO']; ?> <small><?php echo $lang['INFO_SUBTEXT']; ?></small></h3>
 			<div class="row animated fadeIn">
