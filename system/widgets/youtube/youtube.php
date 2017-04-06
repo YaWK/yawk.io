@@ -89,7 +89,7 @@ if (isset($heading) && (!empty($heading)))
     if (isset($subtext) && (!empty($subtext)))
     {   // build a headline with heading and subtext
         $subtext = "<small>$subtext</small>";
-        $headline = "<h1>$heading&nbsp;"."&nbsp;$subtext</h1>";
+        $headline = "<h1>$heading&nbsp;"."$subtext</h1>";
     }
     else
         {   // build just a headline - without subtext
