@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 05. Apr 2017 um 02:13
+-- Erstellungszeit: 08. Apr 2017 um 21:37
 -- Server-Version: 10.1.10-MariaDB
 -- PHP-Version: 5.6.19
 
@@ -608,10 +608,10 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('backendFX', '0', '', 2, 5, 1, 'BACKENDFX_LABEL', 'fa fa-paper-plane-o', 'BACKENDFX_HEADING', 'BACKENDFX_SUBTEXT', 'form-control', 'checkbox', '', '', ''),
 ('backendFXtime', '820', '', 2, 7, 1, 'BACKENDFXTIME_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('backendFXtype', 'fadeIn In', '', 2, 6, 1, 'BACKENDFXTYPE_LABEL', '', '', '', 'form-control', 'select', '', '', 'fadeIn,Fade In:slideDown,Slide Down'),
-('backendLanguage', 'de', '', 2, 4, 1, 'BACKENDLANGUAGE_LABEL', 'fa fa-language', 'BACKENDLANGUAGE_HEADING', 'BACKENDLANGUAGE_SUBTEXT', 'form-control', 'select', '', '', 'en-EN,English (en-EN):de-DE,German (de-DE)'),
+('backendLanguage', 'de-DE', '', 2, 4, 1, 'BACKENDLANGUAGE_LABEL', 'fa fa-language', 'BACKENDLANGUAGE_HEADING', 'BACKENDLANGUAGE_SUBTEXT', 'form-control', 'select', '', '', 'en-EN,English (en-EN):de-DE,German (de-DE)'),
 ('backendLayout', 'sidebar-mini', '', 2, 2, 1, 'BACKENDLAYOUT_LABEL', '', '', '', 'form-control', 'select', '', 'BACKENDLAYOUT_DESC', 'fixed,Fixed:sidebar-collapse,Sidebar Collapse:sidebar-mini,Sidebar Mini:layout-boxed,Layout Boxed:layout-top-nav,Layout Top Nav'),
 ('backendLogoSubText', '', '', 12, 2, 1, 'BACKENDLOGOSUBTEXT_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
-('backendLogoText', 'http://192.168.1.8/yawk-LTE', '', 12, 1, 1, 'BACKENDLOGOTEXT_LABEL', 'fa fa-bars', 'BACKENDLOGOTEXT_HEADING', 'BACKENDLOGOTEXT_SUBTEXT', 'form-control', 'input', '', '', ''),
+('backendLogoText', 'http://yawk.io', '', 12, 1, 1, 'BACKENDLOGOTEXT_LABEL', 'fa fa-bars', 'BACKENDLOGOTEXT_HEADING', 'BACKENDLOGOTEXT_SUBTEXT', 'form-control', 'input', '', '', ''),
 ('backendLogoUrl', '1', '', 12, 3, 1, 'BACKENDLOGOURL_LABEL', '', '', '', 'form-control', 'checkbox', '', '', ''),
 ('backendMessagesMenu', '1', '', 12, 4, 1, 'BACKENDMSGMENU_LABEL', 'fa fa-bell-o', 'BACKENDMSGMENU_HEADING', 'BACKENDMSGMENU_SUBTEXT', 'form-control', 'checkbox', '', '', ''),
 ('backendNotificationMenu', '1', '', 12, 5, 1, 'BACKENDNOTIFYMENU_LABEL', '', '', '', 'form-control', 'checkbox', '', '', ''),
@@ -620,8 +620,8 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('dbname', 'yawk_database', '', 9, 1, 1, 'DBNAME_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('dbport', '3306', '', 9, 6, 1, 'DBPORT_LABEL', '', '', '', 'form-control', 'input', 'default:3306', '', ''),
 ('dbprefix', 'cms_', '', 9, 5, 1, 'DBPREFIX_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
-('dbpwd', '', '', 9, 4, 1, 'DBPWD_LABEL', '', '', '', 'form-control', 'password', '', '', ''),
-('dbusername', '', '', 9, 3, 1, 'DBUSERNAME_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+('dbpwd', 'test', '', 9, 4, 1, 'DBPWD_LABEL', '', '', '', 'form-control', 'password', '', '', ''),
+('dbusername', 'admin', '', 9, 3, 1, 'DBUSERNAME_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('defaultemailtext', '', 'Hello $user,\\n\\n\\Thank you for registering on site\\n\\n$url', 5, 0, 1, 'Default SignUp Email Message', '', '', '', 'form-control', 'textarea', '', '', ''),
 ('dirprefix', '/', '', 9, 0, 1, 'DIRPREFIX_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('domain', '', '', 1, 4, 1, 'DOMAIN_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
@@ -644,7 +644,7 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('globalmenuid', '1', '', 3, 2, 1, 'GLOBALMENUID_LABEL', 'fa fa-bars', 'GLOBALMENUID_HEADING', 'GLOBALMENUID_SUBTEXT', 'form-control', 'select', '', 'GLOBALMENUID_DESC', ''),
 ('globalmetakeywords', 'YAWK, CMS, WORDPRESS, JOOMLA', '', 10, 0, 1, 'Global Site Keywords', '', '', '', 'form-control', '', '', '', ''),
 ('globalmetatext', 'YaWK LTE', '', 10, 0, 1, 'Global Meta Description', '', '', '', 'form-control', '', '', '', ''),
-('host', '', '', 1, 3, 1, 'HOST_LABEL', '', '', '', 'form-control', 'input', '', 'DATABASE_DESC', ''),
+('host', 'http://192.168.1.8/yawk-LTE', '', 1, 3, 1, 'HOST_LABEL', '', '', '', 'form-control', 'input', '', 'DATABASE_DESC', ''),
 ('loadingTime', '0', '', 11, 10, 1, 'LOADINGTIME_LABEL', 'fa fa-signal', 'LOADINGTIME_HEADING', 'LOADINGTIME_SUBTEXT', 'form-control', 'checkbox', '', '', ''),
 ('logoutmenuid', '1', '', 6, 0, 1, 'Logout Menu ID for logged-in Users', '', '', '', 'form-control', '', '', '', ''),
 ('offline', '0', '', 8, 0, 1, 'OFFLINE_LABEL', 'fa fa-wrench', 'OFFLINE_HEADING', 'OFFLINE_SUBTEXT', 'form-control', 'checkbox', '', 'OFFLINE_DESC', ''),
@@ -680,11 +680,11 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('signup_zipcode', '0', '', 5, 0, 1, 'require zipcode to signup', '', '', '', 'form-control', '', '', '', ''),
 ('siteauthor', 'YaWK', '', 10, 0, 1, 'Site Author', '', '', '', 'form-control', '', '', '', ''),
 ('sitename', 'YaWK Yet another WebKit CMS', '', 1, 2, 1, 'SITENAME_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
-('statsEnable', '1', '', 13, 2, 1, 'STATS_LABEL', 'fa fa-bar-chart', 'STATS_HEADING', 'STATS_SUBTEXT', 'form-control', 'select', '', 'STATS_DESC', '0,off:1,on'),
+('statsEnable', '0', '', 13, 2, 1, 'STATS_LABEL', 'fa fa-bar-chart', 'STATS_HEADING', 'STATS_SUBTEXT', 'form-control', 'select', '', 'STATS_DESC', '0,off:1,on'),
 ('syslogEnable', '0', '', 13, 1, 1, 'SYSLOG_LABEL', 'fa fa-terminal', 'SYSLOG_HEADING', 'SYSLOG_SUBTEXT', 'form-control', 'select', '', 'SYSLOG_DESC', '0,off:1,on'),
 ('timediff', '1', '', 7, 1, 1, 'TIMEDIFF_LABEL', 'fa fa-clock-o', 'TIMEDIFF_HEADING', 'TIMEDIFF_SUBTEXT', 'form-control', 'checkbox', '', 'TIMEDIFF_DESC', ''),
 ('timedifftext', 'This page is not online yet. Please come back in ', '', 7, 2, 1, 'TIMEDIFFTEXT_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
-('title', '', '', 1, 1, 1, 'TITLE_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+('title', 'YaWK Test Page', '', 1, 1, 1, 'TITLE_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('twitterstatus', '0', '', 4, 0, 1, 'Twitter on/off', '', '', '', 'form-control', '', '', '', ''),
 ('twitterurl', 'http://www.twitter.com', '', 4, 0, 1, 'URL zu Twitter Profil', '', '', '', 'form-control', '', '', '', ''),
 ('userlogin', '1', '', 17, 1, 1, 'USERLOGIN_LABEL', 'fa fa-lock', 'USERLOGIN_HEADING', 'USERLOGIN_SUBTEXT', 'form-control', 'checkbox', '', 'USERLOGIN_DESC', ''),
@@ -1738,12 +1738,12 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (951, 1, 'form-padding', '6px 12px', '6px 12px', '', 25, 1, 4, 'TPL_FORM_PADDING_LABEL', 'form-control', '', '', 'TPL_FORM_PADDING_PLACEHOLDER', '', '', '', ''),
 (952, 1, 'form-textSize', '14px', '14px', '', 25, 1, 5, 'TPL_FORM_TEXTSIZE_LABEL', 'form-control', '', '', 'TPL_FORM_TEXTSIZE_PLACEHOLDER', '', '', '', ''),
 (953, 1, 'form-lineHeight', '1.42857143', '1.42857143', '', 25, 1, 6, 'TPL_FORM_LINEHEIGHT_LABEL', 'form-control', '', '', 'TPL_FORM_LINEHEIGHT_PLACEHOLDER', '', '', '', ''),
-(954, 1, 'form-textColor', '555', '#555555', '', 51, 1, 1, 'TPL_FORM_TEXTCOLOR_LABEL', 'form-control color', 'color', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
-(955, 1, 'form-bgcolor', 'fff', '#fff', '', 51, 1, 2, 'TPL_FORM_BGCOLOR_LABEL', 'form-control color', 'color', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(954, 1, 'form-textColor', '555555', '#555555', '', 51, 1, 1, 'TPL_FORM_TEXTCOLOR_LABEL', 'form-control color', 'color', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(955, 1, 'form-bgcolor', 'FFFFFF', '#fff', '', 51, 1, 2, 'TPL_FORM_BGCOLOR_LABEL', 'form-control color', 'color', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (956, 1, 'form-border', '1px solid #ccc', '1px solid #ccc', '', 51, 1, 3, 'TPL_FORM_BORDER_LABEL', 'form-control', '', '', 'TPL_FORM_BORDER_PLACEHOLDER', '', '', '', ''),
 (957, 1, 'form-border-radius', '4px', '4px', '', 51, 1, 4, 'TPL_FORM_BORDER_RADIUS_LABEL', 'form-control', '', '', 'TPL_FORM_BORDER_RADIUS_PLACEHOLDER', '', '', '', ''),
-(958, 1, 'form-activeBorderColor', '66afe9', '#66afe9', '', 51, 1, 5, 'TPL_FORM_ACTIVE_BORDERCOLOR_LABEL', 'form-control color', 'color', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
-(959, 1, 'form-placeholderColor', '999', '#999', '', 51, 1, 6, 'TPL_FORM_PLACEHOLDERCOLOR_LABEL', 'form-control color', 'color', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', '');
+(958, 1, 'form-activeBorderColor', '66AFE9', '#66afe9', '', 51, 1, 5, 'TPL_FORM_ACTIVE_BORDERCOLOR_LABEL', 'form-control color', 'color', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(959, 1, 'form-placeholderColor', '999999', '#999', '', 51, 1, 6, 'TPL_FORM_PLACEHOLDERCOLOR_LABEL', 'form-control color', 'color', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -1960,7 +1960,28 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('youtubeVideoUrl', 'https://www.youtube.com/watch?v=PK8sdl53GEA', 16, 1, 'YouTube URL', 'form-control', 40),
 ('youtubeHeading', '', 16, 1, 'Heading above the video', 'form-control', 41),
 ('youtubeSubtext', '', 16, 1, 'Small subtext beneath heading', 'form-control', 42),
-('youtubeDescription', '', 16, 1, 'Description under the video', 'form-control', 43);
+('youtubeDescription', '', 16, 1, 'Description under the video', 'form-control', 43),
+('chaturbateRoom', 'disneydeee', 17, 1, 'Chaturbate Room (nickname)', 'form-control', 44),
+('chaturbateDisableSound', '1', 17, 1, 'Disable Sound? (0 | 1)', 'form-control', 45),
+('chaturbateVideoOnly', '0', 17, 1, 'Video Only? (0 | 1)', 'form-control', 46),
+('chaturbateHeight', '850', 17, 1, 'Video height in px', 'form-control', 47),
+('chaturbateWidth', '100%', 17, 1, 'Video width in px', 'form-control', 48),
+('chaturbateHeading', 'Watch me', 17, 1, 'Heading above the video', 'form-control', 49),
+('chaturbateSubtext', 'being nasty', 17, 1, 'Subtext beneath heading', 'form-control', 50),
+('googleMapsEmbedHtmlCode', '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d85064.65940758218!2d16.310020639299537!3d48.22066363084218!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x476d079e5136ca9f%3A0xfdc2e58a51a25b46!2sWien%2C+%C3%96sterreich!5e0!3m2!1sde!2sde!4v1491406650968" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>', 18, 1, 'HTML Code you get from GoogleMaps (iframe...)', 'form-control', 51),
+('cbaUrl', 'https://cba.fro.at/331756', 19, 1, 'URL of your CBA Stream', 'form-control', 52),
+('cbaHeading', 'Heading', 19, 1, 'Heading before your stream', 'form-control', 53),
+('cbaSubtext', 'Subtext', 19, 1, 'Small subtext beneath heading', 'form-control', 54),
+('cbaHeight', '209', 19, 1, 'Height', 'form-control', 55),
+('cbaWidth', '100%', 19, 1, 'Width', 'form-control', 56),
+('cbaWaveform', '0', 19, 1, 'Display Waveform? 0|1', 'form-control', 57),
+('cbaTitle', '0', 19, 1, 'Display Title? 0|1', 'form-control', 58),
+('cbaSocialmedia', '0', 19, 1, 'Display Socialmedia Links? 0|1', 'form-control', 59),
+('cbaPodcast', '0', 19, 1, 'Allow to subscribe? 0|1', 'form-control', 60),
+('cbaSeries', '0', 19, 1, 'Link to series? 0|1', 'form-control', 61),
+('cbaDescription', '0', 19, 1, 'Display Description? 0|1', 'form-control', 62),
+('cbaMeta', '0', 19, 1, 'Display Meta Information? 0|1', 'form-control', 63),
+('cbaEmbedCode', '', 19, 1, 'OR use embed code instead (iframe...)', 'form-control', 64);
 
 -- --------------------------------------------------------
 
@@ -1996,22 +2017,25 @@ CREATE TABLE `cms_widget_types` (
 --
 
 INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`) VALUES
-(1, 1, 'Loginbox', 'loginbox', ''),
+(1, 1, 'Loginbox', 'loginbox', 'Display a User Login Box'),
 (2, 1, 'Simple Contact Form', 'form_simple', ''),
 (3, 1, 'Prezi', 'prezi', ''),
 (4, 1, 'FacebookPage', 'fb_page', ''),
 (5, 1, 'FacebookLike', 'fb_like', ''),
-(6, 1, 'GoogleAnalytics', 'google_analytics', ''),
+(6, 1, 'GoogleAnalytics', 'google_analytics', 'Embed Google Analytics on your page'),
 (7, 1, 'SimpleUpload', 'simple_upload', ''),
-(8, 1, 'Clock', 'clock', ''),
+(8, 1, 'Clock', 'clock', 'A simple digital clock'),
 (9, 1, 'Signup', 'signup', ''),
 (10, 1, 'Divbox', 'divbox', ''),
 (11, 1, 'News Blog Widget', 'news', ''),
-(12, 1, 'Newsletter', 'newsletter', ''),
-(13, 1, 'Gallery', 'gallery', ''),
-(14, 1, 'Twitch Stream', 'twitch', ''),
-(15, 1, 'Sub Menu', 'submenu', ''),
-(16, 1, 'Youtube Stream', 'youtube', '');
+(12, 1, 'Newsletter', 'newsletter', 'Newsletter Widget'),
+(13, 1, 'Gallery', 'gallery', 'Display a gallery at any position'),
+(14, 1, 'Twitch Stream', 'twitch', 'Embed any Twitch Stream'),
+(15, 1, 'Sub Menu', 'submenu', 'Embed a Menu as Submenu at any position'),
+(16, 1, 'Youtube Stream', 'youtube', 'Embed any YouTube Video'),
+(17, 1, 'Chaturbate Stream', 'chaturbate', 'Embed any chaturbate cam room on your website'),
+(18, 1, 'Google Maps', 'google_maps', 'Embed Google Maps on your website'),
+(19, 1, 'Cultural Broadcasting Archive', 'culturalbroadcasting', 'CBA - Cultural Broadcasting Archive -\r\n Verband Freier Radios Österreich');
 
 --
 -- Indizes der exportierten Tabellen
@@ -2320,10 +2344,15 @@ ALTER TABLE `cms_notifications`
 ALTER TABLE `cms_notifications_msg`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT für Tabelle `cms_widget_defaults`
+--
+ALTER TABLE `cms_widget_defaults`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+--
 -- AUTO_INCREMENT für Tabelle `cms_widget_settings`
 --
 ALTER TABLE `cms_widget_settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
