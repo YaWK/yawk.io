@@ -1986,7 +1986,12 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('instagramWidth', '100%', 20, 1, 'Width in px or %', 'form-control', 66),
 ('instagramTarget', '_blank', 20, 1, 'Target of the link (_blank or _self)', 'form-control', 67),
 ('instagramHeading', '', 20, 1, 'Heading above the Posting', 'form-control', 68),
-('instagramSubtext', '', 20, 1, 'Subtext beneath heading', 'form-control', 69);
+('instagramSubtext', '', 20, 1, 'Subtext beneath heading', 'form-control', 69),
+('spotifyEmbedCode', '<iframe src="https://embed.spotify.com/?uri=spotify%3Atrack%3A30LDuVfrePWbedYTc1mUCn" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>', 21, 1, 'Spotify Embed HTML Code', 'form-control', 70),
+('spotifyWidth', '100%', 21, 1, 'Width in px or %', 'form-control', 71),
+('spotifyHeight', '380', 21, 1, 'Height in px or %', 'form-control', 72),
+('spotifyHeading', 'Heading', 21, 1, 'Heading above Widget', 'form-control', 73),
+('spotifySubtext', 'Subtext', 21, 1, 'Subtext beneath heading', 'form-control', 74);
 
 -- --------------------------------------------------------
 
@@ -2041,7 +2046,8 @@ INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`)
 (17, 1, 'Chaturbate Stream', 'chaturbate', 'Embed any chaturbate cam room on your website'),
 (18, 1, 'Google Maps', 'google_maps', 'Embed Google Maps on your website'),
 (19, 1, 'Cultural Broadcasting Archive', 'culturalbroadcasting', 'CBA - Cultural Broadcasting Archive -\r\n Verband Freier Radios Österreich'),
-(20, 1, 'Instagram Posting', 'instagram', 'Embed any single Instagram posting');
+(20, 1, 'Instagram Posting', 'instagram', 'Embed any single Instagram posting'),
+(21, 1, 'Spotify', 'spotify', 'Embed a Spotify Stream');
 
 --
 -- Indizes der exportierten Tabellen
