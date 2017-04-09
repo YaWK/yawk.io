@@ -26,19 +26,29 @@ if (isset($_GET['widgetID']))
         if (isset($w_property)){
             switch($w_property)
             {
-                /* url of the video to stream */
+                /* single tweet URL */
                 case 'twitterTweetUrl';
                     $twitterUrl = $w_value;
                     break;
 
-                /* spotify width in px or & */
+                /* show or hide image media? */
                 case 'twitterHideDataCards';
                     $twitterHideDataCards = $w_value;
                     break;
 
-                /* spotify height */
+                /* show or hide conversation in tweet */
                 case 'twitterDataConversation';
                     $twitterDataConversation = $w_value;
+                    break;
+
+                /* heading */
+                case 'twitterTweetHeading';
+                    $heading = $w_value;
+                    break;
+
+                /* subtext */
+                case 'twitterTweetSubtext';
+                    $subtext = $w_value;
                     break;
             }
         } /* END LOAD PROPERTIES */
@@ -88,6 +98,8 @@ else
     {   // otherwise, media will be hidden from this tweet
         $twitterHideDataCards = '';
     }
+
+echo $headline;
 ?>
 <blockquote class="twitter-tweet" <?php echo $twitterHideDataCards." ".$twitterDataConversation; ?>><a href="<?php echo $twitterUrl; ?>"></a></blockquote>
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
