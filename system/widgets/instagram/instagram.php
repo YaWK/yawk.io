@@ -89,9 +89,7 @@ echo $headline;
                    margin: 1px;
                    max-width:<?php echo $instagramWidth; ?>;
                    padding:0;
-                   width:99.375%;
-                   width:-webkit-calc(100% - 2px);
-                   width:calc(100% - 2px);">
+                   width:<?php echo $instagramWidth; ?>;">
 
     <p style="margin:8px 0 0 0; padding:0 4px;">
         <a href="<?php echo $instagramUrl; ?>"
