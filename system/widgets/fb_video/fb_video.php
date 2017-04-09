@@ -78,7 +78,7 @@ else
     $headline = '';
 }
 
-// switch plain youtube url to correct embed url string
+// override height and width
 $fbVideoEmbedCode = str_replace("width=\"560\"", "width=\"$fbVideoWidth\"", $fbVideoEmbedCode);
 $fbVideoEmbedCode = str_replace("height=\"315\"", "height=\"$fbVideoHeight\"", $fbVideoEmbedCode);
 

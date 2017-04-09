@@ -405,10 +405,12 @@ namespace YAWK {
             // TOGGLE WIDGET STATUS
             if ($res = $db->query("UPDATE {widgets}
                           SET published = '" . $published . "'
-                          WHERE id = '" . $id . "'")
-            ) {   // toggle successful
+                          WHERE id = '" . $id . "'"))
+            {   // toggle successful
                 return true;
-            } else {   // q failed
+            }
+            else
+            {   // q failed
                 $status = \YAWK\sys::iStatusToString($published, "online", "offline");
                 \YAWK\sys::setSyslog($db, 11, "failed to toggle widget id <b>#$id</b> to $status .", 0, 0, 0, 0);
                 return false;
