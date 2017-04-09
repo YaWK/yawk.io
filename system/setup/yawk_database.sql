@@ -2014,7 +2014,10 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('twitterGridUrl', 'https://twitter.com/TwitterDev/timelines/539487832448843776', 26, 1, 'URL (Link) to the Timeline you want to embed as grid', 'form-control', 94),
 ('twitterGridHeading', 'Heading', 26, 1, 'Heading above Timeline Grid', 'form-control', 95),
 ('twitterGridSubtext', 'Subtext', 26, 1, 'Subtext beside Heading', 'form-control', 96),
-('twitterGridTweetLimit', '5', 26, 1, 'How many tweets to display?', 'form-control', 97);
+('twitterGridTweetLimit', '5', 26, 1, 'How many tweets to display?', 'form-control', 97),
+('twitterTweetButtonText', 'Yet another WebKit - spread the word out lout! Sharing is caring!', 27, 1, 'pre-defined tweet text', 'form-control', 98),
+('twitterTweetButtonHeading', 'Heading', 27, 1, 'Heading above Tweet Button', 'form-control', 99),
+('twitterTweetButtonSubtext', 'Subtext', 27, 1, 'Subtext beside Heading', 'form-control', 100);
 
 -- --------------------------------------------------------
 
@@ -2075,7 +2078,8 @@ INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`)
 (23, 1, 'Facebook Video', 'fb_video', 'Embed any public Facebook Video'),
 (24, 1, 'Twitter (Single Tweet)', 'twitter_tweet', 'Embed any single Tweet'),
 (25, 1, 'Twitter (Timeline)', 'twitter_timeline', 'Embed the timeline of any Twitter User'),
-(25, 1, 'Twitter (Grid)', 'twitter_grid', 'Embed a timeline link as grid');
+(26, 1, 'Twitter (Grid)', 'twitter_grid', 'Embed a timeline link as grid'),
+(27, 1, 'Twitter Button', 'twitter_tweetbutton', 'Embed a Tweet button to let users drop a tweet.');
 
 --
 -- Indizes der exportierten Tabellen
