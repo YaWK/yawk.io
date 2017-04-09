@@ -2017,7 +2017,12 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('twitterGridTweetLimit', '5', 26, 1, 'How many tweets to display?', 'form-control', 97),
 ('twitterTweetButtonText', 'Yet another WebKit - spread the word out lout! Sharing is caring!', 27, 1, 'pre-defined tweet text', 'form-control', 98),
 ('twitterTweetButtonHeading', 'Heading', 27, 1, 'Heading above Tweet Button', 'form-control', 99),
-('twitterTweetButtonSubtext', 'Subtext', 27, 1, 'Subtext beside Heading', 'form-control', 100);
+('twitterTweetButtonSubtext', 'Subtext', 27, 1, 'Subtext beside Heading', 'form-control', 100),
+('pinterestProfileUrl', 'https://www.pinterest.com/pinterest', 28, 1, 'Pinterest Profile URL', 'form-control', 101),
+('pinterestProfileWidth', '100%', 28, 1, 'Width in px or %', 'form-control', 102),
+('pinterestProfileHeight', '600', 28, 1, 'Height in px', 'form-control', 103),
+('pinterestProfileHeading', 'Heading', 28, 1, 'Heading above Pinterest Profile', 'form-control', 104),
+('pinterestProfileSubtext', 'Subtext', 28, 1, 'Subtext beside Heading', 'form-control', 105);
 
 -- --------------------------------------------------------
 
@@ -2079,7 +2084,8 @@ INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`)
 (24, 1, 'Twitter (Single Tweet)', 'twitter_tweet', 'Embed any single Tweet'),
 (25, 1, 'Twitter (Timeline)', 'twitter_timeline', 'Embed the timeline of any Twitter User'),
 (26, 1, 'Twitter (Grid)', 'twitter_grid', 'Embed a timeline link as grid'),
-(27, 1, 'Twitter Button', 'twitter_tweetbutton', 'Embed a Tweet button to let users drop a tweet.');
+(27, 1, 'Twitter Button', 'twitter_tweetbutton', 'Embed a Tweet button to let users drop a tweet'),
+(28, 1, 'Pinterest Profile', 'pinterest_profile', 'Embed any Pinterest Profile');
 
 --
 -- Indizes der exportierten Tabellen
