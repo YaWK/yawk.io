@@ -2041,7 +2041,7 @@ INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`)
 (17, 1, 'Chaturbate Stream', 'chaturbate', 'Embed any chaturbate cam room on your website'),
 (18, 1, 'Google Maps', 'google_maps', 'Embed Google Maps on your website'),
 (19, 1, 'Cultural Broadcasting Archive', 'culturalbroadcasting', 'CBA - Cultural Broadcasting Archive -\r\n Verband Freier Radios Österreich'),
-(20, 1, 'Instagram', 'instagram', 'Embed any single Instagram posting');
+(20, 1, 'Instagram Posting', 'instagram', 'Embed any single Instagram posting');
 
 --
 -- Indizes der exportierten Tabellen
