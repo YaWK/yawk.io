@@ -2001,7 +2001,10 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('fbVideoWidth', '100%', 23, 1, 'Width in px or %', 'form-control', 81),
 ('fbVideoHeight', '700', 23, 1, 'Height in px', 'form-control', 82),
 ('fbVideoHeading', 'Heading', 23, 1, 'Heading above Video', 'form-control', 83),
-('fbVideoSubtext', 'Subtext', 23, 1, 'Subtext beside Heading', 'form-control', 84);
+('fbVideoSubtext', 'Subtext', 23, 1, 'Subtext beside Heading', 'form-control', 84),
+('twitterTweetUrl', 'https://twitter.com/danielretzl/status/802569003172499456', 24, 1, 'URL (Link) to the Tweet you want to embed', 'form-control', 85),
+('twitterHideDataCards', '0', 24, 1, 'Hide Images and Media? 0|1', 'form-control', 86),
+('twitterDataConversation', '0', 24, 1, 'Display Conversation? 0|1', 'form-control', 87);
 
 -- --------------------------------------------------------
 
@@ -2058,7 +2061,9 @@ INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`)
 (19, 1, 'Cultural Broadcasting Archive', 'culturalbroadcasting', 'CBA - Cultural Broadcasting Archive -\r\n Verband Freier Radios Österreich'),
 (20, 1, 'Instagram Posting', 'instagram', 'Embed any single Instagram posting'),
 (21, 1, 'Spotify', 'spotify', 'Embed a Spotify Stream'),
-(22, 1, 'Facebook Posting', 'fb_post', 'Embed any public Facebook Posting');
+(22, 1, 'Facebook Posting', 'fb_post', 'Embed any public Facebook Posting'),
+(23, 1, 'Facebook Video', 'fb_video', 'Embed any public Facebook Video'),
+(24, 1, 'Twitter (Single Tweet)', 'twitter_tweet', 'Embed any single Tweet');
 
 --
 -- Indizes der exportierten Tabellen
