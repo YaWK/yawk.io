@@ -2356,7 +2356,7 @@ else
         <!-- OVERVIEW -->
         <div role="tabpanel" class="tab-pane active" id="overview">
             <h3><?php echo "$lang[OVERVIEW] <small>$lang[TPL] $lang[SUMMARY]</small>"; ?></h3>
-            <!-- list GOOGLE FONTS -->
+            <!-- list TEMPLATE HOME PAGE (DETAILS) -->
             <div class="row animated fadeIn">
                 <div class="col-md-6">
                     <div class="box">
@@ -2494,7 +2494,7 @@ else
         <!-- POSITIONS -->
         <div role="tabpanel" class="tab-pane" id="positions">
             <h3><? echo "$lang[POSITIONS]"; ?> <small><?php echo "$lang[TPL_POSITION_SETTINGS]"; ?></small></h3>
-            <!-- list GOOGLE FONTS -->
+            <!-- list POSITION SETTINGS -->
             <div class="row animated fadeIn">
 
                 <div class="col-md-3">
