@@ -2004,7 +2004,17 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('fbVideoSubtext', 'Subtext', 23, 1, 'Subtext beside Heading', 'form-control', 84),
 ('twitterTweetUrl', 'https://twitter.com/danielretzl/status/802569003172499456', 24, 1, 'URL (Link) to the Tweet you want to embed', 'form-control', 85),
 ('twitterHideDataCards', '0', 24, 1, 'Hide Images and Media? 0|1', 'form-control', 86),
-('twitterDataConversation', '0', 24, 1, 'Display Conversation? 0|1', 'form-control', 87);
+('twitterDataConversation', '0', 24, 1, 'Display Conversation? 0|1', 'form-control', 87),
+('twitterTweetHeading', 'Heading', 24, 1, 'Heading above Tweet', 'form-control', 88),
+('twitterTweetSubtext', 'Subtext', 24, 1, 'Subtext beside Heading', 'form-control', 89),
+('twitterTimelineUrl', 'https://twitter.com/danielretzl', 25, 1, 'URL (Link) to the Timeline you want to embed', 'form-control', 90),
+('twitterTimelineHeading', 'Heading', 25, 1, 'Heading above Tweet', 'form-control', 91),
+('twitterTimelineSubtext', 'Subtext', 25, 1, 'Subtext beside Heading', 'form-control', 92),
+('twitterTimelineTweetLimit', '5', 25, 1, 'How many tweets to display?', 'form-control', 93),
+('twitterGridUrl', 'https://twitter.com/TwitterDev/timelines/539487832448843776', 26, 1, 'URL (Link) to the Timeline you want to embed as grid', 'form-control', 94),
+('twitterGridHeading', 'Heading', 26, 1, 'Heading above Timeline Grid', 'form-control', 95),
+('twitterGridSubtext', 'Subtext', 26, 1, 'Subtext beside Heading', 'form-control', 96),
+('twitterGridTweetLimit', '5', 26, 1, 'How many tweets to display?', 'form-control', 97);
 
 -- --------------------------------------------------------
 
@@ -2063,7 +2073,9 @@ INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`)
 (21, 1, 'Spotify', 'spotify', 'Embed a Spotify Stream'),
 (22, 1, 'Facebook Posting', 'fb_post', 'Embed any public Facebook Posting'),
 (23, 1, 'Facebook Video', 'fb_video', 'Embed any public Facebook Video'),
-(24, 1, 'Twitter (Single Tweet)', 'twitter_tweet', 'Embed any single Tweet');
+(24, 1, 'Twitter (Single Tweet)', 'twitter_tweet', 'Embed any single Tweet'),
+(25, 1, 'Twitter (Timeline)', 'twitter_timeline', 'Embed the timeline of any Twitter User'),
+(25, 1, 'Twitter (Grid)', 'twitter_grid', 'Embed a timeline link as grid');
 
 --
 -- Indizes der exportierten Tabellen
