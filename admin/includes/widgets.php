@@ -18,6 +18,18 @@ if (isset($_GET['add']) && ($_GET['add'] === "1"))
     }
 }
 
+// COPY WIDGET
+if($_GET['copy'] === "true") {
+     if ($widget->copy($db, $_GET['widget']))
+     {   // widget copied
+         print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[WIDGET] $lang[ID]: ".$_GET['widget']." $lang[COPIED]","page=widgets","1800");
+     }
+     else
+     {   // throw error
+         print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[WIDGET] ".$_GET['widget']." $lang[ID] <b>$lang[NOT] $lang[COPIED]</b>","page=widgets","4800");
+     }
+ }
+
 // DELETE WIDGET
 if (isset($_GET['del']) && ($_GET['del'] === "1"))
 {
