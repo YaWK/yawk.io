@@ -1981,7 +1981,12 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('cbaSeries', '0', 19, 1, 'Link to series? 0|1', 'form-control', 61),
 ('cbaDescription', '0', 19, 1, 'Display Description? 0|1', 'form-control', 62),
 ('cbaMeta', '0', 19, 1, 'Display Meta Information? 0|1', 'form-control', 63),
-('cbaEmbedCode', '', 19, 1, 'OR use embed code instead (iframe...)', 'form-control', 64);
+('cbaEmbedCode', '', 19, 1, 'OR use embed code instead (iframe...)', 'form-control', 64),
+('instagramUrl', 'https://www.instagram.com/p/BSqEReEgW4d/', 20, 1, 'URL of your Instagram Posting', 'form-control', 65),
+('instagramWidth', '100%', 20, 1, 'Width in px or %', 'form-control', 66),
+('instagramTarget', '_blank', 20, 1, 'Target of the link (_blank or _self)', 'form-control', 67),
+('instagramHeading', '', 20, 1, 'Heading above the Posting', 'form-control', 68),
+('instagramSubtext', '', 20, 1, 'Subtext beneath heading', 'form-control', 69);
 
 -- --------------------------------------------------------
 
@@ -2035,7 +2040,8 @@ INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`)
 (16, 1, 'Youtube Stream', 'youtube', 'Embed any YouTube Video'),
 (17, 1, 'Chaturbate Stream', 'chaturbate', 'Embed any chaturbate cam room on your website'),
 (18, 1, 'Google Maps', 'google_maps', 'Embed Google Maps on your website'),
-(19, 1, 'Cultural Broadcasting Archive', 'culturalbroadcasting', 'CBA - Cultural Broadcasting Archive -\r\n Verband Freier Radios Österreich');
+(19, 1, 'Cultural Broadcasting Archive', 'culturalbroadcasting', 'CBA - Cultural Broadcasting Archive -\r\n Verband Freier Radios Österreich'),
+(20, 1, 'Instagram', 'instagram', 'Embed any single Instagram posting');
 
 --
 -- Indizes der exportierten Tabellen
