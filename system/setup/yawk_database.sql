@@ -1991,7 +1991,17 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('spotifyWidth', '100%', 21, 1, 'Width in px or %', 'form-control', 71),
 ('spotifyHeight', '380', 21, 1, 'Height in px or %', 'form-control', 72),
 ('spotifyHeading', 'Heading', 21, 1, 'Heading above Widget', 'form-control', 73),
-('spotifySubtext', 'Subtext', 21, 1, 'Subtext beneath heading', 'form-control', 74);
+('spotifySubtext', 'Subtext', 21, 1, 'Subtext beneath heading', 'form-control', 74),
+('fbPostEmbedCode', '<iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fzuck%2Fposts%2F10103625699665601&width=500" width="500" height="625" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>', 22, 1, 'Facebook Posting Embed HTML Code', 'form-control', 75),
+('fbPostWidth', '100%', 22, 1, 'Width in px or %', 'form-control', 76),
+('fbPostHeight', '625', 22, 1, 'Height in px', 'form-control', 77),
+('fbPostHeading', 'Heading', 22, 1, 'Heading above Posting', 'form-control', 78),
+('fbPostSubtext', 'Subtext', 22, 1, 'Subtext beneath Posting', 'form-control', 79),
+('fbVideoEmbedCode', '<iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook%2Fvideos%2F10155656407651729%2F&show_text=0&width=560" width="560" height="315" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>', 23, 1, 'Facebook Video Embed HTML Code', 'form-control', 80),
+('fbVideoWidth', '100%', 23, 1, 'Width in px or %', 'form-control', 81),
+('fbVideoHeight', '700', 23, 1, 'Height in px', 'form-control', 82),
+('fbVideoHeading', 'Heading', 23, 1, 'Heading above Video', 'form-control', 83),
+('fbVideoSubtext', 'Subtext', 23, 1, 'Subtext beside Heading', 'form-control', 84);
 
 -- --------------------------------------------------------
 
@@ -2047,7 +2057,8 @@ INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`)
 (18, 1, 'Google Maps', 'google_maps', 'Embed Google Maps on your website'),
 (19, 1, 'Cultural Broadcasting Archive', 'culturalbroadcasting', 'CBA - Cultural Broadcasting Archive -\r\n Verband Freier Radios Österreich'),
 (20, 1, 'Instagram Posting', 'instagram', 'Embed any single Instagram posting'),
-(21, 1, 'Spotify', 'spotify', 'Embed a Spotify Stream');
+(21, 1, 'Spotify', 'spotify', 'Embed a Spotify Stream'),
+(22, 1, 'Facebook Posting', 'fb_post', 'Embed any public Facebook Posting');
 
 --
 -- Indizes der exportierten Tabellen
