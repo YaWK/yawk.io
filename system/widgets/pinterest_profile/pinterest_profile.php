@@ -77,6 +77,7 @@ else
 {   // leave empty if it's not set
     $headline = '';
 }
+
 echo $headline;
 ?>
 <a data-pin-do="embedUser" data-pin-board-width="<?php echo $pinterestProfileWidth; ?>" data-pin-scale-height="<?php echo $pinterestProfileHeight; ?>" data-pin-scale-width="115" href="<?php echo $pinterestProfileUrl;?>"></a>
