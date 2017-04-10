@@ -27,11 +27,18 @@
 		// textarea that will be transformed into editor
 		var savebutton = ('#savebutton');
 		var savebuttonIcon = ('#savebuttonIcon');
+		// textarea that will be transformed into editor
+		var editor = ('textarea#summernote');
 		// ok, lets go...
 		// we need to check if user clicked on save button
 		$(savebutton).click(function() {
 			$(savebutton).removeClass('btn btn-success').addClass('btn btn-warning disabled');
 			$(savebuttonIcon).removeClass('fa fa-check').addClass('fa fa-spinner fa-spin fa-fw');
+
+			if ($(editor).summernote('codeview.isActivated')) {
+				// if so, turn it off.
+				$(editor).summernote('codeview.deactivate');
+			}
 		});
 
 		/* START CHECKBOX backend footer */
@@ -204,8 +211,10 @@
 	});
 </script>
 <?php
+
+
 // SAVE tpl settings
-if(isset($_POST['save']) || isset($_POST['savenewtheme']))
+if(isset($_POST['save']))
 {   // loop through $_POST items
     foreach ($_POST as $property => $value) {
         if ($property != "save") {
@@ -218,20 +227,102 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
 				}
 			}
 			else
+			{
+				if ($property === "selectedTemplate")
 				{
-					if ($property === "selectedTemplate")
-					{
-						\YAWK\template::setTemplateActive($db, $value);
-					}
+					\YAWK\template::setTemplateActive($db, $value);
+				}
+
 				// save value of property to database
 				\YAWK\settings::setSetting($db, $property, $value, $lang);
 			}
+
+			if ($property === "robotsText-long")
+			{
+				\YAWK\sys::setRobotsText("../", $value);
+			}
         }
+
     }
+    // to ensure that language switching works correctly, reload page with given POST language
     \YAWK\sys::setTimeout("index.php?page=settings-system&lang=$_POST[backendLanguage]", 0);
 }
 ?>
 
+<?php
+// get settings for editor
+$editorSettings = \YAWK\settings::getEditorSettings($db, 14);
+?>
+<!-- include summernote css/js-->
+<!-- include codemirror (codemirror.css, codemirror.js, xml.js) -->
+<link rel="stylesheet" type="text/css" href="../system/engines/codemirror/codemirror.min.css">
+<link rel="stylesheet" type="text/css" href="../system/engines/codemirror/themes/<?php echo $editorSettings['editorTheme']; ?>.css">
+<link rel="stylesheet" type="text/css" href="../system/engines/codemirror/show-hint.min.css">
+<script type="text/javascript" src="../system/engines/codemirror/codemirror-compressed.js"></script>
+<script type="text/javascript" src="../system/engines/codemirror/auto-refresh.js"></script>
+
+<!-- SUMMERNOTE -->
+<link href="../system/engines/summernote/dist/summernote.css" rel="stylesheet">
+<script src="../system/engines/summernote/dist/summernote.min.js"></script>
+<script src="../system/engines/summernote/dist/summernote-cleaner.js"></script>
+<script src="../system/engines/summernote/dist/summernote-image-attributes.js"></script>
+<script src="../system/engines/summernote/dist/summernote-floats-bs.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		// textarea that will be transformed into editor
+		var editor = ('textarea#summernote');
+		// summernote.init -
+		// LOAD SUMMERNOTE IN CODEVIEW ON STARTUP
+		$(editor).on('summernote.init', function() {
+			// toggle editor to codeview
+			$(editor).summernote('codeview.toggle');
+		});
+
+		// INIT SUMMERNOTE EDITOR
+		$(editor).summernote({    // set editor itself
+			height: <?php echo $editorSettings['editorHeight']; ?>,                 // set editor height
+			minHeight: null,             // set minimum height of editor
+			maxHeight: null,             // set maximum height of editor
+			focus: true,                 // set focus to editable area after initializing summernote
+
+			toolbar:
+			{
+				// no toolbar
+			},
+			// language for plugin image-attributes.js
+			lang: '<?php echo $lang['CURRENT_LANGUAGE']; ?>',
+
+			// powerup the codeview with codemirror theme
+			codemirror: { // codemirror options
+				theme: '<?php echo $editorSettings['editorTheme']; ?>',                       // codeview theme
+				lineNumbers: true,             // display lineNumbers true|false
+				undoDepth: <?php echo $editorSettings['editorUndoDepth']; ?>,                 // how many undo steps should be saved? (default: 200)
+				smartIndent: <?php echo $editorSettings['editorSmartIndent']; ?>,             // better indent
+				indentUnit: <?php echo $editorSettings['editorIndentUnit']; ?>,               // how many spaces auto indent? (default: 2)
+				scrollbarStyle: null,                                                         // styling of the scrollbars
+				matchBrackets: <?php echo $editorSettings['editorMatchBrackets']; ?>,         // highlight corresponding brackets
+				autoCloseBrackets: <?php echo $editorSettings['editorCloseBrackets'];?>,      // auto insert close brackets
+				autoCloseTags: <?php echo $editorSettings['editorCloseTags']; ?>,             // auto insert close tags after opening
+				value: "<html>\n  " + document.documentElement.innerHTML + "\n</html>",       // all html
+				mode: "css",                                                            // editor mode
+				matchTags: {bothTags: <?php echo $editorSettings['editorMatchTags']; ?>},     // hightlight matching tags: both
+				extraKeys: {
+					"Ctrl-J": "toMatchingTag",                  // CTRL-J to jump to next matching tab
+					"Ctrl-Space": "autocomplete"               // CTRL-SPACE to open autocomplete window
+				},
+				styleActiveLine: <?php echo $editorSettings['editorActiveLine']; ?>,           // highlight the active line (where the cursor is)
+				autoRefresh: true
+			},
+
+			// plugin: summernote-cleaner.js
+			// this allows to copy/paste from word, browsers etc.
+			cleaner: { // does the job well: no messy code anymore!
+				action: 'button', // both|button|paste 'button' only cleans via toolbar button, 'paste' only clean when pasting content, both does both options.
+				newline: '<br>' // Summernote's default is to use '<p><br></p>'
+			}
+		}); // end summernote
+	}); // end document ready
+</script>
 
 <?php
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
@@ -268,6 +359,7 @@ echo"<ol class=\"breadcrumb\">
 		<li role="presentation"><a href="#backend" aria-controls="backend" role="tab" data-toggle="tab"><i class="fa fa-wrench"></i>&nbsp; <?php echo $lang['BACKEND'] ?></a></li>
 		<li role="presentation"><a href="#system" aria-controls="system" role="tab" data-toggle="tab"><i class="fa fa-gears"></i>&nbsp; <?php echo $lang['SYSTEM'] ?></a></li>
 		<li role="presentation"><a href="#database" aria-controls="database" role="tab" data-toggle="tab"><i class="fa fa-database"></i>&nbsp; <?php echo $lang['DATABASE'] ?></a></li>
+		<li role="presentation"><a href="#robots" aria-controls="robots" role="tab" data-toggle="tab"><i class="fa fa-android"></i>&nbsp; <?php echo $lang['ROBOTS_TXT'] ?></a></li>
 		<li role="presentation"><a href="#info" aria-controls="info" role="tab" data-toggle="tab"><i class="fa fa-info-circle"></i>&nbsp; <?php echo $lang['INFO'] ?></a></li>
 	</ul>
 
@@ -392,6 +484,36 @@ echo"<ol class=\"breadcrumb\">
 					<!-- syslog settings -->
 					<h3><?php // echo $lang['SYSLOG']; ?> <small> <?php // echo $lang['SETTINGS']; ?></small></h3>
 					<?php // \YAWK\settings::getFormElements($db, $settings, 0, $lang); ?>
+				</div>
+			</div>
+		</div>
+
+		<!-- ROBOTS.TXT -->
+		<div role="tabpanel" class="tab-pane" id="robots">
+			<h3><i class="fa fa-android"></i> <?php echo $lang['ROBOTS_TXT']; ?> <small><?php echo $lang['CONFIGURE']; ?></small></h3>
+			<div class="row animated fadeIn">
+				<div class="col-md-8">
+					<div class="box">
+						<div class="box-header with-border">
+							<h3 class="box-title"><?php echo $lang['DATA_PRIVACY']."&nbsp;&amp;&nbsp;".$lang['PRIVACY']; ?>  <small><?php echo $lang['ROBOTS_SUBTEXT']; ?> </small></h3>
+						</div>
+						<div class="box-body">
+							<label for="summernote"></label>
+							<?php $content = \YAWK\sys::getRobotsText($db, "../"); ?>
+							<textarea name="robotsText-long" cols="64" rows="28" id="summernote"><?php echo $content; ?></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+
+					<div class="box">
+						<div class="box-header with-border">
+							<h3 class="box-title"><?php echo $lang['ROBOTS_TXT']; ?> <small> <?php echo $lang['HELP']; ?></small></h3>
+						</div>
+						<div class="box-body">
+							<?php // \YAWK\settings::getFormElements($db, $settings, 0, $lang); ?>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
