@@ -32,6 +32,30 @@ namespace YAWK {
 
 
         /**
+         * Return the content of /robots.txt
+         * @author      Daniel Retzl <danielretzl@gmail.com>
+         * @version     1.0.0
+         * @link        http://yawk.io
+         * @return string|bool
+         */
+        public static function getRobotsTxt($path)
+        {
+            $robotsTxt = $path."/robots.txt";
+            if (is_file($robotsTxt))
+            {
+                $file = readfile($robotsTxt);
+            }
+            if (isset($file) && (!empty($file)))
+            {
+                return $file;
+            }
+            else
+                {
+                    return false;
+                }
+        }
+
+        /**
          * Read a directory recursively
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
