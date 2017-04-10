@@ -36,23 +36,45 @@ namespace YAWK {
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
+         * @param string $path absolute path to the robots.txt file
          * @return string|bool
          */
-        public static function getRobotsTxt($path)
+        public static function getRobotsText($db, $path)
         {
-            $robotsTxt = $path."/robots.txt";
-            if (is_file($robotsTxt))
-            {
-                $file = readfile($robotsTxt);
-            }
-            if (isset($file) && (!empty($file)))
-            {
-                return $file;
-            }
-            else
+            $robotsText = "$path/robots.txt";
+                $file = file_get_contents($robotsText);
+                if (!empty($file))
                 {
-                    return false;
+                    return $file;
                 }
+                else
+                    {   // try to get robots.txt from database
+                        if ($file = \YAWK\settings::getLongSetting($db, "robotsText-long"))
+                        {
+                            return $file;
+                        }
+                        else
+                        {   // db setting robotsText-long is empty
+                            return false;
+                        }
+                    }
+        }
+
+        /**
+         * Set the content of /robots.txt (overwrite)
+         * @author      Daniel Retzl <danielretzl@gmail.com>
+         * @version     1.0.0
+         * @link        http://yawk.io
+         * @param string $path absolute path to the robots.txt file
+         * @param string $content file content to write in robots.txt
+         * @return bool
+         */
+        public static function setRobotsText($path, $content)
+        {
+            // check if file content is set...
+            // set robots.txt path + filename
+            $filename = "$path"."robots.txt";
+            return file_put_contents("$filename", "$content");
         }
 
         /**
