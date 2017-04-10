@@ -142,6 +142,7 @@ namespace YAWK {
                               <input type=\"checkbox\" id=\"$setting[property]\" name=\"$setting[property]\" value=\"1\" $checked>
                               <label for=\"$setting[property]\">&nbsp; $setting[label]</label><p>$setting[description]</p>";
                         }
+
                         /* RADIO BUTTTONS */
                         if ($setting['fieldType'] === "radio")
                         {
@@ -221,6 +222,10 @@ namespace YAWK {
                         /* TEXTAREA */
                         else if ($setting['fieldType'] === "textarea")
                         {    // if a long value is set
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                            {
+                                echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
+                            }
                             $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
                             if (isset($setting['longValue']) && (!empty($setting['longValue'])))
                             {   // build a longValue tagged textarea and fill with longValue
@@ -546,7 +551,7 @@ namespace YAWK {
             $value = $db->quote($value);
             if ($res = $db->query("UPDATE {settings} SET longValue = '".$value."' WHERE property = '".$property."'"))
             {   // success
-                \YAWK\alert::draw("success", "Success!","Setting $property saved.","","120");
+                // \YAWK\alert::draw("success", "Success!","Setting $property saved.","","120");
                 return true;
             }
             else
