@@ -2019,10 +2019,18 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('twitterTweetButtonHeading', 'Heading', 27, 1, 'Heading above Tweet Button', 'form-control', 99),
 ('twitterTweetButtonSubtext', 'Subtext', 27, 1, 'Subtext beside Heading', 'form-control', 100),
 ('pinterestProfileUrl', 'https://www.pinterest.com/pinterest', 28, 1, 'Pinterest Profile URL', 'form-control', 101),
-('pinterestProfileWidth', '100%', 28, 1, 'Width in px or %', 'form-control', 102),
+('pinterestProfileWidth', '900', 28, 1, 'Width in px or %', 'form-control', 102),
 ('pinterestProfileHeight', '600', 28, 1, 'Height in px', 'form-control', 103),
 ('pinterestProfileHeading', 'Heading', 28, 1, 'Heading above Pinterest Profile', 'form-control', 104),
-('pinterestProfileSubtext', 'Subtext', 28, 1, 'Subtext beside Heading', 'form-control', 105);
+('pinterestProfileSubtext', 'Subtext', 28, 1, 'Subtext beside Heading', 'form-control', 105),
+('pinterestPinUrl', 'https://www.pinterest.com/pin/99360735500167749/', 29, 1, 'Pinterest Pin URL', 'form-control', 106),
+('pinterestPinSize', 'large', 29, 1, 'small, medium or large', 'form-control', 107),
+('pinterestPinHideDescription', 'true', 29, 1, 'Hide description? true|false', 'form-control', 108),
+('pinterestPinHeading', 'Heading', 29, 1, 'Heading above Pinterest Pin', 'form-control', 109),
+('pinterestPinSubtext', 'Subtext', 29, 1, 'Subtext beside Heading', 'form-control', 110),
+('pinterestFollowUrl', 'https://www.pinterest.com/pinterest/', 30, 1, 'Pinterest Follow URL', 'form-control', 111),
+('pinterestFollowHeading', 'Heading', 30, 1, 'Heading above Pinterest Follow Button', 'form-control', 112),
+('pinterestFollowSubtext', 'Subtext', 30, 1, 'Subtext beside Heading', 'form-control', 113);
 
 -- --------------------------------------------------------
 
@@ -2085,7 +2093,9 @@ INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`)
 (25, 1, 'Twitter (Timeline)', 'twitter_timeline', 'Embed the timeline of any Twitter User'),
 (26, 1, 'Twitter (Grid)', 'twitter_grid', 'Embed a timeline link as grid'),
 (27, 1, 'Twitter Button', 'twitter_tweetbutton', 'Embed a Tweet button to let users drop a tweet'),
-(28, 1, 'Pinterest Profile', 'pinterest_profile', 'Embed any Pinterest Profile');
+(28, 1, 'Pinterest Profile', 'pinterest_profile', 'Embed any Pinterest Profile'),
+(29, 1, 'Pinterest Pin', 'pinterest_pin', 'Embed any Pinterest Pin'),
+(30, 1, 'Pinterest Follow', 'pinterest_profile', 'Embed a Pinterest Follow Button');
 
 --
 -- Indizes der exportierten Tabellen
