@@ -88,5 +88,5 @@ else
 
 echo $headline;
 ?>
-<a data-pin-do="embedPin" data-pin-width="<?php echo $pinterestPinSize;?>" data-pin-terse="<?php echo $pinterestPinHideDescription;?>" href="<?php echo $pinterestPinUrl; ?>"></a>
+<a data-pin-do="embedPin" data-pin-width="<?php echo $pinterestPinSize;?>" data-pin-terse="<?php echo $pinterestPinHideDescription;?>" href="<?php echo $pinterestPinUrl;?>"></a>
 <script async defer src="//assets.pinterest.com/js/pinit.js"></script>

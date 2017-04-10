@@ -80,5 +80,5 @@ else
 
 echo $headline;
 ?>
-<a data-pin-do="embedUser" data-pin-board-width="<?php echo $pinterestProfileWidth; ?>" data-pin-scale-height="<?php echo $pinterestProfileHeight; ?>" data-pin-scale-width="115" href="<?php echo $pinterestProfileUrl;?>"></a>
+<a data-pin-do="embedUser" data-pin-board-width="<?php echo $pinterestProfileWidth;?>" data-pin-scale-height="<?php echo $pinterestProfileHeight;?>" data-pin-scale-width="115" href="<?php echo $pinterestProfileUrl;?>"></a>
 <script async defer src="//assets.pinterest.com/js/pinit.js"></script>
