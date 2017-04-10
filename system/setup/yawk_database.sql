@@ -2030,7 +2030,12 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('pinterestPinSubtext', 'Subtext', 29, 1, 'Subtext beside Heading', 'form-control', 110),
 ('pinterestFollowUrl', 'https://www.pinterest.com/pinterest/', 30, 1, 'Pinterest Follow URL', 'form-control', 111),
 ('pinterestFollowHeading', 'Heading', 30, 1, 'Heading above Pinterest Follow Button', 'form-control', 112),
-('pinterestFollowSubtext', 'Subtext', 30, 1, 'Subtext beside Heading', 'form-control', 113);
+('pinterestFollowSubtext', 'Subtext', 30, 1, 'Subtext beside Heading', 'form-control', 113),
+('bubblusUrl', 'https://bubbl.us/NDAxNjg1Mi83OTM0MjA4LzJhMTViYjE0MDhmN2ZjNjgxZTA3Mjc3YjdjYWY4MDM2-X?s=7934208', 31, 1, 'Url to your Bubbl.us Mindmap', 'form-control', 114),
+('bubblusWidth', '100%', 31, 1, 'Width in px or %', 'form-control', 115),
+('bubblusHeight', '600', 31, 1, 'Height in px', 'form-control', 116),
+('bubblusHeading', 'Heading', 31, 1, 'Heading above Bubbl.us Mindmap', 'form-control', 117),
+('bubblusSubtext', 'Subtext', 31, 1, 'Subtext beside Heading', 'form-control', 118);
 
 -- --------------------------------------------------------
 
@@ -2095,7 +2100,8 @@ INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`)
 (27, 1, 'Twitter Button', 'twitter_tweetbutton', 'Embed a Tweet button to let users drop a tweet'),
 (28, 1, 'Pinterest Profile', 'pinterest_profile', 'Embed any Pinterest Profile'),
 (29, 1, 'Pinterest Pin', 'pinterest_pin', 'Embed any Pinterest Pin'),
-(30, 1, 'Pinterest Follow', 'pinterest_profile', 'Embed a Pinterest Follow Button');
+(30, 1, 'Pinterest Follow', 'pinterest_profile', 'Embed a Pinterest Follow Button'),
+(31, 1, 'Bubbl.us Mindmap', 'bubblus', 'Embed Bubbl.us Mindmap');
 
 --
 -- Indizes der exportierten Tabellen
