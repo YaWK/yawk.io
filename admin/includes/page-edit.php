@@ -404,8 +404,8 @@ echo "
                   </div>
                   <div class="box-body" style="display: block;">
                       <!-- SUB MENU SELECTOR -->
-                      <label for="menu"><?php echo $lang['SUBMENU']; ?>
-                          <select name="menu" class="form-control">
+                      <label for="menu"><?php echo $lang['SUBMENU']; ?></label>
+                          <select name="menu" id="menu" class="form-control">
                               <option value="<?php print \YAWK\sys::getSubMenu($db, $page->id); ?>"><?php print \YAWK\sys::getMenuItem($db, $page->id); ?></option>
                               <option value="0">-- Kein Men&uuml; --</option>
                               <?php
@@ -423,7 +423,6 @@ echo "
                               }
                               ?>
                           </select>
-                      </label>
                   </div>
               </div>
 
