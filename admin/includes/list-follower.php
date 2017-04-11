@@ -53,7 +53,7 @@ else
         <h3 class="box-title"><?php echo $follower_title; ?></h3>
     </div>
     <div class="box-body">
-        <table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-hover" id="table-sort">
+        <table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-striped table-hover table-responsive" id="table-sort">
             <thead>
             <tr>
                 <td width="15%">&nbsp;</td>

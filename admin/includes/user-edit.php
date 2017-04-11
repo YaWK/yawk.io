@@ -154,7 +154,6 @@ echo "
     <!-- Main content -->
     <section class=\"content\">";
 
-
 echo "<script type='text/javascript'>
 
         function followUser(uid, hunted, user) {

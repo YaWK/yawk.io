@@ -131,7 +131,7 @@ echo "
         <a class="btn btn-success pull-right" href="index.php?page=page-new">
             <i class="glyphicon glyphicon-plus"></i> &nbsp;<?php print $lang['PAGE+']; ?></a>
 
-<table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-striped table-hover" id="table-sort">
+<table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-striped table-hover table-responsive" id="table-sort">
   <thead>
     <tr>
       <td width="3%"><strong><?php echo $lang['STATUS']; ?> </strong></td>

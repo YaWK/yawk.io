@@ -79,7 +79,7 @@ echo"<ol class=\"breadcrumb\">
         <a class="btn btn-success pull-right" title="<?php $lang['WIDGET+']; ?>" href="index.php?page=widget-new">
             <i class="glyphicon glyphicon-download-alt"></i> &nbsp;&nbsp;<?php print $lang['WIDGET_INSTALL']; ?></a>
 
-        <table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-hover" id="table-sort">
+        <table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-striped table-hover table-responsive" id="table-sort">
             <thead>
             <tr>
                 <td width="5%" class="text-center"><strong><?php echo "$lang[STATUS]"; ?></strong></td>

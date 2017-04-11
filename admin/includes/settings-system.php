@@ -23,7 +23,8 @@
 		});
 	}
 	saveHotkey();
-	$(document).ready(function() {
+	$(document).ready(function()
+	{
 		// textarea that will be transformed into editor
 		var savebutton = ('#savebutton');
 		var savebuttonIcon = ('#savebuttonIcon');
@@ -467,7 +468,7 @@ echo"<ol class=\"breadcrumb\">
 							// echo "<h2>Language Array</h2><pre>"; echo print_r($lang); echo "</pre>";
 
 							$dbTables = $db->get_tables();
-							echo "<table class=\"table table-striped table-hover table-condensed table-responsive table-bordered\">
+							echo "<table id=\"table-sort\" class=\"table table-striped table-hover table-condensed table-responsive table-bordered\">
 									<tr class=\"text-bold\"><td>ID</td>
 										<td>TABLE</td>
 									</tr>";

@@ -88,7 +88,7 @@ echo"<ol class=\"breadcrumb\">
 <a class="btn btn-success pull-right" title="<?php $lang['WIDGET_MANAGER']; ?>" href="index.php?page=widgets-manage">
 <i class="glyphicon glyphicon-folder-open"></i> &nbsp;&nbsp;<?php print $lang['WIDGET_MANAGER']; ?></a>
 
-<table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-hover" id="table-sort">
+<table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-striped table-hover table-responsive" id="table-sort">
   <thead>
     <tr>
       <td width="3%"><strong>&nbsp;</strong></td>
