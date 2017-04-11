@@ -1,7 +1,7 @@
 User-agent: *
-Disallow: /admin/
 Disallow: /.idea/
 Disallow: /.git/
+Disallow: /admin/
 Disallow: /system/
 Disallow: /tmp/
 
