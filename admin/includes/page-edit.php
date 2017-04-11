@@ -252,7 +252,7 @@ echo "
 ?>
 
 <!-- FORM -->
-  <form name="form" role="form" class="form-inline" action="index.php?page=page-edit&site=<?php print $page->alias; ?>&id=<?php echo $page->id; ?>" method="post">
+  <form name="form" role="form" action="index.php?page=page-edit&site=<?php print $page->alias; ?>&id=<?php echo $page->id; ?>" method="post">
       <div class="row">
           <div class="col-md-8">
     <!-- EDITOR -->
@@ -274,119 +274,159 @@ echo "
           </div>
           <div class="col-md-4">
           <!-- 2nd col -->
-              <dl>
-                  <h4><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;<?php echo $lang['SETTINGS']; ?> <small><?php echo "$lang[TITLE] $lang[AND] $lang[FILENAME]"; ?></small></h4>
-                  <dt> <!-- TITLE -->
+              <!-- TITLE and FILENAME -->
+              <div class="box box-default">
+                  <div class="box-header with-border">
+                      <h3 class="box-title"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;<?php echo $lang['SETTINGS']; ?> <small> <?php echo "$lang[TITLE] $lang[AND] $lang[FILENAME]"; ?></small></h3>
+                      <!-- box-tools -->
+                      <div class="box-tools pull-right">
+                          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                          </button>
+                      </div>
+                      <!-- /.box-tools -->
+                  </div>
+                  <div class="box-body" style="display: block;">
                       <label for="title"><?php print $lang['TITLE']; ?></label>
-                  </dt>
-                  <dd>
-                      <input id="title" type="text" class="form-control" name="title" size="64" maxlength="255" value="<?php print $page->title; ?>" />
-                  </dd>
-                  <dt> <!-- ALIAS -->
-                      <label for="alias"><?php echo $lang['FILENAME']; ?></label>
-                  </dt>
-                  <dd>
-                      <input id="alias" type="text" class="form-control" name="alias" size="64" maxlength="255"
-                      <?php if (isset($readonly)) { print $readonly; } ?> value="<?php print $page->alias; ?>">
-                  </dd>
-                    <hr>
-                  <h4><i class="fa fa-clock-o"></i>&nbsp;&nbsp;<?php echo $lang['PUBLISHING']; ?> <small><?php echo "$lang[EFFECTIVE_TIME] $lang[AND] $lang[PRIVACY]"; ?></small></h4>
-                  <dt> <!-- PUBLISH DATE -->
-                      <label for="datetimepicker1"><?php print $lang['START_PUBLISH']; ?>
-                  </dt>
-                  <dd>
-                      <input class="form-control" id="datetimepicker1" data-date-format="yyyy-mm-dd hh:mm:ss" type="text" name="date_publish" maxlength="19" value="<?php print $page->date_publish; ?>">
-                  </dd>
-                  <dt> <!-- END PUBLISH DATE -->
-                      <label for="datetimepicker2"><?php print $lang['END_PUBLISH']; ?></label>
-                  </dt>
-                  <dd>
-                      <input type="text" class="form-control" id="datetimepicker2" name="date_unpublish" data-date-format="yyyy-mm-dd hh:mm:ss" maxlength="19" value="<?php print $page->date_unpublish; ?>">
-                  </dd>
-                  <dt> <!-- ACCESS RIGHTS - gid select field -->
-                      <label for="gidselect"> <?php print $lang['PAGE_VISIBLE']; ?></label>
-                  </dt>
-                  <dd>
-                      <select id="gidselect" name="gid" class="form-control">
-                          <option value="<?php print \YAWK\sys::getGroupId($db, $page->id, "pages"); ?>" selected><?php print \YAWK\user::getGroupNameFromID($db, $page->gid); ?></option>
-                          <?php
-                          foreach(YAWK\sys::getGroups($db, "pages") as $role) {
-                              print "<option value=\"".$role['id']."\"";
-                              if (isset($_POST['gid'])) {
-                                  if($_POST['gid'] === $role['id']) {
-                                      print " selected=\"selected\"";
-                                  }
-                                  else if($page->gid === $role['id'] && !$_POST['gid']) {
-                                      print " selected=\"selected\"";
-                                  }
-                              }
-                              print ">".$role['value']."</option>";
-                          }
-                          ?>
-                      </select>
-                  </dd>
+                      <input id="title" class="form-control" name="title" maxlength="255" value="<?php print $page->title; ?>">
 
-                  <dt>
+                      <label for="alias"><?php echo $lang['FILENAME']; ?></label>
+                      <input id="alias" class="form-control" name="alias" maxlength="255"
+                      <?php if (isset($readonly)) { print $readonly; } ?> value="<?php print $page->alias; ?>">
+                  </div>
+              </div>
+
+              <!-- PUBLISHING -->
+              <div class="box">
+                  <div class="box-header with-border">
+                      <h3 class="box-title"><i class="fa fa-clock-o"></i>&nbsp;&nbsp;<?php echo $lang['PUBLISHING']; ?> <small><?php echo "$lang[EFFECTIVE_TIME] $lang[AND] $lang[PRIVACY]"; ?></small></h3>
+                      <!-- box-tools -->
+                      <div class="box-tools pull-right">
+                          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                          </button>
+                      </div>
+                      <!-- /.box-tools -->
+                  </div>
+                  <div class="box-body">
+                      <label for="datetimepicker1"><?php print $lang['START_PUBLISH']; ?></label>
+                      <input class="form-control" id="datetimepicker1" data-date-format="yyyy-mm-dd hh:mm:ss" name="date_publish" maxlength="19" value="<?php print $page->date_publish; ?>">
+
+                      <!-- END PUBLISH DATE -->
+                      <label for="datetimepicker2"><?php print $lang['END_PUBLISH']; ?></label>
+                      <input type="text" class="form-control" id="datetimepicker2" name="date_unpublish" data-date-format="yyyy-mm-dd hh:mm:ss" maxlength="19" value="<?php print $page->date_unpublish; ?>">
+
+                      <label for="gidselect"> <?php print $lang['PAGE_VISIBLE']; ?></label>
+                      <select id="gidselect" name="gid" class="form-control">
+                                  <option value="<?php print \YAWK\sys::getGroupId($db, $page->id, "pages"); ?>" selected><?php print \YAWK\user::getGroupNameFromID($db, $page->gid); ?></option>
+                                  <?php
+                                  foreach(YAWK\sys::getGroups($db, "pages") as $role) {
+                                      print "<option value=\"".$role['id']."\"";
+                                      if (isset($_POST['gid'])) {
+                                          if($_POST['gid'] === $role['id']) {
+                                              print " selected=\"selected\"";
+                                          }
+                                          else if($page->gid === $role['id'] && !$_POST['gid']) {
+                                              print " selected=\"selected\"";
+                                          }
+                                      }
+                                      print ">".$role['value']."</option>";
+                                  }
+                                  ?>
+                      </select>
+
                       <!-- PAGE ON / OFF STATUS -->
                       <label for="published"><?php print $lang['PAGE_STATUS']; ?></label>
-                  </dt>
-                  <dd>
-                      <?php if($page->published === '1'){
+                      <?php if($page->published === '1')
+                      {
                           $publishedHtml = "<option value=\"1\" selected=\"selected\">$lang[ONLINE]</option>";
                           $publishedHtml .= "<option value=\"0\" >offline</option>";
-                      } else {
-                          $publishedHtml = "<option value=\"0\" selected=\"selected\">$lang[OFFLINE]</option>";
-                          $publishedHtml .= "<option value=\"1\" >online</option>";
-                      } ?>
-                      <select id="published" name="published" class="form-control">
+                      }
+                      else
+                          {
+                              $publishedHtml = "<option value=\"0\" selected=\"selected\">$lang[OFFLINE]</option>";
+                              $publishedHtml .= "<option value=\"1\" >online</option>";
+                          }
+                      ?>
+                          <select id="published" name="published" class="form-control">
                           <?php echo $publishedHtml; ?>
-                      </select>
-                  </dd>
-              </dl>
+                          </select>
+                  </div>
+              </div>
 
               <!-- META TAGS -->
-              <hr>
-              <h4><i class="fa fa-google"></i>&nbsp;&nbsp;<?php echo $lang['META_TAGS']; ?> <small><?php echo $lang['PAGE_SEO']; ?> </small></h4>
-              <!-- LOCAL META SITE DESCRIPTION -->
-              <label for="metadescription"><?php echo $lang['META_DESC']; ?></label>
-              <input type="text" size="64" id="metadescription" class="form-control" maxlength="255" placeholder="<?php echo $lang['META_DESC_PLACEHOLDER']; ?>" name="metadescription" value="<?php print $page->getMetaTags($db, $page->id, "description");  ?>">
-              <!-- LOCAL META SITE KEYWORDS -->
-              <label for="metakeywords"><?php echo $lang['META_KEYWORDS']; ?></label>
-              <input type="text" size="64" id="metakeywords" class="form-control" placeholder="<?php echo $lang['META_KEYWORDS_PLACEHOLDER']; ?>" name="metakeywords" value="<?php print $page->getMetaTags($db, $page->id, "keywords");  ?>">
-              <hr>
-              <!-- ENDE META TAGS -->
+              <div class="box box-default">
+                  <div class="box-header with-border">
+                      <h3 class="box-title"><i class="fa fa-google"></i>&nbsp;&nbsp;<?php echo $lang['META_TAGS']; ?> <small><?php echo $lang['PAGE_SEO']; ?></small></h3>
+                      <!-- box-tools -->
+                      <div class="box-tools pull-right">
+                          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                          </button>
+                      </div>
+                      <!-- /.box-tools -->
+                  </div>
+                  <div class="box-body" style="display: block;">
+                      <!-- LOCAL META SITE DESCRIPTION -->
+                      <label for="metadescription"><?php echo $lang['META_DESC']; ?></label>
+                      <input type="text" size="64" id="metadescription" class="form-control" maxlength="255" placeholder="<?php echo $lang['META_DESC_PLACEHOLDER']; ?>" name="metadescription" value="<?php print $page->getMetaTags($db, $page->id, "description"); ?>">
+                      <!-- LOCAL META SITE KEYWORDS -->
+                      <label for="metakeywords"><?php echo $lang['META_KEYWORDS']; ?></label>
+                      <input type="text" size="64" id="metakeywords" class="form-control" placeholder="<?php echo $lang['META_KEYWORDS_PLACEHOLDER']; ?>" name="metakeywords" value="<?php print $page->getMetaTags($db, $page->id, "keywords");  ?>">
+                  </div>
+              </div>
 
-              <!-- BACKGROUND IMAGE -->
-              <h4><i class="fa fa-photo"></i>&nbsp;&nbsp;<?php echo $lang['BG_IMAGE']; ?> <small><?php echo $lang['SPECIFIC_PAGE']; ?></small></h4>
-              <!-- SITE BG IMAGE -->
-              <?php echo $lang['BG_IMAGE']; ?>
-              <input type="text" size="64" class="form-control" placeholder="media/images/background.jpg" name="bgimage" value="<?php print $page->bgimage;  ?>">
+              <!-- BG IMAGE -->
+              <div class="box box-default">
+                  <div class="box-header with-border">
+                      <h3 class="box-title"><i class="fa fa-photo"></i>&nbsp;&nbsp;<?php echo $lang['BG_IMAGE']; ?> <small><?php echo $lang['SPECIFIC_PAGE']; ?></small></h3>
+                      <!-- box-tools -->
+                      <div class="box-tools pull-right">
+                          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                          </button>
+                      </div>
+                      <!-- /.box-tools -->
+                  </div>
+                  <div class="box-body" style="display: block;">
+                      <!-- PAGE BG IMAGE -->
+                      <?php echo $lang['BG_IMAGE']; ?>
+                      <input type="text" size="64" class="form-control" placeholder="media/images/background.jpg" name="bgimage" value="<?php print $page->bgimage;  ?>">
+                  </div>
+              </div>
 
-              <hr>
-              <!-- ENDE META TAGS -->
-              <h4><i class="fa fa-bars"></i>&nbsp;&nbsp;<?php echo $lang['SUBMENU']; ?> <small><?php echo $lang['ADD_PAGE_MENU'] ?></small></h4>
-
-              <!-- SUB MENU SELECTOR -->
-              <label for="menu"><?php echo $lang['SUBMENU']; ?>
-                  <select name="menu" class="form-control">
-                      <option value="<?php print \YAWK\sys::getSubMenu($db, $page->id); ?>"><?php print \YAWK\sys::getMenuItem($db, $page->id); ?></option>
-                      <option value="0">-- Kein Men&uuml; --</option>
-                      <?php
-                      foreach(YAWK\sys::getMenus($db) as $menue){
-                          print "<option value=\"".$menue['id']."\"";
-                          if (isset($_POST['menu'])) {
-                              if($_POST['menu'] === $menue['id']){
-                                  print " selected=\"selected\"";
+              <!-- SUBMENU SELECTOR -->
+              <div class="box box-default">
+                  <div class="box-header with-border">
+                      <h3 class="box-title"><i class="fa fa-bars"></i>&nbsp;&nbsp;<?php echo $lang['SUBMENU']; ?> <small><?php echo $lang['ADD_PAGE_MENU'] ?></small></h3>
+                      <!-- box-tools -->
+                      <div class="box-tools pull-right">
+                          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                          </button>
+                      </div>
+                      <!-- /.box-tools -->
+                  </div>
+                  <div class="box-body" style="display: block;">
+                      <!-- SUB MENU SELECTOR -->
+                      <label for="menu"><?php echo $lang['SUBMENU']; ?>
+                          <select name="menu" class="form-control">
+                              <option value="<?php print \YAWK\sys::getSubMenu($db, $page->id); ?>"><?php print \YAWK\sys::getMenuItem($db, $page->id); ?></option>
+                              <option value="0">-- Kein Men&uuml; --</option>
+                              <?php
+                              foreach(YAWK\sys::getMenus($db) as $menue){
+                                  print "<option value=\"".$menue['id']."\"";
+                                  if (isset($_POST['menu'])) {
+                                      if($_POST['menu'] === $menue['id']){
+                                          print " selected=\"selected\"";
+                                      }
+                                      else if($page->menu === $menue['id'] && !$_POST['menu']){
+                                          print " selected=\"selected\"";
+                                      }
+                                  }
+                                  print ">".$menue['name']."</option>";
                               }
-                              else if($page->menu === $menue['id'] && !$_POST['menu']){
-                                  print " selected=\"selected\"";
-                              }
-                          }
-                          print ">".$menue['name']."</option>";
-                      }
-                      ?>
-                  </select>
-              </label>
+                              ?>
+                          </select>
+                      </label>
+                  </div>
+              </div>
+
           </div>
       </div>
 
