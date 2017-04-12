@@ -164,7 +164,7 @@ namespace YAWK {
                 {   // init() failed - INSTALL.INI is not found or not readable
                     require_once('system/classes/alert.php');
                     \YAWK\alert::draw("danger", "$lang[INSTALLER_BROKEN]", "$lang[INSTALLER_BROKEN_SUBTEXT]", "","");
-                    exit;
+                    die ("$lang[INSTALLER_BROKEN] $lang[INSTALLER_BROKEN_SUBTEXT]");
                 }
         }   // ./ end installer init()
 
@@ -204,6 +204,11 @@ namespace YAWK {
                         // STEP 1 - language selector
                         $this->step1($language, $lang);
                     }
+                    // STEP 1 - Language Data
+                    if (isset($_POST['step']) && $_POST['step'] === "1")
+                    {   // in this step, the user sets the language
+                        $this->step1($language, $lang);
+                    }
 
                     // STEP 2 - MySQL data
                     if (isset($_POST['step']) && $_POST['step'] === "2")
@@ -233,7 +238,7 @@ namespace YAWK {
                 else
                     {
                         \YAWK\alert::draw("danger", "$lang[INSTALLER_BROKEN]", "$lang[INSTALLER_BROKEN_SUBTEXT]", "","");
-                        exit;
+                        die ("$lang[INSTALLER_BROKEN] $lang[INSTALLER_BROKEN_SUBTEXT]");
                     }
                     // prevent display anything else than the single steps
                     exit;
@@ -351,7 +356,7 @@ namespace YAWK {
                                 <h4>$lang[SYS_REQ]</h4>
                                 <ul class=\"list-unstyled\">
                                     <li>$this->phpCheckIcon PHP $this->phpVersionRequired <small><i><small>($lang[USES]: ".phpversion().")</small></i></small></li>
-                                    <li>$this->apacheCheckIcon Apache 2.x <small><i><small>($lang[USES]: ".apache_get_version().")</small></i></small></li>
+                                    <li>$this->apacheCheckIcon Apache 2.x <small><i><small>($lang[AVAILABLE]: ".$this->apacheStatus.")</small></i></small></li>
                                         <ul class=\"list-unstyled small\">
                                             <li>&nbsp;&nbsp;&nbsp;&nbsp;$this->zlibCheckIcon +mod_gzip <small><i>($lang[AVAILABLE]: ".$this->zlib.") </i></small></li>
                                             <li>&nbsp;&nbsp;&nbsp;&nbsp;$this->modRewriteCheckIcon +mod_rewrite <small><i>($lang[AVAILABLE]: ".$this->modRewriteStatus.") </i></small></li>
@@ -492,7 +497,7 @@ namespace YAWK {
                 }
         }
 
-        /** step 4 - save prjects settings and draw a form to enter user data (email, name, password...)
+        /** step 4 - save project settings and draw a form to enter user data (email, name, password...)
          * @param array $setup installation settings
          * @param object $language language object
          * @param array $lang language data array
@@ -929,7 +934,6 @@ ExpiresDefault A86400
             if ($this->modRewriteStatus === "true")
             {   // ok
                 $this->modRewriteCheckIcon = "<i class=\"fa fa-check text-success\"></i>";
-                $i++;
             }
             else
             {   // failed
@@ -937,7 +941,7 @@ ExpiresDefault A86400
             }
 
             // check if
-            if ($i < 3)
+            if ($i < 2)
             {
                 $this->serverRequirements = "false";
             }
@@ -1001,18 +1005,43 @@ ExpiresDefault A86400
          * return bool
          */
         public function checkApacheVersion()
-        {
-            if ($this->apacheVersion = apache_get_version())
-            {
-                // ok, apache is set
-                $this->apacheStatus = "true";
-                return true;
+        {   // check if server software info is readable and set
+            if (isset($_SERVER['SERVER_SOFTWARE']) && (!empty($_SERVER['SERVER_SOFTWARE'])))
+            {   // test server software
+                if ($_SERVER['SERVER_SOFTWARE'] === "Apache")
+                {   // apache seems to be running
+                    $this->apacheStatus = "true";
+                    return true;
+                }
+                else
+                    {   //
+                        if ($this->apacheStatus = apache_get_version())
+                        {
+                            $this->apacheStatus = "true";
+                            return true;
+                        }
+                        else
+                            {
+                                // no apache detected...
+                                $this->apacheStatus = "false";
+                                return false;
+                            }
+                    }
             }
             else
-            {   // could not detect apache
-                $this->apacheStatus = "false";
-                return true;
-            }
+                {
+                    if ($this->apacheStatus = apache_get_version())
+                    {
+                        $this->apacheStatus = "true";
+                        return true;
+                    }
+                    else
+                    {
+                        // server software var not set or readable
+                        $this->apacheStatus = "unable to detect";
+                        return true; // let user try to install anyway
+                    }
+                }
         }
 
         /**
@@ -1025,12 +1054,12 @@ ExpiresDefault A86400
         public function checkZlib()
         {   // check if zlib is installed
             if(extension_loaded('zlib'))
-            {   // installed
+            {   // zlin loaded
                 $this->zlib = "true";
                 return true;
             }
             else
-            {   // not installed
+            {   // zlib not loaded
                 $this->zlib = "false";
                 return false;
             }
@@ -1038,22 +1067,39 @@ ExpiresDefault A86400
 
         /**
          * Check if mod_rewrite is available
+         * <p>Note: this does not work on some restricted configured shared hosting providers.</p>
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
          * @return bool
          */
         public function checkModRewrite()
-        {   // check if zlib is installed
-            if(in_array('mod_rewrite', apache_get_modules()))
-            {   // installed
+        {   // check if mod_rewrite is in module list
+            // note: this does not work on some restricted configured shared hosting providers.
+            // even when mod_rewrite works, sometimes the identification fails due configuration restrictions.
+            if(function_exists('apache_get_modules') && in_array('mod_rewrite',apache_get_modules()))
+            {   // apache!
+                $this->modRewriteStatus = "true";
+                return true;
+            }
+            // IIS ?
+            else if (isset($_SERVER['IIS_UrlRewriteModule']))
+            {   // IIS. meh.
                 $this->modRewriteStatus = "true";
                 return true;
             }
             else
-            {   // not installed
-                $this->modRewriteStatus = "false";
-                return false;
+            {   // anyway - check if mod_rewrite is loaded
+                if (extension_loaded('mod_rewrite'))
+                {   // mod_rewrite loaded
+                    $this->modRewriteStatus = "true";
+                    return true;
+                }
+                else
+                {   // mod_rewrite not loaded
+                    $this->modRewriteStatus = "false";
+                    return false;
+                }
             }
         }
 

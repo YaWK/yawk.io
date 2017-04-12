@@ -33,7 +33,7 @@ echo"<ol class=\"breadcrumb\">
 /* page content start here */
 ?>
 
-<table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-hover" id="table-sort">
+<table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-striped table-hover table-responsive" id="table-sort">
     <thead>
     <tr>
         <td width="3%"><strong>&nbsp;</strong></td>

@@ -14,9 +14,21 @@ if (isset($_GET['add']) && ($_GET['add'] === "1"))
     }
     else
     {   // throw error
-        print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[WIDGET_CREATE_FAILED]", "", 5800);
+        print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[WIDGET_CREATE_FAILED]<br>Widget ID: $newWidgetID", "", 5800);
     }
 }
+
+// COPY WIDGET
+if($_GET['copy'] === "true") {
+     if ($widget->copy($db, $_GET['widget']))
+     {   // widget copied
+         print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[WIDGET] $lang[ID]: ".$_GET['widget']." $lang[COPIED]","page=widgets","1800");
+     }
+     else
+     {   // throw error
+         print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[WIDGET] ".$_GET['widget']." $lang[ID] <b>$lang[NOT] $lang[COPIED]</b>","page=widgets","4800");
+     }
+ }
 
 // DELETE WIDGET
 if (isset($_GET['del']) && ($_GET['del'] === "1"))
@@ -76,7 +88,7 @@ echo"<ol class=\"breadcrumb\">
 <a class="btn btn-success pull-right" title="<?php $lang['WIDGET_MANAGER']; ?>" href="index.php?page=widgets-manage">
 <i class="glyphicon glyphicon-folder-open"></i> &nbsp;&nbsp;<?php print $lang['WIDGET_MANAGER']; ?></a>
 
-<table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-hover" id="table-sort">
+<table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-striped table-hover table-responsive" id="table-sort">
   <thead>
     <tr>
       <td width="3%"><strong>&nbsp;</strong></td>

@@ -298,7 +298,7 @@ namespace YAWK
 
             // Include and instantiate the class.
             require_once 'system/engines/mobiledetect/Mobile_Detect.php';
-            $detect = new \Mobile_Detect;
+            $detect = new \YAWK\Mobile_Detect;
 
             $this->deviceType = ($detect->isMobile() ? ($detect->isTablet() ? 'Tablet' : 'Phone') : 'Desktop');
 

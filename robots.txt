@@ -1,6 +1,10 @@
 User-agent: *
-Disallow: /admin/
 Disallow: /.idea/
 Disallow: /.git/
+Disallow: /admin/
 Disallow: /system/
 Disallow: /tmp/
+
+# uncomment following 2 lines if you NOT want your page to be tracked by waybackmachine (https://archive.org/web/)
+# User-agent:ia_archiver
+# Disallow: /

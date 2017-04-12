@@ -6,7 +6,6 @@
 namespace YAWK {
     /**
      * <b>Database class db</b> <i>extends \mysqli</i>
-     * @package YAWK
      */
     final class db extends \mysqli {
         private $config;
@@ -160,9 +159,9 @@ namespace YAWK {
                 if( substr(trim($query),-1)==';' )
                 {
                     if(!$this->query($query))
-                    {
-                       $error = 'Error performing query \'<strong>' . $query . '\': ' . mysqli_error($this);
-                       file_put_contents($errorFilename, $error."\n");
+                    {   // error handling
+                       $error = 'Error performing query \'<strong>' . $query . '\': ' . @mysqli_error($this);
+                       @file_put_contents($errorFilename, $error."\n");
                        //exit;
                     }
                     $query = '';
@@ -201,6 +200,17 @@ namespace YAWK {
                         echo mysqli_errno($this). ' ' . mysqli_error($this).'<br>';
                     }
             }
+        }
+
+        public function get_tables()
+        {
+            $tableList = array();
+            $res = $this->query("SHOW TABLES");
+            while($row = mysqli_fetch_array($res))
+            {
+                $tableList[] = $row[0];
+            }
+            return $tableList;
         }
 
     } // ./dbclass

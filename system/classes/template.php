@@ -722,9 +722,9 @@ namespace YAWK {
          * @param int    $id affected template ID
          * @return bool
          */
-        public function setTemplateDetails($db, $description = "", $author = "", $authorUrl ="", $id)
+        public function setTemplateDetails($db, $description, $author, $authorUrl, $id)
         {    /** @var $db \YAWK\db  */
-            if ($res = $db->query("UPDATE {templates} SET label = '$description', subAuthor = '$author', subAuthorUrl = '$authorUrl' WHERE id = $id"))
+            if ($res = $db->query("UPDATE {templates} SET description = '".$description."', subAuthor = '".$author."', subAuthorUrl = '".$authorUrl."' WHERE id = '".$id."'"))
             {   // template details updated...
                 return true;
             }
@@ -924,11 +924,7 @@ namespace YAWK {
          */
         public function getFormElements($db, $settings, $type, $lang, $user)
         {   // loop trough array
-            $i_settings = 0;
-            if(!isset($settings) || (empty($settings)) || (!is_array($settings)))
-            {	// if settings are not set, try to get them...
-                $settings = \YAWK\template::getAllSettingsIntoArray($db, $user);
-            }
+            // removed not needed checkup
             if(!isset($type) && (empty($type)))
             {	// if param 'type' is missing, set type 1 as default
                 $type = 1;

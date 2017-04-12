@@ -54,7 +54,7 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
             <a class="btn btn-success pull-right" role="dialog" data-confirm="<?php echo $lang['SYSLOG_DEL_CONFIRM']; ?>" href="index.php?page=syslog&clear=1">
                 <i class="fa fa-trash-o"></i> &nbsp;<?php print $lang['SYSLOG_CLEAR']; ?></a>
 
-<table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-hover" id="table-sort">
+<table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-striped table-hover table-responsive" id="table-sort">
     <thead>
     <tr>
         <td width="3%"><strong><?php echo $lang['ID']; ?></strong></td>

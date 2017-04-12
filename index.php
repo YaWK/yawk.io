@@ -29,9 +29,9 @@
  */
 session_start();
 /* Error Reporting - this is for DEVELOPMENT PURPOSE ONLY! */
-error_reporting(E_ALL ^ E_STRICT);
+// error_reporting(E_ALL ^ E_STRICT);
 ini_set('display_errors', 0);
-//error_reporting(0);
+error_reporting(0);
 /* include core files */
 require_once('system/classes/db.php');               // database connection
 require_once('system/classes/settings.php');         // get/set settings from settings db

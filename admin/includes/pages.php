@@ -131,7 +131,7 @@ echo "
         <a class="btn btn-success pull-right" href="index.php?page=page-new">
             <i class="glyphicon glyphicon-plus"></i> &nbsp;<?php print $lang['PAGE+']; ?></a>
 
-<table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-striped table-hover" id="table-sort">
+<table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-striped table-hover table-responsive" id="table-sort">
   <thead>
     <tr>
       <td width="3%"><strong><?php echo $lang['STATUS']; ?> </strong></td>
@@ -246,7 +246,8 @@ $i_pages_unpublished = 0;
         <h3 class="box-title"><i class="glyphicon glyphicon-stats"></i> &nbsp;<?php print $lang['PAGE_STATS']; ?></h3>
     </div>
     <div class="box-body">
-        <?php  $page = $lang['PAGE'];
+        <?php
+        $page = $lang['PAGE'];
         $pages = $lang['PAGES'];
 
         if ($i_pages > 1) { $seiten="$i_pages $pages $lang[OVERALL]"; }
@@ -254,7 +255,7 @@ $i_pages_unpublished = 0;
         else { $seiten = "$lang[NO_PAGE_CREATED]"; }
 
         if ($i_pages_published > 1) { $pub="$i_pages_published $pages $lang[PUBLISHED]"; }
-        else if ($i_pages_published === '1') { $pub="$i_pages_published $page $lang[PUBLISHED]"; }
+        else if ($i_pages_published == 1) { $pub="$i_pages_published $page $lang[PUBLISHED]."; }
         else { $pub = "$lang[NO_PAGE_PUBLISHED]"; }
 
         if ($i_pages_unpublished > 1) { $unpub="$i_pages_unpublished $pages $lang[OFFLINE]"; }

@@ -103,7 +103,7 @@ if(isset($_GET['backend']) && (isset($_GET['gid'])))
 <!-- signup plg btn -->
 <a class="btn btn-default pull-right" href="index.php?plugin=signup">
 <i class="fa fa-plug"></i> &nbsp;<?php print $lang['SIGNUP']; ?></a>
-<table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-hover" id="table-sort">
+<table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-striped table-hover table-responsive" id="table-sort">
     <thead>
     <tr>
         <td width="5%"><strong><?php echo $lang['ID']; ?></strong></td>

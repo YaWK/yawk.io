@@ -2,8 +2,8 @@
 // set default values
 $youtubeVideoUrl="http://www.youtube.com/";
 $youtubeVideo='';
-$youtubeHeading='';
-$youtubeSubtext='';
+$heading='';
+$subtext='';
 $youtubeDescription='';
 $youtubeFullscreen="true";
 $youtubeHeight="720";
@@ -53,12 +53,12 @@ if (isset($_GET['widgetID']))
 
                 /* heading */
                 case 'youtubeHeading';
-                    $youtubeHeading = $w_value;
+                    $heading = $w_value;
                     break;
 
                 /* subtext */
                 case 'youtubeSubtext';
-                    $youtubeSubtext = $w_value;
+                    $subtext = $w_value;
                     break;
 
                 /* description */
@@ -81,15 +81,15 @@ else
 }
 
 // if a heading is set and not empty
-if (isset($youtubeHeading) && (!empty($youtubeHeading)))
+if (isset($heading) && (!empty($heading)))
 {   // add a h1 tag to heading string
-    $heading = "$youtubeHeading";
+    $heading = "$heading";
 
     // if subtext is set, add <small> subtext to string
-    if (isset($youtubeSubtext) && (!empty($youtubeSubtext)))
+    if (isset($subtext) && (!empty($subtext)))
     {   // build a headline with heading and subtext
-        $subtext = "<small>$youtubeSubtext</small>";
-        $headline = "<h1>$youtubeHeading&nbsp;"."&nbsp;$subtext</h1>";
+        $subtext = "<small>$subtext</small>";
+        $headline = "<h1>$heading&nbsp;"."$subtext</h1>";
     }
     else
         {   // build just a headline - without subtext

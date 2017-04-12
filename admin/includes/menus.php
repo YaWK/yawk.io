@@ -96,7 +96,7 @@ if (isset($_GET['del']) && ($_GET['del'] === "1"))
     <div class="box-body">
 
 <a href="index.php?page=menu-new" class="btn btn-success pull-right"><b class="glyphicon glyphicon-plus"></b> <?php print $lang['MENU+']; ?></a>
-<table class="table table-hover" id="table-sort">
+<table class="table table-striped table-hover table-responsive" id="table-sort">
   <thead>
     <tr>
       <td width="5%">&nbsp;</td>

@@ -32,6 +32,52 @@ namespace YAWK {
 
 
         /**
+         * Return the content of /robots.txt
+         * @author      Daniel Retzl <danielretzl@gmail.com>
+         * @version     1.0.0
+         * @link        http://yawk.io
+         * @param string $path absolute path to the robots.txt file
+         * @return string|bool
+         */
+        public static function getRobotsText($db, $path)
+        {
+            $robotsText = "$path/robots.txt";
+                $file = file_get_contents($robotsText);
+                if (!empty($file))
+                {
+                    return $file;
+                }
+                else
+                    {   // try to get robots.txt from database
+                        if ($file = \YAWK\settings::getLongSetting($db, "robotsText-long"))
+                        {
+                            return $file;
+                        }
+                        else
+                        {   // db setting robotsText-long is empty
+                            return false;
+                        }
+                    }
+        }
+
+        /**
+         * Set the content of /robots.txt (overwrite)
+         * @author      Daniel Retzl <danielretzl@gmail.com>
+         * @version     1.0.0
+         * @link        http://yawk.io
+         * @param string $path absolute path to the robots.txt file
+         * @param string $content file content to write in robots.txt
+         * @return bool
+         */
+        public static function setRobotsText($path, $content)
+        {
+            // check if file content is set...
+            // set robots.txt path + filename
+            $filename = "$path"."robots.txt";
+            return file_put_contents("$filename", "$content");
+        }
+
+        /**
          * Read a directory recursively
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0

@@ -37,16 +37,13 @@ echo"<ol class=\"breadcrumb\">
         <h3 class="box-title"><?php echo $lang['HELP']; ?></h3>
     </div>
     <div class="box-body">
-<!-- APIGEN IFRAME
-<iframe src="../../../yawk-LTE-docs/index.html"
+<!-- APIGEN IFRAME -->
+<iframe src="http://docs.yawk.io/"
         width="100%"
         height="840"
-        border="none"
         scrolling="yes"
         frameborder="0">
-    <p>Sorry, your Browser do not support iframes.</p>
 </iframe>
--->
     </div>
 </div>
 <br><br><br><br>
