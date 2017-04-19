@@ -3,8 +3,15 @@ namespace YAWK\WIDGETS {
     class jPlayer
     {
         /** * @var string current user name */
-        public $mediaFolder;
-        public $folder;
+        public $mediaFolder;        // path to media root folder usually media/audio
+        public $folder;             // media subfolder where the files are stored
+        public $playerSettings;     // player settings array
+
+        public function getPlayerSettings($db, $widgetID)
+        {
+            // ... method call: \YAWK\widgets::getWidgetSettingsIntoArray($db, $widgetID)
+            // return $playerSettingsArray();
+        }
 
         public function getFiles($mediaFolder, $folder)
         {
@@ -63,14 +70,26 @@ namespace YAWK\WIDGETS {
                                 }
 
                                 // process .OGG files
-                                else if (strpos($file, ".ogg") || (strpos($file, ".OGG")) !== false)
+                                else if (strpos($file, ".oga") || (strpos($file, ".OGA")) !== false)
                                 {   // encode filename
                                     $file = rawurlencode($file);
                                     // remove file extension from title string
-                                    $title = rtrim($title, ".ogg");
-                                    $title = rtrim($title, ".OGG");
+                                    $title = rtrim($title, ".oga");
+                                    $title = rtrim($title, ".OGA");
                                     // output JSON data for OGG files
                                     echo "{ name:\"$title\",oga:\"$this->mediaFolder/$file\"},\n\r";
+                                    // optional: add ogg files to filesArray
+                                    // $filesArray[] = array("title" => $title, "oga" => $file);
+                                }
+                                // process .WAV files
+                                else if (strpos($file, ".wav") || (strpos($file, ".WAV")) !== false)
+                                {   // encode filename
+                                    $file = rawurlencode($file);
+                                    // remove file extension from title string
+                                    $title = rtrim($title, ".wav");
+                                    $title = rtrim($title, ".WAV");
+                                    // output JSON data for OGG files
+                                    echo "{ name:\"$title\",wav:\"$this->mediaFolder/$file\"},\n\r";
                                     // optional: add ogg files to filesArray
                                     // $filesArray[] = array("title" => $title, "oga" => $file);
                                 }
