@@ -2035,7 +2035,16 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('bubblusWidth', '100%', 31, 1, 'Width in px or %', 'form-control', 115),
 ('bubblusHeight', '600', 31, 1, 'Height in px', 'form-control', 116),
 ('bubblusHeading', 'Heading', 31, 1, 'Heading above Bubbl.us Mindmap', 'form-control', 117),
-('bubblusSubtext', 'Subtext', 31, 1, 'Subtext beside Heading', 'form-control', 118);
+('bubblusSubtext', 'Subtext', 31, 1, 'Subtext beside Heading', 'form-control', 118),
+('jPlayerUserMediaFolder', 'demo', 32, 1, 'Any folder in media/audio/', 'form-control', 119),
+('jPlayerWidth', '100%', 32, 1, 'Width in px or %', 'form-control', 120),
+('jPlayerHeading', 'Heading', 32, 1, 'Heading above jPlayer', 'form-control', 121),
+('jPlayerSubtext', 'Subtext', 32, 1, 'Subtext beside Heading', 'form-control', 122),
+('jPlayerSkin', 'dark', 32, 1, 'Skin (dark | light)', 'form-control', 123),
+('jPlayerRootMediaFolder', 'media/audio/', 32, 1, 'Path to media root folder', 'form-control', 124),
+('jPlayerInstance', '1', 32, 1, 'Player Instance ID - if more than one player is loaded on the same page', 'form-control', 125),
+('jPlayerDefaultVolume', '0.3', 32, 1, 'Initial Player Volume 0 to 1 (eg. 0.3)', 'form-control', 126),
+('jPlayerInitialMute', 'false', 32, 1, 'Set mute on startup (true | false)', 'form-control', 127);
 
 -- --------------------------------------------------------
 
