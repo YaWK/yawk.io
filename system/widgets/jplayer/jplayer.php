@@ -1,13 +1,113 @@
 <?php
     if (!isset($jPlayer) || (empty($jPlayer)))
     {   // include player class
-        require_once ("system/widgets/jplayer/php/jplayer.class.php");
+        require_once ("system/widgets/jplayer/classes/jplayer.class.php");
         // create new player object
         $jPlayer = new \YAWK\WIDGETS\jPlayer();
     }
 ?>
+<?php
+// set default values
+$jPlayerRootMediaFolder = 'media/audio/';
+$jPlayerUserMediaFolder = 'demo';
+$jPlayerInstance = 1;
+$jPlayerInitialMute = false;
+$jPlayerDefaultVolume = "0.3";
+$jPlayerWidth = "100%";
+$jPlayerSkin = "light";
+$heading = '';
+$subtext = '';
+
+// $_GET['widgetID'] will be generated in \YAWK\widget\loadWidgets($db, $position)
+if (isset($_GET['widgetID']))
+{
+    // widget ID
+    $widgetID = $_GET['widgetID'];
+
+    // make sure, the player got it's own instance ID
+    $jPlayerInstance = $_GET['widgetID'];
+
+    // get widget settings from db
+    $res = $db->query("SELECT * FROM {widget_settings}
+    WHERE widgetID = '".$widgetID."'
+    AND activated = '1'");
+    while($row = mysqli_fetch_assoc($res))
+    {   // set widget properties and values into vars
+        $w_property = $row['property'];
+        $w_value = $row['value'];
+        $w_widgetType = $row['widgetType'];
+        $w_activated = $row['activated'];
+        /* end of get widget properties */
+
+        /* filter and load those widget properties */
+        if (isset($w_property)){
+            switch($w_property)
+            {
+                /* url of the video to stream */
+                case 'jPlayerUserMediaFolder';
+                    $jPlayerUserMediaFolder = $w_value;
+                    break;
+
+                /* width */
+                case 'jPlayerWidth';
+                    $jPlayerWidth = $w_value;
+                    break;
+
+                /* height */
+                case 'jPlayerSkin';
+                    $jPlayerSkin = $w_value;
+                    $jPlayerSkin = mb_strtolower($jPlayerSkin);
+                    break;
+
+                /* heading */
+                case 'jPlayerHeading';
+                    $heading = $w_value;
+                    break;
+
+                /* subtext */
+                case 'jPlayerSubtext';
+                    $subtext = $w_value;
+                    break;
+
+                /* initial volume */
+                case 'jPlayerDefaultVolume';
+                    $jPlayerDefaultVolume = $w_value;
+                    break;
+
+                /* initial mute true|false */
+                case 'jPlayerInitialMute';
+                    $jPlayerInitialMute = $w_value;
+                    break;
+            }
+        } /* END LOAD PROPERTIES */
+    } // end while fetch row (fetch widget settings)
+}
+
+
+// if a heading is set and not empty
+if (isset($heading) && (!empty($heading)))
+{   // add a h1 tag to heading string
+    $heading = "$heading";
+
+    // if subtext is set, add <small> subtext to string
+    if (isset($subtext) && (!empty($subtext)))
+    {   // build a headline with heading and subtext
+        $subtext = "<small>$subtext</small>";
+        $headline = "<h1>$heading&nbsp;"."$subtext</h1>";
+    }
+    else
+    {   // build just a headline - without subtext
+        $headline = "<h1>$heading</h1>";    // draw just the heading
+    }
+}
+else
+{   // leave empty if it's not set
+    $headline = '';
+}
+echo $headline;
+?>
     <!-- jplayer -->
-    <link type="text/css" href="system/widgets/jplayer/js/jplayer.dark.css" rel="stylesheet">
+    <link type="text/css" href="system/widgets/jplayer/skins/<?php echo $jPlayerSkin; ?>/jplayer.<?php echo $jPlayerSkin; ?>.css" rel="stylesheet">
     <script type="text/javascript" src="system/widgets/jplayer/js/jquery.jplayer.min.js"></script>
     <script type="text/javascript" src="system/widgets/jplayer/js/jplayer.playlist.min.js"></script>
     <script type="text/javascript" src="system/widgets/jplayer/js/browser.js"></script>
@@ -136,7 +236,7 @@
                 }
             };
 
-            var audioPlaylist = new Playlist("2", [<?php echo $jPlayer->getFiles('media/audio/', 'demo'); ?>], {
+            var audioPlaylist = new Playlist("<?php echo $jPlayerInstance; ?>", [<?php echo $jPlayer->getFiles("$jPlayerRootMediaFolder", "$jPlayerUserMediaFolder"); ?>], {
                 ready: function() {
                     audioPlaylist.displayPlaylist();
                     audioPlaylist.playlistInit(false); // Parameter is a boolean for autoplay.
@@ -147,24 +247,20 @@
                 play: function() {
                     $(this).jPlayer("pauseOthers");
                 },
-                swfPath: "system/widgets/jplayer/js",   // path for swf fallback
-                supplied: "mp3, oga",                   // supported formats
-                volume: 0.2,                            // intial volume value from 0 to 1
-                muted: false                            // inital mute? false | true
+                swfPath: "system/widgets/jplayer/js",               // path for swf fallback
+                supplied: "mp3, oga, wav",                          // supported formats
+                volume: "<?php echo $jPlayerDefaultVolume; ?>",     // intial volume value from 0 to 1 eg 0.3
+                muted: <?php echo $jPlayerInitialMute; ?>         // inital mute? false | true
             });
         });
         //]]>
     </script>
 
-    <div id="jquery_jplayer_2" class="jp-jplayer"></div>
+
+    <div id="jquery_jplayer_<?php echo $jPlayerInstance; ?>" class="jp-jplayer"></div>
     <div class="jp-audio">
         <div class="jp-type-playlist">
-            <div class="row">
-                <div class="col-md-4 text-center">controls</div>
-                <div class="col-md-4 text-center">seek</div>
-                <div class="col-md-4 text-center">volume</div>
-            </div>
-            <div id="jp_interface_2" class="jp-interface">
+            <div id="jp_interface_<?php echo $jPlayerInstance; ?>" class="jp-interface">
                 <ul class="jp-controls">
                     <li><a href="#" class="jp-play" tabindex="1">play</a></li>
                     <li><a href="#" class="jp-pause" tabindex="1">pause</a></li>
@@ -185,7 +281,7 @@
                 <div class="jp-current-time"></div>
                 <div class="jp-duration"></div>
             </div>
-            <div id="jp_playlist_2" class="jp-playlist">
+            <div id="jp_playlist_<?php echo $jPlayerInstance; ?>" class="jp-playlist">
                 <ul>
                     <!-- The method Playlist.displayPlaylist() uses this unordered list -->
                     <li></li>

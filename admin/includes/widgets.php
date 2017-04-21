@@ -128,7 +128,7 @@ echo"<ol class=\"breadcrumb\">
                 <td class=\"text-center\">".$row['position']."</td>
                 <td class=\"text-center\">
 
-                <a class=\"fa fa-copy\" title=\"".$lang['WIDGET_COPY']."\" href=\"index.php?page=widget-copy&copy=true&widget=".$row['id']."\"></a>&nbsp;
+                <a class=\"fa fa-copy\" title=\"".$lang['WIDGET_COPY']."\" href=\"index.php?page=widgets&copy=true&widget=".$row['id']."\"></a>&nbsp;
                 <a class=\"fa fa-edit\" title=\"EDIT: ".$row['name']."\" href=\"index.php?page=widget-edit&widget=".$row['id']."\"></a>&nbsp;
                 <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"".$lang['WIDGET']." &laquo; # $row[id] &raquo; ".$lang['DELETE']."?\"
                    title=\"$lang[DELETE]\" href=\"index.php?page=widgets&del=1&widget=$row[id]&delete=true\">
