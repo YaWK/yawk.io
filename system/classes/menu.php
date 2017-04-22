@@ -461,7 +461,7 @@ namespace YAWK {
              *  instead of 3 different SELECTs - can anybody help here? */
             /** @var $db \YAWK\db */
             echo "
-<table class=\"table table-striped table-hover\" id=\"table-sort\">
+<table class=\"table table-striped table-hover table-responsive\" id=\"table-sort\">
   <thead>
     <tr>
       <td><strong>&nbsp;</strong></td>

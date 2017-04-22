@@ -1245,7 +1245,7 @@
         border-style: none;
         border-radius: 0 0 0 0;
         padding: 0px;
-        overflow: visible;
+        overflow: hidden;
         visibility: visible;
         text-align: left;
         vertical-align: baseline;

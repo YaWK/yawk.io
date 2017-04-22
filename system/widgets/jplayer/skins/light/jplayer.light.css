@@ -2,22 +2,16 @@
  * Skin for jPlayer Plugin (jQuery JavaScript Library)
  * http://www.jplayer.org
  *
- * Skin Name: light
- * based on Skin Name: Blue / Dark
+ * Skin Name: Light
  *
- * Copyright (c) 2010 Happyworm Ltd & Per SandstrÃ¶m
+ * Copyright (c) 2010 Happyworm Ltd & Per Sandström
  * Dual licensed under the MIT and GPL licenses.
  *  - http://www.opensource.org/licenses/mit-license.php
  *  - http://www.gnu.org/copyleft/gpl.html
  *
- * Author: Per SandstrÃ¶m â€“ http://www.helloper.com
+ * Author: Per Sandström – http://www.helloper.com
  * Skin Version: 1.0 (jPlayer 2.0.0)
  * Date: 20th March 2011
- *
- * additions / changed by Daniel Retzl http://yawk.io
- * Skin Version: 1.0 (jPlayer 2.0.0)
- * Date: 19th April 2017
- *
  */
 
 div.jp-audio,
@@ -25,14 +19,16 @@ div.jp-video {
 	/* Edit the font-size to counteract inherited font sizing.
 	 * Eg. 1.25em = 1 / 0.8em
 	 */
-	color: #CCC;
+	color: #666;
 	font-size: 1em; /* No parent CSS that can effect the size in these demos */
 	font-family: 'Helvetica Neue', sans-serif;
-	line-height: 1.6;	
+	line-height: 1.6;
+	-ms-text-size-adjust:none;
+	-webkit-text-size-adjust:none;
 }
 
 div.jp-audio {
-	width: 100%;
+	width: 420px;
 }
 
 div.jp-video-270p {
@@ -44,13 +40,13 @@ div.jp-video-360p {
 }
 
 div.jp-interface {
-  background: #f8f8f8;
-  background: -moz-linear-gradient(top, #f8f8f8, #fefefe);
-	background: -o-linear-gradient(top, #f8f8f8, #fefefe);
-	background: -webkit-gradient(linear, left top, left bottom, from(#f8f8f8), to(#fefefe));
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f8f8f8', endColorstr='#fefefe');
-	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#f8f8f8, endColorstr=#fefefe)";
-  border: 0;
+  background: #DDD;
+  background: -moz-linear-gradient(top, #f8f8f8, #BBB);
+	background: -o-linear-gradient(top, #f8f8f8, #BBB);
+	background: -webkit-gradient(linear, left top, left bottom, from(#f8f8f8), to(#BBB));
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f8f8f8', endColorstr='#BBBBBB');
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#f8f8f8, endColorstr=#BBBBBB)";
+  border: 1px solid #BBB;
 	-moz-border-radius: 6px 6px 0 0;
 	-webkit-border-radius: 6px 6px 0 0;
 	border-radius: 6px 6px 0 0;
@@ -89,7 +85,7 @@ div.jp-interface ul.jp-controls {
 }
 
 div.jp-interface ul.jp-controls li {
-	display: auto;
+	display: inline;
 }
 
 div.jp-interface ul.jp-controls a {
@@ -271,7 +267,7 @@ div.jp-audio div.jp-type-playlist div.jp-progress {
 	height: 15px;
 	left: 164px;
 	top: 32px;
-	width: 122px;
+	width: 122px;	
 }
 
 div.jp-video div.jp-progress {
@@ -412,8 +408,8 @@ div.jp-current-time,
 div.jp-duration {
 	font-size: .64em;
 	position: absolute;
-	text-shadow: 0 1px 1px #f8f8f8;
-	text-shadow: 0 1px 1px rgba(0, 0, 0, .4);
+	text-shadow: 0 1px 1px #FFF;
+	text-shadow: 0 1px 1px rgba(255, 255, 255, .8);
 }
 
 div.jp-duration {
@@ -443,7 +439,9 @@ div.jp-video div.jp-duration {
 }
 
 div.jp-playlist {
-	background: #222;
+	background: #FFF;
+	border: 1px solid #DDD;
+	border-top: none;
 	-moz-border-radius: 0 0 6px 6px;
 	-webkit-border-radius: 0 0 6px 6px;
 	border-radius: 0 0 6px 6px;
@@ -459,32 +457,32 @@ div.jp-playlist ul {
 
 div.jp-type-single div.jp-playlist li {
   background: #FFF;
-  background: -moz-linear-gradient(top, #f8f8f8, #fefefe);
-	background: -o-linear-gradient(top, #f8f8f8, #fefefe);
-	background: -webkit-gradient(linear, left top, left bottom, from(#f8f8f8), to(#fefefe));
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f8f8f8', endColorstr='#fefefe');
-	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#f8f8f8, endColorstr=#fefefe)";
+  background: -moz-linear-gradient(top, #FFF, #EEE);
+	background: -o-linear-gradient(top, #FFF, #EEE);
+	background: -webkit-gradient(linear, left top, left bottom, from(#FFF), to(#EEE));
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFFFFF', endColorstr='#EEEEEE');
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#FFFFFF, endColorstr=#EEEEEE)";
 	padding:5px 0 5px 10px;
 	font-weight:bold;
-	text-shadow: 0 1px 1px #ccc;
-	text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+	text-shadow: 0 1px 1px #FFF;
+	text-shadow: 0 1px 1px rgba(255, 255, 255, .8);
 }
 
 div.jp-type-playlist div.jp-playlist li {
-  background: #f8f8f8;
-  background: -moz-linear-gradient(top, #f8f8f8, #fefefe);
-	background: -o-linear-gradient(top, #f8f8f8, #fefefe);
-	background: -webkit-gradient(linear, left top, left bottom, from(#f8f8f8), to(#fefefe));
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f8f8f8', endColorstr='#fefefe');
-	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#f8f8f8, endColorstr=#fefefe)";
+  background: #FFF;
+  background: -moz-linear-gradient(top, #FFF, #EEE);
+	background: -o-linear-gradient(top, #FFF, #EEE);
+	background: -webkit-gradient(linear, left top, left bottom, from(#FFF), to(#EEE));
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFFFFF', endColorstr='#EEEEEE');
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#FFFFFF, endColorstr=#EEEEEE)";
 	padding:5px 0 4px 10px;
-	text-shadow: 0 1px 1px #ccc;
-	text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+	text-shadow: 0 1px 1px #FFF;
+	text-shadow: 0 1px 1px rgba(255, 255, 255, .8);
 }
 
 div.jp-type-playlist div.jp-playlist li:nth-child(even),
 div.jp-type-single div.jp-playlist li:nth-child(even) {
-  border: 1px solid #ccc;
+  border: 1px solid #DDD;
   border-left: 0;
   border-right: 0;
 }
@@ -506,16 +504,16 @@ div.jp-type-playlist div.jp-playlist li.jp-playlist-current {
 }
 
 div.jp-type-playlist div.jp-playlist a {
-	color: #888;
+	color: #666;
 	text-decoration: none;
 }
 
 div.jp-type-playlist div.jp-playlist a:hover {
-	color: #444;
+	color: #0D88C1;
 }
 
 div.jp-type-playlist div.jp-playlist a.jp-playlist-current {
-	color: #000;
+	color: #0D88C1;
 }
 
 div.jp-type-playlist div.jp-playlist div.jp-free-media {
@@ -552,6 +550,8 @@ div.jp-jplayer {
 }
 
 div.jp-video div.jp-jplayer {
+	border: 1px solid #DDD;
+	border-bottom: none;
 	z-index: 1;
 }
 
