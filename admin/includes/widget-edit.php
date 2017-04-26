@@ -211,6 +211,9 @@ echo"<ol class=\"breadcrumb\">
   <div class="box-body">
   <!-- MORE WIDGET SETTINGS -->
   <?php
+
+  $widget->getWidgetFormElements($db, "", $widget->id, $lang);
+  /*
     if ($res = $db->query("SELECT cws.property, cws.value, cwd.fieldClass, cwd.description, cw.widgetType as widget
     FROM {widgets} as cw
     JOIN {widget_settings} as cws ON cws.widgetID = cw.id
@@ -225,7 +228,8 @@ echo"<ol class=\"breadcrumb\">
             echo "<input type=\"text\" class=\""; echo $row['fieldClass']; echo"\" name=\"".htmlentities($row['property'])."\" value=\"".htmlentities($row['value'])."\">";
         }
     }
-  ?>
+*/
+?>
   <br><input type="hidden" name="widgetID" value="<?php echo $widget->id; ?>">
   <br>
 
