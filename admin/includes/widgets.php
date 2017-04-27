@@ -121,7 +121,7 @@ echo"<ol class=\"breadcrumb\">
                 <span class=\"label label-$pub\">$pubtext</span></a></td>
                 <td class=\"text-center\">".$row['id']."</td>
                 <td><a href=\"index.php?page=widget-edit&widget=".$row['id']."\"><div style=\"width:100%\">".$row['name']."</div></a>
-                &nbsp;&nbsp;<small>".$row['widgetTitle']."</small></td>
+                &nbsp;<small>".$row['widgetTitle']."</small></td>
                 <td><a href=\"index.php?page=widget-edit&widget=".$row['id']."\" style=\"color: #7A7376;\"><div style=\"width:100%\">".$row['title']."</div></a></td>
 
                 <td class=\"text-center\">".$row['sort']."</td>
