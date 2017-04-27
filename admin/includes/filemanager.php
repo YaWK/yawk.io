@@ -97,12 +97,12 @@ if (isset($_GET['move']))
     </section>
     <!-- Main content -->
     <section class="content">
-        <!-- START CONTENT HERE -->
+
+        <div class="row">
+        <div class="col-md-8">
+    <!-- START CONTENT HERE -->
 <div class="box box-default">
     <div class="box-body">
-<!-- upload btn -->
-<a class="btn btn-success" data-toggle="modal" data-target="#myModal" href="#myModal" style="float:right;">
-<i class="glyphicon glyphicon-plus"></i> &nbsp;<?php print $lang['FILEMAN_UPLOAD']; ?></a>
 
 <?php $maxFileSize = \YAWK\filemanager::getPhpMaxFileSize(); ?>
 <!-- FILE UPLOAD MODAL DIALOG -->
@@ -171,6 +171,7 @@ if (isset($_GET['move']))
   </div> <!-- modal dialog -->
  </div>
 
+
 <!-- Tabs -->
 <ul id="myTab" class="nav nav-tabs">
     <li><a href="#audio" data-toggle="tab"><i class="fa fa-music"></i> &nbsp;<?php echo $lang['FILEMAN_AUDIO']; ?></a></li>
@@ -235,4 +236,19 @@ if (isset($_GET['move']))
 </div>
 
     </div>
+</div>
+        </div>
+        <div class="col-md-4">
+            <div class="box box-default">
+                <div class="box-header">
+                    <!-- upload btn -->
+                    <h3 class="box-title">Upload</h3>
+                    <a class="btn btn-success" data-toggle="modal" data-target="#myModal" href="#myModal" style="float:right;">
+                    <i class="glyphicon glyphicon-plus"></i> &nbsp;<?php print $lang['FILEMAN_UPLOAD']; ?></a>
+                </div>
+                <div class="box-body">
+                    Roadmap: insert dropzone.js here
+                </div>
+            </div>
+        </div>
 </div>
