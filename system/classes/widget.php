@@ -46,6 +46,10 @@ namespace YAWK {
         public $date_unpublish;
         /** * @var string title to identify the widget */
         public $widgetTitle;
+        /** * @var string foldername of this widget */
+        public $folder;
+
+
 
 
         /**
@@ -102,7 +106,7 @@ namespace YAWK {
          * @param array  $settings Settings: property|value|type|sortation|activated|label|icon|heading|subtext|fieldClass|fieldType|placeholder|description|options
          * @param int    $widgetID
          */
-        public static function getWidgetFormElements($db, $settings, $widgetID, $lang)
+        public static function getWidgetFormElements($db, $settings, $widgetID, $widgetFolder, $lang)
         {	// loop trough array
             $i_settings = 0;
 
@@ -134,6 +138,12 @@ namespace YAWK {
 
                 }
                 */
+            }
+
+            // check if language is set
+            if (!isset($language) || (!isset($lang)))
+            {   // inject (add) language tags to core $lang array
+                $lang = \YAWK\language::inject($lang, "../system/widgets/$widgetFolder/language/");
             }
 
             foreach ($settings as $type => $setting)
@@ -849,7 +859,7 @@ namespace YAWK {
                 $id = $db->quote($id);
             }
             /** @var $db \YAWK\db $res */
-            if ($res = $db->query("SELECT cw.id, cw.published,cw.widgetType,cw.pageID,cw.sort,cw.position, cw.date_publish, cw.date_unpublish, cw.widgetTitle, cwt.name, cw.marginTop, cw.marginBottom
+            if ($res = $db->query("SELECT cw.id, cw.published,cw.widgetType,cw.pageID,cw.sort,cw.position, cw.date_publish, cw.date_unpublish, cw.widgetTitle, cwt.name, cw.marginTop, cw.marginBottom, cwt.folder
     							FROM {widgets} as cw
     							JOIN {widget_types} as cwt on cw.widgetType = cwt.id
                                 WHERE cw.id = '" . $id . "'"))
@@ -868,6 +878,7 @@ namespace YAWK {
                     $this->date_publish = $row['date_publish'];
                     $this->date_unpublish = $row['date_unpublish'];
                     $this->widgetTitle = $row['widgetTitle'];
+                    $this->folder = $row['folder'];
                     return true;
                 }
                 else
