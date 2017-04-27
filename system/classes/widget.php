@@ -200,14 +200,11 @@ namespace YAWK {
                         }
 
                         // check if description is set
-                        // the description will be shown underneath the form element
+                        // the description will be shown right beside the label
                         if (isset($setting['description']) && (!empty($setting['description'])))
                         {   // L11n
                             $setting['description'] = $lang[$setting['description']];
-                        }
-                        else
-                        {   // leave empty - no description available
-                            $setting['description'] = '';
+                            $setting['description'] = "<i class=\"fa fa-info-circle text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$setting[description]\"></i>";
                         }
 
                         // CHECKBOX
@@ -227,13 +224,13 @@ namespace YAWK {
                             }
                             echo "<input type=\"hidden\" name=\"$setting[property]\" value=\"0\">
                               <input type=\"checkbox\" id=\"$setting[property]\" name=\"$setting[property]\" value=\"1\" $checked>
-                              <label for=\"$setting[property]\">&nbsp; $setting[label]</label><p>$setting[description]</p>";
+                              <label for=\"$setting[property]\">&nbsp; $setting[label] $setting[description]</label><br>";
                         }
 
                         /* RADIO BUTTTONS */
                         if ($setting['fieldType'] === "radio")
                         {
-                            echo "<label for=\"$setting[property]\">$setting[label]</label>
+                            echo "<label for=\"$setting[property]\">$setting[label] $setting[description]</label>
                                   <input type=\"radio\" id=\"$setting[property]\" name=\"$setting[property]\">";
                             echo "<input type=\"radio\" value=\"$setting[value]\">$lang[SETTING_CURRENT] $setting[value]</option>";
                             // explode option string into array
@@ -248,7 +245,6 @@ namespace YAWK {
                                 echo "<option value=\"$optionValue\">$optionDesc</option>";
                             }
                             echo "</select>";
-                            echo "<p>$setting[description]</p>";
                         }
 
                         /* SELECT FIELD */
@@ -260,7 +256,7 @@ namespace YAWK {
                             }
                             else
                             {   // begin draw select
-                                echo "<label for=\"$setting[property]\">$setting[label]</label>
+                                echo "<label for=\"$setting[property]\">$setting[label] $setting[description]</label>
                                           <select class=\"form-control\" id=\"$setting[property]\" name=\"$setting[property]\">";
                                 echo "<option value=\"$setting[value]\">$lang[SETTING_CURRENT] $setting[value]</option>";
                                 // explode option string into array
@@ -276,7 +272,6 @@ namespace YAWK {
                                     echo "<option value=\"$optionValue[0]\">$optionDesc</option>";
                                 }
                                 echo "</select>";
-                                echo "<p>$setting[description]</p>";
                             }
                         }
 
@@ -291,7 +286,7 @@ namespace YAWK {
                             if (isset($setting['longValue']) && (!empty($setting['longValue'])))
                             {   // build a longValue tagged textarea and fill with longValue
                                 $setting['longValue'] = nl2br($setting['longValue']);
-                                echo "<label for=\"$setting[property]-long\">$setting[label]</label>
+                                echo "<label for=\"$setting[property]-long\">$setting[label] $setting[description]</label>
                                       <textarea cols=\"64\" rows=\"4\" placeholder=\"$lang[$placeholder]\" class=\"$setting[fieldClass]\" id=\"$setting[property]-long\" name=\"$setting[property]-long\">$setting[longValue]</textarea>";
                                 echo "<p>$setting[description]</p>";
                             }
@@ -299,7 +294,7 @@ namespace YAWK {
                             {   // draw default textarea
                                 $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
                                 $setting['value'] = nl2br($setting['value']);
-                                echo "<label for=\"$setting[property]-long\">$setting[label]</label>
+                                echo "<label for=\"$setting[property]-long\">$setting[label] $setting[description]</label>
                                       <textarea cols=\"64\" rows=\"4\" placeholder=\"$lang[$placeholder]\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\">$setting[value]</textarea>";
                                 echo "<p>$setting[description]</p>";
                             }
@@ -313,7 +308,7 @@ namespace YAWK {
                             {
                                 echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
                             }
-                            echo "<label for=\"$setting[property]\">$setting[label]</label>
+                            echo "<label for=\"$setting[property]\">$setting[label] $setting[description]</label>
                                   <input type=\"password\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
 										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\"><p>$setting[description]</p>";
                         }
@@ -326,12 +321,12 @@ namespace YAWK {
                             {
                                 echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
                             }
-                            echo "<label for=\"$setting[property]\">$setting[label]</label>
+                            echo "<label for=\"$setting[property]\">$setting[label] $setting[description]</label>
                                   <input type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
-										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\"><p>$setting[description]</p>";
+										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\">";
                         }
 
-                        /* INPUT TEXT FIELD */
+                        /* COLORPICKER TEXT FIELD */
                         if ($setting['fieldType'] === "color")
                         {    // draw an input field
                             $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
@@ -339,7 +334,7 @@ namespace YAWK {
                             {
                                 echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
                             }
-                            echo "<label for=\"$setting[property]\">$setting[label]</label>
+                            echo "<label for=\"$setting[property]\">$setting[label] $setting[description]</label>
                                   <input type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
 										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\"><p>$setting[description]</p>";
                         }
