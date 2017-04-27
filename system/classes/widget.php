@@ -46,6 +46,11 @@ namespace YAWK {
         public $date_unpublish;
         /** * @var string title to identify the widget */
         public $widgetTitle;
+        /** * @var string foldername of this widget */
+        public $folder;
+
+
+
 
         /**
          * return current widget path
@@ -70,10 +75,10 @@ namespace YAWK {
          * @param object $db Database Object
          * @return array|bool
          */
-        public static function getAllSettingsIntoArray($db) // get all settings from db like property
+        public static function getAllSettingsIntoArray($db, $widgetID) // get all settings from db like property
         {
             /* @var $db \YAWK\db */
-            if ($res= $db->query("SELECT * FROM {widget_settings} ORDER by sortation"))
+            if ($res = $db->query("SELECT * FROM {widget_settings} WHERE widgetID = '".$widgetID."' ORDER by sortation"))
             {
                 $settingsArray = array();
                 while ($row = $res->fetch_assoc())
@@ -90,6 +95,7 @@ namespace YAWK {
             return $settingsArray;
         }
 
+
         // TODO: IMPLEMENT GET FORM ELEMENTS for issue #61
         /**
          * Return settings as form elements corresponding to given widget ID.
@@ -100,28 +106,54 @@ namespace YAWK {
          * @param array  $settings Settings: property|value|type|sortation|activated|label|icon|heading|subtext|fieldClass|fieldType|placeholder|description|options
          * @param int    $widgetID
          */
-        public static function getFormElements($db, $settings, $widgetID, $lang)
+        public static function getWidgetFormElements($db, $settings, $widgetID, $widgetFolder, $lang)
         {	// loop trough array
             $i_settings = 0;
-            if(!isset($settings) || (empty($settings)) || (!is_array($settings)))
-            {	// if settings are not set, try to get them...
-                $settings = \YAWK\settings::getAllSettingsIntoArray($db);
-            }
+
+
             if(!isset($widgetID) && (empty($widgetID)))
             {	// if param 'type' is missing, show all settings
-                $widgetID = 1;
+                die ("Could not get widget settings because widget ID is missing.");
             }
-            // loop trough settings array
-            foreach ($settings as $setting)
+
+            if(!isset($settings) || (empty($settings)) || (!is_array($settings)))
+            {	// if settings are not set, try to get them...
+                $settings = self::getAllSettingsIntoArray($db, $widgetID);
+            }
+
+            if (is_array($settings))
+            {
+                // echo "<pre>";
+                // print_r($settings);
+                // echo "</pre>";
+                /*
+                foreach ($settings as $type => $setting)
+                {
+                    if (!isset($setting['fieldType']) || (empty($setting['fieldType'])))
+                    {
+                        $setting['fieldType'] = "input";
+                    }
+
+                    echo $setting['fieldType']."<br>";
+
+                }
+                */
+            }
+
+            // check if language is set
+            if (!isset($language) || (!isset($lang)))
+            {   // inject (add) language tags to core $lang array
+                $lang = \YAWK\language::inject($lang, "../system/widgets/$widgetFolder/language/");
+            }
+
+            foreach ($settings as $type => $setting)
             {	// field type not set or empty
-                if (!isset($setting['fieldType']) && (empty($fieldType)))
+                if (!isset($setting['fieldType']) || (empty($setting['fieldType'])))
                 {   // set input field as common default
                     $setting['fieldType'] = "input";
-                }
-                else
-                {   // settings type must be equal to param $type
+                }  // settings type must be equal to param $type
                     // equals settings category
-                    if ($setting['type'] === "$widgetID" && ($setting['activated'] === "1"))
+                    if ($setting['widgetID'] === "$widgetID" && ($setting['activated'] === "1"))
                     {
                         // check if ICON is set
                         // if an icon is set, it will be drawn before the heading, to the left.
@@ -142,7 +174,7 @@ namespace YAWK {
                         }
                         else
                         {   // otherwise throw error
-                            $setting['label'] = 'sorry, there is not label set. meh!';
+                            $setting['label'] = "$setting[property]";
                         }
 
                         // check if HEADING is set
@@ -168,20 +200,17 @@ namespace YAWK {
                         }
 
                         // check if description is set
-                        // the description will be shown underneath the form element
+                        // the description will be shown right beside the label
                         if (isset($setting['description']) && (!empty($setting['description'])))
                         {   // L11n
                             $setting['description'] = $lang[$setting['description']];
-                        }
-                        else
-                        {   // leave empty - no description available
-                            $setting['description'] = '';
+                            $setting['description'] = "<i class=\"fa fa-info-circle text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$setting[description]\"></i>";
                         }
 
                         // CHECKBOX
                         if ($setting['fieldType'] === "checkbox")
                         {    // build a checkbox
-                            if ($setting['value'] === "1")
+                            if ($setting['value'] === "1" or ($setting['value'] === "true"))
                             {   // set checkbox to checked
                                 $checked = "checked";
                             }
@@ -195,13 +224,13 @@ namespace YAWK {
                             }
                             echo "<input type=\"hidden\" name=\"$setting[property]\" value=\"0\">
                               <input type=\"checkbox\" id=\"$setting[property]\" name=\"$setting[property]\" value=\"1\" $checked>
-                              <label for=\"$setting[property]\">&nbsp; $setting[label]</label><p>$setting[description]</p>";
+                              <label for=\"$setting[property]\">&nbsp; $setting[label] $setting[description]</label><br>";
                         }
 
                         /* RADIO BUTTTONS */
                         if ($setting['fieldType'] === "radio")
                         {
-                            echo "<label for=\"$setting[property]\">$setting[label]</label>
+                            echo "<label for=\"$setting[property]\">$setting[label] $setting[description]</label>
                                   <input type=\"radio\" id=\"$setting[property]\" name=\"$setting[property]\">";
                             echo "<input type=\"radio\" value=\"$setting[value]\">$lang[SETTING_CURRENT] $setting[value]</option>";
                             // explode option string into array
@@ -216,43 +245,18 @@ namespace YAWK {
                                 echo "<option value=\"$optionValue\">$optionDesc</option>";
                             }
                             echo "</select>";
-                            echo "<p>$setting[description]</p>";
                         }
 
                         /* SELECT FIELD */
-                        else if ($setting['fieldType'] === "select")
+                        if ($setting['fieldType'] === "select")
                         {   // display icon, heading and subtext, if its set
                             if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
                             {
                                 echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
                             }
-                            // TEMPLATE SELECTOR
-                            if ($setting['property'] === "selectedTemplate")
-                            {   // if property is selected template...
-                                \YAWK\backend::drawTemplateSelectField($db);
-                                echo "<p>$setting[description]</p>";
-                            }
-                            // GLOBALMENU ID SELECTOR
-                            else if ($setting['property'] === "globalmenuid")
-                            {
-                                $currentMenu = \YAWK\menu::getMenuNameByID($db, $setting['value'], $lang);
-                                echo "<label for=\"$setting[property]\">$setting[label]</label>
-                                      <select name=\"$setting[property]\" class=\"form-control\" id=\"$setting[property]\">";
-                                echo "<option value=\"$setting[value]\">$currentMenu</option>";
-                                foreach (\YAWK\backend::getMenuNamesArray($db) as $property=>$row)
-                                {
-                                    if ($row['id'] !== $setting['value']){
-                                        echo "<option value=\"$row[id]\">$row[name]</option>";
-                                    }
-
-                                }
-                                echo "<option value=\"0\">$lang[NO_ENTRY]</option>";
-                                echo "</select>";
-                                echo "<p>$setting[description]</p>";
-                            }
                             else
                             {   // begin draw select
-                                echo "<label for=\"$setting[property]\">$setting[label]</label>
+                                echo "<label for=\"$setting[property]\">$setting[label] $setting[description]</label>
                                           <select class=\"form-control\" id=\"$setting[property]\" name=\"$setting[property]\">";
                                 echo "<option value=\"$setting[value]\">$lang[SETTING_CURRENT] $setting[value]</option>";
                                 // explode option string into array
@@ -266,16 +270,13 @@ namespace YAWK {
                                     $optionValue = preg_split("/,[a-zA-Z0-9]*/", $value);
 
                                     echo "<option value=\"$optionValue[0]\">$optionDesc</option>";
-                                    // echo "<option value=\"$optionValue[0]\">$optionDesc</option>";
-                                    // echo "<option value=\"$value\">$value</option>";
                                 }
                                 echo "</select>";
-                                echo "<p>$setting[description]</p>";
                             }
                         }
 
                         /* TEXTAREA */
-                        else if ($setting['fieldType'] === "textarea")
+                        if ($setting['fieldType'] === "textarea")
                         {    // if a long value is set
                             if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
                             {
@@ -285,7 +286,7 @@ namespace YAWK {
                             if (isset($setting['longValue']) && (!empty($setting['longValue'])))
                             {   // build a longValue tagged textarea and fill with longValue
                                 $setting['longValue'] = nl2br($setting['longValue']);
-                                echo "<label for=\"$setting[property]-long\">$setting[label]</label>
+                                echo "<label for=\"$setting[property]-long\">$setting[label] $setting[description]</label>
                                       <textarea cols=\"64\" rows=\"4\" placeholder=\"$lang[$placeholder]\" class=\"$setting[fieldClass]\" id=\"$setting[property]-long\" name=\"$setting[property]-long\">$setting[longValue]</textarea>";
                                 echo "<p>$setting[description]</p>";
                             }
@@ -293,54 +294,53 @@ namespace YAWK {
                             {   // draw default textarea
                                 $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
                                 $setting['value'] = nl2br($setting['value']);
-                                echo "<label for=\"$setting[property]-long\">$setting[label]</label>
+                                echo "<label for=\"$setting[property]-long\">$setting[label] $setting[description]</label>
                                       <textarea cols=\"64\" rows=\"4\" placeholder=\"$lang[$placeholder]\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\">$setting[value]</textarea>";
                                 echo "<p>$setting[description]</p>";
                             }
                         }
 
                         /* INPUT PASSWORD FIELD */
-                        else if ($setting['fieldType'] === "password")
+                        if ($setting['fieldType'] === "password")
                         {    // draw an input field
                             $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
                             if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
                             {
                                 echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
                             }
-                            echo "<label for=\"$setting[property]\">$setting[label]</label>
+                            echo "<label for=\"$setting[property]\">$setting[label] $setting[description]</label>
                                   <input type=\"password\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
 										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\"><p>$setting[description]</p>";
                         }
 
                         /* INPUT TEXT FIELD */
-                        else if ($setting['fieldType'] === "input")
+                        if ($setting['fieldType'] === "input")
                         {    // draw an input field
                             $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
                             if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
                             {
                                 echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
                             }
-                            echo "<label for=\"$setting[property]\">$setting[label]</label>
+                            echo "<label for=\"$setting[property]\">$setting[label] $setting[description]</label>
                                   <input type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
-										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\"><p>$setting[description]</p>";
+										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\">";
                         }
 
-                        /* INPUT TEXT FIELD */
-                        else if ($setting['fieldType'] === "color")
+                        /* COLORPICKER TEXT FIELD */
+                        if ($setting['fieldType'] === "color")
                         {    // draw an input field
                             $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
                             if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
                             {
                                 echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
                             }
-                            echo "<label for=\"$setting[property]\">$setting[label]</label>
+                            echo "<label for=\"$setting[property]\">$setting[label] $setting[description]</label>
                                   <input type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
 										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\"><p>$setting[description]</p>";
                         }
                     }
                 }
             }
-        }
 
 
         /**
@@ -394,15 +394,35 @@ namespace YAWK {
                             $w_value = $row['value'];
                             $w_widgetType = $row['widgetType'];
                             $w_activated = $row['activated'];
+                            $w_sortation = $row['sortation'];
+                            $w_label = $row['label'];
+                            $w_icon = $row['icon'];
+                            $w_heading = $row['heading'];
+                            $w_subtext = $row['subtext'];
+                            $w_fieldClass = $row['fieldClass'];
+                            $w_fieldType = $row['fieldType'];
+                            $w_placeholder = $row['placeholder'];
+                            $w_options = $row['options'];
+                            $w_description = $row['description'];
 
                             // insert widget settings
                             if ($db->query("INSERT INTO {widget_settings}
-							      (widgetID, property, value, widgetType, activated)
+							      (widgetID, property, value, widgetType, activated, sortation, label, icon, heading, subtext, fieldClass, fieldType, placeholder, options, description)
 	                        VALUES('" . $id . "',
 	                        '" . $w_property . "',
 	                        '" . $w_value . "',
 	                        '" . $w_widgetType . "',
-	                        '" . $w_activated . "')"))
+	                        '" . $w_activated . "',
+	                        '" . $w_sortation . "',
+	                        '" . $w_label . "',
+	                        '" . $w_icon . "',
+	                        '" . $w_heading . "',
+	                        '" . $w_subtext . "',
+	                        '" . $w_fieldClass . "',
+	                        '" . $w_fieldType . "',
+	                        '" . $w_placeholder . "',
+	                        '" . $w_options . "',
+	                        '" . $w_description . "')"))
                             {
                                 // widget settings added
                             }
@@ -834,7 +854,7 @@ namespace YAWK {
                 $id = $db->quote($id);
             }
             /** @var $db \YAWK\db $res */
-            if ($res = $db->query("SELECT cw.id, cw.published,cw.widgetType,cw.pageID,cw.sort,cw.position, cw.date_publish, cw.date_unpublish, cw.widgetTitle, cwt.name, cw.marginTop, cw.marginBottom
+            if ($res = $db->query("SELECT cw.id, cw.published,cw.widgetType,cw.pageID,cw.sort,cw.position, cw.date_publish, cw.date_unpublish, cw.widgetTitle, cwt.name, cw.marginTop, cw.marginBottom, cwt.folder
     							FROM {widgets} as cw
     							JOIN {widget_types} as cwt on cw.widgetType = cwt.id
                                 WHERE cw.id = '" . $id . "'"))
@@ -853,6 +873,7 @@ namespace YAWK {
                     $this->date_publish = $row['date_publish'];
                     $this->date_unpublish = $row['date_unpublish'];
                     $this->widgetTitle = $row['widgetTitle'];
+                    $this->folder = $row['folder'];
                     return true;
                 }
                 else
