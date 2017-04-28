@@ -1,4 +1,53 @@
+<script>
+    // MAKE SURE THAT THE LAST USED TAB STAYS ACTIVE
+    // thanks to http://stackoverflow.com/users/463906/ricsrock
+    // http://stackoverflow.com/questions/10523433/how-do-i-keep-the-current-tab-active-with-twitter-bootstrap-after-a-page-reload
+    $(function() {
+        // for bootstrap 3 use 'shown.bs.tab', for bootstrap 2 use 'shown' in the next line
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            // save the latest tab; use cookies if you like 'em better:
+            localStorage.setItem('lastTab', $(this).attr('href'));
+        });
+
+        // go to the latest tab, if it exists:
+        var lastTab = localStorage.getItem('lastTab');
+        if (lastTab) {
+            $('[href="' + lastTab + '"]').tab('show');
+        }
+    });
+</script>
 <?php
+/*
+if (!empty($_FILES)) {
+
+    print_r( $_POST );
+    if (isset($_POST['folderselect']))
+    {   // prepare upload folder vars
+        $upload_folder = $_POST['folderselect'];
+        $upload_folder = "../media/$upload_folder/";
+    }
+    else
+    {   // default upload folder
+        $upload_folder = "../media/uploads/";
+    }
+
+    $ds = DIRECTORY_SEPARATOR;
+
+    $tempFile = $_FILES['file']['tmp_name'];          //3
+
+    $targetPath = dirname( __FILE__ ) . $ds. $upload_folder . $ds;  //4
+
+    $target_path = $upload_folder . basename( $_FILES['uploadedfile']['name']);
+
+
+
+    $targetFile =  $targetPath. $_FILES['file']['name'];  //5
+
+    move_uploaded_file($tempFile,$targetFile); //6
+
+}
+*/
+
 if (isset($_POST['upload']))
 {
     if (isset($_POST['folderselect']))
@@ -10,24 +59,43 @@ if (isset($_POST['upload']))
     {   // default upload folder
         $upload_folder = "../media/uploads/";
     }
+/*
+    if (!empty($_FILES)) {
 
+        $ds = DIRECTORY_SEPARATOR;
+
+        $tempFile = $_FILES['file']['tmp_name'];          //3
+
+        $targetPath = dirname( __FILE__ ) . $ds. $upload_folder . $ds;  //4
+
+        $target_path = $upload_folder . basename( $_FILES['uploadedfile']['name']);
+
+
+
+        $targetFile =  $targetPath. $_FILES['file']['name'];  //5
+
+        move_uploaded_file($tempFile,$targetFile); //6
+
+    }
+*/
     switch ($_POST['upload'])
     {   // upload is sent
         case "sent":
             // set full target path including filename
-            $target_path = $upload_folder . basename( $_FILES['uploadedfile']['name']);
+            $target_path = $upload_folder . basename( $_FILES['file']['name']);
             // move file
-            if(move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target_path))
+
+            if(move_uploaded_file($_FILES['file']['tmp_name'], $target_path))
             {   // store uploaded file
-                $file = basename( $_FILES['uploadedfile']['name']);
+                $file = basename( $_FILES['file']['name']);
                 \YAWK\sys::setSyslog($db, 7, "$lang[UPLOADED] <b>$file</b>", 0, 0, 0, 0);
                 print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[UPLOAD_SUCCESSFUL]: $lang[FILE] <strong>".$file."</strong>", "", 800);
             }
             else
             {   // could not upload file, throw error
-                $file = basename( $_FILES['uploadedfile']['name']);
+                $file = basename( $_FILES['file']['name']);
                 \YAWK\sys::setSyslog($db, 5, "$lang[UPLOAD_FAILED] <b>$file</b>", 0, 0, 0, 0);
-                echo YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[UPLOAD_FAILED]: $file", "", 5800);
+                echo YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[UPLOAD_FAILED]: ".$_FILES['file']['name']."", "", 5800);
             }
             break;
     }
@@ -44,7 +112,7 @@ if (isset($_GET['delete']))
         // execute delete command
         if (YAWK\filemanager::deleteItem($file, $_GET['folder']) === true)
         {   // DELETE SUCCESSFUL, set syslog + throw success msg
-            print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[FILE] $file $lang[DELETE_SUCCESSFUL]","","2400");
+            print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[FILE] $file $lang[DELETE_SUCCESSFUL]","","1200");
             \YAWK\sys::setSyslog($db, 8, "$lang[DELETED] $file", 0, 0, 0, 0);
         }
         else
@@ -84,6 +152,8 @@ if (isset($_GET['move']))
         } );
     } );
 </script>
+<script src="../system/engines/jquery/dropzone/dropzone.js"></script>
+<link href="../system/engines/jquery/dropzone/dropzone.css" rel="stylesheet">
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper" id="content-FX">
     <!-- Content Header (Page header) -->
@@ -114,12 +184,12 @@ if (isset($_GET['move']))
                 <h4 class="modal-title" id="myModalLabel"><?php print $lang['FILEMAN_UPLOAD']; ?> (max <?php print $maxFileSize; ?>B)</h4>
             </div>
             <div class="modal-body">
-                <form enctype="multipart/form-data" class="form-inline" action="index.php?page=filemanager" method="POST">
+                <form enctype="multipart/form-data" class="dropzone" action="index.php?page=filemanager" method="POST">
 
                             <input type="hidden" name="MAX_FILE_SIZE" value="">
                             <input type="hidden" name="upload" value="sent">
-                            <label for="uploadedfile"></label>
-                            <input class="btn btn-default btn-file" id="uploadedfile" name="uploadedfile" type="file"><br>
+                          <!--  <label for="uploadedfile"></label>
+                            <input class="btn btn-default btn-file" id="uploadedfile" name="uploadedfile" type="file" multiple><br> !-->
 
                     <label for="folderselect"><?php echo $lang['UPLOAD_TO']; ?>: </label>
                     <select id="folderselect" name="folderselect" class="form-control">
@@ -247,7 +317,22 @@ if (isset($_GET['move']))
                     <i class="glyphicon glyphicon-plus"></i> &nbsp;<?php print $lang['FILEMAN_UPLOAD']; ?></a>
                 </div>
                 <div class="box-body">
-                    Roadmap: insert dropzone.js here
+                    <form action="index.php?page=filemanager" method="POST" class="dropzone" enctype="multipart/form-data">
+                        <input type="hidden" name="MAX_FILE_SIZE" value="">
+                        <input type="hidden" name="upload" value="sent">
+                        <!-- <label for="uploadedfile"></label>
+                         <input class="btn btn-default btn-file" id="uploadedfile" name="uploadedfile" type="file" multiple> -->
+                        <label for="folderselect"><?php echo $lang['UPLOAD_TO']; ?>: </label>
+                        <select id="folderselect" name="folderselect" class="form-control">
+                            <option value="audio"><?php echo $lang['FILEMAN_AUDIO']; ?></option>
+                            <option value="backup"><?php echo $lang['FILEMAN_BACKUP']; ?></option>
+                            <option value="documents"><?php echo $lang['FILEMAN_DOCUMENTS']; ?></option>
+                            <option value="downloads"><?php echo $lang['FILEMAN_DOWNLOADS']; ?></option>
+                            <option value="images" selected><?php echo $lang['FILEMAN_IMAGES']; ?></option>
+                            <option value="uploads"><?php echo $lang['FILEMAN_UPLOADS']; ?></option>
+                            <option value="video"><?php echo $lang['FILEMAN_VIDEOS']; ?></option>
+                        </select>
+                    </form>
                 </div>
             </div>
         </div>
