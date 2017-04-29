@@ -178,6 +178,7 @@
     border: 1px dashed rgba(0, 0, 0, 0.3);
     background: white;
     padding: 20px 20px; }
+.dropzone:hover {border:1px solid rgba(0, 0, 0, 0.2);}
 .dropzone.dz-clickable {
     cursor: pointer; }
 .dropzone.dz-clickable * {
