@@ -25,13 +25,13 @@ namespace YAWK {
          */
         static function drawTableHeader($lang, $i)
         {
-            print "<table width=\"100%\" cellpadding=\"4\" cellspacing=\"0\" border=\"0\" class=\"table table-hover\" id=\"table-sort$i\">
+            print "<table width=\"100%\" cellpadding=\"4\" cellspacing=\"0\" border=\"0\" class=\"table table-responsive table-hover\" id=\"table-sort$i\">
   <thead>
     <tr>
-      <td width=\"10%\" class=\"text-right;\"><strong>$lang[FILEMAN_SIZE]</strong></td>
-      <td width=\"70%\"><strong><i class=\"fa fa-caret-down\"></i> $lang[FILEMAN_FILENAME]</strong></td>
-      <td width=\"10%\" class=\"text-center;\"><strong>$lang[FILEMAN_RIGHTS]</strong></td>
-      <td width=\"10%\" class=\"text-center;\"><strong>$lang[ACTIONS]</strong></td>
+      <td width=\"10%\" class=\"text-right\"><strong>$lang[FILEMAN_SIZE]</strong></td>
+      <td width=\"70%\" class=\"text-left\"><strong><i class=\"fa fa-caret-down\"></i> $lang[FILEMAN_FILENAME]</strong></td>
+      <td width=\"10%\" class=\"text-center\"><strong>$lang[FILEMAN_RIGHTS]</strong></td>
+      <td width=\"10%\" class=\"text-center\"><strong>$lang[ACTIONS]</strong></td>
     </tr>
   </thead>
   <tbody>";
@@ -98,10 +98,10 @@ namespace YAWK {
                     // LIST FOLDERS
                     //    print "<strong>$dir_perms $dir_value</strong><br>";
                     echo "<tr>
-          <td style=\"text-align:right;\"><a href=\"#\"><i class=\"fa fa-folder\"></i></a></td>
-          <td><a href='$path" . "/" . "$dir_value'>$dir_value</a></td>
-          <td style=\"text-align:left;\">$dir_perms</td>
-          <td style=\"text-align:left;\">
+          <td class=\"text-right\"><a href=\"#\"><i class=\"fa fa-folder\"></i></a></td>
+          <td class=\"text-left\"><a href='$path" . "/" . "$dir_value'>$dir_value</a></td>
+          <td class=\"text-center\">$dir_perms</td>
+          <td class=\"text-center\">
            <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Den Folder &laquo;$dir_value&raquo; wirklich l&ouml;schen?\"
             title=\"delete\" data-target=\"#moveModal\" data-toggle=\"modal\" href='index.php?page=filemanager&delete=1&path=$path&item=$dir_value&folder=$folder'></a>
           </td>
@@ -115,10 +115,10 @@ namespace YAWK {
 
                     $fsize = \YAWK\filemanager::sizeFilter($file_size[$i]);
                     echo "<tr>
-          <td style=\"text-align:right;\">$fsize</td>
-          <td><a href='$path" . "/" . "$file_value'>$file_value</a></td>
-          <td class=\"text-center;\">$file_perms[$i]</td>
-          <td class=\"text-center;\">
+          <td class=\"text-right\">$fsize</td>
+          <td class=\"text-left\"><a href='$path" . "/" . "$file_value'>$file_value</a></td>
+          <td class=\"text-center\">$file_perms[$i]</td>
+          <td class=\"text-center\">
           <!--
            <a data-toggle=\"modal\" data-target=\"#myModal2\" href=\"index.php?page=filemanager&move=1&path=$path&item=$file_value&folder=$folder#mymodal2\"><i class=\"fa fa-exchange\"></i></a>
             &nbsp; -->

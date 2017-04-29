@@ -1,20 +1,36 @@
+<!-- TAB collapse -->
+<script type="text/javascript" src="../system/engines/jquery/bootstrap-tabcollapse.js"></script>
 <script>
     // MAKE SURE THAT THE LAST USED TAB STAYS ACTIVE
     // thanks to http://stackoverflow.com/users/463906/ricsrock
     // http://stackoverflow.com/questions/10523433/how-do-i-keep-the-current-tab-active-with-twitter-bootstrap-after-a-page-reload
-    $(function() {
+    $(function( ) {
         // for bootstrap 3 use 'shown.bs.tab', for bootstrap 2 use 'shown' in the next line
         $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
             // save the latest tab; use cookies if you like 'em better:
             localStorage.setItem('lastTab', $(this).attr('href'));
+
         });
 
         // go to the latest tab, if it exists:
         var lastTab = localStorage.getItem('lastTab');
         if (lastTab) {
             $('[href="' + lastTab + '"]').tab('show');
+
+            // set select default option
+            var activeTab = lastTab.toLowerCase();
+            var activeFolder = activeTab.slice(1);
+            $('select option[value="'+activeFolder+'"]').prop('selected', true);
         }
+
     });
+
+    function flipTheSwitch(folder)
+    {
+        // $('select option:selected').remove();
+        $('select option[value="'+folder+'"]').prop('selected', true);
+
+    }
 </script>
 <?php
 /*
@@ -149,7 +165,14 @@ if (isset($_GET['move']))
             "bSort": true,
             "bInfo": true,
             "bAutoWidth": false
-        } );
+        });
+
+        // call tabCollapse: make the default bootstrap tabs responsive for handheld devices
+        $('#myTab').tabCollapse({
+            tabsClass: 'hidden-sm hidden-xs',
+            accordionClass: 'visible-sm visible-xs'
+        });
+
     } );
 </script>
 <script src="../system/engines/jquery/dropzone/dropzone.js"></script>
@@ -244,13 +267,13 @@ if (isset($_GET['move']))
 
 <!-- Tabs -->
 <ul id="myTab" class="nav nav-tabs">
-    <li><a href="#audio" data-toggle="tab"><i class="fa fa-music"></i> &nbsp;<?php echo $lang['FILEMAN_AUDIO']; ?></a></li>
-    <li><a href="#backup" data-toggle="tab"><i class="fa fa-file-zip-o"></i> &nbsp;<?php echo $lang['FILEMAN_BACKUP']; ?></a></li>
-    <li><a href="#documents" data-toggle="tab"><i class="fa fa-file-text-o"></i> &nbsp;<?php echo $lang['FILEMAN_DOCUMENTS']; ?></a></li>
-    <li><a href="#downloads" data-toggle="tab"><i class="fa fa-download"></i> &nbsp;<?php echo $lang['FILEMAN_DOWNLOADS']; ?></a></li>
-    <li class="active"><a href="#images" data-toggle="tab"><i class="fa fa-picture-o"></i> &nbsp;<?php echo $lang['FILEMAN_IMAGES']; ?></a></li>
-    <li><a href="#uploads" data-toggle="tab"><i class="fa fa-upload"></i> &nbsp;<?php echo $lang['FILEMAN_UPLOADS']; ?></a></li>
-    <li><a href="#video" data-toggle="tab"><i class="fa fa-video-camera"></i> &nbsp;<?php echo $lang['FILEMAN_VIDEOS']; ?></a></li>
+    <li><a href="#audio" onclick="flipTheSwitch('audio');" data-toggle="tab"><i class="fa fa-music"></i> &nbsp;<?php echo $lang['FILEMAN_AUDIO']; ?></a></li>
+    <li><a href="#backup" onclick="flipTheSwitch('backup');" data-toggle="tab"><i class="fa fa-file-zip-o"></i> &nbsp;<?php echo $lang['FILEMAN_BACKUP']; ?></a></li>
+    <li><a href="#documents" onclick="flipTheSwitch('documents');" data-toggle="tab"><i class="fa fa-file-text-o"></i> &nbsp;<?php echo $lang['FILEMAN_DOCUMENTS']; ?></a></li>
+    <li><a href="#downloads" onclick="flipTheSwitch('downloads');" data-toggle="tab"><i class="fa fa-download"></i> &nbsp;<?php echo $lang['FILEMAN_DOWNLOADS']; ?></a></li>
+    <li class="active"><a href="#images" onclick="flipTheSwitch('images');" data-toggle="tab"><i class="fa fa-picture-o"></i> &nbsp;<?php echo $lang['FILEMAN_IMAGES']; ?></a></li>
+    <li><a href="#uploads" onclick="flipTheSwitch('uploads');" data-toggle="tab"><i class="fa fa-upload"></i> &nbsp;<?php echo $lang['FILEMAN_UPLOADS']; ?></a></li>
+    <li><a href="#video" onclick="flipTheSwitch('video');" data-toggle="tab"><i class="fa fa-video-camera"></i> &nbsp;<?php echo $lang['FILEMAN_VIDEOS']; ?></a></li>
 </ul>
 
 <!-- content start -->
@@ -315,6 +338,9 @@ if (isset($_GET['move']))
                     <h3 class="box-title">Upload</h3>
                     <a class="btn btn-success" data-toggle="modal" data-target="#myModal" href="#myModal" style="float:right;">
                     <i class="glyphicon glyphicon-plus"></i> &nbsp;<?php print $lang['FILEMAN_UPLOAD']; ?></a>
+                    <!-- add directory btn -->
+                    <a class="btn btn-success" data-toggle="modal" data-target="#myModal" href="#myModal" style="float:right;">
+                        <i class="glyphicon glyphicon-plus"></i> &nbsp;<?php print $lang['FOLDER']; ?></a>
                 </div>
                 <div class="box-body">
                     <form action="index.php?page=filemanager" method="POST" class="dropzone" enctype="multipart/form-data">
