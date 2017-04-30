@@ -2131,7 +2131,7 @@ INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`)
 (29, 1, 'Pinterest Pin', 'pinterest_pin', 'Embed any Pinterest Pin'),
 (30, 1, 'Pinterest Follow', 'pinterest_profile', 'Embed a Pinterest Follow Button'),
 (31, 1, 'Bubbl.us Mindmap', 'bubblus', 'Embed Bubbl.us Mindmap'),
-(32, 1, 'jPlayer', 'jplayer', 'Audioplayer with playlist'),
+(32, 1, 'jPlayer', 'jplayer', 'Audioplayer with playlist');
 
 --
 -- Indizes der exportierten Tabellen
