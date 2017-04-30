@@ -1,0 +1,265 @@
+/*
+ * Skin: wp-dark-style
+ * ------------
+ */
+.skin-wp-dark-style .main-header .navbar {
+  background-color: #191e23;
+}
+.skin-wp-dark-style .main-header .navbar .nav > li > a {
+  color: #9ca1a6;
+}
+.skin-wp-dark-style .main-header .navbar .nav > li > a:hover,
+.skin-wp-dark-style .main-header .navbar .nav > li > a:active,
+.skin-wp-dark-style .main-header .navbar .nav > li > a:focus,
+.skin-wp-dark-style .main-header .navbar .nav .open > a,
+.skin-wp-dark-style .main-header .navbar .nav .open > a:hover,
+.skin-wp-dark-style .main-header .navbar .nav .open > a:focus,
+.skin-wp-dark-style .main-header .navbar .nav > .active > a {
+ background-color: #32373c;
+  color: #00b9eb;
+}
+.skin-wp-dark-style .main-header .navbar .sidebar-toggle {
+  color: #9ca1a6;
+}
+.skin-wp-dark-style .main-header .navbar .sidebar-toggle:hover {
+  color: #00b9eb;
+  background-color: #32373c;
+}
+@media (max-width: 767px) {
+  .skin-wp-dark-style .main-header .navbar .dropdown-menu li.divider {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  .skin-wp-dark-style .main-header .navbar .dropdown-menu li a {
+    color: #9ca1a6;
+  }
+  .skin-wp-dark-style .main-header .navbar .dropdown-menu li a:hover {
+    background: #32373c;
+  }
+}
+.skin-wp-dark-style .main-header .logo {
+  background-color: #191e23;
+  color: #9ca1a6;
+  border-bottom: 0 solid transparent;
+}
+.skin-wp-dark-style .main-header .logo:hover {
+  color: #00b9eb;
+  background-color: #32373c;
+}
+.skin-wp-dark-style .main-header li.user-header {
+   color: #fff;
+   background-color: #191e23;
+}
+.skin-wp-dark-style .content-header {
+  background: transparent;
+}
+.skin-wp-dark-style .wrapper,
+.skin-wp-dark-style .main-sidebar,
+.skin-wp-dark-style .left-side {
+  background-color: #23282d;
+}
+.skin-wp-dark-style .user-panel > .info,
+.skin-wp-dark-style .user-panel > .info > a {
+  color: #9ca1a6;
+}
+.skin-wp-dark-style .sidebar-menu > li.header {
+  color: #9ca1a6;
+  background: #191e23;
+}
+.skin-wp-dark-style .sidebar-menu > li > a {
+  border-left: 3px solid transparent;
+}
+.skin-wp-dark-style .sidebar-menu > li:hover > a {
+  color: #00b9eb;
+  background: #191e23;
+  border-left-color: #191e23;
+}
+.skin-wp-dark-style .sidebar-menu > li.active > a {
+  color: #FFFFFD;
+  background: #0073aa;
+  border-left-color: #0073aa;
+}
+.skin-wp-dark-style .sidebar-menu > li > .treeview-menu {
+  margin: 0 1px;
+  background: #32373c;
+}
+.skin-wp-dark-style .sidebar a {
+  color: #9ca1a6;
+  font-weight: none;
+}
+.skin-wp-dark-style .sidebar a:hover {
+  text-decoration: none;
+  font-weight: none;
+}
+.skin-wp-dark-style .treeview-menu > li > a {
+  color: #72777c;
+}
+.skin-wp-dark-style .treeview-menu > li.active > a,
+.skin-wp-dark-style .treeview-menu > li > a:hover {
+  color: #fffffd;
+}
+.skin-wp-dark-style .sidebar-form {
+  border-radius: 3px;
+  border: 1px solid #191e23;
+  margin: 10px 10px;
+}
+.skin-wp-dark-style .sidebar-form input[type="text"],
+.skin-wp-dark-style .sidebar-form .btn {
+  box-shadow: none;
+  background-color: #FFFFFD;
+  border: 1px solid transparent;
+  height: 35px;
+}
+.skin-wp-dark-style .sidebar-form input[type="text"] {
+  color: #666;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 2px;
+}
+.skin-wp-dark-style .sidebar-form input[type="text"]:focus,
+.skin-wp-dark-style .sidebar-form input[type="text"]:focus + .input-group-btn .btn {
+  background-color: #fff;
+  color: #666;
+}
+.skin-wp-dark-style .sidebar-form input[type="text"]:focus + .input-group-btn .btn {
+  border-left-color: #fff;
+}
+.skin-wp-dark-style .sidebar-form .btn {
+  color: #999;
+  border-top-left-radius: 0;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 0;
+}
+/*
+ * Content Wrapper - contains the main content
+ * ```.right-side has been deprecated as of v2.0.0 in favor of .content-wrapper  ```
+ */
+.content-wrapper,
+.right-side {
+  color: #9ca1a6;
+  min-height: 100%;
+  background-color: #32373c;
+  z-index: 800;
+}
+/* General Links */
+a,
+a:active,
+a:focus {
+  outline: none;
+  text-decoration: none;
+  color: #0073aa
+}
+a:hover
+{
+  color: #0096DE
+}
+.menuLink
+{
+  color: #fff;
+}
+/*
+ * Component: Form
+ * ---------------
+ */
+.form-control
+{
+  color: #9ca1a6;
+  background-color: #191e23;
+  border: 1px solid #9ca1a6;
+}
+.form-control:disabled
+{
+  color: #9ca1a6;
+  background-color: #32373c;
+  border: 1px solid #9ca1a6;
+}
+label
+{
+  color: #9ca1a6;
+}
+/*
+ * Component: Box
+ * --------------
+ */
+.box {
+  position: relative;
+  border-radius: 3px;
+  background: #23282d;
+  border: 3px 1px 1px 1px solid #000;
+  margin-bottom: 20px;
+  width: 100%;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.box.box-default {
+  border-top-color: #0073aa;
+  border-bottom-color: #0073aa;
+}
+.box-header {
+  color: #9ca1a6;
+  display: block;
+  padding: 10px;
+  position: relative;
+}
+.box-header.with-border {
+  border-bottom: 1px solid #0073aa;;
+}
+.box-body {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+  padding: 10px;
+}
+/*
+ * Component: Control sidebar. By default, this is the right sidebar.
+ */
+.control-sidebar-dark {
+  color: #b8c7ce;
+}
+.control-sidebar-dark,
+.control-sidebar-dark + .control-sidebar-bg {
+  background: #23282d;
+}
+.control-sidebar-dark .nav-tabs.control-sidebar-tabs {
+  border-bottom: #23282d;
+}
+.control-sidebar-dark .nav-tabs.control-sidebar-tabs > li > a {
+  background: #191e23;
+  color: #72777c;
+}
+.control-sidebar-dark .nav-tabs.control-sidebar-tabs > li > a,
+.control-sidebar-dark .nav-tabs.control-sidebar-tabs > li > a:focus {
+  border-left-color: #161A1E;
+  border-bottom-color: #161A1E;
+}
+.control-sidebar-dark .nav-tabs.control-sidebar-tabs > li > a:hover
+{
+  border-left-color: #1C2024;
+  border-bottom-color: #1C2024;
+}
+.control-sidebar-dark .nav-tabs.control-sidebar-tabs > li > a:hover,
+.control-sidebar-dark .nav-tabs.control-sidebar-tabs > li > a:focus,
+.control-sidebar-dark .nav-tabs.control-sidebar-tabs > li > a:active {
+  background: #32373c;
+}
+.control-sidebar-dark .nav-tabs.control-sidebar-tabs > li > a:hover {
+  color: #00b9eb;
+}
+.control-sidebar-dark .nav-tabs.control-sidebar-tabs > li.active > a,
+.control-sidebar-dark .nav-tabs.control-sidebar-tabs > li.active > a:hover,
+.control-sidebar-dark .nav-tabs.control-sidebar-tabs > li.active > a:focus,
+.control-sidebar-dark .nav-tabs.control-sidebar-tabs > li.active > a:active {
+  background: #23282d;
+  color: #fff;
+}
+.control-sidebar-dark .control-sidebar-heading,
+.control-sidebar-dark .control-sidebar-subheading {
+  color: #9ca1a6;
+}
+.control-sidebar-dark .control-sidebar-menu > li > a:hover {
+  background: #191e23;
+}
+.control-sidebar-dark .control-sidebar-menu > li > a .menu-info > p {
+  color: #72777c;
+}
