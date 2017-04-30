@@ -23,7 +23,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cms_blog`
+-- Tabellenstruktur f&uuml;r Tabelle `cms_blog`
 --
 
 CREATE TABLE `cms_blog` (
@@ -51,7 +51,7 @@ CREATE TABLE `cms_blog` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cms_blog_comments`
+-- Tabellenstruktur f&uuml;r Tabelle `cms_blog_comments`
 --
 
 CREATE TABLE `cms_blog_comments` (
@@ -74,7 +74,7 @@ CREATE TABLE `cms_blog_comments` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cms_blog_items`
+-- Tabellenstruktur f&uuml;r Tabelle `cms_blog_items`
 --
 
 CREATE TABLE `cms_blog_items` (
@@ -108,7 +108,7 @@ CREATE TABLE `cms_blog_items` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cms_follower`
+-- Tabellenstruktur f&uuml;r Tabelle `cms_follower`
 --
 
 CREATE TABLE `cms_follower` (
@@ -121,7 +121,7 @@ CREATE TABLE `cms_follower` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cms_friends`
+-- Tabellenstruktur f&uuml;r Tabelle `cms_friends`
 --
 
 CREATE TABLE `cms_friends` (
@@ -137,7 +137,7 @@ CREATE TABLE `cms_friends` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cms_gfonts`
+-- Tabellenstruktur f&uuml;r Tabelle `cms_gfonts`
 --
 
 CREATE TABLE `cms_gfonts` (
@@ -149,7 +149,7 @@ CREATE TABLE `cms_gfonts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `cms_gfonts`
+-- Daten f&uuml;r Tabelle `cms_gfonts`
 --
 
 INSERT INTO `cms_gfonts` (`id`, `font`, `description`, `setting`, `activated`) VALUES
@@ -237,7 +237,7 @@ INSERT INTO `cms_gfonts` (`id`, `font`, `description`, `setting`, `activated`) V
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cms_logins`
+-- Tabellenstruktur f&uuml;r Tabelle `cms_logins`
 --
 
 CREATE TABLE `cms_logins` (
@@ -254,7 +254,7 @@ CREATE TABLE `cms_logins` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cms_menu`
+-- Tabellenstruktur f&uuml;r Tabelle `cms_menu`
 --
 
 CREATE TABLE `cms_menu` (
@@ -278,7 +278,7 @@ CREATE TABLE `cms_menu` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `cms_menu`
+-- Daten f&uuml;r Tabelle `cms_menu`
 --
 
 INSERT INTO `cms_menu` (`TMPID`, `id`, `sort`, `gid`, `menuID`, `parentID`, `published`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `title`, `text`, `href`, `target`, `divider`, `blogid`) VALUES
@@ -287,7 +287,7 @@ INSERT INTO `cms_menu` (`TMPID`, `id`, `sort`, `gid`, `menuID`, `parentID`, `pub
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cms_menu_names`
+-- Tabellenstruktur f&uuml;r Tabelle `cms_menu_names`
 --
 
 CREATE TABLE `cms_menu_names` (
@@ -297,7 +297,7 @@ CREATE TABLE `cms_menu_names` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `cms_menu_names`
+-- Daten f&uuml;r Tabelle `cms_menu_names`
 --
 
 INSERT INTO `cms_menu_names` (`id`, `name`, `published`) VALUES
@@ -306,7 +306,7 @@ INSERT INTO `cms_menu_names` (`id`, `name`, `published`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cms_meta_global`
+-- Tabellenstruktur f&uuml;r Tabelle `cms_meta_global`
 --
 
 CREATE TABLE `cms_meta_global` (
@@ -315,7 +315,7 @@ CREATE TABLE `cms_meta_global` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `cms_meta_global`
+-- Daten f&uuml;r Tabelle `cms_meta_global`
 --
 
 INSERT INTO `cms_meta_global` (`name`, `content`) VALUES
@@ -326,7 +326,7 @@ INSERT INTO `cms_meta_global` (`name`, `content`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cms_meta_local`
+-- Tabellenstruktur f&uuml;r Tabelle `cms_meta_local`
 --
 
 CREATE TABLE `cms_meta_local` (
@@ -339,7 +339,7 @@ CREATE TABLE `cms_meta_local` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cms_newsletter`
+-- Tabellenstruktur f&uuml;r Tabelle `cms_newsletter`
 --
 
 CREATE TABLE `cms_newsletter` (
@@ -353,7 +353,7 @@ CREATE TABLE `cms_newsletter` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cms_notifications`
+-- Tabellenstruktur f&uuml;r Tabelle `cms_notifications`
 --
 
 CREATE TABLE `cms_notifications` (
@@ -370,7 +370,7 @@ CREATE TABLE `cms_notifications` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cms_notifications_msg`
+-- Tabellenstruktur f&uuml;r Tabelle `cms_notifications_msg`
 --
 
 CREATE TABLE `cms_notifications_msg` (
@@ -383,7 +383,7 @@ CREATE TABLE `cms_notifications_msg` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cms_pages`
+-- Tabellenstruktur f&uuml;r Tabelle `cms_pages`
 --
 
 CREATE TABLE `cms_pages` (
@@ -405,7 +405,7 @@ CREATE TABLE `cms_pages` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `cms_pages`
+-- Daten f&uuml;r Tabelle `cms_pages`
 --
 
 INSERT INTO `cms_pages` (`id`, `published`, `gid`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `alias`, `title`, `bgimage`, `owner`, `menu`, `locked`, `blogid`, `plugin`) VALUES
@@ -414,7 +414,7 @@ INSERT INTO `cms_pages` (`id`, `published`, `gid`, `date_created`, `date_changed
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cms_plugins`
+-- Tabellenstruktur f&uuml;r Tabelle `cms_plugins`
 --
 
 CREATE TABLE `cms_plugins` (
@@ -426,7 +426,7 @@ CREATE TABLE `cms_plugins` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `cms_plugins`
+-- Daten f&uuml;r Tabelle `cms_plugins`
 --
 
 INSERT INTO `cms_plugins` (`id`, `name`, `description`, `icon`, `activated`) VALUES
@@ -443,7 +443,7 @@ INSERT INTO `cms_plugins` (`id`, `name`, `description`, `icon`, `activated`) VAL
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cms_plugin_booking`
+-- Tabellenstruktur f&uuml;r Tabelle `cms_plugin_booking`
 --
 
 CREATE TABLE `cms_plugin_booking` (
@@ -476,7 +476,7 @@ CREATE TABLE `cms_plugin_booking` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cms_plugin_faq`
+-- Tabellenstruktur f&uuml;r Tabelle `cms_plugin_faq`
 --
 
 CREATE TABLE `cms_plugin_faq` (
@@ -491,7 +491,7 @@ CREATE TABLE `cms_plugin_faq` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cms_plugin_gallery`
+-- Tabellenstruktur f&uuml;r Tabelle `cms_plugin_gallery`
 --
 
 CREATE TABLE `cms_plugin_gallery` (
@@ -525,7 +525,7 @@ CREATE TABLE `cms_plugin_gallery` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cms_plugin_gallery_items`
+-- Tabellenstruktur f&uuml;r Tabelle `cms_plugin_gallery_items`
 --
 
 CREATE TABLE `cms_plugin_gallery_items` (
@@ -541,7 +541,7 @@ CREATE TABLE `cms_plugin_gallery_items` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cms_plugin_msg`
+-- Tabellenstruktur f&uuml;r Tabelle `cms_plugin_msg`
 --
 
 CREATE TABLE `cms_plugin_msg` (
@@ -559,7 +559,7 @@ CREATE TABLE `cms_plugin_msg` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cms_plugin_tourdates`
+-- Tabellenstruktur f&uuml;r Tabelle `cms_plugin_tourdates`
 --
 
 CREATE TABLE `cms_plugin_tourdates` (
@@ -574,7 +574,7 @@ CREATE TABLE `cms_plugin_tourdates` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cms_settings`
+-- Tabellenstruktur f&uuml;r Tabelle `cms_settings`
 --
 
 CREATE TABLE `cms_settings` (
@@ -596,7 +596,7 @@ CREATE TABLE `cms_settings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `cms_settings`
+-- Daten f&uuml;r Tabelle `cms_settings`
 --
 
 INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation`, `activated`, `label`, `icon`, `heading`, `subtext`, `fieldClass`, `fieldType`, `placeholder`, `description`, `options`) VALUES
@@ -715,14 +715,14 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('userpage_profile', '1', '', 6, 0, 1, 'userpage profile enabled?', '', '', '', 'form-control', '', '', '', ''),
 ('userpage_settings', '1', '', 6, 0, 1, 'userpage`settings', '', '', '', 'form-control', '', '', '', ''),
 ('userpage_stats', '1', '', 6, 0, 1, 'userpage stats enabled?', '', '', '', 'form-control', '', '', '', ''),
-('yawkversion', '1.0 r2017.4', '', 9, 2, 1, 'YAWKVERSION_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+('yawkversion', '1.0 r2017.5', '', 9, 2, 1, 'YAWKVERSION_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('youtubeChannelUrl', 'http://www.youtube.com', '', 4, 0, 1, 'YouTube Channel URL', '', '', '', 'form-control', '', '', '', ''),
 ('youtubestatus', '0', '', 4, 0, 1, 'YouTube on/off', '', '', '', 'form-control', '', '', '', '');
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cms_settings_types`
+-- Tabellenstruktur f&uuml;r Tabelle `cms_settings_types`
 --
 
 CREATE TABLE `cms_settings_types` (
@@ -731,7 +731,7 @@ CREATE TABLE `cms_settings_types` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `cms_settings_types`
+-- Daten f&uuml;r Tabelle `cms_settings_types`
 --
 
 INSERT INTO `cms_settings_types` (`id`, `value`) VALUES
@@ -756,7 +756,7 @@ INSERT INTO `cms_settings_types` (`id`, `value`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cms_stats`
+-- Tabellenstruktur f&uuml;r Tabelle `cms_stats`
 --
 
 CREATE TABLE `cms_stats` (
@@ -781,7 +781,7 @@ CREATE TABLE `cms_stats` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cms_syslog`
+-- Tabellenstruktur f&uuml;r Tabelle `cms_syslog`
 --
 
 CREATE TABLE `cms_syslog` (
@@ -798,7 +798,7 @@ CREATE TABLE `cms_syslog` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cms_syslog_types`
+-- Tabellenstruktur f&uuml;r Tabelle `cms_syslog_types`
 --
 
 CREATE TABLE `cms_syslog_types` (
@@ -810,7 +810,7 @@ CREATE TABLE `cms_syslog_types` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `cms_syslog_types`
+-- Daten f&uuml;r Tabelle `cms_syslog_types`
 --
 
 INSERT INTO `cms_syslog_types` (`id`, `active`, `property`, `icon`, `type`) VALUES
@@ -830,7 +830,7 @@ INSERT INTO `cms_syslog_types` (`id`, `active`, `property`, `icon`, `type`) VALU
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cms_templates`
+-- Tabellenstruktur f&uuml;r Tabelle `cms_templates`
 --
 
 CREATE TABLE `cms_templates` (
@@ -851,7 +851,7 @@ CREATE TABLE `cms_templates` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `cms_templates`
+-- Daten f&uuml;r Tabelle `cms_templates`
 --
 
 INSERT INTO `cms_templates` (`id`, `active`, `name`, `positions`, `description`, `releaseDate`, `author`, `authorUrl`, `weblink`, `subAuthor`, `subAuthorUrl`, `modifyDate`, `version`, `license`) VALUES
@@ -860,7 +860,7 @@ INSERT INTO `cms_templates` (`id`, `active`, `name`, `positions`, `description`,
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cms_template_settings`
+-- Tabellenstruktur f&uuml;r Tabelle `cms_template_settings`
 --
 
 CREATE TABLE `cms_template_settings` (
@@ -885,7 +885,7 @@ CREATE TABLE `cms_template_settings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `cms_template_settings`
+-- Daten f&uuml;r Tabelle `cms_template_settings`
 --
 
 INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `valueDefault`, `longValue`, `type`, `activated`, `sort`, `label`, `fieldClass`, `fieldType`, `options`, `placeholder`, `description`, `icon`, `heading`, `subtext`) VALUES
@@ -1748,7 +1748,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cms_template_settings_types`
+-- Tabellenstruktur f&uuml;r Tabelle `cms_template_settings_types`
 --
 
 CREATE TABLE `cms_template_settings_types` (
@@ -1757,7 +1757,7 @@ CREATE TABLE `cms_template_settings_types` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `cms_template_settings_types`
+-- Daten f&uuml;r Tabelle `cms_template_settings_types`
 --
 
 INSERT INTO `cms_template_settings_types` (`id`, `type`) VALUES
@@ -1816,7 +1816,7 @@ INSERT INTO `cms_template_settings_types` (`id`, `type`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cms_users`
+-- Tabellenstruktur f&uuml;r Tabelle `cms_users`
 --
 
 CREATE TABLE `cms_users` (
@@ -1856,7 +1856,7 @@ CREATE TABLE `cms_users` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cms_user_groups`
+-- Tabellenstruktur f&uuml;r Tabelle `cms_user_groups`
 --
 
 CREATE TABLE `cms_user_groups` (
@@ -1868,7 +1868,7 @@ CREATE TABLE `cms_user_groups` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `cms_user_groups`
+-- Daten f&uuml;r Tabelle `cms_user_groups`
 --
 
 INSERT INTO `cms_user_groups` (`id`, `value`, `color`, `signup_allowed`, `backend_allowed`) VALUES
@@ -1881,7 +1881,7 @@ INSERT INTO `cms_user_groups` (`id`, `value`, `color`, `signup_allowed`, `backen
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cms_widgets`
+-- Tabellenstruktur f&uuml;r Tabelle `cms_widgets`
 --
 
 CREATE TABLE `cms_widgets` (
@@ -1901,7 +1901,7 @@ CREATE TABLE `cms_widgets` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cms_widget_defaults`
+-- Tabellenstruktur f&uuml;r Tabelle `cms_widget_defaults`
 --
 
 CREATE TABLE `cms_widget_defaults` (
@@ -1909,147 +1909,157 @@ CREATE TABLE `cms_widget_defaults` (
   `value` text NOT NULL,
   `widgetType` int(11) NOT NULL,
   `activated` int(1) NOT NULL DEFAULT '1',
+  `sortation` int(11) NOT NULL DEFAULT '0',
+  `label` varchar(255) NOT NULL,
+  `icon` varchar(255) NOT NULL,
+  `heading` varchar(255) NOT NULL,
+  `subtext` varchar(255) NOT NULL,
   `description` varchar(256) NOT NULL,
   `fieldClass` varchar(128) NOT NULL,
+  `fieldType` varchar(128) NOT NULL,
+  `placeholder` varchar(255) NOT NULL,
+  `options` text NOT NULL,
   `ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `cms_widget_defaults`
+-- Daten f&uuml;r Tabelle `cms_widget_defaults`
 --
 
-INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated`, `description`, `fieldClass`, `ID`) VALUES
-('buttontitle', 'Login', 1, 1, 'Beschriftung des Login Buttons', 'form-control', 1),
-('width', '450', 4, 1, 'Breite der Like Box', 'form-control', 2),
-('height', '65', 4, 1, 'Höhe der Like Box', 'form-control', 3),
-('fbpageurl', 'http://www.facebook.com/platform', 4, 1, 'Facebook Page URL', 'form-control', 4),
-('fbappID', '100710516666226', 4, 1, 'Facebook App ID', 'form-control', 5),
-('width', '450', 5, 1, 'Breite des Like Button', 'form-control', 6),
-('height', '35', 5, 1, 'Höhe des Like Button', 'form-control', 7),
-('fblikeurl', 'http://www.facebook.com/platform', 5, 1, 'URL to Like', 'form-control', 8),
-('fbappID', '100710516666226', 5, 1, 'Facebook App ID', 'form-control', 9),
-('colorscheme', 'light', 5, 1, 'Farbschema (light or dark)', 'form-control', 10),
-('preziID', '', 3, 1, 'The ID of Your Prezi (eg: prezi_123456789)', 'form-control', 11),
-('width', '900', 3, 1, 'width of your prezi box', 'form-control', 12),
-('height', '400', 3, 1, 'height of your prezi box', 'form-control', 13),
-('allowfullscreen', 'true', 3, 1, 'enable fullscreen - true or false', 'form-control', 14),
-('bgcolor', 'ffffff', 3, 1, 'The background color of your prezi', 'color', 15),
-('autoplay', 'yes', 3, 1, 'autoplay yes or no', 'form-control', 16),
-('autohidectrl', '0', 3, 1, 'automatically hide controlls 0 or 1', 'form-control', 17),
-('trackingcode', 'UA-0000000-00', 6, 1, 'Tracking Code (eg. UA-0000000-00)', 'form-control', 18),
-('colorscheme', 'dark', 4, 1, 'Colorscheme (light / dark)', 'form-control', 19),
-('x_offset', '0', 4, 1, 'Offset, X-Axsis', 'form-control', 20),
-('y_offset', '0', 4, 1, 'Offset, Y-Axsis', 'form-control', 21),
-('float', 'right', 4, 1, 'left / right, or leave blank', 'form-control', 22),
-('clockcolor', '999', 8, 1, 'Clock Text Color', 'form-control color', 23),
-('float', 'right', 8, 1, 'Float (left / right or leave blank)', 'form-control', 24),
-('textstyle', 'bold', 8, 1, 'bold or leave blank', 'form-control', 25),
-('htmlcode', '<div class="row">\r\n        <div class="col-md-4">\r\n          <h2>Heading</h2>\r\n          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>\r\n          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>\r\n        </div>\r\n        <div class="col-md-4">\r\n          <h2>Heading</h2>\r\n          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>\r\n          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>\r\n       </div>\r\n        <div class="col-md-4">\r\n          <h2>Heading</h2>\r\n          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>\r\n          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>\r\n        </div>\r\n      </div>', 10, 1, 'Custom HTML in a divbox', 'form-control', 27),
-('galleryID', '1', 13, 1, 'the Gallery ID to show up', 'form-control', 28),
-('twitchChannel', 'salista_belladonna', 14, 1, 'the name of any twitch channel', 'form-control', 29),
-('twitchChat', '1', 14, 1, 'Include the Chat for this channel? 1|0', 'form-control', 30),
-('twitchChatHeight', '200', 14, 1, 'Height of the chat in px eg. 200px', 'form-control', 31),
-('twitchChatWidth', '100%', 14, 1, 'Width of the chat channel in px or percent eg. 100%', 'form-control', 32),
-('twitchChannelHeight', '720', 14, 1, 'Height of the video stream in px eg. 720', 'form-control', 33),
-('twitchChannelWidth', '100%', 14, 1, 'Width of the video stream in eg 100%', 'form-control', 34),
-('twitchChannelFullscreen', 'true', 14, 1, 'Allow fullscreen video mode? true|false', 'form-control', 35),
-('menuID', '1', 15, 1, 'the menu ID you wish to show', 'form-control', 36),
-('youtubeWidth', '100%', 16, 1, 'YouTube video width in px or percent', 'form-control', 37),
-('youtubeHeight', '720', 16, 1, 'YouTube video height in px or percent', 'form-control', 38),
-('youtubeFullscreen', 'true', 16, 1, 'Allow fullscreen video? Set true or false', 'form-control', 39),
-('youtubeVideoUrl', 'https://www.youtube.com/watch?v=PK8sdl53GEA', 16, 1, 'YouTube URL', 'form-control', 40),
-('youtubeHeading', '', 16, 1, 'Heading above the video', 'form-control', 41),
-('youtubeSubtext', '', 16, 1, 'Small subtext beneath heading', 'form-control', 42),
-('youtubeDescription', '', 16, 1, 'Description under the video', 'form-control', 43),
-('chaturbateRoom', 'disneydeee', 17, 1, 'Chaturbate Room (nickname)', 'form-control', 44),
-('chaturbateDisableSound', '1', 17, 1, 'Disable Sound? (0 | 1)', 'form-control', 45),
-('chaturbateVideoOnly', '0', 17, 1, 'Video Only? (0 | 1)', 'form-control', 46),
-('chaturbateHeight', '850', 17, 1, 'Video height in px', 'form-control', 47),
-('chaturbateWidth', '100%', 17, 1, 'Video width in px', 'form-control', 48),
-('chaturbateHeading', 'Watch me', 17, 1, 'Heading above the video', 'form-control', 49),
-('chaturbateSubtext', 'being nasty', 17, 1, 'Subtext beneath heading', 'form-control', 50),
-('googleMapsEmbedHtmlCode', '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d85064.65940758218!2d16.310020639299537!3d48.22066363084218!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x476d079e5136ca9f%3A0xfdc2e58a51a25b46!2sWien%2C+%C3%96sterreich!5e0!3m2!1sde!2sde!4v1491406650968" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>', 18, 1, 'HTML Code you get from GoogleMaps (iframe...)', 'form-control', 51),
-('cbaUrl', 'https://cba.fro.at/331756', 19, 1, 'URL of your CBA Stream', 'form-control', 52),
-('cbaHeading', 'Heading', 19, 1, 'Heading before your stream', 'form-control', 53),
-('cbaSubtext', 'Subtext', 19, 1, 'Small subtext beneath heading', 'form-control', 54),
-('cbaHeight', '209', 19, 1, 'Height', 'form-control', 55),
-('cbaWidth', '100%', 19, 1, 'Width', 'form-control', 56),
-('cbaWaveform', '0', 19, 1, 'Display Waveform? 0|1', 'form-control', 57),
-('cbaTitle', '0', 19, 1, 'Display Title? 0|1', 'form-control', 58),
-('cbaSocialmedia', '0', 19, 1, 'Display Socialmedia Links? 0|1', 'form-control', 59),
-('cbaPodcast', '0', 19, 1, 'Allow to subscribe? 0|1', 'form-control', 60),
-('cbaSeries', '0', 19, 1, 'Link to series? 0|1', 'form-control', 61),
-('cbaDescription', '0', 19, 1, 'Display Description? 0|1', 'form-control', 62),
-('cbaMeta', '0', 19, 1, 'Display Meta Information? 0|1', 'form-control', 63),
-('cbaEmbedCode', '', 19, 1, 'OR use embed code instead (iframe...)', 'form-control', 64),
-('instagramUrl', 'https://www.instagram.com/p/BSqEReEgW4d/', 20, 1, 'URL of your Instagram Posting', 'form-control', 65),
-('instagramWidth', '100%', 20, 1, 'Width in px or %', 'form-control', 66),
-('instagramTarget', '_blank', 20, 1, 'Target of the link (_blank or _self)', 'form-control', 67),
-('instagramHeading', '', 20, 1, 'Heading above the Posting', 'form-control', 68),
-('instagramSubtext', '', 20, 1, 'Subtext beneath heading', 'form-control', 69),
-('spotifyEmbedCode', '<iframe src="https://embed.spotify.com/?uri=spotify%3Atrack%3A30LDuVfrePWbedYTc1mUCn" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>', 21, 1, 'Spotify Embed HTML Code', 'form-control', 70),
-('spotifyWidth', '100%', 21, 1, 'Width in px or %', 'form-control', 71),
-('spotifyHeight', '380', 21, 1, 'Height in px or %', 'form-control', 72),
-('spotifyHeading', 'Heading', 21, 1, 'Heading above Widget', 'form-control', 73),
-('spotifySubtext', 'Subtext', 21, 1, 'Subtext beneath heading', 'form-control', 74),
-('fbPostEmbedCode', '<iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fzuck%2Fposts%2F10103625699665601&width=500" width="500" height="625" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>', 22, 1, 'Facebook Posting Embed HTML Code', 'form-control', 75),
-('fbPostWidth', '100%', 22, 1, 'Width in px or %', 'form-control', 76),
-('fbPostHeight', '625', 22, 1, 'Height in px', 'form-control', 77),
-('fbPostHeading', 'Heading', 22, 1, 'Heading above Posting', 'form-control', 78),
-('fbPostSubtext', 'Subtext', 22, 1, 'Subtext beneath Posting', 'form-control', 79),
-('fbVideoEmbedCode', '<iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook%2Fvideos%2F10155656407651729%2F&show_text=0&width=560" width="560" height="315" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>', 23, 1, 'Facebook Video Embed HTML Code', 'form-control', 80),
-('fbVideoWidth', '100%', 23, 1, 'Width in px or %', 'form-control', 81),
-('fbVideoHeight', '700', 23, 1, 'Height in px', 'form-control', 82),
-('fbVideoHeading', 'Heading', 23, 1, 'Heading above Video', 'form-control', 83),
-('fbVideoSubtext', 'Subtext', 23, 1, 'Subtext beside Heading', 'form-control', 84),
-('twitterTweetUrl', 'https://twitter.com/danielretzl/status/802569003172499456', 24, 1, 'URL (Link) to the Tweet you want to embed', 'form-control', 85),
-('twitterHideDataCards', '0', 24, 1, 'Hide Images and Media? 0|1', 'form-control', 86),
-('twitterDataConversation', '0', 24, 1, 'Display Conversation? 0|1', 'form-control', 87),
-('twitterTweetHeading', 'Heading', 24, 1, 'Heading above Tweet', 'form-control', 88),
-('twitterTweetSubtext', 'Subtext', 24, 1, 'Subtext beside Heading', 'form-control', 89),
-('twitterTimelineUrl', 'https://twitter.com/danielretzl', 25, 1, 'URL (Link) to the Timeline you want to embed', 'form-control', 90),
-('twitterTimelineHeading', 'Heading', 25, 1, 'Heading above Tweet', 'form-control', 91),
-('twitterTimelineSubtext', 'Subtext', 25, 1, 'Subtext beside Heading', 'form-control', 92),
-('twitterTimelineTweetLimit', '5', 25, 1, 'How many tweets to display?', 'form-control', 93),
-('twitterGridUrl', 'https://twitter.com/TwitterDev/timelines/539487832448843776', 26, 1, 'URL (Link) to the Timeline you want to embed as grid', 'form-control', 94),
-('twitterGridHeading', 'Heading', 26, 1, 'Heading above Timeline Grid', 'form-control', 95),
-('twitterGridSubtext', 'Subtext', 26, 1, 'Subtext beside Heading', 'form-control', 96),
-('twitterGridTweetLimit', '5', 26, 1, 'How many tweets to display?', 'form-control', 97),
-('twitterTweetButtonText', 'Yet another WebKit - spread the word out lout! Sharing is caring!', 27, 1, 'pre-defined tweet text', 'form-control', 98),
-('twitterTweetButtonHeading', 'Heading', 27, 1, 'Heading above Tweet Button', 'form-control', 99),
-('twitterTweetButtonSubtext', 'Subtext', 27, 1, 'Subtext beside Heading', 'form-control', 100),
-('pinterestProfileUrl', 'https://www.pinterest.com/pinterest', 28, 1, 'Pinterest Profile URL', 'form-control', 101),
-('pinterestProfileWidth', '900', 28, 1, 'Width in px or %', 'form-control', 102),
-('pinterestProfileHeight', '600', 28, 1, 'Height in px', 'form-control', 103),
-('pinterestProfileHeading', 'Heading', 28, 1, 'Heading above Pinterest Profile', 'form-control', 104),
-('pinterestProfileSubtext', 'Subtext', 28, 1, 'Subtext beside Heading', 'form-control', 105),
-('pinterestPinUrl', 'https://www.pinterest.com/pin/99360735500167749/', 29, 1, 'Pinterest Pin URL', 'form-control', 106),
-('pinterestPinSize', 'large', 29, 1, 'small, medium or large', 'form-control', 107),
-('pinterestPinHideDescription', 'true', 29, 1, 'Hide description? true|false', 'form-control', 108),
-('pinterestPinHeading', 'Heading', 29, 1, 'Heading above Pinterest Pin', 'form-control', 109),
-('pinterestPinSubtext', 'Subtext', 29, 1, 'Subtext beside Heading', 'form-control', 110),
-('pinterestFollowUrl', 'https://www.pinterest.com/pinterest/', 30, 1, 'Pinterest Follow URL', 'form-control', 111),
-('pinterestFollowHeading', 'Heading', 30, 1, 'Heading above Pinterest Follow Button', 'form-control', 112),
-('pinterestFollowSubtext', 'Subtext', 30, 1, 'Subtext beside Heading', 'form-control', 113),
-('bubblusUrl', 'https://bubbl.us/NDAxNjg1Mi83OTM0MjA4LzJhMTViYjE0MDhmN2ZjNjgxZTA3Mjc3YjdjYWY4MDM2-X?s=7934208', 31, 1, 'Url to your Bubbl.us Mindmap', 'form-control', 114),
-('bubblusWidth', '100%', 31, 1, 'Width in px or %', 'form-control', 115),
-('bubblusHeight', '600', 31, 1, 'Height in px', 'form-control', 116),
-('bubblusHeading', 'Heading', 31, 1, 'Heading above Bubbl.us Mindmap', 'form-control', 117),
-('bubblusSubtext', 'Subtext', 31, 1, 'Subtext beside Heading', 'form-control', 118),
-('jPlayerUserMediaFolder', 'demo', 32, 1, 'Any folder in media/audio/', 'form-control', 119),
-('jPlayerWidth', '100%', 32, 1, 'Width in px or %', 'form-control', 120),
-('jPlayerHeading', 'Heading', 32, 1, 'Heading above jPlayer', 'form-control', 121),
-('jPlayerSubtext', 'Subtext', 32, 1, 'Subtext beside Heading', 'form-control', 122),
-('jPlayerSkin', 'dark', 32, 1, 'Skin (dark | light)', 'form-control', 123),
-('jPlayerRootMediaFolder', 'media/audio/', 32, 1, 'Path to media root folder', 'form-control', 124),
-('jPlayerInstance', '1', 32, 1, 'Player Instance ID - if more than one player is loaded on the same page', 'form-control', 125),
-('jPlayerDefaultVolume', '0.3', 32, 1, 'Initial Player Volume 0 to 1 (eg. 0.3)', 'form-control', 126),
-('jPlayerInitialMute', 'false', 32, 1, 'Set mute on startup (true | false)', 'form-control', 127);
+INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated`, `sortation`, `label`, `icon`, `heading`, `subtext`, `description`, `fieldClass`, `fieldType`, `placeholder`, `options`, `ID`) VALUES
+('buttontitle', 'Login', 1, 1, 0, '', '', '', '', 'Beschriftung des Login Buttons', 'form-control', '', '', '', 1),
+('width', '450', 4, 1, 0, '', '', '', '', 'Breite der Like Box', 'form-control', '', '', '', 2),
+('height', '65', 4, 1, 0, '', '', '', '', 'H&ouml;he der Like Box', 'form-control', '', '', '', 3),
+('fbpageurl', 'http://www.facebook.com/platform', 4, 1, 0, '', '', '', '', 'Facebook Page URL', 'form-control', '', '', '', 4),
+('fbappID', '100710516666226', 4, 1, 0, '', '', '', '', 'Facebook App ID', 'form-control', '', '', '', 5),
+('width', '450', 5, 1, 0, '', '', '', '', 'Breite des Like Button', 'form-control', '', '', '', 6),
+('height', '35', 5, 1, 0, '', '', '', '', 'H&ouml;he des Like Button', 'form-control', '', '', '', 7),
+('fblikeurl', 'http://www.facebook.com/platform', 5, 1, 0, '', '', '', '', 'URL to Like', 'form-control', '', '', '', 8),
+('fbappID', '100710516666226', 5, 1, 0, '', '', '', '', 'Facebook App ID', 'form-control', '', '', '', 9),
+('colorscheme', 'light', 5, 1, 0, '', '', '', '', 'Farbschema (light or dark)', 'form-control', '', '', '', 10),
+('preziID', '', 3, 1, 0, '', '', '', '', 'The ID of Your Prezi (eg: prezi_123456789)', 'form-control', '', '', '', 11),
+('width', '900', 3, 1, 0, '', '', '', '', 'width of your prezi box', 'form-control', '', '', '', 12),
+('height', '400', 3, 1, 0, '', '', '', '', 'height of your prezi box', 'form-control', '', '', '', 13),
+('allowfullscreen', 'true', 3, 1, 0, '', '', '', '', 'enable fullscreen - true or false', 'form-control', '', '', '', 14),
+('bgcolor', 'ffffff', 3, 1, 0, '', '', '', '', 'The background color of your prezi', 'color', '', '', '', 15),
+('autoplay', 'yes', 3, 1, 0, '', '', '', '', 'autoplay yes or no', 'form-control', '', '', '', 16),
+('autohidectrl', '0', 3, 1, 0, '', '', '', '', 'automatically hide controlls 0 or 1', 'form-control', '', '', '', 17),
+('trackingcode', 'UA-0000000-00', 6, 1, 0, '', '', '', '', 'Tracking Code (eg. UA-0000000-00)', 'form-control', '', '', '', 18),
+('colorscheme', 'dark', 4, 1, 0, '', '', '', '', 'Colorscheme (light / dark)', 'form-control', '', '', '', 19),
+('x_offset', '0', 4, 1, 0, '', '', '', '', 'Offset, X-Axsis', 'form-control', '', '', '', 20),
+('y_offset', '0', 4, 1, 0, '', '', '', '', 'Offset, Y-Axsis', 'form-control', '', '', '', 21),
+('float', 'right', 4, 1, 0, '', '', '', '', 'left / right, or leave blank', 'form-control', '', '', '', 22),
+('clockcolor', '999', 8, 1, 0, '', '', '', '', 'Clock Text Color', 'form-control color', '', '', '', 23),
+('float', 'right', 8, 1, 0, '', '', '', '', 'Float (left / right or leave blank)', 'form-control', '', '', '', 24),
+('textstyle', 'bold', 8, 1, 0, '', '', '', '', 'bold or leave blank', 'form-control', '', '', '', 25),
+('htmlcode', '<div class="row">\r\n        <div class="col-md-4">\r\n          <h2>Heading</h2>\r\n          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>\r\n          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>\r\n        </div>\r\n        <div class="col-md-4">\r\n          <h2>Heading</h2>\r\n          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>\r\n          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>\r\n       </div>\r\n        <div class="col-md-4">\r\n          <h2>Heading</h2>\r\n          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>\r\n          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>\r\n        </div>\r\n      </div>', 10, 1, 0, '', '', '', '', 'Custom HTML in a divbox', 'form-control', '', '', '', 27),
+('galleryID', '1', 13, 1, 0, '', '', '', '', 'the Gallery ID to show up', 'form-control', '', '', '', 28),
+('twitchChannel', 'salista_belladonna', 14, 1, 0, '', '', '', '', 'the name of any twitch channel', 'form-control', '', '', '', 29),
+('twitchChat', '1', 14, 1, 0, '', '', '', '', 'Include the Chat for this channel? 1|0', 'form-control', '', '', '', 30),
+('twitchChatHeight', '200', 14, 1, 0, '', '', '', '', 'Height of the chat in px eg. 200px', 'form-control', '', '', '', 31),
+('twitchChatWidth', '100%', 14, 1, 0, '', '', '', '', 'Width of the chat channel in px or percent eg. 100%', 'form-control', '', '', '', 32),
+('twitchChannelHeight', '720', 14, 1, 0, '', '', '', '', 'Height of the video stream in px eg. 720', 'form-control', '', '', '', 33),
+('twitchChannelWidth', '100%', 14, 1, 0, '', '', '', '', 'Width of the video stream in eg 100%', 'form-control', '', '', '', 34),
+('twitchChannelFullscreen', 'true', 14, 1, 0, '', '', '', '', 'Allow fullscreen video mode? true|false', 'form-control', '', '', '', 35),
+('menuID', '1', 15, 1, 0, '', '', '', '', 'the menu ID you wish to show', 'form-control', '', '', '', 36),
+('youtubeWidth', '100%', 16, 1, 0, 'LABEL_YOUTUBE_WIDTH', '', '', '', 'DESC_YOUTUBE_WIDTH', 'form-control', '', 'PH_YOUTUBE_WIDTH', '', 37),
+('youtubeHeight', '720', 16, 1, 0, 'LABEL_YOUTUBE_HEIGHT', '', '', '', 'DESC_YOUTUBE_HEIGHT', 'form-control', '', 'PH_YOUTUBE_HEIGHT', '', 38),
+('youtubeFullscreen', 'true', 16, 1, 0, 'LABEL_YOUTUBE_FULLSCREEN', '', '', '', 'DESC_YOUTUBE_FULLSCREEN', 'form-control', 'select', '', 'true,true:false,false', 39),
+('youtubeVideoUrl', 'https://www.youtube.com/watch?v=PK8sdl53GEA', 16, 1, 0, 'LABEL_YOUTUBE_URL', '', '', '', 'DESC_YOUTUBE_URL', 'form-control', '', 'PH_YOUTUBE_URL', '', 40),
+('youtubeHeading', '', 16, 1, 0, 'LABEL_YOUTUBE_HEADING', '', '', '', 'DESC_YOUTUBE_HEADING', 'form-control', '', 'PH_YOUTUBE_HEADING', '', 41),
+('youtubeSubtext', '', 16, 1, 0, 'LABEL_YOUTUBE_SUBTEXT', '', '', '', 'DESC_YOUTUBE_SUBTEXT', 'form-control', '', 'PH_YOUTUBE_SUBTEXT', '', 42),
+('youtubeDescription', '', 16, 1, 0, 'LABEL_YOUTUBE_DESCRIPTION', '', '', '', 'DESC_YOUTUBE_DESCRIPTION', 'form-control', '', 'PH_YOUTUBE_DESCRIPTION', '', 43),
+('chaturbateRoom', 'disneydeee', 17, 1, 0, '', '', '', '', 'Chaturbate Room (nickname)', 'form-control', '', '', '', 44),
+('chaturbateDisableSound', '1', 17, 1, 0, '', '', '', '', 'Disable Sound? (0 | 1)', 'form-control', '', '', '', 45),
+('chaturbateVideoOnly', '0', 17, 1, 0, '', '', '', '', 'Video Only? (0 | 1)', 'form-control', '', '', '', 46),
+('chaturbateHeight', '850', 17, 1, 0, '', '', '', '', 'Video height in px', 'form-control', '', '', '', 47),
+('chaturbateWidth', '100%', 17, 1, 0, '', '', '', '', 'Video width in px', 'form-control', '', '', '', 48),
+('chaturbateHeading', 'Watch me', 17, 1, 0, '', '', '', '', 'Heading above the video', 'form-control', '', '', '', 49),
+('chaturbateSubtext', 'being nasty', 17, 1, 0, '', '', '', '', 'Subtext beside heading', 'form-control', '', '', '', 50),
+('googleMapsEmbedHtmlCode', '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d85064.65940758218!2d16.310020639299537!3d48.22066363084218!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x476d079e5136ca9f%3A0xfdc2e58a51a25b46!2sWien%2C+%C3%96sterreich!5e0!3m2!1sde!2sde!4v1491406650968" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>', 18, 1, 0, '', '', '', '', 'HTML Code you get from GoogleMaps (iframe...)', 'form-control', '', '', '', 51),
+('cbaUrl', 'https://cba.fro.at/331756', 19, 1, 0, '', '', '', '', 'URL of your CBA Stream', 'form-control', '', '', '', 52),
+('cbaHeading', 'Heading', 19, 1, 0, '', '', '', '', 'Heading before your stream', 'form-control', '', '', '', 53),
+('cbaSubtext', 'Subtext', 19, 1, 0, '', '', '', '', 'Small subtext beside heading', 'form-control', '', '', '', 54),
+('cbaHeight', '209', 19, 1, 0, '', '', '', '', 'Height', 'form-control', '', '', '', 55),
+('cbaWidth', '100%', 19, 1, 0, '', '', '', '', 'Width', 'form-control', '', '', '', 56),
+('cbaWaveform', '0', 19, 1, 0, '', '', '', '', 'Display Waveform? 0|1', 'form-control', '', '', '', 57),
+('cbaTitle', '0', 19, 1, 0, '', '', '', '', 'Display Title? 0|1', 'form-control', '', '', '', 58),
+('cbaSocialmedia', '0', 19, 1, 0, '', '', '', '', 'Display Socialmedia Links? 0|1', 'form-control', '', '', '', 59),
+('cbaPodcast', '0', 19, 1, 0, '', '', '', '', 'Allow to subscribe? 0|1', 'form-control', '', '', '', 60),
+('cbaSeries', '0', 19, 1, 0, '', '', '', '', 'Link to series? 0|1', 'form-control', '', '', '', 61),
+('cbaDescription', '0', 19, 1, 0, '', '', '', '', 'Display Description? 0|1', 'form-control', '', '', '', 62),
+('cbaMeta', '0', 19, 1, 0, '', '', '', '', 'Display Meta Information? 0|1', 'form-control', '', '', '', 63),
+('cbaEmbedCode', '', 19, 1, 0, '', '', '', '', 'OR use embed code instead (iframe...)', 'form-control', '', '', '', 64),
+('instagramUrl', 'https://www.instagram.com/p/BSqEReEgW4d/', 20, 1, 0, '', '', '', '', 'URL of your Instagram Posting', 'form-control', '', '', '', 65),
+('instagramWidth', '100%', 20, 1, 0, '', '', '', '', 'Width in px or %', 'form-control', '', '', '', 66),
+('instagramTarget', '_blank', 20, 1, 0, '', '', '', '', 'Target of the link (_blank or _self)', 'form-control', '', '', '', 67),
+('instagramHeading', '', 20, 1, 0, '', '', '', '', 'Heading above the Posting', 'form-control', '', '', '', 68),
+('instagramSubtext', '', 20, 1, 0, '', '', '', '', 'Subtext beside heading', 'form-control', '', '', '', 69),
+('spotifyEmbedCode', '<iframe src="https://embed.spotify.com/?uri=spotify%3Atrack%3A30LDuVfrePWbedYTc1mUCn" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>', 21, 1, 0, '', '', '', '', 'Spotify Embed HTML Code', 'form-control', '', '', '', 70),
+('spotifyWidth', '100%', 21, 1, 0, '', '', '', '', 'Width in px or %', 'form-control', '', '', '', 71),
+('spotifyHeight', '380', 21, 1, 0, '', '', '', '', 'Height in px or %', 'form-control', '', '', '', 72),
+('spotifyHeading', 'Heading', 21, 1, 0, '', '', '', '', 'Heading above Widget', 'form-control', '', '', '', 73),
+('spotifySubtext', 'Subtext', 21, 1, 0, '', '', '', '', 'Subtext beside heading', 'form-control', '', '', '', 74),
+('fbPostEmbedCode', '<iframe src="https://www.facebook.com/20531316728/posts/10154009990506729/" width="500" height="625" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>', 22, 1, 0, '', '', '', '', 'Facebook Posting Embed HTML Code', 'form-control', '', '', '', 75),
+('fbPostWidth', '100%', 22, 1, 0, '', '', '', '', 'Width in px or %', 'form-control', '', '', '', 76),
+('fbPostHeight', '625', 22, 1, 0, '', '', '', '', 'Height in px', 'form-control', '', '', '', 77),
+('fbPostHeading', 'Heading', 22, 1, 0, '', '', '', '', 'Heading above Posting', 'form-control', '', '', '', 78),
+('fbPostSubtext', 'Subtext', 22, 1, 0, '', '', '', '', 'Subtext beside Posting', 'form-control', '', '', '', 79),
+('fbVideoEmbedCode', '<iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook%2Fvideos%2F10155656407651729%2F&show_text=0&width=560" width="560" height="315" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>', 23, 1, 0, '', '', '', '', 'Facebook Video Embed HTML Code', 'form-control', '', '', '', 80),
+('fbVideoWidth', '100%', 23, 1, 0, '', '', '', '', 'Width in px or %', 'form-control', '', '', '', 81),
+('fbVideoHeight', '315', 23, 1, 0, '', '', '', '', 'Height in px', 'form-control', '', '', '', 82),
+('fbVideoHeading', 'Heading', 23, 1, 0, '', '', '', '', 'Heading above Video', 'form-control', '', '', '', 83),
+('fbVideoSubtext', 'Subtext', 23, 1, 0, '', '', '', '', 'Subtext beside Heading', 'form-control', '', '', '', 84),
+('twitterTweetUrl', 'https://twitter.com/danielretzl/status/802569003172499456', 24, 1, 0, '', '', '', '', 'URL (Link) to the Tweet you want to embed', 'form-control', '', '', '', 85),
+('twitterHideDataCards', '0', 24, 1, 0, '', '', '', '', 'Hide Images and Media? 0|1', 'form-control', '', '', '', 86),
+('twitterDataConversation', '0', 24, 1, 0, '', '', '', '', 'Display Conversation? 0|1', 'form-control', '', '', '', 87),
+('twitterTweetHeading', 'Heading', 24, 1, 0, '', '', '', '', 'Heading above Tweet', 'form-control', '', '', '', 88),
+('twitterTweetSubtext', 'Subtext', 24, 1, 0, '', '', '', '', 'Subtext beside Heading', 'form-control', '', '', '', 89),
+('twitterTimelineUrl', 'https://twitter.com/danielretzl', 25, 1, 0, '', '', '', '', 'URL (Link) to the Timeline you want to embed', 'form-control', '', '', '', 90),
+('twitterTimelineHeading', 'Heading', 25, 1, 0, '', '', '', '', 'Heading above Tweet', 'form-control', '', '', '', 91),
+('twitterTimelineSubtext', 'Subtext', 25, 1, 0, '', '', '', '', 'Subtext beside Heading', 'form-control', '', '', '', 92),
+('twitterTimelineTweetLimit', '5', 25, 1, 0, '', '', '', '', 'How many tweets to display?', 'form-control', '', '', '', 93),
+('twitterGridUrl', 'https://twitter.com/TwitterDev/timelines/539487832448843776', 26, 1, 0, '', '', '', '', 'URL (Link) to the Timeline you want to embed as grid', 'form-control', '', '', '', 94),
+('twitterGridHeading', 'Heading', 26, 1, 0, '', '', '', '', 'Heading above Timeline Grid', 'form-control', '', '', '', 95),
+('twitterGridSubtext', 'Subtext', 26, 1, 0, '', '', '', '', 'Subtext beside Heading', 'form-control', '', '', '', 96),
+('twitterGridTweetLimit', '5', 26, 1, 0, '', '', '', '', 'How many tweets to display?', 'form-control', '', '', '', 97),
+('twitterTweetButtonText', 'Yet another WebKit - spread the word out lout! Sharing is caring!', 27, 1, 0, '', '', '', '', 'pre-defined tweet text', 'form-control', '', '', '', 98),
+('twitterTweetButtonHeading', 'Heading', 27, 1, 0, '', '', '', '', 'Heading above Tweet Button', 'form-control', '', '', '', 99),
+('twitterTweetButtonSubtext', 'Subtext', 27, 1, 0, '', '', '', '', 'Subtext beside Heading', 'form-control', '', '', '', 100),
+('pinterestProfileUrl', 'https://www.pinterest.com/pinterest', 28, 1, 0, '', '', '', '', 'Pinterest Profile URL', 'form-control', '', '', '', 101),
+('pinterestProfileWidth', '900', 28, 1, 0, '', '', '', '', 'Width in px or %', 'form-control', '', '', '', 102),
+('pinterestProfileHeight', '600', 28, 1, 0, '', '', '', '', 'Height in px', 'form-control', '', '', '', 103),
+('pinterestProfileHeading', 'Heading', 28, 1, 0, '', '', '', '', 'Heading above Pinterest Profile', 'form-control', '', '', '', 104),
+('pinterestProfileSubtext', 'Subtext', 28, 1, 0, '', '', '', '', 'Subtext beside Heading', 'form-control', '', '', '', 105),
+('pinterestPinUrl', 'https://www.pinterest.com/pin/99360735500167749/', 29, 1, 0, '', '', '', '', 'Pinterest Pin URL', 'form-control', '', '', '', 106),
+('pinterestPinSize', 'large', 29, 1, 0, '', '', '', '', 'small, medium or large', 'form-control', '', '', '', 107),
+('pinterestPinHideDescription', 'true', 29, 1, 0, '', '', '', '', 'Hide description? true|false', 'form-control', '', '', '', 108),
+('pinterestPinHeading', 'Heading', 29, 1, 0, '', '', '', '', 'Heading above Pinterest Pin', 'form-control', '', '', '', 109),
+('pinterestPinSubtext', 'Subtext', 29, 1, 0, '', '', '', '', 'Subtext beside Heading', 'form-control', '', '', '', 110),
+('pinterestFollowUrl', 'https://www.pinterest.com/pinterest/', 30, 1, 0, '', '', '', '', 'Pinterest Follow URL', 'form-control', '', '', '', 111),
+('pinterestFollowHeading', 'Heading', 30, 1, 0, '', '', '', '', 'Heading above Pinterest Follow Button', 'form-control', '', '', '', 112),
+('pinterestFollowSubtext', 'Subtext', 30, 1, 0, '', '', '', '', 'Subtext beside Heading', 'form-control', '', '', '', 113),
+('bubblusUrl', 'https://bubbl.us/NDAxNjg1Mi83OTM0MjA4LzJhMTViYjE0MDhmN2ZjNjgxZTA3Mjc3YjdjYWY4MDM2-X?s=7934208', 31, 1, 0, '', '', '', '', 'Url to your Bubbl.us Mindmap', 'form-control', '', '', '', 114),
+('bubblusWidth', '100%', 31, 1, 0, '', '', '', '', 'Width in px or %', 'form-control', '', '', '', 115),
+('bubblusHeight', '600', 31, 1, 0, '', '', '', '', 'Height in px', 'form-control', '', '', '', 116),
+('bubblusHeading', 'Heading', 31, 1, 0, '', '', '', '', 'Heading above Bubbl.us Mindmap', 'form-control', '', '', '', 117),
+('bubblusSubtext', 'Subtext', 31, 1, 0, '', '', '', '', 'Subtext beside Heading', 'form-control', '', '', '', 118),
+('jPlayerUserMediaFolder', 'demo', 32, 1, 2, 'LABEL_JPLAYER_USER_MEDIAFOLDER', '', '', '', 'DESC_JPLAYER_USER_MEDIAFOLDER', 'form-control', '', 'PH_JPLAYER_USER_MEDIAFOLDER', '', 119),
+('jPlayerWidth', '100%', 32, 0, 6, 'LABEL_JPLAYER_WIDTH', '', '', '', '', 'form-control', '', 'PH_JPLAYER_WIDTH', '', 120),
+('jPlayerHeading', 'Heading', 32, 1, 3, 'LABEL_JPLAYER_HEADING', '', '', '', 'DESC_JPLAYER_HEADING', 'form-control', '', 'PH_JPLAYER_HEADING', '', 121),
+('jPlayerSubtext', 'Subtext', 32, 1, 4, 'LABEL_JPLAYER_SUBTEXT', '', '', '', 'DESC_JPLAYER_SUBTEXT', 'form-control', '', 'PH_JPLAYER_SUBTEXT', '', 122),
+('jPlayerSkin', 'dark', 32, 1, 5, 'LABEL_JPLAYER_SKIN', '', '', '', 'DESC_JPLAYER_SKIN', 'form-control', 'select', '', 'light,Light:dark,Dark', 123),
+('jPlayerRootMediaFolder', 'media/audio/', 32, 1, 1, 'LABEL_JPLAYER_ROOT_MEDIAFOLDER', '', '', '', 'DESC_JPLAYER_ROOT_MEDIAFOLDER', 'form-control', '', 'PH_JPLAYER_ROOT_MEDIAFOLDER', '', 124),
+('jPlayerInstance', '1', 32, 0, 9, 'LABEL_JPLAYER_INSTANCE', '', '', '', '', 'form-control', '', '', '', 125),
+('jPlayerDefaultVolume', '0.3', 32, 1, 7, 'LABEL_JPLAYER_DEFAULT_VOLUME', '', '', '', 'DESC_JPLAYER_DEFAULT_VOLUME', 'form-control', 'select', 'PH_JPLAYER_DEFAULT_VOLUME', '0,0%:0.1,10%:0.2,20%:0.3,30%:0.4,40%:0.5,50%:0.6,60%:0.7,70%:0.8,80%:0.9,90%:1,100%', 126),
+('jPlayerInitialMute', 'false', 32, 1, 8, 'LABEL_JPLAYER_INITIAL_MUTE', '', '', '', 'DESC_JPLAYER_INITIAL_MUTE', 'form-control', 'checkbox', 'PH_JPLAYER_INITIAL_MUTE', '', 127);
+
+
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cms_widget_settings`
+-- Tabellenstruktur f&uuml;r Tabelle `cms_widget_settings`
 --
 
 CREATE TABLE `cms_widget_settings` (
@@ -2058,13 +2068,23 @@ CREATE TABLE `cms_widget_settings` (
   `property` varchar(256) NOT NULL,
   `value` text NOT NULL,
   `widgetType` int(11) NOT NULL,
-  `activated` int(1) NOT NULL DEFAULT '1'
+  `activated` int(1) NOT NULL DEFAULT '1',
+  `sortation` int(11) NOT NULL DEFAULT '0',
+  `label` varchar(255) NOT NULL,
+  `icon` varchar(255) NOT NULL,
+  `heading` varchar(255) NOT NULL,
+  `subtext` varchar(255) NOT NULL,
+  `fieldClass` varchar(255) NOT NULL,
+  `fieldType` varchar(128) NOT NULL,
+  `placeholder` varchar(255) NOT NULL,
+  `options` text NOT NULL,
+  `description` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cms_widget_types`
+-- Tabellenstruktur f&uuml;r Tabelle `cms_widget_types`
 --
 
 CREATE TABLE `cms_widget_types` (
@@ -2076,7 +2096,7 @@ CREATE TABLE `cms_widget_types` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `cms_widget_types`
+-- Daten f&uuml;r Tabelle `cms_widget_types`
 --
 
 INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`) VALUES
@@ -2098,7 +2118,7 @@ INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`)
 (16, 1, 'Youtube Stream', 'youtube', 'Embed any YouTube Video'),
 (17, 1, 'Chaturbate Stream', 'chaturbate', 'Embed any chaturbate cam room on your website'),
 (18, 1, 'Google Maps', 'google_maps', 'Embed Google Maps on your website'),
-(19, 1, 'Cultural Broadcasting Archive', 'culturalbroadcasting', 'CBA - Cultural Broadcasting Archive -\r\n Verband Freier Radios Österreich'),
+(19, 1, 'Cultural Broadcasting Archive', 'culturalbroadcasting', 'CBA - Cultural Broadcasting Archive -\r\n Verband Freier Radios &ouml;sterreich'),
 (20, 1, 'Instagram Posting', 'instagram', 'Embed any single Instagram posting'),
 (21, 1, 'Spotify', 'spotify', 'Embed a Spotify Stream'),
 (22, 1, 'Facebook Posting', 'fb_post', 'Embed any public Facebook Posting'),
@@ -2110,60 +2130,61 @@ INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`)
 (28, 1, 'Pinterest Profile', 'pinterest_profile', 'Embed any Pinterest Profile'),
 (29, 1, 'Pinterest Pin', 'pinterest_pin', 'Embed any Pinterest Pin'),
 (30, 1, 'Pinterest Follow', 'pinterest_profile', 'Embed a Pinterest Follow Button'),
-(31, 1, 'Bubbl.us Mindmap', 'bubblus', 'Embed Bubbl.us Mindmap');
+(31, 1, 'Bubbl.us Mindmap', 'bubblus', 'Embed Bubbl.us Mindmap'),
+(32, 1, 'jPlayer', 'jplayer', 'Audioplayer with playlist'),
 
 --
 -- Indizes der exportierten Tabellen
 --
 
 --
--- Indizes für die Tabelle `cms_blog`
+-- Indizes f&uuml;r die Tabelle `cms_blog`
 --
 ALTER TABLE `cms_blog`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id` (`id`);
 
 --
--- Indizes für die Tabelle `cms_blog_comments`
+-- Indizes f&uuml;r die Tabelle `cms_blog_comments`
 --
 ALTER TABLE `cms_blog_comments`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id` (`id`);
 
 --
--- Indizes für die Tabelle `cms_blog_items`
+-- Indizes f&uuml;r die Tabelle `cms_blog_items`
 --
 ALTER TABLE `cms_blog_items`
   ADD PRIMARY KEY (`primkey`);
 
 --
--- Indizes für die Tabelle `cms_follower`
+-- Indizes f&uuml;r die Tabelle `cms_follower`
 --
 ALTER TABLE `cms_follower`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id` (`id`,`follower`,`hunted`);
 
 --
--- Indizes für die Tabelle `cms_friends`
+-- Indizes f&uuml;r die Tabelle `cms_friends`
 --
 ALTER TABLE `cms_friends`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id` (`id`,`friendA`,`friendB`,`confirmed`,`aborted`);
 
 --
--- Indizes für die Tabelle `cms_gfonts`
+-- Indizes f&uuml;r die Tabelle `cms_gfonts`
 --
 ALTER TABLE `cms_gfonts`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `cms_logins`
+-- Indizes f&uuml;r die Tabelle `cms_logins`
 --
 ALTER TABLE `cms_logins`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `cms_menu`
+-- Indizes f&uuml;r die Tabelle `cms_menu`
 --
 ALTER TABLE `cms_menu`
   ADD PRIMARY KEY (`TMPID`),
@@ -2172,31 +2193,31 @@ ALTER TABLE `cms_menu`
   ADD KEY `id_3` (`id`);
 
 --
--- Indizes für die Tabelle `cms_menu_names`
+-- Indizes f&uuml;r die Tabelle `cms_menu_names`
 --
 ALTER TABLE `cms_menu_names`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `cms_meta_global`
+-- Indizes f&uuml;r die Tabelle `cms_meta_global`
 --
 ALTER TABLE `cms_meta_global`
   ADD PRIMARY KEY (`name`);
 
 --
--- Indizes für die Tabelle `cms_meta_local`
+-- Indizes f&uuml;r die Tabelle `cms_meta_local`
 --
 ALTER TABLE `cms_meta_local`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `cms_newsletter`
+-- Indizes f&uuml;r die Tabelle `cms_newsletter`
 --
 ALTER TABLE `cms_newsletter`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `cms_notifications`
+-- Indizes f&uuml;r die Tabelle `cms_notifications`
 --
 ALTER TABLE `cms_notifications`
   ADD PRIMARY KEY (`log_id`),
@@ -2208,27 +2229,27 @@ ALTER TABLE `cms_notifications`
   ADD KEY `msg_id` (`msg_id`);
 
 --
--- Indizes für die Tabelle `cms_notifications_msg`
+-- Indizes f&uuml;r die Tabelle `cms_notifications_msg`
 --
 ALTER TABLE `cms_notifications_msg`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id` (`id`,`active`,`type`);
 
 --
--- Indizes für die Tabelle `cms_pages`
+-- Indizes f&uuml;r die Tabelle `cms_pages`
 --
 ALTER TABLE `cms_pages`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id` (`id`);
 
 --
--- Indizes für die Tabelle `cms_plugins`
+-- Indizes f&uuml;r die Tabelle `cms_plugins`
 --
 ALTER TABLE `cms_plugins`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `cms_plugin_booking`
+-- Indizes f&uuml;r die Tabelle `cms_plugin_booking`
 --
 ALTER TABLE `cms_plugin_booking`
   ADD PRIMARY KEY (`id`),
@@ -2237,25 +2258,25 @@ ALTER TABLE `cms_plugin_booking`
   ADD KEY `ip` (`ip`);
 
 --
--- Indizes für die Tabelle `cms_plugin_faq`
+-- Indizes f&uuml;r die Tabelle `cms_plugin_faq`
 --
 ALTER TABLE `cms_plugin_faq`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `cms_plugin_gallery`
+-- Indizes f&uuml;r die Tabelle `cms_plugin_gallery`
 --
 ALTER TABLE `cms_plugin_gallery`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `cms_plugin_gallery_items`
+-- Indizes f&uuml;r die Tabelle `cms_plugin_gallery_items`
 --
 ALTER TABLE `cms_plugin_gallery_items`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `cms_plugin_msg`
+-- Indizes f&uuml;r die Tabelle `cms_plugin_msg`
 --
 ALTER TABLE `cms_plugin_msg`
   ADD PRIMARY KEY (`msg_id`),
@@ -2267,13 +2288,13 @@ ALTER TABLE `cms_plugin_msg`
 ALTER TABLE `cms_plugin_msg` ADD FULLTEXT KEY `msg_body` (`msg_body`);
 
 --
--- Indizes für die Tabelle `cms_plugin_tourdates`
+-- Indizes f&uuml;r die Tabelle `cms_plugin_tourdates`
 --
 ALTER TABLE `cms_plugin_tourdates`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `cms_settings`
+-- Indizes f&uuml;r die Tabelle `cms_settings`
 --
 ALTER TABLE `cms_settings`
   ADD PRIMARY KEY (`property`),
@@ -2282,19 +2303,19 @@ ALTER TABLE `cms_settings`
   ADD KEY `type` (`type`);
 
 --
--- Indizes für die Tabelle `cms_settings_types`
+-- Indizes f&uuml;r die Tabelle `cms_settings_types`
 --
 ALTER TABLE `cms_settings_types`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `cms_stats`
+-- Indizes f&uuml;r die Tabelle `cms_stats`
 --
 ALTER TABLE `cms_stats`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `cms_syslog`
+-- Indizes f&uuml;r die Tabelle `cms_syslog`
 --
 ALTER TABLE `cms_syslog`
   ADD PRIMARY KEY (`log_id`),
@@ -2305,32 +2326,32 @@ ALTER TABLE `cms_syslog`
   ADD KEY `type` (`log_type`);
 
 --
--- Indizes für die Tabelle `cms_syslog_types`
+-- Indizes f&uuml;r die Tabelle `cms_syslog_types`
 --
 ALTER TABLE `cms_syslog_types`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `cms_templates`
+-- Indizes f&uuml;r die Tabelle `cms_templates`
 --
 ALTER TABLE `cms_templates`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `cms_template_settings`
+-- Indizes f&uuml;r die Tabelle `cms_template_settings`
 --
 ALTER TABLE `cms_template_settings`
   ADD PRIMARY KEY (`id`),
   ADD KEY `templateID` (`templateID`);
 
 --
--- Indizes für die Tabelle `cms_template_settings_types`
+-- Indizes f&uuml;r die Tabelle `cms_template_settings_types`
 --
 ALTER TABLE `cms_template_settings_types`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `cms_users`
+-- Indizes f&uuml;r die Tabelle `cms_users`
 --
 ALTER TABLE `cms_users`
   ADD PRIMARY KEY (`id`,`username`),
@@ -2339,92 +2360,92 @@ ALTER TABLE `cms_users`
   ADD KEY `email` (`email`);
 
 --
--- Indizes für die Tabelle `cms_user_groups`
+-- Indizes f&uuml;r die Tabelle `cms_user_groups`
 --
 ALTER TABLE `cms_user_groups`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `cms_widgets`
+-- Indizes f&uuml;r die Tabelle `cms_widgets`
 --
 ALTER TABLE `cms_widgets`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `cms_widget_defaults`
+-- Indizes f&uuml;r die Tabelle `cms_widget_defaults`
 --
 ALTER TABLE `cms_widget_defaults`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indizes für die Tabelle `cms_widget_settings`
+-- Indizes f&uuml;r die Tabelle `cms_widget_settings`
 --
 ALTER TABLE `cms_widget_settings`
   ADD PRIMARY KEY (`id`),
   ADD KEY `widgetID` (`widgetID`);
 
 --
--- Indizes für die Tabelle `cms_widget_types`
+-- Indizes f&uuml;r die Tabelle `cms_widget_types`
 --
 ALTER TABLE `cms_widget_types`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT für exportierte Tabellen
+-- AUTO_INCREMENT f&uuml;r exportierte Tabellen
 --
 
 --
--- AUTO_INCREMENT für Tabelle `cms_blog_items`
+-- AUTO_INCREMENT f&uuml;r Tabelle `cms_blog_items`
 --
 ALTER TABLE `cms_blog_items`
   MODIFY `primkey` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT für Tabelle `cms_follower`
+-- AUTO_INCREMENT f&uuml;r Tabelle `cms_follower`
 --
 ALTER TABLE `cms_follower`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT für Tabelle `cms_friends`
+-- AUTO_INCREMENT f&uuml;r Tabelle `cms_friends`
 --
 ALTER TABLE `cms_friends`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT für Tabelle `cms_logins`
+-- AUTO_INCREMENT f&uuml;r Tabelle `cms_logins`
 --
 ALTER TABLE `cms_logins`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT für Tabelle `cms_menu`
+-- AUTO_INCREMENT f&uuml;r Tabelle `cms_menu`
 --
 ALTER TABLE `cms_menu`
   MODIFY `TMPID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT für Tabelle `cms_meta_local`
+-- AUTO_INCREMENT f&uuml;r Tabelle `cms_meta_local`
 --
 ALTER TABLE `cms_meta_local`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT für Tabelle `cms_newsletter`
+-- AUTO_INCREMENT f&uuml;r Tabelle `cms_newsletter`
 --
 ALTER TABLE `cms_newsletter`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT für Tabelle `cms_notifications`
+-- AUTO_INCREMENT f&uuml;r Tabelle `cms_notifications`
 --
 ALTER TABLE `cms_notifications`
   MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT für Tabelle `cms_notifications_msg`
+-- AUTO_INCREMENT f&uuml;r Tabelle `cms_notifications_msg`
 --
 ALTER TABLE `cms_notifications_msg`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT für Tabelle `cms_widget_defaults`
+-- AUTO_INCREMENT f&uuml;r Tabelle `cms_widget_defaults`
 --
 ALTER TABLE `cms_widget_defaults`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 --
--- AUTO_INCREMENT für Tabelle `cms_widget_settings`
+-- AUTO_INCREMENT f&uuml;r Tabelle `cms_widget_settings`
 --
 ALTER TABLE `cms_widget_settings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
