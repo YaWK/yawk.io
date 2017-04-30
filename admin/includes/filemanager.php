@@ -31,36 +31,6 @@
     }
 </script>
 <?php
-/*
-if (!empty($_FILES)) {
-
-    print_r( $_POST );
-    if (isset($_POST['folderselect']))
-    {   // prepare upload folder vars
-        $upload_folder = $_POST['folderselect'];
-        $upload_folder = "../media/$upload_folder/";
-    }
-    else
-    {   // default upload folder
-        $upload_folder = "../media/uploads/";
-    }
-
-    $ds = DIRECTORY_SEPARATOR;
-
-    $tempFile = $_FILES['file']['tmp_name'];          //3
-
-    $targetPath = dirname( __FILE__ ) . $ds. $upload_folder . $ds;  //4
-
-    $target_path = $upload_folder . basename( $_FILES['uploadedfile']['name']);
-
-
-
-    $targetFile =  $targetPath. $_FILES['file']['name'];  //5
-
-    move_uploaded_file($tempFile,$targetFile); //6
-
-}
-*/
 
 if (isset($_POST['upload']))
 {
@@ -73,25 +43,7 @@ if (isset($_POST['upload']))
     {   // default upload folder
         $upload_folder = "../media/uploads/";
     }
-/*
-    if (!empty($_FILES)) {
 
-        $ds = DIRECTORY_SEPARATOR;
-
-        $tempFile = $_FILES['file']['tmp_name'];          //3
-
-        $targetPath = dirname( __FILE__ ) . $ds. $upload_folder . $ds;  //4
-
-        $target_path = $upload_folder . basename( $_FILES['uploadedfile']['name']);
-
-
-
-        $targetFile =  $targetPath. $_FILES['file']['name'];  //5
-
-        move_uploaded_file($tempFile,$targetFile); //6
-
-    }
-*/
     switch ($_POST['upload'])
     {   // upload is sent
         case "sent":
@@ -124,7 +76,7 @@ if (isset($_GET['delete']))
         $item=$_GET['item'];
         $file="$path"."/"."$item";
         // execute delete command
-        if (YAWK\filemanager::deleteItem($file, $_GET['folder']) === true)
+        if (YAWK\filemanager::deleteItem($file) === true)
         {   // DELETE SUCCESSFUL, set syslog + throw success msg
             print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[FILE] $file $lang[DELETE_SUCCESSFUL]","","1200");
             \YAWK\sys::setSyslog($db, 8, "$lang[DELETED] $file", 0, 0, 0, 0);
@@ -348,43 +300,90 @@ if (isset($_GET['move']))
                          <input class="btn btn-default btn-file" id="uploadedfile" name="uploadedfile" type="file" multiple> -->
                         <?php
 
-                        $path = "../media/";
-                        foreach (new DirectoryIterator('../media') as $fileInfo) {
-                            if($fileInfo->isDot()) continue;
-                            if($fileInfo->isFile()) continue;
-                            echo $fileInfo->getFilename() . "<br>\n";
-                        }
 
-                        function dirToOptions($path = __DIR__, $level = 0) {
-                        // function dirToOptions($path, $level = 0) {
-                            $items = scandir($path);
-                            foreach($items as $item) {
-                                // ignore items strating with a dot (= hidden or nav)
-                                if (strpos($item, '.') === 0) {
-                                    continue;
+                        function dirToOptions($path)
+                        {
+                            if (isset($path) && (!empty($path) && (is_dir($path))))
+                            {
+                                // init new iterator object
+                                $iter = new RecursiveIteratorIterator(
+                                    new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS),
+                                    RecursiveIteratorIterator::SELF_FIRST,
+                                    RecursiveIteratorIterator::CATCH_GET_CHILD // Ignore "Permission denied"
+                                );
+
+                                // if you wish to return an array, uncomment following line:
+                                // $paths = array($root);
+                                echo "<optgroup label=\"Subfolder\">";
+                                foreach ($iter as $path => $dir) {
+
+                                    if($dir->getFilename() === "audio") continue;
+                                    if($dir->getFilename() === "backup") continue;
+                                    if($dir->getFilename() === "documents") continue;
+                                    if($dir->getFilename() === "downloads") continue;
+                                    if($dir->getFilename() === "images") continue;
+                                    if($dir->getFilename() === "uploads") continue;
+                                    if($dir->getFilename() === "video") continue;
+                                    if ($dir->isDir()) {
+                                        // if you wish to return an array, uncomment following line:
+                                        //  $paths[] = $path;
+
+                                        // build label
+                                        $label = ltrim($dir, "../media/");
+                                        // build folder
+                                        $folder = ltrim($dir, "../media/");
+                                        // if its running on windows:
+                                        $label = ltrim($label, "\\");
+                                        $folder = ltrim($folder, "\\");
+                                        $folder = strtr($folder,"\\","/");
+                                        $label = ucfirst($label);
+                                        echo "<option value=\"$folder\">&nbsp;&nbsp;$label</option>";
+                                    }
                                 }
 
-                                $fullPath = $path . DIRECTORY_SEPARATOR . $item;
-                                // add some whitespace to better mimic the file structure
-                                $item = str_repeat('&nbsp;', $level * 3) . $item;
-                                // file
-                                if (is_file($fullPath)) {
-                                    echo "<option>$item</option>";
+                                // if you wish to return an array, uncomment following code block:
+                                /*
+                                if (isset($paths) && (is_array($paths)))
+                                {
+                                    return $paths;
                                 }
-                                // dir
-                                else if (is_dir($fullPath)) {
-                                    // immediatly close the optgroup to prevent (invalid) nested optgroups
-                                    echo "<optgroup label='$item'></optgroup>";
-                                    // recursive call to self to add the subitems
-                                    dirToOptions($fullPath, $level + 1);
-                                }
+                                else
+                                    {
+                                        return null;
+                                    }
+                                */
+                            }
+                            else
+                            {
+                                die ("no path was set or path is wrong - aborting.");
                             }
 
                         }
 
+
+
+                        function dirToOptions2($path)
+                        {
+                            if (isset($path) && (!empty($path) && (is_dir($path))))
+                            {
+                                foreach (new DirectoryIterator('../media/audio') as $fileInfo)
+                                {
+                                    if($fileInfo->isDot()) continue;
+                                    if($fileInfo->isFile()) continue;
+                                    $file = $fileInfo->getFilename();
+                                    echo "<option value=\"$file\">$file</option>";
+                                }
+                            }
+                            else
+                                {
+                                    die ("no path was set or path is wrong - aborting.");
+                                }
+                        }
+
                         ?>
-                        <label for="folderselect"><?php echo $lang['UPLOAD_TO']; ?>: </label>
+                        <label for="folderselect"><?php echo $lang['UPLOAD_TO']; ?> </label>
                         <select id="folderselect" name="folderselect" class="form-control">
+                            <optgroup label="Media Folder">
                             <option value="audio"><?php echo $lang['FILEMAN_AUDIO']; ?></option>
                             <option value="backup"><?php echo $lang['FILEMAN_BACKUP']; ?></option>
                             <option value="documents"><?php echo $lang['FILEMAN_DOCUMENTS']; ?></option>
@@ -392,13 +391,17 @@ if (isset($_GET['move']))
                             <option value="images" selected><?php echo $lang['FILEMAN_IMAGES']; ?></option>
                             <option value="uploads"><?php echo $lang['FILEMAN_UPLOADS']; ?></option>
                             <option value="video"><?php echo $lang['FILEMAN_VIDEOS']; ?></option>
+                            <?php
+                            dirToOptions("../media/");
+                            ?>
                         </select>
-
-<?php
-                        echo "<select id=\"subfolder\" name=\"subfolder\" class=\"form-control\">";
+                    <?php /*
+                        echo "<select id=\"folderselect2\" name=\"folderselect2\" class=\"form-control\">";
                         echo "<option selected>Subfolder...</option>";
-                            dirToOptions();
-                        echo "</select>"; ?>
+                            dirToOptions("../media/");
+                        echo "</select>";
+ */
+                    ?>
                     </form>
                 </div>
             </div>

@@ -135,6 +135,29 @@ namespace YAWK {
             }
         }
 
+        static function recursiveRemoveDirectory($directory)
+        {
+            foreach(glob("{$directory}/*") as $file)
+            {
+                if(is_dir($file))
+                {
+                    self::recursiveRemoveDirectory($file);
+                }
+                else
+                    {
+                        unlink($file);
+                    }
+            }
+            if (rmdir($directory))
+            {
+                return true;
+            }
+            else
+                {
+                    return false;
+                }
+        }
+
         /**
          * delete file from folder
          * @author     Daniel Retzl <danielretzl@gmail.com>
@@ -144,18 +167,39 @@ namespace YAWK {
          * @param string $file file to delete
          * @param string $folder folder containing the file
          */
-        static function deleteItem($file, $folder)
+        static function deleteItem($file)
         {
-            $folder = mb_strtolower($folder);
-            @fclose($file);
-            if (@unlink($file))
-            {   // success
-                return true;
+            // check if it is a directory or a file and set relevant actions
+
+            // FOLDER
+            if (is_dir($file))
+            {   // lets run recursive directory removal function...
+                if (self::recursiveRemoveDirectory($file))
+                {   // folder + its content deleted
+                    return true;
+                }
+                else
+                    {   // could not recursive delete folder
+                        die ("recursiveRemoveDirectory failed");
+                    }
+            }
+
+            // FILE
+            else if (is_file($file))
+            {   // check if unlink worked
+                if (@unlink($file))
+                {   // all good
+                    return true;
+                }
+                else
+                {   // on error
+                    return false;
+                }
             }
             else
-            {   // on error
-                return false;
-            }
+                {   // item is not a file nor a directory
+                    die ("item not found.");
+                }
         }
 
         /**
