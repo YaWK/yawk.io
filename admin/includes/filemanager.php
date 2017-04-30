@@ -27,9 +27,7 @@
 
     function flipTheSwitch(folder)
     {
-        // $('select option:selected').remove();
         $('select option[value="'+folder+'"]').prop('selected', true);
-
     }
 </script>
 <?php
@@ -279,51 +277,51 @@ if (isset($_GET['move']))
 <!-- content start -->
 <div id="myTabContent" class="tab-content">
     <div class="tab-pane fade in" id="audio">
-        <br>
+        <a href="#" class="btn btn-success pull-right"><i class="fa fa-folder-open-o"></i> </a>
         <?php YAWK\filemanager::drawTableHeader($lang, 1); ?>
-        <?php YAWK\filemanager::getFilesFromFolder("../media/audio");  ?>
+        <?php YAWK\filemanager::getFilesFromFolder("../media/audio"); ?>
         <?php YAWK\filemanager::drawTableFooter(); ?>
     </div>
 
     <div class="tab-pane fade in" id="backup">
         <br>
         <?php YAWK\filemanager::drawTableHeader($lang, 2); ?>
-        <?php YAWK\filemanager::getFilesFromFolder("../media/backup");  ?>
+        <?php YAWK\filemanager::getFilesFromFolder("../media/backup"); ?>
         <?php YAWK\filemanager::drawTableFooter(); ?>
     </div>
 
     <div class="tab-pane fade in" id="documents">
         <br>
         <?php YAWK\filemanager::drawTableHeader($lang, 3); ?>
-        <?php YAWK\filemanager::getFilesFromFolder("../media/documents");	?>
+        <?php YAWK\filemanager::getFilesFromFolder("../media/documents"); ?>
         <?php YAWK\filemanager::drawTableFooter(); ?>
     </div>
 
     <div class="tab-pane fade in" id="downloads">
         <br>
         <?php YAWK\filemanager::drawTableHeader($lang, 4); ?>
-        <?php YAWK\filemanager::getFilesFromFolder("../media/downloads");  ?>
+        <?php YAWK\filemanager::getFilesFromFolder("../media/downloads"); ?>
         <?php YAWK\filemanager::drawTableFooter(); ?>
     </div>
 
     <div class="tab-pane fade in active" id="images">
         <br>
         <?php YAWK\filemanager::drawTableHeader($lang, 5); ?>
-        <?php YAWK\filemanager::getFilesFromFolder("../media/images");  ?>
+        <?php YAWK\filemanager::getFilesFromFolder("../media/images"); ?>
         <?php YAWK\filemanager::drawTableFooter(); ?>
     </div>
 
     <div class="tab-pane fade in" id="uploads">
         <br>
         <?php YAWK\filemanager::drawTableHeader($lang, 6); ?>
-        <?php YAWK\filemanager::getFilesFromFolder("../media/uploads");  ?>
+        <?php YAWK\filemanager::getFilesFromFolder("../media/uploads"); ?>
         <?php YAWK\filemanager::drawTableFooter(); ?>
     </div>
 
     <div class="tab-pane fade in" id="video">
         <br>
         <?php YAWK\filemanager::drawTableHeader($lang, 7); ?>
-        <?php YAWK\filemanager::getFilesFromFolder("../media/video");  ?>
+        <?php YAWK\filemanager::getFilesFromFolder("../media/video"); ?>
         <?php YAWK\filemanager::drawTableFooter(); ?>
     </div>
 </div>
@@ -348,6 +346,43 @@ if (isset($_GET['move']))
                         <input type="hidden" name="upload" value="sent">
                         <!-- <label for="uploadedfile"></label>
                          <input class="btn btn-default btn-file" id="uploadedfile" name="uploadedfile" type="file" multiple> -->
+                        <?php
+
+                        $path = "../media/";
+                        foreach (new DirectoryIterator('../media') as $fileInfo) {
+                            if($fileInfo->isDot()) continue;
+                            if($fileInfo->isFile()) continue;
+                            echo $fileInfo->getFilename() . "<br>\n";
+                        }
+
+                        function dirToOptions($path = __DIR__, $level = 0) {
+                        // function dirToOptions($path, $level = 0) {
+                            $items = scandir($path);
+                            foreach($items as $item) {
+                                // ignore items strating with a dot (= hidden or nav)
+                                if (strpos($item, '.') === 0) {
+                                    continue;
+                                }
+
+                                $fullPath = $path . DIRECTORY_SEPARATOR . $item;
+                                // add some whitespace to better mimic the file structure
+                                $item = str_repeat('&nbsp;', $level * 3) . $item;
+                                // file
+                                if (is_file($fullPath)) {
+                                    echo "<option>$item</option>";
+                                }
+                                // dir
+                                else if (is_dir($fullPath)) {
+                                    // immediatly close the optgroup to prevent (invalid) nested optgroups
+                                    echo "<optgroup label='$item'></optgroup>";
+                                    // recursive call to self to add the subitems
+                                    dirToOptions($fullPath, $level + 1);
+                                }
+                            }
+
+                        }
+
+                        ?>
                         <label for="folderselect"><?php echo $lang['UPLOAD_TO']; ?>: </label>
                         <select id="folderselect" name="folderselect" class="form-control">
                             <option value="audio"><?php echo $lang['FILEMAN_AUDIO']; ?></option>
@@ -358,6 +393,12 @@ if (isset($_GET['move']))
                             <option value="uploads"><?php echo $lang['FILEMAN_UPLOADS']; ?></option>
                             <option value="video"><?php echo $lang['FILEMAN_VIDEOS']; ?></option>
                         </select>
+
+<?php
+                        echo "<select id=\"subfolder\" name=\"subfolder\" class=\"form-control\">";
+                        echo "<option selected>Subfolder...</option>";
+                            dirToOptions();
+                        echo "</select>"; ?>
                     </form>
                 </div>
             </div>
