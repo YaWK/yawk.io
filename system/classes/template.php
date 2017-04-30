@@ -899,7 +899,7 @@ namespace YAWK {
                 if ($indicators["pos-$position-indicator"] === "1")
                 {
                     $indicatorStyle = " style=\"border: 2px solid red;\"";
-                    $indicatorText = "<i>pos: <b>$position</b></i> <small><small></small></small>";
+                    $indicatorText = "<i><b>$position</b></i> <small><small></small></small>";
                 }
                 else
                 {
