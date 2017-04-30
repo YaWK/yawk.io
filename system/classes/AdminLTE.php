@@ -676,7 +676,7 @@ namespace YAWK {
                 </li>
                 <!-- files -->
                 <li ";echo (isset($_GET['page']) && $_GET['page'] == 'filemanager') ? "class='active'" : ""; echo">
-                    <a href=\"index.php?page=filemanager\" title=\"Filemanager\"><i class=\"fa fa-folder\"></i> <span>$lang[FILEMANAGER]</span></a>
+                    <a href=\"index.php?page=filemanager\" title=\"Filemanager\"><i class=\"fa fa-folder-open-o\"></i> <span>$lang[FILEMANAGER]</span></a>
                 </li>
                 <!-- design -->
                 <li ";echo (isset($_GET['page']) && $_GET['page'] == 'template-edit') ? "class='active'" : ""; echo">
