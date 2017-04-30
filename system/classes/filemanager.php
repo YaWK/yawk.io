@@ -28,10 +28,10 @@ namespace YAWK {
             print "<table width=\"100%\" cellpadding=\"4\" cellspacing=\"0\" border=\"0\" class=\"table table-responsive table-hover\" id=\"table-sort$i\">
   <thead>
     <tr>
-      <td width=\"10%\" class=\"text-right\"><strong>$lang[FILEMAN_SIZE]</strong></td>
-      <td width=\"70%\" class=\"text-left\"><strong><i class=\"fa fa-caret-down\"></i> $lang[FILEMAN_FILENAME]</strong></td>
-      <td width=\"10%\" class=\"text-center\"><strong>$lang[FILEMAN_RIGHTS]</strong></td>
-      <td width=\"10%\" class=\"text-center\"><strong>$lang[ACTIONS]</strong></td>
+      <td width=\"10%\" class=\"text-right\"><b>$lang[FILEMAN_SIZE]</b></td>
+      <td width=\"70%\" class=\"text-left\"><b>$lang[FILEMAN_FILENAME]</b></td>
+      <td width=\"10%\" class=\"text-center\"><b>$lang[FILEMAN_RIGHTS]</b></td>
+      <td width=\"10%\" class=\"text-center\"><b>$lang[ACTIONS]</b></td>
     </tr>
   </thead>
   <tbody>";
@@ -235,6 +235,26 @@ namespace YAWK {
                 $files[] = $fileInfo->getFilename();
             }
             return $files;
+        }
+
+        /**
+         * returns an array containing only files from folder (no subfolders)
+         * @author     Daniel Retzl <danielretzl@gmail.com>
+         * @copyright  2009-2016 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @link       http://yawk.io
+         * @param string $folder to get files from
+         */
+        static function getSubfoldersToArray($folder)
+        {
+            $subFolders = array();
+            foreach (new \DirectoryIterator($folder) as $fileInfo) {
+                if($fileInfo->isDot()) continue;
+                if($fileInfo->isFile()) continue;
+                if($fileInfo->isDir())
+                $subFolders[] = $fileInfo->getFilename();
+            }
+            return $subFolders;
         }
 
         /**
