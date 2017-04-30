@@ -118,7 +118,7 @@ echo"<ol class=\"breadcrumb\">
 <form name="form" role="form" action="index.php?page=widget-edit&widget=<?php echo $widget->id; ?>" method="post">
 <div class="row">
 <!-- LEFT -->
-<div class="col-md-4">
+<div class="col-md-5">
 <!-- BASIC WIDGET SETTINGS -->
 <div class="box box-default">
   <div class="box-header with-border">
@@ -192,7 +192,7 @@ echo"<ol class=\"breadcrumb\">
 </div> <!-- end left col -->
 
 <!-- RIGHT -->
-  <div class="col-md-8">
+  <div class="col-md-7">
     <div class="box box-default">
     <div class="box-header with-border">
     <h3 class="box-title"><?php echo "$widget->name $lang[WIDGET] $lang[SETTINGS]"; ?></h3>
