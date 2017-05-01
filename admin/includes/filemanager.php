@@ -184,26 +184,34 @@ if (isset($_GET['move']))
     </div>
 </div>
 
-<!-- Modal --MOVE DIALOG -- -->
+<!-- Modal --ADD FOLDER  -- -->
 <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModal2Label" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
-                <h3 class="modal-title" id="move2Label"><?php print $lang['FILEMAN_MOVE']; ?></h3>
+                <h3 class="modal-title"><i class="fa fa-folder-open-o"></i> <?php print $lang['FILEMAN_ADD_FOLDER']; ?></h3>
             </div>
             <div class="modal-body">
                 <form enctype="multipart/form-data" action="index.php?page=filemanager&move=1" method="POST">
-                    <h3><?php echo $lang['SELECT_FOLDER']; ?>: <small><?php print $lang['SELECT_MOVE']; print $_GET['item']; echo $_GET['$file_value'];  ?></small></h3>
-                    <select id="folderselect" class="form-control" name="folderselect">
-                        <option value="audio"> ><?php echo $lang['FILEMAN_AUDIO']; ?> </option>
-                        <option value="documents"> ><?php echo $lang['FILEMAN_BACKUP']; ?> </option>
-                        <option value="documents"> ><?php echo $lang['FILEMAN_DOCUMENTS']; ?> </option>
-                        <option value="downloads"> ><?php echo $lang['FILEMAN_DOWNLOADS']; ?> </option>
-                        <option value="images" selected> ><?php echo $lang['FILEMAN_IMAGES']; ?> </option>
-                        <option value="uploads"> ><?php echo $lang['FILEMAN_UPLOADS']; ?> </option>
-                        <option value="video"> ><?php echo $lang['FILEMAN_VIDEOS']; ?> </option>
+
+                    <label for="folderselect"><?php echo $lang['UPLOAD_TO']; ?> </label>
+                    <select id="folderselect" name="folderselect" class="form-control">
+                        <optgroup label="Media Folder">
+                            <option value="audio"><?php echo $lang['FILEMAN_AUDIO']; ?></option>
+                            <option value="backup"><?php echo $lang['FILEMAN_BACKUP']; ?></option>
+                            <option value="documents"><?php echo $lang['FILEMAN_DOCUMENTS']; ?></option>
+                            <option value="downloads"><?php echo $lang['FILEMAN_DOWNLOADS']; ?></option>
+                            <option value="images" selected><?php echo $lang['FILEMAN_IMAGES']; ?></option>
+                            <option value="uploads"><?php echo $lang['FILEMAN_UPLOADS']; ?></option>
+                            <option value="video"><?php echo $lang['FILEMAN_VIDEOS']; ?></option>
+                            <?php
+                            // dirToOptions("../media/");
+                            ?>
                     </select>
+
+                    <label for="newFolder"><?php print $lang['FILEMAN_ADD_FOLDER_LABEL']; ?></label>
+                    <input id="newFolder" name="newFolder" class="form-control" placeholder="<?php print $lang['FILEMAN_ADD_FOLDER_PLACEHOLDER']; ?>">
                 </form>
             </div>
             <div class="modal-footer">
@@ -284,13 +292,9 @@ if (isset($_GET['move']))
         <div class="col-md-4">
             <div class="box box-default">
                 <div class="box-header">
-                    <!-- upload btn -->
-                    <h3 class="box-title">Upload</h3>
-                    <a class="btn btn-success" data-toggle="modal" data-target="#myModal" href="#myModal" style="float:right;">
-                    <i class="glyphicon glyphicon-plus"></i> &nbsp;<?php print $lang['FILEMAN_UPLOAD']; ?></a>
                     <!-- add directory btn -->
-                    <a class="btn btn-success" data-toggle="modal" data-target="#myModal" href="#myModal" style="float:right;">
-                        <i class="glyphicon glyphicon-plus"></i> &nbsp;<?php print $lang['FOLDER']; ?></a>
+                    <a class="btn btn-success" data-toggle="modal" data-target="#myModal2" href="#myModal" style="float:right;">
+                    <i class="glyphicon glyphicon-plus"></i> &nbsp;<?php print $lang['FOLDER']; ?></a>
                 </div>
                 <div class="box-body">
                     <form action="index.php?page=filemanager" method="POST" class="dropzone" enctype="multipart/form-data">
@@ -299,7 +303,6 @@ if (isset($_GET['move']))
                         <!-- <label for="uploadedfile"></label>
                          <input class="btn btn-default btn-file" id="uploadedfile" name="uploadedfile" type="file" multiple> -->
                         <?php
-
 
                         function dirToOptions($path)
                         {
@@ -329,15 +332,24 @@ if (isset($_GET['move']))
                                         //  $paths[] = $path;
 
                                         // build label
-                                        $label = ltrim($dir, "../media/");
+                                       // $label = ltrim($dir, "../media/");
                                         // build folder
-                                        $folder = ltrim($dir, "../media/");
+                                      //  $folder = ltrim($dir, "../media/");
                                         // if its running on windows:
-                                        $label = ltrim($label, "\\");
-                                        $folder = ltrim($folder, "\\");
-                                        $folder = strtr($folder,"\\","/");
-                                        $label = ucfirst($label);
-                                        echo "<option value=\"$folder\">&nbsp;&nbsp;$label</option>";
+                                    //    $label = ltrim($label, "\\");
+                                    //    $folder = ltrim($folder, "\\");
+                                        // $folder = strtr($dir,"../media/","");
+                                        // $folder = ltrim($dir, "../media/");
+                                        //$folder = strtr($folder,"\\","/");
+                                       // $label = ucfirst($label);
+                                        $subdir = $dir->getFilename();
+                                        $subpath = ltrim($path, "..");
+                                        $subpath = ltrim($subpath, "/");
+                                        $subpath = ltrim($subpath, "media");
+                                        $subpath = ltrim($subpath, "/");
+                                        $subpath = strtr($subpath,"\\","/");
+                                        $label = ucfirst($subpath);
+                                        echo "<option value=\"$subpath\">&nbsp;&nbsp;$label</option>";
                                     }
                                 }
 
@@ -357,27 +369,6 @@ if (isset($_GET['move']))
                             {
                                 die ("no path was set or path is wrong - aborting.");
                             }
-
-                        }
-
-
-
-                        function dirToOptions2($path)
-                        {
-                            if (isset($path) && (!empty($path) && (is_dir($path))))
-                            {
-                                foreach (new DirectoryIterator('../media/audio') as $fileInfo)
-                                {
-                                    if($fileInfo->isDot()) continue;
-                                    if($fileInfo->isFile()) continue;
-                                    $file = $fileInfo->getFilename();
-                                    echo "<option value=\"$file\">$file</option>";
-                                }
-                            }
-                            else
-                                {
-                                    die ("no path was set or path is wrong - aborting.");
-                                }
                         }
 
                         ?>

@@ -180,7 +180,8 @@ namespace YAWK {
                 }
                 else
                     {   // could not recursive delete folder
-                        die ("recursiveRemoveDirectory failed");
+                        // die ("recursiveRemoveDirectory failed");
+                        return false;
                     }
             }
 
@@ -198,7 +199,8 @@ namespace YAWK {
             }
             else
                 {   // item is not a file nor a directory
-                    die ("item not found.");
+                    // die ("item not found.");
+                    return false;
                 }
         }
 
