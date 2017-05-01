@@ -124,7 +124,7 @@ if (isset($_POST['addFolder']) && ($_POST['addFolder'] === "true"))
         $newFolder = $_POST['newFolder'];
         // $string = 'V!e§r$s%c&h/i(e)d=e?n`e² S³o{n[d]e]r}z\e´i+c*h~e#n';
         // remove special chars
-        $newFolder = preg_replace ( '/[^a-z0-9 ]/i', '', $newFolder);
+        $newFolder = preg_replace ('/[^a-z0-9- ]/i', '', $newFolder);
         // trim any whitespaces left or right
         $newFolder = trim($newFolder);
         // change any backslashes to regular slashes
@@ -250,7 +250,7 @@ if (isset($_POST['addFolder']) && ($_POST['addFolder'] === "true"))
                         <option value="video"><?php echo $lang['FILEMAN_VIDEOS']; ?></option>
                         <?php
                             // if all subdirectories should be drawn, uncomment the following line
-                            // dirToOptions("../media/");
+                            \YAWK\filemanager::subdirToOptions("../media/");
                         ?>
                 </select>
                 <!-- new folder -->
@@ -271,17 +271,24 @@ if (isset($_POST['addFolder']) && ($_POST['addFolder'] === "true"))
 <!-- START FILEMANAGER CONTENT  -->
 <!-- Tabs -->
 <ul id="myTab" class="nav nav-tabs">
+    <li class="active"><a href="#images" onclick="flipTheSwitch('images');" data-toggle="tab"><i class="fa fa-picture-o"></i> &nbsp;<?php echo $lang['FILEMAN_IMAGES']; ?></a></li>
     <li><a href="#audio" onclick="flipTheSwitch('audio');" data-toggle="tab"><i class="fa fa-music"></i> &nbsp;<?php echo $lang['FILEMAN_AUDIO']; ?></a></li>
-    <li><a href="#backup" onclick="flipTheSwitch('backup');" data-toggle="tab"><i class="fa fa-file-zip-o"></i> &nbsp;<?php echo $lang['FILEMAN_BACKUP']; ?></a></li>
+    <li><a href="#video" onclick="flipTheSwitch('video');" data-toggle="tab"><i class="fa fa-video-camera"></i> &nbsp;<?php echo $lang['FILEMAN_VIDEOS']; ?></a></li>
     <li><a href="#documents" onclick="flipTheSwitch('documents');" data-toggle="tab"><i class="fa fa-file-text-o"></i> &nbsp;<?php echo $lang['FILEMAN_DOCUMENTS']; ?></a></li>
     <li><a href="#downloads" onclick="flipTheSwitch('downloads');" data-toggle="tab"><i class="fa fa-download"></i> &nbsp;<?php echo $lang['FILEMAN_DOWNLOADS']; ?></a></li>
-    <li class="active"><a href="#images" onclick="flipTheSwitch('images');" data-toggle="tab"><i class="fa fa-picture-o"></i> &nbsp;<?php echo $lang['FILEMAN_IMAGES']; ?></a></li>
     <li><a href="#uploads" onclick="flipTheSwitch('uploads');" data-toggle="tab"><i class="fa fa-upload"></i> &nbsp;<?php echo $lang['FILEMAN_UPLOADS']; ?></a></li>
-    <li><a href="#video" onclick="flipTheSwitch('video');" data-toggle="tab"><i class="fa fa-video-camera"></i> &nbsp;<?php echo $lang['FILEMAN_VIDEOS']; ?></a></li>
+    <li><a href="#backup" onclick="flipTheSwitch('backup');" data-toggle="tab"><i class="fa fa-file-zip-o"></i> &nbsp;<?php echo $lang['FILEMAN_BACKUP']; ?></a></li>
 </ul>
 
 <!-- content start -->
 <div id="myTabContent" class="tab-content">
+    <!-- images folder -->
+    <div class="tab-pane fade in active" id="images">
+        <br>
+        <?php YAWK\filemanager::drawTableHeader($lang, 5); ?>
+        <?php YAWK\filemanager::getFilesFromFolder("../media/images"); ?>
+        <?php YAWK\filemanager::drawTableFooter(); ?>
+    </div>
     <!-- audio folder -->
     <div class="tab-pane fade in" id="audio">
         <br>
@@ -289,11 +296,11 @@ if (isset($_POST['addFolder']) && ($_POST['addFolder'] === "true"))
         <?php YAWK\filemanager::getFilesFromFolder("../media/audio"); ?>
         <?php YAWK\filemanager::drawTableFooter(); ?>
     </div>
-    <!-- backup folder -->
-    <div class="tab-pane fade in" id="backup">
+    <!-- video folder -->
+    <div class="tab-pane fade in" id="video">
         <br>
-        <?php YAWK\filemanager::drawTableHeader($lang, 2); ?>
-        <?php YAWK\filemanager::getFilesFromFolder("../media/backup"); ?>
+        <?php YAWK\filemanager::drawTableHeader($lang, 7); ?>
+        <?php YAWK\filemanager::getFilesFromFolder("../media/video"); ?>
         <?php YAWK\filemanager::drawTableFooter(); ?>
     </div>
     <!-- documents folder -->
@@ -310,13 +317,6 @@ if (isset($_POST['addFolder']) && ($_POST['addFolder'] === "true"))
         <?php YAWK\filemanager::getFilesFromFolder("../media/downloads"); ?>
         <?php YAWK\filemanager::drawTableFooter(); ?>
     </div>
-    <!-- images folder -->
-    <div class="tab-pane fade in active" id="images">
-        <br>
-        <?php YAWK\filemanager::drawTableHeader($lang, 5); ?>
-        <?php YAWK\filemanager::getFilesFromFolder("../media/images"); ?>
-        <?php YAWK\filemanager::drawTableFooter(); ?>
-    </div>
     <!-- upload folder -->
     <div class="tab-pane fade in" id="uploads">
         <br>
@@ -324,11 +324,11 @@ if (isset($_POST['addFolder']) && ($_POST['addFolder'] === "true"))
         <?php YAWK\filemanager::getFilesFromFolder("../media/uploads"); ?>
         <?php YAWK\filemanager::drawTableFooter(); ?>
     </div>
-    <!-- video folder -->
-    <div class="tab-pane fade in" id="video">
+    <!-- backup folder -->
+    <div class="tab-pane fade in" id="backup">
         <br>
-        <?php YAWK\filemanager::drawTableHeader($lang, 7); ?>
-        <?php YAWK\filemanager::getFilesFromFolder("../media/video"); ?>
+        <?php YAWK\filemanager::drawTableHeader($lang, 2); ?>
+        <?php YAWK\filemanager::getFilesFromFolder("../media/backup"); ?>
         <?php YAWK\filemanager::drawTableFooter(); ?>
     </div>
 </div>
