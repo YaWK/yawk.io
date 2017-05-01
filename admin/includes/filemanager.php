@@ -89,7 +89,7 @@ if (isset($_POST['upload']))
     }
 }
 
-// DELETE ITEM
+/* DELETE ITEM PROCESSING */
 if (isset($_GET['delete']))
 {   // user clicked on delete
     if ($_GET['delete']==1 AND (isset($_GET['item'])))
@@ -111,6 +111,60 @@ if (isset($_GET['delete']))
             print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[FILE] $file $lang[DELETE_FAILED]","","2400");
         }
     }
+}
+
+/* NEW FOLDER PROCESSING */
+if (isset($_POST['addFolder']) && ($_POST['addFolder'] === "true"))
+{
+    // check if new folder is set
+    if (isset($_POST['newFolder']) && (!empty($_POST['newFolder'])))
+    {
+        // prepare newFolder variable
+        // set var
+        $newFolder = $_POST['newFolder'];
+        // $string = 'V!e§r$s%c&h/i(e)d=e?n`e² S³o{n[d]e]r}z\e´i+c*h~e#n';
+        // remove special chars
+        $newFolder = preg_replace ( '/[^a-z0-9 ]/i', '', $newFolder);
+        // trim any whitespaces left or right
+        $newFolder = trim($newFolder);
+        // change any backslashes to regular slashes
+        $newFolder = strtr($newFolder,"\\","/");
+        // remove all leading slashes
+        $newFolder = ltrim($newFolder, "/");
+        // remove all trailing slashes
+        $newFolder = rtrim($newFolder, "/");
+    }
+    else
+        {
+            $newFolder = '';
+        }
+
+    if (isset($_POST['folderselect']))
+    {   // prepare upload folder vars
+        $selectedFolder = $_POST['folderselect'];
+        $selectedFolder = "../media/$selectedFolder/";
+    }
+    else
+    {   // no folder selected - set default upload folder
+        $selectedFolder = "../media/uploads/";
+    }
+
+    // ok... newFolder is set + checked, store folder is selected...
+    // now merge selectedFolder and newFolder to path used by mkdir
+    $newDirectory = "$selectedFolder$newFolder";
+    // create new folder...
+    if (mkdir($newDirectory))
+    {   // CREATE DIR SUCCESSFUL, set syslog entry
+        \YAWK\sys::setSyslog($db, 8, "$lang[CREATED] $newDirectory", 0, 0, 0, 0);
+        // throw success msg
+        print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[FOLDER] $newDirectory $lang[CREATED]","","1200");
+    }
+    else
+        {   // CREATE DIR SUCCESSFUL, set syslog entry
+            \YAWK\sys::setSyslog($db, 8, "$lang[ERROR] $newDirectory $lang[WAS_NOT_CREATED]", 0, 0, 0, 0);
+            // throw success msg
+            print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[FOLDER] $newDirectory $lang[CREATED]","","1200");
+        }
 }
 ?>
 <script src="../system/engines/jquery/dropzone/dropzone.js"></script>
@@ -175,7 +229,7 @@ if (isset($_GET['delete']))
 <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModal2Label" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form enctype="multipart/form-data" action="index.php?page=filemanager&move=1" method="POST">
+            <form enctype="multipart/form-data" action="index.php?page=filemanager" method="POST">
             <div class="modal-header">
                 <!-- modal header with close controls -->
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
@@ -296,10 +350,7 @@ if (isset($_GET['delete']))
                         <input type="hidden" name="upload" value="sent">
                         <!-- <label for="uploadedfile"></label>
                          <input class="btn btn-default btn-file" id="uploadedfile" name="uploadedfile" type="file" multiple> -->
-                        <?php
 
-
-                        ?>
                         <label for="folderselect"><?php echo $lang['UPLOAD_TO']; ?> </label>
                         <select id="folderselect" name="folderselect" class="form-control">
                             <optgroup label="Media Folder">
@@ -314,13 +365,6 @@ if (isset($_GET['delete']))
                             \YAWK\filemanager::subdirToOptions("../media/");
                             ?>
                         </select>
-                    <?php /*
-                        echo "<select id=\"folderselect2\" name=\"folderselect2\" class=\"form-control\">";
-                        echo "<option selected>Subfolder...</option>";
-                            dirToOptions("../media/");
-                        echo "</select>";
- */
-                    ?>
                     </form>
                 </div>
             </div>
