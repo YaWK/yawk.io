@@ -45,6 +45,67 @@ namespace YAWK {
             print "</tbody></table><br><br>";
         }
 
+
+        /**
+         * all folders in $path as select <option>...</option>
+         * @param string $path rootpath that should be scanned and returned
+         */
+        static function subdirToOptions($path)
+        {
+            if (isset($path) && (!empty($path) && (is_dir($path))))
+            {
+                // init new iterator object
+                $iter = new \RecursiveIteratorIterator(
+                    new \RecursiveDirectoryIterator($path, \RecursiveDirectoryIterator::SKIP_DOTS),
+                    \RecursiveIteratorIterator::SELF_FIRST,
+                    \RecursiveIteratorIterator::CATCH_GET_CHILD // Ignore "Permission denied"
+                );
+
+                // if you wish to return an array, uncomment following line:
+                // $paths = array($root);
+                echo "<optgroup label=\"Subfolder\">";
+                foreach ($iter as $path => $dir)
+                {
+                    if($dir->getFilename() === "audio") continue;
+                    if($dir->getFilename() === "backup") continue;
+                    if($dir->getFilename() === "documents") continue;
+                    if($dir->getFilename() === "downloads") continue;
+                    if($dir->getFilename() === "images") continue;
+                    if($dir->getFilename() === "uploads") continue;
+                    if($dir->getFilename() === "video") continue;
+                    if ($dir->isDir())
+                    {
+                        // if you wish to return an array, uncomment following line:
+                        //  $paths[] = $path;
+                        // you need subdir only in a var?- uncomment following line:
+                        // $subdir = $dir->getFilename();
+
+                    // adjust path
+                    $subpath = ltrim($path, "..");          // remove dots
+                    $subpath = ltrim($subpath, "/");        // remove pre slash
+                    $subpath = ltrim($subpath, "media");    // remove not needed path
+                    $subpath = ltrim($subpath, "/");        // remove trailing slash
+                    $subpath = strtr($subpath,"\\","/");    // if run on win: backslashes2slashes
+                    $label = ltrim($subpath, "/");        // remove trailing slash
+                    $label = ucfirst($label);             // uppercase first char of label
+                    echo "<option value=\"$subpath\">&nbsp;$label</option>";
+                    }
+                }
+
+                // if you wish to return an array, uncomment following code block:
+                /*
+                if (isset($paths) && (is_array($paths)))
+                {
+                    return $paths;
+                }
+                else
+                    {
+                        return null;
+                    }
+                */
+            }
+        }
+
         /**
          * returns a list of all files in given folder. expect $folder as string
          * @author     Daniel Retzl <danielretzl@gmail.com>
