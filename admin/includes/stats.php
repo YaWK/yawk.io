@@ -1,9 +1,4 @@
 <!-- JS includes -->
-<!-- jvectormap -->
-<link rel="stylesheet" href="../system/engines/AdminLTE/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
-<!-- jvectormap -->
-<script src="../system/engines/AdminLTE/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-<script src="../system/engines/AdminLTE/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
 <!-- SlimScroll 1.3.0 -->
 <script src="../system/engines/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- ChartJS 1.0.1 -->
