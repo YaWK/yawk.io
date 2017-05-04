@@ -203,7 +203,7 @@ namespace YAWK {
             }
             else
                 {   // personal text requestet, -> get logo text + subtext
-                    $logoText = "<b>".\YAWK\settings::getSetting($db, "backendLogoText")."</b>&nbsp;";
+                    $logoText = "<b>".\YAWK\settings::getSetting($db, "backendLogoText")."</b>";
                     $logoText .= \YAWK\settings::getSetting($db, "backendLogoSubText");
                 }
             echo "<!-- Logo -->
