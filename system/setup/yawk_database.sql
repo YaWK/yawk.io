@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 08. Apr 2017 um 21:37
+-- Erstellungszeit: 05. Mai 2017 um 00:20
 -- Server-Version: 10.1.10-MariaDB
 -- PHP-Version: 5.6.19
 
@@ -23,7 +23,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur f&uuml;r Tabelle `cms_blog`
+-- Tabellenstruktur für Tabelle `cms_blog`
 --
 
 CREATE TABLE `cms_blog` (
@@ -51,7 +51,7 @@ CREATE TABLE `cms_blog` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur f&uuml;r Tabelle `cms_blog_comments`
+-- Tabellenstruktur für Tabelle `cms_blog_comments`
 --
 
 CREATE TABLE `cms_blog_comments` (
@@ -74,7 +74,7 @@ CREATE TABLE `cms_blog_comments` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur f&uuml;r Tabelle `cms_blog_items`
+-- Tabellenstruktur für Tabelle `cms_blog_items`
 --
 
 CREATE TABLE `cms_blog_items` (
@@ -108,7 +108,7 @@ CREATE TABLE `cms_blog_items` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur f&uuml;r Tabelle `cms_follower`
+-- Tabellenstruktur für Tabelle `cms_follower`
 --
 
 CREATE TABLE `cms_follower` (
@@ -121,7 +121,7 @@ CREATE TABLE `cms_follower` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur f&uuml;r Tabelle `cms_friends`
+-- Tabellenstruktur für Tabelle `cms_friends`
 --
 
 CREATE TABLE `cms_friends` (
@@ -137,7 +137,7 @@ CREATE TABLE `cms_friends` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur f&uuml;r Tabelle `cms_gfonts`
+-- Tabellenstruktur für Tabelle `cms_gfonts`
 --
 
 CREATE TABLE `cms_gfonts` (
@@ -149,7 +149,7 @@ CREATE TABLE `cms_gfonts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten f&uuml;r Tabelle `cms_gfonts`
+-- Daten für Tabelle `cms_gfonts`
 --
 
 INSERT INTO `cms_gfonts` (`id`, `font`, `description`, `setting`, `activated`) VALUES
@@ -237,7 +237,7 @@ INSERT INTO `cms_gfonts` (`id`, `font`, `description`, `setting`, `activated`) V
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur f&uuml;r Tabelle `cms_logins`
+-- Tabellenstruktur für Tabelle `cms_logins`
 --
 
 CREATE TABLE `cms_logins` (
@@ -254,7 +254,7 @@ CREATE TABLE `cms_logins` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur f&uuml;r Tabelle `cms_menu`
+-- Tabellenstruktur für Tabelle `cms_menu`
 --
 
 CREATE TABLE `cms_menu` (
@@ -278,16 +278,17 @@ CREATE TABLE `cms_menu` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten f&uuml;r Tabelle `cms_menu`
+-- Daten für Tabelle `cms_menu`
 --
 
 INSERT INTO `cms_menu` (`TMPID`, `id`, `sort`, `gid`, `menuID`, `parentID`, `published`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `title`, `text`, `href`, `target`, `divider`, `blogid`) VALUES
-(1, 1, 1, 1, 1, 0, 1, '2017-03-08 19:02:19', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Welcome to YaWK CMS!', 'index.html', '_self', 0, 0);
+(1, 1, 1, 1, 1, 0, 1, '2017-03-08 19:02:19', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Welcome to YaWK CMS!', 'index.html', '_self', 0, 0),
+(2, 2, 2, 1, 1, 0, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Testseite', 'testseite.html', '_self', 0, 0);
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur f&uuml;r Tabelle `cms_menu_names`
+-- Tabellenstruktur für Tabelle `cms_menu_names`
 --
 
 CREATE TABLE `cms_menu_names` (
@@ -297,7 +298,7 @@ CREATE TABLE `cms_menu_names` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten f&uuml;r Tabelle `cms_menu_names`
+-- Daten für Tabelle `cms_menu_names`
 --
 
 INSERT INTO `cms_menu_names` (`id`, `name`, `published`) VALUES
@@ -306,7 +307,7 @@ INSERT INTO `cms_menu_names` (`id`, `name`, `published`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur f&uuml;r Tabelle `cms_meta_global`
+-- Tabellenstruktur für Tabelle `cms_meta_global`
 --
 
 CREATE TABLE `cms_meta_global` (
@@ -315,7 +316,7 @@ CREATE TABLE `cms_meta_global` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten f&uuml;r Tabelle `cms_meta_global`
+-- Daten für Tabelle `cms_meta_global`
 --
 
 INSERT INTO `cms_meta_global` (`name`, `content`) VALUES
@@ -326,7 +327,7 @@ INSERT INTO `cms_meta_global` (`name`, `content`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur f&uuml;r Tabelle `cms_meta_local`
+-- Tabellenstruktur für Tabelle `cms_meta_local`
 --
 
 CREATE TABLE `cms_meta_local` (
@@ -339,7 +340,7 @@ CREATE TABLE `cms_meta_local` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur f&uuml;r Tabelle `cms_newsletter`
+-- Tabellenstruktur für Tabelle `cms_newsletter`
 --
 
 CREATE TABLE `cms_newsletter` (
@@ -353,7 +354,7 @@ CREATE TABLE `cms_newsletter` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur f&uuml;r Tabelle `cms_notifications`
+-- Tabellenstruktur für Tabelle `cms_notifications`
 --
 
 CREATE TABLE `cms_notifications` (
@@ -370,7 +371,7 @@ CREATE TABLE `cms_notifications` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur f&uuml;r Tabelle `cms_notifications_msg`
+-- Tabellenstruktur für Tabelle `cms_notifications_msg`
 --
 
 CREATE TABLE `cms_notifications_msg` (
@@ -383,7 +384,7 @@ CREATE TABLE `cms_notifications_msg` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur f&uuml;r Tabelle `cms_pages`
+-- Tabellenstruktur für Tabelle `cms_pages`
 --
 
 CREATE TABLE `cms_pages` (
@@ -405,16 +406,17 @@ CREATE TABLE `cms_pages` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten f&uuml;r Tabelle `cms_pages`
+-- Daten für Tabelle `cms_pages`
 --
 
 INSERT INTO `cms_pages` (`id`, `published`, `gid`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `alias`, `title`, `bgimage`, `owner`, `menu`, `locked`, `blogid`, `plugin`) VALUES
-(1, 1, 1, '2017-03-08 00:00:00', '2017-03-26 19:53:19', '2017-03-08 00:00:00', '0000-00-00 00:00:00', 'index', 'Welcome to YaWK CMS!', '', -1, 0, 0, 0, '0');
+(1, 1, 1, '2017-03-08 00:00:00', '2017-03-26 19:53:19', '2017-03-08 00:00:00', '0000-00-00 00:00:00', 'index', 'Welcome to YaWK CMS!', '', -1, 0, 0, 0, '0'),
+(2, 1, 1, '2017-04-14 03:10:50', '0000-00-00 00:00:00', '2017-04-14 03:10:50', '0000-00-00 00:00:00', 'testseite', 'Testseite', '', -1, 0, 0, 0, '0');
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur f&uuml;r Tabelle `cms_plugins`
+-- Tabellenstruktur für Tabelle `cms_plugins`
 --
 
 CREATE TABLE `cms_plugins` (
@@ -426,7 +428,7 @@ CREATE TABLE `cms_plugins` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten f&uuml;r Tabelle `cms_plugins`
+-- Daten für Tabelle `cms_plugins`
 --
 
 INSERT INTO `cms_plugins` (`id`, `name`, `description`, `icon`, `activated`) VALUES
@@ -443,7 +445,7 @@ INSERT INTO `cms_plugins` (`id`, `name`, `description`, `icon`, `activated`) VAL
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur f&uuml;r Tabelle `cms_plugin_booking`
+-- Tabellenstruktur für Tabelle `cms_plugin_booking`
 --
 
 CREATE TABLE `cms_plugin_booking` (
@@ -476,7 +478,7 @@ CREATE TABLE `cms_plugin_booking` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur f&uuml;r Tabelle `cms_plugin_faq`
+-- Tabellenstruktur für Tabelle `cms_plugin_faq`
 --
 
 CREATE TABLE `cms_plugin_faq` (
@@ -491,7 +493,7 @@ CREATE TABLE `cms_plugin_faq` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur f&uuml;r Tabelle `cms_plugin_gallery`
+-- Tabellenstruktur für Tabelle `cms_plugin_gallery`
 --
 
 CREATE TABLE `cms_plugin_gallery` (
@@ -525,7 +527,7 @@ CREATE TABLE `cms_plugin_gallery` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur f&uuml;r Tabelle `cms_plugin_gallery_items`
+-- Tabellenstruktur für Tabelle `cms_plugin_gallery_items`
 --
 
 CREATE TABLE `cms_plugin_gallery_items` (
@@ -541,7 +543,7 @@ CREATE TABLE `cms_plugin_gallery_items` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur f&uuml;r Tabelle `cms_plugin_msg`
+-- Tabellenstruktur für Tabelle `cms_plugin_msg`
 --
 
 CREATE TABLE `cms_plugin_msg` (
@@ -559,7 +561,7 @@ CREATE TABLE `cms_plugin_msg` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur f&uuml;r Tabelle `cms_plugin_tourdates`
+-- Tabellenstruktur für Tabelle `cms_plugin_tourdates`
 --
 
 CREATE TABLE `cms_plugin_tourdates` (
@@ -574,7 +576,7 @@ CREATE TABLE `cms_plugin_tourdates` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur f&uuml;r Tabelle `cms_settings`
+-- Tabellenstruktur für Tabelle `cms_settings`
 --
 
 CREATE TABLE `cms_settings` (
@@ -596,7 +598,7 @@ CREATE TABLE `cms_settings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten f&uuml;r Tabelle `cms_settings`
+-- Daten für Tabelle `cms_settings`
 --
 
 INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation`, `activated`, `label`, `icon`, `heading`, `subtext`, `fieldClass`, `fieldType`, `placeholder`, `description`, `options`) VALUES
@@ -609,13 +611,13 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('backendFXtime', '820', '', 2, 7, 1, 'BACKENDFXTIME_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('backendFXtype', 'fadeIn In', '', 2, 6, 1, 'BACKENDFXTYPE_LABEL', '', '', '', 'form-control', 'select', '', '', 'fadeIn,Fade In:slideDown,Slide Down'),
 ('backendLanguage', 'de-DE', '', 2, 4, 1, 'BACKENDLANGUAGE_LABEL', 'fa fa-language', 'BACKENDLANGUAGE_HEADING', 'BACKENDLANGUAGE_SUBTEXT', 'form-control', 'select', '', '', 'en-EN,English (en-EN):de-DE,German (de-DE)'),
-('backendLayout', 'sidebar-mini', '', 2, 2, 1, 'BACKENDLAYOUT_LABEL', '', '', '', 'form-control', 'select', '', 'BACKENDLAYOUT_DESC', 'fixed,Fixed:sidebar-collapse,Sidebar Collapse:sidebar-mini,Sidebar Mini:layout-boxed,Layout Boxed:layout-top-nav,Layout Top Nav'),
+('backendLayout', 'sidebar-mini', '', 2, 2, 1, 'BACKENDLAYOUT_LABEL', '', '', '', 'form-control', 'select', '', 'BACKENDLAYOUT_DESC', 'fixed,Fixed:sidebar-collapse,Sidebar Collapsed:sidebar-collapse sidebar-mini,Sidebar Mini Collapsed:sidebar-mini,Sidebar Mini Open:layout-boxed,Layout Boxed:layout-top-nav,Layout Top Nav'),
 ('backendLogoSubText', '', '', 12, 2, 1, 'BACKENDLOGOSUBTEXT_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('backendLogoText', 'http://yawk.io', '', 12, 1, 1, 'BACKENDLOGOTEXT_LABEL', 'fa fa-bars', 'BACKENDLOGOTEXT_HEADING', 'BACKENDLOGOTEXT_SUBTEXT', 'form-control', 'input', '', '', ''),
 ('backendLogoUrl', '1', '', 12, 3, 1, 'BACKENDLOGOURL_LABEL', '', '', '', 'form-control', 'checkbox', '', '', ''),
 ('backendMessagesMenu', '1', '', 12, 4, 1, 'BACKENDMSGMENU_LABEL', 'fa fa-bell-o', 'BACKENDMSGMENU_HEADING', 'BACKENDMSGMENU_SUBTEXT', 'form-control', 'checkbox', '', '', ''),
 ('backendNotificationMenu', '1', '', 12, 5, 1, 'BACKENDNOTIFYMENU_LABEL', '', '', '', 'form-control', 'checkbox', '', '', ''),
-('backendSkin', 'skin-wp-style', '', 2, 1, 1, 'BACKENDSKIN_LABEL', 'fa fa-paint-brush', 'BACKENDSKIN_HEADING', 'BACKENDSKIN_SUBTEXT', 'form-control', 'select', '', '', 'skin-blue,Blue:skin-green,Green:skin-red,Red:skin-yellow,Yellow:skin-purple,Purple:skin-black,Black:skin-yellow-light,Yellow Light:skin-wp-style,Wordpress Style'),
+('backendSkin', 'skin-green', '', 2, 1, 1, 'BACKENDSKIN_LABEL', 'fa fa-paint-brush', 'BACKENDSKIN_HEADING', 'BACKENDSKIN_SUBTEXT', 'form-control', 'select', '', '', 'skin-blue,Blue:skin-green,Green:skin-red,Red:skin-yellow,Yellow:skin-purple,Purple:skin-black,Black:skin-yellow-light,Yellow Light:skin-wp-style,Wordpress Style:skin-wp-dark-style,Wordpress Style Dark'),
 ('dbhost', 'localhost', '', 9, 2, 1, 'DBHOST_LABEL', 'fa fa-database', 'DATABASE_HEADING', 'DATABASE_SUBTEXT', 'form-control', 'input', 'http://localhost/', '', ''),
 ('dbname', 'yawk_database', '', 9, 1, 1, 'DBNAME_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('dbport', '3306', '', 9, 6, 1, 'DBPORT_LABEL', '', '', '', 'form-control', 'input', 'default:3306', '', ''),
@@ -644,15 +646,16 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('globalmenuid', '1', '', 3, 2, 1, 'GLOBALMENUID_LABEL', 'fa fa-bars', 'GLOBALMENUID_HEADING', 'GLOBALMENUID_SUBTEXT', 'form-control', 'select', '', 'GLOBALMENUID_DESC', ''),
 ('globalmetakeywords', 'YAWK, CMS, WORDPRESS, JOOMLA', '', 10, 0, 1, 'Global Site Keywords', '', '', '', 'form-control', '', '', '', ''),
 ('globalmetatext', 'YaWK LTE', '', 10, 0, 1, 'Global Meta Description', '', '', '', 'form-control', '', '', '', ''),
-('host', 'http://192.168.1.8/yawk-LTE', '', 1, 3, 1, 'HOST_LABEL', '', '', '', 'form-control', 'input', '', 'DATABASE_DESC', ''),
+('host', '', '', 1, 3, 1, 'HOST_LABEL', '', '', '', 'form-control', 'input', '', 'DATABASE_DESC', ''),
 ('loadingTime', '0', '', 11, 10, 1, 'LOADINGTIME_LABEL', 'fa fa-signal', 'LOADINGTIME_HEADING', 'LOADINGTIME_SUBTEXT', 'form-control', 'checkbox', '', '', ''),
 ('logoutmenuid', '1', '', 6, 0, 1, 'Logout Menu ID for logged-in Users', '', '', '', 'form-control', '', '', '', ''),
 ('offline', '0', '', 8, 0, 1, 'OFFLINE_LABEL', 'fa fa-wrench', 'OFFLINE_HEADING', 'OFFLINE_SUBTEXT', 'form-control', 'checkbox', '', 'OFFLINE_DESC', ''),
 ('offlineimage', 'media/images/closed-sign-tm.jpg', '', 8, 0, 1, 'OFFLINEIMAGE_LABEL', '', '', '', 'form-control', 'input', 'media/images/logo.jpg', 'OFFLINEIMAGE_DESC', ''),
 ('offlinemsg', '<h1>Maintenance Downtime</h1><h3>We are sorry, right now we are going to do some housekeeping at our website. Please come back later.</h3>', '', 8, 0, 1, 'OFFLINEMSG_LABEL', '', '', '', 'form-control', 'textarea', '', '', ''),
 ('paceLoader', 'enabled', '', 11, 1, 1, 'PACELOADER_LABEL', 'fa fa-spinner', 'PACELOADER_HEADING', 'PACELOADER_SUBTEXT', 'form-control', 'select', '', '', 'disabled,disabled:enabled,enabled'),
-('paceLoaderColor', '0073AA', '', 11, 2, 1, 'PACELOADER_COLOR_LABEL', '', '', '', 'form-control color', 'input', '0073aa', '', ''),
+('paceLoaderColor', '15ED73', '', 11, 2, 1, 'PACELOADER_COLOR_LABEL', '', '', '', 'form-control color', 'input', '0073aa', '', ''),
 ('paceLoaderHeight', '4px', '', 11, 3, 1, 'PACELOADER_HEIGHT_LABEL', '', '', '', 'form-control', 'input', 'PACELOADER_HEIGHT_PLACEHOLDER', '', ''),
+('robotsText-long', '', 'User-agent: *\r\nDisallow: /.idea/\r\nDisallow: /.git/\r\nDisallow: /admin/\r\nDisallow: /system/\r\nDisallow: /tmp/\r\n\r\n# uncomment following 2 lines if you NOT want your page to be tracked by waybackmachine (https://archive.org/web/)\r\n# User-agent:ia_archiver\r\n# Disallow: /', 18, 1, 1, 'ROBOTSTXT_LABEL', '', '', '', 'form-control', 'textarea', '', '', ''),
 ('selectedTemplate', '1', '', 3, 1, 1, 'SELECTEDTEMPLATE_LABEL', 'fa fa-photo', 'SELECTEDTEMPLATE_HEADING', 'SELECTEDTEMPLATE_SUBTEXT', 'form-control', 'select', '', 'SELECTEDTEMPLATE_DESC', ''),
 ('sessiontime', '60', '', 9, 1, 1, 'SESSIONTIME_LABEL', '', '', '', 'form-control', 'select', '', 'SESSIONTIME_DESC', '10,10 Minutes:20,20 Minutes:30,30 Minutes:40,40 Minutes:50,50 Minutes:60,60 Minutes:120,120 Minutes:320,320 Minutes'),
 ('signup_adultcheck', '1', '', 5, 0, 1, 'display adultcheck question before registration form', '', '', '', 'form-control', '', '', '', ''),
@@ -680,8 +683,8 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('signup_zipcode', '0', '', 5, 0, 1, 'require zipcode to signup', '', '', '', 'form-control', '', '', '', ''),
 ('siteauthor', 'YaWK', '', 10, 0, 1, 'Site Author', '', '', '', 'form-control', '', '', '', ''),
 ('sitename', 'YaWK Yet another WebKit CMS', '', 1, 2, 1, 'SITENAME_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
-('statsEnable', '0', '', 13, 2, 1, 'STATS_LABEL', 'fa fa-bar-chart', 'STATS_HEADING', 'STATS_SUBTEXT', 'form-control', 'select', '', 'STATS_DESC', '0,off:1,on'),
-('syslogEnable', '0', '', 13, 1, 1, 'SYSLOG_LABEL', 'fa fa-terminal', 'SYSLOG_HEADING', 'SYSLOG_SUBTEXT', 'form-control', 'select', '', 'SYSLOG_DESC', '0,off:1,on'),
+('statsEnable', '1', '', 13, 2, 1, 'STATS_LABEL', 'fa fa-bar-chart', 'STATS_HEADING', 'STATS_SUBTEXT', 'form-control', 'select', '', 'STATS_DESC', '0,off:1,on'),
+('syslogEnable', '1', '', 13, 1, 1, 'SYSLOG_LABEL', 'fa fa-terminal', 'SYSLOG_HEADING', 'SYSLOG_SUBTEXT', 'form-control', 'select', '', 'SYSLOG_DESC', '0,off:1,on'),
 ('timediff', '1', '', 7, 1, 1, 'TIMEDIFF_LABEL', 'fa fa-clock-o', 'TIMEDIFF_HEADING', 'TIMEDIFF_SUBTEXT', 'form-control', 'checkbox', '', 'TIMEDIFF_DESC', ''),
 ('timedifftext', 'This page is not online yet. Please come back in ', '', 7, 2, 1, 'TIMEDIFFTEXT_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('title', 'YaWK Test Page', '', 1, 1, 1, 'TITLE_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
@@ -715,14 +718,14 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('userpage_profile', '1', '', 6, 0, 1, 'userpage profile enabled?', '', '', '', 'form-control', '', '', '', ''),
 ('userpage_settings', '1', '', 6, 0, 1, 'userpage`settings', '', '', '', 'form-control', '', '', '', ''),
 ('userpage_stats', '1', '', 6, 0, 1, 'userpage stats enabled?', '', '', '', 'form-control', '', '', '', ''),
-('yawkversion', '1.0 r2017.5', '', 9, 2, 1, 'YAWKVERSION_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+('yawkversion', '1.0 build 2017.5', '', 9, 2, 1, 'YAWKVERSION_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('youtubeChannelUrl', 'http://www.youtube.com', '', 4, 0, 1, 'YouTube Channel URL', '', '', '', 'form-control', '', '', '', ''),
 ('youtubestatus', '0', '', 4, 0, 1, 'YouTube on/off', '', '', '', 'form-control', '', '', '', '');
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur f&uuml;r Tabelle `cms_settings_types`
+-- Tabellenstruktur für Tabelle `cms_settings_types`
 --
 
 CREATE TABLE `cms_settings_types` (
@@ -731,7 +734,7 @@ CREATE TABLE `cms_settings_types` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten f&uuml;r Tabelle `cms_settings_types`
+-- Daten für Tabelle `cms_settings_types`
 --
 
 INSERT INTO `cms_settings_types` (`id`, `value`) VALUES
@@ -751,12 +754,13 @@ INSERT INTO `cms_settings_types` (`id`, `value`) VALUES
 (14, 'editor'),
 (15, 'syslog'),
 (16, 'database'),
-(17, 'login');
+(17, 'login'),
+(18, 'robots');
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur f&uuml;r Tabelle `cms_stats`
+-- Tabellenstruktur für Tabelle `cms_stats`
 --
 
 CREATE TABLE `cms_stats` (
@@ -781,7 +785,7 @@ CREATE TABLE `cms_stats` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur f&uuml;r Tabelle `cms_syslog`
+-- Tabellenstruktur für Tabelle `cms_syslog`
 --
 
 CREATE TABLE `cms_syslog` (
@@ -798,7 +802,7 @@ CREATE TABLE `cms_syslog` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur f&uuml;r Tabelle `cms_syslog_types`
+-- Tabellenstruktur für Tabelle `cms_syslog_types`
 --
 
 CREATE TABLE `cms_syslog_types` (
@@ -810,7 +814,7 @@ CREATE TABLE `cms_syslog_types` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten f&uuml;r Tabelle `cms_syslog_types`
+-- Daten für Tabelle `cms_syslog_types`
 --
 
 INSERT INTO `cms_syslog_types` (`id`, `active`, `property`, `icon`, `type`) VALUES
@@ -830,7 +834,7 @@ INSERT INTO `cms_syslog_types` (`id`, `active`, `property`, `icon`, `type`) VALU
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur f&uuml;r Tabelle `cms_templates`
+-- Tabellenstruktur für Tabelle `cms_templates`
 --
 
 CREATE TABLE `cms_templates` (
@@ -851,7 +855,7 @@ CREATE TABLE `cms_templates` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten f&uuml;r Tabelle `cms_templates`
+-- Daten für Tabelle `cms_templates`
 --
 
 INSERT INTO `cms_templates` (`id`, `active`, `name`, `positions`, `description`, `releaseDate`, `author`, `authorUrl`, `weblink`, `subAuthor`, `subAuthorUrl`, `modifyDate`, `version`, `license`) VALUES
@@ -860,7 +864,7 @@ INSERT INTO `cms_templates` (`id`, `active`, `name`, `positions`, `description`,
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur f&uuml;r Tabelle `cms_template_settings`
+-- Tabellenstruktur für Tabelle `cms_template_settings`
 --
 
 CREATE TABLE `cms_template_settings` (
@@ -885,7 +889,7 @@ CREATE TABLE `cms_template_settings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten f&uuml;r Tabelle `cms_template_settings`
+-- Daten für Tabelle `cms_template_settings`
 --
 
 INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `valueDefault`, `longValue`, `type`, `activated`, `sort`, `label`, `fieldClass`, `fieldType`, `options`, `placeholder`, `description`, `icon`, `heading`, `subtext`) VALUES
@@ -1066,7 +1070,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (277, 1, 'pos-outerTop-overflow', 'visible', 'visible', '', 26, 1, 24, 'TPL_OVERFLOW', 'form-control', 'select', 'visible,visible:hidden,hidden:scroll,scroll:auto,auto:initial,initial:inherit,inherit', '', '', '', 'TPL_OVERFLOW_HEADING', 'TPL_OVERFLOW_SUBTEXT'),
 (278, 1, 'pos-outerTop-visibility', 'visible', 'visible', '', 26, 1, 26, 'TPL_VISIBILITY', 'form-control', 'select', 'visible,visible:hidden,hidden', '', '', '', '', ''),
 (279, 1, 'pos-outerTop-text-align', 'left', 'left', '', 26, 1, 5, 'TPL_TEXT_ALIGN', 'form-control', 'select', 'left,left:center,center:right,right:justify,justify:initial,initial:inherit,inherit', '', '', '', 'TPL_ALIGN_HEADING', 'TPL_ALIGN_SUBTEXT'),
-(280, 1, 'pos-outerTop-enabled', '1', '0', '', 26, 1, 1, 'TPL_POS_ACTIVE', 'form-control', 'checkbox toggle', '', '', '', '', 'TPL_POS_OUTERTOP_HEADING', 'TPL_POS_OUTERTOP_SUBTEXT'),
+(280, 1, 'pos-outerTop-enabled', '0', '0', '', 26, 1, 1, 'TPL_POS_ACTIVE', 'form-control', 'checkbox toggle', '', '', '', '', 'TPL_POS_OUTERTOP_HEADING', 'TPL_POS_OUTERTOP_SUBTEXT'),
 (281, 1, 'pos-outerTop-bg-gradient-longValue', '', '', '', 26, 1, 13, 'TPL_POS_BG_GRADIENT', 'form-control', 'textarea', '', '', '', '', '', ''),
 (282, 1, 'pos-outerTop-zindex', '9999', '9999', '', 26, 1, 25, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (283, 1, 'pos-outerTop-width', '100%', '100%', '', 26, 1, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
@@ -1132,7 +1136,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (343, 1, 'pos-top-overflow', 'visible', 'visible', '', 29, 1, 24, 'TPL_OVERFLOW', 'form-control', 'select', 'visible,visible:hidden,hidden:scroll,scroll:auto,auto:initial,initial:inherit,inherit', '', '', '', 'TPL_OVERFLOW_HEADING', 'TPL_OVERFLOW_SUBTEXT'),
 (344, 1, 'pos-top-visibility', 'visible', 'visible', '', 29, 1, 26, 'TPL_VISIBILITY', 'form-control', 'select', 'visible,visible:hidden,hidden', '', '', '', '', ''),
 (345, 1, 'pos-top-text-align', 'left', 'left', '', 29, 1, 5, 'TPL_TEXT_ALIGN', 'form-control', 'select', 'left,left:center,center:right,right:justify,justify:initial,initial:inherit,inherit', '', '', '', 'TPL_ALIGN_HEADING', 'TPL_ALIGN_SUBTEXT'),
-(346, 1, 'pos-top-enabled', '1', '0', '', 29, 1, 1, 'TPL_POS_ACTIVE', 'form-control', 'checkbox toggle', '', '', '', '', 'TPL_POS_TOP_HEADING', 'TPL_POS_TOP_SUBTEXT'),
+(346, 1, 'pos-top-enabled', '0', '0', '', 29, 1, 1, 'TPL_POS_ACTIVE', 'form-control', 'checkbox toggle', '', '', '', '', 'TPL_POS_TOP_HEADING', 'TPL_POS_TOP_SUBTEXT'),
 (347, 1, 'pos-top-bg-gradient-longValue', '', '', '', 29, 1, 13, 'TPL_POS_BG_GRADIENT', 'form-control', 'textarea', '', '', '', '', '', ''),
 (348, 1, 'pos-top-zindex', '9999', '9999', '', 29, 1, 25, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (349, 1, 'pos-top-width', '100%', '100%', '', 29, 1, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
@@ -1199,7 +1203,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (409, 1, 'pos-leftMenu-overflow', 'visible', 'visible', '', 32, 1, 24, 'TPL_OVERFLOW', 'form-control', 'select', 'visible,visible:hidden,hidden:scroll,scroll:auto,auto:initial,initial:inherit,inherit', '', '', '', 'TPL_OVERFLOW_HEADING', 'TPL_OVERFLOW_SUBTEXT'),
 (410, 1, 'pos-leftMenu-visibility', 'visible', 'visible', '', 32, 1, 26, 'TPL_VISIBILITY', 'form-control', 'select', 'visible,visible:hidden,hidden', '', '', '', '', ''),
 (411, 1, 'pos-leftMenu-text-align', 'left', 'left', '', 32, 1, 5, 'TPL_TEXT_ALIGN', 'form-control', 'select', 'left,left:center,center:right,right:justify,justify:initial,initial:inherit,inherit', '', '', '', 'TPL_ALIGN_HEADING', 'TPL_ALIGN_SUBTEXT'),
-(412, 1, 'pos-leftMenu-enabled', '1', '0', '', 32, 1, 1, 'TPL_POS_ACTIVE', 'form-control', 'checkbox toggle', '', '', '', '', 'TPL_POS_LEFTMENU_HEADING', 'TPL_POS_LEFTMENU_SUBTEXT'),
+(412, 1, 'pos-leftMenu-enabled', '0', '0', '', 32, 1, 1, 'TPL_POS_ACTIVE', 'form-control', 'checkbox toggle', '', '', '', '', 'TPL_POS_LEFTMENU_HEADING', 'TPL_POS_LEFTMENU_SUBTEXT'),
 (413, 1, 'pos-leftMenu-bg-gradient-longValue', '', '', '', 32, 1, 13, 'TPL_POS_BG_GRADIENT', 'form-control', 'textarea', '', '', '', '', '', ''),
 (414, 1, 'pos-leftMenu-zindex', '9999', '9999', '', 32, 1, 25, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (415, 1, 'pos-leftMenu-width', '100%', '100%', '', 32, 1, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
@@ -1221,7 +1225,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (431, 1, 'pos-rightMenu-overflow', 'visible', 'visible', '', 33, 1, 24, 'TPL_OVERFLOW', 'form-control', 'select', 'visible,visible:hidden,hidden:scroll,scroll:auto,auto:initial,initial:inherit,inherit', '', '', '', 'TPL_OVERFLOW_HEADING', 'TPL_OVERFLOW_SUBTEXT'),
 (432, 1, 'pos-rightMenu-visibility', 'visible', 'visible', '', 33, 1, 26, 'TPL_VISIBILITY', 'form-control', 'select', 'visible,visible:hidden,hidden', '', '', '', '', ''),
 (433, 1, 'pos-rightMenu-text-align', 'left', 'left', '', 33, 1, 5, 'TPL_TEXT_ALIGN', 'form-control', 'select', 'left,left:center,center:right,right:justify,justify:initial,initial:inherit,inherit', '', '', '', 'TPL_ALIGN_HEADING', 'TPL_ALIGN_SUBTEXT'),
-(434, 1, 'pos-rightMenu-enabled', '1', '0', '', 33, 1, 1, 'TPL_POS_ACTIVE', 'form-control', 'checkbox toggle', '', '', '', '', 'TPL_POS_RIGHTMENU_HEADING', 'TPL_POS_RIGHTMENU_SUBTEXT'),
+(434, 1, 'pos-rightMenu-enabled', '0', '0', '', 33, 1, 1, 'TPL_POS_ACTIVE', 'form-control', 'checkbox toggle', '', '', '', '', 'TPL_POS_RIGHTMENU_HEADING', 'TPL_POS_RIGHTMENU_SUBTEXT'),
 (435, 1, 'pos-rightMenu-bg-gradient-longValue', '', '', '', 33, 1, 13, 'TPL_POS_BG_GRADIENT', 'form-control', 'textarea', '', '', '', '', '', ''),
 (436, 1, 'pos-rightMenu-zindex', '9999', '9999', '', 33, 1, 25, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (437, 1, 'pos-rightMenu-width', '100%', '100%', '', 33, 1, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
@@ -1243,7 +1247,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (453, 1, 'pos-mainTop-overflow', 'visible', 'visible', '', 34, 1, 24, 'TPL_OVERFLOW', 'form-control', 'select', 'visible,visible:hidden,hidden:scroll,scroll:auto,auto:initial,initial:inherit,inherit', '', '', '', 'TPL_OVERFLOW_HEADING', 'TPL_OVERFLOW_SUBTEXT'),
 (454, 1, 'pos-mainTop-visibility', 'visible', 'visible', '', 34, 1, 26, 'TPL_VISIBILITY', 'form-control', 'select', 'visible,visible:hidden,hidden', '', '', '', '', ''),
 (455, 1, 'pos-mainTop-text-align', 'left', 'left', '', 34, 1, 5, 'TPL_TEXT_ALIGN', 'form-control', 'select', 'left,left:center,center:right,right:justify,justify:initial,initial:inherit,inherit', '', '', '', 'TPL_ALIGN_HEADING', 'TPL_ALIGN_SUBTEXT'),
-(456, 1, 'pos-mainTop-enabled', '1', '0', '', 34, 1, 1, 'TPL_POS_ACTIVE', 'form-control', 'checkbox toggle', '', '', '', '', 'TPL_POS_MAINTOP_HEADING', 'TPL_POS_MAINTOP_SUBTEXT'),
+(456, 1, 'pos-mainTop-enabled', '0', '0', '', 34, 1, 1, 'TPL_POS_ACTIVE', 'form-control', 'checkbox toggle', '', '', '', '', 'TPL_POS_MAINTOP_HEADING', 'TPL_POS_MAINTOP_SUBTEXT'),
 (457, 1, 'pos-mainTop-bg-gradient-longValue', '', '', '', 34, 1, 13, 'TPL_POS_BG_GRADIENT', 'form-control', 'textarea', '', '', '', '', '', ''),
 (458, 1, 'pos-mainTop-zindex', '9999', '9999', '', 34, 1, 25, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (459, 1, 'pos-mainTop-width', '100%', '100%', '', 34, 1, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
@@ -1372,7 +1376,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (582, 1, 'pos-mainBottomLeft-border-color', '888888', '888888', '', 40, 1, 16, 'TPL_BORDER_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (583, 1, 'pos-mainBottomLeft-border-width', '1px 1px 1px 1px', '1px 1px 1px 1px', '', 40, 1, 14, 'TPL_BORDER_WIDTH', 'form-control', '', '', 'TPL_BORDER_WIDTH_PLACEHOLDER', '', '', 'TPL_BORDER_HEADING', 'TPL_BORDER_SUBTEXT'),
 (584, 1, 'pos-mainBottomLeft-padding', '0px', '0px', '', 40, 1, 23, 'TPL_PADDING', 'form-control', '', '', 'TPL_PADDING_PLACEHOLDER', '', '', '', ''),
-(585, 1, 'pos-mainBottomLeft-overflow', 'visible', 'visible', '', 40, 1, 24, 'TPL_OVERFLOW', 'form-control', 'select', 'visible,visible:hidden,hidden:scroll,scroll:auto,auto:initial,initial:inherit,inherit', '', '', '', 'TPL_OVERFLOW_HEADING', 'TPL_OVERFLOW_SUBTEXT'),
+(585, 1, 'pos-mainBottomLeft-overflow', 'hidden', 'visible', '', 40, 1, 24, 'TPL_OVERFLOW', 'form-control', 'select', 'visible,visible:hidden,hidden:scroll,scroll:auto,auto:initial,initial:inherit,inherit', '', '', '', 'TPL_OVERFLOW_HEADING', 'TPL_OVERFLOW_SUBTEXT'),
 (586, 1, 'pos-mainBottomLeft-visibility', 'visible', 'visible', '', 40, 1, 26, 'TPL_VISIBILITY', 'form-control', 'select', 'visible,visible:hidden,hidden', '', '', '', '', ''),
 (587, 1, 'pos-mainBottomLeft-text-align', 'left', 'left', '', 40, 1, 5, 'TPL_TEXT_ALIGN', 'form-control', 'select', 'left,left:center,center:right,right:justify,justify:initial,initial:inherit,inherit', '', '', '', 'TPL_ALIGN_HEADING', 'TPL_ALIGN_SUBTEXT'),
 (588, 1, 'pos-mainBottomLeft-enabled', '1', '0', '', 40, 1, 1, 'TPL_POS_ACTIVE', 'form-control', 'checkbox toggle', '', '', '', '', 'TPL_POS_MAINBOTTOMLEFT_HEADING', 'TPL_POS_MAINBOTTOMLEFT_SUBTEXT'),
@@ -1748,7 +1752,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur f&uuml;r Tabelle `cms_template_settings_types`
+-- Tabellenstruktur für Tabelle `cms_template_settings_types`
 --
 
 CREATE TABLE `cms_template_settings_types` (
@@ -1757,7 +1761,7 @@ CREATE TABLE `cms_template_settings_types` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten f&uuml;r Tabelle `cms_template_settings_types`
+-- Daten für Tabelle `cms_template_settings_types`
 --
 
 INSERT INTO `cms_template_settings_types` (`id`, `type`) VALUES
@@ -1816,7 +1820,7 @@ INSERT INTO `cms_template_settings_types` (`id`, `type`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur f&uuml;r Tabelle `cms_users`
+-- Tabellenstruktur für Tabelle `cms_users`
 --
 
 CREATE TABLE `cms_users` (
@@ -1856,7 +1860,7 @@ CREATE TABLE `cms_users` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur f&uuml;r Tabelle `cms_user_groups`
+-- Tabellenstruktur für Tabelle `cms_user_groups`
 --
 
 CREATE TABLE `cms_user_groups` (
@@ -1868,7 +1872,7 @@ CREATE TABLE `cms_user_groups` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten f&uuml;r Tabelle `cms_user_groups`
+-- Daten für Tabelle `cms_user_groups`
 --
 
 INSERT INTO `cms_user_groups` (`id`, `value`, `color`, `signup_allowed`, `backend_allowed`) VALUES
@@ -1881,7 +1885,7 @@ INSERT INTO `cms_user_groups` (`id`, `value`, `color`, `signup_allowed`, `backen
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur f&uuml;r Tabelle `cms_widgets`
+-- Tabellenstruktur für Tabelle `cms_widgets`
 --
 
 CREATE TABLE `cms_widgets` (
@@ -1901,7 +1905,7 @@ CREATE TABLE `cms_widgets` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur f&uuml;r Tabelle `cms_widget_defaults`
+-- Tabellenstruktur für Tabelle `cms_widget_defaults`
 --
 
 CREATE TABLE `cms_widget_defaults` (
@@ -1923,17 +1927,17 @@ CREATE TABLE `cms_widget_defaults` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten f&uuml;r Tabelle `cms_widget_defaults`
+-- Daten für Tabelle `cms_widget_defaults`
 --
 
 INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated`, `sortation`, `label`, `icon`, `heading`, `subtext`, `description`, `fieldClass`, `fieldType`, `placeholder`, `options`, `ID`) VALUES
 ('buttontitle', 'Login', 1, 1, 0, '', '', '', '', 'Beschriftung des Login Buttons', 'form-control', '', '', '', 1),
 ('width', '450', 4, 1, 0, '', '', '', '', 'Breite der Like Box', 'form-control', '', '', '', 2),
-('height', '65', 4, 1, 0, '', '', '', '', 'H&ouml;he der Like Box', 'form-control', '', '', '', 3),
+('height', '65', 4, 1, 0, '', '', '', '', 'Höhe der Like Box', 'form-control', '', '', '', 3),
 ('fbpageurl', 'http://www.facebook.com/platform', 4, 1, 0, '', '', '', '', 'Facebook Page URL', 'form-control', '', '', '', 4),
 ('fbappID', '100710516666226', 4, 1, 0, '', '', '', '', 'Facebook App ID', 'form-control', '', '', '', 5),
 ('width', '450', 5, 1, 0, '', '', '', '', 'Breite des Like Button', 'form-control', '', '', '', 6),
-('height', '35', 5, 1, 0, '', '', '', '', 'H&ouml;he des Like Button', 'form-control', '', '', '', 7),
+('height', '35', 5, 1, 0, '', '', '', '', 'Höhe des Like Button', 'form-control', '', '', '', 7),
 ('fblikeurl', 'http://www.facebook.com/platform', 5, 1, 0, '', '', '', '', 'URL to Like', 'form-control', '', '', '', 8),
 ('fbappID', '100710516666226', 5, 1, 0, '', '', '', '', 'Facebook App ID', 'form-control', '', '', '', 9),
 ('colorscheme', 'light', 5, 1, 0, '', '', '', '', 'Farbschema (light or dark)', 'form-control', '', '', '', 10),
@@ -1969,13 +1973,13 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('youtubeHeading', '', 16, 1, 0, 'LABEL_YOUTUBE_HEADING', '', '', '', 'DESC_YOUTUBE_HEADING', 'form-control', '', 'PH_YOUTUBE_HEADING', '', 41),
 ('youtubeSubtext', '', 16, 1, 0, 'LABEL_YOUTUBE_SUBTEXT', '', '', '', 'DESC_YOUTUBE_SUBTEXT', 'form-control', '', 'PH_YOUTUBE_SUBTEXT', '', 42),
 ('youtubeDescription', '', 16, 1, 0, 'LABEL_YOUTUBE_DESCRIPTION', '', '', '', 'DESC_YOUTUBE_DESCRIPTION', 'form-control', '', 'PH_YOUTUBE_DESCRIPTION', '', 43),
-('chaturbateRoom', 'disneydeee', 17, 1, 0, '', '', '', '', 'Chaturbate Room (nickname)', 'form-control', '', '', '', 44),
-('chaturbateDisableSound', '1', 17, 1, 0, '', '', '', '', 'Disable Sound? (0 | 1)', 'form-control', '', '', '', 45),
-('chaturbateVideoOnly', '0', 17, 1, 0, '', '', '', '', 'Video Only? (0 | 1)', 'form-control', '', '', '', 46),
-('chaturbateHeight', '850', 17, 1, 0, '', '', '', '', 'Video height in px', 'form-control', '', '', '', 47),
-('chaturbateWidth', '100%', 17, 1, 0, '', '', '', '', 'Video width in px', 'form-control', '', '', '', 48),
-('chaturbateHeading', 'Watch me', 17, 1, 0, '', '', '', '', 'Heading above the video', 'form-control', '', '', '', 49),
-('chaturbateSubtext', 'being nasty', 17, 1, 0, '', '', '', '', 'Subtext beside heading', 'form-control', '', '', '', 50),
+('chaturbateRoom', 'disneydeee', 17, 1, 1, 'LABEL_CHATURBATE_URL', '', '', '', 'DESC_CHATURBATE_URL', 'form-control', '', 'PH_CHATURBATE_URL', '', 44),
+('chaturbateDisableSound', '1', 17, 1, 6, 'LABEL_CHATURBATE_DISABLE_SOUND', '', '', '', 'DESC_CHATURBATE_DISABLE_SOUND', 'form-control', 'checkbox', '', '', 45),
+('chaturbateVideoOnly', '0', 17, 1, 7, 'LABEL_CHATURBATE_VIDEO_ONLY', '', '', '', 'DESC_CHATURBATE_VIDEO_ONLY', 'form-control', 'checkbox', '', '', 46),
+('chaturbateHeight', '850', 17, 1, 3, 'LABEL_CHATURBATE_HEIGHT', '', '', '', 'DESC_CHATURBATE_HEIGHT', 'form-control', '', 'PH_CHATURBATE_HEIGHT', '', 47),
+('chaturbateWidth', '100%', 17, 1, 2, 'LABEL_CHATURBATE_WIDTH', '', '', '', 'DESC_CHATURBATE_WIDTH', 'form-control', '', 'PH_CHATURBATE_WIDTH', '', 48),
+('chaturbateHeading', 'Watch me', 17, 1, 4, 'LABEL_CHATURBATE_HEADING', '', '', '', 'DESC_CHATURBATE_HEADING', 'form-control', '', 'PH_CHATURBATE_HEADING', '', 49),
+('chaturbateSubtext', 'being nasty', 17, 1, 5, 'LABEL_CHATURBATE_SUBTEXT', '', '', '', 'DESC_CHATURBATE_SUBTEXT', 'form-control', '', 'PH_CHATURBATE_SUBTEXT', '', 50),
 ('googleMapsEmbedHtmlCode', '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d85064.65940758218!2d16.310020639299537!3d48.22066363084218!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x476d079e5136ca9f%3A0xfdc2e58a51a25b46!2sWien%2C+%C3%96sterreich!5e0!3m2!1sde!2sde!4v1491406650968" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>', 18, 1, 0, '', '', '', '', 'HTML Code you get from GoogleMaps (iframe...)', 'form-control', '', '', '', 51),
 ('cbaUrl', 'https://cba.fro.at/331756', 19, 1, 0, '', '', '', '', 'URL of your CBA Stream', 'form-control', '', '', '', 52),
 ('cbaHeading', 'Heading', 19, 1, 0, '', '', '', '', 'Heading before your stream', 'form-control', '', '', '', 53),
@@ -2039,11 +2043,11 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('pinterestFollowUrl', 'https://www.pinterest.com/pinterest/', 30, 1, 0, '', '', '', '', 'Pinterest Follow URL', 'form-control', '', '', '', 111),
 ('pinterestFollowHeading', 'Heading', 30, 1, 0, '', '', '', '', 'Heading above Pinterest Follow Button', 'form-control', '', '', '', 112),
 ('pinterestFollowSubtext', 'Subtext', 30, 1, 0, '', '', '', '', 'Subtext beside Heading', 'form-control', '', '', '', 113),
-('bubblusUrl', 'https://bubbl.us/NDAxNjg1Mi83OTM0MjA4LzJhMTViYjE0MDhmN2ZjNjgxZTA3Mjc3YjdjYWY4MDM2-X?s=7934208', 31, 1, 0, '', '', '', '', 'Url to your Bubbl.us Mindmap', 'form-control', '', '', '', 114),
-('bubblusWidth', '100%', 31, 1, 0, '', '', '', '', 'Width in px or %', 'form-control', '', '', '', 115),
-('bubblusHeight', '600', 31, 1, 0, '', '', '', '', 'Height in px', 'form-control', '', '', '', 116),
-('bubblusHeading', 'Heading', 31, 1, 0, '', '', '', '', 'Heading above Bubbl.us Mindmap', 'form-control', '', '', '', 117),
-('bubblusSubtext', 'Subtext', 31, 1, 0, '', '', '', '', 'Subtext beside Heading', 'form-control', '', '', '', 118),
+('bubblusUrl', 'https://bubbl.us/NDAxNjg1Mi83OTM0MjA4LzJhMTViYjE0MDhmN2ZjNjgxZTA3Mjc3YjdjYWY4MDM2-X?s=7934208', 31, 1, 1, 'LABEL_BUBBLUS_URL', '', '', '', 'DESC_BUBBLUS_URL', 'form-control', '', 'PH_BUBBLUS_URL', '', 114),
+('bubblusWidth', '100%', 31, 1, 2, 'LABEL_BUBBLUS_WIDTH', '', '', '', 'DESC_BUBBLUS_WIDTH', 'form-control', '', 'PH_BUBBLUS_WIDTH', '', 115),
+('bubblusHeight', '600', 31, 1, 3, 'LABEL_BUBBLUS_HEIGHT', '', '', '', 'DESC_BUBBLUS_HEIGHT', 'form-control', '', 'PH_BUBBLUS_HEIGHT', '', 116),
+('bubblusHeading', 'Heading', 31, 1, 4, 'LABEL_BUBBLUS_HEADING', '', '', '', 'DESC_BUBBLUS_HEADING', 'form-control', '', 'PH_BUBBLUS_HEADING', '', 117),
+('bubblusSubtext', 'Subtext', 31, 1, 5, 'LABEL_BUBBLUS_SUBTEXT', '', '', '', 'DESC_BUBBLUS_SUBTEXT', 'form-control', '', 'PH_BUBBLUS_SUBTEXT', '', 118),
 ('jPlayerUserMediaFolder', 'demo', 32, 1, 2, 'LABEL_JPLAYER_USER_MEDIAFOLDER', '', '', '', 'DESC_JPLAYER_USER_MEDIAFOLDER', 'form-control', '', 'PH_JPLAYER_USER_MEDIAFOLDER', '', 119),
 ('jPlayerWidth', '100%', 32, 0, 6, 'LABEL_JPLAYER_WIDTH', '', '', '', '', 'form-control', '', 'PH_JPLAYER_WIDTH', '', 120),
 ('jPlayerHeading', 'Heading', 32, 1, 3, 'LABEL_JPLAYER_HEADING', '', '', '', 'DESC_JPLAYER_HEADING', 'form-control', '', 'PH_JPLAYER_HEADING', '', 121),
@@ -2054,12 +2058,10 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('jPlayerDefaultVolume', '0.3', 32, 1, 7, 'LABEL_JPLAYER_DEFAULT_VOLUME', '', '', '', 'DESC_JPLAYER_DEFAULT_VOLUME', 'form-control', 'select', 'PH_JPLAYER_DEFAULT_VOLUME', '0,0%:0.1,10%:0.2,20%:0.3,30%:0.4,40%:0.5,50%:0.6,60%:0.7,70%:0.8,80%:0.9,90%:1,100%', 126),
 ('jPlayerInitialMute', 'false', 32, 1, 8, 'LABEL_JPLAYER_INITIAL_MUTE', '', '', '', 'DESC_JPLAYER_INITIAL_MUTE', 'form-control', 'checkbox', 'PH_JPLAYER_INITIAL_MUTE', '', 127);
 
-
-
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur f&uuml;r Tabelle `cms_widget_settings`
+-- Tabellenstruktur für Tabelle `cms_widget_settings`
 --
 
 CREATE TABLE `cms_widget_settings` (
@@ -2084,7 +2086,7 @@ CREATE TABLE `cms_widget_settings` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur f&uuml;r Tabelle `cms_widget_types`
+-- Tabellenstruktur für Tabelle `cms_widget_types`
 --
 
 CREATE TABLE `cms_widget_types` (
@@ -2096,95 +2098,95 @@ CREATE TABLE `cms_widget_types` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten f&uuml;r Tabelle `cms_widget_types`
+-- Daten für Tabelle `cms_widget_types`
 --
 
 INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`) VALUES
 (1, 1, 'Loginbox', 'loginbox', 'Display a User Login Box'),
-(2, 1, 'Simple Contact Form', 'form_simple', ''),
-(3, 1, 'Prezi', 'prezi', ''),
-(4, 1, 'FacebookPage', 'fb_page', ''),
-(5, 1, 'FacebookLike', 'fb_like', ''),
-(6, 1, 'GoogleAnalytics', 'google_analytics', 'Embed Google Analytics on your page'),
-(7, 1, 'SimpleUpload', 'simple_upload', ''),
+(2, 1, 'Simple Contact Form', 'form_simple', 'A Simple Contact Form'),
+(3, 1, 'Prezi', 'prezi', 'Embed Prezi'),
+(4, 1, 'FacebookPage', 'fb_page', 'Embed a Facebook Page'),
+(5, 1, 'FacebookLike', 'fb_like', 'Embed a Facebook Like Button'),
+(6, 1, 'GoogleAnalytics', 'google_analytics', 'Embed Google Analytics'),
+(7, 1, 'SimpleUpload', 'simple_upload', 'Simple File Upload'),
 (8, 1, 'Clock', 'clock', 'A simple digital clock'),
-(9, 1, 'Signup', 'signup', ''),
-(10, 1, 'Divbox', 'divbox', ''),
-(11, 1, 'News Blog Widget', 'news', ''),
+(9, 1, 'Signup', 'signup', 'Display a SignUp form to allow user registration on your page'),
+(10, 1, 'Divbox', 'divbox', 'Embed any custom HTML Snippet'),
+(11, 1, 'News Blog Widget', 'news', 'News Blog Widget'),
 (12, 1, 'Newsletter', 'newsletter', 'Newsletter Widget'),
 (13, 1, 'Gallery', 'gallery', 'Display a gallery at any position'),
-(14, 1, 'Twitch Stream', 'twitch', 'Embed any Twitch Stream'),
+(14, 1, 'Twitch Stream', 'twitch', 'Embed Twitch Stream'),
 (15, 1, 'Sub Menu', 'submenu', 'Embed a Menu as Submenu at any position'),
-(16, 1, 'Youtube Stream', 'youtube', 'Embed any YouTube Video'),
-(17, 1, 'Chaturbate Stream', 'chaturbate', 'Embed any chaturbate cam room on your website'),
-(18, 1, 'Google Maps', 'google_maps', 'Embed Google Maps on your website'),
-(19, 1, 'Cultural Broadcasting Archive', 'culturalbroadcasting', 'CBA - Cultural Broadcasting Archive -\r\n Verband Freier Radios &ouml;sterreich'),
-(20, 1, 'Instagram Posting', 'instagram', 'Embed any single Instagram posting'),
-(21, 1, 'Spotify', 'spotify', 'Embed a Spotify Stream'),
+(16, 1, 'Youtube Stream', 'youtube', 'Embed YouTube Video'),
+(17, 1, 'Chaturbate Stream', 'chaturbate', 'Embed Chaturbate Cam Room'),
+(18, 1, 'Google Maps', 'google_maps', 'Embed Google Maps'),
+(19, 1, 'Cultural Broadcasting Archive', 'culturalbroadcasting', 'Embed Cultural Broadcasting Archive'),
+(20, 1, 'Instagram Posting', 'instagram', 'Embed public Instagram Posting'),
+(21, 1, 'Spotify', 'spotify', 'Embed Spotify stream'),
 (22, 1, 'Facebook Posting', 'fb_post', 'Embed any public Facebook Posting'),
 (23, 1, 'Facebook Video', 'fb_video', 'Embed any public Facebook Video'),
-(24, 1, 'Twitter (Single Tweet)', 'twitter_tweet', 'Embed any single Tweet'),
-(25, 1, 'Twitter (Timeline)', 'twitter_timeline', 'Embed the timeline of any Twitter User'),
-(26, 1, 'Twitter (Grid)', 'twitter_grid', 'Embed a timeline link as grid'),
-(27, 1, 'Twitter Button', 'twitter_tweetbutton', 'Embed a Tweet button to let users drop a tweet'),
+(24, 1, 'Twitter (Tweet)', 'twitter_tweet', 'Embed any single Tweet'),
+(25, 1, 'Twitter (Timeline)', 'twitter_timeline', 'Embed the timeline of any Twitter user (feed view)'),
+(26, 1, 'Twitter (Grid)', 'twitter_grid', 'Embed the timeline of any Twitter user (grid view)'),
+(27, 1, 'Twitter Button', 'twitter_tweetbutton', 'Embed Tweet button to let users drop a tweet.'),
 (28, 1, 'Pinterest Profile', 'pinterest_profile', 'Embed any Pinterest Profile'),
 (29, 1, 'Pinterest Pin', 'pinterest_pin', 'Embed any Pinterest Pin'),
-(30, 1, 'Pinterest Follow', 'pinterest_profile', 'Embed a Pinterest Follow Button'),
+(30, 1, 'Pinterest Follow Button', 'pinterest_follow', 'Embed Pinterest Follow Button'),
 (31, 1, 'Bubbl.us Mindmap', 'bubblus', 'Embed Bubbl.us Mindmap'),
-(32, 1, 'jPlayer', 'jplayer', 'Audioplayer with playlist');
+(32, 1, 'jPlayer', 'jplayer', 'audioplayer with playlist');
 
 --
 -- Indizes der exportierten Tabellen
 --
 
 --
--- Indizes f&uuml;r die Tabelle `cms_blog`
+-- Indizes für die Tabelle `cms_blog`
 --
 ALTER TABLE `cms_blog`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id` (`id`);
 
 --
--- Indizes f&uuml;r die Tabelle `cms_blog_comments`
+-- Indizes für die Tabelle `cms_blog_comments`
 --
 ALTER TABLE `cms_blog_comments`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id` (`id`);
 
 --
--- Indizes f&uuml;r die Tabelle `cms_blog_items`
+-- Indizes für die Tabelle `cms_blog_items`
 --
 ALTER TABLE `cms_blog_items`
   ADD PRIMARY KEY (`primkey`);
 
 --
--- Indizes f&uuml;r die Tabelle `cms_follower`
+-- Indizes für die Tabelle `cms_follower`
 --
 ALTER TABLE `cms_follower`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id` (`id`,`follower`,`hunted`);
 
 --
--- Indizes f&uuml;r die Tabelle `cms_friends`
+-- Indizes für die Tabelle `cms_friends`
 --
 ALTER TABLE `cms_friends`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id` (`id`,`friendA`,`friendB`,`confirmed`,`aborted`);
 
 --
--- Indizes f&uuml;r die Tabelle `cms_gfonts`
+-- Indizes für die Tabelle `cms_gfonts`
 --
 ALTER TABLE `cms_gfonts`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes f&uuml;r die Tabelle `cms_logins`
+-- Indizes für die Tabelle `cms_logins`
 --
 ALTER TABLE `cms_logins`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes f&uuml;r die Tabelle `cms_menu`
+-- Indizes für die Tabelle `cms_menu`
 --
 ALTER TABLE `cms_menu`
   ADD PRIMARY KEY (`TMPID`),
@@ -2193,31 +2195,31 @@ ALTER TABLE `cms_menu`
   ADD KEY `id_3` (`id`);
 
 --
--- Indizes f&uuml;r die Tabelle `cms_menu_names`
+-- Indizes für die Tabelle `cms_menu_names`
 --
 ALTER TABLE `cms_menu_names`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes f&uuml;r die Tabelle `cms_meta_global`
+-- Indizes für die Tabelle `cms_meta_global`
 --
 ALTER TABLE `cms_meta_global`
   ADD PRIMARY KEY (`name`);
 
 --
--- Indizes f&uuml;r die Tabelle `cms_meta_local`
+-- Indizes für die Tabelle `cms_meta_local`
 --
 ALTER TABLE `cms_meta_local`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes f&uuml;r die Tabelle `cms_newsletter`
+-- Indizes für die Tabelle `cms_newsletter`
 --
 ALTER TABLE `cms_newsletter`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes f&uuml;r die Tabelle `cms_notifications`
+-- Indizes für die Tabelle `cms_notifications`
 --
 ALTER TABLE `cms_notifications`
   ADD PRIMARY KEY (`log_id`),
@@ -2229,27 +2231,27 @@ ALTER TABLE `cms_notifications`
   ADD KEY `msg_id` (`msg_id`);
 
 --
--- Indizes f&uuml;r die Tabelle `cms_notifications_msg`
+-- Indizes für die Tabelle `cms_notifications_msg`
 --
 ALTER TABLE `cms_notifications_msg`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id` (`id`,`active`,`type`);
 
 --
--- Indizes f&uuml;r die Tabelle `cms_pages`
+-- Indizes für die Tabelle `cms_pages`
 --
 ALTER TABLE `cms_pages`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id` (`id`);
 
 --
--- Indizes f&uuml;r die Tabelle `cms_plugins`
+-- Indizes für die Tabelle `cms_plugins`
 --
 ALTER TABLE `cms_plugins`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes f&uuml;r die Tabelle `cms_plugin_booking`
+-- Indizes für die Tabelle `cms_plugin_booking`
 --
 ALTER TABLE `cms_plugin_booking`
   ADD PRIMARY KEY (`id`),
@@ -2258,25 +2260,25 @@ ALTER TABLE `cms_plugin_booking`
   ADD KEY `ip` (`ip`);
 
 --
--- Indizes f&uuml;r die Tabelle `cms_plugin_faq`
+-- Indizes für die Tabelle `cms_plugin_faq`
 --
 ALTER TABLE `cms_plugin_faq`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes f&uuml;r die Tabelle `cms_plugin_gallery`
+-- Indizes für die Tabelle `cms_plugin_gallery`
 --
 ALTER TABLE `cms_plugin_gallery`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes f&uuml;r die Tabelle `cms_plugin_gallery_items`
+-- Indizes für die Tabelle `cms_plugin_gallery_items`
 --
 ALTER TABLE `cms_plugin_gallery_items`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes f&uuml;r die Tabelle `cms_plugin_msg`
+-- Indizes für die Tabelle `cms_plugin_msg`
 --
 ALTER TABLE `cms_plugin_msg`
   ADD PRIMARY KEY (`msg_id`),
@@ -2288,13 +2290,13 @@ ALTER TABLE `cms_plugin_msg`
 ALTER TABLE `cms_plugin_msg` ADD FULLTEXT KEY `msg_body` (`msg_body`);
 
 --
--- Indizes f&uuml;r die Tabelle `cms_plugin_tourdates`
+-- Indizes für die Tabelle `cms_plugin_tourdates`
 --
 ALTER TABLE `cms_plugin_tourdates`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes f&uuml;r die Tabelle `cms_settings`
+-- Indizes für die Tabelle `cms_settings`
 --
 ALTER TABLE `cms_settings`
   ADD PRIMARY KEY (`property`),
@@ -2303,19 +2305,19 @@ ALTER TABLE `cms_settings`
   ADD KEY `type` (`type`);
 
 --
--- Indizes f&uuml;r die Tabelle `cms_settings_types`
+-- Indizes für die Tabelle `cms_settings_types`
 --
 ALTER TABLE `cms_settings_types`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes f&uuml;r die Tabelle `cms_stats`
+-- Indizes für die Tabelle `cms_stats`
 --
 ALTER TABLE `cms_stats`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes f&uuml;r die Tabelle `cms_syslog`
+-- Indizes für die Tabelle `cms_syslog`
 --
 ALTER TABLE `cms_syslog`
   ADD PRIMARY KEY (`log_id`),
@@ -2326,32 +2328,32 @@ ALTER TABLE `cms_syslog`
   ADD KEY `type` (`log_type`);
 
 --
--- Indizes f&uuml;r die Tabelle `cms_syslog_types`
+-- Indizes für die Tabelle `cms_syslog_types`
 --
 ALTER TABLE `cms_syslog_types`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes f&uuml;r die Tabelle `cms_templates`
+-- Indizes für die Tabelle `cms_templates`
 --
 ALTER TABLE `cms_templates`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes f&uuml;r die Tabelle `cms_template_settings`
+-- Indizes für die Tabelle `cms_template_settings`
 --
 ALTER TABLE `cms_template_settings`
   ADD PRIMARY KEY (`id`),
   ADD KEY `templateID` (`templateID`);
 
 --
--- Indizes f&uuml;r die Tabelle `cms_template_settings_types`
+-- Indizes für die Tabelle `cms_template_settings_types`
 --
 ALTER TABLE `cms_template_settings_types`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes f&uuml;r die Tabelle `cms_users`
+-- Indizes für die Tabelle `cms_users`
 --
 ALTER TABLE `cms_users`
   ADD PRIMARY KEY (`id`,`username`),
@@ -2360,95 +2362,110 @@ ALTER TABLE `cms_users`
   ADD KEY `email` (`email`);
 
 --
--- Indizes f&uuml;r die Tabelle `cms_user_groups`
+-- Indizes für die Tabelle `cms_user_groups`
 --
 ALTER TABLE `cms_user_groups`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes f&uuml;r die Tabelle `cms_widgets`
+-- Indizes für die Tabelle `cms_widgets`
 --
 ALTER TABLE `cms_widgets`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes f&uuml;r die Tabelle `cms_widget_defaults`
+-- Indizes für die Tabelle `cms_widget_defaults`
 --
 ALTER TABLE `cms_widget_defaults`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indizes f&uuml;r die Tabelle `cms_widget_settings`
+-- Indizes für die Tabelle `cms_widget_settings`
 --
 ALTER TABLE `cms_widget_settings`
   ADD PRIMARY KEY (`id`),
   ADD KEY `widgetID` (`widgetID`);
 
 --
--- Indizes f&uuml;r die Tabelle `cms_widget_types`
+-- Indizes für die Tabelle `cms_widget_types`
 --
 ALTER TABLE `cms_widget_types`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT f&uuml;r exportierte Tabellen
+-- AUTO_INCREMENT für exportierte Tabellen
 --
 
 --
--- AUTO_INCREMENT f&uuml;r Tabelle `cms_blog_items`
+-- AUTO_INCREMENT für Tabelle `cms_blog_items`
 --
 ALTER TABLE `cms_blog_items`
   MODIFY `primkey` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT f&uuml;r Tabelle `cms_follower`
+-- AUTO_INCREMENT für Tabelle `cms_follower`
 --
 ALTER TABLE `cms_follower`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT f&uuml;r Tabelle `cms_friends`
+-- AUTO_INCREMENT für Tabelle `cms_friends`
 --
 ALTER TABLE `cms_friends`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT f&uuml;r Tabelle `cms_logins`
+-- AUTO_INCREMENT für Tabelle `cms_logins`
 --
 ALTER TABLE `cms_logins`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT f&uuml;r Tabelle `cms_menu`
+-- AUTO_INCREMENT für Tabelle `cms_menu`
 --
 ALTER TABLE `cms_menu`
-  MODIFY `TMPID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `TMPID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT f&uuml;r Tabelle `cms_meta_local`
+-- AUTO_INCREMENT für Tabelle `cms_meta_local`
 --
 ALTER TABLE `cms_meta_local`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT f&uuml;r Tabelle `cms_newsletter`
+-- AUTO_INCREMENT für Tabelle `cms_newsletter`
 --
 ALTER TABLE `cms_newsletter`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT f&uuml;r Tabelle `cms_notifications`
+-- AUTO_INCREMENT für Tabelle `cms_notifications`
 --
 ALTER TABLE `cms_notifications`
   MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT f&uuml;r Tabelle `cms_notifications_msg`
+-- AUTO_INCREMENT für Tabelle `cms_notifications_msg`
 --
 ALTER TABLE `cms_notifications_msg`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT f&uuml;r Tabelle `cms_widget_defaults`
+-- AUTO_INCREMENT für Tabelle `cms_plugin_gallery`
+--
+ALTER TABLE `cms_plugin_gallery`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT für Tabelle `cms_plugin_gallery_items`
+--
+ALTER TABLE `cms_plugin_gallery_items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT für Tabelle `cms_stats`
+--
+ALTER TABLE `cms_stats`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT für Tabelle `cms_widget_defaults`
 --
 ALTER TABLE `cms_widget_defaults`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
 --
--- AUTO_INCREMENT f&uuml;r Tabelle `cms_widget_settings`
+-- AUTO_INCREMENT für Tabelle `cms_widget_settings`
 --
 ALTER TABLE `cms_widget_settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=635;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
