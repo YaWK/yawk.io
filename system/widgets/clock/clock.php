@@ -1,5 +1,9 @@
 <?php
 
+$clockcolor = "999";
+$float = "right";
+$textstyle = "bold";
+
 if (isset($wID)) {
 /* get widget settings
  * ESSENTIAL TO GET WIDGETS TO WORK PROPERLY */
@@ -31,15 +35,6 @@ if (isset($wID)) {
 		  } // end switch  
 		} // no more properties
 	} // end while fetch array
-} 
-else
-/*
- *  if no widget ID is given or settings could not be retrieved, use this as defaults:
- */
-    { 	
-	$clockcolor = "999"; 
-	$float = "right"; 
-	$textstyle = "bold"; 
 }
 
 ?>
