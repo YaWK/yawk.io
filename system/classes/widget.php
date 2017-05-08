@@ -288,7 +288,6 @@ namespace YAWK {
                                 $setting['longValue'] = nl2br($setting['longValue']);
                                 echo "<label for=\"$setting[property]-long\">$setting[label]&nbsp;$setting[description]</label>
                                       <textarea cols=\"64\" rows=\"4\" placeholder=\"$lang[$placeholder]\" class=\"$setting[fieldClass]\" id=\"$setting[property]-long\" name=\"$setting[property]-long\">$setting[longValue]</textarea>";
-                                echo "<p>$setting[description]</p>";
                             }
                             else
                             {   // draw default textarea
@@ -296,7 +295,6 @@ namespace YAWK {
                                 $setting['value'] = nl2br($setting['value']);
                                 echo "<label for=\"$setting[property]\">$setting[label]&nbsp;$setting[description]</label>
                                       <textarea cols=\"64\" rows=\"4\" placeholder=\"$lang[$placeholder]\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\">$setting[value]</textarea>";
-                                echo "<p>$setting[description]</p>";
                             }
                         }
 
