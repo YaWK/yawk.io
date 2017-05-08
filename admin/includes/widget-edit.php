@@ -178,8 +178,8 @@ echo"<ol class=\"breadcrumb\">
   <label for="sort"><?php echo $lang['SORTATION_ORDER']; ?></label>
   <input id="sort" type="text" class="form-control" name="sort" maxlength="6" value="<?php echo $widget->sort; ?>">
 
-  <!-- TITLE -->
-  <label for ="widgetTitle"><?php echo $lang['DESCRIPTION']; ?></label>
+  <!-- NOTE -->
+  <label for ="widgetTitle"><?php echo $lang['NOTE']; ?></label>
   <input id="widgetTitle" name="widgetTitle" class="form-control" value="<?php echo $widget->widgetTitle; ?>">
   <br>
 
