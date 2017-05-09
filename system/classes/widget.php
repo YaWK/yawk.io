@@ -287,14 +287,14 @@ namespace YAWK {
                             {   // build a longValue tagged textarea and fill with longValue
                                 $setting['longValue'] = nl2br($setting['longValue']);
                                 echo "<label for=\"$setting[property]-long\">$setting[label]&nbsp;$setting[description]</label>
-                                      <textarea cols=\"64\" rows=\"4\" placeholder=\"$lang[$placeholder]\" class=\"$setting[fieldClass]\" id=\"$setting[property]-long\" name=\"$setting[property]-long\">$setting[longValue]</textarea>";
+                                      <textarea cols=\"64\" rows=\"10\" placeholder=\"$lang[$placeholder]\" class=\"$setting[fieldClass]\" id=\"$setting[property]-long\" name=\"$setting[property]-long\">$setting[longValue]</textarea>";
                             }
                             else
                             {   // draw default textarea
                                 $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
                                 $setting['value'] = nl2br($setting['value']);
                                 echo "<label for=\"$setting[property]\">$setting[label]&nbsp;$setting[description]</label>
-                                      <textarea cols=\"64\" rows=\"4\" placeholder=\"$lang[$placeholder]\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\">$setting[value]</textarea>";
+                                      <textarea cols=\"64\" rows=\"10\" placeholder=\"$lang[$placeholder]\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\">$setting[value]</textarea>";
                             }
                         }
 
