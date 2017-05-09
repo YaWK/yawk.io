@@ -81,9 +81,5 @@ if (isset($_GET['widgetID']))
 
 	} // end while fetch row (end get widget settings)
 }
-else
-	{
-		echo "unable to load widget settings from db<br>";
-	}
 ?>
 <iframe src="https://www.facebook.com/plugins/like.php?href=<?php echo $fblikeurl; ?>&width=<?php echo $width; ?>&layout=<?php echo $layout; ?>&action=<?php echo $action; ?>&size=<?php echo $size; ?>&show_faces=<?php echo $showFaces; ?>&share=<?php echo $share; ?>&height=<?php echo $height; ?>&appId=<?php echo $fbappID; ?>" width="<?php echo $width; ?>" height="<?php echo $height; ?>" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
