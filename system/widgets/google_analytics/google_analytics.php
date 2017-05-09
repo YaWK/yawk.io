@@ -1,20 +1,21 @@
 <?php
-if (!isset($db) || (empty($db)))
+// default settings
+$trackingcode = '';
+// $_GET['widgetID'] will be generated in \YAWK\widget\loadWidgets($db, $position)
+if (isset($_GET['widgetID']))
 {
-	@require_once '../../classes/db.php';
-	$db = new \YAWK\db();
-}
-if (isset($wID)) {
-		/* get widget settings */    
-		/* ESSENTIAL TO GET WIDGETS TO WORK PROPERLY */
+	// widget ID
+	$widgetID = $_GET['widgetID'];
+
+	// get widget settings from db
 	    $res = $db->query("SELECT * FROM {widget_settings}
 	                        WHERE widgetID = '".$wID."'
 	                        AND activated = '1'");
-   while($row = mysqli_fetch_row($res)){
-	      $w_property = $row[2];
-	      $w_value = $row[3];
-	      $w_widgetType = $row[4];
-	      $w_activated = $row[5];
+   while($row = mysqli_fetch_assoc($res)){
+	      $w_property = $row['property'];
+	      $w_value = $row['value'];
+	      $w_widgetType = $row['widgetType'];
+	      $w_activated = $row['activated'];
 
 		/* LOAD PROPERTIES */
 		/* TRACKING CODE */
@@ -25,9 +26,10 @@ if (isset($wID)) {
 		}
 	}
 }
-else { 	
-	$trackingcode = "UA-0000000-00"; 
-} 
+else
+	{
+		$trackingcode = "UA-0000000-00";
+	}
 ?>
 <!-- google analytics -->
 <script>
