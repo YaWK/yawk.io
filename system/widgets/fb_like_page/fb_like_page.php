@@ -18,11 +18,11 @@ if (isset($_GET['widgetID']))
 	    $res = $db->query("SELECT * FROM {widget_settings}
 	                        WHERE widgetID = '".$widgetID."'
 	                        AND activated = '1'");
-	    while($row = mysqli_fetch_row($res)){
-	      $w_property = $row[1];   
-	      $w_value = $row[2];
-	      $w_widgetType = $row[3];
-	      $w_activated = $row[4];
+	    while($row = mysqli_fetch_assoc($res)){
+	      $w_property = $row['property'];
+	      $w_value = $row['value'];
+	      $w_widgetType = $row['widgetType'];
+	      $w_activated = $row['activated'];
 		/* end of get widget settings */ 
 
 	/* LOAD PROPERTIES */ 
