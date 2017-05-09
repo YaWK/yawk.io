@@ -28,6 +28,7 @@ if(!isset($_POST['widgetType'])){
       <dl class="dl-horizontal">
           <dt><label for="widgetType"><?php echo $lang['CREATE']; ?>:</label> </dt>
           <dd><select id="widgetType" name="widgetType" class="btn btn-default">
+                  <option value="empty" name="empty" disabled selected aria-disabled="true" aria-selected="true"><?php echo $lang['SELECT_WIDGET']; ?></option>
                   <?php
                   foreach(YAWK\widget::getWidgetsArray($db) as $widget){
                       echo "<option value=\"".$widget['id']."\"";
