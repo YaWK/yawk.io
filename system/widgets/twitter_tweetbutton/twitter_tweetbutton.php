@@ -65,9 +65,9 @@ $twitterTweetButtonText = rawurldecode($twitterTweetButtonText);
 echo $headline;
 ?>
 
-<a class="twitter-share-button"
+<a class="twitter-share-button btn btn-info"
    href="https://twitter.com/intent/tweet?text=<?php echo $twitterTweetButtonText; ?>"
-   data-size="large">Tweet</a>
+   data-size="large">Tweet about that</a>
 
 
 
