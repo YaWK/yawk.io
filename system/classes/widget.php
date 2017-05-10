@@ -334,7 +334,7 @@ namespace YAWK {
                             }
                             echo "<label for=\"$setting[property]\">$setting[label] $setting[description]</label>
                                   <input type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
-										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\"><p>$setting[description]</p>";
+										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\">";
                         }
                     }
                 }
