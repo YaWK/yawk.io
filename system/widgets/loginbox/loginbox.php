@@ -11,7 +11,8 @@ $loginFile = "$currentWidgetPath"."loginbox.php";
 $logoutFile = "logout.php?folder=".$dirprefix."&user=".$user."";
 
 // if form is sent
-if(isset($_POST['user'])) {
+if(isset($_POST['user']))
+{
 // create new user object
 $user = new YAWK\user();
   if(isset($_POST['user']))
