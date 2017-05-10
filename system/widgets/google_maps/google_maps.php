@@ -29,6 +29,20 @@ if (isset($_GET['widgetID']))
 				$googleMapsEmbedHtmlCode = $w_value;
 			}
 		}
+
+		/* google maps embed html code <iframe>...</iframe> */
+		if (isset($w_property)){
+			if ($w_property === "googleMapsHeading") {
+				$heading = $w_value;
+			}
+		}
+
+		/* google maps embed html code <iframe>...</iframe> */
+		if (isset($w_property)){
+			if ($w_property === "googleMapsSubtext") {
+				$subtext = $w_value;
+			}
+		}
 	}
 }
 
