@@ -1,35 +1,39 @@
 <?php
 
-$clockcolor = "999";
-$float = "right";
-$textstyle = "bold";
+$color = "999";
+$align = "text-center";
+$class = "text-success";
 
-if (isset($wID)) {
-/* get widget settings
- * ESSENTIAL TO GET WIDGETS TO WORK PROPERLY */
-   $res = $db->query("SELECT * FROM {widget_settings} 
-								WHERE widgetID = '".$wID."'
-	                        	AND activated = '1'");
-   while($row = mysqli_fetch_row($res)){
-	      $w_property = $row[1];   
-	      $w_value = $row[2];
-	      $w_widgetType = $row[3];
-	      $w_activated = $row[4];
+if (isset($_GET['widgetID']))
+{
+	// widget ID
+	$widgetID = $_GET['widgetID'];
+
+	/* get widget settings from db */
+	$res = $db->query("SELECT * FROM {widget_settings}
+	                        WHERE widgetID = '".$widgetID."'
+	                        AND activated = '1'");
+	while ($row = mysqli_fetch_assoc($res))
+	{
+		$w_property = $row['property'];
+		$w_value = $row['value'];
+		$w_widgetType = $row['widgetType'];
+		$w_activated = $row['activated'];
 
 		/* LOAD PROPERTIES */
 		if (isset($w_property)){
 			switch($w_property)
 		  {
-		    case 'clockcolor';
-		    $clockcolor = $w_value;
+		    case 'clockColor';
+		    $color = $w_value;
 		    break;
 		    
-		    case 'float';
-		    $float = $w_value;
+		    case 'clockAlign';
+		    $align = $w_value;
 		    break;
 		    
-		    case 'textstyle';
-		    $textstyle = $w_value;
+		    case 'clockClass';
+		    $class = $w_value;
 		    break;
 		    
 		  } // end switch  
@@ -54,10 +58,10 @@ function clock() {
  *   var outStr = now.getHours()+':'+now.getMinutes()+':'+now.getSeconds(); */
    document.getElementById('clockDiv').innerHTML=outStr;
    setTimeout('clock()',1000);
-   
 }
 clock();
 </script>  
 
-
-<p id="clockDiv" style="<?php echo "float:$float; font-weight:$textstyle;"; ?> color:<?php echo "#"."$clockcolor;"; ?>"></p>
+<div class="<?php echo $align; ?>">
+	<p id="clockDiv" class="<?php echo $class; ?>" style="color:<?php echo "#"."$color;"; ?>"></p>
+</div>
