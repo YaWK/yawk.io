@@ -64,9 +64,40 @@ if (isset($_GET['widgetID']))
                 case 'twitchChannelFullscreen';
                     $twitchChannelFullscreen = $w_value;
                     break;
+
+                /* heading */
+                case 'twitchHeading';
+                    $heading = $w_value;
+                    break;
+
+                /* subtext */
+                case 'twitchSubtext';
+                    $subtext = $w_value;
+                    break;
             }
         } /* END LOAD PROPERTIES */
     } // end while fetch row (fetch widget settings)
+}
+
+// if a heading is set and not empty
+if (isset($heading) && (!empty($heading)))
+{   // add a h1 tag to heading string
+    $heading = "$heading";
+
+    // if subtext is set, add <small> subtext to string
+    if (isset($subtext) && (!empty($subtext)))
+    {   // build a headline with heading and subtext
+        $subtext = "<small>$subtext</small>";
+        $headline = "<h1>$heading&nbsp;"."$subtext</h1>";
+    }
+    else
+    {   // build just a headline - without subtext
+        $headline = "<h1>$heading</h1>";    // draw just the heading
+    }
+}
+else
+{   // leave empty if it's not set
+    $headline = '';
 }
 
 // to output correct html
@@ -78,7 +109,7 @@ else
     {   // or leave empty if fullscreen should be false
         $allowfullscreen = '';
     }
-
+echo $headline;
 // HTML output
 echo "
 <!-- twitch video stream -->
