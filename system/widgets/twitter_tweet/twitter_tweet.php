@@ -1,6 +1,6 @@
 <?php
 // twitter single tweet default settings
-$twitterUrl = "https://twitter.com/danielretzl/status/802569003172499456";      // single tweet URL
+$twitterUrl = "";      // single tweet URL
 $twitterHideDataCards = "0";            // data-cards: hidden
 $twitterDataConversation = "0";         // data-conversation: none
 
@@ -27,27 +27,27 @@ if (isset($_GET['widgetID']))
             switch($w_property)
             {
                 /* single tweet URL */
-                case 'twitterTweetUrl';
+                case 'twitterSingleTweetUrl';
                     $twitterUrl = $w_value;
                     break;
 
                 /* show or hide image media? */
-                case 'twitterHideDataCards';
+                case 'twitterSingleTweetHideDataCards';
                     $twitterHideDataCards = $w_value;
                     break;
 
                 /* show or hide conversation in tweet */
-                case 'twitterDataConversation';
+                case 'twitterSingleTweetDataConversation';
                     $twitterDataConversation = $w_value;
                     break;
 
                 /* heading */
-                case 'twitterTweetHeading';
+                case 'twitterSingleTweetHeading';
                     $heading = $w_value;
                     break;
 
                 /* subtext */
-                case 'twitterTweetSubtext';
+                case 'twitterSingleTweetSubtext';
                     $subtext = $w_value;
                     break;
             }
