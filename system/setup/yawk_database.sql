@@ -2041,7 +2041,7 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('bubblusHeight', '600', 31, 1, 3, 'LABEL_BUBBLUS_HEIGHT', '', '', '', 'DESC_BUBBLUS_HEIGHT', 'form-control', '', 'PH_BUBBLUS_HEIGHT', '', 116),
 ('bubblusHeading', 'Heading', 31, 1, 4, 'LABEL_BUBBLUS_HEADING', '', '', '', 'DESC_BUBBLUS_HEADING', 'form-control', '', 'PH_BUBBLUS_HEADING', '', 117),
 ('bubblusSubtext', 'Subtext', 31, 1, 5, 'LABEL_BUBBLUS_SUBTEXT', '', '', '', 'DESC_BUBBLUS_SUBTEXT', 'form-control', '', 'PH_BUBBLUS_SUBTEXT', '', 118),
-('jPlayerUserMediaFolder', 'demo', 32, 1, 2, 'LABEL_JPLAYER_USER_MEDIAFOLDER', '', '', '', 'DESC_JPLAYER_USER_MEDIAFOLDER', 'form-control', '', 'PH_JPLAYER_USER_MEDIAFOLDER', '', 119),
+('jPlayerUserMediaFolder', '', 32, 1, 2, 'LABEL_JPLAYER_USER_MEDIAFOLDER', '', '', '', 'DESC_JPLAYER_USER_MEDIAFOLDER', 'form-control', '', 'PH_JPLAYER_USER_MEDIAFOLDER', '', 119),
 ('jPlayerWidth', '100%', 32, 0, 6, 'LABEL_JPLAYER_WIDTH', '', '', '', '', 'form-control', '', 'PH_JPLAYER_WIDTH', '', 120),
 ('jPlayerHeading', 'Heading', 32, 1, 3, 'LABEL_JPLAYER_HEADING', '', '', '', 'DESC_JPLAYER_HEADING', 'form-control', '', 'PH_JPLAYER_HEADING', '', 121),
 ('jPlayerSubtext', 'Subtext', 32, 1, 4, 'LABEL_JPLAYER_SUBTEXT', '', '', '', 'DESC_JPLAYER_SUBTEXT', 'form-control', '', 'PH_JPLAYER_SUBTEXT', '', 122),
