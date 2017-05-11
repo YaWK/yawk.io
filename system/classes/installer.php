@@ -966,12 +966,14 @@ ExpiresDefault A86400
                 $supportedLanguage = substr($supported, 0, 2);
                 if ($language->currentLanguage === "$supportedLanguage")
                 {
-                    $selectOptions .= "<option value=\"$supportedLanguage\" selected>$supported</option>
+                    // $selectOptions .= "<option value=\"$supportedLanguage\" selected>$supported</option>
+                    $selectOptions .= "<option value=\"$supported\" selected>$supported</option>
                                         ";
                 }
                 else
                     {
-                        $selectOptions .= "<option value=\"$supportedLanguage\">$supported</option>
+                        // $selectOptions .= "<option value=\"$supportedLanguage\">$supported</option>
+                        $selectOptions .= "<option value=\"$supported\">$supported</option>
                         ";
                     }
             }
@@ -1117,7 +1119,7 @@ ExpiresDefault A86400
                             <div class=\"col-md-12 text-center small\">
                                 <h5 class=\"text-muted\"><small><a href=\"http://yawk.io\" title=\"Official YaWK Website\" target=\"_blank\"><b>Y</b>et <b>a</b>nother <b>W</b>eb<b>K</b>it</a> on <b>
                                 <a href=\"https://github.com/YaWK/yawk-cms\" title=\"visit, fork or star YaWK on GitHub\" target=\"_blank\">GitHub</a></b></small>
-                                - <small>v$this->yawkVersion
+                                - <small>v $this->yawkVersion
                                 </h5>
                             </div>
                         </div>
