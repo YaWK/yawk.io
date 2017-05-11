@@ -120,6 +120,72 @@ namespace YAWK {
         }
 
         /**
+         * returns the currently set backend language, but is static callable
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @copyright 2017 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @link       http://yawk.io
+         * @return string
+         */
+        static function getCurrentLanguageStatic()
+        {
+            $currentLanguage = '';
+            // check if a GET param is set
+            if (isset($_GET['lang']) && (!empty($_GET['lang'])))
+            {
+                $currentLanguage = $_GET['lang'];     // sst GET param as current language
+                // register and overwrite session var
+                $_SESSION['lang'] = $currentLanguage;
+                // and check if cookie is set
+                if (!isset($_COOKIE['lang']) || (empty($_COOKIE['lang'])))
+                {   // if not, try to set it - with error supressor to avoid notices if output started before
+                    @setcookie('lang', $currentLanguage, time() + (60 * 60 * 24 * 1460));
+                }
+                /* language set, cookie set */
+                return $currentLanguage;
+            }
+            else
+            {
+                // GET param not set, check if there is a $_SESSION[lang]
+                if (isset($_SESSION['lang']) || (!empty($_SESSION['lang'])))
+                {
+                    // session var is set
+                    $currentLanguage = $_SESSION['lang'];
+                    return $currentLanguage;
+                }
+                // SESSION param not set, check if there is a $_COOKIE[lang]
+                elseif (isset($_COOKIE['lang']) || (!empty($_COOKIE['lang'])))
+                {
+                    // cookie var is set
+                    $currentLanguage = $_COOKIE['lang'];
+                    return $currentLanguage;
+                }
+                else
+                {
+                    // get language setting from database
+                    if (!isset($db))
+                    {   // create new db object
+                        require_once '../system/classes/db.php';
+                        require_once '../system/classes/settings.php';
+                        $db = new \YAWK\db();
+                    }
+                    // get backend language setting and save string eg. (en-EN) in $this->current
+                    if ($currentLanguage = (\YAWK\settings::getSetting($db, "backendLanguage")) === true)
+                    {
+                        // return current db-settings language
+                        return $currentLanguage;
+                    }
+                    else
+                    {   // failed to get backend language
+                        $currentLanguage = "en-EN";   // default: en-EN
+                        // return default value (en-EN)
+                        return $currentLanguage;
+                    }
+                }
+            }
+        }
+
+        /**
          * get and return client language
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
@@ -353,7 +419,11 @@ namespace YAWK {
             }
             else
                 {   // get current language from db
-                    $currentLanguage = $this->getCurrentLanguage();
+                    $currentLanguage = \YAWK\language::getCurrentLanguageStatic();
+                    if (isset($currentLanguage) && (!empty($currentLanguage)))
+                    {   // set session var to save database ressources
+                        $_SESSION['lang'] = $currentLanguage;
+                    }
                 }
 
             // get injectable tags from additional language file
