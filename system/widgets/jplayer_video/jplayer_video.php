@@ -1,14 +1,10 @@
 <?php
-/**
- * Copyright (C) Daniel Retzl
- */
-
-if (!isset($jPlayer) || (empty($jPlayer)))
-    {   // include player class
-        require_once ("system/widgets/jplayer_video/classes/jplayer_video.class.php");
-        // create new player object
-        $jPlayer = new \YAWK\WIDGETS\jPlayer();
-    }
+if (!isset($jPlayerVideo) || (empty($jPlayerVideo)))
+{   // include player class
+    require_once ("system/widgets/jplayer_video/classes/jplayer_video.class.php");
+    // create new player object
+    $jPlayerVideo = new \YAWK\WIDGETS\jPlayerVideo();
+}
 ?>
 <?php
 // set default values
@@ -19,6 +15,8 @@ $jPlayerInitialMute = false;
 $jPlayerDefaultVolume = "0.3";
 $jPlayerWidth = "100%";
 $jPlayerSkin = "light";
+$jPlayerPoster = '';
+$jPlayerDownload = "false";
 $heading = '';
 $subtext = '';
 
@@ -48,39 +46,49 @@ if (isset($_GET['widgetID']))
             switch($w_property)
             {
                 /* url of the video to stream */
-                case 'jPlayerUserMediaFolder';
+                case 'jPlayerVideoUserMediaFolder';
                     $jPlayerUserMediaFolder = $w_value;
                     break;
 
                 /* width */
-                case 'jPlayerWidth';
+                case 'jPlayerVideoWidth';
                     $jPlayerWidth = $w_value;
                     break;
 
-                /* height */
-                case 'jPlayerSkin';
+                /* skin */
+                case 'jPlayerVideoSkin';
                     $jPlayerSkin = $w_value;
                     $jPlayerSkin = mb_strtolower($jPlayerSkin);
                     break;
 
                 /* heading */
-                case 'jPlayerHeading';
+                case 'jPlayerVideoHeading';
                     $heading = $w_value;
                     break;
 
                 /* subtext */
-                case 'jPlayerSubtext';
+                case 'jPlayerVideoSubtext';
                     $subtext = $w_value;
                     break;
 
                 /* initial volume */
-                case 'jPlayerDefaultVolume';
+                case 'jPlayerVideoDefaultVolume';
                     $jPlayerDefaultVolume = $w_value;
                     break;
 
                 /* initial mute true|false */
-                case 'jPlayerInitialMute';
+                case 'jPlayerVideoInitialMute';
                     $jPlayerInitialMute = $w_value;
+                    break;
+
+                /* url to a any poster image */
+                case 'jPlayerVideoPoster';
+                    $jPlayerPoster = $w_value;
+                    break;
+
+                /* allow to download file? */
+                case 'jPlayerVideoDownload';
+                    $jPlayerDownload = $w_value;
                     break;
             }
         } /* END LOAD PROPERTIES */
@@ -111,10 +119,10 @@ else
 echo $headline;
 ?>
     <!-- jplayer -->
-    <link type="text/css" href="system/widgets/jplayer_video/skins/<?php echo $jPlayerSkin; ?>/jplayer.<?php echo $jPlayerSkin; ?>.css" rel="stylesheet">
-    <script type="text/javascript" src="system/widgets/jplayer_video/js/jquery.jplayer.min.js"></script>
-    <script type="text/javascript" src="system/widgets/jplayer_video/js/jplayer.playlist.min.js"></script>
-    <script type="text/javascript" src="system/widgets/jplayer_video/js/browser.js"></script>
+    <link type="text/css" href="system/widgets/jplayer/skins/<?php echo $jPlayerSkin; ?>/jplayer.<?php echo $jPlayerSkin; ?>.css" rel="stylesheet">
+    <script type="text/javascript" src="system/widgets/jplayer/js/jquery.jplayer.min.js"></script>
+    <script type="text/javascript" src="system/widgets/jplayer/js/jplayer.playlist.min.js"></script>
+    <script type="text/javascript" src="system/widgets/jplayer/js/browser.js"></script>
     <script type="text/javascript">
         //<![CDATA[
         $(document).ready(function(){
@@ -241,35 +249,10 @@ echo $headline;
             };
 
 
-            var videoPlaylist = new Playlist("<?php echo $jPlayerInstance; ?>", [
-                <?php echo $jPlayer->getFiles("$jPlayerRootMediaFolder", "$jPlayerUserMediaFolder"); ?>
+            var videoPlaylist = new Playlist("<?php echo $jPlayerInstance; ?>",
+
+                [<?php $jPlayerVideo->getVideoFiles($jPlayerRootMediaFolder, $jPlayerUserMediaFolder, $jPlayerPoster, $jPlayerDownload); ?>],
                 {
-                    name:"Big Buck Bunny Trailer",
-                    free:true,
-                    m4v:"http://www.jplayer.org/video/m4v/Big_Buck_Bunny_Trailer_480x270_h264aac.m4v",
-                    ogv:"http://www.jplayer.org/video/ogv/Big_Buck_Bunny_Trailer_480x270.ogv",
-                    poster:"http://www.jplayer.org/video/poster/Big_Buck_Bunny_Trailer_480x270.png"
-                },
-                {
-                    name:"Big Buck Bunny Trailer",
-                    free:true,
-                    m4v:"http://www.jplayer.org/video/m4v/Big_Buck_Bunny_Trailer_480x270_h264aac.m4v",
-                    ogv:"http://www.jplayer.org/video/ogv/Big_Buck_Bunny_Trailer_480x270.ogv",
-                    poster:"http://www.jplayer.org/video/poster/Big_Buck_Bunny_Trailer_480x270.png"
-                },
-                {
-                    name:"Finding Nemo Teaser",
-                    m4v: "http://www.jplayer.org/video/m4v/Finding_Nemo_Teaser_640x352_h264aac.m4v",
-                    ogv: "http://www.jplayer.org/video/ogv/Finding_Nemo_Teaser_640x352.ogv",
-                    poster: "http://www.jplayer.org/video/poster/Finding_Nemo_Teaser_640x352.png"
-                },
-                {
-                    name:"Incredibles Teaser",
-                    m4v: "http://www.jplayer.org/video/m4v/Incredibles_Teaser_640x272_h264aac.m4v",
-                    ogv: "http://www.jplayer.org/video/ogv/Incredibles_Teaser_640x272.ogv",
-                    poster: "http://www.jplayer.org/video/poster/Incredibles_Teaser_640x272.png"
-                }
-            ], {
                 ready: function() {
                     videoPlaylist.displayPlaylist();
                     videoPlaylist.playlistInit(false); // Parameter is a boolean for autoplay.
@@ -280,15 +263,15 @@ echo $headline;
                 play: function() {
                     $(this).jPlayer("pauseOthers");
                 },
-                swfPath: "system/widgets/jplayer_video/js",               // path for swf fallback
-                supplied: "ogv, m4v, mp4, flv",
+                swfPath: "js",
+                supplied: "ogv, m4v, mp4, mpg, flv",
                 volume: "<?php echo $jPlayerDefaultVolume; ?>",     // intial volume value from 0 to 1 eg 0.3
                 muted: <?php echo $jPlayerInitialMute; ?>         // inital mute? false | true
             });
+
         });
         //]]>
     </script>
-    <div id="jquery_jplayer_<?php echo $jPlayerInstance; ?>" class="jp-jplayer"></div>
     <div class="jp-video jp-video-270p">
         <div class="jp-type-playlist">
             <div id="jquery_jplayer_<?php echo $jPlayerInstance; ?>" class="jp-jplayer"></div>
@@ -322,6 +305,8 @@ echo $headline;
             </div>
         </div>
     </div>
+
+
 <?php
 // }   // end namespace
 ?>

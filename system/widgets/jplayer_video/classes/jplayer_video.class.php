@@ -1,10 +1,14 @@
 <?php
 namespace YAWK\WIDGETS {
-    class jPlayer
+    class jPlayerVideo
     {
         /** * @var string current user name */
         public $mediaFolder;        // path to media root folder usually media/audio
         public $folder;             // media subfolder where the files are stored
+        public $poster;             // jpg or png to be displayed before playback is started
+        public $posterJSON;         // contains the prepared json data (.jpg or .png image)
+        public $download;           // allow to download?
+        public $downloadJSON;       // contains the prepares json data (download link)
         public $playerSettings;     // player settings array
 
         public function getPlayerSettings($db, $widgetID)
@@ -13,10 +17,12 @@ namespace YAWK\WIDGETS {
             // return $playerSettingsArray();
         }
 
-        public function getFiles($mediaFolder, $folder)
+        public function getVideoFiles($mediaFolder, $folder, $poster, $download)
         {
             $this->mediaFolder = $mediaFolder;
             $this->folder = $folder;
+            $this->poster = $poster;
+            $this->download = $download;
 
             // optional: add files to array while processing
             // $filesArray = array();
@@ -24,7 +30,7 @@ namespace YAWK\WIDGETS {
             // media folder empty or missing
             if (!isset($this->mediaFolder) || (empty($this->mediaFolder)))
             {   // set default value
-                $this->mediaFolder = "media/audio/";
+                $this->mediaFolder = "media/video/";
             }
             // user folder empty or missing
             if (!isset($this->folder) || (empty($this->folder)))
@@ -36,6 +42,30 @@ namespace YAWK\WIDGETS {
                 {   // mediafolder AND folder are set, build new mediaFolder string
                     $this->mediaFolder = $this->mediaFolder . $this->folder;
                 }
+            // if poster image is set
+            if (isset($this->poster) && (!empty($this->poster)))
+            {
+                // prepare json poster output...
+                $this->posterJSON = ",poster:\"$this->poster\"";
+            }
+            else
+                {   // no poster was set - leave empty
+                    $this->posterJSON = "";
+                }
+
+            // check if download is allowed
+            if (isset($this->download) && (!empty($this->download)))
+            {   // download is enabled
+                if ($this->download === "true")
+                {
+                    // prepare download link JSON data
+                    $this->downloadJSON = ",free:\"$this->download\"";
+                }
+                else
+                    {   // download not allowed
+                        $this->downloadJSON = "";
+                    }
+            }
 
             // OK, lets go with searching for files...
             // is it a directory?
@@ -56,54 +86,80 @@ namespace YAWK\WIDGETS {
                                 // generate title string from filename
                                 $title = $file;
 
-                                // process .MP3 files
-                                if (strpos($file, ".mp3") || (strpos($file, ".MP3")) !== false)
+                                // process .M4V files
+                                if (strpos($file, ".m4v") || (strpos($file, ".M4V")) !== false)
                                 {   // encode filename
                                     $file = rawurlencode($file);
                                     // remove file extension from title string
-                                    $title = rtrim($title, ".mp3");
-                                    $title = rtrim($title, ".MP3");
-                                    // output JSON data for MP3 files
-                                    echo "{ name:\"$title\",mp3:\"$this->mediaFolder/$file\"},\n\r";
-                                    // optional: add mp3 files to filesArray
-                                    // $filesArray[] = array("title" => $title, "mp3" => $file);
+                                    $title = rtrim($title, ".m4v");
+                                    $title = rtrim($title, ".M4V");
+                                    // output JSON data for M4V files
+                                    echo "{ name:\"$title\",m4v:\"$this->mediaFolder/$file\" $this->downloadJSON $this->posterJSON },\n\r";
+                                    // optional: add m4v files to filesArray
+                                    // $filesArray[] = array("title" => $title, "m4v" => $file);
                                 }
 
-                                // process .OGG files
-                                else if (strpos($file, ".oga") || (strpos($file, ".OGA")) !== false)
+                                // process .OGV files
+                                else if (strpos($file, ".ogv") || (strpos($file, ".OGV")) !== false)
                                 {   // encode filename
                                     $file = rawurlencode($file);
                                     // remove file extension from title string
-                                    $title = rtrim($title, ".oga");
-                                    $title = rtrim($title, ".OGA");
-                                    // output JSON data for OGG files
-                                    echo "{ name:\"$title\",oga:\"$this->mediaFolder/$file\"},\n\r";
-                                    // optional: add ogg files to filesArray
-                                    // $filesArray[] = array("title" => $title, "oga" => $file);
+                                    $title = rtrim($title, ".ogv");
+                                    $title = rtrim($title, ".OGV");
+                                    // output JSON data for OGV files
+                                    echo "{ name:\"$title\",ogv:\"$this->mediaFolder/$file\" $this->downloadJSON $this->posterJSON },\n\r";
+                                    // optional: add ogv files to filesArray
+                                    // $filesArray[] = array("title" => $title, "ogv" => $file);
                                 }
-                                // process .WAV files
-                                else if (strpos($file, ".wav") || (strpos($file, ".WAV")) !== false)
+                                // process .FLV files
+                                else if (strpos($file, ".flv") || (strpos($file, ".FLV")) !== false)
                                 {   // encode filename
                                     $file = rawurlencode($file);
                                     // remove file extension from title string
-                                    $title = rtrim($title, ".wav");
-                                    $title = rtrim($title, ".WAV");
-                                    // output JSON data for OGG files
-                                    echo "{ name:\"$title\",wav:\"$this->mediaFolder/$file\"},\n\r";
-                                    // optional: add ogg files to filesArray
-                                    // $filesArray[] = array("title" => $title, "oga" => $file);
+                                    $title = rtrim($title, ".flv");
+                                    $title = rtrim($title, ".FLV");
+                                    // output JSON data for FLV files
+                                    echo "{ name:\"$title\",flv:\"$this->mediaFolder/$file\" $this->downloadJSON $this->posterJSON },\n\r";
+                                    // optional: add FLV files to filesArray
+                                    // $filesArray[] = array("title" => $title, "flv" => $file);
+                                }
+                                // process .MPG files
+                                else if (strpos($file, ".mpg") || (strpos($file, ".MPG")) !== false)
+                                {   // encode filename
+                                    $file = rawurlencode($file);
+                                    // remove file extension from title string
+                                    $title = rtrim($title, ".mpg");
+                                    $title = rtrim($title, ".MPG");
+                                    // output JSON data for MPG files
+                                    echo "{ name:\"$title\",mpg:\"$this->mediaFolder/$file\" $this->downloadJSON $this->posterJSON },\n\r";
+                                    // optional: add MPG files to filesArray
+                                    // $filesArray[] = array("title" => $title, "mpg" => $file);
+                                }
+                                // process .MP4 files
+                                else if (strpos($file, ".mp4") || (strpos($file, ".MP4")) !== false)
+                                {   // encode filename
+                                    $file = rawurlencode($file);
+                                    // remove file extension from title string
+                                    $title = rtrim($title, ".mp4");
+                                    $title = rtrim($title, ".MP4");
+                                    // output JSON data for MP4 files
+                                    echo "{ name:\"$title\",mp4:\"$this->mediaFolder/$file\" $this->downloadJSON $this->posterJSON },\n\r";
+                                    // optional: add MP4 files to filesArray
+                                    // $filesArray[] = array("title" => $title, "mp4" => $file);
                                 }
                             }
                     }
                 }
                 else
                     {   // could not open directory, abort
-                        die ("could not open directory $this->mediaFolder");
+                        die ("could not open directory $this->mediaFolder - check permissions!");
+                        // echo \YAWK\alert::draw("danger", "ERROR: Could not open directory $this->mediaFolder", "Please check file and / or folder access permissions!", "", "");
                     }
             }
             else
                 {   // directory not exists, abort
-                    die ("directory not exists $this->mediaFolder");
+                    die ("folder $this->mediaFolder does not exist!");
+                    // echo \YAWK\alert::draw("danger", "ERROR: Could not open directory $this->mediaFolder", "Directory does not exist!", "", "");
                 }
         }   // end function getFiles
     }   // end class jPlayer
