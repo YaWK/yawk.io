@@ -236,6 +236,7 @@ echo $headline;
                 }
             };
 
+
             var audioPlaylist = new Playlist("<?php echo $jPlayerInstance; ?>", [<?php echo $jPlayer->getFiles("$jPlayerRootMediaFolder", "$jPlayerUserMediaFolder"); ?>], {
                 ready: function() {
                     audioPlaylist.displayPlaylist();
@@ -256,6 +257,8 @@ echo $headline;
         //]]>
     </script>
 
+
+    <div id="jquery_jplayer_<?php echo $jPlayerInstance; ?>" class="jp-jplayer"></div>
 
     <div id="jquery_jplayer_<?php echo $jPlayerInstance; ?>" class="jp-jplayer"></div>
     <div class="jp-audio">
