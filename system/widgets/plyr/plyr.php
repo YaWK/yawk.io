@@ -152,6 +152,7 @@ echo $headline;
     <!-- plyr css -->
     <link type="text/css" rel="stylesheet" href="system/widgets/plyr/js/plyr.css">
     <!-- output plyr html player -->
+<section>
     <video <?php echo $posterHtml; ?> controls style="width: <?php echo $width; ?>">
         <source src="<?php echo $mediafile; ?>" type="<?php echo $filetype; ?>">
         <!-- Text track file -->
@@ -159,4 +160,4 @@ echo $headline;
         <!-- Fallback for browsers that don't support the <video> element -->
         <a href="<?php echo $mediafile; ?>" download>Download</a>
     </video>
-
+</section>
