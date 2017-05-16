@@ -2069,7 +2069,31 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('googleMapsHeading', '', 18, 1, 0, 'LABEL_GOOGLEMAPS_HEADING', '', '', '', 'DESC_GOOGLEMAPS_HEADING', 'form-control', '', 'PH_GOOGLEMAPS_HEADING', '', 144),
 ('googleMapsSubtext', '', 18, 1, 0, 'LABEL_GOOGLEMAPS_SUBTEXT', '', '', '', 'DESC_GOOGLEMAPS_SUBTEXT', 'form-control', '', 'PH_GOOGLEMAPS_SUBTEXT', '', 145),
 ('loginboxHeading', '', 1, 1, 0, 'LABEL_LOGINBOX_HEADING', '', '', '', 'DESC_LOGINBOX_HEADING', 'form-control', '', 'PH_LOGINBOX_HEADING', '', 146),
-('loginboxSubtext', '', 1, 1, 0, 'LABEL_LOGINBOX_SUBTEXT', '', '', '', 'DESC_LOGINBOX_SUBTEXT', 'form-control', '', 'PH_LOGINBOX_SUBTEXT', '', 147);
+('loginboxSubtext', '', 1, 1, 0, 'LABEL_LOGINBOX_SUBTEXT', '', '', '', 'DESC_LOGINBOX_SUBTEXT', 'form-control', '', 'PH_LOGINBOX_SUBTEXT', '', 147),
+('jPlayerVideoUserMediaFolder', '', 33, 1, 2, 'LABEL_JPLAYER_USER_MEDIAFOLDER', '', '', '', 'DESC_JPLAYER_USER_MEDIAFOLDER', 'form-control', '', 'PH_JPLAYER_USER_MEDIAFOLDER', '', 148),
+('jPlayerVideoWidth', '100%', 33, 0, 6, 'LABEL_JPLAYER_WIDTH', '', '', '', '', 'form-control', '', 'PH_JPLAYER_WIDTH', '', 149),
+('jPlayerVideoHeading', 'Heading', 33, 1, 3, 'LABEL_JPLAYER_HEADING', '', '', '', 'DESC_JPLAYER_HEADING', 'form-control', '', 'PH_JPLAYER_HEADING', '', 150),
+('jPlayerVideoSubtext', 'Subtext', 33, 1, 4, 'LABEL_JPLAYER_SUBTEXT', '', '', '', 'DESC_JPLAYER_SUBTEXT', 'form-control', '', 'PH_JPLAYER_SUBTEXT', '', 151),
+('jPlayerVideoSkin', 'dark', 33, 1, 5, 'LABEL_JPLAYER_SKIN', '', '', '', 'DESC_JPLAYER_SKIN', 'form-control', 'select', '', 'light,Light:dark,Dark', 152),
+('jPlayerVideoRootMediaFolder', 'media/video/', 33, 1, 1, 'LABEL_JPLAYER_ROOT_MEDIAFOLDER', '', '', '', 'DESC_JPLAYER_ROOT_MEDIAFOLDER', 'form-control', '', 'PH_JPLAYER_ROOT_MEDIAFOLDER', '', 153),
+('jPlayerVideoInstance', '1', 33, 0, 9, 'LABEL_JPLAYER_INSTANCE', '', '', '', '', 'form-control', '', '', '', 154),
+('jPlayerVideoDefaultVolume', '0.3', 33, 1, 7, 'LABEL_JPLAYER_DEFAULT_VOLUME', '', '', '', 'DESC_JPLAYER_DEFAULT_VOLUME', 'form-control', 'select', 'PH_JPLAYER_DEFAULT_VOLUME', '0,0%:0.1,10%:0.2,20%:0.3,30%:0.4,40%:0.5,50%:0.6,60%:0.7,70%:0.8,80%:0.9,90%:1,100%', 155),
+('jPlayerVideoInitialMute', 'false', 33, 1, 8, 'LABEL_JPLAYER_INITIAL_MUTE', '', '', '', 'DESC_JPLAYER_INITIAL_MUTE', 'form-control', 'checkbox', 'PH_JPLAYER_INITIAL_MUTE', '', 156),
+('jPlayerVideoPoster', '', 33, 1, 4, 'LABEL_JPLAYER_POSTER', '', '', '', 'DESC_JPLAYER_POSTER', 'form-control', '', 'PH_JPLAYER_POSTER', '', 157),
+('jPlayerVideoDownload', 'true', 33, 1, 4, 'LABEL_JPLAYER_DOWNLOAD', '', '', '', 'DESC_JPLAYER_DOWNLOAD', 'form-control', 'select', '', 'true,True:false,False', 158),
+('plyrMediaFile', 'https://cdn.selz.com/plyr/1.5/View_From_A_Blue_Moon_Trailer-HD.mp4', 34, 1, 1, 'LABEL_PLYR_MEDIAFILE', '', '', '', 'DESC_PLYR_MEDIAFILE', 'form-control', '', 'PH_PLYR_MEDIAFILE', '', 159),
+('plyrHeading', '', 34, 1, 5, 'LABEL_PLYR_HEADING', '', '', '', 'DESC_PLYR_HEADING', 'form-control', '', 'PH_PLYR_HEADING', '', 160),
+('plyrSubtext', '', 34, 1, 6, 'LABEL_PLYR_SUBTEXT', '', '', '', 'DESC_PLYR_SUBTEXT', 'form-control', '', 'PH_PLYR_SUBTEXT', '', 161),
+('plyrWidth', '100%', 34, 1, 2, 'LABEL_PLYR_WIDTH', '', '', '', 'DESC_PLYR_WIDTH', 'form-control', '', 'PH_PLYR_WIDTH', '', 162),
+('plyrPoster', 'https://cdn.selz.com/plyr/1.5/View_From_A_Blue_Moon_Trailer-HD.jpg?v1', 34, 1, 3, 'LABEL_PLYR_POSTER', '', '', '', 'DESC_PLYR_POSTER', 'form-control', '', 'PH_PLYR_POSTER', '', 163),
+('plyrTextTrackFile', 'https://cdn.selz.com/plyr/1.5/View_From_A_Blue_Moon_Trailer-HD.en.vtt', 34, 1, 3, 'LABEL_PLYR_TEXT_TRACK_FILE', '', '', '', 'DESC_PLYR_TEXT_TRACK_FILE', 'form-control', '', 'PH_PLYR_TEXT_TRACK_FILE', '', 164),
+('plyrTextTrackSrcLang', 'en', 34, 1, 3, 'LABEL_PLYR_TEXT_SRC_LANG', '', '', '', 'DESC_PLYR_TEXT_SRC_LANG', 'form-control', '', 'PH_PLYR_TEXT_TRACK_SRC_LANG', '', 165),
+('plyrTextTrackLabel', 'English', 34, 1, 3, 'LABEL_PLYR_TEXT_LABEL', '', '', '', 'DESC_PLYR_TEXT_LABEL', 'form-control', '', 'PH_PLYR_TEXT_TRACK_LABEL', '', 166),
+('plyrAutoplay', 'false', 34, 1, 3, 'LABEL_PLYR_AUTOPLAY', '', '', '', 'DESC_PLYR_AUTOPLAY', 'form-control', 'select', '', 'true,True:false,False', 167),
+('plyrClickToPlay', 'true', 34, 1, 3, 'LABEL_PLYR_CLICK2PLAY', '', '', '', 'DESC_PLYR_CLICK2PLAY', 'form-control', 'select', '', 'true,True:false,False', 168),
+('plyrDisableContextMenu', 'true', 34, 1, 3, 'LABEL_PLYR_DISABLE_CONTEXT_MENU', '', '', '', 'DESC_PLYR_DISABLE_CONTEXT_MENU', 'form-control', 'select', '', 'true,True:false,False', 169),
+('plyrHideControls', 'true', 34, 1, 3, 'LABEL_PLYR_HIDE_CONTROLS', '', '', '', 'DESC_PLYR_HIDE_CONTROLS', 'form-control', 'select', '', 'true,True:false,False', 170),
+('plyrShowPosterOnEnd', 'true', 34, 1, 3, 'LABEL_PLYR_SHOW_POSTER_ON_END', '', '', '', 'DESC_PLYR_SHOW_POSTER_ON_END', 'form-control', 'select', '', 'true,True:false,False', 171);
 
 --
 -- Tabellenstruktur für Tabelle `cms_widget_settings`
@@ -2144,7 +2168,9 @@ INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`)
 (29, 1, 'Pinterest Pin', 'pinterest_pin', 'Embed any Pinterest Pin'),
 (30, 1, 'Pinterest Follow Button', 'pinterest_follow', 'Embed Pinterest Follow Button'),
 (31, 1, 'Bubbl.us Mindmap', 'bubblus', 'Embed Bubbl.us Mindmap'),
-(32, 1, 'jPlayer', 'jplayer', 'audioplayer with playlist');
+(32, 1, 'jPlayer Audio', 'jplayer', 'jPlayer Audio Player with playlist feature'),
+(33, 1, 'jPlayer Video', 'jplayer_video', 'jPlayer Video Player with playlist feature'),
+(34, 1, 'Plyr HTML5 Player', 'plyr', 'A simple, accessible HTML5 media player by @sam_potts');
 
 --
 -- Indizes der exportierten Tabellen
