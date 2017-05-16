@@ -151,6 +151,9 @@ echo $headline;
     <script>plyr.setup();</script>
     <!-- plyr css -->
     <link type="text/css" rel="stylesheet" href="system/widgets/plyr/js/plyr.css">
+
+    <!-- Rangetouch to fix <input type="range"> on touch devices (see https://rangetouch.com) -->
+    <script src="system/widgets/plyr/js/rangetouch.js" async></script>
     <!-- output plyr html player -->
 <section>
     <video <?php echo $posterHtml; ?> controls style="width: <?php echo $width; ?>">
