@@ -1,19 +1,13 @@
 <?php
-/*
-if (!isset($jPlayerVideo) || (empty($jPlayerVideo)))
-{   // include player class
-    require_once ("system/widgets/jplayer_video/classes/jplayer_video.class.php");
-    // create new player object
-    $jPlayerVideo = new \YAWK\WIDGETS\jPlayerVideo();
-}
-*/
-?>
-<?php
 // set default values
 $mediafile = '';
+$filetype = '';
 $heading = '';
 $subtext = '';
 $width = '100%';
+$poster = '';
+$posterHtml = '';
+$textTrackFileHtmlOutput = '';
 
 // $_GET['widgetID'] will be generated in \YAWK\widget\loadWidgets($db, $position)
 if (isset($_GET['widgetID']))
@@ -43,6 +37,14 @@ if (isset($_GET['widgetID']))
                 /* url of the video to stream */
                 case 'plyrMediaFile';
                     $mediafile = $w_value;
+                    if (strpos($mediafile, '.mp4') !== false)
+                    {
+                        $filetype = "video/mp4";
+                    }
+                    if (strpos($mediafile, '.webm') !== false)
+                    {
+                        $filetype = "video/webm";
+                    }
                     break;
 
                 /* heading */
@@ -59,11 +61,67 @@ if (isset($_GET['widgetID']))
                 case 'plyrWidth';
                     $width = $w_value;
                     break;
+
+                /* poster */
+                case 'plyrPoster';
+                    $poster = $w_value;
+                    if (isset($poster) && (!empty($poster)))
+                    {   // poster is set...
+                        $posterHtml="poster=\"$poster\"";
+                    }
+                    else
+                        {   // no poster set, leave output empty
+                            $posterHtml = "poster=\"\"";
+                        }
+                    break;
+
+                /* text track file */
+                case 'plyrTextTrackFile';
+                    $textTrackFile = $w_value;
+                    break;
+
+                /* text track label */
+                case 'plyrTextTrackLabel';
+                    $textTrackLabel = $w_value;
+                    break;
+
+                /* text track srclang */
+                case 'plyrTextTrackSrcLang';
+                    $textTrackSrcLang = $w_value;
+                    break;
             }
+
+            // check if text track file, language and label are set
+            if (isset($textTrackFile) && (!empty($textTrackFile)))
+            {   // language found
+                if (isset($textTrackSrcLang) && (!empty($textTrackSrcLang)))
+                {   // store var src language
+                    $srcLang = $textTrackSrcLang;
+                }
+                else
+                    {   // not set - default language:
+                        $srcLang = "en";
+                    }
+                // label is set
+                if (isset($textTrackLabel) && (!empty($textTrackLabel)))
+                {   // store label var
+                    $label = $textTrackLabel;
+                }
+                else
+                    {   // not set - default label:
+                        $label = "English";
+                    }
+            // output text track html...
+            $textTrackFileHtmlOutput = "<track kind=\"captions\" label=\"$label\" srclang=\"$srcLang\" src=\"$textTrackFile\" default>";
+            }
+            else
+                {   // no text track is set, output nothing
+                    $textTrackFileHtmlOutput = '';
+                }
+
         } /* END LOAD PROPERTIES */
     } // end while fetch row (fetch widget settings)
 }
-
 
 // if a heading is set and not empty
 if (isset($heading) && (!empty($heading)))
@@ -87,18 +145,18 @@ else
 }
 echo $headline;
 ?>
-    <!-- plyr -->
+    <!-- plyr js -->
     <script src="system/widgets/plyr/js/plyr.js"></script>
+    <!-- run plyr -->
     <script>plyr.setup();</script>
+    <!-- plyr css -->
     <link type="text/css" rel="stylesheet" href="system/widgets/plyr/js/plyr.css">
-
-    <video poster="/path/to/poster.jpg" controls style="width: <?php echo $width; ?>">
-        <source src=" <?php echo $mediafile; ?>" type="video/mp4">
-        <!-- <source src="/path/to/video.webm" type="video/webm"> -->
-        <!-- Captions are optional -->
-        <track kind="captions" label="English captions" src="/path/to/captions.vtt" srclang="en" default>
+    <!-- output plyr html player -->
+    <video <?php echo $posterHtml; ?> controls style="width: <?php echo $width; ?>">
+        <source src="<?php echo $mediafile; ?>" type="<?php echo $filetype; ?>">
+        <!-- Text track file -->
+        <?php echo $textTrackFileHtmlOutput; ?>
+        <!-- Fallback for browsers that don't support the <video> element -->
+        <a href="<?php echo $mediafile; ?>" download>Download</a>
     </video>
 
-<?php
-// }   // end namespace
-?>
