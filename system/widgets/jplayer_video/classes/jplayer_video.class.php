@@ -152,14 +152,15 @@ namespace YAWK\WIDGETS {
                 }
                 else
                     {   // could not open directory, abort
-                        die ("could not open directory $this->mediaFolder - check permissions!");
-                        // echo \YAWK\alert::draw("danger", "ERROR: Could not open directory $this->mediaFolder", "Please check file and / or folder access permissions!", "", "");
+                        // die ("could not open directory $this->mediaFolder - check permissions!");
+                        return false;
+                        // \YAWK\alert::draw("danger", "ERROR: Could not open directory $this->mediaFolder", "Please check file and / or folder access permissions!", "", "");
                     }
             }
             else
                 {   // directory not exists, abort
-                    die ("folder $this->mediaFolder does not exist!");
-                    // echo \YAWK\alert::draw("danger", "ERROR: Could not open directory $this->mediaFolder", "Directory does not exist!", "", "");
+                    // return false; // die ("folder $this->mediaFolder does not exist!");
+                    // \YAWK\alert::draw("danger", "ERROR: Could not open directory $this->mediaFolder", "Directory does not exist!", "", "");
                 }
         }   // end function getFiles
     }   // end class jPlayer
