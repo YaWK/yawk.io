@@ -8,6 +8,11 @@ $width = '100%';
 $poster = '';
 $posterHtml = '';
 $textTrackFileHtmlOutput = '';
+$autoplay = 'false';
+$clicktoplay = 'true';
+$disableContextMenu = 'true';
+$hideControls = 'true';
+$showPosterOnEnd = 'false';
 
 // $_GET['widgetID'] will be generated in \YAWK\widget\loadWidgets($db, $position)
 if (isset($_GET['widgetID']))
@@ -89,6 +94,31 @@ if (isset($_GET['widgetID']))
                 case 'plyrTextTrackSrcLang';
                     $textTrackSrcLang = $w_value;
                     break;
+
+                /* autoplay */
+                case 'plyrAutoplay';
+                    $autoplay = $w_value;
+                    break;
+
+                /* click2play */
+                case 'plyrClickToPlay';
+                    $clicktoplay = $w_value;
+                    break;
+
+                /* disable context menu */
+                case 'plyrDisableContextMenu';
+                    $disableContextMenu = $w_value;
+                    break;
+
+                /* hide controls  */
+                case 'plyrHideControls';
+                    $hideControls = $w_value;
+                    break;
+
+                /* show poster on end */
+                case 'plyrShowPosterOnEnd';
+                    $showPosterOnEnd = $w_value;
+                    break;
             }
 
             // check if text track file, language and label are set
@@ -145,18 +175,9 @@ else
 }
 echo $headline;
 ?>
-    <!-- plyr js -->
-    <script src="system/widgets/plyr/js/plyr.js"></script>
-    <!-- run plyr -->
-    <script>plyr.setup();</script>
-    <!-- plyr css -->
-    <link type="text/css" rel="stylesheet" href="system/widgets/plyr/js/plyr.css">
-
-    <!-- Rangetouch to fix <input type="range"> on touch devices (see https://rangetouch.com) -->
-    <script src="system/widgets/plyr/js/rangetouch.js" async></script>
     <!-- output plyr html player -->
 <section>
-    <video <?php echo $posterHtml; ?> controls style="width: <?php echo $width; ?>">
+    <video <?php echo $posterHtml; ?> data-plyr='{ "autoplay":<?php echo $autoplay; ?>, "disableContextMenu":<?php echo $disableContextMenu; ?>, hideControls:<?php echo $hideControls; ?>, showPosterOnEnd:<?php echo $showPosterOnEnd; ?> "volume":5, "clickToPlay":<?php echo $clicktoplay; ?>, }' controls style="width: <?php echo $width; ?>">
         <source src="<?php echo $mediafile; ?>" type="<?php echo $filetype; ?>">
         <!-- Text track file -->
         <?php echo $textTrackFileHtmlOutput; ?>
@@ -164,3 +185,13 @@ echo $headline;
         <a href="<?php echo $mediafile; ?>" download>Download</a>
     </video>
 </section>
+
+<!-- plyr js -->
+<script src="system/widgets/plyr/js/plyr.js"></script>
+<!-- run plyr -->
+<script>plyr.setup();</script>
+<!-- plyr css -->
+<link type="text/css" rel="stylesheet" href="system/widgets/plyr/js/plyr.css">
+
+<!-- Rangetouch to fix <input type="range"> on touch devices (see https://rangetouch.com) -->
+<script src="system/widgets/plyr/js/rangetouch.js" async></script>
