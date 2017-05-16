@@ -177,7 +177,7 @@ echo $headline;
 ?>
     <!-- output plyr html player -->
 <section>
-    <video <?php echo $posterHtml; ?> data-plyr='{ "autoplay":<?php echo $autoplay; ?>, "disableContextMenu":<?php echo $disableContextMenu; ?>, hideControls:<?php echo $hideControls; ?>, showPosterOnEnd:<?php echo $showPosterOnEnd; ?> "volume":5, "clickToPlay":<?php echo $clicktoplay; ?>, }' controls style="width: <?php echo $width; ?>">
+    <video <?php echo $posterHtml; ?> controls style="width: <?php echo $width; ?>">
         <source src="<?php echo $mediafile; ?>" type="<?php echo $filetype; ?>">
         <!-- Text track file -->
         <?php echo $textTrackFileHtmlOutput; ?>
@@ -189,7 +189,7 @@ echo $headline;
 <!-- plyr js -->
 <script src="system/widgets/plyr/js/plyr.js"></script>
 <!-- run plyr -->
-<script>plyr.setup();</script>
+<script>plyr.setup({ "autoplay":<?php echo $autoplay; ?>, "disableContextMenu":<?php echo $disableContextMenu; ?>, "hideControls":<?php echo $hideControls; ?>, "showPosterOnEnd":<?php echo $showPosterOnEnd; ?>, "clickToPlay":<?php echo $clicktoplay; ?> });</script>
 <!-- plyr css -->
 <link type="text/css" rel="stylesheet" href="system/widgets/plyr/js/plyr.css">
 
