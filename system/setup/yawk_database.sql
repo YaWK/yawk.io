@@ -1951,7 +1951,7 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('clockClass', 'h1', 8, 1, 0, 'LABEL_CLOCK_CLASS', '', '', '', 'DESC_CLOCK_CLASS', 'form-control', '', 'PH_CLOCK_CLASS', '', 25),
 ('customHtmlCode', '<h1>Hello World! <small>Replace this with any HTML Code</small></h1>', 10, 1, 0, 'LABEL_CUSTOM_HTML_CODE_CONTENT', '', '', '', 'DESC_CUSTOM_HTML_CODE_CONTENT', 'form-control', 'textarea', 'PH_CUSTOM_HTML_CODE_CONTENT', '', 27),
 ('galleryID', '1', 13, 1, 0, 'LABEL_GALLERY_ID', '', '', '', 'DESC_GALLERY_ID', 'form-control', '', '', '', 28),
-('twitchChannel', 'salista_belladonna', 14, 1, 1, 'LABEL_TWITCH_CHANNEL', '', '', '', 'DESC_TWITCH_CHANNEL', 'form-control', '', 'PH_TWITCH_CHANNEL', '', 29),
+('twitchChannel', 'belladonna1337', 14, 1, 1, 'LABEL_TWITCH_CHANNEL', '', '', '', 'DESC_TWITCH_CHANNEL', 'form-control', '', 'PH_TWITCH_CHANNEL', '', 29),
 ('twitchChat', '1', 14, 1, 7, 'LABEL_TWITCH_CHAT', '', '', '', 'DESC_TWITCH_CHAT', 'form-control', 'checkbox', '', '', 30),
 ('twitchChatHeight', '200', 14, 1, 8, 'LABEL_TWITCH_CHAT_HEIGHT', '', '', '', 'DESC_TWITCH_CHAT_HEIGHT', 'form-control', '', 'PH_TWITCH_CHAT_HEIGHT', '', 31),
 ('twitchChatWidth', '100%', 14, 1, 9, 'LABEL_TWITCH_CHAT_WIDTH', '', '', '', 'DESC_TWITCH_CHAT_WIDTH', 'form-control', '', 'PH_TWITCH_CHAT_WIDTH', '', 32),
@@ -2093,7 +2093,9 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('plyrClickToPlay', 'true', 34, 1, 3, 'LABEL_PLYR_CLICK2PLAY', '', '', '', 'DESC_PLYR_CLICK2PLAY', 'form-control', 'select', '', 'true,True:false,False', 168),
 ('plyrDisableContextMenu', 'true', 34, 1, 3, 'LABEL_PLYR_DISABLE_CONTEXT_MENU', '', '', '', 'DESC_PLYR_DISABLE_CONTEXT_MENU', 'form-control', 'select', '', 'true,True:false,False', 169),
 ('plyrHideControls', 'true', 34, 1, 3, 'LABEL_PLYR_HIDE_CONTROLS', '', '', '', 'DESC_PLYR_HIDE_CONTROLS', 'form-control', 'select', '', 'true,True:false,False', 170),
-('plyrShowPosterOnEnd', 'true', 34, 1, 3, 'LABEL_PLYR_SHOW_POSTER_ON_END', '', '', '', 'DESC_PLYR_SHOW_POSTER_ON_END', 'form-control', 'select', '', 'true,True:false,False', 171);
+('plyrShowPosterOnEnd', 'true', 34, 1, 3, 'LABEL_PLYR_SHOW_POSTER_ON_END', '', '', '', 'DESC_PLYR_SHOW_POSTER_ON_END', 'form-control', 'select', '', 'true,True:false,False', 171),
+('responsiveAudioJS', '//vws.responsivevoice.com/v/e?key=S2mbnNTl', 35, 1, 1, 'LABEL_RESP_VOICE', '', '', '', 'DESC_RESP_VOICE', 'form-control', 'input', 'PH_RESP_VOICE', '', 172);
+
 
 --
 -- Tabellenstruktur für Tabelle `cms_widget_settings`
@@ -2170,7 +2172,9 @@ INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`)
 (31, 1, 'Bubbl.us Mindmap', 'bubblus', 'Embed Bubbl.us Mindmap'),
 (32, 1, 'jPlayer Audio', 'jplayer', 'jPlayer Audio Player with playlist feature'),
 (33, 1, 'jPlayer Video', 'jplayer_video', 'jPlayer Video Player with playlist feature'),
-(34, 1, 'Plyr HTML5 Player', 'plyr', 'A simple, accessible HTML5 media player by @sam_potts');
+(34, 1, 'Plyr HTML5 Player', 'plyr', 'A simple, accessible HTML5 media player by @sam_potts'),
+(35, 1, 'Responsive Voice JS', 'responsiveVoiceJS', 'Instant Text-To-Speech with Voice Consistency Across Devices');
+
 
 --
 -- Indizes der exportierten Tabellen
