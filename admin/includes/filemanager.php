@@ -41,11 +41,18 @@
     });
 
     $("#myTab").on("click", function(e) {
-        if ($(this).hasClass("disabled")) {
+        if ($(this).hasClass("disabled"))
+        {
+            // e.removeAttr('data-toggle');
             e.preventDefault();
             return false;
         }
     });
+
+    function disableTabs()
+    {
+        // placeholder
+    }
 
     /**
      * If user switch a folder (tab), the upload folder select option automatically gets set to this folder
