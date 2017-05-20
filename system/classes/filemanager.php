@@ -25,6 +25,17 @@ namespace YAWK {
          */
         static function drawTableHeader($lang, $i)
         {
+
+            if (isset($_GET['path']) && (!empty($_GET['path'])))
+            {
+                $backBtn = "<a class=\"btn btn-success pull-right\" href=\"index.php?page=filemanager\" onclick=\"window.history.back();\"><i class=\"fa fa-chevron-up\"></i> &nbsp;$lang[BACK]</a>";
+            }
+            else
+            {
+                $backBtn = '';
+            }
+
+            print $backBtn;
             print "<table width=\"100%\" cellpadding=\"4\" cellspacing=\"0\" border=\"0\" class=\"table table-responsive table-hover\" id=\"table-sort$i\">
   <thead>
     <tr>
@@ -114,9 +125,14 @@ namespace YAWK {
          * @link       http://yawk.io
          * @param string $folder folder to look for files
          */
-        static function getFilesFromFolder($folder)
+        static function getFilesFromFolder($folder, $path)
         {
             global $file_value;
+
+            if (isset($_GET['path']) && (!empty($_GET['path'])))
+            {
+                $folder = $_GET['path'];
+            }
 
             /*	getFilesFromFolder
             *	returns a list of all files in given folder
@@ -159,8 +175,8 @@ namespace YAWK {
                     // LIST FOLDERS
                     //    print "<strong>$dir_perms $dir_value</strong><br>";
                     echo "<tr>
-          <td class=\"text-right\"><a href=\"#\"><i class=\"fa fa-folder\"></i></a></td>
-          <td class=\"text-left\"><a href='$path" . "/" . "$dir_value'>$dir_value</a></td>
+          <td class=\"text-right\"><a href=\"?page=filemanager&path=$path" . "/" . "$dir_value\"><div style=\"width:100%\"><i class=\"fa fa-folder\"></i></div></a></td>
+          <td class=\"text-left\"><a href=\"?page=filemanager&path=$path" . "/" . "$dir_value\"><div style=\"width:100%\">$dir_value</div></a></td>
           <td class=\"text-center\">$dir_perms</td>
           <td class=\"text-center\">
            <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Den Folder &laquo;$dir_value&raquo; wirklich l&ouml;schen?\"
