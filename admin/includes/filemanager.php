@@ -330,7 +330,7 @@ else
             <form enctype="multipart/form-data" action="index.php?page=filemanager" method="POST">
             <div class="modal-header">
                 <!-- modal header with close controls -->
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
                 <h3 class="modal-title"><i class="fa fa-folder-open-o"></i> <?php print $lang['FILEMAN_ADD_FOLDER']; ?></h3>
             </div>
             <div class="modal-body">
@@ -375,7 +375,7 @@ else
             <form enctype="multipart/form-data" action="index.php?page=filemanager" method="POST">
             <div class="modal-header">
             <!-- modal header with close controls -->
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i> </button>
             <h3 class="modal-title"><i class="fa fa-pencil"></i> <?php echo $lang['FILEMAN_RENAME_FOLDER']; ?></h3>
             </div>
 
@@ -407,7 +407,7 @@ else
             <form enctype="multipart/form-data" action="index.php?page=filemanager" method="POST">
             <div class="modal-header">
                 <!-- modal header with close controls -->
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
                 <h3 class="modal-title"><i class="fa fa-unlock-alt"></i> <?php echo $lang['FILEMAN_CHMOD']; ?></h3>
             </div>
             <!-- modal body -->
@@ -419,11 +419,14 @@ else
                 <label for="chmodCode"><?php echo $lang['FILEMAN_CHMOD']; ?></label>
                 <select id="chmodCode" name="chmodCode" class="form-control">
                     <option value=""><?php echo $lang['FILEMAN_CHMOD_SELECT']; ?></option>
-                    <option value="0600">0600: Lese und Schreibrechte für den Besitzer, keine für alle anderen</option>
-                    <option value="0600">0600: Lese und Schreibrechte für den Besitzer, keine für alle anderen</option>
-                    <option value="0644">0644: Lese und Schreibrechte für den Besitzer, Leserechte alle anderen</option>
-                    <option value="0750">0750: Alle Rechte für den Besitzer, Lese und Ausführungsrechte für die Gruppe</option>
-                    <option value="0755">0755: Alle Rechte für den Besitzer, Lese und Ausführungsrechte für alle anderen</option>
+                    <optgroup label="<?php echo $lang['FILEMAN_HIGH_SEC_LVL']; ?>"></optgroup>
+                    <option value="0600"><?php echo $lang['FILEMAN_0600']; ?></option>
+                    <option value="0644"><?php echo $lang['FILEMAN_0644']; ?></option>
+                    <optgroup label="<?php echo $lang['FILEMAN_CASUAL_SEC_LVL']; ?>"></optgroup>
+                    <option value="0750"><?php echo $lang['FILEMAN_0750']; ?></option>
+                    <option value="0755"><?php echo $lang['FILEMAN_0755']; ?></option>
+                    <optgroup label="<?php echo $lang['FILEMAN_LOW_SEC_LVL']; ?>"></optgroup>
+                    <option value="0777"><?php echo $lang['FILEMAN_0777']; ?></option>
                 </select>
                 <label for="customChmodCode"><?php echo $lang['FILEMAN_CHMOD_CUSTOM']; ?> </label>
                 <input id="customChmodCode" class="form-control" name="customChmodCode" value="">
@@ -457,49 +460,49 @@ else
     <div class="tab-pane fade in active" id="images">
         <br>
         <?php YAWK\filemanager::drawTableHeader($lang, 5); ?>
-        <?php YAWK\filemanager::getFilesFromFolder("../media/images", $path); ?>
+        <?php YAWK\filemanager::getFilesFromFolder("../media/images", $path, $lang); ?>
         <?php YAWK\filemanager::drawTableFooter(); ?>
     </div>
     <!-- audio folder -->
     <div class="tab-pane fade in" id="audio">
         <br>
         <?php YAWK\filemanager::drawTableHeader($lang, 1); ?>
-        <?php YAWK\filemanager::getFilesFromFolder("../media/audio", $path); ?>
+        <?php YAWK\filemanager::getFilesFromFolder("../media/audio", $path, $lang); ?>
         <?php YAWK\filemanager::drawTableFooter(); ?>
     </div>
     <!-- video folder -->
     <div class="tab-pane fade in" id="video">
         <br>
         <?php YAWK\filemanager::drawTableHeader($lang, 7); ?>
-        <?php YAWK\filemanager::getFilesFromFolder("../media/video", $path); ?>
+        <?php YAWK\filemanager::getFilesFromFolder("../media/video", $path, $lang); ?>
         <?php YAWK\filemanager::drawTableFooter(); ?>
     </div>
     <!-- documents folder -->
     <div class="tab-pane fade in" id="documents">
         <br>
         <?php YAWK\filemanager::drawTableHeader($lang, 3); ?>
-        <?php YAWK\filemanager::getFilesFromFolder("../media/documents", $path); ?>
+        <?php YAWK\filemanager::getFilesFromFolder("../media/documents", $path, $lang); ?>
         <?php YAWK\filemanager::drawTableFooter(); ?>
     </div>
     <!-- downloads folder -->
     <div class="tab-pane fade in" id="downloads">
         <br>
         <?php YAWK\filemanager::drawTableHeader($lang, 4); ?>
-        <?php YAWK\filemanager::getFilesFromFolder("../media/downloads", $path); ?>
+        <?php YAWK\filemanager::getFilesFromFolder("../media/downloads", $path, $lang); ?>
         <?php YAWK\filemanager::drawTableFooter(); ?>
     </div>
     <!-- upload folder -->
     <div class="tab-pane fade in" id="uploads">
         <br>
         <?php YAWK\filemanager::drawTableHeader($lang, 6); ?>
-        <?php YAWK\filemanager::getFilesFromFolder("../media/uploads", $path); ?>
+        <?php YAWK\filemanager::getFilesFromFolder("../media/uploads", $path, $lang); ?>
         <?php YAWK\filemanager::drawTableFooter(); ?>
     </div>
     <!-- backup folder -->
     <div class="tab-pane fade in" id="backup">
         <br>
         <?php YAWK\filemanager::drawTableHeader($lang, 2); ?>
-        <?php YAWK\filemanager::getFilesFromFolder("../media/backup", $path); ?>
+        <?php YAWK\filemanager::getFilesFromFolder("../media/backup", $path, $lang); ?>
         <?php YAWK\filemanager::drawTableFooter(); ?>
     </div>
 </div>

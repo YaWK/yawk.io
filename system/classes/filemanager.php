@@ -124,8 +124,10 @@ namespace YAWK {
          * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
          * @link       http://yawk.io
          * @param string $folder folder to look for files
+         * @param string $path path to workout
+         * @param array $lang current language array
          */
-        static function getFilesFromFolder($folder, $path)
+        static function getFilesFromFolder($folder, $path, $lang)
         {
             global $file_value;
 
@@ -160,12 +162,21 @@ namespace YAWK {
             }
             // sort ascending
             if (!empty($files)) {
-                // insert sort here - if needed 
+                // insert sort here - if needed
             }
             if (!empty($folders)) {
-                // sort($folders); 
+                // sort($folders);
             }
 
+            if (empty($files) && (empty($folders)))
+            {
+                $errorMsg = "This directory is empty. <br>
+                             <a href=\"index.php?page=filemanager\" onclick=\"window.history.back();\"> back</a>";
+            }
+            else
+                {
+                    $errorMsg = '';
+                }
             /* OUTPUT:
              * list folders + files
              */
@@ -177,19 +188,26 @@ namespace YAWK {
                     echo "<tr>
           <td class=\"text-right\"><a onclick=\"disableTabs();\" href=\"?page=filemanager&path=$path" . "/" . "$dir_value\"><div style=\"width:100%\"><i class=\"fa fa-folder\"></i></div></a></td>
           <td class=\"text-left\"><a onclick=\"flipTheSwitch();\" href=\"?page=filemanager&path=$path" . "/" . "$dir_value\"><div style=\"width:100%\">$dir_value</div></a></td>
-          <td class=\"text-center\">$dir_perms[$i]</td>
+          <td class=\"text-center\">$dir_perms[$i] <small><a class=\"fa fa-edit\" onclick=\"setChmodCode('$path/$file_value', '$file_perms[$i]');\" data-toggle=\"modal\" data-target=\"#chmodModal\" data-foldername=\"$file_perms[$i]\" title=\"chmod\" href=\"#myModal\"></a></small> </td>
           <td class=\"text-center\">
-           <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Den Folder &laquo;$dir_value&raquo; wirklich l&ouml;schen?\"
+           <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"$lang[FILEMAN_DELETE] &laquo;$dir_value&raquo; ?\"
             title=\"delete\" data-target=\"#deleteModal\" data-toggle=\"modal\" href=\"index.php?page=filemanager&delete=1&path=$path&item=$dir_value&folder=$folder\"></a>
             &nbsp;
            <a class=\"fa fa-pencil\" onclick=\"setItemName('$path', '$dir_value');\" data-toggle=\"modal\" data-target=\"#renameModal\" data-foldername=\"$dir_value\" title=\"rename\" href=\"#myModal\"></a>
-           
-           &nbsp;<a class=\"fa fa-unlock-alt\" onclick=\"setChmodCode('$path/$dir_value', '$dir_perms[$i]');\" data-toggle=\"modal\" data-target=\"#chmodModal\" data-foldername=\"$dir_value\" title=\"chmod\" href=\"#myModal\"></a>
           </td>
         </tr>";
                     $i++;
                 }
             }
+            else
+                {
+                    echo "<tr>
+                            <td></td>
+                            <td>$errorMsg</td>
+                            <td></td>
+                            <td></td>
+                          </tr>";
+                }
 
             if (isset($files)) { // print files
                 $i = 0;
@@ -199,15 +217,13 @@ namespace YAWK {
                     echo "<tr>
           <td class=\"text-right\">$fsize</td>
           <td class=\"text-left\"><a href='$path" . "/" . "$file_value'><div style=\"width:100%\">$file_value</div></a></td>
-          <td class=\"text-center\">$file_perms[$i]</td>
+          <td class=\"text-center\">$file_perms[$i] <small><a class=\"fa fa-edit\" onclick=\"setChmodCode('$path/$file_value', '$file_perms[$i]');\" data-toggle=\"modal\" data-target=\"#chmodModal\" data-foldername=\"$file_perms[$i]\" title=\"chmod\" href=\"#myModal\"></a></small></td>
           <td class=\"text-center\">
 
            <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Die Datei &laquo;$file_value&raquo; wirklich l&ouml;schen?\" 
             title=\"delete\" data-target=\"#moveModal\" data-toggle=\"modal\" href='index.php?page=filemanager&delete=1&path=$path&item=$file_value&folder=$folder'></a>
             &nbsp;
            <a class=\"fa fa-pencil\" onclick=\"setItemName('$path', '$file_value');\" data-toggle=\"modal\" data-target=\"#renameModal\" data-foldername=\"$file_value\" title=\"rename\" href=\"#myModal\"></a>
-            &nbsp;
-           <a class=\"fa fa-unlock-alt\" onclick=\"setChmodCode('$path/$file_value', '$file_perms[$i]');\" data-toggle=\"modal\" data-target=\"#chmodModal\" data-foldername=\"$file_perms[$i]\" title=\"chmod\" href=\"#myModal\"></a>
           </td>        
         </tr>";
                     $i++;
