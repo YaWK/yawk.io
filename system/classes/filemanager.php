@@ -166,7 +166,6 @@ namespace YAWK {
                 // sort($folders); 
             }
 
-
             /* OUTPUT:
              * list folders + files
              */
@@ -182,7 +181,7 @@ namespace YAWK {
            <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Den Folder &laquo;$dir_value&raquo; wirklich l&ouml;schen?\"
             title=\"delete\" data-target=\"#deleteModal\" data-toggle=\"modal\" href=\"index.php?page=filemanager&delete=1&path=$path&item=$dir_value&folder=$folder\"></a>
             &nbsp;
-           <a class=\"fa fa-pencil\" onclick=\"setFolderName('$dir_value');\" data-toggle=\"modal\" data-target=\"#renameModal\" data-foldername=\"$dir_value\" title=\"rename\" href=\"#myModal\"></a>
+           <a class=\"fa fa-pencil\" onclick=\"setFolderName('$path', '$dir_value');\" data-toggle=\"modal\" data-target=\"#renameModal\" data-foldername=\"$dir_value\" title=\"rename\" href=\"#myModal\"></a>
           </td>
         </tr>";
                 }
@@ -341,6 +340,37 @@ namespace YAWK {
                 if($fileInfo->isDir()) continue;
                 echo $fileInfo->getFilename() . "<br>\n";
             }
+        }
+
+        /**
+         * remove special chars as well as leading and trailing slashes from string
+         * @author     Daniel Retzl <danielretzl@gmail.com>
+         * @copyright  2017 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @link       http://yawk.io
+         * @param string $string the affected string
+         */
+        static function removeSpecialChars($string)
+        {
+            if (isset($string) && (!empty($string)))
+            {
+                // $string = 'V!e§r$s%c&h/i(e)d=e?n`e² S³o{n[d]e]r}z\e´i+c*h~e#n';
+                // remove special chars
+                $string = preg_replace ('/[^a-z0-9- ]/i', '', $string);
+                // trim any whitespaces left or right
+                $string = trim($string);
+                // change any backslashes to regular slashes
+                $string = strtr($string,"\\","/");
+                // remove all leading slashes
+                $string = ltrim($string, "/");
+                // remove all trailing slashes
+                $string = rtrim($string, "/");
+                return $string;
+            }
+            else
+                {
+                    return null;
+                }
         }
 
         /**

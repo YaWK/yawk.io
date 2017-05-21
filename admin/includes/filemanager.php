@@ -51,7 +51,7 @@
     });
 
 
-    function setFolderName(folderName)
+    function setFolderName(path, folderName)
     {
         // store input field
         inputField = $("#newFolderName");
@@ -62,6 +62,9 @@
         });
         // add the folderName to input field
         inputField.val(folderName);
+        $("#path").val(path);
+        $("#oldFolderName").val(folderName);
+
     }
 
     function disableTabs()
@@ -145,30 +148,31 @@ if (isset($_GET['delete']))
 }
 
 /* RENAME FOLDER PROCESSING */
-if (isset($_POST['renameFolder']) && ($_POST['addFolder'] === "true"))
+if (isset($_POST['renameFolder']) && ($_POST['renameFolder'] === "true"))
 {
     // check if new folder name is set...
     if (isset($_POST['newFolderName']) && (!empty($_POST['newFolderName'])))
     {
         if (isset($_POST['path']) && (!empty($_POST['path'])))
         {
+            // remove special chars from folder name
+            $newFolderName = \YAWK\filemanager::removeSpecialChars($_POST['newFolderName']);
             // rename from
-            $from = "$_POST[path]$_POST[oldFolderName]";
-
+            $from = "$_POST[path]/$_POST[oldFolderName]";
             // rename to
-            $to = "$_POST[path]$_POST[newFolderName]";
+            $to = "$_POST[path]/$newFolderName";
         }
-        // rename file
+        // rename folder
         if (rename($from, $to))
         {
-            \YAWK\sys::setSyslog("success", "$lang[SUCCESS]", "$lang[FOLDER] renamed $_POST[oldFolderName] to $_POST[newFolderName]", 0, 0, 0, 0);
-            \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[FOLDER] renamed $_POST[oldFolderName] to $_POST[newFolderName]","","1200");
+            // \YAWK\sys::setSyslog("success", "$lang[SUCCESS]", "$lang[FOLDER] renamed $_POST[oldFolderName] to $_POST[newFolderName]", 0, 0, 0, 0);
+            echo \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[FOLDER] $lang[RENAMED]: <i>$_POST[oldFolderName]</i> $lang[FILEMAN_TO] <b>$_POST[newFolderName]</b>","","1200");
 
         }
         else
             {
-                \YAWK\sys::setSyslog("success", "$lang[WARNING]", "$lang[FOLDER] renamed $_POST[oldFolderName] to $_POST[newFolderName]", 0, 0, 0, 0);
-                \YAWK\alert::draw("danger", "$lang[ERROR]", "rename $lang[FOLDER] $_POST[oldFolderName] to $_POST[newFolderName] failed!","","4800");
+                // \YAWK\sys::setSyslog("success", "$lang[WARNING]", "$lang[FOLDER] renamed $_POST[oldFolderName] to $_POST[newFolderName]", 0, 0, 0, 0);
+                echo \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[FOLDER] $lang[RENAMED] $_POST[oldFolderName] $lang[FILEMAN_TO] $_POST[newFolderName] $lang[FAILED]","","4800");
             }
     }
 }
@@ -178,21 +182,8 @@ if (isset($_POST['addFolder']) && ($_POST['addFolder'] === "true"))
 {
     // check if new folder is set
     if (isset($_POST['newFolder']) && (!empty($_POST['newFolder'])))
-    {
-        // prepare newFolder variable
-        // set var
-        $newFolder = $_POST['newFolder'];
-        // $string = 'V!e§r$s%c&h/i(e)d=e?n`e² S³o{n[d]e]r}z\e´i+c*h~e#n';
-        // remove special chars
-        $newFolder = preg_replace ('/[^a-z0-9- ]/i', '', $newFolder);
-        // trim any whitespaces left or right
-        $newFolder = trim($newFolder);
-        // change any backslashes to regular slashes
-        $newFolder = strtr($newFolder,"\\","/");
-        // remove all leading slashes
-        $newFolder = ltrim($newFolder, "/");
-        // remove all trailing slashes
-        $newFolder = rtrim($newFolder, "/");
+    {   // remove special chars from new folder
+        $newFolder = \YAWK\filemanager::removeSpecialChars($_POST['newFolder']);
     }
     else
         {
@@ -343,7 +334,7 @@ else
 
 
 
-<!-- Modal --ADD FOLDER  -- -->
+<!-- Modal --RENME FOLDER  -- -->
 <div class="modal fade" id="renameModal" tabindex="-1" role="dialog" aria-labelledby="myModal2Label" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -351,13 +342,14 @@ else
             <div class="modal-header">
             <!-- modal header with close controls -->
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
-            <h3 class="modal-title"><i class="fa fa-folder-open-o"></i> <?php echo $lang['FILEMAN_RENAME_FOLDER']; ?></h3>
+            <h3 class="modal-title"><i class="fa fa-pencil"></i> <?php echo $lang['FILEMAN_RENAME_FOLDER']; ?></h3>
             </div>
 
             <!-- modal body -->
             <div class="modal-body">
                 <input type="hidden" id="renameFolder" name="renameFolder" value="true">
                 <input type="hidden" id="oldFolderName" name="oldFolderName">
+                <input type="hidden" id="path" name="path">
                 <!-- save to... folder select options -->
                 <label for="newFolderName"><?php echo $lang['RENAME']; ?> </label>
                 <input id="newFolderName" class="form-control" name="newFolderName" value="" autofocus>
@@ -366,7 +358,7 @@ else
             <!-- modal footer /w submit btn -->
             <div class="modal-footer">
                 <input type="hidden" name="move" value="sent">
-                <input class="btn btn-large btn-success" type="submit" value="<?php echo $lang['FILEMAN_ADD_FOLDER_BTN']; ?>">
+                <input class="btn btn-large btn-success" type="submit" value="<?php echo $lang['FILEMAN_RENAME_FOLDER']; ?>">
                 <br><br>
             </div>
             </form>
