@@ -175,12 +175,14 @@ namespace YAWK {
                     // LIST FOLDERS
                     //    print "<strong>$dir_perms $dir_value</strong><br>";
                     echo "<tr>
-          <td class=\"text-right\"><a href=\"?page=filemanager&path=$path" . "/" . "$dir_value\"><div style=\"width:100%\"><i class=\"fa fa-folder\"></i></div></a></td>
+          <td class=\"text-right\"><a onclick=\"disableTabs();\" href=\"?page=filemanager&path=$path" . "/" . "$dir_value\"><div style=\"width:100%\"><i class=\"fa fa-folder\"></i></div></a></td>
           <td class=\"text-left\"><a onclick=\"disableTabs();\" href=\"?page=filemanager&path=$path" . "/" . "$dir_value\"><div style=\"width:100%\">$dir_value</div></a></td>
           <td class=\"text-center\">$dir_perms</td>
           <td class=\"text-center\">
            <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Den Folder &laquo;$dir_value&raquo; wirklich l&ouml;schen?\"
-            title=\"delete\" data-target=\"#moveModal\" data-toggle=\"modal\" href='index.php?page=filemanager&delete=1&path=$path&item=$dir_value&folder=$folder'></a>
+            title=\"delete\" data-target=\"#deleteModal\" data-toggle=\"modal\" href=\"index.php?page=filemanager&delete=1&path=$path&item=$dir_value&folder=$folder\"></a>
+            &nbsp;
+           <a class=\"fa fa-pencil\" onclick=\"setFolderName('$dir_value');\" data-toggle=\"modal\" data-target=\"#renameModal\" data-foldername=\"$dir_value\" title=\"rename\" href=\"#myModal\"></a>
           </td>
         </tr>";
                 }

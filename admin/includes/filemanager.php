@@ -17,6 +17,7 @@
             tabsClass: 'hidden-sm hidden-xs',
             accordionClass: 'visible-sm visible-xs'
         });
+
     });
     // MAKE SURE THAT THE LAST USED TAB STAYS ACTIVE
     // thanks to http://stackoverflow.com/users/463906/ricsrock
@@ -48,6 +49,20 @@
             return false;
         }
     });
+
+
+    function setFolderName(folderName)
+    {
+        // store input field
+        inputField = $("#newFolderName");
+        // when rename modal is shown
+        $('#renameModal').on('shown.bs.modal', function () {
+            // set focus on input field and select it
+            $(inputField).focus().select();
+        });
+        // add the folderName to input field
+        inputField.val(folderName);
+    }
 
     function disableTabs()
     {
@@ -129,6 +144,35 @@ if (isset($_GET['delete']))
     }
 }
 
+/* RENAME FOLDER PROCESSING */
+if (isset($_POST['renameFolder']) && ($_POST['addFolder'] === "true"))
+{
+    // check if new folder name is set...
+    if (isset($_POST['newFolderName']) && (!empty($_POST['newFolderName'])))
+    {
+        if (isset($_POST['path']) && (!empty($_POST['path'])))
+        {
+            // rename from
+            $from = "$_POST[path]$_POST[oldFolderName]";
+
+            // rename to
+            $to = "$_POST[path]$_POST[newFolderName]";
+        }
+        // rename file
+        if (rename($from, $to))
+        {
+            \YAWK\sys::setSyslog("success", "$lang[SUCCESS]", "$lang[FOLDER] renamed $_POST[oldFolderName] to $_POST[newFolderName]", 0, 0, 0, 0);
+            \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[FOLDER] renamed $_POST[oldFolderName] to $_POST[newFolderName]","","1200");
+
+        }
+        else
+            {
+                \YAWK\sys::setSyslog("success", "$lang[WARNING]", "$lang[FOLDER] renamed $_POST[oldFolderName] to $_POST[newFolderName]", 0, 0, 0, 0);
+                \YAWK\alert::draw("danger", "$lang[ERROR]", "rename $lang[FOLDER] $_POST[oldFolderName] to $_POST[newFolderName] failed!","","4800");
+            }
+    }
+}
+
 /* NEW FOLDER PROCESSING */
 if (isset($_POST['addFolder']) && ($_POST['addFolder'] === "true"))
 {
@@ -183,6 +227,8 @@ if (isset($_POST['addFolder']) && ($_POST['addFolder'] === "true"))
         }
 }
 
+/* when a path is set, user is in a subdirectory.
+   disable all other tabs in that case... */
 if (isset($_GET['path']) && (!empty($_GET['path'])))
 {
     $firstTabStatus = "class=\"active disabled\"";
@@ -295,6 +341,38 @@ else
   </div> <!-- modal dialog -->
  </div>
 
+
+
+<!-- Modal --ADD FOLDER  -- -->
+<div class="modal fade" id="renameModal" tabindex="-1" role="dialog" aria-labelledby="myModal2Label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form enctype="multipart/form-data" action="index.php?page=filemanager" method="POST">
+            <div class="modal-header">
+            <!-- modal header with close controls -->
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+            <h3 class="modal-title"><i class="fa fa-folder-open-o"></i> <?php echo $lang['FILEMAN_RENAME_FOLDER']; ?></h3>
+            </div>
+
+            <!-- modal body -->
+            <div class="modal-body">
+                <input type="hidden" id="renameFolder" name="renameFolder" value="true">
+                <input type="hidden" id="oldFolderName" name="oldFolderName">
+                <!-- save to... folder select options -->
+                <label for="newFolderName"><?php echo $lang['RENAME']; ?> </label>
+                <input id="newFolderName" class="form-control" name="newFolderName" value="" autofocus>
+            </div>
+
+            <!-- modal footer /w submit btn -->
+            <div class="modal-footer">
+                <input type="hidden" name="move" value="sent">
+                <input class="btn btn-large btn-success" type="submit" value="<?php echo $lang['FILEMAN_ADD_FOLDER_BTN']; ?>">
+                <br><br>
+            </div>
+            </form>
+        </div> <!-- modal content -->
+    </div> <!-- modal dialog -->
+</div>
 <!-- START FILEMANAGER CONTENT  -->
 <!-- Tabs -->
 <ul id="myTab" class="nav nav-tabs">
