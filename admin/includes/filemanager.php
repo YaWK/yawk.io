@@ -256,12 +256,21 @@ if (isset($_POST['addFolder']) && ($_POST['addFolder'] === "true"))
    disable all other tabs in that case... */
 if (isset($_GET['path']) && (!empty($_GET['path'])))
 {
-    $firstTabStatus = "class=\"active disabled\"";
-    $disabledStatus = "class=\"disabled\"";
+    if ($_GET['path'] = strstr($_GET['path'], "../media"))
+    {
+        $firstTabStatus = "class=\"active disabled\"";
+        $disabledStatus = "class=\"disabled\"";
+        $dataToggle = '';
+    }
+    else
+        {
+            \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[ACTION_FORBIDDEN]", 0, 6000);
+        }
 }
 else
     {
         $firstTabStatus = "class=\"active\"";
+        $dataToggle = " data-toggle=\"tab\"";
         $disabledStatus = '';
     }
 ?>
@@ -445,13 +454,13 @@ else
 <!-- START FILEMANAGER CONTENT  -->
 <!-- Tabs -->
 <ul id="myTab" class="nav nav-tabs">
-    <li <?php echo $firstTabStatus; ?>><a href="#images" onclick="flipTheSwitch('images');" data-toggle="tab"><i class="fa fa-picture-o"></i> &nbsp;<?php echo $lang['FILEMAN_IMAGES']; ?></a></li>
-    <li <?php echo $disabledStatus; ?>><a href="#audio" onclick="flipTheSwitch('audio');" aria-disabled="true" data-toggle="tab"><i class="fa fa-music"></i> &nbsp;<?php echo $lang['FILEMAN_AUDIO']; ?></a></li>
-    <li <?php echo $disabledStatus; ?>><a href="#video" onclick="flipTheSwitch('video');" data-toggle="tab"><i class="fa fa-video-camera"></i> &nbsp;<?php echo $lang['FILEMAN_VIDEOS']; ?></a></li>
-    <li <?php echo $disabledStatus; ?>><a href="#documents" onclick="flipTheSwitch('documents');" data-toggle="tab"><i class="fa fa-file-text-o"></i> &nbsp;<?php echo $lang['FILEMAN_DOCUMENTS']; ?></a></li>
-    <li <?php echo $disabledStatus; ?>><a href="#downloads" onclick="flipTheSwitch('downloads');" data-toggle="tab"><i class="fa fa-download"></i> &nbsp;<?php echo $lang['FILEMAN_DOWNLOADS']; ?></a></li>
-    <li <?php echo $disabledStatus; ?>><a href="#uploads" onclick="flipTheSwitch('uploads');" data-toggle="tab"><i class="fa fa-upload"></i> &nbsp;<?php echo $lang['FILEMAN_UPLOADS']; ?></a></li>
-    <li <?php echo $disabledStatus; ?>><a href="#backup" onclick="flipTheSwitch('backup');" data-toggle="tab"><i class="fa fa-file-zip-o"></i> &nbsp;<?php echo $lang['FILEMAN_BACKUP']; ?></a></li>
+    <li <?php echo $firstTabStatus; ?>><a href="#images" onclick="flipTheSwitch('images');"<?php echo $dataToggle; ?>><i class="fa fa-picture-o"></i> &nbsp;<?php echo $lang['FILEMAN_IMAGES']; ?></a></li>
+    <li <?php echo $disabledStatus; ?>><a href="#audio" onclick="flipTheSwitch('audio');"<?php echo $dataToggle; ?>><i class="fa fa-music"></i> &nbsp;<?php echo $lang['FILEMAN_AUDIO']; ?></a></li>
+    <li <?php echo $disabledStatus; ?>><a href="#video" onclick="flipTheSwitch('video');"<?php echo $dataToggle; ?>><i class="fa fa-video-camera"></i> &nbsp;<?php echo $lang['FILEMAN_VIDEOS']; ?></a></li>
+    <li <?php echo $disabledStatus; ?>><a href="#documents" onclick="flipTheSwitch('documents');"<?php echo $dataToggle; ?>><i class="fa fa-file-text-o"></i> &nbsp;<?php echo $lang['FILEMAN_DOCUMENTS']; ?></a></li>
+    <li <?php echo $disabledStatus; ?>><a href="#downloads" onclick="flipTheSwitch('downloads');"<?php echo $dataToggle; ?>><i class="fa fa-download"></i> &nbsp;<?php echo $lang['FILEMAN_DOWNLOADS']; ?></a></li>
+    <li <?php echo $disabledStatus; ?>><a href="#uploads" onclick="flipTheSwitch('uploads');"<?php echo $dataToggle; ?>><i class="fa fa-upload"></i> &nbsp;<?php echo $lang['FILEMAN_UPLOADS']; ?></a></li>
+    <li <?php echo $disabledStatus; ?>><a href="#backup" onclick="flipTheSwitch('backup');"<?php echo $dataToggle; ?>><i class="fa fa-file-zip-o"></i> &nbsp;<?php echo $lang['FILEMAN_BACKUP']; ?></a></li>
 </ul>
 
 <!-- content start -->

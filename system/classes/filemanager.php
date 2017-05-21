@@ -186,11 +186,11 @@ namespace YAWK {
                     // LIST FOLDERS
                     //    print "<strong>$dir_perms $dir_value</strong><br>";
                     echo "<tr>
-          <td class=\"text-right\"><a onclick=\"disableTabs();\" href=\"?page=filemanager&path=$path" . "/" . "$dir_value\"><div style=\"width:100%\"><i class=\"fa fa-folder\"></i></div></a></td>
-          <td class=\"text-left\"><a onclick=\"flipTheSwitch();\" href=\"?page=filemanager&path=$path" . "/" . "$dir_value\"><div style=\"width:100%\">$dir_value</div></a></td>
+          <td class=\"text-right\"><a onclick=\"disableTabs();\" href=\"?page=filemanager&path=$path" . "/$dir_value\"><div style=\"width:100%\"><i class=\"fa fa-folder\"></i></div></a></td>
+          <td class=\"text-left\"><a onclick=\"flipTheSwitch();\" href=\"?page=filemanager&path=$path" . "/$dir_value\"><div style=\"width:100%\">$dir_value</div></a></td>
           <td class=\"text-center\">$dir_perms[$i] <small><a class=\"fa fa-edit\" onclick=\"setChmodCode('$path/$file_value', '$file_perms[$i]');\" data-toggle=\"modal\" data-target=\"#chmodModal\" data-foldername=\"$file_perms[$i]\" title=\"$lang[FILEMAN_CHMOD]\" href=\"#myModal\"></a></small> </td>
           <td class=\"text-center\">
-           <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"$lang[FILEMAN_DELETE] <b>&laquo;$dir_value&raquo;</b> ?\"
+           <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"$lang[FILEMAN_DELETE]? &laquo;$dir_value&raquo;\"
             title=\"$lang[DELETE]\" data-target=\"#deleteModal\" data-toggle=\"modal\" href=\"index.php?page=filemanager&delete=1&path=$path&item=$dir_value&folder=$folder\"></a>
             &nbsp;
            <a class=\"fa fa-pencil\" onclick=\"setItemName('$path', '$dir_value');\" data-toggle=\"modal\" data-target=\"#renameModal\" data-foldername=\"$dir_value\" title=\"$lang[RENAME]\" href=\"#myModal\"></a>
@@ -216,11 +216,11 @@ namespace YAWK {
                     $fsize = \YAWK\filemanager::sizeFilter($file_size[$i]);
                     echo "<tr>
           <td class=\"text-right\">$fsize</td>
-          <td class=\"text-left\"><a href='$path" . "/" . "$file_value'><div style=\"width:100%\">$file_value</div></a></td>
+          <td class=\"text-left\"><a href='$path" . "/$file_value'><div style=\"width:100%\">$file_value</div></a></td>
           <td class=\"text-center\">$file_perms[$i] <small><a class=\"fa fa-edit\" onclick=\"setChmodCode('$path/$file_value', '$file_perms[$i]');\" data-toggle=\"modal\" data-target=\"#chmodModal\" data-foldername=\"$file_perms[$i]\" title=\"$lang[FILEMAN_CHMOD]\" href=\"#myModal\"></a></small></td>
           <td class=\"text-center\">
 
-           <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"$lang[FILEMAN_DELETE] <b>&laquo;$file_value&raquo;</b> ?\" 
+           <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"$lang[FILEMAN_DELETE]? &laquo;$file_value&raquo;\" 
             title=\"$lang[DELETE]\" data-target=\"#moveModal\" data-toggle=\"modal\" href='index.php?page=filemanager&delete=1&path=$path&item=$file_value&folder=$folder'></a>
             &nbsp;
            <a class=\"fa fa-pencil\" onclick=\"setItemName('$path', '$file_value');\" data-toggle=\"modal\" data-target=\"#renameModal\" data-foldername=\"$file_value\" title=\"$lang[RENAME]\" href=\"#myModal\"></a>
