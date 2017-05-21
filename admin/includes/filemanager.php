@@ -228,7 +228,14 @@ if (isset($_POST['chmod']) && ($_POST['chmod'] === "true"))
     if (isset($_POST['item']) && (!empty($_POST['item'])))
     {   // check if chmod code is set
         if (isset($_POST['chmodCode']) && (!empty($_POST['chmodCode'])))
-        {
+        {   // check if chmod code is selected or not
+            if ($_POST['chmodCode'] === "false")
+            {   // check if a custom chmod code is set
+                if (isset($_POST['customChmodCode']))
+                {   // overwrite chmodcode with custom code
+                    $_POST['chmodCode'] = $_POST['customChmodCode'];
+                }
+            }
             // do chmod on item...
             if (chmod($_POST['item'], octdec($_POST['chmodCode'])))
             {   // chmod successful
@@ -407,7 +414,6 @@ else
  </div>
 
 
-
 <!-- Modal --RENAME FOLDER  -- -->
 <div class="modal fade" id="renameModal" tabindex="-1" role="dialog" aria-labelledby="myModal2Label" aria-hidden="true">
     <div class="modal-dialog">
@@ -455,10 +461,11 @@ else
                 <input type="hidden" id="chmod" name="chmod" value="true">
                 <input type="hidden" id="item" name="item">
                 <input type="hidden" id="path" name="path">
-                <!-- save to... folder select options -->
+
+                <!-- chmod select field -->
                 <label for="chmodCode"><?php echo $lang['FILEMAN_CHMOD']; ?></label>
                 <select id="chmodCode" name="chmodCode" class="form-control">
-                    <option value=""><?php echo $lang['FILEMAN_CHMOD_SELECT']; ?></option>
+                    <option value="false"><?php echo $lang['FILEMAN_CHMOD_SELECT']; ?></option>
                     <optgroup label="<?php echo $lang['FILEMAN_HIGH_SEC_LVL']; ?>"></optgroup>
                     <option value="0600"><?php echo $lang['FILEMAN_0600']; ?></option>
                     <option value="0644"><?php echo $lang['FILEMAN_0644']; ?></option>
@@ -468,6 +475,8 @@ else
                     <optgroup label="<?php echo $lang['FILEMAN_LOW_SEC_LVL']; ?>"></optgroup>
                     <option value="0777"><?php echo $lang['FILEMAN_0777']; ?></option>
                 </select>
+
+                <!-- chmod custom field -->
                 <label for="customChmodCode"><?php echo $lang['FILEMAN_CHMOD_CUSTOM']; ?> </label>
                 <input id="customChmodCode" class="form-control" name="customChmodCode" value="">
             </div>
