@@ -19,9 +19,10 @@
         });
 
     });
-    // MAKE SURE THAT THE LAST USED TAB STAYS ACTIVE
-    // thanks to http://stackoverflow.com/users/463906/ricsrock
-    // http://stackoverflow.com/questions/10523433/how-do-i-keep-the-current-tab-active-with-twitter-bootstrap-after-a-page-reload
+    /** MAKE SURE THAT THE LAST USED TAB STAYS ACTIVE
+     * thanks to http://stackoverflow.com/users/463906/ricsrock
+     * http://stackoverflow.com/questions/10523433/how-do-i-keep-the-current-tab-active-with-twitter-bootstrap-after-a-page-reload
+     */
     $(function() {
         // for bootstrap 3 use 'shown.bs.tab', for bootstrap 2 use 'shown' in the next line
         $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
@@ -41,31 +42,45 @@
         }
     });
 
-    $("#myTab").on("click", function(e) {
-        if ($(this).hasClass("disabled"))
-        {
-            // e.removeAttr('data-toggle');
-            e.preventDefault();
-            return false;
-        }
-    });
 
-
-    function setItemName(path, folderName)
+    /**
+     * setRenameFieldState(path, itemName)
+     * Update the rename input text field with current content (file or folder)
+     * Set focus on input text field and select all it's content for better usability.
+     * path string contains the current working path
+     * itemName string contains the current item name to be processed (renamed)
+     * itemType string contains the current item type (folder or file)
+     * */
+    function setRenameFieldState(path, itemName, itemType)
     {
         // store input field
-        inputField = $("#newFolderName");
+        inputField = $("#newItemName");
         // when rename modal is shown
         $('#renameModal').on('shown.bs.modal', function () {
             // set focus on input field and select it
             $(inputField).focus().select();
         });
-        // add the folderName to input field
-        inputField.val(folderName);
+        // add the current itemName to var
+        inputField.val(itemName);
+        // set path hidden field with value from php function getFilesFromFolder();
         $("#path").val(path);
-        $("#oldFolderName").val(folderName);
+        // set old item name hidden field with value from php
+        $("#oldItemName").val(itemName);
+        // set item type (folder or file) with value from php
+        $("#itemType").val(itemType);
+        // set text of heading div (folder or file) w. value from php
+        $("#fileTypeHeading").text(itemType);
+        // set text of label (folder or file) w. value from php
+        $("#newItemNameLabel").text(itemType);
     }
 
+    /**
+     * setChmodFieldState(path, chmodCode)
+     * Update the chmod input text field with current content (eg 0755)
+     * Set focus on the custom input text field and select all it's content for better usability.
+     * path string contains the current working path
+     * chmodCode string contains the current chmod octal number to be processed
+     * */
     function setChmodCode(item, chmodCode)
     {
         // store input field
@@ -80,11 +95,6 @@
         $("#item").val(item);
     }
 
-    function disableTabs()
-    {
-        // placeholder
-    }
-
     /**
      * If user switch a folder (tab), the upload folder select option automatically gets set to this folder
      * called by clicking on <li>TAB links</li> onclick(flipTheSwitch(folder));
@@ -95,9 +105,20 @@
         // get folder and set this option selected to all select fields on that page
         $('select option[value="'+folder+'"]').prop('selected', true);
     }
-
+// EOF JAVASCRIPT
 </script>
+
 <?php
+/**
+ * THE PHP PART
+ * cares about all the logic handling. Stuff like
+ *  - upload
+ *  - delete
+ *  - rename
+ *  - chmod
+ *
+ */
+
 /* UPLOAD FILE PROCESSING */
 if (isset($_POST['upload']))
 {   // folder was selected
@@ -161,32 +182,42 @@ if (isset($_GET['delete']))
     }
 }
 
-/* RENAME FOLDER PROCESSING */
-if (isset($_POST['renameFolder']) && ($_POST['renameFolder'] === "true"))
+/* RENAME ITEM PROCESSING */
+if (isset($_POST['renameItem']) && ($_POST['renameItem'] === "true"))
 {
-    // check if new folder name is set...
-    if (isset($_POST['newFolderName']) && (!empty($_POST['newFolderName'])))
+    // check if new item name is set...
+    if (isset($_POST['newItemName']) && (!empty($_POST['newItemName'])))
     {
         if (isset($_POST['path']) && (!empty($_POST['path'])))
         {
             // remove special chars from folder name
-            $newFolderName = \YAWK\filemanager::removeSpecialChars($_POST['newFolderName']);
+            $newItemName = \YAWK\filemanager::removeSpecialChars($_POST['newItemName']);
             // rename from
-            $from = "$_POST[path]/$_POST[oldFolderName]";
+            $from = "$_POST[path]/$_POST[oldItemName]";
             // rename to
-            $to = "$_POST[path]/$newFolderName";
+            $to = "$_POST[path]/$newItemName";
         }
+        // check if item type is set
+        if (isset($_POST['itemType']) && (!empty($_POST['itemType'])))
+        {   // set item type var for output in syslog and alert message
+            $itemType = $_POST['itemType'];
+        }
+        else
+        {   // item type unknown - leave empty
+            $itemType = 'ITEM';
+        }
+
         // rename folder
         if (rename($from, $to))
         {
-            // \YAWK\sys::setSyslog("success", "$lang[SUCCESS]", "$lang[FOLDER] renamed $_POST[oldFolderName] to $_POST[newFolderName]", 0, 0, 0, 0);
-            echo \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[FOLDER] $lang[RENAMED]: <i>$_POST[oldFolderName]</i> $lang[FILEMAN_TO] <b>$_POST[newFolderName]</b>","","1200");
+            \YAWK\sys::setSyslog($db, 8, "$lang[$itemType] $lang[RENAMED]: $_POST[oldItemName] $lang[FILEMAN_TO] $_POST[newItemName]", 0, 0, 0, 0);
+            echo \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[$itemType] $lang[RENAMED]: <i>$_POST[oldItemName]</i> $lang[FILEMAN_TO] <b>$_POST[newItemName]</b>","","1200");
 
         }
         else
             {
-                // \YAWK\sys::setSyslog("success", "$lang[WARNING]", "$lang[FOLDER] renamed $_POST[oldFolderName] to $_POST[newFolderName]", 0, 0, 0, 0);
-                echo \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[FOLDER] $lang[RENAMED] $_POST[oldFolderName] $lang[FILEMAN_TO] $_POST[newFolderName] $lang[FAILED]","","4800");
+                \YAWK\sys::setSyslog($db, 5, "$lang[$itemType] $lang[RENAMED] $_POST[oldItemName] $lang[FILEMAN_TO] $_POST[newItemName] $lang[FAILED]", 0, 0, 0, 0);
+                echo \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[$itemType] $lang[RENAMED] $_POST[oldFolderName] $lang[FILEMAN_TO] $_POST[newFolderName] $lang[FAILED]","","4800");
             }
     }
 }
@@ -256,19 +287,20 @@ if (isset($_POST['addFolder']) && ($_POST['addFolder'] === "true"))
    disable all other tabs in that case... */
 if (isset($_GET['path']) && (!empty($_GET['path'])))
 {
+    // check, if user is in allowed path
     if ($_GET['path'] = strstr($_GET['path'], "../media"))
-    {
+    {   // prepare vars with html content for tabs
         $firstTabStatus = "class=\"active disabled\"";
         $disabledStatus = "class=\"disabled\"";
         $dataToggle = '';
     }
     else
-        {
+        {   // if not - user maybe manipulated $path variable, to see files above ../media - throw error
             \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[ACTION_FORBIDDEN]", 0, 6000);
         }
 }
 else
-    {
+    {   // prepare vars with html content for tabs
         $firstTabStatus = "class=\"active\"";
         $dataToggle = " data-toggle=\"tab\"";
         $disabledStatus = '';
@@ -306,11 +338,10 @@ else
             </div>
             <div class="modal-body">
                 <form enctype="multipart/form-data" class="dropzone" action="index.php?page=filemanager" method="POST">
-
-                            <input type="hidden" name="MAX_FILE_SIZE" value="">
-                            <input type="hidden" name="upload" value="sent">
-                          <!--  <label for="uploadedfile"></label>
-                            <input class="btn btn-default btn-file" id="uploadedfile" name="uploadedfile" type="file" multiple><br> !-->
+                    <input type="hidden" name="MAX_FILE_SIZE" value="">
+                    <input type="hidden" name="upload" value="sent">
+                    <!--  <label for="uploadedfile"></label>
+                    <input class="btn btn-default btn-file" id="uploadedfile" name="uploadedfile" type="file" multiple><br> !-->
 
                     <label for="folderselect"><?php echo $lang['UPLOAD_TO']; ?>: </label>
                     <select id="folderselect" name="folderselect" class="form-control">
@@ -385,23 +416,23 @@ else
             <div class="modal-header">
             <!-- modal header with close controls -->
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i> </button>
-            <h3 class="modal-title"><i class="fa fa-pencil"></i> <?php echo $lang['FILEMAN_RENAME_FOLDER']; ?></h3>
+            <h3 class="modal-title"><div id="fileTypeHeading"><i class="fa fa-pencil"></i> <!-- gets filled via JS setRenameFieldState--></div></h3>
             </div>
 
             <!-- modal body -->
             <div class="modal-body">
-                <input type="hidden" id="renameFolder" name="renameFolder" value="true">
-                <input type="hidden" id="oldFolderName" name="oldFolderName">
+                <input type="hidden" id="renameItem" name="renameItem" value="true">
+                <input type="hidden" id="oldItemName" name="oldItemName">
+                <input type="hidden" id="itemType" name="itemType">
                 <input type="hidden" id="path" name="path">
                 <!-- save to... folder select options -->
-                <label for="newFolderName"><?php echo $lang['RENAME']; ?> </label>
-                <input id="newFolderName" class="form-control" name="newFolderName" value="" autofocus>
+                <label id="newItemNameLabel" for="newItemName"><!-- gets filled via JS setRenameFieldState --> </label>
+                <input id="newItemName" class="form-control" name="newItemName" value="" autofocus>
             </div>
 
             <!-- modal footer /w submit btn -->
             <div class="modal-footer">
-                <input type="hidden" name="move" value="sent">
-                <input class="btn btn-large btn-success" type="submit" value="<?php echo $lang['FILEMAN_RENAME_FOLDER']; ?>">
+                <input class="btn btn-large btn-success" type="submit" value="<?php echo $lang['RENAME']; ?>">
                 <br><br>
             </div>
             </form>
