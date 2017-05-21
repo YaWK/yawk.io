@@ -51,7 +51,7 @@
     });
 
 
-    function setFolderName(path, folderName)
+    function setItemName(path, folderName)
     {
         // store input field
         inputField = $("#newFolderName");
@@ -64,7 +64,20 @@
         inputField.val(folderName);
         $("#path").val(path);
         $("#oldFolderName").val(folderName);
+    }
 
+    function setChmodCode(item, chmodCode)
+    {
+        // store input field
+        inputField = $("#customChmodCode");
+        // when rename modal is shown
+        $('#chmodModal').on('shown.bs.modal', function () {
+            // set focus on input field and select it
+            $(inputField).focus().select();
+        });
+        // add the folderName to input field
+        inputField.val(chmodCode);
+        $("#item").val(item);
     }
 
     function disableTabs()
@@ -78,7 +91,8 @@
      * @param folder string the folder to switch
      */
     function flipTheSwitch(folder)
-    {   // get folder and set this option selected to all select fields on that page
+    {
+        // get folder and set this option selected to all select fields on that page
         $('select option[value="'+folder+'"]').prop('selected', true);
     }
 
@@ -174,6 +188,26 @@ if (isset($_POST['renameFolder']) && ($_POST['renameFolder'] === "true"))
                 // \YAWK\sys::setSyslog("success", "$lang[WARNING]", "$lang[FOLDER] renamed $_POST[oldFolderName] to $_POST[newFolderName]", 0, 0, 0, 0);
                 echo \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[FOLDER] $lang[RENAMED] $_POST[oldFolderName] $lang[FILEMAN_TO] $_POST[newFolderName] $lang[FAILED]","","4800");
             }
+    }
+}
+/* CHMOD ITEM PROCESSING */
+// check if user clicked on chmod icon
+if (isset($_POST['chmod']) && ($_POST['chmod'] === "true"))
+{   // check if item  is set
+    if (isset($_POST['item']) && (!empty($_POST['item'])))
+    {   // check if chmod code is set
+        if (isset($_POST['chmodCode']) && (!empty($_POST['chmodCode'])))
+        {
+            // do chmod on item...
+            if (chmod($_POST['item'], octdec($_POST['chmodCode'])))
+            {   // chmod successful
+                print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[FILEMAN_CHANGED_CHMOD] $lang[TO] $_POST[chmodCode]","","1200");
+            }
+            else
+                {   // chmod failed, throw error
+                    print \YAWK\alert::draw("success", "$lang[DANGER]", "$lang[FILEMAN_CHANGED_CHMOD] $_POST[item] $lang[TO] $_POST[chmodCode] $_POST[FAILED]","","1200");
+                }
+        }
     }
 }
 
@@ -334,7 +368,7 @@ else
 
 
 
-<!-- Modal --RENME FOLDER  -- -->
+<!-- Modal --RENAME FOLDER  -- -->
 <div class="modal fade" id="renameModal" tabindex="-1" role="dialog" aria-labelledby="myModal2Label" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -359,6 +393,46 @@ else
             <div class="modal-footer">
                 <input type="hidden" name="move" value="sent">
                 <input class="btn btn-large btn-success" type="submit" value="<?php echo $lang['FILEMAN_RENAME_FOLDER']; ?>">
+                <br><br>
+            </div>
+            </form>
+        </div> <!-- modal content -->
+    </div> <!-- modal dialog -->
+</div>
+
+<!-- Modal --CHMOD WINDOW-- -->
+<div class="modal fade" id="chmodModal" tabindex="-1" role="dialog" aria-labelledby="myModal2Label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form enctype="multipart/form-data" action="index.php?page=filemanager" method="POST">
+            <div class="modal-header">
+                <!-- modal header with close controls -->
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+                <h3 class="modal-title"><i class="fa fa-unlock-alt"></i> <?php echo $lang['FILEMAN_CHMOD']; ?></h3>
+            </div>
+            <!-- modal body -->
+            <div class="modal-body">
+                <input type="hidden" id="chmod" name="chmod" value="true">
+                <input type="hidden" id="item" name="item">
+                <input type="hidden" id="path" name="path">
+                <!-- save to... folder select options -->
+                <label for="chmodCode"><?php echo $lang['FILEMAN_CHMOD']; ?></label>
+                <select id="chmodCode" name="chmodCode" class="form-control">
+                    <option value=""><?php echo $lang['FILEMAN_CHMOD_SELECT']; ?></option>
+                    <option value="0600">0600: Lese und Schreibrechte für den Besitzer, keine für alle anderen</option>
+                    <option value="0600">0600: Lese und Schreibrechte für den Besitzer, keine für alle anderen</option>
+                    <option value="0644">0644: Lese und Schreibrechte für den Besitzer, Leserechte alle anderen</option>
+                    <option value="0750">0750: Alle Rechte für den Besitzer, Lese und Ausführungsrechte für die Gruppe</option>
+                    <option value="0755">0755: Alle Rechte für den Besitzer, Lese und Ausführungsrechte für alle anderen</option>
+                </select>
+                <label for="customChmodCode"><?php echo $lang['FILEMAN_CHMOD_CUSTOM']; ?> </label>
+                <input id="customChmodCode" class="form-control" name="customChmodCode" value="">
+            </div>
+
+            <!-- modal footer /w submit btn -->
+            <div class="modal-footer">
+                <input type="hidden" name="move" value="sent">
+                <input class="btn btn-large btn-success" type="submit" value="<?php echo $lang['FILEMAN_CHMOD']; ?>">
                 <br><br>
             </div>
             </form>

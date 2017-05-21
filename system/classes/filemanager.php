@@ -28,7 +28,7 @@ namespace YAWK {
 
             if (isset($_GET['path']) && (!empty($_GET['path'])))
             {
-                $backBtn = "<a class=\"btn btn-success pull-right\" href=\"index.php?page=filemanager\" onclick=\"window.history.back();\"><i class=\"fa fa-chevron-up\"></i> &nbsp;$lang[BACK]</a>";
+                $backBtn = "<a class=\"btn btn-success pull-right\" href=\"index.php?page=filemanager\" onclick=\"window.history.back();\"><i class=\"fa fa-level-up\"></i> &nbsp;$lang[BACK]</a>";
             }
             else
             {
@@ -153,9 +153,9 @@ namespace YAWK {
                 }
                 if ($file->isDir() AND (!$file->isDot())) {
                     $folders[] = htmlentities($file);
-                    $dir_perms = substr(sprintf('%o', fileperms($path . "/" . $file)), -4);
-                } else {
-                    $dir_perms = "";
+                    $dir_perms[] = substr(sprintf('%o', fileperms($path . "/" . $file)), -4);
+
+//                    $dir_perms[] = sprintf('%o', fileperms($path . "/" . $file));
                 }
             }
             // sort ascending
@@ -170,20 +170,24 @@ namespace YAWK {
              * list folders + files
              */
             if (isset($folders)) { // print folder
+                $i = 0;
                 foreach ($folders as $dir_value) {
                     // LIST FOLDERS
                     //    print "<strong>$dir_perms $dir_value</strong><br>";
                     echo "<tr>
           <td class=\"text-right\"><a onclick=\"disableTabs();\" href=\"?page=filemanager&path=$path" . "/" . "$dir_value\"><div style=\"width:100%\"><i class=\"fa fa-folder\"></i></div></a></td>
-          <td class=\"text-left\"><a onclick=\"disableTabs();\" href=\"?page=filemanager&path=$path" . "/" . "$dir_value\"><div style=\"width:100%\">$dir_value</div></a></td>
-          <td class=\"text-center\">$dir_perms</td>
+          <td class=\"text-left\"><a onclick=\"flipTheSwitch();\" href=\"?page=filemanager&path=$path" . "/" . "$dir_value\"><div style=\"width:100%\">$dir_value</div></a></td>
+          <td class=\"text-center\">$dir_perms[$i]</td>
           <td class=\"text-center\">
            <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Den Folder &laquo;$dir_value&raquo; wirklich l&ouml;schen?\"
             title=\"delete\" data-target=\"#deleteModal\" data-toggle=\"modal\" href=\"index.php?page=filemanager&delete=1&path=$path&item=$dir_value&folder=$folder\"></a>
             &nbsp;
-           <a class=\"fa fa-pencil\" onclick=\"setFolderName('$path', '$dir_value');\" data-toggle=\"modal\" data-target=\"#renameModal\" data-foldername=\"$dir_value\" title=\"rename\" href=\"#myModal\"></a>
+           <a class=\"fa fa-pencil\" onclick=\"setItemName('$path', '$dir_value');\" data-toggle=\"modal\" data-target=\"#renameModal\" data-foldername=\"$dir_value\" title=\"rename\" href=\"#myModal\"></a>
+           
+           &nbsp;<a class=\"fa fa-unlock-alt\" onclick=\"setChmodCode('$path/$dir_value', '$dir_perms[$i]');\" data-toggle=\"modal\" data-target=\"#chmodModal\" data-foldername=\"$dir_value\" title=\"chmod\" href=\"#myModal\"></a>
           </td>
         </tr>";
+                    $i++;
                 }
             }
 
@@ -194,15 +198,16 @@ namespace YAWK {
                     $fsize = \YAWK\filemanager::sizeFilter($file_size[$i]);
                     echo "<tr>
           <td class=\"text-right\">$fsize</td>
-          <td class=\"text-left\"><a href='$path" . "/" . "$file_value'>$file_value</a></td>
+          <td class=\"text-left\"><a href='$path" . "/" . "$file_value'><div style=\"width:100%\">$file_value</div></a></td>
           <td class=\"text-center\">$file_perms[$i]</td>
           <td class=\"text-center\">
-          <!--
-           <a data-toggle=\"modal\" data-target=\"#myModal2\" href=\"index.php?page=filemanager&move=1&path=$path&item=$file_value&folder=$folder#mymodal2\"><i class=\"fa fa-exchange\"></i></a>
-            &nbsp; -->
 
            <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"Die Datei &laquo;$file_value&raquo; wirklich l&ouml;schen?\" 
             title=\"delete\" data-target=\"#moveModal\" data-toggle=\"modal\" href='index.php?page=filemanager&delete=1&path=$path&item=$file_value&folder=$folder'></a>
+            &nbsp;
+           <a class=\"fa fa-pencil\" onclick=\"setItemName('$path', '$file_value');\" data-toggle=\"modal\" data-target=\"#renameModal\" data-foldername=\"$file_value\" title=\"rename\" href=\"#myModal\"></a>
+            &nbsp;
+           <a class=\"fa fa-unlock-alt\" onclick=\"setChmodCode('$path/$file_value', '$file_perms[$i]');\" data-toggle=\"modal\" data-target=\"#chmodModal\" data-foldername=\"$file_perms[$i]\" title=\"chmod\" href=\"#myModal\"></a>
           </td>        
         </tr>";
                     $i++;
@@ -356,7 +361,7 @@ namespace YAWK {
             {
                 // $string = 'V!e§r$s%c&h/i(e)d=e?n`e² S³o{n[d]e]r}z\e´i+c*h~e#n';
                 // remove special chars
-                $string = preg_replace ('/[^a-z0-9- ]/i', '', $string);
+                $string = preg_replace ('/[^a-z0-9-. ]/i', '', $string);
                 // trim any whitespaces left or right
                 $string = trim($string);
                 // change any backslashes to regular slashes
