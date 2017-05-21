@@ -39,7 +39,7 @@ namespace YAWK {
         static function draw($type, $title, $text, $redirect, $delay){
             if (empty($type)) { $type="danger"; }
             if (empty($title)) { $title="ERROR!"; }
-            if (empty($text)) { $text="Something strange has happened. Text is empty. Sorry that there is no more Information available. (Code 0)"; }
+            if (empty($text)) { $text="Something strange has happened. Sorry that there is no more Information available. (Code 0)"; }
             if (empty($redirect)) { $redirect="null"; }
             if (empty($delay)) { $delay="null"; }
 
