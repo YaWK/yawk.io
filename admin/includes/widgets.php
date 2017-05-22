@@ -94,9 +94,9 @@ echo"<ol class=\"breadcrumb\">
       <td width="3%"><strong>&nbsp;</strong></td>
       <td width="5%" class="text-center"><strong><?php echo "$lang[ID]"; ?></strong></td>
       <td width="25%"><strong><?php echo "$lang[WIDGET]"; ?></strong></td>
-      <td width="30%"><strong><?php echo "$lang[ON_PAGE]"; ?></strong></td>
+      <td width="30%"><strong><?php echo "$lang[PAGE]"; ?></strong></td>
       <td width="7%" class="text-center"><strong><?php echo "$lang[SORTATION]"; ?></strong></td>
-      <td width="20%" class="text-center"><strong><?php echo "$lang[AT_POSITION]"; ?></strong></td>
+      <td width="20%" class="text-center"><strong><?php echo "$lang[POSITION]"; ?></strong></td>
       <td width="10%" class="text-center"><strong><?php echo "$lang[ACTIONS]"; ?></strong></td>
     </tr>
   </thead>
