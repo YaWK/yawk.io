@@ -74,6 +74,7 @@
         $("#newItemNameLabel").text(itemType);
     }
 
+
     /**
      * setChmodFieldState(path, chmodCode)
      * Update the chmod input text field with current content (eg 0755)
@@ -341,7 +342,9 @@ else
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel"><?php print $lang['FILEMAN_UPLOAD']; ?> (max <?php print $maxFileSize; ?>B)</h4>
+                <br>
+                <div class="col-md-1"><h3 class="modal-title"><i class="fa fa-folder-open-o"></i></h3></div>
+                <div class="col-md-11"><h3 class="modal-title"><?php print $lang['FILEMAN_UPLOAD']; ?> (max <?php print $maxFileSize; ?>B)</h3></div>
             </div>
             <div class="modal-body">
                 <form enctype="multipart/form-data" class="dropzone" action="index.php?page=filemanager" method="POST">
@@ -378,7 +381,9 @@ else
             <div class="modal-header">
                 <!-- modal header with close controls -->
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
-                <h3 class="modal-title"><i class="fa fa-folder-open-o"></i> <?php print $lang['FILEMAN_ADD_FOLDER']; ?></h3>
+                <br>
+                <div class="col-md-1"><h3 class="modal-title"><i class="fa fa-folder-open-o"></i></h3></div>
+                <div class="col-md-11"><h3 class="modal-title"><?php print $lang['FILEMAN_ADD_FOLDER']; ?></h3></div>
             </div>
             <div class="modal-body">
                 <input type="hidden" name="addFolder" value="true">
@@ -422,7 +427,9 @@ else
             <div class="modal-header">
             <!-- modal header with close controls -->
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i> </button>
-            <h3 class="modal-title"><div id="fileTypeHeading"><i class="fa fa-pencil"></i> <!-- gets filled via JS setRenameFieldState--></div></h3>
+                <br>
+                <div class="col-md-1"><h3 class="modal-title"><i class="fa fa-pencil"></i></h3></div>
+                <div class="col-md-11"><h3 class="modal-title"><div id="fileTypeHeading"> <!-- gets filled via JS setRenameFieldState--></div></h3></div>
             </div>
 
             <!-- modal body -->
@@ -454,7 +461,9 @@ else
             <div class="modal-header">
                 <!-- modal header with close controls -->
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
-                <h3 class="modal-title"><i class="fa fa-unlock-alt"></i> <?php echo $lang['FILEMAN_CHMOD']; ?></h3>
+                <br>
+                <div class="col-md-1"><h3 class="modal-title"><i class="fa fa-edit"></i></h3></div>
+                <div class="col-md-11"><h3 class="modal-title"><?php echo $lang['FILEMAN_CHMOD']; ?></h3></div>
             </div>
             <!-- modal body -->
             <div class="modal-body">
