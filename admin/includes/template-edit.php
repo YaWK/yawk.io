@@ -31,12 +31,6 @@
 <script type="text/javascript">
 /* reminder: check if form has changed and warns the user that he needs to save. */
 $(document).ready(function () {
-    $("#h1FontStyle").change(function () {
-        $('.changeMe').css("font-family", $(this).val());
-    });
-    $("#h1FontStyle").trigger('change');
-});
-    $(document).ready(function() {
         // store settings position box id's in vars
         settings_pos_outerTop = "#settings_pos_outerTop";
         settings_pos_outerLeft = "#settings_pos_outerLeft";
@@ -2825,37 +2819,39 @@ else
         <!-- FONTS -->
         <div role="tabpanel" class="tab-pane" id="fonts">
             <h3><?php echo "$lang[FONTS_TYPES] <small>$lang[TPL_FONTS_SUBTEXT]"; ?></small></h3>
-            <script>
-/*
-                $(document).ready(function () {
-                    $("#h1FontStyle").live('change', function () {
 
-                        $('.changeMe').css("font-family", $(this).val());
-
-                    });
-                    $("#h1FontStyle").trigger('change');
-                });
-*/
-            </script>
             <!--
             http://jsfiddle.net/nanoquantumtech/YfQfr/
             -->
             <div class="row">
                 <div class="col-md-6"></div>
                 <div class="col-md-6">
-                    <input id="testText" name="testText" placeholder="testText" class="form-control pull-right">
+                    <input id="testText" name="testText" placeholder="type any text to test your changes" maxlength="64" class="form-control pull-right">
                 </div>
             </div>
             <div class="row animated fadeIn">
-                <div class="col-md-3"><div id="changeMe"><H1>H1 Heading</H1></div></div>
+                <div class="col-md-3">
+                    <div class="h1" id="changeMe" style="font-size: <?php echo $templateSettings['h1-size']['value']; ?>; color: #<?php echo $templateSettings['h1-fontcolor']['value']; ?>;">H1 Heading</div>
+                </div>
                 <div class="col-md-3">
                     <label for="h1FontStyle">Schriftart</label>
                         <select id="h1FontStyle" name="h1FontStyle" class="form-control">
-                            <optgroup label="System Fonts"></optgroup>
-                                <option value="Arial">Arial</option>
-                                <option value="Arial Black">Arial Black</option>
-                                <option value="Helvetica">Helvetica</option>
-                                <option value="Comic Sans">Comic Sans</option>
+                            <optgroup label="System Sans-Serif Fonts"></optgroup>
+                                <option value="Arial, Helvetica, sans-serif">&nbsp;&nbsp;Arial, Helvetica, sans-serif</option>
+                                <option value="Arial Black">&nbsp;&nbsp;Arial Black</option>
+                                <option value="Comic Sans MS, cursive, sans-serif">&nbsp;&nbsp;Comic Sans</option>
+                                <option value="Impact, Charcoal, sans-serif">&nbsp;&nbsp;Impact, Charcoal, sans-serif</option>
+                                <option value="Lucida Sans Unicode, Lucida Grande, sans-serif">&nbsp;&nbsp;Lucida Sans Unicode, Lucida Grande, sans-serif</option>
+                                <option value="Tahoma, Geneva, sans-serif">&nbsp;&nbsp;Tahoma, Geneva, sans-serif</option>
+                                <option value="Trebuchet MS, Helvetica, sans-serif">&nbsp;&nbsp;Trebuchet MS, Helvetica, sans-serif</option>
+                                <option value="Verdana, Geneava, sans-serif">&nbsp;&nbsp;Verdana, Geneava, sans-serif</option>
+                            <optgroup label="System Serif Fonts"></optgroup>
+                                <option value="Georgia, serif">&nbsp;&nbsp;Georgia, serif</option>
+                                <option value="Palatino Linotype, Book Antiqua, Palatino, serif">&nbsp;&nbsp;Palatino Linotype, Book Antiqua, Palatino, serif</option>
+                                <option value="Times New Roman, Times, serif">&nbsp;&nbsp;Times New Roman, Times, serif</option>
+                            <optgroup label="System Monospace Fonts"></optgroup>
+                                <option value="Courier New, Courier, monospace">&nbsp;&nbsp;Courier New, Courier, monospace</option>
+                                <option value="Lucida Console, Monaco, monospace">&nbsp;&nbsp;Lucida Console, Monaco, monospace</option>
                             <optgroup label="Eigene True Type Fonts (system/fonts)"></optgroup>
                                 <option value="Font1">Font 1</option>
                                 <option value="Font2">Font 2</option>
@@ -2868,18 +2864,59 @@ else
                 <div class="col-md-1">
                     <label for="h1FontSize">Groesse</label>
                         <select id="h1FontSize" name="h1FontSize" class="form-control">
-                            <option value="1">1 pt</option>
-                            <option value="2">2 pt</option>
-                            <option value="3">3 pt</option>
-                            <option value="4">4 pt</option>
-                            <option value="5">5 pt</option>
-                            <option value="6">6 pt</option>
-                            <option value=7>7 pt</option>
+                            <option value="<?php echo $templateSettings['h1-size']['value']; ?>" selected aria-selected="true"><?php echo $templateSettings['h1-size']['value']; ?></option>
+                            <optgroup label="em Sizes"></optgroup>
+                                <option value="0.1em">0.1 em</option>
+                                <option value="0.2em">0.2 em</option>
+                                <option value="0.3em">0.3 em</option>
+                                <option value="0.4em">0.4 em</option>
+                                <option value="0.5em">0.5 em</option>
+                                <option value="0.6em">0.6 em</option>
+                                <option value="0.7em">0.7 em</option>
+                                <option value="0.8em">0.8 em</option>
+                                <option value="0.9em">0.9 em</option>
+                                <option value="1em">1 em</option>
+                                <option value="1.1em">1.1 em</option>
+                                <option value="1.2em">1.2 em</option>
+                                <option value="1.3em">1.3 em</option>
+                                <option value="1.4em">1.4 em</option>
+                                <option value="1.5em">1.5 em</option>
+                                <option value="1.6em">1.6 em</option>
+                                <option value="1.7em">1.7 em</option>
+                                <option value="1.8em">1.8 em</option>
+                                <option value="1.9em">1.9 em</option>
+                                <option value="2em">2 em</option>
+                            <optgroup label="px Sizes"></optgroup>
+                                <option value="4px">4px</option>
+                                <option value="6px">6px</option>
+                                <option value="7px">7px</option>
+                                <option value="8px">8px</option>
+                                <option value="9px">9px</option>
+                                <option value="10px">10px</option>
+                                <option value="12px">12px</option>
+                                <option value="14px">14px</option>
+                                <option value="16px">16px</option>
+                                <option value="18px">18px</option>
+                                <option value="20px">20px</option>
+                                <option value="22px">22px</option>
+                                <option value="24px">24px</option>
+                                <option value="26px">26px</option>
+                                <option value="28px">28px</option>
+                                <option value="30px">30px</option>
+                                <option value="34px">34px</option>
+                                <option value="38px">38px</option>
+                                <option value="42px">42px</option>
+                                <option value="46px">46px</option>
+                                <option value="48px">48px</option>
+                                <option value="52px">52px</option>
+                                <option value="56px">56px</option>
+                                <option value="58px">58px</option>
+                                <option value="60px">60px</option>
                         </select>
                 </div>
                 <div class="col-md-1">
                     <label for="h1FontColor">Farbe</label>
-                    <input id="h1FontColor" name="h1FontColor" class="form-control color">
+                    <input id="h1FontColor" name="h1FontColor" class="form-control color" value="<?php echo $templateSettings['h1-fontcolor']['value']; ?>">
                 </div>
                 <div class="col-md-2">
                     <label for="h1FontShadowSize">Schatten Groesse</label>
@@ -2891,7 +2928,39 @@ else
                 </div>
             </div>
 
+            <script>
+                $(document).ready(function () {
+                    // set preview: read current values from fields
+                    $("#changeMe").css("font-family", $("#h1FontStyle").val());
+                    $("#changeMe").css("font-color", ' #'+$("#h1FontColor").val());
 
+                    $("#h1FontStyle").change(function() {
+                        $("#changeMe").css("font-family", $(this).val());
+                    });
+                    // switch h1 font family
+                    $("#h1FontSize").change(function() {
+                        $("#changeMe").css("font-size", $(this).val());
+                    });
+                    // switch h1 color
+                    $("#h1FontColor").change(function() {
+                        $("#changeMe").css("color", '#'+$(this).val());
+                    });
+                    // switch h1 shadow color
+                    $("#h1FontShadowSize").change(function() {
+                        $("#changeMe").css("text-shadow", $(this).val()+' #'+$("#h1FontShadowColor").val());
+                    });
+                    // switch h1 shadow color
+                    $("#h1FontShadowColor").change(function() {
+                        $("#changeMe").css("text-shadow", $("#h1FontShadowSize").val()+' #'+$("#h1FontShadowColor").val());
+                    });
+                    $('#testText').keyup(function(){
+                        $('#changeMe').html('H1 '+$(this).val());
+                    });
+
+
+                });
+
+            </script>
             <?php
             /*
             <!-- list GOOGLE FONTS -->
