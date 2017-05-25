@@ -240,7 +240,7 @@
             $(pos_rightMenu).toggleClass("posboxActive");
         });
 
-    // TRY TP DISABLE CTRL-S browser hotkey
+    // TRY TO DISABLE CTRL-S browser hotkey
         function saveHotkey() {
             // simply disables save event for chrome
             $(window).keypress(function (event) {
@@ -2479,10 +2479,12 @@ else
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <!-- 16:9 aspect ratio -->
+
+                    <!-- website preview iframe
                     <div class="embed-responsive embed-responsive-4by3">
                         <iframe id="preview" class="embed-responsive-item" src="../index.php"></iframe>
                     </div>
+ -->
                 </div>
             </div>
         </div>
@@ -2819,6 +2821,7 @@ else
             <h3><?php echo "$lang[FONTS_TYPES] <small>$lang[TPL_FONTS_SUBTEXT]"; ?></small></h3>
             <!-- list GOOGLE FONTS -->
             <div class="row animated fadeIn">
+
                 <div class="col-md-4">
                     <div class="box box-default">
                         <div class="box-header">
@@ -2849,7 +2852,8 @@ else
                         </div>
                     </div>
                 </div>
-                </div>
+
+            </div>
         </div>
 
         <!-- TYPO -->

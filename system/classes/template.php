@@ -1318,9 +1318,10 @@ namespace YAWK {
          * @link http://yawk.io
          * @param object $db database
          * @param string $item the font
+         * @param array $lang language array
          * @return bool
          */
-        function getgFonts($db, $item)
+        function getgFonts($db, $item, $lang)
         {   /** @var $db \YAWK\db */
             $nc = '';
             $gfontID = '';
@@ -1343,7 +1344,20 @@ namespace YAWK {
                         $nc = "";
                     }
                 }
-            echo "<div id=\"nogooglefont\"><input type=\"radio\" name=\"global-gfont\" value=\"0\" $nc> | Use system default fonts </div><br>";
+            echo "<div id=\"nogooglefont\">
+                       <label for=\"fontType\">$lang[FONT_TYPE_SELECTOR]</label>
+                       <select id=\"fontType\" name=\"fontType\" class=\"form-control\">
+                            <optgroup label=\"System Fonts\">
+                            <option value=\"helvetica\">Helvetica</option>
+                            <option value=\"arial\">Arial</option>
+                            <option value=\"verdana\">Verdana</option>
+                            <optgroup label=\"Own TrueType Font (system/fonts)\">
+
+                       </select>
+                  </div><br>";
+
+                  // <input type=\"radio\" name=\"global-gfont\" value=\"0\" $nc> | Use system default fonts
+
             echo "<div id=\"googlefontcontainer\">";
 
             if ($res = $db->query("SELECT id, font, description, activated
