@@ -30,6 +30,12 @@
 <!-- Javascript for positions tab -->
 <script type="text/javascript">
 /* reminder: check if form has changed and warns the user that he needs to save. */
+$(document).ready(function () {
+    $("#h1FontStyle").change(function () {
+        $('.changeMe').css("font-family", $(this).val());
+    });
+    $("#h1FontStyle").trigger('change');
+});
     $(document).ready(function() {
         // store settings position box id's in vars
         settings_pos_outerTop = "#settings_pos_outerTop";
@@ -2820,7 +2826,16 @@ else
         <div role="tabpanel" class="tab-pane" id="fonts">
             <h3><?php echo "$lang[FONTS_TYPES] <small>$lang[TPL_FONTS_SUBTEXT]"; ?></small></h3>
             <script>
+/*
+                $(document).ready(function () {
+                    $("#h1FontStyle").live('change', function () {
 
+                        $('.changeMe').css("font-family", $(this).val());
+
+                    });
+                    $("#h1FontStyle").trigger('change');
+                });
+*/
             </script>
             <!--
             http://jsfiddle.net/nanoquantumtech/YfQfr/
@@ -2832,7 +2847,7 @@ else
                 </div>
             </div>
             <div class="row animated fadeIn">
-                <div class="col-md-3"><h1>H1 Heading</h1></div>
+                <div class="col-md-3"><div id="changeMe"><H1>H1 Heading</H1></div></div>
                 <div class="col-md-3">
                     <label for="h1FontStyle">Schriftart</label>
                         <select id="h1FontStyle" name="h1FontStyle" class="form-control">
@@ -2840,6 +2855,7 @@ else
                                 <option value="Arial">Arial</option>
                                 <option value="Arial Black">Arial Black</option>
                                 <option value="Helvetica">Helvetica</option>
+                                <option value="Comic Sans">Comic Sans</option>
                             <optgroup label="Eigene True Type Fonts (system/fonts)"></optgroup>
                                 <option value="Font1">Font 1</option>
                                 <option value="Font2">Font 2</option>
@@ -2874,99 +2890,6 @@ else
                     <input id="h1FontShadowColor" name="h1FontShadowColor" class="form-control color">
                 </div>
             </div>
-
-
-            <!-- 2nd row for testing -->
-            <div class="row animated fadeIn">
-                <div class="col-md-3"><h2>H2 Heading</h2></div>
-                <div class="col-md-3">
-                    <label for="h1FontStyle">Schriftart</label>
-                    <select id="h1FontStyle" name="h1FontStyle" class="form-control">
-                        <optgroup label="System Fonts"></optgroup>
-                        <option value="Arial">Arial</option>
-                        <option value="Arial Black">Arial Black</option>
-                        <option value="Helvetica">Helvetica</option>
-                        <optgroup label="Eigene True Type Fonts (system/fonts)"></optgroup>
-                        <option value="Font1">Font 1</option>
-                        <option value="Font2">Font 2</option>
-                        <optgroup label="Google Fonts"></optgroup>
-                        <option value="Artica">Artica</option>
-                        <option value="Estica">Estica</option>
-                        <option value="Organica">Organica</option>
-                    </select>
-                </div>
-                <div class="col-md-1">
-                    <label for="h1FontSize">Groesse</label>
-                    <select id="h1FontSize" name="h1FontSize" class="form-control">
-                        <option value="1">1 pt</option>
-                        <option value="2">2 pt</option>
-                        <option value="3">3 pt</option>
-                        <option value="4">4 pt</option>
-                        <option value="5">5 pt</option>
-                        <option value="6">6 pt</option>
-                        <option value=7>7 pt</option>
-                    </select>
-                </div>
-                <div class="col-md-1">
-                    <label for="h1FontColor">Farbe</label>
-                    <input id="h1FontColor" name="h1FontColor" class="form-control color">
-                </div>
-                <div class="col-md-2">
-                    <label for="h1FontShadowSize">Schatten Groesse</label>
-                    <input id="h1FontShadowSize" name="h1FontShadowSize" class="form-control" value="2px 2px" placeholder="2px 2px">
-                </div>
-                <div class="col-md-2">
-                    <label for="h1FontShadowColor">Schatten Farbe</label>
-                    <input id="h1FontShadowColor" name="h1FontShadowColor" class="form-control color">
-                </div>
-            </div>
-
-            <!-- 3rd row for testing -->
-            <div class="row animated fadeIn">
-                <div class="col-md-3"><h3>H3 Heading</h3></div>
-                <div class="col-md-3">
-                    <label for="h1FontStyle">Schriftart</label>
-                    <select id="h1FontStyle" name="h1FontStyle" class="form-control">
-                        <optgroup label="System Fonts"></optgroup>
-                        <option value="Arial">Arial</option>
-                        <option value="Arial Black">Arial Black</option>
-                        <option value="Helvetica">Helvetica</option>
-                        <optgroup label="Eigene True Type Fonts (system/fonts)"></optgroup>
-                        <option value="Font1">Font 1</option>
-                        <option value="Font2">Font 2</option>
-                        <optgroup label="Google Fonts"></optgroup>
-                        <option value="Artica">Artica</option>
-                        <option value="Estica">Estica</option>
-                        <option value="Organica">Organica</option>
-                    </select>
-                </div>
-                <div class="col-md-1">
-                    <label for="h1FontSize">Groesse</label>
-                    <select id="h1FontSize" name="h1FontSize" class="form-control">
-                        <option value="1">1 pt</option>
-                        <option value="2">2 pt</option>
-                        <option value="3">3 pt</option>
-                        <option value="4">4 pt</option>
-                        <option value="5">5 pt</option>
-                        <option value="6">6 pt</option>
-                        <option value=7>7 pt</option>
-                    </select>
-                </div>
-                <div class="col-md-1">
-                    <label for="h1FontColor">Farbe</label>
-                    <input id="h1FontColor" name="h1FontColor" class="form-control color">
-                </div>
-                <div class="col-md-2">
-                    <label for="h1FontShadowSize">Schatten Groesse</label>
-                    <input id="h1FontShadowSize" name="h1FontShadowSize" class="form-control" value="2px 2px" placeholder="2px 2px">
-                </div>
-                <div class="col-md-2">
-                    <label for="h1FontShadowColor">Schatten Farbe</label>
-                    <input id="h1FontShadowColor" name="h1FontShadowColor" class="form-control color">
-                </div>
-            </div>
-
-            <hr>
 
 
             <?php
