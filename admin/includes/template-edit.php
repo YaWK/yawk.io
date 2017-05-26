@@ -2826,16 +2826,24 @@ else
             <div class="row">
                 <div class="col-md-6"></div>
                 <div class="col-md-6">
-                    <input id="testText" name="testText" placeholder="type any text to test your changes" maxlength="64" class="form-control pull-right">
+                    <div class="row">
+                        <div class="col-md-8"><label for="testText">Testfeld</label>
+                            <input id="testText" name="testText" placeholder="type text to test your changes" maxlength="64" class="form-control"></div>
+                        <div class="col-md-4">
+                            <label for="resetTestText">zur&uuml;cksetzen</label><button type="button" disabled id="resetTestText" class="form-control">RESET</button></div>
+                    </div>
+                    <hr>
+
                 </div>
             </div>
             <div class="row animated fadeIn">
-                <div class="col-md-3">
+                <div class="col-md-3" style="overflow:hidden;">
                     <div class="h1" id="changeMe" style="font-size: <?php echo $templateSettings['h1-size']['value']; ?>; color: #<?php echo $templateSettings['h1-fontcolor']['value']; ?>;">H1 Heading</div>
                 </div>
                 <div class="col-md-3">
-                    <label for="h1FontStyle">Schriftart</label>
-                        <select id="h1FontStyle" name="h1FontStyle" class="form-control">
+                    <label for="h1-fontfamily">H1 Schriftart</label>
+                    <?php // func out of this ---> ............. ?>
+                        <select id="h1-fontfamily" name="h1-fontfamily" class="form-control">
                             <optgroup label="System Sans-Serif Fonts"></optgroup>
                                 <option value="Arial, Helvetica, sans-serif">&nbsp;&nbsp;Arial, Helvetica, sans-serif</option>
                                 <option value="Arial Black">&nbsp;&nbsp;Arial Black</option>
@@ -2862,101 +2870,60 @@ else
                         </select>
                 </div>
                 <div class="col-md-1">
-                    <label for="h1FontSize">Groesse</label>
-                        <select id="h1FontSize" name="h1FontSize" class="form-control">
-                            <option value="<?php echo $templateSettings['h1-size']['value']; ?>" selected aria-selected="true"><?php echo $templateSettings['h1-size']['value']; ?></option>
-                            <optgroup label="em Sizes"></optgroup>
-                                <option value="0.1em">0.1 em</option>
-                                <option value="0.2em">0.2 em</option>
-                                <option value="0.3em">0.3 em</option>
-                                <option value="0.4em">0.4 em</option>
-                                <option value="0.5em">0.5 em</option>
-                                <option value="0.6em">0.6 em</option>
-                                <option value="0.7em">0.7 em</option>
-                                <option value="0.8em">0.8 em</option>
-                                <option value="0.9em">0.9 em</option>
-                                <option value="1em">1 em</option>
-                                <option value="1.1em">1.1 em</option>
-                                <option value="1.2em">1.2 em</option>
-                                <option value="1.3em">1.3 em</option>
-                                <option value="1.4em">1.4 em</option>
-                                <option value="1.5em">1.5 em</option>
-                                <option value="1.6em">1.6 em</option>
-                                <option value="1.7em">1.7 em</option>
-                                <option value="1.8em">1.8 em</option>
-                                <option value="1.9em">1.9 em</option>
-                                <option value="2em">2 em</option>
-                            <optgroup label="px Sizes"></optgroup>
-                                <option value="4px">4px</option>
-                                <option value="6px">6px</option>
-                                <option value="7px">7px</option>
-                                <option value="8px">8px</option>
-                                <option value="9px">9px</option>
-                                <option value="10px">10px</option>
-                                <option value="12px">12px</option>
-                                <option value="14px">14px</option>
-                                <option value="16px">16px</option>
-                                <option value="18px">18px</option>
-                                <option value="20px">20px</option>
-                                <option value="22px">22px</option>
-                                <option value="24px">24px</option>
-                                <option value="26px">26px</option>
-                                <option value="28px">28px</option>
-                                <option value="30px">30px</option>
-                                <option value="34px">34px</option>
-                                <option value="38px">38px</option>
-                                <option value="42px">42px</option>
-                                <option value="46px">46px</option>
-                                <option value="48px">48px</option>
-                                <option value="52px">52px</option>
-                                <option value="56px">56px</option>
-                                <option value="58px">58px</option>
-                                <option value="60px">60px</option>
-                        </select>
+                    <label for="h1-size">Groesse</label>
+                    <input id="h1-size" name="h1-size" value="<?php echo $templateSettings['h1-size']['value']; ?>" class="form-control">
                 </div>
                 <div class="col-md-1">
-                    <label for="h1FontColor">Farbe</label>
-                    <input id="h1FontColor" name="h1FontColor" class="form-control color" value="<?php echo $templateSettings['h1-fontcolor']['value']; ?>">
+                    <label for="h1-fontcolor">Farbe</label>
+                    <input id="h1-fontcolor" name="h1-fontcolor" class="form-control color" value="<?php echo $templateSettings['h1-fontcolor']['value']; ?>">
                 </div>
                 <div class="col-md-2">
-                    <label for="h1FontShadowSize">Schatten Groesse</label>
-                    <input id="h1FontShadowSize" name="h1FontShadowSize" class="form-control" value="2px 2px" placeholder="2px 2px">
+                    <label for="h1-fontshadowsize">Schatten Groesse</label>
+                    <input id="h1-fontshadowsize" name="h1-fontshadowsize" class="form-control" value="2px 2px" placeholder="2px 2px">
                 </div>
                 <div class="col-md-2">
-                    <label for="h1FontShadowColor">Schatten Farbe</label>
-                    <input id="h1FontShadowColor" name="h1FontShadowColor" class="form-control color">
+                    <label for="h1-fontshadowcolor">Schatten Farbe</label>
+                    <input id="h1-fontshadowcolor" name="h1-fontshadowcolor" class="form-control color">
                 </div>
             </div>
 
             <script>
                 $(document).ready(function () {
+                    $("#resetTestText").click(function()
+                    {   // reset preview: set default value
+                        $("#changeMe").html('H1 Heading');
+                        // empty the input field also
+                        $("#testText").val('');
+                        // and disable button
+                        $('#resetTestText').prop('disabled', true); // gets enabled if keyup on testTest input field
+                    });
                     // set preview: read current values from fields
-                    $("#changeMe").css("font-family", $("#h1FontStyle").val());
-                    $("#changeMe").css("font-color", ' #'+$("#h1FontColor").val());
+                    $("#changeMe").css("font-family", $("#h1-fontfamily").val());
+                    $("#changeMe").css("font-color", ' #'+$("#h1-fontcolor").val());
 
-                    $("#h1FontStyle").change(function() {
+                    $("#h1-fontfamily").change(function() {
                         $("#changeMe").css("font-family", $(this).val());
                     });
                     // switch h1 font family
-                    $("#h1FontSize").change(function() {
+                    $("#h1-size").change(function() {
                         $("#changeMe").css("font-size", $(this).val());
                     });
                     // switch h1 color
-                    $("#h1FontColor").change(function() {
+                    $("#h1-fontcolor").change(function() {
                         $("#changeMe").css("color", '#'+$(this).val());
                     });
                     // switch h1 shadow color
-                    $("#h1FontShadowSize").change(function() {
-                        $("#changeMe").css("text-shadow", $(this).val()+' #'+$("#h1FontShadowColor").val());
+                    $("#h1-fontshadowsize").change(function() {
+                        $("#changeMe").css("text-shadow", $(this).val()+' #'+$("#h1-fontshadowcolor").val());
                     });
                     // switch h1 shadow color
-                    $("#h1FontShadowColor").change(function() {
-                        $("#changeMe").css("text-shadow", $("#h1FontShadowSize").val()+' #'+$("#h1FontShadowColor").val());
+                    $("#h1-fontshadowcolor").change(function() {
+                        $("#changeMe").css("text-shadow", $("#h1-fontshadowsize").val()+' #'+$("#h1-fontshadowcolor").val());
                     });
                     $('#testText').keyup(function(){
-                        $('#changeMe').html('H1 '+$(this).val());
+                        $('#resetTestText').prop('disabled', false);
+                        $('#changeMe').html($(this).val());
                     });
-
 
                 });
 
@@ -2964,7 +2931,7 @@ else
             <?php
             /*
             <!-- list GOOGLE FONTS -->
-            <div class="row animated fadeIn">
+                <div class="row animated fadeIn">
 
                 <div class="col-md-4">
                     <div class="box box-default">
