@@ -46,6 +46,8 @@ namespace YAWK {
         public $license;
         /** * @var int which template is currently set to active? */
         public $selectedTemplate;
+        /** * @var string path to own true type fonts  */
+        public $ttfPath = "../system/fonts";
 
 
         /**
@@ -1310,6 +1312,78 @@ namespace YAWK {
         }
         /* END FUNCTION YAWK\settings::getSetting */
 
+        /**
+         * return a select option list with all fonts:
+         * <ul>
+         * <li>system default fonts</li>
+         * <li>own true type fonts from system/fonts</li>
+         * <li>google fonts from database: gfonts</li>
+         * </ul>
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param array $lang language array
+         */
+        function drawFontFamilySelectField($db, $lang)
+        {
+            $selectField = ''; // init var to hold select field html code
+            $selectField =
+                "<select id=\"h1-fontfamily\" name=\"h1-fontfamily\" class=\"form-control\">
+                            <optgroup label=\"System Sans-Serif Fonts\"></optgroup>
+                                <option value=\"Arial, Helvetica, sans-serif\">&nbsp;&nbsp;Arial, Helvetica, sans-serif</option>
+                                <option value=\"Arial Black\">&nbsp;&nbsp;Arial Black</option>
+                                <option value=\"Comic Sans MS, cursive, sans-serif\">&nbsp;&nbsp;Comic Sans</option>
+                                <option value=\"Impact, Charcoal, sans-serif\">&nbsp;&nbsp;Impact, Charcoal, sans-serif</option>
+                                <option value=\"Lucida Sans Unicode, Lucida Grande, sans-serif\">&nbsp;&nbsp;Lucida Sans Unicode, Lucida Grande, sans-serif</option>
+                                <option value=\"Tahoma, Geneva, sans-serif\">&nbsp;&nbsp;Tahoma, Geneva, sans-serif</option>
+                                <option value=\"Trebuchet MS, Helvetica, sans-serif\">&nbsp;&nbsp;Trebuchet MS, Helvetica, sans-serif</option>
+                                <option value=\"Verdana, Geneava, sans-serif\">&nbsp;&nbsp;Verdana, Geneava, sans-serif</option>
+                            <optgroup label=\"System Serif Fonts\"></optgroup>
+                                <option value=\"Georgia, serif\">&nbsp;&nbsp;Georgia, serif</option>
+                                <option value=\"Palatino Linotype, Book Antiqua, Palatino, serif\">&nbsp;&nbsp;Palatino Linotype, Book Antiqua, Palatino, serif</option>
+                                <option value=\"Times New Roman, Times, serif\">&nbsp;&nbsp;Times New Roman, Times, serif</option>
+                            <optgroup label=\"System Monospace Fonts\"></optgroup>
+                                <option value=\"Courier New, Courier, monospace\">&nbsp;&nbsp;Courier New, Courier, monospace</option>
+                                <option value=\"Lucida Console, Monaco, monospace\">&nbsp;&nbsp;Lucida Console, Monaco, monospace</option>";
+
+            $dir = new \DirectoryIterator($this->ttfPath);
+            $ttfHeading = 1;
+            foreach ($dir as $item)
+            {
+                if (!$item->isDot()
+                    && (!$item->isDir()))
+                {
+                    // workaround: todo what about filenames with spaces?
+                    // workaround: todo what about woff, otf and all others?
+                    // check if it a true type file
+                    if (strtolower(substr($item, -3)) === "ttf")
+                    {
+                        if ($ttfHeading > 0)
+                        {
+                            $selectField .="<optgroup label=\"True Type Schriften (system/fonts/*.ttf)\"></optgroup>";
+                        }
+                        // workaround: change dots to '-' to let option pass trough
+                        $item = str_replace(".", "-", $item);
+                        // add option to select field
+                        $selectField .= "<option value=\"$item\">&nbsp;&nbsp;$item</option>";
+                        $ttfHeading--;
+                    }
+                }
+            }
+
+            $selectField .="
+                                <option value=\"Font1.otf\">Font 1</option>
+                                <option value=\"Font2\">Font 2</option>
+                            <optgroup label=\"Google Fonts\"></optgroup>
+                                <option value=\"Artica\">Artica</option>
+                                <option value=\"Estica\">Estica</option>
+                                <option value=\"Organica\">Organica</option>
+                        </select>
+                ";
+            // output html
+            print $selectField;
+        }
 
         /**
          * return a radio list of all registered google fonts

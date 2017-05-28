@@ -2826,15 +2826,15 @@ else
             <div class="row">
                 <div class="col-md-6"></div>
                 <div class="col-md-6">
-                    <div class="row">
-                        <div class="col-md-8"><label for="testText">Testfeld</label>
-                            <input id="testText" name="testText" placeholder="type text to test your changes" maxlength="64" class="form-control"></div>
-                        <div class="col-md-4">
-                            <label for="resetTestText">zur&uuml;cksetzen</label><button type="button" disabled id="resetTestText" class="form-control">RESET</button></div>
-                    </div>
-                    <hr>
-
+                    <label for="testText">Testfeld</label>
+                    <div class="input-group">
+                        <input id="testText" name="testText" placeholder="type text to test your changes" maxlength="64" class="form-control">
+                        <span class="input-group-btn">
+                        <button type="button" disabled id="resetTestText" class="btn btn-default" title="<?php echo $lang['RESET']; ?>"><i class="fa fa-refresh"></i></button>
+                        </span>
+                     </div>
                 </div>
+                    <hr>
             </div>
             <div class="row animated fadeIn">
                 <div class="col-md-3" style="overflow:hidden;">
@@ -2842,32 +2842,7 @@ else
                 </div>
                 <div class="col-md-3">
                     <label for="h1-fontfamily">H1 Schriftart</label>
-                    <?php // func out of this ---> ............. ?>
-                        <select id="h1-fontfamily" name="h1-fontfamily" class="form-control">
-                            <optgroup label="System Sans-Serif Fonts"></optgroup>
-                                <option value="Arial, Helvetica, sans-serif">&nbsp;&nbsp;Arial, Helvetica, sans-serif</option>
-                                <option value="Arial Black">&nbsp;&nbsp;Arial Black</option>
-                                <option value="Comic Sans MS, cursive, sans-serif">&nbsp;&nbsp;Comic Sans</option>
-                                <option value="Impact, Charcoal, sans-serif">&nbsp;&nbsp;Impact, Charcoal, sans-serif</option>
-                                <option value="Lucida Sans Unicode, Lucida Grande, sans-serif">&nbsp;&nbsp;Lucida Sans Unicode, Lucida Grande, sans-serif</option>
-                                <option value="Tahoma, Geneva, sans-serif">&nbsp;&nbsp;Tahoma, Geneva, sans-serif</option>
-                                <option value="Trebuchet MS, Helvetica, sans-serif">&nbsp;&nbsp;Trebuchet MS, Helvetica, sans-serif</option>
-                                <option value="Verdana, Geneava, sans-serif">&nbsp;&nbsp;Verdana, Geneava, sans-serif</option>
-                            <optgroup label="System Serif Fonts"></optgroup>
-                                <option value="Georgia, serif">&nbsp;&nbsp;Georgia, serif</option>
-                                <option value="Palatino Linotype, Book Antiqua, Palatino, serif">&nbsp;&nbsp;Palatino Linotype, Book Antiqua, Palatino, serif</option>
-                                <option value="Times New Roman, Times, serif">&nbsp;&nbsp;Times New Roman, Times, serif</option>
-                            <optgroup label="System Monospace Fonts"></optgroup>
-                                <option value="Courier New, Courier, monospace">&nbsp;&nbsp;Courier New, Courier, monospace</option>
-                                <option value="Lucida Console, Monaco, monospace">&nbsp;&nbsp;Lucida Console, Monaco, monospace</option>
-                            <optgroup label="Eigene True Type Fonts (system/fonts)"></optgroup>
-                                <option value="Font1">Font 1</option>
-                                <option value="Font2">Font 2</option>
-                            <optgroup label="Google Fonts"></optgroup>
-                                <option value="Artica">Artica</option>
-                                <option value="Estica">Estica</option>
-                                <option value="Organica">Organica</option>
-                        </select>
+                    <?php $template->drawFontFamilySelectField($db, $lang); ?>
                 </div>
                 <div class="col-md-1">
                     <label for="h1-size">Groesse</label>
@@ -2885,26 +2860,60 @@ else
                     <label for="h1-fontshadowcolor">Schatten Farbe</label>
                     <input id="h1-fontshadowcolor" name="h1-fontshadowcolor" class="form-control color">
                 </div>
+                <hr>
             </div>
 
             <script>
                 $(document).ready(function () {
+                    // what to do if click on reset text button
                     $("#resetTestText").click(function()
                     {   // reset preview: set default value
                         $("#changeMe").html('H1 Heading');
                         // empty the input field also
                         $("#testText").val('');
                         // and disable button
-                        $('#resetTestText').prop('disabled', true); // gets enabled if keyup on testTest input field
+                        $('#resetTestText').prop('disabled', true); // enable reset btn if key up on testText field
                     });
-                    // set preview: read current values from fields
-                    $("#changeMe").css("font-family", $("#h1-fontfamily").val());
-                    $("#changeMe").css("font-color", ' #'+$("#h1-fontcolor").val());
 
-                    $("#h1-fontfamily").change(function() {
-                        $("#changeMe").css("font-family", $(this).val());
+                    // set preview with current values from corresponding fields
+                    // $("#changeMe").css("font-family", $("#h1-fontfamily").val()+fontSrc);
+
+                    // check if a font is selected, on change of select field...
+                    $("#h1-fontfamily").change(function()
+                    {
+                       // check if font is a custom font (from system/fonts)
+                       // check if fontfamily contains the string ttf
+                       if ($("#h1-fontfamily").val().toLowerCase().indexOf("-ttf") >= 0)
+                       {
+                           var selectedFont = $("#h1-fontfamily").val();
+                           var pathAndFont = '../system/fonts/'+selectedFont;
+                           // alert(selectedFont);
+                           //  $("#changeMe").css("font-family", selectedFont);
+
+                           // workaround: remove the last 4 chars (-ttf)
+                           var fn = pathAndFont.slice(0,-4);
+                           // workaround: add file extension
+                           fn += '.ttf';
+
+                           // append external font to head
+                           $("head").append("<style type=\"text/css\">" +
+                               "@font-face {\n" +
+                               "\tfont-family: '"+selectedFont+"';\n" +
+                               "\tsrc: url("+fn+");\n" +
+                               "}\n" +
+                               "\t.changeMe {\n" +
+                               "\tfont-family: '"+selectedFont+"' !important;\n" +
+                               "}\n" +
+                               "</style>");
+                           // set preview to selected true type font
+                           $("#changeMe").css("font-family", selectedFont);
+                       }
+                       else
+                       {    //alert('no ttf');
+                            $("#changeMe").css("font-family", $("#h1-fontfamily").val());
+                       }
                     });
-                    // switch h1 font family
+                    // switch h1 font size
                     $("#h1-size").change(function() {
                         $("#changeMe").css("font-size", $(this).val());
                     });
@@ -2926,7 +2935,6 @@ else
                     });
 
                 });
-
             </script>
             <?php
             /*
