@@ -1323,13 +1323,14 @@ namespace YAWK {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db database
+         * @param string $selectName selectName
          * @param array $lang language array
          */
-        function drawFontFamilySelectField($db, $lang)
+        function drawFontFamilySelectField($db, $lang, $selectName)
         {
             $selectField = ''; // init var to hold select field html code
             $selectField =
-                "<select id=\"h1-fontfamily\" name=\"h1-fontfamily\" class=\"form-control\">
+                "<select id=\"$selectName\" name=\"$selectName\" class=\"form-control\">
                             <optgroup label=\"System Sans-Serif Fonts\"></optgroup>
                                 <option value=\"Arial, Helvetica, sans-serif\">&nbsp;&nbsp;Arial, Helvetica, sans-serif</option>
                                 <option value=\"Arial Black\">&nbsp;&nbsp;Arial Black</option>

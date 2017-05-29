@@ -2836,13 +2836,14 @@ else
                 </div>
                     <hr>
             </div>
+            <!-- h1 row -->
             <div class="row animated fadeIn">
                 <div class="col-md-3" style="overflow:hidden;">
-                    <div class="h1" id="changeMe" style="font-size: <?php echo $templateSettings['h1-size']['value']; ?>; color: #<?php echo $templateSettings['h1-fontcolor']['value']; ?>;">H1 Heading</div>
+                    <div class="h1" id="h1-preview" style="font-size: <?php echo $templateSettings['h1-size']['value']; ?>; color: #<?php echo $templateSettings['h1-fontcolor']['value']; ?>;">H1 Heading</div>
                 </div>
                 <div class="col-md-3">
                     <label for="h1-fontfamily">H1 Schriftart</label>
-                    <?php $template->drawFontFamilySelectField($db, $lang); ?>
+                    <?php $template->drawFontFamilySelectField($db, $lang, "h1-fontfamily"); ?>
                 </div>
                 <div class="col-md-1">
                     <label for="h1-size">Groesse</label>
@@ -2863,31 +2864,83 @@ else
                 <hr>
             </div>
 
+
+            <div class="row animated fadeIn">
+                <div class="col-md-3" style="overflow:hidden;">
+                    <div class="h2" id="h2-preview" style="font-size: <?php echo $templateSettings['h2-size']['value']; ?>; color: #<?php echo $templateSettings['h2-fontcolor']['value']; ?>;">H1 Heading</div>
+                </div>
+                <div class="col-md-3">
+                    <label for="h2-fontfamily">H2 Schriftart</label>
+                    <?php $template->drawFontFamilySelectField($db, $lang, "h2-fontfamily"); ?>
+                </div>
+                <div class="col-md-1">
+                    <label for="h2-size">Groesse</label>
+                    <input id="h2-size" name="h2-size" value="<?php echo $templateSettings['h2-size']['value']; ?>" class="form-control">
+                </div>
+                <div class="col-md-1">
+                    <label for="h2-fontcolor">Farbe</label>
+                    <input id="h2-fontcolor" name="h2-fontcolor" class="form-control color" value="<?php echo $templateSettings['h2-fontcolor']['value']; ?>">
+                </div>
+                <div class="col-md-2">
+                    <label for="h2-fontshadowsize">Schatten Groesse</label>
+                    <input id="h2-fontshadowsize" name="h2-fontshadowsize" class="form-control" value="2px 2px" placeholder="2px 2px">
+                </div>
+                <div class="col-md-2">
+                    <label for="h2-fontshadowcolor">Schatten Farbe</label>
+                    <input id="h2-fontshadowcolor" name="h2-fontshadowcolor" class="form-control color">
+                </div>
+                <hr>
+            </div>
+
             <script>
                 $(document).ready(function () {
-                    // what to do if click on reset text button
-                    $("#resetTestText").click(function()
-                    {   // reset preview: set default value
-                        $("#changeMe").html('H1 Heading');
-                        // empty the input field also
-                        $("#testText").val('');
-                        // and disable button
-                        $('#resetTestText').prop('disabled', true); // enable reset btn if key up on testText field
-                    });
 
                     // set preview with current values from corresponding fields
                     // $("#changeMe").css("font-family", $("#h1-fontfamily").val()+fontSrc);
 
-                    // check if a font is selected, on change of select field...
-                    $("#h1-fontfamily").change(function()
+                    // prepare vars
+                    // $(h1_fontfamily).change(function(){
+                    previewFont($("#h1-fontfamily"), 'H1 Heading', 'h1-preview', $("#h1-preview"), $("#h1-size"), $("#h1-color"), $("#h1-fontshadowsize"), $("#h1-fontshadowcolor"));
+                    previewFont($("#h2-fontfamily"), 'H2 Heading', 'h2-preview', $("#h2-preview"), $("#h2-size"), $("#h2-color"), $("#h2-fontshadowsize"), $("#h2-fontshadowcolor"));
+                    // previewFont(h2_fontfamily);
+                    // });
+
+                    /*
+                     * obj font-family select field
+                     * string heading
+                     * string preview field as string
+                     * obj h1-preview
+                     * obj h1-size
+                     * obj h1-color
+                     * obj h1-fontshadowsize
+                     * obj h1-fontshadowcolor
+                     */
+                    function previewFont(font, heading, previewString, previewField, fontsize, fontcolor, fontshadowsize, fontshadowcolor)
                     {
-                       // check if font is a custom font (from system/fonts)
+                        // what to do if click on reset text button
+                        $("#resetTestText").click(function()
+                        {   // reset preview: set default value
+                            $(previewField).html(heading);
+                            // empty the input field also
+                            $("#testText").val('');
+                            // and disable button
+                            $('#resetTestText').prop('disabled', true); // enable reset btn if key up on testText field
+                        });
+
+                        $('#testText').keyup(function(){
+                            $('#resetTestText').prop('disabled', false);
+                            $(previewField).html($(this).val());
+                        });
+                    // check if a font is selected, on change of select field...
+                    $(font).change(function()
+                    {
+                        var selectedFont = $(font).val();
+                        var pathAndFont = '../system/fonts/'+selectedFont;
+
+                        // check if font is a custom font (from system/fonts)
                        // check if fontfamily contains the string ttf
-                       if ($("#h1-fontfamily").val().toLowerCase().indexOf("-ttf") >= 0)
+                       if ($(font).val().toLowerCase().indexOf("-ttf") >= 0)
                        {
-                           var selectedFont = $("#h1-fontfamily").val();
-                           var pathAndFont = '../system/fonts/'+selectedFont;
-                           // alert(selectedFont);
                            //  $("#changeMe").css("font-family", selectedFont);
 
                            // workaround: remove the last 4 chars (-ttf)
@@ -2901,16 +2954,16 @@ else
                                "\tfont-family: '"+selectedFont+"';\n" +
                                "\tsrc: url("+fn+");\n" +
                                "}\n" +
-                               "\t.changeMe {\n" +
+                               "\t."+previewString+" {\n" +
                                "\tfont-family: '"+selectedFont+"' !important;\n" +
                                "}\n" +
                                "</style>");
                            // set preview to selected true type font
-                           $("#changeMe").css("font-family", selectedFont);
+                           $(previewField).css("font-family", selectedFont);
                        }
                        else
                        {    //alert('no ttf');
-                            $("#changeMe").css("font-family", $("#h1-fontfamily").val());
+                           $(previewField).css("font-family", $(font).val());
                        }
                     });
                     // switch h1 font size
@@ -2929,10 +2982,9 @@ else
                     $("#h1-fontshadowcolor").change(function() {
                         $("#changeMe").css("text-shadow", $("#h1-fontshadowsize").val()+' #'+$("#h1-fontshadowcolor").val());
                     });
-                    $('#testText').keyup(function(){
-                        $('#resetTestText').prop('disabled', false);
-                        $('#changeMe').html($(this).val());
-                    });
+
+
+                }
 
                 });
             </script>
