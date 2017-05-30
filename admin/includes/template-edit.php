@@ -2864,10 +2864,10 @@ else
                 <hr>
             </div>
 
-
+            <!-- h2 row -->
             <div class="row animated fadeIn">
                 <div class="col-md-3" style="overflow:hidden;">
-                    <div class="h2" id="h2-preview" style="font-size: <?php echo $templateSettings['h2-size']['value']; ?>; color: #<?php echo $templateSettings['h2-fontcolor']['value']; ?>;">H1 Heading</div>
+                    <div class="h2" id="h2-preview" style="font-size: <?php echo $templateSettings['h2-size']['value']; ?>; color: #<?php echo $templateSettings['h2-fontcolor']['value']; ?>;">H2 Heading</div>
                 </div>
                 <div class="col-md-3">
                     <label for="h2-fontfamily">H2 Schriftart</label>
@@ -2892,6 +2892,147 @@ else
                 <hr>
             </div>
 
+            <!-- h3 row -->
+            <div class="row animated fadeIn">
+                <div class="col-md-3" style="overflow:hidden;">
+                    <div class="h3" id="h3-preview" style="font-size: <?php echo $templateSettings['h3-size']['value']; ?>; color: #<?php echo $templateSettings['h3-fontcolor']['value']; ?>;">H3 Heading</div>
+                </div>
+                <div class="col-md-3">
+                    <label for="h3-fontfamily">H3 Schriftart</label>
+                    <?php $template->drawFontFamilySelectField($db, $lang, "h3-fontfamily"); ?>
+                </div>
+                <div class="col-md-1">
+                    <label for="h3-size">Groesse</label>
+                    <input id="h3-size" name="h3-size" value="<?php echo $templateSettings['h3-size']['value']; ?>" class="form-control">
+                </div>
+                <div class="col-md-1">
+                    <label for="h3-fontcolor">Farbe</label>
+                    <input id="h3-fontcolor" name="h3-fontcolor" class="form-control color" value="<?php echo $templateSettings['h3-fontcolor']['value']; ?>">
+                </div>
+                <div class="col-md-2">
+                    <label for="h3-fontshadowsize">Schatten Groesse</label>
+                    <input id="h3-fontshadowsize" name="h3-fontshadowsize" class="form-control" value="2px 2px" placeholder="2px 2px">
+                </div>
+                <div class="col-md-2">
+                    <label for="h3-fontshadowcolor">Schatten Farbe</label>
+                    <input id="h3-fontshadowcolor" name="h3-fontshadowcolor" class="form-control color">
+                </div>
+                <hr>
+            </div>
+
+            <!-- h4 row -->
+            <div class="row animated fadeIn">
+                <div class="col-md-3" style="overflow:hidden;">
+                    <div class="h4" id="h4-preview" style="font-size: <?php echo $templateSettings['h4-size']['value']; ?>; color: #<?php echo $templateSettings['h4-fontcolor']['value']; ?>;">H4 Heading</div>
+                </div>
+                <div class="col-md-3">
+                    <label for="h4-fontfamily">H3 Schriftart</label>
+                    <?php $template->drawFontFamilySelectField($db, $lang, "h4-fontfamily"); ?>
+                </div>
+                <div class="col-md-1">
+                    <label for="h4-size">Groesse</label>
+                    <input id="h4-size" name="h4-size" value="<?php echo $templateSettings['h4-size']['value']; ?>" class="form-control">
+                </div>
+                <div class="col-md-1">
+                    <label for="h4-fontcolor">Farbe</label>
+                    <input id="h4-fontcolor" name="h4-fontcolor" class="form-control color" value="<?php echo $templateSettings['h4-fontcolor']['value']; ?>">
+                </div>
+                <div class="col-md-2">
+                    <label for="h4-fontshadowsize">Schatten Groesse</label>
+                    <input id="h4-fontshadowsize" name="h4-fontshadowsize" class="form-control" value="2px 2px" placeholder="2px 2px">
+                </div>
+                <div class="col-md-2">
+                    <label for="h4-fontshadowcolor">Schatten Farbe</label>
+                    <input id="h4-fontshadowcolor" name="h4-fontshadowcolor" class="form-control color">
+                </div>
+                <hr>
+            </div>
+
+            <!-- h5 row -->
+            <div class="row animated fadeIn">
+                <div class="col-md-3" style="overflow:hidden;">
+                    <div class="h5" id="h5-preview" style="font-size: <?php echo $templateSettings['h5-size']['value']; ?>; color: #<?php echo $templateSettings['h5-fontcolor']['value']; ?>;">H5 Heading</div>
+                </div>
+                <div class="col-md-3">
+                    <label for="h5-fontfamily">H3 Schriftart</label>
+                    <?php $template->drawFontFamilySelectField($db, $lang, "h5-fontfamily"); ?>
+                </div>
+                <div class="col-md-1">
+                    <label for="h5-size">Groesse</label>
+                    <input id="h5-size" name="h5-size" value="<?php echo $templateSettings['h5-size']['value']; ?>" class="form-control">
+                </div>
+                <div class="col-md-1">
+                    <label for="h5-fontcolor">Farbe</label>
+                    <input id="h5-fontcolor" name="h5-fontcolor" class="form-control color" value="<?php echo $templateSettings['h5-fontcolor']['value']; ?>">
+                </div>
+                <div class="col-md-2">
+                    <label for="h5-fontshadowsize">Schatten Groesse</label>
+                    <input id="h5-fontshadowsize" name="h5-fontshadowsize" class="form-control" value="2px 2px" placeholder="2px 2px">
+                </div>
+                <div class="col-md-2">
+                    <label for="h5-fontshadowcolor">Schatten Farbe</label>
+                    <input id="h5-fontshadowcolor" name="h5-fontshadowcolor" class="form-control color">
+                </div>
+                <hr>
+            </div>
+
+            <!-- h6 row -->
+            <div class="row animated fadeIn">
+                <div class="col-md-3" style="overflow:hidden;">
+                    <div class="h6" id="h6-preview" style="font-size: <?php echo $templateSettings['h6-size']['value']; ?>; color: #<?php echo $templateSettings['h6-fontcolor']['value']; ?>;">H6 Heading</div>
+                </div>
+                <div class="col-md-3">
+                    <label for="h6-fontfamily">H6 Schriftart</label>
+                    <?php $template->drawFontFamilySelectField($db, $lang, "h6-fontfamily"); ?>
+                </div>
+                <div class="col-md-1">
+                    <label for="h6-size">Groesse</label>
+                    <input id="h6-size" name="h6-size" value="<?php echo $templateSettings['h6-size']['value']; ?>" class="form-control">
+                </div>
+                <div class="col-md-1">
+                    <label for="h6-fontcolor">Farbe</label>
+                    <input id="h6-fontcolor" name="h6-fontcolor" class="form-control color" value="<?php echo $templateSettings['h6-fontcolor']['value']; ?>">
+                </div>
+                <div class="col-md-2">
+                    <label for="h6-fontshadowsize">Schatten Groesse</label>
+                    <input id="h6-fontshadowsize" name="h6-fontshadowsize" class="form-control" value="2px 2px" placeholder="2px 2px">
+                </div>
+                <div class="col-md-2">
+                    <label for="h6-fontshadowcolor">Schatten Farbe</label>
+                    <input id="h6-fontshadowcolor" name="h6-fontshadowcolor" class="form-control color">
+                </div>
+                <hr>
+            </div>
+            
+            <!-- text row -->
+            <div class="row animated fadeIn">
+                <div class="col-md-3" style="overflow:hidden;">
+                    <div id="globaltext-preview" style="font-size: <?php echo $templateSettings['globaltext-size']['value']; ?>; color: #<?php echo $templateSettings['globaltext-fontcolor']['value']; ?>;">Default Text</div>
+                </div>
+                <div class="col-md-3">
+                    <label for="globaltext-fontfamily">Text Schriftart</label>
+                    <?php $template->drawFontFamilySelectField($db, $lang, "globaltext-fontfamily"); ?>
+                </div>
+                <div class="col-md-1">
+                    <label for="globaltext-size">Groesse</label>
+                    <input id="globaltext-size" name="globaltext-size" value="<?php echo $templateSettings['globaltext-size']['value']; ?>" class="form-control">
+                </div>
+                <div class="col-md-1">
+                    <label for="globaltext-fontcolor">Farbe</label>
+                    <input id="globaltext-fontcolor" name="globaltext-fontcolor" class="form-control color" value="<?php echo $templateSettings['globaltext-fontcolor']['value']; ?>">
+                </div>
+                <div class="col-md-2">
+                    <label for="globaltext-fontshadowsize">Schatten Groesse</label>
+                    <input id="globaltext-fontshadowsize" name="globaltext-fontshadowsize" class="form-control" value="2px 2px" placeholder="2px 2px">
+                </div>
+                <div class="col-md-2">
+                    <label for="globaltext-fontshadowcolor">Schatten Farbe</label>
+                    <input id="globaltext-fontshadowcolor" name="globaltext-fontshadowcolor" class="form-control color">
+                </div>
+                <hr>
+            </div>
+
+
             <script>
                 $(document).ready(function () {
 
@@ -2900,8 +3041,13 @@ else
 
                     // prepare vars
                     // $(h1_fontfamily).change(function(){
-                    previewFont($("#h1-fontfamily"), 'H1 Heading', 'h1-preview', $("#h1-preview"), $("#h1-size"), $("#h1-color"), $("#h1-fontshadowsize"), $("#h1-fontshadowcolor"));
-                    previewFont($("#h2-fontfamily"), 'H2 Heading', 'h2-preview', $("#h2-preview"), $("#h2-size"), $("#h2-color"), $("#h2-fontshadowsize"), $("#h2-fontshadowcolor"));
+                    previewFont($("#h1-fontfamily"), 'H1 Heading', 'h1-preview', $("#h1-preview"), $("#h1-size"), $("#h1-fontcolor"), $("#h1-fontshadowsize"), $("#h1-fontshadowcolor"));
+                    previewFont($("#h2-fontfamily"), 'H2 Heading', 'h2-preview', $("#h2-preview"), $("#h2-size"), $("#h2-fontcolor"), $("#h2-fontshadowsize"), $("#h2-fontshadowcolor"));
+                    previewFont($("#h3-fontfamily"), 'H3 Heading', 'h3-preview', $("#h3-preview"), $("#h3-size"), $("#h3-fontcolor"), $("#h3-fontshadowsize"), $("#h3-fontshadowcolor"));
+                    previewFont($("#h4-fontfamily"), 'H4 Heading', 'h4-preview', $("#h4-preview"), $("#h4-size"), $("#h4-fontcolor"), $("#h4-fontshadowsize"), $("#h4-fontshadowcolor"));
+                    previewFont($("#h5-fontfamily"), 'H5 Heading', 'h5-preview', $("#h5-preview"), $("#h5-size"), $("#h5-fontcolor"), $("#h5-fontshadowsize"), $("#h5-fontshadowcolor"));
+                    previewFont($("#h6-fontfamily"), 'H6 Heading', 'h6-preview', $("#h6-preview"), $("#h6-size"), $("#h6-fontcolor"), $("#h6-fontshadowsize"), $("#h6-fontshadowcolor"));
+                    previewFont($("#globaltext-fontfamily"), 'Default Text', 'globaltext-preview', $("#globaltext-preview"), $("#globaltext-size"), $("#globaltext-fontcolor"), $("#globaltext-fontshadowsize"), $("#globaltext-fontshadowcolor"));
                     // previewFont(h2_fontfamily);
                     // });
 
@@ -2966,23 +3112,23 @@ else
                            $(previewField).css("font-family", $(font).val());
                        }
                     });
-                    // switch h1 font size
-                    $("#h1-size").change(function() {
-                        $("#changeMe").css("font-size", $(this).val());
-                    });
-                    // switch h1 color
-                    $("#h1-fontcolor").change(function() {
-                        $("#changeMe").css("color", '#'+$(this).val());
-                    });
-                    // switch h1 shadow color
-                    $("#h1-fontshadowsize").change(function() {
-                        $("#changeMe").css("text-shadow", $(this).val()+' #'+$("#h1-fontshadowcolor").val());
-                    });
-                    // switch h1 shadow color
-                    $("#h1-fontshadowcolor").change(function() {
-                        $("#changeMe").css("text-shadow", $("#h1-fontshadowsize").val()+' #'+$("#h1-fontshadowcolor").val());
-                    });
-
+                        // do the rest of the font preview stuff: size, colors, shadow...
+                        // switch font size
+                        $(fontsize).change(function() {
+                            $(previewField).css("font-size", $(fontsize).val());
+                        });
+                        // switch font color
+                        $(fontcolor).change(function() {
+                            $(previewField).css("color", '#'+$(fontcolor).val());
+                        });
+                        // switch shadow size
+                        $(fontshadowsize).change(function() {
+                            $(previewField).css("text-shadow", $(fontshadowsize).val()+' #'+$(fontshadowcolor).val());
+                        });
+                        // switch shadow color
+                        $(fontshadowcolor).change(function() {
+                            $(previewField).css("text-shadow", $(fontshadowsize).val()+' #'+$(fontshadowcolor).val());
+                        });
 
                 }
 
@@ -3064,7 +3210,7 @@ else
                         </div>
                         <div class="box-body">
                             <!-- H1-H6 Text sizes (font size of headings in px or em) -->
-                            <?php $template->getFormElements($db, $templateSettings, 4, $lang, $user); ?>
+                            <?php // $template->getFormElements($db, $templateSettings, 4, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
@@ -3076,7 +3222,7 @@ else
                         </div>
                         <div class="box-body">
                             <!-- Font Colors (h1-h6 colors, smalltag, font, jumbotron + listgroup fontcolor) -->
-                            <?php $template->getFormElements($db, $templateSettings, 5, $lang, $user); ?>
+                            <?php // $template->getFormElements($db, $templateSettings, 5, $lang, $user); ?>
                         </div>
                     </div>
                 </div>
