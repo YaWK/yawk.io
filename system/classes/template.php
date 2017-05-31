@@ -1357,34 +1357,68 @@ namespace YAWK {
                                 <option value=\"Courier New, Courier, monospace\">&nbsp;&nbsp;Courier New, Courier, monospace</option>
                                 <option value=\"Lucida Console, Monaco, monospace\">&nbsp;&nbsp;Lucida Console, Monaco, monospace</option>";
 
+            // directory iterator walks trough system/fonts
+            // and build up 3 arrays: ttf fonts, otf fonts and woff fonts
+            // afterwards they get processed and drawn each on its own make a heading for each easygoing possible
+
             $dir = new \DirectoryIterator($this->ttfPath);
-            $ttfHeading = 1;
+            $ttfFonts = array();    // all .ttf files
+            $otfFonts = array();    // all .otf files
+            $woffFonts = array();   // all .woff files
+
             foreach ($dir as $item)
             {
                 if (!$item->isDot()
                     && (!$item->isDir()))
                 {
                     // workaround: todo what about filenames with spaces?
-                    // workaround: todo what about woff, otf and all others?
-                    // check if it a true type file
+                    // check if it is a true type file
                     if (strtolower(substr($item, -3)) === "ttf")
                     {
-                        if ($ttfHeading > 0)
-                        {
-                            $selectField .="<optgroup label=\"True Type Schriften (system/fonts/*.ttf)\"></optgroup>";
-                        }
+                        // workaround: if dots are in there, the form does not work.
+                        // so lets change the dots to '-' and let option pass trough
+                        $item = str_replace(".", "-", $item);
+                        // add ttf font to array
+                        $ttfFonts[] = "<option value=\"$item\">&nbsp;&nbsp;$item</option>";
+                    }
+                    // check if it is a otf file
+                    if (strtolower(substr($item, -3)) === "otf")
+                    {
+                        $item = str_replace(".", "-", $item);
+                        // add option to select field
+                        $otfFonts[] = "<option value=\"$item\">&nbsp;&nbsp;$item</option>";
+                    }
+                    // check if it is a woff file
+                    if (strtolower(substr($item, -3)) === "woff")
+                    {
                         // workaround: change dots to '-' to let option pass trough
                         $item = str_replace(".", "-", $item);
                         // add option to select field
-                        $selectField .= "<option value=\"$item\">&nbsp;&nbsp;$item</option>";
-                        $ttfHeading--;
+                        $woffFonts[] = "<option value=\"$item\">&nbsp;&nbsp;$item</option>";
                     }
                 }
             }
 
+            // add .ttf fonts to select option
+            $selectField .="<optgroup label=\"True Type Fonts (system/fonts/*.ttf)\"></optgroup>";
+            foreach ($ttfFonts as $ttfFont)
+            {   // add ttf option to select field
+                $selectField .= $ttfFont;
+            }
+            // add .otf fonts to select option
+            $selectField .="<optgroup label=\"Open Type Fonts (system/fonts/*.otf)\"></optgroup>";
+            foreach ($otfFonts as $otfFont)
+            {   // add ttf option to select field
+                $selectField .= $otfFont;
+            }
+            // add .woff fonts to select option
+            $selectField .="<optgroup label=\"Web Open Font Format (system/fonts/*.woff)\"></optgroup>";
+            foreach ($woffFonts as $woffFont)
+            {   // add ttf option to select field
+                $selectField .= $woffFont;
+            }
+
             $selectField .="
-                                <option value=\"Font1.otf\">Font 1</option>
-                                <option value=\"Font2\">Font 2</option>
                             <optgroup label=\"Google Fonts\"></optgroup>
                                 <option value=\"Artica\">Artica</option>
                                 <option value=\"Estica\">Estica</option>

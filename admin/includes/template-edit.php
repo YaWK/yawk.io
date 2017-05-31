@@ -2841,9 +2841,7 @@ else
                 $template->getFontRow($db, $lang, "h6", "h6", $templateSettings);
                 $template->getFontRow($db, $lang, "globaltext", "globaltext", $templateSettings);
             ?>
-
-
-
+            
             <script>
                 $(document).ready(function () {
 
@@ -2912,6 +2910,48 @@ else
                             // set preview to selected true type font
                             $(previewField).css("font-family", selectedFont);
                         }
+                        // check if fontfamily contains the string otf
+                        else if ($(font).val().toLowerCase().indexOf("-otf") >= 0)
+                        {
+                            // workaround: remove the last 4 chars (-otf)
+                            fn = pathAndFont.slice(0,-4);
+                            // workaround: add file extension
+                            fn += '.otf';
+
+                            // append external font to head
+                            $("head").append("<style type=\"text/css\">" +
+                                "@font-face {\n" +
+                                "\tfont-family: '"+selectedFont+"';\n" +
+                                "\tsrc: url("+fn+");\n" +
+                                "}\n" +
+                                "\t."+previewString+" {\n" +
+                                "\tfont-family: '"+selectedFont+"' !important;\n" +
+                                "}\n" +
+                                "</style>");
+                            // set preview to selected true type font
+                            $(previewField).css("font-family", selectedFont);
+                        }
+                        // check if fontfamily contains the string otf
+                        else if ($(font).val().toLowerCase().indexOf("-woff") >= 0)
+                        {
+                            // workaround: remove the last 5 chars (-otf)
+                            fn = pathAndFont.slice(0,-5);
+                            // workaround: add file extension
+                            fn += '.woff';
+
+                            // append external font to head
+                            $("head").append("<style type=\"text/css\">" +
+                                "@font-face {\n" +
+                                "\tfont-family: '"+selectedFont+"';\n" +
+                                "\tsrc: url("+fn+");\n" +
+                                "}\n" +
+                                "\t."+previewString+" {\n" +
+                                "\tfont-family: '"+selectedFont+"' !important;\n" +
+                                "}\n" +
+                                "</style>");
+                            // set preview to selected true type font
+                            $(previewField).css("font-family", selectedFont);
+                        }
                         else
                         {    //alert('no ttf');
                             $(previewField).css("font-family", $(font).val());
@@ -2929,17 +2969,58 @@ else
                         {
                             var selectedFont = $(font).val();
                             var pathAndFont = '../system/fonts/'+selectedFont;
+                            var fn = '';
 
                             // check if font is a custom font (from system/fonts)
                             // check if fontfamily contains the string ttf
                             if ($(font).val().toLowerCase().indexOf("-ttf") >= 0)
                             {
-                                //  $("#changeMe").css("font-family", selectedFont);
-
                                 // workaround: remove the last 4 chars (-ttf)
-                                var fn = pathAndFont.slice(0,-4);
+                                fn = pathAndFont.slice(0,-4);
                                 // workaround: add file extension
                                 fn += '.ttf';
+
+                                // append external font to head
+                                $("head").append("<style type=\"text/css\">" +
+                                    "@font-face {\n" +
+                                    "\tfont-family: '"+selectedFont+"';\n" +
+                                    "\tsrc: url("+fn+");\n" +
+                                    "}\n" +
+                                    "\t."+previewString+" {\n" +
+                                    "\tfont-family: '"+selectedFont+"' !important;\n" +
+                                    "}\n" +
+                                    "</style>");
+                                // set preview to selected true type font
+                                $(previewField).css("font-family", selectedFont);
+                            }
+                            // check if fontfamily contains the string otf
+                            else if ($(font).val().toLowerCase().indexOf("-otf") >= 0)
+                            {
+                                // workaround: remove the last 4 chars (-otf)
+                                fn = pathAndFont.slice(0,-4);
+                                // workaround: add file extension
+                                fn += '.otf';
+
+                                // append external font to head
+                                $("head").append("<style type=\"text/css\">" +
+                                    "@font-face {\n" +
+                                    "\tfont-family: '"+selectedFont+"';\n" +
+                                    "\tsrc: url("+fn+");\n" +
+                                    "}\n" +
+                                    "\t."+previewString+" {\n" +
+                                    "\tfont-family: '"+selectedFont+"' !important;\n" +
+                                    "}\n" +
+                                    "</style>");
+                                // set preview to selected true type font
+                                $(previewField).css("font-family", selectedFont);
+                            }
+                            // check if fontfamily contains the string otf
+                            else if ($(font).val().toLowerCase().indexOf("-woff") >= 0)
+                            {
+                                // workaround: remove the last 5 chars (-otf)
+                                fn = pathAndFont.slice(0,-5);
+                                // workaround: add file extension
+                                fn += '.woff';
 
                                 // append external font to head
                                 $("head").append("<style type=\"text/css\">" +
