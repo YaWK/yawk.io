@@ -1183,6 +1183,122 @@ namespace YAWK {
 
 
         /**
+         * return font edit row including preview
+         *
+         * @param string $fontRow name and id properties of the font row eg. h1
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param array  $lang language array
+         * @param string $fontRow the prefix of the font group to edit (eg. h1, h2, h3, globaltext...)
+         * @param string $previewClass css class you want to use on the preview
+         * @param array  $templateSettings all template settings as an array
+         *
+         */
+        public function getFontRow($db, $lang, $fontRow, $previewClass, $templateSettings)
+        {
+            // prepare vars
+            $fontRowSize = "$fontRow-size";
+            $fontRowColor = "$fontRow-fontcolor";
+            $fontRowFontfamily = "$fontRow-fontfamily";
+            $fontRowFontShadowSize = "$fontRow-fontshadowsize";
+            $fontRowFontShadowColor = "$fontRow-fontshadowcolor";
+            $fontRowFontWeight = "$fontRow-fontweight";
+            $fontRowFontStyle = "$fontRow-fontstyle";
+            $fontRowTextdecoration = "$fontRow-textdecoration";
+
+            $html = " <!-- h1 row -->
+            <div class=\"row animated fadeIn\">
+                <div class=\"col-md-3\" style=\"overflow:hidden;\">
+                    <div class=\"$previewClass\" id=\"$fontRow-preview\" style=\"font-size: ".$templateSettings[$fontRowSize]['value']."; color: #".$templateSettings[$fontRowColor]['value'].";\">$fontRow Heading</div>
+                </div>
+                <div class=\"col-md-2\">
+                    <label for=\"$fontRowFontfamily\">$fontRow Schriftart</label>";
+            $html .= $this->drawFontFamilySelectField($db, $lang, "$fontRowFontfamily", $templateSettings[$fontRowFontfamily]['value']);
+            $html .= "</div>
+                <div class=\"col-md-1\">
+                    <label for=\"$fontRowSize\">Groesse</label>
+                    <input id=\"$fontRowSize\" name=\"$fontRowSize\" value=\"".$templateSettings[$fontRowSize]['value']."\" class=\"form-control\">
+                </div>
+                <div class=\"col-md-1\">
+                    <label for=\"$fontRowColor\">Farbe</label>
+                    <input id=\"$fontRowColor\" name=\"$fontRowColor\" class=\"form-control color\" value=\"".$templateSettings[$fontRowColor]['value']."\">
+                </div>
+                <div class=\"col-md-1\">
+                        <label for=\"$fontRowFontShadowSize\">Schatten</label>
+                        <input id=\"$fontRowFontShadowSize\" name=\"$fontRowFontShadowSize\" class=\"form-control\" value=\"".$templateSettings[$fontRowFontShadowSize]['value']."\" placeholder=\"2px 2px\">
+                </div>
+                <div class=\"col-md-1\">
+                    <label for=\"$fontRowFontShadowColor\">Schattenfarbe</label>
+                    <input id=\"$fontRowFontShadowColor\" name=\"$fontRowFontShadowColor\" value=\"".$templateSettings[$fontRowFontShadowColor]['value']."\" class=\"form-control color\">
+                </div>
+                <div class=\"col-md-1\">
+                    <label for=\"$fontRowFontWeight\">Gewicht</label>
+                        <select id=\"$fontRowFontWeight\" name=\"$fontRowFontWeight\" class=\"form-control\">";
+
+            $fontweightStyles = array("normal", "bold", "bolder", "lighter", "100", "200", "300", "400 [normal]", "500", "600", "700 [bold]", "800", "900", "initial", "inherit");
+            foreach ($fontweightStyles as $weight)
+            {
+                $currentFontWeight = "$fontRow-fontweight";
+                if ($weight === $templateSettings[$currentFontWeight]['value'])
+                {
+                    $selected = "selected aria-selected=\"true\"";
+                }
+                else
+                {
+                    $selected = '';
+                }
+                $html .= "<option value=\"$weight\" $selected>$weight</option>";
+            }
+            $html .= "</select>
+                </div>
+                <div class=\"col-md-1\">
+                    <label for=\"$fontRowFontStyle\">Stil</label>
+                    <select id=\"$fontRowFontStyle\" name=\"$fontRowFontStyle\" class=\"form-control\">";
+
+            $fontStyles = array("normal", "italic", "oblique", "initial", "inherit");
+            foreach ($fontStyles as $style)
+            {
+                $currentFontStyle = "$fontRow-fontstyle";
+                if ($style === $templateSettings[$currentFontStyle]['value'])
+                {
+                    $selected = "selected aria-selected=\"true\"";
+                }
+                else
+                {
+                    $selected = '';
+                }
+                $html .= "<option value=\"$style\" $selected>$style</option>";
+            }
+
+            $html .="</select>
+                </div>
+                <div class=\"col-md-1\">
+                    <label for=\"$fontRowTextdecoration\">Dekoration</label>
+                    <select id=\"$fontRowTextdecoration\" name=\"$fontRowTextdecoration\" class=\"form-control\">";
+
+            $textdecorationTypes = array("none", "underline", "overline", "line-through", "intial", "inherit");
+            foreach ($textdecorationTypes as $decoration)
+            {
+                $currentFontDecoration = "$fontRow-textdecoration";
+                if ($decoration === $templateSettings[$currentFontDecoration]['value'])
+                {
+                    $selected = "selected aria-selected=\"true\"";
+                }
+                else
+                {
+                    $selected = '';
+                }
+                $html .= "<option value=\"$decoration\" $selected>$decoration</option>";
+            }
+            $html .= "</select>
+                </div>
+            </div>";
+            echo $html;
+
+        }
+        /**
          * get setting from database and draw input field
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
@@ -1310,6 +1426,7 @@ namespace YAWK {
             // all good, fin
             return true;
         }
+
         /* END FUNCTION YAWK\settings::getSetting */
 
         /**
@@ -1359,8 +1476,7 @@ namespace YAWK {
 
             // directory iterator walks trough system/fonts
             // and build up 3 arrays: ttf fonts, otf fonts and woff fonts
-            // afterwards they get processed and drawn each on its own make a heading for each easygoing possible
-
+            // afterwards they get processed and drawn
             $dir = new \DirectoryIterator($this->ttfPath);
             $ttfFonts = array();    // all .ttf files
             $otfFonts = array();    // all .otf files
@@ -1427,117 +1543,6 @@ namespace YAWK {
                 ";
             // output html
             return $selectField;
-        }
-
-        /**
-         * return font edit row including preview
-         *
-         * @param string $fontRow name and id properties of the font row eg. h1
-         * @param string $databaseField  selectName
-         * @param array $lang language array
-         *
-         */
-        public function getFontRow($db, $lang, $fontRow, $previewClass, $templateSettings)
-        {
-            // prepare vars
-            $fontRowSize = "$fontRow-size";
-            $fontRowColor = "$fontRow-fontcolor";
-            $fontRowFontfamily = "$fontRow-fontfamily";
-            $fontRowFontShadowSize = "$fontRow-fontshadowsize";
-            $fontRowFontShadowColor = "$fontRow-fontshadowcolor";
-            $fontRowFontWeight = "$fontRow-fontweight";
-            $fontRowFontStyle = "$fontRow-fontstyle";
-            $fontRowTextdecoration = "$fontRow-textdecoration";
-
-            $html = " <!-- h1 row -->
-            <div class=\"row animated fadeIn\">
-                <div class=\"col-md-3\" style=\"overflow:hidden;\">
-                    <div class=\"$previewClass\" id=\"$fontRow-preview\" style=\"font-size: ".$templateSettings[$fontRowSize]['value']."; color: #".$templateSettings[$fontRowColor]['value'].";\">$fontRow Heading</div>
-                </div>
-                <div class=\"col-md-2\">
-                    <label for=\"$fontRowFontfamily\">$fontRow Schriftart</label>";
-                        $html .= $this->drawFontFamilySelectField($db, $lang, "$fontRowFontfamily", $templateSettings[$fontRowFontfamily]['value']);
-                $html .= "</div>
-                <div class=\"col-md-1\">
-                    <label for=\"$fontRowSize\">Groesse</label>
-                    <input id=\"$fontRowSize\" name=\"$fontRowSize\" value=\"".$templateSettings[$fontRowSize]['value']."\" class=\"form-control\">
-                </div>
-                <div class=\"col-md-1\">
-                    <label for=\"$fontRowColor\">Farbe</label>
-                    <input id=\"$fontRowColor\" name=\"$fontRowColor\" class=\"form-control color\" value=\"".$templateSettings[$fontRowColor]['value']."\">
-                </div>
-                <div class=\"col-md-1\">
-                        <label for=\"$fontRowFontShadowSize\">Schatten</label>
-                        <input id=\"$fontRowFontShadowSize\" name=\"$fontRowFontShadowSize\" class=\"form-control\" value=\"".$templateSettings[$fontRowFontShadowSize]['value']."\" placeholder=\"2px 2px\">
-                </div>
-                <div class=\"col-md-1\">
-                    <label for=\"$fontRowFontShadowColor\">Schattenfarbe</label>
-                    <input id=\"$fontRowFontShadowColor\" name=\"$fontRowFontShadowColor\" value=\"".$templateSettings[$fontRowFontShadowColor]['value']."\" class=\"form-control color\">
-                </div>
-                <div class=\"col-md-1\">
-                    <label for=\"$fontRowFontWeight\">Gewicht</label>
-                        <select id=\"$fontRowFontWeight\" name=\"$fontRowFontWeight\" class=\"form-control\">";
-
-                            $fontweightStyles = array("normal", "bold", "bolder", "lighter", "100", "200", "300", "400 [normal]", "500", "600", "700 [bold]", "800", "900", "initial", "inherit");
-                            foreach ($fontweightStyles as $weight)
-                            {
-                                $currentFontWeight = "$fontRow-fontweight";
-                                if ($weight === $templateSettings[$currentFontWeight]['value'])
-                                {
-                                    $selected = "selected aria-selected=\"true\"";
-                                }
-                                else
-                                    {
-                                        $selected = '';
-                                    }
-                                $html .= "<option value=\"$weight\" $selected>$weight</option>";
-                            }
-                        $html .= "</select>
-                </div>
-                <div class=\"col-md-1\">
-                    <label for=\"$fontRowFontStyle\">Stil</label>
-                    <select id=\"$fontRowFontStyle\" name=\"$fontRowFontStyle\" class=\"form-control\">";
-
-                        $fontStyles = array("normal", "italic", "oblique", "initial", "inherit");
-                        foreach ($fontStyles as $style)
-                        {
-                            $currentFontStyle = "$fontRow-fontstyle";
-                            if ($style === $templateSettings[$currentFontStyle]['value'])
-                            {
-                                $selected = "selected aria-selected=\"true\"";
-                            }
-                            else
-                            {
-                                $selected = '';
-                            }
-                            $html .= "<option value=\"$style\" $selected>$style</option>";
-                        }
-
-                    $html .="</select>
-                </div>
-                <div class=\"col-md-1\">
-                    <label for=\"$fontRowTextdecoration\">Dekoration</label>
-                    <select id=\"$fontRowTextdecoration\" name=\"$fontRowTextdecoration\" class=\"form-control\">";
-
-                        $textdecorationTypes = array("none", "underline", "overline", "line-through", "intial", "inherit");
-                        foreach ($textdecorationTypes as $decoration)
-                        {
-                            $currentFontDecoration = "$fontRow-textdecoration";
-                            if ($decoration === $templateSettings[$currentFontDecoration]['value'])
-                            {
-                                $selected = "selected aria-selected=\"true\"";
-                            }
-                            else
-                            {
-                                $selected = '';
-                            }
-                            $html .= "<option value=\"$decoration\" $selected>$decoration</option>";
-                        }
-                    $html .= "</select>
-                </div>
-            </div>";
-            echo $html;
-
         }
 
         /**
