@@ -3043,7 +3043,7 @@ else
 
                         // do the rest of the font preview stuff: size, colors, shadow...
                         // switch font size
-                        $(fontsize).change(function() {
+                        $(fontsize).keyup(function() {
                             $(previewField).css("font-size", $(fontsize).val());
                         });
                         // switch font color
@@ -3051,7 +3051,7 @@ else
                             $(previewField).css("color", '#'+$(fontcolor).val());
                         });
                         // switch shadow size
-                        $(fontshadowsize).change(function() {
+                        $(fontshadowsize).keyup(function() {
                             $(previewField).css("text-shadow", $(fontshadowsize).val()+' #'+$(fontshadowcolor).val());
                         });
                         // switch shadow color
