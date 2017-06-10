@@ -80,7 +80,7 @@ $indicators = \YAWK\template::getPositionIndicatorStatusArray($db);
 ?>
 <!-- /gfonts -->
   </head>
-  <body style="<?php echo YAWK\template::getActivegfont($db, "", "text-gfont"); ?>" ondragstart="return false">
+<body style="<?php echo YAWK\template::getActivegfont($db, "", "text-gfont"); ?>" ondragstart="return false">
 
   <!-- LAYOUT START -->
 

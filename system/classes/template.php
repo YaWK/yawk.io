@@ -650,7 +650,7 @@ namespace YAWK {
         {   /** @var $db \YAWK\db */
 
         $res = $db->query("INSERT INTO {template_settings} (templateID, property, value, valueDefault, label, activated, sort, fieldClass, placeholder)
-                           SELECT NULL, property, value, valueDefault, label, activated, sort, fieldClass, placeholder FROM {template_settings}
+                           SELECT templateID, property, value, valueDefault, label, activated, sort, fieldClass, placeholder FROM {template_settings}
                            WHERE templateID = '".$templateID."'");
             if (!$res)
             {
@@ -1213,7 +1213,7 @@ namespace YAWK {
                 <div class=\"col-md-3\" style=\"overflow:hidden;\">
                     <div class=\"$previewClass\" id=\"$fontRow-preview\" style=\"font-size: ".$templateSettings[$fontRowSize]['value']."; color: #".$templateSettings[$fontRowColor]['value'].";\">$fontRow Heading</div>
                 </div>
-                <div class=\"col-md-2\">
+                <div class=\"col-md-2\"> 
                     <label for=\"$fontRowFontfamily\">$fontRow Schriftart</label>";
             $html .= $this->drawFontFamilySelectField($db, $lang, "$fontRowFontfamily", $templateSettings[$fontRowFontfamily]['value']);
             $html .= "</div>
@@ -1294,7 +1294,28 @@ namespace YAWK {
             }
             $html .= "</select>
                 </div>
-            </div>";
+            </div><hr>";
+            /**
+                <div class=\"row\">
+                    <div class=\"col-md-6\"></div>
+                    <div class=\"col-md-1\">
+                        <label for=\"$fontRow-alink\">$lang[TPL_LINK_COLOR]</label>
+                        <input id=\"$fontRow-alink\" name=\"$fontRow-alink\" class=\"form-control color\"> 
+                    </div>
+                    <div class=\"col-md-1\">
+                        <label for=\"$fontRow-avisited\">$lang[TPL_LINK_VISITED_COLOR]</label>
+                        <input id=\"$fontRow-avisited\" name=\"$fontRow-avisited\" class=\"form-control color\"> 
+                    </div>
+                    <div class=\"col-md-1\">
+                        <label for=\"$fontRow-ahover\">$lang[TPL_LINK_HOVER_COLOR]</label>
+                        <input id=\"$fontRow-ahover\" name=\"$fontRow-ahover\" class=\"form-control color\"> 
+                    </div>
+                    <div class=\"col-md-1\">right</div>
+                    <div class=\"col-md-1\">right</div>
+                    <div class=\"col-md-1\">right</div>
+                </div>
+                <hr>";
+             */
             echo $html;
 
         }
@@ -1455,7 +1476,8 @@ namespace YAWK {
                 }
             $selectField = ''; // init var to hold select field html code
             $selectField =
-                "<select id=\"$selectName\" name=\"$selectName\" class=\"form-control\">
+                "
+                        <select id=\"$selectName\" name=\"$selectName\" class=\"form-control\">
                             $defaultValueOption;
                             <optgroup label=\"System Sans-Serif Fonts\"></optgroup>
                                 <option value=\"Arial, Helvetica, sans-serif\">&nbsp;&nbsp;Arial, Helvetica, sans-serif</option>
@@ -1534,15 +1556,54 @@ namespace YAWK {
                 $selectField .= $woffFont;
             }
 
-            $selectField .="
-                            <optgroup label=\"Google Fonts\"></optgroup>
-                                <option value=\"Artica\">Artica</option>
-                                <option value=\"Estica\">Estica</option>
-                                <option value=\"Organica\">Organica</option>
-                        </select>
-                ";
-            // output html
+
+            // fill google fonts array
+            $googleFonts = $this->getGoogleFontsArray($db);
+            // add google fonts to select option
+            $selectField .="<optgroup label=\"Google Fonts\"></optgroup>";
+            foreach ($googleFonts as $gFont)
+            {
+                // add google font option to select field
+                // add option to select field
+                $selectField .= "<option value=\"$gFont-gfont\">&nbsp;&nbsp;$gFont (Google Font)</option>";
+            }
+            // close select option
+            $selectField .="</select>";
+
+            // finally: output the html code of this select field
             return $selectField;
+        }
+
+        /**
+         * get all google fonts into an array and return array
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @return mixed
+         *
+         */
+        function getGoogleFontsArray($db)
+        {
+            // array that holds the data
+            $googleFonts = array();
+            // select google fonts from database
+            if ($sql = $db->query("SELECT font FROM {gfonts} ORDER BY font"))
+            {   // for every single row...
+                while ($row = mysqli_fetch_array($sql))
+                {   // add font to array
+                    $googleFonts[] = $row['0'];
+                }
+            }
+            // check if googleFont is set and an array and not empty
+            if (isset($googleFonts) && (is_array($googleFonts) && (!empty($googleFonts))))
+            {   // return array containing all google fonts
+                return $googleFonts;
+            }
+            else
+                {   // no google font in database...
+                    return null;
+                }
         }
 
         /**
@@ -1695,6 +1756,100 @@ namespace YAWK {
             }
         }
 
+        static function getActiveFont($cssTagName, $fontFamily, $fontSize, $fontColor, $fontShadowSize, $fontShadowColor, $fontWeight, $fontStyle, $fontTextDecoration)
+        {
+            // get font type by cutting off file extension
+            $fontType = substr($fontFamily, -4);
+            // check file types
+            if ($fontType === "-ttf")
+            {
+                $filename = str_replace("-ttf", ".ttf", $fontFamily);
+                $fontCSS = "@font-face {
+                font-family: $fontFamily;
+                src: url('../../../fonts/$filename');
+                }
+                $cssTagName 
+                {
+                    font-family: $fontFamily !important;
+                    font-size: $fontSize;
+                    color: #$fontColor;
+                    text-shadow: $fontShadowSize #$fontShadowColor;
+                    font-weight: $fontWeight;
+                    font-style: $fontStyle;
+                    text-decoration: $fontTextDecoration;
+                }
+                ";
+            }
+            elseif ($fontType === "-otf")
+            {
+                $filename = str_replace("-otf", ".otf", $fontFamily);
+                $fontCSS = "@font-face {
+                font-family: $fontFamily;
+                src: url('../../../fonts/$filename');
+                }
+                $cssTagName 
+                {                
+                    font-family: $fontFamily !important;
+                    font-size: $fontSize;
+                    color: #$fontColor;
+                    text-shadow: $fontShadowSize #$fontShadowColor;
+                    font-weight: $fontWeight;
+                    font-style: $fontStyle;
+                    text-decoration: $fontTextDecoration;
+                }
+                ";
+            }
+            elseif ($fontType === "woff")
+            {
+                $filename = str_replace("-woff", ".woff", $fontFamily);
+                $fontCSS = "@font-face {
+                font-family: $fontFamily;
+                src: url('../../../fonts/$filename') !important;
+                }
+                $cssTagName 
+                {
+                    font-family: $fontFamily !important;
+                    font-size: $fontSize;
+                    color: #$fontColor;
+                    text-shadow: $fontShadowSize #$fontShadowColor;
+                    font-weight: $fontWeight;
+                    font-style: $fontStyle;
+                    text-decoration: $fontTextDecoration;
+                }";
+            }
+            // check, if it's a google font
+            elseif (substr($fontFamily, -6) === "-gfont")
+            {
+                $googleFont = rtrim($fontFamily, "-gfont");
+                $fontCSS = "
+                $cssTagName 
+                {
+                    font-family: $googleFont !important;
+                    font-size: $fontSize;
+                    color: #$fontColor;
+                    text-shadow: $fontShadowSize #$fontShadowColor;
+                    font-weight: $fontWeight;
+                    font-style: $fontStyle;
+                    text-decoration: $fontTextDecoration;
+                }";
+            }
+            else
+                {
+                    $fontCSS = "
+                    $cssTagName 
+                    {
+                        font-family: $fontFamily;
+                        font-size: $fontSize;
+                        color: #$fontColor;
+                        text-shadow: $fontShadowSize #$fontShadowColor;
+                        font-weight: $fontWeight;
+                        font-style: $fontStyle;
+                        text-decoration: $fontTextDecoration;
+                    }";
+                }
+            return $fontCSS;
+        }
+
         /**
          * return currently active google font
          * @author Daniel Retzl <danielretzl@gmail.com>
@@ -1756,6 +1911,35 @@ namespace YAWK {
          */
         static function outputActivegFont($db)
         {
+            $fonts = array(); // hold all fonts
+            $googleFontFamilyString = ''; // the string the contains all google font families to minimize requests
+            if ($sql = $db->query("SELECT value FROM {template_settings} WHERE property LIKE '%-fontfamily'"))
+            {
+                while ($row = mysqli_fetch_row($sql))
+                {
+                    $fonts[] = $row[0];
+                }
+            }
+            foreach ($fonts as $googleFont)
+            {
+                if (substr($googleFont, -6) === "-gfont")
+                {
+                    // remove font indicator
+                    $googleFont = rtrim($googleFont, "-gfont");
+                    // build google font loading string
+                    $googleFontFamilyString .= $googleFont;
+                    // add | to allow loading more than one font
+                    $googleFontFamilyString .= "|";
+                }
+            }
+            if (!empty($googleFontFamilyString))
+            {
+                // remove last | because its not needed
+                $googleFontFamilyString = rtrim ($googleFontFamilyString, "|");
+                echo "<link href=\"https://fonts.googleapis.com/css?family=$googleFontFamilyString\" rel=\"stylesheet\">";
+            }
+
+
             // set Google Font for Heading, Menu & paragraph Text
             $gHeading = self::getTemplateSetting($db, "value", "heading-gfont");
             $gMenu = self::getTemplateSetting($db, "value", "menu-gfont");

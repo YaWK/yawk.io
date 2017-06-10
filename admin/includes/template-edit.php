@@ -27,6 +27,7 @@
         font-weight: bold;
     }
 </style>
+<link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet">
 <!-- Javascript for positions tab -->
 <script type="text/javascript">
 /* reminder: check if form has changed and warns the user that he needs to save. */
@@ -594,7 +595,16 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
     $tpl_settings = YAWK\template::getTemplateSettingsArray($db, $getID);
 
     // get HEADER FONT from db
-    $headingFont = YAWK\template::getActivegfont($db, "", "heading-gfont");
+    // $headingFont = YAWK\template::getActivegfont($db, "", "heading-gfont");
+    $h1Font = \YAWK\template::getActiveFont("h1", $tpl_settings['h1-fontfamily'], $tpl_settings['h1-size'], $tpl_settings['h1-fontcolor'], $tpl_settings['h1-fontshadowsize'], $tpl_settings['h1-fontshadowcolor'], $tpl_settings['h1-fontweight'], $tpl_settings['h1-fontstyle'], $tpl_settings['h1-textdecoration']);
+    $h2Font = \YAWK\template::getActiveFont("h2", $tpl_settings['h2-fontfamily'], $tpl_settings['h2-size'], $tpl_settings['h2-fontcolor'], $tpl_settings['h2-fontshadowsize'], $tpl_settings['h2-fontshadowcolor'], $tpl_settings['h2-fontweight'], $tpl_settings['h2-fontstyle'], $tpl_settings['h2-textdecoration']);
+    $h3Font = \YAWK\template::getActiveFont("h3", $tpl_settings['h3-fontfamily'], $tpl_settings['h3-size'], $tpl_settings['h3-fontcolor'], $tpl_settings['h3-fontshadowsize'], $tpl_settings['h3-fontshadowcolor'], $tpl_settings['h3-fontweight'], $tpl_settings['h3-fontstyle'], $tpl_settings['h3-textdecoration']);
+    $h4Font = \YAWK\template::getActiveFont("h4", $tpl_settings['h4-fontfamily'], $tpl_settings['h4-size'], $tpl_settings['h4-fontcolor'], $tpl_settings['h4-fontshadowsize'], $tpl_settings['h4-fontshadowcolor'], $tpl_settings['h4-fontweight'], $tpl_settings['h4-fontstyle'], $tpl_settings['h4-textdecoration']);
+    $h5Font = \YAWK\template::getActiveFont("h5", $tpl_settings['h5-fontfamily'], $tpl_settings['h5-size'], $tpl_settings['h5-fontcolor'], $tpl_settings['h5-fontshadowsize'], $tpl_settings['h5-fontshadowcolor'], $tpl_settings['h5-fontweight'], $tpl_settings['h5-fontstyle'], $tpl_settings['h5-textdecoration']);
+    $h6Font = \YAWK\template::getActiveFont("h6", $tpl_settings['h6-fontfamily'], $tpl_settings['h6-size'], $tpl_settings['h6-fontcolor'], $tpl_settings['h6-fontshadowsize'], $tpl_settings['h6-fontshadowcolor'], $tpl_settings['h6-fontweight'], $tpl_settings['h6-fontstyle'], $tpl_settings['h6-textdecoration']);
+
+    // TODO: add fields for body-default text (text-gfont) to database and rename text-gfont
+    //  $bodyFont = \YAWK\template::getActiveFont("body", $tpl_settings['text-gfont'], $tpl_settings['text-gfont'], $tpl_settings['h6-fontcolor'], $tpl_settings['h6-fontshadowsize'], $tpl_settings['h6-fontshadowcolor'], $tpl_settings['h6-fontweight'], $tpl_settings['h6-fontstyle'], $tpl_settings['h6-textdecoration']);
 
     $content = "
     /* ATTENTION: THIS FILE IS AUTO-GENERATED. */
@@ -631,37 +641,14 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
     }
 
         /* TYPOGRAPHY SETTINGS */
-    h1 {
-	   ".$headingFont."
-        color: #".$tpl_settings['h1-fontcolor'].";
-        font-size: ".$tpl_settings['h1-size'].";
+   
+          ".$h1Font."
+          ".$h2Font."
+          ".$h3Font."
+          ".$h4Font."
+          ".$h5Font."
+          ".$h6Font."
 
-    }
-       h2 {
-           ".$headingFont."
-           color: #".$tpl_settings['h2-fontcolor'].";
-           font-size: ".$tpl_settings['h2-size'].";
-       }
-       h3 {
-           ".$headingFont.";
-           color: #".$tpl_settings['h3-fontcolor'].";
-           font-size: ".$tpl_settings['h3-size'].";
-       }
-       h4 {
-           ".$headingFont."
-           color: #".$tpl_settings['h4-fontcolor'].";
-           font-size: ".$tpl_settings['h4-size'].";
-       }
-       h5 {
-           ".$headingFont."
-           color: #".$tpl_settings['h5-fontcolor'].";
-           font-size: ".$tpl_settings['h5-size'].";
-       }
-       h6 {
-           ".$headingFont."
-           color: #".$tpl_settings['h6-fontcolor'].";
-           font-size: ".$tpl_settings['h6-size'].";
-       }
        h1 small,
        h2 small,
        h3 small,
@@ -2946,7 +2933,7 @@ else
                         // check if fontfamily contains the string otf
                         else if ($(font).val().toLowerCase().indexOf("-woff") >= 0)
                         {
-                            // workaround: remove the last 5 chars (-otf)
+                            // workaround: remove the last 5 chars (-woff)
                             fn = pathAndFont.slice(0,-5);
                             // workaround: add file extension
                             fn += '.woff';
@@ -2963,6 +2950,24 @@ else
                                 "</style>");
                             // set preview to selected true type font
                             $(previewField).css("font-family", selectedFont);
+                        }
+                        // check if fontfamily contains the string -gfon
+                        else if ($(font).val().toLowerCase().indexOf("-gfont") >= 0)
+                        {
+                            // workaround: remove the last 6 chars (-gfont)
+                            fn = selectedFont.slice(0,-6);
+
+                            var HtmlDocumentHead = $("head");
+                            // append google font include to head
+                            HtmlDocumentHead.append("<link href=\"https://fonts.googleapis.com/css?family="+fn+"\" rel=\"stylesheet\">");
+                            // append external font to head
+                            HtmlDocumentHead.append("<style type=\"text/css\">" +
+                                "\t."+previewString+" {\n" +
+                                "\tfont-family: '"+fn+"';\n" +
+                                "}\n" +
+                                "</style>");
+                            // set preview to selected true type font
+                            $(previewField).css("font-family", fn);
                         }
                         else
                         {    //alert('no ttf');
@@ -3046,6 +3051,25 @@ else
                                     "</style>");
                                 // set preview to selected true type font
                                 $(previewField).css("font-family", selectedFont);
+                            }
+                            // check if fontfamily contains the string -gfon
+                            else if ($(font).val().toLowerCase().indexOf("-gfont") >= 0)
+                            {
+                                // workaround: remove the last 5 chars (-gfon)
+                                fn = selectedFont.slice(0,-6);
+                                googlePath = "https://fonts.googleapis.com/css?family="+fn;
+
+                                var HtmlDocumentHead = $("head");
+                                // append google font include to head
+                                HtmlDocumentHead.append("<link href=\"https://fonts.googleapis.com/css?family="+fn+"\" rel=\"stylesheet\">");
+                                // append external font to head
+                                HtmlDocumentHead.append("<style type=\"text/css\">" +
+                                    "\t."+previewString+" {\n" +
+                                    "\tfont-family: '"+fn+"';\n" +
+                                    "}\n" +
+                                    "</style>");
+                                // set preview to selected true type font
+                                $(previewField).css("font-family", fn);
                             }
                             else
                             {    //alert('no ttf');
