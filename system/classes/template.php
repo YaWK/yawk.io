@@ -1207,6 +1207,13 @@ namespace YAWK {
             $fontRowFontWeight = "$fontRow-fontweight";
             $fontRowFontStyle = "$fontRow-fontstyle";
             $fontRowTextdecoration = "$fontRow-textdecoration";
+            $fontRowALinkColor = "$fontRow-alink";
+            $fontRowAHoverColor = "$fontRow-ahover";
+            $fontRowAVisitedColor = "$fontRow-avisited";
+            $fontRowLinkFontWeight = "$fontRow-linkfontweight";
+            $fontRowLinkFontStyle = "$fontRow-linkfontstyle";
+            $fontRowLinkTextDecoration = "$fontRow-linktextdecoration";
+            $fontRowHoverTextDecoration = "$fontRow-hovertextdecoration";
 
             $html = " <!-- h1 row -->
             <div class=\"row animated fadeIn\">
@@ -1294,28 +1301,102 @@ namespace YAWK {
             }
             $html .= "</select>
                 </div>
-            </div><hr>";
-            /**
-                <div class=\"row\">
-                    <div class=\"col-md-6\"></div>
+            </div>";
+
+              $html .= "<div class=\"row\">
+                    <div class=\"col-md-5\"></div>
+                    <div class=\"col-md-1\">
+
+                    <label for=\"$fontRowLinkTextDecoration\">Dekoration</label>
+                    <select id=\"$fontRowLinkTextDecoration\" name=\"$fontRowLinkTextDecoration\" class=\"form-control\">";
+
+            foreach ($textdecorationTypes as $decoration)
+            {
+                $currentLinkTextDecoration = "$fontRow-linktextdecoration";
+                if ($decoration === $templateSettings[$currentLinkTextDecoration]['value'])
+                {
+                    $selected = "selected aria-selected=\"true\"";
+                }
+                else
+                {
+                    $selected = '';
+                }
+                $html .= "<option value=\"$decoration\" $selected>$decoration</option>";
+            }
+            $html .= "</select>
+                </div>
                     <div class=\"col-md-1\">
                         <label for=\"$fontRow-alink\">$lang[TPL_LINK_COLOR]</label>
-                        <input id=\"$fontRow-alink\" name=\"$fontRow-alink\" class=\"form-control color\"> 
+                        <input id=\"$fontRow-alink\" name=\"$fontRow-alink\" value=\"".$templateSettings[$fontRowALinkColor]['value']."\" class=\"form-control color\">
                     </div>
                     <div class=\"col-md-1\">
                         <label for=\"$fontRow-avisited\">$lang[TPL_LINK_VISITED_COLOR]</label>
-                        <input id=\"$fontRow-avisited\" name=\"$fontRow-avisited\" class=\"form-control color\"> 
+                        <input id=\"$fontRow-avisited\" name=\"$fontRow-avisited\" value=\"".$templateSettings[$fontRowAVisitedColor]['value']."\" class=\"form-control color\"> 
                     </div>
                     <div class=\"col-md-1\">
                         <label for=\"$fontRow-ahover\">$lang[TPL_LINK_HOVER_COLOR]</label>
-                        <input id=\"$fontRow-ahover\" name=\"$fontRow-ahover\" class=\"form-control color\"> 
+                        <input id=\"$fontRow-ahover\" name=\"$fontRow-ahover\" value=\"".$templateSettings[$fontRowAHoverColor]['value']."\" class=\"form-control color\"> 
                     </div>
-                    <div class=\"col-md-1\">right</div>
-                    <div class=\"col-md-1\">right</div>
-                    <div class=\"col-md-1\">right</div>
+
+            <div class=\"col-md-1\">
+                    <label for=\"$fontRowLinkFontWeight\">Gewicht</label>
+                        <select id=\"$fontRowLinkFontWeight\" name=\"$fontRowLinkFontWeight\" class=\"form-control\">";
+
+            foreach ($fontweightStyles as $weight)
+            {
+                $currentLinkFontWeight = "$fontRow-linkfontweight";
+                if ($weight === $templateSettings[$currentLinkFontWeight]['value'])
+                {
+                    $selected = "selected aria-selected=\"true\"";
+                }
+                else
+                {
+                    $selected = '';
+                }
+                $html .= "<option value=\"$weight\" $selected>$weight</option>";
+            }
+            $html .= "</select>
                 </div>
-                <hr>";
-             */
+                <div class=\"col-md-1\">
+                    <label for=\"$fontRowLinkFontStyle\">Stil</label>
+                    <select id=\"$fontRowLinkFontStyle\" name=\"$fontRowLinkFontStyle\" class=\"form-control\">";
+
+            foreach ($fontStyles as $style)
+            {
+                $currentLinkFontStyle = "$fontRow-linkfontstyle";
+                if ($style === $templateSettings[$currentLinkFontStyle]['value'])
+                {
+                    $selected = "selected aria-selected=\"true\"";
+                }
+                else
+                {
+                    $selected = '';
+                }
+                $html .= "<option value=\"$style\" $selected>$style</option>";
+            }
+
+            $html .="</select></div>
+                    <div class=\"col-md-1\">
+                    <label for=\"$fontRowHoverTextDecoration\">Dekoration</label>
+                    <select id=\"$fontRowHoverTextDecoration\" name=\"$fontRowHoverTextDecoration\" class=\"form-control\">";
+
+            foreach ($textdecorationTypes as $decoration)
+            {
+                $currentFontDecoration = "$fontRow-hovertextdecoration";
+                if ($decoration === $templateSettings[$currentFontDecoration]['value'])
+                {
+                    $selected = "selected aria-selected=\"true\"";
+                }
+                else
+                {
+                    $selected = '';
+                }
+                $html .= "<option value=\"$decoration\" $selected>$decoration</option>";
+            }
+            $html .= "</select>
+                </div>
+            </div><hr>";
+
             echo $html;
 
         }
@@ -1756,8 +1837,24 @@ namespace YAWK {
             }
         }
 
-        static function getActiveFont($cssTagName, $fontFamily, $fontSize, $fontColor, $fontShadowSize, $fontShadowColor, $fontWeight, $fontStyle, $fontTextDecoration)
+        static function setCssFontTags($cssTagName, $tplSettings)
         {
+            $fontFamily = $tplSettings["$cssTagName-fontfamily"];
+            $fontSize = $tplSettings["$cssTagName-size"];
+            $fontColor = $tplSettings["$cssTagName-fontcolor"];
+            $fontShadowSize = $tplSettings["$cssTagName-fontshadowsize"];
+            $fontShadowColor = $tplSettings["$cssTagName-fontshadowcolor"];
+            $fontWeight = $tplSettings["$cssTagName-fontweight"];
+            $fontStyle = $tplSettings["$cssTagName-fontstyle"];
+            $fontTextDecoration = $tplSettings["$cssTagName-textdecoration"];
+            $aLink = $tplSettings["$cssTagName-alink"];
+            $aVisited = $tplSettings["$cssTagName-avisited"];
+            $aHover = $tplSettings["$cssTagName-ahover"];
+            $aWeight = $tplSettings["$cssTagName-linkfontweight"];
+            $aStyle = $tplSettings["$cssTagName-linkfontstyle"];
+            $aDecoration = $tplSettings["$cssTagName-linktextdecoration"];
+            $hoverDecoration = $tplSettings["$cssTagName-hovertextdecoration"];
+
             // get font type by cutting off file extension
             $fontType = substr($fontFamily, -4);
             // check file types
@@ -1778,6 +1875,19 @@ namespace YAWK {
                     font-style: $fontStyle;
                     text-decoration: $fontTextDecoration;
                 }
+                $cssTagName a { /* LINK SETTINGS */
+                        color: #$aLink;
+                        font-weight: $aWeight;
+                        font-style: $aStyle;
+                        text-decoration: $aDecoration;
+                }
+                $cssTagName a:visited {
+                        color: #$aVisited;
+                }
+                $cssTagName a:hover {   
+                        color: #$aHover;
+                        text-decoration: $hoverDecoration;
+                }
                 ";
             }
             elseif ($fontType === "-otf")
@@ -1797,6 +1907,19 @@ namespace YAWK {
                     font-style: $fontStyle;
                     text-decoration: $fontTextDecoration;
                 }
+                    $cssTagName a { /* LINK SETTINGS */
+                        color: #$aLink;
+                        font-weight: $aWeight;
+                        font-style: $aStyle;
+                        text-decoration: $aDecoration;
+                    }
+                    $cssTagName a:visited {
+                        color: #$aVisited;
+                    }
+                    $cssTagName a:hover {   
+                        color: #$aHover;
+                        text-decoration: $hoverDecoration;
+                    }
                 ";
             }
             elseif ($fontType === "woff")
@@ -1815,14 +1938,28 @@ namespace YAWK {
                     font-weight: $fontWeight;
                     font-style: $fontStyle;
                     text-decoration: $fontTextDecoration;
-                }";
+                }
+                    $cssTagName a { /* LINK SETTINGS */
+                        color: #$aLink;
+                        font-weight: $aWeight;
+                        font-style: $aStyle;
+                        text-decoration: $aDecoration;
+                    }
+                    $cssTagName a:visited {
+                        color: #$aVisited;
+                    }
+                    $cssTagName a:hover {   
+                        color: #$aHover;
+                        text-decoration: $hoverDecoration;
+                    }
+                ";
             }
             // check, if it's a google font
             elseif (substr($fontFamily, -6) === "-gfont")
             {
                 $googleFont = rtrim($fontFamily, "-gfont");
                 $fontCSS = "
-                $cssTagName 
+                $cssTagName
                 {
                     font-family: $googleFont !important;
                     font-size: $fontSize;
@@ -1831,7 +1968,22 @@ namespace YAWK {
                     font-weight: $fontWeight;
                     font-style: $fontStyle;
                     text-decoration: $fontTextDecoration;
-                }";
+                }
+                
+                $cssTagName a { /* LINK SETTINGS */
+                        color: #$aLink;
+                        font-weight: $aWeight;
+                        font-style: $aStyle;
+                        text-decoration: $aDecoration;
+                    }
+                $cssTagName a:visited {
+                        color: #$aVisited;
+                    }
+                $cssTagName a:hover {   
+                        color: #$aHover;
+                        text-decoration: $hoverDecoration;
+                    }
+                ";
             }
             else
                 {
@@ -1845,7 +1997,22 @@ namespace YAWK {
                         font-weight: $fontWeight;
                         font-style: $fontStyle;
                         text-decoration: $fontTextDecoration;
-                    }";
+                    }
+                
+                    $cssTagName a { /* LINK SETTINGS */
+                        color: #$aLink;
+                        font-weight: $aWeight;
+                        font-style: $aStyle;
+                        text-decoration: $aDecoration;
+                    }
+                    $cssTagName a:visited {
+                        color: #$aVisited;
+                    }
+                    $cssTagName a:hover {   
+                        color: #$aHover;
+                        text-decoration: $hoverDecoration;
+                    }
+                    ";
                 }
             return $fontCSS;
         }
