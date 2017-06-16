@@ -1430,14 +1430,14 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         width: ".$tplSettings['pos-outerTop-width'].";
         height: ".$tplSettings['pos-outerTop-height'].";
         z-index: ".$tplSettings['pos-outerTop-zindex'].";
-        ".$tplSettings['pos-outerTop-bg-gradient-longValue']."
-        ".$tplSettings['pos-outerTop-customCSS-longValue']."
         /* BACKGROUND IMAGE */
         background-image: url('".$tplSettings['pos-outerTop-bg-image']."');
         background-repeat:".$tplSettings['pos-outerTop-bg-repeat'].";
         background-position:".$tplSettings['pos-outerTop-bg-position'].";
         background-attachment:".$tplSettings['pos-outerTop-bg-attachment'].";
         background-size: ".$tplSettings['pos-outerTop-bg-attachment'].";
+        ".$tplSettings['pos-outerTop-bg-gradient-longValue']."
+        ".$tplSettings['pos-outerTop-customCSS-longValue']."
     }
     .pos-intro
     {   
@@ -1460,14 +1460,14 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         width: ".$tplSettings['pos-intro-width'].";
         height: ".$tplSettings['pos-intro-height'].";
         z-index: ".$tplSettings['pos-intro-zindex'].";
-        ".$tplSettings['pos-intro-bg-gradient-longValue']."
-        ".$tplSettings['pos-intro-customCSS-longValue']."
         /* BACKGROUND IMAGE */
         background-image: url('".$tplSettings['pos-intro-bg-image']."');
         background-repeat:".$tplSettings['pos-intro-bg-repeat'].";
         background-position:".$tplSettings['pos-intro-bg-position'].";
         background-attachment:".$tplSettings['pos-intro-bg-attachment'].";
         background-size: ".$tplSettings['pos-intro-bg-attachment'].";
+        ".$tplSettings['pos-intro-bg-gradient-longValue']."
+        ".$tplSettings['pos-intro-customCSS-longValue']."
     }
     .pos-globalmenu
     {   
@@ -1490,14 +1490,14 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         width: ".$tplSettings['pos-globalmenu-width'].";
         height: ".$tplSettings['pos-globalmenu-height'].";
         z-index: ".$tplSettings['pos-globalmenu-zindex'].";
-        ".$tplSettings['pos-globalmenu-bg-gradient-longValue']."
-        ".$tplSettings['pos-globalmenu-customCSS-longValue']."
         /* BACKGROUND IMAGE */
         background-image: url('".$tplSettings['pos-globalmenu-bg-image']."');
         background-repeat:".$tplSettings['pos-globalmenu-bg-repeat'].";
         background-position:".$tplSettings['pos-globalmenu-bg-position'].";
         background-attachment:".$tplSettings['pos-globalmenu-bg-attachment'].";
         background-size: ".$tplSettings['pos-globalmenu-attachment'].";
+        ".$tplSettings['pos-globalmenu-bg-gradient-longValue']."
+        ".$tplSettings['pos-globalmenu-customCSS-longValue']."
     }
     .pos-top
     {   
@@ -1520,14 +1520,14 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         width: ".$tplSettings['pos-top-width'].";
         height: ".$tplSettings['pos-top-height'].";
         z-index: ".$tplSettings['pos-top-zindex'].";
-        ".$tplSettings['pos-top-bg-gradient-longValue']."
-        ".$tplSettings['pos-top-customCSS-longValue']."
         /* BACKGROUND IMAGE */
         background-image: url('".$tplSettings['pos-top-bg-image']."');
         background-repeat:".$tplSettings['pos-top-bg-repeat'].";
         background-position:".$tplSettings['pos-top-bg-position'].";
         background-attachment:".$tplSettings['pos-top-bg-attachment'].";
         background-size: ".$tplSettings['pos-top-attachment'].";
+        ".$tplSettings['pos-top-bg-gradient-longValue']."
+        ".$tplSettings['pos-top-customCSS-longValue']."
     }
     .pos-outerLeft
     {   
@@ -1549,14 +1549,14 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         background-color: #".$tplSettings['pos-outerLeft-bgcolor'].";
         height: ".$tplSettings['pos-outerLeft-height'].";
         z-index: ".$tplSettings['pos-outerLeft-zindex'].";
-        ".$tplSettings['pos-outerLeft-bg-gradient-longValue']."
-        ".$tplSettings['pos-outerLeft-customCSS-longValue']."
         /* BACKGROUND IMAGE */
         background-image: url('".$tplSettings['pos-outerLeft-bg-image']."');
         background-repeat:".$tplSettings['pos-outerLeft-bg-repeat'].";
         background-position:".$tplSettings['pos-outerLeft-bg-position'].";
         background-attachment:".$tplSettings['pos-outerLeft-bg-attachment'].";
         background-size: ".$tplSettings['pos-outerLeft-attachment'].";
+        ".$tplSettings['pos-outerLeft-bg-gradient-longValue']."
+        ".$tplSettings['pos-outerLeft-customCSS-longValue']."
     }
     .pos-outerRight
     {   
@@ -1578,14 +1578,14 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         background-color: #".$tplSettings['pos-outerRight-bgcolor'].";
         height: ".$tplSettings['pos-outerRight-height'].";
         z-index: ".$tplSettings['pos-outerRight-zindex'].";
-        ".$tplSettings['pos-outerRight-bg-gradient-longValue']."
-        ".$tplSettings['pos-outerRight-customCSS-longValue']."
         /* BACKGROUND IMAGE */
         background-image: url('".$tplSettings['pos-outerRight-bg-image']."');
         background-repeat:".$tplSettings['pos-outerRight-bg-repeat'].";
         background-position:".$tplSettings['pos-outerRight-bg-position'].";
         background-attachment:".$tplSettings['pos-outerRight-bg-attachment'].";
         background-size: ".$tplSettings['pos-outerRight-attachment'].";
+        ".$tplSettings['pos-outerRight-bg-gradient-longValue']."
+        ".$tplSettings['pos-outerRight-customCSS-longValue']."
     }
     .pos-leftMenu
     {   
@@ -1607,14 +1607,14 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         background-color: #".$tplSettings['pos-leftMenu-bgcolor'].";
         height: ".$tplSettings['pos-leftMenu-height'].";
         z-index: ".$tplSettings['pos-leftMenu-zindex'].";
-        ".$tplSettings['pos-leftMenu-bg-gradient-longValue']."
-        ".$tplSettings['pos-leftMenu-customCSS-longValue']."
         /* BACKGROUND IMAGE */
         background-image: url('".$tplSettings['pos-leftMenu-bg-image']."');
         background-repeat:".$tplSettings['pos-leftMenu-bg-repeat'].";
         background-position:".$tplSettings['pos-leftMenu-bg-position'].";
         background-attachment:".$tplSettings['pos-leftMenu-bg-attachment'].";
         background-size: ".$tplSettings['pos-leftMenu-attachment'].";
+        ".$tplSettings['pos-leftMenu-bg-gradient-longValue']."
+        ".$tplSettings['pos-leftMenu-customCSS-longValue']."
     }
     .pos-rightMenu
     {   
@@ -1636,14 +1636,14 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         background-color: #".$tplSettings['pos-rightMenu-bgcolor'].";
         height: ".$tplSettings['pos-rightMenu-height'].";
         z-index: ".$tplSettings['pos-rightMenu-zindex'].";
-        ".$tplSettings['pos-rightMenu-bg-gradient-longValue']."
-        ".$tplSettings['pos-rightMenu-customCSS-longValue']."
         /* BACKGROUND IMAGE */
         background-image: url('".$tplSettings['pos-rightMenu-bg-image']."');
         background-repeat:".$tplSettings['pos-rightMenu-bg-repeat'].";
         background-position:".$tplSettings['pos-rightMenu-bg-position'].";
         background-attachment:".$tplSettings['pos-rightMenu-bg-attachment'].";
         background-size: ".$tplSettings['pos-rightMenu-attachment'].";
+        ".$tplSettings['pos-rightMenu-bg-gradient-longValue']."
+        ".$tplSettings['pos-rightMenu-customCSS-longValue']."
     }
     .pos-mainTop
     {   
@@ -1666,14 +1666,14 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         width: ".$tplSettings['pos-mainTop-width'].";
         height: ".$tplSettings['pos-mainTop-height'].";
         z-index: ".$tplSettings['pos-mainTop-zindex'].";
-        ".$tplSettings['pos-mainTop-bg-gradient-longValue']."
-        ".$tplSettings['pos-mainTop-customCSS-longValue']."
         /* BACKGROUND IMAGE */
         background-image: url('".$tplSettings['pos-mainTop-bg-image']."');
         background-repeat:".$tplSettings['pos-mainTop-bg-repeat'].";
         background-position:".$tplSettings['pos-mainTop-bg-position'].";
         background-attachment:".$tplSettings['pos-mainTop-bg-attachment'].";
         background-size: ".$tplSettings['pos-mainTop-attachment'].";
+        ".$tplSettings['pos-mainTop-bg-gradient-longValue']."
+        ".$tplSettings['pos-mainTop-customCSS-longValue']."
     }
     .pos-mainTopLeft
     {   
@@ -1695,14 +1695,14 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         background-color: #".$tplSettings['pos-mainTopLeft-bgcolor'].";
         height: ".$tplSettings['pos-mainTopLeft-height'].";
         z-index: ".$tplSettings['pos-mainTopLeft-zindex'].";
-        ".$tplSettings['pos-mainTopLeft-bg-gradient-longValue']."
-        ".$tplSettings['pos-mainTopLeft-customCSS-longValue']."
         /* BACKGROUND IMAGE */
         background-image: url('".$tplSettings['pos-mainTopLeft-bg-image']."');
         background-repeat:".$tplSettings['pos-mainTopLeft-bg-repeat'].";
         background-position:".$tplSettings['pos-mainTopLeft-bg-position'].";
         background-attachment:".$tplSettings['pos-mainTopLeft-bg-attachment'].";
         background-size: ".$tplSettings['pos-mainTopLeft-attachment'].";
+        ".$tplSettings['pos-mainTopLeft-bg-gradient-longValue']."
+        ".$tplSettings['pos-mainTopLeft-customCSS-longValue']."
     }
     .pos-mainTopCenter
     {   
@@ -1724,14 +1724,14 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         background-color: #".$tplSettings['pos-mainTopCenter-bgcolor'].";
         height: ".$tplSettings['pos-mainTopCenter-height'].";
         z-index: ".$tplSettings['pos-mainTopCenter-zindex'].";
-        ".$tplSettings['pos-mainTopCenter-bg-gradient-longValue']."
-        ".$tplSettings['pos-mainTopCenter-customCSS-longValue']."
         /* BACKGROUND IMAGE */
         background-image: url('".$tplSettings['pos-mainTopCenter-bg-image']."');
         background-repeat:".$tplSettings['pos-mainTopCenter-bg-repeat'].";
         background-position:".$tplSettings['pos-mainTopCenter-bg-position'].";
         background-attachment:".$tplSettings['pos-mainTopCenter-bg-attachment'].";
         background-size: ".$tplSettings['pos-mainTopCenter-attachment'].";
+        ".$tplSettings['pos-mainTopCenter-bg-gradient-longValue']."
+        ".$tplSettings['pos-mainTopCenter-customCSS-longValue']."
     }
     .pos-mainTopRight
     {   
@@ -1753,14 +1753,14 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         background-color: #".$tplSettings['pos-mainTopRight-bgcolor'].";
         height: ".$tplSettings['pos-mainTopRight-height'].";
         z-index: ".$tplSettings['pos-mainTopRight-zindex'].";
-        ".$tplSettings['pos-mainTopRight-bg-gradient-longValue']."
-        ".$tplSettings['pos-mainTopRight-customCSS-longValue']."
         /* BACKGROUND IMAGE */
         background-image: url('".$tplSettings['pos-mainTopRight-bg-image']."');
         background-repeat:".$tplSettings['pos-mainTopRight-bg-repeat'].";
         background-position:".$tplSettings['pos-mainTopRight-bg-position'].";
         background-attachment:".$tplSettings['pos-mainTopRight-bg-attachment'].";
         background-size: ".$tplSettings['pos-mainTopRight-attachment'].";
+        ".$tplSettings['pos-mainTopRight-bg-gradient-longValue']."
+        ".$tplSettings['pos-mainTopRight-customCSS-longValue']."
     }
     .pos-main
     {   
@@ -1783,14 +1783,14 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         width: ".$tplSettings['pos-main-width'].";
         height: ".$tplSettings['pos-main-height'].";
         z-index: ".$tplSettings['pos-main-zindex'].";
-        ".$tplSettings['pos-main-bg-gradient-longValue']."
-        ".$tplSettings['pos-main-customCSS-longValue']."
         /* BACKGROUND IMAGE */
         background-image: url('".$tplSettings['pos-main-bg-image']."');
         background-repeat:".$tplSettings['pos-main-bg-repeat'].";
         background-position:".$tplSettings['pos-main-bg-position'].";
         background-attachment:".$tplSettings['pos-main-bg-attachment'].";
         background-size: ".$tplSettings['pos-main-attachment'].";
+        ".$tplSettings['pos-main-bg-gradient-longValue']."
+        ".$tplSettings['pos-main-customCSS-longValue']."
     }
     .pos-mainBottom
     {   
@@ -1813,14 +1813,14 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         width: ".$tplSettings['pos-mainBottom-width'].";
         height: ".$tplSettings['pos-mainBottom-height'].";
         z-index: ".$tplSettings['pos-mainBottom-zindex'].";
-        ".$tplSettings['pos-mainBottom-bg-gradient-longValue']."
-        ".$tplSettings['pos-mainBottom-customCSS-longValue']."
         /* BACKGROUND IMAGE */
         background-image: url('".$tplSettings['pos-mainBottom-bg-image']."');
         background-repeat:".$tplSettings['pos-mainBottom-bg-repeat'].";
         background-position:".$tplSettings['pos-mainBottom-bg-position'].";
         background-attachment:".$tplSettings['pos-mainBottom-bg-attachment'].";
         background-size: ".$tplSettings['pos-mainBottom-attachment'].";
+        ".$tplSettings['pos-mainBottom-bg-gradient-longValue']."
+        ".$tplSettings['pos-mainBottom-customCSS-longValue']."
     }
     .pos-mainBottomLeft
     {   
@@ -1842,14 +1842,14 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         background-color: #".$tplSettings['pos-mainBottomLeft-bgcolor'].";
         height: ".$tplSettings['pos-mainBottomLeft-height'].";
         z-index: ".$tplSettings['pos-mainBottomLeft-zindex'].";
-        ".$tplSettings['pos-mainBottomLeft-bg-gradient-longValue']."
-        ".$tplSettings['pos-mainBottomLeft-customCSS-longValue']."
         /* BACKGROUND IMAGE */
         background-image: url('".$tplSettings['pos-mainBottomLeft-bg-image']."');
         background-repeat:".$tplSettings['pos-mainBottomLeft-bg-repeat'].";
         background-position:".$tplSettings['pos-mainBottomLeft-bg-position'].";
         background-attachment:".$tplSettings['pos-mainBottomLeft-bg-attachment'].";
         background-size: ".$tplSettings['pos-mainBottomLeft-attachment'].";
+        ".$tplSettings['pos-mainBottomLeft-bg-gradient-longValue']."
+        ".$tplSettings['pos-mainBottomLeft-customCSS-longValue']."
     }
     .pos-mainBottomCenter
     {   
@@ -1870,15 +1870,15 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         position: ".$tplSettings['pos-mainBottomCenter-position'].";
         background-color: #".$tplSettings['pos-mainBottomCenter-bgcolor'].";
         height: ".$tplSettings['pos-mainBottomCenter-height'].";
-        z-index: ".$tplSettings['pos-mainBottomCenter-zindex'].";
-        ".$tplSettings['pos-mainBottomCenter-bg-gradient-longValue']."
-        ".$tplSettings['pos-mainBottomCenter-customCSS-longValue']."        
+        z-index: ".$tplSettings['pos-mainBottomCenter-zindex'].";    
         /* BACKGROUND IMAGE */
         background-image: url('".$tplSettings['pos-mainBottomCenter-bg-image']."');
         background-repeat:".$tplSettings['pos-mainBottomCenter-bg-repeat'].";
         background-position:".$tplSettings['pos-mainBottomCenter-bg-position'].";
         background-attachment:".$tplSettings['pos-mainBottomCenter-bg-attachment'].";
         background-size: ".$tplSettings['pos-mainBottomCenter-attachment'].";
+        ".$tplSettings['pos-mainBottomCenter-bg-gradient-longValue']."
+        ".$tplSettings['pos-mainBottomCenter-customCSS-longValue']."    
     }
     .pos-mainBottomRight
     {   
@@ -1900,14 +1900,14 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         background-color: #".$tplSettings['pos-mainBottomRight-bgcolor'].";
         height: ".$tplSettings['pos-mainBottomRight-height'].";
         z-index: ".$tplSettings['pos-mainBottomRight-zindex'].";
-        ".$tplSettings['pos-mainBottomRight-bg-gradient-longValue']."
-        ".$tplSettings['pos-mainBottomRight-customCSS-longValue']."
         /* BACKGROUND IMAGE */
         background-image: url('".$tplSettings['pos-mainBottomRight-bg-image']."');
         background-repeat:".$tplSettings['pos-mainBottomRight-bg-repeat'].";
         background-position:".$tplSettings['pos-mainBottomRight-bg-position'].";
         background-attachment:".$tplSettings['pos-mainBottomRight-bg-attachment'].";
         background-size: ".$tplSettings['pos-mainBottomRight-attachment'].";
+        ".$tplSettings['pos-mainBottomRight-bg-gradient-longValue']."
+        ".$tplSettings['pos-mainBottomRight-customCSS-longValue']."
     }
     .pos-mainFooter
     {   
@@ -1930,14 +1930,14 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         width: ".$tplSettings['pos-mainFooter-width'].";
         height: ".$tplSettings['pos-mainFooter-height'].";
         z-index: ".$tplSettings['pos-mainFooter-zindex'].";
-        ".$tplSettings['pos-mainFooter-bg-gradient-longValue']."
-        ".$tplSettings['pos-mainFooter-customCSS-longValue']."
         /* BACKGROUND IMAGE */
         background-image: url('".$tplSettings['pos-mainFooter-bg-image']."');
         background-repeat:".$tplSettings['pos-mainFooter-bg-repeat'].";
         background-position:".$tplSettings['pos-mainFooter-bg-position'].";
         background-attachment:".$tplSettings['pos-mainFooter-bg-attachment'].";
         background-size: ".$tplSettings['pos-mainFooter-attachment'].";
+        ".$tplSettings['pos-mainFooter-bg-gradient-longValue']."
+        ".$tplSettings['pos-mainFooter-customCSS-longValue']."
     }
     .pos-mainFooterLeft
     {   
@@ -1959,14 +1959,14 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         background-color: #".$tplSettings['pos-mainFooterLeft-bgcolor'].";
         height: ".$tplSettings['pos-mainFooterLeft-height'].";
         z-index: ".$tplSettings['pos-mainFooterLeft-zindex'].";
-        ".$tplSettings['pos-mainFooterLeft-bg-gradient-longValue']."
-        ".$tplSettings['pos-mainFooterLeft-customCSS-longValue']."
         /* BACKGROUND IMAGE */
         background-image: url('".$tplSettings['pos-mainFooterLeft-bg-image']."');
         background-repeat:".$tplSettings['pos-mainFooterLeft-bg-repeat'].";
         background-position:".$tplSettings['pos-mainFooterLeft-bg-position'].";
         background-attachment:".$tplSettings['pos-mainFooterLeft-bg-attachment'].";
         background-size: ".$tplSettings['pos-mainFooterLeft-attachment'].";
+        ".$tplSettings['pos-mainFooterLeft-bg-gradient-longValue']."
+        ".$tplSettings['pos-mainFooterLeft-customCSS-longValue']."
     }
     .pos-mainFooterCenter
     {   
@@ -1988,14 +1988,14 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         background-color: #".$tplSettings['pos-mainFooterCenter-bgcolor'].";
         height: ".$tplSettings['pos-mainFooterCenter-height'].";
         z-index: ".$tplSettings['pos-mainFooterCenter-zindex'].";
-        ".$tplSettings['pos-mainFooterCenter-bg-gradient-longValue']."
-        ".$tplSettings['pos-mainFooterCenter-customCSS-longValue']."
         /* BACKGROUND IMAGE */
         background-image: url('".$tplSettings['pos-mainFooterCenter-bg-image']."');
         background-repeat:".$tplSettings['pos-mainFooterCenter-bg-repeat'].";
         background-position:".$tplSettings['pos-mainFooterCenter-bg-position'].";
         background-attachment:".$tplSettings['pos-mainFooterCenter-bg-attachment'].";
         background-size: ".$tplSettings['pos-mainFooterCenter-attachment'].";
+        ".$tplSettings['pos-mainFooterCenter-bg-gradient-longValue']."
+        ".$tplSettings['pos-mainFooterCenter-customCSS-longValue']."
     }
     .pos-mainFooterRight
     {   
@@ -2017,14 +2017,14 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         background-color: #".$tplSettings['pos-mainFooterRight-bgcolor'].";
         height: ".$tplSettings['pos-mainFooterRight-height'].";
         z-index: ".$tplSettings['pos-mainFooterRight-zindex'].";
-        ".$tplSettings['pos-mainFooterRight-bg-gradient-longValue']."
-        ".$tplSettings['pos-mainFooterRight-customCSS-longValue']."
         /* BACKGROUND IMAGE */
         background-image: url('".$tplSettings['pos-mainFooterRight-bg-image']."');
         background-repeat:".$tplSettings['pos-mainFooterRight-bg-repeat'].";
         background-position:".$tplSettings['pos-mainFooterRight-bg-position'].";
         background-attachment:".$tplSettings['pos-mainFooterRight-bg-attachment'].";
         background-size: ".$tplSettings['pos-mainFooterRight-attachment'].";
+        ".$tplSettings['pos-mainFooterRight-bg-gradient-longValue']."
+        ".$tplSettings['pos-mainFooterRight-customCSS-longValue']."
     }
     .pos-footer
     {   
@@ -2047,14 +2047,14 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         width: ".$tplSettings['pos-footer-width'].";
         height: ".$tplSettings['pos-footer-height'].";
         z-index: ".$tplSettings['pos-footer-zindex'].";
-        ".$tplSettings['pos-footer-bg-gradient-longValue']."
-        ".$tplSettings['pos-footer-customCSS-longValue']."
         /* BACKGROUND IMAGE */
         background-image: url('".$tplSettings['pos-footer-bg-image']."');
         background-repeat:".$tplSettings['pos-footer-bg-repeat'].";
         background-position:".$tplSettings['pos-footer-bg-position'].";
         background-attachment:".$tplSettings['pos-footer-bg-attachment'].";
         background-size: ".$tplSettings['pos-footer-attachment'].";
+        ".$tplSettings['pos-footer-bg-gradient-longValue']."
+        ".$tplSettings['pos-footer-customCSS-longValue']."
     }
     .pos-hiddenToolbar
     {   
@@ -2077,14 +2077,14 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         width: ".$tplSettings['pos-hiddenToolbar-width'].";
         height: ".$tplSettings['pos-hiddenToolbar-height'].";
         z-index: ".$tplSettings['pos-hiddenToolbar-zindex'].";
-        ".$tplSettings['pos-hiddenToolbar-bg-gradient-longValue']."
-        ".$tplSettings['pos-hiddenToolbar-customCSS-longValue']."
         /* BACKGROUND IMAGE */
         background-image: url('".$tplSettings['pos-hiddenToolbar-bg-image']."');
         background-repeat:".$tplSettings['pos-hiddenToolbar-bg-repeat'].";
         background-position:".$tplSettings['pos-hiddenToolbar-bg-position'].";
         background-attachment:".$tplSettings['pos-hiddenToolbar-bg-attachment'].";
         background-size: ".$tplSettings['pos-hiddenToolbar-attachment'].";
+        ".$tplSettings['pos-hiddenToolbar-bg-gradient-longValue']."
+        ".$tplSettings['pos-hiddenToolbar-customCSS-longValue']."
     }
     .pos-debug
     {   
@@ -2107,14 +2107,14 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         width: ".$tplSettings['pos-debug-width'].";
         height: ".$tplSettings['pos-debug-height'].";
         z-index: ".$tplSettings['pos-debug-zindex'].";
-        ".$tplSettings['pos-debug-bg-gradient-longValue']."
-        ".$tplSettings['pos-debug-customCSS-longValue']."
         /* BACKGROUND IMAGE */
         background-image: url('".$tplSettings['pos-debug-bg-image']."');
         background-repeat:".$tplSettings['pos-debug-bg-repeat'].";
         background-position:".$tplSettings['pos-debug-bg-position'].";
         background-attachment:".$tplSettings['pos-debug-bg-attachment'].";
         background-size: ".$tplSettings['pos-debug-attachment'].";
+        ".$tplSettings['pos-debug-bg-gradient-longValue']."
+        ".$tplSettings['pos-debug-customCSS-longValue']."
     }
     .pos-outerBottom
     {   
@@ -2137,14 +2137,14 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         width: ".$tplSettings['pos-outerBottom-width'].";
         height: ".$tplSettings['pos-outerBottom-height'].";
         z-index: ".$tplSettings['pos-outerBottom-zindex'].";
-        ".$tplSettings['pos-outerBottom-bg-gradient-longValue']."
-        ".$tplSettings['pos-outerBottom-customCSS-longValue']."
         /* BACKGROUND IMAGE */
         background-image: url('".$tplSettings['pos-outerBottom-bg-image']."');
         background-repeat:".$tplSettings['pos-outerBottom-bg-repeat'].";
         background-position:".$tplSettings['pos-outerBottom-bg-position'].";
         background-attachment:".$tplSettings['pos-outerBottom-bg-attachment'].";
         background-size: ".$tplSettings['pos-outerBottom-attachment'].";
+        ".$tplSettings['pos-outerBottom-bg-gradient-longValue']."
+        ".$tplSettings['pos-outerBottom-customCSS-longValue']."
     }
     
     ";

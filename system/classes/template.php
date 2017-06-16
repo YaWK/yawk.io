@@ -579,6 +579,8 @@ namespace YAWK {
             $property = $db->quote($property);
             $value = $db->quote($value);
             $longValue = $db->quote($longValue);
+            $value = strip_tags($value);
+            $longValue = strip_tags($longValue);
             if ($longValue === "1")
             {
                 $sql ="SET longValue = '".$value."'";
@@ -1217,6 +1219,19 @@ namespace YAWK {
 
             $html = " <!-- h1 row -->
             <div class=\"row animated fadeIn\">
+                <div class=\"col-md-2\">H1</div>
+                <div class=\"col-md-2\">H2</div>
+                <div class=\"col-md-2\">H3</div>
+                <div class=\"col-md-2\">H4</div>
+                <div class=\"col-md-2\">H5</div>
+                <div class=\"col-md-2\">H6</div>
+                </div>
+                ";
+
+
+            $html .= "<div class=\"row animated fadeIn\">
+            
+            
                 <div class=\"col-md-3\" style=\"overflow:hidden;\">
                     <div class=\"$previewClass\" id=\"$fontRow-preview\" style=\"font-size: ".$templateSettings[$fontRowSize]['value']."; color: #".$templateSettings[$fontRowColor]['value'].";\">$fontRow Heading</div>
                 </div>
