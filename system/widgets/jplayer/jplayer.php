@@ -259,9 +259,7 @@ echo $headline;
 
 
     <div id="jquery_jplayer_<?php echo $jPlayerInstance; ?>" class="jp-jplayer"></div>
-
-    <div id="jquery_jplayer_<?php echo $jPlayerInstance; ?>" class="jp-jplayer"></div>
-    <div class="jp-audio">
+    <div class="jp-audio" style="width: <?php echo $jPlayerWidth;?>;">
         <div class="jp-type-playlist">
             <div id="jp_interface_<?php echo $jPlayerInstance; ?>" class="jp-interface">
                 <ul class="jp-controls">
