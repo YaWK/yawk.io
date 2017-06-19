@@ -10,8 +10,10 @@
 <style>
     .posbox
     {
+        background-color: #fff;
         font-weight:normal;
         border-style: dotted; border-color: #ccc;
+        cursor:pointer;
     }
 
     .posbox:hover
@@ -25,6 +27,7 @@
         background-color: #E3E3E3;
         border: 2px solid #888888;
         font-weight: bold;
+        cursor:pointer;
     }
 </style>
 <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet">
@@ -32,214 +35,266 @@
 <script type="text/javascript">
 /* reminder: check if form has changed and warns the user that he needs to save. */
 $(document).ready(function () {
+    /*
         // store settings position box id's in vars
-        settings_pos_outerTop = "#settings_pos_outerTop";
-        settings_pos_outerLeft = "#settings_pos_outerLeft";
-        settings_pos_outerRight = "#settings_pos_outerRight";
-        settings_pos_leftMenu = "#settings_pos_leftMenu";
-        settings_pos_rightMenu = "#settings_pos_rightMenu";
-        settings_pos_intro = "#settings_pos_intro";
-        settings_pos_globalmenu = "#settings_pos_globalmenu";
-        settings_pos_top = "#settings_pos_top";
-        settings_pos_mainTop = "#settings_pos_mainTop";
-        settings_pos_mainTopLeft = "#settings_pos_mainTopLeft";
-        settings_pos_mainTopCenter = "#settings_pos_mainTopCenter";
-        settings_pos_mainTopRight = "#settings_pos_mainTopRight";
-        settings_pos_main = "#settings_pos_main";
-        settings_pos_mainBottom = "#settings_pos_mainBottom";
-        settings_pos_mainBottomLeft = "#settings_pos_mainBottomLeft";
-        settings_pos_mainBottomCenter = "#settings_pos_mainBottomCenter";
-        settings_pos_mainBottomRight = "#settings_pos_mainBottomRight";
-        settings_pos_mainFooter = "#settings_pos_mainFooter";
-        settings_pos_mainFooterLeft = "#settings_pos_mainFooterLeft";
-        settings_pos_mainFooterCenter = "#settings_pos_mainFooterCenter";
-        settings_pos_mainFooterRight = "#settings_pos_mainFooterRight";
-        settings_pos_footer = "#settings_pos_footer";
-        settings_pos_hiddenToolbar = "#settings_pos_hiddenToolbar";
-        settings_pos_debug = "#settings_pos_debug";
-        settings_pos_outerBottom = "#settings_pos_outerBottom";
+        var settings_pos_outerTop = "#settings_pos_outerTop";
+        var settings_pos_outerLeft = "#settings_pos_outerLeft";
+        var settings_pos_outerRight = "#settings_pos_outerRight";
+        var settings_pos_leftMenu = "#settings_pos_leftMenu";
+        var settings_pos_rightMenu = "#settings_pos_rightMenu";
+        var settings_pos_intro = "#settings_pos_intro";
+        var settings_pos_globalmenu = "#settings_pos_globalmenu";
+        var settings_pos_top = "#settings_pos_top";
+        var settings_pos_mainTop = "#settings_pos_mainTop";
+        var settings_pos_mainTopLeft = "#settings_pos_mainTopLeft";
+        var settings_pos_mainTopCenter = "#settings_pos_mainTopCenter";
+        var settings_pos_mainTopRight = "#settings_pos_mainTopRight";
+        var settings_pos_main = "#settings_pos_main";
+        var settings_pos_mainBottom = "#settings_pos_mainBottom";
+        var settings_pos_mainBottomLeft = "#settings_pos_mainBottomLeft";
+        var settings_pos_mainBottomCenter = "#settings_pos_mainBottomCenter";
+        var settings_pos_mainBottomRight = "#settings_pos_mainBottomRight";
+        var settings_pos_mainFooter = "#settings_pos_mainFooter";
+        var settings_pos_mainFooterLeft = "#settings_pos_mainFooterLeft";
+        var settings_pos_mainFooterCenter = "#settings_pos_mainFooterCenter";
+        var settings_pos_mainFooterRight = "#settings_pos_mainFooterRight";
+        var settings_pos_footer = "#settings_pos_footer";
+        var settings_pos_hiddenToolbar = "#settings_pos_hiddenToolbar";
+        var settings_pos_debug = "#settings_pos_debug";
+        var settings_pos_outerBottom = "#settings_pos_outerBottom";
 
         // store position selector in vars
-        pos_outerTop = "#pos_outerTop";
-        pos_outerLeft = "#pos_outerLeft";
-        pos_outerRight = "#pos_outerRight";
-        pos_leftMenu = "#pos_leftMenu";
-        pos_rightMenu = "#pos_rightMenu";
-        pos_intro = "#pos_intro";
-        pos_globalmenu = "#pos_globalmenu";
-        pos_top = "#pos_top";
-        pos_mainTop = "#pos_mainTop";
-        pos_mainTopLeft = "#pos_mainTopLeft";
-        pos_mainTopCenter = "#pos_mainTopCenter";
-        pos_mainTopRight = "#pos_mainTopRight";
-        pos_main = "#pos_main";
-        pos_mainBottom = "#pos_mainBottom";
-        pos_mainBottomLeft = "#pos_mainBottomLeft";
-        pos_mainBottomCenter = "#pos_mainBottomCenter";
-        pos_mainBottomRight = "#pos_mainBottomRight";
-        pos_mainFooter = "#pos_mainFooter";
-        pos_mainFooterLeft = "#pos_mainFooterLeft";
-        pos_mainFooterCenter = "#pos_mainFooterCenter";
-        pos_mainFooterRight = "#pos_mainFooterRight";
-        pos_footer = "#pos_footer";
-        pos_hiddenToolbar = "#pos_hiddenToolbar";
-        pos_debug = "#pos_debug";
-        pos_outerBottom = "#pos_outerBottom";
+        var pos_outerTop = "#pos_outerTop";
+        var pos_outerLeft = "#pos_outerLeft";
+        var pos_outerRight = "#pos_outerRight";
+        var pos_leftMenu = "#pos_leftMenu";
+        var pos_rightMenu = "#pos_rightMenu";
+        var pos_intro = "#pos_intro";
+        var pos_globalmenu = "#pos_globalmenu";
+        var pos_top = "#pos_top";
+        var pos_mainTop = "#pos_mainTop";
+        var pos_mainTopLeft = "#pos_mainTopLeft";
+        var pos_mainTopCenter = "#pos_mainTopCenter";
+        var pos_mainTopRight = "#pos_mainTopRight";
+        var pos_main = "#pos_main";
+        var pos_mainBottom = "#pos_mainBottom";
+        var pos_mainBottomLeft = "#pos_mainBottomLeft";
+        var pos_mainBottomCenter = "#pos_mainBottomCenter";
+        var pos_mainBottomRight = "#pos_mainBottomRight";
+        var pos_mainFooter = "#pos_mainFooter";
+        var pos_mainFooterLeft = "#pos_mainFooterLeft";
+        var pos_mainFooterCenter = "#pos_mainFooterCenter";
+        var pos_mainFooterRight = "#pos_mainFooterRight";
+        var pos_footer = "#pos_footer";
+        var pos_hiddenToolbar = "#pos_hiddenToolbar";
+        var pos_debug = "#pos_debug";
+        var pos_outerBottom = "#pos_outerBottom";
 
-        // hide all settings boxes on default
-        // they will appear by clicking on a postion selector
-        $(settings_pos_outerTop).hide();
-        $(settings_pos_outerLeft).hide();
-        $(settings_pos_outerRight).hide();
-        $(settings_pos_leftMenu).hide();
-        $(settings_pos_rightMenu).hide();
-        $(settings_pos_intro).hide();
-        $(settings_pos_globalmenu).hide();
-        $(settings_pos_top).hide();
-        $(settings_pos_mainTop).hide();
-        $(settings_pos_mainTopLeft).hide();
-        $(settings_pos_mainTopCenter).hide();
-        $(settings_pos_mainTopRight).hide();
-        $(settings_pos_main).hide();
-        $(settings_pos_mainBottom).hide();
-        $(settings_pos_mainBottomLeft).hide();
-        $(settings_pos_mainBottomCenter).hide();
-        $(settings_pos_mainBottomRight).hide();
-        $(settings_pos_mainFooter).hide();
-        $(settings_pos_mainFooterLeft).hide();
-        $(settings_pos_mainFooterCenter).hide();
-        $(settings_pos_mainFooterRight).hide();
-        $(settings_pos_footer).hide();
-        $(settings_pos_hiddenToolbar).hide();
-        $(settings_pos_debug).hide();
-        $(settings_pos_outerBottom).hide();
+/*
 
+    function disablePosBoxes()
+    {
+        $(pos_outerTop).toggleClass("posbox");
+        $(pos_outerLeft).toggleClass("posbox");
+        $(pos_outerRight).toggleClass("posbox");
+        $(pos_intro).toggleClass("posbox");
+        $(pos_globalmenu).toggleClass("posbox");
+        $(pos_top).toggleClass("posbox");
+        $(pos_mainTop).toggleClass("posbox");
+        $(pos_mainTopLeft).toggleClass("posbox");
+        $(pos_mainTopCenter).toggleClass("posbox");
+        $(pos_mainTopRight).toggleClass("posbox");
+        $(pos_main).toggleClass("posbox");
+        $(pos_mainBottomLeft).toggleClass("posbox");
+        $(pos_mainBottomCenter).toggleClass("posbox");
+        $(pos_mainBottomRight).toggleClass("posbox");
+        $(pos_mainFooter).toggleClass("posbox");
+        $(pos_mainFooterLeft).toggleClass("posbox");
+        $(pos_mainFooterCenter).toggleClass("posbox");
+        $(pos_mainFooterRight).toggleClass("posbox");
+        $(pos_footer).toggleClass("posbox");
+        $(pos_hiddenToolbar).toggleClass("posbox");
+        $(pos_debug).toggleClass("posbox");
+        $(pos_outerBottom).toggleClass("posbox");
+    }
+/*
         $(pos_outerTop).click(function () {
             $("#selectPositionRequestInfo").hide();
+           // hideAllPositionSettings(); // hide all settings
+            resetPositionBoxes();
             $(settings_pos_outerTop).fadeToggle();
             $(pos_outerTop).toggleClass("posboxActive");
         });
 
         $(pos_outerLeft).click(function () {
             $("#selectPositionRequestInfo").hide();
+           // hideAllPositionSettings(); // hide all settings
+            resetPositionBoxes();
             $(settings_pos_outerLeft).fadeToggle();
             $(pos_outerLeft).toggleClass("posboxActive");
         });
         $(pos_outerRight).click(function () {
             $("#selectPositionRequestInfo").hide();
+          //  hideAllPositionSettings(); // hide all settings
+            resetPositionBoxes();
             $(settings_pos_outerRight).fadeToggle();
             $(pos_outerRight).toggleClass("posboxActive");
         });
         $(pos_intro).click(function () {
             $("#selectPositionRequestInfo").hide();
+          //  hideAllPositionSettings(); // hide all settings
+            resetPositionBoxes();
             $(settings_pos_intro).fadeToggle();
             $(pos_intro).toggleClass("posboxActive");
         });
         $(pos_globalmenu).click(function () {
             $("#selectPositionRequestInfo").hide();
+         //   hideAllPositionSettings(); // hide all settings
+            resetPositionBoxes();
             $(settings_pos_globalmenu).fadeToggle();
             $(pos_globalmenu).toggleClass("posboxActive");
         });
         $(pos_top).click(function () {
             $("#selectPositionRequestInfo").hide();
+         //   hideAllPositionSettings(); // hide all settings
+            resetPositionBoxes();
             $(settings_pos_top).fadeToggle();
             $(pos_top).toggleClass("posboxActive");
         });
         $(pos_mainTop).click(function () {
             $("#selectPositionRequestInfo").hide();
+        //    hideAllPositionSettings(); // hide all settings
+            resetPositionBoxes();
             $(settings_pos_mainTop).fadeToggle();
             $(pos_mainTop).toggleClass("posboxActive");
         });
         $(pos_mainTopLeft).click(function () {
             $("#selectPositionRequestInfo").hide();
+        //    hideAllPositionSettings(); // hide all settings
+            resetPositionBoxes();
             $(settings_pos_mainTopLeft).fadeToggle();
             $(pos_mainTopLeft).toggleClass("posboxActive");
         });
         $(pos_mainTopCenter).click(function () {
             $("#selectPositionRequestInfo").hide();
+         //   hideAllPositionSettings(); // hide all settings
+            resetPositionBoxes();
             $(settings_pos_mainTopCenter).fadeToggle();
             $(pos_mainTopCenter).toggleClass("posboxActive");
         });
         $(pos_mainTopRight).click(function () {
             $("#selectPositionRequestInfo").hide();
+        //    hideAllPositionSettings(); // hide all settings
+            resetPositionBoxes();
             $(settings_pos_mainTopRight).fadeToggle();
             $(pos_mainTopRight).toggleClass("posboxActive");
         });
         $(pos_main).click(function () {
             $("#selectPositionRequestInfo").hide();
+          //  hideAllPositionSettings(); // hide all settings
+            resetPositionBoxes();
             $(settings_pos_main).fadeToggle();
             $(pos_main).toggleClass("posboxActive");
         });
         $(pos_mainBottom).click(function () {
             $("#selectPositionRequestInfo").hide();
+         //   hideAllPositionSettings(); // hide all settings
+            resetPositionBoxes();
             $(settings_pos_mainBottom).fadeToggle();
             $(pos_mainBottom).toggleClass("posboxActive");
         });
         $(pos_mainBottomLeft).click(function () {
             $("#selectPositionRequestInfo").hide();
+        //    hideAllPositionSettings(); // hide all settings
+            resetPositionBoxes();
             $(settings_pos_mainBottomLeft).fadeToggle();
             $(pos_mainBottomLeft).toggleClass("posboxActive");
         });
         $(pos_mainBottomCenter).click(function () {
             $("#selectPositionRequestInfo").hide();
+       //     hideAllPositionSettings(); // hide all settings
+            resetPositionBoxes();
             $(settings_pos_mainBottomCenter).fadeToggle();
             $(pos_mainBottomCenter).toggleClass("posboxActive");
         });
         $(pos_mainBottomRight).click(function () {
             $("#selectPositionRequestInfo").hide();
+         //   hideAllPositionSettings(); // hide all settings
+            resetPositionBoxes();
             $(settings_pos_mainBottomRight).fadeToggle();
             $(pos_mainBottomRight).toggleClass("posboxActive");
         });
         $(pos_mainFooter).click(function () {
             $("#selectPositionRequestInfo").hide();
+          //  hideAllPositionSettings(); // hide all settings
+            resetPositionBoxes();
             $(settings_pos_mainFooter).fadeToggle();
             $(pos_mainFooter).toggleClass("posboxActive");
         });
         $(pos_mainFooterLeft).click(function () {
             $("#selectPositionRequestInfo").hide();
+         //   hideAllPositionSettings(); // hide all settings
+            resetPositionBoxes();
             $(settings_pos_mainFooterLeft).fadeToggle();
             $(pos_mainFooterLeft).toggleClass("posboxActive");
         });
         $(pos_mainFooterCenter).click(function () {
             $("#selectPositionRequestInfo").hide();
+         //   hideAllPositionSettings(); // hide all settings
+            resetPositionBoxes();
             $(settings_pos_mainFooterCenter).fadeToggle();
             $(pos_mainFooterCenter).toggleClass("posboxActive");
         });
         $(pos_mainFooterRight).click(function () {
             $("#selectPositionRequestInfo").hide();
+         //   hideAllPositionSettings(); // hide all settings
+            resetPositionBoxes();
             $(settings_pos_mainFooterRight).fadeToggle();
             $(pos_mainFooterRight).toggleClass("posboxActive");
         });
         $(pos_footer).click(function () {
             $("#selectPositionRequestInfo").hide();
+        //    hideAllPositionSettings(); // hide all settings
+            resetPositionBoxes();
             $(settings_pos_footer).fadeToggle();
             $(pos_footer).toggleClass("posboxActive");
         });
         $(pos_hiddenToolbar).click(function () {
             $("#selectPositionRequestInfo").hide();
+         //   hideAllPositionSettings(); // hide all settings
+            resetPositionBoxes();
             $(settings_pos_hiddenToolbar).fadeToggle();
             $(pos_hiddenToolbar).toggleClass("posboxActive");
         });
         $(pos_debug).click(function () {
             $("#selectPositionRequestInfo").hide();
+        //    hideAllPositionSettings(); // hide all settings
+            resetPositionBoxes();
             $(settings_pos_debug).fadeToggle();
             $(pos_debug).toggleClass("posboxActive");
         });
         $(pos_outerBottom).click(function () {
             $("#selectPositionRequestInfo").hide();
+        //    hideAllPositionSettings(); // hide all settings
+            resetPositionBoxes();
             $(settings_pos_outerBottom).fadeToggle();
             $(pos_outerBottom).toggleClass("posboxActive");
         });
         $(pos_leftMenu).click(function () {
             $("#selectPositionRequestInfo").hide();
+         //   hideAllPositionSettings(); // hide all settings
+            resetPositionBoxes();
             $(settings_pos_leftMenu).fadeToggle();
             $(pos_leftMenu).toggleClass("posboxActive");
         });
         $(pos_rightMenu).click(function () {
             $("#selectPositionRequestInfo").hide();
+        //    hideAllPositionSettings(); // hide all settings
+            resetPositionBoxes();
             $(settings_pos_rightMenu).fadeToggle();
             $(pos_rightMenu).toggleClass("posboxActive");
         });
+ */
 
     // TRY TO DISABLE CTRL-S browser hotkey
         function saveHotkey() {
@@ -639,7 +694,6 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         a:hover {   color: #".$tplSettings['hover-link'].";
             text-decoration: ".$tplSettings['hoverdecoration-link'].";
         }
-
     
         /* TYPOGRAPHY SETTINGS */
    
@@ -2299,10 +2353,12 @@ else
             <a href="#fonts" aria-controls="fonts" role="tab" data-toggle="tab"><i class="fa fa-font"></i>
                 &nbsp; <?php echo $lang['FONTS_TYPES']; ?></a>
         </li>
+        <!--
         <li role="presentation">
             <a href="#typo" aria-controls="typo" role="tab" data-toggle="tab"><i class="fa fa-text-width"></i>
-                &nbsp; <?php echo $lang['TYPOGRAPHY']; ?></a>
+                &nbsp; <?php // echo $lang['TYPOGRAPHY']; ?></a>
         </li>
+        -->
         <li role="presentation">
             <a href="#body" aria-controls="body" role="tab" data-toggle="tab"><i class="fa fa-object-group"></i>
                 &nbsp; <?php echo $lang['BODY']; ?></a>
@@ -2324,10 +2380,12 @@ else
             <a href="#images" aria-controls="images" role="tab" data-toggle="tab"><i class="fa fa-picture-o"></i>
                 &nbsp; <?php echo $lang['IMAGES']; ?></a>
         </li>
+        <!-- effects - disabled for now
         <li role="presentation">
             <a href="#effects" aria-controls="effects" role="tab" data-toggle="tab"><i class="fa fa-paper-plane-o"></i>
-                &nbsp; <?php echo $lang['EFFECTS']; ?></a>
+                &nbsp; <?php // echo $lang['EFFECTS']; ?></a>
         </li>
+        -->
         <li role="presentation">
             <a href="#custom" aria-controls="custom" role="tab" data-toggle="tab"><i class="fa fa-css3"></i>
                 &nbsp; <?php echo $lang['CUSTOM_CSS']; ?></a>
@@ -2735,70 +2793,152 @@ else
                         {   $outerBottomEnabled = ''; }
                         ?>
 
+                        <script type="text/javascript">
+                            function resetPositionBoxes()
+                            {
+                                $(pos_outerTop).removeClass("posboxActive").toggleClass("posbox");
+                                $(pos_outerLeft).removeClass("posboxActive").toggleClass("posbox");
+                                $(pos_outerRight).removeClass("posboxActive").toggleClass("posbox");
+                                $(pos_leftMenu).removeClass("posboxActive").toggleClass("posbox");
+                                $(pos_rightMenu).removeClass("posboxActive").toggleClass("posbox");
+                                $(pos_intro).removeClass("posboxActive").toggleClass("posbox");
+                                $(pos_globalmenu).removeClass("posboxActive").toggleClass("posbox");
+                                $(pos_top).removeClass("posboxActive").toggleClass("posbox");
+                                $(pos_mainTop).removeClass("posboxActive").toggleClass("posbox");
+                                $(pos_mainTopLeft).removeClass("posboxActive").toggleClass("posbox");
+                                $(pos_mainTopCenter).removeClass("posboxActive").toggleClass("posbox");
+                                $(pos_mainTopRight).removeClass("posboxActive").toggleClass("posbox");
+                                $(pos_main).removeClass("posboxActive").toggleClass("posbox");
+                                $(pos_mainBottom).removeClass("posboxActive").toggleClass("posbox");
+                                $(pos_mainBottomLeft).removeClass("posboxActive").toggleClass("posbox");
+                                $(pos_mainBottomCenter).removeClass("posboxActive").toggleClass("posbox");
+                                $(pos_mainBottomRight).removeClass("posboxActive").toggleClass("posbox");
+                                $(pos_mainFooter).removeClass("posboxActive").toggleClass("posbox");
+                                $(pos_mainFooterLeft).removeClass("posboxActive").toggleClass("posbox");
+                                $(pos_mainFooterCenter).removeClass("posboxActive").toggleClass("posbox");
+                                $(pos_mainFooterRight).removeClass("posboxActive").toggleClass("posbox");
+                                $(pos_footer).removeClass("posboxActive").toggleClass("posbox");
+                                $(pos_hiddenToolbar).removeClass("posboxActive").toggleClass("posbox");
+                                $(pos_debug).removeClass("posboxActive").toggleClass("posbox");
+                                $(pos_outerBottom).removeClass("posboxActive").toggleClass("posbox");
+                            }
+                            function hideAllPositionSettings()
+                            {
+                                $(settings_pos_outerTop).hide();
+                                $(settings_pos_outerLeft).hide();
+                                $(settings_pos_outerRight).hide();
+                                $(settings_pos_leftMenu).hide();
+                                $(settings_pos_rightMenu).hide();
+                                $(settings_pos_intro).hide();
+                                $(settings_pos_globalmenu).hide();
+                                $(settings_pos_top).hide();
+                                $(settings_pos_mainTop).hide();
+                                $(settings_pos_mainTopLeft).hide();
+                                $(settings_pos_mainTopCenter).hide();
+                                $(settings_pos_mainTopRight).hide();
+                                $(settings_pos_main).hide();
+                                $(settings_pos_mainBottom).hide();
+                                $(settings_pos_mainBottomLeft).hide();
+                                $(settings_pos_mainBottomCenter).hide();
+                                $(settings_pos_mainBottomRight).hide();
+                                $(settings_pos_mainFooter).hide();
+                                $(settings_pos_mainFooterLeft).hide();
+                                $(settings_pos_mainFooterCenter).hide();
+                                $(settings_pos_mainFooterRight).hide();
+                                $(settings_pos_footer).hide();
+                                $(settings_pos_hiddenToolbar).hide();
+                                $(settings_pos_debug).hide();
+                                $(settings_pos_outerBottom).hide();
+                            }
+
+                            // hide settings on load for better visual clarity
+                            hideAllPositionSettings();
+
+                            // onclick any position, this function will display all settings of this clicked position
+                            function switchPosition(pos)
+                            {
+                                // contains the name of settings div box from current selected position
+                                var settingsPosition = '#settings_'+pos;
+                                // contains the name of div box from current selected position
+                                var currentPosition = '#'+pos;
+
+                                // hide info text (select any position...)
+                                $("#selectPositionRequestInfo").hide();
+                                // to make sure just to display settings for selected position
+                                hideAllPositionSettings();
+                                // simulate a position toggle feel
+                                resetPositionBoxes();
+                                // display settings for current clicked position
+                                $(settingsPosition).fadeToggle();
+                                // add css to display which position is currently selected
+                                $(currentPosition).toggleClass("posboxActive");
+                            }
+                        </script>
+
                         <div class="box-body">
                             <div class="container-fluid">
                                 <div class="row text-center">
-                                    <div class="col-md-12 posbox" id="pos_outerTop" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; <?php echo $outerTopEnabled; ?>">&laquo;outerTop&raquo;</div>
+                                    <div class="col-md-12 posbox" onclick="switchPosition('pos_outerTop')" id="pos_outerTop" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; <?php echo $outerTopEnabled; ?>">&laquo;outerTop&raquo;</div>
                                 </div>
                                 <div class="row text-center">
-                                    <div class="col-md-2 posbox" id="pos_outerLeft" style="height: 630px; margin-bottom:5px; text-align: center; <?php echo $outerLeftEnabled; ?>">&laquo;outerLeft&raquo;</div>
+                                    <div class="col-md-2 posbox" onclick="switchPosition('pos_outerLeft')" id="pos_outerLeft" style="height: 630px; margin-bottom:5px; text-align: center; <?php echo $outerLeftEnabled; ?>">&laquo;outerLeft&raquo;</div>
                                     <div class="col-md-8">
                                         <div class="row">
-                                            <div class="col-md-12 posbox" id="pos_intro" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; <?php echo $introEnabled; ?>">&laquo;intro&raquo;</div>
-                                            <div class="col-md-12 posbox" id="pos_globalmenu" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; <?php echo $globalmenuEnabled; ?>">&laquo;globalmenu&raquo;</div>
-                                            <div class="col-md-12 posbox" id="pos_top" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; <?php echo $topEnabled; ?>">&laquo;top&raquo;</div>
+                                            <div onclick="switchPosition('pos_intro')" class="col-md-12 posbox" id="pos_intro" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; <?php echo $introEnabled; ?>">&laquo;intro&raquo;</div>
+                                            <div onclick="switchPosition('pos_globalmenu')" class="col-md-12 posbox" id="pos_globalmenu" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; <?php echo $globalmenuEnabled; ?>">&laquo;globalmenu&raquo;</div>
+                                            <div onclick="switchPosition('pos_top')" class="col-md-12 posbox" id="pos_top" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; <?php echo $topEnabled; ?>">&laquo;top&raquo;</div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-2 posbox" id="pos_leftMenu" style="height: 410px; margin-bottom:5px; text-align: center; <?php echo $leftMenuEnabled; ?>">&laquo;leftMenu&raquo;</div>
+                                            <div onclick="switchPosition('pos_leftMenu')" class="col-md-2 posbox" id="pos_leftMenu" style="height: 410px; margin-bottom:5px; text-align: center; <?php echo $leftMenuEnabled; ?>">&laquo;leftMenu&raquo;</div>
                                             <div class="col-md-8" style="height: auto; margin-bottom:5px; text-align: center;">
                                                 <div class="row">
-                                                    <div class="col-md-12 posbox" id="pos_mainTop" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainTopEnabled; ?>">&laquo;mainTop&raquo;</div>
+                                                    <div onclick="switchPosition('pos_mainTop')" class="col-md-12 posbox" id="pos_mainTop" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainTopEnabled; ?>">&laquo;mainTop&raquo;</div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-4 posbox" id="pos_mainTopLeft" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainTopLeftEnabled; ?>">&laquo;mainTopLeft&raquo;</div>
-                                                    <div class="col-md-4 posbox" id="pos_mainTopCenter" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainTopCenterEnabled; ?>">&laquo;mainTopCenter&raquo;</div>
-                                                    <div class="col-md-4 posbox" id="pos_mainTopRight" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainTopRightEnabled; ?>">&laquo;mainTopRight&raquo;</div>
+                                                    <div onclick="switchPosition('pos_mainTopLeft')" class="col-md-4 posbox" id="pos_mainTopLeft" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainTopLeftEnabled; ?>">&laquo;mainTopLeft&raquo;</div>
+                                                    <div onclick="switchPosition('pos_mainTopCenter')" class="col-md-4 posbox" id="pos_mainTopCenter" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainTopCenterEnabled; ?>">&laquo;mainTopCenter&raquo;</div>
+                                                    <div onclick="switchPosition('pos_mainTopRight')" class="col-md-4 posbox" id="pos_mainTopRight" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainTopRightEnabled; ?>">&laquo;mainTopRight&raquo;</div>
                                                 </div>
 
                                                 <div class="row">
-                                                    <div class="col-md-12 posbox" id="pos_main" style="height: 200px; margin-bottom:5px; text-align: center; <?php echo $mainEnabled; ?>">&laquo;main&raquo;</div>
+                                                    <div onclick="switchPosition('pos_main')" class="col-md-12 posbox" id="pos_main" style="height: 200px; margin-bottom:5px; text-align: center; <?php echo $mainEnabled; ?>">&laquo;main&raquo;</div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-12 posbox" id="pos_mainBottom" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainBottomEnabled; ?>">&laquo;mainBottom&raquo;</div>
+                                                    <div onclick="switchPosition('pos_mainBottom')" class="col-md-12 posbox" id="pos_mainBottom" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainBottomEnabled; ?>">&laquo;mainBottom&raquo;</div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-4 posbox" id="pos_mainBottomLeft" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainBottomLeftEnabled; ?>">&laquo;mainBottomLeft&raquo;</div>
-                                                    <div class="col-md-4 posbox" id="pos_mainBottomCenter" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainBottomCenterEnabled; ?>">&laquo;mainBottomCenter&raquo;</div>
-                                                    <div class="col-md-4 posbox" id="pos_mainBottomRight" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainBottomRightEnabled; ?>">&laquo;mainBottomRight&raquo;</div>
+                                                    <div onclick="switchPosition('pos_mainBottomLeft')" class="col-md-4 posbox" id="pos_mainBottomLeft" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainBottomLeftEnabled; ?>">&laquo;mainBottomLeft&raquo;</div>
+                                                    <div onclick="switchPosition('pos_mainBottomCenter')" class="col-md-4 posbox" id="pos_mainBottomCenter" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainBottomCenterEnabled; ?>">&laquo;mainBottomCenter&raquo;</div>
+                                                    <div onclick="switchPosition('pos_mainBottomRight')" class="col-md-4 posbox" id="pos_mainBottomRight" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainBottomRightEnabled; ?>">&laquo;mainBottomRight&raquo;</div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-12 posbox" id="pos_mainFooter" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainFooterEnabled; ?>">&laquo;mainFooter&raquo;</div>
+                                                    <div onclick="switchPosition('pos_mainFooter')" class="col-md-12 posbox" id="pos_mainFooter" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainFooterEnabled; ?>">&laquo;mainFooter&raquo;</div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-4 posbox" id="pos_mainFooterLeft" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainFooterLeftEnabled; ?>">&laquo;mainFooterLeft&raquo;</div>
-                                                    <div class="col-md-4 posbox" id="pos_mainFooterCenter" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainFooterCenterEnabled; ?>">&laquo;mainFooterCenter&raquo;</div>
-                                                    <div class="col-md-4 posbox" id="pos_mainFooterRight" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainFooterRightEnabled; ?>">&laquo;mainFooterRight&raquo;</div>
+                                                    <div onclick="switchPosition('pos_mainFooterLeft')" class="col-md-4 posbox" id="pos_mainFooterLeft" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainFooterLeftEnabled; ?>">&laquo;mainFooterLeft&raquo;</div>
+                                                    <div onclick="switchPosition('pos_mainFooterCenter')" class="col-md-4 posbox" id="pos_mainFooterCenter" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainFooterCenterEnabled; ?>">&laquo;mainFooterCenter&raquo;</div>
+                                                    <div onclick="switchPosition('pos_mainFooterRight')" class="col-md-4 posbox" id="pos_mainFooterRight" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainFooterRightEnabled; ?>">&laquo;mainFooterRight&raquo;</div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-2 posbox" id="pos_rightMenu" style="height: 410px; margin-bottom:5px; text-align: center; <?php echo $rightMenuEnabled; ?>">&laquo;rightMenu&raquo;</div>
+                                            <div onclick="switchPosition('pos_rightMenu')" class="col-md-2 posbox" id="pos_rightMenu" style="height: 410px; margin-bottom:5px; text-align: center; <?php echo $rightMenuEnabled; ?>">&laquo;rightMenu&raquo;</div>
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-md-12 posbox" id="pos_footer" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $footerEnabled; ?>">&laquo;footer&raquo;</div>
+                                            <div onclick="switchPosition('pos_footer')" class="col-md-12 posbox" id="pos_footer" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $footerEnabled; ?>">&laquo;footer&raquo;</div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-12 posbox" id="pos_hiddenToolbar" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $hiddenToolbarEnabled; ?>">&laquo;hiddenToolbar&raquo;</div>
+                                            <div onclick="switchPosition('pos_hiddenToolbar')" class="col-md-12 posbox" id="pos_hiddenToolbar" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $hiddenToolbarEnabled; ?>">&laquo;hiddenToolbar&raquo;</div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-12 posbox" id="pos_debug" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $debugEnabled; ?>">&laquo;debug&raquo;</div>
+                                            <div onclick="switchPosition('pos_debug')" class="col-md-12 posbox" id="pos_debug" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $debugEnabled; ?>">&laquo;debug&raquo;</div>
                                         </div>
                                     </div>
-                                    <div class="col-md-2 posbox" id="pos_outerRight" style="height: 630px; margin-bottom:5px; text-align: center; <?php echo $outerRightEnabled; ?>">&laquo;outerRight&raquo;</div>
+                                    <div onclick="switchPosition('pos_outerRight')" class="col-md-2 posbox" id="pos_outerRight" style="height: 630px; margin-bottom:5px; text-align: center; <?php echo $outerRightEnabled; ?>">&laquo;outerRight&raquo;</div>
 
                                 </div>
 
                                 <div class="row text-center">
-                                    <div class="col-md-12 posbox" id="pos_outerBottom" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; <?php echo $outerBottomEnabled; ?>">&laquo;outerBottom&raquo;</div>
+                                    <div onclick="switchPosition('pos_outerBottom')" class="col-md-12 posbox" id="pos_outerBottom" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; <?php echo $outerBottomEnabled; ?>">&laquo;outerBottom&raquo;</div>
                                 </div>
                             </div>
                         </div>
@@ -2811,7 +2951,12 @@ else
         <div role="tabpanel" class="tab-pane" id="fonts">
             <h3><?php echo "$lang[FONTS_TYPES] <small>$lang[TPL_FONTS_SUBTEXT]"; ?></small></h3>
             <div class="row">
-                <div class="col-md-6"></div>
+                <div class="col-md-6">
+
+                    <!-- common text settings (size, shadow, color...) -->
+                    <?php // $template->getFormElements($db, $templateSettings, 2, $lang, $user); ?>
+                    <?php // $template->getFormElements($db, $templateSettings, 3, $lang, $user); ?>
+                </div>
                 <div class="col-md-6">
                     <label for="testText">Testfeld</label>
                     <div class="input-group">
@@ -2824,6 +2969,7 @@ else
                 </div>
             </div>
             <hr>
+            <div class="row animated fadeIn">
             <?php
                 $template->getFontRow($db, $lang, "h1", "h1", $templateSettings);
                 $template->getFontRow($db, $lang, "h2", "h2", $templateSettings);
@@ -2831,8 +2977,9 @@ else
                 $template->getFontRow($db, $lang, "h4", "h4", $templateSettings);
                 $template->getFontRow($db, $lang, "h5", "h5", $templateSettings);
                 $template->getFontRow($db, $lang, "h6", "h6", $templateSettings);
-                $template->getFontRow($db, $lang, "globaltext", "globaltext", $templateSettings);
+                // $template->getFontRow($db, $lang, "globaltext", "globaltext", $templateSettings);
             ?>
+            </div>
             
             <script>
                 $(document).ready(function () {
@@ -3537,9 +3684,10 @@ else
         </div>
 
         <!-- FX -->
-        <div role="tabpanel" class="tab-pane" id="effects">Kommen dann hier rein...
-
-        </div>
+        <!--
+            <div role="tabpanel" class="tab-pane" id="effects">Kommen dann hier rein...
+            </div>
+        -->
 
         <!-- CUSTOM CSS -->
         <div role="tabpanel" class="tab-pane animated fadeIn" id="custom">
