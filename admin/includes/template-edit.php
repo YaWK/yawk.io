@@ -29,6 +29,25 @@
         font-weight: bold;
         cursor:pointer;
     }
+    .bodyBox
+    {
+        background-color: #fff;
+        font-weight:normal;
+        border: 1px solid #444;
+        cursor:pointer;
+    }
+
+    .bodyBox:hover
+    {
+        cursor:pointer;
+    }
+    .bodyBoxActive
+    {
+        /* background-color: #E3E3E3; */
+        border: 2px solid #888888;
+        /* font-weight: bold; */
+        cursor:pointer;
+    }
 </style>
 <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet">
 <!-- Javascript for positions tab -->
@@ -316,7 +335,7 @@ if(isset($_POST['savenewtheme']) && isset($_POST['newthemename']))
     }
     else
     {   // new positions not set, default value instead:
-        $template->positions = "globalmenu:top:main:bottom:footer";
+        $template->positions = "outerTop:outerLeft:outerRight:intro:globalmenu:top:leftMenu:mainTop:mainTopLeft:mainTopCenter:mainTopRight:main:mainBottom:mainBottomLeft:mainBottomCenter:mainBottomRight:mainFooter:mainFooterLeft:mainFooterCenter:mainFooterRight:rightMenu:bottom:footer:hiddentoolbar:debug:outerBottom";
     }
     // save as new theme
     $template->saveAs($db, $template, $template->name, $template->positions, $template->description);
@@ -1940,7 +1959,6 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         ".$tplSettings['pos-outerBottom-bg-gradient-longValue']."
         ".$tplSettings['pos-outerBottom-customCSS-longValue']."
     }
-    
     ";
 
     if (isset($_POST['getID']))
@@ -2284,7 +2302,7 @@ else
 
         <!-- POSITIONS -->
         <div role="tabpanel" class="tab-pane" id="positions">
-            <h3><? echo "$lang[POSITIONS]"; ?> <small><?php echo "$lang[TPL_POSITION_SETTINGS]"; ?></small></h3>
+            <h3><?php echo "$lang[POSITIONS]"; ?> <small><?php echo "$lang[TPL_POSITION_SETTINGS]"; ?></small></h3>
             <!-- list POSITION SETTINGS -->
             <div class="row animated fadeIn">
 
@@ -2293,6 +2311,10 @@ else
                         <div class="box-body">
                             <div id="selectPositionRequestInfo">
                                 <h4 class="box-title"><?php echo "$lang[TPL_SELECT_POSITIONS_REQUEST]"; ?></h4>
+                            </div>
+                            <!-- settings outerTop -->
+                            <div id="settings_pos_body">
+                                <?php $template->getFormElements($db, $templateSettings, 54, $lang, $user); ?>
                             </div>
                             <!-- settings outerTop -->
                             <div id="settings_pos_outerTop">
@@ -2407,6 +2429,7 @@ else
 
                         <?php
                         $enabledBorder = "border: 1px solid #4CAE4C;";
+
                         if ($templateSettings['pos-outerTop-enabled']['value'] === "1")
                         {   $outerTopEnabled = $enabledBorder; }
                         else
@@ -2536,6 +2559,7 @@ else
                         <script type="text/javascript">
                             function resetPositionBoxes()
                             {
+                                $(pos_body).removeClass("bodyBoxActive").toggleClass("bodyBox");
                                 $(pos_outerTop).removeClass("posboxActive").toggleClass("posbox");
                                 $(pos_outerLeft).removeClass("posboxActive").toggleClass("posbox");
                                 $(pos_outerRight).removeClass("posboxActive").toggleClass("posbox");
@@ -2564,6 +2588,7 @@ else
                             }
                             function hideAllPositionSettings()
                             {
+                                $(settings_pos_body).hide();
                                 $(settings_pos_outerTop).hide();
                                 $(settings_pos_outerLeft).hide();
                                 $(settings_pos_outerRight).hide();
@@ -2610,17 +2635,30 @@ else
                                 resetPositionBoxes();
                                 // display settings for current clicked position
                                 $(settingsPosition).fadeToggle();
-                                // add css to display which position is currently selected
-                                $(currentPosition).toggleClass("posboxActive");
+                                if (pos !== "pos_body")
+                                {   // toggle css class to display which position is selected
+                                    $(currentPosition).toggleClass("posboxActive");
+                                    $(pos_bodyWrapper).removeClass("bodyBoxActive").addClass("bodyBox");
+                                }
+                                else
+                                    {
+                                        // toggle css class to display, if body is selected
+                                        $(pos_bodyWrapper).toggleClass("bodyBoxActive");
+                                    }
                             }
                         </script>
 
-                        <div class="box-body">
-                            <div class="container-fluid">
-                                <div class="row text-center">
+                        <div class="box-body bodyBox" id="pos_bodyWrapper">
+                                <div class="text-center">
+                                    <div class="col-md-12 bodyBox" onclick="switchPosition('pos_body')" id="pos_body" style="height: 50px; border-width: 0 0 0 0; margin-bottom:5px; width: 100%; text-align: center;">
+                                        &laquo;body&raquo;
+                                    </div>
+                                </div>
+
+                                <div class="text-center">
                                     <div class="col-md-12 posbox" onclick="switchPosition('pos_outerTop')" id="pos_outerTop" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; <?php echo $outerTopEnabled; ?>">&laquo;outerTop&raquo;</div>
                                 </div>
-                                <div class="row text-center">
+                                <div class="text-center">
                                     <div class="col-md-2 posbox" onclick="switchPosition('pos_outerLeft')" id="pos_outerLeft" style="height: 630px; margin-bottom:5px; text-align: center; <?php echo $outerLeftEnabled; ?>">&laquo;outerLeft&raquo;</div>
                                     <div class="col-md-8">
                                         <div class="row">
@@ -2677,11 +2715,11 @@ else
 
                                 </div>
 
-                                <div class="row text-center">
+                                <div class="text-center">
                                     <div onclick="switchPosition('pos_outerBottom')" class="col-md-12 posbox" id="pos_outerBottom" style="height: 30px; margin-bottom:5px; width: 100%; text-align: center; <?php echo $outerBottomEnabled; ?>">&laquo;outerBottom&raquo;</div>
                                 </div>
                             </div>
-                        </div>
+
                     </div>
                 </div>
             </div>
