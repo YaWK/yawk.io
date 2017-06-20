@@ -296,7 +296,7 @@ echo "
               </div>
 
               <!-- PUBLISHING -->
-              <div class="box">
+              <div class="box box-default">
                   <div class="box-header with-border">
                       <h3 class="box-title"><i class="fa fa-clock-o"></i>&nbsp;&nbsp;<?php echo $lang['PUBLISHING']; ?> <small><?php echo "$lang[EFFECTIVE_TIME] $lang[AND] $lang[PRIVACY]"; ?></small></h3>
                       <!-- box-tools -->
