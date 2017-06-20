@@ -1217,6 +1217,10 @@ namespace YAWK {
             $fontRowLinkTextDecoration = "$fontRow-linktextdecoration";
             $fontRowHoverTextDecoration = "$fontRow-hovertextdecoration";
 
+            $FONT_ROW = strtoupper($fontRow);
+            $labelFontSize = "TPL_".$FONT_ROW."_SIZE";
+            $labelFontColor = "TPL_".$FONT_ROW."_COLOR";
+
             if ($fontRow === "xx")
             {
                 $col = "1";
@@ -1230,23 +1234,23 @@ namespace YAWK {
                 <div class=\"col-md-$col\">
                     <div class=\"$previewClass\" id=\"$fontRow-preview\" style=\"height: 120px; font-size: ".$templateSettings[$fontRowSize]['value']."; color: #".$templateSettings[$fontRowColor]['value'].";\">$fontRow Heading</div>
                 
-                    <label for=\"$fontRowFontfamily\">$fontRow Schriftart</label>";
+                    <label for=\"$fontRowFontfamily\">$FONT_ROW $lang[TPL_FONTFAMILY]</label>";
             $html .= $this->drawFontFamilySelectField($db, $lang, "$fontRowFontfamily", $templateSettings[$fontRowFontfamily]['value']);
             $html .= "
                 
-                    <label for=\"$fontRowSize\">Groesse</label>
+                    <label for=\"$fontRowSize\">$lang[$labelFontSize]</label>
                     <input id=\"$fontRowSize\" name=\"$fontRowSize\" value=\"".$templateSettings[$fontRowSize]['value']."\" class=\"form-control\">
                 
-                    <label for=\"$fontRowColor\">Farbe</label>
+                    <label for=\"$fontRowColor\">$lang[$labelFontColor]</label>
                     <input id=\"$fontRowColor\" name=\"$fontRowColor\" class=\"form-control color\" value=\"".$templateSettings[$fontRowColor]['value']."\">
                
-                        <label for=\"$fontRowFontShadowSize\">Schatten</label>
+                        <label for=\"$fontRowFontShadowSize\">$lang[TPL_FONTSHADOWSIZE]</label>
                         <input id=\"$fontRowFontShadowSize\" name=\"$fontRowFontShadowSize\" class=\"form-control\" value=\"".$templateSettings[$fontRowFontShadowSize]['value']."\" placeholder=\"2px 2px\">
                 
-                    <label for=\"$fontRowFontShadowColor\">Schattenfarbe</label>
+                    <label for=\"$fontRowFontShadowColor\">$lang[TPL_FONTSHADOWCOLOR]</label>
                     <input id=\"$fontRowFontShadowColor\" name=\"$fontRowFontShadowColor\" value=\"".$templateSettings[$fontRowFontShadowColor]['value']."\" class=\"form-control color\">
                 
-                    <label for=\"$fontRowFontWeight\">Gewicht</label>
+                    <label for=\"$fontRowFontWeight\">$lang[TPL_FONTWEIGHT]</label>
                         <select id=\"$fontRowFontWeight\" name=\"$fontRowFontWeight\" class=\"form-control\">";
 
             $fontweightStyles = array("normal", "bold", "bolder", "lighter", "100", "200", "300", "400 [normal]", "500", "600", "700 [bold]", "800", "900", "initial", "inherit");
@@ -1265,7 +1269,7 @@ namespace YAWK {
             }
             $html .= "</select>
                 
-                    <label for=\"$fontRowFontStyle\">Stil</label>
+                    <label for=\"$fontRowFontStyle\">$lang[TPL_FONTSTYLE]</label>
                     <select id=\"$fontRowFontStyle\" name=\"$fontRowFontStyle\" class=\"form-control\">";
 
             $fontStyles = array("normal", "italic", "oblique", "initial", "inherit");
@@ -1285,7 +1289,7 @@ namespace YAWK {
 
             $html .="</select>
                 
-                    <label for=\"$fontRowTextdecoration\">Dekoration</label>
+                    <label for=\"$fontRowTextdecoration\">$lang[TPL_TEXTDECORATION]</label>
                     <select id=\"$fontRowTextdecoration\" name=\"$fontRowTextdecoration\" class=\"form-control\">";
 
             $textdecorationTypes = array("none", "underline", "overline", "line-through", "intial", "inherit");
@@ -1307,7 +1311,7 @@ namespace YAWK {
             // LINK SETTINGS START HERE
               $html .= "
 
-                    <label for=\"$fontRowLinkTextDecoration\">Dekoration</label>
+                    <label for=\"$fontRowLinkTextDecoration\">$lang[TPL_LINK_TEXTDECORATION]</label>
                     <select id=\"$fontRowLinkTextDecoration\" name=\"$fontRowLinkTextDecoration\" class=\"form-control\">";
 
             foreach ($textdecorationTypes as $decoration)
@@ -1333,7 +1337,7 @@ namespace YAWK {
                         <label for=\"$fontRow-ahover\">$lang[TPL_LINK_HOVER_COLOR]</label>
                         <input id=\"$fontRow-ahover\" name=\"$fontRow-ahover\" value=\"".$templateSettings[$fontRowAHoverColor]['value']."\" class=\"form-control color\"> 
                    
-                    <label for=\"$fontRowLinkFontWeight\">Gewicht</label>
+                    <label for=\"$fontRowLinkFontWeight\">$lang[TPL_LINK_TEXTDECORATION]</label>
                         <select id=\"$fontRowLinkFontWeight\" name=\"$fontRowLinkFontWeight\" class=\"form-control\">";
 
             foreach ($fontweightStyles as $weight)
@@ -1351,7 +1355,7 @@ namespace YAWK {
             }
             $html .= "</select>
                
-                    <label for=\"$fontRowLinkFontStyle\">Stil</label>
+                    <label for=\"$fontRowLinkFontStyle\">$lang[TPL_LINK_FONTSTYLE]</label>
                     <select id=\"$fontRowLinkFontStyle\" name=\"$fontRowLinkFontStyle\" class=\"form-control\">";
 
             foreach ($fontStyles as $style)
@@ -1369,7 +1373,7 @@ namespace YAWK {
             }
 
             $html .="</select>
-                    <label for=\"$fontRowHoverTextDecoration\">Dekoration</label>
+                    <label for=\"$fontRowHoverTextDecoration\">$lang[TPL_HOVER_TEXTDECORATION]</label>
                     <select id=\"$fontRowHoverTextDecoration\" name=\"$fontRowHoverTextDecoration\" class=\"form-control\">";
 
             foreach ($textdecorationTypes as $decoration)
