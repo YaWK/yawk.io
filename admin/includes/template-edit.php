@@ -53,7 +53,6 @@
         cursor:pointer;
     }
 </style>
-<link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet">
 <!-- Javascript for positions tab -->
 <script type="text/javascript">
 /* reminder: check if form has changed and warns the user that he needs to save. */
@@ -2453,131 +2452,132 @@ else
 
                         <?php
                         $enabledBorder = "border: 1px solid #4CAE4C;";
+                        $disabledBorder = "border: 1px dashed #ccc;";
 
                         if ($templateSettings['pos-outerTop-enabled']['value'] === "1")
                         {   $outerTopEnabled = $enabledBorder; }
                         else
-                        {   $outerTopEnabled = ''; }
+                        {   $outerTopEnabled = $disabledBorder; }
 
                         if ($templateSettings['pos-intro-enabled']['value'] === "1")
                         {   $introEnabled = $enabledBorder; }
                         else
-                        {   $introEnabled = ''; }
+                        {   $introEnabled = $disabledBorder; }
 
                         if ($templateSettings['pos-outerLeft-enabled']['value'] === "1")
                         {   $outerLeftEnabled = $enabledBorder; }
                         else
-                        {   $outerLeftEnabled = ''; }
+                        {   $outerLeftEnabled = $disabledBorder; }
 
                         if ($templateSettings['pos-globalmenu-enabled']['value'] === "1")
                         {   $globalmenuEnabled = $enabledBorder; }
                         else
-                        {   $globalmenuEnabled = ''; }
+                        {   $globalmenuEnabled = $disabledBorder; }
 
                         if ($templateSettings['pos-top-enabled']['value'] === "1")
                         {   $topEnabled = $enabledBorder; }
                         else
-                        {   $topEnabled = ''; }
+                        {   $topEnabled = $disabledBorder; }
 
                         if ($templateSettings['pos-leftMenu-enabled']['value'] === "1")
                         {   $leftMenuEnabled = $enabledBorder; }
                         else
-                        {   $leftMenuEnabled = ''; }
+                        {   $leftMenuEnabled = $disabledBorder; }
 
                         if ($templateSettings['pos-mainTop-enabled']['value'] === "1")
                         {   $mainTopEnabled = $enabledBorder; }
                         else
-                        {   $mainTopEnabled = ''; }
+                        {   $mainTopEnabled = $disabledBorder; }
 
                         if ($templateSettings['pos-mainTopLeft-enabled']['value'] === "1")
                         {   $mainTopLeftEnabled = $enabledBorder; }
                         else
-                        {   $mainTopLeftEnabled = ''; }
+                        {   $mainTopLeftEnabled = $disabledBorder; }
 
                         if ($templateSettings['pos-mainTopCenter-enabled']['value'] === "1")
                         {   $mainTopCenterEnabled = $enabledBorder; }
                         else
-                        {   $mainTopCenterEnabled = ''; }
+                        {   $mainTopCenterEnabled = $disabledBorder; }
 
                         if ($templateSettings['pos-mainTopRight-enabled']['value'] === "1")
                         {   $mainTopRightEnabled = $enabledBorder; }
                         else
-                        {   $mainTopRightEnabled = ''; }
+                        {   $mainTopRightEnabled = $disabledBorder; }
 
                         if ($templateSettings['pos-main-enabled']['value'] === "1")
                         {   $mainEnabled = $enabledBorder; }
                         else
-                        {   $mainEnabled = ''; }
+                        {   $mainEnabled = $disabledBorder; }
 
                         if ($templateSettings['pos-mainBottom-enabled']['value'] === "1")
                         {   $mainBottomEnabled = $enabledBorder; }
                         else
-                        {   $mainBottomEnabled = ''; }
+                        {   $mainBottomEnabled = $disabledBorder; }
 
                         if ($templateSettings['pos-mainBottomLeft-enabled']['value'] === "1")
                         {   $mainBottomLeftEnabled = $enabledBorder; }
                         else
-                        {   $mainBottomLeftEnabled = ''; }
+                        {   $mainBottomLeftEnabled = $disabledBorder; }
 
                         if ($templateSettings['pos-mainBottomCenter-enabled']['value'] === "1")
                         {   $mainBottomCenterEnabled = $enabledBorder; }
                         else
-                        {   $mainBottomCenterEnabled = ''; }
+                        {   $mainBottomCenterEnabled = $disabledBorder; }
 
                         if ($templateSettings['pos-mainBottomRight-enabled']['value'] === "1")
                         {   $mainBottomRightEnabled = $enabledBorder; }
                         else
-                        {   $mainBottomRightEnabled = ''; }
+                        {   $mainBottomRightEnabled = $disabledBorder; }
 
                         if ($templateSettings['pos-mainFooter-enabled']['value'] === "1")
                         {   $mainFooterEnabled = $enabledBorder; }
                         else
-                        {   $mainFooterEnabled = ''; }
+                        {   $mainFooterEnabled = $disabledBorder; }
 
                         if ($templateSettings['pos-mainFooterLeft-enabled']['value'] === "1")
                         {   $mainFooterLeftEnabled = $enabledBorder; }
                         else
-                        {   $mainFooterLeftEnabled = ''; }
+                        {   $mainFooterLeftEnabled = $disabledBorder; }
 
                         if ($templateSettings['pos-mainFooterCenter-enabled']['value'] === "1")
                         {   $mainFooterCenterEnabled = $enabledBorder; }
                         else
-                        {   $mainFooterCenterEnabled = ''; }
+                        {   $mainFooterCenterEnabled = $disabledBorder; }
 
                         if ($templateSettings['pos-mainFooterRight-enabled']['value'] === "1")
                         {   $mainFooterRightEnabled = $enabledBorder; }
                         else
-                        {   $mainFooterRightEnabled = ''; }
+                        {   $mainFooterRightEnabled = $disabledBorder; }
 
                         if ($templateSettings['pos-rightMenu-enabled']['value'] === "1")
                         {   $rightMenuEnabled = $enabledBorder; }
                         else
-                        {   $rightMenuEnabled = ''; }
+                        {   $rightMenuEnabled = $disabledBorder; }
 
                         if ($templateSettings['pos-footer-enabled']['value'] === "1")
                         {   $footerEnabled = $enabledBorder; }
                         else
-                        {   $footerEnabled = ''; }
+                        {   $footerEnabled = $disabledBorder; }
 
                         if ($templateSettings['pos-hiddenToolbar-enabled']['value'] === "1")
                         {   $hiddenToolbarEnabled = $enabledBorder; }
                         else
-                        {   $hiddenToolbarEnabled = ''; }
+                        {   $hiddenToolbarEnabled = $disabledBorder; }
 
                         if ($templateSettings['pos-debug-enabled']['value'] === "1")
                         {   $debugEnabled = $enabledBorder; }
                         else
-                        {   $debugEnabled = ''; }
+                        {   $debugEnabled = $disabledBorder; }
 
                         if ($templateSettings['pos-outerRight-enabled']['value'] === "1")
                         {   $outerRightEnabled = $enabledBorder; }
                         else
-                        {   $outerRightEnabled = ''; }
+                        {   $outerRightEnabled = $disabledBorder; }
 
                         if ($templateSettings['pos-outerBottom-enabled']['value'] === "1")
                         {   $outerBottomEnabled = $enabledBorder; }
                         else
-                        {   $outerBottomEnabled = ''; }
+                        {   $outerBottomEnabled = $disabledBorder; }
                         ?>
 
                         <script type="text/javascript">
