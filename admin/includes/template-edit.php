@@ -447,7 +447,7 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         /* BODY BG GRADIENT */
         ".$tplSettings['pos-body-bg-gradient-longValue']."
         ".$tplSettings['pos-body-customCSS-longValue']."
-    }
+        
         a { /* LINK SETTINGS */
             color: #".$tplSettings['a-link'].";
             font-weight: bold;
@@ -460,6 +460,7 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
             color: #".$tplSettings['hover-link'].";
             text-decoration: ".$tplSettings['hoverdecoration-link'].";
         }
+    }
     
         /* TYPOGRAPHY SETTINGS */
    
@@ -2794,12 +2795,11 @@ else
                         // alert('you flipped the switch!');
                         $("#h1-preview").replaceWith( "<div class=\"h1\" id=\"h1-preview\"><a href=\"#\">H1 Heading (link)</div>");
                         // $("#h1-preview").css("text-decoration", "underline");
-
                     });
 
                     // call set default values and preview font function
-                    previewFont($("#h1-fontfamily"), 'H1 Heading', 'h1-preview', $("#h1-preview"), $("#h1-size"), $("#h1-fontcolor"), $("#h1-fontshadowsize"), $("#h1-fontshadowcolor"), $("#h1-fontweight"), $("#h1-fontstyle"), $("#h1-textdecoration"), $("#h1-linkfontweight"), $("#h1-linkfontstyle"), $("#h1-linktextdecoration"), $("#h1-alink"), $("#h1-avisited"), $("#h1-ahover"));
-                    previewFont($("#h2-fontfamily"), 'H2 Heading', 'h2-preview', $("#h2-preview"), $("#h2-size"), $("#h2-fontcolor"), $("#h2-fontshadowsize"), $("#h2-fontshadowcolor"), $("#h2-fontweight"), $("#h2-fontstyle"), $("#h2-textdecoration"), $("#h2-linkfontweight"), $("#h2-linkfontstyle"), $("#h2-linktextdecoration"), $("#h2-alink"), $("#h2-avisited"), $("#h2-ahover"));
+                    previewFont($("#h1-fontfamily"), 'H1 Heading', 'h1-preview', $("#h1-preview"), $("#h1-size"), $("#h1-fontcolor"), $("#h1-fontshadowsize"), $("#h1-fontshadowcolor"), $("#h1-fontweight"), $("#h1-fontstyle"), $("#h1-textdecoration"));
+                    previewFont($("#h2-fontfamily"), 'H2 Heading', 'h2-preview', $("#h2-preview"), $("#h2-size"), $("#h2-fontcolor"), $("#h2-fontshadowsize"), $("#h2-fontshadowcolor"), $("#h2-fontweight"), $("#h2-fontstyle"), $("#h2-textdecoration"));
                     previewFont($("#h3-fontfamily"), 'H3 Heading', 'h3-preview', $("#h3-preview"), $("#h3-size"), $("#h3-fontcolor"), $("#h3-fontshadowsize"), $("#h3-fontshadowcolor"), $("#h3-fontweight"), $("#h3-fontstyle"), $("#h3-textdecoration"));
                     previewFont($("#h4-fontfamily"), 'H4 Heading', 'h4-preview', $("#h4-preview"), $("#h4-size"), $("#h4-fontcolor"), $("#h4-fontshadowsize"), $("#h4-fontshadowcolor"), $("#h4-fontweight"), $("#h4-fontstyle"), $("#h4-textdecoration"));
                     previewFont($("#h5-fontfamily"), 'H5 Heading', 'h5-preview', $("#h5-preview"), $("#h5-size"), $("#h5-fontcolor"), $("#h5-fontshadowsize"), $("#h5-fontshadowcolor"), $("#h5-fontweight"), $("#h5-fontstyle"), $("#h5-textdecoration"));
@@ -2828,12 +2828,15 @@ else
                             $('#resetTestText').prop('disabled', true); // enable reset btn if key up on testText field
                         });
 
+                        // if test text changes due input via keyup
                         $('#testText').keyup(function(){
+                            // enable reset text button
                             $('#resetTestText').prop('disabled', false);
+                            // update text preview with values from testText field
                             $(previewField).html($(this).val());
                         });
 
-
+                        // LOAD DEFAULT (CURRENT) PREVIEW
                         // SET DEFAULT VALUES
                         var selectedFont = $(font).val();
                         var pathAndFont = '../system/fonts/'+selectedFont;
@@ -2842,8 +2845,6 @@ else
                         // check if fontfamily contains the string ttf
                         if ($(font).val().toLowerCase().indexOf("-ttf") >= 0)
                         {
-                            //  $("#changeMe").css("font-family", selectedFont);
-
                             // workaround: remove the last 4 chars (-ttf)
                             var fn = pathAndFont.slice(0,-4);
                             // workaround: add file extension
