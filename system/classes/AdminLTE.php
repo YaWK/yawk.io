@@ -690,6 +690,10 @@ namespace YAWK {
                 <li ";echo (isset($_GET['page']) && $_GET['page'] == 'stats') ? "class='active'" : ""; echo">
                     <a href=\"index.php?page=stats\"><i class=\"fa fa-line-chart\"></i> <span>$lang[STATS]</span></a>
                 </li>
+                <!-- support -->
+                <li ";echo (isset($_GET['page']) && $_GET['page'] == 'help') ? "class='active'" : ""; echo">
+                    <a href=\"index.php?page=help\"><i class=\"fa fa-life-ring\"></i> <span>$lang[SUPPORT]</span></a>
+                </li>
                 <!-- system -->
                 <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-system') ? "class='active'" : ""; echo">
                     <a href=\"index.php?page=settings-system\"> <i class=\"fa fa-cog\"></i> <span>$lang[SETTINGS]</span></a>
