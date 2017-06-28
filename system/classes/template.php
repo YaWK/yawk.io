@@ -1198,7 +1198,7 @@ namespace YAWK {
          * @param array  $templateSettings all template settings as an array
          *
          */
-        public function getFontRow($db, $lang, $fontRow, $previewClass, $templateSettings)
+        public function getFontRow($db, $lang, $fontRow, $previewClass, $templateSettings, $lang)
         {
             // prepare vars
             $fontRowSize = "$fontRow-size";
@@ -1216,42 +1216,69 @@ namespace YAWK {
             $fontRowLinkFontStyle = "$fontRow-linkfontstyle";
             $fontRowLinkTextDecoration = "$fontRow-linktextdecoration";
             $fontRowHoverTextDecoration = "$fontRow-hovertextdecoration";
+            $fontRowSmallColor = "$fontRow-smallcolor";
+            $fontRowSmallShadowSize = "$fontRow-smallshadowsize";
+            $fontRowSmallShadowColor = "$fontRow-smallshadowcolor";
 
             $FONT_ROW = strtoupper($fontRow);
             $labelFontSize = "TPL_".$FONT_ROW."_SIZE";
             $labelFontColor = "TPL_".$FONT_ROW."_COLOR";
+            $labelSmallColor = "TPL_".$FONT_ROW."_SMALLCOLOR";
 
-            if ($fontRow === "xx")
-            {
-                $col = "1";
+
+            // check if description is set
+            // the description will be shown right beside the label as small info icon
+            if (isset($templateSettings[$fontRowFontfamily]['description']) && (!empty($templateSettings[$fontRowFontfamily]['description'])))
+            {   // L11n
+                $fontRowFamilyDesc = $lang[$templateSettings[$fontRowFontfamily]['description']];
+                $fontRowFamilyInfoBtn = "&nbsp;<small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$fontRowFamilyDesc\"></i></small>";
             }
             else
                 {
-                    $col = "2";
+                    $fontRowFamilyInfoBtn = '';
+                }
+            // check if font family default value is set
+            if (isset($templateSettings[$fontRowFontfamily]['valueDefault']) && (!empty($templateSettings[$fontRowFontfamily]['valueDefault'])))
+            {   // default values:
+                $fontRowFamilyDefault = "<i class=\"h6 small\">default: ".$templateSettings[$fontRowFontfamily]['valueDefault']."</i>";
+            }
+            else
+                {
+                    $fontRowFamilyDefault = '';
                 }
 
+            // check if font size is set
+            if (isset($templateSettings[$fontRowSize]['valueDefault']) && (!empty($templateSettings[$fontRowSize]['valueDefault'])))
+            {   // default values:
+                $fontRowSizeDefault = "<i class=\"h6 small\">(".$templateSettings[$fontRowSize]['valueDefault'].")</i>";
+            }
+            else
+            {
+                $fontRowSizeDefault = '';
+            }
+
             $html = "
-                <div class=\"col-md-$col\">
-                    <div class=\"$previewClass\" id=\"$fontRow-preview\" style=\"height: 120px; font-size: ".$templateSettings[$fontRowSize]['value']."; color: #".$templateSettings[$fontRowColor]['value'].";\">$fontRow Heading</div>
-                
-                    <label for=\"$fontRowFontfamily\">$FONT_ROW $lang[TPL_FONTFAMILY]</label>";
+                <div class=\"col-md-2\">
+                    <div class=\"$previewClass\" id=\"$fontRow-preview\" style=\"height: 120px; overflow:hidden; font-size: ".$templateSettings[$fontRowSize]['value']."; color: #".$templateSettings[$fontRowColor]['value'].";\">$fontRow Heading</div>
+               
+                    <label for=\"$fontRowFontfamily\">$FONT_ROW $lang[TPL_FONTFAMILY] $fontRowFamilyInfoBtn</label>";
             $html .= $this->drawFontFamilySelectField($db, $lang, "$fontRowFontfamily", $templateSettings[$fontRowFontfamily]['value']);
             $html .= "
                 
-                    <label for=\"$fontRowSize\">$lang[$labelFontSize]</label>
+                    <label for=\"$fontRowSize\">$lang[$labelFontSize] $fontRowSizeDefault</label>
                     <input id=\"$fontRowSize\" name=\"$fontRowSize\" value=\"".$templateSettings[$fontRowSize]['value']."\" class=\"form-control\">
                 
                     <label for=\"$fontRowColor\">$lang[$labelFontColor]</label>
                     <input id=\"$fontRowColor\" name=\"$fontRowColor\" class=\"form-control color\" value=\"".$templateSettings[$fontRowColor]['value']."\">
                
-                        <label for=\"$fontRowFontShadowSize\">$lang[TPL_FONTSHADOWSIZE]</label>
-                        <input id=\"$fontRowFontShadowSize\" name=\"$fontRowFontShadowSize\" class=\"form-control\" value=\"".$templateSettings[$fontRowFontShadowSize]['value']."\" placeholder=\"2px 2px\">
+                    <label for=\"$fontRowFontShadowSize\">$lang[TPL_FONTSHADOWSIZE]</label>
+                    <input id=\"$fontRowFontShadowSize\" name=\"$fontRowFontShadowSize\" class=\"form-control\" value=\"".$templateSettings[$fontRowFontShadowSize]['value']."\" placeholder=\"2px 2px\">
                 
                     <label for=\"$fontRowFontShadowColor\">$lang[TPL_FONTSHADOWCOLOR]</label>
                     <input id=\"$fontRowFontShadowColor\" name=\"$fontRowFontShadowColor\" value=\"".$templateSettings[$fontRowFontShadowColor]['value']."\" class=\"form-control color\">
                 
                     <label for=\"$fontRowFontWeight\">$lang[TPL_FONTWEIGHT]</label>
-                        <select id=\"$fontRowFontWeight\" name=\"$fontRowFontWeight\" class=\"form-control\">";
+                    <select id=\"$fontRowFontWeight\" name=\"$fontRowFontWeight\" class=\"form-control\">";
 
             $fontweightStyles = array("normal", "bold", "bolder", "lighter", "100", "200", "300", "400 [normal]", "500", "600", "700 [bold]", "800", "900", "initial", "inherit");
             foreach ($fontweightStyles as $weight)
@@ -1389,7 +1416,21 @@ namespace YAWK {
                 }
                 $html .= "<option value=\"$decoration\" $selected>$decoration</option>";
             }
-            $html .= "</select>
+            $html .= "</select>";
+
+            // SMALL TAG COLOR
+            $html .= "<label for=\"$fontRowSmallColor\">$lang[$labelSmallColor]</label>
+                    <input id=\"$fontRowSmallColor\" name=\"$fontRowSmallColor\" class=\"form-control color\" value=\"".$templateSettings[$fontRowSmallColor]['value']."\">";
+
+            // SMALL TAG SHADOW SIZE
+            $html .= "<label for=\"$fontRowSmallShadowSize\">$lang[TPL_SMALLSHADOWSIZE]</label>
+                    <input id=\"$fontRowSmallShadowSize\" name=\"$fontRowSmallShadowSize\" class=\"form-control\" value=\"".$templateSettings[$fontRowSmallShadowSize]['value']."\" placeholder=\"2px 2px\">";
+            // SMALL TAG SHADOW COLOR
+            $html .= "<label for=\"$fontRowSmallShadowColor\">$lang[TPL_SMALLSHADOWCOLOR]</label>
+                    <input id=\"$fontRowSmallShadowColor\" name=\"$fontRowSmallShadowColor\" value=\"".$templateSettings[$fontRowSmallShadowColor]['value']."\" class=\"form-control color\">";
+
+            // end font div box
+            $html .="
             </div>";
 
             echo $html;
@@ -1849,6 +1890,9 @@ namespace YAWK {
             $aStyle = $tplSettings["$cssTagName-linkfontstyle"];
             $aDecoration = $tplSettings["$cssTagName-linktextdecoration"];
             $hoverDecoration = $tplSettings["$cssTagName-hovertextdecoration"];
+            $smallColor = $tplSettings["$cssTagName-smallcolor"];
+            $smallShadowSize = $tplSettings["$cssTagName-smallshadowsize"];
+            $smallShadowColor = $tplSettings["$cssTagName-smallshadowcolor"];
 
             // get font type by cutting off file extension
             $fontType = substr($fontFamily, -4);
@@ -1883,6 +1927,14 @@ namespace YAWK {
                         color: #$aHover;
                         text-decoration: $hoverDecoration;
                 }
+                $cssTagName small,
+                .$cssTagName small
+                {
+                    font-weight: normal;
+                    line-height: 1;
+                    color: #$smallColor;
+                    text-shadow: $smallShadowSize #$smallShadowColor;
+                }
                 ";
             }
             elseif ($fontType === "-otf")
@@ -1914,6 +1966,14 @@ namespace YAWK {
                     $cssTagName a:hover {   
                         color: #$aHover;
                         text-decoration: $hoverDecoration;
+                    }
+                    $cssTagName small,
+                    .$cssTagName small
+                    {
+                        font-weight: normal;
+                        line-height: 1;
+                        color: #$smallColor;
+                        text-shadow: $smallShadowSize #$smallShadowColor;
                     }
                 ";
             }
@@ -1947,6 +2007,14 @@ namespace YAWK {
                         color: #$aHover;
                         text-decoration: $hoverDecoration;
                     }
+                    $cssTagName small,
+                    .$cssTagName small
+                    {
+                        font-weight: normal;
+                        line-height: 1;
+                        color: #$smallColor;
+                        text-shadow: $smallShadowSize #$smallShadowColor;
+                    }
                 ";
             }
             // check, if it's a google font
@@ -1978,6 +2046,14 @@ namespace YAWK {
                         color: #$aHover;
                         text-decoration: $hoverDecoration;
                     }
+                    $cssTagName small,
+                    .$cssTagName small
+                    {
+                        font-weight: normal;
+                        line-height: 1;
+                        color: #$smallColor;
+                        text-shadow: $smallShadowSize #$smallShadowColor;
+                    }
                 ";
             }
             else
@@ -2006,6 +2082,14 @@ namespace YAWK {
                     $cssTagName a:hover {   
                         color: #$aHover;
                         text-decoration: $hoverDecoration;
+                    }
+                    $cssTagName small,
+                    .$cssTagName small
+                    {
+                        font-weight: normal;
+                        line-height: 1;
+                        color: #$smallColor;
+                        text-shadow: $smallShadowSize #$smallShadowColor;
                     }
                     ";
                 }
@@ -2071,6 +2155,7 @@ namespace YAWK {
          * @link http://yawk.io
          * @param object $db database
          */
+        // TODO: OUTDATED AFTER REFACTORING...
         static function outputActivegFont($db)
         {
             $fonts = array(); // hold all fonts
@@ -2087,7 +2172,8 @@ namespace YAWK {
                 if (substr($googleFont, -6) === "-gfont")
                 {
                     // remove font indicator
-                    $googleFont = rtrim($googleFont, "-gfont");
+                    $googleFont = rtrim($googleFont, "gfont");
+                    $googleFont = rtrim($googleFont, "-");
                     // build google font loading string
                     $googleFontFamilyString .= $googleFont;
                     // add | to allow loading more than one font
@@ -2101,32 +2187,6 @@ namespace YAWK {
                 echo "<link href=\"https://fonts.googleapis.com/css?family=$googleFontFamilyString\" rel=\"stylesheet\">";
             }
 
-
-            // set Google Font for Heading, Menu & paragraph Text
-            $gHeading = self::getTemplateSetting($db, "value", "heading-gfont");
-            $gMenu = self::getTemplateSetting($db, "value", "menu-gfont");
-            $gText = self::getTemplateSetting($db, "value", "text-gfont");
-            // make sure that we are loading just the google font we are really need
-            if ($gHeading == $gMenu && $gHeading == $gText)
-            {
-                echo self::getActivegfont($db, "url", "heading-gfont");
-            }
-            elseif ($gHeading == $gMenu)
-            {
-                echo self::getActivegfont($db, "url", "heading-gfont");
-                echo self::getActivegfont($db, "url", "text-gfont");
-            }
-            elseif ($gHeading == $gText)
-            {
-                echo self::getActivegfont($db, "url", "heading-gfont");
-                echo self::getActivegfont($db, "url", "menu-gfont");
-            }
-            else
-            {
-                echo self::getActivegfont($db, "url", "heading-gfont");
-                echo self::getActivegfont($db, "url", "menu-gfont");
-                echo self::getActivegfont($db, "url", "text-gfont");
-            }
         }
 
         /**
