@@ -32,12 +32,13 @@ else
  <meta name="description" content="<?php echo YAWK\settings::getSetting($db, "globalmetatext"); ?>">
  <meta charset="utf-8">
  <meta http-equiv="imagetoolbar" content="no">
+<!-- <meta name="google-site-verification" content="x557vK7Psu-reaTe6WOfjYXSKhCxUmfkRiX1sOKlTdA"> -->
  <meta http-equiv="X-UA-Compatible" content="IE=edge">
  <!-- apple touch icons -->
  <link rel="apple-touch-icon" sizes="120x120" href="media/images/apple-touch-icon-120x120-precomposed.png">
  <link rel="apple-touch-icon" sizes="152x152" href="media/images/apple-touch-icon-152x152-precomposed.png">
     <!-- import font awesome -->
-    <link rel="stylesheet" href="system/engines/font-awesome/css/font-awesome.min.css" type="text/css" media="all">
+    <!-- <link rel="stylesheet" href="system/engines/font-awesome/css/font-awesome.min.css" type="text/css" media="all"> -->
     <!-- import animate.css -->
     <!-- <link rel="stylesheet" href="system/engines/animateCSS/animate.min.css" type="text/css" media="all"> -->
     <!-- Bootstrap core CSS -->
@@ -51,7 +52,7 @@ else
     <!-- validation plugin
     <script src="system/engines/jquery/jquery.validate.min.js"></script> -->
     <!-- jQuery UI -->
-    <script src="system/engines/jquery/jquery-ui.min.js"></script>
+    <!-- <script src="system/engines/jquery/jquery-ui.min.js"></script> -->
     <!--[if lt IE 9]>
     <script src="system/engines/jquery/html5shiv.min.js"></script>
     <script src="system/engines/jquery/1.3.0-respond.min.js"></script>
@@ -65,23 +66,22 @@ else
 
     <!-- JS <noscript> tag -->
     <!-- <noscript><br><br><h2 style="text-align: center;">This page requires a modern browser with javascript. <br><small>Please activate Javascript or use a better browser.</small></h2></noscript> -->
+<!-- gfonts -->
 <?php
 // include additional html header stuff & local meta tags
 \YAWK\sys::includeHeader($db);
 // load active google font code
-// \YAWK\template::outputActivegFont($db);
+\YAWK\template::loadGoogleFonts($db);
 // load position stats (0|1)
 $positions = \YAWK\template::getPositionStatesArray($db);
 // load position indicators
 $indicators = \YAWK\template::getPositionIndicatorStatusArray($db);
-
 ?>
+<!-- /gfonts -->
   </head>
-<!-- <body style="<?php //echo YAWK\template::getActivegfont($db, "", "text-gfont"); ?>" ondragstart="return false"> -->
-<body ondragstart="return false">
+<body style="<?php echo YAWK\template::getActiveBodyFont($db); ?>" ondragstart="return false">
 
   <!-- LAYOUT START -->
-
   <div class="container-fluid">
       <div class="row">
       <?php
@@ -135,7 +135,7 @@ $indicators = \YAWK\template::getPositionIndicatorStatusArray($db);
                       $col = "col-md-8";
                   }
                   else if ($positions['pos-leftMenu-enabled'] === "0" && ($positions['pos-rightMenu-enabled'] === "1")
-                      ||      ($positions['pos-leftMenu-enabled'] === "1" && ($positions['pos-rightMenu-enabled'] === "0")))
+                  ||      ($positions['pos-leftMenu-enabled'] === "1" && ($positions['pos-rightMenu-enabled'] === "0")))
                   {
                       $col = "col-md-10";
                   }
@@ -363,6 +363,42 @@ $indicators = \YAWK\template::getPositionIndicatorStatusArray($db);
       </div>
   </div>
   <!-- LAYOUT END -->
+
+      <script>
+          /*
+          $(document).ready(function(){
+             // $("#mainPos").addClass("slide");
+
+              // Add smooth scrolling to all links in navbar + footer link
+              $(".submenu a, a[href='#sicherheit']").on('click', function(event) {
+                  // Prevent default anchor click behavior
+                  event.preventDefault();
+                  // Store hash
+                  var hash = this.hash;
+                  // Using jQuery's animate() method to add smooth page scroll
+                  // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
+                  $('html, body').animate({
+                      scrollTop: $(hash).offset().top
+                  }, 900, function(){
+                      // Add hash (#) to URL when done scrolling (default click behavior)
+                      window.location.hash = hash;
+                  });
+              });
+
+              // Slide in elements on scroll
+              $(window).scroll(function() {
+                  $(".slideanim").each(function(){
+                      var pos = $(this).offset().top;
+
+                      var winTop = $(window).scrollTop();
+                      if (pos < winTop + 600) {
+                          $(this).addClass("slide");
+                      }
+                  });
+              });
+          })
+          */
+      </script>
 
  </body>
 </html>

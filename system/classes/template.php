@@ -1198,7 +1198,7 @@ namespace YAWK {
          * @param array  $templateSettings all template settings as an array
          *
          */
-        public function getFontRow($db, $lang, $fontRow, $previewClass, $templateSettings, $lang)
+        public function getFontRow($db, $lang, $fontRow, $previewClass, $templateSettings)
         {
             // prepare vars
             $fontRowSize = "$fontRow-size";
@@ -1219,6 +1219,12 @@ namespace YAWK {
             $fontRowSmallColor = "$fontRow-smallcolor";
             $fontRowSmallShadowSize = "$fontRow-smallshadowsize";
             $fontRowSmallShadowColor = "$fontRow-smallshadowcolor";
+
+            if ($fontRow === "globaltext" xor ($fontRow === "menufont"))
+            {
+                $col = 6;
+            }
+            else { $col = 2; }
 
             $FONT_ROW = strtoupper($fontRow);
             $labelFontSize = "TPL_".$FONT_ROW."_SIZE";
@@ -1258,8 +1264,8 @@ namespace YAWK {
             }
 
             $html = "
-                <div class=\"col-md-2\">
-                    <div class=\"$previewClass\" id=\"$fontRow-preview\" style=\"height: 120px; overflow:hidden; font-size: ".$templateSettings[$fontRowSize]['value']."; color: #".$templateSettings[$fontRowColor]['value'].";\">$fontRow Heading</div>
+                <div class=\"col-md-$col\">
+                    <div class=\"$previewClass\" id=\"$fontRow-preview\" style=\"height: auto; overflow:hidden; font-size: ".$templateSettings[$fontRowSize]['value']."; color: #".$templateSettings[$fontRowColor]['value'].";\">$fontRow Heading</div>
                
                     <label for=\"$fontRowFontfamily\">$FONT_ROW $lang[TPL_FONTFAMILY] $fontRowFamilyInfoBtn</label>";
             $html .= $this->drawFontFamilySelectField($db, $lang, "$fontRowFontfamily", $templateSettings[$fontRowFontfamily]['value']);
@@ -1873,6 +1879,134 @@ namespace YAWK {
             }
         }
 
+        static function setBodyFontFace($cssTagName, $tplSettings)
+        {
+            $fontFamily = $tplSettings["$cssTagName-fontfamily"];
+            // get font type by cutting off file extension
+            $fontType = substr($fontFamily, -4);
+            // check file types
+            if ($fontType === "-ttf")
+            {
+                $filename = str_replace("-ttf", ".ttf", $fontFamily);
+                $bodyFontCSS = "@font-face {
+                font-family: $fontFamily;
+                src: url('../../../fonts/$filename');
+                }";
+            }
+            elseif ($fontType === "-otf")
+            {
+                $filename = str_replace("-otf", ".otf", $fontFamily);
+                $bodyFontCSS = "@font-face {
+                font-family: $fontFamily;
+                src: url('../../../fonts/$filename');
+                }";
+            }
+            elseif ($fontType === "woff")
+            {
+                $filename = str_replace("-woff", ".woff", $fontFamily);
+                $bodyFontCSS = "@font-face {
+                font-family: $fontFamily;
+                src: url('../../../fonts/$filename') !important;
+                }";
+            }
+            return $bodyFontCSS;
+        }
+
+        static function setCssBodyFontTags($cssTagName, $tplSettings)
+        {
+            $fontFamily = $tplSettings["$cssTagName-fontfamily"];
+            $fontSize = $tplSettings["$cssTagName-size"];
+            $fontColor = $tplSettings["$cssTagName-fontcolor"];
+            $fontShadowSize = $tplSettings["$cssTagName-fontshadowsize"];
+            $fontShadowColor = $tplSettings["$cssTagName-fontshadowcolor"];
+            $fontWeight = $tplSettings["$cssTagName-fontweight"];
+            $fontStyle = $tplSettings["$cssTagName-fontstyle"];
+            $fontTextDecoration = $tplSettings["$cssTagName-textdecoration"];
+            $aLink = $tplSettings["$cssTagName-alink"];
+            $aVisited = $tplSettings["$cssTagName-avisited"];
+            $aHover = $tplSettings["$cssTagName-ahover"];
+            $aWeight = $tplSettings["$cssTagName-linkfontweight"];
+            $aStyle = $tplSettings["$cssTagName-linkfontstyle"];
+            $aDecoration = $tplSettings["$cssTagName-linktextdecoration"];
+            $hoverDecoration = $tplSettings["$cssTagName-hovertextdecoration"];
+            $smallColor = $tplSettings["$cssTagName-smallcolor"];
+            $smallShadowSize = $tplSettings["$cssTagName-smallshadowsize"];
+            $smallShadowColor = $tplSettings["$cssTagName-smallshadowcolor"];
+            // check, if it's a google font
+            if (substr($fontFamily, -6) === "-gfont")
+            {
+                $googleFont = rtrim($fontFamily, "-gfont");
+                $bodyFontCSS = "
+                    font-family: $googleFont !important;
+                    font-size: $fontSize;
+                    color: #$fontColor;
+                    text-shadow: $fontShadowSize #$fontShadowColor;
+                    font-weight: $fontWeight;
+                    font-style: $fontStyle;
+                    text-decoration: $fontTextDecoration;
+                
+                a { /* LINK SETTINGS */
+                        color: #$aLink;
+                        font-weight: $aWeight;
+                        font-style: $aStyle;
+                        text-decoration: $aDecoration;
+                    }
+                a:visited {
+                        color: #$aVisited;
+                    }
+                a:hover {   
+                        color: #$aHover;
+                        text-decoration: $hoverDecoration;
+                    }
+                    small,
+                    .small
+                    {
+                        font-weight: normal;
+                        line-height: 1;
+                        color: #$smallColor;
+                        text-shadow: $smallShadowSize #$smallShadowColor;
+                    }
+                ";
+            }
+            else
+            {
+                $bodyFontCSS = "
+                        font-family: $fontFamily;
+                        font-size: $fontSize;
+                        color: #$fontColor;
+                        text-shadow: $fontShadowSize #$fontShadowColor;
+                        font-weight: $fontWeight;
+                        font-style: $fontStyle;
+                        text-decoration: $fontTextDecoration;
+                 
+                    a { /* LINK SETTINGS */
+                        color: #$aLink;
+                        font-weight: $aWeight;
+                        font-style: $aStyle;
+                        text-decoration: $aDecoration;
+                    }
+                    a:visited {
+                        color: #$aVisited;
+                    }
+                    a:hover {   
+                        color: #$aHover;
+                        text-decoration: $hoverDecoration;
+                    }
+                    small,
+                    .small
+                    {
+                        font-weight: normal;
+                        line-height: 1;
+                        color: #$smallColor;
+                        text-shadow: $smallShadowSize #$smallShadowColor;
+                    }
+                    ";
+
+
+            }
+            return $bodyFontCSS;
+        }
+
         static function setCssFontTags($cssTagName, $tplSettings)
         {
             $fontFamily = $tplSettings["$cssTagName-fontfamily"];
@@ -2096,6 +2230,13 @@ namespace YAWK {
             return $fontCSS;
         }
 
+        static function getActiveBodyFont($db)
+        {   /* @var \YAWK\db $db */
+            $bodyFont = \YAWK\template::getTemplateSetting($db, "value", "globaltext-fontfamily");
+            $bodyFontFamily = "font-family: $bodyFont";
+            return $bodyFontFamily;
+        }
+
         /**
          * return currently active google font
          * @author Daniel Retzl <danielretzl@gmail.com>
@@ -2156,7 +2297,7 @@ namespace YAWK {
          * @param object $db database
          */
         // TODO: OUTDATED AFTER REFACTORING...
-        static function outputActivegFont($db)
+        static function loadGoogleFonts($db)
         {
             $fonts = array(); // hold all fonts
             $googleFontFamilyString = ''; // the string the contains all google font families to minimize requests
