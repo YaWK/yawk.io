@@ -1881,6 +1881,7 @@ namespace YAWK {
 
         static function setBodyFontFace($cssTagName, $tplSettings)
         {
+            $bodyFontCSS = '';
             $fontFamily = $tplSettings["$cssTagName-fontfamily"];
             // get font type by cutting off file extension
             $fontType = substr($fontFamily, -4);
