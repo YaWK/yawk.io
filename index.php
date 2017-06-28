@@ -11,6 +11,7 @@
  * <li>\YAWK\user</li>
  * <li>\YAWK\page</li>
  * <li>\YAWK\controller</li>
+ * <li>\YAWK\stats</li>
  * </ul>
  * <p>Those objects are holding all data used by the frontend. Additional
  * you can use any of that many static methods from other classes. See class
@@ -29,9 +30,9 @@
  */
 session_start();
 /* Error Reporting - this is for DEVELOPMENT PURPOSE ONLY! */
-// error_reporting(E_ALL ^ E_STRICT);
-ini_set('display_errors', 0);
-error_reporting(0);
+error_reporting(E_ALL ^ E_STRICT);
+ini_set('display_errors', 1);
+error_reporting(1);
 /* include core files */
 require_once('system/classes/db.php');               // database connection
 require_once('system/classes/settings.php');         // get/set settings from settings db
@@ -145,6 +146,8 @@ if (\YAWK\user::isAnybodyThere())
             {
                 die("Unable to include template. Either database config is faulty or YaWK is not correctly installed.");
             }
+
+
         }
 }
 else
