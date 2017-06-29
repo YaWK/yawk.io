@@ -3,11 +3,12 @@ session_start();
 if(isset($_SESSION)){
     if (isset($_SESSION['uid']) && (!empty($_SESSION['uid']))){
         // include db connection
-        include '../../../dbconnect.php';
+        include '../../../classes/db.php';
+        $db = new \YAWK\db();
         // escape var
-        $request = mysqli_real_escape_string($connection, $_SESSION['uid']);
+        $request = $db->quote($_SESSION['uid']);
         // do update query: block user
-        $sql = mysqli_query($connection, "UPDATE ".$dbprefix."users SET blocked = 1 WHERE id = '".$request."'");
+        $sql = mysqli_query($db, "UPDATE {users} SET blocked = 1 WHERE id = '".$request."'");
         if($sql)
         {
             echo "true"; die; // blocked user successfully

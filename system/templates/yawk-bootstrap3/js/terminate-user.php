@@ -3,17 +3,18 @@ session_start();
 if(isset($_SESSION)) {
     if (isset($_SESSION['uid']) && (!empty($_SESSION['uid']))) {
         // include db connection
-        include '../../../dbconnect.php';
+        include '../../../classes/db.php';
+        $db = new \YAWK\db();
         // escape var
-        $request = mysqli_real_escape_string($connection, $_SESSION['uid']);
+        $request = $db->quote($_SESSION['uid']);
         // do update query: block user
-        $sql = mysqli_query($connection, "UPDATE " . $dbprefix . "users SET terminatedByUser = 1 WHERE id = '" . $request . "'");
+        $sql = mysqli_query($db, "UPDATE {users} SET terminatedByUser = 1 WHERE id = '" . $request . "'");
         if ($sql) {
             // set user offline in db
-            if (!$res = mysqli_query($connection, "UPDATE " . $dbprefix . "users
+            if (!$res = mysqli_query($db, "UPDATE {users}
                                SET online = '0'
                                WHERE id = '" . $request . "'")) {
-                print \YAWK\alert::draw("danger", "Fehler", "User konnte nicht korrekt ausgeloggt werden.");
+                print \YAWK\alert::draw("danger", "Fehler", "User konnte nicht korrekt ausgeloggt werden.", "", "");
                 echo "Es tut mir leid, anscheinend wurdest Du nicht korrekt ausgeloggt. Bitte versuch es nochmal.";
                 die; // something went wrong when updating db
             } else {
