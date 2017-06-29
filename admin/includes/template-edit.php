@@ -2728,10 +2728,10 @@ else
             <div class="row">
                 <div class="col-md-6">
 
-                    <label for="testText">Testfeld</label>
+                    <label for="testText"><?php echo $lang['TPL_FORM_TESTFIELD']; ?></label>
                     <div class="input-group">
                         <!-- <div class="input-group-addon" id="switchPreview" style="cursor: pointer;"><i class="fa fa-link" title="switch preview"></i></div> -->
-                        <input id="testText" name="testText" placeholder="type text to test your changes" maxlength="84" class="form-control">
+                        <input id="testText" name="testText" placeholder="<?php echo $lang['TPL_FORM_TESTFIELD_PLACEHOLDER']; ?>" maxlength="84" class="form-control">
                         <span class="input-group-btn">
                         <button type="button" disabled id="resetTestText" class="btn btn-default" title="<?php echo $lang['RESET']; ?>"><i class="fa fa-refresh"></i></button>
                         </span>
