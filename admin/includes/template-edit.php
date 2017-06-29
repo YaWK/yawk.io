@@ -1314,7 +1314,7 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         background-size: ".$tplSettings['pos-top-attachment'].";
         ".$tplSettings['pos-top-bg-gradient-longValue']."
         ".$tplSettings['pos-top-customCSS-longValue']."
-        background: ".$tplSettings['pos-customCSS-bgnone'].";
+        background: ".$tplSettings['pos-top-bgnone'].";
     }
     .pos-outerLeft
     {   
@@ -1677,7 +1677,7 @@ if(isset($_POST['save']) || isset($_POST['savenewtheme']))
         background-size: ".$tplSettings['pos-mainBottomCenter-attachment'].";
         ".$tplSettings['pos-mainBottomCenter-bg-gradient-longValue']."
         ".$tplSettings['pos-mainBottomCenter-customCSS-longValue']."
-        background: ".$tplSettings['pos-customCSS-bgnone'].";    
+        background: ".$tplSettings['pos-mainBottomCenter-bgnone'].";    
     }
     .pos-mainBottomRight
     {   
@@ -2741,7 +2741,22 @@ else
                     <?php // $template->getFormElements($db, $templateSettings, 3, $lang, $user); ?>
                 </div>
                 <div class="col-md-6">
-                    <!-- ... -->
+                    <!-- DEMO - can be deleted...
+                    <label for="pAlign">< p > Text Align Settings</label>
+                    <select class="form-control" name="pAlign" id="pAlign">
+                        <option value="left">left</option>
+                        <option value="center">center</option>
+                        <option value="right">right</option>
+                        <option value="justify">justify</option>
+                    </select>
+                    <label for="hAlign">< h1-h6 > Text Align Settings</label>
+                    <select class="form-control" name="hAlign" id="hAlign">
+                        <option value="left">left</option>
+                        <option value="center">center</option>
+                        <option value="right">right</option>
+                        <option value="justify">justify</option>
+                    </select>
+                    -->
                 </div>
             </div>
             <hr>
