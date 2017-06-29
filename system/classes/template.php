@@ -897,19 +897,20 @@ namespace YAWK {
                     $startRow = '';
                     $endRow = '';
                 }
-            // outerTop - fist position outside container
+            // check if position is enabled
             if ($positions["pos-$position-enabled"] === "1")
-            {
+            {   // check if position indicator is enabled
                 if ($indicators["pos-$position-indicator"] === "1")
-                {
+                {   // display position indicator
                     $indicatorStyle = " style=\"border: 2px solid red;\"";
-                    $indicatorText = "<i><b>$position</b></i> <small><small></small></small>";
+                    $indicatorText = "<i><b>$position</b></i>";
                 }
                 else
-                {
+                {   // no position indicator set
                     $indicatorStyle = '';
                     $indicatorText = '';
                 }
+                // output position div box
                 echo "$startRow";
                 echo "<div class=\"$bootstrapGrid pos-$position\" id=\"$position\" $indicatorStyle>$indicatorText";
                       \YAWK\template::setPosition($db, "$position-pos");
