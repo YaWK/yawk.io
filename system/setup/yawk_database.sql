@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 10. Jun 2017 um 22:26
+-- Erstellungszeit: 29. Jun 2017 um 16:47
 -- Server-Version: 10.1.10-MariaDB
 -- PHP-Version: 5.6.19
 
@@ -368,13 +368,6 @@ CREATE TABLE `cms_notifications` (
   `seen` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Daten für Tabelle `cms_notifications`
---
-
-INSERT INTO `cms_notifications` (`log_id`, `log_date`, `log_type`, `msg_id`, `fromUID`, `toUID`, `toGID`, `seen`) VALUES
-(1, '0000-00-00 00:00:00', 1, 0, 1, 0, 0, 0);
-
 -- --------------------------------------------------------
 
 --
@@ -417,8 +410,8 @@ CREATE TABLE `cms_pages` (
 --
 
 INSERT INTO `cms_pages` (`id`, `published`, `gid`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `alias`, `title`, `bgimage`, `owner`, `menu`, `locked`, `blogid`, `plugin`) VALUES
-(1, 1, 1, '2017-03-08 00:00:00', '2017-06-10 13:10:52', '2017-03-08 00:00:00', '0000-00-00 00:00:00', 'index', 'Welcome to YaWK CMS!', '', -1, 0, 0, 0, '0'),
-(2, 1, 1, '2017-06-10 15:45:03', '2017-06-10 21:46:00', '2017-06-10 15:45:03', '0000-00-00 00:00:00', 'typography', 'Typography', '', -1, 0, 0, 0, '0');
+(1, 1, 1, '2017-03-08 00:00:00', '2017-06-29 12:14:03', '2017-03-08 00:00:00', '0000-00-00 00:00:00', 'index', 'Welcome to YaWK CMS!', '', -1, 0, 0, 0, '0'),
+(2, 1, 1, '2017-06-10 15:45:03', '2017-06-28 13:40:31', '2017-06-10 15:45:03', '0000-00-00 00:00:00', 'typography', 'Typography', '', -1, 0, 0, 0, '0');
 
 -- --------------------------------------------------------
 
@@ -690,8 +683,8 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('signup_zipcode', '0', '', 5, 0, 1, 'require zipcode to signup', '', '', '', 'form-control', '', '', '', ''),
 ('siteauthor', 'YaWK', '', 10, 0, 1, 'Site Author', '', '', '', 'form-control', '', '', '', ''),
 ('sitename', 'YaWK Yet another WebKit CMS', '', 1, 2, 1, 'SITENAME_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
-('statsEnable', '1', '', 13, 2, 1, 'STATS_LABEL', 'fa fa-bar-chart', 'STATS_HEADING', 'STATS_SUBTEXT', 'form-control', 'select', '', 'STATS_DESC', '0,off:1,on'),
-('syslogEnable', '1', '', 13, 1, 1, 'SYSLOG_LABEL', 'fa fa-terminal', 'SYSLOG_HEADING', 'SYSLOG_SUBTEXT', 'form-control', 'select', '', 'SYSLOG_DESC', '0,off:1,on'),
+('statsEnable', '0', '', 13, 2, 1, 'STATS_LABEL', 'fa fa-bar-chart', 'STATS_HEADING', 'STATS_SUBTEXT', 'form-control', 'select', '', 'STATS_DESC', '0,off:1,on'),
+('syslogEnable', '0', '', 13, 1, 1, 'SYSLOG_LABEL', 'fa fa-terminal', 'SYSLOG_HEADING', 'SYSLOG_SUBTEXT', 'form-control', 'select', '', 'SYSLOG_DESC', '0,off:1,on'),
 ('timediff', '1', '', 7, 1, 1, 'TIMEDIFF_LABEL', 'fa fa-clock-o', 'TIMEDIFF_HEADING', 'TIMEDIFF_SUBTEXT', 'form-control', 'checkbox', '', 'TIMEDIFF_DESC', ''),
 ('timedifftext', 'This page is not online yet. Please come back in ', '', 7, 2, 1, 'TIMEDIFFTEXT_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('title', '192.168.1.8/yawk-LTE', '', 1, 1, 1, 'TITLE_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
@@ -903,15 +896,15 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (1, 1, 'heading-gfont', '76', '1', '', 0, 1, 0, 'Global GoogleFont ID', 'form-control', '', '', 'Default Google Font', '', '', '', ''),
 (2, 1, 'menu-gfont', '76', '1', '', 0, 1, 0, 'Menu GoogleFont ID', 'form-control', '', '', 'Menu Google Font', '', '', '', ''),
 (3, 1, 'text-gfont', '76', '1', '', 0, 1, 0, 'Text GoogleFont ID', 'form-control', '', '', 'Text Google Font', '', '', '', ''),
-(4, 1, 'h1-fontcolor', 'CC9A6E', '000000', '', 5, 1, 1, 'TPL_H1_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(4, 1, 'h1-fontcolor', 'CC9A6E', '000000', '', 52, 1, 1, 'TPL_H1_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (5, 1, 'h2-fontcolor', '1E2E22', '000000', '', 5, 1, 2, 'TPL_H2_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (6, 1, 'h3-fontcolor', '4D4D4D', '000000', '', 5, 1, 3, 'TPL_H3_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (7, 1, 'h4-fontcolor', 'A8A8A8', '000000', '', 5, 1, 4, 'TPL_H4_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (8, 1, 'h5-fontcolor', 'C4C4C4', '000000', '', 5, 1, 5, 'TPL_H5_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (9, 1, 'h6-fontcolor', '0A0A0A', '000000', '', 5, 1, 6, 'TPL_H6_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
-(10, 1, 'body-bg-color', 'FFFFFF', 'FFFFFF', '', 6, 1, 0, 'TPL_BODY_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(10, 1, 'body-bg-color', 'FFFFFF', 'FFFFFF', '', 54, 1, 0, 'TPL_BODY_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', 'TPL_POS_BODY_HEADING', 'TPL_POS_BODY_SUBTEXT'),
 (11, 1, 'well-bg-color', 'F5F5F5', 'F5F5F5', '', 14, 1, 1, 'TPL_WELL_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
-(12, 1, 'smalltag-fontcolor', '777777', '777777', '', 5, 1, 7, 'TPL_SMALLTAG_FONT_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(12, 1, 'globaltext-smallcolor', '777777', '777777', '', 52, 1, 7, 'TPL_SMALLTAG_FONT_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (13, 1, 'font-menucolor', '777777', '777777', '', 10, 1, 1, 'TPL_MENU_FONT_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (14, 1, 'brand-menucolor', '777777', '777777', '', 10, 1, 2, 'TPL_MENU_BRAND_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (15, 1, 'brandhover-menucolor', '5E5E5E', '5e5e5e', '', 10, 1, 3, 'TPL_MENU_BRAND_HOVER_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
@@ -931,27 +924,27 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (29, 1, 'fontactive-menudropdowncolor', 'FFFFFF', 'FFFFFF', '', 12, 1, 7, 'TPL_MENU_DROPDOWN_FONT_ACTIVE_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (30, 1, 'activebg-menudropdowncolor', 'FFFFFF', '337AB7', '', 12, 1, 3, 'TPL_MENU_DROPDOWN_BGCOLOR_ACTIVE', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (31, 1, 'disabled-menudropdowncolor', '777777', '777777', '', 12, 1, 8, 'TPL_MENU_DROPDOWN_FONT_DISABLED_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
-(32, 1, 'a-link', '337AB7', '337ab7', '', 3, 1, 1, 'TPL_LINK_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
-(33, 1, 'visited-link', '337AB7', '337ab7', '', 3, 1, 2, 'TPL_LINK_VISITED_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
-(34, 1, 'hover-link', '23527C', '23527c', '', 3, 1, 3, 'TPL_LINK_HOVER_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
-(35, 1, 'decoration-link', 'none', 'none', '', 3, 1, 4, 'TPL_LINK_DECORATION', 'form-control', 'select', 'none,none:underline,underline:overline,overline:line-trough,line-trough:blink,blink:inherit,inherit', 'TPL_LINK_COLOR_DECORATION_PLACEHOLDER', '', '', '', ''),
-(36, 1, 'hoverdecoration-link', 'underline', 'underline', '', 3, 1, 5, 'TPL_LINK_HOVER_DECORATION', 'form-control', 'select', 'none,none:underline,underline:overline,overline:line-trough,line-trough:blink,blink:inherit,inherit', 'TPL_HOVER_DECORATION_PLACEHOLDER', '', '', '', ''),
+(32, 1, 'globaltext-alink', 'B71021', '337ab7', '', 3, 1, 1, 'TPL_LINK_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(33, 1, 'globaltext-avisited', 'B71021', '337ab7', '', 3, 1, 2, 'TPL_LINK_VISITED_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(34, 1, 'globaltext-ahover', 'DE1328', '23527c', '', 3, 1, 3, 'TPL_LINK_HOVER_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(35, 1, 'globaltext-linktextdecoration', 'none', 'none', '', 3, 1, 4, 'TPL_LINK_DECORATION', 'form-control', 'select', 'none,none:underline,underline:overline,overline:line-trough,line-trough:blink,blink:inherit,inherit', 'TPL_LINK_COLOR_DECORATION_PLACEHOLDER', '', '', '', ''),
+(36, 1, 'globaltext-hovertextdecoration', 'none', 'underline', '', 3, 1, 5, 'TPL_LINK_HOVER_DECORATION', 'form-control', 'select', 'none,none:underline,underline:overline,overline:line-trough,line-trough:blink,blink:inherit,inherit', 'TPL_HOVER_DECORATION_PLACEHOLDER', '', '', '', ''),
 (37, 1, 'buttontext-link', 'FFFFFF', 'ffffff', '', 3, 1, 6, 'TPL_BTN_TEXT_LINK_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (38, 1, 'background-listgroup', 'FFFFFF', 'ffffff', '', 15, 1, 0, 'TPL_LISTGROUP_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (39, 1, 'fontcolor-listgroup', 'FFFFFF', '000000', '', 15, 1, 0, 'TPL_LISTGROUP_FONTCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
-(40, 1, 'text-fontcolor', '333333', '333333', '', 5, 1, 8, 'TPL_TEXT_FONT_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(40, 1, 'globaltext-fontcolor', '575757', '333333', '', 5, 1, 8, 'TPL_TEXT_FONT_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (41, 1, 'fontshadow-menucolor', 'CCCCCC', 'CCCCCC', '', 10, 1, 7, 'TPL_MENU_FONT_SHADOW_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (42, 1, 'form-valid', '009900', '009900', '', 0, 1, 0, 'Form Valid Color', 'color', '', '', 'pick a color or leave blank', '', '', '', ''),
 (43, 1, 'form-error', 'FF0000', 'FF0000', '', 0, 1, 0, 'Form Error Color', 'color', '', '', 'pick a color or leave blank', '', '', '', ''),
-(44, 1, 'body-text-shadow', '1px 0px', '1px 0px', '', 2, 1, 0, 'TPL_BODY_TEXT_SHADOW', 'form-control', '', '', 'TPL_BODY_TEXT_SHADOW_PLACEHOLDER', '', '', '', ''),
-(45, 1, 'body-text-shadow-color', 'C7C7C7', 'CCCCCC', '', 2, 1, 0, 'TPL_BODY_TEXT_SHADOW_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
-(46, 1, 'body-text-size', '1.8em', '1.7em', '', 2, 1, 0, 'TPL_BODY_TEXT_SIZE', 'form-control', '', '', 'TPL_BODY_TEXT_SIZE_PLACEHOLDER', '', '', '', ''),
-(47, 1, 'body-margin-top', '0px', '40px', '', 7, 1, 1, 'TPL_BODY_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
-(48, 1, 'body-bg-image', '', 'any .jpg or .png you want', '', 8, 1, 1, 'TPL_BODY_BG_IMAGE', 'form-control', '', '', 'TPL_BODY_BG_IMAGE_PLACEHOLDER', '', '', '', ''),
-(49, 1, 'body-bg-repeat', 'no-repeat', 'no-repeat', '', 8, 1, 2, 'TPL_BODY_BG_IMAGE_REPEAT', 'form-control', 'select', 'no-repeat,no-repeat:repeat-x,repeat-x:repeat-y,repeat-y:inherit,inherit', '', '', '', '', ''),
-(50, 1, 'body-bg-position', 'center', 'center', '', 8, 1, 3, 'TPL_BODY_BG_IMAGE_POSITION', 'form-control', 'select', 'left-center,left-center:right-center,right-center:top-center,top-center:top,top:bottom,bottom', '', '', '', '', ''),
-(51, 1, 'body-bg-attachment', 'fixed', 'fixed', '', 8, 1, 4, 'TPL_BODY_BG_IMAGE_ATTACH', 'form-control', 'select', 'scroll,scroll:fixed,fixed:local,local:initial,inital:inherit,inherit', '', '', '', '', ''),
-(52, 1, 'body-bg-size', 'cover', 'cover', '', 8, 1, 5, 'TPL_BODY_BG_IMAGE_SIZE', 'form-control', 'select', 'auto,auto:cover,cover:contain,contain:length,length:percentage,percentage:initial,inital:inherit,inherit', '', '', '', '', ''),
+(44, 1, 'globaltext-fontshadowsize', '1px 1px 0px', '1px 0px', '', 2, 1, 0, 'TPL_BODY_TEXT_SHADOW', 'form-control', '', '', 'TPL_BODY_TEXT_SHADOW_PLACEHOLDER', '', '', '', ''),
+(45, 1, 'globaltext-fontshadowcolor', 'ABABAB', 'CCCCCC', '', 2, 1, 0, 'TPL_BODY_TEXT_SHADOW_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(46, 1, 'globaltext-size', '14px', '1.7em', '', 2, 1, 0, 'TPL_BODY_TEXT_SIZE', 'form-control', '', '', 'TPL_BODY_TEXT_SIZE_PLACEHOLDER', '', '', '', ''),
+(47, 1, 'body-margin-top', '0px', '40px', '', 54, 1, 20, 'TPL_BODY_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', 'BODY', 'POSITIONING'),
+(48, 1, 'body-bg-image', '', 'any .jpg or .png you want', '', 54, 1, 5, 'TPL_BODY_BG_IMAGE', 'form-control', '', '', 'TPL_BODY_BG_IMAGE_PLACEHOLDER', '', '', 'BG_IMAGE', 'SETTINGS'),
+(49, 1, 'body-bg-repeat', 'no-repeat', 'no-repeat', '', 54, 1, 6, 'TPL_BODY_BG_IMAGE_REPEAT', 'form-control', 'select', 'no-repeat,no-repeat:repeat-x,repeat-x:repeat-y,repeat-y:inherit,inherit', '', '', '', '', ''),
+(50, 1, 'body-bg-position', 'center center', 'center', '', 54, 1, 7, 'TPL_BODY_BG_IMAGE_POSITION', 'form-control', 'select', 'left top,left top:left center,left center:left bottom,left bottom:right top,right top:right center,right center:right bottom,right bottom:center top,center top:center center,center bottom', '', '', '', '', ''),
+(51, 1, 'body-bg-attachment', 'fixed', 'fixed', '', 54, 1, 8, 'TPL_BODY_BG_IMAGE_ATTACH', 'form-control', 'select', 'scroll,scroll:fixed,fixed:local,local:initial,inital:inherit,inherit', '', '', '', '', ''),
+(52, 1, 'body-bg-size', 'cover', 'cover', '', 54, 1, 9, 'TPL_BODY_BG_IMAGE_SIZE', 'form-control', 'select', 'auto,auto:cover,cover:contain,contain:length,length:percentage,percentage:initial,inital:inherit,inherit', '', '', '', '', ''),
 (53, 1, 'main-box-shadow', '6px 12px 16px 0px', '6px 12px 6px', '', 9, 1, 1, 'TPL_MAIN_SHADOW', 'form-control', '', '', 'TPL_MAIN_SHADOW_PLACEHOLDER', '', '', '', ''),
 (54, 1, 'main-box-shadow-color', 'E8E8E8', 'E8E8E8', '', 9, 1, 2, 'TPL_MAIN_SHADOW_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (55, 1, 'well-min-height', '20px', '20px', '', 14, 1, 2, 'TPL_WELL_MIN_HEIGHT', 'form-control', '', '', 'value in px eg. 20px', '', '', '', ''),
@@ -963,8 +956,8 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (61, 1, 'well-border-radius', '12px', '0px', '', 14, 1, 8, 'TPL_WELL_BORDER_RADIUS', 'form-control', '', '', 'rounded edges, value in px eg. 4px', '', '', '', ''),
 (62, 1, 'well-shadow', '8px 8px 20px -6px', '3px 3px 5px 6px', '', 14, 1, 9, 'TPL_WELL_SHADOW', 'form-control', '', '', 'value in px eg. x,y,blur,spread', '', '', '', ''),
 (63, 1, 'well-shadow-color', 'CCCCCC', 'CCCCCC', '', 14, 1, 10, 'TPL_WELL_SHADOW_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
-(64, 1, 'h1-size', '48px', '36px', '', 4, 1, 1, 'TPL_H1_SIZE', 'form-control', '', '', 'TPL_H1_SIZE_PLACEHOLDER', '', '', '', ''),
-(65, 1, 'h2-size', '36px', '30px', '', 4, 1, 2, 'TPL_H2_SIZE', 'form-control', '', '', 'TPL_H2_SIZE_PLACEHOLDER', '', '', '', ''),
+(64, 1, 'h1-size', '48px', '36px', '', 52, 1, 1, 'TPL_H1_SIZE', 'form-control', '', '', 'TPL_H1_SIZE_PLACEHOLDER', '', '', '', ''),
+(65, 1, 'h2-size', '36px', '36px', '', 4, 1, 2, 'TPL_H2_SIZE', 'form-control', '', '', 'TPL_H2_SIZE_PLACEHOLDER', '', '', '', ''),
 (66, 1, 'h3-size', '30px', '24px', '', 4, 1, 3, 'TPL_H3_SIZE', 'form-control', '', '', 'TPL_H3_SIZE_PLACEHOLDER', '', '', '', ''),
 (67, 1, 'h4-size', '32px', '18px', '', 4, 1, 4, 'TPL_H4_SIZE', 'form-control', '', '', 'TPL_H4_SIZE_PLACEHOLDER', '', '', '', ''),
 (68, 1, 'h5-size', '18px', '14px', '', 4, 1, 5, 'TPL_H5_SIZE', 'form-control', '', '', 'TPL_H5_SIZE_PLACEHOLDER', '', '', '', ''),
@@ -1022,9 +1015,9 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (120, 1, 'btn-danger-hover-color', 'FFFFFF', 'FFFFFF', '', 22, 1, 6, 'TPL_BTN_HOVER_TEXT_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (121, 1, 'btn-danger-hover-background-color', 'C9302C', 'c9302c', '', 22, 1, 7, 'TPL_BTN_HOVER_BG_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (122, 1, 'btn-danger-hover-border-color', 'AC2925', 'ac2925', '', 22, 1, 8, 'TPL_BTN_HOVER_BORDER_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
-(123, 1, 'body-margin-bottom', '0px', '40px', '', 7, 1, 2, 'TPL_BODY_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
-(124, 1, 'body-margin-left', '0px', '0px', '', 7, 1, 3, 'TPL_BODY_MARGIN_LEFT', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
-(125, 1, 'body-margin-right', '0px', '0px', '', 7, 1, 4, 'TPL_BODY_MARGIN_RIGHT', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
+(123, 1, 'body-margin-bottom', '0px', '40px', '', 54, 1, 21, 'TPL_BODY_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
+(124, 1, 'body-margin-left', '0px', '0px', '', 54, 1, 22, 'TPL_BODY_MARGIN_LEFT', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
+(125, 1, 'body-margin-right', '0px', '0px', '', 54, 1, 23, 'TPL_BODY_MARGIN_RIGHT', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (126, 1, 'img-shadow', '2px 2px 12px 2px', '2px 2px 12px 2px', '', 24, 1, 1, 'TPL_IMG_SHADOW', 'form-control', '', '', 'TPL_IMG_SHADOW_PLACEHOLDER', '', '', '', ''),
 (127, 1, 'img-shadow-color', '0A0A0A', '0A0A0A', '', 24, 1, 2, 'TPL_IMG_SHADOW_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (128, 1, 'img-righty', '7deg', '7deg', '', 24, 1, 3, 'TPL_IMG_RIGHTY', 'form-control', '', '', 'TPL_IMG_RIGHTY_PLACEHOLDER', '', '', '', ''),
@@ -1055,8 +1048,8 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (153, 1, 'jumbotron-fluidPaddingLeft', '60px', '60px', '', 16, 1, 14, 'TPL_JUMBOTRON_FLUID_PADDING_L', 'form-control', '', '', 'TPL_JUMBOTRON_FLUID_PADDING_L_PLACEHOLDER', '', '', '', ''),
 (154, 1, 'jumbotron-h1FontSize', '63px', '63px', '', 16, 1, 15, 'TPL_JUMBOTRON_H1_FONTSIZE', 'form-control', '', '', 'TPL_JUMBOTRON_H1_FONTSIZE_PLACEHOLDER', '', '', '', ''),
 (155, 1, 'jumbotron-h1Color', 'FFFFFF', 'FFFFFF', '', 16, 1, 0, 'TPL_JUMBOTRON_H1_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
-(156, 1, 'jumbotron-fontColor', 'CCCCCC', 'CCCCCC', '', 5, 1, 9, 'TPL_JUMBOTRON_FONT_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
-(157, 1, 'listgroup-fontColor', 'FFFFFF', 'FFFFFF', '', 5, 1, 10, 'TPL_LISTGROUP_FONT_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(156, 1, 'jumbotron-fontColor', 'CCCCCC', 'CCCCCC', '', 16, 1, 9, 'TPL_JUMBOTRON_FONT_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(157, 1, 'listgroup-fontColor', 'FFFFFF', 'FFFFFF', '', 15, 1, 10, 'TPL_LISTGROUP_FONT_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (158, 1, 'listgroup-fontSize', '0.9em', '1.2em', '', 15, 1, 0, 'TPL_LISTGROUP_FONTSIZE', 'form-control', '', '', 'font size in em or px eg 16px or 1.2em', '', '', '', ''),
 (159, 1, 'navbar-marginTop', '0px', '0px', '', 13, 1, 1, 'TPL_MENU_NAVBAR_MARGIN_TOP', 'form-control', '', '', 'margin in em or px eg 20px or 1.2em', '', '', '', ''),
 (160, 1, 'listgroup-bg-gradient-longValue', '', '', '', 15, 1, 0, 'TPL_LISTGROUP_BG_GRADIENT', 'form-control', 'textarea', '', '', '', '', '', ''),
@@ -1082,7 +1075,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (180, 1, 'pos-outerTop-zindex', '9999', '9999', '', 26, 1, 25, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (181, 1, 'pos-outerTop-width', '100%', '100%', '', 26, 1, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
 (182, 1, 'pos-outerTop-height', 'auto', 'auto', '', 26, 1, 3, 'TPL_POS_HEIGHT', 'form-control', '', '', 'TPL_HEIGHT_PLACEHOLDER', '', '', 'TPL_SIZE_HEADING', 'TPL_SIZE_SUBTEXT'),
-(183, 1, 'pos-outerTop-bgcolor', 'F8F8F8', 'F8F8F8', '', 26, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(183, 1, 'pos-outerTop-bgcolor', 'F8F8F8', 'F8F8F8', '', 26, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (184, 1, 'pos-outerTop-position', 'static', 'static', '', 26, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (185, 1, 'pos-outerTop-marginBottom', '0px', '0px', '', 26, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (186, 1, 'pos-outerTop-marginTop', '0px', '0px', '', 26, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
@@ -1104,7 +1097,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (202, 1, 'pos-intro-zindex', '9999', '9999', '', 27, 1, 25, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (203, 1, 'pos-intro-width', '100%', '100%', '', 27, 1, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
 (204, 1, 'pos-intro-height', 'auto', 'auto', '', 27, 1, 3, 'TPL_POS_HEIGHT', 'form-control', '', '', 'TPL_HEIGHT_PLACEHOLDER', '', '', 'TPL_SIZE_HEADING', 'TPL_SIZE_SUBTEXT'),
-(205, 1, 'pos-intro-bgcolor', 'F8F8F8', 'F8F8F8', '', 27, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(205, 1, 'pos-intro-bgcolor', 'F8F8F8', 'F8F8F8', '', 27, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (206, 1, 'pos-intro-position', 'static', 'static', '', 27, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (207, 1, 'pos-intro-marginBottom', '0px', '0px', '', 27, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (208, 1, 'pos-intro-marginTop', '0px', '0px', '', 27, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
@@ -1126,7 +1119,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (224, 1, 'pos-globalmenu-zindex', '9999', '9999', '', 28, 1, 26, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (225, 1, 'pos-globalmenu-width', '100%', '100%', '', 28, 1, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
 (226, 1, 'pos-globalmenu-height', 'auto', 'auto', '', 28, 1, 3, 'TPL_POS_HEIGHT', 'form-control', '', '', 'TPL_HEIGHT_PLACEHOLDER', '', '', 'TPL_SIZE_HEADING', 'TPL_SIZE_SUBTEXT'),
-(227, 1, 'pos-globalmenu-bgcolor', 'F8F8F8', 'F8F8F8', '', 28, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(227, 1, 'pos-globalmenu-bgcolor', 'F8F8F8', 'F8F8F8', '', 28, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (228, 1, 'pos-globalmenu-position', 'static', 'static', '', 28, 1, 21, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (229, 1, 'pos-globalmenu-marginBottom', '0px', '0px', '', 28, 1, 23, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (230, 1, 'pos-globalmenu-marginTop', '0px', '0px', '', 28, 1, 22, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
@@ -1148,7 +1141,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (246, 1, 'pos-top-zindex', '9999', '9999', '', 29, 1, 25, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (247, 1, 'pos-top-width', '100%', '100%', '', 29, 1, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
 (248, 1, 'pos-top-height', 'auto', 'auto', '', 29, 1, 3, 'TPL_POS_HEIGHT', 'form-control', '', '', 'TPL_HEIGHT_PLACEHOLDER', '', '', 'TPL_SIZE_HEADING', 'TPL_SIZE_SUBTEXT'),
-(249, 1, 'pos-top-bgcolor', 'F8F8F8', 'F8F8F8', '', 29, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(249, 1, 'pos-top-bgcolor', 'F8F8F8', 'F8F8F8', '', 29, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (250, 1, 'pos-top-position', 'static', 'static', '', 29, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (251, 1, 'pos-top-marginBottom', '0px', '0px', '', 29, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (252, 1, 'pos-top-marginTop', '0px', '0px', '', 29, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
@@ -1170,7 +1163,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (268, 1, 'pos-outerLeft-zindex', '9999', '9999', '', 30, 1, 24, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (269, 1, 'pos-outerLeft-width', '', '100%', '', 30, 1, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
 (270, 1, 'pos-outerLeft-height', 'auto', 'auto', '', 30, 1, 3, 'TPL_POS_HEIGHT', 'form-control', '', '', 'TPL_HEIGHT_PLACEHOLDER', '', '', 'TPL_SIZE_HEADING', 'TPL_SIZE_SUBTEXT'),
-(271, 1, 'pos-outerLeft-bgcolor', 'F8F8F8', 'F8F8F8', '', 30, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(271, 1, 'pos-outerLeft-bgcolor', 'F8F8F8', 'F8F8F8', '', 30, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (272, 1, 'pos-outerLeft-position', 'static', 'static', '', 30, 1, 19, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (273, 1, 'pos-outerLeft-marginBottom', '0px', '0px', '', 30, 1, 21, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (274, 1, 'pos-outerLeft-marginTop', '0px', '0px', '', 30, 1, 20, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
@@ -1193,7 +1186,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (290, 1, 'pos-outerRight-zindex', '9999', '9999', '', 31, 1, 25, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (291, 1, 'pos-outerRight-width', '100%', '100%', '', 31, 1, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
 (292, 1, 'pos-outerRight-height', 'auto', 'auto', '', 31, 1, 3, 'TPL_POS_HEIGHT', 'form-control', '', '', 'TPL_HEIGHT_PLACEHOLDER', '', '', 'TPL_SIZE_HEADING', 'TPL_SIZE_SUBTEXT'),
-(293, 1, 'pos-outerRight-bgcolor', 'F8F8F8', 'F8F8F8', '', 31, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(293, 1, 'pos-outerRight-bgcolor', 'F8F8F8', 'F8F8F8', '', 31, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (294, 1, 'pos-outerRight-position', 'static', 'static', '', 31, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (295, 1, 'pos-outerRight-marginBottom', '0px', '0px', '', 31, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (296, 1, 'pos-outerRight-marginTop', '0px', '0px', '', 31, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
@@ -1215,7 +1208,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (312, 1, 'pos-leftMenu-zindex', '9999', '9999', '', 32, 1, 25, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (313, 1, 'pos-leftMenu-width', '100%', '100%', '', 32, 1, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
 (314, 1, 'pos-leftMenu-height', 'auto', 'auto', '', 32, 1, 3, 'TPL_POS_HEIGHT', 'form-control', '', '', 'TPL_HEIGHT_PLACEHOLDER', '', '', 'TPL_SIZE_HEADING', 'TPL_SIZE_SUBTEXT'),
-(315, 1, 'pos-leftMenu-bgcolor', 'F8F8F8', 'F8F8F8', '', 32, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(315, 1, 'pos-leftMenu-bgcolor', 'F8F8F8', 'F8F8F8', '', 32, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (316, 1, 'pos-leftMenu-position', 'static', 'static', '', 32, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (317, 1, 'pos-leftMenu-marginBottom', '0px', '0px', '', 32, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (318, 1, 'pos-leftMenu-marginTop', '0px', '0px', '', 32, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
@@ -1237,7 +1230,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (334, 1, 'pos-rightMenu-zindex', '9999', '9999', '', 33, 1, 25, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (335, 1, 'pos-rightMenu-width', '100%', '100%', '', 33, 1, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
 (336, 1, 'pos-rightMenu-height', 'auto', 'auto', '', 33, 1, 3, 'TPL_POS_HEIGHT', 'form-control', '', '', 'TPL_HEIGHT_PLACEHOLDER', '', '', 'TPL_SIZE_HEADING', 'TPL_SIZE_SUBTEXT'),
-(337, 1, 'pos-rightMenu-bgcolor', 'F8F8F8', 'F8F8F8', '', 33, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(337, 1, 'pos-rightMenu-bgcolor', 'F8F8F8', 'F8F8F8', '', 33, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (338, 1, 'pos-rightMenu-position', 'static', 'static', '', 33, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (339, 1, 'pos-rightMenu-marginBottom', '0px', '0px', '', 33, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (340, 1, 'pos-rightMenu-marginTop', '0px', '0px', '', 33, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
@@ -1251,7 +1244,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (348, 1, 'pos-mainTop-border-color', '888888', '888888', '', 34, 1, 16, 'TPL_BORDER_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (349, 1, 'pos-mainTop-border-width', '1px 1px 1px 1px', '1px 1px 1px 1px', '', 34, 1, 14, 'TPL_BORDER_WIDTH', 'form-control', '', '', 'TPL_BORDER_WIDTH_PLACEHOLDER', '', '', 'TPL_BORDER_HEADING', 'TPL_BORDER_SUBTEXT'),
 (350, 1, 'pos-mainTop-padding', '0px', '0px', '', 34, 1, 23, 'TPL_PADDING', 'form-control', '', '', 'TPL_PADDING_PLACEHOLDER', '', '', '', ''),
-(351, 1, 'pos-mainTop-overflow', 'visible', 'visible', '', 34, 1, 24, 'TPL_OVERFLOW', 'form-control', 'select', 'visible,visible:hidden,hidden:scroll,scroll:auto,auto:initial,initial:inherit,inherit', '', '', '', 'TPL_OVERFLOW_HEADING', 'TPL_OVERFLOW_SUBTEXT'),
+(351, 1, 'pos-mainTop-overflow', 'hidden', 'visible', '', 34, 1, 24, 'TPL_OVERFLOW', 'form-control', 'select', 'visible,visible:hidden,hidden:scroll,scroll:auto,auto:initial,initial:inherit,inherit', '', '', '', 'TPL_OVERFLOW_HEADING', 'TPL_OVERFLOW_SUBTEXT'),
 (352, 1, 'pos-mainTop-visibility', 'visible', 'visible', '', 34, 1, 26, 'TPL_VISIBILITY', 'form-control', 'select', 'visible,visible:hidden,hidden', '', '', '', '', ''),
 (353, 1, 'pos-mainTop-text-align', 'left', 'left', '', 34, 1, 5, 'TPL_TEXT_ALIGN', 'form-control', 'select', 'left,left:center,center:right,right:justify,justify:initial,initial:inherit,inherit', '', '', '', 'TPL_ALIGN_HEADING', 'TPL_ALIGN_SUBTEXT'),
 (354, 1, 'pos-mainTop-enabled', '1', '0', '', 34, 1, 1, 'TPL_POS_ACTIVE', 'form-control', 'checkbox toggle', '', '', '', '', 'TPL_POS_MAINTOP_HEADING', 'TPL_POS_MAINTOP_SUBTEXT'),
@@ -1259,7 +1252,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (356, 1, 'pos-mainTop-zindex', '9999', '9999', '', 34, 1, 25, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (357, 1, 'pos-mainTop-width', '100%', '100%', '', 34, 1, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
 (358, 1, 'pos-mainTop-height', 'auto', 'auto', '', 34, 1, 3, 'TPL_POS_HEIGHT', 'form-control', '', '', 'TPL_HEIGHT_PLACEHOLDER', '', '', 'TPL_SIZE_HEADING', 'TPL_SIZE_SUBTEXT'),
-(359, 1, 'pos-mainTop-bgcolor', 'F8F8F8', 'F8F8F8', '', 34, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(359, 1, 'pos-mainTop-bgcolor', 'F8F8F8', 'F8F8F8', '', 34, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (360, 1, 'pos-mainTop-position', 'static', 'static', '', 34, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (361, 1, 'pos-mainTop-marginBottom', '0px', '0px', '', 34, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (362, 1, 'pos-mainTop-marginTop', '0px', '0px', '', 34, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
@@ -1281,7 +1274,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (378, 1, 'pos-mainTopLeft-zindex', '9999', '9999', '', 35, 1, 25, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (379, 1, 'pos-mainTopLeft-width', '100%', '100%', '', 35, 0, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
 (380, 1, 'pos-mainTopLeft-height', 'auto', 'auto', '', 35, 1, 3, 'TPL_POS_HEIGHT', 'form-control', '', '', 'TPL_HEIGHT_PLACEHOLDER', '', '', 'TPL_SIZE_HEADING', 'TPL_SIZE_SUBTEXT'),
-(381, 1, 'pos-mainTopLeft-bgcolor', 'F8F8F8', 'F8F8F8', '', 35, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(381, 1, 'pos-mainTopLeft-bgcolor', 'F8F8F8', 'F8F8F8', '', 35, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (382, 1, 'pos-mainTopLeft-position', 'static', 'static', '', 35, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (383, 1, 'pos-mainTopLeft-marginBottom', '0px', '0px', '', 35, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (384, 1, 'pos-mainTopLeft-marginTop', '0px', '0px', '', 35, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
@@ -1303,7 +1296,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (400, 1, 'pos-mainTopCenter-zindex', '9999', '9999', '', 36, 1, 25, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (401, 1, 'pos-mainTopCenter-width', '100%', '100%', '', 36, 0, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
 (402, 1, 'pos-mainTopCenter-height', 'auto', 'auto', '', 36, 1, 3, 'TPL_POS_HEIGHT', 'form-control', '', '', 'TPL_HEIGHT_PLACEHOLDER', '', '', 'TPL_SIZE_HEADING', 'TPL_SIZE_SUBTEXT'),
-(403, 1, 'pos-mainTopCenter-bgcolor', 'F8F8F8', 'F8F8F8', '', 36, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(403, 1, 'pos-mainTopCenter-bgcolor', 'F8F8F8', 'F8F8F8', '', 36, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (404, 1, 'pos-mainTopCenter-position', 'static', 'static', '', 36, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (405, 1, 'pos-mainTopCenter-marginBottom', '0px', '0px', '', 36, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (406, 1, 'pos-mainTopCenter-marginTop', '0px', '0px', '', 36, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
@@ -1325,7 +1318,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (422, 1, 'pos-mainTopRight-zindex', '9999', '9999', '', 37, 1, 25, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (423, 1, 'pos-mainTopRight-width', '100%', '100%', '', 37, 0, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
 (424, 1, 'pos-mainTopRight-height', 'auto', 'auto', '', 37, 1, 3, 'TPL_POS_HEIGHT', 'form-control', '', '', 'TPL_HEIGHT_PLACEHOLDER', '', '', 'TPL_SIZE_HEADING', 'TPL_SIZE_SUBTEXT'),
-(425, 1, 'pos-mainTopRight-bgcolor', 'F8F8F8', 'F8F8F8', '', 37, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(425, 1, 'pos-mainTopRight-bgcolor', 'F8F8F8', 'F8F8F8', '', 37, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (426, 1, 'pos-mainTopRight-position', 'static', 'static', '', 37, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (427, 1, 'pos-mainTopRight-marginBottom', '0px', '0px', '', 37, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (428, 1, 'pos-mainTopRight-marginTop', '0px', '0px', '', 37, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
@@ -1347,8 +1340,8 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (444, 1, 'pos-main-zindex', '9999', '9999', '', 38, 1, 25, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (445, 1, 'pos-main-width', '100%', '100%', '', 38, 1, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
 (446, 1, 'pos-main-height', 'auto', 'auto', '', 38, 1, 3, 'TPL_POS_HEIGHT', 'form-control', '', '', 'TPL_HEIGHT_PLACEHOLDER', '', '', 'TPL_SIZE_HEADING', 'TPL_SIZE_SUBTEXT'),
-(447, 1, 'pos-main-bgcolor', 'FFFFFF', 'F8F8F8', '', 38, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
-(448, 1, 'pos-main-position', 'static', 'static', '', 38, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
+(447, 1, 'pos-main-bgcolor', 'f8f8f8', 'F8F8F8', '', 38, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(448, 1, 'pos-main-position', 'relative', 'static', '', 38, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (449, 1, 'pos-main-marginBottom', '0px', '0px', '', 38, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (450, 1, 'pos-main-marginTop', '0px', '0px', '', 38, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (451, 1, 'pos-mainBottom-indicator', '1', '0', '', 39, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
@@ -1369,7 +1362,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (466, 1, 'pos-mainBottom-zindex', '9999', '9999', '', 39, 1, 25, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (467, 1, 'pos-mainBottom-width', '100%', '100%', '', 39, 1, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
 (468, 1, 'pos-mainBottom-height', 'auto', 'auto', '', 39, 1, 3, 'TPL_POS_HEIGHT', 'form-control', '', '', 'TPL_HEIGHT_PLACEHOLDER', '', '', 'TPL_SIZE_HEADING', 'TPL_SIZE_SUBTEXT'),
-(469, 1, 'pos-mainBottom-bgcolor', 'F8F8F8', 'F8F8F8', '', 39, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(469, 1, 'pos-mainBottom-bgcolor', 'F8F8F8', 'F8F8F8', '', 39, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (470, 1, 'pos-mainBottom-position', 'static', 'static', '', 39, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (471, 1, 'pos-mainBottom-marginBottom', '0px', '0px', '', 39, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (472, 1, 'pos-mainBottom-marginTop', '0px', '0px', '', 39, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
@@ -1391,7 +1384,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (488, 1, 'pos-mainBottomLeft-zindex', '9999', '9999', '', 40, 1, 25, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (489, 1, 'pos-mainBottomLeft-width', '100%', '100%', '', 40, 0, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
 (490, 1, 'pos-mainBottomLeft-height', 'auto', 'auto', '', 40, 1, 3, 'TPL_POS_HEIGHT', 'form-control', '', '', 'TPL_HEIGHT_PLACEHOLDER', '', '', 'TPL_SIZE_HEADING', 'TPL_SIZE_SUBTEXT'),
-(491, 1, 'pos-mainBottomLeft-bgcolor', 'F8F8F8', 'F8F8F8', '', 40, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(491, 1, 'pos-mainBottomLeft-bgcolor', 'F8F8F8', 'F8F8F8', '', 40, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (492, 1, 'pos-mainBottomLeft-position', 'static', 'static', '', 40, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (493, 1, 'pos-mainBottomLeft-marginBottom', '0px', '0px', '', 40, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (494, 1, 'pos-mainBottomLeft-marginTop', '0px', '0px', '', 40, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
@@ -1413,7 +1406,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (510, 1, 'pos-mainBottomCenter-zindex', '9999', '9999', '', 41, 1, 25, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (511, 1, 'pos-mainBottomCenter-width', '100%', '100%', '', 41, 0, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
 (512, 1, 'pos-mainBottomCenter-height', 'auto', 'auto', '', 41, 1, 3, 'TPL_POS_HEIGHT', 'form-control', '', '', 'TPL_HEIGHT_PLACEHOLDER', '', '', 'TPL_SIZE_HEADING', 'TPL_SIZE_SUBTEXT'),
-(513, 1, 'pos-mainBottomCenter-bgcolor', 'F8F8F8', 'F8F8F8', '', 41, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(513, 1, 'pos-mainBottomCenter-bgcolor', 'F8F8F8', 'F8F8F8', '', 41, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (514, 1, 'pos-mainBottomCenter-position', 'static', 'static', '', 41, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (515, 1, 'pos-mainBottomCenter-marginBottom', '0px', '0px', '', 41, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (516, 1, 'pos-mainBottomCenter-marginTop', '0px', '0px', '', 41, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
@@ -1435,15 +1428,15 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (532, 1, 'pos-mainBottomRight-zindex', '9999', '9999', '', 42, 1, 25, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (533, 1, 'pos-mainBottomRight-width', '100%', '100%', '', 42, 0, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
 (534, 1, 'pos-mainBottomRight-height', 'auto', 'auto', '', 42, 1, 3, 'TPL_POS_HEIGHT', 'form-control', '', '', 'TPL_HEIGHT_PLACEHOLDER', '', '', 'TPL_SIZE_HEADING', 'TPL_SIZE_SUBTEXT'),
-(535, 1, 'pos-mainBottomRight-bgcolor', 'F8F8F8', 'F8F8F8', '', 42, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(535, 1, 'pos-mainBottomRight-bgcolor', 'F8F8F8', 'F8F8F8', '', 42, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (536, 1, 'pos-mainBottomRight-position', 'static', 'static', '', 42, 1, 22, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (537, 1, 'pos-mainBottomRight-marginBottom', '0px', '0px', '', 42, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (538, 1, 'pos-mainBottomRight-marginTop', '0px', '0px', '', 42, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (539, 1, 'pos-mainFooter-indicator', '0', '0', '', 43, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
-(540, 1, 'pos-mainFooter-vertical-align', 'baseline', 'baseline', '', 43, 1, 6, 'TPL_VERTICAL_ALIGN', 'form-control', 'select', 'baseline,baseline:sub,subscript:super,superscript:top,top:text-top,text-top:middle,middle:bottom,bottom:text-bottom,text-bottom:initial,initial:inherit,inherit', '', '', '', '', '');
-INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `valueDefault`, `longValue`, `type`, `activated`, `sort`, `label`, `fieldClass`, `fieldType`, `options`, `placeholder`, `description`, `icon`, `heading`, `subtext`) VALUES
+(540, 1, 'pos-mainFooter-vertical-align', 'baseline', 'baseline', '', 43, 1, 6, 'TPL_VERTICAL_ALIGN', 'form-control', 'select', 'baseline,baseline:sub,subscript:super,superscript:top,top:text-top,text-top:middle,middle:bottom,bottom:text-bottom,text-bottom:initial,initial:inherit,inherit', '', '', '', '', ''),
 (541, 1, 'pos-mainFooter-customCSS-longValue', '', '', '', 43, 1, 27, 'TPL_CUSTOM_CSS', 'form-control', 'textarea', '', '', '', '', '', ''),
-(542, 1, 'pos-mainFooter-border-radius', '0 0 0 0', '12px 12px 12px 12px', '', 43, 1, 17, 'TPL_BORDER_RADIUS', 'form-control', '', '', 'TPL_BORDER_RADIUS_PLACEHOLDER', '', '', '', ''),
+(542, 1, 'pos-mainFooter-border-radius', '0 0 0 0', '12px 12px 12px 12px', '', 43, 1, 17, 'TPL_BORDER_RADIUS', 'form-control', '', '', 'TPL_BORDER_RADIUS_PLACEHOLDER', '', '', '', '');
+INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `valueDefault`, `longValue`, `type`, `activated`, `sort`, `label`, `fieldClass`, `fieldType`, `options`, `placeholder`, `description`, `icon`, `heading`, `subtext`) VALUES
 (543, 1, 'pos-mainFooter-box-shadow-color', '888888', '888888', '', 43, 1, 19, 'TPL_BOX_SHADOW_COLOR', 'form-control color', '', '', '', '', '', '', ''),
 (544, 1, 'pos-mainFooter-box-shadow-width', '6px 6px 25px -8px', '6px 6px 25px -8px', '', 43, 1, 18, 'TPL_BOX_SHADOW', 'form-control', '', '', 'TPL_BOX_SHADOW_PLACEHOLDER', '', '', 'TPL_BOX_SHADOW_HEADING', 'TPL_BOX_SHADOW_SUBTEXT'),
 (545, 1, 'pos-mainFooter-border-style', 'none', 'solid', '', 43, 1, 15, 'TPL_BORDER_STYLE', 'form-control', 'select', 'none,none:hidden,hidden:dotted,dotted:dashed,dashed:solid,solid:double,double:groove,groove:ridge,ridge:inset,inset:outset,outset:initial,initial:inherit,inherit', '', '', '', '', ''),
@@ -1458,7 +1451,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (554, 1, 'pos-mainFooter-zindex', '9999', '9999', '', 43, 1, 25, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (555, 1, 'pos-mainFooter-width', '100%', '100%', '', 43, 1, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
 (556, 1, 'pos-mainFooter-height', 'auto', 'auto', '', 43, 1, 3, 'TPL_POS_HEIGHT', 'form-control', '', '', 'TPL_HEIGHT_PLACEHOLDER', '', '', 'TPL_SIZE_HEADING', 'TPL_SIZE_SUBTEXT'),
-(557, 1, 'pos-mainFooter-bgcolor', '0D0D0D', 'F8F8F8', '', 43, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(557, 1, 'pos-mainFooter-bgcolor', '0D0D0D', 'F8F8F8', '', 43, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (558, 1, 'pos-mainFooter-position', 'static', 'static', '', 43, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (559, 1, 'pos-mainFooter-marginBottom', '0px', '0px', '', 43, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (560, 1, 'pos-mainFooter-marginTop', '0px', '0px', '', 43, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
@@ -1480,7 +1473,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (576, 1, 'pos-mainFooterLeft-zindex', '9999', '9999', '', 44, 1, 25, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (577, 1, 'pos-mainFooterLeft-width', '100%', '100%', '', 44, 0, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
 (578, 1, 'pos-mainFooterLeft-height', 'auto', 'auto', '', 44, 1, 3, 'TPL_POS_HEIGHT', 'form-control', '', '', 'TPL_HEIGHT_PLACEHOLDER', '', '', 'TPL_SIZE_HEADING', 'TPL_SIZE_SUBTEXT'),
-(579, 1, 'pos-mainFooterLeft-bgcolor', 'F8F8F8', 'F8F8F8', '', 44, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(579, 1, 'pos-mainFooterLeft-bgcolor', 'F8F8F8', 'F8F8F8', '', 44, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (580, 1, 'pos-mainFooterLeft-position', 'static', 'static', '', 44, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (581, 1, 'pos-mainFooterLeft-marginBottom', '0px', '0px', '', 44, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (582, 1, 'pos-mainFooterLeft-marginTop', '0px', '0px', '', 44, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
@@ -1502,7 +1495,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (598, 1, 'pos-mainFooterCenter-zindex', '9999', '9999', '', 45, 1, 25, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (599, 1, 'pos-mainFooterCenter-width', '100%', '100%', '', 45, 0, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
 (600, 1, 'pos-mainFooterCenter-height', 'auto', 'auto', '', 45, 1, 3, 'TPL_POS_HEIGHT', 'form-control', '', '', 'TPL_HEIGHT_PLACEHOLDER', '', '', 'TPL_SIZE_HEADING', 'TPL_SIZE_SUBTEXT'),
-(601, 1, 'pos-mainFooterCenter-bgcolor', 'F8F8F8', 'F8F8F8', '', 45, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(601, 1, 'pos-mainFooterCenter-bgcolor', 'F8F8F8', 'F8F8F8', '', 45, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (602, 1, 'pos-mainFooterCenter-position', 'static', 'static', '', 45, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (603, 1, 'pos-mainFooterCenter-marginBottom', '0px', '0px', '', 45, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (604, 1, 'pos-mainFooterCenter-marginTop', '0px', '0px', '', 45, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
@@ -1524,7 +1517,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (620, 1, 'pos-mainFooterRight-zindex', '9999', '9999', '', 46, 1, 25, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (621, 1, 'pos-mainFooterRight-width', '100%', '100%', '', 46, 0, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
 (622, 1, 'pos-mainFooterRight-height', 'auto', 'auto', '', 46, 1, 3, 'TPL_POS_HEIGHT', 'form-control', '', '', 'TPL_HEIGHT_PLACEHOLDER', '', '', 'TPL_SIZE_HEADING', 'TPL_SIZE_SUBTEXT'),
-(623, 1, 'pos-mainFooterRight-bgcolor', 'F8F8F8', 'F8F8F8', '', 46, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(623, 1, 'pos-mainFooterRight-bgcolor', 'F8F8F8', 'F8F8F8', '', 46, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (624, 1, 'pos-mainFooterRight-position', 'static', 'static', '', 46, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (625, 1, 'pos-mainFooterRight-marginBottom', '0px', '0px', '', 46, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (626, 1, 'pos-mainFooterRight-marginTop', '0px', '0px', '', 46, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
@@ -1546,7 +1539,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (642, 1, 'pos-footer-zindex', '9999', '9999', '', 47, 1, 25, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (643, 1, 'pos-footer-width', '100%', '100%', '', 47, 1, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
 (644, 1, 'pos-footer-height', 'auto', 'auto', '', 47, 1, 3, 'TPL_POS_HEIGHT', 'form-control', '', '', 'TPL_HEIGHT_PLACEHOLDER', '', '', 'TPL_SIZE_HEADING', 'TPL_SIZE_SUBTEXT'),
-(645, 1, 'pos-footer-bgcolor', 'F8F8F8', 'F8F8F8', '', 47, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(645, 1, 'pos-footer-bgcolor', 'F8F8F8', 'F8F8F8', '', 47, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (646, 1, 'pos-footer-position', 'static', 'static', '', 47, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (647, 1, 'pos-footer-marginBottom', '0px', '0px', '', 47, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (648, 1, 'pos-footer-marginTop', '0px', '0px', '', 47, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
@@ -1568,7 +1561,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (664, 1, 'pos-hiddenToolbar-zindex', '9999', '9999', '', 48, 1, 25, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (665, 1, 'pos-hiddenToolbar-width', '100%', '100%', '', 48, 1, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
 (666, 1, 'pos-hiddenToolbar-height', 'auto', 'auto', '', 48, 1, 3, 'TPL_POS_HEIGHT', 'form-control', '', '', 'TPL_HEIGHT_PLACEHOLDER', '', '', 'TPL_SIZE_HEADING', 'TPL_SIZE_SUBTEXT'),
-(667, 1, 'pos-hiddenToolbar-bgcolor', 'F8F8F8', 'F8F8F8', '', 48, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(667, 1, 'pos-hiddenToolbar-bgcolor', 'F8F8F8', 'F8F8F8', '', 48, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (668, 1, 'pos-hiddenToolbar-position', 'static', 'static', '', 48, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (669, 1, 'pos-hiddenToolbar-marginBottom', '0px', '0px', '', 48, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (670, 1, 'pos-hiddenToolbar-marginTop', '0px', '0px', '', 48, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
@@ -1590,7 +1583,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (686, 1, 'pos-debug-zindex', '9999', '9999', '', 49, 1, 25, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (687, 1, 'pos-debug-width', '100%', '100%', '', 49, 1, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
 (688, 1, 'pos-debug-height', 'auto', 'auto', '', 49, 1, 3, 'TPL_POS_HEIGHT', 'form-control', '', '', 'TPL_HEIGHT_PLACEHOLDER', '', '', 'TPL_SIZE_HEADING', 'TPL_SIZE_SUBTEXT'),
-(689, 1, 'pos-debug-bgcolor', 'F8F8F8', 'F8F8F8', '', 49, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(689, 1, 'pos-debug-bgcolor', 'F8F8F8', 'F8F8F8', '', 49, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (690, 1, 'pos-debug-position', 'static', 'static', '', 49, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (691, 1, 'pos-debug-marginBottom', '0px', '0px', '', 49, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (692, 1, 'pos-debug-marginTop', '0px', '0px', '', 49, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
@@ -1612,7 +1605,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (708, 1, 'pos-outerBottom-zindex', '9999', '9999', '', 50, 1, 25, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (709, 1, 'pos-outerBottom-width', '100%', '100%', '', 50, 1, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
 (710, 1, 'pos-outerBottom-height', 'auto', 'auto', '', 50, 1, 3, 'TPL_POS_HEIGHT', 'form-control', '', '', 'TPL_HEIGHT_PLACEHOLDER', '', '', 'TPL_SIZE_HEADING', 'TPL_SIZE_SUBTEXT'),
-(711, 1, 'pos-outerBottom-bgcolor', 'F8F8F8', 'F8F8F8', '', 50, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(711, 1, 'pos-outerBottom-bgcolor', 'F8F8F8', 'F8F8F8', '', 50, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (712, 1, 'pos-outerBottom-position', 'static', 'static', '', 50, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (713, 1, 'pos-outerBottom-marginBottom', '0px', '0px', '', 50, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (714, 1, 'pos-outerBottom-marginTop', '0px', '0px', '', 50, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
@@ -1688,10 +1681,10 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (784, 1, 'pos-mainBottom-bg-repeat', 'no-repeat', 'no-repeat', '', 39, 1, 11, 'TPL_BODY_BG_IMAGE_REPEAT', 'form-control', 'select', 'no-repeat,no-repeat:repeat-x,repeat-x:repeat-y,repeat-y:inherit,inherit', '', '', '', '', ''),
 (785, 1, 'pos-mainBottom-bg-size', 'cover', 'cover', '', 39, 1, 12, 'TPL_BODY_BG_IMAGE_SIZE', 'form-control', 'select', 'auto,auto:cover,cover:contain,contain:length,length:percentage,percentage:initial,inital:inherit,inherit', '', '', '', '', ''),
 (786, 1, 'pos-mainBottomLeft-bg-image', '', 'any .jpg or .png you want', '', 40, 1, 8, 'TPL_BODY_BG_IMAGE', 'form-control', '', '', 'TPL_BODY_BG_IMAGE_PLACEHOLDER', '', '', '', ''),
-(787, 1, 'pos-mainBottomLeft-bg-attachment', 'fixed', 'fixed', '', 40, 1, 9, 'TPL_BODY_BG_IMAGE_ATTACH', 'form-control', 'select', 'scroll,scroll:fixed,fixed:local,local:initial,inital:inherit,inherit', '', '', '', '', '');
-INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `valueDefault`, `longValue`, `type`, `activated`, `sort`, `label`, `fieldClass`, `fieldType`, `options`, `placeholder`, `description`, `icon`, `heading`, `subtext`) VALUES
+(787, 1, 'pos-mainBottomLeft-bg-attachment', 'fixed', 'fixed', '', 40, 1, 9, 'TPL_BODY_BG_IMAGE_ATTACH', 'form-control', 'select', 'scroll,scroll:fixed,fixed:local,local:initial,inital:inherit,inherit', '', '', '', '', ''),
 (788, 1, 'pos-mainBottomLeft-bg-position', 'center', 'center', '', 40, 1, 10, 'TPL_BODY_BG_IMAGE_POSITION', 'form-control', 'select', 'left-center,left-center:right-center,right-center:top-center,top-center:top,top:bottom,bottom', '', '', '', '', ''),
-(789, 1, 'pos-mainBottomLeft-bg-repeat', 'no-repeat', 'no-repeat', '', 40, 1, 11, 'TPL_BODY_BG_IMAGE_REPEAT', 'form-control', 'select', 'no-repeat,no-repeat:repeat-x,repeat-x:repeat-y,repeat-y:inherit,inherit', '', '', '', '', ''),
+(789, 1, 'pos-mainBottomLeft-bg-repeat', 'no-repeat', 'no-repeat', '', 40, 1, 11, 'TPL_BODY_BG_IMAGE_REPEAT', 'form-control', 'select', 'no-repeat,no-repeat:repeat-x,repeat-x:repeat-y,repeat-y:inherit,inherit', '', '', '', '', '');
+INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `valueDefault`, `longValue`, `type`, `activated`, `sort`, `label`, `fieldClass`, `fieldType`, `options`, `placeholder`, `description`, `icon`, `heading`, `subtext`) VALUES
 (790, 1, 'pos-mainBottomLeft-bg-size', 'cover', 'cover', '', 40, 1, 12, 'TPL_BODY_BG_IMAGE_SIZE', 'form-control', 'select', 'auto,auto:cover,cover:contain,contain:length,length:percentage,percentage:initial,inital:inherit,inherit', '', '', '', '', ''),
 (791, 1, 'pos-mainBottomCenter-bg-image', '', 'any .jpg or .png you want', '', 41, 1, 8, 'TPL_BODY_BG_IMAGE', 'form-control', '', '', 'TPL_BODY_BG_IMAGE_PLACEHOLDER', '', '', '', ''),
 (792, 1, 'pos-mainBottomCenter-bg-attachment', 'fixed', 'fixed', '', 41, 1, 9, 'TPL_BODY_BG_IMAGE_ATTACH', 'form-control', 'select', 'scroll,scroll:fixed,fixed:local,local:initial,inital:inherit,inherit', '', '', '', '', ''),
@@ -1755,18 +1748,18 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (850, 1, 'form-border-radius', '4px', '4px', '', 51, 1, 4, 'TPL_FORM_BORDER_RADIUS_LABEL', 'form-control', '', '', 'TPL_FORM_BORDER_RADIUS_PLACEHOLDER', '', '', '', ''),
 (851, 1, 'form-activeBorderColor', '66AFE9', '#66afe9', '', 51, 1, 5, 'TPL_FORM_ACTIVE_BORDERCOLOR_LABEL', 'form-control color', 'color', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (852, 1, 'form-placeholderColor', '999999', '#999', '', 51, 1, 6, 'TPL_FORM_PLACEHOLDERCOLOR_LABEL', 'form-control color', 'color', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
-(853, 1, 'h1-fontfamily', 'Satisfy-gfont', '', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
-(854, 1, 'h2-fontfamily', 'Gloria Hallelujah-gfont', '', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
-(855, 1, 'h3-fontfamily', 'Impact, Charcoal, sans-serif', '', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
-(856, 1, 'h4-fontfamily', 'Allura-gfont', '', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
-(857, 1, 'h5-fontfamily', 'Exo-BlackItalic-otf', '', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
-(858, 1, 'h6-fontfamily', 'PTN57F-ttf', '', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
-(859, 1, 'globaltext-fontfamily', 'Norican-gfont', '', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
-(860, 1, 'h1-fontshadowsize', '2px 2px 0px', '2px 2px 0px', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
-(861, 1, 'h1-fontshadowcolor', '963627', 'FFFFFF', '', 52, 1, 1, '', 'form-control color', '', '', '', '', '', '', ''),
-(862, 1, 'h1-fontweight', 'normal', '', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
-(863, 1, 'h1-fontstyle', 'normal', '', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
-(864, 1, 'h1-textdecoration', 'none', '', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
+(853, 1, 'h1-fontfamily', 'Arial, Helvetica, sans-serif', '', '', 52, 1, 1, 'TPL_H1_FONTFAMILY', 'form-control', '', '', '', 'TPL_FONTFAMILY_DESC', '', '', ''),
+(854, 1, 'h2-fontfamily', 'Arial, Helvetica, sans-serif', 'Arial', '', 52, 1, 1, '', 'form-control', '', '', '', 'TPL_FONTFAMILY_DESC', '', '', ''),
+(855, 1, 'h3-fontfamily', 'Arial, Helvetica, sans-serif', '', '', 52, 1, 1, '', 'form-control', '', '', '', 'TPL_FONTFAMILY_DESC', '', '', ''),
+(856, 1, 'h4-fontfamily', 'Arial, Helvetica, sans-serif', '', '', 52, 1, 1, '', 'form-control', '', '', '', 'TPL_FONTFAMILY_DESC', '', '', ''),
+(857, 1, 'h5-fontfamily', 'Arial, Helvetica, sans-serif', '', '', 52, 1, 1, '', 'form-control', '', '', '', 'TPL_FONTFAMILY_DESC', '', '', ''),
+(858, 1, 'h6-fontfamily', 'Arial, Helvetica, sans-serif', '', '', 52, 1, 1, '', 'form-control', '', '', '', 'TPL_FONTFAMILY_DESC', '', '', ''),
+(859, 1, 'globaltext-fontfamily', 'Arial, Helvetica, sans-serif', '', '', 52, 1, 1, '', 'form-control', '', '', '', 'TPL_FONTFAMILY_DESC', '', '', ''),
+(860, 1, 'h1-fontshadowsize', '2px 2px 0px', '2px 2px 0px', '', 52, 1, 1, 'TPL_FONTSHADOWSIZE', 'form-control', '', '', '', '', '', '', ''),
+(861, 1, 'h1-fontshadowcolor', '963627', 'FFFFFF', '', 52, 1, 1, 'TPL_FONTSHADOWCOLOR', 'form-control color', '', '', '', '', '', '', ''),
+(862, 1, 'h1-fontweight', 'normal', '', '', 52, 1, 1, 'TPL_FONTWEIGHT', 'form-control', '', '', '', '', '', '', ''),
+(863, 1, 'h1-fontstyle', 'normal', '', '', 52, 1, 1, 'TPL_FONTSTYLE', 'form-control', '', '', '', '', '', '', ''),
+(864, 1, 'h1-textdecoration', 'none', '', '', 52, 1, 1, 'TPL_TEXTDECORATION', 'form-control', '', '', '', '', '', '', ''),
 (865, 1, 'h2-fontshadowsize', '2px 2px 0px', '2px 2px 0px', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
 (866, 1, 'h2-fontshadowcolor', 'C2C2C2', 'FFFFFF', '', 52, 1, 1, '', 'form-control color', '', '', '', '', '', '', ''),
 (867, 1, 'h2-fontweight', 'normal', '', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
@@ -1786,13 +1779,110 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (881, 1, 'h4-fontweight', 'normal', '', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
 (882, 1, 'h4-fontstyle', 'normal', '', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
 (883, 1, 'h5-fontshadowsize', '1px 1px 0px', '2px 2px 0px', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
-(884, 1, 'h5-fontshadowcolor', '1C1C1C', 'FFFFFF', '', 52, 1, 1, '', 'form-control color', '', '', '', '', '', '', ''),
+(884, 1, 'h5-fontshadowcolor', '919191', 'FFFFFF', '', 52, 1, 1, '', 'form-control color', '', '', '', '', '', '', ''),
 (885, 1, 'h5-fontweight', 'normal', '', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
 (886, 1, 'h5-fontstyle', 'normal', '', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
 (887, 1, 'h6-fontshadowsize', '1px 1px 0px', '2px 2px 0px', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
-(888, 1, 'h6-fontshadowcolor', 'BFBFBF', 'FFFFFF', '', 52, 1, 1, '', 'form-control color', '', '', '', '', '', '', ''),
+(888, 1, 'h6-fontshadowcolor', 'EBEBEB', 'FFFFFF', '', 52, 1, 1, '', 'form-control color', '', '', '', '', '', '', ''),
 (889, 1, 'h6-fontweight', 'normal', '', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
-(890, 1, 'h6-fontstyle', 'normal', '', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', '');
+(890, 1, 'h6-fontstyle', 'normal', '', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
+(891, 1, 'h1-alink', '186FF2', '337AB7', '', 52, 1, 1, 'TPL_LINK_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(892, 1, 'h1-ahover', '1B95F2', '23527C', '', 52, 1, 1, 'TPL_LINK_HOVER_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(893, 1, 'h1-avisited', '114EAB', '337AB7', '', 52, 1, 1, 'TPL_LINK_VISITED_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(894, 1, 'h1-linkfontweight', 'normal', '', '', 52, 1, 1, 'TPL_LINK_FONTWEIGHT', 'form-control', '', '', '', '', '', '', ''),
+(895, 1, 'h1-linkfontstyle', 'normal', '', '', 52, 1, 1, 'TPL_LINK_FONTSTYLE', 'form-control', '', '', '', '', '', '', ''),
+(896, 1, 'h1-linktextdecoration', 'none', '', '', 52, 1, 1, 'TPL_LINK_TEXTDECORATION', 'form-control', '', '', '', '', '', '', ''),
+(897, 1, 'h1-hovertextdecoration', 'none', '', '', 52, 1, 1, 'TPL_HOVER_TEXTDECORATION', 'form-control', '', '', '', '', '', '', ''),
+(898, 1, 'h2-alink', 'DD22F2', '337AB7', '', 5, 1, 1, 'TPL_LINK_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(899, 1, 'h3-alink', '186FF2', '337AB7', '', 5, 1, 1, 'TPL_LINK_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(900, 1, 'h4-alink', '186FF2', '337AB7', '', 5, 1, 1, 'TPL_LINK_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(901, 1, 'h5-alink', '186FF2', '337AB7', '', 5, 1, 1, 'TPL_LINK_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(902, 1, 'h6-alink', 'F21D6B', '337AB7', '', 5, 1, 1, 'TPL_LINK_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(903, 1, 'h2-ahover', 'F20018', '337AB7', '', 5, 1, 1, 'TPL_LINK_HOVER_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(904, 1, 'h2-avisited', 'AB1D64', '337AB7', '', 5, 1, 1, 'TPL_LINK_VISITED_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(905, 1, 'pos-body-bg-gradient-longValue', '', '', '', 54, 1, 13, 'TPL_POS_BG_GRADIENT', 'form-control', 'textarea', '', '', '', '', '', ''),
+(906, 1, 'pos-body-customCSS-longValue', '', '', '', 54, 1, 27, 'TPL_CUSTOM_CSS', 'form-control', 'textarea', '', '', '', '', '', ''),
+(907, 1, 'pos-body-text-align', 'justify', 'justify', '', 54, 1, 1, 'TPL_TEXT_ALIGN', 'form-control', 'select', 'left,left:center,center:right,right:justify,justify:initial,initial:inherit,inherit', '', '', '', 'TPL_ALIGN_HEADING', 'TEXT'),
+(908, 1, 'pos-leftMenu-bgnone', ' ', 'none', '', 32, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(909, 1, 'h2-linkfontweight', 'normal', '', '', 52, 1, 1, 'TPL_LINK_FONTWEIGHT', 'form-control', '', '', '', '', '', '', ''),
+(910, 1, 'h2-linkfontstyle', 'normal', '', '', 52, 1, 1, 'TPL_LINK_FONTSTYLE', 'form-control', '', '', '', '', '', '', ''),
+(911, 1, 'h2-linktextdecoration', 'none', '', '', 52, 1, 1, 'TPL_LINK_TEXTDECORATION', 'form-control', '', '', '', '', '', '', ''),
+(912, 1, 'h2-hovertextdecoration', 'underline', '', '', 52, 1, 1, 'TPL_HOVER_TEXTDECORATION', 'form-control', '', '', '', '', '', '', ''),
+(913, 1, 'h3-linkfontweight', 'normal', '', '', 52, 1, 1, 'TPL_LINK_FONTWEIGHT', 'form-control', '', '', '', '', '', '', ''),
+(914, 1, 'h3-linkfontstyle', 'normal', '', '', 52, 1, 1, 'TPL_LINK_FONTSTYLE', 'form-control', '', '', '', '', '', '', ''),
+(915, 1, 'h3-linktextdecoration', 'none', '', '', 52, 1, 1, 'TPL_LINK_TEXTDECORATION', 'form-control', '', '', '', '', '', '', ''),
+(916, 1, 'h3-hovertextdecoration', 'none', '', '', 52, 1, 1, 'TPL_HOVER_TEXTDECORATION', 'form-control', '', '', '', '', '', '', ''),
+(917, 1, 'h3-avisited', '114EAB', '337AB7', '', 52, 1, 1, 'TPL_LINK_VISITED_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(918, 1, 'h3-ahover', '1B95F2', '23527C', '', 52, 1, 1, 'TPL_LINK_HOVER_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(919, 1, 'h4-alink', '186FF2', '337AB7', '', 52, 1, 1, 'TPL_LINK_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(920, 1, 'h4-ahover', '1B95F2', '23527C', '', 52, 1, 1, 'TPL_LINK_HOVER_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(921, 1, 'h4-avisited', '114EAB', '337AB7', '', 52, 1, 1, 'TPL_LINK_VISITED_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(922, 1, 'h4-linkfontweight', 'normal', '', '', 52, 1, 1, 'TPL_LINK_FONTWEIGHT', 'form-control', '', '', '', '', '', '', ''),
+(923, 1, 'h4-linkfontstyle', 'normal', '', '', 52, 1, 1, 'TPL_LINK_FONTSTYLE', 'form-control', '', '', '', '', '', '', ''),
+(924, 1, 'h4-linktextdecoration', 'none', '', '', 52, 1, 1, 'TPL_LINK_TEXTDECORATION', 'form-control', '', '', '', '', '', '', ''),
+(925, 1, 'h4-hovertextdecoration', 'none', '', '', 52, 1, 1, 'TPL_HOVER_TEXTDECORATION', 'form-control', '', '', '', '', '', '', ''),
+(926, 1, 'h5-alink', '186FF2', '337AB7', '', 52, 1, 1, 'TPL_LINK_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(927, 1, 'h5-ahover', '1B95F2', '23527C', '', 52, 1, 1, 'TPL_LINK_HOVER_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(928, 1, 'h5-avisited', '114EAB', '337AB7', '', 52, 1, 1, 'TPL_LINK_VISITED_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(929, 1, 'h5-linkfontweight', 'normal', '', '', 52, 1, 1, 'TPL_LINK_FONTWEIGHT', 'form-control', '', '', '', '', '', '', ''),
+(930, 1, 'h5-linkfontstyle', 'normal', '', '', 52, 1, 1, 'TPL_LINK_FONTSTYLE', 'form-control', '', '', '', '', '', '', ''),
+(931, 1, 'h5-linktextdecoration', 'none', '', '', 52, 1, 1, 'TPL_LINK_TEXTDECORATION', 'form-control', '', '', '', '', '', '', ''),
+(932, 1, 'h5-hovertextdecoration', 'none', '', '', 52, 1, 1, 'TPL_HOVER_TEXTDECORATION', 'form-control', '', '', '', '', '', '', ''),
+(933, 1, 'h6-alink', 'F21D6B', '337AB7', '', 52, 1, 1, 'TPL_LINK_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(934, 1, 'h6-ahover', 'F20212', '23527C', '', 52, 1, 1, 'TPL_LINK_HOVER_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(935, 1, 'h6-avisited', 'AB071D', '337AB7', '', 52, 1, 1, 'TPL_LINK_VISITED_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(936, 1, 'h6-linkfontweight', 'normal', '', '', 52, 1, 1, 'TPL_LINK_FONTWEIGHT', 'form-control', '', '', '', '', '', '', ''),
+(937, 1, 'h6-linkfontstyle', 'normal', '', '', 52, 1, 1, 'TPL_LINK_FONTSTYLE', 'form-control', '', '', '', '', '', '', ''),
+(938, 1, 'h6-linktextdecoration', 'none', '', '', 52, 1, 1, 'TPL_LINK_TEXTDECORATION', 'form-control', '', '', '', '', '', '', ''),
+(939, 1, 'h6-hovertextdecoration', 'none', '', '', 52, 1, 1, 'TPL_HOVER_TEXTDECORATION', 'form-control', '', '', '', '', '', '', ''),
+(940, 1, 'h1-smallcolor', 'CC9A6E', '888888', '', 52, 1, 1, 'TPL_SMALLCOLOR', 'form-control', '', '', '', '', '', '', ''),
+(941, 1, 'h2-smallcolor', '1E2E22', '888888', '', 52, 1, 1, 'TPL_SMALLCOLOR', 'form-control', '', '', '', '', '', '', ''),
+(942, 1, 'h3-smallcolor', '4D4D4D', '888888', '', 52, 1, 1, 'TPL_SMALLCOLOR', 'form-control', '', '', '', '', '', '', ''),
+(943, 1, 'h4-smallcolor', 'A8A8A8', '888888', '', 52, 1, 1, 'TPL_SMALLCOLOR', 'form-control', '', '', '', '', '', '', ''),
+(944, 1, 'h5-smallcolor', 'C4C4C4', '888888', '', 52, 1, 1, 'TPL_SMALLCOLOR', 'form-control', '', '', '', '', '', '', ''),
+(945, 1, 'h6-smallcolor', '0A0A0A', '888888', '', 52, 1, 1, 'TPL_SMALLCOLOR', 'form-control', '', '', '', '', '', '', ''),
+(946, 1, 'h1-smallshadowsize', '2px 2px 0px', '1px 1px 0px', '', 52, 1, 1, 'TPL_SMALLSHADOWSIZE', 'form-control', '', '', '', '', '', '', ''),
+(947, 1, 'h1-smallshadowcolor', '963627', 'FFFFFF', '', 52, 1, 1, 'TPL_SMALLSHADOWCOLOR', 'form-control color', '', '', '', '', '', '', ''),
+(948, 1, 'h2-smallshadowsize', '2px 2px 0px', '1px 1px 0px', '', 52, 1, 1, 'TPL_SMALLSHADOWSIZE', 'form-control', '', '', '', '', '', '', ''),
+(949, 1, 'h2-smallshadowcolor', 'C2C2C2', 'FFFFFF', '', 52, 1, 1, 'TPL_SMALLSHADOWCOLOR', 'form-control color', '', '', '', '', '', '', ''),
+(950, 1, 'h3-smallshadowsize', '2px 2px 0px', '1px 1px 0px', '', 52, 1, 1, 'TPL_SMALLSHADOWSIZE', 'form-control', '', '', '', '', '', '', ''),
+(951, 1, 'h3-smallshadowcolor', '9C9C9C', 'FFFFFF', '', 52, 1, 1, 'TPL_SMALLSHADOWCOLOR', 'form-control color', '', '', '', '', '', '', ''),
+(952, 1, 'h4-smallshadowsize', '1px 1px 3px', '1px 1px 0px', '', 52, 1, 1, 'TPL_SMALLSHADOWSIZE', 'form-control', '', '', '', '', '', '', ''),
+(953, 1, 'h4-smallshadowcolor', '0D0D0D', 'FFFFFF', '', 52, 1, 1, 'TPL_SMALLSHADOWCOLOR', 'form-control color', '', '', '', '', '', '', ''),
+(954, 1, 'h5-smallshadowsize', '1px 1px 0px', '1px 1px 0px', '', 52, 1, 1, 'TPL_SMALLSHADOWSIZE', 'form-control', '', '', '', '', '', '', ''),
+(955, 1, 'h5-smallshadowcolor', '919191', 'FFFFFF', '', 52, 1, 1, 'TPL_SMALLSHADOWCOLOR', 'form-control color', '', '', '', '', '', '', ''),
+(956, 1, 'h6-smallshadowsize', '1px 1px 0px', '1px 1px 0px', '', 52, 1, 1, 'TPL_SMALLSHADOWSIZE', 'form-control', '', '', '', '', '', '', ''),
+(957, 1, 'h6-smallshadowcolor', 'EBEBEB', 'FFFFFF', '', 52, 1, 1, 'TPL_SMALLSHADOWCOLOR', 'form-control color', '', '', '', '', '', '', ''),
+(958, 1, 'globaltext-fontweight', 'normal', '', '', 52, 1, 1, 'TPL_FONTWEIGHT', 'form-control', '', '', '', '', '', '', ''),
+(959, 1, 'globaltext-fontstyle', 'normal', '', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
+(960, 1, 'globaltext-linkfontstyle', 'normal', '', '', 52, 1, 1, 'TPL_LINK_FONTSTYLE', 'form-control', '', '', '', '', '', '', ''),
+(961, 1, 'globaltext-linkfontweight', 'normal', '', '', 52, 1, 1, 'TPL_LINK_FONTWEIGHT', 'form-control', '', '', '', '', '', '', ''),
+(962, 1, 'globaltext-smallshadowsize', '1px 1px 10px', '1px 1px 0px', '', 52, 1, 1, 'TPL_SMALLSHADOWSIZE', 'form-control', '', '', '', '', '', '', ''),
+(963, 1, 'globaltext-smallshadowcolor', 'DE1328', 'FFFFFF', '', 52, 1, 1, 'TPL_SMALLSHADOWCOLOR', 'form-control color', '', '', '', '', '', '', ''),
+(964, 1, 'pos-rightMenu-bgnone', ' ', 'none', '', 33, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(965, 1, 'pos-outerTop-bgnone', ' ', 'none', '', 26, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(966, 1, 'pos-intro-bgnone', ' ', 'none', '', 27, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(967, 1, 'pos-globalmenu-bgnone', ' ', 'none', '', 28, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(968, 1, 'pos-top-bgnone', ' ', 'none', '', 29, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(969, 1, 'pos-outerLeft-bgnone', ' ', 'none', '', 30, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(970, 1, 'pos-outerRight-bgnone', ' ', 'none', '', 31, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(971, 1, 'pos-mainTop-bgnone', ' ', 'none', '', 34, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(972, 1, 'pos-mainTopLeft-bgnone', ' ', 'none', '', 35, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(973, 1, 'pos-mainTopCenter-bgnone', ' ', 'none', '', 36, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(974, 1, 'pos-mainTopRight-bgnone', ' ', 'none', '', 37, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(975, 1, 'pos-main-bgnone', ' ', 'none', '', 38, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(976, 1, 'pos-mainBottom-bgnone', ' ', 'none', '', 39, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(977, 1, 'pos-mainBottomLeft-bgnone', ' ', 'none', '', 40, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(978, 1, 'pos-mainBottomCenter-bgnone', ' ', 'none', '', 41, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(979, 1, 'pos-mainBottomRight-bgnone', ' ', 'none', '', 42, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(980, 1, 'pos-mainFooter-bgnone', ' ', 'none', '', 43, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(981, 1, 'pos-mainFooterLeft-bgnone', ' ', 'none', '', 44, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(982, 1, 'pos-mainFooterCenter-bgnone', ' ', 'none', '', 45, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(983, 1, 'pos-mainFooterRight-bgnone', ' ', 'none', '', 46, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(984, 1, 'pos-footer-bgnone', ' ', 'none', '', 47, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(985, 1, 'pos-hiddenToolbar-bgnone', ' ', 'none', '', 48, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(986, 1, 'pos-debug-bgnone', ' ', 'none', '', 49, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(987, 1, 'pos-outerBottom-bgnone', ' ', 'none', '', 50, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT');
 
 -- --------------------------------------------------------
 
@@ -1862,7 +1952,8 @@ INSERT INTO `cms_template_settings_types` (`id`, `type`) VALUES
 (50, 'pos-outerBottom'),
 (51, 'forms-extended'),
 (52, 'fontfamily'),
-(53, 'font-linkcolors');
+(53, 'font-linkcolors'),
+(54, 'pos-body');
 
 -- --------------------------------------------------------
 
@@ -1903,13 +1994,6 @@ CREATE TABLE `cms_users` (
   `overrideTemplate` int(1) NOT NULL,
   `templateID` int(6) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Daten für Tabelle `cms_users`
---
-
-INSERT INTO `cms_users` (`id`, `blocked`, `privacy`, `online`, `gid`, `terms`, `username`, `password`, `date_created`, `date_changed`, `date_expired`, `date_lastlogin`, `login_count`, `email`, `url`, `twitter`, `facebook`, `firstname`, `lastname`, `street`, `zipcode`, `city`, `country`, `state`, `logged_in`, `public_email`, `terminatedByUser`, `job`, `likes`, `overrideTemplate`, `templateID`) VALUES
-(1, 0, 1, 1, 5, 1, 'admin', '098f6bcd4621d373cade4e832627b4f6', '2017-05-05 00:33:51', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2017-05-20 10:19:57', 5, 'danielretzl@gmail.com', '', '', '', '', '', '', '', '', '', '', 1, 0, 0, 'Administrator', 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -2096,7 +2180,7 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('bubblusHeading', 'Heading', 31, 1, 4, 'LABEL_BUBBLUS_HEADING', '', '', '', 'DESC_BUBBLUS_HEADING', 'form-control', '', 'PH_BUBBLUS_HEADING', '', 117),
 ('bubblusSubtext', 'Subtext', 31, 1, 5, 'LABEL_BUBBLUS_SUBTEXT', '', '', '', 'DESC_BUBBLUS_SUBTEXT', 'form-control', '', 'PH_BUBBLUS_SUBTEXT', '', 118),
 ('jPlayerUserMediaFolder', '', 32, 1, 2, 'LABEL_JPLAYER_USER_MEDIAFOLDER', '', '', '', 'DESC_JPLAYER_USER_MEDIAFOLDER', 'form-control', '', 'PH_JPLAYER_USER_MEDIAFOLDER', '', 119),
-('jPlayerWidth', '100%', 32, 0, 6, 'LABEL_JPLAYER_WIDTH', '', '', '', '', 'form-control', '', 'PH_JPLAYER_WIDTH', '', 120),
+('jPlayerWidth', '100%', 32, 1, 6, 'LABEL_JPLAYER_WIDTH', '', '', '', '', 'form-control', '', 'PH_JPLAYER_WIDTH', '', 120),
 ('jPlayerHeading', 'Heading', 32, 1, 3, 'LABEL_JPLAYER_HEADING', '', '', '', 'DESC_JPLAYER_HEADING', 'form-control', '', 'PH_JPLAYER_HEADING', '', 121),
 ('jPlayerSubtext', 'Subtext', 32, 1, 4, 'LABEL_JPLAYER_SUBTEXT', '', '', '', 'DESC_JPLAYER_SUBTEXT', 'form-control', '', 'PH_JPLAYER_SUBTEXT', '', 122),
 ('jPlayerSkin', 'dark', 32, 1, 5, 'LABEL_JPLAYER_SKIN', '', '', '', 'DESC_JPLAYER_SKIN', 'form-control', 'select', '', 'light,Light:dark,Dark', 123),
@@ -2530,7 +2614,7 @@ ALTER TABLE `cms_newsletter`
 -- AUTO_INCREMENT für Tabelle `cms_notifications`
 --
 ALTER TABLE `cms_notifications`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `cms_notifications_msg`
 --
@@ -2550,7 +2634,7 @@ ALTER TABLE `cms_plugin_gallery_items`
 -- AUTO_INCREMENT für Tabelle `cms_stats`
 --
 ALTER TABLE `cms_stats`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 --
 -- AUTO_INCREMENT für Tabelle `cms_syslog`
 --
@@ -2560,7 +2644,7 @@ ALTER TABLE `cms_syslog`
 -- AUTO_INCREMENT für Tabelle `cms_template_settings`
 --
 ALTER TABLE `cms_template_settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=891;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=988;
 --
 -- AUTO_INCREMENT für Tabelle `cms_widget_defaults`
 --
@@ -2570,7 +2654,7 @@ ALTER TABLE `cms_widget_defaults`
 -- AUTO_INCREMENT für Tabelle `cms_widget_settings`
 --
 ALTER TABLE `cms_widget_settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
