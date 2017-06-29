@@ -78,7 +78,7 @@ $positions = \YAWK\template::getPositionStatesArray($db);
 $indicators = \YAWK\template::getPositionIndicatorStatusArray($db);
 ?>
 <!-- /gfonts -->
-  </head>
+</head>
 <body style="<?php echo YAWK\template::getActiveBodyFont($db); ?>" ondragstart="return false">
 
   <!-- LAYOUT START -->

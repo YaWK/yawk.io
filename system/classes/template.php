@@ -1222,7 +1222,7 @@ namespace YAWK {
 
             if ($fontRow === "globaltext" xor ($fontRow === "menufont"))
             {
-                $col = 6;
+                $col = 4;
             }
             else { $col = 2; }
 
@@ -1879,9 +1879,9 @@ namespace YAWK {
             }
         }
 
-        static function setBodyFontFace($cssTagName, $tplSettings)
+        static function setCssBodyFontFace($cssTagName, $tplSettings)
         {
-            $bodyFontCSS = '';
+            $bodyFontFaceCSS = '';
             $fontFamily = $tplSettings["$cssTagName-fontfamily"];
             // get font type by cutting off file extension
             $fontType = substr($fontFamily, -4);
@@ -1889,7 +1889,7 @@ namespace YAWK {
             if ($fontType === "-ttf")
             {
                 $filename = str_replace("-ttf", ".ttf", $fontFamily);
-                $bodyFontCSS = "@font-face {
+                $bodyFontFaceCSS = "@font-face {
                 font-family: $fontFamily;
                 src: url('../../../fonts/$filename');
                 }";
@@ -1897,7 +1897,7 @@ namespace YAWK {
             elseif ($fontType === "-otf")
             {
                 $filename = str_replace("-otf", ".otf", $fontFamily);
-                $bodyFontCSS = "@font-face {
+                $bodyFontFaceCSS = "@font-face {
                 font-family: $fontFamily;
                 src: url('../../../fonts/$filename');
                 }";
@@ -1905,15 +1905,61 @@ namespace YAWK {
             elseif ($fontType === "woff")
             {
                 $filename = str_replace("-woff", ".woff", $fontFamily);
-                $bodyFontCSS = "@font-face {
+                $bodyFontFaceCSS = "@font-face {
                 font-family: $fontFamily;
                 src: url('../../../fonts/$filename') !important;
                 }";
             }
-            return $bodyFontCSS;
+            return $bodyFontFaceCSS;
         }
 
-        static function setCssBodyFontTags($cssTagName, $tplSettings)
+        static function setCssBodyLinkTags($cssTagName, $tplSettings)
+        {
+            $aLink = $tplSettings["$cssTagName-alink"];
+            $aVisited = $tplSettings["$cssTagName-avisited"];
+            $aHover = $tplSettings["$cssTagName-ahover"];
+            $aWeight = $tplSettings["$cssTagName-linkfontweight"];
+            $aStyle = $tplSettings["$cssTagName-linkfontstyle"];
+            $aDecoration = $tplSettings["$cssTagName-linktextdecoration"];
+            $hoverDecoration = $tplSettings["$cssTagName-hovertextdecoration"];
+            $bodyLinkTags = "
+                /* TODO: must be out of body */ 
+                a:link { 
+                        color: #$aLink;
+                        font-weight: $aWeight;
+                        font-style: $aStyle;
+                        text-decoration: $aDecoration;
+                        }
+                a:visited {
+                        color: #$aVisited;
+                    }
+                a:hover {   
+                        color: #$aHover;
+                        text-decoration: $hoverDecoration;
+                    }
+            ";
+            return $bodyLinkTags;
+        }
+
+        static function setCssBodySmallFontSettings($cssTagName, $tplSettings)
+        {
+            $smallColor = $tplSettings["$cssTagName-smallcolor"];
+            $smallShadowSize = $tplSettings["$cssTagName-smallshadowsize"];
+            $smallShadowColor = $tplSettings["$cssTagName-smallshadowcolor"];
+
+            $bodySmallTags = "small,
+                    .small
+                    {
+                        font-weight: normal;
+                        line-height: 1;
+                        color: #$smallColor;
+                        text-shadow: $smallShadowSize #$smallShadowColor;
+                    }
+                    ";
+            return $bodySmallTags;
+        }
+
+        static function setCssBodyFontSettings($cssTagName, $tplSettings)
         {
             $fontFamily = $tplSettings["$cssTagName-fontfamily"];
             $fontSize = $tplSettings["$cssTagName-size"];
@@ -1923,16 +1969,6 @@ namespace YAWK {
             $fontWeight = $tplSettings["$cssTagName-fontweight"];
             $fontStyle = $tplSettings["$cssTagName-fontstyle"];
             $fontTextDecoration = $tplSettings["$cssTagName-textdecoration"];
-            $aLink = $tplSettings["$cssTagName-alink"];
-            $aVisited = $tplSettings["$cssTagName-avisited"];
-            $aHover = $tplSettings["$cssTagName-ahover"];
-            $aWeight = $tplSettings["$cssTagName-linkfontweight"];
-            $aStyle = $tplSettings["$cssTagName-linkfontstyle"];
-            $aDecoration = $tplSettings["$cssTagName-linktextdecoration"];
-            $hoverDecoration = $tplSettings["$cssTagName-hovertextdecoration"];
-            $smallColor = $tplSettings["$cssTagName-smallcolor"];
-            $smallShadowSize = $tplSettings["$cssTagName-smallshadowsize"];
-            $smallShadowColor = $tplSettings["$cssTagName-smallshadowcolor"];
             // check, if it's a google font
             if (substr($fontFamily, -6) === "-gfont")
             {
@@ -1945,70 +1981,24 @@ namespace YAWK {
                     font-weight: $fontWeight;
                     font-style: $fontStyle;
                     text-decoration: $fontTextDecoration;
-                
-                a { /* LINK SETTINGS */
-                        color: #$aLink;
-                        font-weight: $aWeight;
-                        font-style: $aStyle;
-                        text-decoration: $aDecoration;
-                    }
-                a:visited {
-                        color: #$aVisited;
-                    }
-                a:hover {   
-                        color: #$aHover;
-                        text-decoration: $hoverDecoration;
-                    }
-                    small,
-                    .small
-                    {
-                        font-weight: normal;
-                        line-height: 1;
-                        color: #$smallColor;
-                        text-shadow: $smallShadowSize #$smallShadowColor;
-                    }
                 ";
             }
             else
             {
                 $bodyFontCSS = "
-                        font-family: $fontFamily;
-                        font-size: $fontSize;
-                        color: #$fontColor;
-                        text-shadow: $fontShadowSize #$fontShadowColor;
-                        font-weight: $fontWeight;
-                        font-style: $fontStyle;
-                        text-decoration: $fontTextDecoration;
-                 
-                    a { /* LINK SETTINGS */
-                        color: #$aLink;
-                        font-weight: $aWeight;
-                        font-style: $aStyle;
-                        text-decoration: $aDecoration;
-                    }
-                    a:visited {
-                        color: #$aVisited;
-                    }
-                    a:hover {   
-                        color: #$aHover;
-                        text-decoration: $hoverDecoration;
-                    }
-                    small,
-                    .small
-                    {
-                        font-weight: normal;
-                        line-height: 1;
-                        color: #$smallColor;
-                        text-shadow: $smallShadowSize #$smallShadowColor;
-                    }
-                    ";
-
-
+                    font-family: $fontFamily;
+                    font-size: $fontSize;
+                    color: #$fontColor;
+                    text-shadow: $fontShadowSize #$fontShadowColor;
+                    font-weight: $fontWeight;
+                    font-style: $fontStyle;
+                    text-decoration: $fontTextDecoration;
+                ";
             }
             return $bodyFontCSS;
         }
 
-        static function setCssFontTags($cssTagName, $tplSettings)
+        static function setCssFontSettings($cssTagName, $tplSettings)
         {
             $fontFamily = $tplSettings["$cssTagName-fontfamily"];
             $fontSize = $tplSettings["$cssTagName-size"];
@@ -2049,7 +2039,7 @@ namespace YAWK {
                     font-style: $fontStyle;
                     text-decoration: $fontTextDecoration;
                 }
-                $cssTagName a { /* LINK SETTINGS */
+                $cssTagName a:link { /* LINK SETTINGS */
                         color: #$aLink;
                         font-weight: $aWeight;
                         font-style: $aStyle;
@@ -2089,7 +2079,7 @@ namespace YAWK {
                     font-style: $fontStyle;
                     text-decoration: $fontTextDecoration;
                 }
-                    $cssTagName a { /* LINK SETTINGS */
+                    $cssTagName a:link { /* LINK SETTINGS */
                         color: #$aLink;
                         font-weight: $aWeight;
                         font-style: $aStyle;
@@ -2129,7 +2119,7 @@ namespace YAWK {
                     font-style: $fontStyle;
                     text-decoration: $fontTextDecoration;
                 }
-                    $cssTagName a { /* LINK SETTINGS */
+                    $cssTagName a:link { /* LINK SETTINGS */
                         color: #$aLink;
                         font-weight: $aWeight;
                         font-style: $aStyle;
@@ -2168,7 +2158,7 @@ namespace YAWK {
                     text-decoration: $fontTextDecoration;
                 }
                 
-                $cssTagName a { /* LINK SETTINGS */
+                $cssTagName a:link { /* LINK SETTINGS */
                         color: #$aLink;
                         font-weight: $aWeight;
                         font-style: $aStyle;
@@ -2205,7 +2195,7 @@ namespace YAWK {
                         text-decoration: $fontTextDecoration;
                     }
                 
-                    $cssTagName a { /* LINK SETTINGS */
+                    $cssTagName a:link { /* LINK SETTINGS */
                         color: #$aLink;
                         font-weight: $aWeight;
                         font-style: $aStyle;
