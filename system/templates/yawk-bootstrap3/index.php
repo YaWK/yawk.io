@@ -204,10 +204,12 @@ $indicators = \YAWK\template::getPositionIndicatorStatusArray($db);
                           ?>
                       </div>
 
+                      <div class="row">
                           <?php
                           // POSITION: main
                           \YAWK\template::getPositionDivBox($db, "main", 0, "col-md-12", $positions, $indicators);
                           ?>
+                      </div>
                       <div class="row">
                           <?php
                           // POSITION: mainBottom
