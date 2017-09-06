@@ -112,17 +112,17 @@
 </script>
 
 <?php
-/**
- * Copyright (C) Daniel Retzl
- */
-
 // new template object if not exists
 if (!isset($template)) { $template = new \YAWK\template(); }
 // new user object if not exists
 if (!isset($user)) { $user = new \YAWK\user(); }
 
-session_start();
-$_SESSION['template'] = $template;
+// check, if a session is already running
+if (!isset($_SESSION) || (empty($_SESSION)))
+{   // if not...
+    session_start();
+    $_SESSION['template'] = $template;
+}
 
 // get ID of current active template
 $getID = \YAWK\settings::getSetting($db, "selectedTemplate");
