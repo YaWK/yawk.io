@@ -19,7 +19,7 @@ if (isset($_GET['add']) && ($_GET['add'] === "1"))
 }
 
 // COPY WIDGET
-if($_GET['copy'] === "true") {
+if(isset($_GET['copy']) && ($_GET['copy'] === "true")) {
      if ($widget->copy($db, $_GET['widget']))
      {   // widget copied
          print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[WIDGET] $lang[ID]: ".$_GET['widget']." $lang[COPIED]","page=widgets","1800");
