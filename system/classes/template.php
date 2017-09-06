@@ -1093,7 +1093,7 @@ namespace YAWK {
                                 echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
                             }
                             echo "<input type=\"hidden\" name=\"$setting[property]\" value=\"0\">
-                              <input type=\"checkbox\" data-on=\"$lang[ON]\" data-off=\"$lang[OFF]\" data-toggle=\"toggle\" data-onstyle=\"success\" data-offstyle=\"danger\" id=\"$setting[property]\" name=\"$setting[property]\" value=\"1\" $checked>
+                              <input type=\"checkbox\" data-on=\"$lang[ON_]\" data-off=\"$lang[OFF_]\" data-toggle=\"toggle\" data-onstyle=\"success\" data-offstyle=\"danger\" id=\"$setting[property]\" name=\"$setting[property]\" value=\"1\" $checked>
                               <label for=\"$setting[property]\">&nbsp; $setting[label]</label><p>$setting[description]</p>";
                         }
 
@@ -1425,6 +1425,7 @@ namespace YAWK {
             }
             $html .= "</select>";
 
+            /*
             // SMALL TAG COLOR
             $html .= "<label for=\"$fontRowSmallColor\">$lang[$labelSmallColor]</label>
                     <input id=\"$fontRowSmallColor\" name=\"$fontRowSmallColor\" class=\"form-control color\" value=\"".$templateSettings[$fontRowSmallColor]['value']."\">";
@@ -1435,7 +1436,7 @@ namespace YAWK {
             // SMALL TAG SHADOW COLOR
             $html .= "<label for=\"$fontRowSmallShadowColor\">$lang[TPL_SMALLSHADOWCOLOR]</label>
                     <input id=\"$fontRowSmallShadowColor\" name=\"$fontRowSmallShadowColor\" value=\"".$templateSettings[$fontRowSmallShadowColor]['value']."\" class=\"form-control color\">";
-
+            */
             // end font div box
             $html .="
             </div>";
@@ -2531,6 +2532,48 @@ namespace YAWK {
                 $array[$prop] .= $row['longValue'];
             }
             return $array;
+        }
+
+        /**
+         * check if an admin LTE wrapper should be loaded around the backend content.
+         * This function must be called at the top of every backend page (admin/includes/xyz.php)
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param array $lang language array
+         * @return array
+         */
+        static function checkWrapper($lang, $title, $subtitle)
+        {   /* @var \YAWK\db $db */
+            if (!isset($_GET['hideWrapper']))
+            {
+                // draw the admin lte wrapper around content to include breadcrumbs and start content section
+                // TEMPLATE WRAPPER - HEADER & breadcrumbs
+                echo "
+                        <!-- Content Wrapper. Contains page content -->
+                        <div class=\"content-wrapper\" id=\"content-FX\">
+                        <!-- Content Header (Page header) -->
+                        <section class=\"content-header\">";
+                /* draw Title on top */
+                echo \YAWK\backend::getTitle($lang[$title], $lang[$subtitle]);
+                echo"<ol class=\"breadcrumb\">
+                                <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+                                <li><a href=\"index.php?page=users\" class=\"active\" title=\"$lang[USERS]\"> $lang[USERS]</a></li>
+                            </ol>
+                        </section>
+                        <!-- Main content -->
+                        <section class=\"content\">";
+                /* page content start here */
+                return null;
+            }
+            else    // if wrapper is set
+                {   // check if hide status is 1
+                    if ($_GET['hideWrapper'] === 1)
+                    {
+                        // no wrapper needed - do nothing
+                    }
+                }
+            return null;
         }
 
 
