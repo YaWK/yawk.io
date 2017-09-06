@@ -103,6 +103,7 @@ $previewButton = "";
                 $settings = "<dt>$lang[SETTINGS]</dt>
                             <dd>".$template->countTemplateSettings($db, $template->id)."</dd>";
 
+                $infoBadge = "<span class=\"label label-success\"><i class=\"fa fa-check\"></i>&nbsp;&nbsp;$lang[VISIBLE_TO_EVERYONE]</span>";
                 ?>
                 <dt><?php echo "$lang[TEMPLATE] $lang[NAME]"; ?></dt>
                 <dd><b><?php echo $template->name; ?></b></dd>
