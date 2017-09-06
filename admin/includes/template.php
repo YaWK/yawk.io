@@ -20,12 +20,12 @@
         });
 
         $("#tab-customcss").click(function() {
-            fn = baseURL+"/yawk-LTE/admin/index.php?page=users&hideWrapper=1";
+            fn = baseURL+"/yawk-LTE/admin/index.php?page=template-customcss&hideWrapper=1";
             $("#tabcontent-customcss").load( fn );
         });
 
         $("#tab-settings").click(function() {
-            fn = baseURL+"/yawk-LTE/admin/index.php?page=settings-manage&hideWrapper=1";
+            fn = baseURL+"/yawk-LTE/admin/index.php?page=template-settings&hideWrapper=1";
             $("#tabcontent-settings").load( fn );
         });
        // set default active tab
@@ -34,6 +34,15 @@
     });
 </script>
 <?php
+// check if template obj is set and create if not exists
+if (!isset($template)) { $template = new \YAWK\template(); }
+// new user obj if not exists
+if (!isset($user)) { $user = new \YAWK\user(); }
+// get ID of current active template
+$getID = \YAWK\settings::getSetting($db, "selectedTemplate");
+// load properties of current active template
+$template->loadProperties($db, $getID);
+
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
     <!-- Content Wrapper. Contains page content -->
@@ -41,12 +50,13 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 /* draw Title on top */
-echo \YAWK\backend::getTitle($lang['TPL'], $lang['SET_AND_EDIT']);
+$t = "$lang[TEMPLATE] $lang[SET_AND_EDIT]";
+echo \YAWK\backend::getTitle($lang['TPL_MANAGER'], $t);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
-            <li class=\"active\"><a href=\"index.php?page=search\" title=\"$lang[SEARCH]\"> $lang[SEARCH]</a></li>
-         </ol>
-    </section>
+            <li><a href=\"index.php?page=template-manage\" title=\"$lang[TPL_MANAGER]\"> $lang[TPL_MANAGER]</a></li>
+            <li><b><a href=\"index.php?page=template-edit&id=$template->id\" class=\"active\" title=\"$lang[TPL_EDIT]\">$template->name</a></b></li>
+        </ol></section>
     <!-- Main content -->
     <section class=\"content\">";
 /* page content start here */
@@ -71,7 +81,6 @@ echo '
     <p id="tabcontent-design"></p>
   </div>
   <div id="tpl-customcss" class="tab-pane fade">
-    <h3>'.$lang['CUSTOM_CSS'].'</h3>
     <p id="tabcontent-customcss"></p>
   </div>
   <div id="tpl-settings" class="tab-pane fade">
