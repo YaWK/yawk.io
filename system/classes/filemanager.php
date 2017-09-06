@@ -127,7 +127,7 @@ namespace YAWK {
          * @param string $path path to workout
          * @param array $lang current language array
          */
-        static function getFilesFromFolder($folder, $path, $lang)
+        static function getFilesFromFolder($folder, $lang)
         {
             global $file_value;
 
