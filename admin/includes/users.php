@@ -82,13 +82,14 @@ if (isset($_GET['delete']))
     } );
 </script>
 <?php
+
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
     <!-- Content Wrapper. Contains page content -->
     <div class=\"content-wrapper\" id=\"content-FX\">
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
-/* draw Title on top */
+// draw Title on top
 echo \YAWK\backend::getTitle($lang['USERS'], $lang['USERS_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
@@ -98,6 +99,7 @@ echo"<ol class=\"breadcrumb\">
     <!-- Main content -->
     <section class=\"content\">";
 /* page content start here */
+// \YAWK\template::checkWrapper($lang, "USERS", "USERS_SUBTEXT");
 ?>
 <div class="box box-default">
     <div class="box-body">
