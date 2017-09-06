@@ -2128,7 +2128,7 @@ else
         </li>
         <li role="presentation">
             <a href="#buttons" aria-controls="buttons" role="tab" data-toggle="tab"><i class="fa fa-toggle-on"></i>
-                &nbsp; <?php echo $lang['FORM']; ?></a>
+                &nbsp; <?php echo $lang['FORMS']; ?></a>
         </li>
         <li role="presentation">
             <a href="#images" aria-controls="images" role="tab" data-toggle="tab"><i class="fa fa-picture-o"></i>
@@ -2143,10 +2143,6 @@ else
         <li role="presentation">
             <a href="#custom" aria-controls="custom" role="tab" data-toggle="tab"><i class="fa fa-css3"></i>
                 &nbsp; <?php echo $lang['CUSTOM_CSS']; ?></a>
-        </li>
-        <li role="presentation">
-            <a href="#themes" aria-controls="themes" role="tab" data-toggle="tab"><i class="fa fa-adjust"></i>
-                &nbsp; <?php echo $lang['THEME']; ?></a>
         </li>
         <li role="presentation">
             <a href="#settings" aria-controls="settings" role="tab" data-toggle="tab"><i class="fa fa-wrench"></i>
@@ -2308,7 +2304,8 @@ else
                             <div id="selectPositionRequestInfo">
                                 <h4 class="box-title"><?php echo "$lang[TPL_SELECT_POSITIONS_REQUEST]"; ?></h4>
                             </div>
-                            <!-- settings outerTop -->
+
+                            <!-- settings body -->
                             <div id="settings_pos_body">
                                 <?php $template->getFormElements($db, $templateSettings, 54, $lang, $user); ?>
                             </div>
@@ -2419,10 +2416,9 @@ else
 
                 <div class="col-md-9">
                     <div class="box box-default">
-                        <div class="box-header">
+                        <div class="box-header with-border">
                             <h3 class="box-title"><?php echo "$lang[POSITIONS] <small>$lang[SETTINGS]</small>"; ?></h3>
                         </div>
-
                         <?php
                         $enabledBorder = "border: 1px solid #4CAE4C;";
                         $disabledBorder = "border: 1px dashed #ccc;";
@@ -3333,7 +3329,7 @@ else
 
         <!-- BUTTONS -->
         <div role="tabpanel" class="tab-pane" id="buttons">
-            <h3><?php echo "$lang[FORM] <small>$lang[AND] $lang[BUTTONS] </small>"; ?></h3>
+            <h3><?php echo "$lang[FORMS] <small>$lang[AND] $lang[BUTTONS] </small>"; ?></h3>
             <div class="row animated fadeIn">
 
                 <div class="col-md-4">
@@ -3522,53 +3518,12 @@ else
             </div>
         </div>
 
-        <!-- THEMES -->
-        <div role="tabpanel" class="tab-pane" id="themes">
-            <h3><?php echo "$lang[TPL] <small>$lang[SETTINGS]</small>"; ?></h3>
-            <!-- list availalbe THEMES -->
+        <!-- SETTINGS -->
+        <div role="tabpanel" class="tab-pane  animated fadeIn" id="settings">
+            <h3><?php echo "$lang[SETTINGS] <small>$lang[TPL_SETTINGS_SUBTEXT]</small>"; ?></h3>
             <div class="row animated fadeIn">
-                <div class="col-md-4">
-                    <div class="box box-default">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><?php echo "$lang[LOAD]"; ?> <small>Theme</small></h3>
-                        </div>
-                        <div class="box-body">
-                            ...
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="box box-default">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><?php echo "$lang[TPL] $lang[DETAILS] <small>$lang[TPL_UPDATE_SUBTEXT]</small>"; ?></h3>
-                        </div>
-                        <div class="box-body">
-                            <label for="Tname"><?php echo "$lang[TPL] $lang[NAME]"; ?></label>
-                            <input type="text" class="form-control" id="Tname" name="Tname" value="<?php echo $template->name; ?>" placeholder="<?php echo "$lang[TEMPLATE] $lang[NAME]"; ?>" disabled>
-                            <label for="Tauthor"><?php echo "$lang[TPL] $lang[AUTHOR]"; ?></label>
-                            <input type="text" class="form-control" id="Tauthor" name="Tauthor" value="<?php echo $template->author; ?>" placeholder="<?php echo "$lang[TEMPLATE] $lang[AUTHOR]"; ?>" disabled>
-                            <label for="Tversion"><?php echo "$lang[TPL] $lang[VERSION]"; ?></label>
-                            <input type="text" class="form-control" id="Tversion" name="Tversion" value="<?php echo $template->version; ?>" placeholder="<?php echo "$lang[TEMPLATE] $lang[VERSION]"; ?>" disabled>
-                            <label for="Treleasedate"><?php echo "$lang[TPL] $lang[RELEASE] $lang[DATE]"; ?></label>
-                            <input type="text" class="form-control" id="Treleasedate" name="Treleasedate" value="<?php echo $template->releaseDate; ?>" placeholder="<?php echo "$lang[TEMPLATE] $lang[RELEASE] $lang[DATE]"; ?>" disabled>
-                            <label for="Tlicenese"><?php echo "$lang[TPL] $lang[LICENSE]"; ?></label>
-                            <select name="Tlicense" class="form-control" id="Tlicenese" disabled>
-                                <option value="GNU General Public License (GPL)">GNU General Public License (GPL) </option>
-                                <option value="GNU Lesser Public License (LGPL)">GNU Lesser Public License (LGPL)</option>
-                                <option value="MIT License">MIT License</option>
-                                <option value="Mozilla Public License 2.0">Mozilla Public License 2.0</option>
-                                <option value="Apache License 2.0">Apache License 2.0</option>
-                            </select>
-                            <label for="Tdescription"><?php echo "$lang[TPL] $lang[DESCRIPTION]"; ?></label>
-                            <textarea class="form-control" id="Tdescription" rows="5" cols="64" name="Tdescription" disabled aria-disabled="true"><?php echo $template->description; ?></textarea>
-                            <label for="Tsubauthor"><?php echo "$lang[MODIFIED] $lang[BY]"; ?></label>
-                            <input type="text" class="form-control" id="Tsubauthor" name="Tsubauthor" value="<?php echo $template->subAuthor; ?>" placeholder="<?php echo "$lang[MODIFIED] $lang[BY]"; ?>" disabled aria-disabled="true">
-                            <label for="Tsubauthorurl"><?php echo "$lang[SUB_AUTHOR_URL]"; ?></label>
-                            <input type="text" class="form-control" id="Tsubauthorurl" name="Tsubauthorurl" value="<?php echo $template->subAuthorUrl; ?>" placeholder="<?php echo "$lang[SUB_AUTHOR_URL]"; ?>" disabled aria-disabled="true">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
+
                     <div class="box box-default">
                         <div class="box-header with-border">
                             <h3 class="box-title"><?php echo "$lang[SAVE_AS] <small>$lang[NEW_THEME]</small>"; ?></h3>
@@ -3579,23 +3534,6 @@ else
                             <input type="text" class="form-control" name="description" placeholder="<?php echo "$lang[TPL] $lang[DESCRIPTION]"; ?>">
                             <input type="text" class="form-control" name="positions" placeholder="<?php echo "$lang[POSITIONS] $lang[POS_DESCRIPTION]"; ?>">
                             <br><input id="addbutton" type="submit" class="btn btn-danger" name="savenewtheme" value="<?php echo "$lang[SAVE_NEW_THEME_AS]"; ?>">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SETTINGS -->
-        <div role="tabpanel" class="tab-pane  animated fadeIn" id="settings">
-            <h3><?php echo "$lang[SETTINGS] <small>$lang[TPL_SETTINGS_SUBTEXT]</small>"; ?></h3>
-            <div class="row animated fadeIn">
-                <div class="col-md-6">
-                    <div class="box box-default">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Any thing <small>could be here...</small></h3>
-                        </div>
-                        <div class="box-body">
-                            ...
                         </div>
                     </div>
                 </div>
