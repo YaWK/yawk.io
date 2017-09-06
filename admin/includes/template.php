@@ -14,9 +14,9 @@
             $("#tabcontent-positions").load( fn );
         });
 
-        $("#tab-design").click(function() {
+        $("#tab-redesign").click(function() {
             fn = baseURL+"/yawk-LTE/admin/index.php?page=template-redesign&hideWrapper=1";
-            $("#tabcontent-design").load( fn );
+            $("#tabcontent-redesign").load( fn );
         });
 
         $("#tab-customcss").click(function() {
@@ -28,10 +28,49 @@
             fn = baseURL+"/yawk-LTE/admin/index.php?page=template-settings&hideWrapper=1";
             $("#tabcontent-settings").load( fn );
         });
-       // set default active tab
-       home.trigger("click");
+        // set default active tab
+        // home.trigger("click");
 
-    });
+        /* MAKE SURE THAT THE LAST USED TAB STAYS ACTIVE */
+        $(function() {
+            // for bootstrap 3 use 'shown.bs.tab', for bootstrap 2 use 'shown' in the next line
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                // save the latest tab; use cookies if you like 'em better:
+                localStorage.setItem('lastTab', $(this).attr('href'));
+                // save the latest tabcontent id
+                localStorage.setItem('lastTabContent', $(this).attr('id'));
+                // remove first char (#) to get correct filename
+                var file = $(this).attr('href').slice(1);
+                // store filename from last tab
+                localStorage.setItem('lastFile', file);
+            });
+
+            // go to the latest tab, if it exists:
+            var lastTab = localStorage.getItem('lastTab');
+            // get latest filename
+            var lastFile = localStorage.getItem('lastFile');
+            // get latest tab content id
+            var lastTabContent = localStorage.getItem('lastTabContent');
+            // remove first 4 chars from tabcontent id str
+            var tab = lastTabContent.substr(4);
+            // and build correct tabcontent id str
+            var tabContent = '#tabcontent-'+tab;
+            // build latest url
+            var lastPage = '/yawk-LTE/admin/index.php?page='+lastFile+'&hideWrapper=1';
+
+            // if a last tab exists...
+            if (lastTab) {
+                // show it up
+                $('[href="' + lastTab + '"]').tab('show');
+                // load latest page into last opened content tab
+                $(tabContent).load(lastPage);
+            }
+            else
+                {   // no last tab found, load overview as default home tab
+                    home.trigger("click");
+                }
+        });
+    });// end document ready
 </script>
 <?php
 // check if template obj is set and create if not exists
@@ -64,27 +103,26 @@ echo"<ol class=\"breadcrumb\">
 
 echo '
 <ul class="nav nav-tabs">
-  <li class="active"><a data-toggle="tab" href="#tpl-overview" id="tab-overview"><i class="fa fa-home"></i>&nbsp;'.$lang['OVERVIEW'].'</a></li>
-  <li><a data-toggle="tab" href="#tpl-positions" id="tab-positions"><i class="fa fa-cube"></i>&nbsp;'.$lang['POSITIONS'].'</a></li>
-  <li><a data-toggle="tab" href="#tpl-design" id="tab-design"><i class="fa fa-paint-brush"></i>&nbsp;'.$lang['DESIGN'].'</a></li>
-  <li><a data-toggle="tab" href="#tpl-customcss" id="tab-customcss"><i class="fa fa-css3"></i>&nbsp;'.$lang['CUSTOM_CSS'].'</a></li>
-  <li><a data-toggle="tab" href="#tpl-settings" id="tab-settings"><i class="fa fa-wrench"></i>&nbsp;'.$lang['SETTINGS'].'</a></li>
+  <li class="active"><a data-toggle="tab" href="#template-overview" id="tab-overview"><i class="fa fa-home"></i>&nbsp;'.$lang['OVERVIEW'].'</a></li>
+  <li><a data-toggle="tab" href="#template-positions" id="tab-positions"><i class="fa fa-cube"></i>&nbsp;'.$lang['POSITIONS'].'</a></li>
+  <li><a data-toggle="tab" href="#template-redesign" id="tab-redesign"><i class="fa fa-paint-brush"></i>&nbsp;'.$lang['DESIGN'].'</a></li>
+  <li><a data-toggle="tab" href="#template-customcss" id="tab-customcss"><i class="fa fa-css3"></i>&nbsp;'.$lang['CUSTOM_CSS'].'</a></li>
+  <li><a data-toggle="tab" href="#template-settings" id="tab-settings"><i class="fa fa-wrench"></i>&nbsp;'.$lang['SETTINGS'].'</a></li>
 </ul>
 <div class="tab-content">
-  <div id="tpl-overview" class="tab-pane fade in active">
+  <div id="template-overview" class="tab-pane fade in active">
     <p id="tabcontent-overview"></p>
   </div>
-  <div id="tpl-positions" class="tab-pane fade">
+  <div id="template-positions" class="tab-pane fade">
     <p id="tabcontent-positions"></p>
   </div>
-  <div id="tpl-design" class="tab-pane fade">
-    <p id="tabcontent-design"></p>
+  <div id="template-redesign" class="tab-pane fade">
+    <p id="tabcontent-redesign"></p>
   </div>
-  <div id="tpl-customcss" class="tab-pane fade">
+  <div id="template-customcss" class="tab-pane fade">
     <p id="tabcontent-customcss"></p>
   </div>
-  <div id="tpl-settings" class="tab-pane fade">
-    <h3>'.$lang['SETTINGS'].'</h3>
+  <div id="template-settings" class="tab-pane fade">
     <p id="tabcontent-settings"></p>
   </div>
 </div>';
