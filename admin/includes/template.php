@@ -13,6 +13,10 @@
             fn = baseURL+"/yawk-LTE/admin/index.php?page=template-positions&hideWrapper=1";
             $("#tabcontent-positions").load( fn );
         });
+        $("#tab-theme").click(function() {
+            fn = baseURL+"/yawk-LTE/admin/index.php?page=template-theme&hideWrapper=1";
+            $("#tabcontent-theme").load( fn );
+        });
 
         $("#tab-redesign").click(function() {
             fn = baseURL+"/yawk-LTE/admin/index.php?page=template-redesign&hideWrapper=1";
@@ -105,6 +109,7 @@ echo '
 <ul class="nav nav-tabs">
   <li class="active"><a data-toggle="tab" href="#template-overview" id="tab-overview"><i class="fa fa-home"></i>&nbsp;'.$lang['OVERVIEW'].'</a></li>
   <li><a data-toggle="tab" href="#template-positions" id="tab-positions"><i class="fa fa-cube"></i>&nbsp;'.$lang['POSITIONS'].'</a></li>
+  <li><a data-toggle="tab" href="#template-theme" id="tab-theme"><i class="glyphicon glyphicon-tint"></i>&nbsp;'.$lang['THEME'].'</a></li>
   <li><a data-toggle="tab" href="#template-redesign" id="tab-redesign"><i class="fa fa-paint-brush"></i>&nbsp;'.$lang['DESIGN'].'</a></li>
   <li><a data-toggle="tab" href="#template-customcss" id="tab-customcss"><i class="fa fa-css3"></i>&nbsp;'.$lang['CUSTOM_CSS'].'</a></li>
   <li><a data-toggle="tab" href="#template-settings" id="tab-settings"><i class="fa fa-wrench"></i>&nbsp;'.$lang['SETTINGS'].'</a></li>
@@ -115,6 +120,9 @@ echo '
   </div>
   <div id="template-positions" class="tab-pane fade">
     <p id="tabcontent-positions"></p>
+  </div>
+  <div id="template-theme" class="tab-pane fade">
+    <p id="tabcontent-theme"></p>
   </div>
   <div id="template-redesign" class="tab-pane fade">
     <p id="tabcontent-redesign"></p>
