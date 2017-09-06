@@ -753,6 +753,7 @@ namespace YAWK {
                 include(\YAWK\controller::filterfilename("includes/".$_GET['page']));
                 self::drawHtmlContentClose();
             }
+
             else if(isset($_GET['plugin']) && (!isset($_GET['pluginpage'])))
             {   // load given plugin
                 $plugin = $_GET['plugin'];
