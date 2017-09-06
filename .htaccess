@@ -5,7 +5,7 @@
 
 #Options +FollowSymlinks
 #Options +SymlinksIfOwnerMatch
-DirectoryIndex index.php
+DirectoryIndex setup.php
 Order allow,deny
 Allow from all
 
