@@ -1,35 +1,37 @@
+
 <script>
     $(document).ready(function() {
         var basePath = window.location.pathname;
         var baseURL = document.location.origin;
+        var baseDir = '<?php echo \YAWK\sys::getBaseDir(); ?>';
 
         home = $("#tab-overview");  // set this tab as home
         home.click(function() {
-            fn = baseURL+"/yawk-LTE/admin/index.php?page=template-overview&hideWrapper=1";
+            fn = baseURL+baseDir+"index.php?page=template-overview&hideWrapper=1";
             $("#tabcontent-overview").load( fn );
         });
 
         $("#tab-positions").click(function() {
-            fn = baseURL+"/yawk-LTE/admin/index.php?page=template-positions&hideWrapper=1";
+            fn = baseURL+baseDir+"index.php?page=template-positions&hideWrapper=1";
             $("#tabcontent-positions").load( fn );
         });
         $("#tab-theme").click(function() {
-            fn = baseURL+"/yawk-LTE/admin/index.php?page=template-theme&hideWrapper=1";
+            fn = baseURL+baseDir+"index.php?page=template-theme&hideWrapper=1";
             $("#tabcontent-theme").load( fn );
         });
 
         $("#tab-redesign").click(function() {
-            fn = baseURL+"/yawk-LTE/admin/index.php?page=template-redesign&hideWrapper=1";
+            fn = baseURL+baseDir+"index.php?page=template-redesign&hideWrapper=1";
             $("#tabcontent-redesign").load( fn );
         });
 
         $("#tab-customcss").click(function() {
-            fn = baseURL+"/yawk-LTE/admin/index.php?page=template-customcss&hideWrapper=1";
+            fn = baseURL+baseDir+"index.php?page=template-customcss&hideWrapper=1";
             $("#tabcontent-customcss").load( fn );
         });
 
         $("#tab-settings").click(function() {
-            fn = baseURL+"/yawk-LTE/admin/index.php?page=template-settings&hideWrapper=1";
+            fn = baseURL+baseDir+"index.php?page=template-settings&hideWrapper=1";
             $("#tabcontent-settings").load( fn );
         });
         // set default active tab
@@ -60,7 +62,7 @@
             // and build correct tabcontent id str
             var tabContent = '#tabcontent-'+tab;
             // build latest url
-            var lastPage = '/yawk-LTE/admin/index.php?page='+lastFile+'&hideWrapper=1';
+            var lastPage = baseDir+'index.php?page='+lastFile+'&hideWrapper=1';
 
             // if a last tab exists...
             if (lastTab) {
@@ -103,6 +105,28 @@ echo"<ol class=\"breadcrumb\">
     <!-- Main content -->
     <section class=\"content\">";
 /* page content start here */
+// check if any action is requested
+if (isset($_GET['id']) && (isset($_GET['action'])))
+{
+    // check if it's about positions
+    if ($_GET['action'] === "template-positions")
+    {
+        echo $_GET['id'];
+        echo "<pre>";
+        print_r($_POST);
+        echo "</pre>";
+        echo "<h3>".count($_POST)."</h3>";
+    }
+    // check if it's about design
+    if ($_GET['action'] === "template-redesign")
+    {
+        echo $_GET['id'];
+        echo "<pre>";
+        print_r($_POST);
+        echo "</pre>";
+        echo "<h3>".count($_POST)."</h3>";
+    }
+}
 
 
 echo '
