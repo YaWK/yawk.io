@@ -1,7 +1,6 @@
 
 <script>
     $(document).ready(function() {
-        var basePath = window.location.pathname;
         var baseURL = document.location.origin;
         var baseDir = '<?php echo \YAWK\sys::getBaseDir(); ?>';
 
