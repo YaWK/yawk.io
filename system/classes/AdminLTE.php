@@ -678,6 +678,10 @@ namespace YAWK {
                 <li ";echo (isset($_GET['page']) && $_GET['page'] == 'filemanager') ? "class='active'" : ""; echo">
                     <a href=\"index.php?page=filemanager\" title=\"Filemanager\"><i class=\"fa fa-folder-open-o\"></i> <span>$lang[FILEMANAGER]</span></a>
                 </li>
+                <!-- template -->
+                <li ";echo (isset($_GET['page']) && $_GET['page'] == 'template') ? "class='active'" : ""; echo">
+                    <a href=\"index.php?page=template&id=";echo \YAWK\settings::getSetting($db, "selectedTemplate"); echo"\"><i class=\"fa fa-paint-brush\"></i> <span>$lang[TPL]</span></a>
+                </li>
                 <!-- design -->
                 <li ";echo (isset($_GET['page']) && $_GET['page'] == 'template-edit') ? "class='active'" : ""; echo">
                     <a href=\"index.php?page=template-edit&id=";echo \YAWK\settings::getSetting($db, "selectedTemplate"); echo"\"><i class=\"fa fa-paint-brush\"></i> <span>$lang[REDESIGN]</span></a>
