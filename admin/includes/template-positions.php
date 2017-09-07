@@ -129,8 +129,19 @@ $templateSettings = \YAWK\template::getAllSettingsIntoArray($db, $user);
 \YAWK\template::checkWrapper($lang, $lang['POSITIONS'], $lang['POSITIONS']);
 ?>
 
+<!-- <form id="template-edit-form" action="index.php?page=template&save=template-positions&<?php // echo $overrideTemplate; ?>id=<?php // echo $template->id; ?>" method="POST"> -->
+<form id="template-edit-form" action="index.php?page=template&action=template-positions&id=<?php echo $template->id; ?>" method="POST">
 <!-- POSITIONS -->
-<h3><?php echo "$lang[POSITIONS]"; ?> <small><?php echo "$lang[TPL_POSITION_SETTINGS]"; ?></small></h3>
+<div class="row animated fadeIn">
+    <div class="col-md-6">
+        <h3><?php echo "$lang[POSITIONS]"; ?> <small><?php echo "$lang[TPL_POSITION_SETTINGS]"; ?></small></h3>
+    </div>
+    <div class="col-md-6 text-right">
+        <button type="submit" id="savebutton" name="save" class="btn btn-success" style="margin-top:10px;">
+            <i id="savebuttonIcon" class="fa fa-check"></i> &nbsp;<?php print $lang['DESIGN_SAVE']; ?>
+        </button>
+    </div>
+</div>
     <!-- list POSITION SETTINGS -->
     <div class="row animated fadeIn">
 
@@ -552,3 +563,4 @@ $templateSettings = \YAWK\template::getAllSettingsIntoArray($db, $user);
             </div>
         </div>
     </div>
+</form>
