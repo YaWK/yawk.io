@@ -192,6 +192,54 @@ namespace YAWK {
         }
 
         /**
+         * save new template properties into database
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database object
+         * @param int $id template id to save
+         * @param array $data post data from form (new settings)
+         * @return bool true or false
+         */
+        public function saveProperties($db, $id, $data)
+        {
+            // check if data is set set
+            if (!isset($data) || (!isset($id)))
+            {   // if not, abort
+                return false;
+            }
+
+            // walk through all post data settings
+            foreach($data as $property=>$value)
+            {
+                // check, if settings is a long value
+                if (fnmatch('*-longValue', $property))
+                {   // it is, set long value indicator to true
+                    $longValue = 1;
+                }
+                else
+                {   // not a long value
+                    $longValue = 0;
+                }
+
+                // save this property only if its NOT save or customcss
+                if ($property != "save" && $property != "customCSS")
+                {
+                    // save theme settings to database
+                    $this->setTemplateSetting($db, $id, $property, $value, $longValue);
+                }
+                // if save property is customCSS
+                elseif ($property == "customCSS")
+                {   // save the content to /system/template/$NAME/css/custom.css
+                    $this->setCustomCssFile($db, $value, 0, $id);
+                    // save a minified version to /system/template/$NAME/css/custom.min.css
+                    $this->setCustomCssFile($db, $value, 1, $id);
+                }
+            }
+            return true;
+        }
+
+        /**
          * return array with all template id's + names.
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
