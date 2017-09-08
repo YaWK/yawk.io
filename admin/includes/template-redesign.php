@@ -1,9 +1,5 @@
 <!-- color picker -->
 <script type="text/javascript" src="../system/engines/jquery/jscolor/jscolor.js"></script>
-<!-- Bootstrap toggle css -->
-<link rel="stylesheet" href="../system/engines/bootstrap-toggle/css/bootstrap-toggle.css">
-<!-- Bootstrap toggle js -->
-<script type="text/javascript" src="../system/engines/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
 <!-- TAB collapse -->
 <script type="text/javascript" src="../system/engines/jquery/bootstrap-tabcollapse.js"></script>
 <!-- CSS for positions tab -->
@@ -138,8 +134,18 @@ $templateSettings = \YAWK\template::getAllSettingsIntoArray($db, $user);
 \YAWK\template::checkWrapper($lang, $lang['POSITIONS'], $lang['POSITIONS']);
 ?>
 
-<!-- POSITIONS -->
-<h3><?php echo "$lang[DESIGN]"; ?> <small><?php echo "$lang[DESIGN_DETAILS]"; ?></small></h3>
+<form id="template-edit-form" action="index.php?page=template&action=template-redesign&id=<?php echo $template->id; ?>" method="POST">
+    <!-- REDESIGN -->
+    <div class="row animated fadeIn">
+        <div class="col-md-6">
+            <h3><?php echo "$lang[DESIGN]"; ?> <small><?php echo "$lang[DESIGN_DETAILS]"; ?></small></h3>
+        </div>
+        <div class="col-md-6 text-right">
+            <button type="submit" id="savebutton" name="save" class="btn btn-success" style="margin-top:10px;">
+                <i id="savebuttonIcon" class="fa fa-check"></i> &nbsp;<?php print $lang['DESIGN_SAVE']; ?>
+            </button>
+        </div>
+    </div>
 
 <!-- list POSITION SETTINGS -->
 <!-- MENU -->
@@ -771,3 +777,4 @@ $templateSettings = \YAWK\template::getAllSettingsIntoArray($db, $user);
     </div>
 </div>
 </div>
+</form>
