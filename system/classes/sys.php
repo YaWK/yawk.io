@@ -232,25 +232,30 @@ namespace YAWK {
          */
         static function full_copy($source, $target )
         {   /** copy an entire folder into another location */
-            if ( is_dir( $source ) ) {
-                @mkdir( $target );
-                $d = dir( $source );
-                while ( FALSE !== ( $entry = $d->read() ) ) {
-                    if ( $entry == '.' || $entry == '..' ) {
+            if (is_dir($source))
+            {
+                @mkdir($target);
+                $d = dir($source);
+                while (FALSE !== ($entry = $d->read()))
+                {
+                    if ($entry == '.' || $entry == '..')
+                    {
                         continue;
                     }
-                    $Entry = $source . '/' . $entry;
-                    if ( is_dir( $Entry ) ) {
-                        self::full_copy( $Entry, $target . '/' . $entry );
+                    $Entry = $source.'/'.$entry;
+                    if (is_dir($Entry))
+                    {
+                        self::full_copy($Entry, $target.'/'.$entry);
                         continue;
                     }
-                    copy( $Entry, $target . '/' . $entry );
+                    copy($Entry, $target.'/'.$entry);
                 }
-
                 $d->close();
-            }else {
-                copy( $source, $target );
             }
+            else
+                {
+                    copy( $source, $target );
+                }
         }
 
         /**
