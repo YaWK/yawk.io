@@ -141,6 +141,100 @@ if (!isset($user)) { $user = new \YAWK\user(); }
 <!-- SETTINGS -->
 <h3><?php echo "$lang[SETTINGS] <small>$lang[TPL_SETTINGS_SUBTEXT]</small>"; ?></h3>
 <div class="row animated fadeIn">
+    <div class="col-md-4">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title">Required Assets Include Configuration</h3>
+            </div>
+            <div class="box-body">
+                <label for="include-bootstrap">Bootstrap JS</label>
+                <select id="include-bootstrap" name="include-bootstrap" class="form-control">
+                    <option name="null">please select</option>
+                    <optgroup label="internal">internal</optgroup>
+                    <option name="internal">load from internal sources (system/engines/bootstrap)</option>
+                    <optgroup label="external">external</optgroup>
+                    <option name="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js</option>
+                    <option name="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js">https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js</option>
+                </select>
+                <label for="include-bootstrap">Bootstrap CSS</label>
+                <select id="include-bootstrap" name="include-bootstrap" class="form-control">
+                    <option name="null">please select</option>
+                    <optgroup label="internal">internal</optgroup>
+                    <option name="internal">load from internal sources (system/engines/bootstrap)</option>
+                    <optgroup label="external">external</optgroup>
+                    <option name="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css</option>
+                    <option name="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css</option>
+                </select>
+                <label for="include-jquery">jQuery</label>
+                <select id="include-jquery" name="include-jquery" class="form-control">
+                    <option name="null">please select</option>
+                    <optgroup label="internal">internal</optgroup>
+                    <option name="internal">load from internal sources (system/engines/jquery)</option>
+                    <optgroup label="external">external</optgroup>
+                    <option name="cdn-google">use google CDN (http://.....)</option>
+                    <option name="cdn-xyz">use jquery CDN (http://.....)</option>
+                </select>
+                <label for="include-jquery">jQuery UI</label>
+                <select id="include-jquery" name="include-jquery" class="form-control">
+                    <option name="null">please select</option>
+                    <optgroup label="internal">internal</optgroup>
+                    <option name="internal">load from internal sources (system/engines/jquery)</option>
+                    <optgroup label="external">external</optgroup>
+                    <option name="cdn-google">use google CDN (http://.....)</option>
+                    <option name="cdn-xyz">use jquery CDN (http://.....)</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title">Optional Assets Configuration</h3>
+            </div>
+            <div class="box-body">
+                <label for="include-animate">Animate.css</label>
+                <select id="include-animate" name="include-animate" class="form-control">
+                    <option name="null">please select</option>
+                    <optgroup label="internal">internal</optgroup>
+                    <option name="internal">load from internal sources (system/engines/animate)</option>
+                    <optgroup label="external">external</optgroup>
+                    <option name="cdn-google">use google CDN (http://.....)</option>
+                    <option name="cdn-xyz">use jquery CDN (http://.....)</option>
+                </select>
+                <label for="include-fontawesome">Font Awesome Icons</label>
+                <select id="include-fontawesome" name="include-fontawesome" class="form-control">
+                    <option name="null">please select</option>
+                    <optgroup label="internal">internal</optgroup>
+                    <option name="internal">load from internal sources (system/engines/fontawesome)</option>
+                    <optgroup label="external">external</optgroup>
+                    <option name="cdn-google">use google CDN (http://.....)</option>
+                </select>
+                <label for="include-lightbox2">Lightbox 2</label>
+                <select id="include-lightbox2" name="include-lightbox2" class="form-control">
+                    <option name="null">please select</option>
+                    <optgroup label="internal">internal</optgroup>
+                    <option name="internal">load from internal sources (system/engines/lightbox)</option>
+                    <optgroup label="external">external</optgroup>
+                    <option name="cdn-google">use google CDN (http://.....)</option>
+                    <option name="cdn-xyz">use jquery CDN (http://.....)</option>
+                </select>
+                <label for="include-pace">Pace Loading Bar</label>
+                <select id="include-pace" name="include-pace" class="form-control">
+                    <option name="null">please select</option>
+                    <optgroup label="internal">internal</optgroup>
+                    <option name="internal">load from internal sources (system/engines/pace)</option>
+                    <optgroup label="external">external</optgroup>
+                    <option name="cdn-google">use google CDN (http://.....)</option>
+                    <option name="cdn-xyz">use jquery CDN (http://.....)</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">4</div>
+</div>
+
+<div class="row animated fadeIn">
     <div class="col-md-6">
         <div class="box box-default">
             <div class="box-header with-border">
