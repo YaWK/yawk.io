@@ -85,28 +85,36 @@ namespace YAWK {
          * @param string $path full path e.g. /xampp/htdocs/yawk-LTE/
          * @return array
          */
-        public static function read_recursive($path) {
+        public static function read_recursive($path)
+        {
             global $files_count;
             $result = array();
             $handle = opendir($path);
-            if ($handle) {
-
-                while (false !== ($file = readdir($handle))) {
-                    if ($file != "." && $file != "..") {
-                        if (is_file($file)) {
+            if ($handle)
+            {
+                while (false !== ($file = readdir($handle)))
+                {
+                    if ($file != "." && $file != "..")
+                    {
+                        if (is_file($file))
+                        {
                             $files_count = $files_count + 1;
                         }
                         $name = $path . "/" . $file;
 
-                        if (is_dir($name)) {
+                        if (is_dir($name))
+                        {
                             $ar = self::read_recursive($name);
-                            foreach ($ar as $value) {
+                            foreach ($ar as $value)
+                            {
                                 $result[] = $value;
                             }
-                        } else {
-                            $result[] = $name;
-                            $files_count = $files_count + 1;
                         }
+                        else
+                            {
+                                $result[] = $name;
+                                $files_count = $files_count + 1;
+                            }
                     }
                 }
             }
@@ -177,22 +185,27 @@ namespace YAWK {
          */
         static function xcopy($source, $dest, $permissions = 0755)
         {   // Check for symlinks
-            if (is_link($source)) {
+            if (is_link($source))
+            {
                 return symlink(readlink($source), $dest);
             }
             // Simple copy for a file
-            if (is_file($source)) {
+            if (is_file($source))
+            {
                 return copy($source, $dest);
             }
             // Make destination directory
-            if (!is_dir($dest)) {
+            if (!is_dir($dest))
+            {
                 mkdir($dest, $permissions);
             }
             // Loop through the folder
             $dir = dir($source);
-            while (false !== $entry = $dir->read()) {
+            while (false !== $entry = $dir->read())
+            {
                 // Skip pointers
-                if ($entry == '.' || $entry == '..') {
+                if ($entry == '.' || $entry == '..')
+                {
                     continue;
                 }
                 // Deep copy directories
