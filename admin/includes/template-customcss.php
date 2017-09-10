@@ -20,6 +20,28 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
 
 <script type="text/javascript">
     $(document).ready(function() {
+        // TRY TO DISABLE CTRL-S browser hotkey
+        function saveHotkey() {
+            // simply disables save event for chrome
+            $(window).keypress(function (event) {
+                if (!(event.which == 115 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) && !(event.which == 19)) return true;
+                event.preventDefault();
+                formmodified=0; // do not warn user, just save.
+                return false;
+            });
+            // used to process the cmd+s and ctrl+s events
+            $(document).keydown(function (event) {
+                if (event.which == 83 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) {
+                    event.preventDefault();
+                    $('#savebutton').click(); // SAVE FORM AFTER PRESSING STRG-S hotkey
+                    formmodified=0; // do not warn user, just save.
+                    // save(event);
+                    return false;
+                }
+            });
+        }
+        saveHotkey();
+
         // textarea that will be transformed into editor
         var editor = ('textarea#summernote');
         var savebutton = ('#savebutton');
@@ -64,7 +86,7 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
         });
 
         // INIT SUMMERNOTE EDITOR
-        $(editor).summernote({    // set editor itself
+        $(editor).summernote({           // set editor itself
             height: <?php echo $editorSettings['editorHeight']; ?>,                 // set editor height
             minHeight: null,             // set minimum height of editor
             maxHeight: null,             // set maximum height of editor
@@ -89,7 +111,7 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
             // powerup the codeview with codemirror theme
             codemirror: { // codemirror options
                 theme: '<?php echo $editorSettings['editorTheme']; ?>',                       // codeview theme
-                lineNumbers: true,             // display lineNumbers true|false
+                lineNumbers: true,                                                            // display lineNumbers true|false
                 undoDepth: <?php echo $editorSettings['editorUndoDepth']; ?>,                 // how many undo steps should be saved? (default: 200)
                 smartIndent: <?php echo $editorSettings['editorSmartIndent']; ?>,             // better indent
                 indentUnit: <?php echo $editorSettings['editorIndentUnit']; ?>,               // how many spaces auto indent? (default: 2)
@@ -98,17 +120,15 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
                 autoCloseBrackets: <?php echo $editorSettings['editorCloseBrackets'];?>,      // auto insert close brackets
                 autoCloseTags: <?php echo $editorSettings['editorCloseTags']; ?>,             // auto insert close tags after opening
                 value: "<html>\n  " + document.documentElement.innerHTML + "\n</html>",       // all html
-                mode: "css",                                                            // editor mode
+                mode: "css",                                                                  // editor mode
                 matchTags: {bothTags: <?php echo $editorSettings['editorMatchTags']; ?>},     // hightlight matching tags: both
                 extraKeys: {
-                    "Ctrl-J": "toMatchingTag",                  // CTRL-J to jump to next matching tab
-                    "Ctrl-Space": "autocomplete"               // CTRL-SPACE to open autocomplete window
+                    "Ctrl-J": "toMatchingTag",                                                // CTRL-J to jump to next matching tab
+                    "Ctrl-Space": "autocomplete"                                              // CTRL-SPACE to open autocomplete window
                 },
-                styleActiveLine: <?php echo $editorSettings['editorActiveLine']; ?>,           // highlight the active line (where the cursor is)
+                styleActiveLine: <?php echo $editorSettings['editorActiveLine']; ?>,          // highlight the active line (where the cursor is)
                 autoRefresh: true
             },
-
-
 
             // plugin: summernote-cleaner.js
             // this allows to copy/paste from word, browsers etc.
@@ -140,10 +160,28 @@ if (!isset($user)) { $user = new \YAWK\user(); }
 // in the frontend. -Without affecting the current active theme for any other user.
 // This is pretty cool when working on a new design: because you see changes, while others wont.
 // In theory, thereby every user can have a different frontend template activated.
+
+// load properties of current active template
+// get ID of current active template
+$getID = \YAWK\settings::getSetting($db, "selectedTemplate");
+// load properties of current active template
+$template->loadProperties($db, $getID);
 ?>
 
-<!-- CUSTOM CSS -->
-<h3>Custom.css <small><?php echo $lang['TPL_CUSTOMCSS_SUBTEXT']; ?></small></h3>
+<form id="template-edit-form" action="index.php?page=template&action=template-customcss&id=<?php echo $template->id; ?>" method="POST">
+    <!-- CUSTOM CSS -->
+    <div class="row animated fadeIn">
+        <div class="col-md-6">
+            <h3>Custom.css <small><?php echo $lang['TPL_CUSTOMCSS_SUBTEXT']; ?></small></h3>
+        </div>
+        <div class="col-md-6 text-right">
+            <button type="submit" id="savebutton" name="save" class="btn btn-success" style="margin-top:10px;">
+                <i id="savebuttonIcon" class="fa fa-check"></i> &nbsp;<?php print $lang['DESIGN_SAVE']; ?>
+            </button>
+        </div>
+    </div>
+
+
     <div class="row">
         <div class="col-md-8">
             <?php $customCSS = $template->getCustomCSSFile($db, $template->id); ?>
@@ -169,3 +207,4 @@ if (!isset($user)) { $user = new \YAWK\user(); }
             </div>
         </div>
     </div>
+</form>
