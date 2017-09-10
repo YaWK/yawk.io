@@ -133,7 +133,7 @@ if (\YAWK\user::isAnybodyThere())
         // get template by user templateID
         $templateName = \YAWK\template::getTemplateNameById($db, $user->templateID);
         // include page, based on user templateID
-        if(!@include("system/templates/$templateName/index.php"))
+        if(!include("system/templates/$templateName/index.php"))
         {   // if template not exists, show selectedTemplate
             $templateName = \YAWK\template::getTemplateNameById($db, $selectedTemplate);
             include("system/templates/$templateName/index.php");
