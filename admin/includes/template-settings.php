@@ -28,6 +28,7 @@ if (!isset($user)) { $user = new \YAWK\user(); }
 <!-- SETTINGS -->
 <h3><?php echo "$lang[SETTINGS] <small>$lang[TPL_SETTINGS_SUBTEXT]</small>"; ?></h3>
 <div class="row animated fadeIn">
+
     <div class="col-md-4">
         <div class="box box-default">
             <div class="box-header with-border">
@@ -58,8 +59,7 @@ if (!isset($user)) { $user = new \YAWK\user(); }
                     <optgroup label="internal">internal</optgroup>
                     <option name="internal">load from internal sources (system/engines/jquery)</option>
                     <optgroup label="external">external</optgroup>
-                    <option name="cdn-google">use google CDN (http://.....)</option>
-                    <option name="cdn-xyz">use jquery CDN (http://.....)</option>
+                    <option name="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js</option>
                 </select>
                 <label for="include-jquery">jQuery UI</label>
                 <select id="include-jquery" name="include-jquery" class="form-control">
@@ -67,8 +67,7 @@ if (!isset($user)) { $user = new \YAWK\user(); }
                     <optgroup label="internal">internal</optgroup>
                     <option name="internal">load from internal sources (system/engines/jquery)</option>
                     <optgroup label="external">external</optgroup>
-                    <option name="cdn-google">use google CDN (http://.....)</option>
-                    <option name="cdn-xyz">use jquery CDN (http://.....)</option>
+                    <option name="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js">https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js</option>
                 </select>
             </div>
         </div>
@@ -86,8 +85,8 @@ if (!isset($user)) { $user = new \YAWK\user(); }
                     <optgroup label="internal">internal</optgroup>
                     <option name="internal">load from internal sources (system/engines/animate)</option>
                     <optgroup label="external">external</optgroup>
-                    <option name="cdn-google">use google CDN (http://.....)</option>
-                    <option name="cdn-xyz">use jquery CDN (http://.....)</option>
+                    <option name="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css</option>
+                    <option name="https://fastcdn.org/Animate.css/3.4.0/animate.min.css">https://fastcdn.org/Animate.css/3.4.0/animate.min.css</option>
                 </select>
                 <label for="include-fontawesome">Font Awesome Icons</label>
                 <select id="include-fontawesome" name="include-fontawesome" class="form-control">
@@ -95,7 +94,7 @@ if (!isset($user)) { $user = new \YAWK\user(); }
                     <optgroup label="internal">internal</optgroup>
                     <option name="internal">load from internal sources (system/engines/fontawesome)</option>
                     <optgroup label="external">external</optgroup>
-                    <option name="cdn-google">use google CDN (http://.....)</option>
+                    <option name="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css</option>
                 </select>
                 <label for="include-lightbox2">Lightbox 2</label>
                 <select id="include-lightbox2" name="include-lightbox2" class="form-control">
@@ -103,22 +102,37 @@ if (!isset($user)) { $user = new \YAWK\user(); }
                     <optgroup label="internal">internal</optgroup>
                     <option name="internal">load from internal sources (system/engines/lightbox)</option>
                     <optgroup label="external">external</optgroup>
-                    <option name="cdn-google">use google CDN (http://.....)</option>
-                    <option name="cdn-xyz">use jquery CDN (http://.....)</option>
+                    <option name="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.9.0/js/lightbox.min.js">https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.9.0/js/lightbox.min.js</option>
                 </select>
-                <label for="include-pace">Pace Loading Bar</label>
-                <select id="include-pace" name="include-pace" class="form-control">
+                <label for="include-ekkolightbox">Ekko Lightbox</label>
+                <select id="include-ekkolightbox" name="include-ekkolightbox" class="form-control">
                     <option name="null">please select</option>
                     <optgroup label="internal">internal</optgroup>
-                    <option name="internal">load from internal sources (system/engines/pace)</option>
+                    <option name="internal">load from internal sources (system/engines/lightbox)</option>
                     <optgroup label="external">external</optgroup>
-                    <option name="cdn-google">use google CDN (http://.....)</option>
-                    <option name="cdn-xyz">use jquery CDN (http://.....)</option>
+                    <option name="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.2.0/ekko-lightbox.min.js">https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.2.0/ekko-lightbox.min.js</option>
+                </select>
+                <label for="include-bootstraplightbox">Bootstrap Lightbox</label>
+                <select id="include-bootstraplightbox" name="include-bootstraplightbox" class="form-control">
+                    <option name="null">please select</option>
+                    <optgroup label="internal">internal</optgroup>
+                    <option name="internal">load from internal sources (system/engines/...)</option>
+                    <optgroup label="external">external</optgroup>
+                    <option name="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-lightbox/0.7.0/bootstrap-lightbox.min.js">https://cdnjs.cloudflare.com/ajax/libs/bootstrap-lightbox/0.7.0/bootstrap-lightbox.min.js</option>
                 </select>
             </div>
         </div>
     </div>
-    <div class="col-md-4">4</div>
+    <div class="col-md-4">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title">Inclusion Config</h3>
+            </div>
+            <div class="box-body">
+                ...
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="row animated fadeIn">

@@ -1073,8 +1073,6 @@ namespace YAWK {
                                     $optionValue = preg_split("/,[a-zA-Z0-9]*/", $value);
 
                                     echo "<option value=\"$optionValue[0]\">$optionDesc</option>";
-                                    // echo "<option value=\"$optionValue[0]\">$optionDesc</option>";
-                                    // echo "<option value=\"$value\">$value</option>";
                                 }
                                 echo "</select>";
                                 echo "<p>$setting[description]</p>";

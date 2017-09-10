@@ -755,11 +755,6 @@ Allow from all
 # custom error page
 ErrorDocument 404 $host/content/errors/404.html
 
-# FORM settings
-php_value max_input_vars 10000
-php_value suhosin.post.max_vars 10000
-php_value suhosin.request.max_vars 10000
-
 # SEO settings
 RewriteEngine On
 RewriteBase $this->rootPath

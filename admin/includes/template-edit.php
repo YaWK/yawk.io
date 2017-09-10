@@ -3511,7 +3511,7 @@ else
                             <hr>
                             <b><i class="fa fa-lightbulb-o"></i> <?php echo $lang['DID_YOU_KNOW']; ?></b><br>
                             <i><?php echo $lang['TIP_STRG_S']; ?></i>
-                </div>
+                        </div>
 
                     </div>
                 </div>

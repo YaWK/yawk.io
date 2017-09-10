@@ -31,7 +31,7 @@ if (!isset($db)) {
 
     <?php
         // load active google font code
-        \YAWK\template::outputActivegFont($db);
+        \YAWK\template::loadGoogleFonts($db);
     ?>
 
     <!-- Just for debugging purposes. Don't actually copy this line! -->

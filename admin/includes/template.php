@@ -1,13 +1,4 @@
-<link rel="stylesheet" type="text/css" href="../system/engines/codemirror/show-hint.min.css">
-<script type="text/javascript" src="../system/engines/codemirror/codemirror-compressed.js"></script>
-<script type="text/javascript" src="../system/engines/codemirror/auto-refresh.js"></script>
 
-<!-- SUMMERNOTE -->
-<link href="../system/engines/summernote/dist/summernote.css" rel="stylesheet">
-<script src="../system/engines/summernote/dist/summernote.min.js"></script>
-<script src="../system/engines/summernote/dist/summernote-cleaner.js"></script>
-<script src="../system/engines/summernote/dist/summernote-image-attributes.js"></script>
-<script src="../system/engines/summernote/dist/summernote-floats-bs.js"></script>
 <script>
     $(document).ready(function() {
         var baseURL = document.location.origin;
@@ -23,9 +14,12 @@
             $("#tabcontent-overview").load( fn );
         });
 
+
         $("#tab-positions").click(function() {
             fn = baseURL+baseDir+"index.php?page=template-positions&hideWrapper=1";
-            $("#tabcontent-positions").load( fn );
+            $("#tabcontent-positions").load( fn , function() {
+               // alert( "Load was performed." );
+            });
         });
 
         $("#tab-theme").click(function() {
@@ -45,7 +39,8 @@
 
         $("#tab-settings").click(function() {
             fn = baseURL+baseDir+"index.php?page=template-settings&hideWrapper=1";
-            $("#tabcontent-settings").load( fn );
+            alert (fn);
+            $("#tabcontent-settings").load(fn);
         });
 
         /* MAKE SURE THAT THE LAST USED TAB STAYS ACTIVE */
@@ -87,7 +82,6 @@
                     home.trigger("click");
                 }
         });
-
 
     });// end document ready
 </script>
