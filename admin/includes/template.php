@@ -157,9 +157,9 @@ if (isset($_POST['save']) && (isset($_GET['action']) && (isset($_GET['id']))))
             if (isset($_POST['customCSS']) && (!empty($_POST['customCSS'])))
             {
                 // save the content to /system/template/$NAME/css/custom.css
-                $template->setCustomCssFile($db, $value, 0, $_GET['id']);
+                $template->setCustomCssFile($db, $_POST['customCSS'], 0, $_GET['id']);
                 // save a minified version to /system/template/$NAME/css/custom.min.css
-                $template->setCustomCssFile($db, $value, 1, $_GET['id']);
+                $template->setCustomCssFile($db, $_POST['customCSS'], 1, $_GET['id']);
             }
         }
 
