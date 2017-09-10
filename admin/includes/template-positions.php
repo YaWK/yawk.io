@@ -100,36 +100,28 @@
             }
         }
 
-
         $('[data-toggle="tooltip"]').tooltip();
 
     });
 </script>
 
 <?php
-
 // new template object if not exists
 if (!isset($template)) { $template = new \YAWK\template(); }
 // new user object if not exists
 if (!isset($user)) { $user = new \YAWK\user(); }
-
-
-
 // get ID of current active template
 $getID = \YAWK\settings::getSetting($db, "selectedTemplate");
 // load properties of current active template
 $template->loadProperties($db, $getID);
 // previewButton is an empty string - why? this should be checked
 $previewButton = "";
-
 // load all template settings into array
 $templateSettings = \YAWK\template::getAllSettingsIntoArray($db, $user);
-
 // check template wrapper
 \YAWK\template::checkWrapper($lang, $lang['POSITIONS'], $lang['POSITIONS']);
 ?>
 
-<!-- <form id="template-edit-form" action="index.php?page=template&save=template-positions&<?php // echo $overrideTemplate; ?>id=<?php // echo $template->id; ?>" method="POST"> -->
 <form id="template-edit-form" action="index.php?page=template&action=template-positions&id=<?php echo $template->id; ?>" method="POST">
 <!-- POSITIONS -->
 <div class="row animated fadeIn">
