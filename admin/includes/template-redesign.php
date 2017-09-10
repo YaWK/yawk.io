@@ -199,22 +199,7 @@ $templateSettings = \YAWK\template::getAllSettingsIntoArray($db, $user);
             <?php // $template->getFormElements($db, $templateSettings, 3, $lang, $user); ?>
         </div>
         <div class="col-md-6">
-            <!-- DEMO - can be deleted...
-            <label for="pAlign">< p > Text Align Settings</label>
-            <select class="form-control" name="pAlign" id="pAlign">
-                <option value="left">left</option>
-                <option value="center">center</option>
-                <option value="right">right</option>
-                <option value="justify">justify</option>
-            </select>
-            <label for="hAlign">< h1-h6 > Text Align Settings</label>
-            <select class="form-control" name="hAlign" id="hAlign">
-                <option value="left">left</option>
-                <option value="center">center</option>
-                <option value="right">right</option>
-                <option value="justify">justify</option>
-            </select>
-            -->
+
         </div>
     </div>
     <hr>
