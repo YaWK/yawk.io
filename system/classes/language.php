@@ -417,6 +417,10 @@ namespace YAWK {
             {   // set from cookie setting
                 $currentLanguage = $_COOKIE['lang'];
             }
+            elseif (isset($_GET['lang']))
+            {   // set from cookie setting
+                $currentLanguage = $_GET['lang'];
+            }
             else
                 {   // get current language from db
                     $currentLanguage = \YAWK\language::getCurrentLanguageStatic();

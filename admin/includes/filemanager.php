@@ -3,6 +3,7 @@
 <!-- data tables JS -->
 <script type="text/javascript">
     $(document).ready(function() {
+        /*
         $('#table-sort').dataTable( {
             "bPaginate": false,
             "bLengthChange": false,
@@ -11,6 +12,7 @@
             "bInfo": true,
             "bAutoWidth": false
         });
+        */
 
         // make bootstrap tabs responsive to improve handheld experience
         $('#myTab').tabCollapse({

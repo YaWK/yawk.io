@@ -572,7 +572,7 @@ namespace YAWK {
                 else
                 {   // fetch failed
                     \YAWK\sys::setSyslog($db, 5, "failed to load user settings ", 0, 0, 0, 0);
-                    \YAWK\alert::draw("warning","Warning!","Load settings for user <b>$username</b> failed.","","4800");
+                    // \YAWK\alert::draw("warning","Warning!","Load settings for user <b>$username</b> failed.","","4800");
                     return false;
                 }
             }
@@ -606,7 +606,7 @@ namespace YAWK {
             else
             {   // q failed
                 \YAWK\sys::setSyslog($db, 5, "Could not get property <b>$property</b> of user id <b>#$uid</b> ", 0, 0, 0, 0);
-                \YAWK\alert::draw("danger","Error!","Could not get property $property","","4800");
+                //  \YAWK\alert::draw("danger","Error!","Could not get property $property","","4800");
                 return false;
             }
         }
