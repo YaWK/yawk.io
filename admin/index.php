@@ -1,9 +1,9 @@
 <?php
 session_start();
 header('Cache-control: private');          // IE 6 FIX
-error_reporting(E_ALL ^ E_STRICT);         // just for development purpose!!!
-// ini_set('display_errors', 0);           // DISPLAY ALL ERRORS - DEVELOPMENT ONLY!!!
-// error_reporting(0);                     // no error reporting
+// error_reporting(E_ALL ^ E_STRICT);         // just for development purpose!!!
+ini_set('display_errors', 0);           // DISPLAY ALL ERRORS - DEVELOPMENT ONLY!!!
+error_reporting(0);                     // no error reporting
 $loadingTime = microtime(true);            // scripting start time (var gets used for benchmark, if enabled)
 
 /* include controller classes */
