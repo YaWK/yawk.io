@@ -39,6 +39,6 @@ if (!isset($menu))
     @require_once 'system/classes/menu.php';
     $menu = new \YAWK\menu();
 }
-echo "<div class=\"row\">";
+// echo "<div class=\"row\">";
 $menu->displaySubMenu($db, $menuID);
-echo "</div>";
+// echo "</div>";
