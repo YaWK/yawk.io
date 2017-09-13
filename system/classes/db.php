@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Copyright (C) Daniel Retzl
- */
 namespace YAWK {
     /**
      * <b>Database class db</b> <i>extends \mysqli</i>

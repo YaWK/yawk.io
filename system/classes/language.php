@@ -45,12 +45,12 @@ namespace YAWK {
          * @link       http://yawk.io
          * @return string
          */
-        public function init()
+        public function init($db)
         {
             // set current language
             $this->httpAcceptedLanguage = $this->getClientLanguage();
-            $this->currentLanguage = $this->getCurrentLanguage();
-            return $this->lang = $this->setLanguage($this->currentLanguage);
+            $this->currentLanguage = $this->getCurrentLanguage($db);
+            return $this->setLanguage($this->currentLanguage);
         }
 
         /**
@@ -61,7 +61,7 @@ namespace YAWK {
          * @link       http://yawk.io
          * @return string
          */
-        public function getCurrentLanguage()
+        public function getCurrentLanguage($db)
         {
             $currentLanguage = '';
             // check if a GET param is set
@@ -103,15 +103,17 @@ namespace YAWK {
                         require_once '../system/classes/settings.php';
                         $db = new \YAWK\db();
                     }
-                    // get backend language setting and save string eg. (en-EN) in $this->current
-                    if ($currentLanguage = (\YAWK\settings::getSetting($db, "backendLanguage")) === true)
+                    if ($currentLanguage = \YAWK\settings::getSetting($db, "backendLanguage"))
                     {
-                        // return current db-settings language
+                        $_SESSION['lang'] = $currentLanguage;
+                        // return current language from db-settings// if not, try to set it - with error supressor to avoid notices if output started before
+                        @setcookie('lang', $currentLanguage, time() + (60 * 60 * 24 * 1460));
                         return $currentLanguage;
                     }
                     else
                     {   // failed to get backend language
                         $currentLanguage = "en-EN";   // default: en-EN
+                        $_SESSION['lang'] = $currentLanguage;
                         // return default value (en-EN)
                         return $currentLanguage;
                     }

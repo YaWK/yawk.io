@@ -436,9 +436,11 @@ namespace YAWK {
          */
         public static function getSetting($db, $property) // get a single setting from db
         {    /* @var $db \YAWK\db */
-            if ($res = $db->query("SELECT value FROM {settings} WHERE property = '".$property."'"))
-            {   // fetch data
-                $row = mysqli_fetch_row($res);
+            $sql = $db->query("SELECT value FROM {settings} WHERE property = '".$property."'");
+
+            // fetch data from db
+            if ($row = mysqli_fetch_row($sql))
+            {   // return settings of property
                 return $row[0];
             }
             else
