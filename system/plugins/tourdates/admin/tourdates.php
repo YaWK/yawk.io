@@ -9,7 +9,14 @@ if (!isset($language) || (!isset($lang)))
 if (isset($_GET['addpage']))
 {   // add HTML page for that plugin
     if ($_GET['addpage']==='1'){
-        \YAWK\plugin::createPluginPage($db, "tourdates", "tourdates");
+        if (\YAWK\plugin::createPluginPage($db, "tourdates", "tourdates") === true)
+        {
+            \YAWK\alert::draw("success", "Success!", "Pluginpage created successfully!", "", 5000);
+        }
+        else
+            {
+                \YAWK\alert::draw("danger", "ERROR!", "Could not create plugin page!", "", 5000);
+            }
     }
 }
 ?>
