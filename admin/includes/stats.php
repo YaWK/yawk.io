@@ -31,7 +31,7 @@ echo"<ol class=\"breadcrumb\">
         $stats = new \YAWK\stats();
     }
 // load stats data into an array that every box will use, this saves performance
-    $data = $stats->getStatsArray($db);
+    $data = $stats->getStatsArray($db, '');
 
 if (isset($_POST['limit']) && (!empty($_POST['limit'])))
 {
