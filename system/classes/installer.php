@@ -790,8 +790,20 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
 # #LoadModule expires_module modules/mod_expires.so -- uncomment it & restart server.
 # if you cannot load the modules, comment out all lines til #END CACHING -- and it will work (w/o caching)
  <IfModule mod_expires.c>
+    # Add correct content-type for fonts
+    AddType application/vnd.ms-fontobject .eot
+    AddType application/x-font-ttf .ttf
+    AddType application/x-font-opentype .otf
+    AddType application/x-font-woff .woff
+    AddType image/svg+xml .svg
+    
+    # enable cache
     ExpiresActive On
+    
+    # default expire: 1 day
     ExpiresDefault A86400
+    
+    # set cacheable items
     ExpiresByType image/x-icon A2592000
     ExpiresByType application/x-javascript A1209600
     ExpiresByType text/css A1209600
@@ -803,11 +815,13 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
     ExpiresByType video/x-flv A2592000
     ExpiresByType application/pdf A2592000
     ExpiresByType text/html A86400
+    # Add a far future Expires header for fonts
+    ExpiresByType application/vnd.ms-fontobject \"access plus 1 year\"
+    ExpiresByType application/x-font-ttf \"access plus 1 year\"
+    ExpiresByType application/x-font-opentype \"access plus 1 year\"
+    ExpiresByType application/x-font-woff \"access plus 1 year\"
+    ExpiresByType image/svg+xml \"access plus 1 year\"
     </IfModule>
-
-## Turn on Expires and set default expires to 1 day
-ExpiresActive On
-ExpiresDefault A86400
 
 ## Set up caching on media files for 1 month
 <FilesMatch \"\.(flv|ico|pdf|avi|mov|ppt|doc|mp3|wmv|wav|swf)$\">
@@ -852,8 +866,8 @@ ExpiresDefault A86400
  # DEFLATE compression
  # this deflates all zipped files
  <IfModule mod_deflate.so>
- # Set compression for: html,txt,xml,js,css
- AddOutputFilterByType DEFLATE text/html text/plain text/xml application/xml application/xhtml+xml text/javascript text/css application/x-javascript
+ # Set compression for: html,txt,xml,js,css,svg and otf, ttf and woff fonts
+ AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/xml application/xhtml+xml application/x-javascript application/x-font-ttf application/x-font-opentype image/svg+xml
  # Deactivate compression for buggy browsers
  BrowserMatch ^Mozilla/4 gzip-only-text/html
  BrowserMatch ^Mozilla/4.0[678] no-gzip
