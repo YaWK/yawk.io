@@ -18,8 +18,8 @@ if (!isset($stats) || (empty($stats)))
     @require_once '../system/classes/stats.php';
     // and create new stats object
     $stats = new \YAWK\stats();
-    $data = $stats->getStatsArray($db);
-    $limit =$stats->i_hits;
+    $data = $stats->getStatsArray($db, 1);
+    $limit = $stats->i_hits;
 }
 ?>
 <p><?php print $lang['DASH_WELCOMETEXT']; ?> </p>
@@ -32,7 +32,7 @@ if (!isset($stats) || (empty($stats)))
             <span class="info-box-icon bg-blue"><i class="fa fa-line-chart"></i></span>
 
             <div class="info-box-content">
-                <span class="info-box-text"><?php echo "$lang[HITS]&nbsp;$lang[TOTAL]"; ?></span>
+                <span class="info-box-text"><?php echo "$lang[HITS]&nbsp;$lang[LAST24H]"; ?></span>
                 <span class="info-box-number"><?php echo number_format($stats->i_hits, 0, '.', '.'); ?> <small> <?php echo $lang['HITS_EN']; ?></small></span>
             </div>
             <!-- /.info-box-content -->
@@ -48,7 +48,7 @@ if (!isset($stats) || (empty($stats)))
             <div class="info-box-content">
                 <span class="info-box-text"><?php echo $lang['DEVICES']; ?></span>
                 <span class="info-box-number"><?php $stats->countDeviceTypes($db, $data, $limit); echo round($stats->i_desktopPercent, 1); ?>% <small> Desktop</small></span>
-                <span class="info-box-number"><?php echo round($stats->i_tabletPercent, 1); ?>% <small> Tablet</small></span>
+                <span class="info-box-number"><?php echo round($stats->i_phonePercent, 1); ?>% <small> Phone</small> / <?php echo round($stats->i_tabletPercent, 1); ?>% <small> Tablet</small></span>
             </div>
             <!-- /.info-box-content -->
         </div>
