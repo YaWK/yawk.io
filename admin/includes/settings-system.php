@@ -363,13 +363,14 @@ echo"<ol class=\"breadcrumb\">
 	<!-- FORM -->
 	<!-- Nav tabs -->
 	<ul class="nav nav-tabs" id="tabs" role="tablist">
-		<li role="presentation" class="active"><a href="#overview" aria-controls="overview" role="tab" data-toggle="tab"><i class="fa fa-home"></i>&nbsp; <?php echo $lang['OVERVIEW'] ?></a></li>
-		<li role="presentation"><a href="#frontend" aria-controls="frontend" role="tab" data-toggle="tab"><i class="fa fa-globe"></i>&nbsp; <?php echo $lang['FRONTEND'] ?></a></li>
-		<li role="presentation"><a href="#backend" aria-controls="backend" role="tab" data-toggle="tab"><i class="fa fa-wrench"></i>&nbsp; <?php echo $lang['BACKEND'] ?></a></li>
-		<li role="presentation"><a href="#system" aria-controls="system" role="tab" data-toggle="tab"><i class="fa fa-gears"></i>&nbsp; <?php echo $lang['SYSTEM'] ?></a></li>
-		<li role="presentation"><a href="#database" aria-controls="database" role="tab" data-toggle="tab"><i class="fa fa-database"></i>&nbsp; <?php echo $lang['DATABASE'] ?></a></li>
-		<li role="presentation"><a href="#robots" aria-controls="robots" role="tab" data-toggle="tab"><i class="fa fa-android"></i>&nbsp; <?php echo $lang['ROBOTS_TXT'] ?></a></li>
-		<li role="presentation"><a href="#info" aria-controls="info" role="tab" data-toggle="tab"><i class="fa fa-info-circle"></i>&nbsp; <?php echo $lang['INFO'] ?></a></li>
+		<li class="active"><a href="#overview" aria-controls="overview" role="tab" data-toggle="tab"><i class="fa fa-home"></i>&nbsp; <?php echo $lang['OVERVIEW'] ?></a></li>
+		<li><a href="#frontend" aria-controls="frontend" role="tab" data-toggle="tab"><i class="fa fa-globe"></i>&nbsp; <?php echo $lang['FRONTEND'] ?></a></li>
+		<li><a href="#backend" aria-controls="backend" role="tab" data-toggle="tab"><i class="fa fa-wrench"></i>&nbsp; <?php echo $lang['BACKEND'] ?></a></li>
+		<li><a href="#system" aria-controls="system" role="tab" data-toggle="tab"><i class="fa fa-gears"></i>&nbsp; <?php echo $lang['SYSTEM'] ?></a></li>
+		<li><a href="#database" aria-controls="database" role="tab" data-toggle="tab"><i class="fa fa-database"></i>&nbsp; <?php echo $lang['DATABASE'] ?></a></li>
+		<li><a href="#robots" aria-controls="robots" role="tab" data-toggle="tab"><i class="fa fa-android"></i>&nbsp; <?php echo $lang['ROBOTS_TXT'] ?></a></li>
+        <li><a href="#language" aria-controls="language" role="tab" data-toggle="tab"><i class="fa fa-language"></i>&nbsp; <?php echo $lang['LANGUAGES'] ?></a></li>
+        <li><a href="#info" aria-controls="info" role="tab" data-toggle="tab"><i class="fa fa-info-circle"></i>&nbsp; <?php echo $lang['INFO'] ?></a></li>
 	</ul>
 
 	<!-- Tab panes -->
@@ -429,6 +430,8 @@ echo"<ol class=\"breadcrumb\">
 				<div class="col-md-4">
                     <!-- backend settings -->
                     <?php \YAWK\settings::getFormElements($db, $settings, 2, $lang); ?>
+                    <?php // \YAWK\settings::getFormElements($db, $settings, 19, $lang); ?>
+                    <?php \YAWK\settings::getFormElements($db, $settings, 20, $lang); ?>
 				</div>
 				<div class="col-md-4">
                     <!-- footer settings -->
@@ -527,6 +530,41 @@ echo"<ol class=\"breadcrumb\">
 			</div>
 		</div>
 
+        <!-- LANGUAGE -->
+        <div role="tabpanel" class="tab-pane" id="language">
+            <h3><?php echo $lang['LANGUAGES']; ?> <small>&amp; <?php echo $lang['TRANSLATION']; ?></small></h3>
+            <div class="row animated fadeIn">
+                <div class="col-md-8">
+                    <div class="box">
+                        <div class="box-body">
+                            <?php
+                            echo "<pre>"; echo print_r($lang); echo "</pre>";
+
+                            ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <?php // \YAWK\settings::getFormElements($db, $settings, 0, $lang); ?>
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Sprache <small>festlegen</small></h3>
+                        </div>
+                        <div class="box-body">
+                            <?php \YAWK\settings::getFormElements($db, $settings, 19, $lang) ?>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">&Uuml;bersetzung <small>bearbeiten</small></h3>
+                        </div>
+                        <div class="box-body">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 		<!-- INFO -->
 		<div role="tabpanel" class="tab-pane" id="info">
 			<h3><?php echo $lang['INFO']; ?> <small><?php echo $lang['INFO_SUBTEXT']; ?></small></h3>
@@ -537,10 +575,7 @@ echo"<ol class=\"breadcrumb\">
 							<h3 class="box-title"><?php echo $lang['SETTINGS']; ?>  <small><?php echo $lang['SETTINGS_SUBTEXT']; ?> </small></h3>
 						</div>
 						<div class="box-body">
-							<?php
-							// echo "<h2>Language Array</h2><pre>"; echo print_r($lang); echo "</pre>";
-
-							?>
+                            ...
 						</div>
 					</div>
 				</div>
@@ -551,6 +586,7 @@ echo"<ol class=\"breadcrumb\">
 				</div>
 			</div>
 		</div>
+
 
 	</div>
 	<!-- </div> <!-- ./ nav-tabs-custom -->
