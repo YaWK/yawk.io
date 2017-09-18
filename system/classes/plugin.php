@@ -203,13 +203,14 @@ namespace YAWK {
                 }
                 else
                 {   // could not create page
-                    \YAWK\sys::setSyslog($db, 5, "failed to create page $alias for plugin $plugin", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 5, "failed to create page $alias for plugin $plugin. Maybe a permissions problem.", 0, 0, 0, 0);
                     return false;
                 }
             }
             else
-            {   // q failed
-                return true;
+            {   // file exits
+                \YAWK\sys::setSyslog($db, 5, "failed to create page $alias for plugin $plugin. A page with that name still exits. File will not be overwritten.", 0, 0, 0, 0);
+                return false;
             }
         }
 
