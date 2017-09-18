@@ -48,17 +48,51 @@ namespace YAWK {
          */
         public function displaySubMenu($db, $menuID)
         {   /** @var \YAWK\db  $db */
-            $res = $db->query("SELECT * FROM {menu}
-                               WHERE menuID = '".$menuID."' 
-                               AND published = '1' 
-                               ORDER by sort, title");
-            echo "<ul class=\"hideLeft list-group\" id=\"leftMenu\">";
-            while ($row = mysqli_fetch_assoc($res))
+            if ($this->isPublished($db, $menuID))
             {
-                echo "<li class=\"list-group-item\"><b><a href=\"".$row['href']."\" target=\"".$row['target']."\">".$row['text']."</a></b></li>";
+                // get menu entries and draw navbar
+                $res = $db->query("SELECT * FROM {menu}
+                               WHERE published = 1 
+                               AND menuID = '".$menuID."' 
+                               ORDER by sort, title");
+                echo "<nav class=\"navbar navbar-inverse\">
+                    <ul class=\"nav navbar-nav\">";
+                while ($row = mysqli_fetch_assoc($res))
+                {
+                    echo "<li><a href=\"".$row['href']."\" target=\"".$row['target']."\">".$row['text']."</a></li>";
+                }
+                echo "    </ul>
+                    <button class=\"btn btn-danger navbar-btn\">Button</button>
+                </nav>";
             }
-            echo "</ul>";
         }
+
+
+        /**
+         * return true if menu is published, false if not. expects db object and menu ID to get the status from
+         * @copyright  2009-2016 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @version    1.0.0
+         * @link       http://yawk.io
+         * @param object $db database
+         * @param int $menuID the menuID to get data
+         */
+        public function isPublished($db, $menuID)
+        {   /** @var \YAWK\db  $db */
+            $res = $db->query("SELECT published FROM {menu_names}
+                               WHERE published = 1 
+                               AND id = '".$menuID."'");
+            $status = mysqli_fetch_row($res);
+            if ($status['0'] == '1')
+            {   // this menu ID is published
+                return true;
+            }
+            else
+                {   // menu ID is not published
+                    return false;
+                }
+        }
+
 
         /**
          * display the global menu
