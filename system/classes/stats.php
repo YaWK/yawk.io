@@ -1928,33 +1928,63 @@ namespace YAWK
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
+         * @param string $interval The time period from when to get data (1 = the last day, 7 = the last week...)
          * @return bool|array containing all stats from database
          */
-        public function getStatsArray($db) // get all settings from db like property
+        public function getStatsArray($db, $interval) // get all settings from db like property
         {
             /* @var $db \YAWK\db */
-            if ($res = $db->query("SELECT * FROM {stats} ORDER BY date_created DESC"))
-            {
+            // check if interval is set, empty and be sure that it is an integer
+            if (!isset($interval) || (empty($interval) || (!is_int($interval))))
+            {   // if no interval is given or wrong datatype, show all data
+                $intervalQuery = '';    // leave empty in this case
+            }
+            // check if interval is correct int data type
+            else if (is_int($interval))
+            {   // ok. lets check it
+                switch ($interval)
+                {   // if zero
+                    case 0:
+                        // no additional query, leave empty
+                        $intervalQuery = '';
+                        break;
+
+                    // if any other value than zero
+                    default:
+                        // extend the query to get data for given time period
+                        $intervalQuery = "WHERE {stats}.date_created > DATE_SUB(CURDATE(), INTERVAL $interval DAY)";
+                }
+            }
+            else
+                {   // in any other case leave empty and get all data
+                    $intervalQuery = '';
+                }
+
+            // get stats data from database feat. prepared string
+            if ($res = $db->query("SELECT * FROM {stats} $intervalQuery ORDER BY date_created DESC"))
+            {   // this array helds all stats data
                 $statsArray = array();
+                // gogo
                 while ($row = $res->fetch_assoc())
                 {   // fill array
                     $statsArray[] = $row;
                 }
             }
             else
-            {   // q failed, throw error
+            {   // q failed, set syslog and throw error
                 \YAWK\sys::setSyslog($db, 5, "failed to get stats from database.", 0, 0, 0, 0);
                 \YAWK\alert::draw("warning", "Warning!", "Fetch database error: getStatsArray failed.","","4800");
                 return false;
             }
-
+            // check if there is a stats array
             if (is_array($statsArray) && (!empty($statsArray)))
-            {
+            {   // ok, go ahead with the data
                 $this->calculateStatsFromArray($db, $statsArray);
+                // and finally...
                 return $statsArray;
             }
             else
-                {
+                {   // stats array is not an array or empty - in this case
                     return null;
                 }
 
@@ -1974,7 +2004,7 @@ namespace YAWK
             if (!isset($data) || (empty($data)))
             {
                 // get statistics into array
-                $data = $this->getStatsArray($db);
+                $data = $this->getStatsArray($db, '');
             }
             // count and analyze the stats data in a loop
             foreach ($data as $value => $item)
