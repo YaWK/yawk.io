@@ -72,8 +72,11 @@ namespace YAWK {
                 $_SESSION['lang'] = $currentLanguage;
                 // and check if cookie is set
                 if (!isset($_COOKIE['lang']) || (empty($_COOKIE['lang'])))
-                {   // if not, try to set it - with error supressor to avoid notices if output started before
-                    @setcookie('lang', $currentLanguage, time() + (60 * 60 * 24 * 1460));
+                {   // if session is set, but cookie is not
+                    // try to set it via PHP (will not work, because output started before...)
+                    // @setcookie("lang", $currentLanguage, time() + (60 * 60 * 24 * 1460));
+                    // instead: set the cookie via JS
+                    echo "<script>document.cookie = 'lang=$currentLanguage';</script>";
                 }
                 /* language set, cookie set */
                 return $currentLanguage;

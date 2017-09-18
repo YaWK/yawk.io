@@ -234,6 +234,12 @@ if(isset($_POST['save']))
 					\YAWK\template::setTemplateActive($db, $value);
 				}
 
+				// ensure, that new backend language gets stored as cookie
+				if ($property === "backendLanguage")
+				{   // we use a small line of JS to achieve this
+                    echo "<script>document.cookie = 'lang=$value';</script>";
+                }
+
 				// save value of property to database
 				\YAWK\settings::setSetting($db, $property, $value, $lang);
 			}
