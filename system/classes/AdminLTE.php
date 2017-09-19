@@ -792,8 +792,8 @@ namespace YAWK {
                 echo \YAWK\backend::getTitle($lang['DASHBOARD'], $dashboard_subtext);
                 /* breadcrumbs */
                 echo"<ol class=\"breadcrumb\">
-                <li><a href=\"index.php?page=dashboard\" title=\"Pages\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
-                <li class=\"active\"><a href=\"index.php?page=dashboard\"> Overview</a></li>
+                <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
+                <li class=\"active\"><a href=\"index.php\"> $lang[OVERVIEW]</a></li>
               </ol>
             </section>";
                 echo"
