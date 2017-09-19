@@ -21,21 +21,25 @@ echo"<ol class=\"breadcrumb\">
 // include search class
 require_once '../system/classes/search.php';
 if (!isset($search) || (empty($search)))
-{
+{   // create search object
     $search = new \YAWK\search();
 }
+// check if db is set
 if (!isset($db) || (empty($db)))
-{
+{   // if not, include class
     require_once '../system/classes/db.php';
+    // and create database object
     $db = new \YAWK\db();
 }
-
+// check if search string is sent
 if (isset($_POST['searchString']) && (!empty($_POST['searchString'])))
-{
+{   // strip html tags and assign obj property
     $search->string = strip_tags($_POST['searchString']);
 }
 else
-{
+{   // user sent form, but entered no search string
+    // set focus on search field
+    \YAWK\backend::setFocus("searchString");
     $search->string = '';
 }
 ?>
