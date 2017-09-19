@@ -1604,7 +1604,8 @@ namespace YAWK
             // check if data array is set, if not load data from db
             if (!isset($data) || (empty($data) || (!is_array($data))))
             {   // data is not set or in false format, try to get it from database
-                if ($res = $db->query("SELECT deviceType FROM {stats} ORDER BY id DESC LIMIT $limit"))
+                $intervalQuery = "WHERE {stats}.date_created > DATE_SUB(CURDATE(), INTERVAL 1 DAY)";
+                if ($res = $db->query("SELECT deviceType FROM {stats} $intervalQuery ORDER BY id DESC LIMIT $limit"))
                 {   // create array
                     $data = array();
                     while ($row = mysqli_fetch_assoc($res))
@@ -1928,12 +1929,18 @@ namespace YAWK
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
-         * @param string $interval The time period from when to get data (1 = the last day, 7 = the last week...)
+         * @param string $interval The interval to get data
+         * @param string $period The time period (YEAR, MONTH, DAY, HOUR, MINUTE or SECOND)
          * @return bool|array containing all stats from database
          */
-        public function getStatsArray($db, $interval) // get all settings from db like property
+        public function getStatsArray($db, $interval, $period) // get all settings from db like property
         {
             /* @var $db \YAWK\db */
+            // check if period is set
+            if (!isset($period) || (empty($period) || (!is_string($period))))
+            {   // set default to show data of the last day (last 24 hours)
+                $period = "DAY";
+            }
             // check if interval is set, empty and be sure that it is an integer
             if (!isset($interval) || (empty($interval) || (!is_int($interval))))
             {   // if no interval is given or wrong datatype, show all data
@@ -1952,7 +1959,7 @@ namespace YAWK
                     // if any other value than zero
                     default:
                         // extend the query to get data for given time period
-                        $intervalQuery = "WHERE {stats}.date_created > DATE_SUB(CURDATE(), INTERVAL $interval DAY)";
+                        $intervalQuery = "WHERE {stats}.date_created > DATE_SUB(NOW(), INTERVAL $interval $period)";
                 }
             }
             else
@@ -2004,7 +2011,7 @@ namespace YAWK
             if (!isset($data) || (empty($data)))
             {
                 // get statistics into array
-                $data = $this->getStatsArray($db, '');
+                $data = $this->getStatsArray($db, '', '');
             }
             // count and analyze the stats data in a loop
             foreach ($data as $value => $item)

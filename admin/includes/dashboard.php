@@ -11,18 +11,18 @@ Both of these plugins are recommended to enhance the
         <!-- ChartJS 1.0.1 -->
         <script src=\"../system/engines/AdminLTE/plugins/chartjs/Chart.min.js\"></script>";
 
-
 // check if stats object is here...
 if (!isset($stats) || (empty($stats)))
 {   // include stats class
     @require_once '../system/classes/stats.php';
     // and create new stats object
     $stats = new \YAWK\stats();
-    $data = $stats->getStatsArray($db, 1);
+    $defaultInterval = 1;
+    $defaultPeriod = "DAY";
+    $data = $stats->getStatsArray($db, $defaultInterval, $defaultPeriod);
     $limit = $stats->i_hits;
 }
 ?>
-<p><?php print $lang['DASH_WELCOMETEXT']; ?> </p>
 
 <!-- Info boxes -->
 <div class="row">
