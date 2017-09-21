@@ -66,13 +66,27 @@ if (isset($_POST['editLanguageBtn']))
 }
 if (isset($_POST['resetLanguageBtn']))
 {
-    $files = glob("../system/backup/languages/*.*");
+    $i = 0;
+    $total = 0;
+    $files = glob("../system/backup/languages/*.ini");
     $src = "../system/backup/languages";
     $dst = "language";
     foreach($files as $file){
-        $file_to_go = str_replace($src,$dst,$file);
-        copy($file, $file_to_go);
+        $i++;
+        $file2go = str_replace($src,$dst,$file);
+        if (copy($file, $file2go))
+        {
+            $total++;
+        }
     }
+    if ($i === $total)
+    {
+        \YAWK\alert::draw("success", "$lang[LANGUAGES] $lang[RESTORED]", "$lang[LANGUAGE] $lang[FILES] $lang[RESTORED]", "", 2400);
+    }
+    else
+        {   // not all files could be copied
+            \YAWK\alert::draw("danger", "$lang[LANGUAGES] $lang[NOT_RESTORED]", "$lang[LANGUAGE] $lang[FILES] $lang[NOT_RESTORED]", "", 3400);
+        }
 }
 ?>
 
@@ -117,7 +131,6 @@ echo"<ol class=\"breadcrumb\">
             </div>
         </div>
         <div class="col-md-4">
-            <?php // \YAWK\settings::getFormElements($db, $settings, 0, $lang); ?>
             <div class="box">
                 <div class="box-header with-border">
                     <h3 class="box-title">Sprache <small>festlegen</small></h3>
@@ -153,7 +166,7 @@ echo"<ol class=\"breadcrumb\">
                 </div>
                 <div class="box-body">
                     <i class="fa fa-exclamation-triangle text-danger"></i>&nbsp;&nbsp;Setzt alle Sprachen auf Werkseinstellung zur&uuml;ck.
-                    <button class="btn btn-default pull-right" id="resetLanguageBtn" name="resetLanguageBtn"><i class="fa fa-language text-danger"></i>&nbsp;&nbsp;Backup laden</button>
+                    <a class="btn btn-default pull-right" id="resetLanguageBtn" name="resetLanguageBtn" role="dialog" data-confirm="<?php echo $lang['ARE_YOU_SURE'];?>" title="<?php echo $lang['RESTORE_LANGUAGE']; ?>" href="index.php?page=settings-language&restore=1&action=true"><i class="fa fa-language text-danger"></i>&nbsp;&nbsp;Backup laden</a>
                 </div>
             </div>
         </div>
@@ -206,18 +219,13 @@ echo"<ol class=\"breadcrumb\">
                 // hide cancel button
                 $(cancelLanguageBtn).removeClass('btn btn-danger pull-right').addClass('btn btn-danger pull-right hidden');
             });
-            // alert( "Load was performed." );
-            // alert(language);
+
             // change label to tell user which file he is editing
             $(editlanguageSelectLabel).empty().append('<?php // echo $lang['EDIT'].":"; ?> admin/'+fn);
             // turn off editLangue Select field
             $(editLanguageSelect).prop('disabled', true);
-            // make cancel button visible
-            // $(cancelLanguageBtn).removeClass('btn btn-danger pull-right hidden').addClass('btn btn-danger pull-right');
             // change class (color) of savebutton
             $(editLanguageBtn).removeClass('btn btn-success pull-right').addClass('btn btn-warning pull-right');
-
         });
     }); // end document ready
-
 </script>
