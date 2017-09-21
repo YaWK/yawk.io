@@ -64,7 +64,7 @@ if (isset($_POST['editLanguageBtn']))
             }
     }
 }
-if (isset($_POST['resetLanguageBtn']))
+if (isset($_GET['restore']) && ($_GET['restore'] == 1) && ($_GET['action'] == true))
 {
     $i = 0;
     $total = 0;
