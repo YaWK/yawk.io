@@ -31,7 +31,7 @@ echo"<ol class=\"breadcrumb\">
         $stats = new \YAWK\stats();
     }
 // load stats data into an array that every box will use, this saves performance
-    $data = $stats->getStatsArray($db, '');
+    $data = $stats->getStatsArray($db, '', '');
 
 if (isset($_POST['limit']) && (!empty($_POST['limit'])))
 {
@@ -92,6 +92,29 @@ else
 <div class="row">
     <div class="col-md-8">
         <!-- device type box -->
+        <?php
+        $daysOfMonth = date("t",mktime(0, 0, 0, 9, 1, 2017));
+        $daysOfMonth++; // Zähler bei 1
+        for($i = 1; $i < $daysOfMonth; $i++){
+        echo $i."\n";
+        }
+        ?>
+
+        <?php
+        $currentMonth = date("m");
+        $lastMonth  = date("m")-1;
+        echo "<hr>";
+        echo $lastMonth."<br>";
+        $date = new DateTime("2017-$currentMonth-01");
+        $dates = array();
+
+        foreach ( range(1, $date->format("t")) as $day ) {
+            $dates[] = $date->format("d.m.Y");
+            $date->modify("+1 day");
+        }
+
+        echo join('<br />', $dates);
+        ?>
         <?php $stats->drawDeviceTypeBox($db, $data, $limit, $lang); ?>
         <!-- /device type box -->
 

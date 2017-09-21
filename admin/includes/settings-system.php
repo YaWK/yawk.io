@@ -2,6 +2,7 @@
 <script type="text/javascript" src="../system/engines/jquery/jscolor/jscolor.js"></script>
 <!-- --><script type="text/javascript" src="../system/engines/jquery/bootstrap-tabcollapse.js"></script>
 <!-- JS GO -->
+
 <script type="text/javascript">
 	function saveHotkey() {
 		// simply disables save event for chrome
@@ -41,10 +42,11 @@
 				$(editor).summernote('codeview.deactivate');
 			}
 		});
+		var backendFooter = $('#backendFooter');
 
 		/* START CHECKBOX backend footer */
-		// check backend footer checkbox onload
-		if( $('#backendFooter').prop('checked')){
+		// check backend footer checkbox STATUS ONLOAD
+		if( $(backendFooter).prop('checked')){
 			// box is checked, set input field to NOT disabled
 			$("#backendFooterValueLeft").prop('disabled', false);
 			$("#backendFooterValueRight").prop('disabled', false);
@@ -56,8 +58,8 @@
 			$("#backendFooterValueRight").prop('disabled', true);
 			$("#backendFooterCopyright").prop('disabled', true);
 		}
-		// check wheter the footer checkbox is clicked
-		$('#backendFooter').click(function(){ // if user clicked save
+		// check wheter the footer checkbox IS CLICKED
+		$(backendFooter).click(function(){ // if user clicked save
 			if( $('#backendFooter').prop('checked')){
 				// box is checked, set input field to NOT disabled
 				$("#backendFooterValueLeft").prop('disabled', false);
@@ -538,9 +540,11 @@ echo"<ol class=\"breadcrumb\">
                     <div class="box">
                         <div class="box-body">
                             <?php
-                            echo "<pre>"; echo print_r($lang); echo "</pre>";
-
+                            // echo "<pre>"; echo print_r($lang); echo "</pre>";
                             ?>
+                            <label for="languageContent">Language File Content</label>
+                            <textarea id="languageContent" name="languageContent" rows="30" class="form-control"></textarea>
+                            <div id="textbox"></div>
                         </div>
                     </div>
                 </div>
@@ -559,6 +563,25 @@ echo"<ol class=\"breadcrumb\">
                             <h3 class="box-title">&Uuml;bersetzung <small>bearbeiten</small></h3>
                         </div>
                         <div class="box-body">
+                            <label id="editLanguageSelectLabel" for="editLanguageSelect">welche Sprache möchtest Du bearbeiten?</label>
+                            <select id="editLanguageSelect" name="editLanguageSelect" class="form-control">
+                                <option>bitte auswählen</option>
+                                <option value="language/lang-de-DE.ini">de-DE</option>
+                                <option value="language/lang-en-EN.ini">en-EN</option>
+                            </select>
+                            <div id="editLanguageFooter">
+                            <button id="editLanguageBtn" class="btn btn-success pull-right" style="margin-top:5px;"><i class="fa fa-save"></i> &nbsp;speichern</button>
+                            <a href="#" id="cancelLanguageBtn" class="btn btn-danger pull-right hidden" style="margin-top:5px; margin-right:2px;"><i class="fa fa-times"></i> &nbsp;abbrechen</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><?php echo $lang['LANGUAGES']; ?> <small>zurücksetzen</small></h3>
+                        </div>
+                        <div class="box-body">
+                            <i class="fa fa-exclamation-triangle text-danger"></i>&nbsp;&nbsp;Setzt alle Sprachen auf Werkseinstellung zur&uuml;ck.
+                            <button class="btn btn-default pull-right"><i class="fa fa-language text-danger"></i>&nbsp;&nbsp;Backup laden</button>
                         </div>
                     </div>
                 </div>
@@ -594,3 +617,57 @@ echo"<ol class=\"breadcrumb\">
 
 	</div>
 </div>
+
+
+<script type="text/javascript">
+    // to ensure, that user can edit the language, we need this piece of jquery code
+
+    // edit language selected
+    $('#editLanguageSelect').on('change', function()
+    {
+        // prepare vars
+        fn = this.value;    // language file
+        languageContent = $("#languageContent");
+        editlanguageSelectLabel = $("#editLanguageSelectLabel");
+        editLanguageSelect = $("#editLanguageSelect");
+        cancelLanguageBtn = $("#cancelLanguageBtn");
+        editLanguageBtn = $("#languageEditBtn");
+
+        // load language file content into textarea
+        $(languageContent).load( this.value, function() {
+            // alert( "Load was performed." );
+
+            // change label to tell user which file he is editing
+            $(editlanguageSelectLabel).empty().append('<?php // echo $lang['EDIT'].":"; ?> admin/'+fn);
+            // turn off editLangue Select field
+            $(editLanguageSelect).prop('disabled', true);
+            // make cancel button visible
+            $(cancelLanguageBtn).removeClass('btn btn-danger pull-right hidden').addClass('btn btn-danger pull-right');
+            // change class (color) of savebutton
+            $(editLanguageBtn).removeClass('btn btn-success').addClass('btn btn-warning');
+
+            // if cancel language btn is clicked
+            $(cancelLanguageBtn).click(function() {
+                // reset select options, enable it and set back to default: first option
+                $(editLanguageSelect).prop('disabled', false).val($("#editLanguageSelect option:first").val());
+                // reset label to default text
+                $(editLanguageSelectLabel).text('welche Sprache möchtest Du bearbeiten?');
+                // hide cancel button
+                $(cancelLanguageBtn).removeClass('btn btn-danger pull-right').addClass('btn btn-danger pull-right hidden');
+                // reset save language button
+                $(editLanguageBtn).removeClass('btn btn-warning pull-right').addClass('btn btn-success pull-right');
+                // reset textarea (clear it)
+                $(languageContent).text('');
+            });
+
+            // if save language btn is clicked
+            $(editLanguageBtn).click(function() {
+                // release (enable) select options field
+                $(editLanguageSelect).prop('disabled', false);
+                // hide cancel button
+                $(cancelLanguageBtn).removeClass('btn btn-danger pull-right').addClass('btn btn-danger pull-right hidden');
+            });
+
+        });
+    });
+</script>
