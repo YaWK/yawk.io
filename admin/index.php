@@ -132,7 +132,7 @@ if (!isset($AdminLTE))
     else
     {
         // session username, gid and / or user is is not set - throw alert and draw login box
-        \YAWK\alert::draw("warning", "Warning :", "It seems that you are not logged in correctly. Please try to re-login!","","3800");
+        \YAWK\alert::draw("warning", "Warning :", "It seems that you are not logged in correctly. Please try to re-login!","","8000");
     }
   }
   else
