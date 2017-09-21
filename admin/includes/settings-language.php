@@ -1,4 +1,5 @@
 <?php
+// user clicked on save
 if (isset($_POST['save']))
 {
     // store backend language
@@ -28,74 +29,86 @@ if (isset($_POST['save']))
                 \YAWK\sys::setTimeout("index.php?page=settings-language&lang=$_POST[backendLanguage]&saved=1&frontendLanguage=$_POST[frontendLanguage]", 0);
             }
             break;
-        // false, throw error msg
         case 0:
-            // to ensure that language switching works correctly, reload page with given POST language
+            // false, throw error msg
             \YAWK\alert::draw("danger", "$lang[LANGUAGES] $lang[NOT_SAVED]", "$lang[BACKEND] ($_GET[backendLanguage]) $lang[AND] $lang[FRONTEND] ($_GET[frontendLanguage]) $lang[LANGUAGE] $lang[NOT_SAVED].",'', 3400);
             // \YAWK\sys::setTimeout("index.php?page=settings-language&saved=0&backendLanguage=$_POST[backendLanguage]&frontendLanguage=$_POST[frontendLanguage]", 0);
             break;
     }
 }
+// confirmed: switch language has been successful
 if (isset($_GET['saved']) && ($_GET['saved'] == 1))
-{
+{   // throw success msg
     \YAWK\alert::draw("success", "$lang[LANGUAGES] $lang[SAVED]", "$lang[BACKEND] ($_GET[lang]) $lang[AND] $lang[FRONTEND] ($_GET[frontendLanguage]) $lang[LANGUAGE] $lang[SAVED].",'', 2400);
 }
 
-// save new language file
+// user wants to override (edit and save) one of the existing language files
 if (isset($_POST['editLanguageBtn']))
-{
+{   // check, which option the user have selected
     if (isset($_POST['editLanguageSelect']))
     {   // no language selected
         if ($_POST['editLanguageSelect'] === "null")
         {   // throw error
-            \YAWK\alert::draw("danger", $lang['ERROR'], $lang['LANGUAGE_SELECT_NEEDED'], "", 3400);
+            \YAWK\alert::draw("warning", $lang['ERROR'], $lang['LANGUAGE_SELECT_NEEDED'], "", 3400);
         }
         else
-            {   // language selected
+            {   // user selected a language, store filename
                 $file = $_POST['editLanguageSelect'];
+                // try to override the existing language file
                 if (file_put_contents($file, $_POST['languageContent']))
                 {   // write ok, throw msg
                     \YAWK\alert::draw("success", $lang['TRANSLATION'], "$lang[FILE] <b>$file</b> $lang[SAVED]", "", 2400);
                 }
                 else
-                {   // error, throw alert
+                {   // write error, throw alert
                     \YAWK\alert::draw("danger", $lang['TRANSLATION'], "$lang[FILE] <b>$file</b> $lang[NOT_SAVED]", "", 3400);
                 }
             }
     }
 }
+// user requested to restore the language files from backup folder
 if (isset($_GET['restore']) && ($_GET['restore'] == 1) && ($_GET['action'] == true))
 {
-    $i = 0;
-    $total = 0;
-    $files = glob("../system/backup/languages/*.ini");
+    // total amount of language files
+    $fileCount = 0;
+    //  total amount of files copied
+    $copiedTotal = 0;
+    // source directory to copy from
     $src = "../system/backup/languages";
+    // destination directory to copy to
     $dst = "language";
+    // build array with all language files from backup folder
+    $files = glob("../system/backup/languages/*.ini");
+    // walk through array
     foreach($files as $file){
-        $i++;
-        $file2go = str_replace($src,$dst,$file);
-        if (copy($file, $file2go))
-        {
-            $total++;
+        // add +1 to file counter
+        $fileCount++;
+        // prepare current file
+        $current = str_replace($src,$dst,$file);
+        // process file
+        if (copy($file, $current))
+        {   // add +1 to total counter
+            $copiedTotal++;
         }
     }
-    if ($i === $total)
-    {
+    // if all items are processed
+    if ($fileCount === $copiedTotal)
+    {   // throw success msg
         \YAWK\alert::draw("success", "$lang[LANGUAGES] $lang[RESTORED]", "$lang[LANGUAGE] $lang[FILES] $lang[RESTORED]", "", 2400);
     }
     else
-        {   // not all files could be copied
+        {   // throw error
             \YAWK\alert::draw("danger", "$lang[LANGUAGES] $lang[NOT_RESTORED]", "$lang[LANGUAGE] $lang[FILES] $lang[NOT_RESTORED]", "", 3400);
         }
 }
+// end save routine and processing
 ?>
 
 <?php
 // get settings for editor
 $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
 ?>
-<!-- include summernote css/js-->
-<!-- include codemirror (codemirror.css, codemirror.js, xml.js) -->
+<!-- include codemirror -->
 <link rel="stylesheet" type="text/css" href="../system/engines/codemirror/codemirror.min.css">
 <link rel="stylesheet" type="text/css" href="../system/engines/codemirror/themes/<?php echo $editorSettings['editorTheme']; ?>.css">
 <script type="text/javascript" src="../system/engines/codemirror/codemirror-compressed.js"></script>
@@ -124,8 +137,8 @@ echo"<ol class=\"breadcrumb\">
         <div class="col-md-8">
             <div class="box">
                 <div class="box-body">
-                    <label for="languageContent">Language File Content</label>
-                    <textarea id="languageContent" name="languageContent" rows="30" class="form-control"></textarea>
+                    <label for="languageContent"><?php echo $lang['LANGUAGE_FILE_CONTENT']; ?> &nbsp;<i id="additionalLabelInfo" class="small hidden"><?php echo $lang['LANGUAGE_FILE_WARNING']; ?></i></label>
+                        <textarea id="languageContent" name="languageContent" rows="30" class="form-control"></textarea>
                     <div id="textbox"></div>
                 </div>
             </div>
@@ -133,39 +146,93 @@ echo"<ol class=\"breadcrumb\">
         <div class="col-md-4">
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Sprache <small>festlegen</small></h3>
+                    <h3 class="box-title"><?php echo $lang['LANGUAGE']; ?> <small><?php echo $lang['DETERMINE']; ?></small></h3>
                 </div>
                 <div class="box-body">
-                    <?php \YAWK\settings::getFormElements($db, $settings, 19, $lang) ?>
-                    <button type="submit" id="savebutton" name="save" class="btn btn-success pull-right">
+                    <?php // \YAWK\settings::getFormElements($db, $settings, 19, $lang) ?>
+                    <!-- backend language -->
+                    <h3><i class="fa fa-language"></i>&nbsp;<?php echo $lang['BACKENDLANGUAGE_HEADING']."&nbsp;<small>$lang[BACKENDLANGUAGE_SUBTEXT]</small>";  ?></h3>
+                    <label id="backendLanguge" for="backendLanguge"><?php echo $lang['BACKENDLANGUAGE_LABEL']; ?></label>
+                    <select id="backendLanguge" name="backendLanguage" class="form-control">
+                    <?php
+                    $dbLanguage = \YAWK\settings::getSetting($db, "backendLanguage");
+                    echo "<option value=\"$dbLanguage\">$lang[CURRENT] $dbLanguage</option>";
+                    // get all language files from folder to array
+                    $languageFiles = \YAWK\filemanager::getFilesFromFolderToArray('language');
+                    // walk through array
+                    foreach ($languageFiles AS $file)
+                    {   // exclude .htaccess
+                        if ($file != ".htaccess")
+                        {   // extract language tag from filename
+                            $languageTag = substr($file, -9, 5); // returns eg "en-EN"
+                            // create option for each language file
+                            echo "<option value=\"$languageTag\">$languageTag</option>";
+                        }
+                    }
+                    ?>
+                    </select>
+
+                    <!-- frontend Language selection -->
+                    <h3><i class="fa fa-language"></i>&nbsp;<?php echo $lang['FRONTENDLANGUAGE_HEADING']."&nbsp;<small>$lang[FRONTENDLANGUAGE_SUBTEXT]</small>";  ?></h3>
+                    <label id="frontendLanguge" for="frontendLanguge"><?php echo $lang['FRONTENDLANGUAGE_LABEL']; ?></label>
+                    <select id="frontendLanguge" name="frontendLanguage" class="form-control">
+                        <?php
+                        $dbLanguage = \YAWK\settings::getSetting($db, "frontendLanguage");
+                        echo "<option value=\"$dbLanguage\">$lang[CURRENT] $dbLanguage</option>";
+                        // get all language files from folder to array
+                        // this has been declared before - no need to get it twice from database.
+                        // $languageFiles = \YAWK\filemanager::getFilesFromFolderToArray('language'); // declared before
+                        // walk through array
+                        foreach ($languageFiles AS $file)
+                        {   // exclude .htaccess
+                            if ($file != ".htaccess")
+                            {   // extract language tag from filename
+                                $languageTag = substr($file, -9, 5); // returns eg "en-EN"
+                                // create option for each language file
+                                echo "<option value=\"$languageTag\">$languageTag</option>";
+                            }
+                        }
+                        ?>
+                    </select>
+                    <button type="submit" id="savebutton" name="save" class="btn btn-success pull-right" style="margin-top:10px;">
                         <i id="savebuttonIcon" class="fa fa-check"></i> &nbsp;<?php print $lang['SAVE_SETTINGS']; ?>
                     </button>
                 </div>
             </div>
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">&Uuml;bersetzung <small>bearbeiten</small></h3>
+                    <h3 class="box-title"><?php echo $lang['TRANSLATION']; ?> <small><?php echo $lang['EDIT']; ?></small></h3>
                 </div>
                 <div class="box-body">
-                    <label id="editLanguageSelectLabel" for="editLanguageSelect">welche Sprache möchtest Du bearbeiten?</label>
+                    <label id="editLanguageSelectLabel" for="editLanguageSelect"><?php echo $lang['LANGUAGE_WHICH_EDIT']; ?></label>
                     <select id="editLanguageSelect" name="editLanguageSelect" class="form-control">
-                        <option value="null">bitte auswählen</option>
-                        <option value="language/lang-de-DE.ini">de-DE</option>
-                        <option value="language/lang-en-EN.ini">en-EN</option>
+                        <option value="null"><?php echo $lang['PLEASE_SELECT']; ?></option>
+                        <?php
+                            // get all language files from folder to array
+                            $languageFiles = \YAWK\filemanager::getFilesFromFolderToArray('language');
+                            // walk through array
+                            foreach ($languageFiles AS $file)
+                            {   // exclude .htaccess
+                                if ($file != ".htaccess")
+                                {   // create option for each language file
+                                    echo "<option value=\"language/$file\">$file</option>";
+                                }
+                            }
+                        ?>
                     </select>
                     <div id="editLanguageFooter">
                         <button id="editLanguageBtn" name="editLanguageBtn" class="btn btn-success pull-right" style="margin-top:10px;"><i class="fa fa-check"></i> &nbsp;
-                            <?php echo $lang['TRANSLATION']."&nbsp;".$lang['SAVE']; ?></button>
-                        <a href="index.php?page=settings-language" id="cancelLanguageBtn" class="btn btn-danger pull-right hidden" style="margin-top:10px; margin-right:2px;"><i class="fa fa-times"></i> &nbsp;abbrechen</a>
+                            <?php echo $lang['SAVE_TRANSLATION']; ?></button>
+                        <a href="index.php?page=settings-language" id="cancelLanguageBtn" class="btn btn-danger pull-right hidden" style="margin-top:10px; margin-right:2px;"><i class="fa fa-times"></i> &nbsp;<?php echo $lang['CANCEL']; ?></a>
                     </div>
                 </div>
             </div>
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title"><?php echo $lang['LANGUAGES']; ?> <small>zurücksetzen</small></h3>
+                    <h3 class="box-title"><?php echo $lang['LANGUAGES']; ?> <small><?php echo $lang['RESTORE']; ?></small></h3>
                 </div>
                 <div class="box-body">
-                    <i class="fa fa-exclamation-triangle text-danger"></i>&nbsp;&nbsp;Setzt alle Sprachen auf Werkseinstellung zur&uuml;ck.
+                    <i class="fa fa-exclamation-triangle text-danger"></i>&nbsp;&nbsp;<?php echo $lang['LANGUAGE_RESET']; ?>
                     <a class="btn btn-default pull-right" id="resetLanguageBtn" name="resetLanguageBtn" role="dialog" data-confirm="<?php echo $lang['ARE_YOU_SURE'];?>" title="<?php echo $lang['RESTORE_LANGUAGE']; ?>" href="index.php?page=settings-language&restore=1&action=true"><i class="fa fa-language text-danger"></i>&nbsp;&nbsp;Backup laden</a>
                 </div>
             </div>
@@ -186,6 +253,7 @@ echo"<ol class=\"breadcrumb\">
         editLanguageSelect = $("#editLanguageSelect");
         cancelLanguageBtn = $("#cancelLanguageBtn");
         editLanguageBtn = $("#editLanguageBtn");
+        additionalLabel = $("#additionalLabelInfo");
 
        $(editLanguageSelect).on('change', function()
         {
@@ -212,6 +280,9 @@ echo"<ol class=\"breadcrumb\">
                 editor = CodeMirror.fromTextArea(document.getElementById("languageContent"), config).setValue(language);
             });
 
+            // show file edit warning
+            $(additionalLabel).removeClass('small hidden').addClass('small');
+
             // make cancel button visible
             $(cancelLanguageBtn).removeClass('btn btn-danger pull-right hidden').addClass('btn btn-danger pull-right');
 
@@ -221,6 +292,8 @@ echo"<ol class=\"breadcrumb\">
                 $(editLanguageSelect).prop('disabled', false);
                 // hide cancel button
                 $(cancelLanguageBtn).removeClass('btn btn-danger pull-right').addClass('btn btn-danger pull-right hidden');
+                // hide additional info
+                $(additionalLabel).removeClass('small').addClass('small hidden');
             });
 
             // change label to tell user which file he is editing
