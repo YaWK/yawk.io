@@ -156,7 +156,7 @@ echo"<ol class=\"breadcrumb\">
                     <div id="editLanguageFooter">
                         <button id="editLanguageBtn" name="editLanguageBtn" class="btn btn-success pull-right" style="margin-top:10px;"><i class="fa fa-check"></i> &nbsp;
                             <?php echo $lang['TRANSLATION']."&nbsp;".$lang['SAVE']; ?></button>
-                        <!-- <a href="#" id="cancelLanguageBtn" class="btn btn-danger pull-right hidden" style="margin-top:10px; margin-right:2px;"><i class="fa fa-times"></i> &nbsp;abbrechen</a> -->
+                        <a href="index.php?page=settings-language" id="cancelLanguageBtn" class="btn btn-danger pull-right hidden" style="margin-top:10px; margin-right:2px;"><i class="fa fa-times"></i> &nbsp;abbrechen</a>
                     </div>
                 </div>
             </div>
@@ -211,6 +211,9 @@ echo"<ol class=\"breadcrumb\">
                 //  alert(language);
                 editor = CodeMirror.fromTextArea(document.getElementById("languageContent"), config).setValue(language);
             });
+
+            // make cancel button visible
+            $(cancelLanguageBtn).removeClass('btn btn-danger pull-right hidden').addClass('btn btn-danger pull-right');
 
             // if save language btn is clicked
             $(editLanguageBtn).click(function() {
