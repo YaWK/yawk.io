@@ -1994,7 +1994,6 @@ namespace YAWK
                 {   // stats array is not an array or empty - in this case
                     return null;
                 }
-
         }
 
 
