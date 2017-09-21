@@ -100,19 +100,14 @@ if (isset($_GET['restore']) && ($_GET['restore'] == 1) && ($_GET['action'] == tr
         {   // throw error
             \YAWK\alert::draw("danger", "$lang[LANGUAGES] $lang[NOT_RESTORED]", "$lang[LANGUAGE] $lang[FILES] $lang[NOT_RESTORED]", "", 3400);
         }
-}
-// end save routine and processing
-?>
-
-<?php
-// get settings for editor
+}   // end save routine and processing
+// get editor settings from database
 $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
 ?>
 <!-- include codemirror -->
 <link rel="stylesheet" type="text/css" href="../system/engines/codemirror/codemirror.min.css">
 <link rel="stylesheet" type="text/css" href="../system/engines/codemirror/themes/<?php echo $editorSettings['editorTheme']; ?>.css">
 <script type="text/javascript" src="../system/engines/codemirror/codemirror-compressed.js"></script>
-
 
 <?php
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
@@ -137,7 +132,7 @@ echo"<ol class=\"breadcrumb\">
         <div class="col-md-8">
             <div class="box">
                 <div class="box-body">
-                    <label for="languageContent"><?php echo $lang['LANGUAGE_FILE_CONTENT']; ?> &nbsp;<i id="additionalLabelInfo" class="small hidden"><?php echo $lang['LANGUAGE_FILE_WARNING']; ?></i></label>
+                    <label for="languageContent"><?php echo $lang['LANGUAGE_FILE_CONTENT']; ?> &nbsp;<small><i id="sign" class="fa fa-exclamation-triangle text-danger hidden"></i></small> &nbsp;<i id="additionalLabelInfo" class="small text-danger hidden"><?php echo $lang['LANGUAGE_FILE_WARNING']; ?></i></label>
                         <textarea id="languageContent" name="languageContent" rows="30" class="form-control"></textarea>
                     <div id="textbox"></div>
                 </div>
@@ -247,42 +242,46 @@ echo"<ol class=\"breadcrumb\">
 
 <script type="text/javascript" language="javascript">
     $(document).ready(function() {
+        // init vars
+        var languageContent = $("#languageContent");
+        var editlanguageSelectLabel = $("#editLanguageSelectLabel");
+        var editLanguageSelect = $("#editLanguageSelect");
+        var cancelLanguageBtn = $("#cancelLanguageBtn");
+        var editLanguageBtn = $("#editLanguageBtn");
+        var additionalLabel = $("#additionalLabelInfo");
+        var sign = $("#sign");
 
-        languageContent = $("#languageContent");
-        editlanguageSelectLabel = $("#editLanguageSelectLabel");
-        editLanguageSelect = $("#editLanguageSelect");
-        cancelLanguageBtn = $("#cancelLanguageBtn");
-        editLanguageBtn = $("#editLanguageBtn");
-        additionalLabel = $("#additionalLabelInfo");
-
-       $(editLanguageSelect).on('change', function()
+        // user select a language to edit from select option
+        $(editLanguageSelect).on('change', function()
         {
-            // prepare vars
+            // get filename from select option value
             fn = this.value;    // language file
 
+            // codemirror configuration
             var config, editor;
             config = {
                 theme: '<?php echo $editorSettings['editorTheme']; ?>',                       // codeview theme
-                lineNumbers: true,             // display lineNumbers true|false
+                lineNumbers: true,                                                            // display lineNumbers true|false
                 undoDepth: <?php echo $editorSettings['editorUndoDepth']; ?>,                 // how many undo steps should be saved? (default: 200)
                 smartIndent: <?php echo $editorSettings['editorSmartIndent']; ?>,             // better indent
                 indentUnit: <?php echo $editorSettings['editorIndentUnit']; ?>,               // how many spaces auto indent? (default: 2)
                 mode: "text/css",
                 styleActiveLine: <?php echo $editorSettings['editorActiveLine']; ?>           // highlight the active line (where the cursor is)
-                // autoRefresh: true
             };
 
             // prevent caching
             $.ajaxSetup({ cache: false });
+            // get language from filename
             $.get(fn, function (response) {
                 language = response;
-                //  alert(language);
+                // launch codemirror and load language file (value) into it
                 editor = CodeMirror.fromTextArea(document.getElementById("languageContent"), config).setValue(language);
             });
 
+            // show exclamation sign
+            $(sign).removeClass('fa fa-exclamation-triangle text-danger hidden').addClass('fa fa-exclamation-triangle text-danger');
             // show file edit warning
             $(additionalLabel).removeClass('small hidden').addClass('small');
-
             // make cancel button visible
             $(cancelLanguageBtn).removeClass('btn btn-danger pull-right hidden').addClass('btn btn-danger pull-right');
 
@@ -294,6 +293,8 @@ echo"<ol class=\"breadcrumb\">
                 $(cancelLanguageBtn).removeClass('btn btn-danger pull-right').addClass('btn btn-danger pull-right hidden');
                 // hide additional info
                 $(additionalLabel).removeClass('small').addClass('small hidden');
+                // hide exclamation sign
+                $(sign).removeClass('fa fa-exclamation-triangle text-danger').addClass('fa fa-exclamation-triangle text-danger hidden');
             });
 
             // change label to tell user which file he is editing
