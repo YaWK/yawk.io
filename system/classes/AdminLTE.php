@@ -651,7 +651,7 @@ namespace YAWK {
               <!-- /.search form -->
 
               <!-- Sidebar Menu -->
-              <ul class=\"sidebar-menu\">
+              <ul class=\"sidebar-menu\" data-widget=\"tree\">
                 <li class=\"header\">$lang[MAIN_NAVIGATION]</li>
                 <!-- Optionally, you can add icons to the links -->
                 <li ";echo (!isset($_GET['page'])) && (!isset($_GET['plugin'])) ? "class='active'" : ""; echo">
@@ -682,10 +682,6 @@ namespace YAWK {
                 <li ";echo (isset($_GET['page']) && $_GET['page'] == 'template') ? "class='active'" : ""; echo">
                     <a href=\"index.php?page=template&id=";echo \YAWK\settings::getSetting($db, "selectedTemplate"); echo"\"><i class=\"fa fa-paint-brush\"></i> <span>$lang[TPL]</span></a>
                 </li>
-                <!-- design -->
-                <li ";echo (isset($_GET['page']) && $_GET['page'] == 'template-edit') ? "class='active'" : ""; echo">
-                    <a href=\"index.php?page=template-edit&id=";echo \YAWK\settings::getSetting($db, "selectedTemplate"); echo"\"><i class=\"fa fa-paint-brush\"></i> <span>$lang[REDESIGN]</span></a>
-                </li>
                 <!-- themes -->
                 <li ";echo (isset($_GET['page']) && $_GET['page'] == 'template-manage') ? "class='active'" : ""; echo">
                     <a href=\"index.php?page=template-manage\"><i class=\"fa fa-photo\"></i> <span>$lang[THEMES]</span></a>
@@ -697,11 +693,44 @@ namespace YAWK {
                 <!-- support -->
                 <li ";echo (isset($_GET['page']) && $_GET['page'] == 'help') ? "class='active'" : ""; echo">
                     <a href=\"index.php?page=help\"><i class=\"fa fa-life-ring\"></i> <span>$lang[SUPPORT]</span></a>
-                </li>
-                <!-- system -->
-                <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-system') ? "class='active'" : ""; echo">
-                    <a href=\"index.php?page=settings-system\"> <i class=\"fa fa-cog\"></i> <span>$lang[SETTINGS]</span></a>
-                </li>
+                </li>";
+
+            if (strpos($_GET['page'], 'settings') !== false) {
+                $activeClass = " class=\"active\"";
+            }
+            else {
+                $activeClass = '';
+            }
+                
+         echo"
+        <li$activeClass>
+          <a href=\"#\">
+            <i class=\"fa fa-gear\"></i>
+            <span>$lang[SETTINGS]</span>
+            <span class=\"pull-right-container\">
+              <i class=\"fa fa-angle-left pull-right\"></i>
+            </span>
+          </a>
+          <ul class=\"treeview-menu\">
+            <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-%') ? "class=\"active\"" :""; echo">
+                <a href=\"index.php?page=settings-system\"><i class=\"fa fa-home\"></i> $lang[OVERVIEW]</a>
+            </li>
+            <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-frontend') ? "class=\"active\"" : ""; echo">
+                <a href=\"index.php?page=settings-frontend\"><i class=\"fa fa-globe\"></i> $lang[FRONTEND]</a>
+            </li>
+            <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-backend') ? "class=\"active\"" : ""; echo">
+                <a href=\"index.php?page=settings-backend\"><i class=\"fa fa-sign-in\"></i> $lang[BACKEND]</a>
+            </li>
+            <li><a href=\"index.php?page=settings-system\"><i class=\"fa fa-gears\"></i> $lang[SYSTEM]</a></li>
+            <li><a href=\"index.php?page=settings-system\"><i class=\"fa fa-database\"></i> $lang[DATABASE]</a></li>
+            <li><a href=\"index.php?page=settings-system\"><i class=\"fa fa-android\"></i> $lang[ROBOTS_TXT]</a></li>
+            <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-language') ? "class=\"active\"" : ""; echo">
+                <a href=\"index.php?page=settings-language\"><i class=\"fa fa-language\"></i> $lang[LANGUAGES]</a>
+            </li>
+            <li><a href=\"index.php?page=settings-system\"><i class=\"fa fa-info-circle\"></i> $lang[SYSTEM]&nbsp;$lang[INFO]</a></li>
+          </ul>
+        </li>
+        <br><br><br><br>
               </ul><!-- /.sidebar-menu -->
             </section>
             <!-- /.sidebar -->
