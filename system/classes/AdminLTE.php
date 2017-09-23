@@ -712,9 +712,6 @@ namespace YAWK {
             </span>
           </a>
           <ul class=\"treeview-menu\">
-            <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-%') ? "class=\"active\"" :""; echo">
-                <a href=\"index.php?page=settings\"><i class=\"fa fa-home\"></i> $lang[OVERVIEW]</a>
-            </li>
             <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-frontend') ? "class=\"active\"" : ""; echo">
                 <a href=\"index.php?page=settings-frontend\"><i class=\"fa fa-globe\"></i> $lang[FRONTEND]</a>
             </li>
@@ -724,13 +721,14 @@ namespace YAWK {
             <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-system') ? "class=\"active\"" : ""; echo">
                 <a href=\"index.php?page=settings-system\"><i class=\"fa fa-gears\"></i> $lang[SYSTEM]</a>
             </li>
-            <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-database') ? "class=\"active\"" : ""; echo">
-                <a href=\"index.php?page=settings-database\"><i class=\"fa fa-database\"></i> $lang[DATABASE]</a>
-            </li>
             <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-robots') ? "class=\"active\"" : ""; echo">
                 <a href=\"index.php?page=settings-robots\"><i class=\"fa fa-android\"></i> $lang[ROBOTS_TXT]</a></li>
+                
             <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-language') ? "class=\"active\"" : ""; echo">
                 <a href=\"index.php?page=settings-language\"><i class=\"fa fa-language\"></i> $lang[LANGUAGES]</a>
+            </li>
+            <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-database') ? "class=\"active\"" : ""; echo">
+                <a href=\"index.php?page=settings-database\"><i class=\"fa fa-database\"></i> $lang[DATABASE]</a>
             </li>
             <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-systeminfo') ? "class=\"active\"" : ""; echo">
             <a href=\"index.php?page=settings-systeminfo\"><i class=\"fa fa-info-circle\"></i> $lang[SYSTEM]&nbsp;$lang[INFO]</a></li>
