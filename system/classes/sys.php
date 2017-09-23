@@ -74,7 +74,14 @@ namespace YAWK {
             // check if file content is set...
             // set robots.txt path + filename
             $filename = "$path"."robots.txt";
-            return file_put_contents("$filename", "$content");
+            if (file_put_contents("$filename", "$content"))
+            {
+                return true;
+            }
+            else
+                {
+                    return false;
+                }
         }
 
         /**
