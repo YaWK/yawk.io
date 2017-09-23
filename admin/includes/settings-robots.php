@@ -118,20 +118,17 @@ echo"</section><!-- Main content -->
     </div>
 
     <!-- ROBOTS.TXT -->
+    <div class="row">
             <div class="col-md-8">
                 <div class="box">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><?php echo $lang['DATA_PRIVACY']."&nbsp;&amp;&nbsp;".$lang['PRIVACY']; ?>  <small><?php echo $lang['ROBOTS_SUBTEXT']; ?> </small></h3>
-                    </div>
                     <div class="box-body">
-                        <label for="summernote"></label>
+                        <label for="summernote"><?php echo $lang['DATA_PRIVACY']."&nbsp;&amp;&nbsp;".$lang['PRIVACY']; ?>  - <small><?php echo $lang['ROBOTS_SUBTEXT']; ?> </small></label>
                         <?php $content = \YAWK\sys::getRobotsText($db, "../"); ?>
                         <textarea name="robotsText-long" cols="64" rows="28" id="summernote"><?php echo $content; ?></textarea>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-
                 <div class="box">
                     <div class="box-header with-border">
                         <h3 class="box-title"><?php echo $lang['ROBOTS_TXT']; ?> <small> <?php echo $lang['HELP']; ?></small></h3>
@@ -141,6 +138,7 @@ echo"</section><!-- Main content -->
                     </div>
                 </div>
             </div>
+    </div>
 </form>
 <script type="text/javascript">
 $(document).ready(function() {

@@ -49,7 +49,7 @@ echo"</section><!-- Main content -->
     <div class="box">
         <div class="box-body">
             <div class="col-md-10">
-                <?php echo "<h4><i class=\"fa fa-globe\"></i> &nbsp;".$lang['SYSTEM_SUBTEXT']."</h4>"; ?>
+                <?php echo "<h4><i class=\"fa fa-cogs\"></i> &nbsp;".$lang['SYSTEM_SUBTEXT']."</h4>"; ?>
             </div>
             <div class="col-md-2">
                 <button class="btn btn-success pull-right" id="save" name="save" style="margin-top:2px;"><i class="fa fa-check"></i>&nbsp;&nbsp;<?php echo $lang['SAVE_SETTINGS']; ?></button>

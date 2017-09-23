@@ -125,6 +125,17 @@ echo"</section>
 /* page content start here */
 ?>
 <form id="template-edit-form" action="index.php?page=settings-language" method="POST">
+    <div class="box">
+        <div class="box-body">
+            <div class="col-md-10">
+                <?php echo "<h4><i class=\"fa fa-language\"></i> &nbsp;$lang[LANGUAGES]&nbsp;<small>$lang[LANGUAGES_SUBTEXT]</small></h4>"; ?>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-success pull-right" id="save" name="save" style="margin-top:2px;"><i id="savebuttonIcon" class="fa fa-check"></i>&nbsp;&nbsp;<?php echo $lang['SAVE_SETTINGS']; ?></button>
+            </div>
+        </div>
+    </div>
+
     <div class="row animated fadeIn">
         <div class="col-md-8">
             <div class="box">
@@ -163,7 +174,7 @@ echo"</section>
                     }
                     ?>
                     </select>
-
+                    <br>
                     <!-- frontend Language selection -->
                     <h3><i class="fa fa-language"></i>&nbsp;<?php echo $lang['FRONTENDLANGUAGE_HEADING']."&nbsp;<small>$lang[FRONTENDLANGUAGE_SUBTEXT]</small>";  ?></h3>
                     <label id="frontendLanguge" for="frontendLanguge"><?php echo $lang['FRONTENDLANGUAGE_LABEL']; ?></label>
@@ -186,9 +197,7 @@ echo"</section>
                         }
                         ?>
                     </select>
-                    <button type="submit" id="savebutton" name="save" class="btn btn-success pull-right" style="margin-top:10px;">
-                        <i id="savebuttonIcon" class="fa fa-check"></i> &nbsp;<?php print $lang['SAVE_SETTINGS']; ?>
-                    </button>
+                    <br><br>
                 </div>
             </div>
             <div class="box">
@@ -213,7 +222,7 @@ echo"</section>
                         ?>
                     </select>
                     <div id="editLanguageFooter">
-                        <button id="editLanguageBtn" name="editLanguageBtn" class="btn btn-success pull-right" style="margin-top:10px;"><i class="fa fa-check"></i> &nbsp;
+                        <button id="editLanguageBtn" name="editLanguageBtn" class="btn btn-success pull-right hidden" style="margin-top:10px;"><i class="fa fa-check"></i> &nbsp;
                             <?php echo $lang['SAVE_TRANSLATION']; ?></button>
                         <a href="index.php?page=settings-language" id="cancelLanguageBtn" class="btn btn-danger pull-right hidden" style="margin-top:10px; margin-right:2px;"><i class="fa fa-times"></i> &nbsp;<?php echo $lang['CANCEL']; ?></a>
                     </div>
@@ -275,6 +284,8 @@ echo"</section>
                 editor = CodeMirror.fromTextArea(document.getElementById("languageContent"), config).setValue(language);
             });
 
+            // show save button
+            $(editLanguageBtn).removeClass('btn btn-success pull-right hidden').addClass('btn btn-success pull-right');
             // show exclamation sign
             $(sign).removeClass('fa fa-exclamation-triangle text-danger hidden').addClass('fa fa-exclamation-triangle text-danger');
             // show file edit warning
