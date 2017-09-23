@@ -26,6 +26,23 @@ namespace YAWK {
      */
     class backend
     {
+
+        static function getSettingsBreadcrumbs($lang)
+        {
+            return "<ol class=\"breadcrumb\">
+            <li><a href=\"index.php?page=settings-system\" title=\"$lang[SETTINGS]\"><i class=\"fa fa-cog\"></i> $lang[SETTINGS]</a></li>
+            <li><i class=\"fa fa-globe\"></i> &nbsp;<a href=\"index.php?page=settings-frontend\" title=\"$lang[EDIT]\"> $lang[FRONTEND]</a></li>
+            <li><i class=\"fa fa-sign-in\"></i> &nbsp;<a href=\"index.php?page=settings-backend\" title=\"$lang[EDIT]\"> $lang[BACKEND]</a></li>
+            <li><i class=\"fa fa-cogs\"></i> &nbsp;<a href=\"index.php?page=settings-system\" title=\"$lang[EDIT]\"> $lang[SYSTEM]</a></li>
+            <li><i class=\"fa fa-language\"></i> &nbsp;<a href=\"index.php?page=settings-language\" title=\"$lang[EDIT]\"> $lang[LANGUAGES]</a></li>
+            <li><i class=\"fa fa-android\"></i> &nbsp;<a href=\"index.php?page=settings-robots\" title=\"$lang[EDIT]\"> $lang[ROBOTS_TXT]</a></li>
+            <li><i class=\"fa fa-database\"></i> &nbsp;<a href=\"index.php?page=settings-database\" title=\"$lang[EDIT]\"> $lang[DATABASE]</a></li>
+            <li><i class=\"fa fa-info-circle\"></i> &nbsp;<a href=\"index.php?page=settings-systeminfo\" title=\"$lang[EDIT]\"> $lang[SYSTEM] $lang[INFO]</a></li>
+        </ol></section>";
+        }
+
+
+
         /**
          * Header title on top of every page
          * @param string $title Title to display
