@@ -27,6 +27,8 @@ if(isset($_POST['save']))
             }
         }
     }
+    // force page reload to show changes immediately
+    // \YAWK\sys::setTimeout("index.php?page=settings-frontend", 0);
 }
 ?>
 <?php
@@ -38,17 +40,8 @@ echo "
     <section class=\"content-header\">";
 // draw Title on top
 echo \YAWK\backend::getTitle($lang['SETTINGS'], $lang['FRONTEND']);
-echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php?page=settings-system\" title=\"$lang[SETTINGS]\"><i class=\"fa fa-cog\"></i> $lang[SETTINGS]</a></li>
-            <li><i class=\"fa fa-globe\"></i> &nbsp;<a href=\"index.php?page=settings-frontend\" class=\"active\" title=\"$lang[EDIT]\"> $lang[FRONTEND]</a></li>
-            <li><i class=\"fa fa-sign-in\"></i> &nbsp;<a href=\"index.php?page=settings-backend\" title=\"$lang[EDIT]\"> $lang[BACKEND]</a></li>
-            <li><i class=\"fa fa-language\"></i> &nbsp;<a href=\"index.php?page=settings-language\" title=\"$lang[EDIT]\"> $lang[LANGUAGES]</a></li>
-            <li><i class=\"fa fa-cogs\"></i> &nbsp;<a href=\"index.php?page=settings-system\" title=\"$lang[EDIT]\"> $lang[SYSTEM]</a></li>
-            <li><i class=\"fa fa-android\"></i> &nbsp;<a href=\"index.php?page=settings-robots\" title=\"$lang[EDIT]\"> $lang[ROBOTS_TXT]</a></li>
-            <li><i class=\"fa fa-database\"></i> &nbsp;<a href=\"index.php?page=settings-database\" title=\"$lang[EDIT]\"> $lang[DATABASE]</a></li>
-            <li><i class=\"fa fa-info-circle\"></i> &nbsp;<a href=\"index.php?page=settings-systeminfo\" title=\"$lang[EDIT]\"> $lang[SYSTEM] $lang[INFO]</a></li>
-        </ol></section>
-    <!-- Main content -->
+echo \YAWK\backend::getSettingsBreadcrumbs($lang);
+echo"</section><!-- Main content -->
     <section class=\"content\">";
 /* page content start here */
 ?>
@@ -93,3 +86,54 @@ echo"<ol class=\"breadcrumb\">
                 </div>
     </div>
 </form>
+<script type="text/javascript">
+    /* START CHECKBOX timediff */
+    // check backend footer checkbox onload
+    if( $('#timediff').prop('checked')){
+        // box is checked, set input field to NOT disabled
+        $("#timedifftext").prop('disabled', false);
+    }
+    else {
+        // box is not checked, set field to disabled
+        $("#timedifftext").prop('disabled', true);
+    }
+    // check wheter the checkbox is clicked
+    $('#timediff').click(function(){ // if user clicked save
+        if( $('#timediff').prop('checked')){
+            // box is checked, set input field to NOT disabled
+            $("#timedifftext").prop('disabled', false);
+        }
+        else {
+            // set footer value input field to disabled
+            $("#timedifftext").prop('disabled', true);
+        }
+    });
+    /* END CHECKBOX backend footer */
+
+    /* START CHECKBOX offline mode */
+    // check backend footer checkbox onload
+    if( $('#offline').prop('checked')){
+        // box is checked, set input field to NOT disabled
+        $("#offlinemsg").prop('disabled', false);
+        $("#offlineimage").prop('disabled', false);
+    }
+    else {
+        // box is not checked, set field to disabled
+        $("#offlinemsg").prop('disabled', true);
+        $("#offlineimage").prop('disabled', true);
+    }
+    // check wheter the checkbox is clicked
+    $('#offline').click(function(){ // if user clicked save
+        if( $('#offline').prop('checked')){
+            // box is checked, set input field to NOT disabled
+            $("#offlinemsg").prop('disabled', false);
+            $("#offlineimage").prop('disabled', false);
+        }
+        else {
+            // set footer value input field to disabled
+            $("#offlinemsg").prop('disabled', true);
+            $("#offlineimage").prop('disabled', true);
+        }
+    });
+    /* END CHECKBOX backend fx */
+</script>

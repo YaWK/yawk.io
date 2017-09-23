@@ -27,6 +27,8 @@ if(isset($_POST['save']))
             }
         }
     }
+    // load page again to show changes immediately
+    \YAWK\sys::setTimeout("index.php?page=settings-backend", 0);
 }
 ?>
 <?php
@@ -38,17 +40,8 @@ echo "
     <section class=\"content-header\">";
 // draw Title on top
 echo \YAWK\backend::getTitle($lang['SETTINGS'], $lang['FRONTEND']);
-echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php?page=settings-system\" title=\"$lang[SETTINGS]\"><i class=\"fa fa-cog\"></i> $lang[SETTINGS]</a></li>
-            <li><i class=\"fa fa-globe\"></i> &nbsp;<a href=\"index.php?page=settings-frontend\" title=\"$lang[EDIT]\"> $lang[FRONTEND]</a></li>
-            <li class=\"active\"><i class=\"fa fa-sign-in\"></i> &nbsp;<a href=\"index.php?page=settings-backend\" title=\"$lang[EDIT]\"> $lang[BACKEND]</a></li>
-            <li><i class=\"fa fa-language\"></i> &nbsp;<a href=\"index.php?page=settings-language\" title=\"$lang[EDIT]\"> $lang[LANGUAGES]</a></li>
-            <li><i class=\"fa fa-cogs\"></i> &nbsp;<a href=\"index.php?page=settings-system\" title=\"$lang[EDIT]\"> $lang[SYSTEM]</a></li>
-            <li><i class=\"fa fa-android\"></i> &nbsp;<a href=\"index.php?page=settings-robots\" title=\"$lang[EDIT]\"> $lang[ROBOTS_TXT]</a></li>
-            <li><i class=\"fa fa-database\"></i> &nbsp;<a href=\"index.php?page=settings-database\" title=\"$lang[EDIT]\"> $lang[DATABASE]</a></li>
-            <li><i class=\"fa fa-info-circle\"></i> &nbsp;<a href=\"index.php?page=settings-systeminfo\" title=\"$lang[EDIT]\"> $lang[SYSTEM] $lang[INFO]</a></li>
-        </ol></section>
-    <!-- Main content -->
+echo \YAWK\backend::getSettingsBreadcrumbs($lang);
+echo"</section><!-- Main content -->
     <section class=\"content\">";
 /* page content start here */
 ?>
@@ -56,7 +49,7 @@ echo"<ol class=\"breadcrumb\">
     <div class="box">
         <div class="box-body">
             <div class="col-md-10">
-                <?php echo "<h4><i class=\"fa fa-sign-in\"></i> $lang[BACKEND_SUBTEXT]</h4>"; ?>
+                <?php echo "<h4><i class=\"fa fa-sign-in\"></i> &nbsp;$lang[BACKEND_SUBTEXT]</h4>"; ?>
             </div>
             <div class="col-md-2">
                 <button class="btn btn-success pull-right" id="save" name="save" style="margin-top:2px;"><i class="fa fa-check"></i>&nbsp;&nbsp;<?php echo $lang['SAVE_SETTINGS']; ?></button>
@@ -96,3 +89,105 @@ echo"<ol class=\"breadcrumb\">
             </div>
     </div>
 </form>
+<script type="text/javascript">
+
+    var backendFooter = $('#backendFooter');
+
+    /* START CHECKBOX backend footer */
+    // check backend footer checkbox STATUS ONLOAD
+    if( $(backendFooter).prop('checked')){
+        // box is checked, set input field to NOT disabled
+        $("#backendFooterValueLeft").prop('disabled', false);
+        $("#backendFooterValueRight").prop('disabled', false);
+        $("#backendFooterCopyright").prop('disabled', false);
+    }
+    else {
+        // box is not checked, set field to disabled
+        $("#backendFooterValueLeft").prop('disabled', true);
+        $("#backendFooterValueRight").prop('disabled', true);
+        $("#backendFooterCopyright").prop('disabled', true);
+    }
+    // check wheter the footer checkbox IS CLICKED
+    $(backendFooter).click(function(){ // if user clicked save
+        if( $('#backendFooter').prop('checked')){
+            // box is checked, set input field to NOT disabled
+            $("#backendFooterValueLeft").prop('disabled', false);
+            $("#backendFooterValueRight").prop('disabled', false);
+            $("#backendFooterCopyright").prop('disabled', false);
+        }
+        else {
+            // set footer value input field to disabled
+            $("#backendFooterValueLeft").prop('disabled', true);
+            $("#backendFooterValueRight").prop('disabled', true);
+            $("#backendFooterCopyright").prop('disabled', true);
+        }
+    });
+    // check wheter the footer copyright checkbox is clicked
+    $('#backendFooterCopyright').click(function(){ // if user clicked save
+        if( $('#backendFooterCopyright').prop('checked')){
+            // box is checked, set input field to NOT disabled
+            $("#backendFooterValueLeft").prop('disabled', true);
+            $("#backendFooterValueRight").prop('disabled', true);
+        }
+        else {
+            // set footer value input field to disabled
+            $("#backendFooterValueLeft").prop('disabled', false);
+            $("#backendFooterValueRight").prop('disabled', false);
+        }
+    });
+    /* END CHECKBOX backend footer */
+
+    /* START CHECKBOX backend logo */
+    // check backend footer checkbox onload
+    if( $('#backendLogoUrl').prop('checked')){
+        // box is checked, set input field to NOT disabled
+        $("#backendLogoText").prop('disabled', true);
+        $("#backendLogoSubText").prop('disabled', true);
+    }
+    else {
+        // box is not checked, set field to disabled
+        $("#backendLogoText").prop('disabled', false);
+        $("#backendLogoSubText").prop('disabled', false);
+    }
+    // check wheter the checkbox is clicked
+    $('#backendLogoUrl').click(function(){ // if user clicked save
+        if( $('#backendLogoUrl').prop('checked')){
+            // box is checked, set input field to NOT disabled
+            $("#backendLogoText").prop('disabled', true);
+            $("#backendLogoSubText").prop('disabled', true);
+        }
+        else {
+            // set footer value input field to disabled
+            $("#backendLogoText").prop('disabled', false);
+            $("#backendLogoSubText").prop('disabled', false);
+        }
+    });
+    /* END CHECKBOX backend logo */
+
+    /* START CHECKBOX backend fx */
+    // check backend footer checkbox onload
+    if( $('#backendFX').prop('checked')){
+        // box is checked, set input field to NOT disabled
+        $("#backendFXtype").prop('disabled', false);
+        $("#backendFXtime").prop('disabled', false);
+    }
+    else {
+        // box is not checked, set field to disabled
+        $("#backendFXtype").prop('disabled', true);
+        $("#backendFXtime").prop('disabled', true);
+    }
+    // check wheter the checkbox is clicked
+    $('#backendFX').click(function(){ // if user clicked save
+        if( $('#backendFX').prop('checked')){
+            // box is checked, set input field to NOT disabled
+            $("#backendFXtype").prop('disabled', false);
+            $("#backendFXtime").prop('disabled', false);
+        }
+        else {
+            // set footer value input field to disabled
+            $("#backendFXtype").prop('disabled', true);
+            $("#backendFXtime").prop('disabled', true);
+        }
+    });
+    /* END CHECKBOX backend fx */
+</script>

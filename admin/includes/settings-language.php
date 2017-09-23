@@ -118,11 +118,8 @@ echo "
     <section class=\"content-header\">";
 /* draw Title on top */
 echo \YAWK\backend::getTitle($lang['LANGUAGES'], $lang['TRANSLATION']);
-echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php?page=settings-system\" title=\"$lang[SETTINGS]\"><i class=\"fa fa-gear\"></i> $lang[SETTINGS]</a></li>
-            <li class=\"active\"><a href=\"index.php?page=settings-language\" title=\"$lang[LANGUAGES]\"> $lang[LANGUAGES]</a></li>
-         </ol>
-    </section>
+echo \YAWK\backend::getSettingsBreadcrumbs($lang);
+echo"</section>
     <!-- Main content -->
     <section class=\"content\">";
 /* page content start here */
@@ -265,7 +262,7 @@ echo"<ol class=\"breadcrumb\">
                 undoDepth: <?php echo $editorSettings['editorUndoDepth']; ?>,                 // how many undo steps should be saved? (default: 200)
                 smartIndent: <?php echo $editorSettings['editorSmartIndent']; ?>,             // better indent
                 indentUnit: <?php echo $editorSettings['editorIndentUnit']; ?>,               // how many spaces auto indent? (default: 2)
-                mode: "text/css",
+                mode: "css",
                 styleActiveLine: <?php echo $editorSettings['editorActiveLine']; ?>           // highlight the active line (where the cursor is)
             };
 
@@ -304,5 +301,6 @@ echo"<ol class=\"breadcrumb\">
             // change class (color) of savebutton
             $(editLanguageBtn).removeClass('btn btn-success pull-right').addClass('btn btn-warning pull-right');
         });
+
     }); // end document ready
 </script>
