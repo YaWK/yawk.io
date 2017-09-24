@@ -57,8 +57,7 @@ echo"</section><!-- Main content -->
                 </div>
             </div>
             <div class="box-body">
-
-
+                <?php echo $lang['PHP_HELP']; ?>
             </div>
         </div>
     </div>
