@@ -46,7 +46,7 @@ else
     <!-- Own Template Settings: Bootstrap core CSS override -->
     <link href="system/templates/<?php echo $template; ?>/css/settings.min.css" rel="stylesheet">
     <!-- CUSTOM Template Override: custom.CSS -->
-    <link href="system/templates/<?php echo $template; ?>/css/custom.min.css" rel="stylesheet">
+    <link href="system/templates/<?php echo $template; ?>/css/custom.min.css" rel="stylesheet" type="text/css">
     <!-- import jquery 1.11.3 -->
     <script src="system/engines/jquery/jquery-1.11.3.min.js"></script>
     <!-- validation plugin
@@ -355,6 +355,7 @@ $indicators = \YAWK\template::getPositionIndicatorStatusArray($db);
 
       </div>
 
+      <!-- <div class="navbar-fixed-bottom"> -->
       <div class="row">
           <?php
           // POSITION: outerBottom
@@ -362,6 +363,7 @@ $indicators = \YAWK\template::getPositionIndicatorStatusArray($db);
           ?>
       </div>
   </div>
+
   <!-- LAYOUT END -->
 
       <script>

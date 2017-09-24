@@ -167,12 +167,13 @@ namespace YAWK\PLUGINS\GALLERY {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
+         * @param array $lang language array
          * @param string $path usually media/images/
          */
-        public function drawFolderSelect($path)
+        public function drawFolderSelect($lang, $path)
         {
             echo "<select name=\"folder\" class=\"form-control\" id=\"folder\">
-                  <option value=\"Select Image Folder\">Select Image Folder</option>
+                  <option value=\"\">$lang[SELECT_FOLDER]</option>
                   ".self::scanImageDirectory($path)."
                   </select>";
         }

@@ -2,7 +2,7 @@
 // check if language is set
 if (!isset($language) || (!isset($lang)))
 {   // inject (add) language tags to core $lang array
-    $lang = \YAWK\language::inject(@$lang, "../system/plugins/gallery/language/");
+    $lang = \YAWK\language::inject($lang, "../system/plugins/gallery/language/");
 }
 require_once '../system/plugins/gallery/classes/gallery.php';
 /** GALLERY PLUGIN  */
@@ -80,8 +80,8 @@ echo"<ol class=\"breadcrumb\">
                 <h3 class="box-title"><i class="fa fa-plus-circle text-muted"></i> &nbsp;<?php echo $lang['GALLERY_ADD_NEW']; ?></h3>
             </div>
             <div class="box-body">
-                <label for="folder"><?php echo $lang['SELECT_FOLDER']; ?></label>
-                <?php echo $gallery->drawFolderSelect("media/images/")?>
+                <label for="folder"><?php echo $lang['SELECT_FOLDER_LABEL']; ?></label>
+                <?php $gallery->drawFolderSelect($lang, "media/images/")?>
                 <label for="customFolder"><?php echo $lang['OR_SET_DIFFERENT_FOLDER']; ?></label>
                 <input id="customFolder"
                        name="customFolder"
