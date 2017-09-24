@@ -578,9 +578,9 @@ namespace YAWK {
                                     <label for=\"USERNAME\">$lang[USERNAME] <small><i>$lang[USERNAME]</i></small></label>
                                     <input type=\"text\" class=\"form-control\" name=\"USERNAME\" id=\"USERNAME\" placeholder=\"$setup[ADMIN_USER]\" value=\"admin\">
                                     <label for=\"PASSWORD\">$lang[PASSWORD] <small><i>$lang[PASSWORD]</i></small></label>
-                                    <input type=\"text\" class=\"form-control\" name=\"PASSWORD\" id=\"PASSWORD\" placeholder=\"$setup[ADMIN_PASS]\">
+                                    <input type=\"password\" class=\"form-control\" name=\"PASSWORD\" id=\"PASSWORD\" placeholder=\"$setup[ADMIN_PASS]\">
                                     <label for=\"PASSWORD2\">$lang[PASSWORD] <small><i>($lang[REPEAT])</i></small></label>
-                                    <input type=\"text\" class=\"form-control\" name=\"PASSWORD2\" id=\"PASSWORD2\" placeholder=\"$setup[ADMIN_PASS]\">
+                                    <input type=\"password\" class=\"form-control\" name=\"PASSWORD2\" id=\"PASSWORD2\" placeholder=\"$setup[ADMIN_PASS]\">
                                     <br>
                                     <input type=\"hidden\" name=\"url\" value=\"$this->url\">
                                     <input type=\"hidden\" name=\"rootPath\" value=\"$this->rootPath\">
