@@ -19,6 +19,164 @@ namespace YAWK {
     {
 
         /**
+         * Display a multidimensional array line per line. Expects an array and property
+         * @author      Daniel Retzl <danielretzl@gmail.com>
+         * @version     1.0.0
+         * @link        https://gist.github.com/sbmzhcn/6255314
+         * @return bool
+         */
+        static function array2lines($array, $property)
+        {
+
+            echo "<h4 class=\"settingsTitle\">$property</h4>";
+            foreach ($array[$property] as $item => $key)
+            {
+                $linkProperty = str_replace(" ", "+", $item);
+                if (is_array($key))
+                {
+                    echo "<li class=\"list-group-item\"><a href=\"https://www.google.at/search?q=php.net+$linkProperty\" title=\"google this: $item setting\" target=\"_blank\"><b>$item</b> = $key[0]</a></li>";
+                }
+                else
+                {
+                    echo "<li class=\"list-group-item\"><a href=\"https://www.google.at/search?q=php.net+$linkProperty\" title=\"google this: $item setting\" target=\"_blank\"><b>$item</b> = $key</a></li>";
+                }
+            }
+            return true;
+        }
+
+        static function drawPhpInfo($lang)
+        {
+            // get data from php info into array
+            $data = \YAWK\sys::parse_phpinfo();
+
+            // JS filter script
+            echo "
+            <script>
+                function myFunction() {
+                    // Declare variables
+                    var input, filter, ul, li, a, i;
+                    input = document.getElementById('myInput');
+                    filter = input.value.toUpperCase();
+                    ul = document.getElementById(\"phpinfoList\");
+                    li = ul.getElementsByTagName('li');
+    
+                    // Loop through all list items, and hide those who don't match the search query
+                    for (i = 0; i < li.length; i++) {
+                        a = li[i].getElementsByTagName(\"a\")[0];
+                        if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                            li[i].style.display = \"\";
+                            $('.settingsTitle').show();
+                        } else {
+                            li[i].style.display = \"none\";
+                            $('.settingsTitle').hide();
+                        }
+                    }
+                }
+            </script>";
+
+            echo "<input type=\"text\" id=\"myInput\" class=\"form-control\" onkeyup=\"myFunction()\" placeholder=\"$lang[SEARCH_DOTDOTDOT]\">";
+            echo "<ul id=\"phpinfoList\" class=\"list-group\">";
+            \YAWK\sys::array2lines($data, "apache2handler");
+            \YAWK\sys::array2lines($data, "Apache Environment");
+            \YAWK\sys::array2lines($data, "HTTP Headers Information");
+            \YAWK\sys::array2lines($data, "bcmath");
+            \YAWK\sys::array2lines($data, "bz2");
+            \YAWK\sys::array2lines($data, "calendar");
+            \YAWK\sys::array2lines($data, "Core");
+            \YAWK\sys::array2lines($data, "ctype");
+            \YAWK\sys::array2lines($data, "curl");
+            \YAWK\sys::array2lines($data, "date");
+            \YAWK\sys::array2lines($data, "dom");
+            \YAWK\sys::array2lines($data, "ereg");
+            \YAWK\sys::array2lines($data, "exif");
+            \YAWK\sys::array2lines($data, "fileinfo");
+            \YAWK\sys::array2lines($data, "filter");
+            \YAWK\sys::array2lines($data, "ftp");
+            \YAWK\sys::array2lines($data, "gd");
+            \YAWK\sys::array2lines($data, "gettext");
+            \YAWK\sys::array2lines($data, "hash");
+            \YAWK\sys::array2lines($data, "iconv");
+            \YAWK\sys::array2lines($data, "imagick");
+            \YAWK\sys::array2lines($data, "json");
+            \YAWK\sys::array2lines($data, "libxml");
+            \YAWK\sys::array2lines($data, "mbstring");
+            \YAWK\sys::array2lines($data, "mcrypt");
+            \YAWK\sys::array2lines($data, "mhash");
+            \YAWK\sys::array2lines($data, "mysqli");
+            \YAWK\sys::array2lines($data, "mysqlnd");
+            \YAWK\sys::array2lines($data, "odbc");
+            \YAWK\sys::array2lines($data, "openssl");
+            \YAWK\sys::array2lines($data, "pcre");
+            \YAWK\sys::array2lines($data, "PDO");
+            \YAWK\sys::array2lines($data, "pdo_mysql");
+            \YAWK\sys::array2lines($data, "pdo_sqlite");
+            \YAWK\sys::array2lines($data, "Phar");
+            \YAWK\sys::array2lines($data, "Reflection");
+            \YAWK\sys::array2lines($data, "session");
+            \YAWK\sys::array2lines($data, "SimpleXML");
+            \YAWK\sys::array2lines($data, "SPL");
+            \YAWK\sys::array2lines($data, "standard");
+            \YAWK\sys::array2lines($data, "tokenizer");
+            \YAWK\sys::array2lines($data, "wddx");
+            \YAWK\sys::array2lines($data, "xml");
+            \YAWK\sys::array2lines($data, "xmlreader");
+            \YAWK\sys::array2lines($data, "xmlwriter");
+            \YAWK\sys::array2lines($data, "zip");
+            \YAWK\sys::array2lines($data, "zlib");
+            echo "</ul>";
+        }
+
+        /**
+         * Display a multidimensional array line per line. Expects an array and property
+         * @author      Daniel Retzl <danielretzl@gmail.com>
+         * @version     1.0.0
+         * @link        https://gist.github.com/sbmzhcn/6255314
+         * @return bool
+         */
+        static function multiarray2lines($array, $property)
+        {
+            echo "<h2><small>".strtoupper($property)."</small></h2>";
+            foreach ($array[$property] as $item => $key)
+            {
+                echo "<b>$item</b> = $key[0]<br>";
+            }
+            return true;
+        }
+
+        /**
+         * Read phpinfo() into multidimensional array and return it
+         * @author      Ray Chang
+         * @version     1.0.0
+         * @link        https://gist.github.com/sbmzhcn/6255314
+         * @return array phpinfo() data as multidimensional array
+         */
+        public static function parse_phpinfo() {
+            ob_start(); phpinfo(INFO_MODULES); $s = ob_get_contents(); ob_end_clean();
+            $s = strip_tags($s, '<h2><th><td>');
+            $s = preg_replace('/<th[^>]*>([^<]+)<\/th>/', '<info>\1</info>', $s);
+            $s = preg_replace('/<td[^>]*>([^<]+)<\/td>/', '<info>\1</info>', $s);
+            $t = preg_split('/(<h2[^>]*>[^<]+<\/h2>)/', $s, -1, PREG_SPLIT_DELIM_CAPTURE);
+            $r = array(); $count = count($t);
+            $p1 = '<info>([^<]+)<\/info>';
+            $p2 = '/'.$p1.'\s*'.$p1.'\s*'.$p1.'/';
+            $p3 = '/'.$p1.'\s*'.$p1.'/';
+            for ($i = 1; $i < $count; $i++) {
+                if (preg_match('/<h2[^>]*>([^<]+)<\/h2>/', $t[$i], $matchs)) {
+                    $name = trim($matchs[1]);
+                    $vals = explode("\n", $t[$i + 1]);
+                    foreach ($vals AS $val) {
+                        if (preg_match($p2, $val, $matchs)) { // 3cols
+                            $r[$name][trim($matchs[1])] = array(trim($matchs[2]), trim($matchs[3]));
+                        } elseif (preg_match($p3, $val, $matchs)) { // 2cols
+                            $r[$name][trim($matchs[1])] = trim($matchs[2]);
+                        }
+                    }
+                }
+            }
+            return $r;
+        }
+
+        /**
          * Return current base directory
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
