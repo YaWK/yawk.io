@@ -63,9 +63,6 @@ else
     ================================================== -->
     <!-- Boostrap jQuery Plugins -->
     <script src="system/engines/bootstrap/dist/js/bootstrap.min.js"></script>
-
-    <!-- JS <noscript> tag -->
-    <!-- <noscript><br><br><h2 style="text-align: center;">This page requires a modern browser with javascript. <br><small>Please activate Javascript or use a better browser.</small></h2></noscript> -->
 <!-- gfonts -->
 <?php
 // include additional html header stuff & local meta tags
