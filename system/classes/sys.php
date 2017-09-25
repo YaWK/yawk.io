@@ -28,7 +28,7 @@ namespace YAWK {
         static function array2lines($array, $property)
         {
 
-            echo "<h4 class=\"settingsTitle\">$property</h4>";
+            echo "<h2 class=\"myClass\">$property</h2>";
             foreach ($array[$property] as $item => $key)
             {
                 $linkProperty = str_replace(" ", "+", $item);
@@ -41,7 +41,6 @@ namespace YAWK {
                     echo "<li class=\"list-group-item\"><a href=\"https://www.google.at/search?q=php.net+$linkProperty\" title=\"google this: $item setting\" target=\"_blank\"><b>$item</b> = $key</a></li>";
                 }
             }
-            return true;
         }
 
         static function drawPhpInfo($lang)
@@ -65,10 +64,11 @@ namespace YAWK {
                         a = li[i].getElementsByTagName(\"a\")[0];
                         if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
                             li[i].style.display = \"\";
-                            $('.settingsTitle').show();
+                            $('.myClass').show();
                         } else {
                             li[i].style.display = \"none\";
-                            $('.settingsTitle').hide();
+                            $('.myClass').hide();
+    
                         }
                     }
                 }
@@ -124,6 +124,9 @@ namespace YAWK {
             \YAWK\sys::array2lines($data, "zip");
             \YAWK\sys::array2lines($data, "zlib");
             echo "</ul>";
+            /*
+            echo "</tbody></table>";
+            */
         }
 
         /**
