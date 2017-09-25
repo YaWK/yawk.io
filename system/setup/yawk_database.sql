@@ -2249,7 +2249,13 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('plyrDisableContextMenu', 'true', 34, 1, 3, 'LABEL_PLYR_DISABLE_CONTEXT_MENU', '', '', '', 'DESC_PLYR_DISABLE_CONTEXT_MENU', 'form-control', 'select', '', 'true,True:false,False', 169),
 ('plyrHideControls', 'true', 34, 1, 3, 'LABEL_PLYR_HIDE_CONTROLS', '', '', '', 'DESC_PLYR_HIDE_CONTROLS', 'form-control', 'select', '', 'true,True:false,False', 170),
 ('plyrShowPosterOnEnd', 'true', 34, 1, 3, 'LABEL_PLYR_SHOW_POSTER_ON_END', '', '', '', 'DESC_PLYR_SHOW_POSTER_ON_END', 'form-control', 'select', '', 'true,True:false,False', 171),
-('responsiveAudioJS', '//vws.responsivevoice.com/v/e?key=S2mbnNTl', 35, 1, 1, 'LABEL_RESP_VOICE', '', '', '', 'DESC_RESP_VOICE', 'form-control', 'input', 'PH_RESP_VOICE', '', 172);
+('responsiveAudioJS', '//vws.responsivevoice.com/v/e?key=S2mbnNTl', 35, 1, 1, 'LABEL_RESP_VOICE', '', '', '', 'DESC_RESP_VOICE', 'form-control', 'input', 'PH_RESP_VOICE', '', 172),
+('fuckAdBlockTitle', 'AdBlock detected...', 36, 1, 1, 'LABEL_ADBLOCK_TITLE', '', '', '', 'DESC_ADBLOCK_TITLE', 'form-control', 'input', 'PH_ADBLOCK_TITLE', '', 173),
+('fuckAdBlockText', 'It seems that you are using AdBlock. We truely understand this. But please, be fair and disable Adblock to support our project. It is on your own to help us. Thank you.', 36, 1, 2, 'LABEL_ADBLOCK_TEXT', '', '', '', 'DESC_ADBLOCK_TEXT', 'form-control', 'textarea', 'PH_ADBLOCK_TEXT', '', 174),
+('fuckAdBlockLevel', 'low', 36, 1, 0, 'LABEL_ADBLOCK_LEVEL', '', '', '', 'DESC_ADBLOCK_LEVEL', 'form-control', 'select', '', 'low,Low Level:high,High Level', 175),
+('fuckAdBlockLowBtnText', 'OK, got it!', 36, 1, 4, 'LABEL_ADBLOCK_LOWBTNTEXT', '', '', '', 'DESC_ADBLOCK_LOWBTNTEXT', 'form-control', 'input', 'PH_ADBLOCK_LOWBTNTEXT', '', 176),
+('fuckAdBlockHighBtnText', 'Please disable your AdBlocker and click here.', 36, 1, 5, 'LABEL_ADBLOCK_HIGHBTNTEXT', '', '', '', 'DESC_ADBLOCK_HIGHBTNTEXT', 'form-control', 'input', 'PH_ADBLOCK_HIGHBTNTEXT', '', 177),
+('fuckAdBlockBtnClass', 'btn btn-danger', 36, 1, 6, 'LABEL_ADBLOCK_BTNCLASS', '', '', '', 'DESC_ADBLOCK_BTNCLASS', 'form-control', 'input', 'PH_ADBLOCK_BTNCLASS', '', 178);
 
 -- --------------------------------------------------------
 
@@ -2329,7 +2335,8 @@ INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`)
 (32, 1, 'jPlayer Audio', 'jplayer', 'jPlayer Audio Player with playlist feature'),
 (33, 1, 'jPlayer Video', 'jplayer_video', 'jPlayer Video Player with playlist feature'),
 (34, 1, 'Plyr HTML5 Player', 'plyr', 'A simple, accessible HTML5 media player by @sam_potts'),
-(35, 1, 'Responsive Voice JS', 'responsiveVoiceJS', 'Instant Text-To-Speech with Voice Consistency Across Devices');
+(35, 1, 'Responsive Voice JS', 'responsiveVoiceJS', 'Instant Text-To-Speech with Voice Consistency Across Devices'),
+(36, 1, 'AdBlock Blocker', 'fuckadblock', 'Detect and block AdBlocker');
 
 --
 -- Indizes der exportierten Tabellen
