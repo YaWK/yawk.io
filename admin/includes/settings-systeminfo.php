@@ -58,6 +58,11 @@ echo"</section><!-- Main content -->
             </div>
             <div class="box-body">
                 <?php echo $lang['PHP_HELP']; ?>
+
+                <br><br>
+                    <i class="fa fa-lightbulb-o"></i>
+                    <?php echo $lang['PHP_TIP']; ?>
+
             </div>
         </div>
     </div>
