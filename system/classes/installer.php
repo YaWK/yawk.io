@@ -320,7 +320,7 @@ namespace YAWK {
                                 <input type=\"text\" class=\"form-control\" name=\"DB_USER\" id=\"DB_USER\" placeholder=\"$setup[DB_USER]\">
                                     
                                 <label for=\"DB_PASS\">$lang[DB_PASS] <small><i>$lang[DB_PASS_SUBTEXT]</i></small></label>
-                                <input type=\"text\" class=\"form-control\" name=\"DB_PASS\" id=\"DB_PASS\" placeholder=\"$setup[DB_PASS]\"><br>";
+                                <input type=\"password\" class=\"form-control\" name=\"DB_PASS\" id=\"DB_PASS\" placeholder=\"$setup[DB_PASS]\"><br>";
 
 
             if ($this->serverRequirements === "true")
