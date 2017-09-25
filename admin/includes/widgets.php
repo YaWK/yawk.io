@@ -18,6 +18,10 @@ if (isset($_GET['add']) && ($_GET['add'] === "1"))
     }
 }
 
+ if (!isset($widget))
+ {   // create new widget obj
+     $widget = new YAWK\widget();
+ }
 // COPY WIDGET
 if(isset($_GET['copy']) && ($_GET['copy'] === "true")) {
      if ($widget->copy($db, $_GET['widget']))
@@ -33,10 +37,6 @@ if(isset($_GET['copy']) && ($_GET['copy'] === "true")) {
 // DELETE WIDGET
 if (isset($_GET['del']) && ($_GET['del'] === "1"))
 {
-  if (!isset($widget))
-  {   // create new widget obj
-      $widget = new YAWK\widget();
-  }
   if (isset($_GET['widget']) && (isset($_GET['delete']) && ($_GET['delete'] == "true")))
   {   // delete widget
     if($widget->delete($db, $_GET['widget']))
