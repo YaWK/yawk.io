@@ -60,8 +60,8 @@ echo"</section><!-- Main content -->
                 <?php echo $lang['PHP_HELP']; ?>
 
                 <br><br>
-                    <i class="fa fa-lightbulb-o"></i>
-                    <?php echo $lang['PHP_TIP']; ?>
+                <i class="fa fa-lightbulb-o"></i>
+                <i><?php echo $lang['PHP_TIP']; ?></i>
 
             </div>
         </div>
