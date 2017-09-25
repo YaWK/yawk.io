@@ -677,7 +677,45 @@ namespace YAWK {
                 <!-- files -->
                 <li ";echo (isset($_GET['page']) && $_GET['page'] == 'filemanager') ? "class='active'" : ""; echo">
                     <a href=\"index.php?page=filemanager\" title=\"Filemanager\"><i class=\"fa fa-folder-open-o\"></i> <span>$lang[FILEMANAGER]</span></a>
-                </li>
+                </li>";
+
+            if (strpos($_GET['page'], 'template') !== false) {
+                $activeClass = " class=\"active\"";
+            }
+            else {
+                $activeClass = '';
+            }
+
+            echo "<li$activeClass>
+                  <a href=\"#\">
+                    <i class=\"fa fa-paint-brush\"></i>
+                    <span>$lang[TPL]</span>
+                    <span class=\"pull-right-container\">
+                      <i class=\"fa fa-angle-left pull-right\"></i>
+                    </span>
+                  </a>
+                    <ul class=\"treeview-menu\">
+                        <li ";echo (isset($_GET['page']) && $_GET['page'] == 'template-overview') ? "class=\"active\"" : ""; echo">
+                            <a href=\"index.php?page=template-overview\"><i class=\"fa fa-home\"></i> $lang[OVERVIEW]</a>
+                        </li>
+                        <li ";echo (isset($_GET['page']) && $_GET['page'] == 'template-positions') ? "class=\"active\"" : ""; echo">
+                            <a href=\"index.php?page=template-positions\"><i class=\"fa fa-cube\"></i> $lang[POSITIONS]</a>
+                        </li>
+                        <li ";echo (isset($_GET['page']) && $_GET['page'] == 'template-theme') ? "class=\"active\"" : ""; echo">
+                            <a href=\"index.php?page=template-theme\"><i class=\"fa fa-tint\"></i> $lang[THEME]</a>
+                        </li>
+                        <li ";echo (isset($_GET['page']) && $_GET['page'] == 'template-redesign') ? "class=\"active\"" : ""; echo">
+                            <a href=\"index.php?page=template-redesign\"><i class=\"fa fa-paint-brush\"></i> $lang[DESIGN]</a>
+                        </li>
+                        <li ";echo (isset($_GET['page']) && $_GET['page'] == 'template-customcss') ? "class=\"active\"" : ""; echo">
+                            <a href=\"index.php?page=template-customcss\"><i class=\"fa fa-css3\"></i> $lang[CUSTOM_CSS]</a>
+                        </li>
+                        <li ";echo (isset($_GET['page']) && $_GET['page'] == 'template-settings') ? "class=\"active\"" : ""; echo">
+                            <a href=\"index.php?page=template-settings\"><i class=\"fa fa-wrench\"></i> $lang[SETTINGS]</a>
+                        </li>
+                    </ul>
+                   </li>
+                
                 <!-- template -->
                 <li ";echo (isset($_GET['page']) && $_GET['page'] == 'template') ? "class='active'" : ""; echo">
                     <a href=\"index.php?page=template&id=";echo \YAWK\settings::getSetting($db, "selectedTemplate"); echo"\"><i class=\"fa fa-paint-brush\"></i> <span>$lang[TPL]</span></a>
