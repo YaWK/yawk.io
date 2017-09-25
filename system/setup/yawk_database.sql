@@ -2255,7 +2255,8 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('fuckAdBlockLevel', 'low', 36, 1, 0, 'LABEL_ADBLOCK_LEVEL', '', '', '', 'DESC_ADBLOCK_LEVEL', 'form-control', 'select', '', 'low,Low Level:high,High Level', 175),
 ('fuckAdBlockLowBtnText', 'OK, got it!', 36, 1, 4, 'LABEL_ADBLOCK_LOWBTNTEXT', '', '', '', 'DESC_ADBLOCK_LOWBTNTEXT', 'form-control', 'input', 'PH_ADBLOCK_LOWBTNTEXT', '', 176),
 ('fuckAdBlockHighBtnText', 'Please disable your AdBlocker and click here.', 36, 1, 5, 'LABEL_ADBLOCK_HIGHBTNTEXT', '', '', '', 'DESC_ADBLOCK_HIGHBTNTEXT', 'form-control', 'input', 'PH_ADBLOCK_HIGHBTNTEXT', '', 177),
-('fuckAdBlockBtnClass', 'btn btn-danger', 36, 1, 6, 'LABEL_ADBLOCK_BTNCLASS', '', '', '', 'DESC_ADBLOCK_BTNCLASS', 'form-control', 'input', 'PH_ADBLOCK_BTNCLASS', '', 178);
+('fuckAdBlockBtnClass', 'btn btn-danger', 36, 1, 6, 'LABEL_ADBLOCK_BTNCLASS', '', '', '', 'DESC_ADBLOCK_BTNCLASS', 'form-control', 'input', 'PH_ADBLOCK_BTNCLASS', '', 178),
+('fuckAdBlockLoadingType', 'onPageLoad', 36, 1, 7, 'LABEL_ADBLOCK_LOADINGTYPE', '', '', '', 'DESC_ADBLOCK_LOADINGTYPE', 'form-control', 'select', '', 'onPageLoad,on Page Load:10,after 10 Seconds:30,after 30 seconds:60,after 60 Seconds:120,after 2 Minutes:300,after 5 Minutes:600,every 10 Minutes:1800,every 30 Minutes:3600,every Hour,', 179);
 
 -- --------------------------------------------------------
 
