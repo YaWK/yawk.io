@@ -125,34 +125,31 @@ if (!isset($user)) { $user = new \YAWK\user(); }
 
 </script>
 
-<h3><?php echo "$lang[THEME] <small>$lang[SET_COLORS]</small>"; ?></h3>
-<div class="row small" style="cursor:pointer;">
-    <div class="col-md-1">
-        <div id="1-baseColor" class="colorpatch" style="width: 100px; height: 100px;"></div>
-        <div id="1-color1" style="width: 100px; height: 100px;"></div>
-        <div id="1-color2" style="width: 100px; height: 100px;"></div>
-        <div id="1-color3" style="width: 100px; height: 100px;"></div>
-        <div id="1-color4" style="width: 100px; height: 100px;"></div>
-        <div id="1-contrast" style="width: 100px; height: 100px;"></div>
-    </div>
-    <div class="col-md-1">
-        <div id="2-baseColor" style="width: 100px; height: 100px;"></div>
-        <div id="2-color1" style="width: 100px; height: 100px;"></div>
-        <div id="2-color2" style="width: 100px; height: 100px;"></div>
-        <div id="2-color3" style="width: 100px; height: 100px;"></div>
-        <div id="2-color4" style="width: 100px; height: 100px;"></div>
-        <div id="2-contrast" style="width: 100px; height: 100px;"></div>
-    </div>
-    <div class="col-md-1">
-        <div id="3-baseColor" style="width: 100px; height: 100px;"></div>
-        <div id="3-color1" style="width: 100px; height: 100px;"></div>
-        <div id="3-color2" style="width: 100px; height: 100px;"></div>
-        <div id="3-color3" style="width: 100px; height: 100px;"></div>
-        <div id="3-color4" style="width: 100px; height: 100px;"></div>
-        <div id="3-contrast" style="width: 100px; height: 100px;"></div>
+<?php
+// TEMPLATE WRAPPER - HEADER & breadcrumbs
+echo "
+    <!-- Content Wrapper. Contains page content -->
+    <div class=\"content-wrapper\" id=\"content-FX\">
+    <!-- Content Header (Page header) -->
+    <section class=\"content-header\">";
+// draw Title on top
+echo \YAWK\backend::getTitle($lang['TPL'], $lang['SET_COLORS']);
+echo \YAWK\backend::getTemplateBreadcrumbs($lang);
+echo"</section><!-- Main content -->
+    <section class=\"content\">";
+/* page content start here */
+?>
+<!-- title header -->
+<div class="box">
+    <div class="box-body">
+        <div class="col-md-10">
+            <?php echo "<h4><i class=\"fa fa-tint\"></i> &nbsp;$lang[THEME]  <small>$lang[SET_COLORS]</small></h4>"; ?>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-success pull-right" id="savebutton" name="save" style="margin-top:2px;"><i class="fa fa-check"></i>&nbsp;&nbsp;<?php echo $lang['DESIGN_SAVE']; ?></button>
+        </div>
     </div>
 </div>
-<hr><hr>
 
 <div class="row animated fadeIn">
     <!-- col 1 -->
