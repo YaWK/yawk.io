@@ -25,6 +25,33 @@ if (!isset($user)) { $user = new \YAWK\user(); }
 // In theory, thereby every user can have a different frontend template activated.
 ?>
 
+<?php
+// TEMPLATE WRAPPER - HEADER & breadcrumbs
+echo "
+    <!-- Content Wrapper. Contains page content -->
+    <div class=\"content-wrapper\" id=\"content-FX\">
+    <!-- Content Header (Page header) -->
+    <section class=\"content-header\">";
+// draw Title on top
+echo \YAWK\backend::getTitle($lang['TPL'], $lang['SETTINGS']);
+echo \YAWK\backend::getTemplateBreadcrumbs($lang);
+echo"</section><!-- Main content -->
+    <section class=\"content\">";
+/* page content start here */
+?>
+<form id="template-edit-form" action="index.php?page=template&action=template-settings&id=<?php echo $template->id; ?>" method="POST">
+    <!-- title header -->
+    <!-- REDESIGN -->
+    <div class="box">
+        <div class="box-body">
+            <div class="col-md-10">
+                <?php echo "<h4><i class=\"fa fa-tint\"></i> &nbsp;$lang[SETTINGS] <small>$lang[TPL_SETTINGS_SUBTEXT]</small></h4>"; ?>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-success pull-right" id="savebutton" name="save" style="margin-top:2px;"><i class="fa fa-check"></i>&nbsp;&nbsp;<?php echo $lang['DESIGN_SAVE']; ?></button>
+            </div>
+        </div>
+    </div>
 <!-- SETTINGS -->
 <h3><?php echo "$lang[SETTINGS] <small>$lang[TPL_SETTINGS_SUBTEXT]</small>"; ?></h3>
 <div class="row animated fadeIn">
