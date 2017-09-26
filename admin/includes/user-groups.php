@@ -145,12 +145,12 @@ if(isset($_GET['backend']) && (isset($_GET['gid'])))
                 </td>
                 <td><input type=\"text\" name=\"groupname[]\" value=\"".$row['value']."\" class=\"form-control\"></a></td>
                 <td>
-                  <a title=\"toggle&nbsp;status\" href=\"index.php?page=user-groups&backend=".$row['backend_allowed']."&gid=".$row['id']."\">
+                  <a title=\"$lang[TOGGLE_STATUS]\" href=\"index.php?page=user-groups&backend=".$row['backend_allowed']."&gid=".$row['id']."\">
                   <span class=\"label label-$backendhtml\">$backend_allowedtext</span></a>&nbsp;
                 </td>
 
                 <td>
-                  <a title=\"toggle&nbsp;status\" href=\"index.php?page=user-groups&signup=".$row['signup_allowed']."&gid=".$row['id']."\">
+                  <a title=\"$lang[TOGGLE_STATUS]\" href=\"index.php?page=user-groups&signup=".$row['signup_allowed']."&gid=".$row['id']."\">
                   <span class=\"label label-$signuphtml\">$signuptext</span></a>&nbsp;</td>
 
                 <td class=\"text-center\"><p class=\"text-$row[color]\">$row[color]</p></td>
