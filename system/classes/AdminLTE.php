@@ -710,6 +710,9 @@ namespace YAWK {
                         <li ";echo (isset($_GET['page']) && $_GET['page'] == 'template-customcss') ? "class=\"active\"" : ""; echo">
                             <a href=\"index.php?page=template-customcss\"><i class=\"fa fa-css3\"></i> $lang[CUSTOM_CSS]</a>
                         </li>
+                        <li ";echo (isset($_GET['page']) && $_GET['page'] == 'template-preview') ? "class=\"active\"" : ""; echo">
+                            <a href=\"index.php?page=template-preview\"><i class=\"fa fa-eye\"></i> $lang[PREVIEW]</a>
+                        </li>
                         <li ";echo (isset($_GET['page']) && $_GET['page'] == 'template-settings') ? "class=\"active\"" : ""; echo">
                             <a href=\"index.php?page=template-settings\"><i class=\"fa fa-wrench\"></i> $lang[SETTINGS]</a>
                         </li>
