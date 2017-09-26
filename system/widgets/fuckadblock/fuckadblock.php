@@ -75,6 +75,8 @@ if (isset($_GET['widgetID'])) {
         $footerBtnCode = '<a href="'.$link.'" class="'.$btnClass.'" style="color:#fff; text-shadow: none;">'.$highLevelBtnText.'</a>';
         // strong toughness: no ability to close window, so no header button.
         $headerBtnCode = '';
+        // force loadingType on every pageLoad
+        $loadingType = "onPageLoad";
     }
     // low generates a more fair-use user-friendy de-clickable info message box.
     if ($level === "low")
