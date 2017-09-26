@@ -14,11 +14,32 @@ $previewButton = "";
 // $templateSettings = \YAWK\template::getAllSettingsIntoArray($db, $user);
 
 // check template wrapper
-\YAWK\template::checkWrapper($lang, $lang['TPL'], $lang['OVERVIEW']);
+// \YAWK\template::checkWrapper($lang, $lang['TPL'], $lang['OVERVIEW']);
 ?>
+<?php
+// TEMPLATE WRAPPER - HEADER & breadcrumbs
+echo "
+    <!-- Content Wrapper. Contains page content -->
+    <div class=\"content-wrapper\" id=\"content-FX\">
+    <!-- Content Header (Page header) -->
+    <section class=\"content-header\">";
+// draw Title on top
+echo \YAWK\backend::getTitle($lang['TPL'], $lang['OVERVIEW']);
+echo \YAWK\backend::getTemplateBreadcrumbs($lang);
+echo"</section><!-- Main content -->
+    <section class=\"content\">";
+/* page content start here */
+?>
+<!-- title header -->
+<div class="box">
+    <div class="box-body">
+        <div class="col-md-12">
+            <?php echo "<h4><i class=\"fa fa-home\"></i> &nbsp;$lang[OVERVIEW] <small>$template->name</small></h4>"; ?>
+        </div>
+    </div>
+</div>
 
 <!-- OVERVIEW -->
-<h3><?php echo "$lang[OVERVIEW] <small>$lang[TPL] $lang[SUMMARY]</small>"; ?></h3>
 <!-- list TEMPLATE HOME PAGE (DETAILS) -->
 <div class="row animated fadeIn">
     <div class="col-md-6">
@@ -114,6 +135,7 @@ $previewButton = "";
 
                 <dt>&nbsp;</dt>
                 <dd>&nbsp;</dd>
+
                 <dt><?php echo $lang['TOOLS']; ?></dt>
                 <dd>
                     <b><?php echo $lang['YAWK_SLOGAN_TOGETHER']; ?><br>
@@ -143,12 +165,6 @@ $previewButton = "";
         </div>
     </div>
     <div class="col-md-6">
-
-        <!-- website preview iframe
-        <div class="embed-responsive embed-responsive-4by3">
-            <iframe id="preview" class="embed-responsive-item" src="../index.php"></iframe>
-        </div>
-        -->
-
+        ...
     </div>
 </div>
