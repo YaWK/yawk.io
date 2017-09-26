@@ -719,10 +719,6 @@ namespace YAWK {
                     </ul>
                    </li>
                 
-                <!-- template -->
-                <li ";echo (isset($_GET['page']) && $_GET['page'] == 'template') ? "class='active'" : ""; echo">
-                    <a href=\"index.php?page=template&id=";echo \YAWK\settings::getSetting($db, "selectedTemplate"); echo"\"><i class=\"fa fa-paint-brush\"></i> <span>$lang[TPL]</span></a>
-                </li>
                 <!-- themes -->
                 <li ";echo (isset($_GET['page']) && $_GET['page'] == 'template-manage') ? "class='active'" : ""; echo">
                     <a href=\"index.php?page=template-manage\"><i class=\"fa fa-photo\"></i> <span>$lang[THEMES]</span></a>
