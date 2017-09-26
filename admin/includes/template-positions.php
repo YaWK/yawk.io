@@ -119,19 +119,32 @@ $previewButton = "";
 // load all template settings into array
 $templateSettings = \YAWK\template::getAllSettingsIntoArray($db, $user);
 // check template wrapper
-\YAWK\template::checkWrapper($lang, $lang['POSITIONS'], $lang['POSITIONS']);
+// \YAWK\template::checkWrapper($lang, $lang['POSITIONS'], $lang['POSITIONS']);
 ?>
-
+<?php
+// TEMPLATE WRAPPER - HEADER & breadcrumbs
+echo "
+    <!-- Content Wrapper. Contains page content -->
+    <div class=\"content-wrapper\" id=\"content-FX\">
+    <!-- Content Header (Page header) -->
+    <section class=\"content-header\">";
+// draw Title on top
+echo \YAWK\backend::getTitle($lang['TPL'], $lang['POSITIONS']);
+echo \YAWK\backend::getTemplateBreadcrumbs($lang);
+echo"</section><!-- Main content -->
+    <section class=\"content\">";
+/* page content start here */
+?>
 <form id="template-edit-form" action="index.php?page=template&action=template-positions&id=<?php echo $template->id; ?>" method="POST">
-<!-- POSITIONS -->
-<div class="row animated fadeIn">
-    <div class="col-md-6">
-        <h3><?php echo "$lang[POSITIONS]"; ?> <small><?php echo "$lang[TPL_POSITION_SETTINGS]"; ?></small></h3>
-    </div>
-    <div class="col-md-6 text-right">
-        <button type="submit" id="savebutton" name="save" class="btn btn-success" style="margin-top:10px;">
-            <i id="savebuttonIcon" class="fa fa-check"></i> &nbsp;<?php print $lang['DESIGN_SAVE']; ?>
-        </button>
+<!-- title header -->
+<div class="box">
+    <div class="box-body">
+        <div class="col-md-10">
+            <?php echo "<h4><i class=\"fa fa-cube\"></i> &nbsp;$lang[POSITIONS]  <small>$lang[TPL_POSITION_SETTINGS]</small></h4>"; ?>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-success pull-right" id="savebutton" name="save" style="margin-top:2px;"><i class="fa fa-check"></i>&nbsp;&nbsp;<?php echo $lang['DESIGN_SAVE']; ?></button>
+        </div>
     </div>
 </div>
     <!-- list POSITION SETTINGS -->

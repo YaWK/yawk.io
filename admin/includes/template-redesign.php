@@ -126,59 +126,72 @@ $getID = \YAWK\settings::getSetting($db, "selectedTemplate");
 $template->loadProperties($db, $getID);
 // previewButton is an empty string - why? this should be checked
 $previewButton = "";
-
 // load all template settings into array
 $templateSettings = \YAWK\template::getAllSettingsIntoArray($db, $user);
-
-// check template wrapper
-\YAWK\template::checkWrapper($lang, $lang['POSITIONS'], $lang['POSITIONS']);
 ?>
-
+<?php
+// TEMPLATE WRAPPER - HEADER & breadcrumbs
+echo "
+    <!-- Content Wrapper. Contains page content -->
+    <div class=\"content-wrapper\" id=\"content-FX\">
+    <!-- Content Header (Page header) -->
+    <section class=\"content-header\">";
+// draw Title on top
+echo \YAWK\backend::getTitle($lang['TPL'], $lang['DESIGN']);
+echo \YAWK\backend::getTemplateBreadcrumbs($lang);
+echo"</section><!-- Main content -->
+    <section class=\"content\">";
+/* page content start here */
+?>
 <form id="template-edit-form" action="index.php?page=template&action=template-redesign&id=<?php echo $template->id; ?>" method="POST">
+<!-- title header -->
     <!-- REDESIGN -->
-    <div class="row animated fadeIn">
-        <div class="col-md-6">
-            <h3><?php echo "$lang[DESIGN]"; ?> <small><?php echo "$lang[DESIGN_DETAILS]"; ?></small></h3>
+<div class="box">
+    <div class="box-body">
+        <div class="col-md-10">
+            <?php echo "<h4><i class=\"fa fa-tint\"></i> &nbsp;$lang[DESIGN]  <small>$lang[DESIGN_DETAILS]</small></h4>"; ?>
         </div>
-        <div class="col-md-6 text-right">
-            <button type="submit" id="savebutton" name="save" class="btn btn-success" style="margin-top:10px;">
-                <i id="savebuttonIcon" class="fa fa-check"></i> &nbsp;<?php print $lang['DESIGN_SAVE']; ?>
-            </button>
+        <div class="col-md-2">
+            <button class="btn btn-success pull-right" id="savebutton" name="save" style="margin-top:2px;"><i class="fa fa-check"></i>&nbsp;&nbsp;<?php echo $lang['DESIGN_SAVE']; ?></button>
         </div>
     </div>
+</div>
 
-<!-- list POSITION SETTINGS -->
-<!-- MENU -->
-<!-- Nav tabs -->
-<ul class="nav nav-tabs" id="undertabs">
-    <li class="active">
-        <a href="#fonts" aria-controls="fonts" data-toggle="tab"><i class="fa fa-font"></i>
-        &nbsp; <?php echo $lang['TYPOGRAPHY']; ?></a>
-    </li>
+<div class="box">
+    <div class="box-body">
 
-    <li>
-        <a href="#menu" aria-controls="menu" data-toggle="tab"><i class="fa fa-bars"></i>
-        &nbsp; <?php echo $lang['MENU']; ?></a>
-    </li>
-    <li>
-        <a href="#bootstrap" aria-controls="bootstrap" data-toggle="tab"><i class="fa fa-sticky-note-o"></i>
-        &nbsp; <?php echo $lang['BOOTSTRAP3']; ?></a>
-    </li>
-    <li>
-        <a href="#buttons" aria-controls="buttons" role="tab" data-toggle="tab"><i class="fa fa-toggle-on"></i>
-        &nbsp; <?php echo $lang['FORMS']; ?></a>
-    </li>
-    <li>
-        <a href="#images" aria-controls="images" role="tab" data-toggle="tab"><i class="fa fa-picture-o"></i>
-        &nbsp; <?php echo $lang['IMAGES']; ?></a>
-    </li>
-    <!-- effects - disabled for now
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" id="undertabs">
+            <li class="active">
+                <a href="#fonts" aria-controls="fonts" data-toggle="tab"><i class="fa fa-font"></i>
+                    &nbsp; <?php echo $lang['TYPOGRAPHY']; ?></a>
+            </li>
+
+            <li>
+                <a href="#menu" aria-controls="menu" data-toggle="tab"><i class="fa fa-bars"></i>
+                    &nbsp; <?php echo $lang['MENU']; ?></a>
+            </li>
+            <li>
+                <a href="#bootstrap" aria-controls="bootstrap" data-toggle="tab"><i class="fa fa-sticky-note-o"></i>
+                    &nbsp; <?php echo $lang['BOOTSTRAP3']; ?></a>
+            </li>
+            <li>
+                <a href="#buttons" aria-controls="buttons" role="tab" data-toggle="tab"><i class="fa fa-toggle-on"></i>
+                    &nbsp; <?php echo $lang['FORMS']; ?></a>
+            </li>
+            <li>
+                <a href="#images" aria-controls="images" role="tab" data-toggle="tab"><i class="fa fa-picture-o"></i>
+                    &nbsp; <?php echo $lang['IMAGES']; ?></a>
+            </li>
+            <!-- effects - disabled for now
         <li role="presentation">
             <a href="#effects" aria-controls="effects" role="tab" data-toggle="tab"><i class="fa fa-paper-plane-o"></i>
                 &nbsp; <?php // echo $lang['EFFECTS']; ?></a>
         </li>
         -->
-</ul>
+        </ul>
+
+
 <!-- FONTS -->
 <div class="tab-content">
 <div class="tab-pane fade in active" id="fonts">
@@ -761,5 +774,9 @@ $templateSettings = \YAWK\template::getAllSettingsIntoArray($db, $user);
         </div>
     </div>
 </div>
+</div>
+
+
+    </div>
 </div>
 </form>
