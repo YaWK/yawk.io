@@ -2567,7 +2567,7 @@ namespace YAWK {
             {   // if no templateID is set, take current template ID from settings db
                 $templateID = settings::getSetting($db, "selectedTemplate");
             }
-            $array = '';
+            $array = array();
             $res = $db->query("SELECT property, value, longValue
                         	FROM {template_settings}
                             WHERE templateID = $templateID");
@@ -2621,6 +2621,8 @@ namespace YAWK {
                 }
             return null;
         }
+
+
 
 
     } // ./class template
