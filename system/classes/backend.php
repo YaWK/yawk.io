@@ -27,6 +27,11 @@ namespace YAWK {
     class backend
     {
 
+        /**
+         * Return breadcrumbs for settings pages
+         * @param array $lang Language Array
+         * @return string html code
+         */
         static function getSettingsBreadcrumbs($lang)
         {
             return "<ol class=\"breadcrumb\">
@@ -37,6 +42,24 @@ namespace YAWK {
             <li><i class=\"fa fa-android\"></i> &nbsp;<a href=\"index.php?page=settings-robots\" title=\"$lang[EDIT]\"> $lang[ROBOTS_TXT]</a></li>
             <li><i class=\"fa fa-database\"></i> &nbsp;<a href=\"index.php?page=settings-database\" title=\"$lang[EDIT]\"> $lang[DATABASE]</a></li>
             <li><i class=\"fa fa-info-circle\"></i> &nbsp;<a href=\"index.php?page=settings-systeminfo\" title=\"$lang[EDIT]\"> $lang[SYSTEM] $lang[INFO]</a></li>
+        </ol></section>";
+        }
+
+        /**
+         * Return breadcrumbs for template pages
+         * @param array $lang Language Array
+         * @return string html code
+         */
+        static function getTemplateBreadcrumbs($lang)
+        {
+            return "<ol class=\"breadcrumb\">
+            <li><i class=\"fa fa-home\"></i> &nbsp;<a href=\"index.php?page=template-overview\" title=\"$lang[EDIT]\"> $lang[OVERVIEW]</a></li>
+            <li><i class=\"fa fa-cube\"></i> &nbsp;<a href=\"index.php?page=template-positions\" title=\"$lang[EDIT]\"> $lang[POSITIONS]</a></li>
+            <li><i class=\"fa fa-tint\"></i> &nbsp;<a href=\"index.php?page=template-theme\" title=\"$lang[EDIT]\"> $lang[THEME]</a></li>
+            <li><i class=\"fa fa-paint-brush\"></i> &nbsp;<a href=\"index.php?page=template-redesign\" title=\"$lang[EDIT]\"> $lang[DESIGN]</a></li>
+            <li><i class=\"fa fa-css3\"></i> &nbsp;<a href=\"index.php?page=template-customcss\" title=\"$lang[EDIT]\"> $lang[CUSTOM_CSS]</a></li>
+            <li><i class=\"fa fa-eye\"></i> &nbsp;<a href=\"index.php?page=template-preview\" title=\"$lang[WATCH]\"> $lang[PREVIEW]</a></li>
+            <li><i class=\"fa fa-wrench\"></i> &nbsp;<a href=\"index.php?page=template-settings\" title=\"$lang[EDIT]\"> $lang[SETTINGS]</a></li>
         </ol></section>";
         }
 
