@@ -6,6 +6,7 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 // draw Title on top
+$host = \YAWK\sys::getHost($db);
 echo \YAWK\backend::getTitle($lang['TPL'], $lang['PREVIEW']);
 echo \YAWK\backend::getTemplateBreadcrumbs($lang);
 echo"</section><!-- Main content -->
@@ -16,7 +17,7 @@ echo"</section><!-- Main content -->
 <div class="box">
     <div class="box-body">
         <div class="col-md-10">
-            <?php echo "<h4><i class=\"fa fa-home\"></i> &nbsp;$lang[TEMPLATE] <small>$lang[PREVIEW]</small></h4>"; ?>
+            <?php echo "<h4><i class=\"fa fa-eye\"></i> &nbsp;$lang[PREVIEW] $lang[OF] <small>$host</small></h4>"; ?>
         </div>
         <div class="col-md-2">
             <button class="btn btn-success pull-right" id="save" name="save" style="margin-top:2px;"><i class="fa fa-check"></i>&nbsp;&nbsp;<?php echo $lang['SAVE_SETTINGS']; ?></button>
