@@ -160,7 +160,7 @@ echo"</section><!-- Main content -->
     <section class=\"content\">";
 /* page content start here */
 ?>
-<form id="template-edit-form" action="index.php?page=template-positions&action=template-positions&id=<?php echo $getID; ?>" method="POST">
+<form id="template-edit-form" action="index.php?page=template-save&action=template-positions&id=<?php echo $getID; ?>" method="POST">
 <!-- title header -->
 <div class="box">
     <div class="box-body">
