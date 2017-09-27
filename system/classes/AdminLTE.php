@@ -714,7 +714,7 @@ namespace YAWK {
                             <a href=\"index.php?page=template-preview\"><i class=\"fa fa-eye\"></i> $lang[PREVIEW]</a>
                         </li>
                         <li ";echo (isset($_GET['page']) && $_GET['page'] == 'template-setup') ? "class=\"active\"" : ""; echo">
-                            <a href=\"index.php?page=template-setup\"><i class=\"fa fa-wrench\"></i> $lang[SETTINGS]</a>
+                            <a href=\"index.php?page=template-setup\"><i class=\"fa fa-gears\"></i> $lang[SETTINGS]</a>
                         </li>
                     </ul>
                    </li>

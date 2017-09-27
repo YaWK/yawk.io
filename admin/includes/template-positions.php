@@ -1,3 +1,45 @@
+<?php
+// new template object if not exists
+if (!isset($template)) { $template = new \YAWK\template(); }
+
+// check if any action is requested
+if (isset($_POST['save']) && (isset($_GET['action']) && (isset($_GET['id']))))
+{
+    if (isset($_POST) && (!empty($_POST)))
+    {
+        if (isset($_GET['action']))
+        {
+            // process only if $_POST data is set and not empty
+            // walk through save requests
+            // position properties
+            if ($_GET['action'] === "template-positions")
+            {
+                if ($template->saveProperties($db, $_GET['id'], $_POST))
+                {
+                    \YAWK\alert::draw("success", $lang['SUCCESS'], $lang['POSITIONS'] . "&nbsp;" . $lang['SAVED'], "", 2400);
+                }
+                else
+                {
+                    \YAWK\alert::draw("danger", $lang['ERROR'], $lang['POSITIONS'] . "&nbsp;" . $lang['NOT_SAVED'], "", 5000);
+                }
+            }
+        }
+    }
+}
+// new user object if not exists
+if (!isset($user)) { $user = new \YAWK\user(); }
+// get ID of current active template
+$getID = \YAWK\settings::getSetting($db, "selectedTemplate");
+// load properties of current active template
+// $template->loadProperties($db, $getID);
+// load all template settings into array
+
+// $template->selectedTemplate = \YAWK\settings::getSetting($db, "selectedTemplate");
+$templateSettings = \YAWK\template::getAllSettingsIntoArray($db, $user);
+// check template wrapper
+// \YAWK\template::checkWrapper($lang, $lang['POSITIONS'], $lang['POSITIONS']);
+?>
+
 <!-- color picker -->
 <script type="text/javascript" src="../system/engines/jquery/jscolor/jscolor.js"></script>
 <!-- Bootstrap toggle css -->
@@ -104,23 +146,6 @@
 
     });
 </script>
-
-<?php
-// new template object if not exists
-if (!isset($template)) { $template = new \YAWK\template(); }
-// new user object if not exists
-if (!isset($user)) { $user = new \YAWK\user(); }
-// get ID of current active template
-$getID = \YAWK\settings::getSetting($db, "selectedTemplate");
-// load properties of current active template
-$template->loadProperties($db, $getID);
-// previewButton is an empty string - why? this should be checked
-$previewButton = "";
-// load all template settings into array
-$templateSettings = \YAWK\template::getAllSettingsIntoArray($db, $user);
-// check template wrapper
-// \YAWK\template::checkWrapper($lang, $lang['POSITIONS'], $lang['POSITIONS']);
-?>
 <?php
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
@@ -135,7 +160,7 @@ echo"</section><!-- Main content -->
     <section class=\"content\">";
 /* page content start here */
 ?>
-<form id="template-edit-form" action="index.php?page=template&action=template-positions&id=<?php echo $template->id; ?>" method="POST">
+<form id="template-edit-form" action="index.php?page=template-positions&action=template-positions&id=<?php echo $getID; ?>" method="POST">
 <!-- title header -->
 <div class="box">
     <div class="box-body">

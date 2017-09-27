@@ -149,7 +149,7 @@ echo"</section><!-- Main content -->
 <div class="box">
     <div class="box-body">
         <div class="col-md-10">
-            <?php echo "<h4><i class=\"fa fa-tint\"></i> &nbsp;$lang[DESIGN]  <small>$lang[DESIGN_DETAILS]</small></h4>"; ?>
+            <?php echo "<h4><i class=\"fa fa-paint-brush\"></i> &nbsp;$lang[DESIGN]  <small>$lang[DESIGN_DETAILS]</small></h4>"; ?>
         </div>
         <div class="col-md-2">
             <button class="btn btn-success pull-right" id="savebutton" name="save" style="margin-top:2px;"><i class="fa fa-check"></i>&nbsp;&nbsp;<?php echo $lang['DESIGN_SAVE']; ?></button>
