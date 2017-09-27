@@ -1,4 +1,31 @@
+<?php
+// new template object if not exists
+if (!isset($template)) { $template = new \YAWK\template(); }
 
+// check if any action is requested
+if (isset($_POST['save']) && (isset($_GET['action']) && (isset($_GET['id']))))
+{
+    if (isset($_POST) && (!empty($_POST)))
+    {
+        if (isset($_GET['action']))
+        {
+            // process only if $_POST data is set and not empty
+            // walk through save requests
+            // position properties
+            if ($_GET['action'] === "template-customcss")
+            {
+                if (isset($_POST['customCSS']) && (!empty($_POST['customCSS'])))
+                {
+                    // save the content to /system/template/$NAME/css/custom.css
+                    $template->setCustomCssFile($db, $_POST['customCSS'], 0, $_GET['id']);
+                    // save a minified version to /system/template/$NAME/css/custom.min.css
+                    $template->setCustomCssFile($db, $_POST['customCSS'], 1, $_GET['id']);
+                }
+            }
+        }
+    }
+}
+?>
 <?php
 // get settings for editor
 $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
@@ -182,7 +209,7 @@ echo"</section><!-- Main content -->
     <section class=\"content\">";
 /* page content start here */
 ?>
-<form id="template-edit-form" action="index.php?page=template&action=template-customcss&id=<?php echo $template->id; ?>" method="POST">
+<form id="template-edit-form" action="index.php?page=template-customcss&action=template-customcss&id=<?php echo $getID; ?>" method="POST">
     <!-- title header -->
     <!-- REDESIGN -->
     <div class="box">
