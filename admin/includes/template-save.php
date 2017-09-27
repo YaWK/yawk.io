@@ -83,6 +83,7 @@ if (isset($_POST['save']) && (isset($_GET['action']) && (isset($_GET['id']))))
             // position properties
             if ($_GET['action'] === "template-positions")
             {
+                $redirect = "template-positions";
                 if ($template->saveProperties($db, $_GET['id'], $_POST))
                 {
                     \YAWK\alert::draw("success", $lang['SUCCESS'], $lang['POSITIONS'] . "&nbsp;" . $lang['SAVED'], "", 2400);
@@ -95,6 +96,7 @@ if (isset($_POST['save']) && (isset($_GET['action']) && (isset($_GET['id']))))
             // redesign properties
             if ($_GET['action'] === "template-redesign")
             {
+                $redirect = "template-redesign";
                 if ($template->saveProperties($db, $_GET['id'], $_POST))
                 {
                     \YAWK\alert::draw("success", $lang['SUCCESS'], $lang['DESIGN_DETAILS'] . "&nbsp;" . $lang['SAVED'], "", 2400);
@@ -1679,6 +1681,7 @@ if (isset($_POST['save']) && (isset($_GET['action']) && (isset($_GET['id']))))
         $template->writeTemplateCssFile($db, $template->id, $content, 1); // 1 = minify
 
         //////////////////////////////////////////////////////////////////////////////////////
+        \YAWK\sys::setTimeout("index.php?page=$redirect", 0);
     }
 }
 

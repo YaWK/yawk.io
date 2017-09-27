@@ -38,6 +38,7 @@ $getID = \YAWK\settings::getSetting($db, "selectedTemplate");
 $templateSettings = \YAWK\template::getAllSettingsIntoArray($db, $user);
 // check template wrapper
 // \YAWK\template::checkWrapper($lang, $lang['POSITIONS'], $lang['POSITIONS']);
+
 ?>
 
 <!-- color picker -->

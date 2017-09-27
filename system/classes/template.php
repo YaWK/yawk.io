@@ -210,7 +210,7 @@ namespace YAWK {
             }
 
             // walk through all post data settings
-            foreach($data as $property=>$value)
+            foreach($data as $property => $value)
             {
                 // check, if settings is a long value
                 if (fnmatch('*-longValue', $property))
@@ -228,6 +228,7 @@ namespace YAWK {
                     // save theme settings to database
                     $this->setTemplateSetting($db, $id, $property, $value, $longValue);
                 }
+                /*
                 // if save property is customCSS
                 elseif ($property == "customCSS")
                 {   // save the content to /system/template/$NAME/css/custom.css
@@ -235,6 +236,7 @@ namespace YAWK {
                     // save a minified version to /system/template/$NAME/css/custom.min.css
                     $this->setCustomCssFile($db, $value, 1, $id);
                 }
+                */
             }
             return true;
         }
