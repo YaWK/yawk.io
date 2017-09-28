@@ -165,6 +165,87 @@ echo"</section><!-- Main content -->
         </div>
     </div>
     <div class="col-md-6">
-        ...
+        <div class="box">
+            <div class="box-header"><h3 class="box-title">Template Manager</h3></div>
+            <div class="box-body">
+                <table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-striped table-hover table-responsive" id="table-sort">
+                    <thead>
+                    <tr>
+                        <td><strong>&nbsp;</strong></td>
+                        <td><strong><?php echo $lang['ID']; ?></strong></td>
+                        <td><strong><i class="fa fa-caret-down"></i> <?php print $lang['TEMPLATE']; ?></strong></td>
+                        <td><strong><i class="fa fa-caret-down"></i> <?php print $lang['DESCRIPTION']; ?></strong></td>
+                        <td><strong><?php print $lang['SCREENSHOT']; ?></strong></td>
+                        <td class="text-center"><strong><?php print $lang['ACTIONS']; ?></strong></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <?php
+                    $i_pages = 0;
+                    $i_pages_published = 0;
+                    $i_pages_unpublished = 0;
+                    // get active tpl name
+                    $activeTemplate = \YAWK\template::getCurrentTemplateName($db, "backend", "");
+                    if ($res = $db->query("SELECT * FROM {templates} ORDER BY active DESC"))
+                    {
+                        // fetch templates and draw a tbl row in a while loop
+                        while($row = mysqli_fetch_assoc($res))
+                        {   // get active template id
+                            $activeTemplateId = \YAWK\settings::getSetting($db, "selectedTemplate");
+
+                            if ($row['id'] === $activeTemplateId)
+                            {   // set published online
+                                $pub = "success"; $pubtext="$lang[ONLINE]";
+                                $i_pages_published = $i_pages_published + 1;
+                                // do not allow to delete current active template
+                                $deleteIcon = "<i class=\"fa fa-ban\" title=\"$lang[TPL_DEL_FAILED_DUE_ACTIVE]\"></i>";
+                            }
+                            else if ($row['id'] === "1" && ($activeTemplateId !== $row['id']))
+                            {   // do not allow to delete default template
+                                $pub = "danger"; $pubtext = "$lang[OFFLINE]";
+                                $deleteIcon = "<i class=\"fa fa-ban\" title=\"$lang[TPL_DEL_DEFAULT_FAILED]\"></i>";
+                            }
+                            else
+                            {   // set published offline
+                                $pub = "danger"; $pubtext = "$lang[OFFLINE]";
+                                $i_pages_unpublished = $i_pages_unpublished +1;
+                                // delete template button
+                                $deleteIcon = "<a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"$lang[TPL_DEL_CONFIRM] &laquo;".$row['name']." / ".$row['id']."&raquo;\"
+                title=\"".$lang['DELETE']."\" href=\"index.php?page=template-manage&delete=1&templateID=".$row['id']."\">
+                </a>";
+                            }
+
+                            // set template image (screen shot)
+                            $screenshot = "../system/templates/".$activeTemplate."/img/screenshot.jpg";
+                            if (!file_exists($screenshot))
+                            {   // sorry, no screenshot available
+                                $screenshot = "$lang[NO_SCREENSHOT]";
+                            }
+                            else
+                            {   // screenshot found, display
+                                $screenshot = "<img src=\"../system/templates/".$activeTemplate."/img/screenshot.jpg\" width=\"200\" class=\"img-rounded\">";
+                            }
+
+                            $row['positions'] = str_replace(':', '<br>',$row['positions']); //wordwrap($row['positions'], 20, "<br>\n");
+                            echo "<tr>
+          <td class=\"text-center\">
+            <a title=\"toggle&nbsp;status\" href=\"index.php?page=template-manage&toggle=1&templateID=".$row['id']."\">
+            <span class=\"label label-$pub\">$pubtext</span></a>&nbsp;</td>
+          <td>".$row['id']."</td>
+          <td><a href=\"index.php?page=template-overview&overrideTemplate=1&id=".$row['id']."\"><div style=\"width:100%\">".$row['name']."</div></a></td>
+          <td><a href=\"index.php?page=template-overview&id=".$row['id']."\" style=\"color: #7A7376;\"><div style=\"width:100%\">".$row['description']."</div></a></td>
+          <td><a href=\"index.php?page=template-overview&id=".$row['id']."\" title=\"$lang[EDIT]: ".$row['name']."\">".$screenshot."</a></td>
+          <td class=\"text-center\">
+            $deleteIcon
+          </td>
+        </tr>";
+                        }
+                    }
+                    ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
