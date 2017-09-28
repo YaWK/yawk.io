@@ -952,7 +952,7 @@ namespace YAWK {
             {   // check if position indicator is enabled
                 if ($indicators["pos-$position-indicator"] === "1")
                 {   // display position indicator
-                    $indicatorStyle = " style=\"border: 2px solid red;\"";
+                    $indicatorStyle = "style=\"border: 2px solid red;\"";
                     $indicatorText = "<i><b>$position</b></i>";
                 }
                 else
