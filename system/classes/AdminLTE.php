@@ -851,18 +851,21 @@ namespace YAWK {
             else { $activeClass = ''; }
             echo "<li$activeClass>
                         <a href=\"#\">
-                        <i class=\"fa fa-life-ring\"></i>
-                        <span>$lang[STATS]</span>
+                        <i class=\"fa fa-question-circle\"></i>
+                        <span>$lang[HELP]</span>
                         <span class=\"pull-right-container\">
                         <i class=\"fa fa-angle-left pull-right\"></i>
                         </span>
                         </a>
                       <ul class=\"treeview-menu\">
-                        <li ";echo (isset($_GET['page']) && $_GET['page'] == 'help') ? "class=\"active\"" : ""; echo">
-                            <a href=\"index.php?page=help\" title=\"help and support\"><i class=\"fa fa-life-saver\"></i> <span>$lang[SUPPORT]</span></a>
+                        <li ";echo (isset($_GET['page']) && $_GET['page'] == 'help') ? "class='active'" : ""; echo">
+                            <a href=\"index.php?page=help\" title=\"help\"><i class=\"fa fa-question-circle-o\"></i> <span>$lang[HELP_USER_MANUAL]</span></a>
                         </li>
-                        <li ";echo (isset($_GET['page']) && $_GET['page'] == 'help-support') ? "class='active'" : ""; echo">
-                            <a href=\"index.php?page=help-support\" title=\"support\"><i class=\"fa fa-question-circle-o\"></i> <span>$lang[HELP]</span></a>
+                        <li ";echo (isset($_GET['page']) && $_GET['page'] == 'help-apigen') ? "class=\"active\"" : ""; echo">
+                            <a href=\"index.php?page=help-apigen\" title=\"API Documentation\"><i class=\"fa fa-question-circle-o\"></i> <span>$lang[HELP_APIGEN]</span></a>
+                        </li>
+                        <li ";echo (isset($_GET['page']) && $_GET['page'] == 'help-support') ? "class=\"active\"" : ""; echo">
+                            <a href=\"index.php?page=help-support\" title=\"Support\"><i class=\"fa fa-life-saver\"></i> <span>$lang[HELP_SUPPORT]</span></a>
                         </li>
                       </ul>";
 
