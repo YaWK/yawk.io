@@ -3,18 +3,12 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 29. Jun 2017 um 16:47
+-- Erstellungszeit: 28. Sep 2017 um 20:56
 -- Server-Version: 10.1.10-MariaDB
 -- PHP-Version: 5.6.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Datenbank: `yawk_lte`
@@ -283,7 +277,8 @@ CREATE TABLE `cms_menu` (
 
 INSERT INTO `cms_menu` (`TMPID`, `id`, `sort`, `gid`, `menuID`, `parentID`, `published`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `title`, `text`, `href`, `target`, `divider`, `blogid`) VALUES
 (1, 1, 1, 1, 1, 0, 1, '2017-03-08 19:02:19', '2017-06-10 17:48:54', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Welcome to YaWK CMS!', 'index.html', '_self', 0, 0),
-(2, 2, 2, 1, 1, 0, 1, '0000-00-00 00:00:00', '2017-06-10 17:48:54', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Typography', 'typography.html', '_self', 0, 0);
+(2, 2, 2, 1, 1, 0, 1, '0000-00-00 00:00:00', '2017-06-10 17:48:54', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Typography', 'typography.html', '_self', 0, 0),
+(15, 13, 3, 1, 1, 0, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Testseite', 'testseite.html', '_self', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -410,8 +405,9 @@ CREATE TABLE `cms_pages` (
 --
 
 INSERT INTO `cms_pages` (`id`, `published`, `gid`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `alias`, `title`, `bgimage`, `owner`, `menu`, `locked`, `blogid`, `plugin`) VALUES
-(1, 1, 1, '2017-03-08 00:00:00', '2017-06-29 12:14:03', '2017-03-08 00:00:00', '0000-00-00 00:00:00', 'index', 'Welcome to YaWK CMS!', '', -1, 0, 0, 0, '0'),
-(2, 1, 1, '2017-06-10 15:45:03', '2017-06-28 13:40:31', '2017-06-10 15:45:03', '0000-00-00 00:00:00', 'typography', 'Typography', '', -1, 0, 0, 0, '0');
+(1, 1, 1, '2017-03-08 00:00:00', '2017-09-13 00:20:21', '2017-03-08 00:00:00', '0000-00-00 00:00:00', 'index', 'Welcome to YaWK CMS!', '', -1, 0, 0, 0, '0'),
+(2, 1, 1, '2017-06-10 15:45:03', '2017-09-10 18:57:16', '2017-06-10 15:45:03', '0000-00-00 00:00:00', 'typography', 'Typography', '', -1, 0, 0, 0, '0'),
+(3, 1, 1, '2017-09-25 21:56:32', '2017-09-25 21:56:43', '2017-09-25 21:56:32', '0000-00-00 00:00:00', 'testseite', 'Testseite', '', -1, 0, 0, 0, '0');
 
 -- --------------------------------------------------------
 
@@ -602,7 +598,7 @@ CREATE TABLE `cms_settings` (
 --
 
 INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation`, `activated`, `label`, `icon`, `heading`, `subtext`, `fieldClass`, `fieldType`, `placeholder`, `description`, `options`) VALUES
-('admin_email', '', '', 1, 5, 1, 'ADMIN_EMAIL_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+('admin_email', '', '', 9, 5, 1, 'ADMIN_EMAIL_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('backendFooter', '0', '', 11, 5, 1, 'BACKENDFOOTER_LABEL', 'fa fa-chevron-down', 'BACKENDFOOTER_HEADING', 'BACKENDFOOTER_SUBTEXT', 'form-control', 'checkbox', '', '', ''),
 ('backendFooterCopyright', '0', '', 11, 6, 1, 'BACKENDFOOTERCOPYRIGHT_LABEL', '', '', '', 'form-control', 'checkbox', '', '', ''),
 ('backendFooterValueLeft', 'http://yawk.io', '', 11, 7, 1, 'BACKENDFOOTERVALUE_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
@@ -610,7 +606,7 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('backendFX', '0', '', 20, 5, 1, 'BACKENDFX_LABEL', 'fa fa-paper-plane-o', 'BACKENDFX_HEADING', 'BACKENDFX_SUBTEXT', 'form-control', 'checkbox', '', '', ''),
 ('backendFXtime', '820', '', 20, 7, 1, 'BACKENDFXTIME_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('backendFXtype', 'fadeIn In', '', 20, 6, 1, 'BACKENDFXTYPE_LABEL', '', '', '', 'form-control', 'select', '', '', 'fadeIn,Fade In:slideDown,Slide Down'),
-('backendLanguage', 'en-EN', '', 19, 4, 1, 'BACKENDLANGUAGE_LABEL', '', '', '', 'form-control', '', '', '', ''),
+('backendLanguage', 'de-DE', '', 19, 4, 1, 'BACKENDLANGUAGE_LABEL', '', '', '', 'form-control', '', '', '', ''),
 ('backendLayout', 'sidebar-mini', '', 2, 2, 1, 'BACKENDLAYOUT_LABEL', '', '', '', 'form-control', 'select', '', 'BACKENDLAYOUT_DESC', 'fixed,Fixed:sidebar-collapse,Sidebar Collapsed:sidebar-collapse sidebar-mini,Sidebar Mini Collapsed:sidebar-mini,Sidebar Mini Open:layout-boxed,Layout Boxed:layout-top-nav,Layout Top Nav'),
 ('backendLogoSubText', '.io', '', 12, 2, 1, 'BACKENDLOGOSUBTEXT_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('backendLogoText', 'YaWK', '', 12, 1, 1, 'BACKENDLOGOTEXT_LABEL', 'fa fa-bars', 'BACKENDLOGOTEXT_HEADING', 'BACKENDLOGOTEXT_SUBTEXT', 'form-control', 'input', '', '', ''),
@@ -620,13 +616,13 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('backendSkin', 'skin-wp-style', '', 2, 1, 1, 'BACKENDSKIN_LABEL', 'fa fa-paint-brush', 'BACKENDSKIN_HEADING', 'BACKENDSKIN_SUBTEXT', 'form-control', 'select', '', '', 'skin-blue,Blue:skin-green,Green:skin-red,Red:skin-yellow,Yellow:skin-purple,Purple:skin-black,Black:skin-yellow-light,Yellow Light:skin-wp-style,Wordpress Style:skin-wp-dark-style,Wordpress Style Dark'),
 ('dbhost', '', '', 21, 1, 1, 'DBHOST_LABEL', 'fa fa-database', 'DATABASE_HEADING', 'DATABASE_SUBTEXT', 'form-control', 'input', 'http://localhost/', '', 'readonly'),
 ('dbname', '', '', 21, 2, 1, 'DBNAME_LABEL', '', '', '', 'form-control', 'input', '', '', 'readonly'),
-('dbport', '', '', 21, 6, 1, 'DBPORT_LABEL', '', '', '', 'form-control', 'input', 'default:3306', '', 'readonly'),
+('dbport', '3306', '', 21, 6, 1, 'DBPORT_LABEL', '', '', '', 'form-control', 'input', 'default:3306', '', 'readonly'),
 ('dbprefix', '', '', 21, 5, 1, 'DBPREFIX_LABEL', '', '', '', 'form-control', 'input', '', '', 'readonly'),
 ('dbpwd', '', '', 21, 4, 1, 'DBPWD_LABEL', '', '', '', 'form-control', 'password', '', '', 'readonly'),
 ('dbusername', '', '', 21, 3, 1, 'DBUSERNAME_LABEL', '', '', '', 'form-control', 'input', '', '', 'readonly'),
 ('defaultemailtext', '', 'Hello $user,\\n\\n\\Thank you for registering on site\\n\\n$url', 5, 0, 1, 'Default SignUp Email Message', '', '', '', 'form-control', 'textarea', '', '', ''),
 ('dirprefix', '', '', 9, 0, 1, 'DIRPREFIX_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
-('domain', '', '', 1, 4, 1, 'DOMAIN_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+('domain', '', '', 9, 4, 1, 'DOMAIN_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('editorActiveLine', '1', '', 14, 2, 1, 'EDITOR_ACTIVE_LINE_LABEL', '', '', '', 'form-control', 'checkbox', '', 'EDITOR_ACTIVE_LINE_DESC', ''),
 ('editorAutoCodeview', '1', '', 14, 9, 1, 'EDITOR_AUTO_CODEVIEW_LABEL', '', '', '', 'form-control', 'checkbox', '', 'EDITOR_AUTO_CODEVIEW_DESC', ''),
 ('editorCloseBrackets', '1', '', 14, 11, 1, 'EDITOR_CLOSE_BRACKETS_LABEL', '', '', '', 'form-control', 'checkbox', '', 'EDITOR_CLOSE_BRACKETS_DESC', ''),
@@ -643,22 +639,22 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('facebookstatus', '0', '', 4, 0, 1, 'Facebook on/off', '', '', '', 'form-control', '', '', '', ''),
 ('facebookurl', 'http://www.facebook.com', '', 4, 0, 1, 'URL zu Facebook Seite / Profil ', '', '', '', 'form-control', '', '', '', ''),
 ('frontendFX', '0', '', 3, 3, 1, 'FRONTENDFX_LABEL', '', '', '', 'form-control', '', '', '', ''),
-('frontendLanguage', 'en-EN', '', 19, 4, 1, 'FRONTENDLANGUAGE_LABEL', '', '', '', 'form-control', '', '', '', ''),
+('frontendLanguage', 'de-DE', '', 19, 4, 1, 'FRONTENDLANGUAGE_LABEL', '', '', '', 'form-control', '', '', '', ''),
 ('globalmenuid', '1', '', 3, 2, 1, 'GLOBALMENUID_LABEL', 'fa fa-bars', 'GLOBALMENUID_HEADING', 'GLOBALMENUID_SUBTEXT', 'form-control', 'select', '', 'GLOBALMENUID_DESC', ''),
-('globalmetakeywords', 'YAWK, Web Management, Blog, Website, CMS', '', 10, 0, 1, 'Global Site Keywords', '', '', '', 'form-control', '', '', '', ''),
-('globalmetatext', 'YaWK - Yet another Webkit - CMS - Content Management System', '', 10, 0, 1, 'Global Meta Description', '', '', '', 'form-control', '', '', '', ''),
-('host', '', '', 1, 3, 1, 'HOST_LABEL', '', '', '', 'form-control', 'input', '', 'DATABASE_DESC', ''),
+('globalmetakeywords', 'YAWK, CMS, WORDPRESS, JOOMLA', '', 10, 0, 1, 'Global Site Keywords', '', '', '', 'form-control', '', '', '', ''),
+('globalmetatext', 'YaWK - Yet another Webkit - CMS', '', 10, 0, 1, 'Global Meta Description', '', '', '', 'form-control', '', '', '', ''),
+('host', '', '', 9, 3, 1, 'HOST_LABEL', '', '', '', 'form-control', 'input', '', 'DATABASE_DESC', ''),
 ('loadingTime', '0', '', 11, 10, 1, 'LOADINGTIME_LABEL', 'fa fa-signal', 'LOADINGTIME_HEADING', 'LOADINGTIME_SUBTEXT', 'form-control', 'checkbox', '', '', ''),
 ('logoutmenuid', '1', '', 6, 0, 1, 'Logout Menu ID for logged-in Users', '', '', '', 'form-control', '', '', '', ''),
-('offline', '1', '', 8, 0, 1, 'OFFLINE_LABEL', 'fa fa-wrench', 'OFFLINE_HEADING', 'OFFLINE_SUBTEXT', 'form-control', 'checkbox', '', 'OFFLINE_DESC', ''),
+('offline', '0', '', 8, 0, 1, 'OFFLINE_LABEL', 'fa fa-wrench', 'OFFLINE_HEADING', 'OFFLINE_SUBTEXT', 'form-control', 'checkbox', '', 'OFFLINE_DESC', ''),
 ('offlineimage', 'media/images/closed-sign-tm.jpg', '', 8, 0, 1, 'OFFLINEIMAGE_LABEL', '', '', '', 'form-control', 'input', 'media/images/logo.jpg', 'OFFLINEIMAGE_DESC', ''),
 ('offlinemsg', '<h1>Maintenance Downtime</h1><h3>We are sorry, right now we are going to do some housekeeping at our website. Please come back later.</h3>', '', 8, 0, 1, 'OFFLINEMSG_LABEL', '', '', '', 'form-control', 'textarea', '', '', ''),
 ('paceLoader', 'enabled', '', 11, 1, 1, 'PACELOADER_LABEL', 'fa fa-spinner', 'PACELOADER_HEADING', 'PACELOADER_SUBTEXT', 'form-control', 'select', '', '', 'disabled,disabled:enabled,enabled'),
-('paceLoaderColor', '0073AA', '', 11, 2, 1, 'PACELOADER_COLOR_LABEL', '', '', '', 'form-control color', 'input', '0073aa', '', ''),
+('paceLoaderColor', '00ADFF', '', 11, 2, 1, 'PACELOADER_COLOR_LABEL', '', '', '', 'form-control color', 'input', '0073aa', '', ''),
 ('paceLoaderHeight', '4px', '', 11, 3, 1, 'PACELOADER_HEIGHT_LABEL', '', '', '', 'form-control', 'input', 'PACELOADER_HEIGHT_PLACEHOLDER', '', ''),
 ('robotsText-long', '', 'User-agent: *\r\nDisallow: /.idea/\r\nDisallow: /.git/\r\nDisallow: /admin/\r\nDisallow: /system/\r\nDisallow: /tmp/\r\nAllow: /system/engines/\r\n\r\n# uncomment following 2 lines if you NOT want your page to be tracked by waybackmachine (https://archive.org/web/)\r\n# User-agent:ia_archiver\r\n# Disallow: /', 18, 1, 1, 'ROBOTSTXT_LABEL', '', '', '', 'form-control', 'textarea', '', '', ''),
 ('selectedTemplate', '1', '', 3, 1, 1, 'SELECTEDTEMPLATE_LABEL', 'fa fa-photo', 'SELECTEDTEMPLATE_HEADING', 'SELECTEDTEMPLATE_SUBTEXT', 'form-control', 'select', '', 'SELECTEDTEMPLATE_DESC', ''),
-('sessiontime', '60', '', 9, 1, 1, 'SESSIONTIME_LABEL', '', '', '', 'form-control', 'select', '', 'SESSIONTIME_DESC', '10,10 Minutes:20,20 Minutes:30,30 Minutes:40,40 Minutes:50,50 Minutes:60,60 Minutes:120,120 Minutes:320,320 Minutes'),
+('sessiontime', '60', '', 9, 1, 0, 'SESSIONTIME_LABEL', '', '', '', 'form-control', 'select', '', 'SESSIONTIME_DESC', '10,10 Minutes:20,20 Minutes:30,30 Minutes:40,40 Minutes:50,50 Minutes:60,60 Minutes:120,120 Minutes:320,320 Minutes'),
 ('signup_adultcheck', '1', '', 5, 0, 1, 'display adultcheck question before registration form', '', '', '', 'form-control', '', '', '', ''),
 ('signup_city', '0', '', 5, 0, 1, 'require city to signup', '', '', '', 'form-control', '', '', '', ''),
 ('signup_country', '0', '', 5, 0, 1, 'require country to signup', '', '', '', 'form-control', '', '', '', ''),
@@ -683,12 +679,12 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('signup_tostext', 'Terms of service', '', 5, 0, 1, 'terms of service description', '', '', '', 'form-control', '', '', '', ''),
 ('signup_zipcode', '0', '', 5, 0, 1, 'require zipcode to signup', '', '', '', 'form-control', '', '', '', ''),
 ('siteauthor', 'YaWK', '', 10, 0, 1, 'Site Author', '', '', '', 'form-control', '', '', '', ''),
-('sitename', 'YaWK Yet another WebKit CMS', '', 1, 2, 1, 'SITENAME_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+('sitename', 'YaWK Yet another WebKit CMS', '', 9, 2, 1, 'SITENAME_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('statsEnable', '1', '', 13, 2, 1, 'STATS_LABEL', 'fa fa-bar-chart', 'STATS_HEADING', 'STATS_SUBTEXT', 'form-control', 'select', '', 'STATS_DESC', '0,off:1,on'),
 ('syslogEnable', '1', '', 13, 1, 1, 'SYSLOG_LABEL', 'fa fa-terminal', 'SYSLOG_HEADING', 'SYSLOG_SUBTEXT', 'form-control', 'select', '', 'SYSLOG_DESC', '0,off:1,on'),
 ('timediff', '1', '', 7, 1, 1, 'TIMEDIFF_LABEL', 'fa fa-clock-o', 'TIMEDIFF_HEADING', 'TIMEDIFF_SUBTEXT', 'form-control', 'checkbox', '', 'TIMEDIFF_DESC', ''),
 ('timedifftext', 'This page is not online yet. Please come back in ', '', 7, 2, 1, 'TIMEDIFFTEXT_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
-('title', '', '', 1, 1, 1, 'TITLE_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+('title', '', '', 9, 1, 1, 'TITLE_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('twitterstatus', '0', '', 4, 0, 1, 'Twitter on/off', '', '', '', 'form-control', '', '', '', ''),
 ('twitterurl', 'http://www.twitter.com', '', 4, 0, 1, 'URL zu Twitter Profil', '', '', '', 'form-control', '', '', '', ''),
 ('userlogin', '1', '', 17, 1, 1, 'USERLOGIN_LABEL', 'fa fa-lock', 'USERLOGIN_HEADING', 'USERLOGIN_SUBTEXT', 'form-control', 'checkbox', '', 'USERLOGIN_DESC', ''),
@@ -719,7 +715,7 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('userpage_profile', '1', '', 6, 0, 1, 'userpage profile enabled?', '', '', '', 'form-control', '', '', '', ''),
 ('userpage_settings', '1', '', 6, 0, 1, 'userpage`settings', '', '', '', 'form-control', '', '', '', ''),
 ('userpage_stats', '1', '', 6, 0, 1, 'userpage stats enabled?', '', '', '', 'form-control', '', '', '', ''),
-('yawkversion', '1.0 build 2017.12', '', 9, 2, 1, 'YAWKVERSION_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+('yawkversion', '1.0 build 2017.5', '', 9, 2, 0, 'YAWKVERSION_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('youtubeChannelUrl', 'http://www.youtube.com', '', 4, 0, 1, 'YouTube Channel URL', '', '', '', 'form-control', '', '', '', ''),
 ('youtubestatus', '0', '', 4, 0, 1, 'YouTube on/off', '', '', '', 'form-control', '', '', '', '');
 
@@ -760,7 +756,6 @@ INSERT INTO `cms_settings_types` (`id`, `value`) VALUES
 (19, 'language'),
 (20, 'backendFX'),
 (21, 'database');
-
 
 -- --------------------------------------------------------
 
@@ -916,7 +911,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (16, 1, 'fonthover-menucolor', '333333', '333333', '', 10, 1, 4, 'TPL_MENU_FONT_HOVER_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (17, 1, 'fontactive-menucolor', '555555', '555555', '', 10, 1, 5, 'TPL_MENU_FONT_ACTIVE_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (18, 1, 'fontdisabled-menucolor', 'CCCCCC', 'CCCCCC', '', 10, 1, 6, 'TPL_MENU_FONT_DISABLED_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
-(19, 1, 'default-menubgcolor', 'F8F8F8', 'f8f8f8', '', 11, 1, 1, 'TPL_MENU_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(19, 1, 'default-menubgcolor', 'f8f8f8', 'f8f8f8', '', 11, 1, 1, 'TPL_MENU_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (20, 1, 'border-menubgcolor', 'E7E7E7', 'e7e7e7', '', 11, 1, 2, 'TPL_MENU_BGCOLOR_BORDER', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (21, 1, 'active-menubgcolor', 'E7E7E7', 'e7e7e7', '', 11, 1, 3, 'TPL_MENU_BGCOLOR_ACTIVE', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (22, 1, 'toggle-menubgcolor', 'DDDDDD', 'dddddd', '', 11, 1, 4, 'TPL_MENU_BGCOLOR_TOGGLE', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
@@ -1324,7 +1319,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (426, 1, 'pos-mainTopRight-position', 'static', 'static', '', 37, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (427, 1, 'pos-mainTopRight-marginBottom', '0px', '0px', '', 37, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (428, 1, 'pos-mainTopRight-marginTop', '0px', '0px', '', 37, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
-(429, 1, 'pos-main-indicator', '0', '0', '', 38, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
+(429, 1, 'pos-main-indicator', '1', '0', '', 38, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
 (430, 1, 'pos-main-vertical-align', 'baseline', 'baseline', '', 38, 1, 6, 'TPL_VERTICAL_ALIGN', 'form-control', 'select', 'baseline,baseline:sub,subscript:super,superscript:top,top:text-top,text-top:middle,middle:bottom,bottom:text-bottom,text-bottom:initial,initial:inherit,inherit', '', '', '', '', ''),
 (431, 1, 'pos-main-customCSS-longValue', '', '', '', 38, 1, 27, 'TPL_CUSTOM_CSS', 'form-control', 'textarea', '', 'TPL_CUSTOM_CSS_PLACEHOLDER', '', '', '', ''),
 (432, 1, 'pos-main-border-radius', '0 0 0 0', '12px 12px 12px 12px', '', 38, 1, 17, 'TPL_BORDER_RADIUS', 'form-control', '', '', 'TPL_BORDER_RADIUS_PLACEHOLDER', '', '', '', ''),
@@ -1342,8 +1337,8 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (444, 1, 'pos-main-zindex', '9999', '9999', '', 38, 1, 25, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (445, 1, 'pos-main-width', '100%', '100%', '', 38, 1, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
 (446, 1, 'pos-main-height', 'auto', 'auto', '', 38, 1, 3, 'TPL_POS_HEIGHT', 'form-control', '', '', 'TPL_HEIGHT_PLACEHOLDER', '', '', 'TPL_SIZE_HEADING', 'TPL_SIZE_SUBTEXT'),
-(447, 1, 'pos-main-bgcolor', 'F8F8F8', 'F8F8F8', '', 38, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
-(448, 1, 'pos-main-position', 'relative', 'static', '', 38, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
+(447, 1, 'pos-main-bgcolor', 'f8f8f8', 'F8F8F8', '', 38, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(448, 1, 'pos-main-position', 'static', 'static', '', 38, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (449, 1, 'pos-main-marginBottom', '0px', '0px', '', 38, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (450, 1, 'pos-main-marginTop', '0px', '0px', '', 38, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (451, 1, 'pos-mainBottom-indicator', '1', '0', '', 39, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
@@ -1881,26 +1876,6 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (987, 1, 'pos-outerBottom-bgnone', ' ', 'none', '', 50, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
 (988, 1, 'pos-outerLeft-bg-size', 'cover', 'cover', '', 31, 1, 12, 'TPL_BODY_BG_IMAGE_SIZE', 'form-control', 'select', 'auto,auto:cover,cover:contain,contain:length,length:percentage,percentage:initial,inital:inherit,inherit', '', '', '', '', '');
 
---
--- Indizes der exportierten Tabellen
---
-
---
--- Indizes für die Tabelle `cms_template_settings`
---
-ALTER TABLE `cms_template_settings`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `templateID` (`templateID`);
-
---
--- AUTO_INCREMENT für exportierte Tabellen
---
-
---
--- AUTO_INCREMENT für Tabelle `cms_template_settings`
---
-ALTER TABLE `cms_template_settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=989;
 -- --------------------------------------------------------
 
 --
@@ -1970,7 +1945,8 @@ INSERT INTO `cms_template_settings_types` (`id`, `type`) VALUES
 (51, 'forms-extended'),
 (52, 'fontfamily'),
 (53, 'font-linkcolors'),
-(54, 'pos-body');
+(54, 'pos-body'),
+(55, 'tpl-assets-basic');
 
 -- --------------------------------------------------------
 
@@ -2011,6 +1987,7 @@ CREATE TABLE `cms_users` (
   `overrideTemplate` int(1) NOT NULL,
   `templateID` int(6) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 
 -- --------------------------------------------------------
 
@@ -2624,7 +2601,7 @@ ALTER TABLE `cms_logins`
 -- AUTO_INCREMENT für Tabelle `cms_menu`
 --
 ALTER TABLE `cms_menu`
-  MODIFY `TMPID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `TMPID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT für Tabelle `cms_meta_local`
 --
@@ -2659,7 +2636,7 @@ ALTER TABLE `cms_plugin_gallery_items`
 -- AUTO_INCREMENT für Tabelle `cms_stats`
 --
 ALTER TABLE `cms_stats`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `cms_syslog`
 --
@@ -2669,17 +2646,14 @@ ALTER TABLE `cms_syslog`
 -- AUTO_INCREMENT für Tabelle `cms_template_settings`
 --
 ALTER TABLE `cms_template_settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=988;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=989;
 --
 -- AUTO_INCREMENT für Tabelle `cms_widget_defaults`
 --
 ALTER TABLE `cms_widget_defaults`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=173;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=180;
 --
 -- AUTO_INCREMENT für Tabelle `cms_widget_settings`
 --
 ALTER TABLE `cms_widget_settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
