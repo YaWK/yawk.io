@@ -656,35 +656,137 @@ namespace YAWK {
                 <!-- Optionally, you can add icons to the links -->
                 <li ";echo (!isset($_GET['page'])) && (!isset($_GET['plugin'])) ? "class='active'" : ""; echo">
                     <a href=\"index.php\"><i class=\"fa fa-dashboard\"></i> <span>$lang[DASHBOARD]</span></a>
-                </li>
-                <li ";echo (isset($_GET['page']) && $_GET['page'] == 'pages') || (isset($_GET['page']) && ($_GET['page'] == 'page-edit')) ? "class='active'" : ""; echo">
-                    <a href=\"index.php?page=pages\" title=\"add or edit a static .html page\"><i class=\"fa fa-file-word-o\"></i> <span>$lang[PAGES]</span></a>
-                </li>
-                <li ";echo (isset($_GET['page']) && $_GET['page'] == 'menus') || (isset($_GET['page']) && ($_GET['page'] == 'menu-edit')) ? "class='active'" : ""; echo">
-                    <a href=\"index.php?page=menus\" title=\"add or edit menu entries\"><i class=\"fa fa-bars\"></i> <span>$lang[MENUS]</span></a>
-                </li>
-                <li ";echo (isset($_GET['page']) && $_GET['page'] == 'users') || (isset($_GET['page']) && ($_GET['page'] == 'user-edit')) || (isset($_GET['page']) && ($_GET['page'] == 'user-new')) || (isset($_GET['page']) && ($_GET['page'] == 'user-groups')) ? "class='active'" : ""; echo">
-                    <a href=\"index.php?page=users\" title=\"add or modify users\"><i class=\"fa fa-user\"></i> <span>$lang[USERS]</span></a>
-                </li>
-                <!-- plugins -->
-                <li ";echo (isset($_GET['page']) && $_GET['page'] == 'plugins') || (isset($_GET['plugin'])) || (isset($_GET['page']) && ($_GET['page'] == 'plugins-manage')) ? "class='active'" : ""; echo">
-                    <a href=\"index.php?page=plugins\" title=\"Plugins\"><i class=\"fa fa-plug\"></i> <span>$lang[PLUGINS]</span> </a>
-                </li>
-                <!-- widgets -->
-                <li ";echo (isset($_GET['page']) && $_GET['page'] == 'widgets') || (isset($_GET['page']) && ($_GET['page'] == 'widget-edit')) ? "class='active'" : ""; echo">
-                    <a href=\"index.php?page=widgets\"><i class=\"fa fa-tags\"></i> <span>$lang[WIDGETS]</span> </a>
-                </li>
-                <!-- files -->
-                <li ";echo (isset($_GET['page']) && $_GET['page'] == 'filemanager') ? "class='active'" : ""; echo">
-                    <a href=\"index.php?page=filemanager\" title=\"Filemanager\"><i class=\"fa fa-folder-open-o\"></i> <span>$lang[FILEMANAGER]</span></a>
                 </li>";
 
-            if (strpos($_GET['page'], 'template') !== false) {
-                $activeClass = " class=\"active\"";
-            }
-            else {
-                $activeClass = '';
-            }
+                // PAGES TREEVIEW MENU
+                if (strpos($_GET['page'], 'page') !== false)
+                { $activeClass = " class=\"active\""; }
+                else { $activeClass = ''; }
+                echo "<li$activeClass>
+                  <a href=\"#\">
+                    <i class=\"fa fa-file-word-o\"></i>
+                    <span>$lang[PAGES]</span>
+                    <span class=\"pull-right-container\">
+                      <i class=\"fa fa-angle-left pull-right\"></i>
+                    </span>
+                  </a>
+                <ul class=\"treeview-menu\">
+                    <li ";echo (isset($_GET['page']) && $_GET['page'] == 'pages') ? "class=\"active\"" : ""; echo">
+                        <a href=\"index.php?page=pages\" title=\"add or edit a static .html page\"><i class=\"fa fa-file-word-o\"></i> <span>$lang[OVERVIEW]</span></a>
+                    </li>
+                    <li ";echo (isset($_GET['page']) && $_GET['page'] == 'page-new') ? "class='active'" : ""; echo">
+                        <a href=\"index.php?page=page-new\" title=\"add or edit a static .html page\"><i class=\"fa fa-plus\"></i> <span>$lang[PAGE_ADD]</span></a>
+                    </li>
+                </ul>";
+
+                // MENU TREEVIEW MENU
+                if (strpos($_GET['page'], 'menu') !== false)
+                { $activeClass = " class=\"active\""; }
+                else { $activeClass = ''; }
+                echo "<li$activeClass>
+                      <a href=\"#\">
+                        <i class=\"fa fa-bars\"></i>
+                        <span>$lang[MENUS]</span>
+                        <span class=\"pull-right-container\">
+                          <i class=\"fa fa-angle-left pull-right\"></i>
+                        </span>
+                      </a>
+                    <ul class=\"treeview-menu\">
+                        <li ";echo (isset($_GET['page']) && $_GET['page'] == 'menus') ? "class=\"active\"" : ""; echo">
+                            <a href=\"index.php?page=menus\" title=\"view menus and entries\"><i class=\"fa fa-bars\"></i> <span>$lang[OVERVIEW]</span></a>
+                        </li>
+                        <li ";echo (isset($_GET['page']) && $_GET['page'] == 'menu-new') ? "class='active'" : ""; echo">
+                            <a href=\"index.php?page=menu-new\" title=\"add or edit menu entries\"><i class=\"fa fa-plus\"></i> <span>$lang[MENU_ADD]</span></a>
+                        </li>
+                    </ul>";
+
+                // USER TREEVIEW MENU
+                if (strpos($_GET['page'], 'user') !== false)
+                { $activeClass = " class=\"active\""; }
+                else { $activeClass = ''; }
+                echo "<li$activeClass>
+                      <a href=\"#\">
+                      <i class=\"fa fa-user\"></i>
+                        <span>$lang[USERS]</span>
+                        <span class=\"pull-right-container\">
+                        <i class=\"fa fa-angle-left pull-right\"></i></span>
+                      </a>
+                      <ul class=\"treeview-menu\">
+                        <li ";echo (isset($_GET['page']) && $_GET['page'] == 'users') ? "class=\"active\"" : ""; echo">
+                            <a href=\"index.php?page=users\" title=\"show all users\"><i class=\"fa fa-user\"></i> <span>$lang[USERS]</span></a>
+                        </li>
+                        <li ";echo (isset($_GET['page']) && $_GET['page'] == 'user-new') ? "class='active'" : ""; echo">
+                            <a href=\"index.php?page=user-new\" title=\"add a new user\"><i class=\"fa fa-plus\"></i> <span>$lang[USER_ADD]</span></a>
+                        </li>
+                      </ul>";
+
+                // PLUGINS TREEVIEW MENU
+                if (strpos($_GET['page'], 'plugin') !== false)
+                { $activeClass = " class=\"active\""; }
+                else { $activeClass = ''; }
+                echo "<li$activeClass>
+                      <a href=\"#\">
+                        <i class=\"fa fa-plug\"></i>
+                        <span>$lang[PLUGINS]</span>
+                        <span class=\"pull-right-container\">
+                        <i class=\"fa fa-angle-left pull-right\"></i>
+                        </span>
+                      </a>
+                      <ul class=\"treeview-menu\">
+                        <li ";echo (isset($_GET['page']) && $_GET['page'] == 'plugins') ? "class=\"active\"" : ""; echo">
+                            <a href=\"index.php?page=plugins\" title=\"show plugins\"><i class=\"fa fa-plug\"></i> <span>$lang[PLUGINS]</span></a>
+                        </li>
+                        <li ";echo (isset($_GET['page']) && $_GET['page'] == 'plugins-manage') ? "class='active'" : ""; echo">
+                            <a href=\"index.php?page=plugins-manage\" title=\"manage plugins\"><i class=\"fa fa-wrench\"></i> <span>$lang[PLUGINS_MANAGE]</span></a>
+                        </li>
+                      </ul>";
+
+                // WIDGETS TREEVIEW MENU
+                if (strpos($_GET['page'], 'widget') !== false)
+                { $activeClass = " class=\"active\""; }
+                else { $activeClass = ''; }
+                echo "<li$activeClass>
+                      <a href=\"#\">
+                        <i class=\"fa fa-tags\"></i>
+                        <span>$lang[WIDGETS]</span>
+                        <span class=\"pull-right-container\">
+                        <i class=\"fa fa-angle-left pull-right\"></i>
+                        </span>
+                      </a>
+                      <ul class=\"treeview-menu\">
+                        <li ";echo (isset($_GET['page']) && $_GET['page'] == 'widgets') ? "class=\"active\"" : ""; echo">
+                            <a href=\"index.php?page=widgets\" title=\"show widgets\"><i class=\"fa fa-tags\"></i> <span>$lang[WIDGETS]</span></a>
+                        </li>
+                        <li ";echo (isset($_GET['page']) && $_GET['page'] == 'widget-new') ? "class='active'" : ""; echo">
+                            <a href=\"index.php?page=widget-new\" title=\"add widget\"><i class=\"fa fa-plus\"></i> <span>$lang[WIDGET_ADD]</span></a>
+                        </li>
+                      </ul>";
+
+                // FILEMANAGER TREEVIEW MENU
+                if (strpos($_GET['page'], 'filemanager') !== false)
+                { $activeClass = " class=\"active\""; }
+                else { $activeClass = ''; }
+                echo "<li$activeClass>
+                        <a href=\"#\">
+                        <i class=\"fa fa-folder-open\"></i>
+                        <span>$lang[FILEMANAGER]</span>
+                        <span class=\"pull-right-container\">
+                        <i class=\"fa fa-angle-left pull-right\"></i>
+                        </span>
+                        </a>
+                      <ul class=\"treeview-menu\">
+                        <li ";echo (isset($_GET['page']) && $_GET['page'] == 'filemanager') ? "class=\"active\"" : ""; echo">
+                            <a href=\"index.php?page=filemanager\" title=\"show files\"><i class=\"fa fa-folder-open-o\"></i> <span>$lang[FILEMANAGER]</span></a>
+                        </li>
+                        <li ";echo (isset($_GET['page']) && $_GET['page'] == 'filemanager-upload') ? "class='active'" : ""; echo">
+                            <a href=\"index.php?page=filemanager-upload\" title=\"upload files\"><i class=\"fa fa-plus\"></i> <span>$lang[UPLOAD]</span></a>
+                        </li>
+                      </ul>";
+
+            // TEMPLATE TREEVIEW MENU
+            if (strpos($_GET['page'], 'template') !== false)
+            {   $activeClass = " class=\"active\""; }
+            else { $activeClass = ''; }
 
             echo "<li$activeClass>
                   <a href=\"#\">
@@ -716,28 +818,57 @@ namespace YAWK {
                         <li ";echo (isset($_GET['page']) && $_GET['page'] == 'template-setup') ? "class=\"active\"" : ""; echo">
                             <a href=\"index.php?page=template-setup\"><i class=\"fa fa-gears\"></i> $lang[SETTINGS]</a>
                         </li>
+                        <li ";echo (isset($_GET['page']) && $_GET['page'] == 'template-manage') ? "class='active'" : ""; echo">
+                            <a href=\"index.php?page=template-manage\"><i class=\"fa fa-photo\"></i> <span>$lang[THEMES]</span></a>
+                        </li>
                     </ul>
-                   </li>
-                
-                <!-- themes -->
-                <li ";echo (isset($_GET['page']) && $_GET['page'] == 'template-manage') ? "class='active'" : ""; echo">
-                    <a href=\"index.php?page=template-manage\"><i class=\"fa fa-photo\"></i> <span>$lang[THEMES]</span></a>
-                </li>
-                <!-- seo -->
-                <li ";echo (isset($_GET['page']) && $_GET['page'] == 'stats') ? "class='active'" : ""; echo">
-                    <a href=\"index.php?page=stats\"><i class=\"fa fa-line-chart\"></i> <span>$lang[STATS]</span></a>
-                </li>
-                <!-- support -->
-                <li ";echo (isset($_GET['page']) && $_GET['page'] == 'help') ? "class='active'" : ""; echo">
-                    <a href=\"index.php?page=help\"><i class=\"fa fa-life-ring\"></i> <span>$lang[SUPPORT]</span></a>
-                </li>";
+                   </li>";
 
-            if (strpos($_GET['page'], 'settings') !== false) {
-                $activeClass = " class=\"active\"";
-            }
-            else {
-                $activeClass = '';
-            }
+            // STATS TREEVIEW MENU
+            if (strpos($_GET['page'], 'stats') !== false)
+            { $activeClass = " class=\"active\""; }
+            else { $activeClass = ''; }
+            echo "<li$activeClass>
+                        <a href=\"#\">
+                        <i class=\"fa fa-line-chart\"></i>
+                        <span>$lang[STATS]</span>
+                        <span class=\"pull-right-container\">
+                        <i class=\"fa fa-angle-left pull-right\"></i>
+                        </span>
+                        </a>
+                      <ul class=\"treeview-menu\">
+                        <li ";echo (isset($_GET['page']) && $_GET['page'] == 'stats') ? "class=\"active\"" : ""; echo">
+                            <a href=\"index.php?page=stats\" title=\"statistics\"><i class=\"fa fa-line-chart\"></i> <span>$lang[STATS]</span></a>
+                        </li>
+                        <li ";echo (isset($_GET['page']) && $_GET['page'] == 'stats-24h') ? "class='active'" : ""; echo">
+                            <a href=\"index.php?page=stats-24h\" title=\"last 24 hours\"><i class=\"fa fa-clock-o\"></i> <span>$lang[LAST24H]</span></a>
+                        </li>
+                      </ul>";
+
+            // HELP / SUPPORT TREEVIEW MENU
+            if (strpos($_GET['page'], 'help') !== false)
+            { $activeClass = " class=\"active\""; }
+            else { $activeClass = ''; }
+            echo "<li$activeClass>
+                        <a href=\"#\">
+                        <i class=\"fa fa-life-ring\"></i>
+                        <span>$lang[STATS]</span>
+                        <span class=\"pull-right-container\">
+                        <i class=\"fa fa-angle-left pull-right\"></i>
+                        </span>
+                        </a>
+                      <ul class=\"treeview-menu\">
+                        <li ";echo (isset($_GET['page']) && $_GET['page'] == 'help') ? "class=\"active\"" : ""; echo">
+                            <a href=\"index.php?page=help\" title=\"help and support\"><i class=\"fa fa-life-saver\"></i> <span>$lang[SUPPORT]</span></a>
+                        </li>
+                        <li ";echo (isset($_GET['page']) && $_GET['page'] == 'help-support') ? "class='active'" : ""; echo">
+                            <a href=\"index.php?page=help-support\" title=\"support\"><i class=\"fa fa-question-circle-o\"></i> <span>$lang[HELP]</span></a>
+                        </li>
+                      </ul>";
+
+            if (strpos($_GET['page'], 'settings') !== false)
+            { $activeClass = " class=\"active\""; }
+            else { $activeClass = ''; }
                 
          echo"
         <li$activeClass>
