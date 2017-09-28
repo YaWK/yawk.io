@@ -73,6 +73,7 @@ else
 $positions = \YAWK\template::getPositionStatesArray($db);
 // load position indicators
 $indicators = \YAWK\template::getPositionIndicatorStatusArray($db);
+$col = '';
 ?>
 <!-- /gfonts -->
 </head>
@@ -200,7 +201,6 @@ $indicators = \YAWK\template::getPositionIndicatorStatusArray($db);
                           }
                           ?>
                       </div>
-
                       <div class="row">
                           <?php
                           // POSITION: main
