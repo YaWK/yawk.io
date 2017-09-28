@@ -39,7 +39,7 @@ echo"</section><!-- Main content -->
     <section class=\"content\">";
 /* page content start here */
 ?>
-<form id="template-edit-form" action="index.php?page=template&action=template-settings&id=<?php echo $template->id; ?>" method="POST">
+<form id="template-edit-form" action="index.php?page=template-save&action=template-setup&id=<?php echo $template->id; ?>" method="POST">
     <!-- title header -->
     <!-- REDESIGN -->
     <div class="box">
