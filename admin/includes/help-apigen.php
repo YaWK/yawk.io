@@ -29,12 +29,10 @@ echo"<ol class=\"breadcrumb\">
 /* page content start here */
 ?>
 <!-- btn clear log -->
-<a class="btn btn-success pull-right" href="index.php?page=syslog&clear=1">
-    <i class="fa fa-trash-o"></i> &nbsp;<?php print $lang['HELP']; ?></a>
 
 <div class="box box-default">
     <div class="box-header with-border">
-        <h3 class="box-title"><?php echo $lang['HELP']; ?></h3>
+        <h3 class="box-title"><?php echo $lang['HELP_APIGEN']; ?></h3>
     </div>
     <div class="box-body">
 <!-- APIGEN IFRAME -->
