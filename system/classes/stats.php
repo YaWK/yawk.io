@@ -16,9 +16,15 @@ namespace YAWK
          /** * @var int id for every entry */
         public $id;
         /** * @var int uid (user id) who affected this entry */
-        public $uid;
+        public $uid = 0;
         /** * @var int gid (group id) who affected this entry */
         public $gid;
+        /** * @var int phpSessionID current php session ID */
+        public $phpSessionID;
+        /** * @var string currentTimeStamp current time stamp */
+        public $currentTimeStamp;
+        /** * @var int currentOnline how many users are currently online */
+        public $currentOnline = 0;
         /** * @var int 0|1 was the user logged in? */
         public $logged_in;
         /** * @var string detected user language */
@@ -217,19 +223,135 @@ namespace YAWK
 
         public function construct()
         {
-            // ...
+
         }
 
-        public function getActiveSessions()
-        {
-            if ($this->activeSessions = count(scandir(ini_get("session.save_path"))) - 2)
-            {
-                return $this->activeSessions;
+        /**
+         * Return the number of all currently online users
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @return int|null
+         */
+        public function getOnlineUsers($db)
+        {   /* @var $db \YAWK\db */
+        $i = 0;
+        // get online users from database
+            if ($res = $db->query("SELECT phpSessionID FROM {users_online}"))
+            {   // gogo
+                while ($row = $res->fetch_assoc())
+                {   // count entries
+                    $i++;
+                }
+                $this->currentOnline = $i;
+                return $i;
             }
             else
                 {
-                    return "0";
+                    return null;
                 }
+        }
+
+        /**
+         * Set users online in database (stores and check sessions and timestamps)
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @return null
+         */
+        public function setOnlineUsers($db)
+        {   /* @var $db \YAWK\db */
+
+            // how long
+            $timeCheck = time()-60;
+            $this->phpSessionID = session_id();
+            $this->currentTimeStamp = time();
+            if (!isset($_SESSION['uid']) || (empty($_SESSION['uid'])))
+            { $this->uid = 0; }
+            else
+                { $this->uid = $_SESSION['uid']; }
+
+            // check, if phpSessionID and currentTimeStamp is set
+            if (isset($this->phpSessionID) && (isset($this->currentTimeStamp)))
+            {
+                // check, if this phpSessionID is already in database
+                if ($row = $db->query("SELECT * from {users_online} 
+                                                WHERE phpSessionID = '$this->phpSessionID'"))
+                {
+                    // fetch data from users_online
+                    if ($res = $row->fetch_assoc())
+                    {
+                        // create currentTimeStamp
+                        $this->currentTimeStamp = time();
+                        // user is still online, update currentTimeStamp for this phpSessionID
+                        if ($row = $db->query("UPDATE {users_online}
+                                                        SET currentTimeStamp = '$this->currentTimeStamp' 
+                                                        WHERE phpSessionID = '$this->phpSessionID'"))
+                        {
+                            // user updated
+                        }
+                        else
+                            {
+                                // could not update user status
+                                // todo: add syslog entry
+                            }
+                    }
+                    else
+                    {   // failed to fetch data, add new phpSessionID and currentTimeStamp
+                        if ($db->query("INSERT INTO {users_online} 
+                                    (phpSessionID,
+                                     uid,
+                                     currentTimeStamp)
+                            VALUES ('".$this->phpSessionID."',
+                                    '".$this->uid."',
+                                   '".$this->currentTimeStamp."')"))
+                        {
+                            // all good
+                        }
+                        else
+                        {   // insert failed
+                            // todo: add syslog entry
+                        }
+                    }
+                }
+                else
+                {   // failed to fetch data, add new phpSessionID and currentTimeStamp
+                    if ($db->query("INSERT INTO {users_online} 
+                                    (phpSessionID,
+                                     currentTimeStamp)
+                            VALUES ('".$this->phpSessionID."',
+                                   '".$this->currentTimeStamp."')"))
+                    {
+                        // all good
+                    }
+                    else
+                    {   // insert failed
+                        // todo: add syslog entry
+                    }
+                }
+            }
+            else
+                {
+                    // session ID or currentTimeStamp are not set
+                    // todo: add syslog entry
+                }
+
+            // DELETE OUTDATED SESSIONS
+            if ($db->query("DELETE FROM {users_online} WHERE currentTimeStamp < $timeCheck"))
+            {
+                // deleted outdated sessions
+                // echo "<h1>deleted!</h1>";
+                // return true;
+            }
+            else
+            {
+                // could not delete outdated sessions
+                // todo: add syslog entry
+                return false;
+            }
+            return true;
         }
 
         /**
@@ -246,6 +368,8 @@ namespace YAWK
             if (\YAWK\settings::getSetting($db, "statsEnable") === "1")
             {   // prepare user information that we can easily collect
                 $this->prepareData();
+                // set online users
+                $this->setOnlineUsers($db);
                 // insert statistics into database
                 if ($this->insertData($db) === false)
                 {   // insert stats failed, add syslog entry
@@ -267,7 +391,13 @@ namespace YAWK
         {
             // check if a session is set
             if (isset($_SESSION) && (!empty($_SESSION)))
-            {   // prepare all session user data
+            {
+                // store current session ID
+                $this->phpSessionID = session_id();
+                // store current timestamp (will be used for users online counter)
+                $this->currentTimeStamp=time();
+
+                // prepare all session user data
                 if (isset($_SESSION['uid']) && (!empty($_SESSION['uid'])))
                 {   // user id (if logged in)
                     $this->uid = $_SESSION['uid'];
@@ -1936,6 +2066,9 @@ namespace YAWK
         public function getStatsArray($db, $interval, $period) // get all settings from db like property
         {
             /* @var $db \YAWK\db */
+            // get online users
+            $this->currentOnline = $this->getOnlineUsers($db);
+
             // check if period is set
             if (!isset($period) || (empty($period) || (!is_string($period))))
             {   // set default to show data of the last day (last 24 hours)
