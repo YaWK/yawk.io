@@ -1992,6 +1992,20 @@ CREATE TABLE `cms_users` (
 -- --------------------------------------------------------
 
 --
+-- Tabellenstruktur für Tabelle `cms_users_online`
+--
+
+CREATE TABLE `cms_users_online` (
+  `uid` int(11) NOT NULL,
+  `phpSessionID` varchar(128) NOT NULL,
+  `currentTimeStamp` varchar(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+-- --------------------------------------------------------
+
+--
 -- Tabellenstruktur für Tabelle `cms_user_groups`
 --
 
