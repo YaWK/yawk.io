@@ -226,6 +226,7 @@ namespace YAWK
 
         }
 
+
         /**
          * Return the number of all currently online users
          * @author Daniel Retzl <danielretzl@gmail.com>
@@ -236,8 +237,11 @@ namespace YAWK
          */
         public function getOnlineUsers($db)
         {   /* @var $db \YAWK\db */
-        $i = 0;
-        // get online users from database
+            // first of all: delete all outdated sessions
+            $this->deleteOutdatedSessions($db);
+            // init count var
+            $i = 0;
+            // get online users from database
             if ($res = $db->query("SELECT phpSessionID FROM {users_online}"))
             {   // gogo
                 while ($row = $res->fetch_assoc())
@@ -254,6 +258,32 @@ namespace YAWK
         }
 
         /**
+         * Check and delete outdated sessions if they are expired
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param int $expireAfter Time in seconds after a session will be deleted
+         * @return bool
+         */
+        public function deleteOutdatedSessions($db)
+        {   /* @var $db \YAWK\db */
+            // set default expire to 60 seconds
+            $sessionExpire = time()-60;
+            // DELETE OUTDATED SESSIONS
+            if ($db->query("DELETE FROM {users_online} WHERE currentTimeStamp < $sessionExpire"))
+            {
+                return true;
+            }
+            else
+            {
+                // could not delete outdated sessions
+                // todo: add syslog entry
+                return false;
+            }
+        }
+
+        /**
          * Set users online in database (stores and check sessions and timestamps)
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
@@ -265,7 +295,6 @@ namespace YAWK
         {   /* @var $db \YAWK\db */
 
             // how long
-            $timeCheck = time()-60;
             $this->phpSessionID = session_id();
             $this->currentTimeStamp = time();
             if (!isset($_SESSION['uid']) || (empty($_SESSION['uid'])))
@@ -338,19 +367,6 @@ namespace YAWK
                     // todo: add syslog entry
                 }
 
-            // DELETE OUTDATED SESSIONS
-            if ($db->query("DELETE FROM {users_online} WHERE currentTimeStamp < $timeCheck"))
-            {
-                // deleted outdated sessions
-                // echo "<h1>deleted!</h1>";
-                // return true;
-            }
-            else
-            {
-                // could not delete outdated sessions
-                // todo: add syslog entry
-                return false;
-            }
             return true;
         }
 
