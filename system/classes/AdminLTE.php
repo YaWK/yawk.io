@@ -841,7 +841,7 @@ namespace YAWK {
                             <a href=\"index.php?page=stats\" title=\"statistics\"><i class=\"fa fa-line-chart\"></i> <span>$lang[STATS]</span></a>
                         </li>
                         <li ";echo (isset($_GET['page']) && $_GET['page'] == 'stats-24h') ? "class='active'" : ""; echo">
-                            <a href=\"index.php?page=stats-24h\" title=\"last 24 hours\"><i class=\"fa fa-clock-o\"></i> <span>$lang[LAST24H]</span></a>
+                            <a href=\"index.php?page=stats&interval=24&period=HOUR\" title=\"last 24 hours\"><i class=\"fa fa-clock-o\"></i> <span>$lang[LAST24H]</span></a>
                         </li>
                       </ul>";
 
