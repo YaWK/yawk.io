@@ -600,13 +600,15 @@ namespace YAWK
          * @param int $limit Contains an i number to limit the sql request
          * @return array|bool
          */
-        public function countLogins($db, $limit)
+        public function countLogins($db)
         {   /* @var $db \YAWK\db */
+            /*
             if (!isset($limit) || (empty($limit)))
             {
                 $limit = 100;
             }
-            if ($res = $db->query("SELECT * FROM {logins} LIMIT $limit"))
+            */
+            if ($res = $db->query("SELECT * FROM {logins}"))
             {   // fetch and return how many messages have been sent
                 $loginDataArray = array();
                 // count login data
@@ -1052,7 +1054,7 @@ namespace YAWK
             // check if device types are set
             if (!isset($deviceTypes) || (empty($deviceTypes)))
             {   // device types are note set - get them from db
-                $deviceTypes = $this->countDeviceTypes($db, '', 200);
+                $deviceTypes = $this->countDeviceTypes($db, '');
             }
 
             $jsonData = "labels: ['$lang[DESKTOP]', '$lang[PHONE]', '$lang[TABLET]'],
@@ -1342,15 +1344,16 @@ namespace YAWK
          * @param string $limit contains i number for sql limitation
          * @return array|bool containing weekdays and number of hits
          */
-        public function countWeekdays($db, $data, $limit, $lang)
+        public function countWeekdays($db, $data, $lang)
         {   /* @var $db \YAWK\db */
 
+        /*
             // check if limit (i) is set
             if (!isset($limit) || (empty($limit)))
             {   // set default value
                 $limit = 100;
             }
-
+            */
             // check if data array is set, if not load data from db
             if (!isset($data) || (empty($data) || (!is_array($data))))
             {   // data is not set or in false format, try to get it from database
@@ -1368,11 +1371,13 @@ namespace YAWK
                 }
             }
 
+            /*
             // LIMIT the data to x entries
             if (isset($limit) && (!empty($limit)))
             {   // if limit is set, cut array to limited range
                 $data = array_slice($data, 0, $limit, true);
             }
+            */
 
             // break up the date & extract the hour to calculate
             foreach ($data as $date => $value)
@@ -1494,19 +1499,21 @@ namespace YAWK
          * @param string $limit contains i number for sql limitation
          * @return array|bool containing daytimes (and number of hits
          */
-        public function countDaytime($db, $data, $limit, $lang)
+        public function countDaytime($db, $data, $lang)
         {   /* @var $db \YAWK\db */
 
+        /*
             // check if limit (i) is set
             if (!isset($limit) || (empty($limit)))
             {   // set default value
                 $limit = 100;
             }
+        */
 
             // check if data array is set, if not load data from db
             if (!isset($data) || (empty($data) || (!is_array($data))))
             {   // data is not set or in false format, try to get it from database
-                if ($res = $db->query("SELECT date_created FROM {stats} ORDER BY id DESC LIMIT $limit"))
+                if ($res = $db->query("SELECT date_created FROM {stats} ORDER BY id DESC"))
                 {   // create array
                     $data = array();
                     while ($row = mysqli_fetch_assoc($res))
@@ -1520,11 +1527,13 @@ namespace YAWK
                 }
             }
 
+            /*
             // LIMIT the data to x entries
             if (isset($limit) && (!empty($limit)))
             {   // if limit is set, cut array to limited range
                 $data = array_slice($data, 0, $limit, true);
             }
+            */
 
             // break up the date & extract the hour to calculate
             foreach ($data as $date => $value)
@@ -1639,14 +1648,16 @@ namespace YAWK
          * @param string $limit contains i number for sql limitation
          * @return array|bool returning array containing the browsers and their hits
          */
-        public function countBrowsers($db, $data, $limit)
+        public function countBrowsers($db, $data)
         {   /* @var $db \YAWK\db */
 
+        /*
             // check if limit (i) is set
             if (!isset($limit) || (empty($limit)))
             {   // set default value
                 $limit = 100;
             }
+        */
 
             // this vars stores the counting for each browser
             $n_msie = 0;
@@ -1662,7 +1673,7 @@ namespace YAWK
             if (!isset($data) || (empty($data) || (!is_array($data))))
             {   // data is not set or in false format, try to get it from database
                 // \YAWK\alert::draw("warning", "database needed", "need to get browser data - array not set, empty or not an array.", "", 0);
-                if ($res = $db->query("SELECT browser FROM {stats} ORDER BY id DESC LIMIT $limit"))
+                if ($res = $db->query("SELECT browser FROM {stats} ORDER BY id DESC"))
                 {   // create array
                     $data = array();
                     while ($row = mysqli_fetch_assoc($res))
@@ -1677,11 +1688,13 @@ namespace YAWK
                     }
             }
 
+            /*
             // LIMIT the data to x entries
             if (isset($limit) && (!empty($limit)))
             {   // if limit is set, cut array to limited range
                 $data = array_slice($data, 0, $limit, true);
             }
+            */
 
             // count browsers
             foreach ($data AS $item => $browser) {   // add +1 for each found
@@ -1738,20 +1751,22 @@ namespace YAWK
          * @param string $limit contains i number for sql limitation
          * @return array|bool returning array containing device types and their hits
          */
-        public function countDeviceTypes($db, $data, $limit)
+        public function countDeviceTypes($db, $data)
         {   /* @var $db \YAWK\db */
 
+            /*
             // check if limit (i) is set
             if (!isset($limit) || (empty($limit)))
             {   // set default value
                 $limit = 100;
             }
+            */
 
             // check if data array is set, if not load data from db
             if (!isset($data) || (empty($data) || (!is_array($data))))
             {   // data is not set or in false format, try to get it from database
                 $intervalQuery = "WHERE {stats}.date_created > DATE_SUB(CURDATE(), INTERVAL 1 DAY)";
-                if ($res = $db->query("SELECT deviceType FROM {stats} $intervalQuery ORDER BY id DESC LIMIT $limit"))
+                if ($res = $db->query("SELECT deviceType FROM {stats} $intervalQuery ORDER BY id DESC"))
                 {   // create array
                     $data = array();
                     while ($row = mysqli_fetch_assoc($res))
@@ -1765,11 +1780,13 @@ namespace YAWK
                 }
             }
 
+            /*
             // LIMIT the data to x entries
             if (isset($limit) && (!empty($limit)))
             {   // if limit is set, cut array to limited range
                 $data = array_slice($data, 0, $limit, true);
             }
+            */
             foreach ($data as $deviceType => $value)
             {
                 // count device types
@@ -1823,20 +1840,21 @@ namespace YAWK
          * @param string $limit contains i number for sql limitation
          * @return array|bool returning array containing all detected operating systems and their hits
          */
-        public function countOS($db, $data, $limit)
+        public function countOS($db, $data)
         {   /* @var $db \YAWK\db */
 
+        /*
             // check if limit (i) is set
             if (!isset($limit) || (empty($limit)))
             {   // set default value
                 $limit = 100;
             }
-
+        */
             // check if data array is set, if not load data from db
             if (!isset($data) || (empty($data) || (!is_array($data))))
             {   // data is not set or in false format, try to get it from database
                 // \YAWK\alert::draw("warning", "database needed", "need to get browser data - array not set, empty or not an array.", "", 0);
-                if ($res = $db->query("SELECT os FROM {stats} ORDER BY id DESC LIMIT $limit"))
+                if ($res = $db->query("SELECT os FROM {stats} ORDER BY id DESC"))
                 {   // create array
                     $data = array();
                     while ($row = mysqli_fetch_assoc($res))
@@ -1850,11 +1868,13 @@ namespace YAWK
                 }
             }
 
+            /*
             // LIMIT the data to x entries
             if (isset($limit) && (!empty($limit)))
             {   // if limit is set, cut array to limited range
                 $data = array_slice($data, 0, $limit, true);
             }
+            */
             foreach ($data as $os => $value)
             {
                 // count Operating Systems
@@ -1907,20 +1927,21 @@ namespace YAWK
          * @param string $limit contains i number for sql limitation
          * @return array|bool returning array containing all detected OS versions and their hits
          */
-        public function countOSVersions($db, $data, $limit)
+        public function countOSVersions($db, $data)
         {   /* @var $db \YAWK\db */
 
+        /*
             // check if limit (i) is set
             if (!isset($limit) || (empty($limit)))
             {   // set default value
                 $limit = 100;
             }
-
+        */
             // check if data array is set, if not load data from db
             if (!isset($data) || (empty($data) || (!is_array($data))))
             {   // data is not set or in false format, try to get it from database
                 // \YAWK\alert::draw("warning", "database needed", "need to get browser data - array not set, empty or not an array.", "", 0);
-                if ($res = $db->query("SELECT osVersion FROM {stats} ORDER BY id DESC LIMIT $limit"))
+                if ($res = $db->query("SELECT osVersion FROM {stats} ORDER BY id DESC"))
                 {   // create array
                     $data = array();
                     while ($row = mysqli_fetch_assoc($res))
@@ -1934,11 +1955,13 @@ namespace YAWK
                 }
             }
 
+            /*
             // LIMIT the data to x entries
             if (isset($limit) && (!empty($limit)))
             {   // if limit is set, cut array to limited range
                 $data = array_slice($data, 0, $limit, true);
             }
+            */
 
             // count browsers
             foreach ($data AS $item => $osVersion) {   // add +1 for each found
@@ -2086,17 +2109,17 @@ namespace YAWK
             $this->currentOnline = $this->getOnlineUsers($db);
 
             // check if period is set
-            if (!isset($period) || (empty($period) || (!is_string($period))))
+            if (!isset($period) || (empty($period)))
             {   // set default to show data of the last day (last 24 hours)
                 $period = "DAY";
             }
             // check if interval is set, empty and be sure that it is an integer
-            if (!isset($interval) || (empty($interval) || (!is_int($interval))))
+            if (!isset($interval) || (empty($interval)))
             {   // if no interval is given or wrong datatype, show all data
                 $intervalQuery = '';    // leave empty in this case
             }
             // check if interval is correct int data type
-            else if (is_int($interval))
+            if (isset($interval) && (isset($period)))
             {   // ok. lets check it
                 switch ($interval)
                 {   // if zero
@@ -2290,10 +2313,10 @@ namespace YAWK
          * @param string $data array containing all the stats data
          * @param string $limit contains i number for sql limitation
          */
-        public function drawOsBox($db, $data, $limit, $lang)
+        public function drawOsBox($db, $data, $lang)
         {   /** @var $db \YAWK\db */
             // get data for this box
-            $oss = $this->countOS($db, $data, $limit);
+            $oss = $this->countOS($db, $data);
 
             echo "<!-- donut box:  -->
         <div class=\"box box-default\">
@@ -2421,10 +2444,10 @@ namespace YAWK
          * @param string $data array containing all the stats data
          * @param string $limit contains i number for sql limitation
          */
-        public function drawBrowserBox($db, $data, $limit, $lang)
+        public function drawBrowserBox($db, $data, $lang)
         {   /** @var $db \YAWK\db */
             // get data for this box
-            $browsers = $this->countBrowsers($db, $data, $limit);
+            $browsers = $this->countBrowsers($db, $data);
 
             echo "<!-- donut box:  -->
         <div class=\"box box-default\">
@@ -2551,10 +2574,10 @@ namespace YAWK
          * @param string $data array containing all the stats data
          * @param string $limit contains i number for sql limitation
          */
-        public function drawOsVersionBox($db, $data, $limit, $lang)
+        public function drawOsVersionBox($db, $data, $lang)
         {   /** @var $db \YAWK\db */
             // get data for this box
-            $osVersions = $this->countOSVersions($db, $data, $limit);
+            $osVersions = $this->countOSVersions($db, $data);
 
             echo "<!-- donut box:  -->
         <div class=\"box box-default\">
@@ -2680,10 +2703,10 @@ namespace YAWK
          * @param string $data array containing all the stats data
          * @param string $limit contains i number for sql limitation
          */
-        public function drawDeviceTypeBox($db, $data, $limit, $lang)
+        public function drawDeviceTypeBox($db, $data, $lang)
         {   /** @var $db \YAWK\db */
             // get data for this box
-            $deviceTypes = $this->countDeviceTypes($db, $data, $limit);
+            $deviceTypes = $this->countDeviceTypes($db, $data);
 
             echo "<!-- donut box:  -->
         <div class=\"box box-default\">
@@ -2815,10 +2838,10 @@ namespace YAWK
          * @param string $data array containing all the stats data
          * @param string $limit contains i number for sql limitation
          */
-        public function drawLoginBox($db, $limit, $lang)
+        public function drawLoginBox($db, $lang)
         {   /** @var $db \YAWK\db */
             // get data for this box
-            $logins = $this->countLogins($db, $limit);
+            $logins = $this->countLogins($db);
 
             echo "<!-- donut box:  -->
         <div class=\"box box-default\">
@@ -2963,10 +2986,10 @@ namespace YAWK
          * @param string $limit contains i number for sql limitation
          * @param object $lang language object
          */
-        public function drawDaytimeBox($db, $data, $limit, $lang)
+        public function drawDaytimeBox($db, $data, $lang)
         {   /** @var $db \YAWK\db */
             // get data for this box
-            $dayTimes = $this->countDaytime($db, $data, $limit, $lang);
+            $dayTimes = $this->countDaytime($db, $data, $lang);
             $dayTimesPercent = $this->getDayTimesPercent($lang);
 
             echo "<!-- donut box:  -->
@@ -3216,10 +3239,10 @@ namespace YAWK
          * @param string $limit contains i number for sql limitation
          * @param object $lang language array
          */
-            public function drawWeekdayBox($db, $data, $limit, $lang)
+            public function drawWeekdayBox($db, $data, $lang)
         {   /** @var $db \YAWK\db */
             // get data for this box
-            $weekdays = $this->countWeekdays($db, $data, $limit, $lang);
+            $weekdays = $this->countWeekdays($db, $data, $lang);
             $weekdaysPercent = $this->getWeekdaysPercent($lang);
 
             echo "<!-- donut box:  -->
@@ -3316,6 +3339,125 @@ namespace YAWK
             <!-- /.box-body -->
         </div>
         <!-- /.box -->";
+        }
+
+        public function drawOverviewBox($lang)
+        {
+            echo "
+<div class=\"row\">
+    <div class=\"col-md-12\">
+        <!-- box -->
+        <div class=\"box\">
+            <div class=\"box-header with-border\">
+                <h3 class=\"box-title\">$lang[STATS] <small>$lang[HITS_AND_USER_BEHAVIOR] </small></h3>
+            </div>
+            <div class=\"box-body\">";
+                $this->i_hits = number_format($this->i_hits, 0, '.', '.');
+
+                echo "$lang[ACTIVE_SESSIONS]: <b>$this->currentOnline</b><br>
+                $lang[HITS] $lang[OVERALL]:<b> $this->i_hits</b><br>
+                $lang[GUESTS]: <b> $this->i_publicUsersPercentage</b> % <small>($this->i_publicUsers)</small><br>
+                $lang[MEMBERS]: <b> $this->i_loggedUsersPercentage</b> % <small>($this->i_loggedUsers)</small><br>
+            </div>
+        </div>
+        <!-- / box -->
+    </div>
+</div>";
+        }
+
+        public function drawPagesBox($data, $lang)
+        {
+            echo "
+        <!-- box -->
+        <div class=\"box\">
+            <div class=\"box-header with-border\">
+                <h3 class=\"box-title\">$lang[PAGE_VIEWS] <small> $lang[HITS_FROM_MOST_TO_LEAST]</small></h3>
+            </div>";
+                    $res = array();
+                    if (is_array($data))
+                    {
+                        // $data = array_slice($data, 0, $limit, true);
+                        foreach ($data AS $page => $value)
+                        {
+                            $res[] = $value['page'];
+                        }
+                    }
+
+                    $res = (array_count_values($res));
+                    arsort($res);
+                echo "<div class=\"box-footer no-padding\">
+                <ul class=\"nav nav-pills nav-stacked\">";
+
+             // walk through array and display pages as nav pills
+            foreach ($res as $page => $value)
+            {   // show only items where browser got a value
+                if ($value !== 0 && $page !== 0)
+                {   // get different textcolors
+                    echo "<li><a href=\"../$page\" target=\"_blank\"><b>$value</b> &nbsp;<span class=\"text-blue\">$page</span></a></li>";
+                }
+            }
+
+            echo "</ul>
+            </div>";
+        }
+
+        public function getDaysOfMonthBox($lang)
+        {
+            echo "<div class=\"box\">";
+            echo "<div class=\"box-header\"><h3 class=\"box-title\">$lang[DAYS_OF_MONTH]</h3></div>";
+            echo "<div class=\"box-body\">";
+
+            $daysOfMonth = date("t",mktime(0, 0, 0, 9, 1, 2017));
+            $daysOfMonth++; // Zähler bei 1
+            for($i = 1; $i < $daysOfMonth; $i++){
+                echo $i."\n";
+            }
+            echo "</div>";
+            echo "</div>"; // end box
+        }
+
+        public function drawTestBox()
+        {
+            echo "<canvas id=\"myChart57\" width=\"400\" height=\"400\" style=\"border: 1px solid #000;\"></canvas>
+<script>
+var ctx = document.getElementById(\"myChart57\").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+</script>";
         }
 
     }
