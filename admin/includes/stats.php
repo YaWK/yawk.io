@@ -3,6 +3,60 @@
 <script src="../system/engines/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- ChartJS 1.0.1 -->
 <script src="../system/engines/AdminLTE/plugins/chartjs/Chart.min.js"></script>
+
+<style>
+    .tab-content>.tab-pane {
+        display: block;
+        height: 0;
+        overflow: hidden;
+    }
+    .tab-content>.tab-pane.active {
+        height: auto;
+    }
+</style>
+
+<?php
+// check if stats object is here...
+if (!isset($stats) || (empty($stats)))
+{   // include stats class
+    @require_once '../system/classes/stats.php';
+    // and create new stats object
+    $stats = new \YAWK\stats();
+}
+if (isset($_GET['interval']))
+{
+    $defaultInterval = $_GET['interval'];
+}
+    else if (isset($_POST['interval']))
+    {
+        $defaultInterval = $_POST['interval'];
+    }
+    else
+        {
+            $defaultInterval = 1;
+        }
+
+if (isset($_GET['period']))
+{
+    $defaultPeriod = $_GET['period'];
+}
+    else if (isset($_POST['period']))
+    {
+        $defaultPeriod = $_POST['period'];
+    }
+    else
+        {
+            $defaultPeriod = "DAY";
+        }
+
+// $defaultInterval = 1;
+// $defaultPeriod = "DAY";
+$data = $stats->getStatsArray($db, $defaultInterval, $defaultPeriod);
+
+?>
+
+
+
 <?php
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
@@ -20,163 +74,353 @@ echo"<ol class=\"breadcrumb\">
     <!-- Main content -->
     <section class=\"content\">";
 /* page content start here */
+/*
+echo " Hits total: ";
+echo number_format($stats->i_hits, 0, '.', '.');
+echo "<pre>";
+print_r($data);
+echo "</pre>";
+*/
 ?>
 
-<?php
-// include stats class
-    require_once '../system/classes/stats.php';
-// check if stats object is set...
-    if (!isset($stats))
-    {   // if not, create new
-        $stats = new \YAWK\stats();
-    }
-// load stats data into an array that every box will use, this saves performance
-    $data = $stats->getStatsArray($db, '', '');
+<div class="box">
+    <div class="box-body">
+        <form action="index.php?page=stats" method="post" class="form-inline">
+        <div class="col-md-4">
+            <?php echo "<h4><i class=\"fa fa-line-chart\"></i> &nbsp;$lang[STATS]&nbsp;<small>$lang[STATS_]</small></h4>"; ?>
+        </div>
+        <div class="col-md-8">
+                <?php echo $lang['SHOW_DATA_OF']; ?>
+                <label for="interval"><?php echo $lang['interval']; ?></label>
+                <select id="interval" name="interval" class="form-control">
+                    <?php
+                    if (isset($_POST['interval']))
+                    {
+                        echo "<option value=\"$_POST[interval]\" selected aria-selected=\"true\">$_POST[interval]</option>";
+                    }
+                    ?>
+                    <option value="0">---</option>
+                    <?php
+                    for ($i = 1; $i <= 365; $i++) {
+                        echo "<option value=\"$i\">$i</option>";
+                    }
+                    ?>
+                </select>
+                <label for="period"><?php echo $lang['PERIOD']; ?></label>
+                <select id="period" name="period" class="form-control">
+                    <?php
+                    if (isset($_POST['period']) && (isset($_POST['period'])))
+                    {
+                        $description = '';
 
-if (isset($_POST['limit']) && (!empty($_POST['limit'])))
-{
-    $limit = strip_tags($_POST['limit']);
-}
-else
-    {
-        $limit = $stats->i_hits;
-    }
-?>
-<div class="row">
-    <div class="col-md-4">
-        <!-- box -->
-        <div class="box">
-            <div class="box-header with-border">
-                <h3 class="box-title"><?php echo $lang['STATS']; ?> <small><?php echo $lang['HITS_AND_USER_BEHAVIOR']; ?></small></h3>
+                        switch ($_POST['period']) {
+                            case "SECONDS":
+                                if ($_POST['interval'] > 1)
+                                {
+                                    $description = $lang['SECONDS'];
+                                }
+                                else
+                                {
+                                    $description = $lang['SECOND'];
+                                }
+                                break;
+                            case "MINUTE":
+                                if ($_POST['interval'] > 1)
+                                {
+                                    $description = $lang['MINUTES'];
+                                }
+                                else
+                                {
+                                    $description = $lang['MINUTE'];
+                                }
+                                break;
+                            case "HOUR":
+                                if ($_POST['interval'] > 1)
+                                {
+                                    $description = $lang['HOURS'];
+                                }
+                                else
+                                {
+                                    $description = $lang['HOUR'];
+                                }
+                                break;
+                            case "DAY":
+                                if ($_POST['interval'] > 1)
+                                {
+                                    $description = $lang['DAYS'];
+                                }
+                                else
+                                {
+                                    $description = $lang['DAY'];
+                                }
+                                break;
+                            case "WEEK":
+                                if ($_POST['interval'] > 1)
+                                {
+                                    $description = $lang['WEEKS'];
+                                }
+                                else
+                                {
+                                    $description = $lang['WEEK'];
+                                }
+                                break;
+                            case "MONTH":
+                                if ($_POST['interval'] > 1)
+                                {
+                                    $description = $lang['MONTHS'];
+                                }
+                                else
+                                {
+                                    $description = $lang['MONTH'];
+                                }
+                                break;
+                            case "YEAR":
+                                if ($_POST['interval'] > 1)
+                                {
+                                    $description = $lang['YEARS'];
+                                }
+                                else
+                                {
+                                    $description = $lang['YEAR'];
+                                }
+                                break;
+                        }
+
+                        echo "<option value=\"$_POST[period]\" selected aria-selected=\"true\">$description</option>";
+
+                    }
+                    ?>
+
+                    <option value="ALL">---</option>
+                    <option value="SECONDS"><?php echo $lang['SECONDS']; ?></option>
+                    <option value="MINUTE"><?php echo $lang['MINUTES']; ?></option>
+                    <option value="HOUR"><?php echo $lang['HOURS']; ?></option>
+                    <option value="DAY"><?php echo $lang['DAYS']; ?></option>
+                    <option value="WEEK"><?php echo $lang['WEEKS']; ?></option>
+                    <option value="MONTH"><?php echo $lang['MONTHS']; ?></option>
+                    <option value="YEAR"><?php echo $lang['YEARS']; ?></option>
+                </select>
+                <!--
+                <br><br>
+                <label for="limit"><?php //echo "$lang[VIEW_LATEST] <small><i>n</i></small> $lang[HITS], $lang[LEAVE_BLANK_FOR_ALL]"; ?></label>
+                <br>
+                <input id="limit" name="limit" value="<?php // echo $limit; ?>" type="text" placeholder="<?php // echo $limit; ?>" class="form-control">
+                <br>
+                -->
+                <button type="submit" id="refresh" name="refresh" class="btn btn-success" title="<?php echo $lang['REFRESH_STATS']; ?>"><i class="glyphicon glyphicon-refresh"></i>&nbsp; <?php echo "$lang[STATS]"; ?></button>
+        </div>
+    </form>
+</div>
+</div>
+
+<div class="box">
+    <div class="box-body">
+
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#home"><?php echo $lang['OVERVIEW']; ?></a></li>
+    <li><a data-toggle="tab" href="#devices"><?php echo $lang['DEVICES']; ?></a></li>
+    <li><a data-toggle="tab" href="#browser"><?php echo $lang['BROWSER']; ?></a></li>
+    <li><a data-toggle="tab" href="#users"><?php echo $lang['USERS']; ?></a></li>
+    <li><a data-toggle="tab" href="#os"><?php echo $lang['OPERATING_SYSTEMS']; ?></a></li>
+    <li><a data-toggle="tab" href="#pages"><?php echo $lang['PAGES']; ?></a></li>
+</ul>
+
+    <div class="tab-content">
+        <div id="home" class="tab-pane fade in active">
+            <h3><?php echo $lang['OVERVIEW']; ?></h3>
+            <div class="col-md-8">
+                <!-- box -->
+                <?php $stats->drawOverviewBox($lang); ?>
+                <!-- / box -->
+                <br>
+                <?php $stats->drawWeekdayBox($db, $data, $lang); ?>
+                <br>
+                <?php $stats->getDaysOfMonthBox($lang); ?>
             </div>
-            <div class="box-body">
-                <?php
-                if ($stats->i_hits !== $limit) { $current = "<small><i>(view: $limit)</i></small>"; } else { $current = ''; }
-                $stats->i_hits = number_format($stats->i_hits, 0, '.', '.');
-                ?>
-                <?php echo "$lang[ACTIVE_SESSIONS]: <b>".$stats->getActiveSessions()."</b> "; ?> <br>
-                <?php echo "$lang[HITS] $lang[OVERALL]:<b> $stats->i_hits</b>"; ?> <?php echo $current; ?> <br>
-                <?php echo "$lang[GUESTS]: <b> $stats->i_publicUsersPercentage</b>"; ?>% <small>(<?php echo $stats->i_publicUsers; ?>)</small><br>
-                <?php echo "$lang[MEMBERS]: <b> $stats->i_loggedUsersPercentage</b>"; ?>% <small>(<?php echo $stats->i_loggedUsers; ?>)</small><br>
-
+            <div class="col-md-4">
+                <!-- box -->
+                <?php $stats->drawDaytimeBox($db, $data, $lang); ?>
+                <!-- / box -->
             </div>
         </div>
-        <!-- / box -->
+        <div id="devices" class="tab-pane">
+            <h3><?php echo $lang['DEVICES']; ?></h3>
+            <div class="col-md-8">
+                <!-- device type box -->
+                <?php $stats->drawDeviceTypeBox($db, $data, $lang); ?>
+                <!-- /device type box -->
+            </div>
+            <div class="col-md-4">
+                <!-- device type box -->
+                <?php $stats->drawOsBox($db, $data, $lang); ?>
+                <!-- /device type box -->
+            </div>
+        </div>
+        <div id="browser" class="tab-pane fade in">
+            <h3><?php echo $lang['BROWSER']; ?></h3>
+            <div class="col-md-6">
+                <!-- browser box -->
+                <?php $stats->drawBrowserBox($db, $data, $lang); ?>
+                <!-- /browser box -->
+            </div>
+            <div class="col-md-6">
+                ...
+            </div>
+        </div>
+        <div id="users" class="tab-pane fade in">
+            <h3><?php echo $lang['USERS']; ?></h3>
+            <div class="col-md-6">
+                <!-- login box -->
+                <?php $stats->drawLoginBox($db, $lang); ?>
+                <!-- / login box -->
+            </div>
+            <div class="col-md-6">
+                <!-- latest users box -->
+                <?php \YAWK\dashboard::drawLatestUsers($db, 8, $lang); ?>
+                <!-- / latest users box -->
+            </div>
+        </div>
+        <div id="os" class="tab-pane fade in">
+            <h3><?php echo $lang['OPERATING_SYSTEMS']; ?></h3>
+            <div class="col-md-12">
+                <!-- device type box -->
+                <?php $stats->drawOsVersionBox($db, $data, $lang); ?>
+                <!-- /device type box -->
+            </div>
+        </div>
+        <div id="pages" class="tab-pane fade in">
+            <h3><?php echo $lang['PAGES']; ?></h3>
+            <?php $stats->drawPagesBox($data, $lang); ?>
+        </div>
     </div>
-    <div class="col-md-4"><?php $stats->drawWeekdayBox($db, $data, $limit, $lang); ?></div>
-    <div class="col-md-4">
-
-        <!-- stats settings box -->
-        <div class="box">
-            <div class="box-header with-border">
-                <h3 class="box-title"><?php echo "$lang[SETTINGS] <small>$lang[FILTER_YOUR_VIEW]</small>"; ?></h3>
-            </div>
-            <div class="box-body">
-                <form action="index.php?page=stats" method="post">
-                    <label for="limit"><?php echo "$lang[VIEW_LATEST] <small><i>n</i></small> $lang[HITS], $lang[LEAVE_BLANK_FOR_ALL]"; ?></label>
-                    <input id="limit" name="limit" value="<?php echo $limit; ?>" type="text" placeholder="<?php echo $limit; ?>" class="form-control">
-                    <br>
-                    <button type="submit" class="btn btn-success pull-right"><i class="glyphicon glyphicon-refresh"></i>&nbsp; <?php echo "$lang[REFRESH_STATS]"; ?></button>
-                </form>
-            </div>
-        </div>
-        <!-- / stats settings box -->
-
-        <!-- user settings box -->
-        <?php $stats->drawUserStats($db, $lang); ?>
-        <!-- / user settings box -->
-        
     </div>
 </div>
 
-<div class="row">
-    <div class="col-md-8">
-        <!-- device type box -->
-        <?php
-        $daysOfMonth = date("t",mktime(0, 0, 0, 9, 1, 2017));
-        $daysOfMonth++; // Zähler bei 1
-        for($i = 1; $i < $daysOfMonth; $i++){
-        echo $i."\n";
-        }
-        ?>
 
-        <?php
-        $currentMonth = date("m");
-        $lastMonth  = date("m")-1;
-        echo "<hr>";
-        echo $lastMonth."<br>";
-        $date = new DateTime("2017-$currentMonth-01");
-        $dates = array();
+<br>
+<?php // $stats->drawTestBox(); ?>
 
-        foreach ( range(1, $date->format("t")) as $day ) {
-            $dates[] = $date->format("d.m.Y");
-            $date->modify("+1 day");
-        }
-
-        echo join('<br />', $dates);
-        ?>
-        <?php $stats->drawDeviceTypeBox($db, $data, $limit, $lang); ?>
-        <!-- /device type box -->
-
-        <!-- OS box -->
-        <div class="row">
-        <div class="col-md-6"><?php $stats->drawOsBox($db, $data, $limit, $lang); ?></div>
-        <div class="col-md-6"><?php $stats->drawOsVersionBox($db, $data, $limit, $lang); ?></div>
-        </div>
-        <!-- /OS box -->
-
-        <!-- browser box -->
-        <?php $stats->drawBrowserBox($db, $data, $limit, $lang); ?>
-        <!-- /browser box -->
-
-    </div>
-    <div class="col-md-4">
-
-        <!-- box -->
-        <?php $stats->drawDaytimeBox($db, $data, $limit, $lang); ?>
-        <!-- / box -->
-
-        <!-- box -->
-        <div class="box">
-            <div class="box-header with-border">
-                <h3 class="box-title"><?php echo "$lang[PAGE_VIEWS] <small> $lang[HITS_FROM_MOST_TO_LEAST]</small>"; ?></h3>
-            </div>
-                <?php
-                    $erg = array();
-                    if (is_array($data))
-                    {
-                        $data = array_slice($data, 0, $limit, true);
-                        foreach ($data AS $page => $value)
-                        {
-                            $erg[] = $value['page'];
-                        }
+<canvas id="myChart" width="400" height="400"></canvas>
+<script>
+    var ctx = document.getElementById("myChart").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
                     }
+                }]
+            }
+        }
+    });
+</script>
 
-                    $erg = (array_count_values($erg));
-                    arsort($erg);
-                echo "<div class=\"box-footer no-padding\">
-                <ul class=\"nav nav-pills nav-stacked\">";
+<script type="text/javascript">
+    // some jquery magic to remember select option status
+    $(document).ready(function() {
+        var getUrlParameter = function getUrlParameter(sParam) {
+            var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
 
-                // walk through array and display pages as nav pills
-            foreach ($erg as $page => $value)
-            {   // show only items where browser got a value
-                if ($value !== 0 && $page !== 0)
-                {   // get different textcolors
-                    echo "<li><a href=\"../$page\" target=\"_blank\"><b>$value</b> &nbsp;<span class=\"text-blue\">$page</span></a></li>";
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : sParameterName[1];
                 }
             }
+        };
 
-            echo "</ul>";
-              ?>
-                <!-- /.footer -->
-            </div>
-        </div>
-        <!-- / box -->
+        // period select field
+        var periodSelect = $( "#period" );
+        // interval select field
+        var intervalSelect = $( "#interval" );
+        // submit btn
+        var submitBtn = $( "#refresh" );
 
-    <!-- login box -->
-    <?php
-     $stats->drawLoginBox($db, $limit, $lang);
-    ?>
-    <!-- / login box -->
+        // on change of interval select option
+        $(intervalSelect).on('change', function() {
+            // current selected value
+            intervalSelectValue = this.value;
+            // save current intervalSelectValue to localStorage
+            localStorage.setItem('intervalSelect', intervalSelectValue);
+        });
 
-    </div>
+        // on change of period select option
+        $(periodSelect).on('change', function() {
+            // current selected value
+            periodSelectValue = this.value;
+            // save current periodSelectValue to localStorage
+            localStorage.setItem('periodSelect', periodSelectValue);
+        });
+
+        /*
+        // on change of period select option
+        $(submitBtn).on('click', function() {
+            // current periodValue
+            var currentPeriodSelectValue = $( "#period option:selected" ).val();
+            // current intervalValue
+            var currentIntervalSelectValue = $( "#interval option:selected" ).val();
+            // save current periodSelectValue to localStorage
+            localStorage.setItem('periodSelect', currentPeriodSelectValue);
+            localStorage.setItem('intervalSelect', currentIntervalSelectValue);
+        });
+        */
+
+        // get data from localStorage
+        lastPeriodSelectValue = localStorage.getItem('periodSelect');
+        lastIntervalSelectValue = localStorage.getItem('intervalSelect');
+
+        $(periodSelect).val(lastPeriodSelectValue); // change value
+        $(intervalSelect).val(lastIntervalSelectValue); // change value
+
+
+        // check if there are GET params...
+        var getPeriod = getUrlParameter('period');
+        var getInterval = getUrlParameter('interval');
+
+        // $( submitBtn ).trigger( "click" );
+
+        /*
+        // if getPeriod param is not set
+        if(getPeriod !== "")
+        {   // otherwise change value of period with GET param data
+            $(periodSelect).val(getPeriod); // change value
+        }
+
+        // if getInterval param is not set
+        if (getInterval !== "")
+        {   // update interval select field with GET param data
+            $(intervalSelect).val(getInterval); // change value
+        }
+        */
+    });
+</script>
