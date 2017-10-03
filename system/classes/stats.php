@@ -3341,6 +3341,13 @@ namespace YAWK
         <!-- /.box -->";
         }
 
+        /**
+         * Draw default box containing overview statistics
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param array $lang language array
+         */
         public function drawOverviewBox($lang)
         {
             echo "
@@ -3365,6 +3372,14 @@ namespace YAWK
 </div>";
         }
 
+        /**
+         * Draw default box containing pages statistics
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param array $data stats data array
+         * @param array $lang language array
+         */
         public function drawPagesBox($data, $lang)
         {
             echo "
@@ -3401,6 +3416,13 @@ namespace YAWK
             </div>";
         }
 
+        /**
+         * Draw default box containing days of month statistics
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param array $lang language array
+         */
         public function getDaysOfMonthBox($lang)
         {
             echo "<div class=\"box\">";
@@ -3414,50 +3436,6 @@ namespace YAWK
             }
             echo "</div>";
             echo "</div>"; // end box
-        }
-
-        public function drawTestBox()
-        {
-            echo "<canvas id=\"myChart57\" width=\"400\" height=\"400\" style=\"border: 1px solid #000;\"></canvas>
-<script>
-var ctx = document.getElementById(\"myChart57\").getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
-        }
-    }
-});
-</script>";
         }
 
     }
