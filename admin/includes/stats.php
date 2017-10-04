@@ -3,7 +3,6 @@
 <script src="../system/engines/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- ChartJS 1.0.1 -->
 <script src="../system/engines/AdminLTE/plugins/chartjs/Chart.min.js"></script>
-
 <style>
     .tab-content>.tab-pane {
         display: block;
@@ -14,7 +13,6 @@
         height: auto;
     }
 </style>
-
 <?php
 // check if stats object is here...
 if (!isset($stats) || (empty($stats)))
@@ -23,41 +21,29 @@ if (!isset($stats) || (empty($stats)))
     // and create new stats object
     $stats = new \YAWK\stats();
 }
+// check if GET param interval is set
 if (isset($_GET['interval']))
-{
-    $defaultInterval = $_GET['interval'];
-}
-    else if (isset($_POST['interval']))
-    {
-        $defaultInterval = $_POST['interval'];
-    }
-    else
-        {
-            $defaultInterval = 1;
-        }
+{   $defaultInterval = $_GET['interval']; }
+else if (isset($_POST['interval']))
+{   $defaultInterval = $_POST['interval']; }
+else
+// default interval value
+{   $defaultInterval = 1; }
 
+// check if GET param period is set
 if (isset($_GET['period']))
-{
-    $defaultPeriod = $_GET['period'];
-}
-    else if (isset($_POST['period']))
-    {
-        $defaultPeriod = $_POST['period'];
-    }
-    else
-        {
-            $defaultPeriod = "DAY";
-        }
+{ $defaultPeriod = $_GET['period']; }
+else if (isset($_POST['period']))
+{ $defaultPeriod = $_POST['period']; }
+else
+// default period value
+{ $defaultPeriod = "DAY"; }
 
 // $defaultInterval = 1;
 // $defaultPeriod = "DAY";
+// get stats into array
 $data = $stats->getStatsArray($db, $defaultInterval, $defaultPeriod);
 
-?>
-
-
-
-<?php
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
     <!-- Content Wrapper. Contains page content -->
@@ -69,20 +55,13 @@ echo \YAWK\backend::getTitle($lang['STATS'], $lang['STATS_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
             <li class=\"active\"><a href=\"index.php?page=yawk-stats\" title=\"$lang[STATS]\"> $lang[STATS]</a></li>
+            <li><a href=\"index.php?page=yawk-stats&interval=1&period=DAY\" title=\"$lang[LAST24H]\"> $lang[LAST24H]</a></li>
          </ol>
     </section>
     <!-- Main content -->
     <section class=\"content\">";
 /* page content start here */
-/*
-echo " Hits total: ";
-echo number_format($stats->i_hits, 0, '.', '.');
-echo "<pre>";
-print_r($data);
-echo "</pre>";
-*/
 ?>
-
 <div class="box">
     <div class="box-body">
         <form action="index.php?page=stats" method="post" class="form-inline">
@@ -116,81 +95,50 @@ echo "</pre>";
                         switch ($_POST['period']) {
                             case "SECONDS":
                                 if ($_POST['interval'] > 1)
-                                {
-                                    $description = $lang['SECONDS'];
-                                }
+                                { $description = $lang['SECONDS']; }
                                 else
-                                {
-                                    $description = $lang['SECOND'];
-                                }
+                                { $description = $lang['SECOND']; }
                                 break;
                             case "MINUTE":
                                 if ($_POST['interval'] > 1)
-                                {
-                                    $description = $lang['MINUTES'];
-                                }
+                                { $description = $lang['MINUTES']; }
                                 else
-                                {
-                                    $description = $lang['MINUTE'];
-                                }
+                                { $description = $lang['MINUTE']; }
                                 break;
                             case "HOUR":
                                 if ($_POST['interval'] > 1)
-                                {
-                                    $description = $lang['HOURS'];
-                                }
+                                { $description = $lang['HOURS']; }
                                 else
-                                {
-                                    $description = $lang['HOUR'];
-                                }
+                                { $description = $lang['HOUR']; }
                                 break;
                             case "DAY":
                                 if ($_POST['interval'] > 1)
-                                {
-                                    $description = $lang['DAYS'];
-                                }
+                                { $description = $lang['DAYS']; }
                                 else
-                                {
-                                    $description = $lang['DAY'];
-                                }
+                                { $description = $lang['DAY']; }
                                 break;
                             case "WEEK":
                                 if ($_POST['interval'] > 1)
-                                {
-                                    $description = $lang['WEEKS'];
-                                }
+                                { $description = $lang['WEEKS']; }
                                 else
-                                {
-                                    $description = $lang['WEEK'];
-                                }
+                                { $description = $lang['WEEK']; }
                                 break;
                             case "MONTH":
                                 if ($_POST['interval'] > 1)
-                                {
-                                    $description = $lang['MONTHS'];
-                                }
+                                { $description = $lang['MONTHS']; }
                                 else
-                                {
-                                    $description = $lang['MONTH'];
-                                }
+                                { $description = $lang['MONTH']; }
                                 break;
                             case "YEAR":
                                 if ($_POST['interval'] > 1)
-                                {
-                                    $description = $lang['YEARS'];
-                                }
+                                { $description = $lang['YEARS']; }
                                 else
-                                {
-                                    $description = $lang['YEAR'];
-                                }
+                                { $description = $lang['YEAR']; }
                                 break;
                         }
-
                         echo "<option value=\"$_POST[period]\" selected aria-selected=\"true\">$description</option>";
-
                     }
                     ?>
-
                     <option value="ALL">---</option>
                     <option value="SECONDS"><?php echo $lang['SECONDS']; ?></option>
                     <option value="MINUTE"><?php echo $lang['MINUTES']; ?></option>
@@ -200,13 +148,6 @@ echo "</pre>";
                     <option value="MONTH"><?php echo $lang['MONTHS']; ?></option>
                     <option value="YEAR"><?php echo $lang['YEARS']; ?></option>
                 </select>
-                <!--
-                <br><br>
-                <label for="limit"><?php //echo "$lang[VIEW_LATEST] <small><i>n</i></small> $lang[HITS], $lang[LEAVE_BLANK_FOR_ALL]"; ?></label>
-                <br>
-                <input id="limit" name="limit" value="<?php // echo $limit; ?>" type="text" placeholder="<?php // echo $limit; ?>" class="form-control">
-                <br>
-                -->
                 <button type="submit" id="refresh" name="refresh" class="btn btn-success" title="<?php echo $lang['REFRESH_STATS']; ?>"><i class="glyphicon glyphicon-refresh"></i>&nbsp; <?php echo "$lang[STATS]"; ?></button>
         </div>
     </form>
@@ -296,11 +237,93 @@ echo "</pre>";
     </div>
 </div>
 
+<div class="box">
+    <div class="box-header"><h3 class="box-title">Bar Chart</h3></div>
+    <div class="box-body">
+        <canvas id="myChart"></canvas>
+    </div>
+</div>
 
-<br>
-<?php // $stats->drawTestBox(); ?>
+<script type="text/javascript">
+    // some jquery magic to remember select option status
+    $(document).ready(function() {
+        var getUrlParameter = function getUrlParameter(sParam) {
+            var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
 
-<canvas id="myChart" width="400" height="400"></canvas>
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : sParameterName[1];
+                }
+            }
+        };
+
+        // period select field
+        var periodSelect = $( "#period" );
+        // interval select field
+        var intervalSelect = $( "#interval" );
+        // submit btn
+        var submitBtn = $( "#refresh" );
+/*
+        // on change of interval select option
+        $(intervalSelect).on('change', function() {
+            // current selected value
+            intervalSelectValue = this.value;
+            // save current intervalSelectValue to localStorage
+            localStorage.setItem('intervalSelect', intervalSelectValue);
+        });
+
+        // on change of period select option
+        $(periodSelect).on('change', function() {
+            // current selected value
+            periodSelectValue = this.value;
+            // save current periodSelectValue to localStorage
+            localStorage.setItem('periodSelect', periodSelectValue);
+        });
+*/
+        // on change of period select option
+        $(submitBtn).on('click', function() {
+            // current periodValue
+            var currentPeriodSelectValue = $( "#period option:selected" ).val();
+            // current intervalValue
+            var currentIntervalSelectValue = $( "#interval option:selected" ).val();
+            // save current periodSelectValue to localStorage
+            localStorage.setItem('periodSelect', currentPeriodSelectValue);
+            localStorage.setItem('intervalSelect', currentIntervalSelectValue);
+        });
+
+        // get data from localStorage
+        lastPeriodSelectValue = localStorage.getItem('periodSelect');
+        lastIntervalSelectValue = localStorage.getItem('intervalSelect');
+
+        $(periodSelect).val(lastPeriodSelectValue); // change value
+        $(intervalSelect).val(lastIntervalSelectValue); // change value
+
+        // check if there are GET params...
+        var getPeriod = getUrlParameter('period');
+        var getInterval = getUrlParameter('interval');
+
+        // $( submitBtn ).trigger( "click" );
+        /*
+        // if getPeriod param is not set
+        if(getPeriod !== "")
+        {   // otherwise change value of period with GET param data
+            $(periodSelect).val(getPeriod); // change value
+        }
+
+        // if getInterval param is not set
+        if (getInterval !== "")
+        {   // update interval select field with GET param data
+            $(intervalSelect).val(getInterval); // change value
+        }
+        */
+    });
+</script>
+
 <script>
     var ctx = document.getElementById("myChart").getContext('2d');
     var myChart = new Chart(ctx, {
@@ -338,89 +361,5 @@ echo "</pre>";
                 }]
             }
         }
-    });
-</script>
-
-<script type="text/javascript">
-    // some jquery magic to remember select option status
-    $(document).ready(function() {
-        var getUrlParameter = function getUrlParameter(sParam) {
-            var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-                sURLVariables = sPageURL.split('&'),
-                sParameterName,
-                i;
-
-            for (i = 0; i < sURLVariables.length; i++) {
-                sParameterName = sURLVariables[i].split('=');
-
-                if (sParameterName[0] === sParam) {
-                    return sParameterName[1] === undefined ? true : sParameterName[1];
-                }
-            }
-        };
-
-        // period select field
-        var periodSelect = $( "#period" );
-        // interval select field
-        var intervalSelect = $( "#interval" );
-        // submit btn
-        var submitBtn = $( "#refresh" );
-
-        // on change of interval select option
-        $(intervalSelect).on('change', function() {
-            // current selected value
-            intervalSelectValue = this.value;
-            // save current intervalSelectValue to localStorage
-            localStorage.setItem('intervalSelect', intervalSelectValue);
-        });
-
-        // on change of period select option
-        $(periodSelect).on('change', function() {
-            // current selected value
-            periodSelectValue = this.value;
-            // save current periodSelectValue to localStorage
-            localStorage.setItem('periodSelect', periodSelectValue);
-        });
-
-        /*
-        // on change of period select option
-        $(submitBtn).on('click', function() {
-            // current periodValue
-            var currentPeriodSelectValue = $( "#period option:selected" ).val();
-            // current intervalValue
-            var currentIntervalSelectValue = $( "#interval option:selected" ).val();
-            // save current periodSelectValue to localStorage
-            localStorage.setItem('periodSelect', currentPeriodSelectValue);
-            localStorage.setItem('intervalSelect', currentIntervalSelectValue);
-        });
-        */
-
-        // get data from localStorage
-        lastPeriodSelectValue = localStorage.getItem('periodSelect');
-        lastIntervalSelectValue = localStorage.getItem('intervalSelect');
-
-        $(periodSelect).val(lastPeriodSelectValue); // change value
-        $(intervalSelect).val(lastIntervalSelectValue); // change value
-
-
-        // check if there are GET params...
-        var getPeriod = getUrlParameter('period');
-        var getInterval = getUrlParameter('interval');
-
-        // $( submitBtn ).trigger( "click" );
-
-        /*
-        // if getPeriod param is not set
-        if(getPeriod !== "")
-        {   // otherwise change value of period with GET param data
-            $(periodSelect).val(getPeriod); // change value
-        }
-
-        // if getInterval param is not set
-        if (getInterval !== "")
-        {   // update interval select field with GET param data
-            $(intervalSelect).val(getInterval); // change value
-        }
-        */
     });
 </script>
