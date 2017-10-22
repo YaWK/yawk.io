@@ -23,7 +23,6 @@ namespace YAWK {
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        https://gist.github.com/sbmzhcn/6255314
-         * @return bool
          */
         static function array2lines($array, $property)
         {
@@ -189,6 +188,28 @@ namespace YAWK {
         public static function getBaseDir()
         {
             return substr($_SERVER['SCRIPT_NAME'], 0, strpos($_SERVER['SCRIPT_NAME'],basename($_SERVER['SCRIPT_NAME'])));
+        }
+
+        /**
+         * Generate a random password with given length
+         * @author      Daniel Retzl <danielretzl@gmail.com>
+         * @version     1.0.0
+         * @link        http://yawk.io
+         * @param int $length length of the password you wish to return
+         * @return string
+         */
+        public static function generateRandomPassword($length)
+        {
+            // if length is not set or wrong type
+            if (!isset($length) || (empty($length) || (!is_int($length))))
+            {   // generate password with default length (8 chars)
+                $length = 8;
+            }
+            // string with allowed chars - these can appear in the generated password
+            $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-=+;:,.?";
+            // generate password
+            $password = substr(str_shuffle($chars), 0, $length);
+            return $password;
         }
 
 
