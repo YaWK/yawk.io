@@ -1558,6 +1558,7 @@ namespace YAWK\PLUGINS\BLOG {
         function createItem($db, $blogid, $title, $subtitle, $published, $teasertext, $blogtext, $date_publish, $date_unpublish, $thumbnail, $youtubeUrl, $weblink)
         {
             /** @var $db \YAWK\db */
+
             $date_created = date("Y-m-d G:i:s");
             $alias = $title;
             /* alias string manipulation to generate a valid filename */
@@ -1570,7 +1571,8 @@ namespace YAWK\PLUGINS\BLOG {
             $alias = preg_replace("/[^a-z0-9\-\/]/i", "", $alias); // final check: just numbers and chars are allowed
 
             // ## select max id from pages
-            if ($res = $db->query("SELECT MAX(id) FROM {pages}")) {
+            if ($res = $db->query("SELECT MAX(id) FROM {pages}"))
+            {
                 $row = mysqli_fetch_row($res);
                 $page_id = $row[0] + 1;
                 $locked = 1;
@@ -1585,11 +1587,14 @@ namespace YAWK\PLUGINS\BLOG {
                                 '" . $alias . "',
                                 '" . $title . "',
                                 '" . $locked . "',
-                                '" . $blogid . "')")
+                                '" . $this->blogid . "')")
                 ) {   // q insert page into database failed
-                    \YAWK\alert::draw("danger", "Error: ", "Could not insert blog page into database.", "", "3800");
+                   //  \YAWK\alert::draw("danger", "Error: ", "Could not insert blog page into database.", "", "3800");
+                    \YAWK\sys::setSyslog($db, 1, "Could not insert blog page $alias into database.", 0, 0, 0, 0);
                     return false;
-                } else {   // all good, go ahead...
+                }
+                else
+                    {   // all good, go ahead...
                     // generate local meta tags
                     $desc = "description";
                     $keyw = "keywords";
@@ -1600,17 +1605,30 @@ namespace YAWK\PLUGINS\BLOG {
                     if (!$res = $db->query("INSERT INTO {meta_local} (name,page,content)
                         VALUES ('" . $desc . "', '" . $page_id . "', '" . $title . "')")
                     ) {   // insert local meta description failed, throw error
-                        \YAWK\alert::draw("warning", "Warning: ", "Could not store local meta description in database!", "", "3800");
+                        // \YAWK\alert::draw("warning", "Warning: ", "Could not store local meta description in database!", "", "3800");
+                        \YAWK\sys::setSyslog($db, 1, "Unable to store local meta description in database.", 0, 0, 0, 0);
                     }
                     if (!$res = $db->query("INSERT INTO {meta_local} (name,page,content)
                         VALUES ('" . $keyw . "','" . $page_id . "','" . $words . "')")
                     ) {   // insert local meta keywords failed, throw error
-                        \YAWK\alert::draw("warning", "Warning: ", "Could not store local meta keywords in database!", "", "3800");
+                        // \YAWK\alert::draw("warning", "Warning: ", "Could not store local meta keywords in database!", "", "3800");
+                        \YAWK\sys::setSyslog($db, 1, "Unable to store local meta keywords in database.", 0, 0, 0, 0);
                     }
 
                     /* generate ID manually to prevent id holes    */
-                    if ($res_blog = $db->query("SELECT MAX(id), MAX(sort) FROM {blog_items}")) {   // add ID
+                    if ($res_blog = $db->query("SELECT MAX(id), MAX(sort) FROM {blog_items}"))
+                    {   // add ID
                         $row = mysqli_fetch_row($res_blog);
+                        if (empty($row[0]))
+                        {
+                            $row[0] = 1;
+                            $id = $row[0] + 1;
+                        }
+                        if (empty($row[1]))
+                        {
+                            $row[1] = 1;
+                            $sort = $row[1] + 1;
+                        }
                         $id = $row[0] + 1;
                         $sort = $row[1] + 1;
                     }
@@ -1624,7 +1642,7 @@ namespace YAWK\PLUGINS\BLOG {
 
                     if ($res = $db->query("INSERT INTO {blog_items}
                                 (blogid,id,uid,pageid,sort,published,title,filename,subtitle,date_created,date_publish,date_unpublish,teasertext,blogtext,thumbnail,youtubeUrl,author,weblink)
-                          VALUES('" . $blogid . "',
+                          VALUES('" . $this->blogid . "',
                           '" . $id . "',
                           '" . $_SESSION['uid'] . "',
                           '" . $page_id . "',
@@ -1640,8 +1658,8 @@ namespace YAWK\PLUGINS\BLOG {
                           '" . $blogtext . "',
                           '" . $thumbnail . "',
                           '" . $youtubeUrl . "',
-                          '" . $weblink . "',
-                          '" . $_SESSION['username'] . "')"))
+                          '" . $_SESSION['username'] . "',
+                          '" . $weblink . "')"))
                     {
                         // define content of file
                         $content = "<?php \$blog_id = $blogid; \$item_id = $id; \$full_view = 1; include 'system/plugins/blog/blog.php'; ?>";
@@ -1655,12 +1673,14 @@ namespace YAWK\PLUGINS\BLOG {
                         }
                     } // ./ end insert blog item
                     else {   // insert blog item failed
-                        \YAWK\alert::draw("danger", "Error: ", "Could not insert blog item into database!", "", "3800");
+                        // \YAWK\alert::draw("danger", "Error: ", "Could not insert blog item into database!", "", "3800");
+                        \YAWK\sys::setSyslog($db, 1, "Unable to insert blog item to db, affected: ID: $id \"$alias\" into blog ID: $blogid", 0, 0, 0, 0);
                     }
                 } // ./ end insert blog page
             } // ./ end select MAXid
             else {   // q failed (getMAX id)
-                \YAWK\alert::draw("danger", "Error: ", "Could not get MAX id from pages database.", "", "3800");
+                // \YAWK\alert::draw("danger", "Error: ", "Could not get MAX id from pages database.", "", "3800");
+                \YAWK\sys::setSyslog($db, 1, "Unable to get MAX ID from pages database", 0, 0, 0, 0);
                 return false;
             }
             return true;

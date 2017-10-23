@@ -9,7 +9,8 @@ if (!isset($language) || (!isset($lang)))
     $lang = \YAWK\language::inject(@$lang, "../system/plugins/blog/language/");
 }
 
-if (isset($_POST['create']) && isset($_POST['blogid'])) {
+if (isset($_POST['create']) && isset($_POST['blogid']))
+{
     $blog = new \YAWK\PLUGINS\BLOG\blog();
     $blog->blogid = $db->quote($_POST['blogid']);
     $blog->title = $db->quote($_POST['title']);
@@ -26,18 +27,13 @@ if (isset($_POST['create']) && isset($_POST['blogid'])) {
     if ($blog->createItem($db, $blog->blogid, $blog->title, $blog->subtitle, $blog->published, $blog->teasertext, $blog->blogtext, $blog->date_publish, $blog->date_unpublish, $blog->thumbnail, $blog->youtubeUrl, $blog->weblink)) {
         // echo YAWK\alert::draw("success", "Success!", "Your entry $blog->title was saved.","plugin=blog&pluginpage=blog-entries&blogid=".$blog->blogid."", 9800);
         echo YAWK\alert::draw("success", "$lang[SUCCESS]", "$blog->title $lang[SAVED]", "plugin=blog&pluginpage=blog-entries&blogid=".$blog->blogid."", 0);
+        \YAWK\sys::setSyslog($db, 1, "Blog Item $blog->title saved.", 0, 0, 0, 0);
     }
     else
     {   // create failed, throw error
         \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[BLOG_ADD_ITEM_FAILED]","","3800");
+        \YAWK\sys::setSyslog($db, 1, "Unable to save Blog Item $blog->title.", 0, 0, 0, 0);
     }
-}
-
-if (isset($_GET['blogid']))
-{
-    $blog->icon = $blog->getBlogProperty($db, $_GET['blogid'], "icon");
-    $blog->name = $blog->getBlogProperty($db, $_GET['blogid'], "name");
-    $blog->id = $blog->getBlogProperty($db, $_GET['blogid'], "id");
 }
 
 // LOAD EDITOR JS + SETTINGS
@@ -306,8 +302,8 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
                 <label for="blogtitle"><?php print $lang['TITLE']; ?></label>
                 <input type="text"
                        class="form-control input-lg"
-                       id="blogtitle"
-                       name="blogtitle">
+                       id="title"
+                       name="title">
                 <br>
                 <?php if ($blog->layout !== "0")
                 {
@@ -583,9 +579,22 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
                     <!-- /.box-body -->
                 </div>
                 <!-- /. ADDITIONAL BOXES-->
+                <?php
+                    if (!isset($_GET['blogid']))
+                    {
+                        $blog->icon = $blog->getBlogProperty($db, $_GET['blogid'], "icon");
+                        $blog->name = $blog->getBlogProperty($db, $_GET['blogid'], "name");
+                        $blog->id = $blog->getBlogProperty($db, $_GET['blogid'], "id");
+                    }
+                    else
+                    {
+                        $blog->id = $_GET['blogid'];
+                    }
+                ?>
 
                 <!-- HIDDEN FIELDS -->
-                <input type="hidden" name="blogid" value="<?php print $blog->blogid; ?>">
+                <input type="hidden" name="create" value="1">
+                <input type="hidden" name="blogid" value="<?php print $blog->id; ?>">
                 <input type="hidden" name="itemid" value="<?php print $blog->itemid; ?>">
                 <input type="hidden" name="pageid" value="<?php print $blog->pageid; ?>">
                 <input type="hidden" name="oldteasertext" value="<?php print $blog->teasertext; ?>">
