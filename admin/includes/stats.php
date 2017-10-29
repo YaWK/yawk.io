@@ -3,6 +3,7 @@
 <script src="../system/engines/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- ChartJS 1.0.1 -->
 <script src="../system/engines/AdminLTE/plugins/chartjs/Chart.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script> -->
 <style>
     .tab-content>.tab-pane {
         display: block;
@@ -61,6 +62,9 @@ echo"<ol class=\"breadcrumb\">
     <!-- Main content -->
     <section class=\"content\">";
 /* page content start here */
+// include '../system/classes/statistics.php';
+// $oStat = new \YAWK\statistics();
+// echo $oStat->printObjectData();
 ?>
 <div class="box">
     <div class="box-body">
@@ -158,17 +162,17 @@ echo"<ol class=\"breadcrumb\">
     <div class="box-body">
 
 <ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#home"><?php echo $lang['OVERVIEW']; ?></a></li>
-    <li><a data-toggle="tab" href="#devices"><?php echo $lang['DEVICES']; ?></a></li>
-    <li><a data-toggle="tab" href="#browser"><?php echo $lang['BROWSER']; ?></a></li>
-    <li><a data-toggle="tab" href="#users"><?php echo $lang['USERS']; ?></a></li>
-    <li><a data-toggle="tab" href="#os"><?php echo $lang['OPERATING_SYSTEMS']; ?></a></li>
-    <li><a data-toggle="tab" href="#pages"><?php echo $lang['PAGES']; ?></a></li>
+    <li class="active"><a data-toggle="tab" href="#home"><i class="fa fa-pie-chart"></i> &nbsp;<?php echo $lang['OVERVIEW']; ?></a></li>
+    <li><a data-toggle="tab" href="#devices"><i class="fa fa-tablet"></i> &nbsp;<?php echo $lang['DEVICES']; ?></a></li>
+    <li><a data-toggle="tab" href="#browser"><i class="fa fa-firefox"></i> &nbsp;<?php echo $lang['BROWSER']; ?></a></li>
+    <li><a data-toggle="tab" href="#users"><i class="fa fa-users"></i> &nbsp;<?php echo $lang['USERS']; ?></a></li>
+    <li><a data-toggle="tab" href="#os"><i class="fa fa-windows"></i> &nbsp;<?php echo $lang['OPERATING_SYSTEMS']; ?></a></li>
+    <li><a data-toggle="tab" href="#pages"><i class="fa fa-file"></i> &nbsp;<?php echo $lang['PAGES']; ?></a></li>
 </ul>
 
     <div class="tab-content">
         <div id="home" class="tab-pane fade in active">
-            <h3><?php echo $lang['OVERVIEW']; ?></h3>
+            <h3><i class="fa fa-pie-chart"></i>&nbsp;<?php echo $lang['OVERVIEW']; ?></h3>
             <div class="col-md-8">
                 <!-- box -->
                 <?php $stats->drawOverviewBox($lang); ?>
@@ -185,7 +189,7 @@ echo"<ol class=\"breadcrumb\">
             </div>
         </div>
         <div id="devices" class="tab-pane">
-            <h3><?php echo $lang['DEVICES']; ?></h3>
+            <h3><i class="fa fa-tablet"></i> &nbsp;<?php echo $lang['DEVICES']; ?></h3>
             <div class="col-md-8">
                 <!-- device type box -->
                 <?php $stats->drawDeviceTypeBox($db, $data, $lang); ?>
@@ -198,7 +202,7 @@ echo"<ol class=\"breadcrumb\">
             </div>
         </div>
         <div id="browser" class="tab-pane fade in">
-            <h3><?php echo $lang['BROWSER']; ?></h3>
+            <h3><i class="fa fa-firefox"></i> &nbsp;<?php echo $lang['BROWSER']; ?></h3>
             <div class="col-md-6">
                 <!-- browser box -->
                 <?php $stats->drawBrowserBox($db, $data, $lang); ?>
@@ -209,7 +213,7 @@ echo"<ol class=\"breadcrumb\">
             </div>
         </div>
         <div id="users" class="tab-pane fade in">
-            <h3><?php echo $lang['USERS']; ?></h3>
+            <h3><i class="fa fa-users"></i> &nbsp;<?php echo $lang['USERS']; ?></h3>
             <div class="col-md-6">
                 <!-- login box -->
                 <?php $stats->drawLoginBox($db, $lang); ?>
@@ -222,7 +226,7 @@ echo"<ol class=\"breadcrumb\">
             </div>
         </div>
         <div id="os" class="tab-pane fade in">
-            <h3><?php echo $lang['OPERATING_SYSTEMS']; ?></h3>
+            <h3><i class="fa fa-windows"></i> &nbsp;<?php echo $lang['OPERATING_SYSTEMS']; ?></h3>
             <div class="col-md-12">
                 <!-- device type box -->
                 <?php $stats->drawOsVersionBox($db, $data, $lang); ?>
@@ -230,7 +234,7 @@ echo"<ol class=\"breadcrumb\">
             </div>
         </div>
         <div id="pages" class="tab-pane fade in">
-            <h3><?php echo $lang['PAGES']; ?></h3>
+            <h3><i class="fa fa-file"></i> &nbsp;<?php echo $lang['PAGES']; ?></h3>
             <?php $stats->drawPagesBox($data, $lang); ?>
         </div>
     </div>
