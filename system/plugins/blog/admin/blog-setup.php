@@ -28,7 +28,8 @@ $blog->name = $blog->getBlogProperty($db, $blog->id, "name");
 $blog->description = $blog->getBlogProperty($db, $blog->id, "description");
 $blog->icon = $blog->getBlogProperty($db, $blog->id, "icon");
 // if form is sent, prepare data
-if (isset($_POST['setup'])) {
+if (isset($_POST['setup']))
+{
     $blog->blogid = $_POST['blogid'];
     $blog->name = $db->quote($_POST['name']);
     $blog->description = $db->quote($_POST['description']);
@@ -110,29 +111,32 @@ if (isset($_POST['setup'])) {
         exit;
     }
 }
-/*
- * HERE IS THE BACKEND LOGIC
- */
-// get frontend settings
-$blog->showTitle = $blog->getBlogProperty($db, $blog->id, "showtitle");
-$blog->showDesc = $blog->getBlogProperty($db, $blog->id, "showdesc");
-$blog->showDate = $blog->getBlogProperty($db, $blog->id, "showdate");
-$blog->showAuthor = $blog->getBlogProperty($db, $blog->id, "showauthor");
-$blog->sequence = $blog->getBlogProperty($db, $blog->id, "sequence");
-$blog->sortation = $blog->getBlogProperty($db, $blog->id, "sortation");
-$blog->comments = $blog->getBlogProperty($db, $blog->id, "comments");
-$blog->permaLink = $blog->getBlogProperty($db, $blog->id, "permaLink");
-$blog->layout = $blog->getBlogProperty($db, $blog->id, "layout");
-$blog->gid = $blog->getBlogProperty($db, $blog->id, "gid");
-$blog->preview = $blog->getBlogProperty($db, $blog->id, "preview");
-$blog->voting = $blog->getBlogProperty($db, $blog->id, "voting");
+else
+    {
+        // get blog settings
+        $blog->showTitle = $blog->getBlogProperty($db, $blog->id, "showtitle");
+        $blog->showDesc = $blog->getBlogProperty($db, $blog->id, "showdesc");
+        $blog->showDate = $blog->getBlogProperty($db, $blog->id, "showdate");
+        $blog->showAuthor = $blog->getBlogProperty($db, $blog->id, "showauthor");
+        $blog->sequence = $blog->getBlogProperty($db, $blog->id, "sequence");
+        $blog->sortation = $blog->getBlogProperty($db, $blog->id, "sortation");
+        $blog->comments = $blog->getBlogProperty($db, $blog->id, "comments");
+        $blog->permaLink = $blog->getBlogProperty($db, $blog->id, "permaLink");
+        $blog->layout = $blog->getBlogProperty($db, $blog->id, "layout");
+        $blog->gid = $blog->getBlogProperty($db, $blog->id, "gid");
+        $blog->preview = $blog->getBlogProperty($db, $blog->id, "preview");
+        $blog->voting = $blog->getBlogProperty($db, $blog->id, "voting");
+    }
+
 
 // prepare HTML HELPER VARS, check if checkboxes needs to be checked (:
 // frontend settings checkboxes
 if ($blog->showTitle === '1') {
     $titleChecked = "checked";
+    $titleCheckedValue = 1;
 } else {
     $titleChecked = "";
+    $titleCheckedValue = 0;
 }
 if ($blog->showDesc === '1') {
     $descCheckbox = "checked";
@@ -232,7 +236,6 @@ if ($blog->voting === '1') {
 } else {
     $votingOnChecked = "";
 }
-
 // GO ON WITH THE PLAIN HTML FORM...
 ?>
 
@@ -259,22 +262,28 @@ echo "
 <div class="box box-default">
     <div class="box-body">
         <form action="index.php?plugin=blog&pluginpage=blog-setup" class="form-inline" role="form" method="POST">
+        <div class="row">
+            <div class="col-md-6">
+                <h4><?php echo $lang['BLOG']."&nbsp;".$lang['SETTINGS'].":&nbsp;<b>".$blog->name."</b>"; ?></h4>
+            </div>
+            <div class="col-md-6">
+                <!-- SAVE BUTTON -->
+                <input id="savebutton"
+                       class="btn btn-success pull-right"
+                       type="submit"
+                       name="create"
+                       value="<?php echo $lang['SAVE_SETTINGS']; ?>">&nbsp;
 
-            <!-- SAVE BUTTON -->
-            <input id="savebutton"
-                   class="btn btn-success pull-right"
-                   type="submit"
-                   name="create"
-                   value="<?php echo $lang['SAVE_SETTINGS']; ?>">&nbsp;
-
-            <!-- BACK BUTTON -->
-            <a class="btn btn-default pull-right" href="index.php?plugin=blog"><?php echo $lang['BACK']; ?></a><br>
-            <input name="setup"
-                   value="blog-create"
-                   type="hidden">
-            <input name="blogid"
-                   value="<?php echo $_GET['blogid']; ?>"
-                   type="hidden">
+                <!-- BACK BUTTON -->
+                <a class="btn btn-default pull-right" href="index.php?plugin=blog"><?php echo $lang['BACK']; ?></a><br>
+                <input name="setup"
+                       value="blog-create"
+                       type="hidden">
+                <input name="blogid"
+                       value="<?php echo $_GET['blogid']; ?>"
+                       type="hidden">
+            </div>
+        </div>
     </div>
 </div>
 
@@ -302,7 +311,7 @@ echo "
                            value="<?php echo $blog->name; ?>"><br><br>
 
 
-                    <label for = "description"><?php echo $lang['DESCRIPTION']; ?></label><br>
+                    <label for="description"><?php echo $lang['DESCRIPTION']; ?></label><br>
                     <textarea class="form-control"
                               cols="64"
                               rows="3"
@@ -311,7 +320,7 @@ echo "
                               id="description"
                               name="description"><?php echo $blog->description; ?></textarea><br><br>
 
-                    <label for = "icon"><?php echo $lang['ICON'] ?></label><br>
+                    <label for="icon"><?php echo $lang['ICON'] ?></label><br>
                     <input type="text"
                            class="form-control icp icp-auto iconpicker-element iconpicker-input"
                            size="50"
@@ -324,6 +333,7 @@ echo "
                 <div class="col-md-6">
                     <!-- FRONTEND SETTINGS -->
                     <h3><i class="fa fa-television"></i> <?php echo $lang['FRONTEND']."&nbsp;".$lang['SETTINGS']; ?></h3>
+
                             <label for="showTitle">
                             <input type="checkbox"
                                    class="form-inline"
