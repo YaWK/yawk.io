@@ -39,7 +39,8 @@ CREATE TABLE `cms_blog` (
   `permalink` int(1) NOT NULL DEFAULT '0',
   `layout` int(1) NOT NULL DEFAULT '0',
   `preview` int(1) NOT NULL DEFAULT '0',
-  `voting` int(1) NOT NULL DEFAULT '0'
+  `voting` int(1) NOT NULL DEFAULT '0',
+  `spacer` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
