@@ -389,7 +389,8 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
                             data-date-format="yyyy-mm-dd hh:mm:ss"
                             type="text"
                             name="date_publish"
-                            maxlength="19">
+                            maxlength="19"
+                            value="<?php echo date("Y-m-d H:i:s"); ?>"
 
                         <!-- end publish datetimepicker -->
                         <label for="datetimepicker2"><i class="fa fa-ban"></i> <?php print $lang['END_PUBLISH']; ?></label><br>
@@ -399,7 +400,8 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
                             id="datetimepicker2"
                             name="date_unpublish"
                             data-date-format="yyyy-MM-dd hh:mm:ss"
-                            maxlength="19">
+                            maxlength="19"
+                            value="0000-00-00 00:00:00">
 
                         <!-- group id selector -->
                         <label for="gidselect"><i class="fa fa-users"></i> <?php print $lang['PAGE_VISIBLE']; ?></label>
