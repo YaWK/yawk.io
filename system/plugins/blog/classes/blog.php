@@ -133,6 +133,8 @@ namespace YAWK\PLUGINS\BLOG {
         public $itemlayout;
         /** * @var int|string show blog item comments, yes or no */
         public $itemcomments;
+        /** * @var int 0|1 show a <hr> line between every item (article), yes or no */
+        public $spacer;
 
 
         /**
@@ -370,6 +372,7 @@ namespace YAWK\PLUGINS\BLOG {
             $frontendSortation = self::getBlogProperty($db, $blogid, "sortation");
             $frontendPreview = self::getBlogProperty($db, $blogid, "preview");
             $frontendVoting = self::getBlogProperty($db, $blogid, "voting");
+            $this->spacer = self::getBlogProperty($db, $blogid, "spacer");
             $frontendIcon = self::getBlogProperty($db, $blogid, "icon");
             $blog_gid = self::getBlogProperty($db, $blogid, "gid");
             // ORDER BY
@@ -445,7 +448,7 @@ namespace YAWK\PLUGINS\BLOG {
                     $time = $splitDate['time'];
 
                     // get weekday from datetime
-                    $weekday = \YAWK\sys::getWeekday($this->date_publish);
+                    $weekday = \YAWK\sys::getWeekday($this->date_publish, $lang);
 
                     // build a prettydate
                     $prettydate = "$weekday, $day. $month $year, $time";
@@ -503,7 +506,7 @@ namespace YAWK\PLUGINS\BLOG {
                         $showAllButton = '';
                     } else {
                         if ($frontendPreview === '0') {
-                            $showAllButton = "<a class='btn btn-default' role='button' href=\"$alias.html\"><i class='fa fa-bars'></i> &nbsp;alles anzeigen</a>";
+                            $showAllButton = "<a class=\"btn btn-default\" role=\"button\" href=\"$alias.html\"><i class=\"fa fa-bars\"></i> &nbsp;alles anzeigen</a>";
                         } else {
                             $showAllButton = '';
                         }
@@ -518,19 +521,22 @@ namespace YAWK\PLUGINS\BLOG {
                     // LAYOUT 4 = 1 col, YOUTUBE RESPONSIVE BLOG
 
                     if ($this->layout === '0') {   // LAYOUT 0 = 1 col, default text blog
-                        $this->html .= "<br><small class=\"pull-right\"><i>$this->permaLink$prettydate " . $author . "</i></small>";
+                        $this->html .= "<small class=\"pull-right\"><i>$this->permaLink$prettydate " . $author . "</i></small>";
                         $this->html .= "<h2>$this->title&nbsp;<small>$this->subtitle</small></h2>$this->teasertext" . $blogtextHtml . "";
                         // are comments enabled?
                         if ($this->comments !== '0') {
                             if (isset($full_view) && ($full_view === 1)) {   // full view, display comments
                                 $this->html .= self::draw_commentbox($db);
                             } else {   // display btn with link to the full view
-                                $this->html .= "<a class='btn btn-default' role='button' href=\"$alias.html\"><i class='fa fa-bars'></i> &nbsp;anzeigen</a><br><br><br>";
+                                $this->html .= "<br><a class='btn btn-default' role='button' href=\"$alias.html\"><i class='fa fa-bars'></i> &nbsp;anzeigen</a>";
                             }
                         } else {   // no comments, show all button
                             $this->html .= $showAllButton;
                         }
-                        $this->html .= "<hr>";
+                        if ($this->spacer === '1')
+                        {
+                            $this->html .= "<hr>";
+                        }
                     }
 
                     if ($this->layout === '1') {   // LAYOUT 1 = 2 cols, left thumbnail
@@ -548,10 +554,15 @@ namespace YAWK\PLUGINS\BLOG {
                             if (isset($full_view) && ($full_view === 1)) {  // full view, display comments
                                 $this->html .= self::draw_commentbox($db);
                             } else {   // display btn with link to the full view
-                                $this->html .= "<a class='btn btn-default' href=\"$alias.html\"><i class='fa fa-bars'></i> &nbsp;anzeigen</a><br><br><br>";
+                                $this->html .= "<br><a class='btn btn-default' href=\"$alias.html\"><i class='fa fa-bars'></i> &nbsp;anzeigen</a>";
                             }
                         } else {   // no comments, show all button
                             $this->html .= $showAllButton;
+                        }
+
+                        if ($this->spacer === '1')
+                        {
+                            $this->html .= "<hr>";
                         }
                         $this->html .= "</div>
                         </div>";
@@ -574,7 +585,12 @@ namespace YAWK\PLUGINS\BLOG {
                         } else {
                             $this->html .= $showAllButton;
                         }
-                        $this->html .= "<hr></div>
+
+                        if ($this->spacer === '1')
+                        {
+                            $this->html .= "<hr>";
+                        }
+                        $this->html .= "</div>
                       <div class=\"col-xs-6 col-md-4\">
                       <br>$imgHtml </div>
 
@@ -586,7 +602,7 @@ namespace YAWK\PLUGINS\BLOG {
                   <div class=\"col-xs-6 col-md-4\"><br>advertising space</div>
                   <div class=\"col-xs-6 col-md-4\">
                    <small class=\"pull-right\"><i>$this->permaLink$prettydate $author</i></small>
-                  <h2>$this->title&nbsp;<small>$this->subtitle</small></h2>$imgHtml $this->teasertext" . $blogtextHtml . "<hr>
+                  <h2>$this->title&nbsp;<small>$this->subtitle</small></h2>$imgHtml $this->teasertext" . $blogtextHtml . "
                   ";
                         // are comments enabled?
                         if ($this->comments !== '0') {
@@ -597,6 +613,11 @@ namespace YAWK\PLUGINS\BLOG {
                             }
                         } else {
                             $this->html .= $showAllButton;
+                        }
+
+                        if ($this->spacer === '1')
+                        {
+                            $this->html .= "<hr>";
                         }
                         $this->html .= "</div>
                   <div class=\"col-xs-6 col-md-4\"><br>advertising space
@@ -626,7 +647,11 @@ namespace YAWK\PLUGINS\BLOG {
                             } else {
                                 $this->html .= $showAllButton;
                             }
-                            $this->html .= "<hr>";
+
+                            if ($this->spacer === '1')
+                            {
+                                $this->html .= "<hr>";
+                            }
                         }
                     }
                 }
@@ -933,7 +958,8 @@ namespace YAWK\PLUGINS\BLOG {
                     preview = '" . $blog->preview . "',
                     voting = '" . $blog->voting . "',
                     layout = '" . $blog->layout . "',
-                    gid = '" . $blog->gid . "'
+                    gid = '" . $blog->gid . "',
+                    spacer = '" . $blog->spacer . "'
                     WHERE id = '" . $blog->blogid . "'"))
         {
             return true;

@@ -42,6 +42,7 @@ if (isset($_POST['setup']))
     $blog->permaLink = $_POST['permaLink'];
     $blog->preview = $_POST['preview'];
     $blog->voting = $_POST['voting'];
+    $blog->spacer = $_POST['spacer'];
 
     // set layout setting
     if (!isset($_POST['layout'])) {
@@ -95,6 +96,7 @@ else
         $blog->gid = $blog->getBlogProperty($db, $blog->blogid, "gid");
         $blog->preview = $blog->getBlogProperty($db, $blog->blogid, "preview");
         $blog->voting = $blog->getBlogProperty($db, $blog->blogid, "voting");
+        $blog->spacer = $blog->getBlogProperty($db, $blog->blogid, "spacer");
     }
 
 
@@ -137,6 +139,12 @@ if ($blog->preview === '1') {
 } else {
     $blog->preview = 0;
     $previewChecked = "";
+}
+if ($blog->spacer === '1') {
+    $spacerChecked = "checked";
+} else {
+    $blog->spacer = 0;
+    $spacerChecked = "";
 }
 
 // layout radio buttons
@@ -357,6 +365,16 @@ echo "
                             <?php echo $permaLinkChecked; ?>> <?php echo $lang['SHOW_PERMALINK_IN_FRONTEND']; ?>
                         </label><br>
 
+                    <input type="hidden" name="spacer" value="0">
+                    <label for="spacer">
+                        <input type="checkbox"
+                               class="form-inline"
+                               id="spacer"
+                               name="spacer"
+                               value="1"
+                            <?php echo $spacerChecked; ?>> <?php echo $lang['SHOW_HR_SEPERATOR']; ?>
+                    </label><br>
+
                     <input type="hidden" name="preview" value="0">
                         <label for="preview">
                             <input type="checkbox"
@@ -364,8 +382,9 @@ echo "
                                    id="preview"
                                    name="preview"
                                    value="1"
-                            <?php echo $previewChecked; ?>> Nur Preview anzeigen? <small>(&laquo;alles anzeigen&raquo; button verstecken)</small>
+                            <?php echo $previewChecked; ?>> <?php echo $lang['HIDE_SHOW_MORE_BTN']; ?>
                         </label><br>
+
                     </div>
                 </div>
             </div>
