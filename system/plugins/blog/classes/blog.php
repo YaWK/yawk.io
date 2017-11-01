@@ -158,7 +158,7 @@ namespace YAWK\PLUGINS\BLOG {
                     $language = new \YAWK\language();
                 }
                 // ok...
-                $language->init();
+                $language->init($db);
                 // convert lang object param to array
                 $lang = (array) $language->lang;
             }
@@ -908,33 +908,40 @@ namespace YAWK\PLUGINS\BLOG {
      * @version 1.0.0
      * @link http://yawk.io
      * @param object $db Database Object
-     * @param int $blogid The blog id of which we want to save properties
+     * @param object $blog The blog Object
      * @param string $property The property to get
      * @return bool
     */
-    function setup($db, $blogid)
+    public function setup($db, $blog)
     {
         /** @var $db \YAWK\db */
         // convert html special chars
-        $this->name = htmlentities($this->name);
-        $this->description = htmlentities($this->description);
-        return $db->query("UPDATE {blog} SET
+        $this->name = htmlentities($blog->name);
+        $this->description = htmlentities($blog->description);
+        if ($db->query("UPDATE {blog} SET
                     name = '" . $this->name . "',
                     description = '" . $this->description . "',
-                    icon = '" . $this->icon . "',
-                    showtitle = '" . $this->showTitle . "',
-                    showdesc = '" . $this->showDesc . "',
-                    showdate = '" . $this->showDate . "',
-                    showauthor = '" . $this->showAuthor . "',
-                    sequence = '" . $this->sequence . "',
-                    sortation = '" . $this->sortation . "',
-                    comments = '" . $this->comments . "',
-                    permalink = '" . $this->permaLink . "',
-                    preview = '" . $this->preview . "',
-                    voting = '" . $this->voting . "',
-                    layout = '" . $this->layout . "',
-                    gid = '" . $this->gid . "'
-                    WHERE id = '" . $blogid . "'");
+                    icon = '" . $blog->icon . "',
+                    showtitle = '" . $blog->showTitle . "',
+                    showdesc = '" . $blog->showDesc . "',
+                    showdate = '" . $blog->showDate . "',
+                    showauthor = '" . $blog->showAuthor . "',
+                    sequence = '" . $blog->sequence . "',
+                    sortation = '" . $blog->sortation . "',
+                    comments = '" . $blog->comments . "',
+                    permalink = '" . $blog->permaLink . "',
+                    preview = '" . $blog->preview . "',
+                    voting = '" . $blog->voting . "',
+                    layout = '" . $blog->layout . "',
+                    gid = '" . $blog->gid . "'
+                    WHERE id = '" . $blog->blogid . "'"))
+        {
+            return true;
+        }
+        else
+            {
+                return false;
+            }
     }
 
     /**
@@ -1075,7 +1082,7 @@ namespace YAWK\PLUGINS\BLOG {
         // get parent items
         $res = $db->query("SELECT * FROM {blog_comments} WHERE blogid = '" . $blogid . "' AND itemid = '" . $itemid . "' ORDER BY date_created DESC");
         while ($row = mysqli_fetch_assoc($res)) {
-            self::getComments($db, $blogid, $itemid, $row);
+            self::getComments($db, $blogid, $itemid);
             //     self::getAllComments($blogid, $itemid, $row);
         }
         $this->html .= "</div>";
@@ -1099,12 +1106,12 @@ namespace YAWK\PLUGINS\BLOG {
         /** @var $db \YAWK\db */
         /* ADMIN ONLY */
         // ADMIN? - SHOW ALL COMMENTS:
-        /*     if ($_SESSION['gid'] >=5) {
+                 if ($_SESSION['gid'] >=5) {
                  // GET COMMENTS
-                 $sql = mysqli_query($connection, "SELECT * FROM ".$dbprefix."blog_comments WHERE blogid = ".$blogid."");
+                 $sql = $db->query("SELECT * FROM {blog_comments} WHERE blogid = '".$blogid."'");
                  while($row = mysqli_fetch_row($sql)) {
 
-                     $sql2 = mysqli_query($connection, "SELECT username FROM ".$dbprefix."users WHERE id = '".$row['0']."'");
+                     $sql2 = $db->query("SELECT username FROM {users} WHERE id = '".$row[0]."'");
                      while($row2 = mysqli_fetch_row($sql2)) {
                          // DRAW COMMENTS
                          $this->comments .= "<i>von: <strong>$row2[0]</i></strong><br> &nbsp;$row[1]<br><br>";
@@ -1309,7 +1316,6 @@ namespace YAWK\PLUGINS\BLOG {
             }
             $row = '';
             $this->html .= self::getComments($db, $this->blogid, $this->itemid);
-            // $this->html .= self::getComments($this->blogid, $this->itemid);
             $this->html .= "</div>";
         return null;
         }
