@@ -240,14 +240,21 @@ namespace YAWK\PLUGINS\BLOG {
             }
 
             if ($showTitle && $showDesc === '1') {   // show title AND description
+                print "<div class=\"container-fluid\">";
                 echo "<h1>$icon &nbsp;$name <small>$description</small></h1>";
             }
             else if ($showTitle === '1' && $showDesc === '0') {   // just title
+                print "<div class=\"container-fluid\">";
                 echo "<h1>$icon &nbsp;$name</h1>";
             }
             else if ($showTitle === '0' && $showDesc === '1') {   // just show description
+                print "<div class=\"container-fluid\">";
                 echo "<h1>$icon $description</h1>";
             }
+            else
+                {   // just open a new container for following content (body, footer...)
+                    print "<div class=\"container-fluid\">";
+                }
             return null;
         }
 

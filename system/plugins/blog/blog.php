@@ -42,7 +42,6 @@ if ($published != 0) {
         $blog->getFooter($db);
     }
     // finally: draw the blog
-    print "<div class=\"container-fluid\">";
     print $blog->draw();
     print "</div>";
 
