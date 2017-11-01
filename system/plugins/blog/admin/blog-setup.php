@@ -18,15 +18,13 @@ if (!isset($language) || (!isset($lang)))
 YAWK\backend::getTitle($lang['BLOG'], $lang['BLOG_SETUP']);
 
 if (isset($_GET['blogid'])) { // if blog is set,
-    $blog->id = $_GET['blogid']; // load id to object
-} else {
-    $blog->id = 1; // else set default blogid
+    $blog->blogid = $_GET['blogid']; // load id to object
 }
 
 // and get blog settings
-$blog->name = $blog->getBlogProperty($db, $blog->id, "name");
-$blog->description = $blog->getBlogProperty($db, $blog->id, "description");
-$blog->icon = $blog->getBlogProperty($db, $blog->id, "icon");
+$blog->name = $blog->getBlogProperty($db, $blog->blogid, "name");
+$blog->description = $blog->getBlogProperty($db, $blog->blogid, "description");
+$blog->icon = $blog->getBlogProperty($db, $blog->blogid, "icon");
 // if form is sent, prepare data
 if (isset($_POST['setup']))
 {
@@ -37,41 +35,13 @@ if (isset($_POST['setup']))
     $blog->gid = $db->quote($_POST['gid']);
 
     // set frontend settings
-    if (!isset($_POST['showTitle'])) {
-        $blog->showTitle = 0;
-    } else {
-        $blog->showTitle = $_POST['showTitle'];
-    }
-    if (!isset($_POST['showDesc'])) {
-        $blog->showDesc = 0;
-    } else {
-        $blog->showDesc = $_POST['showDesc'];
-    }
-    if (!isset($_POST['showDate'])) {
-        $blog->showDate = 0;
-    } else {
-        $blog->showDate = $_POST['showDate'];
-    }
-    if (!isset($_POST['showAuthor'])) {
-        $blog->showAuthor = 0;
-    } else {
-        $blog->showAuthor = $_POST['showAuthor'];
-    }
-    if (!isset($_POST['permaLink'])) {
-        $blog->permaLink = 0;
-    } else {
-        $blog->permaLink = $_POST['permaLink'];
-    }
-    if (!isset($_POST['preview'])) {
-        $blog->preview = 0;
-    } else {
-        $blog->preview = $_POST['preview'];
-    }
-    if (!isset($_POST['voting'])) {
-        $blog->voting = 0;
-    } else {
-        $blog->voting = $_POST['voting'];
-    }
+    $blog->showTitle = $_POST['showTitle'];
+    $blog->showDesc = $_POST['showDesc'];
+    $blog->showDate = $_POST['showDate'];
+    $blog->showAuthor = $_POST['showAuthor'];
+    $blog->permaLink = $_POST['permaLink'];
+    $blog->preview = $_POST['preview'];
+    $blog->voting = $_POST['voting'];
 
     // set layout setting
     if (!isset($_POST['layout'])) {
@@ -100,32 +70,31 @@ if (isset($_POST['setup']))
     }
 
     // finally: save blog settings
-    if ($blog->setup($db, $blog->blogid))
+    if ($blog->setup($db, $blog))
     {   // success
-        echo YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[SETTINGS_SAVED]","","1200");
-
+        echo YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[SETTINGS_SAVED]","", 1200);
     }
     else
     {   // setup failed, throw error
         echo YAWK\alert::draw("danger", "$lang[ERROR] ", "$lang[SETTINGS] $lang[BLOG] $lang[ID] " . $_POST['blogid'] . " " . $blog->name . " - " . $blog->description . " $lang[NOT_SAVED]","plugin=blog","3800");
-        exit;
     }
+
 }
 else
     {
         // get blog settings
-        $blog->showTitle = $blog->getBlogProperty($db, $blog->id, "showtitle");
-        $blog->showDesc = $blog->getBlogProperty($db, $blog->id, "showdesc");
-        $blog->showDate = $blog->getBlogProperty($db, $blog->id, "showdate");
-        $blog->showAuthor = $blog->getBlogProperty($db, $blog->id, "showauthor");
-        $blog->sequence = $blog->getBlogProperty($db, $blog->id, "sequence");
-        $blog->sortation = $blog->getBlogProperty($db, $blog->id, "sortation");
-        $blog->comments = $blog->getBlogProperty($db, $blog->id, "comments");
-        $blog->permaLink = $blog->getBlogProperty($db, $blog->id, "permaLink");
-        $blog->layout = $blog->getBlogProperty($db, $blog->id, "layout");
-        $blog->gid = $blog->getBlogProperty($db, $blog->id, "gid");
-        $blog->preview = $blog->getBlogProperty($db, $blog->id, "preview");
-        $blog->voting = $blog->getBlogProperty($db, $blog->id, "voting");
+        $blog->showTitle = $blog->getBlogProperty($db, $blog->blogid, "showtitle");
+        $blog->showDesc = $blog->getBlogProperty($db, $blog->blogid, "showdesc");
+        $blog->showDate = $blog->getBlogProperty($db, $blog->blogid, "showdate");
+        $blog->showAuthor = $blog->getBlogProperty($db, $blog->blogid, "showauthor");
+        $blog->sequence = $blog->getBlogProperty($db, $blog->blogid, "sequence");
+        $blog->sortation = $blog->getBlogProperty($db, $blog->blogid, "sortation");
+        $blog->comments = $blog->getBlogProperty($db, $blog->blogid, "comments");
+        $blog->permaLink = $blog->getBlogProperty($db, $blog->blogid, "permaLink");
+        $blog->layout = $blog->getBlogProperty($db, $blog->blogid, "layout");
+        $blog->gid = $blog->getBlogProperty($db, $blog->blogid, "gid");
+        $blog->preview = $blog->getBlogProperty($db, $blog->blogid, "preview");
+        $blog->voting = $blog->getBlogProperty($db, $blog->blogid, "voting");
     }
 
 
@@ -136,31 +105,37 @@ if ($blog->showTitle === '1') {
     $titleCheckedValue = 1;
 } else {
     $titleChecked = "";
+    $blog->showTitle = 0;
     $titleCheckedValue = 0;
 }
 if ($blog->showDesc === '1') {
     $descCheckbox = "checked";
 } else {
+    $blog->showDesc = 0;
     $descCheckbox = "";
 }
 if ($blog->showDate === '1') {
     $dateChecked = "checked";
 } else {
+    $blog->showDate= 0;
     $dateChecked = "";
 }
 if ($blog->showAuthor === '1') {
     $authorChecked = "checked";
 } else {
+    $blog->showAuthor = 0;
     $authorChecked = "";
 }
 if ($blog->permaLink === '1') {
     $permaLinkChecked = "checked";
 } else {
+    $blog->permaLink = 0;
     $permaLinkChecked = "";
 }
 if ($blog->preview === '1') {
     $previewChecked = "checked";
 } else {
+    $blog->preview = 0;
     $previewChecked = "";
 }
 
@@ -261,7 +236,7 @@ echo "
 ?>
 <div class="box box-default">
     <div class="box-body">
-        <form action="index.php?plugin=blog&pluginpage=blog-setup" class="form-inline" role="form" method="POST">
+        <form action="index.php?plugin=blog&pluginpage=blog-setup&blogid=<?php echo $blog->blogid; ?>" class="form-inline" role="form" method="POST">
         <div class="row">
             <div class="col-md-6">
                 <h4><?php echo $lang['BLOG']."&nbsp;".$lang['SETTINGS'].":&nbsp;<b>".$blog->name."</b>"; ?></h4>
@@ -333,7 +308,7 @@ echo "
                 <div class="col-md-6">
                     <!-- FRONTEND SETTINGS -->
                     <h3><i class="fa fa-television"></i> <?php echo $lang['FRONTEND']."&nbsp;".$lang['SETTINGS']; ?></h3>
-
+                    <input type="hidden" name="showTitle" value="0">
                             <label for="showTitle">
                             <input type="checkbox"
                                    class="form-inline"
@@ -342,6 +317,7 @@ echo "
                                    value="1" <?php echo $titleChecked; ?>> <?php echo $lang['SHOW_TITLE_IN_FRONTEND']; ?>
                             </label><br>
 
+                    <input type="hidden" name="showDesc" value="0">
                         <label for="showDesc">
                             <input type="checkbox"
                                    class="form-inline"
@@ -351,6 +327,7 @@ echo "
                                 <?php echo $descCheckbox; ?>> <?php echo $lang['SHOW_DESC_IN_FRONTEND']; ?>
                         </label><br>
 
+                    <input type="hidden" name="showDate" value="0">
                         <label for="showDate">
                             <input type="checkbox"
                                    class="form-inline"
@@ -360,6 +337,7 @@ echo "
                                 <?php echo $dateChecked; ?>> <?php echo $lang['SHOW_DATE_IN_FRONTEND']; ?>
                         </label><br>
 
+                    <input type="hidden" name="showAuthor" value="0">
                         <label for="showAuthor">
                             <input type="checkbox"
                                    class="form-inline"
@@ -369,6 +347,7 @@ echo "
                             <?php echo $authorChecked; ?>> <?php echo $lang['SHOW_AUTHOR_IN_FRONTEND']; ?>
                         </label><br>
 
+                    <input type="hidden" name="permaLink" value="0">
                         <label for="permaLink">
                             <input type="checkbox"
                                    class="form-inline"
@@ -378,6 +357,7 @@ echo "
                             <?php echo $permaLinkChecked; ?>> <?php echo $lang['SHOW_PERMALINK_IN_FRONTEND']; ?>
                         </label><br>
 
+                    <input type="hidden" name="preview" value="0">
                         <label for="preview">
                             <input type="checkbox"
                                    class="form-inline"
