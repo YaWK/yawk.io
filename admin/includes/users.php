@@ -156,7 +156,7 @@ echo"<ol class=\"breadcrumb\">
                 <td>".$row['gid']."</td>
                 <td><a title=\"send Email\" href=\"index.php?page=email-new&user=".$row['username']."\">".$row['email']."</a></td>
                 <td>".$row['date_lastlogin']."</td>
-                <td class=\"text-center\">".$row['login_count']."</td>
+                <td class=\"text-center\"><a href=\"index.php?page=logins&user=".$row['username']."\" target=\"_self\" title=\"$lang[SHOW_LOGINS_OF]".$row['username']."\">".$row['login_count']."</a></td>
                 
                 <td class=\"text-center\">
                    <a class=\"fa fa-envelope-o\" title=\"send Email\" href=\"index.php?page=email-new&user=".$row['username']."\"></a>
