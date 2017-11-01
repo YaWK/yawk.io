@@ -80,6 +80,7 @@ CREATE TABLE `cms_blog_items` (
   `sort` int(11) NOT NULL,
   `published` int(1) NOT NULL DEFAULT '1',
   `itemgid` int(2) NOT NULL DEFAULT '1',
+  `teaser` int(1) NOT NULL DEFAULT '0',
   `title` varchar(255) NOT NULL,
   `filename` varchar(255) NOT NULL,
   `subtitle` varchar(255) NOT NULL,
