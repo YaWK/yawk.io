@@ -43,6 +43,7 @@ if (isset($_POST['setup']))
     $blog->preview = $_POST['preview'];
     $blog->voting = $_POST['voting'];
     $blog->spacer = $_POST['spacer'];
+    $blog->frontendIcon = $_POST['frontendIcon'];
 
     // set layout setting
     if (!isset($_POST['layout'])) {
@@ -97,6 +98,7 @@ else
         $blog->preview = $blog->getBlogProperty($db, $blog->blogid, "preview");
         $blog->voting = $blog->getBlogProperty($db, $blog->blogid, "voting");
         $blog->spacer = $blog->getBlogProperty($db, $blog->blogid, "spacer");
+        $blog->frontendIcon = $blog->getBlogProperty($db, $blog->blogid, "frontendIcon");
     }
 
 
@@ -145,6 +147,12 @@ if ($blog->spacer === '1') {
 } else {
     $blog->spacer = 0;
     $spacerChecked = "";
+}
+if ($blog->frontendIcon === '1') {
+    $frontendIconChecked = "checked";
+} else {
+    $blog->frontendIcon = 0;
+    $frontendIconChecked = "";
 }
 
 // layout radio buttons
@@ -316,14 +324,23 @@ echo "
                 <div class="col-md-6">
                     <!-- FRONTEND SETTINGS -->
                     <h3><i class="fa fa-television"></i> <?php echo $lang['FRONTEND']."&nbsp;".$lang['SETTINGS']; ?></h3>
+                    <input type="hidden" name="frontendIcon" value="0">
+                    <label for="frontendIcon">
+                        <input type="checkbox"
+                               class="form-inline"
+                               id="frontendIcon"
+                               name="frontendIcon"
+                               value="1" <?php echo $frontendIconChecked; ?>> <?php echo $lang['SHOW_ICON_IN_FRONTEND']; ?>
+                    </label><br>
+
                     <input type="hidden" name="showTitle" value="0">
-                            <label for="showTitle">
-                            <input type="checkbox"
-                                   class="form-inline"
-                                   id="showTitle"
-                                   name="showTitle"
-                                   value="1" <?php echo $titleChecked; ?>> <?php echo $lang['SHOW_TITLE_IN_FRONTEND']; ?>
-                            </label><br>
+                    <label for="showTitle">
+                        <input type="checkbox"
+                               class="form-inline"
+                               id="showTitle"
+                               name="showTitle"
+                               value="1" <?php echo $titleChecked; ?>> <?php echo $lang['SHOW_TITLE_IN_FRONTEND']; ?>
+                    </label><br>
 
                     <input type="hidden" name="showDesc" value="0">
                         <label for="showDesc">

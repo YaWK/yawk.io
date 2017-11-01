@@ -135,6 +135,8 @@ namespace YAWK\PLUGINS\BLOG {
         public $itemcomments;
         /** * @var int 0|1 show a <hr> line between every item (article), yes or no */
         public $spacer;
+        /** * @var int 0|1 display blog icon in frontend */
+        public $frontendIcon;
 
 
         /**
@@ -232,24 +234,36 @@ namespace YAWK\PLUGINS\BLOG {
             $description = self::getBlogProperty($db, $blogid, "description");
             $name = self::getBlogProperty($db, $blogid, "name");
             $icon = self::getBlogProperty($db, $blogid, "icon");
+            $frontendIcon = self::getBlogProperty($db, $blogid, "frontendIcon");
 
-            if (!empty($icon)) {   // set font awesome icon
-                $icon = "<i class=\"fa $icon\"\"></i>";
-            } else {   // set no icon
-                $icon = '';
+            // if frontend icon is enabled
+            if ($frontendIcon === '1')
+            {   // check if icon is set and display it
+                if (!empty($icon))
+                {   // set font awesome icon
+                    $icon = "<i class=\"fa $icon\"></i>&nbsp;";
+                }
+                else
+                    {   // no icon
+                        $icon = '';
+                    }
             }
+            else
+                {
+                    $icon = '';
+                }
 
             if ($showTitle && $showDesc === '1') {   // show title AND description
                 print "<div class=\"container-fluid\">";
-                echo "<h1>$icon &nbsp;$name <small>$description</small></h1>";
+                echo "<h1>$icon$name <small>$description</small></h1>";
             }
             else if ($showTitle === '1' && $showDesc === '0') {   // just title
                 print "<div class=\"container-fluid\">";
-                echo "<h1>$icon &nbsp;$name</h1>";
+                echo "<h1>$icon$name</h1>";
             }
             else if ($showTitle === '0' && $showDesc === '1') {   // just show description
                 print "<div class=\"container-fluid\">";
-                echo "<h1>$icon $description</h1>";
+                echo "<h1>$icon$description</h1>";
             }
             else
                 {   // just open a new container for following content (body, footer...)
@@ -966,7 +980,8 @@ namespace YAWK\PLUGINS\BLOG {
                     voting = '" . $blog->voting . "',
                     layout = '" . $blog->layout . "',
                     gid = '" . $blog->gid . "',
-                    spacer = '" . $blog->spacer . "'
+                    spacer = '" . $blog->spacer . "',
+                    frontendIcon = '" . $blog->frontendIcon . "'
                     WHERE id = '" . $blog->blogid . "'"))
         {
             return true;
