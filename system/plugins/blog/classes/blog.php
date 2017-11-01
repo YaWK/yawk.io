@@ -45,6 +45,8 @@ namespace YAWK\PLUGINS\BLOG {
         public $itemid;
         /** * @var int item group ID */
         public $itemgid;
+        /** * @var int 0|1 teaser yes/no */
+        public $teaser;
         /** * @var string blog title */
         public $title;
         /** * @var string blog filename */
@@ -236,6 +238,7 @@ namespace YAWK\PLUGINS\BLOG {
             $icon = self::getBlogProperty($db, $blogid, "icon");
             $frontendIcon = self::getBlogProperty($db, $blogid, "frontendIcon");
 
+
             // if frontend icon is enabled
             if ($frontendIcon === '1')
             {   // check if icon is set and display it
@@ -244,12 +247,12 @@ namespace YAWK\PLUGINS\BLOG {
                     $icon = "<i class=\"fa $icon\"></i>&nbsp;";
                 }
                 else
-                    {   // no icon
+                    {   // no icon is set, leave empty
                         $icon = '';
                     }
             }
             else
-                {
+                {   // icon disabled
                     $icon = '';
                 }
 
@@ -387,6 +390,7 @@ namespace YAWK\PLUGINS\BLOG {
             // if no itemid is set, set the sql code for all items, vice versa.
             if ($itemid != 0) $sql = "AND id = '$itemid'"; else $sql = '';
             // get settings (frontend view)
+
             $frontendShowDate = self::getBlogProperty($db, $blogid, "showdate");
             $frontendShowAuthor = self::getBlogProperty($db, $blogid, "showauthor");
             $frontendSequence = self::getBlogProperty($db, $blogid, "sequence");
@@ -396,24 +400,36 @@ namespace YAWK\PLUGINS\BLOG {
             $this->spacer = self::getBlogProperty($db, $blogid, "spacer");
             $frontendIcon = self::getBlogProperty($db, $blogid, "icon");
             $blog_gid = self::getBlogProperty($db, $blogid, "gid");
+
+
             // ORDER BY
-            if ($frontendSequence === '0') {
+            if ($frontendSequence === '0')
+            {
                 $this->sequence = "date_publish";
-            } else if ($frontendSequence === '1') {
+            }
+            else if ($frontendSequence === '1')
+            {
                 $this->sequence = "title";
             }
+
             // SORT
-            if ($frontendSortation === '0') {
+            if ($frontendSortation === '0')
+            {
                 $this->sortation = "ASC";
-            } else if ($frontendSortation === '1') {
+            }
+            else if ($frontendSortation === '1')
+            {
                 $this->sortation = "DESC";
             }
 
-            if ($limit != 0) {
+            if ($limit != 0)
+            {
                 $limitSql = "LIMIT $limit";
-            } else {
-                $limitSql = '';
             }
+            else
+                {
+                    $limitSql = '';
+                }
 
             // select settings for given blog id
             $res = $db->query("SELECT * FROM {blog_items}
@@ -422,7 +438,8 @@ namespace YAWK\PLUGINS\BLOG {
                                          ORDER BY " . $this->sequence . " " . $this->sortation . "
                                          $limitSql");
             // fetch data in loop
-            while ($row = mysqli_fetch_array($res)) {   // set blog item properties
+            while ($row = mysqli_fetch_array($res))
+            {   // set blog item properties
                 $this->itemid = $row['id'];
                 $this->uid = $row['uid'];
                 $this->gid = $row['uid'];
@@ -459,7 +476,8 @@ namespace YAWK\PLUGINS\BLOG {
                 }
 
 
-                if ($frontendShowDate === '1') {   // show date of this entry
+                if ($frontendShowDate === '1')
+                {   // show date of this entry
                     /* date string to array function */
                     $splitDate = \YAWK\sys::splitDate($this->date_publish);
                     /* set seperated vars */
@@ -474,65 +492,88 @@ namespace YAWK\PLUGINS\BLOG {
                     // build a prettydate
                     $prettydate = "$weekday, $day. $month $year, $time";
                     $prettydate = trim($prettydate);
-                } else {   // display no date
-                    $prettydate = '';
                 }
+                else
+                    {   // display no date
+                        $prettydate = '';
+                    }
 
-                if ($this->permaLink === '1') {   // show permalink of this entry
+                if ($this->permaLink === '1')
+                {   // show permalink of this entry
                     $host = \YAWK\settings::getSetting($db, "host");
                     $page = new \YAWK\page();
                     $alias = $page->getProperty($db, $this->pageid, "alias");
                     $this->permaLink = "share this URL: <a href=\"$host/$alias.html\">$host/$alias.html</a>";
-                } else {   // no permalink
-                    $page = new \YAWK\page();
-                    $alias = $page->getProperty($db, $this->pageid, "alias");
-                    $this->permaLink = '';
                 }
+                else
+                    {   // no permalink
+                        $page = new \YAWK\page();
+                        $alias = $page->getProperty($db, $this->pageid, "alias");
+                        $this->permaLink = '';
+                    }
 
-                if ($frontendShowAuthor === '1') {   //  show author of this entry
+                if ($frontendShowAuthor === '1')
+                {   //  show author of this entry
                     $author = "by <strong>$this->author</strong>";
-                } else {   // do not display author
-                    $author = '';
                 }
+                else
+                    {   // do not display author
+                        $author = '';
+                    }
 
-                if ($frontendVoting === '1') {   // show voting box
+                if ($frontendVoting === '1')
+                {   // show voting box
                     $voting = self::drawVotingBox($db, $this->voteUp, $this->voteDown);
-                } else {   // no voting
-                    $voting = '';
                 }
+                else
+                    {   // no voting
+                        $voting = '';
+                    }
 
                 // current date + time
                 $atm = date("Y-m-d G:i:s");
 
                 // check publish date and show entry
-                if ($atm < $this->date_publish) {
+                if ($atm < $this->date_publish)
+                {
                     $this->html .= "";
                 }
-                if (isset($_SESSION['gid'])) {
+                if (isset($_SESSION['gid']))
+                {
                     $session_gid = $_SESSION['gid'];
-                } else {
-                    $session_gid = 1;
                 }
+                else
+                    {
+                        $session_gid = 1;
+                    }
                 // check if content is outdated
-                if ($this->date_unpublish < $atm XOR $this->date_unpublish === "0000-00-00 00:00:00") {
+                if ($this->date_unpublish < $atm XOR $this->date_unpublish === "0000-00-00 00:00:00")
+                {
                     $this->html .= ""; // do nothing
                 } // check publish date and show entry
-                else if ($atm > $this->date_publish && $session_gid >= $this->gid && $session_gid >= $blog_gid) {
+                else if ($atm > $this->date_publish && $session_gid >= $this->gid && $session_gid >= $blog_gid)
+                {
                     // publish datetime is behind us, so display the blog
                     // 1.) check & get settings, 2. check layouts, 3. draw
 
                     // check & build vars for single entry FULL view
-                    if (isset($full_view) && ($full_view === 1)) {
+                    if (isset($full_view) && ($full_view === 1))
+                    {
                         $blogtextHtml = $this->blogtext;
                         $showAllButton = '';
-                    } else {
-                        if ($frontendPreview === '0') {
-                            $showAllButton = "<a class=\"btn btn-default\" role=\"button\" href=\"$alias.html\"><i class=\"fa fa-bars\"></i> &nbsp;alles anzeigen</a>";
-                        } else {
-                            $showAllButton = '';
-                        }
-                        $blogtextHtml = '';
                     }
+                    else
+                        {
+                            if ($frontendPreview === '0')
+                            {
+                                $showAllButton = "<a class=\"btn btn-default\" role=\"button\" href=\"$alias.html\"><i class=\"fa fa-bars\"></i> &nbsp;alles anzeigen</a>";
+                            }
+                            else
+                                {
+                                    $showAllButton = '';
+                                }
+                        $blogtextHtml = '';
+                        }
 
                     // check & set the different layouts
                     // LAYOUT 0 = 1 col, TEXT BLOG
@@ -541,26 +582,34 @@ namespace YAWK\PLUGINS\BLOG {
                     // LAYOUT 3 = 1 col, NEWSPAPER STYLE
                     // LAYOUT 4 = 1 col, YOUTUBE RESPONSIVE BLOG
 
-                    if ($this->layout === '0') {   // LAYOUT 0 = 1 col, default text blog
+                    if ($this->layout === '0')
+                    {   // LAYOUT 0 = 1 col, default text blog
                         $this->html .= "<small class=\"pull-right\"><i>$this->permaLink$prettydate " . $author . "</i></small>";
                         $this->html .= "<h2>$this->title&nbsp;<small>$this->subtitle</small></h2>$this->teasertext" . $blogtextHtml . "";
                         // are comments enabled?
-                        if ($this->comments !== '0') {
-                            if (isset($full_view) && ($full_view === 1)) {   // full view, display comments
+                        if ($this->comments !== '0')
+                        {
+                            if (isset($full_view) && ($full_view === 1))
+                            {   // full view, display comments
                                 $this->html .= self::draw_commentbox($db);
-                            } else {   // display btn with link to the full view
-                                $this->html .= "<br><a class='btn btn-default' role='button' href=\"$alias.html\"><i class='fa fa-bars'></i> &nbsp;anzeigen</a>";
                             }
-                        } else {   // no comments, show all button
-                            $this->html .= $showAllButton;
+                            else
+                                {   // display btn with link to the full view
+                                    $this->html .= "<br><a class='btn btn-default' role='button' href=\"$alias.html\"><i class='fa fa-bars'></i> &nbsp;anzeigen</a>";
+                                }
                         }
+                        else
+                            {   // no comments, show all button
+                                $this->html .= $showAllButton;
+                            }
                         if ($this->spacer === '1')
                         {
                             $this->html .= "<hr>";
                         }
                     }
 
-                    if ($this->layout === '1') {   // LAYOUT 1 = 2 cols, left thumbnail
+                    if ($this->layout === '1')
+                    {   // LAYOUT 1 = 2 cols, left thumbnail
                         if (!empty($this->thumbnail)) $imgHtml = "<br><img src=\"" . $this->thumbnail . "\" class=\"img-thumbnail img-lefty-less protected\">"; else $imgHtml = '';
                         $this->html .= "
                         <div class=\"row\">
@@ -571,15 +620,21 @@ namespace YAWK\PLUGINS\BLOG {
                             <small class=\"pull-right\"><i>$this->permaLink$prettydate $author</i></small>
                             <h2>$this->title&nbsp;<small>$this->subtitle</small></h2>$this->teasertext" . $blogtextHtml . "";
                         // are comments enabled?
-                        if ($this->comments !== '0') {
-                            if (isset($full_view) && ($full_view === 1)) {  // full view, display comments
+                        if ($this->comments !== '0')
+                        {
+                            if (isset($full_view) && ($full_view === 1))
+                            {  // full view, display comments
                                 $this->html .= self::draw_commentbox($db);
-                            } else {   // display btn with link to the full view
-                                $this->html .= "<br><a class='btn btn-default' href=\"$alias.html\"><i class='fa fa-bars'></i> &nbsp;anzeigen</a>";
                             }
-                        } else {   // no comments, show all button
-                            $this->html .= $showAllButton;
+                            else
+                                {   // display btn with link to the full view
+                                    $this->html .= "<br><a class='btn btn-default' href=\"$alias.html\"><i class='fa fa-bars'></i> &nbsp;anzeigen</a>";
+                                }
                         }
+                        else
+                            {   // no comments, show all button
+                                $this->html .= $showAllButton;
+                            }
 
                         if ($this->spacer === '1')
                         {
@@ -589,61 +644,75 @@ namespace YAWK\PLUGINS\BLOG {
                         </div>";
                     }
 
-                    if ($this->layout === '2') {   // LAYOUT 2 = 2 cols, right thumbnail
+                    if ($this->layout === '2')
+                    {   // LAYOUT 2 = 2 cols, right thumbnail
                         if (!empty($this->thumbnail)) $imgHtml = "<br><img src=\"" . $this->thumbnail . "\" class=\"img-thumbnail img-righty-less protected\">"; else $imgHtml = '';
                         $this->html .= "
-                    <div class=\"row\">
-                      <div class=\"col-xs-12 col-md-8 text-right\">
-                      <small class=\"pull-right\"><i>$this->permaLink$prettydate $author</i></small>
-                       <h2>$this->title&nbsp;<small>$this->subtitle</small></h2>$this->teasertext" . $blogtextHtml . "";
-                        // are comments enabled?
-                        if ($this->comments !== '0') {
-                            if (isset($full_view) && ($full_view === 1)) {
-                                $this->html .= self::draw_commentbox($db);
-                            } else {
-                                $this->html .= "<a class='btn btn-info' href=\"$alias.html\"><i class='fa fa-bars'></i> &nbsp;anzeigen</a><br><br>";
+                        <div class=\"row\">
+                          <div class=\"col-xs-12 col-md-8 text-right\">
+                          <small class=\"pull-right\"><i>$this->permaLink$prettydate $author</i></small>
+                           <h2>$this->title&nbsp;<small>$this->subtitle</small></h2>$this->teasertext" . $blogtextHtml . "";
+                            // are comments enabled?
+                            if ($this->comments !== '0')
+                            {
+                                if (isset($full_view) && ($full_view === 1))
+                                {
+                                    $this->html .= self::draw_commentbox($db);
+                                }
+                                else
+                                    {
+                                        $this->html .= "<a class='btn btn-info' href=\"$alias.html\"><i class='fa fa-bars'></i> &nbsp;anzeigen</a><br><br>";
+                                    }
                             }
-                        } else {
-                            $this->html .= $showAllButton;
-                        }
+                            else
+                                {
+                                    $this->html .= $showAllButton;
+                                }
 
-                        if ($this->spacer === '1')
-                        {
-                            $this->html .= "<hr>";
-                        }
-                        $this->html .= "</div>
-                      <div class=\"col-xs-6 col-md-4\">
-                      <br>$imgHtml </div>
-
-                 </div>";
+                            if ($this->spacer === '1')
+                            {
+                                $this->html .= "<hr>";
+                            }
+                            $this->html .= "</div>
+                          <div class=\"col-xs-6 col-md-4\">
+                          <br>$imgHtml </div>
+    
+                     </div>";
                     }
-                    if ($this->layout === '3') {   // LAYOUT 3 = 3 cols, newspaper layout
+                    if ($this->layout === '3')
+                    {   // LAYOUT 3 = 3 cols, newspaper layout
                         if (!empty($this->thumbnail)) $imgHtml = "<img src=\"" . $this->thumbnail . "\" class=\"thumbnail img-responsive\">"; else $imgHtml = '';
                         $this->html .= "<div class=\"row\">
-                  <div class=\"col-xs-6 col-md-4\"><br>advertising space</div>
-                  <div class=\"col-xs-6 col-md-4\">
-                   <small class=\"pull-right\"><i>$this->permaLink$prettydate $author</i></small>
-                  <h2>$this->title&nbsp;<small>$this->subtitle</small></h2>$imgHtml $this->teasertext" . $blogtextHtml . "
-                  ";
-                        // are comments enabled?
-                        if ($this->comments !== '0') {
-                            if (isset($full_view) && ($full_view === 1)) {
-                                $this->html .= self::draw_commentbox($db);
-                            } else {
-                                $this->html .= "<a href=\"$alias.html\"><i class='btn btn-info'>comments anzeigen</i></a>";
-                            }
-                        } else {
-                            $this->html .= $showAllButton;
-                        }
+                        <div class=\"col-xs-6 col-md-4\"><br>advertising space</div>
+                        <div class=\"col-xs-6 col-md-4\">
+                            <small class=\"pull-right\"><i>$this->permaLink$prettydate $author</i></small>
+                            <h2>$this->title&nbsp;<small>$this->subtitle</small></h2>$imgHtml $this->teasertext" . $blogtextHtml . "
+                            ";
+                                // are comments enabled?
+                                if ($this->comments !== '0')
+                                {
+                                    if (isset($full_view) && ($full_view === 1))
+                                    {
+                                        $this->html .= self::draw_commentbox($db);
+                                    }
+                                    else
+                                        {
+                                            $this->html .= "<a href=\"$alias.html\"><i class='btn btn-info'>comments anzeigen</i></a>";
+                                        }
+                                }
+                                else
+                                    {
+                                        $this->html .= $showAllButton;
+                                    }
 
-                        if ($this->spacer === '1')
-                        {
-                            $this->html .= "<hr>";
-                        }
-                        $this->html .= "</div>
-                  <div class=\"col-xs-6 col-md-4\"><br>advertising space
-                    </div>
-                </div>";
+                                if ($this->spacer === '1')
+                                {
+                                    $this->html .= "<hr>";
+                                }
+                                $this->html .= "</div>
+                          <div class=\"col-xs-6 col-md-4\"><br>advertising space
+                            </div>
+                        </div>";
                     }
                     if ($this->layout === '4') {   // LAYOUT 4 = 1 col, youtube responsive blog
                         // cut of time from prettydate
@@ -677,6 +746,7 @@ namespace YAWK\PLUGINS\BLOG {
                     }
                 }
             }
+            return null;
         }
 
     /**
@@ -744,8 +814,10 @@ namespace YAWK\PLUGINS\BLOG {
     function loadBlogProperties($db, $blogid)
     {
         /** @var $db \YAWK\db */
-        if ($res = $db->query("SELECT * FROM {blog} WHERE id = '" . $blogid . "'")) {   // fetch data
-            if ($row = mysqli_fetch_array($res)) {   // set properties
+        if ($res = $db->query("SELECT * FROM {blog} WHERE id = '" . $blogid . "'"))
+        {   // fetch data
+            if ($row = mysqli_fetch_array($res))
+            {   // set properties
                 $this->id = $row['id'];
                 $this->sort = $row['sort'];
                 $this->published = $row['published'];
@@ -765,13 +837,19 @@ namespace YAWK\PLUGINS\BLOG {
                 $this->layout = $row['layout'];
                 $this->preview = $row['preview'];
                 $this->voting = $row['voting'];
+                $this->spacer = $row['spacer'];
+                $this->frontendIcon = $row['frontendIcon'];
                 return true;
-            } else {   // fetch failed
+            }
+            else
+                {   // fetch failed
+                    return false;
+                }
+        }
+        else
+            {   // q failed
                 return false;
             }
-        } else {   // q failed
-            return false;
-        }
     }
 
     /**
@@ -799,6 +877,7 @@ namespace YAWK\PLUGINS\BLOG {
                 $this->sort = $row['sort'];
                 $this->published = $row['published'];
                 $this->itemgid = $row['itemgid'];
+                $this->teaser = $row['teaser'];
                 $this->blogtitle = $row['title'];
                 $this->filename = $row['filename'];
                 $this->subtitle = $row['subtitle'];
@@ -918,6 +997,7 @@ namespace YAWK\PLUGINS\BLOG {
                     published = '" . $this->published . "',
                     itemgid = '" . $this->itemgid . "',
                     sort = '" . $this->sort . "',
+                    teaser = '" . $this->teaser . "',
                     title = '" . $this->blogtitle . "',
                     filename = '" . $this->filename . "',
                     subtitle = '" . $this->subtitle . "',

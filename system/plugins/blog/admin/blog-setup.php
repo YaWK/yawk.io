@@ -259,14 +259,11 @@ echo "
             </div>
             <div class="col-md-6">
                 <!-- SAVE BUTTON -->
-                <input id="savebutton"
-                       class="btn btn-success pull-right"
-                       type="submit"
-                       name="create"
-                       value="<?php echo $lang['SAVE_SETTINGS']; ?>">&nbsp;
+                <button class="btn btn-success pull-right" type="submit" name="create" id="savebutton"><i class="fa fa-save"></i> &nbsp;<?php echo $lang['SAVE_SETTINGS']; ?></button>
+                &nbsp;
 
                 <!-- BACK BUTTON -->
-                <a class="btn btn-default pull-right" href="index.php?plugin=blog"><?php echo $lang['BACK']; ?></a><br>
+                <a class="btn btn-default pull-right" href="index.php?plugin=blog"><i class="glyphicon glyphicon-backward"></i> &nbsp;<?php echo $lang['BACK']; ?></a><br>
                 <input name="setup"
                        value="blog-create"
                        type="hidden">
@@ -300,7 +297,6 @@ echo "
                            id="name"
                            name="name"
                            value="<?php echo $blog->name; ?>"><br><br>
-
 
                     <label for="description"><?php echo $lang['DESCRIPTION']; ?></label><br>
                     <textarea class="form-control"

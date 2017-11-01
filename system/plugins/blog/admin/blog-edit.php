@@ -47,6 +47,7 @@ if (isset($_POST['save'])) {
     $blog->published = $db->quote($_POST['published']);
     $blog->itemid = $db->quote($_POST['itemid']);
     $blog->itemgid = $db->quote($_POST['itemgid']);
+    $blog->teaser = $db->quote($_POST['teaser']);
     $blog->date_publish = $db->quote($_POST['date_publish']);
     $blog->date_unpublish = $db->quote($_POST['date_unpublish']);
     $blog->blogid = $db->quote($_POST['blogid']);
@@ -60,7 +61,7 @@ if (isset($_POST['save'])) {
     $blog->itemlayout = $db->quote($_POST['itemlayout']);
     $blog->itemcomments = $db->quote($_POST['itemcomments']);
 
-    // Summernot Editor \r\n removal
+    // Summernote Editor \r\n removal
     if ($blog->save($db))
     {   // throw success notify
         YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[ENTRY] $lang[SAVED]", "", "800");
@@ -327,7 +328,7 @@ $(editor2).summernote('codeview.deactivate');
         }
     }); // end summernote
 }); // end document ready
-        </script>
+</script>
 
 <!-- bootstrap date-timepicker -->
 <link type="text/css" href="../system/engines/datetimepicker/css/datetimepicker.min.css" rel="stylesheet"/>
@@ -368,7 +369,8 @@ $blog->layout = $blog->getBlogProperty($db, $blog->blogid, "layout");
                name="blogtitle"
                value="<?php print $blog->blogtitle; ?>">
         <br>
-    <?php if ($blog->layout !== "0")
+    <?php
+    if ($blog->teaser !== "0")
     {
         echo "
         <!-- EDITOR -->
@@ -661,11 +663,27 @@ $blog->layout = $blog->getBlogProperty($db, $blog->blogid, "layout");
 
                 </select>
                 <label for="itemcomments"><i class="fa fa-comment-o"></i> &nbsp;<?php print $lang['COMMENTS']; ?>&nbsp;</label><br>
-                <!-- YouTube Link -->
+                <!-- Comment Settings -->
                 <select name="itemcomments" id="itemcomments" class="form-control">
                     <option value="-1"><?php echo $lang['BLOG_SETTING']; ?></option>
                     <option value="1"><?php echo $lang['COMMENTS_ALLOWED']; ?></option>
                     <option value="0"><?php echo $lang['COMMENTS_FORBIDDEN']; ?></option>
+                </select>
+                <label for="teaser"><i class="fa fa-newspaper-o"></i> &nbsp;<?php print $lang['TEASER']."&nbsp;".$lang['TEXT']; ?>&nbsp;</label><br>
+                <!-- Teaser Settings -->
+                <select name="teaser" id="teaser" class="form-control">
+                    <?php
+                        if ($blog->teaser === '1')
+                        {
+                            echo '<option value="1" selected aria-selected="true">'.$lang['ENABLED'].'</option>';
+                            echo '<option value="0">'.$lang['DISABLED'].'</option>';
+                        }
+                        else
+                            {
+                                echo '<option value="0" selected aria-selected="true">'.$lang['DISABLED'].'</option>';
+                                echo '<option value="1">'.$lang['ENABLED'].'</option>';
+                            }
+                    ?>
                 </select>
             </div>
             <!-- /.box-body -->
