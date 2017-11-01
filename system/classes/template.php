@@ -1473,9 +1473,9 @@ namespace YAWK {
             }
             $html .= "</select>";
 
-            /*
+
             // SMALL TAG COLOR
-            $html .= "<label for=\"$fontRowSmallColor\">$lang[$labelSmallColor]</label>
+            $html .= "<label for=\"$fontRowSmallColor\">$lang[TPL_SMALLCOLOR]</label>
                     <input id=\"$fontRowSmallColor\" name=\"$fontRowSmallColor\" class=\"form-control color\" value=\"".$templateSettings[$fontRowSmallColor]['value']."\">";
 
             // SMALL TAG SHADOW SIZE
@@ -1484,7 +1484,7 @@ namespace YAWK {
             // SMALL TAG SHADOW COLOR
             $html .= "<label for=\"$fontRowSmallShadowColor\">$lang[TPL_SMALLSHADOWCOLOR]</label>
                     <input id=\"$fontRowSmallShadowColor\" name=\"$fontRowSmallShadowColor\" value=\"".$templateSettings[$fontRowSmallShadowColor]['value']."\" class=\"form-control color\">";
-            */
+
             // end font div box
             $html .="
             </div>";
