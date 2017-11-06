@@ -473,12 +473,19 @@ echo "
                 <div class="col-md-6">
                     <!-- ACCESS CONTROL / PRIVACY -->
                     <h3><i class="fa fa-eye"></i> <?php echo $lang['PRIVACY']; ?></h3>
-                    <select name="gid" class="form-control">
-                        <option value="<?php print \YAWK\sys::getRoleId($db, $blog->gid, "blog"); ?>"><?php print \YAWK\sys::getRole($db, $blog->gid, "blog"); ?></option>
+                    <?php
+                        // $cGid = \YAWK\sys::getRoleId($db, 1, "blog");
+                        // echo \YAWK\sys::getRole($db, 1, "blog");
+                        // echo "gid: $cGid";
+                    ?>
+                    <label for="gid"><?php echo $lang['MINIMUM_GID_TO_VIEW_BLOG']; ?></label>
+
+                    <select name="gid" id="gid" class="form-control">
+                        <option value="<?php print \YAWK\sys::getRoleId($db, $blog->blogid, "blog"); ?>"><?php print \YAWK\sys::getRole($db, $blog->blogid, "blog"); ?></option>
 
                         <?php
-                        /*
-                        foreach(YAWK\sys::getRoles("blog") as $gid) {
+                        // foreach(YAWK\sys::getRoles("blog") as $gid) {
+                        foreach(YAWK\sys::getGroups($db, "blog") as $gid) {
                             print "<option value=\"".$gid['id']."\"";
                             if (isset($blog->gid)) {
                                 if($blog->gid === $gid['id']) {
@@ -490,7 +497,6 @@ echo "
                             }
                             print ">".$gid['value']."</option>";
                         }
-                        */
                         ?>
                     </select>
                 </div>

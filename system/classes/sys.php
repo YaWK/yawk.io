@@ -1234,7 +1234,7 @@ namespace YAWK {
             $mysqlRes = $db->query("SELECT cp.gid, cg.value
                     FROM {".$table."} as cp
                     JOIN {user_groups} as cg on cg.id = cp.gid
-                    WHERE cp.id = $id");
+                    WHERE cp.id = '".$id."'");
             // fetch data
             while ($row = mysqli_fetch_row($mysqlRes)) {
                 echo $row[1];
