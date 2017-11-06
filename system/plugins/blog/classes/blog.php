@@ -789,15 +789,21 @@ namespace YAWK\PLUGINS\BLOG {
     function getBlogProperty($db, $blogid, $property)
     {
         /** @var $db \YAWK\db */
-        if ($res = $db->query("SELECT $property FROM {blog} WHERE id = '" . $blogid . "'")) {   // fetch data
-            if ($row = mysqli_fetch_row($res)) {   // success
+        if ($res = $db->query("SELECT $property FROM {blog} WHERE id = '" . $blogid . "'"))
+        {   // fetch data
+            if ($row = mysqli_fetch_row($res))
+            {   // success
                 return $row['0'];
-            } else {   // fetch failed
+            }
+            else
+                {   // fetch failed
+                    return false;
+                }
+        }
+        else
+            {   // q failed
                 return false;
             }
-        } else {   // q failed
-            return false;
-        }
     }
 
     /**
@@ -937,23 +943,28 @@ namespace YAWK\PLUGINS\BLOG {
         $filename = "../content/pages/" . $this->filename . ".php";
         // set content of the plugin file
         $content = "<?php \$blog_id = $this->blogid; \$item_id = $this->itemid; \$full_view = 1; include 'system/plugins/blog/blog.php'; ?>";
-        if (file_exists($filename_old)) {
+        if (file_exists($filename_old))
+        {
             $handle = fopen($filename, "wr");
             $res = fwrite($handle, $content);
             fclose($handle);
             chmod($filename, 0777);
-            if (!$res) {   // cannot write file, throw error
+            if (!$res)
+            {   // cannot write file, throw error
                 \YAWK\alert::draw("danger", "Error", "could not write file: $filename", "", "4200");
             }
-        } else {
-            $handle = fopen($filename, "wr");
-            $res = fwrite($handle, $content);
-            fclose($handle);
-            chmod($filename, 0777);
-            if (!$res) {
-                \YAWK\alert::draw("danger", "Error", "could not create file: $filename", "", "4200");
-            }
         }
+        else
+            {
+                $handle = fopen($filename, "wr");
+                $res = fwrite($handle, $content);
+                fclose($handle);
+                chmod($filename, 0777);
+                if (!$res)
+                {
+                    \YAWK\alert::draw("danger", "Error", "could not create file: $filename", "", "4200");
+                }
+            }
         // convert html special chars
 
         $this->blogtext = utf8_encode($this->blogtext);
@@ -1099,7 +1110,7 @@ namespace YAWK\PLUGINS\BLOG {
      * @return mixed Html
     */
     function draw()
-    {   // mixed HTML, built, filled and modified by several previews functions
+    {   // mixed HTML, built, filled and modified previously by several blog class methods
         return $this->html;
     }
 
