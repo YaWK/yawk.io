@@ -473,11 +473,6 @@ echo "
                 <div class="col-md-6">
                     <!-- ACCESS CONTROL / PRIVACY -->
                     <h3><i class="fa fa-eye"></i> <?php echo $lang['PRIVACY']; ?></h3>
-                    <?php
-                        // $cGid = \YAWK\sys::getRoleId($db, 1, "blog");
-                        // echo \YAWK\sys::getRole($db, 1, "blog");
-                        // echo "gid: $cGid";
-                    ?>
                     <label for="gid"><?php echo $lang['MINIMUM_GID_TO_VIEW_BLOG']; ?></label>
 
                     <select name="gid" id="gid" class="form-control">
