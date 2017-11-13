@@ -14,11 +14,11 @@ if (isset($_GET['positionIndicator']))
 {
     if ($template->switchPositionIndicators($db, $getID, $_GET['positionIndicator']))
     {
-        \YAWK\alert::draw("success", "OK", "Switched Position Indicator Status", '', 1800);
+        \YAWK\alert::draw("success", $lang['SUCCESS'], $lang['SWITCHED_POS_INDICATOR_SUCCESS'], '', 1800);
     }
     else
         {
-            \YAWK\alert::draw("danger", "NOT OK", "Switching FAILED!", '', 5000);
+            \YAWK\alert::draw("danger", $lang['ERROR'], $lang['SWITCHED_POS_INDICATOR_FAILED'], '', 5000);
         }
 }
 
