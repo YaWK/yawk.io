@@ -64,6 +64,45 @@ namespace YAWK {
         }
 
         /**
+         * switch all positions indicators on or off
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param int $templateID ID of the affected template
+         * @param int $status value to set (0|1)
+         * @param object $db
+         * @return bool true|false
+         */
+        public function switchPositionIndicators($db, $templateID, $status)
+        {
+            // if template param is not set
+            if (!isset($templateID) || (!is_numeric($templateID)))
+            {   // get current active template ID
+                $templateID = self::getCurrentTemplateId($db);
+            }
+
+            // if status parameter is not set
+            if (!isset($status) || (!is_numeric($status)))
+            {   // turn off is default behaviour
+                $status = 0;
+            }
+
+            // update position indicator status
+            if ($db->query("UPDATE {template_settings} 
+                                   SET value = '".$status."'
+                                   WHERE property 
+                                   LIKE '%indicator%'
+                                   AND templateID = '".$templateID."'"))
+            {   // all good,
+                return true;
+            }
+            else
+                {   // update position indicators failed
+                    return false;
+                }
+        }
+
+        /**
          * fetch positions of current (active) template, explode string and return positions array
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0

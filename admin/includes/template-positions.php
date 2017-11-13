@@ -1,6 +1,21 @@
 <?php
+// new database object if not exists
+if (!isset($db)) { $db = new \YAWK\db(); }
 // new template object if not exists
 if (!isset($template)) { $template = new \YAWK\template(); }
+
+// switch postion borders
+if (isset($_GET['positionIndicator']))
+{
+    if ($template->switchPositionIndicators($db, 1, $_GET['positionIndicator']))
+    {
+        \YAWK\alert::draw("success", "OK", "Switched Position Indicator Status", '', 1800);
+    }
+    else
+        {
+            \YAWK\alert::draw("danger", "NOT OK", "Switching FAILED!", '', 5000);
+        }
+}
 
 // check if any action is requested
 if (isset($_POST['save']) && (isset($_GET['action']) && (isset($_GET['id']))))
@@ -296,6 +311,8 @@ echo"</section><!-- Main content -->
             <div class="box box-default">
                 <div class="box-header with-border">
                     <h3 class="box-title"><?php echo "$lang[POSITIONS] <small>$lang[SETTINGS]</small>"; ?></h3>
+                    &nbsp; <a href="index.php?page=template-positions&positionIndicator=0"><i class="fa fa-circle-o" title="disable all position indicators"></i></a>
+                    &nbsp; <a href="index.php?page=template-positions&positionIndicator=1"><i class="fa fa-circle" title="enable all position indicators"></i></a>
                 </div>
                 <?php
                 $enabledBorder = "border: 1px solid #4CAE4C;";
