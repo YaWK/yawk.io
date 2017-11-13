@@ -312,8 +312,10 @@ echo"</section><!-- Main content -->
             <div class="box box-default">
                 <div class="box-header with-border">
                     <h3 class="box-title"><?php echo "$lang[POSITIONS] <small>$lang[SETTINGS]</small>"; ?></h3>
-                    &nbsp; <a href="index.php?page=template-positions&positionIndicator=0"><i class="fa fa-circle-o" title="disable all position indicators"></i></a>
-                    &nbsp; <a href="index.php?page=template-positions&positionIndicator=1"><i class="fa fa-circle" title="enable all position indicators"></i></a>
+                    <div id="toolbar" class="text-right">
+                          <a href="index.php?page=template-positions&positionIndicator=0"><i class="fa fa-square-o" title="disable position indicators"></i></a>
+                        | <a href="index.php?page=template-positions&positionIndicator=1"><i class="fa fa-square" title="enable position indicators"></i></a>
+                    </div>
                 </div>
                 <?php
                 $enabledBorder = "border: 1px solid #4CAE4C;";
