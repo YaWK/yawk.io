@@ -3,11 +3,16 @@
 if (!isset($db)) { $db = new \YAWK\db(); }
 // new template object if not exists
 if (!isset($template)) { $template = new \YAWK\template(); }
+// new user object if not exists
+if (!isset($user)) { $user = new \YAWK\user(); }
+
+// get ID of current active template
+$getID = \YAWK\settings::getSetting($db, "selectedTemplate");
 
 // switch postion borders
 if (isset($_GET['positionIndicator']))
 {
-    if ($template->switchPositionIndicators($db, 1, $_GET['positionIndicator']))
+    if ($template->switchPositionIndicators($db, $getID, $_GET['positionIndicator']))
     {
         \YAWK\alert::draw("success", "OK", "Switched Position Indicator Status", '', 1800);
     }
@@ -41,10 +46,6 @@ if (isset($_POST['save']) && (isset($_GET['action']) && (isset($_GET['id']))))
         }
     }
 }
-// new user object if not exists
-if (!isset($user)) { $user = new \YAWK\user(); }
-// get ID of current active template
-$getID = \YAWK\settings::getSetting($db, "selectedTemplate");
 // load properties of current active template
 // $template->loadProperties($db, $getID);
 // load all template settings into array
