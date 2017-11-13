@@ -313,8 +313,8 @@ echo"</section><!-- Main content -->
                 <div class="box-header with-border">
                     <h3 class="box-title"><?php echo "$lang[POSITIONS] <small>$lang[SETTINGS]</small>"; ?></h3>
                     <div id="toolbar" class="text-right">
-                          <a href="index.php?page=template-positions&positionIndicator=0"><i class="fa fa-square-o" title="disable position indicators"></i></a>
-                        | <a href="index.php?page=template-positions&positionIndicator=1"><i class="fa fa-square" title="enable position indicators"></i></a>
+                          <a href="index.php?page=template-positions&positionIndicator=0"><i class="fa fa-square-o" title="<?php echo $lang['DISABLE_POS_INDICATOR']; ?>"></i></a>
+                        | <a href="index.php?page=template-positions&positionIndicator=1"><i class="fa fa-square" title="<?php echo $lang['ENABLE_POS_INDICATOR']; ?>"></i></a>
                     </div>
                 </div>
                 <?php
