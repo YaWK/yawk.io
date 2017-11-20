@@ -836,7 +836,7 @@ namespace YAWK {
          * @param int $id affected menu id
          * @return string
          */
-        static function getMenuNameByID($db, $id, $lang)
+        static function getMenuNameByID($db, $id)
         {   /* @var $db \YAWK\db */
         global $lang;
             $menu = '';

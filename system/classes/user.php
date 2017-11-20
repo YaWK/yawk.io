@@ -1064,6 +1064,10 @@ namespace YAWK {
                 $row = mysqli_fetch_row($res);
                 $id = $row[0] + 1;
             }
+            else
+                {   // if ID could not be determined, set 1 as default
+                    $id = 1;
+                }
             // lowercase username
             $username = mb_strtolower($username);
 
@@ -1088,11 +1092,14 @@ namespace YAWK {
                 if ($res = $db->query("SELECT username FROM {users} WHERE username='" . $username . "'"))
                 {
                     $row = mysqli_fetch_row($res); // username is already taken
-                    if ($row[0]) {
-                        // \YAWK\alert::draw("danger","Warning!","Please choose another username!","page=user-new","4800");
-                        \YAWK\alert::draw("warning","Warning!","Please choose another username!","","4800");
-                        // exit;
-                        return false;
+                    if ($row[0])
+                    {
+                        if ($row[0] === $username)
+                        {
+                            \YAWK\alert::draw("warning","Warning!","Please choose another username!","","4800");
+                            // exit;
+                            return false;
+                        }
                     }
                 }
                 else {

@@ -50,6 +50,8 @@ namespace YAWK {
         public $metakeywords;
         /** * @var string search string for this page */
         public $searchstring;
+        /** * @var string bg image */
+        public $bgimage;
 
 
         /**
@@ -469,6 +471,7 @@ namespace YAWK {
                 }
                 else
                 {   // throw error
+                    $id = 1;
                     \YAWK\sys::setSyslog($db, 5, "Could not fetch MAX(id) FROM {menu}", 0, 0, 0, 0);
                     \YAWK\alert::draw("danger","Error:", "Could not fetch MAX(id) FROM {menu}", "page=page-new", "4300");
                 }
@@ -476,14 +479,18 @@ namespace YAWK {
                 if ($res = $db->query("SELECT MAX(sort) FROM {menu} WHERE menuID = '" . $menuID . "'"))
                 {
                     $row = mysqli_fetch_row($res);
-                    if (!isset($row[0])) { // if not, give it a ID of 1
+                    if (!isset($row[0]))
+                    {   // if not, give it a ID of 1
                         $sort = 1;
-                    } else {
-                        $sort = $row[0] + 1; // if entry exists, add +1 to sort #
                     }
+                    else
+                        {   // if entry exists, add +1 to sort #
+                            $sort = $row[0] + 1;
+                        }
                 }
                 else
                 {   // throw error
+                    $sort = 1;
                     \YAWK\sys::setSyslog($db, 5, "Could not fetch MAX(id) FROM {menu} WHERE menuID = $menuID", 0, 0, 0, 0);
                     \YAWK\alert::draw("danger","Error:", "Could not fetch MAX(id) FROM {menu} WHERE menuID = $menuID", "page=page-new", "4300");
                 }
@@ -555,16 +562,19 @@ namespace YAWK {
             }
             else
                 {
+                    $id = 1;
                     \YAWK\sys::setSyslog($db, 5, "could not select MAX(id) from pages db", 0, 0, 0, 0);
                 }
 
             $alias = htmlentities($alias);
             // ## add new page to db pages
-            if ($res = $db->query("INSERT INTO {pages} (id,published,date_created,date_publish,alias,title,locked,blogid,plugin)
+            if ($res = $db->query("INSERT INTO {pages} (id,published,date_created,date_changed,date_publish,date_unpublish,alias,title,locked,blogid,plugin)
                                    VALUES ('" . $id . "',
                                            '" . $published . "',
                                            '" . $date_created . "',
+                                           '0000-00-00 00:00:00',
                                            '" . $date_created . "',
+                                           '0000-00-00 00:00:00',
                                            '" . $alias . "',
                                            '" . $title . "',
                                            '" . $locked . "',
@@ -582,11 +592,6 @@ namespace YAWK {
                         VALUES ($desc, $id, $title)"))
                 {   // error inserting page into database - throw error
                    // \YAWK\alert::draw("warning", "Error!", "Failed to insert meta description.", "", 4300);
-                }
-                if (!$db->query("INSERT INTO {meta_local} (name,page,content)
-                        VALUES ($keyw, $id, $words)"))
-                {   // error inserting page into database - throw error
-                    // \YAWK\alert::draw("warning", "Error!", "Failed to insert meta keywords.", "", 4300);
                 }
             }
             else
