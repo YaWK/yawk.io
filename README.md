@@ -31,10 +31,10 @@ After spending years on this project, I decided to follow my fellows - I've uplo
 <h3>Funding and Crowd Help</h3>
 Developing a big tool like this takes truely a certain amount of time. Most of the time I am working on it from eight to twelve hours per day. This is needed, to get a full-working product, not just a prototype. There are so many things implemented yet. You can watch the feature list here: http://yawk.io/features but a lot more is still ahead. Please overview upcoming goals here: http://roadmap.yawk.io
 
-<h4>Help me get to the goals of this lifetime-project</h4>
+<h4>Help me to get to the goals of this lifetime-project</h4>
 To be able to keep developing this project all day (and all night) long, it was needed to kick my daily job. Developing this is a full-time job. As everyone else, I need to earn money to achieve my life. <b>Donating to this project will help me feed the hungry family members and make me able to take care and achieve the goals of this project.</b> I like to hold on to 'doing what I really like to' but without financial help I won't be able to keep on doing this on long-term sight. Therefore, I'll appreciate your help.
 
-So please if you can, take a overview at the funding platform: http://funding.yawk.io and get more Information how you can contribute to this project. Your help keep this project alive and active.
+So please if you can, take a overview at the funding platform: http://funding.yawk.io and get more Information how you can contribute to this project. Your help keep this project alive and active. Supporters also may observe my patreon page: http://patreon.com as well as the kickstarter campaign: http://kickstarter.com Of course, you can donate via PayPal if you like the project.
 
 <h2>What do we go now?</h2>
 <h3>Feature Overview</h3>
