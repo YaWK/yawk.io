@@ -1,9 +1,10 @@
 <?php
+setcookie("guest", 1, time()+60);  /* verfällt in 1 Stunde */
 session_start();
-header('Cache-control: private');          // IE 6 FIX
-// error_reporting(E_ALL ^ E_STRICT);         // just for development purpose!!!
-ini_set('display_errors', 0);           // DISPLAY ALL ERRORS - DEVELOPMENT ONLY!!!
-error_reporting(0);                     // no error reporting
+header('Cache-control: private');              // IE 6 FIX
+// error_reporting(E_ALL ^ E_STRICT);              // just for development purpose!!!
+// ini_set('display_errors', 1);       // DISPLAY ALL ERRORS - DEVELOPMENT ONLY!!!
+error_reporting(0);                             // no error reporting
 $loadingTime = microtime(true);            // scripting start time (var gets used for benchmark, if enabled)
 
 /* include controller classes */
@@ -52,13 +53,6 @@ if (!isset($user))
 if (!isset($page))
 {   // create new page obj if none exists
     $page = new \YAWK\page();
-}
-
-// hideWrapper to load dynamic content w/o AdminLTE wrapped around.
-if (isset($_GET['hideWrapper']) && ($_GET['hideWrapper'] == 1))
-{   // load requested page
-    include(\YAWK\controller::filterfilename("includes/".$_GET['page']));
-    exit;   // if hide wrapper is requested, we need to step off here
 }
 
 // Admin LTE Backend
