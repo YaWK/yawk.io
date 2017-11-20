@@ -61,6 +61,7 @@ if (!isset($user)) {
 /* set page object */
 if (!isset($page)) {
     $page = new \YAWK\page();
+    $currentpage = $page;
 }
 /* set controller object */
 if (!isset($controller)) {
