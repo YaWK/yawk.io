@@ -60,7 +60,7 @@ if (!isset($user)) {
 }
 /* set page object */
 if (!isset($page)) {
-    $currentpage = new \YAWK\page();
+    $page = new \YAWK\page();
 }
 /* set controller object */
 if (!isset($controller)) {
@@ -108,7 +108,7 @@ if (isset($_GET['include']) && (!empty($_GET['include'])))
         }
     }
     // URL is set and not empty - lets go, load properties for given page
-    $currentpage->loadProperties($db, $db->quote($_GET['include']));
+    $page->loadProperties($db, $db->quote($_GET['include']));
 
     // different GET controller actions can be done here...
 }
@@ -116,7 +116,7 @@ else
 {   // if no page is given, set index as default page
     $_GET['include'] = "index";
     // and load properties for it
-    $currentpage->loadProperties($db, $db->quote($_GET['include']));
+    $page->loadProperties($db, $db->quote($_GET['include']));
 }
 
 // get global selected template ID
