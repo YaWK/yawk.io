@@ -1,4 +1,4 @@
-YaWK = Yet another WebKit 
+YaWK = <b>Y</b>et <b>a</b>nother <b>W</b>eb<b>K</b>it 
 
 Official Website: http://yawk.io
 
