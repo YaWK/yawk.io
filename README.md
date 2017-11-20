@@ -24,17 +24,17 @@ Please consider to research any previously opened or closed GitHub Issues <u>bef
 
 
 <h3>Open Development</h3>
-YaWK is an open source project, built for everyone. There is no big business company or foundation behind it. It is mostly a one man show, - originally developed for my own, personal purpose. It was never meant to go public. But the bigger the project growed, the more people told me to make it accessable for the public crowd. 
+YaWK is an open source project, <b>built for everyone.</b> Actually there is <i>no big business company or foundation behind it</i>. It is mostly a one man show, - originally developed for my own, personal purpose. It was never meant to go public. But the bigger the project growed, the more people told me to make it accessable for the public crowd. 
 
-After spending years on this project, I decided to follow my fellows - I've uploaded it to GitHub an kept the repository private until the status of the project has got to a level where people can make use out of it. Though all efforts of "getting it to the point", this project is not finished yet - and never will be. It will stay in development, as long as I or somebody else take care about it.
+After spending years on this project, I decided to follow my fellows - I've uploaded it to GitHub and kept the repository private until the status of the project has got to a level where people can make use out of it. Though all efforts of "getting it to the point", this project is not finished yet - and never will be. It will stay in development, as long as I or somebody else take care about it.
 
 <h3>Funding and Crowd Help</h3>
 Developing a big tool like that takes truely a certain amount of time. Most of the time I am working on it from eight to twelve hours per day. This is needed, to get a full-working product, not just a prototype. There are so many things implemented yet. You can watch the feature list here: http://yawk.io/features but a lot more is still ahead. Please overview upcoming goals here: http://roadmap.yawk.io
 
 <h4>Help me get to the goals of this lifetime-project</h4>
-To be able to keep developing this project all day (and all night) long, it was needed to kick my daily job. Developing this is a full-time job. As everyone else, I need to earn money to achieve my life. <b>Donating to this project will help me feed the hungry family members and make me able to take care and achieve the goals of this project.</b> I like to hold on to 'doing what I really like to' but without a bit of financial help I won't be able to keep doing this on long-term. 
+To be able to keep developing this project all day (and all night) long, it was needed to kick my daily job. Developing this is a full-time job. As everyone else, I need to earn money to achieve my life. <b>Donating to this project will help me feed the hungry family members and make me able to take care and achieve the goals of this project.</b> I like to hold on to 'doing what I really like to' but without financial help I won't be able to keep doing this on long-term. 
 
-So please if you can, take a overview at the funding platform: http://funding.yawk.io and get more Information how you can contribute to this project. Your help makes sure that this project can stay alive and active.
+So please if you can, take a overview at the funding platform: http://funding.yawk.io and get more Information how you can contribute to this project. Your help keeps this project alive and active.
 
 <h3>Feature Overview</h3>
 <h4>Responsive Design</h4>
