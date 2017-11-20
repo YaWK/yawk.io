@@ -34,6 +34,7 @@ Developing a big tool like this takes truely a certain amount of time. Most of t
 <h4>Help me to get to the goals of this lifetime-project</h4>
 To be able to keep developing this project all day (and all night) long, it was needed to kick my daily job. Developing this is a full-time job. As everyone else, I need to earn money to achieve my life. <b>Donating to this project will help me feed the hungry family members and make me able to take care and achieve the goals of this project.</b> I like to hold on to 'doing what I really like to' but without financial help I won't be able to keep on doing this on long-term sight. Therefore, I'll appreciate your help.
 
+<h4>Possibilities to support and fund this project</h4>
 So please if you can, take a overview at the funding platform: http://funding.yawk.io and get more Information how you can contribute to this project. Your help keep this project alive and active. Supporters also may observe my patreon page: http://patreon.com as well as the kickstarter campaign: http://kickstarter.com Of course, you can donate via PayPal if you like the project.
 
 <h2>What do we got for now?</h2>
