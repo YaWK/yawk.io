@@ -1,4 +1,9 @@
-YaWK = Yet another WebKit 1.0 alpha
+YaWK = Yet another WebKit 
+
+Official Website: http://yawk.io
+Roadmap: http://roadmap.yawk.io
+Funding: http://funding.yawk.io
+Support: http://support.yawk.io
 
 
 YaWK is a free, open-source-bundle solution CMS to build, design and operate any modern webpage or web-app. Designed to be slick, fast and reliable. Steady in development. Put together, what belongs together. YaWK uses HTML, CSS, MySQL, PHP and JavaScript to bundle Bootstrap, jQuery, AdminLTE, FontAwesome and much more of your favourite "daily use" web(open)sourceware into a new atop overall CMS.
