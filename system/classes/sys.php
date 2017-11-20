@@ -1016,7 +1016,7 @@ namespace YAWK {
         static function getGroups($db, $table)
         {
             /** @var $db \YAWK\db $res */
-            $groupsArray = '';
+            $groupsArray = array();
             if ($res = $db->query("SELECT id, value, (
 	                              SELECT COUNT( * )
 	                              FROM {".$table."}
@@ -1149,7 +1149,7 @@ namespace YAWK {
         static function getMenus($db)
         {
             /** @var $db \YAWK\db */
-            $menusArray = '';
+            $menusArray = array();
             if ($res = $db->query("SELECT id, name, published, (
                              SELECT COUNT( * )
                              FROM {menu}

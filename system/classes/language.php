@@ -49,7 +49,7 @@ namespace YAWK {
         {
             // set current language
             $this->httpAcceptedLanguage = $this->getClientLanguage();
-            $this->currentLanguage = $this->getCurrentLanguage($db);
+            $this->currentLanguage = $this->getCurrentLanguage();
             return $this->setLanguage($this->currentLanguage);
         }
 
@@ -61,7 +61,7 @@ namespace YAWK {
          * @link       http://yawk.io
          * @return string
          */
-        public function getCurrentLanguage($db)
+        public function getCurrentLanguage()
         {
             $currentLanguage = '';
             // check if a GET param is set
