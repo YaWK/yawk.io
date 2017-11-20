@@ -255,12 +255,12 @@ CREATE TABLE `cms_logins` (
 
 CREATE TABLE `cms_menu` (
   `TMPID` int(11) NOT NULL,
-  `id` int(11) NOT NULL,
+  `id` int(11)  NOT NULL,
   `sort` int(11) NOT NULL DEFAULT '0',
   `gid` int(11) NOT NULL DEFAULT '1',
   `menuID` int(11) NOT NULL,
   `parentID` int(11) NOT NULL DEFAULT '0',
-  `published` int(1) NOT NULL DEFAULT '0',
+  `published` int(1) NOT NULL DEFAULT '1',
   `date_created` datetime NOT NULL,
   `date_changed` datetime NOT NULL,
   `date_publish` datetime NOT NULL,
@@ -278,9 +278,7 @@ CREATE TABLE `cms_menu` (
 --
 
 INSERT INTO `cms_menu` (`TMPID`, `id`, `sort`, `gid`, `menuID`, `parentID`, `published`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `title`, `text`, `href`, `target`, `divider`, `blogid`) VALUES
-(1, 1, 1, 1, 1, 0, 1, '2017-03-08 19:02:19', '2017-06-10 17:48:54', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Welcome to YaWK CMS!', 'index.html', '_self', 0, 0),
-(2, 2, 2, 1, 1, 0, 1, '0000-00-00 00:00:00', '2017-06-10 17:48:54', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Typography', 'typography.html', '_self', 0, 0),
-(15, 13, 3, 1, 1, 0, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Testseite', 'testseite.html', '_self', 0, 0);
+(1, 1, 1, 1, 1, 0, 1, '2017-03-08 19:02:19', '2017-06-10 17:48:54', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Welcome to YaWK CMS!', 'index.html', '_self', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -407,9 +405,7 @@ CREATE TABLE `cms_pages` (
 --
 
 INSERT INTO `cms_pages` (`id`, `published`, `gid`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `alias`, `title`, `bgimage`, `owner`, `menu`, `locked`, `blogid`, `plugin`) VALUES
-(1, 1, 1, '2017-03-08 00:00:00', '2017-09-13 00:20:21', '2017-03-08 00:00:00', '0000-00-00 00:00:00', 'index', 'Welcome to YaWK CMS!', '', -1, 0, 0, 0, '0'),
-(2, 1, 1, '2017-06-10 15:45:03', '2017-09-10 18:57:16', '2017-06-10 15:45:03', '0000-00-00 00:00:00', 'typography', 'Typography', '', -1, 0, 0, 0, '0'),
-(3, 1, 1, '2017-09-25 21:56:32', '2017-09-25 21:56:43', '2017-09-25 21:56:32', '0000-00-00 00:00:00', 'testseite', 'Testseite', '', -1, 0, 0, 0, '0');
+(1, 1, 1, '2017-03-08 00:00:00', '2017-09-13 00:20:21', '2017-03-08 00:00:00', '0000-00-00 00:00:00', 'index', 'Welcome to YaWK CMS!', '', -1, 0, 0, 0, '0');
 
 -- --------------------------------------------------------
 
@@ -1957,36 +1953,36 @@ INSERT INTO `cms_template_settings_types` (`id`, `type`) VALUES
 --
 
 CREATE TABLE `cms_users` (
-  `id` int(11) NOT NULL,
+  `id` int(11),
   `blocked` int(1) NOT NULL DEFAULT '0',
   `privacy` int(1) NOT NULL DEFAULT '0',
   `online` int(1) NOT NULL DEFAULT '0',
   `gid` int(11) NOT NULL DEFAULT '4',
   `terms` int(1) NOT NULL DEFAULT '1',
-  `username` varchar(48) NOT NULL,
-  `password` varchar(48) NOT NULL,
-  `date_created` datetime NOT NULL,
-  `date_changed` datetime NOT NULL,
-  `date_expired` datetime NOT NULL,
-  `date_lastlogin` datetime NOT NULL,
-  `login_count` int(11) NOT NULL,
-  `email` varchar(128) NOT NULL,
-  `url` varchar(255) NOT NULL,
-  `twitter` varchar(255) NOT NULL,
-  `facebook` varchar(255) NOT NULL,
-  `firstname` varchar(128) NOT NULL,
-  `lastname` varchar(128) NOT NULL,
-  `street` varchar(128) NOT NULL,
-  `zipcode` varchar(12) NOT NULL,
-  `city` varchar(128) NOT NULL,
-  `country` varchar(128) NOT NULL,
-  `state` varchar(128) NOT NULL,
+  `username` varchar(48),
+  `password` varchar(48),
+  `date_created` datetime,
+  `date_changed` datetime,
+  `date_expired` datetime,
+  `date_lastlogin` datetime,
+  `login_count` int(11) NOT NULL DEFAULT '0',
+  `email` varchar(128),
+  `url` varchar(255),
+  `twitter` varchar(255),
+  `facebook` varchar(255),
+  `firstname` varchar(128),
+  `lastname` varchar(128),
+  `street` varchar(128),
+  `zipcode` varchar(12),
+  `city` varchar(128),
+  `country` varchar(128),
+  `state` varchar(128),
   `logged_in` int(1) NOT NULL DEFAULT '0',
   `public_email` int(1) NOT NULL DEFAULT '0',
   `terminatedByUser` int(1) NOT NULL DEFAULT '0',
-  `job` varchar(255) NOT NULL,
+  `job` varchar(255),
   `likes` int(11) NOT NULL DEFAULT '0',
-  `overrideTemplate` int(1) NOT NULL,
+  `overrideTemplate` int(1) NOT NULL DEFAULT'1',
   `templateID` int(6) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -2387,9 +2383,7 @@ ALTER TABLE `cms_logins`
 --
 ALTER TABLE `cms_menu`
   ADD PRIMARY KEY (`TMPID`),
-  ADD KEY `id` (`id`,`sort`,`gid`,`menuID`,`parentID`,`published`,`date_created`,`date_changed`,`date_publish`,`date_unpublish`,`text`,`href`),
-  ADD KEY `id_2` (`id`),
-  ADD KEY `id_3` (`id`);
+  ADD KEY `id` (`id`,`sort`,`gid`,`menuID`,`parentID`,`published`,`date_created`,`date_changed`,`date_publish`,`date_unpublish`,`text`,`href`);
 
 --
 -- Indizes für die Tabelle `cms_menu_names`
