@@ -432,7 +432,8 @@ echo "
                     </div>
                 </div>
                 <div class="col-md-6">
-                    layout xtras
+                    <h3><?php echo $lang['HELP']; ?></h3>
+                    <div id="layout0Help"><?php echo $lang['LAYOUT_0_HELP']; ?></div>
                 </div>
                 </div>
             </div>
@@ -480,13 +481,16 @@ echo "
 
                         <?php
                         // foreach(YAWK\sys::getRoles("blog") as $gid) {
-                        foreach(YAWK\sys::getGroups($db, "blog") as $gid) {
+                        foreach(YAWK\sys::getGroups($db, "blog") as $gid)
+                        {
                             print "<option value=\"".$gid['id']."\"";
                             if (isset($blog->gid)) {
-                                if($blog->gid === $gid['id']) {
+                                if($blog->gid === $gid['id'])
+                                {
                                     print " selected=\"selected\"";
                                 }
-                                else if($blog->gid === $gid['id'] && !$_POST['gid']) {
+                                else if($blog->gid === $gid['id'] && !$_POST['gid'])
+                                {
                                     print " selected=\"selected\"";
                                 }
                             }
@@ -494,9 +498,6 @@ echo "
                         }
                         ?>
                     </select>
-                </div>
-                <div class="col-md-6">
-                    ...
                 </div>
             </div>
             </div>
