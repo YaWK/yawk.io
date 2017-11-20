@@ -20,7 +20,7 @@ https://yawk.io/download
 <h3>Support</h3>
 There are several ways to get support. First place to go should be: <b>http://support.yawk.io</b> - Please make sure to overview the <b>manual</b>, the <b>FAQ area</b> as well as the <b>API Documentation: http://docs.yawk.io</b> 
 
-Please consider to research any previously opened or closed GitHub Issues <u>before you start a new issue or support ticket.</u> Due the fact, that this is project is ambitous, but with no big money or manpower behind it: Please understand, that it is not possible to  guarantee that every single ticket can be anwered. Despite all, we try to take care of the problems that affect a lot of people, as well as single ideas for individuals. <b>If you need premium support, we love to help out! Please have a look at our patreon page: http://patreon.com  </b>
+Please consider to research any previously opened or closed GitHub Issues <u>before you start a new issue or support ticket.</u> Due the fact, that this project is ambitous, but with no big money or manpower behind: Please understand, that it is not possible to  guarantee that every single ticket can be anwered. Despite all, we try to take care of the problems that affect a lot of people, as well as single ideas for individuals. <b>If you need premium support, we love to help out! Please have a look at our patreon page: http://patreon.com  </b>
 
 
 <h3>Open Development</h3>
@@ -29,10 +29,10 @@ YaWK is an open source project, <b>built for everyone.</b> Actually there is <i>
 After spending years on this project, I decided to follow my fellows - I've uploaded it to GitHub and kept the repository private until the status of the project has got to a level where people can make use out of it. Though all efforts of "getting it to the point", this project is not finished yet - and never will be. It will stay in development, as long as I or somebody else take care about it.
 
 <h3>Funding and Crowd Help</h3>
-Developing a big tool like this takes truely a certain amount of time. Most of the time I am working on it from eight to twelve hours per day. This is needed, to get a full-working product, not just a prototype. There are so many things implemented yet. You can watch the feature list here: http://yawk.io/features but a lot more is still ahead. Please overview upcoming goals here: http://roadmap.yawk.io
+Developing a big tool like this <u>takes truely a certain amount of time</u>. Most of the time I am working on it from eight to twelve hours per day. This is needed to get a full-working product, not just a prototype. There are many things implemented yet. You can watch the complete feature list here: http://yawk.io/features but a lot more is still ahead. Please overview upcoming goals here: http://roadmap.yawk.io
 
-<h4>Help me to get to the goals of this lifetime-project</h4>
-To be able to keep developing this project all day (and all night) long, it was needed to kick my daily job. Developing this is a full-time job. As everyone else, I need to earn money to achieve my life. <b>Donating to this project will help me feed the hungry family members and make me able to take care and achieve the goals of this project.</b> I like to hold on to 'doing what I really like to' but without financial help I won't be able to keep on doing this on long-term sight. Therefore, I'll appreciate your help.
+<h4>Help me get to the goals of this lifetime-project</h4>
+Developing this is a full-time job. As everyone else, I need to earn money to achieve my life. <b>Donating to this project will help me feed the hungry family members and make me able to take care and achieve the goals of this project.</b> I like to hold on to 'doing what I really like to' but without financial help I won't be able to keep on doing this on a long-term sight. Therefore, I'll appreciate your help. Your donation allows me to stay focused on this project, keep short release cycles and gives me the freedom to keep on programming all day and all of the night.
 
 <h4>Possibilities to support and fund this project</h4>
 So please if you can, take a overview at the funding platform: http://funding.yawk.io and get more Information how you can contribute to this project. Your help keep this project alive and active. Supporters also may observe my patreon page: http://patreon.com as well as the kickstarter campaign: http://kickstarter.com Of course, you can donate via PayPal if you like the project.
