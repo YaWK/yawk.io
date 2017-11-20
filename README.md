@@ -36,7 +36,7 @@ To be able to keep developing this project all day (and all night) long, it was 
 
 So please if you can, take a overview at the funding platform: http://funding.yawk.io and get more Information how you can contribute to this project. Your help keep this project alive and active. Supporters also may observe my patreon page: http://patreon.com as well as the kickstarter campaign: http://kickstarter.com Of course, you can donate via PayPal if you like the project.
 
-<h2>What do we go now?</h2>
+<h2>What do we got for now?</h2>
 <h3>Feature Overview</h3>
 <h4>Responsive Design</h4>
 Think of responsive design as a matter of quality. The frontend, as well as the backend is 100% responsive designed. It does not matter if you are using it on a small handheld device, a desktop or even a big TV screen - it always acts nice and fit into the used device. In the past few years it's been tested during development, as well as on productional sites with more than 800+ smartphones, tablets, desktop and browser combinations & we keep on testing!
