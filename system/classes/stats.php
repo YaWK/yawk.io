@@ -444,7 +444,7 @@ namespace YAWK
 
             // Include and instantiate the class.
             require_once 'system/engines/mobiledetect/Mobile_Detect.php';
-            $detect = new \YAWK\Mobile_Detect;
+            $detect = new \YAWK\Mobile_Detect();
 
             $this->deviceType = ($detect->isMobile() ? ($detect->isTablet() ? 'Tablet' : 'Phone') : 'Desktop');
 
@@ -477,30 +477,27 @@ namespace YAWK
                 $this->osVersion = \YAWK\sys::getOS($this->userAgent);
             }
 
-            // check OS for iOS
-            if( $detect->isiOS() ){
-                $this->os = "iOS";
                 // detect wheter its a phone, pad or pod
                 if ( $detect->version('iPhone') ) {
                     $this->device = "iPhone";
+                    $this->os = "iOS";
                     $this->osVersion = $detect->version('iPhone');
                 }
                 if ( $detect->version('iPad') ) {
                     $this->device = "iPad";
+                    $this->os = "iOS";
                     $this->osVersion = $detect->version('iPad');
                 }
                 if ( $detect->version('iPod') ) {
                     $this->device = "iPod";
+                    $this->os = "iOS";
                     $this->osVersion = $detect->version('iPod');
                 }
-            }
-            else
-                {   // check OS for android
-                    if( $detect->isAndroidOS() ){
+                if( $detect->version('Android') ){
                         $this->os = "Android";
                         $this->osVersion = $detect->version('Android');
-                    }
                 }
+
 
             // set remote user
             $this->acceptLanguage = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
