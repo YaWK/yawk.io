@@ -707,7 +707,7 @@ namespace YAWK
             // check if logins are set
             if (!isset($logins) || (empty($logins)))
             {   // nope, get them from db
-                $logins = $this->countLogins($db, 200);
+                $logins = $this->countLogins($db);
             }
             $jsonData = "[";
             foreach ($logins AS $login => $value)
@@ -752,7 +752,7 @@ namespace YAWK
             // check if logins are set
             if (!isset($daytimes) || (empty($daytimes)))
             {   // nope, get them from db
-                $daytimes = $this->countDaytime($db, '', 200, $lang);
+                $daytimes = $this->countDaytime($db, '', $lang);
             }
             $jsonData = "[";
             foreach ($daytimes AS $daytime => $value)
@@ -802,7 +802,7 @@ namespace YAWK
             // check if device types are set
             if (!isset($daytimes) || (empty($daytimes)))
             {   // nope, get them from db
-                $daytimes = $this->countDaytime($db, '', 200, $lang);
+                $daytimes = $this->countDaytime($db, '', $lang);
             }
 
             $jsonData = "labels: ['$lang[MORNING]', '$lang[AFTERNOON]', '$lang[EVENING]', '$lang[NIGHT]'],
@@ -836,7 +836,7 @@ namespace YAWK
             // check if device types are set
             if (!isset($daytimes) || (empty($daytimes)))
             {   // nope, get them from db
-                $daytimes = $this->countDaytime($db, '', 200, $lang);
+                $daytimes = $this->countDaytime($db, '', $lang);
             }
 
             $jsonData = "labels: ['$lang[MORNING]', '$lang[AFTERNOON]', '$lang[EVENING]', '$lang[NIGHT]'],
@@ -896,7 +896,7 @@ namespace YAWK
             // check if browsers are set
             if (!isset($browsers) || (empty($browsers)))
             {   // nope, get them from db
-                $browsers = $this->countBrowsers($db, '', 200);
+                $browsers = $this->countBrowsers($db, '');
             }
             $jsonData = "[";
             foreach ($browsers AS $browser => $value)
@@ -906,6 +906,8 @@ namespace YAWK
                 // set different colors for each browser
                 if ($browser === "Chrome") { $textcolor = "#f56954"; }
                 if ($browser === "IE") { $textcolor = "#00a65a"; }
+                if ($browser === "Edge") { $textcolor = "#00a65a"; }
+                if ($browser === "Kindle") { $textcolor = "#239330"; }
                 if ($browser === "Firefox") { $textcolor = "#f39c12"; }
                 if ($browser === "Safari") { $textcolor = "#00c0ef"; }
                 if ($browser === "Opera") { $textcolor = "#3c8dbc"; }
@@ -991,7 +993,7 @@ namespace YAWK
             // check if browsers are set
             if (!isset($osVersions) || (empty($osVersions)))
             {   // nope, get them from db
-                $osVersions = $this->countOSVersions($db, '', 200);
+                $osVersions = $this->countOSVersions($db, '');
             }
             $jsonData = "[";
             foreach ($osVersions AS $osVersion => $value)
@@ -999,6 +1001,7 @@ namespace YAWK
                 // init textcolor
                 $textcolor = '';
                 // set different colors for each OS version
+                if ($osVersion === "Windows 10") { $textcolor = "#00c0ef"; }
                 if ($osVersion === "Windows 8") { $textcolor = "#00c0ef"; }
                 if ($osVersion === "Windows 7") { $textcolor = "#00A0C7"; }
                 if ($osVersion === "Windows Vista") { $textcolor = "#00B5E1"; }
@@ -1261,6 +1264,9 @@ namespace YAWK
         public function getOsVersionsColors($osVersions)
         {
             switch ($osVersions) {
+                case "Windows 10":
+                    $textcolor = "text-blue";
+                    break;
                 case "Windows 8":
                     $textcolor = "text-blue";
                     break;
