@@ -946,7 +946,7 @@ namespace YAWK
             // check if browsers are set
             if (!isset($oss) || (empty($oss)))
             {   // nope, get them from db
-                $oss = $this->countOS($db, '', 200);
+                $oss = $this->countOS($db, '');
             }
             $jsonData = "[";
             foreach ($oss AS $os => $value)
