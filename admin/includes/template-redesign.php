@@ -2,53 +2,6 @@
 <script type="text/javascript" src="../system/engines/jquery/jscolor/jscolor.js"></script>
 <!-- TAB collapse -->
 <script type="text/javascript" src="../system/engines/jquery/bootstrap-tabcollapse.js"></script>
-<!-- CSS for positions tab -->
-<style>
-    .posbox
-    {
-        /* background-color: #fff; */
-        font-weight:normal;
-        border-style: dotted; border-color: #ccc;
-        cursor:pointer;
-    }
-
-    .posbox:hover
-    {
-        border: dotted #888888;
-        font-weight: bold;
-        cursor:pointer;
-    }
-    .posboxActive
-    {
-        background-color: #E3E3E3;
-        border: 2px solid #888888;
-        font-weight: bold;
-        cursor:pointer;
-    }
-    .bodyBox
-    {
-        /* background-color: #fff; */
-        font-weight:normal;
-        border: 1px solid #444;
-        cursor:pointer;
-    }
-    .bodyBoxHover:hover
-    {
-        font-weight:bold;
-    }
-
-    .bodyBox:hover
-    {
-        cursor:pointer;
-    }
-    .bodyBoxActive
-    {
-        /* background-color: #E3E3E3; */
-        border: 2px solid #888888;
-        /* font-weight: bold; */
-        cursor:pointer;
-    }
-</style>
 <!-- Javascript for positions tab -->
 <script type="text/javascript">
     /* reminder: check if form has changed and warns the user that he needs to save. */
