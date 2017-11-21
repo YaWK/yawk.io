@@ -131,20 +131,33 @@ namespace YAWK {
         {
             global $file_value;
 
+            // check if a path is requested via GET variable
             if (isset($_GET['path']) && (!empty($_GET['path'])))
-            {
+            {   // set folder to given value
                 $folder = $_GET['path'];
             }
 
-            /*	getFilesFromFolder
-            *	returns a list of all files in given folder
-            *	expect var $folder as string
-            */
+            // if no folder is set
             if (!isset($folder)) {
+                // show up any default folder
                 $folder = "../media/images";
             }
+
+            // if requested folder not exists, folder structure may be corrupt.
+            // this can cause a crash if a system-needed folder was deleted.
+            if (!is_dir($folder))
+            {   // try to catch this - create missing folder
+                if (!mkdir($folder))
+                {   // could not create missing folder - bad exit, bad warning.
+                    die ("$lang[FILEMAN_FOLDER_MISSING]");
+                }
+                // in any other case, everything is ok - go on...
+            }
+            // set path variable
             $path = "$folder";
+            // walk through file structure...
             foreach (new \DirectoryIterator($path) as $file) {
+                // fill files array
                 if ($file->isFile()) {
                     // create files array
                     $files[] = htmlentities($file);
@@ -153,31 +166,36 @@ namespace YAWK {
                     // get filesize
                     $file_size[] = filesize($path . "/" . $file);
                 }
+                // fill folders array
                 if ($file->isDir() AND (!$file->isDot())) {
                     $folders[] = htmlentities($file);
                     $dir_perms[] = substr(sprintf('%o', fileperms($path . "/" . $file)), -4);
                 }
             }
-            // sort ascending
+            // sort files asc/desc
             if (!empty($files)) {
                 // insert sort here - if needed
             }
+            // sort folders asc/desc
             if (!empty($folders)) {
                 // sort($folders);
             }
 
+            // if no files or folder was found
             if (empty($files) && (empty($folders)))
-            {
+            {   // this directory is empty, show msg and draw back btn
                 $errorMsg = "$lang[FILEMAN_THIS_EMPTY_DIR]<br>
                              <a href=\"index.php?page=filemanager\" onclick=\"window.history.back();\"> $lang[BACK]</a>";
             }
             else
-                {
+                {   // no error message
                     $errorMsg = '';
                 }
+
             /* OUTPUT:
              * list folders + files
              */
+            // first of all, draw folders from array
             if (isset($folders))
             { // print folders
                 $i = 0;
@@ -209,6 +227,7 @@ namespace YAWK {
                           </tr>";
                 }
 
+            // secondly draw files from array
             if (isset($files))
             { // print files
                 $i = 0;
@@ -235,25 +254,34 @@ namespace YAWK {
             }
         }
 
+        /**
+         * Delete a directory recursive
+         * @author     Daniel Retzl <danielretzl@gmail.com>
+         * @copyright  2009-2017 Daniel Retzl
+         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @link       http://yawk.io
+         * @param string $directory folder to delete
+         */
         static function recursiveRemoveDirectory($directory)
-        {
+        {   // walk through directory
             foreach(glob("{$directory}/*") as $file)
-            {
+            {   // if it's a directory
                 if(is_dir($file))
-                {
+                {   // call ourself
                     self::recursiveRemoveDirectory($file);
                 }
                 else
-                    {
+                    {   // delete folder
                         unlink($file);
                     }
             }
+            // directory removed
             if (rmdir($directory))
-            {
+            {   // successful
                 return true;
             }
             else
-                {
+                {   // remove folder failed
                     return false;
                 }
         }
