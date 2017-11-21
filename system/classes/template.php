@@ -2061,7 +2061,7 @@ namespace YAWK {
             // check, if it's a google font
             if (substr($fontFamily, -6) === "-gfont")
             {
-                $googleFont = rtrim($fontFamily, "-gfont");
+                $googleFont = substr($fontFamily, 0, -6);
                 $bodyFontCSS = "
                     font-family: $googleFont !important;
                     font-size: $fontSize;
@@ -2234,7 +2234,7 @@ namespace YAWK {
             // check, if it's a google font
             elseif (substr($fontFamily, -6) === "-gfont")
             {
-                $googleFont = rtrim($fontFamily, "-gfont");
+                $googleFont = substr($fontFamily, 0, -6);
                 $fontCSS = "
                 $cssTagName
                 {
