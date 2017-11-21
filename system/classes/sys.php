@@ -673,6 +673,7 @@ namespace YAWK {
                 }
             $bname = 'Unknown';
             $platform = 'Unknown';
+            $ub = '';
             $version= "";
 
             //First get the platform?
@@ -697,6 +698,11 @@ namespace YAWK {
             {
                 $bname = 'Internet Explorer';
                 $ub = "MSIE";
+            }
+            if(preg_match('/Edge/i',$u_agent) && !preg_match('/Opera/i',$u_agent))
+            {
+                $bname = 'Edge';
+                $ub = "Edge";
             }
             elseif(preg_match('/Trident/i',$u_agent))
             { // this condition is for IE11
