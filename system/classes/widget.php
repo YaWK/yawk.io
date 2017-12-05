@@ -254,8 +254,7 @@ namespace YAWK {
                             {
                                 echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
                             }
-                            else
-                            {   // begin draw select
+                            // begin draw select
                                 echo "<label for=\"$setting[property]\">$setting[label]&nbsp;$setting[description]</label>
                                           <select class=\"form-control\" id=\"$setting[property]\" name=\"$setting[property]\">";
                                 echo "<option value=\"$setting[value]\">$lang[SETTING_CURRENT] $setting[value]</option>";
@@ -263,16 +262,14 @@ namespace YAWK {
                                 $optionValues = explode(":", $setting['options']);
                                 foreach ($optionValues as $value)
                                 {
-                                    // extract value from option setting string
-                                    // $optionValue = preg_replace("/,[a-zA-Z0-9]*/", "", $value);
                                     // extract description from option setting
                                     $optionDesc = preg_replace('/.*,(.*)/','$1', $value);
+                                    // extract value from option setting string
                                     $optionValue = preg_split("/,[a-zA-Z0-9]*/", $value);
 
                                     echo "<option value=\"$optionValue[0]\">$optionDesc</option>";
                                 }
                                 echo "</select>";
-                            }
                         }
 
                         /* TEXTAREA */
@@ -370,6 +367,7 @@ namespace YAWK {
                         \YAWK\sys::setSyslog($db, 11, "could not get max ID.", 0, 0, 0, 0);
                         return false;
                     }
+
                 // add new widget to db
                 if ($res_widgets = $db->query("INSERT INTO {widgets}
                                 (id, published, widgetType, pageID, sort, position, date_publish)
