@@ -89,7 +89,7 @@ echo \YAWK\backend::getTitle($widget->name, $lang['WIDGET']);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
             <li><a href=\"index.php?page=widgets\" title=\"$lang[WIDGETS]\"> $lang[WIDGETS]</a></li>
-            <li class=\"active\"><a href=\"index.php?page=widget-edit&widget=$widget->id\" title=\"$lang[WIDGET_EDIT_SUBTEXT]\"> $lang[EDIT] $widget->name $lang[WIDGET]</a></li>
+            <li class=\"active\"><a href=\"index.php?page=widget-edit&widget=$widget->id\" title=\"$lang[WIDGET_EDIT_SUBTEXT]\"> $lang[EDIT]:&nbsp; <b>$widget->name $lang[WIDGET]</b></a></li>
          </ol>
     </section>
     <!-- Main content -->
