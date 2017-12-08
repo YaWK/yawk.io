@@ -255,22 +255,22 @@ CREATE TABLE `cms_logins` (
 
 CREATE TABLE `cms_menu` (
   `TMPID` int(11) NOT NULL,
-  `id` int(11)  NOT NULL,
-  `sort` int(11) NOT NULL DEFAULT '0',
-  `gid` int(11) NOT NULL DEFAULT '1',
-  `menuID` int(11) NOT NULL,
-  `parentID` int(11) NOT NULL DEFAULT '0',
-  `published` int(1) NOT NULL DEFAULT '1',
-  `date_created` datetime NOT NULL,
-  `date_changed` datetime NOT NULL,
-  `date_publish` datetime NOT NULL,
-  `date_unpublish` datetime NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `text` varchar(100) NOT NULL,
-  `href` varchar(255) NOT NULL,
-  `target` varchar(64) NOT NULL DEFAULT '_self',
-  `divider` int(11) NOT NULL DEFAULT '0',
-  `blogid` int(11) NOT NULL DEFAULT '0'
+  `id` int(11)  DEFAULT NULL,
+  `sort` int(11) DEFAULT '0',
+  `gid` int(11) DEFAULT '1',
+  `menuID` int(11) DEFAULT NULL,
+  `parentID` int(11) DEFAULT '0',
+  `published` int(1) DEFAULT '1',
+  `date_created` datetime DEFAULT NULL,
+  `date_changed` datetime DEFAULT NULL,
+  `date_publish` datetime DEFAULT NULL,
+  `date_unpublish` datetime DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `text` varchar(100) DEFAULT NULL,
+  `href` varchar(255) DEFAULT NULL,
+  `target` varchar(64) DEFAULT '_self',
+  `divider` int(11) DEFAULT '0',
+  `blogid` int(11) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -384,20 +384,20 @@ CREATE TABLE `cms_notifications_msg` (
 
 CREATE TABLE `cms_pages` (
   `id` int(11) NOT NULL,
-  `published` int(1) NOT NULL DEFAULT '0',
-  `gid` int(11) NOT NULL DEFAULT '1',
-  `date_created` datetime NOT NULL,
-  `date_changed` datetime NOT NULL,
-  `date_publish` datetime NOT NULL,
-  `date_unpublish` datetime NOT NULL,
-  `alias` varchar(255) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `bgimage` varchar(255) NOT NULL,
-  `owner` int(11) NOT NULL DEFAULT '-1',
-  `menu` int(11) NOT NULL DEFAULT '0',
-  `locked` int(1) NOT NULL DEFAULT '0',
-  `blogid` int(11) NOT NULL DEFAULT '0',
-  `plugin` varchar(255) NOT NULL
+  `published` int(1) DEFAULT '0',
+  `gid` int(11) DEFAULT '1',
+  `date_created` datetime DEFAULT NULL,
+  `date_changed` datetime DEFAULT NULL,
+  `date_publish` datetime DEFAULT NULL,
+  `date_unpublish` datetime DEFAULT NULL,
+  `alias` varchar(255) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `bgimage` varchar(255) DEFAULT NULL,
+  `owner` int(11) DEFAULT '-1',
+  `menu` int(11) DEFAULT '0',
+  `locked` int(1) DEFAULT '0',
+  `blogid` int(11) DEFAULT '0',
+  `plugin` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -430,11 +430,10 @@ INSERT INTO `cms_plugins` (`id`, `name`, `description`, `icon`, `activated`) VAL
 (2, 'faq', 'Datenbank-gest&uuml;tze F.A.Q.s', 'fa fa-question-circle', 1),
 (3, 'blog', 'Erstelle ein Blog mit fortlaufenden Eintr&auml;gen.', 'fa fa-wordpress', 1),
 (4, 'booking', 'Booking App', 'fa fa-calendar-check-o', 1),
-(5, 'sedcard', 'Sedcard Plugin provides Online Sedcards for "Models"', 'fa fa-female', 0),
-(6, 'messages', 'A simple messaging system where users can send private messages to each other.', 'fa fa-envelope-o', 1),
-(7, 'signup', 'Allow and setup user registration from frontend.', 'fa fa-user', 1),
-(8, 'userpage', 'Edit User Page Settings', 'fa fa-home', 1),
-(9, 'gallery', 'Create and manage image and video galleries', 'fa fa-photo', 1);
+(5, 'messages', 'A simple messaging system where users can send private messages to each other.', 'fa fa-envelope-o', 1),
+(6, 'signup', 'Allow and setup user registration from frontend.', 'fa fa-user', 1),
+(7, 'userpage', 'Edit User Page Settings', 'fa fa-home', 1),
+(8, 'gallery', 'Create and manage image and video galleries', 'fa fa-photo', 1);
 
 -- --------------------------------------------------------
 
@@ -2245,7 +2244,9 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('fuckAdBlockLowBtnText', 'OK, got it!', 36, 1, 4, 'LABEL_ADBLOCK_LOWBTNTEXT', '', '', '', 'DESC_ADBLOCK_LOWBTNTEXT', 'form-control', 'input', 'PH_ADBLOCK_LOWBTNTEXT', '', 176),
 ('fuckAdBlockHighBtnText', 'Please disable your AdBlocker and click here.', 36, 1, 5, 'LABEL_ADBLOCK_HIGHBTNTEXT', '', '', '', 'DESC_ADBLOCK_HIGHBTNTEXT', 'form-control', 'input', 'PH_ADBLOCK_HIGHBTNTEXT', '', 177),
 ('fuckAdBlockBtnClass', 'btn btn-danger', 36, 1, 6, 'LABEL_ADBLOCK_BTNCLASS', '', '', '', 'DESC_ADBLOCK_BTNCLASS', 'form-control', 'input', 'PH_ADBLOCK_BTNCLASS', '', 178),
-('fuckAdBlockLoadingType', 'onPageLoad', 36, 1, 7, 'LABEL_ADBLOCK_LOADINGTYPE', '', '', '', 'DESC_ADBLOCK_LOADINGTYPE', 'form-control', 'select', '', 'onPageLoad,on Page Load:10,after 10 Seconds:30,after 30 seconds:60,after 60 Seconds:120,after 2 Minutes:300,after 5 Minutes:600,every 10 Minutes:1800,every 30 Minutes:3600,every Hour,', 179);
+('fuckAdBlockLoadingType', 'onPageLoad', 36, 1, 7, 'LABEL_ADBLOCK_LOADINGTYPE', '', '', '', 'DESC_ADBLOCK_LOADINGTYPE', 'form-control', 'select', '', 'onPageLoad,on Page Load:10,after 10 Seconds:30,after 30 seconds:60,after 60 Seconds:120,after 2 Minutes:300,after 5 Minutes:600,every 10 Minutes:1800,every 30 Minutes:3600,every Hour,', 179),
+('contentAnimatorClass', 'slideUp', 37, 1, 1, 'LABEL_CONTENTANIMATOR_CLASS', '', '', '', 'DESC_CONTENTANIMATOR_CLASS', 'form-control', 'select', '', 'slideUp,Slide Up:slideDown,Slide Down:slideLeft,Slide Left:slideRight,Slide Right:fade,Fade:fadeMedium,Fade Medium:fadeSlow,Fade Slow', 180),
+('contentAnimatorScrollValue', '600', 37, 1, 2, 'LABEL_CONTENTANIMATOR_VALUE', '', '', '', 'DESC_CONTENTANIMATOR_VALUE', 'form-control', 'input', 'PH_CONTENTANIMATOR_VALUE', '', 181);
 
 -- --------------------------------------------------------
 
@@ -2326,7 +2327,8 @@ INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`)
 (33, 1, 'jPlayer Video', 'jplayer_video', 'jPlayer Video Player with playlist feature'),
 (34, 1, 'Plyr HTML5 Player', 'plyr', 'A simple, accessible HTML5 media player by @sam_potts'),
 (35, 1, 'Responsive Voice JS', 'responsiveVoiceJS', 'Instant Text-To-Speech with Voice Consistency Across Devices'),
-(36, 1, 'AdBlock Blocker', 'fuckadblock', 'Detect and block AdBlocker');
+(36, 1, 'AdBlock Blocker', 'fuckadblock', 'Detect and block AdBlocker'),
+(37, 1, 'Content Animator', 'contentAnimator', 'Enable Slide Animations for your content');
 
 --
 -- Indizes der exportierten Tabellen
@@ -2611,7 +2613,7 @@ ALTER TABLE `cms_logins`
 -- AUTO_INCREMENT für Tabelle `cms_menu`
 --
 ALTER TABLE `cms_menu`
-  MODIFY `TMPID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `TMPID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 --
 -- AUTO_INCREMENT für Tabelle `cms_meta_local`
 --
@@ -2666,4 +2668,4 @@ ALTER TABLE `cms_widget_defaults`
 -- AUTO_INCREMENT für Tabelle `cms_widget_settings`
 --
 ALTER TABLE `cms_widget_settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
