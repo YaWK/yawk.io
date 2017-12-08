@@ -38,9 +38,9 @@ else
  <link rel="apple-touch-icon" sizes="120x120" href="media/images/apple-touch-icon-120x120-precomposed.png">
  <link rel="apple-touch-icon" sizes="152x152" href="media/images/apple-touch-icon-152x152-precomposed.png">
     <!-- import font awesome -->
-    <!-- <link rel="stylesheet" href="system/engines/font-awesome/css/font-awesome.min.css" type="text/css" media="all"> -->
+    <link rel="stylesheet" href="system/engines/font-awesome/css/font-awesome.min.css" type="text/css" media="all">
     <!-- import animate.css -->
-    <!-- <link rel="stylesheet" href="system/engines/animateCSS/animate.min.css" type="text/css" media="all"> -->
+    <link rel="stylesheet" href="system/engines/animateCSS/animate.min.css" type="text/css" media="all">
     <!-- Bootstrap core CSS -->
     <link href="system/engines/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Own Template Settings: Bootstrap core CSS override -->
@@ -364,12 +364,12 @@ $col = '';
   <!-- LAYOUT END -->
 
       <script>
-          /*
-          $(document).ready(function(){
-             // $("#mainPos").addClass("slide");
 
+
+
+              /*
               // Add smooth scrolling to all links in navbar + footer link
-              $(".submenu a, a[href='#sicherheit']").on('click', function(event) {
+              $(".submenu a, a[href='#home']").on('click', function(event) {
                   // Prevent default anchor click behavior
                   event.preventDefault();
                   // Store hash
@@ -383,7 +383,7 @@ $col = '';
                       window.location.hash = hash;
                   });
               });
-
+/*
               // Slide in elements on scroll
               $(window).scroll(function() {
                   $(".slideanim").each(function(){
@@ -395,6 +395,7 @@ $col = '';
                       }
                   });
               });
+
           })
           */
       </script>

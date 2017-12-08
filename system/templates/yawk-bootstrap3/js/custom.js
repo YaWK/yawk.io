@@ -1,16 +1,11 @@
 $(document).ready(function () {
-    // logout menu animation: on mousemover spinning cog
-    $('#logoutMenu').mouseover(function() {
-        $('#cog').addClass('fa fa-cog fa-spin');
-    });
-    // logoutmenu animation: on mouseout still cog
-    $('#logoutMenu').mouseout(function() {
-        $('#cog').removeClass('fa fa-cog fa-spin');
-        $('#cog').addClass('fa fa-cog');
-    });
 
-    // body class FX
-    $('#bodyFX').fadeIn(920);
+    $('.scrollup').click(function () {
+        $("html, body").animate({
+            scrollTop: 0
+        }, 600);
+        return false;
+    });
 
     // set class="protected" to hide r.mouse context menu
     $('.protected').bind('contextmenu', function(e) {
@@ -39,14 +34,14 @@ $(document).ready(function () {
         // confirmation dialog 1
         var terminate = window.confirm("ACHTUNG!\nDas wird Deinen Account permanent deaktivieren.\n" +
             "Bist Du Dir sicher, dass Du das tun willst?");
-        if (terminate == true){
+        if (terminate === true){
             // just to be sure - ask the user once again
             var terminateUser = window.confirm("Bist Du Dir wirklich ganz sicher?\n"+
             "Diese Aktion kann nicht rueckgaengig gemacht werden.");
-            if (terminateUser == true){
+            if (terminateUser === true){
                 // the php file who set the user off in db
                   $.get('system/templates/yawk-bootstrap3/js/terminate-user.php', function(data) {
-                   if (data == "true"){
+                   if (data === "true"){
                        setTimeout ("window.location='logout.html'", 0);
                       //  alert ("it worked!");
                    }
