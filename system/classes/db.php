@@ -4,9 +4,9 @@ namespace YAWK {
     /**
      * <b>Database class db</b> <i>extends \mysqli</i>
      */
-    final class db extends \mysqli {
+    class db extends \mysqli {
         private $config;
-        public static $connection;
+        private $connection;
 
         /**
          * db constructor.

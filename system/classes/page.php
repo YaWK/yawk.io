@@ -247,7 +247,7 @@ namespace YAWK {
                 die ("Sorry, database error: could not fetch MAX(id).");
             }
             // ## add new page to db pages
-            if ($res = $db->query("INSERT INTO {pages} (id,gid,date_created,date_publish,alias,title,blogid,locked,plugin)
+            if ($db->query("INSERT INTO {pages} (id,gid,date_created,date_publish,alias,title,blogid,locked,plugin)
                                    VALUES ('" . $id . "',
                                            '" . $gid . "',
                                            '" . $date_created . "',
@@ -264,7 +264,7 @@ namespace YAWK {
                 $keyw = "keywords";
                 $words = "";
                 // add local meta tags
-                if (!$res2 = $db->query("INSERT INTO {meta_local} (name,page,content)
+                if (!$db->query("INSERT INTO {meta_local} (name,page,content)
                                           VALUES ('" . $desc . "', '" . $id . "', '" . $title . "')"))
                 {
                     \YAWK\sys::setSyslog($db, 5, "could not store local meta tags", 0, 0, 0, 0);
@@ -272,7 +272,7 @@ namespace YAWK {
                 }
 
                 // add local meta tags to db meta_local
-                if (!$res3 = $db->query("INSERT INTO {meta_local} (name,page,content)
+                if (!$db->query("INSERT INTO {meta_local} (name,page,content)
                         VALUES ('" . $keyw . "','" . $id . "','" . $words . "')"))
                 {
                     \YAWK\sys::setSyslog($db, 5, "Could not store local meta tags", 0, 0, 0, 0);
@@ -290,7 +290,7 @@ namespace YAWK {
                 }
 
                 // ## selectmenuID from menu db
-                if ($res = $db->query("SELECT menuID FROM {menu} WHERE title LIKE '" . $title . "'"))
+                if ($db->query("SELECT menuID FROM {menu} WHERE title LIKE '" . $title . "'"))
                 {
                     $row = mysqli_fetch_row($res);
                     $menuID = $row[0];
@@ -329,7 +329,7 @@ namespace YAWK {
                     }
 
                     $link = "$alias" . ".html";
-                    if ($res = $db->query("INSERT INTO {menu} (id,sort,menuID,text,href)
+                    if ($db->query("INSERT INTO {menu} (id,sort,menuID,text,href)
                           VALUES('" . $id . "','" . $sort . "', '" . $menuID . "', '" . $title_new . "', '" . $link . "')"))
                     {
                         \YAWK\sys::setSyslog($db, 2, "copy $newfile successful", 0, 0, 0, 0);
@@ -423,7 +423,7 @@ namespace YAWK {
             $alias = html_entity_decode($alias);
             // creation date
             $date_created = date("Y-m-d G:i:s");
-            $date_publish = $date_created;
+            $date_unpublish = date('Y-m-d', strtotime('+25 year', strtotime($date_created)) );
             $title = $alias;
             /* alias string manipulation */
             $alias = mb_strtolower($alias); // lowercase
@@ -572,9 +572,9 @@ namespace YAWK {
                                    VALUES ('" . $id . "',
                                            '" . $published . "',
                                            '" . $date_created . "',
-                                           '0000-00-00 00:00:00',
                                            '" . $date_created . "',
-                                           '0000-00-00 00:00:00',
+                                           '" . $date_created . "',
+                                           '" . $date_unpublish . "',
                                            '" . $alias . "',
                                            '" . $title . "',
                                            '" . $locked . "',
@@ -620,11 +620,10 @@ namespace YAWK {
          * @param object $db database
          * @return bool
          */
-        function save($db)
+        public function save($db)
         {
             /** @var $db \YAWK\db */
             $date_changed = date("Y-m-d G:i:s");
-            // $alias = $this->alias;
             /* alias string manipulation */
             $this->alias = mb_strtolower($this->alias); // lowercase
             $this->alias = str_replace(" ", "-", $this->alias); // replace all ' ' with -
@@ -641,68 +640,99 @@ namespace YAWK {
             if (file_exists($oldFilename)) {
                 // try to rename the new file
                 if (!rename($oldFilename, $newFilename))
-                { // throw error
+                { // throw error msg
                  \YAWK\alert::draw("warning","Warning!","Could not rename $oldFilename to new file: $newFilename","","");
                 }
-                else {
+                else
+                {
                     // new file was stored, now do all the database stuff
                     // update meta tags, menu entries and finally the pages db itself
                 }
+
                 // update local meta description
-                if (!$result = $db->query("UPDATE {meta_local}
+                if (!$db->query("UPDATE {meta_local}
   					SET content = '" . $this->metadescription . "'
                     WHERE name = 'description'
                     AND page = '" . $this->id . "'"))
-                {   // throw error
+                {
+                    // throw error msg
                     \YAWK\sys::setSyslog($db, 5, "local meta description could not be stored in database.", 0, 0, 0, 0);
                     \YAWK\alert::draw("warning", "Warning", "local meta description could not be stored in database.", "", 4200);
                 }
+
                 // update local meta tag keywords
-                if (!$result = $db->query("UPDATE {meta_local}
+                if (!$db->query("UPDATE {meta_local}
   					SET content = '" . $this->metakeywords . "'
                     WHERE name = 'keywords'
                     AND page = '" . $this->id . "'"))
-                {   // throw error
+                {
+                    // throw error msg
                     \YAWK\sys::setSyslog($db, 5, "local meta keywords could not be stored in database.", 0, 0, 0, 0);
                     \YAWK\alert::draw("warning", "Warning", "local meta keywords could not be stored in database.", "", 4200);
                 }
+
                 // update menu entry
-                if (!$result = $db->query("UPDATE {menu}
-  				    SET text = '". $this->title ."',
+                if (!$db->query("UPDATE {menu}
+  				    SET text = '" . $this->title ."',
   				        href = '" . $this->alias . ".html',
   					 	gid = '" . $this->gid . "',
   						published = '" . $this->published . "'
-                  WHERE href = '" . $this->searchstring . "'"))
-                {   // throw error
+                    WHERE href = '" . $this->searchstring . "'"))
+                {
+                    // throw error
                     \YAWK\sys::setSyslog($db, 5, "menu entry could not be stored in database.", 0, 0, 0, 0);
-                    \YAWK\alert::draw("warning", "Warning", "menu entry could not be stored in database.", "", 4200);
+                    \YAWK\alert::draw("warning", "Warning", "menu entry could not be stored in database.", "", 6200);
                 }
-                // update menu entry
-                if (!$result = $db->query("UPDATE {pages} SET
-                                        published = '" . $this->published . "',
-                                        gid = '" . $this->gid . "',
-                                        date_changed = '" . $date_changed . "',
-                                        date_publish = '" . $this->date_publish . "',
-                                        date_unpublish = '" . $this->date_unpublish . "',
-                                        title = '" . $this->title . "',
-                                        alias = '" . $this->alias . "',
-                                        menu = '" . $this->menu . "',
-                                        bgimage = '" . $this->bgimage . "'
-                      WHERE id = '" . $this->id . "'"))
-                {   // throw error
-                    \YAWK\sys::setSyslog($db, 5, "menu entry could not be stored in database.", 0, 0, 0, 0);
-                    \YAWK\alert::draw("warning", "Warning", "menu entry could not be stored in database.", "", 4200);
+
+/* var output for testing
+echo "<h1>published: $this->published<br>
+gid: $this->gid<br>
+date_changed: $date_changed<br>
+date_publish: $this->date_publish<br>
+date unpublish: $this->date_unpublish<br>
+title: $this->title<br>
+alias: $this->alias<br>
+menu: $this->menu<br>
+bgimage: $this->bgimage<br>
+where ID = $this->id</h1>";
+*/
+                // update page db
+                if (!$db->query("UPDATE {pages} 
+                    SET published = '" . $this->published . "',
+                        gid = '" . $this->gid . "',
+                        date_changed = '" . $date_changed . "',
+                        date_publish = '" . $this->date_publish . "',
+                        date_unpublish = '" . $this->date_unpublish . "',
+                        title = '" . $this->title . "',
+                        alias = '" . $this->alias . "',
+                        menu = '" . $this->menu . "',
+                        bgimage = '" . $this->bgimage . "'
+                    WHERE id = '" . $this->id . "'"))
+                {
+                    // throw error
+                    \YAWK\sys::setSyslog($db, 5, "page data could not be stored in database.", 0, 0, 0, 0);
+                    // \YAWK\alert::draw("warning", "Warning", "page data could not be stored in database.", "", 6200);
+                    \YAWK\alert::draw("danger", 'MySQL Error: ('.mysqli_errno($db).')', 'Database error: '.mysqli_error($db).'', "", 0);
+                    return false;
                 }
-                else {
+
+                else
+                {
+
+                    if (!$db->error) {
+                        printf("Errormessage: %s\n", $db->error);
+                    }
                     // update pages db worked, all fin
                     \YAWK\sys::setSyslog($db, 2, "save $this->alias", 0, 0, 0, 0);
                     return true;
                 }
+
             }
             // something went wrong...
-            \YAWK\sys::setSyslog($db, 5, "file $oldFilename does not exist.", 0, 0, 0, 0);
-            return false;
+            // \YAWK\sys::setSyslog($db, 5, "file $oldFilename does not exist.", 0, 0, 0, 0);
+            // return true;
         } // ./ save function
+
 
         /**
          * delete a static content page
@@ -715,9 +745,18 @@ namespace YAWK {
         {
             global $dirprefix;
             $filename = $dirprefix . "../content/pages/" . $this->alias . ".php";
-            if (file_exists($filename)) {
-                unlink($filename);
+            if (file_exists($filename))
+            {
+                if (unlink($filename))
+                {
+                    return true;
+                }
+                else
+                    {
+                        return false;
+                    }
             }
+            return true;
         }
 
         /**
@@ -727,7 +766,7 @@ namespace YAWK {
          * @link http://yawk.io
          * @param string $dirprefix directory prefix
          * @param string $content the content to write
-         * @return int
+         * @return bool true|false
          */
         function writeContent($dirprefix, $content)
         {
@@ -742,10 +781,16 @@ namespace YAWK {
             $alias = preg_replace("/[^a-z0-9\-\/]/i", "", $alias); // final check: just numbers and chars are allowed
             $filename = $dirprefix . "content/pages/" . $alias . ".php";
             $handle = fopen($filename, "w+");
-            $res = fwrite($handle, $content);
-            fclose($handle);
-            chmod($filename, 0777);
-            return $res;
+            if ($res = fwrite($handle, $content))
+            {
+                fclose($handle);
+                chmod($filename, 0777);
+                return true;
+            }
+            else
+                {
+                    return false;
+                }
         }
 
         /**

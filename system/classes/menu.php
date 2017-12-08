@@ -704,9 +704,9 @@ namespace YAWK {
 
                 $html = "";
                 $html .= "
-             <!-- <nav class=\"navbar navbar-default navbar-fixed-top\" role=\"navigation\" id=\"topnavbar\"> -->
-             <nav class=\"navbar navbar-default\" role=\"navigation\" id=\"topnavbar\">
-             <!-- <div class=\"container\"> -->
+             <nav class=\"navbar navbar-default navbar-fixed-top\" role=\"navigation\" id=\"topnavbar\">
+             <!-- <nav class=\"navbar navbar-default\" role=\"navigation\" id=\"topnavbar\"> -->
+             <div class=\"container\">
              <div class=\"navbar-header\">
              <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\".navbar-collapse\">
                 <span class=\"sr-only\">Toggle navigation</span>
@@ -784,7 +784,7 @@ namespace YAWK {
                     }
                     $html .= "<!-- /.nav-collapse -->
   </div><!-- /navbar-inn -->
- <!-- </div><!-- /container -->
+ </div> <!-- /container -->
 </nav><!-- navbar -->";
                 }
                 return $html;
