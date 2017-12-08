@@ -4,6 +4,10 @@ if (!isset($page)) // if no page object is set
 {   // create new page object
     $page = new YAWK\page();
 }
+if (!isset($db))
+{
+    $db = new \YAWK\db();
+}
 
 // TOGGLE PAGE
 if (isset($_GET['toggle']) && ($_GET['toggle'] === "1"))
@@ -29,7 +33,7 @@ if (isset($_GET['lock']) && ($_GET['lock']) === "1")
 
         if ($locked === '1') { $setLock = 0; $status = "$lang[UNLOCKED]"; $color="success"; }
         if ($locked === '0') { $setLock = 1; $status = "$lang[LOCKED]"; $color="danger"; }
-        else { $setLock = 0; }
+        else { $setLock = 0; $status=''; }
 
         // execute page lock
         if ($page->toggleLock($db, $id, $setLock))

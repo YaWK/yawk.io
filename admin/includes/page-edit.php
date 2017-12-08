@@ -3,6 +3,10 @@ if (!isset($page))
 {   // generate new page object
     $page = new YAWK\page();
 }
+if (!isset($db))
+{
+    $db = new \YAWK\db();
+}
 
 if (isset($_GET['alias'])){
     $alias = $db->quote($_GET['alias']);
@@ -33,12 +37,12 @@ if(isset($_POST['save'])){
             print YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[PAGE_SAVED]","", 800);
           }
           else {
-              print YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[FILE] $page->alias $lang[NOT_SAVED]. $lang[CHECK_CHMOD]", "", "8200");
+              print YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[FILE] $page->alias $lang[NOT_SAVED]. $lang[CHECK_CHMOD]", "", "8200");
 
           }
     }
     else {
-       print YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[PAGE_DB_FAILED] $page->alias $lang[DB_WRITE_FAILED]", "", "8200");
+       print YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[PAGE_DB_FAILED] $page->alias $lang[DB_WRITE_FAILED]", "", "8200");
     }
 }
 // path to cms	

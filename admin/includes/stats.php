@@ -241,12 +241,6 @@ echo"<ol class=\"breadcrumb\">
     </div>
 </div>
 
-<div class="box">
-    <div class="box-header"><h3 class="box-title">Bar Chart</h3></div>
-    <div class="box-body">
-        <canvas id="myChart"></canvas>
-    </div>
-</div>
 
 <script type="text/javascript">
     // some jquery magic to remember select option status
