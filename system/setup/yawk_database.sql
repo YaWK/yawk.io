@@ -2246,7 +2246,9 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('fuckAdBlockBtnClass', 'btn btn-danger', 36, 1, 6, 'LABEL_ADBLOCK_BTNCLASS', '', '', '', 'DESC_ADBLOCK_BTNCLASS', 'form-control', 'input', 'PH_ADBLOCK_BTNCLASS', '', 178),
 ('fuckAdBlockLoadingType', 'onPageLoad', 36, 1, 7, 'LABEL_ADBLOCK_LOADINGTYPE', '', '', '', 'DESC_ADBLOCK_LOADINGTYPE', 'form-control', 'select', '', 'onPageLoad,on Page Load:10,after 10 Seconds:30,after 30 seconds:60,after 60 Seconds:120,after 2 Minutes:300,after 5 Minutes:600,every 10 Minutes:1800,every 30 Minutes:3600,every Hour,', 179),
 ('contentAnimatorClass', 'slideUp', 37, 1, 1, 'LABEL_CONTENTANIMATOR_CLASS', '', '', '', 'DESC_CONTENTANIMATOR_CLASS', 'form-control', 'select', '', 'slideUp,Slide Up:slideDown,Slide Down:slideLeft,Slide Left:slideRight,Slide Right:fade,Fade:fadeMedium,Fade Medium:fadeSlow,Fade Slow', 180),
-('contentAnimatorScrollValue', '600', 37, 1, 2, 'LABEL_CONTENTANIMATOR_VALUE', '', '', '', 'DESC_CONTENTANIMATOR_VALUE', 'form-control', 'input', 'PH_CONTENTANIMATOR_VALUE', '', 181);
+('contentAnimatorScrollValue', '600', 37, 1, 2, 'LABEL_CONTENTANIMATOR_VALUE', '', '', '', 'DESC_CONTENTANIMATOR_VALUE', 'form-control', 'input', 'PH_CONTENTANIMATOR_VALUE', '', 181),
+('youtubeAutoplay', 'false', 16, 1, 0, 'LABEL_YOUTUBE_AUTOPLAY', '', '', '', 'DESC_YOUTUBE_AUTOPLAY', 'form-control', 'select', '', 'true,true:false,false', 182);
+
 
 -- --------------------------------------------------------
 

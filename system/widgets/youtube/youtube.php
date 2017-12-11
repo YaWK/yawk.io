@@ -6,6 +6,7 @@ $heading='';
 $subtext='';
 $youtubeDescription='';
 $youtubeFullscreen="true";
+$youtubeAutoplay="false";
 $youtubeHeight="720";
 $youtubeWidth="100%";
 
@@ -39,6 +40,11 @@ if (isset($_GET['widgetID']))
                 /* allow fullscreen */
                 case 'youtubeFullscreen';
                     $youtubeFullscreen = $w_value;
+                    break;
+
+                /* autplay */
+                case 'youtubeAutoplay';
+                    $youtubeAutoplay = $w_value;
                     break;
 
                 /* height of video frame in pixels */
@@ -80,6 +86,16 @@ else
     $allowfullscreen = '';
 }
 
+// to output correct html
+if ($youtubeAutoplay === "true")
+{   // set fullscreen property
+    $autoplay = "?autoplay=1";
+}
+else
+{   // or leave empty if fullscreen should be false
+    $autoplay = '';
+}
+
 // if a heading is set and not empty
 if (isset($heading) && (!empty($heading)))
 {   // add a h1 tag to heading string
@@ -112,7 +128,7 @@ else
     }
 
 // switch plain youtube url to correct embed url string
-$youtubeVideoUrl = str_replace("watch?v=","embed/",$youtubeVideoUrl);
+$youtubeVideoUrl = str_replace("watch?v=","embed/",$youtubeVideoUrl.$autoplay);
 
 // HTML output
 echo "
