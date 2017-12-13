@@ -10,6 +10,43 @@ $template->loadProperties($db, $getID);
 // previewButton is an empty string - why? this should be checked
 $previewButton = "";
 
+// TOGGLE TEMPLATE
+// set selectedTemplate online/offline (visible for everybody)
+if (isset($_GET['toggle']) && ($_GET['toggle'] === "1"))
+{
+    if (isset($_GET['templateID']) && (is_numeric($_GET['templateID'])))
+    {   // escape chars
+        $_GET['templateID'] = $db->quote($_GET['templateID']);
+        if (\YAWK\settings::setSetting($db, "selectedTemplate", $_GET['templateID'], $lang))
+        {   // additional: set this template as active in template database
+            \YAWK\template::setTemplateActive($db, $_GET['templateID']);
+            $user->setUserTemplate($db, 0, $_GET['templateID'], $user->id);
+            $user->overrideTemplate = 0;
+        }
+        else
+        {
+            \YAWK\alert::draw("warning", "$lang[TPL_SWITCH_FAILED]", "$lang[TPL_SWITCH_FAILED_SUBTEXT]", "page=template-manage", 3000);
+        }
+    }
+}
+
+
+// DELETE TEMPLATE
+if (isset($_GET['delete']) && ($_GET['delete'] === "1"))
+{   // check, if the given ID is correct
+    if (isset($_GET['templateID']) && (is_numeric($_GET['templateID'])))
+    {   // escape chars
+        $_GET['templateID'] = $db->quote($_GET['templateID']);
+        if (\YAWK\template::deleteTemplate($db, $_GET['templateID']))
+        {   // throw success msg
+            \YAWK\alert::draw("success", "<i class=\"fa fa-trash-o\"></i> $lang[TPL] $lang[DELETED]", "$lang[SUCCESS]", "", 3000);
+        }
+        else
+        {
+            \YAWK\alert::draw("danger", "$lang[TPL_FAILED_TO_DELETE] $_GET[templateID]", "$lang[PLEASE_TRY_AGAIN]", "", 3000);
+        }
+    }
+}
 
 // OVERRIDE TEMPLATE
 // check if call comes from template-manage or template-edit form
@@ -67,6 +104,7 @@ if (isset($_GET['id']) && (is_numeric($_GET['id']) || (isset($_POST['id']) && (i
 }
 else {
     $previewButton = "";
+    $infoBadge = "<span class=\"label label-success\"><i class=\"fa fa-check\"></i>&nbsp;&nbsp;$lang[VISIBLE_TO_EVERYONE]</span>";
 }
 
 // load all template settings into array
@@ -101,7 +139,7 @@ echo"</section><!-- Main content -->
 <!-- OVERVIEW -->
 <!-- list TEMPLATE HOME PAGE (DETAILS) -->
 <div class="row animated fadeIn">
-    <div class="col-md-6">
+    <div class="col-md-5">
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title"><?php echo "$lang[DETAILS] <small>$lang[OF_CURRENT_ACTIVE_THEME]"; ?></small></h3>
@@ -183,7 +221,6 @@ echo"</section><!-- Main content -->
                 $settings = "<dt>$lang[SETTINGS]</dt>
                             <dd>".$template->countTemplateSettings($db, $template->id)."</dd>";
 
-                $infoBadge = "<span class=\"label label-success\"><i class=\"fa fa-check\"></i>&nbsp;&nbsp;$lang[VISIBLE_TO_EVERYONE]</span>";
                 ?>
                 <dt><?php echo "$lang[TEMPLATE] $lang[NAME]"; ?></dt>
                 <dd><b><?php echo $template->name; ?></b></dd>
@@ -223,7 +260,7 @@ echo"</section><!-- Main content -->
             </dl>
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-7">
         <div class="box">
             <div class="box-header"><h3 class="box-title">Template Manager</h3></div>
             <div class="box-body">
@@ -271,7 +308,7 @@ echo"</section><!-- Main content -->
                                 $i_pages_unpublished = $i_pages_unpublished +1;
                                 // delete template button
                                 $deleteIcon = "<a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"$lang[TPL_DEL_CONFIRM] &laquo;".$row['name']." / ".$row['id']."&raquo;\"
-                title=\"".$lang['DELETE']."\" href=\"index.php?page=template-manage&delete=1&templateID=".$row['id']."\">
+                title=\"".$lang['DELETE']."\" href=\"index.php?page=template-overview&delete=1&templateID=".$row['id']."\">
                 </a>";
                             }
 
@@ -289,7 +326,7 @@ echo"</section><!-- Main content -->
                             $row['positions'] = str_replace(':', '<br>',$row['positions']); //wordwrap($row['positions'], 20, "<br>\n");
                             echo "<tr>
           <td class=\"text-center\">
-            <a title=\"toggle&nbsp;status\" href=\"index.php?page=template-manage&toggle=1&templateID=".$row['id']."\">
+            <a title=\"toggle&nbsp;status\" href=\"index.php?page=template-overview&toggle=1&templateID=".$row['id']."\">
             <span class=\"label label-$pub\">$pubtext</span></a>&nbsp;</td>
           <td>".$row['id']."</td>
           <td><a href=\"index.php?page=template-overview&overrideTemplate=1&id=".$row['id']."\"><div style=\"width:100%\">".$row['name']."</div></a></td>
