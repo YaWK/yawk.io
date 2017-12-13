@@ -13,16 +13,16 @@
   db-positions:
   globalmenu:top:main:bottom:footer:hiddentoolbar:debug
 */
+/** @vars
+ *  these vars are declared in yourdomain/index.php before inclusion of this document
+ *  $template               // template object
+ *  $controller             // controller object
+ *  $page                   // page object
+ *  $user                   // user object
+ *  $stats                  // stats object
+ */
 
-if (isset($_GET['template']) && (!empty($template)))
-{
-    $template = $_GET['template'];
-}
-else
-    {
-       // $template = YAWK\template::getCurrentTemplateNameById($db, "");
-        $template = $templateName;
-    }
+// \YAWK\sys::outputObjects($template, $controller, $page, $user, $stats);
 ?>
  <!-- To ensure proper rendering and touch zooming on phones and tablets -->
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,9 +44,9 @@ else
     <!-- Bootstrap core CSS -->
     <link href="system/engines/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Own Template Settings: Bootstrap core CSS override -->
-    <link href="system/templates/<?php echo $template; ?>/css/settings.min.css" rel="stylesheet">
+    <link href="system/templates/<?php echo $template->name; ?>/css/settings.min.css" rel="stylesheet">
     <!-- CUSTOM Template Override: custom.CSS -->
-    <link href="system/templates/<?php echo $template; ?>/css/custom.min.css" rel="stylesheet" type="text/css">
+    <link href="system/templates/<?php echo $template->name; ?>/css/custom.min.css" rel="stylesheet" type="text/css">
     <!-- import jquery 1.11.3 -->
     <script src="system/engines/jquery/jquery-1.11.3.min.js"></script>
     <!-- validation plugin
@@ -58,7 +58,7 @@ else
     <script src="system/engines/jquery/1.3.0-respond.min.js"></script>
     <![endif]-->
     <!-- import custom js -->
-    <script src="system/templates/<?php echo $template; ?>/js/custom.min.js"></script>
+    <script src="system/templates/<?php echo $template->name; ?>/js/custom.min.js"></script>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Boostrap jQuery Plugins -->
@@ -70,9 +70,9 @@ else
 // load active google font code
 \YAWK\template::loadGoogleFonts($db);
 // load position stats (0|1)
-$positions = \YAWK\template::getPositionStatesArray($db);
+$positions = \YAWK\template::getPositionStatesArray($db, $template->id);
 // load position indicators
-$indicators = \YAWK\template::getPositionIndicatorStatusArray($db);
+$indicators = \YAWK\template::getPositionIndicatorStatusArray($db, $template->id);
 $col = '';
 ?>
 <!-- /gfonts -->

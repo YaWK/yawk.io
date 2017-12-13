@@ -123,14 +123,14 @@ $templateSettings = \YAWK\template::getAllSettingsIntoArray($db, $user);
         function saveHotkey() {
             // simply disables save event for chrome
             $(window).keypress(function (event) {
-                if (!(event.which == 115 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) && !(event.which == 19)) return true;
+                if (!(event.which === 115 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) && !(event.which === 19)) return true;
                 event.preventDefault();
                 formmodified=0; // do not warn user, just save.
                 return false;
             });
             // used to process the cmd+s and ctrl+s events
             $(document).keydown(function (event) {
-                if (event.which == 83 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) {
+                if (event.which === 83 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) {
                     event.preventDefault();
                     $('#savebutton').click(); // SAVE FORM AFTER PRESSING STRG-S hotkey
                     formmodified=0; // do not warn user, just save.
@@ -154,7 +154,7 @@ $templateSettings = \YAWK\template::getAllSettingsIntoArray($db, $user);
         // now the function:
         window.onbeforeunload = confirmExit; // before close
         function confirmExit() {             // dialog
-            if (formmodified == 1) {         // if form has changed
+            if (formmodified === 1) {         // if form has changed
                 return "<?php echo $lang['LEAVE_REQUEST']; ?>";
             }
         }

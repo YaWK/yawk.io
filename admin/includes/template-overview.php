@@ -10,6 +10,65 @@ $template->loadProperties($db, $getID);
 // previewButton is an empty string - why? this should be checked
 $previewButton = "";
 
+
+// OVERRIDE TEMPLATE
+// check if call comes from template-manage or template-edit form
+if (isset($_GET['id']) && (is_numeric($_GET['id']) || (isset($_POST['id']) && (is_numeric($_POST['id'])))))
+{
+    if (empty($_GET['id']) || (!empty($_POST['id']))) { $getID = $_POST['id']; }
+    else if (!empty($_GET['id']) || (empty($_POST['id']))) { $getID = $_GET['id']; }
+    else { $getID = \YAWK\settings::getSetting($db, "selectedTemplate");  }
+
+    if ($user->isTemplateEqual($db, $getID))
+    {   // user template equals selectedTemplate
+        // update template in user table row
+        $user->setUserTemplate($db, 0, $getID, $user->id);
+        $user->overrideTemplate = 0;
+        // info badge to inform user that this is visible to everyone
+        $infoBadge = "<span class=\"label label-success\"><i class=\"fa fa-check\"></i>&nbsp;&nbsp;$lang[VISIBLE_TO_EVERYONE]</span>";
+        // info button on top
+        $previewButton = "";
+    }
+    else
+    {   // show preview button and set template active for this user
+        $user->setUserTemplate($db, 1, $getID, $user->id);
+        $user->overrideTemplate = 1;
+        // info badge to inform user that this is HIS preview
+        $infoBadge = "<span class=\"label label-danger\"><i class=\"fa fa-eye\"></i>&nbsp;&nbsp;$lang[PREVIEW]</span>";
+        // close preview button on top
+        $previewButton = "<a class=\"btn btn-danger\" href=\"index.php?page=template-manage&overrideTemplate=0&id=$getID\"><i class=\"fa fa-times\"></i>&nbsp;&nbsp;$lang[CLOSE_PREVIEW]</a>";
+    }
+
+    // check if user/admin is allowed to override the template
+    if ($user->isAllowedToOverrideTemplate($db, $user->id) === true)
+    {   // ok, user is allowed to override: set tpl from user database
+        if (isset($_GET['overrideTemplate']) && ($_GET['overrideTemplate'] === "1"))
+        {
+            $user->setUserTemplate($db, 1, $getID, $user->id);
+            $user->overrideTemplate = 1;
+            $template->loadProperties($db, $getID);
+        }
+        else
+        {
+            $user->setUserTemplate($db, 0, $getID, $user->id);
+            $user->overrideTemplate = 0;
+            $template->loadProperties($db, $getID);
+        }
+
+        // $userTemplateID = \YAWK\user::getUserTemplateID($db, $user->id);
+        // load template properties for userTemplateID
+        // $template->loadProperties($db, $getID);
+    }
+    else
+    {   // user is not allowed to override, so we load the default (global) selectedTemplate settings
+        // $template->loadProperties($db, YAWK\settings::getSetting($db, "selectedTemplate"));
+        $template->loadProperties($db, $getID);
+    }
+}
+else {
+    $previewButton = "";
+}
+
 // load all template settings into array
 // $templateSettings = \YAWK\template::getAllSettingsIntoArray($db, $user);
 

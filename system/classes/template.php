@@ -151,9 +151,14 @@ namespace YAWK {
          * @param string $description
          * @return bool
          */
-        public function saveAs($db, $template, $new_template, $positions, $description)
+        public function saveAs($db, $newID, $template, $new_template, $positions, $description)
         {   /** @var \YAWK\db $db */
             // save theme as new template
+
+            if (!isset($newID) || (empty($newID)))
+            {
+                $newID = \YAWK\template::getMaxId($db);
+            }
 
             $replace = array("/ä/", "/ü/", "/ö/", "/Ä/", "/Ü/", "/Ö/", "/ß/"); // array of special chars
             $chars = array("ae", "ue", "oe", "Ae", "Ue", "Oe", "ss"); // array of replacement chars
@@ -175,8 +180,8 @@ namespace YAWK {
                 \YAWK\sys::full_copy("../system/templates/yawk-bootstrap3", "../system/templates/$new_template");
             }
 
-            if ($res = $db->query("INSERT INTO {templates} (name, positions, description)
-  	                               VALUES('" . $new_template . "', '" . $positions . "', '" . $description . "')"))
+            if ($res = $db->query("INSERT INTO {templates} (id, name, positions, description)
+  	                               VALUES('" . $newID . "', '" . $new_template . "', '" . $positions . "', '" . $description . "')"))
             {   // success
                 // do something
                 // store each setting with new tpl id in database
@@ -740,9 +745,14 @@ namespace YAWK {
         public static function copyTemplateSettings($db, $templateID, $newID)
         {   /** @var $db \YAWK\db */
 
-        $res = $db->query("INSERT INTO {template_settings} (templateID, property, value, valueDefault, label, activated, sort, fieldClass, placeholder)
-                           SELECT templateID, property, value, valueDefault, label, activated, sort, fieldClass, placeholder FROM {template_settings}
-                           WHERE templateID = '".$templateID."'");
+        $res = $db->query("INSERT INTO {template_settings} 
+        (templateID, property, value, valueDefault, longValue, type, activated, sort, label, fieldClass, fieldType, 
+        options, placeholder, description, icon, heading, subtext)
+        SELECT '".$newID."', property, value, valueDefault, longValue, type, activated, sort, label, fieldClass, fieldType, 
+        options, placeholder, description, icon, heading, subtext 
+        FROM {template_settings} 
+        WHERE templateID = '".$templateID."'");
+
             if (!$res)
             {
                 \YAWK\sys::setSyslog($db, 5, "failed to copy template settings of template #$templateID ", 0, 0, 0, 0);
@@ -751,34 +761,35 @@ namespace YAWK {
             else
             {
                 \YAWK\alert::draw("success", "Settings copied", "successful", "", 5000);
-                // alter IDs
-                $update = $db->query("UPDATE {template_settings} SET templateID='".$newID."' WHERE templateID=0");
-                if ($update)
-                {
-                    \YAWK\alert::draw("success", "Settings are set-up", "successful", "", 5000);
-                }
-                else
-                {
-                    \YAWK\sys::setSyslog($db, 5, "failed to set new template settings of template #$templateID ", 0, 0, 0, 0);
-                    \YAWK\alert::draw("warning", "Could not set new template settings", "unable to alter IDs.", "", 5000);
-                }
-            }
-        }
 
-        /**
-         * Add a new template setting to the database.
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
-         * @param object $db database
-         * @param string $property template property
-         * @param string $value template value
-         * @param string $valueDefault default value
-         * @param string $label setting label
-         * @param string $fieldclass class for the input field (eg. color or form-control)
-         * @param string $placeholder placeholder for the input field
-         * @return bool
-         */
+                 $update = $db->query("UPDATE {template_settings} SET templateID='".$newID."' WHERE templateID=0");
+                 if ($update)
+                 {
+                     \YAWK\alert::draw("success", "Settings are set-up", "successful", "", 5000);
+                 }
+                 else
+                 {
+                     \YAWK\sys::setSyslog($db, 5, "failed to set new template settings of template #$templateID ", 0, 0, 0, 0);
+                     \YAWK\alert::draw("warning", "Could not set new template settings", "unable to alter IDs.", "", 5000);
+                 }
+             }
+         }
+
+         /**
+          * Add a new template setting to the database.
+          * @author Daniel Retzl <danielretzl@gmail.com>
+          * @version 1.0.0
+          * @link http://yawk.io
+          * @param object $db database
+          * @param string $property template property
+          * @param string $value template value
+          * @param string $valueDefault default value
+          * @param string $label setting label
+          * @param string $fieldclass class for the input field (eg. color or form-control)
+          * @param string $placeholder placeholder for the input field
+          * @return bool
+          */
+                // alter IDs
         function addTemplateSetting($db, $property, $value, $valueDefault, $label, $fieldclass, $placeholder)
         {   /** @var $db \YAWK\db  */
             $active = 1;
@@ -1943,6 +1954,14 @@ namespace YAWK {
          */
         function addgfont($db, $gfont, $description)
         {   /** @var $db \YAWK\db */
+            if (empty($gfont))
+            {   // no font was sent
+                return false;
+            }
+            if (empty($description))
+            {   // no description was sent
+                return false;
+            }
             $gfont = $db->quote($gfont);
             $description = $db->quote($description);
             // ## select max ID from gfonts
@@ -2480,12 +2499,16 @@ namespace YAWK {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db database
+         * @param int $templateID ID of the current selected template
          * @return array|bool $array template positions 0|1
          */
-        static function getPositionStatesArray($db)
+        static function getPositionStatesArray($db, $templateID)
         {
             $array = '';
-            $sql = $db->query("SELECT property, value FROM {template_settings} WHERE property LIKE 'pos-%-enabled'");
+            $sql = $db->query("SELECT property, value 
+                               FROM {template_settings} 
+                               WHERE property LIKE 'pos-%-enabled' AND 
+                               templateID = '".$templateID."'");
             while ($row = mysqli_fetch_assoc($sql))
             {
                 $prop = $row['property'];
@@ -2507,12 +2530,17 @@ namespace YAWK {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db database
+         * @param int $templateID ID of the current template
          * @return array|bool $array position indicator 0|1
          */
-        static function getPositionIndicatorStatusArray($db)
+        static function getPositionIndicatorStatusArray($db, $templateID)
         {
             $array = '';
-            $sql = $db->query("SELECT property, value FROM {template_settings} WHERE property LIKE 'pos-%-indicator'");
+            $sql = $db->query("SELECT property, value 
+                               FROM {template_settings} 
+                               WHERE property 
+                               LIKE 'pos-%-indicator'
+                               AND templateID = '".$templateID."'");
             while ($row = mysqli_fetch_assoc($sql))
             {
                 $prop = $row['property'];
