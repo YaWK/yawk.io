@@ -803,9 +803,6 @@ namespace YAWK {
                         <li ";echo (isset($_GET['page']) && $_GET['page'] == 'template-positions') ? "class=\"active\"" : ""; echo">
                             <a href=\"index.php?page=template-positions\"><i class=\"fa fa-cube\"></i> $lang[POSITIONS]</a>
                         </li>
-                        <li ";echo (isset($_GET['page']) && $_GET['page'] == 'template-theme') ? "class=\"active\"" : ""; echo">
-                            <a href=\"index.php?page=template-theme\"><i class=\"fa fa-tint\"></i> $lang[THEME]</a>
-                        </li>
                         <li ";echo (isset($_GET['page']) && $_GET['page'] == 'template-redesign') ? "class=\"active\"" : ""; echo">
                             <a href=\"index.php?page=template-redesign\"><i class=\"fa fa-paint-brush\"></i> $lang[DESIGN]</a>
                         </li>
@@ -817,9 +814,6 @@ namespace YAWK {
                         </li>
                         <li ";echo (isset($_GET['page']) && $_GET['page'] == 'template-setup') ? "class=\"active\"" : ""; echo">
                             <a href=\"index.php?page=template-setup\"><i class=\"fa fa-gears\"></i> $lang[SETTINGS]</a>
-                        </li>
-                        <li ";echo (isset($_GET['page']) && $_GET['page'] == 'template-manage') ? "class='active'" : ""; echo">
-                            <a href=\"index.php?page=template-manage\"><i class=\"fa fa-photo\"></i> <span>$lang[THEMES]</span></a>
                         </li>
                     </ul>
                    </li>";
