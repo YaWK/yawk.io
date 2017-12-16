@@ -2691,6 +2691,195 @@ namespace YAWK {
             return null;
         }
 
+        /**
+         * Return a multidimensional array with all assets by requested type.
+         * If no type is set, or type == 0, all assets will be returned.
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database object
+         * @param int $type 0 = all, 1 = required, 2 = optional, 3 = additional
+         * @return array
+         */
+        public static function getAssetsByType($db, $type)
+        {   /* @var \YAWK\db $db */
+            // check if type is set
+            if (!isset($type) || (empty($type)))
+            {   // if its not set, get all assets from db, no matter which type they are
+                $typeSQLCode = ''; // terminate db query
+            }
+            else
+            {   // check if type is a number
+                if (is_numeric($type) || (is_int($type)))
+                {   // and build additional sql string
+                    $typeSQLCode = "AND type = '$type'";
+
+                    // if type is zero, fetch all data
+                    if ($type === 0)
+                    {   // terminate db query
+                        $typeSQLCode = '';
+                    }
+                }
+                else
+                {   // type is not a number, get all data
+                    $typeSQLCode = ''; // terminate db query
+                }
+            }
+
+            // init a new empty array
+            $assets = array();
+            // get assets from database
+            $res = $db->query("SELECT * 
+                            FROM {assets_types}
+                            WHERE published = '1' 
+                            $typeSQLCode;");
+            // fetch data in loop
+            while ($row = mysqli_fetch_assoc($res))
+            {   // build assets array
+                $prop = $row['asset'];
+                $assets[$prop]["asset"] = $prop;
+                $assets[$prop]["property"] = $row['property'];
+                $assets[$prop]["internal"] = $row['internal'];
+                $assets[$prop]["url1"] .= $row['url1'];
+                $assets[$prop]["url2"] .= $row['url2'];
+                $assets[$prop]["url3"] .= $row['url3'];
+            }
+            // check if assets is an array
+            if (is_array($assets))
+            {   // all good
+                return $assets;
+            }
+            else
+                {   // error: exit with msg
+                    die ('unable to return assets array - maybe database is corrupt or missing.');
+                }
+        }
+
+        /**
+         * Return an array with all assets that are used in this template
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database object
+         * @param int $templateID ID of the affectd template
+         * @return null
+         */
+        public static function drawAssetsTitles($db, $templateID)
+        {
+            /* @var \YAWK\db $db */
+            // if no template ID is set
+            if (!isset($templateID) || (empty($templateID)))
+            {   // get current ID from database
+                $templateID = \YAWK\settings::getSetting($db, "selectedTemplate");
+            }
+            if ($res = $db->query("SELECT asset FROM {assets} 
+                                          WHERE templateID = '".$templateID."' 
+                                          ORDER BY asset"))
+            {
+                while ($row = mysqli_fetch_assoc($res))
+                {
+                    $qString = rawurlencode($row['asset']);
+                    echo "<i class=\"fa fa-check text-info\"></i> &nbsp;$row[asset] &nbsp;<a href=\"https://www.google.at/search?q=$qString\" target=\"_blank\" title=\"(google $row[asset] in new window)\"><i class=\"fa fa-edit\"></i> </a><br>";
+                }
+            }
+            return null;
+        }
+
+
+        /**
+         * Draw asset select fields
+         * This method is used in the backend to generate asset select fields in template-setup view
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database object
+         * @param int $type 0 = all, 1 = required, 2 = optional, 3 = additional
+         * @return null
+         */
+        public static function drawAssetsSelectFields($db, $type, $templateID)
+        {   /* @var \YAWK\db $db */
+
+            // check type and load assets data
+            // if type is not set
+            if (!isset($type) || (empty($type)))
+            {   // set to zero -this will get all assets in array
+                $type = 0;
+            }
+
+            // check if templateID is set
+            if (!isset($templateID) || (empty($templateID)))
+            {
+                // get current template ID
+                $templateID = \YAWK\settings::getSetting($db, "selectedTemplate");
+            }
+
+            // get assets, depending on type from database
+            $assets = \YAWK\template::getAssetsByType($db, $type);
+
+            foreach ($assets as $asset => $property)
+            {
+                $resInternal = $db->query("SELECT link from {assets} 
+                                         WHERE templateID = '".$templateID."'
+                                         AND link = '".$property['internal']."'");
+
+                $resUrl1 = $db->query("SELECT link from {assets} 
+                                         WHERE templateID = '".$templateID."'
+                                         AND link = '".$property['url1']."'");
+
+                $resUrl2 = $db->query("SELECT link from {assets} 
+                                         WHERE templateID = '".$templateID."'
+                                         AND link = '".$property['url2']."'");
+
+                $resUrl3 = $db->query("SELECT link from {assets} 
+                                         WHERE templateID = '".$templateID."'
+                                         AND link = '".$property['url3']."'");
+
+                $row = mysqli_fetch_assoc($resInternal);
+               // print_r($res);
+                if ($row['link'] === $property['internal'])
+                { $selectedInternal = " selected"; }
+                else { $selectedInternal = ''; }
+
+                $row = mysqli_fetch_assoc($resUrl1);
+                if ($row['link'] === $property['url1'])
+                { $selectedUrl1 = " selected"; }
+                else { $selectedUrl1 = ''; }
+
+                $row = mysqli_fetch_assoc($resUrl2);
+                if ($row['link'] === $property['url2'])
+                { $selectedUrl2 = " selected"; }
+                else { $selectedUrl2 = ''; }
+
+                $row = mysqli_fetch_assoc($resUrl3);
+                if ($row['link'] === $property['url3'])
+                { $selectedUrl3 = " selected"; }
+                else { $selectedUrl3 = ''; }
+
+                echo "
+                      <label for=\"include-$property[property]\">$property[asset]</label>
+                      <input name=\"title-$property[property]\" value=\"$property[asset]\" type=\"hidden\">
+                        <select id=\"include-$property[property]\" name=\"include-$property[property]\" class=\"form-control\">
+                            <option name=\"null\" value=\"\">inactive</option>
+                            <optgroup label=\"internal\">internal</optgroup>
+                            <option name=\"value\"$selectedInternal>$property[internal]</option>
+                            <optgroup label=\"external\">external</optgroup>
+                            <option name=\"value\"$selectedUrl1>$property[url1]</option>";
+                            if (!empty($property['url2']))
+                            {   // display 2nd external asset link
+                                echo "
+                            <option name=\"value\"$selectedUrl2>$property[url2]</option>";
+                            }
+                            if (!empty($property['url3']))
+                            {
+                                echo "
+                            <option name=\"value\"$selectedUrl3>$property[url3]</option>";
+                            }
+                        echo "
+                            </select>";
+            }
+            return null;
+        }
+
 
 
 
