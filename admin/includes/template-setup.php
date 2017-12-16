@@ -150,9 +150,37 @@ if ($_GET['action'] === "template-setup")
     // update asset configuration
     if (isset($_POST['save']) && (!empty($_POST['save'])))
     {
-        // process update of assets configuration in database
-        echo "<h1>................................... update asset config!</h1>";
-        exit;
+        $title = '';
+        // delete all assets of this templateID to avoid duplicates
+        if ($db->query("DELETE FROM {assets} WHERE templateID = '".$template->id."'"))
+        {
+            // walk through post data
+            foreach ($_POST as $param => $value)
+            {
+                // check file types
+                // .js file
+                if (substr($value, -3) == ".js")
+                {   // type 1 = javascript file
+                    $type = 1;
+                }
+                // .css file
+                if (substr($value, -4) == ".css") {
+                    // type 2 = css file
+                    $type = 2;
+                }
+                // title
+                if (substr($param, 0, 6) == "title-") {
+                    $title = $value;
+                    $value = '';
+                }
+
+                // if value is not empty
+                if (!empty($value) && ($value != "save"))
+                {   // add asset to database
+                    $db->query("INSERT INTO {assets} (templateID, type, asset, link) VALUES ('" . $template->id . "', '" . $type . "', '" . $title . "', '" . $value . "')");
+                }
+            }
+        }
     }
 }
 
@@ -208,40 +236,7 @@ echo"</section><!-- Main content -->
                 <h3 class="box-title">Required Assets Include Configuration</h3>
             </div>
             <div class="box-body">
-                <label for="include-bootstrap">Bootstrap JS</label>
-                <select id="include-bootstrap" name="include-bootstrap" class="form-control">
-                    <option name="null">please select</option>
-                    <optgroup label="internal">internal</optgroup>
-                    <option name="internal">load from internal sources (system/engines/bootstrap)</option>
-                    <optgroup label="external">external</optgroup>
-                    <option name="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js</option>
-                    <option name="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js">https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js</option>
-                </select>
-                <label for="include-bootstrap">Bootstrap CSS</label>
-                <select id="include-bootstrap" name="include-bootstrap" class="form-control">
-                    <option name="null">please select</option>
-                    <optgroup label="internal">internal</optgroup>
-                    <option name="internal">load from internal sources (system/engines/bootstrap)</option>
-                    <optgroup label="external">external</optgroup>
-                    <option name="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css</option>
-                    <option name="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css</option>
-                </select>
-                <label for="include-jquery">jQuery</label>
-                <select id="include-jquery" name="include-jquery" class="form-control">
-                    <option name="null">please select</option>
-                    <optgroup label="internal">internal</optgroup>
-                    <option name="internal">load from internal sources (system/engines/jquery)</option>
-                    <optgroup label="external">external</optgroup>
-                    <option name="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js</option>
-                </select>
-                <label for="include-jquery">jQuery UI</label>
-                <select id="include-jquery" name="include-jquery" class="form-control">
-                    <option name="null">please select</option>
-                    <optgroup label="internal">internal</optgroup>
-                    <option name="internal">load from internal sources (system/engines/jquery)</option>
-                    <optgroup label="external">external</optgroup>
-                    <option name="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js">https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js</option>
-                </select>
+                <?php \YAWK\template::drawAssetsSelectFields($db, 1, $template->id); ?>
             </div>
         </div>
     </div>
@@ -252,47 +247,7 @@ echo"</section><!-- Main content -->
                 <h3 class="box-title">Optional Assets Configuration</h3>
             </div>
             <div class="box-body">
-                <label for="include-animate">Animate.css</label>
-                <select id="include-animate" name="include-animate" class="form-control">
-                    <option name="null">please select</option>
-                    <optgroup label="internal">internal</optgroup>
-                    <option name="internal">load from internal sources (system/engines/animate)</option>
-                    <optgroup label="external">external</optgroup>
-                    <option name="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css</option>
-                    <option name="https://fastcdn.org/Animate.css/3.4.0/animate.min.css">https://fastcdn.org/Animate.css/3.4.0/animate.min.css</option>
-                </select>
-                <label for="include-fontawesome">Font Awesome Icons</label>
-                <select id="include-fontawesome" name="include-fontawesome" class="form-control">
-                    <option name="null">please select</option>
-                    <optgroup label="internal">internal</optgroup>
-                    <option name="internal">load from internal sources (system/engines/fontawesome)</option>
-                    <optgroup label="external">external</optgroup>
-                    <option name="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css</option>
-                </select>
-                <label for="include-lightbox2">Lightbox 2</label>
-                <select id="include-lightbox2" name="include-lightbox2" class="form-control">
-                    <option name="null">please select</option>
-                    <optgroup label="internal">internal</optgroup>
-                    <option name="internal">load from internal sources (system/engines/lightbox)</option>
-                    <optgroup label="external">external</optgroup>
-                    <option name="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.9.0/js/lightbox.min.js">https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.9.0/js/lightbox.min.js</option>
-                </select>
-                <label for="include-ekkolightbox">Ekko Lightbox</label>
-                <select id="include-ekkolightbox" name="include-ekkolightbox" class="form-control">
-                    <option name="null">please select</option>
-                    <optgroup label="internal">internal</optgroup>
-                    <option name="internal">load from internal sources (system/engines/lightbox)</option>
-                    <optgroup label="external">external</optgroup>
-                    <option name="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.2.0/ekko-lightbox.min.js">https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.2.0/ekko-lightbox.min.js</option>
-                </select>
-                <label for="include-bootstraplightbox">Bootstrap Lightbox</label>
-                <select id="include-bootstraplightbox" name="include-bootstraplightbox" class="form-control">
-                    <option name="null">please select</option>
-                    <optgroup label="internal">internal</optgroup>
-                    <option name="internal">load from internal sources (system/engines/...)</option>
-                    <optgroup label="external">external</optgroup>
-                    <option name="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-lightbox/0.7.0/bootstrap-lightbox.min.js">https://cdnjs.cloudflare.com/ajax/libs/bootstrap-lightbox/0.7.0/bootstrap-lightbox.min.js</option>
-                </select>
+                <?php \YAWK\template::drawAssetsSelectFields($db, 2, $template->id); ?>
             </div>
         </div>
     </div>
@@ -307,33 +262,34 @@ echo"</section><!-- Main content -->
         </div>
     </div>
 </div>
+</form>
 
-<div class="row animated fadeIn">
-    <div class="col-md-6">
-        <div class="box box-default">
-            <div class="box-header with-border">
-                <h3 class="box-title"><?php echo "$lang[SAVE_AS] <small>$lang[NEW_THEME]</small>"; ?></h3>
+    <div class="row animated fadeIn">
+        <div class="col-md-6">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><?php echo "$lang[SAVE_AS] <small>$lang[NEW_THEME]</small>"; ?></h3>
+                </div>
+                <div class="box-body">
+                    <label for="savetheme"><?php echo "$lang[SAVE_NEW_THEME_AS]"; ?></label>
+                    <input type="text" class="form-control" name="newthemename" value="<?php echo $template->name; ?>-copy" placeholder="<?php echo "$lang[NEW] $lang[TPL] $lang[NAME]"; ?>">
+                    <input type="text" class="form-control" name="description" placeholder="<?php echo "$lang[TPL] $lang[DESCRIPTION]"; ?>">
+                    <input type="text" class="form-control" name="positions" placeholder="<?php echo "$lang[POSITIONS] $lang[POS_DESCRIPTION]"; ?>">
+                    <br><input id="addbutton" type="submit" class="btn btn-danger" name="savenewtheme" value="<?php echo "$lang[SAVE_NEW_THEME_AS]"; ?>">
+                </div>
             </div>
-            <div class="box-body">
-                <label for="savetheme"><?php echo "$lang[SAVE_NEW_THEME_AS]"; ?></label>
-                <input type="text" class="form-control" name="newthemename" value="<?php echo $template->name; ?>-copy" placeholder="<?php echo "$lang[NEW] $lang[TPL] $lang[NAME]"; ?>">
-                <input type="text" class="form-control" name="description" placeholder="<?php echo "$lang[TPL] $lang[DESCRIPTION]"; ?>">
-                <input type="text" class="form-control" name="positions" placeholder="<?php echo "$lang[POSITIONS] $lang[POS_DESCRIPTION]"; ?>">
-                <br><input id="addbutton" type="submit" class="btn btn-danger" name="savenewtheme" value="<?php echo "$lang[SAVE_NEW_THEME_AS]"; ?>">
+        </div>
+
+        <div class="col-md-6">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><?php echo "$lang[TPL_ADD_GFONT] <small>$lang[TPL_ADD_GFONT_SUBTEXT]</small>"; ?></h3>
+                </div>
+                <div class="box-body">
+                    <input type="text" class="form-control" id="gfont" name="gfont" placeholder="font eg. Ubuntu">
+                    <input type="text" class="form-control" name="gfontdescription" placeholder="description eg. Ubuntu, serif">
+                    <br><input id="savebutton" type="submit" class="btn btn-danger" name="addgfont" value="<?php echo "$lang[TPL_ADD_GFONT_BTN]"; ?>">
+                </div>
             </div>
         </div>
     </div>
-
-    <div class="col-md-6">
-        <div class="box box-default">
-            <div class="box-header with-border">
-                <h3 class="box-title"><?php echo "$lang[TPL_ADD_GFONT] <small>$lang[TPL_ADD_GFONT_SUBTEXT]</small>"; ?></h3>
-            </div>
-            <div class="box-body">
-                <input type="text" class="form-control" id="gfont" name="gfont" placeholder="font eg. Ubuntu">
-                <input type="text" class="form-control" name="gfontdescription" placeholder="description eg. Ubuntu, serif">
-                <br><input id="savebutton" type="submit" class="btn btn-danger" name="addgfont" value="<?php echo "$lang[TPL_ADD_GFONT_BTN]"; ?>">
-            </div>
-        </div>
-    </div>
-</div>
