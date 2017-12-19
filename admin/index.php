@@ -85,6 +85,9 @@ if (!isset($AdminLTE))
             // navbar right menu start
             echo $AdminLTE->drawHtmlNavbarRightMenu();
 
+            // navbar: draw preview icon
+            echo $AdminLTE->drawHtmlNavbarPreviewIcon($lang);
+
             // check if messaging is enabled
             if (\YAWK\settings::getSetting($db, "backendMessagesMenu") == 1)
             {   // ok, draw msg icon and message navbar in upper right corner

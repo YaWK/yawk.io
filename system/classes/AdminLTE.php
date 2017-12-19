@@ -261,6 +261,22 @@ namespace YAWK {
             return null;
         }
 
+        function drawHtmlNavbarPreviewIcon($lang)
+        {
+            if (isset($_GET['page']) && (!empty($_GET['page']) && ($_GET['page'] === "frontend-preview")))
+            {
+                $selected = ' class="active"';
+            }
+            else { $selected = ''; }
+            echo  "<li $selected>
+                <!-- preview eye icon -->
+                <a href=\"index.php?page=frontend-preview\" title=\"$lang[QUICK_PREVIEW]\">
+                  <i class=\"fa fa-eye\"></i>
+                </a>
+                </li>";
+            return null;
+        }
+
         /**
          * Messages Menu: the small icon in the right corner of top navigation
          * This is a facebook-ike messaging preview.
