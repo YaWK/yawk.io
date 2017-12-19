@@ -235,7 +235,7 @@ echo"</section><!-- Main content -->
                 <dt><?php echo $lang['TOOLS']; ?></dt>
                 <dd>
                     <b><?php echo $lang['YAWK_SLOGAN_TOGETHER']; ?><br>
-                        <?php \YAWK\template::drawAssetsTitles($db, $template->id); ?>
+                        <?php \YAWK\template::drawAssetsTitles($db, $template->id, $lang); ?>
                 </dd>
                 <dt>&nbsp;</dt>
                 <dd>&nbsp;</dd>
@@ -250,6 +250,7 @@ echo"</section><!-- Main content -->
                     <thead>
                     <tr>
                         <td><strong>&nbsp;</strong></td>
+                        <td><strong><?php echo $lang['PREVIEW']; ?></strong></td>
                         <td><strong><?php echo $lang['ID']; ?></strong></td>
                         <td><strong><i class="fa fa-caret-down"></i> <?php print $lang['TEMPLATE']; ?></strong></td>
                         <td><strong><i class="fa fa-caret-down"></i> <?php print $lang['DESCRIPTION']; ?></strong></td>
@@ -265,6 +266,7 @@ echo"</section><!-- Main content -->
                     $i_pages_unpublished = 0;
                     // get active tpl name
                     $activeTemplate = \YAWK\template::getCurrentTemplateName($db, "backend", "");
+                    $userTemplateID = \YAWK\user::getUserTemplateID($db, $user->id);
                     if ($res = $db->query("SELECT * FROM {templates} ORDER BY active DESC"))
                     {
                         // fetch templates and draw a tbl row in a while loop
@@ -290,8 +292,23 @@ echo"</section><!-- Main content -->
                                 $i_pages_unpublished = $i_pages_unpublished +1;
                                 // delete template button
                                 $deleteIcon = "<a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"$lang[TPL_DEL_CONFIRM] &laquo;".$row['name']." / ".$row['id']."&raquo;\"
-                title=\"".$lang['DELETE']."\" href=\"index.php?page=template-overview&delete=1&templateID=".$row['id']."\">
-                </a>";
+                                title=\"".$lang['DELETE']."\" href=\"index.php?page=template-overview&delete=1&templateID=".$row['id']."\"></a>";
+                                $previewLabel = '';
+                            }
+                            if ($row['id'] == ($userTemplateID) && ($row['id'] == $activeTemplateId))
+                            {
+                                $previewLabel = "<a href=\"index.php?page=template-overview&overrideTemplate=1&id=".$row['id']."\">
+                                <span class=\"label label-success\"><i class=\"fa fa-eye\"></i> $lang[ACTIVE]</span></a>";
+                            }
+                            else if ($row['id'] == ($userTemplateID))
+                            {
+                                $previewLabel = "<a href=\"index.php?page=template-overview&overrideTemplate=1&id=".$row['id']."\">
+                                <span class=\"label label-success\"><i class=\"fa fa-eye\"></i> $lang[PREVIEW] $lang[ACTIVE]</span></a>";
+                            }
+                            else
+                            {
+                                $previewLabel = "<a href=\"index.php?page=template-overview&overrideTemplate=1&id=".$row['id']."\">
+                                <span class=\"label label-default\"><i class=\"fa fa-eye\"></i> $lang[PREVIEW]</span></a>";
                             }
 
                             // set template image (screen shot)
@@ -299,17 +316,21 @@ echo"</section><!-- Main content -->
                             if (!file_exists($screenshot))
                             {   // sorry, no screenshot available
                                 $screenshot = "$lang[NO_SCREENSHOT]";
+                                $screenshot = "<img src=\"http://placehold.it/220x150\" class=\"img-responsive img-rounded\">";
                             }
                             else
                             {   // screenshot found, display
                                 $screenshot = "<img src=\"../system/templates/".$activeTemplate."/img/screenshot.jpg\" width=\"200\" class=\"img-rounded\">";
                             }
 
+        // <td>".$row['id']."</td>
+
                             $row['positions'] = str_replace(':', '<br>',$row['positions']); //wordwrap($row['positions'], 20, "<br>\n");
                             echo "<tr>
           <td class=\"text-center\">
             <a title=\"toggle&nbsp;status\" href=\"index.php?page=template-overview&toggle=1&templateID=".$row['id']."\">
             <span class=\"label label-$pub\">$pubtext</span></a>&nbsp;</td>
+          <td>".$previewLabel."</td>
           <td>".$row['id']."</td>
           <td><a href=\"index.php?page=template-overview&overrideTemplate=1&id=".$row['id']."\"><div style=\"width:100%\">".$row['name']."</div></a></td>
           <td><a href=\"index.php?page=template-overview&id=".$row['id']."\" style=\"color: #7A7376;\"><div style=\"width:100%\">".$row['description']."</div></a></td>
