@@ -317,9 +317,8 @@ echo"</section><!-- Main content -->
                     <tbody>
 
                     <?php
-                    $i_pages = 0;
-                    $i_pages_published = 0;
-                    $i_pages_unpublished = 0;
+                    $activeBoldStart = '';  // indicate active template (make it bold)
+                    $activeBoldEnd = ''; // indicate active template (end bold)
                     // get active tpl name
                     $activeTemplate = \YAWK\template::getCurrentTemplateName($db, "backend", "");
                     $userTemplateID = \YAWK\user::getUserTemplateID($db, $user->id);
@@ -333,7 +332,6 @@ echo"</section><!-- Main content -->
                             if ($row['id'] === $activeTemplateId)
                             {   // set published online
                                 $pub = "success"; $pubtext="$lang[ONLINE]";
-                                $i_pages_published = $i_pages_published + 1;
                                 // do not allow to delete current active template
                                 $deleteIcon = "<i class=\"fa fa-ban\" title=\"$lang[TPL_DEL_FAILED_DUE_ACTIVE]\"></i>";
                             }
@@ -345,7 +343,6 @@ echo"</section><!-- Main content -->
                             else
                             {   // set published offline
                                 $pub = "danger"; $pubtext = "$lang[OFFLINE]";
-                                $i_pages_unpublished = $i_pages_unpublished +1;
                                 // delete template button
                                 $deleteIcon = "<a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"$lang[TPL_DEL_CONFIRM] &laquo;".$row['name']." / ".$row['id']."&raquo;\"
                                 title=\"".$lang['DELETE']."\" href=\"index.php?page=template-overview&delete=1&templateID=".$row['id']."\"></a>";
@@ -355,16 +352,22 @@ echo"</section><!-- Main content -->
                             {
                                 $previewLabel = "<a href=\"index.php?page=template-overview&overrideTemplate=1&id=".$row['id']."\">
                                 <span class=\"label label-success\"><i class=\"fa fa-eye\"></i> $lang[ACTIVE]</span></a>";
+                                $activeBoldStart = "<b>";
+                                $activeBoldEnd = "</b>";
                             }
                             else if ($row['id'] == ($userTemplateID))
                             {
                                 $previewLabel = "<a href=\"index.php?page=template-overview&overrideTemplate=1&id=".$row['id']."\">
                                 <span class=\"label label-success\"><i class=\"fa fa-eye\"></i> $lang[PREVIEW] $lang[ACTIVE]</span></a>";
+                                $activeBoldStart = "<b>";
+                                $activeBoldEnd = "</b>";
                             }
                             else
                             {
                                 $previewLabel = "<a href=\"index.php?page=template-overview&overrideTemplate=1&id=".$row['id']."\">
                                 <span class=\"label label-default\"><i class=\"fa fa-eye\"></i> $lang[PREVIEW]</span></a>";
+                                $activeBoldStart = "";
+                                $activeBoldEnd = "";
                             }
 
                             // set template image (screen shot)
@@ -391,7 +394,7 @@ echo"</section><!-- Main content -->
             <span class=\"label label-$pub\">$pubtext</span></a>&nbsp;</td>
           <td>".$previewLabel."</td>
           <td>".$row['id']."</td>
-          <td><a href=\"index.php?page=template-positions&id=".$row['id']."\"><div style=\"width:100%\">".$row['name']."</div></a></td>
+          <td>".$activeBoldStart."<a href=\"index.php?page=template-positions&id=".$row['id']."\"><div style=\"width:100%\">".$row['name']."</div></a>".$activeBoldEnd."</td>
           <td><a href=\"index.php?page=template-overview&id=".$row['id']."\" style=\"color: #7A7376;\"><div style=\"width:100%\">".$row['description']."</div></a></td>
           <td><a href=\"index.php?page=template-overview&id=".$row['id']."\" title=\"$lang[EDIT]: ".$row['name']."\">".$screenshot."</a></td>
           <td class=\"text-center\">
