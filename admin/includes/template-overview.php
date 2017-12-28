@@ -319,6 +319,7 @@ echo"</section><!-- Main content -->
                     <?php
                     $activeBoldStart = '';  // indicate active template (make it bold)
                     $activeBoldEnd = ''; // indicate active template (end bold)
+                    $statusText = ''; // online/offline tooltip
                     // get active tpl name
                     $activeTemplate = \YAWK\template::getCurrentTemplateName($db, "backend", "");
                     $userTemplateID = \YAWK\user::getUserTemplateID($db, $user->id);
@@ -332,17 +333,20 @@ echo"</section><!-- Main content -->
                             if ($row['id'] === $activeTemplateId)
                             {   // set published online
                                 $pub = "success"; $pubtext="$lang[ONLINE]";
+                                $statusText = "$lang[TPL_ON]";
                                 // do not allow to delete current active template
                                 $deleteIcon = "<i class=\"fa fa-ban\" title=\"$lang[TPL_DEL_FAILED_DUE_ACTIVE]\"></i>";
                             }
                             else if ($row['id'] === "1" && ($activeTemplateId !== $row['id']))
                             {   // do not allow to delete default template
                                 $pub = "danger"; $pubtext = "$lang[OFFLINE]";
+                                $statusText = "$lang[TPL_OFF]";
                                 $deleteIcon = "<i class=\"fa fa-ban\" title=\"$lang[TPL_DEL_DEFAULT_FAILED]\"></i>";
                             }
                             else
                             {   // set published offline
                                 $pub = "danger"; $pubtext = "$lang[OFFLINE]";
+                                $statusText = "$lang[TPL_OFF]";
                                 // delete template button
                                 $deleteIcon = "<a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"$lang[TPL_DEL_CONFIRM] &laquo;".$row['name']." / ".$row['id']."&raquo;\"
                                 title=\"".$lang['DELETE']."\" href=\"index.php?page=template-overview&delete=1&templateID=".$row['id']."\"></a>";
@@ -350,21 +354,21 @@ echo"</section><!-- Main content -->
                             }
                             if ($row['id'] == ($userTemplateID) && ($row['id'] == $activeTemplateId))
                             {
-                                $previewLabel = "<a href=\"index.php?page=template-overview&overrideTemplate=1&id=".$row['id']."\">
+                                $previewLabel = "<a href=\"index.php?page=template-overview&overrideTemplate=1&id=".$row['id']."\" data-toggle=\"tooltip\" title=\"$lang[TPL_CURRENTLY_ACTIVE]\">
                                 <span class=\"label label-success\"><i class=\"fa fa-eye\"></i> $lang[ACTIVE]</span></a>";
                                 $activeBoldStart = "<b>";
                                 $activeBoldEnd = "</b>";
                             }
                             else if ($row['id'] == ($userTemplateID))
                             {
-                                $previewLabel = "<a href=\"index.php?page=template-overview&overrideTemplate=1&id=".$row['id']."\">
+                                $previewLabel = "<a href=\"index.php?page=template-overview&overrideTemplate=1&id=".$row['id']."\" data-toggle=\"tooltip\" title=\"$lang[TPL_ENABLE_PREVIEW]\">
                                 <span class=\"label label-success\"><i class=\"fa fa-eye\"></i> $lang[PREVIEW] $lang[ACTIVE]</span></a>";
                                 $activeBoldStart = "<b>";
                                 $activeBoldEnd = "</b>";
                             }
                             else
                             {
-                                $previewLabel = "<a href=\"index.php?page=template-overview&overrideTemplate=1&id=".$row['id']."\">
+                                $previewLabel = "<a href=\"index.php?page=template-overview&overrideTemplate=1&id=".$row['id']."\" data-toggle=\"tooltip\" title=\"$lang[TPL_ENABLE_PREVIEW]\">
                                 <span class=\"label label-default\"><i class=\"fa fa-eye\"></i> $lang[PREVIEW]</span></a>";
                                 $activeBoldStart = "";
                                 $activeBoldEnd = "";
@@ -390,7 +394,7 @@ echo"</section><!-- Main content -->
                             $row['positions'] = str_replace(':', '<br>',$row['positions']); //wordwrap($row['positions'], 20, "<br>\n");
                             echo "<tr>
           <td class=\"text-center\">
-            <a title=\"toggle&nbsp;status\" href=\"index.php?page=template-overview&toggle=1&templateID=".$row['id']."\">
+            <a data-toggle=\"tooltip\" title=\"$statusText\" href=\"index.php?page=template-overview&toggle=1&templateID=".$row['id']."\">
             <span class=\"label label-$pub\">$pubtext</span></a>&nbsp;</td>
           <td>".$previewLabel."</td>
           <td>".$row['id']."</td>
