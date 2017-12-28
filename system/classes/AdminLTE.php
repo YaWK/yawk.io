@@ -263,6 +263,24 @@ namespace YAWK {
 
         function drawHtmlNavbarPreviewIcon($lang)
         {
+            // TODO: COMMENT THIS
+            if (isset($_GET['alias']) && (!empty($_GET['alias'])))
+            {
+                $history = "&alias=$_GET[alias]";
+            }
+            else if (isset($_GET['plugin']) && (!empty($_GET['plugin']) && ($_GET['plugin'] === "userpage")))
+            {
+                $history = "&alias=welcome";
+            }
+            else if (isset($_GET['plugin']) && (!empty($_GET['plugin'])))
+            {
+                $history = "&alias=$_GET[plugin]";
+            }
+            else
+            {
+                $history = '';
+            }
+
             if (isset($_GET['page']) && (!empty($_GET['page']) && ($_GET['page'] === "frontend-preview")))
             {
                 $selected = ' class="active"';
@@ -270,7 +288,7 @@ namespace YAWK {
             else { $selected = ''; }
             echo  "<li $selected>
                 <!-- preview eye icon -->
-                <a href=\"index.php?page=frontend-preview\" title=\"$lang[QUICK_PREVIEW]\">
+                <a href=\"index.php?page=frontend-preview".$history."\" title=\"$lang[QUICK_PREVIEW]\">
                   <i class=\"fa fa-eye\"></i>
                 </a>
                 </li>";
