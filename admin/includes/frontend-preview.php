@@ -9,13 +9,27 @@ echo "
 echo"</section><!-- Main content -->
     <section class=\"content\">";
 /* page content start here */
+
+// TODO: COMMENT
+if (isset($_GET['alias']) && (!empty($_GET['alias'])))
+{
+    $alias = "?include=$_GET[alias]";
+}
+else if (isset($_GET['plugin']) && (!empty($_GET['plugin'])))
+{
+    $alias = "?include=$_GET[plugin]";
+}
+else
+{
+    $alias = '';
+}
 ?>
 <div class="row animated fadeIn">
     <!-- PREVIEW -->
     <div class="col-md-12">
         <!-- website preview iframe -->
         <div class="embed-responsive embed-responsive-4by3">
-            <iframe id="preview" class="embed-responsive-item" src="../index.php"></iframe>
+            <iframe id="preview" class="embed-responsive-item" src="../index.php<?php echo $alias; ?>"></iframe>
         </div>
     </div>
 </div>
