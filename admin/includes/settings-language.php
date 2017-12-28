@@ -32,7 +32,6 @@ if (isset($_POST['save']))
         case 0:
             // false, throw error msg
             \YAWK\alert::draw("danger", "$lang[LANGUAGES] $lang[NOT_SAVED]", "$lang[BACKEND] ($_GET[backendLanguage]) $lang[AND] $lang[FRONTEND] ($_GET[frontendLanguage]) $lang[LANGUAGE] $lang[NOT_SAVED].",'', 3400);
-            // \YAWK\sys::setTimeout("index.php?page=settings-language&saved=0&backendLanguage=$_POST[backendLanguage]&frontendLanguage=$_POST[frontendLanguage]", 0);
             break;
     }
 }
