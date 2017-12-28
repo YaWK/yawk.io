@@ -2773,14 +2773,25 @@ namespace YAWK {
             {   // get current ID from database
                 $templateID = \YAWK\settings::getSetting($db, "selectedTemplate");
             }
-            if ($res = $db->query("SELECT asset FROM {assets} 
+            if ($res = $db->query("SELECT asset, link FROM {assets} 
                                           WHERE templateID = '".$templateID."' 
                                           ORDER BY asset"))
             {
                 while ($row = mysqli_fetch_assoc($res))
                 {
+                    // check, if link is external
+                    if (strpos($row['link'], 'https://') !== false) {
+                        $icon = "fa fa-globe";
+                        $title = "$lang[EXTERNAL]";
+                    }
+                    else
+                        {
+                            $icon = "fa fa-server";
+                            $title = "$lang[INTERNAL]";
+                        }
                     $qString = rawurlencode($row['asset']);
-                    echo "<i class=\"fa fa-check text-info\"></i> &nbsp;$row[asset] &nbsp;<small><a href=\"https://www.google.at/search?q=$qString\" target=\"_blank\" title=\"$lang[GOOGLE_THIS]\"><i class=\"fa fa-edit\"></i></a></small><br>";
+
+                    echo "<small><a href=\"index.php?page=template-setup\" data-toggle=\"tooltip\" title=\"$title\"><i class=\"$icon text-info\"></i></a></small> &nbsp;$row[asset] &nbsp;<small><a href=\"https://www.google.at/search?q=$qString\" target=\"_blank\" data-toggle=\"tooltip\" title=\"$row[asset] $lang[GOOGLE_THIS]\"><i class=\"fa fa-question-circle-o\"></i></a></small><br>";
                 }
             }
             return null;
