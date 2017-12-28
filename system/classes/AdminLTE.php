@@ -261,26 +261,36 @@ namespace YAWK {
             return null;
         }
 
+        /**
+         * Draw preview page icon on navbar top beside other notification icons
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @return null
+         */
         function drawHtmlNavbarPreviewIcon($lang)
         {
-            // TODO: COMMENT THIS
+            // admin edit a page
             if (isset($_GET['alias']) && (!empty($_GET['alias'])))
-            {
+            {   // show this page as preview
                 $history = "&alias=$_GET[alias]";
             }
+            // admin is configuring the userpage
             else if (isset($_GET['plugin']) && (!empty($_GET['plugin']) && ($_GET['plugin'] === "userpage")))
-            {
+            {   // load frontend user page as preview
                 $history = "&alias=welcome";
             }
+            // admin is on plugin configuration page
             else if (isset($_GET['plugin']) && (!empty($_GET['plugin'])))
-            {
+            {   // try to load the plugin page as preview
                 $history = "&alias=$_GET[plugin]";
             }
             else
-            {
+            {   // default: index.html
                 $history = '';
             }
 
+            // set menu to active if user clicked on preview icon
             if (isset($_GET['page']) && (!empty($_GET['page']) && ($_GET['page'] === "frontend-preview")))
             {
                 $selected = ' class="active"';
