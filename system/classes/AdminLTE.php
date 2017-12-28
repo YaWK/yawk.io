@@ -266,6 +266,7 @@ namespace YAWK {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
+         * @param array $lang Language Array
          * @return null
          */
         function drawHtmlNavbarPreviewIcon($lang)
