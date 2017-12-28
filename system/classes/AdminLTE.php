@@ -937,6 +937,9 @@ namespace YAWK {
             <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-language') ? "class=\"active\"" : ""; echo">
                 <a href=\"index.php?page=settings-language\"><i class=\"fa fa-language\"></i> $lang[LANGUAGES]</a>
             </li>
+            <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-assets') ? "class=\"active\"" : ""; echo">
+                <a href=\"index.php?page=settings-assets\"><i class=\"fa fa-puzzle-piece\"></i> $lang[ASSETS]</a>
+            </li>
             <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-database') ? "class=\"active\"" : ""; echo">
                 <a href=\"index.php?page=settings-database\"><i class=\"fa fa-database\"></i> $lang[DATABASE]</a>
             </li>
