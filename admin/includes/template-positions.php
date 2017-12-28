@@ -72,6 +72,7 @@ $templateSettings = \YAWK\template::getAllSettingsIntoArray($db, $user);
         font-weight:normal;
         border-style: dotted; border-color: #ccc;
         cursor:pointer;
+        overflow: hidden;
     }
 
     .posbox:hover
@@ -79,13 +80,16 @@ $templateSettings = \YAWK\template::getAllSettingsIntoArray($db, $user);
         border: dotted #888888;
         font-weight: bold;
         cursor:pointer;
+        overflow: hidden;
     }
     .posboxActive
     {
-        background-color: #E3E3E3;
+        /* background-color: #E3E3E3; */
+        background-color: #e8e8e8;
         border: 2px solid #888888;
         font-weight: bold;
         cursor:pointer;
+        overflow: hidden;
     }
     .bodyBox
     {
@@ -109,6 +113,7 @@ $templateSettings = \YAWK\template::getAllSettingsIntoArray($db, $user);
         border: 2px solid #888888;
         /* font-weight: bold; */
         cursor:pointer;
+        overflow: hidden;
     }
 </style>
 <!-- Javascript for positions tab -->
@@ -252,8 +257,16 @@ echo"</section><!-- Main content -->
                         <?php $template->getFormElements($db, $templateSettings, 37, $lang, $user); ?>
                     </div>
                     <!-- settings main -->
+                    <div id="settings_pos_mainLeft">
+                        <?php $template->getFormElements($db, $templateSettings, 56, $lang, $user); ?>
+                    </div>
+                    <!-- settings main -->
                     <div id="settings_pos_main">
                         <?php $template->getFormElements($db, $templateSettings, 38, $lang, $user); ?>
+                    </div>
+                    <!-- settings main -->
+                    <div id="settings_pos_mainRight">
+                        <?php $template->getFormElements($db, $templateSettings, 57, $lang, $user); ?>
                     </div>
                     <!-- settings mainBottom -->
                     <div id="settings_pos_mainBottom">
@@ -371,10 +384,20 @@ echo"</section><!-- Main content -->
                 else
                 {   $mainTopRightEnabled = $disabledBorder; }
 
+                if ($templateSettings['pos-mainLeft-enabled']['value'] === "1")
+                {   $mainLeftEnabled = $enabledBorder; }
+                else
+                {   $mainLeftEnabled = $disabledBorder; }
+
                 if ($templateSettings['pos-main-enabled']['value'] === "1")
                 {   $mainEnabled = $enabledBorder; }
                 else
                 {   $mainEnabled = $disabledBorder; }
+
+                if ($templateSettings['pos-mainRight-enabled']['value'] === "1")
+                {   $mainRightEnabled = $enabledBorder; }
+                else
+                {   $mainRightEnabled = $disabledBorder; }
 
                 if ($templateSettings['pos-mainBottom-enabled']['value'] === "1")
                 {   $mainBottomEnabled = $enabledBorder; }
@@ -463,7 +486,9 @@ echo"</section><!-- Main content -->
                         $(pos_mainTopLeft).removeClass("posboxActive").toggleClass("posbox");
                         $(pos_mainTopCenter).removeClass("posboxActive").toggleClass("posbox");
                         $(pos_mainTopRight).removeClass("posboxActive").toggleClass("posbox");
+                        $(pos_mainLeft).removeClass("posboxActive").toggleClass("posbox");
                         $(pos_main).removeClass("posboxActive").toggleClass("posbox");
+                        $(pos_mainRight).removeClass("posboxActive").toggleClass("posbox");
                         $(pos_mainBottom).removeClass("posboxActive").toggleClass("posbox");
                         $(pos_mainBottomLeft).removeClass("posboxActive").toggleClass("posbox");
                         $(pos_mainBottomCenter).removeClass("posboxActive").toggleClass("posbox");
@@ -492,7 +517,9 @@ echo"</section><!-- Main content -->
                         $(settings_pos_mainTopLeft).hide();
                         $(settings_pos_mainTopCenter).hide();
                         $(settings_pos_mainTopRight).hide();
+                        $(settings_pos_mainLeft).hide();
                         $(settings_pos_main).hide();
+                        $(settings_pos_mainRight).hide();
                         $(settings_pos_mainBottom).hide();
                         $(settings_pos_mainBottomLeft).hide();
                         $(settings_pos_mainBottomCenter).hide();
@@ -570,7 +597,9 @@ echo"</section><!-- Main content -->
                                     </div>
 
                                     <div class="row">
-                                        <div onclick="switchPosition('pos_main')" class="col-md-12 posbox" id="pos_main" style="height: 200px; margin-bottom:5px; text-align: center; <?php echo $mainEnabled; ?>">&laquo;main&raquo;</div>
+                                        <div onclick="switchPosition('pos_mainLeft')" class="col-md-2 posbox" id="pos_mainLeft" style="height: 200px; margin-bottom:5px; text-align: center; <?php echo $mainLeftEnabled; ?>">&laquo;mainLeft&raquo;</div>
+                                        <div onclick="switchPosition('pos_main')" class="col-md-8 posbox" id="pos_main" style="height: 200px; margin-bottom:5px; text-align: center; <?php echo $mainEnabled; ?>">&laquo;main&raquo;</div>
+                                        <div onclick="switchPosition('pos_mainRight')" class="col-md-2 posbox" id="pos_mainRight" style="height: 200px; margin-bottom:5px; text-align: center; <?php echo $mainRightEnabled; ?>">&laquo;mainRight&raquo;</div>
                                     </div>
                                     <div class="row">
                                         <div onclick="switchPosition('pos_mainBottom')" class="col-md-12 posbox" id="pos_mainBottom" style="height: 30px; margin-bottom:5px; text-align: center; <?php echo $mainBottomEnabled; ?>">&laquo;mainBottom&raquo;</div>

@@ -48,6 +48,62 @@ if (isset($_GET['delete']) && ($_GET['delete'] === "1"))
     }
 }
 
+// COPY TEMPLATE
+if (isset($_POST['savenewtheme']) && (!empty($_POST['savenewtheme']))
+|| (isset($_GET['savenewtheme']) && (!empty($_GET['savenewtheme']))))
+{
+    $newID = '';
+    $getID = '';
+
+    // SAVE AS new theme
+    // get new template id
+    $oldTemplateId = $template->id;
+    $newID = \YAWK\template::getMaxId($db);
+    $newTplId = $newID++;
+    $template->id = $newTplId;
+    // set new theme active
+    //$user->setUserTemplate($db, 1, $newID, $user->id);
+    //$user->overrideTemplate = 1;
+    //\YAWK\settings::setSetting($db, "selectedTemplate", $newID);
+
+    if (isset($_POST['newthemename']) && (!empty($_POST['newthemename'])))
+    {
+        $template->name = $db->quote($_POST['newthemename']);
+    }
+    else if (isset($_GET['newthemename']) && (!empty($_GET['newthemename'])))
+    {
+        $template->name = $db->quote($_GET['newthemename']);
+    }
+
+    if (isset($_POST['description']) && (!empty($_POST['description'])))
+    {   // set new tpl description
+        $template->description = $db->quote($_POST['description']);
+    }
+    else if (isset($_GET['description']) && (!empty($_GET['description'])))
+    {   // set new tpl description
+        $template->description = $db->quote($_GET['description']);
+    }
+    else
+    {   // new description not set, default value instead:
+        $template->description = "Template Description";
+    }
+    if (isset($_POST['positions']) && (!empty($_POST['positions'])))
+    {   // set new tpl positions
+        $template->positions = $db->quote($_POST['positions']);
+    }
+    else
+    {   // new positions not set, default value instead:
+        $template->positions = '';
+    }
+
+    // save as new theme
+    $template->saveAs($db, $newID, $template, $template->name, $template->positions, $template->description);
+    // set the new theme active in template
+    \YAWK\template::setTemplateActive($db, $newID);
+    // copy the template settings into the new template
+    \YAWK\template::copyTemplateSettings($db, $oldTemplateId, $newID);
+}
+
 // OVERRIDE TEMPLATE
 // check if call comes from template-manage or template-edit form
 if (isset($_GET['id']) && (is_numeric($_GET['id']) || (isset($_POST['id']) && (is_numeric($_POST['id'])))))
@@ -232,10 +288,10 @@ echo"</section><!-- Main content -->
                 <dt>&nbsp;</dt>
                 <dd>&nbsp;</dd>
 
-                <dt><?php echo $lang['TOOLS']; ?></dt>
+                <dt><?php echo $lang['ASSETS']; ?></dt>
                 <dd>
-                    <b><?php echo $lang['YAWK_SLOGAN_TOGETHER']; ?><br>
-                        <?php \YAWK\template::drawAssetsTitles($db, $template->id, $lang); ?>
+                    <?php echo $lang['ASSETS_USED']; ?><br>
+                    <?php \YAWK\template::drawAssetsTitles($db, $template->id, $lang); ?>
                 </dd>
                 <dt>&nbsp;</dt>
                 <dd>&nbsp;</dd>
@@ -244,7 +300,7 @@ echo"</section><!-- Main content -->
     </div>
     <div class="col-md-7">
         <div class="box">
-            <div class="box-header"><h3 class="box-title">Template Manager</h3></div>
+            <div class="box-header"><h3 class="box-title"><?php echo $lang['TPL_MANAGE']; ?></h3></div>
             <div class="box-body">
                 <table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-striped table-hover table-responsive" id="table-sort">
                     <thead>
@@ -323,7 +379,10 @@ echo"</section><!-- Main content -->
                                 $screenshot = "<img src=\"../system/templates/".$activeTemplate."/img/screenshot.jpg\" width=\"200\" class=\"img-rounded\">";
                             }
 
-        // <td>".$row['id']."</td>
+                            // set copy icon
+                            $tplCopyName = $row['name']."-copy";
+                            $description = "copy of: ".$row['name']."";
+                            $copyIcon = "<a title=\"$lang[COPY]\" href=\"index.php?page=template-overview&savenewtheme=true&newthemename=".$tplCopyName."&description=".$description."\"<i class=\"fa fa-copy\"></i></a>";
 
                             $row['positions'] = str_replace(':', '<br>',$row['positions']); //wordwrap($row['positions'], 20, "<br>\n");
                             echo "<tr>
@@ -332,11 +391,12 @@ echo"</section><!-- Main content -->
             <span class=\"label label-$pub\">$pubtext</span></a>&nbsp;</td>
           <td>".$previewLabel."</td>
           <td>".$row['id']."</td>
-          <td><a href=\"index.php?page=template-overview&overrideTemplate=1&id=".$row['id']."\"><div style=\"width:100%\">".$row['name']."</div></a></td>
+          <td><a href=\"index.php?page=template-positions&id=".$row['id']."\"><div style=\"width:100%\">".$row['name']."</div></a></td>
           <td><a href=\"index.php?page=template-overview&id=".$row['id']."\" style=\"color: #7A7376;\"><div style=\"width:100%\">".$row['description']."</div></a></td>
           <td><a href=\"index.php?page=template-overview&id=".$row['id']."\" title=\"$lang[EDIT]: ".$row['name']."\">".$screenshot."</a></td>
           <td class=\"text-center\">
-            $deleteIcon
+            $copyIcon &nbsp;
+            $deleteIcon 
           </td>
         </tr>";
                         }

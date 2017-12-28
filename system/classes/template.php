@@ -2756,15 +2756,16 @@ namespace YAWK {
         }
 
         /**
-         * Return an array with all assets that are used in this template
+         * Draw a list with all assets that are used in this template
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db database object
          * @param int $templateID ID of the affectd template
+         * @param array $lang language array
          * @return null
          */
-        public static function drawAssetsTitles($db, $templateID)
+        public static function drawAssetsTitles($db, $templateID, $lang)
         {
             /* @var \YAWK\db $db */
             // if no template ID is set
@@ -2779,7 +2780,7 @@ namespace YAWK {
                 while ($row = mysqli_fetch_assoc($res))
                 {
                     $qString = rawurlencode($row['asset']);
-                    echo "<i class=\"fa fa-check text-info\"></i> &nbsp;$row[asset] &nbsp;<a href=\"https://www.google.at/search?q=$qString\" target=\"_blank\" title=\"(google $row[asset] in new window)\"><i class=\"fa fa-edit\"></i> </a><br>";
+                    echo "<i class=\"fa fa-check text-info\"></i> &nbsp;$row[asset] &nbsp;<small><a href=\"https://www.google.at/search?q=$qString\" target=\"_blank\" title=\"$lang[GOOGLE_THIS]\"><i class=\"fa fa-edit\"></i></a></small><br>";
                 }
             }
             return null;
