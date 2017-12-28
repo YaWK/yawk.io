@@ -118,6 +118,7 @@ if (isset($_POST['save']) && (isset($_GET['action']) && (isset($_GET['id']))))
                 }
             }
 
+
         } // end if isset $_GET['action']
 
         // get all template settings fresh form database into array
@@ -1267,6 +1268,36 @@ if (isset($_POST['save']) && (isset($_GET['action']) && (isset($_GET['id']))))
         ".$tplSettings['pos-mainTopRight-customCSS-longValue']."
         background: ".$tplSettings['pos-mainTopRight-bgnone'].";
     }
+    .pos-mainLeft
+    {   
+        -webkit-box-shadow: ".$tplSettings['pos-mainLeft-box-shadow-width']." #".$tplSettings['pos-mainLeft-box-shadow-color'].";
+        -moz-box-shadow: ".$tplSettings['pos-mainLeft-box-shadow-width']." #".$tplSettings['pos-mainLeft-box-shadow-color'].";
+        box-shadow: ".$tplSettings['pos-mainLeft-box-shadow-width']." #".$tplSettings['pos-mainLeft-box-shadow-color'].";
+        border-width: ".$tplSettings['pos-mainLeft-border-width'].";
+        border-color: #".$tplSettings['pos-mainLeft-border-color'].";
+        border-style: ".$tplSettings['pos-mainLeft-border-style'].";
+        border-radius: ".$tplSettings['pos-mainLeft-border-radius'].";
+        padding: ".$tplSettings['pos-mainLeft-padding'].";
+        overflow: ".$tplSettings['pos-mainLeft-overflow'].";
+        visibility: ".$tplSettings['pos-mainLeft-visibility'].";
+        text-align: ".$tplSettings['pos-mainLeft-text-align'].";
+        vertical-align: ".$tplSettings['pos-mainLeft-vertical-align'].";
+        margin-top: ".$tplSettings['pos-mainLeft-marginTop'].";
+        margin-bottom: ".$tplSettings['pos-mainLeft-marginBottom'].";
+        position: ".$tplSettings['pos-mainLeft-position'].";
+        background-color: #".$tplSettings['pos-mainLeft-bgcolor'].";
+        height: ".$tplSettings['pos-mainLeft-height'].";
+        z-index: ".$tplSettings['pos-mainLeft-zindex'].";
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tplSettings['pos-mainLeft-bg-image']."');
+        background-repeat:".$tplSettings['pos-mainLeft-bg-repeat'].";
+        background-position:".$tplSettings['pos-mainLeft-bg-position'].";
+        background-attachment:".$tplSettings['pos-mainLeft-bg-attachment'].";
+        background-size: ".$tplSettings['pos-mainLeft-bg-size'].";
+        ".$tplSettings['pos-mainLeft-bg-gradient-longValue']."
+        ".$tplSettings['pos-mainLeft-customCSS-longValue']."
+        background: ".$tplSettings['pos-mainLeft-bgnone'].";
+    }
     .pos-main
     {   
         -webkit-box-shadow: ".$tplSettings['pos-main-box-shadow-width']." #".$tplSettings['pos-main-box-shadow-color'].";
@@ -1285,7 +1316,6 @@ if (isset($_POST['save']) && (isset($_GET['action']) && (isset($_GET['id']))))
         margin-bottom: ".$tplSettings['pos-main-marginBottom'].";
         position: ".$tplSettings['pos-main-position'].";
         background-color: #".$tplSettings['pos-main-bgcolor'].";
-        width: ".$tplSettings['pos-main-width'].";
         height: ".$tplSettings['pos-main-height'].";
         z-index: ".$tplSettings['pos-main-zindex'].";
         /* BACKGROUND IMAGE */
@@ -1297,6 +1327,36 @@ if (isset($_POST['save']) && (isset($_GET['action']) && (isset($_GET['id']))))
         ".$tplSettings['pos-main-bg-gradient-longValue']."
         ".$tplSettings['pos-main-customCSS-longValue']."
         background: ".$tplSettings['pos-main-bgnone'].";
+    }
+    .pos-mainRight
+    {   
+        -webkit-box-shadow: ".$tplSettings['pos-mainRight-box-shadow-width']." #".$tplSettings['pos-mainRight-box-shadow-color'].";
+        -moz-box-shadow: ".$tplSettings['pos-mainRight-box-shadow-width']." #".$tplSettings['pos-mainRight-box-shadow-color'].";
+        box-shadow: ".$tplSettings['pos-mainRight-box-shadow-width']." #".$tplSettings['pos-mainRight-box-shadow-color'].";
+        border-width: ".$tplSettings['pos-mainRight-border-width'].";
+        border-color: #".$tplSettings['pos-mainRight-border-color'].";
+        border-style: ".$tplSettings['pos-mainRight-border-style'].";
+        border-radius: ".$tplSettings['pos-mainRight-border-radius'].";
+        padding: ".$tplSettings['pos-mainRight-padding'].";
+        overflow: ".$tplSettings['pos-mainRight-overflow'].";
+        visibility: ".$tplSettings['pos-mainRight-visibility'].";
+        text-align: ".$tplSettings['pos-mainRight-text-align'].";
+        vertical-align: ".$tplSettings['pos-mainRight-vertical-align'].";
+        margin-top: ".$tplSettings['pos-mainRight-marginTop'].";
+        margin-bottom: ".$tplSettings['pos-mainRight-marginBottom'].";
+        position: ".$tplSettings['pos-mainRight-position'].";
+        background-color: #".$tplSettings['pos-mainRight-bgcolor'].";
+        height: ".$tplSettings['pos-mainRight-height'].";
+        z-index: ".$tplSettings['pos-mainRight-zindex'].";
+        /* BACKGROUND IMAGE */
+        background-image: url('".$tplSettings['pos-mainRight-bg-image']."');
+        background-repeat:".$tplSettings['pos-mainRight-bg-repeat'].";
+        background-position:".$tplSettings['pos-mainRight-bg-position'].";
+        background-attachment:".$tplSettings['pos-mainRight-bg-attachment'].";
+        background-size: ".$tplSettings['pos-mainRight-bg-size'].";
+        ".$tplSettings['pos-mainRight-bg-gradient-longValue']."
+        ".$tplSettings['pos-mainRight-customCSS-longValue']."
+        background: ".$tplSettings['pos-mainRight-bgnone'].";
     }
     .pos-mainBottom
     {   

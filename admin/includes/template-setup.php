@@ -85,49 +85,6 @@ else {
 <?php
 if ($_GET['action'] === "template-setup")
 {
-    // admin requested to save current template settings as new theme
-    if (isset($_POST['savenewtheme']) && (!empty($_POST['savenewtheme'])))
-    {
-        $newID = '';
-        $getID = '';
-
-        // SAVE AS new theme
-        $template->name = $db->quote($_POST['newthemename']);
-        // get new template id
-        $oldTemplateId = $template->id;
-        $newID = \YAWK\template::getMaxId($db);
-        $newTplId = $newID++;
-        $template->id = $newTplId;
-        // set new theme active
-        //$user->setUserTemplate($db, 1, $newID, $user->id);
-        //$user->overrideTemplate = 1;
-        //\YAWK\settings::setSetting($db, "selectedTemplate", $newID);
-
-        if (isset($_POST['description']) && (!empty($_POST['description'])))
-        {   // set new tpl description
-            $template->description = $db->quote($_POST['description']);
-        }
-        else
-        {   // new description not set, default value instead:
-            $template->description = "Template Description";
-        }
-        if (isset($_POST['positions']) && (!empty($_POST['positions'])))
-        {   // set new tpl positions
-            $template->positions = $db->quote($_POST['positions']);
-        }
-        else
-        {   // new positions not set, default value instead:
-            $template->positions = "globalmenu:top:main:bottom:footer";
-        }
-
-        // save as new theme
-        $template->saveAs($db, $newID, $template, $template->name, $template->positions, $template->description);
-        // set the new theme active in template
-        \YAWK\template::setTemplateActive($db, $newID);
-        // copy the template settings into the new template
-        \YAWK\template::copyTemplateSettings($db, $oldTemplateId, $newID);
-    }
-
     // add new google font to database
     if (isset($_POST['addgfont']) && (!empty($_POST['addgfont'])))
     {
