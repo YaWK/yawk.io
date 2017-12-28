@@ -127,7 +127,7 @@ if (isset($_GET['id']) && (is_numeric($_GET['id']) || (isset($_POST['id']) && (i
         $user->setUserTemplate($db, 1, $getID, $user->id);
         $user->overrideTemplate = 1;
         // info badge to inform user that this is HIS preview
-        $infoBadge = "<span class=\"label label-danger\"><i class=\"fa fa-eye\"></i>&nbsp;&nbsp;$lang[PREVIEW]</span>";
+        $infoBadge = "<span class=\"label label-success\"><i class=\"fa fa-eye\"></i>&nbsp;&nbsp;$lang[TPL_PREVIEW_VISIBLE_TO_YOU]</span>";
         // close preview button on top
         $previewButton = "<a class=\"btn btn-danger\" href=\"index.php?page=template-manage&overrideTemplate=0&id=$getID\"><i class=\"fa fa-times\"></i>&nbsp;&nbsp;$lang[CLOSE_PREVIEW]</a>";
     }
@@ -305,11 +305,10 @@ echo"</section><!-- Main content -->
                 <table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-striped table-hover table-responsive" id="table-sort">
                     <thead>
                     <tr>
-                        <td><strong>&nbsp;</strong></td>
+                        <td class="text-center"><strong><?php echo $lang['STATUS']; ?></strong></td>
                         <td><strong><?php echo $lang['PREVIEW']; ?></strong></td>
                         <td><strong><?php echo $lang['ID']; ?></strong></td>
                         <td><strong><i class="fa fa-caret-down"></i> <?php print $lang['TEMPLATE']; ?></strong></td>
-                        <td><strong><i class="fa fa-caret-down"></i> <?php print $lang['DESCRIPTION']; ?></strong></td>
                         <td><strong><?php print $lang['SCREENSHOT']; ?></strong></td>
                         <td class="text-center"><strong><?php print $lang['ACTIONS']; ?></strong></td>
                     </tr>
@@ -348,8 +347,8 @@ echo"</section><!-- Main content -->
                                 $pub = "danger"; $pubtext = "$lang[OFFLINE]";
                                 $statusText = "$lang[TPL_OFF]";
                                 // delete template button
-                                $deleteIcon = "<a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"$lang[TPL_DEL_CONFIRM] &laquo;".$row['name']." / ".$row['id']."&raquo;\"
-                                title=\"".$lang['DELETE']."\" href=\"index.php?page=template-overview&delete=1&templateID=".$row['id']."\"></a>";
+                                $deleteIcon = "<a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"$lang[TPL_DEL_CONFIRM] &laquo;".$row['name']." ID: ".$row['id']."&raquo;\"
+                                title=\"".$lang['TEMPLATE']."&nbsp;".$lang['DELETE']."\" href=\"index.php?page=template-overview&delete=1&templateID=".$row['id']."\"></a>";
                                 $previewLabel = '';
                             }
                             if ($row['id'] == ($userTemplateID) && ($row['id'] == $activeTemplateId))
@@ -391,16 +390,14 @@ echo"</section><!-- Main content -->
                             $description = "copy of: ".$row['name']."";
                             $copyIcon = "<a title=\"$lang[COPY]\" href=\"index.php?page=template-overview&savenewtheme=true&newthemename=".$tplCopyName."&description=".$description."\"<i class=\"fa fa-copy\"></i></a>";
 
-                            $row['positions'] = str_replace(':', '<br>',$row['positions']); //wordwrap($row['positions'], 20, "<br>\n");
                             echo "<tr>
           <td class=\"text-center\">
             <a data-toggle=\"tooltip\" title=\"$statusText\" href=\"index.php?page=template-overview&toggle=1&templateID=".$row['id']."\">
             <span class=\"label label-$pub\">$pubtext</span></a>&nbsp;</td>
           <td>".$previewLabel."</td>
           <td>".$row['id']."</td>
-          <td>".$activeBoldStart."<a href=\"index.php?page=template-positions&id=".$row['id']."\"><div style=\"width:100%\">".$row['name']."</div></a>".$activeBoldEnd."</td>
-          <td><a href=\"index.php?page=template-overview&id=".$row['id']."\" style=\"color: #7A7376;\"><div style=\"width:100%\">".$row['description']."</div></a></td>
-          <td><a href=\"index.php?page=template-overview&id=".$row['id']."\" title=\"$lang[EDIT]: ".$row['name']."\">".$screenshot."</a></td>
+          <td>".$activeBoldStart."<a href=\"index.php?page=template-positions&id=".$row['id']."\"><div style=\"width:100%\">".$row['name']."</div></a>".$activeBoldEnd."".$row['description']."</td>
+          <td><a href=\"index.php?page=template-positions&id=".$row['id']."\" title=\"$lang[EDIT]: ".$row['name']."\">".$screenshot."</a></td>
           <td class=\"text-center\">
             $copyIcon &nbsp;
             $deleteIcon 
