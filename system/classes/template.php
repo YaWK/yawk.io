@@ -2732,7 +2732,7 @@ namespace YAWK {
             $res = $db->query("SELECT * 
                             FROM {assets_types}
                             WHERE published = '1' 
-                            $typeSQLCode;");
+                            $typeSQLCode ORDER by asset");
             // fetch data in loop
             while ($row = mysqli_fetch_assoc($res))
             {   // build assets array
