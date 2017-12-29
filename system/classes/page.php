@@ -942,23 +942,23 @@ where ID = $this->id</h1>";
                 }
             }
             // GET STATUS
-            $zukunft = (isset($currentpage->date_publish));        // publish date + time
+            $future = (isset($currentpage->date_publish));        // publish date + time
             if (isset($currentpage->date_publish_end)) {        // end publish date + time
                 $publish_end = $currentpage->date_publish_end;
             }
 
-            $jetzt = date("Y-m-d G:i:s");                  // current date + time
+            $now = date("Y-m-d G:i:s");                  // current date + time
             // trim vars
-            $date_published = trim($zukunft);
+            $date_published = trim($future);
             $publish_end = trim(isset($publish_end));
-            $date_now = trim($jetzt);
+            $date_now = trim($now);
 
             // de-construct string
-            $date_now = substr($jetzt, 0, 10);    // get the first 10 chars, start from left
-            $time_now = substr($jetzt, -8);    // get the last 8 chars, start from right
+            $date_now = substr($now, 0, 10);    // get the first 10 chars, start from left
+            $time_now = substr($now, -8);    // get the last 8 chars, start from right
 
-            $date_published = substr($zukunft, 0, 10);
-            $time_published = substr($zukunft, -8);
+            $date_published = substr($future, 0, 10);
+            $time_published = substr($future, -8);
 
             $date_publish_end = substr($publish_end, 0, 10);
             $time_publish_end = substr($publish_end, -8);
@@ -981,7 +981,7 @@ where ID = $this->id</h1>";
 
             } else {
 
-                if ($currentpage->date_publish > $jetzt) {
+                if ($currentpage->date_publish > $now) {
                     $timediff = settings::getSetting($db, "timediff");
                     if ($timediff === '1') {
                         echo "<br>Content Pending. Publishing is scheduled for $currentpage->date_publish<br><br>";
@@ -989,7 +989,7 @@ where ID = $this->id</h1>";
                         echo "&nbsp;";
                     }
 
-                    $start = strtotime($jetzt);
+                    $start = strtotime($now);
                     $end = strtotime($currentpage->date_publish);
                     $timediff = settings::getSetting($db, "timediff");
                     if ($timediff === '1') {
@@ -997,9 +997,9 @@ where ID = $this->id</h1>";
                     }
                     exit;
                 }
-                if ($currentpage->date_unpublish < $jetzt XOR $currentpage->date_unpublish === "0000-00-00 00:00:00") {
+                if ($currentpage->date_unpublish < $now XOR $currentpage->date_unpublish === "0000-00-00 00:00:00") {
                     echo "<br>Dieser Inhalt ist leider nicht mehr verf&uuml;gbar. <br><br>";
-                    $start = strtotime($jetzt);
+                    $start = strtotime($now);
                     $end = strtotime($currentpage->date_publish);
                     $timediff = settings::getSetting($db, "timediff");
                     if ($timediff === '1') {
