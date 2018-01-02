@@ -222,22 +222,8 @@ echo"</section><!-- Main content -->
 </form>
 
     <div class="row animated fadeIn">
-        <div class="col-md-6">
-            <div class="box box-default">
-                <div class="box-header with-border">
-                    <h3 class="box-title"><?php echo "$lang[SAVE_AS] <small>$lang[NEW_THEME]</small>"; ?></h3>
-                </div>
-                <div class="box-body">
-                    <label for="savetheme"><?php echo "$lang[SAVE_NEW_THEME_AS]"; ?></label>
-                    <input type="text" class="form-control" name="newthemename" value="<?php echo $template->name; ?>-copy" placeholder="<?php echo "$lang[NEW] $lang[TPL] $lang[NAME]"; ?>">
-                    <input type="text" class="form-control" name="description" placeholder="<?php echo "$lang[TPL] $lang[DESCRIPTION]"; ?>">
-                    <input type="text" class="form-control" name="positions" placeholder="<?php echo "$lang[POSITIONS] $lang[POS_DESCRIPTION]"; ?>">
-                    <br><input id="addbutton" type="submit" class="btn btn-danger" name="savenewtheme" value="<?php echo "$lang[SAVE_NEW_THEME_AS]"; ?>">
-                </div>
-            </div>
-        </div>
 
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="box box-default">
                 <div class="box-header with-border">
                     <h3 class="box-title"><?php echo "$lang[TPL_ADD_GFONT] <small>$lang[TPL_ADD_GFONT_SUBTEXT]</small>"; ?></h3>
