@@ -23,11 +23,21 @@ SET time_zone = "+00:00";
 CREATE TABLE `cms_assets` (
   `id` int(11) NOT NULL,
   `templateID` int(11) NOT NULL,
-  `type` int(11) NOT NULL,
+  `type` varchar(11) NOT NULL,
   `asset` varchar(255) NOT NULL,
   `link` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Daten für Tabelle `cms_assets`
+--
+
+INSERT INTO `cms_assets` (`id`, `templateID`, `type`, `asset`, `link`) VALUES
+(1, 1, 'js', 'jQuery 1.x', 'system/engines/jquery/jquery-1.12.4.min.js'),
+(2, 1, 'css', 'Bootstrap 3 CSS', 'system/engines/bootstrap/dist/css/bootstrap.min.css'),
+(3, 1, 'js', 'Bootstrap 3 JS', 'system/engines/bootstrap/dist/js/bootstrap.min.js');
+
+-- --------------------------------------------------------
 
 --
 -- Tabellenstruktur für Tabelle `cms_assets_types`
@@ -35,8 +45,9 @@ CREATE TABLE `cms_assets` (
 
 CREATE TABLE `cms_assets_types` (
   `id` int(11) NOT NULL,
-  `published` int(1) NOT NULL,
+  `published` int(1) NOT NULL DEFAULT '1',
   `type` int(1) NOT NULL,
+  `sortation` int(11) NOT NULL,
   `asset` varchar(255) NOT NULL,
   `property` varchar(128) NOT NULL,
   `internal` varchar(255) NOT NULL,
@@ -49,21 +60,21 @@ CREATE TABLE `cms_assets_types` (
 -- Daten für Tabelle `cms_assets_types`
 --
 
-INSERT INTO `cms_assets_types` (`id`, `published`, `type`, `asset`, `property`, `internal`, `url1`, `url2`, `url3`) VALUES
-(1, 1, 1, 'Bootstrap 3 JS', 'bootstrap3-js', 'system/engines/bootstrap/dist/js/bootstrap.min.js', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js', ''),
-(2, 1, 1, 'Bootstrap 3 CSS', 'bootstrap3-css', 'system/engines/bootstrap/dist/css/bootstrap.min.css', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css', ''),
-(3, 1, 1, 'jQuery 1.x', 'jquery-1', 'system/engines/jquery/jquery-1.12.4.min.js', 'http://code.jquery.com/jquery-1.12.4.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js', ''),
-(4, 1, 1, 'jQuery 2.x', 'jquery-2', 'system/engines/jquery/jquery-2.2.4.min.js', 'http://code.jquery.com/jquery-2.2.4.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js', ''),
-(5, 1, 1, 'jQuery 3.x', 'jquery-3', 'system/engines/jquery/jquery-3.2.1.min.js', 'http://code.jquery.com/jquery-3.2.1.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js', ''),
-(6, 1, 1, 'jQuery UI 1.12 JS', 'jqueryUI', 'system/engines/jquery/jquery-ui.min.js', 'http://code.jquery.com/ui/1.12.1/jquery-ui.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js', ''),
-(7, 1, 2, 'Animate.css', 'animateCSS', 'system/engines/animateCSS/animate.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css', 'https://fastcdn.org/Animate.css/3.4.0/animate.min.css', ''),
-(8, 1, 2, 'Font Awesome Icons', 'font-awesome', 'system/engines/font-awesome/css/font-awesome.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css', '', ''),
-(9, 1, 2, 'Lightbox 2 JS', 'lightbox2-js', 'system/engines/jquery/lightbox2/js/lightbox.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/js/lightbox.min.js', '', ''),
-(10, 1, 2, 'Lightbox 2 CSS', 'lightbox2-css', 'system/engines/jquery/lightbox2/css/lightbox.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/css/lightbox.min.css', '', ''),
-(11, 1, 2, 'Ekko Lightbox JS', 'ekko-lightbox-js', 'system/engines/jquery/lightbox/ekko-lightbox.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.js', '', ''),
-(12, 1, 2, 'Ekko Lightbox CSS', 'ekko-lightbox-css', 'system/engines/jquery/lightbox/ekko-lightbox.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css', 'system/engines/jquery/lightbox/dark.min.css', ''),
-(13, 1, 2, 'Bootstrap Notify JS', 'bootstrap-notify-js', 'system/engines/jquery/notify/bootstrap-notify.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/js/bootstrap-notify.min.js', '', ''),
-(14, 1, 2, 'Bootstrap Notify CSS', 'bootstrap-notify-css', 'system/engines/jquery/notify/bootstrap-notify.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/css/bootstrap-notify.min.css', '', '');
+INSERT INTO `cms_assets_types` (`id`, `published`, `type`, `sortation`, `asset`, `property`, `internal`, `url1`, `url2`, `url3`) VALUES
+(1, 1, 1, 6, 'Bootstrap 3 JS', 'bootstrap3-js', 'system/engines/bootstrap/dist/js/bootstrap.min.js', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js', ''),
+(2, 1, 1, 5, 'Bootstrap 3 CSS', 'bootstrap3-css', 'system/engines/bootstrap/dist/css/bootstrap.min.css', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css', ''),
+(3, 1, 1, 1, 'jQuery 1.x', 'jquery-1', 'system/engines/jquery/jquery-1.12.4.min.js', 'http://code.jquery.com/jquery-1.12.4.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js', ''),
+(4, 1, 1, 2, 'jQuery 2.x', 'jquery-2', 'system/engines/jquery/jquery-2.2.4.min.js', 'http://code.jquery.com/jquery-2.2.4.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js', ''),
+(5, 1, 1, 3, 'jQuery 3.x', 'jquery-3', 'system/engines/jquery/jquery-3.2.1.min.js', 'http://code.jquery.com/jquery-3.2.1.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js', ''),
+(6, 1, 1, 4, 'jQuery UI 1.12 JS', 'jqueryUI', 'system/engines/jquery/jquery-ui.min.js', 'http://code.jquery.com/ui/1.12.1/jquery-ui.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js', ''),
+(8, 1, 2, 8, 'Font Awesome Icons', 'font-awesome', 'system/engines/font-awesome/css/font-awesome.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css', '', ''),
+(9, 1, 2, 9, 'Lightbox 2 JS', 'lightbox2-js', 'system/engines/jquery/lightbox2/js/lightbox.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/js/lightbox.min.js', '', ''),
+(10, 1, 2, 10, 'Lightbox 2 CSS', 'lightbox2-css', 'system/engines/jquery/lightbox2/css/lightbox.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/css/lightbox.min.css', '', ''),
+(11, 1, 2, 11, 'Ekko Lightbox JS', 'ekko-lightbox-js', 'system/engines/jquery/lightbox/ekko-lightbox.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.js', '', ''),
+(12, 1, 2, 12, 'Ekko Lightbox CSS', 'ekko-lightbox-css', 'system/engines/jquery/lightbox/ekko-lightbox.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css', 'system/engines/jquery/lightbox/dark.min.css', ''),
+(13, 1, 2, 13, 'Bootstrap Notify JS', 'bootstrap-notify-js', 'system/engines/jquery/notify/bootstrap-notify.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/js/bootstrap-notify.min.js', '', ''),
+(14, 1, 2, 14, 'Bootstrap Notify CSS', 'bootstrap-notify-css', 'system/engines/jquery/notify/bootstrap-notify.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/css/bootstrap-notify.min.css', '', ''),
+(28, 1, 2, 7, 'Animate.css', 'Animate.css', 'system/engines/animateCSS/animate.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css', 'https://fastcdn.org/Animate.css/3.4.0/animate.min.css', '');
 
 --
 -- Tabellenstruktur für Tabelle `cms_blog`
