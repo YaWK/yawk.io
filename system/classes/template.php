@@ -2780,7 +2780,7 @@ namespace YAWK {
                 while ($row = mysqli_fetch_assoc($res))
                 {
                     // check, if link is external
-                    if (strpos($row['link'], 'https://') !== false) {
+                    if (strpos($row['link'], 'http://') !== false || (strpos($row['link'], 'https://') !== false)) {
                         $icon = "fa fa-globe";
                         $title = "$lang[EXTERNAL]";
                     }
