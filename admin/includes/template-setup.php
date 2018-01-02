@@ -108,7 +108,8 @@ if ($_GET['action'] === "template-setup")
     if (isset($_POST['save']) && (!empty($_POST['save'])))
     {
         $title = '';
-        // delete all assets of this templateID to avoid duplicates
+        $sortation = '';
+        // first of all: delete all assets of this templateID to avoid duplicates
         if ($db->query("DELETE FROM {assets} WHERE templateID = '".$template->id."'"))
         {
             // walk through post data
@@ -118,12 +119,12 @@ if ($_GET['action'] === "template-setup")
                 // .js file
                 if (substr($value, -3) == ".js")
                 {   // type 1 = javascript file
-                    $type = 1;
+                    $type = "js";
                 }
                 // .css file
                 if (substr($value, -4) == ".css") {
                     // type 2 = css file
-                    $type = 2;
+                    $type = "css";
                 }
                 // title
                 if (substr($param, 0, 6) == "title-") {
@@ -193,7 +194,7 @@ echo"</section><!-- Main content -->
                 <h3 class="box-title">Required Assets Include Configuration</h3>
             </div>
             <div class="box-body">
-                <?php \YAWK\template::drawAssetsSelectFields($db, 1, $template->id); ?>
+                <?php \YAWK\template::drawAssetsSelectFields($db, 1, $template->id, $lang); ?>
             </div>
         </div>
     </div>
@@ -204,7 +205,7 @@ echo"</section><!-- Main content -->
                 <h3 class="box-title">Optional Assets Configuration</h3>
             </div>
             <div class="box-body">
-                <?php \YAWK\template::drawAssetsSelectFields($db, 2, $template->id); ?>
+                <?php \YAWK\template::drawAssetsSelectFields($db, 2, $template->id, $lang); ?>
             </div>
         </div>
     </div>

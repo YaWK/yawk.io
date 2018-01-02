@@ -37,33 +37,6 @@
  <!-- apple touch icons -->
  <link rel="apple-touch-icon" sizes="120x120" href="media/images/apple-touch-icon-120x120-precomposed.png">
  <link rel="apple-touch-icon" sizes="152x152" href="media/images/apple-touch-icon-152x152-precomposed.png">
-    <!-- import font awesome -->
-    <link rel="stylesheet" href="system/engines/font-awesome/css/font-awesome.min.css" type="text/css" media="all">
-    <!-- import animate.css -->
-    <link rel="stylesheet" href="system/engines/animateCSS/animate.min.css" type="text/css" media="all">
-    <!-- Bootstrap core CSS -->
-    <link href="system/engines/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Own Template Settings: Bootstrap core CSS override -->
-    <link href="system/templates/<?php echo $template->name; ?>/css/settings.min.css" rel="stylesheet">
-    <!-- CUSTOM Template Override: custom.CSS -->
-    <link href="system/templates/<?php echo $template->name; ?>/css/custom.min.css" rel="stylesheet" type="text/css">
-    <!-- import jquery 1.11.3 -->
-    <script src="system/engines/jquery/jquery-1.11.3.min.js"></script>
-    <!-- validation plugin
-    <script src="system/engines/jquery/jquery.validate.min.js"></script> -->
-    <!-- jQuery UI -->
-    <!-- <script src="system/engines/jquery/jquery-ui.min.js"></script> -->
-    <!--[if lt IE 9]>
-    <script src="system/engines/jquery/html5shiv.min.js"></script>
-    <script src="system/engines/jquery/1.3.0-respond.min.js"></script>
-    <![endif]-->
-    <!-- import custom js -->
-    <script src="system/templates/<?php echo $template->name; ?>/js/custom.min.js"></script>
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Boostrap jQuery Plugins -->
-    <script src="system/engines/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- gfonts -->
 <?php
 // include additional html header stuff & local meta tags
 \YAWK\sys::includeHeader($db);
@@ -73,12 +46,32 @@
 $positions = \YAWK\template::getPositionStatesArray($db, $template->id);
 // load position indicators
 $indicators = \YAWK\template::getPositionIndicatorStatusArray($db, $template->id);
-$col = '';
+// load active assets for this template
+$template->loadActiveAssets($db, $template->id);
 ?>
-<!-- /gfonts -->
+
+<!-- SETTINGS.MIN.CSS YaWK template settings: Bootstrap core CSS override -->
+<link href="system/templates/<?php echo $template->name; ?>/css/settings.min.css" rel="stylesheet">
+<!-- CUSTOM.MIN.CSS User defined CSS Rules -->
+<link href="system/templates/<?php echo $template->name; ?>/css/custom.min.css" rel="stylesheet" type="text/css">
+
+<!--[if lt IE 9]>
+<script src="system/engines/jquery/html5shiv.min.js"></script>
+<script src="system/engines/jquery/1.3.0-respond.min.js"></script>
+<![endif]-->
+
+<!-- import yawk app: custom js -->
+<script src="system/templates/<?php echo $template->name; ?>/js/custom.min.js"></script>
 </head>
+
+
 <body style="<?php echo YAWK\template::getActiveBodyFont($db); ?>" ondragstart="return false">
 
+<?php
+$col = '';
+// \YAWK\sys::outputObjects($template, $controller, $page, $user, $stats);
+// exit;
+?>
   <!-- LAYOUT START -->
   <div class="container-fluid">
       <div class="row">
@@ -203,6 +196,7 @@ $col = '';
                       </div>
                       <div class="row">
                           <?php
+                          // TODO: ADD POSITIONS MAIN LEFT + MAIN RIGHT
                           // POSITION: main
                           \YAWK\template::getPositionDivBox($db, "main", 0, "col-md-12", $positions, $indicators);
                           ?>

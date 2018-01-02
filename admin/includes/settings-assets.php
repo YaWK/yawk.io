@@ -80,6 +80,7 @@ if (isset($_POST) && (!empty($_POST)))
         $url1 = $db->quote($_POST['url1']);
         $url2 = $db->quote($_POST['url2']);
         $url3 = $db->quote($_POST['url3']);
+        $sortation = $db->quote($_POST['sortation']);
 
         // add asset to db
         if ($db->query(("UPDATE {assets_types}
@@ -89,7 +90,8 @@ if (isset($_POST) && (!empty($_POST)))
                                 internal = '" . $internal . "',
                                 url1 = '" . $url1 . "',
                                 url2 = '" . $url2 . "',
-                                url3 = '" . $url3 . "'
+                                url3 = '" . $url3 . "',
+                                sortation = '" . $sortation . "'
                             WHERE id = '" . $id . "'")))
         {   // all good, throw success msg
             \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[ASSET_UPDATE_OK]", "", "800");
@@ -100,8 +102,6 @@ if (isset($_POST) && (!empty($_POST)))
         }
     }
 }
-
-//
 
 ?>
 
@@ -191,6 +191,8 @@ echo"</section><!-- Main content -->
                         <option value=\"1\" $assetType1Selected>$lang[REQUIRED]</option>
                         <option value=\"2\" $assetType2Selected>$lang[OPTIONAL]</option>
                       </select>
+                      <label for=\"sortation\">$lang[ORDER]</label>
+                       <input type=\"text\" class=\"form-control\" name=\"sortation\" id=\"sortation\" value=\"$row[sortation]\" placeholder=\"$lang[ORDER_PH]\">
                       <a style=\"margin-top:2px;\" role=\"dialog\" data-confirm=\"$lang[ASSET_DEL] &laquo;$row[asset]&raquo;\"
                    title=\"$lang[ASSET] $lang[DELETE]\" href=\"index.php?page=settings-assets&delete=1&id=$row[id]&asset=$row[asset]\" class=\"btn btn-default pull-left\"><i class=\"fa fa-trash-o\"></i> $lang[DELETE]</a>
                       <button class=\"btn btn-success pull-right\" type=\"submit\" value=\"save\" id=\"save\" title=\"$lang[SAVE]\" name=\"save\" style=\"margin-top:2px;\"><i id=\"savebuttonIcon\" class=\"fa fa-check\"></i>&nbsp;&nbsp;$lang[SAVE_SETTINGS]</button>

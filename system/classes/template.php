@@ -2732,7 +2732,7 @@ namespace YAWK {
             $res = $db->query("SELECT * 
                             FROM {assets_types}
                             WHERE published = '1' 
-                            $typeSQLCode ORDER by asset");
+                            $typeSQLCode ORDER by sortation, asset");
             // fetch data in loop
             while ($row = mysqli_fetch_assoc($res))
             {   // build assets array
@@ -2740,9 +2740,9 @@ namespace YAWK {
                 $assets[$prop]["asset"] = $prop;
                 $assets[$prop]["property"] = $row['property'];
                 $assets[$prop]["internal"] = $row['internal'];
-                $assets[$prop]["url1"] .= $row['url1'];
-                $assets[$prop]["url2"] .= $row['url2'];
-                $assets[$prop]["url3"] .= $row['url3'];
+                $assets[$prop]["url1"] = $row['url1'];
+                $assets[$prop]["url2"] = $row['url2'];
+                $assets[$prop]["url3"] = $row['url3'];
             }
             // check if assets is an array
             if (is_array($assets))
@@ -2806,9 +2806,11 @@ namespace YAWK {
          * @link http://yawk.io
          * @param object $db database object
          * @param int $type 0 = all, 1 = required, 2 = optional, 3 = additional
+         * @param int $templateID id of the affected template
+         * @param array $lang language array
          * @return null
          */
-        public static function drawAssetsSelectFields($db, $type, $templateID)
+        public static function drawAssetsSelectFields($db, $type, $templateID, $lang)
         {   /* @var \YAWK\db $db */
 
             // check type and load assets data
@@ -2867,9 +2869,9 @@ namespace YAWK {
                 { $selectedUrl3 = " selected"; }
                 else { $selectedUrl3 = ''; }
 
-                echo "
-                      <label for=\"include-$property[property]\">$property[asset]</label>
+                echo "<label for=\"include-$property[property]\">$property[asset]</label>
                       <input name=\"title-$property[property]\" value=\"$property[asset]\" type=\"hidden\">
+                      
                         <select id=\"include-$property[property]\" name=\"include-$property[property]\" class=\"form-control\">
                             <option name=\"null\" value=\"\">inactive</option>
                             <optgroup label=\"internal\">internal</optgroup>
@@ -2890,6 +2892,39 @@ namespace YAWK {
                             </select>";
             }
             return null;
+        }
+
+        public function loadActiveAssets($db, $templateID)
+        {   /* @var \YAWK\db $db */
+
+            // create empty array
+            $assetArray = array();
+
+            if (isset($templateID) && (!empty($templateID)))
+            {
+                echo "
+<!-- ASSETS -->";
+                if ($res = $db->query("SELECT type, asset, link FROM {assets} WHERE templateID = '".$templateID."' ORDER BY type"))
+                {
+                    while ($row = mysqli_fetch_assoc($res))
+                    {
+                        // CSS
+                        if ($row['type'] === "css")
+                        {   // load css asset
+                            echo "
+ <!-- load CSS: $row[asset] -->
+ <link rel=\"stylesheet\" href=\"".$row['link']."\" type=\"text/css\" media=\"all\">";
+                        }
+                        // JS
+                        if ($row['type'] === "js")
+                        {   // load js asset
+                            echo "
+ <!-- load JS: $row[asset] -->
+ <script src=\"".$row['link']."\"></script>";
+                        }
+                    }
+                }
+            }
         }
 
 
