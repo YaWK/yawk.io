@@ -59,7 +59,7 @@ namespace YAWK {
             <li><i class=\"fa fa-tint\"></i> &nbsp;<a href=\"index.php?page=template-theme\" title=\"$lang[EDIT]\"> $lang[THEME]</a></li>
             <li><i class=\"fa fa-paint-brush\"></i> &nbsp;<a href=\"index.php?page=template-redesign\" title=\"$lang[EDIT]\"> $lang[DESIGN]</a></li>
             <li><i class=\"fa fa-css3\"></i> &nbsp;<a href=\"index.php?page=template-customcss\" title=\"$lang[EDIT]\"> $lang[CUSTOM_CSS]</a></li>
-            <li><i class=\"fa fa-puzzle-piece\"></i> &nbsp;<a href=\"index.php?page=template-setup\" title=\"$lang[EDIT]\"> $lang[ASSETS]</a></li>
+            <li><i class=\"fa fa-puzzle-piece\"></i> &nbsp;<a href=\"index.php?page=template-assets\" title=\"$lang[EDIT]\"> $lang[ASSETS]</a></li>
             <li><i class=\"fa fa-eye\"></i> &nbsp;<a href=\"index.php?page=template-preview\" title=\"$lang[WATCH]\"> $lang[PREVIEW]</a></li>
         </ol></section>";
         }

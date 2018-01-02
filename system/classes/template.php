@@ -2806,7 +2806,7 @@ namespace YAWK {
                         }
                     $qString = rawurlencode($row['asset']);
 
-                    echo "<small><a href=\"index.php?page=template-setup\" data-toggle=\"tooltip\" title=\"$title\"><i class=\"$icon text-info\"></i></a></small> &nbsp;$row[asset] &nbsp;<small><a href=\"https://www.google.at/search?q=$qString\" target=\"_blank\" data-toggle=\"tooltip\" title=\"$row[asset] $lang[GOOGLE_THIS]\"><i class=\"fa fa-question-circle-o\"></i></a></small><br>";
+                    echo "<small><a href=\"index.php?page=template-assets\" data-toggle=\"tooltip\" title=\"$title\"><i class=\"$icon text-info\"></i></a></small> &nbsp;$row[asset] &nbsp;<small><a href=\"https://www.google.at/search?q=$qString\" target=\"_blank\" data-toggle=\"tooltip\" title=\"$row[asset] $lang[GOOGLE_THIS]\"><i class=\"fa fa-question-circle-o\"></i></a></small><br>";
                 }
             }
             return null;
@@ -2815,7 +2815,7 @@ namespace YAWK {
 
         /**
          * Draw asset select fields
-         * This method is used in the backend to generate asset select fields in template-setup view
+         * This method is used in the backend to generate asset select fields in template-assets view
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

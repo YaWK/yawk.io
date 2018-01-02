@@ -83,7 +83,7 @@ else {
 ?>
 
 <?php
-if ($_GET['action'] === "template-setup")
+if ($_GET['action'] === "setup")
 {
     // add new google font to database
     if (isset($_POST['addgfont']) && (!empty($_POST['addgfont'])))
@@ -171,7 +171,7 @@ echo"</section><!-- Main content -->
     <section class=\"content\">";
 /* page content start here */
 ?>
-<form id="template-edit-form" action="index.php?page=template-setup&action=template-setup&id=<?php echo $template->id; ?>" method="POST">
+<form id="template-edit-form" action="index.php?page=template-assets&action=setup&id=<?php echo $template->id; ?>" method="POST">
     <!-- title header -->
     <!-- REDESIGN -->
     <div class="box">
