@@ -1,12 +1,4 @@
 <script>
-    /**
-     * setRenameFieldState(path, itemName)
-     * Update the rename input text field with current content (file or folder)
-     * Set focus on input text field and select all it's content for better usability.
-     * path string contains the current working path
-     * itemName string contains the current item name to be processed (renamed)
-     * itemType string contains the current item type (folder or file)
-     * */
     function setCopyTplSettings(newTplName)
     {
         // store input field
@@ -85,10 +77,6 @@ if (isset($_POST['savenewtheme']) && (!empty($_POST['savenewtheme']))
     $newID = \YAWK\template::getMaxId($db);
     $newTplId = $newID++;
     $template->id = $newTplId;
-    // set new theme active
-    //$user->setUserTemplate($db, 1, $newID, $user->id);
-    //$user->overrideTemplate = 1;
-    //\YAWK\settings::setSetting($db, "selectedTemplate", $newID);
 
     if (isset($_POST['newTplName']) && (!empty($_POST['newTplName'])))
     {
@@ -148,6 +136,8 @@ if (isset($_POST['savenewtheme']) && (!empty($_POST['savenewtheme']))
     \YAWK\template::setTemplateActive($db, $newID);
     // copy the template settings into the new template
     \YAWK\template::copyTemplateSettings($db, $oldTemplateId, $newID);
+    // copy assets
+    \YAWK\template::copyAssets($db, $oldTemplateId, $newID);
 }
 
 // OVERRIDE TEMPLATE
@@ -460,7 +450,6 @@ echo"</section><!-- Main content -->
         </div>
     </div>
 </div>
-
 
 <!-- Modal --RENAME FOLDER  -- -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal2Label" aria-hidden="true">

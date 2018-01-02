@@ -147,7 +147,6 @@ namespace YAWK {
          * @param object $db
          * @param object $template
          * @param string $new_template
-         * @param string $positions
          * @param string $description
          * @param string $author
          * @param string $authorUrl
@@ -171,9 +170,11 @@ namespace YAWK {
             // final check: just numbers and chars are allowed
             $new_template = preg_replace("/[^a-z0-9\-\/]/i", "", $new_template);
             // same goes on for $template->name
-            $template->name = preg_replace($replace, $chars, $template->name);      // replace with preg
+            $template->name = preg_replace($replace, $chars, $template->name);  // replace with preg
             // final check: just numbers and chars are allowed
             $template->name = preg_replace("/[^a-z0-9\-\/]/i", "", $template->name);
+
+            $now = \YAWK\sys::now();
 
             // check if new tpl folder already exists
             if (file_exists("../system/templates/$new_template/"))
@@ -185,13 +186,15 @@ namespace YAWK {
                 \YAWK\sys::full_copy("../system/templates/yawk-bootstrap3", "../system/templates/$new_template");
             }
 
-            if ($res = $db->query("INSERT INTO {templates} (id, name, description, author, authorUrl, weblink, version, license)
+            if ($res = $db->query("INSERT INTO {templates} (id, name, description, releaseDate, author, authorUrl, weblink, modifyDate, version, license)
   	                               VALUES('" . $newID . "', 
   	                                      '" . $new_template . "', 
   	                                      '" . $description . "',
+  	                                      '" . $now . "',
   	                                      '" . $author . "',
   	                                      '" . $authorUrl . "',
   	                                      '" . $weblink . "',
+  	                                      '" . $now . "',
   	                                      '" . $version . "',
   	                                      '" . $license . "')"))
             {   // success
@@ -2936,6 +2939,48 @@ namespace YAWK {
                         }
                     }
                 }
+            }
+        }
+
+
+        /**
+         * copy template settings into a new template
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $templateID template ID
+         * @param int $newID template ID
+         */
+        public static function copyAssets($db, $templateID, $newID)
+        {   /** @var $db \YAWK\db */
+
+            $res = $db->query("INSERT INTO {assets} (templateID, type, asset, link)
+                                      SELECT '".$newID."', type, asset, link
+                                      FROM {assets} 
+                                      WHERE templateID = '".$templateID."'");
+
+            if (!$res)
+            {
+                \YAWK\sys::setSyslog($db, 5, "failed to copy assets of template #$templateID ", 0, 0, 0, 0);
+                \YAWK\alert::draw("danger", "Could not copy assets", "please try again.", "", 5000);
+            }
+            else
+            {
+                \YAWK\alert::draw("success", "Assets copied", "successful", "", 5000);
+
+
+                $update = $db->query("UPDATE {assets} SET templateID='".$newID."' WHERE templateID=0");
+                if ($update)
+                {
+                    \YAWK\alert::draw("success", "Assets are set-up", "successful", "", 5000);
+                }
+                else
+                {
+                    \YAWK\sys::setSyslog($db, 5, "failed to copy assets of template #$templateID ", 0, 0, 0, 0);
+                    \YAWK\alert::draw("warning", "Could not copy template assets", "unable to alter IDs.", "", 5000);
+                }
+
             }
         }
 
