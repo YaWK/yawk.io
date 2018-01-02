@@ -149,9 +149,14 @@ namespace YAWK {
          * @param string $new_template
          * @param string $positions
          * @param string $description
+         * @param string $author
+         * @param string $authorUrl
+         * @param string $weblink
+         * @param string $version
+         * @param string $license
          * @return bool
          */
-        public function saveAs($db, $newID, $template, $new_template, $positions, $description)
+        public function saveAs($db, $newID, $template, $new_template, $description, $author, $authorUrl, $weblink, $version, $license)
         {   /** @var \YAWK\db $db */
             // save theme as new template
 
@@ -180,8 +185,15 @@ namespace YAWK {
                 \YAWK\sys::full_copy("../system/templates/yawk-bootstrap3", "../system/templates/$new_template");
             }
 
-            if ($res = $db->query("INSERT INTO {templates} (id, name, positions, description)
-  	                               VALUES('" . $newID . "', '" . $new_template . "', '" . $positions . "', '" . $description . "')"))
+            if ($res = $db->query("INSERT INTO {templates} (id, name, description, author, authorUrl, weblink, version, license)
+  	                               VALUES('" . $newID . "', 
+  	                                      '" . $new_template . "', 
+  	                                      '" . $description . "',
+  	                                      '" . $author . "',
+  	                                      '" . $authorUrl . "',
+  	                                      '" . $weblink . "',
+  	                                      '" . $version . "',
+  	                                      '" . $license . "')"))
             {   // success
                 // do something
                 // store each setting with new tpl id in database

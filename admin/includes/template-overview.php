@@ -1,3 +1,27 @@
+<script>
+    /**
+     * setRenameFieldState(path, itemName)
+     * Update the rename input text field with current content (file or folder)
+     * Set focus on input text field and select all it's content for better usability.
+     * path string contains the current working path
+     * itemName string contains the current item name to be processed (renamed)
+     * itemType string contains the current item type (folder or file)
+     * */
+    function setCopyTplSettings(newTplName)
+    {
+        // store input field
+        inputField = $("#newTplName");
+        // when rename modal is shown
+        $('#myModal').on('shown.bs.modal', function () {
+            // set focus on input field and select it
+            $(inputField).focus().select();
+        });
+        // add the current itemName to var
+        inputField.val(newTplName+'-copy');
+        // set text of heading span
+        // $("#tplHeading").text(newTplName);
+    }
+</script>
 <?php
 // check if template obj is set and create if not exists
 if (!isset($template)) { $template = new \YAWK\template(); }
@@ -66,18 +90,18 @@ if (isset($_POST['savenewtheme']) && (!empty($_POST['savenewtheme']))
     //$user->overrideTemplate = 1;
     //\YAWK\settings::setSetting($db, "selectedTemplate", $newID);
 
-    if (isset($_POST['newthemename']) && (!empty($_POST['newthemename'])))
+    if (isset($_POST['newTplName']) && (!empty($_POST['newTplName'])))
     {
-        $template->name = $db->quote($_POST['newthemename']);
+        $template->name = $db->quote($_POST['newTplName']);
     }
     else if (isset($_GET['newthemename']) && (!empty($_GET['newthemename'])))
     {
         $template->name = $db->quote($_GET['newthemename']);
     }
 
-    if (isset($_POST['description']) && (!empty($_POST['description'])))
+    if (isset($_POST['newTplDescription']) && (!empty($_POST['newTplDescription'])))
     {   // set new tpl description
-        $template->description = $db->quote($_POST['description']);
+        $template->description = $db->quote($_POST['newTplDescription']);
     }
     else if (isset($_GET['description']) && (!empty($_GET['description'])))
     {   // set new tpl description
@@ -87,17 +111,39 @@ if (isset($_POST['savenewtheme']) && (!empty($_POST['savenewtheme']))
     {   // new description not set, default value instead:
         $template->description = "Template Description";
     }
-    if (isset($_POST['positions']) && (!empty($_POST['positions'])))
-    {   // set new tpl positions
-        $template->positions = $db->quote($_POST['positions']);
+
+    if (isset($_POST['newTplAuthor']) && (!empty($_POST['newTplAuthor'])))
+    {   // set new tpl author
+        $template->author = $db->quote($_POST['newTplAuthor']);
     }
-    else
-    {   // new positions not set, default value instead:
-        $template->positions = '';
+    else { $template->author = ''; }
+
+    if (isset($_POST['newTplAuthorUrl']) && (!empty($_POST['newTplAuthorUrl'])))
+    {   // set new tpl author URL
+        $template->authorUrl = $db->quote($_POST['newTplAuthorUrl']);
     }
+    else { $template->authorUrl = ''; }
+
+    if (isset($_POST['newTplWeblink']) && (!empty($_POST['newTplWeblink'])))
+    {   // set new tpl weblink
+        $template->weblink = $db->quote($_POST['newTplWeblink']);
+    }
+    else { $template->weblink = ''; }
+
+    if (isset($_POST['newTplVersion']) && (!empty($_POST['newTplVersion'])))
+    {   // set new tpl weblink
+        $template->version = $db->quote($_POST['newTplVersion']);
+    }
+    else { $template->version = "1.0"; }
+
+    if (isset($_POST['newTplLicense']) && (!empty($_POST['newTplLicense'])))
+    {   // set new tpl license
+        $template->license = $db->quote($_POST['newTplLicense']);
+    }
+    else { $template->license = ''; }
 
     // save as new theme
-    $template->saveAs($db, $newID, $template, $template->name, $template->positions, $template->description);
+    $template->saveAs($db, $newID, $template, $template->name, $template->description, $template->author, $template->authorUrl, $template->weblink, $template->version, $template->license);
     // set the new theme active in template
     \YAWK\template::setTemplateActive($db, $newID);
     // copy the template settings into the new template
@@ -302,6 +348,7 @@ echo"</section><!-- Main content -->
         <div class="box">
             <div class="box-header"><h3 class="box-title"><?php echo $lang['TPL_MANAGE']; ?></h3></div>
             <div class="box-body">
+
                 <table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-striped table-hover table-responsive" id="table-sort">
                     <thead>
                     <tr>
@@ -387,8 +434,9 @@ echo"</section><!-- Main content -->
 
                             // set copy icon
                             $tplCopyName = $row['name']."-copy";
+                            $tplName = $row['name'];
                             $description = "copy of: ".$row['name']."";
-                            $copyIcon = "<a title=\"$lang[COPY]\" href=\"index.php?page=template-overview&savenewtheme=true&newthemename=".$tplCopyName."&description=".$description."\"<i class=\"fa fa-copy\"></i></a>";
+                            $copyIcon = "<a title=\"$lang[COPY]\" onclick=\"setCopyTplSettings('$tplName');\" href=\"#\" data-toggle=\"modal\" data-target=\"#myModal\" data-tplName=\"$row[name]\"><i class=\"fa fa-copy\"></i></a>";
 
                             echo "<tr>
           <td class=\"text-center\">
@@ -411,4 +459,56 @@ echo"</section><!-- Main content -->
             </div>
         </div>
     </div>
+</div>
+
+
+<!-- Modal --RENAME FOLDER  -- -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal2Label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form enctype="multipart/form-data" action="index.php?page=template-overview&savenewtheme=true" method="POST">
+                <div class="modal-header">
+                    <!-- modal header with close controls -->
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i> </button>
+                    <br>
+                    <div class="col-md-1"><h3 class="modal-title"><i class="fa fa-copy"></i></h3></div>
+                    <div class="col-md-11"><h3 class="modal-title"><?php echo $lang['SAVE_NEW_THEME_AS']; ?> <!-- gets filled via JS setRenameFieldState--></h3></div>
+                </div>
+
+                <!-- modal body -->
+                <div class="modal-body">
+                    <!-- save to... folder select options -->
+                    <label id="newTplNameLabel" for="newTplName"><?php echo $lang['TPL_NEW_NAME']; ?></label>
+                    <input id="newTplName" class="form-control" name="newTplName">
+                    <label for="newTplDescription"><?php echo $lang['DESCRIPTION']; ?></label>
+                    <textarea id="newTplDescription" class="form-control" name="newTplDescription" placeholder="<?php echo $lang['SHORT_DESCRIPTION_PH']; ?>"></textarea>
+                    <label id="newTplAuthorLAbel" for="newTplAuthor"><?php echo $lang['AUTHOR']; ?></label>
+                    <input id="newTplAuthor" class="form-control" name="newTplAuthor" placeholder="<?php echo $lang['AUTHOR_PH']; ?>">
+                    <label id="newTplAuthorUrlLabel" for="newTplAuthorUrl"><?php echo $lang['AUTHOR']."&nbsp;".$lang['URL']; ?></label>
+                    <input id="newTplAuthorUrl" class="form-control" name="newTplAuthorUrl" placeholder="https://">
+                    <label id="newTplWeblinkLabel" for="newTplWeblink"><?php echo $lang['WEBLINK']; ?></label>
+                    <input id="newTplWeblink" class="form-control" name="newTplWeblink" placeholder="https://">
+                    <label id="newTplVersionLabel" for="newTplVersion"><?php echo $lang['VERSION']; ?></label>
+                    <input id="newTplVersion" class="form-control" name="newTplVersion" placeholder="1.0">
+                    <label id="newTplLicenseLabel" for="newTplLicense"><?php echo $lang['LICENSE']; ?></label>
+                    <select id="newTplLicense" class="form-control" name="newTplLicense">
+                        <option value=""><?php echo $lang['PLEASE_SELECT']; ?></option>
+                        <option value="MIT">MIT License</option>
+                        <option value="Apache-2.0">Apache-2.0 License</option>
+                        <option value="GPL-2.0">GPL 2.0 License</option>
+                        <option value="GPL-3.0">GPL 3.0 License</option>
+                        <option value="LGPL-2.0">Lesser GPL 2.0</option>
+                        <option value="LGPL-2.1">Lesser GPL 2.1</option>
+                        <option value="MPL-2.0">Mozilla Public License 2.0</option>
+                    </select>
+                </div>
+
+                <!-- modal footer /w submit btn -->
+                <div class="modal-footer">
+                    <input class="btn btn-large btn-success" type="submit" value="<?php echo $lang['SAVE_NEW_THEME_AS']; ?>">
+                    <br><br>
+                </div>
+            </form>
+        </div> <!-- modal content -->
+    </div> <!-- modal dialog -->
 </div>
