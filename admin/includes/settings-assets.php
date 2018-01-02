@@ -158,6 +158,14 @@ echo"</section><!-- Main content -->
                         {
                             $assetType2Selected = '';
                         }
+                        if ($row['type'] == 3)
+                        {
+                            $assetType3Selected = "selected";
+                        }
+                        else
+                        {
+                            $assetType3Selected = '';
+                        }
                         echo "              
               <!-- BOX -->
               <div class=\"box box-default collapsed-box\">
@@ -190,6 +198,7 @@ echo"</section><!-- Main content -->
                         <option value=\"1\">$lang[PLEASE_SELECT]</option>
                         <option value=\"1\" $assetType1Selected>$lang[REQUIRED]</option>
                         <option value=\"2\" $assetType2Selected>$lang[OPTIONAL]</option>
+                        <option value=\"3\" $assetType3Selected>$lang[USER_DEFINED]</option>
                       </select>
                       <label for=\"sortation\">$lang[ORDER]</label>
                        <input type=\"text\" class=\"form-control\" name=\"sortation\" id=\"sortation\" value=\"$row[sortation]\" placeholder=\"$lang[ORDER_PH]\">

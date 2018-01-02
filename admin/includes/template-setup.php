@@ -165,7 +165,7 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 // draw Title on top
-echo \YAWK\backend::getTitle($lang['TPL'], $lang['SETTINGS']);
+echo \YAWK\backend::getTitle($lang['TPL'], $lang['TPL_ASSETS_SETTINGS']);
 echo \YAWK\backend::getTemplateBreadcrumbs($lang);
 echo"</section><!-- Main content -->
     <section class=\"content\">";
@@ -177,7 +177,7 @@ echo"</section><!-- Main content -->
     <div class="box">
         <div class="box-body">
             <div class="col-md-10">
-                <?php echo "<h4><i class=\"fa fa-gears\"></i> &nbsp;$lang[SETTINGS] <small>$lang[TPL_SETTINGS_SUBTEXT]</small></h4>"; ?>
+                <?php echo "<h4><i class=\"fa fa-puzzle-piece\"></i> &nbsp;$lang[ASSETS] <small>$lang[TPL_ASSETS_SUBTEXT]</small></h4>"; ?>
             </div>
             <div class="col-md-2">
                 <button class="btn btn-success pull-right" type="submit" value="save" id="savebutton" name="save" style="margin-top:2px;"><i class="fa fa-check"></i>&nbsp;&nbsp;<?php echo $lang['DESIGN_SAVE']; ?></button>
@@ -185,13 +185,12 @@ echo"</section><!-- Main content -->
         </div>
     </div>
 <!-- SETTINGS -->
-<h3><?php echo "$lang[SETTINGS] <small>$lang[TPL_SETTINGS_SUBTEXT]</small>"; ?></h3>
 <div class="row animated fadeIn">
 
     <div class="col-md-4">
         <div class="box box-default">
             <div class="box-header with-border">
-                <h3 class="box-title">Required Assets Include Configuration</h3>
+                <h3 class="box-title"><?php echo $lang['SYSTEM_ASSETS']; ?></h3>
             </div>
             <div class="box-body">
                 <?php \YAWK\template::drawAssetsSelectFields($db, 1, $template->id, $lang); ?>
@@ -202,7 +201,7 @@ echo"</section><!-- Main content -->
 
         <div class="box box-default">
             <div class="box-header with-border">
-                <h3 class="box-title">Optional Assets Configuration</h3>
+                <h3 class="box-title"><?php echo $lang['OPTIONAL_ASSETS']; ?></h3>
             </div>
             <div class="box-body">
                 <?php \YAWK\template::drawAssetsSelectFields($db, 2, $template->id, $lang); ?>
@@ -212,10 +211,10 @@ echo"</section><!-- Main content -->
     <div class="col-md-4">
         <div class="box box-default">
             <div class="box-header with-border">
-                <h3 class="box-title">Inclusion Config</h3>
+                <h3 class="box-title"><?php echo $lang['USER_DEFINED_ASSETS']; ?></h3>
             </div>
             <div class="box-body">
-                ...
+                <?php \YAWK\template::drawAssetsSelectFields($db, 3, $template->id, $lang); ?>
             </div>
         </div>
     </div>
