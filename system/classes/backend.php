@@ -41,6 +41,7 @@ namespace YAWK {
             <li><i class=\"fa fa-language\"></i> &nbsp;<a href=\"index.php?page=settings-language\" title=\"$lang[EDIT]\"> $lang[LANGUAGES]</a></li>
             <li><i class=\"fa fa-android\"></i> &nbsp;<a href=\"index.php?page=settings-robots\" title=\"$lang[EDIT]\"> $lang[ROBOTS_TXT]</a></li>
             <li><i class=\"fa fa-puzzle-piece\"></i> &nbsp;<a href=\"index.php?page=settings-assets\" title=\"$lang[EDIT]\"> $lang[ASSETS]</a></li>
+            <li><i class=\"fa fa-font\"></i> &nbsp;<a href=\"index.php?page=settings-fonts\" title=\"$lang[EDIT]\"> $lang[FONTS]</a></li>
             <li><i class=\"fa fa-database\"></i> &nbsp;<a href=\"index.php?page=settings-database\" title=\"$lang[EDIT]\"> $lang[DATABASE]</a></li>
             <li><i class=\"fa fa-info-circle\"></i> &nbsp;<a href=\"index.php?page=settings-systeminfo\" title=\"$lang[EDIT]\"> $lang[SYSTEM] $lang[INFO]</a></li>
         </ol></section>";
