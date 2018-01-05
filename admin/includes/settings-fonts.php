@@ -41,12 +41,13 @@ if (isset($_GET) && (!empty($_GET)))
                     }
             }
         }
+        // TODO: add google fonts to database
     }
 
     // DELETE FONT ACTION REQUESTED
     if ($_GET['delete'] === "true")
     {   // check which type of font it is
-        if (isset($_GET['type']) || (!empty($_GET['type'])))
+        if (isset($_GET['type']) && (!empty($_GET['type'])))
         {   // custom font (.ttf, .otf or .woff)
             if ($_GET['type'] === "custom")
             {   // check if font is sent
@@ -243,14 +244,15 @@ echo"</section><!-- Main content -->
                     </ul>
 
                         <label for="fontFile"><?php echo $lang['SELECT_FILE']; ?></label>
-                        <input type="hidden" name="MAX_FILE_SIZE" value="4194304">
+                        <input type="hidden" name="MAX_FILE_SIZE" value="4194304"> <!-- 4 MB -->
                         <input type="file" class="form-control" id="fontFile" name="fontFile">
                         <small><?php echo $lang['FONTS_PATH']; ?></small>
                         <hr>
-                       <!-- <div class="text-uppercase text-center"><h4><?php // echo $lang['OR']; ?></h4></div> -->
                         <h4><b><?php echo $lang['FONT_ADD_GFONT']; ?></b></h4>
-                        <input type="text" class="form-control" id="gfont" name="gfont" placeholder="font eg. Ubuntu">
-                        <input type="text" class="form-control" name="gfontdescription" placeholder="description eg. Ubuntu, serif">
+                        <label for="gfont"><?php echo $lang['FONT_GOOGLE_NAME']; ?></label>
+                        <input type="text" class="form-control" id="gfont" name="gfont" placeholder="<?php echo $lang['FONT_GOOGLE_NAME_PH']; ?>">
+                        <label for="gfontDescription"><?php echo $lang['FONT_GOOGLE_DESC']; ?></label>
+                        <input type="text" class="form-control" name="gfontDescription" id="gfontDescription" placeholder="<?php echo $lang['FONT_GOOGLE_DESC_PH']; ?>">
 
                 </div>
 
