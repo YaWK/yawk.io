@@ -1,35 +1,90 @@
 <?php
 // FONT ACTIONS.....
-if ($_GET['add'] === "true")
-{
-    if (isset($_POST) && (!empty($_POST)))
-    {   // check if new font file was sent
-        if (isset($_FILES['fontFile']) && (!empty($_FILES['fontFile'])))
-        {   // allowed file extensions
-            $exts = array('ttf', 'otf', 'woff');
-            // file type seems to be ok
-            if(in_array(end(explode('.', $_FILES['fontFile']['name'])), $exts))
-            {
-                // process file
-                $uploaddir = '../system/fonts/';
-                $uploadfile = $uploaddir . basename($_FILES['userfile']['name']);
-
-                // copy font to folder
-                if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile))
+// upload folder
+$fontFolder = "../system/fonts/";
+if (isset($_GET) && (!empty($_GET)))
+{   // user wants upload a custom font (ttf, otf or woff)
+    if ($_GET['add'] === "true")
+    {   // check if data is here
+        if (isset($_POST) && (!empty($_POST)))
+        {   // check if new font file was sent
+            if (isset($_FILES['fontFile']) && (!empty($_FILES['fontFile'])))
+            {   // allowed file extensions
+                $exts = array('ttf', 'otf', 'woff');
+                // file type seems to be ok
+                if(in_array(end(explode('.', $_FILES['fontFile']['name'])), $exts))
                 {
-                    echo "Datei ist valide und wurde erfolgreich hochgeladen.\n";
+                    // folder and file to upload
+                    $uploadFile = $fontFolder . basename($_FILES['fontFile']['name']);
+
+                    // check if directory is existent and writeable
+                    if (is_dir($fontFolder) && is_writable($fontFolder))
+                    {
+                        // copy file to font folder
+                        if (move_uploaded_file($_FILES['fontFile']['tmp_name'], $uploadFile))
+                        {   // upload ok, throw success msg
+                            \YAWK\alert::draw("success", $lang['SUCCESS'], "$lang[UPLOAD_SUCCESSFUL]: $uploadFile", "", 1800);
+                        }
+                        else
+                        {   // file upload failed - throw msg with error code
+                            \YAWK\alert::draw("danger", $lang['ERROR'], "$lang[UPLOAD_FAILED]: $uploadFile $lang[ERROR]: ".$_FILES['fontFile']['error']."", "", 2600);
+                        }
+                    }
+                    else
+                        {   // folder does not exist or is not writeable
+                            \YAWK\alert::draw("danger", $lang['ERROR'], "$lang[FILE_UPLOAD_ERROR] $lang[FOLDER]: $uploadFile", "", 4800);
+                        }
                 }
                 else
-                {
-                    echo "Möglicherweise eine Dateiupload-Attacke!\n";
-                }
+                    {   // wrong file type
+                        \YAWK\alert::draw("danger", $lang['ERROR'], "$lang[FONT_WRONG_TYPE]", "", 4600);
+                    }
             }
+        }
+    }
+
+    // DELETE FONT ACTION REQUESTED
+    if ($_GET['delete'] === "true")
+    {   // check which type of font it is
+        if (isset($_GET['type']) || (!empty($_GET['type'])))
+        {   // custom font (.ttf, .otf or .woff)
+            if ($_GET['type'] === "custom")
+            {   // check if font is sent
+                if (isset($_GET['font']) && (!empty($_GET['font'])))
+                {   // check if file is existent
+                    if (is_file($fontFolder.$_GET['font']))
+                    {   // try to delete file
+                        if (unlink($fontFolder.$_GET['font']))
+                        {   // all good, throw success msg
+                            \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[FONT_DEL_OK]: $_GET[font]", "", 1200);
+                        }
+                        else
+                            {   // failed to delete file
+                                \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[FONT_DEL_FAILED]", "", 2600);
+                            }
+                    }
+                    else
+                        {   // file does not exist
+                            \YAWK\alert::draw("success", "$lang[ERROR]", "$lang[FILEMAN_FILE_DOES_NOT_EXIST] $fontFolder$_GET[font]", "", 4600);
+                        }
+                }
+                else
+                    {   // no font was sent - manipulated get vars?!
+                        \YAWK\alert::draw("success", "$lang[ERROR]", "$lang[VARS_MANIPULATED]", "", 4600);
+                    }
+            }
+            else
+                {   // it must be a google font...
+                    // TODO: delete google font from database
+                }
+        }
+        else
+        {   // no type was sent - manipulated get vars?!
+            \YAWK\alert::draw("success", "$lang[ERROR]", "$lang[VARS_MANIPULATED]", "", 4600);
         }
     }
 }
 
-// folder where fonts are stored
-$fontFolder = '../system/fonts/';
 // load google fonts from database into array
 $googleFonts = \YAWK\template::getGoogleFontsArray($db);
 // load font files from folder to array
@@ -187,9 +242,8 @@ echo"</section><!-- Main content -->
                         <li><b>.woff</b> <small><i>(Web Open Font Format)</i></small></li>
                     </ul>
 
-                    <form class="form-control" method="POST" action="settings-fonts.php?upload=true" enctype="multipart/form-data">
                         <label for="fontFile"><?php echo $lang['SELECT_FILE']; ?></label>
-                        <input type="hidden" name="MAX_FILE_SIZE" value="30000">
+                        <input type="hidden" name="MAX_FILE_SIZE" value="4194304">
                         <input type="file" class="form-control" id="fontFile" name="fontFile">
                         <small><?php echo $lang['FONTS_PATH']; ?></small>
                         <hr>
@@ -198,7 +252,6 @@ echo"</section><!-- Main content -->
                         <input type="text" class="form-control" id="gfont" name="gfont" placeholder="font eg. Ubuntu">
                         <input type="text" class="form-control" name="gfontdescription" placeholder="description eg. Ubuntu, serif">
 
-                    </form>
                 </div>
 
                 <!-- modal footer /w submit btn -->
