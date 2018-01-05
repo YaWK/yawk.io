@@ -2004,20 +2004,44 @@ namespace YAWK {
          * @link http://yawk.io
          * @param object $db database
          * @param int $gfontid google font ID you wish to delete
+         * @param string $gfont google font (name) you wish to delete
          * @return bool
          */
-        function deleteGfont($db, $gfontid)
+        public static function deleteGfont($db, $gfontid, $gfont)
         {   /** @var $db \YAWK\db */
-            if ($res = $db->query("DELETE from {gfonts}
-                     			   WHERE id = '" . $gfontid . "'"))
-            {   // success
-                return true;
+
+            // no google font ID was sent
+            if (!isset($gfontid) || (empty($gfontid)))
+            {   // check if google font name was sent
+                if (isset($gfont) && (!empty($gfont)))
+                {
+                    // try to delete google font by name
+                    if ($res = $db->query("DELETE from {gfonts}
+                     			   WHERE font LIKE '%" . $gfont . "%'"))
+                    {   // success
+                        return true;
+                    }
+                    else
+                    {   // q failed
+                        \YAWK\sys::setSyslog($db, 5, "failed to delete google font id: $gfontid ", 0, 0, 0, 0);
+                        return false;
+                    }
+                }
             }
             else
-            {   // q failed
-                \YAWK\sys::setSyslog($db, 5, "failed to delete google font id: $gfontid ", 0, 0, 0, 0);
+                {   // delete google font by ID
+                    if ($res = $db->query("DELETE from {gfonts}
+                     			   WHERE id = '" . $gfontid . "'"))
+                    {   // success
+                        return true;
+                    }
+                    else
+                    {   // q failed
+                        \YAWK\sys::setSyslog($db, 5, "failed to delete google font id: $gfontid ", 0, 0, 0, 0);
+                        return false;
+                    }
+                }
                 return false;
-            }
         }
 
         /**
@@ -2030,7 +2054,7 @@ namespace YAWK {
          * @param string $description any description for the font (eg. YourFont, cursive)
          * @return bool
          */
-        function addgfont($db, $gfont, $description)
+        public static function addgfont($db, $gfont, $description)
         {   /** @var $db \YAWK\db */
             if (empty($gfont))
             {   // no font was sent

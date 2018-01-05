@@ -85,25 +85,6 @@ else {
 <?php
 if ($_GET['action'] === "setup")
 {
-    // add new google font to database
-    if (isset($_POST['addgfont']) && (!empty($_POST['addgfont'])))
-    {
-        $description = $_POST['gfontdescription'];
-        $gfont = $_POST['gfont'];
-        // add google font
-        if($gfont != "addgfont")
-        {
-            if ($template->addgfont($db, $gfont,$description) === true)
-            {   // successful, throw info
-                \YAWK\alert::draw("success", "$lang[TPL_ADD_GFONT]", "$lang[ADD_SUCCESSFUL]", '', 2400);
-            }
-            else
-                {   // add gfont failed - throw error
-                    \YAWK\alert::draw("danger", "$lang[TPL_ADD_GFONT]", "$lang[ADD_FAILED]", '', 2400);
-                }
-        }
-    }
-
     // update asset configuration
     if (isset($_POST['save']) && (!empty($_POST['save'])))
     {

@@ -8,7 +8,7 @@ if (isset($_GET) && (!empty($_GET)))
     {   // check if data is here
         if (isset($_POST) && (!empty($_POST)))
         {   // check if new font file was sent
-            if (isset($_FILES['fontFile']) && (!empty($_FILES['fontFile'])))
+            if (isset($_FILES['fontFile']['tmp_name']) && (!empty($_FILES['fontFile']['tmp_name'])))
             {   // allowed file extensions
                 $exts = array('ttf', 'otf', 'woff');
                 // file type seems to be ok
@@ -40,8 +40,23 @@ if (isset($_GET) && (!empty($_GET)))
                         \YAWK\alert::draw("danger", $lang['ERROR'], "$lang[FONT_WRONG_TYPE]", "", 4600);
                     }
             }
+
+            // add new google font to database
+            if (isset($_POST['gfont']) && (!empty($_POST['gfont']) && (isset($_POST['gfontDescription']) && (!empty($_POST['gfontDescription'])))))
+            {
+                $description = $_POST['gfontDescription'];
+                $gfont = $_POST['gfont'];
+                // add google font
+                if (\YAWK\template::addgfont($db, $gfont,$description) === true)
+                {   // successful, throw info
+                    \YAWK\alert::draw("success", "$lang[TPL_ADD_GFONT]", "$lang[ADD_SUCCESSFUL]: $_POST[gfont]", '', 1800);
+                }
+                else
+                {   // add gfont failed - throw error
+                    \YAWK\alert::draw("danger", "$lang[TPL_ADD_GFONT]", "$lang[ADD_FAILED]: $_POST[gfont]", '', 4600);
+                }
+            }
         }
-        // TODO: add google fonts to database
     }
 
     // DELETE FONT ACTION REQUESTED
@@ -76,7 +91,14 @@ if (isset($_GET) && (!empty($_GET)))
             }
             else
                 {   // it must be a google font...
-                    // TODO: delete google font from database
+                    if (\YAWK\template::deleteGfont($db, '', $_GET['font']) === true)
+                    {
+                        \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[FONT_DEL_OK]: $_GET[font]", "", 1200);
+                    }
+                    else
+                    {   // failed to delete file
+                        \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[FONT_DEL_FAILED]", "", 2600);
+                    }
                 }
         }
         else
@@ -259,7 +281,7 @@ echo"</section><!-- Main content -->
                 <!-- modal footer /w submit btn -->
                 <div class="modal-footer">
                     <input class="btn btn-large btn-default" data-dismiss="modal" aria-hidden="true" type="submit" value="<?php echo $lang['CANCEL']; ?>">
-                    <input class="btn btn-large btn-success" type="submit" value="<?php echo $lang['FONT_ADD']; ?>">
+                    <button class="btn btn-large btn-success" type="submit"><i class="fa fa-check"></i>&nbsp; <?php echo $lang['FONT_ADD']; ?></button>
                     <br><br>
                 </div>
             </form>
