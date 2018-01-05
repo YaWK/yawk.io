@@ -387,5 +387,63 @@ namespace YAWK {
             }
             return $menusArray;
         }
+
+        /**
+         * Draw a list with all fonts. Expects fonts as array
+         * @param array $fontArray array with font names
+         * @param string $folder the folder where fonts are stored
+         * @param array $lang language array
+         */
+        static function drawFontList($fontArray, $folder, $type, $lang)
+        {
+            // we need to check if its a custom font (ttf, otf, woff) or google font.
+            // this determination is needed to flag the delete link - this ensures that
+            // the delete function knows if it's a file to delete or an entry from the database.
+            if ($type === "Google" || ($type === "google"))
+            {   // flag get param as google font
+                $flag = "&type=google";
+            }
+            else
+            {   // font type unknown
+                $flag = "&type=custom";
+            }
+            // folder is empty...
+            if (!isset($folder) || (empty($folder)))
+            {   // default folder
+                $folder = '../system/fonts/';
+            }
+            // if array is empty - no fonts were found
+            if (empty($fontArray))
+            {   // throw a message
+                echo $lang['FONTS_NOT_FOUND'];
+                echo "<a href=\"#\" id=\"addFontBtn\" data-toggle=\"modal\" data-target=\"#myModal\" 
+                         style=\"margin-top:2px;\"><i><small>&nbsp;&nbsp;&raquo; ".$lang['ADD']."</small></i></a>";
+            }
+            else
+            {   // walk through folder
+                foreach ($fontArray as $font)
+                {   // draw list with fonts, delete and download icon
+                    echo "<!-- draw font -->
+                    <h4 style=\"font-family:'$font';\">$font<small>                    
+                    <!-- delete font icon -->
+                    <a role=\"dialog\" data-confirm=\"$lang[FONT] &laquo; ".$font." &raquo; $lang[DELETE_CONFIRM]\" 
+                    title=\"".$lang['FONT_DEL']."\" href=\"index.php?page=settings-fonts&delete=true$flag&font=$font\">
+                    <i class=\"fa fa-trash-o pull-right\" data-toggle=\"tooltip\" title=\"$lang[DELETE]\" style=\"margin-top:4px;\"></i></a>&nbsp;";
+
+                    // if google fonts get drawn...
+                    if ($type === "Google" || ($type === "google"))
+                    {
+                        // no download icon
+                    }
+                    else
+                        {   // download font icon
+                            echo "<a href=\"$folder$font\" title=\"$lang[DOWNLOAD] $font\"><i class=\"fa fa-arrow-circle-o-down pull-right\" 
+                            data-toggle=\"tooltip\" title=\"$lang[TO_DOWNLOAD]\" style=\"margin-top:4px;\"></i></a>&nbsp;";
+                        }
+                    // close tags
+                    echo "</small></h4><hr>";
+                }
+            }
+        }
     } /* END class::backend */
 }

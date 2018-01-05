@@ -1557,6 +1557,69 @@ namespace YAWK {
             echo $html;
 
         }
+
+        /**
+         * get fonts from folder and return as array
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param string $folder folder that helds all fonts (usually ../system/fonts/)
+         * @return array | bool | mixed
+         */
+        static public function getFontsFromFolder($folder)
+        {
+            // if no folder is given
+            if (!isset($folder) || (empty($folder)))
+            {   // set default folder
+                $folder = '../system/fonts/';
+            }
+            else
+            {
+                // make sure that there is a slash at the end
+                $folder = rtrim($folder, '/') . '/';
+                // check if folder is a directory
+                if (!is_dir($folder))
+                {   // if not, abort
+                    return "Folder <b>$folder</b> is not a valid folder";
+                }
+            }
+
+            // create new font array
+            $fontArray = array();
+            // create new directory iterator
+            $iterator = new \DirectoryIterator($folder);
+            // walk through folder
+            foreach ($iterator as $file) {
+                // exclude dots
+                if (!$file->isDot())
+                {   // check filetype
+                    if ($file->getExtension() === "ttf")
+                    {   // add ttf fonts to array
+                        $fontArray['ttf'][] = $file->getFilename();
+                    }
+                    // check filetype
+                    if ($file->getExtension() === "otf")
+                    {   // add otf fonts to array
+                        $fontArray['otf'][] = $file->getFilename();
+                    }
+                    // check filetype
+                    if ($file->getExtension() === "woff")
+                    {   // add woff fonts to array
+                        $fontArray['woff'][] = $file->getFilename();
+                    }
+                }
+            }
+            // check if font array is set and not empty
+            if (is_array($fontArray) && (!empty($fontArray)))
+            {   // all good
+                return $fontArray;
+            }
+            else
+                {   // array not set or empty, throw message
+                    return "No fonts found in $folder";
+                }
+        }
+
         /**
          * get setting from database and draw input field
          * @author Daniel Retzl <danielretzl@gmail.com>
@@ -1821,7 +1884,7 @@ namespace YAWK {
          * @return mixed
          *
          */
-        function getGoogleFontsArray($db)
+        public static function getGoogleFontsArray($db)
         {
             // array that holds the data
             $googleFonts = array();
