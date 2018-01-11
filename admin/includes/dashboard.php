@@ -13,14 +13,34 @@ Both of these plugins are recommended to enhance the
 
 // check if stats object is here...
 if (!isset($stats) || (empty($stats)))
-{   // include stats class
+{
+    /* @var $db \YAWK\db */
+    // include stats class
     @require_once '../system/classes/stats.php';
     // and create new stats object
     $stats = new \YAWK\stats();
-    $defaultInterval = 1;
-    $defaultPeriod = "DAY";
+    $defaultInterval = 10;
+    $defaultPeriod = "MINUTE";
     $data = $stats->getStatsArray($db, $defaultInterval, $defaultPeriod);
     $limit = $stats->i_hits;
+}
+else
+    {
+        $data = '';
+    }
+
+// check if tip of day is enabled
+if (\YAWK\settings::getSetting($db, "backendTipOfDay") == true)
+{   // include tip of day class
+    @require_once '../system/classes/tipOfDay.php';
+    // create new tip of day object
+    $tipOfDay = new \YAWK\tipOfDay();
+    // get next tip on load, ordered by ID
+    $tipData = $tipOfDay->getNextTipData($db);
+    // get random tip on load
+    // $tipData = $tipOfDay->getRandomTipData($db);
+    // draw tip of day, depending on previous data selection
+    $tipOfDay->drawTip($db);
 }
 ?>
 
@@ -47,7 +67,7 @@ if (!isset($stats) || (empty($stats)))
 
             <div class="info-box-content">
                 <span class="info-box-text"><?php echo $lang['DEVICES']; ?></span>
-                <span class="info-box-number"><?php $stats->countDeviceTypes($db, $data, $limit); echo round($stats->i_desktopPercent, 1); ?>% <small> Desktop</small></span>
+                <span class="info-box-number"><?php $stats->countDeviceTypes($db, $data); echo round($stats->i_desktopPercent, 1); ?>% <small> Desktop</small></span>
                 <span class="info-box-number"><?php echo round($stats->i_phonePercent, 1); ?>% <small> Phone</small> / <?php echo round($stats->i_tabletPercent, 1); ?>% <small> Tablet</small></span>
             </div>
             <!-- /.info-box-content -->
@@ -106,11 +126,11 @@ if (!isset($stats) || (empty($stats)))
 
     <div class="col-md-4">
         <!-- weekday stats -->
-        <?php $stats->drawWeekdayBox($db, $data, $limit, $lang); ?>
+        <?php $stats->drawWeekdayBox($db, $data, $lang); ?>
         <!-- latest users -->
         <?php \YAWK\dashboard::drawLatestUsers($db, 8, $lang); ?>
         <!-- daytime stats -->
-        <?php $stats->drawDaytimeBox($db, $data, $limit, $lang); ?>
+        <?php $stats->drawDaytimeBox($db, $data, $lang); ?>
         <!-- latest pages stats-->
         <?php \YAWK\dashboard::drawLatestPagesBox($db, 5, $lang); ?>
     </div>
