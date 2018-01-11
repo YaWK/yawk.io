@@ -57,7 +57,7 @@ namespace YAWK {
          * @param string $tipLink Link of the tip, up to 255 chars
          *
          */
-        public function setTip($db, $published, $sortation, $tipClass, $tipHeading, $tipText, $tipLink)
+        public function setTip($db, $published, $tipClass, $tipHeading, $tipText, $tipLink)
         {
             /** @var $db \YAWK\db */
             // preprate data
@@ -65,8 +65,6 @@ namespace YAWK {
             { $db->quote($published); }
             if (isset($tipClass) && (!empty($tipClass)))
             { $db->quote($tipClass); }
-            if (isset($sortation) && (!empty($sortation)))
-            { $db->quote($sortation); }
             if (isset($tipHeading) && (!empty($tipHeading)))
             { $db->quote($tipHeading); }
             if (isset($tipText) && (!empty($tipText)))
@@ -74,10 +72,9 @@ namespace YAWK {
             if (isset($tipLink) && (!empty($tipLink)))
             { $db->quote($tipLink); }
             // insert tip into database
-            if ($db->query("INSERT INTO {tips} (published, sortation, tipClass, tipHeading, tipText, tipLink)
+            if ($db->query("INSERT INTO {tips} (published, tipClass, tipHeading, tipText, tipLink)
                                    VALUES 
                                    ('".$published."',
-                                    '".$sortation."',
                                     '".$tipClass."',
                                     '".$tipHeading."',
                                     '".$tipText."',
