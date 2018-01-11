@@ -640,6 +640,8 @@ namespace YAWK {
             /* @var $db \YAWK\db */
             $property = $db->quote($property);
             $value = $db->quote($value);
+            $value = nl2br($value);
+            $value = preg_replace('/\<br (\s*)?\/?\>/i', "", $value); // TODO: check regular expr
             if ($res = $db->query("UPDATE {widget_settings} SET value = '".$value."'
                                    WHERE property = '".$property."' AND widgetID = '".$widgetID."'"))
             {   // q successful
