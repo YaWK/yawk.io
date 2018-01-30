@@ -46,7 +46,9 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
 # #LoadModule expires_module modules/mod_expires.so -- uncomment it & restart server.
 # if you cannot load the modules, comment out all lines til #END CACHING -- and it will work (w/o caching)
  <IfModule mod_expires.c>
+    ## Turn on Expires and set default expires to 1 day
     ExpiresActive On
+    ## 1 day
     ExpiresDefault A86400
     ExpiresByType image/x-icon A2592000
     ExpiresByType application/x-javascript A1209600
@@ -59,11 +61,6 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
     ExpiresByType video/x-flv A2592000
     ExpiresByType application/pdf A2592000
     ExpiresByType text/html A86400
-    </IfModule>
-
-## Turn on Expires and set default expires to 1 day
-ExpiresActive On
-ExpiresDefault A86400
 
 ## Set up caching on media files for 1 month
 <FilesMatch "\.(flv|ico|pdf|avi|mov|ppt|doc|mp3|wmv|wav|swf)$">
@@ -89,6 +86,7 @@ ExpiresDefault A86400
   Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
   Header set Pragma "no-cache"
 </FilesMatch>
+</IfModule>
 
 # BEGIN GZIP
 # compress the output of html, xml, txt, css and js files
