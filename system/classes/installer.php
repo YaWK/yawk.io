@@ -821,7 +821,6 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
     ExpiresByType application/x-font-opentype \"access plus 1 year\"
     ExpiresByType application/x-font-woff \"access plus 1 year\"
     ExpiresByType image/svg+xml \"access plus 1 year\"
-    </IfModule>
 
 ## Set up caching on media files for 1 month
 <FilesMatch \"\.(flv|ico|pdf|avi|mov|ppt|doc|mp3|wmv|wav|swf)$\">
@@ -847,6 +846,7 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
   Header set Cache-Control \"no-store, no-cache, must-revalidate, max-age=0\"
   Header set Pragma \"no-cache\"
 </FilesMatch>
+</IfModule>
 
 # BEGIN GZIP
 # compress the output of html, xml, txt, css and js files
