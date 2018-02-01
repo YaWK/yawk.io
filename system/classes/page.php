@@ -10,7 +10,7 @@ namespace YAWK {
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2009-2016 Daniel Retzl
      * @link       http://yawk.io
-     * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+     * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @annotation The default pages class. Provide all functions to handle static pages.
      */

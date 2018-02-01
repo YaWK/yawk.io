@@ -9,7 +9,7 @@ namespace YAWK {
      * @package    YAWK
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2009-2015 Daniel Retzl
-     * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+     * @license    https://opensource.org/licenses/MIT
      * @link       http://yawk.io
      * @annotation The default user class. Provide all functions to handle the user object.
      */

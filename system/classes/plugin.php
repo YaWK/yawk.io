@@ -26,7 +26,7 @@ namespace YAWK {
      * @package    YAWK
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2009-2016 Daniel Retzl
-     * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+     * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
      * @annotation Handles the Plugin System.
@@ -56,7 +56,7 @@ namespace YAWK {
          * get and draw a list of all active plugins
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
          * @param object $db database
          * @param array $lang language array
@@ -123,7 +123,7 @@ namespace YAWK {
          * get requested plugin name for given plugin ID
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
          * @param object $db database
          * @param int $pluginId affected plugin ID
@@ -151,7 +151,7 @@ namespace YAWK {
          * get requested plugin ID by given name
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
          * @param object $db database
          * @param string $plugin plugin name
@@ -178,7 +178,7 @@ namespace YAWK {
          * create a static page wich includes the according plugin content
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
          * @param object $db database
          * @param string $alias filename of the static page

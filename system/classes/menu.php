@@ -9,7 +9,7 @@ namespace YAWK {
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2009-2016 Daniel Retzl
-     * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+     * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
      * @annotation The default menu class. Serves all the menu functions.
@@ -40,7 +40,7 @@ namespace YAWK {
         /**
          * display any subMenu (used by widgets to get any menu in any position)
          * @copyright  2009-2016 Daniel Retzl
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
          * @link       http://yawk.io
          * @param object $db database
@@ -71,7 +71,7 @@ namespace YAWK {
         /**
          * return true if menu is published, false if not. expects db object and menu ID to get the status from
          * @copyright  2009-2016 Daniel Retzl
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
          * @link       http://yawk.io
          * @param object $db database
@@ -97,7 +97,7 @@ namespace YAWK {
         /**
          * display the global menu
          * @copyright  2009-2016 Daniel Retzl
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
          * @link       http://yawk.io
          * @param object $db database
@@ -116,7 +116,7 @@ namespace YAWK {
         /**
          * create a new menu
          * @copyright  2009-2016 Daniel Retzl
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
          * @link       http://yawk.io
          * @param object $db the database object
@@ -159,7 +159,7 @@ namespace YAWK {
         /**
          * Change the menu title
          * @copyright  2009-2016 Daniel Retzl
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
          * @link       http://yawk.io
          * @param object $db the database oject
@@ -188,7 +188,7 @@ namespace YAWK {
          * add new entry to an existing menu
          * @param $db object database object
          * @copyright  2009-2016 Daniel Retzl
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
          * @link       http://yawk.io
          * @param $menu int affected menu ID
@@ -243,7 +243,7 @@ namespace YAWK {
         /**
          * check if a whole menu is published or not
          * @copyright  2009-2016 Daniel Retzl
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
          * @link       http://yawk.io
          * @param object $db database object
@@ -270,7 +270,7 @@ namespace YAWK {
         /**
          * check if a single menu entry is published or not
          * @copyright  2009-2016 Daniel Retzl
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
          * @link       http://yawk.io
          * @param $db object database object
@@ -295,7 +295,7 @@ namespace YAWK {
         /**
          * toggle a whole menu offline
          * @copyright  2009-2016 Daniel Retzl
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
          * @link       http://yawk.io
          * @param object $db database
@@ -330,7 +330,7 @@ namespace YAWK {
         /**
          * toggle a menu entry offline
          * @copyright  2009-2016 Daniel Retzl
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
          * @link       http://yawk.io
          * @param $db object database
@@ -366,7 +366,7 @@ namespace YAWK {
         /**
          * edit a single menu entry
          * @copyright  2009-2016 Daniel Retzl
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
          * @link       http://yawk.io
          * @param object $db database
@@ -411,7 +411,7 @@ namespace YAWK {
         /**
          * delete a single menu entry
          * @copyright  2009-2016 Daniel Retzl
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
          * @link       http://yawk.io
          * @param object $db database
@@ -446,7 +446,7 @@ namespace YAWK {
         /**
          * delete a whole menu
          * @copyright  2009-2016 Daniel Retzl
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
          * @link       http://yawk.io
          * @param object $db database
@@ -641,7 +641,7 @@ namespace YAWK {
         /**
          * get menu from database, build and draw it
          * @copyright  2009-2016 Daniel Retzl
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
          * @link       http://yawk.io
          * @param object $db database obj
@@ -797,7 +797,7 @@ namespace YAWK {
         /**
          * draw the logout menu (if user is logged in...)
          * @copyright  2009-2016 Daniel Retzl
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
          * @link       http://yawk.io
          * @param object $db database
@@ -828,7 +828,7 @@ namespace YAWK {
         /**
          * get menu name for given id
          * @copyright  2009-2016 Daniel Retzl
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
          * @link       http://yawk.io
          * @param object $db database

@@ -10,7 +10,7 @@ namespace YAWK {
      * @package    YAWK
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2009-2015 Daniel Retzl yawk.goodconnect.net
-     * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+     * @license    https://opensource.org/licenses/MIT
      * @link       http://yawk.io
      * @since      File available since Release 1.0.0
      * @annotation Basic File Manager (Backend)
@@ -121,7 +121,7 @@ namespace YAWK {
          * returns a list of all files in given folder. expect $folder as string
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2015 Daniel Retzl yawk.goodconnect.net
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @link       http://yawk.io
          * @param string $folder folder to look for files
          * @param string $path path to workout
@@ -258,7 +258,7 @@ namespace YAWK {
          * Delete a directory recursive
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2017 Daniel Retzl
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @link       http://yawk.io
          * @param string $directory folder to delete
          */
@@ -290,7 +290,7 @@ namespace YAWK {
          * delete file from folder
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2015 Daniel Retzl
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @link       http://yawk.io
          * @param string $file file to delete
          * @param string $folder folder containing the file
@@ -336,7 +336,7 @@ namespace YAWK {
          * get and return PHP max file size setting
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @link       http://yawk.io
          * @return bool|string
          */
@@ -359,7 +359,7 @@ namespace YAWK {
          * count files from folder
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @link       http://yawk.io
          * @param string $folder to search for files
          * @return int number of files in folder
@@ -379,7 +379,7 @@ namespace YAWK {
          * output a list showing only files from folder (no subfolders)
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @link       http://yawk.io
          * @param string $folder to get files from
          */
@@ -396,7 +396,7 @@ namespace YAWK {
          * remove special chars as well as leading and trailing slashes from string
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2017 Daniel Retzl
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @link       http://yawk.io
          * @param string $string the affected string
          */
@@ -427,7 +427,7 @@ namespace YAWK {
          * returns an array containing only files from folder (no subfolders)
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @link       http://yawk.io
          * @param string $folder to get files from
          */
@@ -446,7 +446,7 @@ namespace YAWK {
          * returns an array containing only files from folder (no subfolders)
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @link       http://yawk.io
          * @param string $folder to get files from
          */
@@ -466,7 +466,7 @@ namespace YAWK {
          * calculate filesize from bytes
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @link       http://yawk.io
          * @param int|string $bytes
          * @return string rounded, human-readable bytes

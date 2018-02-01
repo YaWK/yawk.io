@@ -16,7 +16,7 @@ namespace YAWK {
      * @package    System
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2009-2015 Daniel Retzl yawk.goodconnect.net
-     * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+     * @license    https://opensource.org/licenses/MIT
      * @version    1.2.0
      * @link       http://yawk.website/
      * @since      File available since Release 1.0.0

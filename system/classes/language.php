@@ -9,7 +9,7 @@ namespace YAWK {
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2017 Daniel Retzl
-     * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+     * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
      * @annotation The language class - support multilingual backend
@@ -41,7 +41,7 @@ namespace YAWK {
          * initialize and return current language
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @link       http://yawk.io
          * @return string
          */
@@ -57,7 +57,7 @@ namespace YAWK {
          * returns the currently set backend language
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @copyright 2017 Daniel Retzl
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @link       http://yawk.io
          * @return string
          */
@@ -128,7 +128,7 @@ namespace YAWK {
          * returns the currently set backend language, but is static callable
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @copyright 2017 Daniel Retzl
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @link       http://yawk.io
          * @return string
          */
@@ -194,7 +194,7 @@ namespace YAWK {
          * get and return client language
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @link       http://yawk.io
          * @return string
          */
@@ -217,7 +217,7 @@ namespace YAWK {
          * sets object supportedLanguages as array including all supported languages
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @link       http://yawk.io
          * @return bool
          */
@@ -256,7 +256,7 @@ namespace YAWK {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @copyright 2017 Daniel Retzl
          * @param string $currentLanguage language in format: en-EN or en
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @link       http://yawk.io
          * @return string
          */
@@ -307,7 +307,7 @@ namespace YAWK {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @copyright 2017 Daniel Retzl
          * @param string $defaultLanguage language in format: en-EN or en
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @link       http://yawk.io
          */
         public function setDefault($defaultLanguage)
@@ -324,7 +324,7 @@ namespace YAWK {
          * Returns the path to the language file
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @copyright 2017 Daniel Retzl
-         * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
+         * @license    https://opensource.org/licenses/MIT
          * @link       http://yawk.io
          * return string
          */
