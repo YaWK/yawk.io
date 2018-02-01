@@ -1102,6 +1102,7 @@ namespace YAWK {
                         }
                     }
                 }
+                /* TODO: check if this can be deleted
                 else {
                     \YAWK\sys::setSyslog($db, 5, "could not fetch username <b>$username</b> ", 0, 0, 0, 0);
                     // \YAWK\alert::draw("danger","Warning!","Could not fetch username! Database error?","page=user-new","4800");
@@ -1109,6 +1110,7 @@ namespace YAWK {
                     \YAWK\alert::draw("warning","Warning!","Could not fetch username! Database error?","","4800");
                     return false;
                 }
+                */
                 // prepare vars
                 if (isset($_POST['twitter']) && (!empty($_POST['twitter']))) { $twitter = htmlentities($_POST['twitter']); }
                 if (isset($_POST['facebook']) && (!empty($_POST['facebook']))) { $facebook = htmlentities($_POST['facebook']); }
