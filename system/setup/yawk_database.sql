@@ -671,6 +671,8 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('backendMessagesMenu', '1', '', 12, 4, 1, 'BACKENDMSGMENU_LABEL', 'fa fa-bell-o', 'BACKENDMSGMENU_HEADING', 'BACKENDMSGMENU_SUBTEXT', 'form-control', 'checkbox', '', '', ''),
 ('backendNotificationMenu', '1', '', 12, 5, 1, 'BACKENDNOTIFYMENU_LABEL', '', '', '', 'form-control', 'checkbox', '', '', ''),
 ('backendSkin', 'skin-wp-style', '', 2, 1, 1, 'BACKENDSKIN_LABEL', 'fa fa-paint-brush', 'BACKENDSKIN_HEADING', 'BACKENDSKIN_SUBTEXT', 'form-control', 'select', '', '', 'skin-blue,Blue:skin-green,Green:skin-red,Red:skin-yellow,Yellow:skin-purple,Purple:skin-black,Black:skin-yellow-light,Yellow Light:skin-wp-style,Wordpress Style:skin-wp-dark-style,Wordpress Style Dark'),
+('backendTipOfDay', '1', '', 12, 6, 1, 'BACKENDTIPOFDAY_LABEL', '', '', '', 'form-control', 'checkbox', '', '', ''),
+('backendTipOfDayRepeat', '1', '', 12, 7, 1, 'BACKENDTIPOFDAYREPEAT_LABEL', '', '', '', 'form-control', 'checkbox', '', '', ''),
 ('dbhost', '', '', 21, 1, 1, 'DBHOST_LABEL', 'fa fa-database', 'DATABASE_HEADING', 'DATABASE_SUBTEXT', 'form-control', 'input', 'http://localhost/', '', 'readonly'),
 ('dbname', '', '', 21, 2, 1, 'DBNAME_LABEL', '', '', '', 'form-control', 'input', '', '', 'readonly'),
 ('dbport', '3306', '', 21, 6, 1, 'DBPORT_LABEL', '', '', '', 'form-control', 'input', 'default:3306', '', 'readonly'),
@@ -774,7 +776,8 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('userpage_stats', '1', '', 6, 0, 1, 'userpage stats enabled?', '', '', '', 'form-control', '', '', '', ''),
 ('yawkversion', '1.0 build 2017.5', '', 9, 2, 0, 'YAWKVERSION_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('youtubeChannelUrl', 'http://www.youtube.com', '', 4, 0, 1, 'YouTube Channel URL', '', '', '', 'form-control', '', '', '', ''),
-('youtubestatus', '0', '', 4, 0, 1, 'YouTube on/off', '', '', '', 'form-control', '', '', '', '');
+('youtubestatus', '0', '', 4, 0, 1, 'YouTube on/off', '', '', '', 'form-control', '', '', '', ''),
+('embedPageName', 'yourpage.php', 38, 1, 1, 'LABEL_EMBEDPAGE_NAME', '', '', '', 'DESC_EMBEDPAGE_NAME', 'form-control', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -2007,6 +2010,31 @@ INSERT INTO `cms_template_settings_types` (`id`, `type`) VALUES
 
 -- --------------------------------------------------------
 
+
+--
+-- Tabellenstruktur für Tabelle `cms_tips`
+--
+
+CREATE TABLE `cms_tips` (
+  `id` int(11) NOT NULL,
+  `published` int(1) NOT NULL,
+  `tipHeading` varchar(255) NOT NULL,
+  `tipText` varchar(255) NOT NULL,
+  `tipLink` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Daten für Tabelle `cms_tips`
+--
+
+INSERT INTO `cms_tips` (`id`, `published`, `tipHeading`, `tipText`, `tipLink`) VALUES
+(1, 0, 'TOD_1_H', 'TOD_1_T', ''),
+(2, 0, 'TOD_2_H', 'TOD_2_T', ''),
+(3, 1, 'TOD_3_H', 'TOD_3_T', ''),
+(4, 1, 'TOD_4_H', 'TOD_4_T', ''),
+(5, 1, 'TOD_5_H', 'TOD_5_T', '');
+
+
 --
 -- Tabellenstruktur für Tabelle `cms_users`
 --
@@ -2390,7 +2418,8 @@ INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`)
 (34, 1, 'Plyr HTML5 Player', 'plyr', 'A simple, accessible HTML5 media player by @sam_potts'),
 (35, 1, 'Responsive Voice JS', 'responsiveVoiceJS', 'Instant Text-To-Speech with Voice Consistency Across Devices'),
 (36, 1, 'AdBlock Blocker', 'fuckadblock', 'Detect and block AdBlocker'),
-(37, 1, 'Content Animator', 'contentAnimator', 'Enable Slide Animations for your content');
+(37, 1, 'Content Animator', 'contentAnimator', 'Enable Slide Animations for your content'),
+(38, 1, 'Embed Page', 'embed_page', 'Embed any of your static pages');
 
 --
 -- Indizes der exportierten Tabellen
@@ -2608,6 +2637,12 @@ ALTER TABLE `cms_template_settings_types`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indizes für die Tabelle `cms_tips`
+--
+ALTER TABLE `cms_tips`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indizes für die Tabelle `cms_users`
 --
 ALTER TABLE `cms_users`
@@ -2685,7 +2720,7 @@ ALTER TABLE `cms_logins`
 -- AUTO_INCREMENT für Tabelle `cms_menu`
 --
 ALTER TABLE `cms_menu`
-  MODIFY `TMPID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `TMPID` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `cms_meta_local`
 --
@@ -2731,6 +2766,13 @@ ALTER TABLE `cms_syslog`
 --
 ALTER TABLE `cms_template_settings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=989;
+
+--
+-- AUTO_INCREMENT für Tabelle `cms_tips`
+--
+ALTER TABLE `cms_tips`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
 --
 -- AUTO_INCREMENT für Tabelle `cms_widget_defaults`
 --
