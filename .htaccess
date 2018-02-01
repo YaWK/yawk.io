@@ -1,4 +1,3 @@
-
 # SEO settings
 # to work correctly, you need +FollowSymLinks or at least +SymLinksIfOwnerMatch enabled.
 # if you get an ERROR 500, try ifownermatch (slower) and/or ask you webhoster to enable mod_rewrite + symlinks
