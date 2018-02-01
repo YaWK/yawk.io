@@ -133,6 +133,7 @@ $youtubeVideoUrl = str_replace("watch?v=","embed/",$youtubeVideoUrl.$autoplay);
 // HTML output
 echo "
 <!-- youtube video iframe -->
+<div>
 $headline
 <iframe width=\"$youtubeWidth\" 
         height=\"$youtubeHeight\" 
@@ -141,5 +142,6 @@ $headline
         scrolling=\"no\"
         $allowfullscreen>
 </iframe>
-$description";
+$description
+</div>";
 
