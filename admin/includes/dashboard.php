@@ -35,12 +35,7 @@ if (\YAWK\settings::getSetting($db, "backendTipOfDay") == true)
     @require_once '../system/classes/tipOfDay.php';
     // create new tip of day object
     $tipOfDay = new \YAWK\tipOfDay();
-    // get next tip on load, ordered by ID
-    $tipData = $tipOfDay->getNextTipData($db);
-    // get random tip on load
-    // $tipData = $tipOfDay->getRandomTipData($db);
-    // draw tip of day, depending on previous data selection
-    $tipOfDay->drawTip($db);
+    $tipOfDay->drawTip($db, $lang);
 }
 ?>
 
@@ -137,4 +132,3 @@ if (\YAWK\settings::getSetting($db, "backendTipOfDay") == true)
     <!-- /.col -->
 </div>
 <!-- /.row -->
-

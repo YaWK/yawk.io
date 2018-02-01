@@ -1,6 +1,4 @@
-<link rel="stylesheet" href="../system/engines/jquery/morris/morris.css">
-<script src="../system/engines/jquery/morris/raphael-min.js"></script>
-<script src="../system/engines/jquery/morris/morris.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <?php
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
@@ -19,71 +17,82 @@ echo"<ol class=\"breadcrumb\">
     <section class=\"content\">";
 /* page content start here */
 ?>
-
 <h3>Seitenaufrufe</h3>
-<div id="myfirstchart" class="container-fluid" style="height: 250px;"></div>
-<script type="text/javascript">
-  new Morris.Line({
-    // ID of the element in which to draw the chart.
-    element: 'myfirstchart',
-    // Chart data records -- each entry in this array corresponds to a point on
-    // the chart.
-    data: [
-      { year: '2012', value: 0 },
-      { year: '2013', value: 1228 },
-      { year: '2014', value: 2256 },
-      { year: '2015', value: 3220 }
-    ],
-    // The name of the data record attribute that contains x-values.
-    xkey: 'year',
-    // A list of names of data record attributes that contain y-values.
-    ykeys: ['value'],
-    // Labels for the ykeys -- will be displayed when you hover over the
-    // chart.
-    labels: ['Seitenaufrufe']
-  });
+<div class="col-md-8">
+    <div class="box">
+        <div class="box-header"><h3 class="box-title">Month</h3></div>
+        <div class="box-body">
+            <canvas id="myChart"></canvas>
+        </div>
+    </div>
+</div>
+<div class="col-md-4">
+    <?php
+    /*
+    if (\YAWK\sys::isBrowscapSet($_SERVER['HTTP_USER_AGENT']) === false)
+    {
+      echo "Your Browser: <b>".\YAWK\sys::getBrowserName($_SERVER['HTTP_USER_AGENT'])."</b>";
+    }
+    */
+    $useragent = \YAWK\sys::getBrowser('');
+    echo "<h4>Browser Statistik </h4>Your browser: "."<b>". $useragent['name'] . " " . $useragent['version'] . " on " .$useragent['platform'] ."</b><br><br>";
+
+    echo "<h4>User Statistik</h4>Referer: ".$_SERVER['HTTP_REFERER']."<br>";
+    echo "Current: ".$_SERVER['REQUEST_URI']."<br>";
+    echo "accept language: ".$_SERVER['HTTP_ACCEPT_LANGUAGE']."<br><br>";
+
+    echo "<h4>Quellcode Statistik</h4>";
+    echo "YaWK Version: ".\YAWK\settings::getSetting($db, "yawkversion");
+    echo " <small>";echo \YAWK\settings::getSettingDescription($db, "yawkversion");echo"</small>";
+
+    // SET VARS
+    $FILE_PATH = "/xampp/htdocs/yawk-LTE/"; // full path
+    $data = \YAWK\sys::countCodeLines($FILE_PATH, '.php');
+
+    echo"<p>$FILE_PATH <br>umfasst insgesamt <b>$data[files]</b> $data[type] files mit exakt <b>$data[lines]</b> Zeilen $data[type] Code</p><br>";
+
+    echo "<h4>Server Statistik</h4>";
+    if (\YAWK\sys::checkZlib() === true)
+    {   // output
+        echo "<p>...zlib found!</p>";
+    }
+    else
+    {   // output
+        echo "<p class=\"text-danger\">...zlib not found!</p>";
+    }
+
+
+    /*
+     $total=$anz_lines + $anz_lines1;
+     $total = number_format($total);
+     echo "und <b>$anz_lines</b> Zeilen .html-Code.</b><br> Insgesamt z&auml;hlt das Projekt: <b>$total</b> Zeilen Quellcode.";
+     */
+    ?>
+</div>
+
+
+
+
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'bar',
+
+        // The data for our dataset
+        data: {
+            labels: ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15",
+                "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"],
+            datasets: [{
+                label: "Hits this day",
+                borderColor: 'rgb(51, 122, 183)',
+                backgroundColor: 'rgb(51, 122, 183)',
+                data: [11, 10, 5, 2, 20, 30, 45, 16, 54, 34, 46, 67, 55, 46, 46, 47, 26, 11, 10, 5, 2, 20, 30,
+                    45, 16, 64, 58, 46, 67, 55, 46]
+            }]
+        },
+
+        // Configuration options go here
+        options: {}
+    });
 </script>
-
-
-<!-- ################################################# -->
-
-<?php
-/*
-if (\YAWK\sys::isBrowscapSet($_SERVER['HTTP_USER_AGENT']) === false)
-{
-  echo "Your Browser: <b>".\YAWK\sys::getBrowserName($_SERVER['HTTP_USER_AGENT'])."</b>";
-}
-*/
-$useragent = \YAWK\sys::getBrowser('');
-echo "<h4>Browser Statistik </h4>Your browser: "."<b>". $useragent['name'] . " " . $useragent['version'] . " on " .$useragent['platform'] ."</b><br><br>";
-
-echo "<h4>User Statistik</h4>Referer: ".$_SERVER['HTTP_REFERER']."<br>";
-echo "Current: ".$_SERVER['REQUEST_URI']."<br>";
-echo "accept language: ".$_SERVER['HTTP_ACCEPT_LANGUAGE']."<br><br>";
-
-echo "<h4>Quellcode Statistik</h4>";
-echo "YaWK Version: ".\YAWK\settings::getSetting($db, "yawkversion");
-echo " <small>";echo \YAWK\settings::getSettingDescription($db, "yawkversion");echo"</small>";
-
-// SET VARS
-$FILE_PATH = "/xampp/htdocs/yawk-LTE/"; // full path
-$data = \YAWK\sys::countCodeLines($FILE_PATH, '.php');
-
-echo"<p>$FILE_PATH <br>umfasst insgesamt <b>$data[files]</b> $data[type] files mit exakt <b>$data[lines]</b> Zeilen $data[type] Code</p><br>";
-
-echo "<h4>Server Statistik</h4>";
-if (\YAWK\sys::checkZlib() === true)
-{   // output
-  echo "<p>...zlib found!</p>";
-}
-else
-{   // output
-  echo "<p class=\"text-danger\">...zlib not found!</p>";
-}
-
-
-/*
- $total=$anz_lines + $anz_lines1;
- $total = number_format($total);
- echo "und <b>$anz_lines</b> Zeilen .html-Code.</b><br> Insgesamt z&auml;hlt das Projekt: <b>$total</b> Zeilen Quellcode.";
- */
