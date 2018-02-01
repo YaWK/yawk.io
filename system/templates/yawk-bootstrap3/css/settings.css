@@ -37,46 +37,48 @@
                  
     }    
         /* H1 - H6 TYPOGRAPHY SETTINGS */   
-          
-                    h1 
-                    {
-                        font-family: Arial, Helvetica, sans-serif;
-                        font-size: 48px;
-                        color: #CC9A6E;
-                        text-shadow: 2px 2px 0px #963627;
-                        font-weight: normal;
-                        font-style: normal;
-                        text-decoration: none;
-                    }
-                
-                    h1 a:link { /* LINK SETTINGS */
+          @font-face {
+                font-family: Sansation-LightItalic-ttf;
+                src: url('../../../fonts/Sansation-LightItalic.ttf');
+                }
+                h1 
+                {
+                    font-family: Sansation-LightItalic-ttf !important;
+                    font-size: 48px;
+                    color: #383838;
+                    text-shadow: 2px 2px 0px #C2C2C2;
+                    font-weight: normal;
+                    font-style: normal;
+                    text-decoration: none;
+                }
+                h1 a:link { /* LINK SETTINGS */
                         color: #186FF2;
                         font-weight: normal;
                         font-style: normal;
                         text-decoration: none;
-                    }
-                    h1 a:visited {
+                }
+                h1 a:visited {
                         color: #114EAB;
-                    }
-                    h1 a:hover {   
+                }
+                h1 a:hover {   
                         color: #1B95F2;
                         text-decoration: none;
-                    }
-                    h1 small,
-                    .h1 small
-                    {
-                        font-weight: normal;
-                        line-height: 1;
-                        color: #CC9A6E;
-                        text-shadow: 2px 2px 0px #963627;
-                    }
-                    
+                }
+                h1 small,
+                .h1 small
+                {
+                    font-weight: normal;
+                    line-height: 1;
+                    color: #CC9A6E;
+                    text-shadow: 2px 2px 0px #963627;
+                }
+                
           
                     h2 
                     {
                         font-family: Arial, Helvetica, sans-serif;
                         font-size: 36px;
-                        color: #1E2E22;
+                        color: #383838;
                         text-shadow: 2px 2px 0px #C2C2C2;
                         font-weight: normal;
                         font-style: normal;
@@ -170,7 +172,7 @@
                         font-weight: normal;
                         line-height: 1;
                         color: #A8A8A8;
-                        text-shadow: 1px 1px 3px #0D0D0D;
+                        text-shadow: 2px 2px 0px #0D0D0D;
                     }
                     
           
@@ -204,7 +206,7 @@
                         font-weight: normal;
                         line-height: 1;
                         color: #C4C4C4;
-                        text-shadow: 1px 1px 0px #919191;
+                        text-shadow: 2px 2px 0px #919191;
                     }
                     
           
@@ -238,7 +240,7 @@
                         font-weight: normal;
                         line-height: 1;
                         color: #0A0A0A;
-                        text-shadow: 1px 1px 0px #EBEBEB;
+                        text-shadow: 2px 2px 0px #EBEBEB;
                     }
                     
           
@@ -266,8 +268,8 @@
                     {
                         font-weight: normal;
                         line-height: 1;
-                        color: #C4C4C4;
-                        text-shadow: 1px 1px 10px #1480DE;
+                        color: #787878;
+                        text-shadow: 1px 1px 0px #E0E0E0;
                     }
                     
         
@@ -1069,7 +1071,7 @@
         text-align: left;
         vertical-align: baseline;
         margin-top: 0px;
-        margin-bottom: 0px;
+        margin-bottom: 25px;
         position: static;
         background-color: #F8F8F8;
         width: 100%;
@@ -1144,7 +1146,7 @@
         background-size: cover;
         
         
-        background:  ;
+        background: transparent;
     }
     .pos-outerRight
     {   
@@ -1357,6 +1359,36 @@
         
         background:  ;
     }
+    .pos-mainLeft
+    {   
+        -webkit-box-shadow: 0px 0px 0px -0px #888888;
+        -moz-box-shadow: 0px 0px 0px -0px #888888;
+        box-shadow: 0px 0px 0px -0px #888888;
+        border-width: 0px 0px 0px 0px;
+        border-color: #888888;
+        border-style: none;
+        border-radius: 0 0 0 0;
+        padding: 0px;
+        overflow: visible;
+        visibility: visible;
+        text-align: left;
+        vertical-align: baseline;
+        margin-top: 0px;
+        margin-bottom: 0px;
+        position: static;
+        background-color: #F8F8F8;
+        height: auto;
+        z-index: 9999;
+        /* BACKGROUND IMAGE */
+        background-image: url('');
+        background-repeat:;
+        background-position:center;
+        background-attachment:fixed;
+        background-size: ;
+        
+        
+        background:  ;
+    }
     .pos-main
     {   
         -webkit-box-shadow: 6px 6px 25px -8px #888888;
@@ -1373,9 +1405,8 @@
         vertical-align: baseline;
         margin-top: 0px;
         margin-bottom: 0px;
-        position: relative;
+        position: static;
         background-color: #F8F8F8;
-        width: 100%;
         height: auto;
         z-index: 9999;
         /* BACKGROUND IMAGE */
@@ -1384,6 +1415,36 @@
         background-position:center;
         background-attachment:fixed;
         background-size: cover;
+        
+        
+        background:  ;
+    }
+    .pos-mainRight
+    {   
+        -webkit-box-shadow: 0px 0px 0px -0px #888888;
+        -moz-box-shadow: 0px 0px 0px -0px #888888;
+        box-shadow: 0px 0px 0px -0px #888888;
+        border-width: 0px 0px 0px 0px;
+        border-color: #888888;
+        border-style: none;
+        border-radius: 0 0 0 0;
+        padding: 0px;
+        overflow: visible;
+        visibility: visible;
+        text-align: left;
+        vertical-align: baseline;
+        margin-top: 0px;
+        margin-bottom: 0px;
+        position: static;
+        background-color: #F8F8F8;
+        height: auto;
+        z-index: 9999;
+        /* BACKGROUND IMAGE */
+        background-image: url('');
+        background-repeat:;
+        background-position:center;
+        background-attachment:fixed;
+        background-size: ;
         
         
         background:  ;
@@ -1526,7 +1587,7 @@
         margin-top: 0px;
         margin-bottom: 0px;
         position: static;
-        background-color: #0D0D0D;
+        background-color: #F8F8F8;
         width: 100%;
         height: auto;
         z-index: 9999;

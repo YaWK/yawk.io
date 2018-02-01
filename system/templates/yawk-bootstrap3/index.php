@@ -51,7 +51,7 @@ $template->loadActiveAssets($db, $template->id);
 ?>
 
 <!-- SETTINGS.MIN.CSS YaWK template settings: Bootstrap core CSS override -->
-<link href="system/templates/<?php echo $template->name; ?>/css/settings.min.css" rel="stylesheet">
+<link href="system/templates/<?php echo $template->name; ?>/css/settings.min.css" rel="stylesheet" type="text/css">
 <!-- CUSTOM.MIN.CSS User defined CSS Rules -->
 <link href="system/templates/<?php echo $template->name; ?>/css/custom.min.css" rel="stylesheet" type="text/css">
 
