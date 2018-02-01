@@ -1689,6 +1689,7 @@ namespace YAWK {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db database
+         * @param string $state login or logout information as string: login|logout
          * @param int $failed 0|1 failed status: 1 means login failed, 0 means NOT failed
          * @param string $location frontend or backend
          * @param string $username username
@@ -1700,11 +1701,16 @@ namespace YAWK {
             if (!isset($location)){
                 $location = '';
             }
+
             // store failed login
             $atm = date("Y-m-d H:i:s");
             if (!isset($failed))
             {   //
                 $failed = 1;
+            }
+            if (!isset($state) || (empty($state)))
+            {
+                $state = "login";
             }
             $ip = $_SERVER['REMOTE_ADDR'];
             $useragent = $_SERVER['HTTP_USER_AGENT'];
