@@ -145,11 +145,13 @@ if (!isset($AdminLTE))
       // output js includes at bottom of page
       echo $AdminLTE->drawHtmlJSIncludes();
 
+      /*
       // call checklogin (todo: is this really needed? think it's called double times. check this!)
       if (\YAWK\backend::checkLogin($db))
       {
         // ...
       }
+      */
 
       // html output end
       echo $AdminLTE->drawHtmlEnd($db);
