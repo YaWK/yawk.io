@@ -24,8 +24,8 @@ namespace YAWK {
      *
      */
 
-    class alert {
-
+    class alert
+    {
         /**
          * draw a fancy alert notification
          *
@@ -36,10 +36,62 @@ namespace YAWK {
          * @param int $delay How long should the notification stay on top before it hides respectively redirect. Leave empty if it should stay on top forevermore.
          *
          */
-        static function draw($type, $title, $text, $redirect, $delay){
+        static function draw($type, $title, $text, $redirect, $delay)
+        {
+
+            /** default animation when alert pops in */
+            $animatedEnter = "animated fadeInDown";
+            /** default animation when alert pops out */
+            $animatedExit = "animated fadeOutUp";
+            /** default placementFrom (top, bottom) */
+            $placementFrom = "top";
+            /** default placementFrom (left, center, right) */
+            $placementAlign = "center";
+            /** any URL to link to */
+            $url = "";
+            /** URL target */
+            $urlTarget = "_blank";
+            /** should it be allowed to dismiss this alert? */
+            $allowDismiss = "true";
+            /** display newest on top if there are more simultaneous alerts? */
+            $newestOnTop = "false";
+            /** display a progressbar to show how long the alert will stay */
+            $progressBar = "false";
+            /** offest X axis */
+            $offsetX = "10";
+            /** offest Y axis */
+            $offsetY = "62";
+            /** spacing */
+            $spacing = "10";
+            /** z-index */
+            $zIndex = "9999";
+            /** icon */
+            $icon = "fa fa-info-circle";
+            
+            if (!isset($type) || (empty($type)))
+            {
+                $type = "info";
+            }
+            if (!isset($title) || (empty($title)))
+            {
+                $title = "";
+            }
+            if (!isset($text) || (empty($text)))
+            {
+                $text = "";
+            }
+            if (!isset($redirect) || (empty($redirect)))
+            {
+                $redirect = "";
+            }
+            if (!isset($delay) || (empty($delay)))
+            {
+                $delay = 0;
+            }
+
             if (empty($type)) { $type="danger"; }
             if (empty($title)) { $title="ERROR!"; }
-            if (empty($text)) { $text="Something strange has happened. Sorry that there is no more Information available. (Code 0)"; }
+            if (empty($text)) { $text="Something strange has happened. Text is empty. Sorry that there is no more Information available. (Code 0)"; }
             if (empty($redirect)) { $redirect="null"; }
             if (empty($delay)) { $delay="null"; }
 
@@ -74,6 +126,14 @@ namespace YAWK {
                 case "default":
                     $icon = "fa fa-info-circle";
                     break;
+                case "tipofday":
+                    $icon = "fa fa-lightbulb-o";
+                    $type = "success";
+                    $animatedEnter = "animated fadeInRight";
+                    $animatedExit = "animated fadeOutRight";
+                    $placementFrom = "top";
+                    $placementAlign = "right";
+                    break;
                 default:
                     $icon = "fa fa-info-circle";
                     break;
@@ -86,33 +146,33 @@ namespace YAWK {
         // options
         title: '<h4><i class=\"$icon\"></i>&nbsp; $title</h4>',
         message: '$text',
-        url: '#',
-        target: '_blank'
+        url: '$url',
+        target: '$urlTarget'
     }, {
         // settings
         type: '$type',
         element: 'body',
         position: null,
-        allow_dismiss: true,
-        newest_on_top: false,
-        showProgressbar: false,
+        allow_dismiss: '$allowDismiss',
+        newest_on_top: '$newestOnTop',
+        showProgressbar: $progressBar,
         placement: {
-            from: 'top',
-            align: 'center'
+            from: '$placementFrom',
+            align: '$placementAlign'
         },
         offset: {
-            x: 10,
-            y: 62
+            x: $offsetX,
+            y: $offsetY
         },
-        spacing: 10,
-        z_index: 9999,
+        spacing: $spacing,
+        z_index: $zIndex,
         delay: '$n_delay',
         timer: 420,
-        url_target: '_blank',
+        url_target: '$urlTarget',
         mouse_over: 'pause',
         animate: {
-            enter: 'animated fadeInDown',
-            exit: 'animated fadeOutUp'
+            enter: '$animatedEnter',
+            exit: '$animatedExit'
         }
     });
   </script>";
@@ -122,9 +182,10 @@ namespace YAWK {
                 // redirect after notify with given delay param
                 return \YAWK\sys::setTimeout("index.php?$redirect", $delay);
             }
-            else {
-                return null;
-            }
+            else
+                {
+                    return null;
+                }
         } // ./draw
     } // ./class alert
 } // ./namespace

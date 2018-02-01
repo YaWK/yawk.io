@@ -51,20 +51,17 @@ namespace YAWK {
          * Store a new tip to database
          * @param object $db Database Object
          * @param int $published 1 = Tip is published (unseen) 0 = Tip is not published (already seen)
-         * @param string $tipClass css class for the alert box (success, warning, danger or info)
          * @param string $tipHeading Heading of the tip, up to 255 chars
          * @param string $tipText Text of the tip, up to 255 chars
          * @param string $tipLink Link of the tip, up to 255 chars
          *
          */
-        public function setTip($db, $published, $tipClass, $tipHeading, $tipText, $tipLink)
+        public function setTip($db, $published, $tipHeading, $tipText, $tipLink)
         {
             /** @var $db \YAWK\db */
             // preprate data
             if (isset($published) && (!empty($published)))
             { $db->quote($published); }
-            if (isset($tipClass) && (!empty($tipClass)))
-            { $db->quote($tipClass); }
             if (isset($tipHeading) && (!empty($tipHeading)))
             { $db->quote($tipHeading); }
             if (isset($tipText) && (!empty($tipText)))
@@ -75,7 +72,6 @@ namespace YAWK {
             if ($db->query("INSERT INTO {tips} (published, tipClass, tipHeading, tipText, tipLink)
                                    VALUES 
                                    ('".$published."',
-                                    '".$tipClass."',
                                     '".$tipHeading."',
                                     '".$tipText."',
                                     '".$tipLink."'"))
@@ -134,7 +130,7 @@ namespace YAWK {
         /**
          * Get a the next single tip which is not already seen (still published)
          * To get the order, ID and published fields will be used in the query.
-         * @param $db
+         * @param object $db database object
          * return bool
          */
         public function getNextTipData($db)
@@ -178,10 +174,17 @@ namespace YAWK {
 
         /**
          * Draw tip of the day.
+         * @param object $db database object
+         * @param array $lang language array
          * @return string
         */
-        public function drawTip($db)
+        public function drawTip($db, $lang)
         {
+            // get next tip on load, ordered by ID
+            $this->getNextTipData($db);
+            // or get random tip on load
+            // $this->getRandomTipData($db);
+
             if (isset($this->tipLink) && (!empty($this->tipLink)))
             {
                 if (filter_var($this->tipLink, FILTER_VALIDATE_URL))
@@ -205,6 +208,8 @@ namespace YAWK {
                     {
                         return "failed to set tip to zero";
                     }
+                    $this->tipHeading = $lang[$this->tipHeading];
+                    $this->tipText = $lang[$this->tipText];
                     return alert::draw("tipofday", "Tip #$this->id - $this->tipHeading", "$this->tipText", '', 10000);
                 }
         }
