@@ -7,7 +7,7 @@ Documentation: http://docs.yawk.io
 <b>YaWK is a free, open-source-bundle solution</b> CMS to build, design and operate any modern webpage or web-app. Designed to be slick, fast and reliable. Steady in development. Put together, what belongs together. YaWK uses HTML, CSS, MySQL, PHP and JavaScript to bundle Bootstrap, jQuery, AdminLTE, FontAwesome and much more of your favourite daily use web open source tools and combines them into a new base for your daily work.
 
 <h3>Download</h3>
-latest stable version on GitHub: https://github.com/YaWK/yawk.io/archive/master.zip
+latest pre-release alpha test version on GitHub: https://github.com/YaWK/yawk.io/archive/master.zip
 
 <h3>Open Development</h3>
 YaWK is an open source project, <b>built for everyone.</b> Actually there is <i>no big business company or foundation behind it</i>. It is mostly a one man show, - originally developed for my own, personal purpose. It was never meant to go public. But the bigger the project growed, the more people told me to make it accessable to the public crowd. 
