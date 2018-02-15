@@ -423,7 +423,8 @@ namespace YAWK {
             $alias = html_entity_decode($alias);
             // creation date
             $date_created = date("Y-m-d G:i:s");
-            $date_unpublish = date('Y-m-d', strtotime('+25 year', strtotime($date_created)) );
+//            $date_unpublish = date('Y-m-d', strtotime('+25 year', strtotime($date_created)) );
+            $date_unpublish = null;
             $title = $alias;
             /* alias string manipulation */
             $alias = mb_strtolower($alias); // lowercase
