@@ -22,7 +22,6 @@ namespace YAWK {
          * Display a multidimensional array line per line. Expects an array and property
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
-         * @link        https://gist.github.com/sbmzhcn/6255314
          */
         static function array2lines($array, $property)
         {
