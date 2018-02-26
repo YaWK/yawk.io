@@ -4,6 +4,10 @@ if (!isset($language) || (!isset($lang)))
 {   // inject (add) language tags to core $lang array
     $lang = \YAWK\language::inject(@$lang, "../system/plugins/faq/language/");
 }
+if (!isset($db))
+{
+    $db = new \YAWK\db();
+}
 include '../system/plugins/faq/classes/faq-backend.php';
 if (isset($_POST['create']))
 {   // if faq object is not set

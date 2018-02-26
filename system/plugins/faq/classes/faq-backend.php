@@ -96,7 +96,7 @@ namespace YAWK\PLUGINS\FAQ {
 	                        '" . $question . "',
 	                        '" . $answer . "')"))
                 {   // success
-                    return $res;
+                    return true;
                 }
                 else
                 {
