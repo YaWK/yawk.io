@@ -2544,10 +2544,10 @@ ALTER TABLE `cms_plugin_booking`
   ADD KEY `ip` (`ip`);
 
 --
--- Indizes für die Tabelle `cms_plugin_faq`
+-- AUTO_INCREMENT für Tabelle `cms_plugin_faq`
 --
 ALTER TABLE `cms_plugin_faq`
-  ADD PRIMARY KEY (`id`);
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Indizes für die Tabelle `cms_plugin_gallery`
