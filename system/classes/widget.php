@@ -480,10 +480,10 @@ namespace YAWK {
                     $_GET['widgetID'] = $row['id'];
 
                     // check publish date and show entry
-                    if ($atm > $row['date_publish'] || ($row['date_publish'] === "0000-00-00 00:00:00") || (empty($row['date_publish'])))
+                    if ($atm > $row['date_publish'] || ($row['date_publish'] <=> NULL) || (empty($row['date_publish'])))
                     {
                         // if current date is bigger than unpublish date
-                        if ($atm < $row['date_unpublish'] || ($row['date_unpublish'] === "0000-00-00 00:00:00") || (empty($row['date_unpublish'])))
+                        if ($atm < $row['date_unpublish'] || ($row['date_unpublish'] <=> NULL) || (empty($row['date_unpublish'])))
                         {
                             $widgetFile = "system/widgets/".$row['folder']."/".$row['folder'].".php";
                             include $widgetFile;
