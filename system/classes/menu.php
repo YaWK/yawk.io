@@ -660,8 +660,8 @@ namespace YAWK {
                             WHERE menuID = '" . $id . "'
                             and gid <= '" . $currentRole . "'
                             AND published = 1
-                            AND (date_publish <= NOW() or date_publish = '0000-00-00 00:00:00')
-                            AND (date_unpublish >= NOW() or date_unpublish = '0000-00-00 00:00:00')
+                            AND (date_publish <= NOW() or date_publish <=> NULL)
+                            AND (date_unpublish >= NOW() or date_unpublish <=> NULL)
                             ORDER BY parentid, sort, title");
 
             // Create a multidimensional array to conatin a list of items and parents

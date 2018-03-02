@@ -338,7 +338,7 @@ CREATE TABLE `cms_menu` (
 --
 
 INSERT INTO `cms_menu` (`TMPID`, `id`, `sort`, `gid`, `menuID`, `parentID`, `published`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `title`, `text`, `href`, `target`, `divider`, `blogid`) VALUES
-(1, 1, 1, 1, 1, 0, 1, '2017-03-08 19:02:19', '2017-06-10 17:48:54', '', '', '', 'Welcome to YaWK CMS!', 'index.html', '_self', 0, 0);
+(1, 1, 1, 1, 1, 0, 1, '2018-03-01 00:00:00', '2018-03-01 00:00:00', NULL, NULL, '', 'Welcome to YaWK CMS!', 'index.html', '_self', 0, 0);
 
 -- --------------------------------------------------------
 
