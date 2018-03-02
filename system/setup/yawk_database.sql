@@ -144,10 +144,10 @@ CREATE TABLE `cms_blog_items` (
   `title` varchar(255) NOT NULL,
   `filename` varchar(255) NOT NULL,
   `subtitle` varchar(255) NOT NULL,
-  `date_created` datetime NOT NULL,
-  `date_changed` datetime NOT NULL,
-  `date_publish` datetime NOT NULL,
-  `date_unpublish` datetime NOT NULL,
+  `date_created` datetime DEFAULT NULL,
+  `date_changed` datetime DEFAULT NULL,
+  `date_publish` datetime DEFAULT NULL,
+  `date_unpublish` datetime DEFAULT NULL,
   `teasertext` text NOT NULL,
   `blogtext` longtext NOT NULL,
   `author` varchar(255) NOT NULL,
@@ -2129,7 +2129,7 @@ CREATE TABLE `cms_widgets` (
   `marginTop` int(11) NOT NULL,
   `marginBottom` int(11) NOT NULL,
   `date_publish` datetime NOT NULL,
-  `date_unpublish` datetime NOT NULL,
+  `date_unpublish` datetime DEFAULT NULL,
   `widgetTitle` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
