@@ -212,7 +212,7 @@ echo "
               $pub = "warning";
               $pubtext = "$lang[IN_QUEUE]";
           }
-          if ($date_unpublish !== "0000-00-00 00:00:00"){
+          if (!is_null($date_unpublish)){
               if ($atm >= $date_unpublish) {
               $pub = "default";
               $pubtext = "$lang[EXPIRED]";

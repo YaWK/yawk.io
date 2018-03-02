@@ -56,7 +56,7 @@ namespace YAWK\PLUGINS\USERPAGE {
             else { $public_email = "hidden"; $emailHtml = "text-danger";
             }
 
-            if($user->date_expired === '0000-00-00 00:00:00') {
+            if($user->date_expired === NULL) {
                 $expiredHtml = "text-success";
                 $expired = "never - lifetime account";
             }

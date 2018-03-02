@@ -401,7 +401,7 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
                             name="date_unpublish"
                             data-date-format="yyyy-MM-dd hh:mm:ss"
                             maxlength="19"
-                            value="0000-00-00 00:00:00">
+                            value="">
 
                         <!-- group id selector -->
                         <label for="gidselect"><i class="fa fa-users"></i> <?php print $lang['PAGE_VISIBLE']; ?></label>

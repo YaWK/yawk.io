@@ -547,7 +547,7 @@ namespace YAWK\PLUGINS\BLOG {
                         $session_gid = 1;
                     }
                 // check if content is outdated
-                if ($this->date_unpublish < $atm XOR $this->date_unpublish === "0000-00-00 00:00:00")
+                if ($this->date_unpublish < $atm XOR $this->date_unpublish === NULL)
                 {
                     $this->html .= ""; // do nothing
                 } // check publish date and show entry
