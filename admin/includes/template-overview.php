@@ -262,14 +262,14 @@ echo"</section><!-- Main content -->
                 else { $weblink= ""; }
 
                 // modifyDate
-                if (isset($template->modifyDate) && ($template->modifyDate !== "0000-00-00 00:00:00"))
+                if (isset($template->modifyDate) && ($template->modifyDate !== NULL))
                 {   // set modifyDate
                     $modifyDate = "<dt>$lang[MODIFIED]</dt><dd>$template->modifyDate</dd>";
                 }
                 else { $modifyDate = ''; }
 
                 // releaseDate
-                if (isset($template->releaseDate) && ($template->releaseDate !== "0000-00-00 00:00:00"))
+                if (isset($template->releaseDate) && ($template->releaseDate !== NULL))
                 {   // set release date
                     $releaseDate = "<dt>$lang[RELEASED]</dt><dd>$template->releaseDate</dd>";
                 }

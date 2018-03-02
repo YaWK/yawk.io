@@ -903,7 +903,7 @@ CREATE TABLE `cms_templates` (
   `name` varchar(128) NOT NULL,
   `positions` text NOT NULL,
   `description` text NOT NULL,
-  `releaseDate` datetime NOT NULL,
+  `releaseDate` datetime DEFAULT NULL,
   `author` varchar(255) NOT NULL,
   `authorUrl` varchar(255) NOT NULL,
   `weblink` varchar(255) NOT NULL,
