@@ -465,7 +465,7 @@ CREATE TABLE `cms_pages` (
 --
 
 INSERT INTO `cms_pages` (`id`, `published`, `gid`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `alias`, `title`, `bgimage`, `owner`, `menu`, `locked`, `blogid`, `plugin`) VALUES
-(1, 1, 1, '2017-03-08 00:00:00', '2017-09-13 00:20:21', '2017-03-08 00:00:00', '', 'index', 'Welcome to YaWK CMS!', '', -1, 0, 0, 0, '0');
+(1, 1, 1, '2017-03-08 00:00:00', '2017-09-13 00:20:21', '2017-03-08 00:00:00', NULL, 'index', 'Welcome to YaWK CMS!', '', -1, 0, 0, 0, '0');
 
 -- --------------------------------------------------------
 

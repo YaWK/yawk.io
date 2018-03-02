@@ -332,7 +332,7 @@ namespace YAWK {
                     if ($db->query("INSERT INTO {menu} (id,sort,menuID,text,href)
                           VALUES('" . $id . "','" . $sort . "', '" . $menuID . "', '" . $title_new . "', '" . $link . "')"))
                     {
-                        \YAWK\sys::setSyslog($db, 2, "copy $newfile successful", 0, 0, 0, 0);
+                        \YAWK\sys::setSyslog($db, 5, "menu entry $title_new added", 0, 0, 0, 0);
                        return true;
                     }
                     else
@@ -994,7 +994,7 @@ where ID = $this->id</h1>";
                     }
                     exit;
                 }
-                if ($currentpage->date_unpublish < $now XOR $currentpage->date_unpublish === "0000-00-00 00:00:00") {
+                if ($currentpage->date_unpublish < $now XOR $currentpage->date_unpublish === NULL) {
                     echo "<br>Dieser Inhalt ist leider nicht mehr verf&uuml;gbar. <br><br>";
                     $start = strtotime($now);
                     $end = strtotime($currentpage->date_publish);
