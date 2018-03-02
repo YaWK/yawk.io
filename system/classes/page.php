@@ -719,10 +719,6 @@ where ID = $this->id</h1>";
 
                 else
                 {
-
-                    if (!$db->error) {
-                        printf("Errormessage: %s\n", $db->error);
-                    }
                     // update pages db worked, all fin
                     \YAWK\sys::setSyslog($db, 2, "save $this->alias", 0, 0, 0, 0);
                     return true;
