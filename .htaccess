@@ -4,13 +4,13 @@
 
 #Options +FollowSymlinks
 #Options +SymlinksIfOwnerMatch
-#DirectoryIndex setup.php
-DirectoryIndex index.php
+DirectoryIndex setup.php
+#DirectoryIndex index.php
 Order allow,deny
 Allow from all
 
 # custom error page
-ErrorDocument 404 http://raspi/web/yawk-LTE/content/errors/404.html
+# ErrorDocument 404 http://yourdomain.com/web/yawk-LTE/content/errors/404.html
 
 # SEO settings
 RewriteEngine On
