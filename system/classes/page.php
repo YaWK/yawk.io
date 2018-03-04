@@ -424,7 +424,7 @@ namespace YAWK {
             // creation date
             $date_created = date("Y-m-d G:i:s");
 //            $date_unpublish = date('Y-m-d', strtotime('+25 year', strtotime($date_created)) );
-            $date_unpublish = null;
+            $date_unpublish = NULL;
             $title = $alias;
             /* alias string manipulation */
             $alias = mb_strtolower($alias); // lowercase
@@ -575,7 +575,7 @@ namespace YAWK {
                                            '" . $date_created . "',
                                            '" . $date_created . "',
                                            '" . $date_created . "',
-                                           '" . $date_unpublish . "',
+                                           NULL,
                                            '" . $alias . "',
                                            '" . $title . "',
                                            '" . $locked . "',
