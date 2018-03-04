@@ -625,6 +625,7 @@ namespace YAWK {
         {
             /** @var $db \YAWK\db */
             $date_changed = date("Y-m-d G:i:s");
+
             /* alias string manipulation */
             $this->alias = mb_strtolower($this->alias); // lowercase
             $this->alias = str_replace(" ", "-", $this->alias); // replace all ' ' with -
@@ -685,20 +686,40 @@ namespace YAWK {
                     \YAWK\alert::draw("warning", "Warning", "menu entry could not be stored in database.", "", 6200);
                 }
 
-/* var output for testing
-echo "<h1>published: $this->published<br>
-gid: $this->gid<br>
-date_changed: $date_changed<br>
-date_publish: $this->date_publish<br>
-date unpublish: $this->date_unpublish<br>
-title: $this->title<br>
-alias: $this->alias<br>
-menu: $this->menu<br>
-bgimage: $this->bgimage<br>
-where ID = $this->id</h1>";
-*/
                 // update page db
-                if (!$db->query("UPDATE {pages} 
+                // check unpublish date
+                if ($this->date_unpublish == "0000-00-00 00:00:00" || (empty($this->date_unpublish)))
+                {
+                    // sql code with NULL unpublish date
+                    if (!$db->query("UPDATE {pages} 
+                    SET published = '" . $this->published . "',
+                        gid = '" . $this->gid . "',
+                        date_changed = '" . $date_changed . "',
+                        date_publish = '" . $this->date_publish . "',
+                        date_unpublish = NULL,
+                        title = '" . $this->title . "',
+                        alias = '" . $this->alias . "',
+                        menu = '" . $this->menu . "',
+                        bgimage = '" . $this->bgimage . "'
+                    WHERE id = '" . $this->id . "'"))
+                    {
+                        // throw error
+                        \YAWK\sys::setSyslog($db, 5, "page data could not be stored in database.", 0, 0, 0, 0);
+                        // \YAWK\alert::draw("warning", "Warning", "page data could not be stored in database.", "", 6200);
+                        \YAWK\alert::draw("danger", 'MySQL Error: ('.mysqli_errno($db).')', 'Database error: '.mysqli_error($db).'', "", 0);
+                        return false;
+                    }
+                    else
+                    {
+                        // update pages db worked, all fin
+                        \YAWK\sys::setSyslog($db, 2, "save $this->alias", 0, 0, 0, 0);
+                        return true;
+                    }
+                }
+                else
+                    {
+                        // sql code with correct, user-selected unpublish date
+                        if (!$db->query("UPDATE {pages} 
                     SET published = '" . $this->published . "',
                         gid = '" . $this->gid . "',
                         date_changed = '" . $date_changed . "',
@@ -709,20 +730,21 @@ where ID = $this->id</h1>";
                         menu = '" . $this->menu . "',
                         bgimage = '" . $this->bgimage . "'
                     WHERE id = '" . $this->id . "'"))
-                {
-                    // throw error
-                    \YAWK\sys::setSyslog($db, 5, "page data could not be stored in database.", 0, 0, 0, 0);
-                    // \YAWK\alert::draw("warning", "Warning", "page data could not be stored in database.", "", 6200);
-                    \YAWK\alert::draw("danger", 'MySQL Error: ('.mysqli_errno($db).')', 'Database error: '.mysqli_error($db).'', "", 0);
-                    return false;
-                }
+                        {
+                            // throw error
+                            \YAWK\sys::setSyslog($db, 5, "page data could not be stored in database.", 0, 0, 0, 0);
+                            // \YAWK\alert::draw("warning", "Warning", "page data could not be stored in database.", "", 6200);
+                            \YAWK\alert::draw("danger", 'MySQL Error: ('.mysqli_errno($db).')', 'Database error: '.mysqli_error($db).'', "", 0);
+                            return false;
+                        }
+                        else
+                        {
+                            // update pages db worked, all fin
+                            \YAWK\sys::setSyslog($db, 2, "save $this->alias", 0, 0, 0, 0);
+                            return true;
+                        }
+                    }
 
-                else
-                {
-                    // update pages db worked, all fin
-                    \YAWK\sys::setSyslog($db, 2, "save $this->alias", 0, 0, 0, 0);
-                    return true;
-                }
 
             }
             // something went wrong...
