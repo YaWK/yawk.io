@@ -6,6 +6,11 @@ if (!isset($language) || (!isset($lang)))
     $lang = \YAWK\language::inject(@$lang, "../system/plugins/blog/language/");
 }
 $item = new \YAWK\PLUGINS\BLOG\blog();
+if (!isset($db))
+{
+    $db = new \YAWK\db();
+}
+
 $item->gid = $_GET['itemgid'];
 $item->blogid = $_GET['blogid'];
 $item->id = $_GET['itemid'];
@@ -39,7 +44,7 @@ switch ($item->gid) {
 
 $progress = "success";
 
-if ($item->toggleRole($db, $item->gid, $item->id, $item->blogid))
+if ($item->toggleRole($db, $item->gid, $item->id))
 {   // success, redirect to blog entries overview
     \YAWK\backend::setTimeout("index.php?plugin=blog&pluginpage=blog-entries&blogid=" . $item->blogid . "",0);
 }

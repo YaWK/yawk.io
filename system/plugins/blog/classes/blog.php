@@ -313,14 +313,18 @@ namespace YAWK\PLUGINS\BLOG {
         {
             /** @var $db \YAWK\db */
             // TOGGLE ITEM STATUS
-            if ($res = $db->query("UPDATE {blog_items}
-                          SET published = '" . $published . "'
-                          WHERE id = '" . $id . "'")
-            ) {   // success
+            if ($db->query("UPDATE {blog_items}
+                SET published = '" . $published . "'
+                WHERE id = '" . $id . "'"))
+            {
+                // success
                 return true;
-            } else {   // q failed
-                return false;
             }
+            else
+                {
+                    // toggle blog item failed
+                    return false;
+                }
         }
 
         /**
@@ -355,21 +359,23 @@ namespace YAWK\PLUGINS\BLOG {
          * @param object $db Database Object
          * @param int $itemgid The new group id for the blog item
          * @param int $id The id of the blog item to set
-         * @param int $bllgid ??
          * @return bool
          */
-        function toggleRole($db, $itemgid, $id, $blogid)
+        function toggleRole($db, $itemgid, $id)
         {
             /** @var $db \YAWK\db */
             // TOGGLE ITEM STATUS
-            if ($res = $db->query("UPDATE {blog_items}
-                          SET itemgid = '" . $itemgid . "'
-                          WHERE id = '" . $id . "'")
-            ) {   // success
+            if ($db->query("UPDATE {blog_items}
+                SET itemgid = '" . $itemgid . "'
+                WHERE id = '" . $id . "'"))
+            {
+                // success
                 return true;
-            } else {   // q failed
-                return false;
             }
+            else
+                {   // update item group id failed
+                    return false;
+                }
         }
 
         /**
@@ -1004,7 +1010,41 @@ namespace YAWK\PLUGINS\BLOG {
             }
 
             // UPDATE BLOG ENTRY ITSELF
-            if ($res = $db->query("UPDATE {blog_items} SET
+            if ($this->date_unpublish === "0000-00-00 00:00:00" || (empty($this->date_unpublish)))
+            {
+                // sql code with date_unblish = NULL
+                if ($res = $db->query("UPDATE {blog_items} SET
+                    published = '" . $this->published . "',
+                    itemgid = '" . $this->itemgid . "',
+                    sort = '" . $this->sort . "',
+                    teaser = '" . $this->teaser . "',
+                    title = '" . $this->blogtitle . "',
+                    filename = '" . $this->filename . "',
+                    subtitle = '" . $this->subtitle . "',
+                    date_changed = '" . $date_changed . "',
+                    date_publish = '" . $this->date_publish . "',
+                    date_unpublish = NULL,
+                    teasertext = '" . $this->teasertext . "',
+                    blogtext = '" . $this->blogtext . "',
+                    thumbnail = '" . $this->thumbnail . "',
+                    youtubeUrl = '" . $this->youtubeUrl . "',
+                    weblink = '" . $this->weblink . "',
+                    itemlayout = '" . $this->itemlayout . "',
+                    itemcomments = '" . $this->itemcomments . "'
+                    WHERE id = '" . $this->itemid . "'
+                    AND blogid = '" . $this->blogid . "'"))
+                {   // success
+                    return true;
+                }
+                else
+                {   // update blog items failed,
+                    return false;
+                }
+            }
+            else
+                {
+                    // sql insert with a valid user selected unpublish date
+                    if ($res = $db->query("UPDATE {blog_items} SET
                     published = '" . $this->published . "',
                     itemgid = '" . $this->itemgid . "',
                     sort = '" . $this->sort . "',
@@ -1024,13 +1064,15 @@ namespace YAWK\PLUGINS\BLOG {
                     itemcomments = '" . $this->itemcomments . "'
                     WHERE id = '" . $this->itemid . "'
                     AND blogid = '" . $this->blogid . "'"))
-            {   // success
-                return true;
-            }
-            else
-            {   // update blog items failed,
-                return false;
-            }
+                    {   // success
+                        return true;
+                    }
+                    else
+                    {   // update blog items failed,
+                        return false;
+                    }
+                }
+
         }
         else
         {   // update pages failed, abort +

@@ -24,23 +24,30 @@ $blog->comments = $blog->getBlogProperty($db, $blog->id, "comments");
 // TOGGLE ITEM
 if (isset($_GET['toggle']))
 {
-    $published = $db->quote($_GET['published']);
-    $blogid = $db->quote($_GET['blogid']);
+    $published = $_GET['published'];
+    if (isset($_GET['itemid']) && (!empty($_GET['itemid']) && (is_numeric($_GET['itemid']))))
+    {
+        $blog->itemid = $_GET['itemid'];
+    }
+    else
+        {
+            $blog->itemid = 0;
+        }
 
 // check status and toggle it
-    if ($published === '1') {
+    if ($published == '1') {
         $published = 0;
         $status = "$lang[OFFLINE]";
-        $color = "danger";
+        $color = "success";
     } else {
         $published = 1;
         $status = "$lang[ONLINE]";
         $color = "success";
     }
 
-    if ($blog->toggleItemOffline($db, $blogid, $published))
+    if ($blog->toggleItemOffline($db, $blog->itemid, $published))
     {   //
-        print \YAWK\alert::draw($color, "$lang[PAGE] $lang[IS] $lang[NOW] $status", "$lang[PAGE_TOGGLE] $lang[SUCCESSFUL]", "", 800);
+        print \YAWK\alert::draw($color, "$lang[PAGE] $lang[IS] $lang[NOW] $published", "$lang[PAGE_TOGGLE] $lang[SUCCESSFUL]", "", 800);
     }
     else
     {
