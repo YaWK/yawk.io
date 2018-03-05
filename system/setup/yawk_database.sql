@@ -337,7 +337,7 @@ CREATE TABLE `cms_menu` (
 --
 
 INSERT INTO `cms_menu` (`TMPID`, `id`, `sort`, `gid`, `menuID`, `parentID`, `published`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `title`, `text`, `href`, `target`, `divider`, `blogid`) VALUES
-(1, 1, 1, 1, 1, 0, 1, '2018-03-01 00:00:00', '2018-03-04 19:12:11', '2018-03-04 19:12:11', NULL, '', 'Welcome to Yet another Web Kit!', 'index.html', '_self', 0, 0);
+(1, 1, 1, 1, 1, 0, 1, '2018-03-01 00:00:00', '2018-03-04 19:12:11', '2018-03-04 19:12:11', NULL, '', 'Welcome!', 'index.html', '_self', 0, 0);
 
 -- --------------------------------------------------------
 
