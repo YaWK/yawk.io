@@ -101,17 +101,17 @@ echo"<ol class=\"breadcrumb\">
 <div class="box box-default">
     <div class="box-body">
 
-<a class="btn btn-default" href="index.php?plugin=blog" style="float:right;">
-    <i class="glyphicon glyphicon-backward"></i> &nbsp;<?php print $lang['BACK']; ?></a>
 <a class="btn btn-success" href="index.php?plugin=blog&pluginpage=blog-comments<?php echo $refreshBtnAddon; ?>&blogid=<?php echo $blog->id; ?>" style="float:right;">
-    <i class="glyphicon glyphicon-repeat"></i> &nbsp;<?php print $lang['REFRESH']; ?></a>
+<i class="glyphicon glyphicon-repeat"></i> &nbsp;<?php print $lang['REFRESH']; ?></a>
+<a class="btn btn-default" href="index.php?plugin=blog" style="float:right;">
+<i class="glyphicon glyphicon-backward"></i> &nbsp;<?php print $lang['BACK']; ?></a>
 
 <table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-hover" id="table-sort">
     <thead>
     <tr>
         <td width="3%"><strong>&nbsp;</strong></td>
-        <td width="3%" class=\"text-center\"><strong><?php echo $lang['GROUP']; ?></strong></td>
-        <td width="13%" class=\"text-center\"><strong><?php echo $lang['USER']; ?></strong></td>
+        <td width="3%" class=\"text-left\"><strong><?php echo $lang['GROUP']; ?></strong></td>
+        <td width="13%" class=\"text-left\"><strong><?php echo $lang['USER']; ?></strong></td>
         <td width="14%" class=\"text-center\"><strong><?php echo $lang['DATE']; ?></strong></td>
         <td width="57%"><strong><?php echo $lang['COMMENT']; ?></strong></td>
         <td width="5%" class=\"text-center\"><strong><?php echo $lang['ID']; ?></strong></td>
@@ -182,11 +182,11 @@ echo"<ol class=\"breadcrumb\">
         }
         // draw table and badges
         echo "<tr>
-                <td class=\"text-center\">
+                <td class=\"text-left\">
                 <a href=\"index.php?plugin=blog&pluginpage=blog-comments&toggle=1&published=" . $row['published'] . "&blogid=" . $blog->id . "&id=" . $row['id'] . "\">
-                <span class=\"label label-$pub\">$pubtext</span></a>&nbsp;</td>
+                <span class=\"label label-$pub\">".$pubtext."</span></a>&nbsp;</td>
                 
-                <td class=\"text-center\">
+                <td class=\"text-leftcleft>
                 <span class=\"label label-$color\">".$label."</span></td>
                 
                 <td class=\"text-center\">".$comment_user."</td>
