@@ -28,58 +28,56 @@
         /* BODY TYPOGRAPHY */
         
                     font-family: Arial, Helvetica, sans-serif;
-                    font-size: 14px;
-                    color: #787878;
-                    text-shadow: 1px 1px 0px #E0E0E0;
+                    font-size: 16px;
+                    color: #222222;
+                    text-shadow: 1px 1px 0px #CCCCCC;
                     font-weight: normal;
                     font-style: normal;
                     text-decoration: none;
                  
     }    
         /* H1 - H6 TYPOGRAPHY SETTINGS */   
-          @font-face {
-                font-family: Sansation-LightItalic-ttf;
-                src: url('../../../fonts/Sansation-LightItalic.ttf');
-                }
-                h1 
-                {
-                    font-family: Sansation-LightItalic-ttf !important;
-                    font-size: 48px;
-                    color: #383838;
-                    text-shadow: 2px 2px 0px #C2C2C2;
-                    font-weight: normal;
-                    font-style: normal;
-                    text-decoration: none;
-                }
-                h1 a:link { /* LINK SETTINGS */
+          
+                    h1 
+                    {
+                        font-family: Impact, Charcoal, sans-serif;
+                        font-size: 48px;
+                        color: #363636;
+                        text-shadow: 2px 2px 0px #CCCCCC;
+                        font-weight: normal;
+                        font-style: normal;
+                        text-decoration: none;
+                    }
+                
+                    h1 a:link { /* LINK SETTINGS */
                         color: #186FF2;
                         font-weight: normal;
                         font-style: normal;
                         text-decoration: none;
-                }
-                h1 a:visited {
+                    }
+                    h1 a:visited {
                         color: #114EAB;
-                }
-                h1 a:hover {   
+                    }
+                    h1 a:hover {   
                         color: #1B95F2;
                         text-decoration: none;
-                }
-                h1 small,
-                .h1 small
-                {
-                    font-weight: normal;
-                    line-height: 1;
-                    color: #CC9A6E;
-                    text-shadow: 2px 2px 0px #963627;
-                }
-                
+                    }
+                    h1 small,
+                    .h1 small
+                    {
+                        font-weight: normal;
+                        line-height: 1;
+                        color: #FFFFFF;
+                        text-shadow:  #FFFFFF;
+                    }
+                    
           
                     h2 
                     {
-                        font-family: Arial, Helvetica, sans-serif;
+                        font-family: Impact, Charcoal, sans-serif;
                         font-size: 36px;
-                        color: #383838;
-                        text-shadow: 2px 2px 0px #C2C2C2;
+                        color: #363636;
+                        text-shadow: 2px 2px 0px #CCCCCC;
                         font-weight: normal;
                         font-style: normal;
                         text-decoration: none;
@@ -103,17 +101,17 @@
                     {
                         font-weight: normal;
                         line-height: 1;
-                        color: #1E2E22;
-                        text-shadow: 2px 2px 0px #C2C2C2;
+                        color: #FFFFFF;
+                        text-shadow:  #FFFFFF;
                     }
                     
           
                     h3 
                     {
-                        font-family: Arial, Helvetica, sans-serif;
+                        font-family: Impact, Charcoal, sans-serif;
                         font-size: 30px;
-                        color: #4D4D4D;
-                        text-shadow: 2px 2px 8px #9C9C9C;
+                        color: #363636;
+                        text-shadow: 2px 2px 8px #CCCCCC;
                         font-weight: normal;
                         font-style: normal;
                         text-decoration: none;
@@ -137,17 +135,17 @@
                     {
                         font-weight: normal;
                         line-height: 1;
-                        color: #4D4D4D;
-                        text-shadow: 2px 2px 0px #9C9C9C;
+                        color: #FFFFFF;
+                        text-shadow:  #FFFFFF;
                     }
                     
           
                     h4 
                     {
-                        font-family: Arial, Helvetica, sans-serif;
+                        font-family: Impact, Charcoal, sans-serif;
                         font-size: 32px;
-                        color: #A8A8A8;
-                        text-shadow: 1px 1px 0px #0D0D0D;
+                        color: #363636;
+                        text-shadow: 1px 1px 0px #CCCCCC;
                         font-weight: normal;
                         font-style: normal;
                         text-decoration: none;
@@ -171,17 +169,17 @@
                     {
                         font-weight: normal;
                         line-height: 1;
-                        color: #A8A8A8;
-                        text-shadow: 2px 2px 0px #0D0D0D;
+                        color: #FFFFFF;
+                        text-shadow:  #FFFFFF;
                     }
                     
           
                     h5 
                     {
-                        font-family: Arial, Helvetica, sans-serif;
+                        font-family: Impact, Charcoal, sans-serif;
                         font-size: 18px;
-                        color: #C4C4C4;
-                        text-shadow: 1px 1px 0px #919191;
+                        color: #363636;
+                        text-shadow: 1px 1px 0px #CCCCCC;
                         font-weight: normal;
                         font-style: normal;
                         text-decoration: none;
@@ -205,17 +203,17 @@
                     {
                         font-weight: normal;
                         line-height: 1;
-                        color: #C4C4C4;
-                        text-shadow: 2px 2px 0px #919191;
+                        color: #FFFFFF;
+                        text-shadow:  #FFFFFF;
                     }
                     
           
                     h6 
                     {
-                        font-family: Arial, Helvetica, sans-serif;
+                        font-family: Impact, Charcoal, sans-serif;
                         font-size: 12px;
-                        color: #0A0A0A;
-                        text-shadow: 1px 1px 0px #EBEBEB;
+                        color: #363636;
+                        text-shadow: 1px 1px 0px #CCCCCC;
                         font-weight: normal;
                         font-style: normal;
                         text-decoration: none;
@@ -239,8 +237,8 @@
                     {
                         font-weight: normal;
                         line-height: 1;
-                        color: #0A0A0A;
-                        text-shadow: 2px 2px 0px #EBEBEB;
+                        color: #FFFFFF;
+                        text-shadow:  #FFFFFF;
                     }
                     
           
@@ -268,8 +266,8 @@
                     {
                         font-weight: normal;
                         line-height: 1;
-                        color: #787878;
-                        text-shadow: 1px 1px 0px #E0E0E0;
+                        color: #FFFFFF;
+                        text-shadow:  #FFFFFF;
                     }
                     
         
@@ -1071,7 +1069,7 @@
         text-align: left;
         vertical-align: baseline;
         margin-top: 0px;
-        margin-bottom: 25px;
+        margin-bottom: 3.0em;
         position: static;
         background-color: #F8F8F8;
         width: 100%;
@@ -1146,7 +1144,7 @@
         background-size: cover;
         
         
-        background: transparent;
+        background:  ;
     }
     .pos-outerRight
     {   
@@ -1361,33 +1359,33 @@
     }
     .pos-mainLeft
     {   
-        -webkit-box-shadow: 0px 0px 0px -0px #888888;
-        -moz-box-shadow: 0px 0px 0px -0px #888888;
-        box-shadow: 0px 0px 0px -0px #888888;
-        border-width: 0px 0px 0px 0px;
-        border-color: #888888;
-        border-style: none;
-        border-radius: 0 0 0 0;
-        padding: 0px;
-        overflow: visible;
-        visibility: visible;
-        text-align: left;
-        vertical-align: baseline;
-        margin-top: 0px;
-        margin-bottom: 0px;
-        position: static;
-        background-color: #F8F8F8;
-        height: auto;
-        z-index: 9999;
+        -webkit-box-shadow:  #;
+        -moz-box-shadow:  #;
+        box-shadow:  #;
+        border-width: ;
+        border-color: #;
+        border-style: ;
+        border-radius: ;
+        padding: ;
+        overflow: ;
+        visibility: ;
+        text-align: ;
+        vertical-align: ;
+        margin-top: ;
+        margin-bottom: ;
+        position: ;
+        background-color: #;
+        height: ;
+        z-index: ;
         /* BACKGROUND IMAGE */
         background-image: url('');
         background-repeat:;
-        background-position:center;
-        background-attachment:fixed;
+        background-position:;
+        background-attachment:;
         background-size: ;
         
         
-        background:  ;
+        background: ;
     }
     .pos-main
     {   
@@ -1421,33 +1419,33 @@
     }
     .pos-mainRight
     {   
-        -webkit-box-shadow: 0px 0px 0px -0px #888888;
-        -moz-box-shadow: 0px 0px 0px -0px #888888;
-        box-shadow: 0px 0px 0px -0px #888888;
-        border-width: 0px 0px 0px 0px;
-        border-color: #888888;
-        border-style: none;
-        border-radius: 0 0 0 0;
-        padding: 0px;
-        overflow: visible;
-        visibility: visible;
-        text-align: left;
-        vertical-align: baseline;
-        margin-top: 0px;
-        margin-bottom: 0px;
-        position: static;
-        background-color: #F8F8F8;
-        height: auto;
-        z-index: 9999;
+        -webkit-box-shadow:  #;
+        -moz-box-shadow:  #;
+        box-shadow:  #;
+        border-width: ;
+        border-color: #;
+        border-style: ;
+        border-radius: ;
+        padding: ;
+        overflow: ;
+        visibility: ;
+        text-align: ;
+        vertical-align: ;
+        margin-top: ;
+        margin-bottom: ;
+        position: ;
+        background-color: #;
+        height: ;
+        z-index: ;
         /* BACKGROUND IMAGE */
         background-image: url('');
         background-repeat:;
-        background-position:center;
-        background-attachment:fixed;
+        background-position:;
+        background-attachment:;
         background-size: ;
         
         
-        background:  ;
+        background: ;
     }
     .pos-mainBottom
     {   
