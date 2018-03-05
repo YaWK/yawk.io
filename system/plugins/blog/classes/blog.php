@@ -363,7 +363,7 @@ namespace YAWK\PLUGINS\BLOG {
          */
         function toggleRole($db, $itemgid, $id)
         {
-            /** @var $db \YAWK\db */
+            /** @var $db \YAWK\db*/
             // TOGGLE ITEM STATUS
             if ($db->query("UPDATE {blog_items}
                 SET itemgid = '" . $itemgid . "'
@@ -1827,7 +1827,34 @@ namespace YAWK\PLUGINS\BLOG {
                     $this->teasertext = \YAWK\sys::encodeChars($this->teasertext);
                     $this->blogtext = \YAWK\sys::encodeChars($this->blogtext);
 
-                    if ($res = $db->query("INSERT INTO {blog_items}
+                    if ($date_unpublish == "0000-00-00 00:00:00" || (empty($date_unpublish)))
+                    {
+                        // sql code for zero date - insert NULL instead
+                        $res = $db->query("INSERT INTO {blog_items}
+                                (blogid,id,uid,pageid,sort,published,title,filename,subtitle,date_created,date_publish,date_unpublish,teasertext,blogtext,thumbnail,youtubeUrl,author,weblink)
+                          VALUES('" . $this->blogid . "',
+                          '" . $id . "',
+                          '" . $_SESSION['uid'] . "',
+                          '" . $page_id . "',
+                          '" . $sort . "',
+                          '" . $published . "',
+                          '" . $title . "',
+                          '" . $alias . "',
+                          '" . $subtitle . "',
+                          '" . $date_created . "',
+                          '" . $date_publish . "',
+                          NULL,
+                          '" . $teasertext . "',
+                          '" . $blogtext . "',
+                          '" . $thumbnail . "',
+                          '" . $youtubeUrl . "',
+                          '" . $_SESSION['username'] . "',
+                          '" . $weblink . "')");
+                    }
+                    else
+                        {
+                            // sql code for zero date - insert NULL instead
+                            $res = $db->query("INSERT INTO {blog_items}
                                 (blogid,id,uid,pageid,sort,published,title,filename,subtitle,date_created,date_publish,date_unpublish,teasertext,blogtext,thumbnail,youtubeUrl,author,weblink)
                           VALUES('" . $this->blogid . "',
                           '" . $id . "',
@@ -1846,7 +1873,10 @@ namespace YAWK\PLUGINS\BLOG {
                           '" . $thumbnail . "',
                           '" . $youtubeUrl . "',
                           '" . $_SESSION['username'] . "',
-                          '" . $weblink . "')"))
+                          '" . $weblink . "')");
+                        }
+
+                    if ($res === true)
                     {
                         // define content of file
                         $content = "<?php \$blog_id = $blogid; \$item_id = $id; \$full_view = 1; include 'system/plugins/blog/blog.php'; ?>";
@@ -1925,8 +1955,71 @@ namespace YAWK\PLUGINS\BLOG {
                     $row = mysqli_fetch_row($res);
                     $id = $row[0] + 1;
                 }
-                // add new entry to db blog_items
-                if ($res = $db->query("INSERT INTO {blog_items} (blogid,id,uid,pageid,sort,published,itemgid,title,filename,subtitle,date_created,date_changed,date_publish,date_unpublish,teasertext,blogtext,author,youtubeUrl,thumbnail, weblink)
+
+                if ($this->date_unpublish == "0000-00-00 00:00:00" || (empty($this->date_unpublish)))
+                {
+                    // add new entry to blog_items with date_unpublish ZERO value
+                    if ($res = $db->query("INSERT INTO {blog_items} (blogid,id,uid,pageid,sort,published,itemgid,title,filename,subtitle,date_created,date_changed,date_publish,date_unpublish,teasertext,blogtext,author,youtubeUrl,thumbnail, weblink)
+                        VALUES ('" . $this->blogid . "',
+                                '" . $id . "',
+                                '" . $this->uid . "',
+                                '" . $pageid . "',
+                                '" . $this->sort . "',
+                                '" . $this->published . "',
+                                '" . $this->itemgid . "',
+                                '" . $this->blogtitle . "',
+                                '" . $alias . "',
+                                '" . $this->subtitle . "',
+                                '" . $this->date_created . "',
+                                '" . $this->date_changed . "',
+                                '" . $this->date_publish . "',
+                                NULL,
+                                '" . $this->teasertext . "',
+                                '" . $this->blogtext . "',
+                                '" . $this->author . "',
+                                '" . $this->youtubeUrl . "',
+                                '" . $this->weblink . "',
+                                '" . $this->thumbnail . "')"))
+                    {   // blog items inserted into database
+                        // generate local meta tags
+                        $desc = "description";
+                        $keyw = "keywords";
+                        $words = "";
+                        // insert local meta description to db meta_local
+                        if (!$res = $db->query("INSERT INTO {meta_local} (name,page,content)
+                        VALUES ('" . $desc . "', '" . $id . "', '" . $this->blogtitle . "')"))
+                        {   // inset local meta description failed
+                            // \YAWK\alert::draw("warning", "Warning: ", "Could not store meta description.", "", "3800");
+                        }
+                        if (!$res = $db->query("INSERT INTO {meta_local} (name,page,content)
+                        VALUES ('" . $keyw . "','" . $id . "','" . $words . "')"))
+                        {   // insert local meta keywords
+                            // \YAWK\alert::draw("warning", "Warning: ", "Could not store meta description.", "", "3800");
+                        }
+                        // prepare loading page content
+                        $content = "<?php \$blog_id = $this->blogid; \$item_id = $id; \$full_view = 1; include 'system/plugins/blog/blog.php'; ?>";
+                        // prepare file
+                        $filename = "../content/pages/" . $alias . ".php";
+                        $handle = fopen($filename, "wr");
+                        if (fwrite($handle, $content))
+                        {   // create file
+                            fclose($handle);
+                            chmod($filename, 0777);
+                        }
+                        else
+                        {   // could not create file, throw error
+                            \YAWK\alert::draw("error", "Error: ", "Could not create loading file $filename", "", "3800");
+                        }
+                    }
+                    else
+                    {   // insert blog item failed,
+                        \YAWK\alert::draw("danger", "Error: ", "Insert Blog item failed.", "","3600");
+                        return false;
+                    }
+                }
+                else
+                    {   // add new entry to db blog_items WITH correct unpublish date
+                        if ($res = $db->query("INSERT INTO {blog_items} (blogid,id,uid,pageid,sort,published,itemgid,title,filename,subtitle,date_created,date_changed,date_publish,date_unpublish,teasertext,blogtext,author,youtubeUrl,thumbnail, weblink)
                         VALUES ('" . $this->blogid . "',
                                 '" . $id . "',
                                 '" . $this->uid . "',
@@ -1947,42 +2040,56 @@ namespace YAWK\PLUGINS\BLOG {
                                 '" . $this->youtubeUrl . "',
                                 '" . $this->weblink . "',
                                 '" . $this->thumbnail . "')"))
-                {   // blog items inserted into database
-                    // generate local meta tags
-                    $desc = "description";
-                    $keyw = "keywords";
-                    $words = "";
-                    // insert local meta description to db meta_local
-                    if (!$res = $db->query("INSERT INTO {meta_local} (name,page,content)
+                        {   // blog items inserted into database
+                            // generate local meta tags
+                            $desc = "description";
+                            $keyw = "keywords";
+                            $words = "";
+                            // insert local meta description to db meta_local
+                            if (!$res = $db->query("INSERT INTO {meta_local} (name,page,content)
                         VALUES ('" . $desc . "', '" . $id . "', '" . $this->blogtitle . "')"))
-                    {   // inset local meta description failed
-                       // \YAWK\alert::draw("warning", "Warning: ", "Could not store meta description.", "", "3800");
-                    }
-                    if (!$res = $db->query("INSERT INTO {meta_local} (name,page,content)
+                            {   // inset local meta description failed
+                                // \YAWK\alert::draw("warning", "Warning: ", "Could not store meta description.", "", "3800");
+                            }
+                            if (!$res = $db->query("INSERT INTO {meta_local} (name,page,content)
                         VALUES ('" . $keyw . "','" . $id . "','" . $words . "')"))
-                    {   // insert local meta keywords
-                        // \YAWK\alert::draw("warning", "Warning: ", "Could not store meta description.", "", "3800");
+                            {   // insert local meta keywords
+                                // \YAWK\alert::draw("warning", "Warning: ", "Could not store meta description.", "", "3800");
+                            }
+                            // prepare loading page content
+                            $content = "<?php \$blog_id = $this->blogid; \$item_id = $id; \$full_view = 1; include 'system/plugins/blog/blog.php'; ?>";
+                            // prepare file
+                            $filename = "../content/pages/" . $alias . ".php";
+                            $handle = fopen($filename, "wr");
+                            if (fwrite($handle, $content))
+                            {   // create file
+                                fclose($handle);
+                                chmod($filename, 0777);
+                            }
+                            else
+                            {   // could not create file, throw error
+                                \YAWK\alert::draw("error", "Error: ", "Could not create loading file $filename", "", "3800");
+                            }
+                        }
+                        else
+                        {   // insert blog item failed,
+                            \YAWK\alert::draw("danger", "Error: ", "Insert Blog item failed.", "","3600");
+                            return false;
+                        }
                     }
-                    // prepare loading page content
-                    $content = "<?php \$blog_id = $this->blogid; \$item_id = $id; \$full_view = 1; include 'system/plugins/blog/blog.php'; ?>";
-                    // prepare file
-                    $filename = "../content/pages/" . $alias . ".php";
-                    $handle = fopen($filename, "wr");
-                    if (fwrite($handle, $content))
-                    {   // create file
-                        fclose($handle);
-                        chmod($filename, 0777);
-                    }
-                    else
-                    {   // could not create file, throw error
-                        \YAWK\alert::draw("error", "Error: ", "Could not create loading file $filename", "", "3800");
-                    }
+
+                /*
+                // success: insert blog item worked
+                if ($res === true)
+                {
+
                 }
                 else
-                {   // insert blog item failed,
-                    \YAWK\alert::draw("danger", "Error: ", "Insert Blog item failed.", "","3600");
-                    return false;
-                }
+                    {
+                        // error: insert blog item failed!
+                    }
+                */
+
             }
             else
             {   // insert item into pages db failed,
