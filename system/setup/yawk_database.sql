@@ -161,7 +161,7 @@ CREATE TABLE `cms_blog_items` (
   `voteUp` int(11) NOT NULL DEFAULT '0',
   `voteDown` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
------------------------------------------------------
+-- ---------------------------------------------------
 
 --
 -- Tabellenstruktur für Tabelle `cms_follower`
@@ -857,7 +857,7 @@ CREATE TABLE `cms_syslog` (
   `toGID` int(11) NOT NULL DEFAULT '0',
   `seen` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
- --------------------------------------------------------
+-- --------------------------------------------------------
 
 --
 -- Tabellenstruktur für Tabelle `cms_syslog_types`
@@ -2122,7 +2122,7 @@ CREATE TABLE `cms_widgets` (
   `date_unpublish` datetime DEFAULT NULL,
   `widgetTitle` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
--------------------------------------------------------
+-- -----------------------------------------------------
 
 --
 -- Tabellenstruktur für Tabelle `cms_widget_defaults`
@@ -2351,7 +2351,7 @@ CREATE TABLE `cms_widget_settings` (
   `options` text NOT NULL,
   `description` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
---------------------------------------------------------
+-- ------------------------------------------------------
 
 --
 -- Tabellenstruktur für Tabelle `cms_widget_types`
@@ -2637,3 +2637,4 @@ ALTER TABLE `cms_stats`
 
 ALTER TABLE `cms_syslog`
   MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT;
+  
