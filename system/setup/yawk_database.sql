@@ -846,6 +846,7 @@ CREATE TABLE `cms_stats` (
 -- Tabellenstruktur für Tabelle `cms_syslog`
 --
 
+
 CREATE TABLE `cms_syslog` (
   `log_id` int(11) NOT NULL,
   `log_date` datetime DEFAULT CURRENT_TIMESTAMP,
@@ -2597,12 +2598,7 @@ ALTER TABLE `cms_stats`
 -- Indizes für die Tabelle `cms_syslog`
 --
 ALTER TABLE `cms_syslog`
-  ADD PRIMARY KEY (`log_id`),
-  ADD KEY `id` (`log_id`,`fromUID`),
-  ADD KEY `event_date` (`log_date`),
-  ADD KEY `toUID` (`toUID`,`toGID`),
-  ADD KEY `msg_read` (`seen`),
-  ADD KEY `type` (`log_type`);
+  ADD PRIMARY KEY (`log_id`);
 
 --
 -- Indizes für die Tabelle `cms_syslog_types`
@@ -2640,6 +2636,7 @@ ALTER TABLE `cms_plugin_faq`
 --
 ALTER TABLE `cms_stats`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT für Tabelle `cms_syslog`
 --
