@@ -1113,8 +1113,7 @@ namespace YAWK\PLUGINS\BLOG {
                     voting = '" . $blog->voting . "',
                     layout = '" . $blog->layout . "',
                     gid = '" . $blog->gid . "',
-                    spacer = '" . $blog->spacer . "',
-                    frontendIcon = '" . $blog->frontendIcon . "'
+                    spacer = '" . $blog->spacer . "'
                     WHERE id = '" . $blog->blogid . "'"))
         {
             return true;
@@ -1959,7 +1958,7 @@ namespace YAWK\PLUGINS\BLOG {
                 if ($this->date_unpublish == "0000-00-00 00:00:00" || (empty($this->date_unpublish)))
                 {
                     // add new entry to blog_items with date_unpublish ZERO value
-                    if ($res = $db->query("INSERT INTO {blog_items} (blogid,id,uid,pageid,sort,published,itemgid,title,filename,subtitle,date_created,date_changed,date_publish,date_unpublish,teasertext,blogtext,author,youtubeUrl,thumbnail, weblink)
+                    if ($res = $db->query("INSERT INTO {blog_items} (blogid,id,uid,pageid,sort,published,itemgid,title,filename,subtitle,date_created,date_changed,date_publish,date_unpublish,teasertext,blogtext,author,youtubeUrl,weblink, thumbnail)
                         VALUES ('" . $this->blogid . "',
                                 '" . $id . "',
                                 '" . $this->uid . "',
@@ -2019,7 +2018,7 @@ namespace YAWK\PLUGINS\BLOG {
                 }
                 else
                     {   // add new entry to db blog_items WITH correct unpublish date
-                        if ($res = $db->query("INSERT INTO {blog_items} (blogid,id,uid,pageid,sort,published,itemgid,title,filename,subtitle,date_created,date_changed,date_publish,date_unpublish,teasertext,blogtext,author,youtubeUrl,thumbnail, weblink)
+                        if ($res = $db->query("INSERT INTO {blog_items} (blogid,id,uid,pageid,sort,published,itemgid,title,filename,subtitle,date_created,date_changed,date_publish,date_unpublish,teasertext,blogtext,author,youtubeUrl,weblink,thumbnail)
                         VALUES ('" . $this->blogid . "',
                                 '" . $id . "',
                                 '" . $this->uid . "',
