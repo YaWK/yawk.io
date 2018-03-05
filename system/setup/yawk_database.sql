@@ -105,13 +105,6 @@ CREATE TABLE `cms_blog` (
   `spacer` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Daten für Tabelle `cms_blog`
---
-
-INSERT INTO `cms_blog` (`id`, `sort`, `published`, `name`, `description`, `icon`, `showtitle`, `showdesc`, `showdate`, `showauthor`, `sequence`, `sortation`, `footer`, `comments`, `gid`, `permalink`, `layout`, `preview`, `voting`, `spacer`) VALUES
-(1, 0, 1, 'ZyXEL zywalls', 'ZyXEL Mails Forward Address', 'fa-area-chart', 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0);
-
 -- --------------------------------------------------------
 
 --
@@ -168,17 +161,7 @@ CREATE TABLE `cms_blog_items` (
   `voteUp` int(11) NOT NULL DEFAULT '0',
   `voteDown` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Daten für Tabelle `cms_blog_items`
---
-
-INSERT INTO `cms_blog_items` (`blogid`, `id`, `uid`, `pageid`, `sort`, `published`, `itemgid`, `teaser`, `title`, `filename`, `subtitle`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `teasertext`, `blogtext`, `author`, `thumbnail`, `youtubeUrl`, `weblink`, `itemlayout`, `itemcomments`, `voteUp`, `voteDown`) VALUES
-(1, 2, 1, 4, 2, 1, 1, 0, 'Blog', 'blog', '', '2018-03-05 16:26:19', '2018-03-05 16:45:51', '2018-03-05 16:26:02', NULL, '<p>teaser</p>', '<p>text</p>', 'admin', 'http://placehold.it/320x200', '', '', -1, -1, 0, 0),
-(1, 3, 1, 5, 3, 1, 1, 0, 'Blog-KOPIE', 'blog-kopie', '', '2018-03-05 16:26:19', '2018-03-05 16:51:46', '2018-03-05 16:26:02', NULL, '<p>teaser</p>', '<p>text</p>', 'admin', 'http://placehold.it/320x200', '', '', -1, -1, 0, 0),
-(1, 4, 1, 6, 4, 1, 1, 0, 'Fantastic Article', 'fantastic-article', '', '2018-03-05 16:26:19', '2018-03-05 16:53:50', '2018-03-05 16:26:02', NULL, '<p>teaser</p>', '<p>&Uuml;berall dieselbe alte Leier. Das Layout ist fertig, der Text l&auml;sst auf sich warten. Damit das Layout nun nicht nackt im Raume steht und sich klein und leer vorkommt, springe ich ein: der Blindtext. Genau zu diesem Zwecke erschaffen, immer im Schatten meines gro&szlig;en Bruders »Lorem Ipsum«, freue ich mich jedes Mal, wenn Sie ein paar Zeilen lesen. Denn esse est percipi - Sein ist wahrgenommen werden. Und weil Sie nun schon die G&uuml;te haben, mich ein paar weitere S&auml;tze lang zu begleiten, m&ouml;chte ich diese Gelegenheit nutzen, Ihnen nicht nur als L&uuml;ckenf&uuml;ller zu dienen, sondern auf etwas hinzuweisen, das es ebenso verdient wahrgenommen zu werden: Webstandards n&auml;mlich. Sehen Sie, Webstandards sind das Regelwerk, auf dem Webseiten aufbauen. So gibt es Regeln f&uuml;r HTML, CSS, JavaScript oder auch XML; Worte, die Sie vielleicht schon einmal von Ihrem Entwickler geh&ouml;rt haben. Diese Standards sorgen daf&uuml;r, dass alle Beteiligten aus einer Webseite den gr&ouml;&szlig;ten Nutzen ziehen. Im Gegensatz zu fr&uuml;heren Webseiten m&uuml;ssen wir zum Beispiel nicht mehr zwei verschiedene Webseiten f&uuml;r den Internet Explorer und einen anderen Browser programmieren. Es reicht eine Seite, die - richtig angelegt - sowohl auf verschiedenen Browsern im Netz funktioniert, aber ebenso gut f&uuml;r den Ausdruck oder</p>', 'admin', 'http://placehold.it/320x200', '', '', 1, -1, 0, 0);
-
--- --------------------------------------------------------
+-----------------------------------------------------
 
 --
 -- Tabellenstruktur für Tabelle `cms_follower`
@@ -324,14 +307,6 @@ CREATE TABLE `cms_logins` (
   `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Daten für Tabelle `cms_logins`
---
-
-INSERT INTO `cms_logins` (`id`, `datetime`, `location`, `failed`, `ip`, `useragent`, `username`, `password`) VALUES
-(0, '2018-03-03 13:55:39', 'backend', 0, '192.168.100.10', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36', 'admin', 'test');
-
--- --------------------------------------------------------
 
 --
 -- Tabellenstruktur für Tabelle `cms_menu`
@@ -362,10 +337,7 @@ CREATE TABLE `cms_menu` (
 --
 
 INSERT INTO `cms_menu` (`TMPID`, `id`, `sort`, `gid`, `menuID`, `parentID`, `published`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `title`, `text`, `href`, `target`, `divider`, `blogid`) VALUES
-(1, 1, 1, 1, 1, 0, 1, '2018-03-01 00:00:00', '2018-03-04 19:12:11', '0000-00-00 00:00:00', NULL, '', 'Welcome to YaWK CMS!', 'index.html', '_self', 0, 0),
-(0, 4, 4, 1, 1, 0, 1, '2018-03-05 01:15:54', '2018-03-05 01:15:54', '2018-03-05 01:15:54', NULL, '', 'YaWK Support', '#', '_self', 0, 0),
-(0, 5, 5, 1, 1, 0, 1, '2018-03-05 01:16:28', '2018-03-05 01:16:28', '2018-03-05 01:16:28', NULL, '', 'test2', 'test2.html', '_self', 0, 0),
-(0, 6, 6, 1, 1, 0, 1, '2018-03-05 16:25:58', '2018-03-05 16:25:58', '2018-03-05 16:25:58', NULL, '', 'ZyXEL zywall', 'zyxel-zywall.html', '_self', 0, 1);
+(1, 1, 1, 1, 1, 0, 1, '2018-03-01 00:00:00', '2018-03-04 19:12:11', '2018-03-04 19:12:11', NULL, '', 'Welcome to Yet another Web Kit!', 'index.html', '_self', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -419,36 +391,6 @@ CREATE TABLE `cms_meta_local` (
   `content` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Daten für Tabelle `cms_meta_local`
---
-
-INSERT INTO `cms_meta_local` (`id`, `name`, `page`, `content`) VALUES
-(1, 'description', 4, 'Blog Description                                                                                    '),
-(2, 'description', 4, 'Blog Description                                                                                    '),
-(3, 'keywords', 4, ''),
-(4, 'description', 3, 'blog 1-KOPIE'),
-(5, 'keywords', 3, ''),
-(6, 'description', 3, 'blog 1-KOPIE'),
-(7, 'keywords', 3, ''),
-(8, 'description', 3, 'blog 1-KOPIE'),
-(9, 'keywords', 3, ''),
-(10, 'description', 15, 'Blog'),
-(11, 'keywords', 15, ''),
-(12, 'description', 3, 'Blog-KOPIE'),
-(13, 'keywords', 3, ''),
-(14, 'description', 3, 'Blog-KOPIE'),
-(15, 'keywords', 3, ''),
-(16, 'description', 4, 'Blog Description                                                                                    '),
-(17, 'keywords', 4, ''),
-(18, 'description', 3, 'Blog-KOPIE'),
-(19, 'keywords', 3, ''),
-(20, 'description', 4, 'Blog Description                                                                                    '),
-(21, 'keywords', 4, ''),
-(22, 'description', 3, 'Blog-KOPIE'),
-(23, 'keywords', 3, ''),
-(24, 'description', 4, 'Blog-KOPIE-KOPIE'),
-(25, 'keywords', 4, '');
 
 -- --------------------------------------------------------
 
@@ -523,14 +465,7 @@ CREATE TABLE `cms_pages` (
 --
 
 INSERT INTO `cms_pages` (`id`, `published`, `gid`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `alias`, `title`, `bgimage`, `owner`, `menu`, `locked`, `blogid`, `plugin`) VALUES
-(1, 1, 1, '2017-03-08 00:00:00', '2017-09-13 00:20:21', '2017-03-08 00:00:00', NULL, 'index', 'Welcome to YaWK CMS!', '', -1, 0, 0, 0, '0'),
-(2, 1, 1, '2018-03-05 01:16:28', '2018-03-05 03:55:26', '2018-03-05 01:16:28', NULL, 'test2', 'test2', '', -1, 0, 0, 0, '0'),
-(3, 1, 1, '2018-03-05 16:25:58', '2018-03-05 16:25:58', '2018-03-05 16:25:58', NULL, 'zyxel-zywall', 'ZyXEL zywall', NULL, -1, 0, 1, 1, '0'),
-(4, 1, 1, '2018-03-05 16:26:19', NULL, '2018-03-05 16:26:19', NULL, 'blog', 'Blog', NULL, -1, 0, 1, 1, '0'),
-(5, 1, 1, '2018-03-05 16:46:24', NULL, '2018-03-05 16:46:24', NULL, 'blog-kopie', 'Blog-KOPIE', NULL, -1, 0, 1, 1, '0'),
-(6, 1, 1, '2018-03-05 16:50:23', NULL, '2018-03-05 16:50:23', NULL, 'fantastic-article', 'Fantastic Article', NULL, -1, 0, 1, 1, '0');
-
--- --------------------------------------------------------
+(1, 1, 1, '2017-03-08 00:00:00', '2017-09-13 00:20:21', '2017-03-08 00:00:00', NULL, 'index', 'Welcome to Yet another Web Kit!', '', -1, 0, 0, 0, '0');
 
 --
 -- Tabellenstruktur für Tabelle `cms_plugins`
@@ -905,13 +840,6 @@ CREATE TABLE `cms_stats` (
   `page` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Daten für Tabelle `cms_stats`
---
-
-INSERT INTO `cms_stats` (`id`, `uid`, `gid`, `logged_in`, `acceptLanguage`, `remoteAddr`, `userAgent`, `device`, `deviceType`, `os`, `osVersion`, `browser`, `browserVersion`, `date_created`, `referer`, `page`) VALUES
-(1, 1, 5, 1, 'de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7', '192.168.100.10', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '64.0.3282.186', '2018-03-05 04:49:30', 'http://raspi/web/clone/admin/index.php?page=stats', 'index');
-
 -- --------------------------------------------------------
 
 --
@@ -928,14 +856,7 @@ CREATE TABLE `cms_syslog` (
   `toGID` int(11) NOT NULL DEFAULT '0',
   `seen` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Daten für Tabelle `cms_syslog`
---
-
-INSERT INTO `cms_syslog` (`log_id`, `log_date`, `log_type`, `message`, `fromUID`, `toUID`, `toGID`, `seen`) VALUES
-(1, '2018-03-05 15:03:55', 2, 'add ../content/pages/blog.php', 1, 0, 0, 0);
--- --------------------------------------------------------
+ --------------------------------------------------------
 
 --
 -- Tabellenstruktur für Tabelle `cms_syslog_types`
@@ -2161,12 +2082,6 @@ CREATE TABLE `cms_users_online` (
   `currentTimeStamp` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Daten für Tabelle `cms_users_online`
---
-
-INSERT INTO `cms_users_online` (`uid`, `phpSessionID`, `currentTimeStamp`) VALUES
-(1, 'ednv68almupi3bi3sr2rs07p63', '1520265608');
 
 -- --------------------------------------------------------
 
@@ -2212,15 +2127,7 @@ CREATE TABLE `cms_widgets` (
   `date_unpublish` datetime DEFAULT NULL,
   `widgetTitle` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Daten für Tabelle `cms_widgets`
---
-
-INSERT INTO `cms_widgets` (`id`, `published`, `widgetType`, `pageID`, `sort`, `position`, `marginTop`, `marginBottom`, `date_publish`, `date_unpublish`, `widgetTitle`) VALUES
-(1, 1, 36, 0, 1, 'mainbottom', 0, 0, '2018-03-01 09:20:23', '2018-03-04 08:40:04', '');
-
--- --------------------------------------------------------
+-------------------------------------------------------
 
 --
 -- Tabellenstruktur für Tabelle `cms_widget_defaults`
@@ -2449,21 +2356,7 @@ CREATE TABLE `cms_widget_settings` (
   `options` text NOT NULL,
   `description` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Daten für Tabelle `cms_widget_settings`
---
-
-INSERT INTO `cms_widget_settings` (`id`, `widgetID`, `property`, `value`, `widgetType`, `activated`, `sortation`, `label`, `icon`, `heading`, `subtext`, `fieldClass`, `fieldType`, `placeholder`, `options`, `description`) VALUES
-(0, 1, 'fuckAdBlockTitle', 'AdBlock detected...', 36, 1, 1, 'LABEL_ADBLOCK_TITLE', '', '', '', 'form-control', 'input', 'PH_ADBLOCK_TITLE', '', 'DESC_ADBLOCK_TITLE'),
-(0, 1, 'fuckAdBlockText', 'It seems that you are using AdBlock. We truely understand this. But please, be fair and disable Adblock to support our project. It is on your own to help us. Thank you.', 36, 1, 2, 'LABEL_ADBLOCK_TEXT', '', '', '', 'form-control', 'textarea', 'PH_ADBLOCK_TEXT', '', 'DESC_ADBLOCK_TEXT'),
-(0, 1, 'fuckAdBlockLevel', 'low', 36, 1, 0, 'LABEL_ADBLOCK_LEVEL', '', '', '', 'form-control', 'select', '', 'low,Low Level:high,High Level', 'DESC_ADBLOCK_LEVEL'),
-(0, 1, 'fuckAdBlockLowBtnText', 'OK, got it!', 36, 1, 4, 'LABEL_ADBLOCK_LOWBTNTEXT', '', '', '', 'form-control', 'input', 'PH_ADBLOCK_LOWBTNTEXT', '', 'DESC_ADBLOCK_LOWBTNTEXT'),
-(0, 1, 'fuckAdBlockHighBtnText', 'Please disable your AdBlocker and click here.', 36, 1, 5, 'LABEL_ADBLOCK_HIGHBTNTEXT', '', '', '', 'form-control', 'input', 'PH_ADBLOCK_HIGHBTNTEXT', '', 'DESC_ADBLOCK_HIGHBTNTEXT'),
-(0, 1, 'fuckAdBlockBtnClass', 'btn btn-danger', 36, 1, 6, 'LABEL_ADBLOCK_BTNCLASS', '', '', '', 'form-control', 'input', 'PH_ADBLOCK_BTNCLASS', '', 'DESC_ADBLOCK_BTNCLASS'),
-(0, 1, 'fuckAdBlockLoadingType', '10', 36, 1, 7, 'LABEL_ADBLOCK_LOADINGTYPE', '', '', '', 'form-control', 'select', '', 'onPageLoad,on Page Load:10,after 10 Seconds:30,after 30 seconds:60,after 60 Seconds:120,after 2 Minutes:300,after 5 Minutes:600,every 10 Minutes:1800,every 30 Minutes:3600,every Hour,', 'DESC_ADBLOCK_LOADINGTYPE');
-
--- --------------------------------------------------------
+--------------------------------------------------------
 
 --
 -- Tabellenstruktur für Tabelle `cms_widget_types`
@@ -2731,12 +2624,12 @@ ALTER TABLE `cms_templates`
 -- AUTO_INCREMENT für Tabelle `cms_menu`
 --
 ALTER TABLE `cms_menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 --
 -- AUTO_INCREMENT für Tabelle `cms_meta_local`
 --
 ALTER TABLE `cms_meta_local`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `cms_plugin_faq`
 --
@@ -2746,9 +2639,9 @@ ALTER TABLE `cms_plugin_faq`
 -- AUTO_INCREMENT für Tabelle `cms_stats`
 --
 ALTER TABLE `cms_stats`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `cms_syslog`
 --
 ALTER TABLE `cms_syslog`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT;
