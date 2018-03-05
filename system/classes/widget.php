@@ -897,7 +897,33 @@ namespace YAWK {
         {
             /** @var $db \YAWK\db */
             $this->position = mb_strtolower($this->position);
-            if ($res = $db->query("UPDATE {widgets} SET
+            if ($this->date_unpublish === "0000-00-00 00:00:00" || (empty($this->date_unpublish)))
+            {
+                // sql code when date_unpublish is a zero date (NULL)
+                if ($res = $db->query("UPDATE {widgets} SET
+                                        published = '" . $this->published . "',
+                                        widgetType = '" . $this->widgetType . "',
+                                        pageID = '" . $this->pageID . "',
+                                        sort = '" . $this->sort . "',
+                                        position = '" . $this->position . "',
+                                        date_publish = '" . $this->date_publish. "',
+                                        date_unpublish = NULL,
+                                        widgetTitle = '" . $this->widgetTitle. "'
+                      WHERE id = '" . $this->id . "'"))
+                {   // save successful
+                    return true;
+                }
+                else
+                {   // q failed
+                    \YAWK\sys::setSyslog($db, 11, "failed to save widget settings of id<b>#$this->id</b> .", 0, 0, 0, 0);
+                    return false;
+                }
+
+            }
+            else
+                {
+                    // sql code with qualified, user selected unpublish date
+                    if ($res = $db->query("UPDATE {widgets} SET
                                         published = '" . $this->published . "',
                                         widgetType = '" . $this->widgetType . "',
                                         pageID = '" . $this->pageID . "',
@@ -907,14 +933,15 @@ namespace YAWK {
                                         date_unpublish = '" . $this->date_unpublish. "',
                                         widgetTitle = '" . $this->widgetTitle. "'
                       WHERE id = '" . $this->id . "'"))
-            {   // save successful
-                return true;
-            }
-            else
-            {   // q failed
-                \YAWK\sys::setSyslog($db, 11, "failed to save widget settings of id<b>#$this->id</b> .", 0, 0, 0, 0);
-                return false;
-            }
+                    {   // save successful
+                        return true;
+                    }
+                    else
+                    {   // q failed
+                        \YAWK\sys::setSyslog($db, 11, "failed to save widget settings of id<b>#$this->id</b> .", 0, 0, 0, 0);
+                        return false;
+                    }
+                }
         }
 
     } // end class Widget
