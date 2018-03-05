@@ -201,7 +201,6 @@ namespace YAWK {
             $menuName = \YAWK\menu::getMenuNameByID($db, $menu);
             /** @var $db \YAWK\db */
             $date_created = date("Y-m-d G:i:s");
-            $parentID = 0; // default parent = 0
 
             // ## select max ID from menu + add menu entry
             $res = $db->query("SELECT MAX(id), MAX(sort) FROM {menu}
@@ -225,9 +224,13 @@ namespace YAWK {
             // echo "<br><br>$id $sort $title $href"; exit;
 
             /* do query */
-            if ($res = $db->query("INSERT INTO {menu}
-               (id, sort, menuID, text, href, date_created, parentID)
-               VALUES ('" . $id . "','" . $sort . "','" . $menu . "','" . $text . "','" . $href . "','" . $date_created . "','" . $parentID . "')"))
+            if ($res = $db->query("INSERT INTO {menu} 
+                                        (id, sort, menuID, text, href)
+                                        VALUES ('" . $id . "',
+                                        '" . $sort . "',
+                                        '" . $menu . "',
+                                        '" . $text . "',
+                                        '" . $href . "')"))
             {
                 // entry added
                 \YAWK\sys::setSyslog($db, 7, "added menu entry <b>$text</b> to <b>$menuName</b>", 0, 0, 0, 0);

@@ -49,7 +49,7 @@ if (isset($_GET['del']) && ($_GET['del'] === "1")) {
         case 1:
             $menuID = $_GET['menu'];
             $entry = $_GET['entry'];
-            if (YAWK\menu::deleteEntry($db, $menuID, $entry, $lang) === true)
+            if (YAWK\menu::deleteEntry($db, $menuID, $entry) === true)
             {   // delete successful
                 \YAWK\alert::draw("success", "$lang[ITEM] $lang[DELETED].", "$lang[MENU_ITEM] $lang[DELETED]", "", 800);
             }
