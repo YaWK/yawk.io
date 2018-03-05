@@ -862,7 +862,6 @@ CREATE TABLE `cms_syslog` (
 --
 -- Tabellenstruktur für Tabelle `cms_syslog_types`
 --
-
 CREATE TABLE `cms_syslog_types` (
   `id` int(11) NOT NULL,
   `active` int(1) NOT NULL DEFAULT '1',
@@ -870,10 +869,6 @@ CREATE TABLE `cms_syslog_types` (
   `icon` varchar(128) NOT NULL,
   `type` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Daten für Tabelle `cms_syslog_types`
---
 
 INSERT INTO `cms_syslog_types` (`id`, `active`, `property`, `icon`, `type`) VALUES
 (1, 1, 'system', 'fa fa-wrench', 'text-default'),
@@ -888,7 +883,6 @@ INSERT INTO `cms_syslog_types` (`id`, `active`, `property`, `icon`, `type`) VALU
 (10, 1, 'settings', 'fa fa-gears', 'text-default'),
 (11, 1, 'widgets', 'fa fa-labels', 'text-default'),
 (12, 1, 'stats', 'fa fa-bar-chart', 'text-default');
-
 -- --------------------------------------------------------
 
 --
