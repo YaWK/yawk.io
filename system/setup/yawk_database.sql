@@ -2640,5 +2640,6 @@ ALTER TABLE `cms_stats`
 --
 -- AUTO_INCREMENT für Tabelle `cms_syslog`
 --
+
 ALTER TABLE `cms_syslog`
   MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT;
