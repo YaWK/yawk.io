@@ -1,17 +1,17 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
+-- version 4.6.6deb4
+-- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Erstellungszeit: 28. Sep 2017 um 20:56
--- Server-Version: 10.1.10-MariaDB
--- PHP-Version: 5.6.19
+-- Host: localhost:3306
+-- Erstellungszeit: 05. Mrz 2018 um 17:03
+-- Server-Version: 10.1.23-MariaDB-9+deb9u1
+-- PHP-Version: 7.0.27-0+deb9u1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 --
--- Datenbank: `yawk_lte`
+-- Datenbank: `yawk_clone`
 --
 
 -- --------------------------------------------------------
@@ -33,9 +33,9 @@ CREATE TABLE `cms_assets` (
 --
 
 INSERT INTO `cms_assets` (`id`, `templateID`, `type`, `asset`, `link`) VALUES
-(1, 1, 'js', 'jQuery 1.x', 'system/engines/jquery/jquery-1.12.4.min.js'),
-(2, 1, 'css', 'Bootstrap 3 CSS', 'system/engines/bootstrap/dist/css/bootstrap.min.css'),
-(3, 1, 'js', 'Bootstrap 3 JS', 'system/engines/bootstrap/dist/js/bootstrap.min.js');
+(0, 1, 'js', 'jQuery 1.x', 'system/engines/jquery/jquery-1.12.4.min.js'),
+(0, 1, 'css', 'Bootstrap 3 CSS', 'system/engines/bootstrap/dist/css/bootstrap.min.css'),
+(0, 1, 'js', 'Bootstrap 3 JS', 'system/engines/bootstrap/dist/js/bootstrap.min.js');
 
 -- --------------------------------------------------------
 
@@ -76,6 +76,8 @@ INSERT INTO `cms_assets_types` (`id`, `published`, `type`, `sortation`, `asset`,
 (14, 1, 2, 14, 'Bootstrap Notify CSS', 'bootstrap-notify-css', 'system/engines/jquery/notify/bootstrap-notify.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/css/bootstrap-notify.min.css', '', ''),
 (28, 1, 2, 7, 'Animate.css', 'Animate.css', 'system/engines/animateCSS/animate.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css', 'https://fastcdn.org/Animate.css/3.4.0/animate.min.css', '');
 
+-- --------------------------------------------------------
+
 --
 -- Tabellenstruktur für Tabelle `cms_blog`
 --
@@ -102,6 +104,13 @@ CREATE TABLE `cms_blog` (
   `voting` int(1) NOT NULL DEFAULT '0',
   `spacer` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Daten für Tabelle `cms_blog`
+--
+
+INSERT INTO `cms_blog` (`id`, `sort`, `published`, `name`, `description`, `icon`, `showtitle`, `showdesc`, `showdate`, `showauthor`, `sequence`, `sortation`, `footer`, `comments`, `gid`, `permalink`, `layout`, `preview`, `voting`, `spacer`) VALUES
+(1, 0, 1, 'ZyXEL zywalls', 'ZyXEL Mails Forward Address', 'fa-area-chart', 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -144,12 +153,12 @@ CREATE TABLE `cms_blog_items` (
   `title` varchar(255) NOT NULL,
   `filename` varchar(255) NOT NULL,
   `subtitle` varchar(255) NOT NULL,
-  `date_created` datetime DEFAULT NULL,
-  `date_changed` datetime DEFAULT NULL,
+  `date_created` datetime DEFAULT CURRENT_TIMESTAMP,
+  `date_changed` datetime DEFAULT CURRENT_TIMESTAMP,
   `date_publish` datetime DEFAULT NULL,
   `date_unpublish` datetime DEFAULT NULL,
   `teasertext` text NOT NULL,
-  `blogtext` longtext NOT NULL,
+  `blogtext` text NOT NULL,
   `author` varchar(255) NOT NULL,
   `thumbnail` varchar(255) NOT NULL,
   `youtubeUrl` varchar(255) NOT NULL,
@@ -157,9 +166,17 @@ CREATE TABLE `cms_blog_items` (
   `itemlayout` int(4) NOT NULL DEFAULT '-1',
   `itemcomments` int(1) NOT NULL DEFAULT '-1',
   `voteUp` int(11) NOT NULL DEFAULT '0',
-  `voteDown` int(11) NOT NULL DEFAULT '0',
-  `primkey` int(11) NOT NULL
+  `voteDown` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Daten für Tabelle `cms_blog_items`
+--
+
+INSERT INTO `cms_blog_items` (`blogid`, `id`, `uid`, `pageid`, `sort`, `published`, `itemgid`, `teaser`, `title`, `filename`, `subtitle`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `teasertext`, `blogtext`, `author`, `thumbnail`, `youtubeUrl`, `weblink`, `itemlayout`, `itemcomments`, `voteUp`, `voteDown`) VALUES
+(1, 2, 1, 4, 2, 1, 1, 0, 'Blog', 'blog', '', '2018-03-05 16:26:19', '2018-03-05 16:45:51', '2018-03-05 16:26:02', NULL, '<p>teaser</p>', '<p>text</p>', 'admin', 'http://placehold.it/320x200', '', '', -1, -1, 0, 0),
+(1, 3, 1, 5, 3, 1, 1, 0, 'Blog-KOPIE', 'blog-kopie', '', '2018-03-05 16:26:19', '2018-03-05 16:51:46', '2018-03-05 16:26:02', NULL, '<p>teaser</p>', '<p>text</p>', 'admin', 'http://placehold.it/320x200', '', '', -1, -1, 0, 0),
+(1, 4, 1, 6, 4, 1, 1, 0, 'Fantastic Article', 'fantastic-article', '', '2018-03-05 16:26:19', '2018-03-05 16:53:50', '2018-03-05 16:26:02', NULL, '<p>teaser</p>', '<p>&Uuml;berall dieselbe alte Leier. Das Layout ist fertig, der Text l&auml;sst auf sich warten. Damit das Layout nun nicht nackt im Raume steht und sich klein und leer vorkommt, springe ich ein: der Blindtext. Genau zu diesem Zwecke erschaffen, immer im Schatten meines gro&szlig;en Bruders »Lorem Ipsum«, freue ich mich jedes Mal, wenn Sie ein paar Zeilen lesen. Denn esse est percipi - Sein ist wahrgenommen werden. Und weil Sie nun schon die G&uuml;te haben, mich ein paar weitere S&auml;tze lang zu begleiten, m&ouml;chte ich diese Gelegenheit nutzen, Ihnen nicht nur als L&uuml;ckenf&uuml;ller zu dienen, sondern auf etwas hinzuweisen, das es ebenso verdient wahrgenommen zu werden: Webstandards n&auml;mlich. Sehen Sie, Webstandards sind das Regelwerk, auf dem Webseiten aufbauen. So gibt es Regeln f&uuml;r HTML, CSS, JavaScript oder auch XML; Worte, die Sie vielleicht schon einmal von Ihrem Entwickler geh&ouml;rt haben. Diese Standards sorgen daf&uuml;r, dass alle Beteiligten aus einer Webseite den gr&ouml;&szlig;ten Nutzen ziehen. Im Gegensatz zu fr&uuml;heren Webseiten m&uuml;ssen wir zum Beispiel nicht mehr zwei verschiedene Webseiten f&uuml;r den Internet Explorer und einen anderen Browser programmieren. Es reicht eine Seite, die - richtig angelegt - sowohl auf verschiedenen Browsern im Netz funktioniert, aber ebenso gut f&uuml;r den Ausdruck oder</p>', 'admin', 'http://placehold.it/320x200', '', '', 1, -1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -307,6 +324,13 @@ CREATE TABLE `cms_logins` (
   `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Daten für Tabelle `cms_logins`
+--
+
+INSERT INTO `cms_logins` (`id`, `datetime`, `location`, `failed`, `ip`, `useragent`, `username`, `password`) VALUES
+(0, '2018-03-03 13:55:39', 'backend', 0, '192.168.100.10', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36', 'admin', 'test');
+
 -- --------------------------------------------------------
 
 --
@@ -315,22 +339,22 @@ CREATE TABLE `cms_logins` (
 
 CREATE TABLE `cms_menu` (
   `TMPID` int(11) NOT NULL,
-  `id` int(11)  DEFAULT NULL,
+  `id` int(11) NOT NULL,
   `sort` int(11) DEFAULT '0',
   `gid` int(11) DEFAULT '1',
-  `menuID` int(11) DEFAULT NULL,
+  `menuID` int(11) DEFAULT '1',
   `parentID` int(11) DEFAULT '0',
   `published` int(1) DEFAULT '1',
-  `date_created` datetime DEFAULT NULL,
-  `date_changed` datetime DEFAULT NULL,
-  `date_publish` datetime DEFAULT NULL,
+  `date_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_changed` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_publish` datetime DEFAULT CURRENT_TIMESTAMP,
   `date_unpublish` datetime DEFAULT NULL,
-  `title` varchar(255) DEFAULT NULL,
-  `text` varchar(100) DEFAULT NULL,
-  `href` varchar(255) DEFAULT NULL,
-  `target` varchar(64) DEFAULT '_self',
-  `divider` int(11) DEFAULT '0',
-  `blogid` int(11) DEFAULT '0'
+  `title` varchar(255) NOT NULL,
+  `text` varchar(100) NOT NULL,
+  `href` varchar(255) NOT NULL,
+  `target` varchar(64) NOT NULL DEFAULT '_self',
+  `divider` int(11) NOT NULL DEFAULT '0',
+  `blogid` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -338,7 +362,10 @@ CREATE TABLE `cms_menu` (
 --
 
 INSERT INTO `cms_menu` (`TMPID`, `id`, `sort`, `gid`, `menuID`, `parentID`, `published`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `title`, `text`, `href`, `target`, `divider`, `blogid`) VALUES
-(1, 1, 1, 1, 1, 0, 1, '2018-03-01 00:00:00', '2018-03-01 00:00:00', NULL, NULL, '', 'Welcome to YaWK CMS!', 'index.html', '_self', 0, 0);
+(1, 1, 1, 1, 1, 0, 1, '2018-03-01 00:00:00', '2018-03-04 19:12:11', '0000-00-00 00:00:00', NULL, '', 'Welcome to YaWK CMS!', 'index.html', '_self', 0, 0),
+(0, 4, 4, 1, 1, 0, 1, '2018-03-05 01:15:54', '2018-03-05 01:15:54', '2018-03-05 01:15:54', NULL, '', 'YaWK Support', '#', '_self', 0, 0),
+(0, 5, 5, 1, 1, 0, 1, '2018-03-05 01:16:28', '2018-03-05 01:16:28', '2018-03-05 01:16:28', NULL, '', 'test2', 'test2.html', '_self', 0, 0),
+(0, 6, 6, 1, 1, 0, 1, '2018-03-05 16:25:58', '2018-03-05 16:25:58', '2018-03-05 16:25:58', NULL, '', 'ZyXEL zywall', 'zyxel-zywall.html', '_self', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -391,6 +418,37 @@ CREATE TABLE `cms_meta_local` (
   `page` int(11) NOT NULL,
   `content` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Daten für Tabelle `cms_meta_local`
+--
+
+INSERT INTO `cms_meta_local` (`id`, `name`, `page`, `content`) VALUES
+(1, 'description', 4, 'Blog Description                                                                                    '),
+(2, 'description', 4, 'Blog Description                                                                                    '),
+(3, 'keywords', 4, ''),
+(4, 'description', 3, 'blog 1-KOPIE'),
+(5, 'keywords', 3, ''),
+(6, 'description', 3, 'blog 1-KOPIE'),
+(7, 'keywords', 3, ''),
+(8, 'description', 3, 'blog 1-KOPIE'),
+(9, 'keywords', 3, ''),
+(10, 'description', 15, 'Blog'),
+(11, 'keywords', 15, ''),
+(12, 'description', 3, 'Blog-KOPIE'),
+(13, 'keywords', 3, ''),
+(14, 'description', 3, 'Blog-KOPIE'),
+(15, 'keywords', 3, ''),
+(16, 'description', 4, 'Blog Description                                                                                    '),
+(17, 'keywords', 4, ''),
+(18, 'description', 3, 'Blog-KOPIE'),
+(19, 'keywords', 3, ''),
+(20, 'description', 4, 'Blog Description                                                                                    '),
+(21, 'keywords', 4, ''),
+(22, 'description', 3, 'Blog-KOPIE'),
+(23, 'keywords', 3, ''),
+(24, 'description', 4, 'Blog-KOPIE-KOPIE'),
+(25, 'keywords', 4, '');
 
 -- --------------------------------------------------------
 
@@ -457,7 +515,7 @@ CREATE TABLE `cms_pages` (
   `menu` int(11) DEFAULT '0',
   `locked` int(1) DEFAULT '0',
   `blogid` int(11) DEFAULT '0',
-  `plugin` varchar(255) DEFAULT NULL
+  `plugin` varchar(255) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -465,7 +523,12 @@ CREATE TABLE `cms_pages` (
 --
 
 INSERT INTO `cms_pages` (`id`, `published`, `gid`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `alias`, `title`, `bgimage`, `owner`, `menu`, `locked`, `blogid`, `plugin`) VALUES
-(1, 1, 1, '2017-03-08 00:00:00', '2017-09-13 00:20:21', '2017-03-08 00:00:00', NULL, 'index', 'Welcome to YaWK CMS!', '', -1, 0, 0, 0, '0');
+(1, 1, 1, '2017-03-08 00:00:00', '2017-09-13 00:20:21', '2017-03-08 00:00:00', NULL, 'index', 'Welcome to YaWK CMS!', '', -1, 0, 0, 0, '0'),
+(2, 1, 1, '2018-03-05 01:16:28', '2018-03-05 03:55:26', '2018-03-05 01:16:28', NULL, 'test2', 'test2', '', -1, 0, 0, 0, '0'),
+(3, 1, 1, '2018-03-05 16:25:58', '2018-03-05 16:25:58', '2018-03-05 16:25:58', NULL, 'zyxel-zywall', 'ZyXEL zywall', NULL, -1, 0, 1, 1, '0'),
+(4, 1, 1, '2018-03-05 16:26:19', NULL, '2018-03-05 16:26:19', NULL, 'blog', 'Blog', NULL, -1, 0, 1, 1, '0'),
+(5, 1, 1, '2018-03-05 16:46:24', NULL, '2018-03-05 16:46:24', NULL, 'blog-kopie', 'Blog-KOPIE', NULL, -1, 0, 1, 1, '0'),
+(6, 1, 1, '2018-03-05 16:50:23', NULL, '2018-03-05 16:50:23', NULL, 'fantastic-article', 'Fantastic Article', NULL, -1, 0, 1, 1, '0');
 
 -- --------------------------------------------------------
 
@@ -666,16 +729,16 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('backendLanguage', 'de-DE', '', 19, 4, 1, 'BACKENDLANGUAGE_LABEL', '', '', '', 'form-control', '', '', '', ''),
 ('backendLayout', 'sidebar-mini', '', 2, 2, 1, 'BACKENDLAYOUT_LABEL', '', '', '', 'form-control', 'select', '', 'BACKENDLAYOUT_DESC', 'fixed,Fixed:sidebar-collapse,Sidebar Collapsed:sidebar-collapse sidebar-mini,Sidebar Mini Collapsed:sidebar-mini,Sidebar Mini Open:layout-boxed,Layout Boxed:layout-top-nav,Layout Top Nav'),
 ('backendLogoSubText', '.io', '', 12, 2, 1, 'BACKENDLOGOSUBTEXT_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
-('backendLogoText', 'YaWK', '', 12, 1, 1, 'BACKENDLOGOTEXT_LABEL', 'fa fa-bars', 'BACKENDLOGOTEXT_HEADING', 'BACKENDLOGOTEXT_SUBTEXT', 'form-control', 'input', '', '', ''),
+('backendLogoText', 'http://raspi/web/clone', '', 12, 1, 1, 'BACKENDLOGOTEXT_LABEL', 'fa fa-bars', 'BACKENDLOGOTEXT_HEADING', 'BACKENDLOGOTEXT_SUBTEXT', 'form-control', 'input', '', '', ''),
 ('backendLogoUrl', '1', '', 12, 3, 1, 'BACKENDLOGOURL_LABEL', '', '', '', 'form-control', 'checkbox', '', '', ''),
 ('backendMessagesMenu', '1', '', 12, 4, 1, 'BACKENDMSGMENU_LABEL', 'fa fa-bell-o', 'BACKENDMSGMENU_HEADING', 'BACKENDMSGMENU_SUBTEXT', 'form-control', 'checkbox', '', '', ''),
 ('backendNotificationMenu', '1', '', 12, 5, 1, 'BACKENDNOTIFYMENU_LABEL', '', '', '', 'form-control', 'checkbox', '', '', ''),
 ('backendSkin', 'skin-wp-style', '', 2, 1, 1, 'BACKENDSKIN_LABEL', 'fa fa-paint-brush', 'BACKENDSKIN_HEADING', 'BACKENDSKIN_SUBTEXT', 'form-control', 'select', '', '', 'skin-blue,Blue:skin-green,Green:skin-red,Red:skin-yellow,Yellow:skin-purple,Purple:skin-black,Black:skin-yellow-light,Yellow Light:skin-wp-style,Wordpress Style:skin-wp-dark-style,Wordpress Style Dark'),
-('backendTipOfDay', '1', '', 12, 6, 1, 'BACKENDTIPOFDAY_LABEL', '', '', '', 'form-control', 'checkbox', '', '', ''),
-('backendTipOfDayRepeat', '1', '', 12, 7, 1, 'BACKENDTIPOFDAYREPEAT_LABEL', '', '', '', 'form-control', 'checkbox', '', '', ''),
+('backendTipOfDay', '0', '', 12, 6, 1, 'BACKENDTIPOFDAY_LABEL', '', '', '', 'form-control', 'checkbox', '', '', ''),
+('backendTipOfDayRepeat', '0', '', 12, 7, 1, 'BACKENDTIPOFDAYREPEAT_LABEL', '', '', '', 'form-control', 'checkbox', '', '', ''),
 ('dbhost', '', '', 21, 1, 1, 'DBHOST_LABEL', 'fa fa-database', 'DATABASE_HEADING', 'DATABASE_SUBTEXT', 'form-control', 'input', 'http://localhost/', '', 'readonly'),
 ('dbname', '', '', 21, 2, 1, 'DBNAME_LABEL', '', '', '', 'form-control', 'input', '', '', 'readonly'),
-('dbport', '3306', '', 21, 6, 1, 'DBPORT_LABEL', '', '', '', 'form-control', 'input', 'default:3306', '', 'readonly'),
+('dbport', '', '', 21, 6, 1, 'DBPORT_LABEL', '', '', '', 'form-control', 'input', 'default:3306', '', 'readonly'),
 ('dbprefix', '', '', 21, 5, 1, 'DBPREFIX_LABEL', '', '', '', 'form-control', 'input', '', '', 'readonly'),
 ('dbpwd', '', '', 21, 4, 1, 'DBPWD_LABEL', '', '', '', 'form-control', 'password', '', '', 'readonly'),
 ('dbusername', '', '', 21, 3, 1, 'DBUSERNAME_LABEL', '', '', '', 'form-control', 'input', '', '', 'readonly'),
@@ -695,13 +758,14 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('editorTeaserHeight', '100', '', 14, 4, 1, 'EDITOR_TEASER_HEIGHT_LABEL', '', '', '', 'form-control', 'input', '', 'EDITOR_TEASER_HEIGHT_DESC', ''),
 ('editorTheme', 'yawk', '', 14, 1, 1, 'EDITOR_THEME_LABEL', '', '', '', 'form-control', 'select', '', '', 'yawk,YaWK Theme (based on monokai):monokai,Monokai:3024-day,3024 Day:3024-night,3024 Night:abcdef,ABCDEF:ambiance,Ambiance:ambiance-mobile,Ambiance Mobile:base16-dark,Base 16 dark:base16-light,Base 16 light:bespin,Bespin:blackboard,Blackboard:cobalt,Cobalt:colorforth,Colorforth:dracula,Dracula:eclipse,Eclipse:elegant,Elegant:erlang-dark,Erlang Dark:hopscotch,Hopscotch:icecoder,Icecoder:isotope,Isotope:lesser-dark,Lesser Dark:liquibyte,Liquibyte:material,Material:mbo,MBO:mdn-like,MDN Like:midnight,Midnight:neat,Neat:neo,Neo:night,Night:panda-syntax,Panda Syntax:paraiso-dark,Paraiso Dark:paraiso-light,Paraiso Light:pastel-on-dark,Pastel On Dark:railcasts,Railcasts:rubyblue,Rubyblue:seti,Seti:solarized,Solarized:the-matrix,The Matrix:tomorrow-night-bright,Tomorrow Night Bright:tomorrow-night-eighties,Tomorrow Night Eighties:ttcn,TTCN:twilight,Twilight:vibrant-ink,Vibrant Ink:xq-dark,XQ Dark:xq-light,XQ Light:yeti,Yeti:zenburn,Zenburn'),
 ('editorUndoDepth', '200', '', 14, 6, 1, 'EDITOR_UNDO_DEPTH_LABEL', '', '', '', 'form-control', 'select', '', 'EDITOR_UNDO_DEPTH_DESC', '50,50:100,100:150,150:200,200:250,250:300,300:400,400:500,500:1000,1000'),
+('embedPageName', 'yourpage.php', '38', 1, 1, 0, '', '', '', 'DESC_EMBEDPAGE_NAME', 'form-control', '', '', '', ''),
 ('facebookstatus', '0', '', 4, 0, 1, 'Facebook on/off', '', '', '', 'form-control', '', '', '', ''),
 ('facebookurl', 'http://www.facebook.com', '', 4, 0, 1, 'URL zu Facebook Seite / Profil ', '', '', '', 'form-control', '', '', '', ''),
 ('frontendFX', '0', '', 3, 3, 1, 'FRONTENDFX_LABEL', '', '', '', 'form-control', '', '', '', ''),
 ('frontendLanguage', 'de-DE', '', 19, 4, 1, 'FRONTENDLANGUAGE_LABEL', '', '', '', 'form-control', '', '', '', ''),
 ('globalmenuid', '1', '', 3, 2, 1, 'GLOBALMENUID_LABEL', 'fa fa-bars', 'GLOBALMENUID_HEADING', 'GLOBALMENUID_SUBTEXT', 'form-control', 'select', '', 'GLOBALMENUID_DESC', ''),
 ('globalmetakeywords', 'YAWK, CMS, WORDPRESS, JOOMLA', '', 10, 0, 1, 'Global Site Keywords', '', '', '', 'form-control', '', '', '', ''),
-('globalmetatext', 'YaWK - Yet another Webkit - CMS', '', 10, 0, 1, 'Global Meta Description', '', '', '', 'form-control', '', '', '', ''),
+('globalmetatext', 'Clone of current repository (for testing purpose)', '', 10, 0, 1, 'Global Meta Description', '', '', '', 'form-control', '', '', '', ''),
 ('host', '', '', 9, 3, 1, 'HOST_LABEL', '', '', '', 'form-control', 'input', '', 'DATABASE_DESC', ''),
 ('loadingTime', '0', '', 11, 10, 1, 'LOADINGTIME_LABEL', 'fa fa-signal', 'LOADINGTIME_HEADING', 'LOADINGTIME_SUBTEXT', 'form-control', 'checkbox', '', '', ''),
 ('logoutmenuid', '1', '', 6, 0, 1, 'Logout Menu ID for logged-in Users', '', '', '', 'form-control', '', '', '', ''),
@@ -722,7 +786,7 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('signup_gid', '1', '', 5, 0, 1, 'Adds a GroupID select field to SignUp Form', '', '', '', 'form-control', '', '', '', ''),
 ('signup_lastname', '0', '', 5, 0, 1, 'require lastname to signUp', '', '', '', 'form-control', '', '', '', ''),
 ('signup_layout', 'right', '', 5, 0, 1, 'Layout of User SignUp Form (left, right or plain)', '', '', '', 'form-control', '', '', '', ''),
-('signup_legend0-long', '', '<h2>Membership  <small>- become a VIP!</small></h2><p>\r\nIf you signup today, you can\r\n<ul>\r\n<li class="fa fa-check"> login to Website</li><br>\r\n<li class="fa fa-check"> get your own profile page</li><br>\r\n<li class="fa fa-check"> additional exclusive Member''s Stuff</li><br>\r\n<li class="fa fa-check"> super-douper-whatever you want to sell or show</li><br>\r\n</ul>\r\n\r\nBeein VIP is free. As long as you want it. Expect nothing, get all!</p>\r\n<b>But beware! You need an email invitation to register here - its exclusive! (: </b>', 5, 0, 1, 'signUp legend text', '', '', '', 'form-control', '', '', '', ''),
+('signup_legend0-long', '', '<h2>Membership  <small>- become a VIP!</small></h2><p>\r\nIf you signup today, you can\r\n<ul>\r\n<li class=\"fa fa-check\"> login to Website</li><br>\r\n<li class=\"fa fa-check\"> get your own profile page</li><br>\r\n<li class=\"fa fa-check\"> additional exclusive Member\'s Stuff</li><br>\r\n<li class=\"fa fa-check\"> super-douper-whatever you want to sell or show</li><br>\r\n</ul>\r\n\r\nBeein VIP is free. As long as you want it. Expect nothing, get all!</p>\r\n<b>But beware! You need an email invitation to register here - its exclusive! (: </b>', 5, 0, 1, 'signUp legend text', '', '', '', 'form-control', '', '', '', ''),
 ('signup_legend1-long', '', '<h2>SignUp as Guest</h2>', 5, 0, 1, 'signUp legend text', '', '', '', 'form-control', '', '', '', ''),
 ('signup_legend2-long', '', '<h2>SignUp as User <br><small>all the good things...</small></h2>\r\n<ul>\r\n<li>Item 1</li>\r\n<li>Item 2</li>\r\n<li>Item 3</li>\r\n</ul>', 5, 0, 1, 'signUp legend text', '', '', '', 'form-control', '', '', '', ''),
 ('signup_legend3-long', '', '<h2>SignUp as Provider</h2>', 5, 0, 1, 'signUp legend text', '', '', '', 'form-control', '', '', '', ''),
@@ -743,7 +807,7 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('syslogEnable', '1', '', 13, 1, 1, 'SYSLOG_LABEL', 'fa fa-terminal', 'SYSLOG_HEADING', 'SYSLOG_SUBTEXT', 'form-control', 'select', '', 'SYSLOG_DESC', '0,off:1,on'),
 ('timediff', '1', '', 7, 1, 1, 'TIMEDIFF_LABEL', 'fa fa-clock-o', 'TIMEDIFF_HEADING', 'TIMEDIFF_SUBTEXT', 'form-control', 'checkbox', '', 'TIMEDIFF_DESC', ''),
 ('timedifftext', 'This page is not online yet. Please come back in ', '', 7, 2, 1, 'TIMEDIFFTEXT_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
-('title', '', '', 9, 1, 1, 'TITLE_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+('title', 'YaWK GitHub [clone]', '', 9, 1, 1, 'TITLE_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('twitterstatus', '0', '', 4, 0, 1, 'Twitter on/off', '', '', '', 'form-control', '', '', '', ''),
 ('twitterurl', 'http://www.twitter.com', '', 4, 0, 1, 'URL zu Twitter Profil', '', '', '', 'form-control', '', '', '', ''),
 ('userlogin', '1', '', 17, 1, 1, 'USERLOGIN_LABEL', 'fa fa-lock', 'USERLOGIN_HEADING', 'USERLOGIN_SUBTEXT', 'form-control', 'checkbox', '', 'USERLOGIN_DESC', ''),
@@ -776,8 +840,7 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('userpage_stats', '1', '', 6, 0, 1, 'userpage stats enabled?', '', '', '', 'form-control', '', '', '', ''),
 ('yawkversion', '1.0 build 2017.5', '', 9, 2, 0, 'YAWKVERSION_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('youtubeChannelUrl', 'http://www.youtube.com', '', 4, 0, 1, 'YouTube Channel URL', '', '', '', 'form-control', '', '', '', ''),
-('youtubestatus', '0', '', 4, 0, 1, 'YouTube on/off', '', '', '', 'form-control', '', '', '', ''),
-('embedPageName', 'yourpage.php', 38, 1, 1, 'LABEL_EMBEDPAGE_NAME', '', '', '', 'DESC_EMBEDPAGE_NAME', 'form-control', '', '', '', '');
+('youtubestatus', '0', '', 4, 0, 1, 'YouTube on/off', '', '', '', 'form-control', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -837,10 +900,17 @@ CREATE TABLE `cms_stats` (
   `osVersion` varchar(64) NOT NULL,
   `browser` varchar(255) NOT NULL,
   `browserVersion` varchar(64) NOT NULL,
-  `date_created` datetime NOT NULL,
+  `date_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `referer` varchar(255) NOT NULL,
   `page` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Daten für Tabelle `cms_stats`
+--
+
+INSERT INTO `cms_stats` (`id`, `uid`, `gid`, `logged_in`, `acceptLanguage`, `remoteAddr`, `userAgent`, `device`, `deviceType`, `os`, `osVersion`, `browser`, `browserVersion`, `date_created`, `referer`, `page`) VALUES
+(1, 1, 5, 1, 'de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7', '192.168.100.10', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36', '', 'Desktop', 'Windows', 'Windows 7', 'Google Chrome', '64.0.3282.186', '2018-03-05 04:49:30', 'http://raspi/web/clone/admin/index.php?page=stats', 'index');
 
 -- --------------------------------------------------------
 
@@ -850,7 +920,7 @@ CREATE TABLE `cms_stats` (
 
 CREATE TABLE `cms_syslog` (
   `log_id` int(11) NOT NULL,
-  `log_date` datetime NOT NULL,
+  `log_date` datetime DEFAULT CURRENT_TIMESTAMP,
   `log_type` int(11) NOT NULL DEFAULT '0',
   `message` varchar(255) NOT NULL,
   `fromUID` int(11) NOT NULL DEFAULT '0',
@@ -859,6 +929,12 @@ CREATE TABLE `cms_syslog` (
   `seen` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Daten für Tabelle `cms_syslog`
+--
+
+INSERT INTO `cms_syslog` (`log_id`, `log_date`, `log_type`, `message`, `fromUID`, `toUID`, `toGID`, `seen`) VALUES
+(1, '2018-03-05 15:03:55', 2, 'add ../content/pages/blog.php', 1, 0, 0, 0);
 -- --------------------------------------------------------
 
 --
@@ -956,22 +1032,22 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (1, 1, 'heading-gfont', '76', '1', '', 0, 1, 0, 'Global GoogleFont ID', 'form-control', '', '', 'Default Google Font', '', '', '', ''),
 (2, 1, 'menu-gfont', '76', '1', '', 0, 1, 0, 'Menu GoogleFont ID', 'form-control', '', '', 'Menu Google Font', '', '', '', ''),
 (3, 1, 'text-gfont', '76', '1', '', 0, 1, 0, 'Text GoogleFont ID', 'form-control', '', '', 'Text Google Font', '', '', '', ''),
-(4, 1, 'h1-fontcolor', 'CC9A6E', '000000', '', 52, 1, 1, 'TPL_H1_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
-(5, 1, 'h2-fontcolor', '1E2E22', '000000', '', 5, 1, 2, 'TPL_H2_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
-(6, 1, 'h3-fontcolor', '4D4D4D', '000000', '', 5, 1, 3, 'TPL_H3_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
-(7, 1, 'h4-fontcolor', 'A8A8A8', '000000', '', 5, 1, 4, 'TPL_H4_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
-(8, 1, 'h5-fontcolor', 'C4C4C4', '000000', '', 5, 1, 5, 'TPL_H5_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
-(9, 1, 'h6-fontcolor', '0A0A0A', '000000', '', 5, 1, 6, 'TPL_H6_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(4, 1, 'h1-fontcolor', '222222', '000000', '', 52, 1, 1, 'TPL_H1_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(5, 1, 'h2-fontcolor', '222222', '000000', '', 5, 1, 2, 'TPL_H2_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(6, 1, 'h3-fontcolor', '222222', '000000', '', 5, 1, 3, 'TPL_H3_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(7, 1, 'h4-fontcolor', '222222', '000000', '', 5, 1, 4, 'TPL_H4_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(8, 1, 'h5-fontcolor', '222222', '000000', '', 5, 1, 5, 'TPL_H5_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(9, 1, 'h6-fontcolor', '222222', '000000', '', 5, 1, 6, 'TPL_H6_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (10, 1, 'body-bg-color', 'FFFFFF', 'FFFFFF', '', 54, 1, 0, 'TPL_BODY_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', 'TPL_POS_BODY_HEADING', 'TPL_POS_BODY_SUBTEXT'),
 (11, 1, 'well-bg-color', 'F5F5F5', 'F5F5F5', '', 14, 1, 1, 'TPL_WELL_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
-(12, 1, 'globaltext-smallcolor', 'C4C4C4', '777777', '', 52, 0, 7, 'TPL_SMALLTAG_FONT_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(12, 1, 'globaltext-smallcolor', 'FFFFFF', '777777', '', 52, 0, 7, 'TPL_SMALLTAG_FONT_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (13, 1, 'font-menucolor', '777777', '777777', '', 10, 1, 1, 'TPL_MENU_FONT_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (14, 1, 'brand-menucolor', '777777', '777777', '', 10, 1, 2, 'TPL_MENU_BRAND_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (15, 1, 'brandhover-menucolor', '5E5E5E', '5e5e5e', '', 10, 1, 3, 'TPL_MENU_BRAND_HOVER_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (16, 1, 'fonthover-menucolor', '333333', '333333', '', 10, 1, 4, 'TPL_MENU_FONT_HOVER_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (17, 1, 'fontactive-menucolor', '555555', '555555', '', 10, 1, 5, 'TPL_MENU_FONT_ACTIVE_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (18, 1, 'fontdisabled-menucolor', 'CCCCCC', 'CCCCCC', '', 10, 1, 6, 'TPL_MENU_FONT_DISABLED_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
-(19, 1, 'default-menubgcolor', 'f8f8f8', 'f8f8f8', '', 11, 1, 1, 'TPL_MENU_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(19, 1, 'default-menubgcolor', 'F8F8F8', 'f8f8f8', '', 11, 1, 1, 'TPL_MENU_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (20, 1, 'border-menubgcolor', 'E7E7E7', 'e7e7e7', '', 11, 1, 2, 'TPL_MENU_BGCOLOR_BORDER', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (21, 1, 'active-menubgcolor', 'E7E7E7', 'e7e7e7', '', 11, 1, 3, 'TPL_MENU_BGCOLOR_ACTIVE', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (22, 1, 'toggle-menubgcolor', 'DDDDDD', 'dddddd', '', 11, 1, 4, 'TPL_MENU_BGCOLOR_TOGGLE', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
@@ -992,13 +1068,13 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (37, 1, 'buttontext-link', 'FFFFFF', 'ffffff', '', 3, 1, 6, 'TPL_BTN_TEXT_LINK_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (38, 1, 'background-listgroup', 'FFFFFF', 'ffffff', '', 15, 1, 0, 'TPL_LISTGROUP_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (39, 1, 'fontcolor-listgroup', 'FFFFFF', '000000', '', 15, 1, 0, 'TPL_LISTGROUP_FONTCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
-(40, 1, 'globaltext-fontcolor', '787878', '333333', '', 5, 1, 8, 'TPL_TEXT_FONT_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(40, 1, 'globaltext-fontcolor', '222222', '333333', '', 5, 1, 8, 'TPL_TEXT_FONT_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (41, 1, 'fontshadow-menucolor', 'CCCCCC', 'CCCCCC', '', 10, 1, 7, 'TPL_MENU_FONT_SHADOW_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (42, 1, 'form-valid', '009900', '009900', '', 0, 1, 0, 'Form Valid Color', 'color', '', '', 'pick a color or leave blank', '', '', '', ''),
 (43, 1, 'form-error', 'FF0000', 'FF0000', '', 0, 1, 0, 'Form Error Color', 'color', '', '', 'pick a color or leave blank', '', '', '', ''),
 (44, 1, 'globaltext-fontshadowsize', '1px 1px 0px', '1px 0px', '', 2, 1, 0, 'TPL_BODY_TEXT_SHADOW', 'form-control', '', '', 'TPL_BODY_TEXT_SHADOW_PLACEHOLDER', '', '', '', ''),
-(45, 1, 'globaltext-fontshadowcolor', 'E0E0E0', 'CCCCCC', '', 2, 1, 0, 'TPL_BODY_TEXT_SHADOW_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
-(46, 1, 'globaltext-size', '14px', '1.7em', '', 2, 1, 0, 'TPL_BODY_TEXT_SIZE', 'form-control', '', '', 'TPL_BODY_TEXT_SIZE_PLACEHOLDER', '', '', '', ''),
+(45, 1, 'globaltext-fontshadowcolor', 'CCCCCC', 'CCCCCC', '', 2, 1, 0, 'TPL_BODY_TEXT_SHADOW_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(46, 1, 'globaltext-size', '16px', '1.7em', '', 2, 1, 0, 'TPL_BODY_TEXT_SIZE', 'form-control', '', '', 'TPL_BODY_TEXT_SIZE_PLACEHOLDER', '', '', '', ''),
 (47, 1, 'body-margin-top', '0px', '40px', '', 54, 1, 20, 'TPL_BODY_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', 'BODY', 'POSITIONING'),
 (48, 1, 'body-bg-image', '', 'any .jpg or .png you want', '', 54, 1, 5, 'TPL_BODY_BG_IMAGE', 'form-control', '', '', 'TPL_BODY_BG_IMAGE_PLACEHOLDER', '', '', 'BG_IMAGE', 'SETTINGS'),
 (49, 1, 'body-bg-repeat', 'no-repeat', 'no-repeat', '', 54, 1, 6, 'TPL_BODY_BG_IMAGE_REPEAT', 'form-control', 'select', 'no-repeat,no-repeat:repeat-x,repeat-x:repeat-y,repeat-y:inherit,inherit', '', '', '', '', ''),
@@ -1117,7 +1193,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (162, 1, 'listgroup-firstChild-topRight-radius', '4px', '4px', '', 15, 1, 0, 'TPL_LISTGROUP_FIRST_CHILD_TOP_R_BORDER_RADIUS', 'form-control', '', '', 'TPL_LISTGROUP_BORDER_RADIUS_PLACEHOLDER', '', '', '', ''),
 (163, 1, 'listgroup-lastChild-bottomRight-radius', '4px', '4px', '', 15, 1, 0, 'TPL_LISTGROUP_LAST_CHILD_BOTTOM_R_BORDER_RADIUS', 'form-control', '', '', 'TPL_LISTGROUP_BORDER_RADIUS_PLACEHOLDER', '', '', '', ''),
 (164, 1, 'listgroup-lastChild-bottomLeft-radius', '4px', '4px', '', 15, 1, 0, 'TPL_LISTGROUP_LAST_CHILD_BOTTOM_L_BORDER_RADIUS', 'form-control', '', '', 'TPL_LISTGROUP_BORDER_RADIUS_PLACEHOLDER', '', '', '', ''),
-(165, 1, 'pos-outerTop-indicator', '1', '0', '', 26, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
+(165, 1, 'pos-outerTop-indicator', '0', '0', '', 26, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
 (166, 1, 'pos-outerTop-vertical-align', 'baseline', 'baseline', '', 26, 1, 6, 'TPL_VERTICAL_ALIGN', 'form-control', 'select', 'baseline,baseline:sub,subscript:super,superscript:top,top:text-top,text-top:middle,middle:bottom,bottom:text-bottom,text-bottom:initial,initial:inherit,inherit', '', '', '', '', ''),
 (167, 1, 'pos-outerTop-customCSS-longValue', '', '', '', 26, 1, 27, 'TPL_CUSTOM_CSS', 'form-control', 'textarea', '', 'TPL_CUSTOM_CSS_PLACEHOLDER', '', '', '', ''),
 (168, 1, 'pos-outerTop-border-radius', '0 0 0 0', '12px 12px 12px 12px', '', 26, 1, 17, 'TPL_BORDER_RADIUS', 'form-control', '', '', 'TPL_BORDER_RADIUS_PLACEHOLDER', '', '', '', ''),
@@ -1139,7 +1215,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (184, 1, 'pos-outerTop-position', 'static', 'static', '', 26, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (185, 1, 'pos-outerTop-marginBottom', '0px', '0px', '', 26, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (186, 1, 'pos-outerTop-marginTop', '0px', '0px', '', 26, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
-(187, 1, 'pos-intro-indicator', '1', '0', '', 27, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
+(187, 1, 'pos-intro-indicator', '0', '0', '', 27, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
 (188, 1, 'pos-intro-vertical-align', 'baseline', 'baseline', '', 27, 1, 6, 'TPL_VERTICAL_ALIGN', 'form-control', 'select', 'baseline,baseline:sub,subscript:super,superscript:top,top:text-top,text-top:middle,middle:bottom,bottom:text-bottom,text-bottom:initial,initial:inherit,inherit', '', '', '', '', ''),
 (189, 1, 'pos-intro-customCSS-longValue', '', '', '', 27, 1, 27, 'TPL_CUSTOM_CSS', 'form-control', 'textarea', '', 'TPL_CUSTOM_CSS_PLACEHOLDER', '', '', '', ''),
 (190, 1, 'pos-intro-border-radius', '0 0 0 0', '12px 12px 12px 12px', '', 27, 1, 17, 'TPL_BORDER_RADIUS', 'form-control', '', '', 'TPL_BORDER_RADIUS_PLACEHOLDER', '', '', '', ''),
@@ -1161,7 +1237,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (206, 1, 'pos-intro-position', 'static', 'static', '', 27, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (207, 1, 'pos-intro-marginBottom', '0px', '0px', '', 27, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (208, 1, 'pos-intro-marginTop', '0px', '0px', '', 27, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
-(209, 1, 'pos-globalmenu-indicator', '1', '0', '', 28, 1, 30, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
+(209, 1, 'pos-globalmenu-indicator', '0', '0', '', 28, 1, 30, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
 (210, 1, 'pos-globalmenu-vertical-align', 'baseline', 'baseline', '', 28, 1, 6, 'TPL_VERTICAL_ALIGN', 'form-control', 'select', 'baseline,baseline:sub,subscript:super,superscript:top,top:text-top,text-top:middle,middle:bottom,bottom:text-bottom,text-bottom:initial,initial:inherit,inherit', '', '', '', '', ''),
 (211, 1, 'pos-globalmenu-customCSS-longValue', '', '', '', 28, 1, 29, 'TPL_CUSTOM_CSS', 'form-control', 'textarea', '', 'TPL_CUSTOM_CSS_PLACEHOLDER', '', '', '', ''),
 (212, 1, 'pos-globalmenu-border-radius', '0 0 0 0', '12px 12px 12px 12px', '', 28, 1, 18, 'TPL_BORDER_RADIUS', 'form-control', '', '', 'TPL_BORDER_RADIUS_PLACEHOLDER', '', '', '', ''),
@@ -1181,9 +1257,9 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (226, 1, 'pos-globalmenu-height', 'auto', 'auto', '', 28, 1, 3, 'TPL_POS_HEIGHT', 'form-control', '', '', 'TPL_HEIGHT_PLACEHOLDER', '', '', 'TPL_SIZE_HEADING', 'TPL_SIZE_SUBTEXT'),
 (227, 1, 'pos-globalmenu-bgcolor', 'F8F8F8', 'F8F8F8', '', 28, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (228, 1, 'pos-globalmenu-position', 'static', 'static', '', 28, 1, 21, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
-(229, 1, 'pos-globalmenu-marginBottom', '0px', '0px', '', 28, 1, 23, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
+(229, 1, 'pos-globalmenu-marginBottom', '3.0em', '0px', '', 28, 1, 23, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (230, 1, 'pos-globalmenu-marginTop', '0px', '0px', '', 28, 1, 22, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
-(231, 1, 'pos-top-indicator', '1', '0', '', 29, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
+(231, 1, 'pos-top-indicator', '0', '0', '', 29, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
 (232, 1, 'pos-top-vertical-align', 'baseline', 'baseline', '', 29, 1, 6, 'TPL_VERTICAL_ALIGN', 'form-control', 'select', 'baseline,baseline:sub,subscript:super,superscript:top,top:text-top,text-top:middle,middle:bottom,bottom:text-bottom,text-bottom:initial,initial:inherit,inherit', '', '', '', '', ''),
 (233, 1, 'pos-top-customCSS-longValue', '', '', '', 29, 1, 27, 'TPL_CUSTOM_CSS', 'form-control', 'textarea', '', 'TPL_CUSTOM_CSS_PLACEHOLDER', '', '', '', ''),
 (234, 1, 'pos-top-border-radius', '0 0 0 0', '12px 12px 12px 12px', '', 29, 1, 17, 'TPL_BORDER_RADIUS', 'form-control', '', '', 'TPL_BORDER_RADIUS_PLACEHOLDER', '', '', '', ''),
@@ -1205,7 +1281,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (250, 1, 'pos-top-position', 'static', 'static', '', 29, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (251, 1, 'pos-top-marginBottom', '0px', '0px', '', 29, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (252, 1, 'pos-top-marginTop', '0px', '0px', '', 29, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
-(253, 1, 'pos-outerLeft-indicator', '1', '0', '', 30, 1, 27, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
+(253, 1, 'pos-outerLeft-indicator', '0', '0', '', 30, 1, 27, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
 (254, 1, 'pos-outerLeft-vertical-align', 'baseline', 'baseline', '', 30, 1, 6, 'TPL_VERTICAL_ALIGN', 'form-control', 'select', 'baseline,baseline:sub,subscript:super,superscript:top,top:text-top,text-top:middle,middle:bottom,bottom:text-bottom,text-bottom:initial,initial:inherit,inherit', '', '', '', '', ''),
 (255, 1, 'pos-outerLeft-customCSS-longValue', '', '', '', 30, 1, 26, 'TPL_CUSTOM_CSS', 'form-control', 'textarea', '', 'TPL_CUSTOM_CSS_PLACEHOLDER', '', '', '', ''),
 (256, 1, 'pos-outerLeft-border-radius', '0 0 0 0', '12px 12px 12px 12px', '', 30, 1, 17, 'TPL_BORDER_RADIUS', 'form-control', '', '', 'TPL_BORDER_RADIUS_PLACEHOLDER', '', '', '', ''),
@@ -1227,7 +1303,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (272, 1, 'pos-outerLeft-position', 'static', 'static', '', 30, 1, 19, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (273, 1, 'pos-outerLeft-marginBottom', '0px', '0px', '', 30, 1, 21, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (274, 1, 'pos-outerLeft-marginTop', '0px', '0px', '', 30, 1, 20, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
-(275, 1, 'pos-outerRight-indicator', '1', '0', '', 31, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
+(275, 1, 'pos-outerRight-indicator', '0', '0', '', 31, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
 (276, 1, 'pos-outerRight-vertical-align', 'baseline', 'baseline', '', 31, 1, 6, 'TPL_VERTICAL_ALIGN', 'form-control', 'select', 'baseline,baseline:sub,subscript:super,superscript:top,top:text-top,text-top:middle,middle:bottom,bottom:text-bottom,text-bottom:initial,initial:inherit,inherit', '', '', '', '', ''),
 (277, 1, 'pos-outerRight-customCSS-longValue', '', '', '', 31, 1, 27, 'TPL_CUSTOM_CSS', 'form-control', 'textarea', '', 'TPL_CUSTOM_CSS_PLACEHOLDER', '', '', '', ''),
 (278, 1, 'pos-outerRight-border-radius', '0 0 0 0', '12px 12px 12px 12px', '', 31, 1, 17, 'TPL_BORDER_RADIUS', 'form-control', '', '', 'TPL_BORDER_RADIUS_PLACEHOLDER', '', '', '', ''),
@@ -1250,7 +1326,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (294, 1, 'pos-outerRight-position', 'static', 'static', '', 31, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (295, 1, 'pos-outerRight-marginBottom', '0px', '0px', '', 31, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (296, 1, 'pos-outerRight-marginTop', '0px', '0px', '', 31, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
-(297, 1, 'pos-leftMenu-indicator', '1', '0', '', 32, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
+(297, 1, 'pos-leftMenu-indicator', '0', '0', '', 32, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
 (298, 1, 'pos-leftMenu-vertical-align', 'baseline', 'baseline', '', 32, 1, 6, 'TPL_VERTICAL_ALIGN', 'form-control', 'select', 'baseline,baseline:sub,subscript:super,superscript:top,top:text-top,text-top:middle,middle:bottom,bottom:text-bottom,text-bottom:initial,initial:inherit,inherit', '', '', '', '', ''),
 (299, 1, 'pos-leftMenu-customCSS-longValue', '', '', '', 32, 1, 27, 'TPL_CUSTOM_CSS', 'form-control', 'textarea', '', 'TPL_CUSTOM_CSS_PLACEHOLDER', '', '', '', ''),
 (300, 1, 'pos-leftMenu-border-radius', '0 0 0 0', '12px 12px 12px 12px', '', 32, 1, 17, 'TPL_BORDER_RADIUS', 'form-control', '', '', 'TPL_BORDER_RADIUS_PLACEHOLDER', '', '', '', ''),
@@ -1263,7 +1339,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (307, 1, 'pos-leftMenu-overflow', 'visible', 'visible', '', 32, 1, 24, 'TPL_OVERFLOW', 'form-control', 'select', 'visible,visible:hidden,hidden:scroll,scroll:auto,auto:initial,initial:inherit,inherit', '', '', '', 'TPL_OVERFLOW_HEADING', 'TPL_OVERFLOW_SUBTEXT'),
 (308, 1, 'pos-leftMenu-visibility', 'visible', 'visible', '', 32, 1, 26, 'TPL_VISIBILITY', 'form-control', 'select', 'visible,visible:hidden,hidden', '', '', '', '', ''),
 (309, 1, 'pos-leftMenu-text-align', 'left', 'left', '', 32, 1, 5, 'TPL_TEXT_ALIGN', 'form-control', 'select', 'left,left:center,center:right,right:justify,justify:initial,initial:inherit,inherit', '', '', '', 'TPL_ALIGN_HEADING', 'TPL_ALIGN_SUBTEXT'),
-(310, 1, 'pos-leftMenu-enabled', '1', '0', '', 32, 1, 1, 'TPL_POS_ACTIVE', 'form-control', 'checkbox toggle', '', '', '', '', 'TPL_POS_LEFTMENU_HEADING', 'TPL_POS_LEFTMENU_SUBTEXT'),
+(310, 1, 'pos-leftMenu-enabled', '0', '0', '', 32, 1, 1, 'TPL_POS_ACTIVE', 'form-control', 'checkbox toggle', '', '', '', '', 'TPL_POS_LEFTMENU_HEADING', 'TPL_POS_LEFTMENU_SUBTEXT'),
 (311, 1, 'pos-leftMenu-bg-gradient-longValue', '', '', '', 32, 1, 13, 'TPL_POS_BG_GRADIENT', 'form-control', 'textarea', '', 'TPL_BG_GRADIENT_PLACEHOLDER', '', '', '', ''),
 (312, 1, 'pos-leftMenu-zindex', '9999', '9999', '', 32, 1, 25, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (313, 1, 'pos-leftMenu-width', '100%', '100%', '', 32, 1, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
@@ -1272,7 +1348,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (316, 1, 'pos-leftMenu-position', 'static', 'static', '', 32, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (317, 1, 'pos-leftMenu-marginBottom', '0px', '0px', '', 32, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (318, 1, 'pos-leftMenu-marginTop', '0px', '0px', '', 32, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
-(319, 1, 'pos-rightMenu-indicator', '1', '0', '', 33, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
+(319, 1, 'pos-rightMenu-indicator', '0', '0', '', 33, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
 (320, 1, 'pos-rightMenu-vertical-align', 'baseline', 'baseline', '', 33, 1, 6, 'TPL_VERTICAL_ALIGN', 'form-control', 'select', 'baseline,baseline:sub,subscript:super,superscript:top,top:text-top,text-top:middle,middle:bottom,bottom:text-bottom,text-bottom:initial,initial:inherit,inherit', '', '', '', '', ''),
 (321, 1, 'pos-rightMenu-customCSS-longValue', '', '', '', 33, 1, 27, 'TPL_CUSTOM_CSS', 'form-control', 'textarea', '', 'TPL_CUSTOM_CSS_PLACEHOLDER', '', '', '', ''),
 (322, 1, 'pos-rightMenu-border-radius', '0 0 0 0', '12px 12px 12px 12px', '', 33, 1, 17, 'TPL_BORDER_RADIUS', 'form-control', '', '', 'TPL_BORDER_RADIUS_PLACEHOLDER', '', '', '', ''),
@@ -1285,7 +1361,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (329, 1, 'pos-rightMenu-overflow', 'visible', 'visible', '', 33, 1, 24, 'TPL_OVERFLOW', 'form-control', 'select', 'visible,visible:hidden,hidden:scroll,scroll:auto,auto:initial,initial:inherit,inherit', '', '', '', 'TPL_OVERFLOW_HEADING', 'TPL_OVERFLOW_SUBTEXT'),
 (330, 1, 'pos-rightMenu-visibility', 'visible', 'visible', '', 33, 1, 26, 'TPL_VISIBILITY', 'form-control', 'select', 'visible,visible:hidden,hidden', '', '', '', '', ''),
 (331, 1, 'pos-rightMenu-text-align', 'left', 'left', '', 33, 1, 5, 'TPL_TEXT_ALIGN', 'form-control', 'select', 'left,left:center,center:right,right:justify,justify:initial,initial:inherit,inherit', '', '', '', 'TPL_ALIGN_HEADING', 'TPL_ALIGN_SUBTEXT'),
-(332, 1, 'pos-rightMenu-enabled', '1', '0', '', 33, 1, 1, 'TPL_POS_ACTIVE', 'form-control', 'checkbox toggle', '', '', '', '', 'TPL_POS_RIGHTMENU_HEADING', 'TPL_POS_RIGHTMENU_SUBTEXT'),
+(332, 1, 'pos-rightMenu-enabled', '0', '0', '', 33, 1, 1, 'TPL_POS_ACTIVE', 'form-control', 'checkbox toggle', '', '', '', '', 'TPL_POS_RIGHTMENU_HEADING', 'TPL_POS_RIGHTMENU_SUBTEXT'),
 (333, 1, 'pos-rightMenu-bg-gradient-longValue', '', '', '', 33, 1, 13, 'TPL_POS_BG_GRADIENT', 'form-control', 'textarea', '', 'TPL_BG_GRADIENT_PLACEHOLDER', '', '', '', ''),
 (334, 1, 'pos-rightMenu-zindex', '9999', '9999', '', 33, 1, 25, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (335, 1, 'pos-rightMenu-width', '100%', '100%', '', 33, 1, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
@@ -1294,7 +1370,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (338, 1, 'pos-rightMenu-position', 'static', 'static', '', 33, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (339, 1, 'pos-rightMenu-marginBottom', '0px', '0px', '', 33, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (340, 1, 'pos-rightMenu-marginTop', '0px', '0px', '', 33, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
-(341, 1, 'pos-mainTop-indicator', '1', '0', '', 34, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
+(341, 1, 'pos-mainTop-indicator', '0', '0', '', 34, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
 (342, 1, 'pos-mainTop-vertical-align', 'baseline', 'baseline', '', 34, 1, 6, 'TPL_VERTICAL_ALIGN', 'form-control', 'select', 'baseline,baseline:sub,subscript:super,superscript:top,top:text-top,text-top:middle,middle:bottom,bottom:text-bottom,text-bottom:initial,initial:inherit,inherit', '', '', '', '', ''),
 (343, 1, 'pos-mainTop-customCSS-longValue', '', '', '', 34, 1, 27, 'TPL_CUSTOM_CSS', 'form-control', 'textarea', '', 'TPL_CUSTOM_CSS_PLACEHOLDER', '', '', '', ''),
 (344, 1, 'pos-mainTop-border-radius', '0 0 0 0', '12px 12px 12px 12px', '', 34, 1, 17, 'TPL_BORDER_RADIUS', 'form-control', '', '', 'TPL_BORDER_RADIUS_PLACEHOLDER', '', '', '', ''),
@@ -1316,7 +1392,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (360, 1, 'pos-mainTop-position', 'static', 'static', '', 34, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (361, 1, 'pos-mainTop-marginBottom', '0px', '0px', '', 34, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (362, 1, 'pos-mainTop-marginTop', '0px', '0px', '', 34, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
-(363, 1, 'pos-mainTopLeft-indicator', '1', '0', '', 35, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
+(363, 1, 'pos-mainTopLeft-indicator', '0', '0', '', 35, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
 (364, 1, 'pos-mainTopLeft-vertical-align', 'baseline', 'baseline', '', 35, 1, 6, 'TPL_VERTICAL_ALIGN', 'form-control', 'select', 'baseline,baseline:sub,subscript:super,superscript:top,top:text-top,text-top:middle,middle:bottom,bottom:text-bottom,text-bottom:initial,initial:inherit,inherit', '', '', '', '', ''),
 (365, 1, 'pos-mainTopLeft-customCSS-longValue', '', '', '', 35, 1, 27, 'TPL_CUSTOM_CSS', 'form-control', 'textarea', '', 'TPL_CUSTOM_CSS_PLACEHOLDER', '', '', '', ''),
 (366, 1, 'pos-mainTopLeft-border-radius', '0 0 0 0', '12px 12px 12px 12px', '', 35, 1, 17, 'TPL_BORDER_RADIUS', 'form-control', '', '', 'TPL_BORDER_RADIUS_PLACEHOLDER', '', '', '', ''),
@@ -1337,7 +1413,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (382, 1, 'pos-mainTopLeft-position', 'static', 'static', '', 35, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (383, 1, 'pos-mainTopLeft-marginBottom', '0px', '0px', '', 35, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (384, 1, 'pos-mainTopLeft-marginTop', '0px', '0px', '', 35, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
-(385, 1, 'pos-mainTopCenter-indicator', '1', '0', '', 36, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
+(385, 1, 'pos-mainTopCenter-indicator', '0', '0', '', 36, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
 (386, 1, 'pos-mainTopCenter-vertical-align', 'baseline', 'baseline', '', 36, 1, 6, 'TPL_VERTICAL_ALIGN', 'form-control', 'select', 'baseline,baseline:sub,subscript:super,superscript:top,top:text-top,text-top:middle,middle:bottom,bottom:text-bottom,text-bottom:initial,initial:inherit,inherit', '', '', '', '', ''),
 (387, 1, 'pos-mainTopCenter-customCSS-longValue', '', '', '', 36, 1, 27, 'TPL_CUSTOM_CSS', 'form-control', 'textarea', '', 'TPL_CUSTOM_CSS_PLACEHOLDER', '', '', '', ''),
 (388, 1, 'pos-mainTopCenter-border-radius', '0 0 0 0', '12px 12px 12px 12px', '', 36, 1, 17, 'TPL_BORDER_RADIUS', 'form-control', '', '', 'TPL_BORDER_RADIUS_PLACEHOLDER', '', '', '', ''),
@@ -1358,7 +1434,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (404, 1, 'pos-mainTopCenter-position', 'static', 'static', '', 36, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (405, 1, 'pos-mainTopCenter-marginBottom', '0px', '0px', '', 36, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (406, 1, 'pos-mainTopCenter-marginTop', '0px', '0px', '', 36, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
-(407, 1, 'pos-mainTopRight-indicator', '1', '0', '', 37, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
+(407, 1, 'pos-mainTopRight-indicator', '0', '0', '', 37, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
 (408, 1, 'pos-mainTopRight-vertical-align', 'baseline', 'baseline', '', 37, 1, 6, 'TPL_VERTICAL_ALIGN', 'form-control', 'select', 'baseline,baseline:sub,subscript:super,superscript:top,top:text-top,text-top:middle,middle:bottom,bottom:text-bottom,text-bottom:initial,initial:inherit,inherit', '', '', '', '', ''),
 (409, 1, 'pos-mainTopRight-customCSS-longValue', '', '', '', 37, 1, 27, 'TPL_CUSTOM_CSS', 'form-control', 'textarea', '', 'TPL_CUSTOM_CSS_PLACEHOLDER', '', '', '', ''),
 (410, 1, 'pos-mainTopRight-border-radius', '0 0 0 0', '12px 12px 12px 12px', '', 37, 1, 17, 'TPL_BORDER_RADIUS', 'form-control', '', '', 'TPL_BORDER_RADIUS_PLACEHOLDER', '', '', '', ''),
@@ -1379,7 +1455,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (426, 1, 'pos-mainTopRight-position', 'static', 'static', '', 37, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (427, 1, 'pos-mainTopRight-marginBottom', '0px', '0px', '', 37, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (428, 1, 'pos-mainTopRight-marginTop', '0px', '0px', '', 37, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
-(429, 1, 'pos-main-indicator', '1', '0', '', 38, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
+(429, 1, 'pos-main-indicator', '0', '0', '', 38, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
 (430, 1, 'pos-main-vertical-align', 'baseline', 'baseline', '', 38, 1, 6, 'TPL_VERTICAL_ALIGN', 'form-control', 'select', 'baseline,baseline:sub,subscript:super,superscript:top,top:text-top,text-top:middle,middle:bottom,bottom:text-bottom,text-bottom:initial,initial:inherit,inherit', '', '', '', '', ''),
 (431, 1, 'pos-main-customCSS-longValue', '', '', '', 38, 1, 27, 'TPL_CUSTOM_CSS', 'form-control', 'textarea', '', 'TPL_CUSTOM_CSS_PLACEHOLDER', '', '', '', ''),
 (432, 1, 'pos-main-border-radius', '0 0 0 0', '12px 12px 12px 12px', '', 38, 1, 17, 'TPL_BORDER_RADIUS', 'form-control', '', '', 'TPL_BORDER_RADIUS_PLACEHOLDER', '', '', '', ''),
@@ -1397,11 +1473,11 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (444, 1, 'pos-main-zindex', '9999', '9999', '', 38, 1, 25, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (445, 1, 'pos-main-width', '100%', '100%', '', 38, 1, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
 (446, 1, 'pos-main-height', 'auto', 'auto', '', 38, 1, 3, 'TPL_POS_HEIGHT', 'form-control', '', '', 'TPL_HEIGHT_PLACEHOLDER', '', '', 'TPL_SIZE_HEADING', 'TPL_SIZE_SUBTEXT'),
-(447, 1, 'pos-main-bgcolor', 'f8f8f8', 'F8F8F8', '', 38, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(447, 1, 'pos-main-bgcolor', 'F8F8F8', 'F8F8F8', '', 38, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (448, 1, 'pos-main-position', 'static', 'static', '', 38, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (449, 1, 'pos-main-marginBottom', '0px', '0px', '', 38, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (450, 1, 'pos-main-marginTop', '0px', '0px', '', 38, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
-(451, 1, 'pos-mainBottom-indicator', '1', '0', '', 39, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
+(451, 1, 'pos-mainBottom-indicator', '0', '0', '', 39, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
 (452, 1, 'pos-mainBottom-vertical-align', 'baseline', 'baseline', '', 39, 1, 6, 'TPL_VERTICAL_ALIGN', 'form-control', 'select', 'baseline,baseline:sub,subscript:super,superscript:top,top:text-top,text-top:middle,middle:bottom,bottom:text-bottom,text-bottom:initial,initial:inherit,inherit', '', '', '', '', ''),
 (453, 1, 'pos-mainBottom-customCSS-longValue', '', '', '', 39, 1, 27, 'TPL_CUSTOM_CSS', 'form-control', 'textarea', '', 'TPL_CUSTOM_CSS_PLACEHOLDER', '', '', '', ''),
 (454, 1, 'pos-mainBottom-border-radius', '0 0 0 0', '12px 12px 12px 12px', '', 39, 1, 17, 'TPL_BORDER_RADIUS', 'form-control', '', '', 'TPL_BORDER_RADIUS_PLACEHOLDER', '', '', '', ''),
@@ -1423,7 +1499,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (470, 1, 'pos-mainBottom-position', 'static', 'static', '', 39, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (471, 1, 'pos-mainBottom-marginBottom', '0px', '0px', '', 39, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (472, 1, 'pos-mainBottom-marginTop', '0px', '0px', '', 39, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
-(473, 1, 'pos-mainBottomLeft-indicator', '1', '0', '', 40, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
+(473, 1, 'pos-mainBottomLeft-indicator', '0', '0', '', 40, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
 (474, 1, 'pos-mainBottomLeft-vertical-align', 'baseline', 'baseline', '', 40, 1, 6, 'TPL_VERTICAL_ALIGN', 'form-control', 'select', 'baseline,baseline:sub,subscript:super,superscript:top,top:text-top,text-top:middle,middle:bottom,bottom:text-bottom,text-bottom:initial,initial:inherit,inherit', '', '', '', '', ''),
 (475, 1, 'pos-mainBottomLeft-customCSS-longValue', '', '', '', 40, 1, 27, 'TPL_CUSTOM_CSS', 'form-control', 'textarea', '', 'TPL_CUSTOM_CSS_PLACEHOLDER', '', '', '', ''),
 (476, 1, 'pos-mainBottomLeft-border-radius', '0 0 0 0', '12px 12px 12px 12px', '', 40, 1, 17, 'TPL_BORDER_RADIUS', 'form-control', '', '', 'TPL_BORDER_RADIUS_PLACEHOLDER', '', '', '', ''),
@@ -1444,7 +1520,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (492, 1, 'pos-mainBottomLeft-position', 'static', 'static', '', 40, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (493, 1, 'pos-mainBottomLeft-marginBottom', '0px', '0px', '', 40, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (494, 1, 'pos-mainBottomLeft-marginTop', '0px', '0px', '', 40, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
-(495, 1, 'pos-mainBottomCenter-indicator', '1', '0', '', 41, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
+(495, 1, 'pos-mainBottomCenter-indicator', '0', '0', '', 41, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
 (496, 1, 'pos-mainBottomCenter-vertical-align', 'baseline', 'baseline', '', 41, 1, 6, 'TPL_VERTICAL_ALIGN', 'form-control', 'select', 'baseline,baseline:sub,subscript:super,superscript:top,top:text-top,text-top:middle,middle:bottom,bottom:text-bottom,text-bottom:initial,initial:inherit,inherit', '', '', '', '', ''),
 (497, 1, 'pos-mainBottomCenter-customCSS-longValue', '', '', '', 41, 1, 27, 'TPL_CUSTOM_CSS', 'form-control', 'textarea', '', 'TPL_CUSTOM_CSS_PLACEHOLDER', '', '', '', ''),
 (498, 1, 'pos-mainBottomCenter-border-radius', '0 0 0 0', '12px 12px 12px 12px', '', 41, 1, 17, 'TPL_BORDER_RADIUS', 'form-control', '', '', 'TPL_BORDER_RADIUS_PLACEHOLDER', '', '', '', ''),
@@ -1465,7 +1541,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (514, 1, 'pos-mainBottomCenter-position', 'static', 'static', '', 41, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (515, 1, 'pos-mainBottomCenter-marginBottom', '0px', '0px', '', 41, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (516, 1, 'pos-mainBottomCenter-marginTop', '0px', '0px', '', 41, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
-(517, 1, 'pos-mainBottomRight-indicator', '1', '0', '', 42, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
+(517, 1, 'pos-mainBottomRight-indicator', '0', '0', '', 42, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
 (518, 1, 'pos-mainBottomRight-vertical-align', 'baseline', 'baseline', '', 42, 1, 6, 'TPL_VERTICAL_ALIGN', 'form-control', 'select', 'baseline,baseline:sub,subscript:super,superscript:top,top:text-top,text-top:middle,middle:bottom,bottom:text-bottom,text-bottom:initial,initial:inherit,inherit', '', '', '', '', ''),
 (519, 1, 'pos-mainBottomRight-customCSS-longValue', '', '', '', 42, 1, 27, 'TPL_CUSTOM_CSS', 'form-control', 'textarea', '', 'TPL_CUSTOM_CSS_PLACEHOLDER', '', '', '', ''),
 (520, 1, 'pos-mainBottomRight-border-radius', '0 0 0 0', '12px 12px 12px 12px', '', 42, 1, 18, 'TPL_BORDER_RADIUS', 'form-control', '', '', 'TPL_BORDER_RADIUS_PLACEHOLDER', '', '', '', ''),
@@ -1505,11 +1581,11 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (554, 1, 'pos-mainFooter-zindex', '9999', '9999', '', 43, 1, 25, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (555, 1, 'pos-mainFooter-width', '100%', '100%', '', 43, 1, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
 (556, 1, 'pos-mainFooter-height', 'auto', 'auto', '', 43, 1, 3, 'TPL_POS_HEIGHT', 'form-control', '', '', 'TPL_HEIGHT_PLACEHOLDER', '', '', 'TPL_SIZE_HEADING', 'TPL_SIZE_SUBTEXT'),
-(557, 1, 'pos-mainFooter-bgcolor', '0D0D0D', 'F8F8F8', '', 43, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(557, 1, 'pos-mainFooter-bgcolor', 'F8F8F8', 'F8F8F8', '', 43, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (558, 1, 'pos-mainFooter-position', 'static', 'static', '', 43, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (559, 1, 'pos-mainFooter-marginBottom', '0px', '0px', '', 43, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (560, 1, 'pos-mainFooter-marginTop', '0px', '0px', '', 43, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
-(561, 1, 'pos-mainFooterLeft-indicator', '1', '0', '', 44, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
+(561, 1, 'pos-mainFooterLeft-indicator', '0', '0', '', 44, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
 (562, 1, 'pos-mainFooterLeft-vertical-align', 'baseline', 'baseline', '', 44, 1, 6, 'TPL_VERTICAL_ALIGN', 'form-control', 'select', 'baseline,baseline:sub,subscript:super,superscript:top,top:text-top,text-top:middle,middle:bottom,bottom:text-bottom,text-bottom:initial,initial:inherit,inherit', '', '', '', '', ''),
 (563, 1, 'pos-mainFooterLeft-customCSS-longValue', '', '', '', 44, 1, 27, 'TPL_CUSTOM_CSS', 'form-control', 'textarea', '', 'TPL_CUSTOM_CSS_PLACEHOLDER', '', '', '', ''),
 (564, 1, 'pos-mainFooterLeft-border-radius', '0 0 0 0', '12px 12px 12px 12px', '', 44, 1, 17, 'TPL_BORDER_RADIUS', 'form-control', '', '', 'TPL_BORDER_RADIUS_PLACEHOLDER', '', '', '', ''),
@@ -1530,7 +1606,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (580, 1, 'pos-mainFooterLeft-position', 'static', 'static', '', 44, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (581, 1, 'pos-mainFooterLeft-marginBottom', '0px', '0px', '', 44, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (582, 1, 'pos-mainFooterLeft-marginTop', '0px', '0px', '', 44, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
-(583, 1, 'pos-mainFooterCenter-indicator', '1', '0', '', 45, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
+(583, 1, 'pos-mainFooterCenter-indicator', '0', '0', '', 45, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
 (584, 1, 'pos-mainFooterCenter-vertical-align', 'baseline', 'baseline', '', 45, 1, 6, 'TPL_VERTICAL_ALIGN', 'form-control', 'select', 'baseline,baseline:sub,subscript:super,superscript:top,top:text-top,text-top:middle,middle:bottom,bottom:text-bottom,text-bottom:initial,initial:inherit,inherit', '', '', '', '', ''),
 (585, 1, 'pos-mainFooterCenter-customCSS-longValue', '', '', '', 45, 1, 27, 'TPL_CUSTOM_CSS', 'form-control', 'textarea', '', 'TPL_CUSTOM_CSS_PLACEHOLDER', '', '', '', ''),
 (586, 1, 'pos-mainFooterCenter-border-radius', '0 0 0 0', '12px 12px 12px 12px', '', 45, 1, 17, 'TPL_BORDER_RADIUS', 'form-control', '', '', 'TPL_BORDER_RADIUS_PLACEHOLDER', '', '', '', ''),
@@ -1551,7 +1627,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (602, 1, 'pos-mainFooterCenter-position', 'static', 'static', '', 45, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (603, 1, 'pos-mainFooterCenter-marginBottom', '0px', '0px', '', 45, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (604, 1, 'pos-mainFooterCenter-marginTop', '0px', '0px', '', 45, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
-(605, 1, 'pos-mainFooterRight-indicator', '1', '0', '', 46, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
+(605, 1, 'pos-mainFooterRight-indicator', '0', '0', '', 46, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
 (606, 1, 'pos-mainFooterRight-vertical-align', 'baseline', 'baseline', '', 46, 1, 6, 'TPL_VERTICAL_ALIGN', 'form-control', 'select', 'baseline,baseline:sub,subscript:super,superscript:top,top:text-top,text-top:middle,middle:bottom,bottom:text-bottom,text-bottom:initial,initial:inherit,inherit', '', '', '', '', ''),
 (607, 1, 'pos-mainFooterRight-customCSS-longValue', '', '', '', 46, 1, 27, 'TPL_CUSTOM_CSS', 'form-control', 'textarea', '', 'TPL_CUSTOM_CSS_PLACEHOLDER', '', '', '', ''),
 (608, 1, 'pos-mainFooterRight-border-radius', '0 0 0 0', '12px 12px 12px 12px', '', 46, 1, 17, 'TPL_BORDER_RADIUS', 'form-control', '', '', 'TPL_BORDER_RADIUS_PLACEHOLDER', '', '', '', ''),
@@ -1572,7 +1648,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (624, 1, 'pos-mainFooterRight-position', 'static', 'static', '', 46, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (625, 1, 'pos-mainFooterRight-marginBottom', '0px', '0px', '', 46, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (626, 1, 'pos-mainFooterRight-marginTop', '0px', '0px', '', 46, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
-(627, 1, 'pos-footer-indicator', '1', '0', '', 47, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
+(627, 1, 'pos-footer-indicator', '0', '0', '', 47, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
 (628, 1, 'pos-footer-vertical-align', 'baseline', 'baseline', '', 47, 1, 6, 'TPL_VERTICAL_ALIGN', 'form-control', 'select', 'baseline,baseline:sub,subscript:super,superscript:top,top:text-top,text-top:middle,middle:bottom,bottom:text-bottom,text-bottom:initial,initial:inherit,inherit', '', '', '', '', ''),
 (629, 1, 'pos-footer-customCSS-longValue', '', '', '', 47, 1, 27, 'TPL_CUSTOM_CSS', 'form-control', 'textarea', '', 'TPL_CUSTOM_CSS_PLACEHOLDER', '', '', '', ''),
 (630, 1, 'pos-footer-border-radius', '0 0 0 0', '12px 12px 12px 12px', '', 47, 1, 17, 'TPL_BORDER_RADIUS', 'form-control', '', '', 'TPL_BORDER_RADIUS_PLACEHOLDER', '', '', '', ''),
@@ -1594,7 +1670,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (646, 1, 'pos-footer-position', 'static', 'static', '', 47, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (647, 1, 'pos-footer-marginBottom', '0px', '0px', '', 47, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (648, 1, 'pos-footer-marginTop', '0px', '0px', '', 47, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
-(649, 1, 'pos-hiddenToolbar-indicator', '1', '0', '', 48, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
+(649, 1, 'pos-hiddenToolbar-indicator', '0', '0', '', 48, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
 (650, 1, 'pos-hiddenToolbar-vertical-align', 'baseline', 'baseline', '', 48, 1, 6, 'TPL_VERTICAL_ALIGN', 'form-control', 'select', 'baseline,baseline:sub,subscript:super,superscript:top,top:text-top,text-top:middle,middle:bottom,bottom:text-bottom,text-bottom:initial,initial:inherit,inherit', '', '', '', '', ''),
 (651, 1, 'pos-hiddenToolbar-customCSS-longValue', '', '', '', 48, 1, 27, 'TPL_CUSTOM_CSS', 'form-control', 'textarea', '', 'TPL_CUSTOM_CSS_PLACEHOLDER', '', '', '', ''),
 (652, 1, 'pos-hiddenToolbar-border-radius', '0 0 0 0', '12px 12px 12px 12px', '', 48, 1, 17, 'TPL_BORDER_RADIUS', 'form-control', '', '', 'TPL_BORDER_RADIUS_PLACEHOLDER', '', '', '', ''),
@@ -1616,7 +1692,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (668, 1, 'pos-hiddenToolbar-position', 'static', 'static', '', 48, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (669, 1, 'pos-hiddenToolbar-marginBottom', '0px', '0px', '', 48, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (670, 1, 'pos-hiddenToolbar-marginTop', '0px', '0px', '', 48, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
-(671, 1, 'pos-debug-indicator', '1', '0', '', 49, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
+(671, 1, 'pos-debug-indicator', '0', '0', '', 49, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
 (672, 1, 'pos-debug-vertical-align', 'baseline', 'baseline', '', 49, 1, 6, 'TPL_VERTICAL_ALIGN', 'form-control', 'select', 'baseline,baseline:sub,subscript:super,superscript:top,top:text-top,text-top:middle,middle:bottom,bottom:text-bottom,text-bottom:initial,initial:inherit,inherit', '', '', '', '', ''),
 (673, 1, 'pos-debug-customCSS-longValue', '', '', '', 49, 1, 27, 'TPL_CUSTOM_CSS', 'form-control', 'textarea', '', 'TPL_CUSTOM_CSS_PLACEHOLDER', '', '', '', ''),
 (674, 1, 'pos-debug-border-radius', '0 0 0 0', '12px 12px 12px 12px', '', 49, 1, 17, 'TPL_BORDER_RADIUS', 'form-control', '', '', 'TPL_BORDER_RADIUS_PLACEHOLDER', '', '', '', ''),
@@ -1638,7 +1714,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (690, 1, 'pos-debug-position', 'static', 'static', '', 49, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (691, 1, 'pos-debug-marginBottom', '0px', '0px', '', 49, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (692, 1, 'pos-debug-marginTop', '0px', '0px', '', 49, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
-(693, 1, 'pos-outerBottom-indicator', '1', '0', '', 50, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
+(693, 1, 'pos-outerBottom-indicator', '0', '0', '', 50, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
 (694, 1, 'pos-outerBottom-vertical-align', 'baseline', 'baseline', '', 50, 1, 6, 'TPL_VERTICAL_ALIGN', 'form-control', 'select', 'baseline,baseline:sub,subscript:super,superscript:top,top:text-top,text-top:middle,middle:bottom,bottom:text-bottom,text-bottom:initial,initial:inherit,inherit', '', '', '', '', ''),
 (695, 1, 'pos-outerBottom-customCSS-longValue', '', '', '', 50, 1, 27, 'TPL_CUSTOM_CSS', 'form-control', 'textarea', '', 'TPL_CUSTOM_CSS_PLACEHOLDER', '', '', '', ''),
 (696, 1, 'pos-outerBottom-border-radius', '0 0 0 0', '12px 12px 12px 12px', '', 50, 1, 17, 'TPL_BORDER_RADIUS', 'form-control', '', '', 'TPL_BORDER_RADIUS_PLACEHOLDER', '', '', '', ''),
@@ -1799,20 +1875,20 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (850, 1, 'form-border-radius', '4px', '4px', '', 51, 1, 4, 'TPL_FORM_BORDER_RADIUS_LABEL', 'form-control', '', '', 'TPL_FORM_BORDER_RADIUS_PLACEHOLDER', '', '', '', ''),
 (851, 1, 'form-activeBorderColor', '66AFE9', '#66afe9', '', 51, 1, 5, 'TPL_FORM_ACTIVE_BORDERCOLOR_LABEL', 'form-control color', 'color', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (852, 1, 'form-placeholderColor', '999999', '#999', '', 51, 1, 6, 'TPL_FORM_PLACEHOLDERCOLOR_LABEL', 'form-control color', 'color', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
-(853, 1, 'h1-fontfamily', 'Arial, Helvetica, sans-serif', '', '', 52, 1, 1, 'TPL_H1_FONTFAMILY', 'form-control', '', '', '', 'TPL_FONTFAMILY_DESC', '', '', ''),
-(854, 1, 'h2-fontfamily', 'Arial, Helvetica, sans-serif', 'Arial', '', 52, 1, 1, '', 'form-control', '', '', '', 'TPL_FONTFAMILY_DESC', '', '', ''),
-(855, 1, 'h3-fontfamily', 'Arial, Helvetica, sans-serif', '', '', 52, 1, 1, '', 'form-control', '', '', '', 'TPL_FONTFAMILY_DESC', '', '', ''),
-(856, 1, 'h4-fontfamily', 'Arial, Helvetica, sans-serif', '', '', 52, 1, 1, '', 'form-control', '', '', '', 'TPL_FONTFAMILY_DESC', '', '', ''),
-(857, 1, 'h5-fontfamily', 'Arial, Helvetica, sans-serif', '', '', 52, 1, 1, '', 'form-control', '', '', '', 'TPL_FONTFAMILY_DESC', '', '', ''),
-(858, 1, 'h6-fontfamily', 'Arial, Helvetica, sans-serif', '', '', 52, 1, 1, '', 'form-control', '', '', '', 'TPL_FONTFAMILY_DESC', '', '', ''),
+(853, 1, 'h1-fontfamily', 'Impact, Charcoal, sans-serif', '', '', 52, 1, 1, 'TPL_H1_FONTFAMILY', 'form-control', '', '', '', 'TPL_FONTFAMILY_DESC', '', '', ''),
+(854, 1, 'h2-fontfamily', 'Impact, Charcoal, sans-serif', 'Arial', '', 52, 1, 1, '', 'form-control', '', '', '', 'TPL_FONTFAMILY_DESC', '', '', ''),
+(855, 1, 'h3-fontfamily', 'Impact, Charcoal, sans-serif', '', '', 52, 1, 1, '', 'form-control', '', '', '', 'TPL_FONTFAMILY_DESC', '', '', ''),
+(856, 1, 'h4-fontfamily', 'Impact, Charcoal, sans-serif', '', '', 52, 1, 1, '', 'form-control', '', '', '', 'TPL_FONTFAMILY_DESC', '', '', ''),
+(857, 1, 'h5-fontfamily', 'Impact, Charcoal, sans-serif', '', '', 52, 1, 1, '', 'form-control', '', '', '', 'TPL_FONTFAMILY_DESC', '', '', ''),
+(858, 1, 'h6-fontfamily', 'Impact, Charcoal, sans-serif', '', '', 52, 1, 1, '', 'form-control', '', '', '', 'TPL_FONTFAMILY_DESC', '', '', ''),
 (859, 1, 'globaltext-fontfamily', 'Arial, Helvetica, sans-serif', '', '', 52, 1, 1, '', 'form-control', '', '', '', 'TPL_FONTFAMILY_DESC', '', '', ''),
 (860, 1, 'h1-fontshadowsize', '2px 2px 0px', '2px 2px 0px', '', 52, 1, 1, 'TPL_FONTSHADOWSIZE', 'form-control', '', '', '', '', '', '', ''),
-(861, 1, 'h1-fontshadowcolor', '963627', 'FFFFFF', '', 52, 1, 1, 'TPL_FONTSHADOWCOLOR', 'form-control color', '', '', '', '', '', '', ''),
+(861, 1, 'h1-fontshadowcolor', 'CCCCCC', 'FFFFFF', '', 52, 1, 1, 'TPL_FONTSHADOWCOLOR', 'form-control color', '', '', '', '', '', '', ''),
 (862, 1, 'h1-fontweight', 'normal', '', '', 52, 1, 1, 'TPL_FONTWEIGHT', 'form-control', '', '', '', '', '', '', ''),
 (863, 1, 'h1-fontstyle', 'normal', '', '', 52, 1, 1, 'TPL_FONTSTYLE', 'form-control', '', '', '', '', '', '', ''),
 (864, 1, 'h1-textdecoration', 'none', '', '', 52, 1, 1, 'TPL_TEXTDECORATION', 'form-control', '', '', '', '', '', '', ''),
 (865, 1, 'h2-fontshadowsize', '2px 2px 0px', '2px 2px 0px', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
-(866, 1, 'h2-fontshadowcolor', 'C2C2C2', 'FFFFFF', '', 52, 1, 1, '', 'form-control color', '', '', '', '', '', '', ''),
+(866, 1, 'h2-fontshadowcolor', 'CCCCCC', 'FFFFFF', '', 52, 1, 1, '', 'form-control color', '', '', '', '', '', '', ''),
 (867, 1, 'h2-fontweight', 'normal', '', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
 (868, 1, 'h2-fontstyle', 'normal', '', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
 (869, 1, 'h2-textdecoration', 'none', '', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
@@ -1822,19 +1898,19 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (873, 1, 'h6-textdecoration', 'none', '', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
 (874, 1, 'globaltext-textdecoration', 'none', '', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
 (875, 1, 'h3-fontshadowsize', '2px 2px 8px', '2px 2px 0px', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
-(876, 1, 'h3-fontshadowcolor', '9C9C9C', 'FFFFFF', '', 52, 1, 1, '', 'form-control color', '', '', '', '', '', '', ''),
+(876, 1, 'h3-fontshadowcolor', 'CCCCCC', 'FFFFFF', '', 52, 1, 1, '', 'form-control color', '', '', '', '', '', '', ''),
 (877, 1, 'h3-fontweight', 'normal', '', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
 (878, 1, 'h3-fontstyle', 'normal', '', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
 (879, 1, 'h4-fontshadowsize', '1px 1px 0px', '2px 2px 0px', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
-(880, 1, 'h4-fontshadowcolor', '0D0D0D', 'FFFFFF', '', 52, 1, 1, '', 'form-control color', '', '', '', '', '', '', ''),
+(880, 1, 'h4-fontshadowcolor', 'CCCCCC', 'FFFFFF', '', 52, 1, 1, '', 'form-control color', '', '', '', '', '', '', ''),
 (881, 1, 'h4-fontweight', 'normal', '', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
 (882, 1, 'h4-fontstyle', 'normal', '', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
 (883, 1, 'h5-fontshadowsize', '1px 1px 0px', '2px 2px 0px', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
-(884, 1, 'h5-fontshadowcolor', '919191', 'FFFFFF', '', 52, 1, 1, '', 'form-control color', '', '', '', '', '', '', ''),
+(884, 1, 'h5-fontshadowcolor', 'CCCCCC', 'FFFFFF', '', 52, 1, 1, '', 'form-control color', '', '', '', '', '', '', ''),
 (885, 1, 'h5-fontweight', 'normal', '', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
 (886, 1, 'h5-fontstyle', 'normal', '', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
 (887, 1, 'h6-fontshadowsize', '1px 1px 0px', '2px 2px 0px', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
-(888, 1, 'h6-fontshadowcolor', 'EBEBEB', 'FFFFFF', '', 52, 1, 1, '', 'form-control color', '', '', '', '', '', '', ''),
+(888, 1, 'h6-fontshadowcolor', 'CCCCCC', 'FFFFFF', '', 52, 1, 1, '', 'form-control color', '', '', '', '', '', '', ''),
 (889, 1, 'h6-fontweight', 'normal', '', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
 (890, 1, 'h6-fontstyle', 'normal', '', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
 (891, 1, 'h1-alink', '186FF2', '337AB7', '', 52, 1, 1, 'TPL_LINK_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
@@ -1886,30 +1962,30 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (937, 1, 'h6-linkfontstyle', 'normal', '', '', 52, 1, 1, 'TPL_LINK_FONTSTYLE', 'form-control', '', '', '', '', '', '', ''),
 (938, 1, 'h6-linktextdecoration', 'none', '', '', 52, 1, 1, 'TPL_LINK_TEXTDECORATION', 'form-control', '', '', '', '', '', '', ''),
 (939, 1, 'h6-hovertextdecoration', 'none', '', '', 52, 1, 1, 'TPL_HOVER_TEXTDECORATION', 'form-control', '', '', '', '', '', '', ''),
-(940, 1, 'h1-smallcolor', 'CC9A6E', '888888', '', 52, 0, 1, 'TPL_SMALLCOLOR', 'form-control', '', '', '', '', '', '', ''),
-(941, 1, 'h2-smallcolor', '1E2E22', '888888', '', 52, 0, 1, 'TPL_SMALLCOLOR', 'form-control', '', '', '', '', '', '', ''),
-(942, 1, 'h3-smallcolor', '4D4D4D', '888888', '', 52, 0, 1, 'TPL_SMALLCOLOR', 'form-control', '', '', '', '', '', '', ''),
-(943, 1, 'h4-smallcolor', 'A8A8A8', '888888', '', 52, 0, 1, 'TPL_SMALLCOLOR', 'form-control', '', '', '', '', '', '', ''),
-(944, 1, 'h5-smallcolor', 'C4C4C4', '888888', '', 52, 0, 1, 'TPL_SMALLCOLOR', 'form-control', '', '', '', '', '', '', ''),
-(945, 1, 'h6-smallcolor', '0A0A0A', '888888', '', 52, 0, 1, 'TPL_SMALLCOLOR', 'form-control', '', '', '', '', '', '', ''),
-(946, 1, 'h1-smallshadowsize', '2px 2px 0px', '1px 1px 0px', '', 52, 0, 1, 'TPL_SMALLSHADOWSIZE', 'form-control', '', '', '', '', '', '', ''),
-(947, 1, 'h1-smallshadowcolor', '963627', 'FFFFFF', '', 52, 0, 1, 'TPL_SMALLSHADOWCOLOR', 'form-control color', '', '', '', '', '', '', ''),
-(948, 1, 'h2-smallshadowsize', '2px 2px 0px', '1px 1px 0px', '', 52, 0, 1, 'TPL_SMALLSHADOWSIZE', 'form-control', '', '', '', '', '', '', ''),
-(949, 1, 'h2-smallshadowcolor', 'C2C2C2', 'FFFFFF', '', 52, 0, 1, 'TPL_SMALLSHADOWCOLOR', 'form-control color', '', '', '', '', '', '', ''),
-(950, 1, 'h3-smallshadowsize', '2px 2px 0px', '1px 1px 0px', '', 52, 0, 1, 'TPL_SMALLSHADOWSIZE', 'form-control', '', '', '', '', '', '', ''),
-(951, 1, 'h3-smallshadowcolor', '9C9C9C', 'FFFFFF', '', 52, 0, 1, 'TPL_SMALLSHADOWCOLOR', 'form-control color', '', '', '', '', '', '', ''),
-(952, 1, 'h4-smallshadowsize', '1px 1px 3px', '1px 1px 0px', '', 52, 0, 1, 'TPL_SMALLSHADOWSIZE', 'form-control', '', '', '', '', '', '', ''),
-(953, 1, 'h4-smallshadowcolor', '0D0D0D', 'FFFFFF', '', 52, 0, 1, 'TPL_SMALLSHADOWCOLOR', 'form-control color', '', '', '', '', '', '', ''),
-(954, 1, 'h5-smallshadowsize', '1px 1px 0px', '1px 1px 0px', '', 52, 0, 1, 'TPL_SMALLSHADOWSIZE', 'form-control', '', '', '', '', '', '', ''),
-(955, 1, 'h5-smallshadowcolor', '919191', 'FFFFFF', '', 52, 0, 1, 'TPL_SMALLSHADOWCOLOR', 'form-control color', '', '', '', '', '', '', ''),
-(956, 1, 'h6-smallshadowsize', '1px 1px 0px', '1px 1px 0px', '', 52, 0, 1, 'TPL_SMALLSHADOWSIZE', 'form-control', '', '', '', '', '', '', ''),
-(957, 1, 'h6-smallshadowcolor', 'EBEBEB', 'FFFFFF', '', 52, 0, 1, 'TPL_SMALLSHADOWCOLOR', 'form-control color', '', '', '', '', '', '', ''),
+(940, 1, 'h1-smallcolor', 'FFFFFF', '888888', '', 52, 0, 1, 'TPL_SMALLCOLOR', 'form-control', '', '', '', '', '', '', ''),
+(941, 1, 'h2-smallcolor', 'FFFFFF', '888888', '', 52, 0, 1, 'TPL_SMALLCOLOR', 'form-control', '', '', '', '', '', '', ''),
+(942, 1, 'h3-smallcolor', 'FFFFFF', '888888', '', 52, 0, 1, 'TPL_SMALLCOLOR', 'form-control', '', '', '', '', '', '', ''),
+(943, 1, 'h4-smallcolor', 'FFFFFF', '888888', '', 52, 0, 1, 'TPL_SMALLCOLOR', 'form-control', '', '', '', '', '', '', ''),
+(944, 1, 'h5-smallcolor', 'FFFFFF', '888888', '', 52, 0, 1, 'TPL_SMALLCOLOR', 'form-control', '', '', '', '', '', '', ''),
+(945, 1, 'h6-smallcolor', 'FFFFFF', '888888', '', 52, 0, 1, 'TPL_SMALLCOLOR', 'form-control', '', '', '', '', '', '', ''),
+(946, 1, 'h1-smallshadowsize', '', '1px 1px 0px', '', 52, 0, 1, 'TPL_SMALLSHADOWSIZE', 'form-control', '', '', '', '', '', '', ''),
+(947, 1, 'h1-smallshadowcolor', 'FFFFFF', 'FFFFFF', '', 52, 0, 1, 'TPL_SMALLSHADOWCOLOR', 'form-control color', '', '', '', '', '', '', ''),
+(948, 1, 'h2-smallshadowsize', '', '1px 1px 0px', '', 52, 0, 1, 'TPL_SMALLSHADOWSIZE', 'form-control', '', '', '', '', '', '', ''),
+(949, 1, 'h2-smallshadowcolor', 'FFFFFF', 'FFFFFF', '', 52, 0, 1, 'TPL_SMALLSHADOWCOLOR', 'form-control color', '', '', '', '', '', '', ''),
+(950, 1, 'h3-smallshadowsize', '', '1px 1px 0px', '', 52, 0, 1, 'TPL_SMALLSHADOWSIZE', 'form-control', '', '', '', '', '', '', ''),
+(951, 1, 'h3-smallshadowcolor', 'FFFFFF', 'FFFFFF', '', 52, 0, 1, 'TPL_SMALLSHADOWCOLOR', 'form-control color', '', '', '', '', '', '', ''),
+(952, 1, 'h4-smallshadowsize', '', '1px 1px 0px', '', 52, 0, 1, 'TPL_SMALLSHADOWSIZE', 'form-control', '', '', '', '', '', '', ''),
+(953, 1, 'h4-smallshadowcolor', 'FFFFFF', 'FFFFFF', '', 52, 0, 1, 'TPL_SMALLSHADOWCOLOR', 'form-control color', '', '', '', '', '', '', ''),
+(954, 1, 'h5-smallshadowsize', '', '1px 1px 0px', '', 52, 0, 1, 'TPL_SMALLSHADOWSIZE', 'form-control', '', '', '', '', '', '', ''),
+(955, 1, 'h5-smallshadowcolor', 'FFFFFF', 'FFFFFF', '', 52, 0, 1, 'TPL_SMALLSHADOWCOLOR', 'form-control color', '', '', '', '', '', '', ''),
+(956, 1, 'h6-smallshadowsize', '', '1px 1px 0px', '', 52, 0, 1, 'TPL_SMALLSHADOWSIZE', 'form-control', '', '', '', '', '', '', ''),
+(957, 1, 'h6-smallshadowcolor', 'FFFFFF', 'FFFFFF', '', 52, 0, 1, 'TPL_SMALLSHADOWCOLOR', 'form-control color', '', '', '', '', '', '', ''),
 (958, 1, 'globaltext-fontweight', 'normal', '', '', 52, 1, 1, 'TPL_FONTWEIGHT', 'form-control', '', '', '', '', '', '', ''),
 (959, 1, 'globaltext-fontstyle', 'normal', '', '', 52, 1, 1, '', 'form-control', '', '', '', '', '', '', ''),
 (960, 1, 'globaltext-linkfontstyle', 'normal', '', '', 52, 1, 1, 'TPL_LINK_FONTSTYLE', 'form-control', '', '', '', '', '', '', ''),
 (961, 1, 'globaltext-linkfontweight', 'normal', '', '', 52, 1, 1, 'TPL_LINK_FONTWEIGHT', 'form-control', '', '', '', '', '', '', ''),
-(962, 1, 'globaltext-smallshadowsize', '1px 1px 10px', '1px 1px 0px', '', 52, 0, 1, 'TPL_SMALLSHADOWSIZE', 'form-control', '', '', '', '', '', '', ''),
-(963, 1, 'globaltext-smallshadowcolor', '1480DE', 'FFFFFF', '', 52, 0, 1, 'TPL_SMALLSHADOWCOLOR', 'form-control color', '', '', '', '', '', '', ''),
+(962, 1, 'globaltext-smallshadowsize', '', '1px 1px 0px', '', 52, 0, 1, 'TPL_SMALLSHADOWSIZE', 'form-control', '', '', '', '', '', '', ''),
+(963, 1, 'globaltext-smallshadowcolor', 'FFFFFF', 'FFFFFF', '', 52, 0, 1, 'TPL_SMALLSHADOWCOLOR', 'form-control color', '', '', '', '', '', '', ''),
 (964, 1, 'pos-rightMenu-bgnone', ' ', 'none', '', 33, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
 (965, 1, 'pos-outerTop-bgnone', ' ', 'none', '', 26, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
 (966, 1, 'pos-intro-bgnone', ' ', 'none', '', 27, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
@@ -2010,7 +2086,6 @@ INSERT INTO `cms_template_settings_types` (`id`, `type`) VALUES
 
 -- --------------------------------------------------------
 
-
 --
 -- Tabellenstruktur für Tabelle `cms_tips`
 --
@@ -2029,50 +2104,50 @@ CREATE TABLE `cms_tips` (
 
 INSERT INTO `cms_tips` (`id`, `published`, `tipHeading`, `tipText`, `tipLink`) VALUES
 (1, 0, 'TOD_1_H', 'TOD_1_T', ''),
-(2, 0, 'TOD_2_H', 'TOD_2_T', ''),
+(2, 1, 'TOD_2_H', 'TOD_2_T', ''),
 (3, 1, 'TOD_3_H', 'TOD_3_T', ''),
 (4, 1, 'TOD_4_H', 'TOD_4_T', ''),
 (5, 1, 'TOD_5_H', 'TOD_5_T', '');
 
+-- --------------------------------------------------------
 
 --
 -- Tabellenstruktur für Tabelle `cms_users`
 --
 
 CREATE TABLE `cms_users` (
-  `id` int(11),
+  `id` int(11) DEFAULT NULL,
   `blocked` int(1) NOT NULL DEFAULT '0',
   `privacy` int(1) NOT NULL DEFAULT '0',
   `online` int(1) NOT NULL DEFAULT '0',
   `gid` int(11) NOT NULL DEFAULT '4',
   `terms` int(1) NOT NULL DEFAULT '1',
-  `username` varchar(48),
-  `password` varchar(48),
-  `date_created` datetime,
-  `date_changed` datetime,
-  `date_expired` datetime,
-  `date_lastlogin` datetime,
+  `username` varchar(48) DEFAULT NULL,
+  `password` varchar(48) DEFAULT NULL,
+  `date_created` datetime DEFAULT NULL,
+  `date_changed` datetime DEFAULT NULL,
+  `date_expired` datetime DEFAULT NULL,
+  `date_lastlogin` datetime DEFAULT NULL,
   `login_count` int(11) NOT NULL DEFAULT '0',
-  `email` varchar(128),
-  `url` varchar(255),
-  `twitter` varchar(255),
-  `facebook` varchar(255),
-  `firstname` varchar(128),
-  `lastname` varchar(128),
-  `street` varchar(128),
-  `zipcode` varchar(12),
-  `city` varchar(128),
-  `country` varchar(128),
-  `state` varchar(128),
+  `email` varchar(128) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `twitter` varchar(255) DEFAULT NULL,
+  `facebook` varchar(255) DEFAULT NULL,
+  `firstname` varchar(128) DEFAULT NULL,
+  `lastname` varchar(128) DEFAULT NULL,
+  `street` varchar(128) DEFAULT NULL,
+  `zipcode` varchar(12) DEFAULT NULL,
+  `city` varchar(128) DEFAULT NULL,
+  `country` varchar(128) DEFAULT NULL,
+  `state` varchar(128) DEFAULT NULL,
   `logged_in` int(1) NOT NULL DEFAULT '0',
   `public_email` int(1) NOT NULL DEFAULT '0',
   `terminatedByUser` int(1) NOT NULL DEFAULT '0',
-  `job` varchar(255),
+  `job` varchar(255) DEFAULT NULL,
   `likes` int(11) NOT NULL DEFAULT '0',
-  `overrideTemplate` int(1) NOT NULL DEFAULT'1',
+  `overrideTemplate` int(1) NOT NULL DEFAULT '1',
   `templateID` int(6) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 
 -- --------------------------------------------------------
 
@@ -2086,7 +2161,12 @@ CREATE TABLE `cms_users_online` (
   `currentTimeStamp` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Daten für Tabelle `cms_users_online`
+--
 
+INSERT INTO `cms_users_online` (`uid`, `phpSessionID`, `currentTimeStamp`) VALUES
+(1, 'ednv68almupi3bi3sr2rs07p63', '1520265608');
 
 -- --------------------------------------------------------
 
@@ -2132,6 +2212,13 @@ CREATE TABLE `cms_widgets` (
   `date_unpublish` datetime DEFAULT NULL,
   `widgetTitle` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Daten für Tabelle `cms_widgets`
+--
+
+INSERT INTO `cms_widgets` (`id`, `published`, `widgetType`, `pageID`, `sort`, `position`, `marginTop`, `marginBottom`, `date_publish`, `date_unpublish`, `widgetTitle`) VALUES
+(1, 1, 36, 0, 1, 'mainbottom', 0, 0, '2018-03-01 09:20:23', '2018-03-04 08:40:04', '');
 
 -- --------------------------------------------------------
 
@@ -2204,7 +2291,7 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('chaturbateWidth', '100%', 17, 1, 2, 'LABEL_CHATURBATE_WIDTH', '', '', '', 'DESC_CHATURBATE_WIDTH', 'form-control', '', 'PH_CHATURBATE_WIDTH', '', 48),
 ('chaturbateHeading', 'Watch me', 17, 1, 4, 'LABEL_CHATURBATE_HEADING', '', '', '', 'DESC_CHATURBATE_HEADING', 'form-control', '', 'PH_CHATURBATE_HEADING', '', 49),
 ('chaturbateSubtext', 'being nasty', 17, 1, 5, 'LABEL_CHATURBATE_SUBTEXT', '', '', '', 'DESC_CHATURBATE_SUBTEXT', 'form-control', '', 'PH_CHATURBATE_SUBTEXT', '', 50),
-('googleMapsEmbedHtmlCode', '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d85064.65940758218!2d16.310020639299537!3d48.22066363084218!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x476d079e5136ca9f%3A0xfdc2e58a51a25b46!2sWien%2C+%C3%96sterreich!5e0!3m2!1sde!2sde!4v1491406650968" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>', 18, 1, 0, 'LABEL_GOOGLEMAPS_EMBEDCODE', '', '', '', 'DESC_GOOGLEMAPS_EMBEDCODE', 'form-control', 'textarea', 'PH_GOOGLEMAPS_EMBEDCODE', '', 51),
+('googleMapsEmbedHtmlCode', '<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d85064.65940758218!2d16.310020639299537!3d48.22066363084218!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x476d079e5136ca9f%3A0xfdc2e58a51a25b46!2sWien%2C+%C3%96sterreich!5e0!3m2!1sde!2sde!4v1491406650968\" width=\"100%\" height=\"450\" frameborder=\"0\" style=\"border:0\" allowfullscreen></iframe>', 18, 1, 0, 'LABEL_GOOGLEMAPS_EMBEDCODE', '', '', '', 'DESC_GOOGLEMAPS_EMBEDCODE', 'form-control', 'textarea', 'PH_GOOGLEMAPS_EMBEDCODE', '', 51),
 ('cbaUrl', 'https://cba.fro.at/331756', 19, 1, 1, 'LABEL_CBA_URL', '', '', '', 'DESC_CBA_URL', 'form-control', '', 'PH_CBA_URL', '', 52),
 ('cbaHeading', 'Heading', 19, 1, 0, 'LABEL_CBA_HEADING', '', '', '', 'DESC_CBA_HEADING', 'form-control', '', 'PH_CBA_HEADING', '', 53),
 ('cbaSubtext', 'Subtext', 19, 1, 0, 'LABEL_CBA_SUBTEXT', '', '', '', 'DESC_CBA_SUBTEXT', 'form-control', '', 'PH_CBA_SUBTEXT', '', 54),
@@ -2223,17 +2310,17 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('instagramHeight', '600', 20, 0, 0, 'LABEL_INSTAGRAM_HEIGHT', '', '', '', 'DESC_INSTAGRAM_HEIGHT', 'form-control', '', 'PH_INSTAGRAM_HEIGHT', '', 67),
 ('instagramHeading', '', 20, 1, 0, 'LABEL_INSTAGRAM_HEADING', '', '', '', 'DESC_INSTAGRAM_HEADING', 'form-control', '', 'PH_INSTAGRAM_HEADING', '', 68),
 ('instagramSubtext', '', 20, 1, 0, 'LABEL_INSTAGRAM_SUBTEXT', '', '', '', 'DESC_INSTAGRAM_SUBTEXT', 'form-control', '', 'PH_INSTAGRAM_SUBTEXT', '', 69),
-('spotifyEmbedCode', '<iframe src="https://embed.spotify.com/?uri=spotify%3Atrack%3A30LDuVfrePWbedYTc1mUCn" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>', 21, 1, 0, 'LABEL_SPOTIFY_EMBEDCODE', '', '', '', 'DESC_SPOTIFY_EMBEDCODE', 'form-control', 'textarea', 'PH_SPOTIFY_EMBEDCODE', '', 70),
+('spotifyEmbedCode', '<iframe src=\"https://embed.spotify.com/?uri=spotify%3Atrack%3A30LDuVfrePWbedYTc1mUCn\" width=\"300\" height=\"380\" frameborder=\"0\" allowtransparency=\"true\"></iframe>', 21, 1, 0, 'LABEL_SPOTIFY_EMBEDCODE', '', '', '', 'DESC_SPOTIFY_EMBEDCODE', 'form-control', 'textarea', 'PH_SPOTIFY_EMBEDCODE', '', 70),
 ('spotifyWidth', '100%', 21, 1, 0, 'LABEL_SPOTIFY_WIDTH', '', '', '', 'DESC_SPOTIFY_WIDTH', 'form-control', '', 'PH_SPOTIFY_WIDTH', '', 71),
 ('spotifyHeight', '380', 21, 1, 0, 'LABEL_SPOTIFY_HEIGHT', '', '', '', 'DESC_SPOTIFY_HEIGHT', 'form-control', '', 'PH_SPOTIFY_HEIGHT', '', 72),
 ('spotifyHeading', 'Heading', 21, 1, 0, 'LABEL_SPOTIFY_HEADING', '', '', '', 'DESC_SPOTIFY_HEADING', 'form-control', '', 'PH_SPOTIFY_HEADING', '', 73),
 ('spotifySubtext', 'Subtext', 21, 1, 0, 'LABEL_SPOTIFY_SUBTEXT', '', '', '', 'DESC_SPOTIFY_SUBTEXT', 'form-control', '', 'PH_SPOTIFY_SUBTEXT', '', 74),
-('fbPostEmbedCode', '<iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2F20531316728%2Fposts%2F10154009990506729%2F&width=500" width="500" height="310" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>', 22, 1, 0, 'LABEL_FBPOST_EMBEDCODE', '', '', '', 'DESC_FBPOST_EMBEDCODE', 'form-control', 'textarea', 'PH_FBPOST_EMBEDCODE', '', 75),
+('fbPostEmbedCode', '<iframe src=\"https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2F20531316728%2Fposts%2F10154009990506729%2F&width=500\" width=\"500\" height=\"310\" style=\"border:none;overflow:hidden\" scrolling=\"no\" frameborder=\"0\" allowTransparency=\"true\"></iframe>', 22, 1, 0, 'LABEL_FBPOST_EMBEDCODE', '', '', '', 'DESC_FBPOST_EMBEDCODE', 'form-control', 'textarea', 'PH_FBPOST_EMBEDCODE', '', 75),
 ('fbPostWidth', '100%', 22, 1, 0, 'LABEL_FBPOST_WIDTH', '', '', '', 'DESC_FBPOST_WIDTH', 'form-control', '', 'PH_FBPOST_WIDTH', '', 76),
 ('fbPostHeight', '625', 22, 1, 0, 'LABEL_FBPOST_HEIGHT', '', '', '', 'DESC_FBPOST_HEIGHT', 'form-control', '', 'PH_FBPOST_HEIGHT', '', 77),
 ('fbPostHeading', '', 22, 1, 0, 'LABEL_FBPOST_HEADING', '', '', '', 'DESC_FBPOST_HEADING', 'form-control', '', 'PH_FBPOST_HEADING', '', 78),
 ('fbPostSubtext', '', 22, 1, 0, 'LABEL_FBPOST_SUBTEXT', '', '', '', 'DESC_FBPOST_SUBTEXT', 'form-control', '', 'PH_FBPOST_SUBTEXT', '', 79),
-('fbVideoEmbedCode', '<iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook%2Fvideos%2F10155656407651729%2F&show_text=0&width=560" width="560" height="315" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>', 23, 1, 0, 'LABEL_FBVIDEO_EMBEDCODE', '', '', '', 'DESC_FBVIDEO_EMBEDCODE', 'form-control', 'textarea', 'PH_FBVIDEO_EMBEDCODE', '', 80),
+('fbVideoEmbedCode', '<iframe src=\"https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook%2Fvideos%2F10155656407651729%2F&show_text=0&width=560\" width=\"560\" height=\"315\" style=\"border:none;overflow:hidden\" scrolling=\"no\" frameborder=\"0\" allowTransparency=\"true\" allowFullScreen=\"true\"></iframe>', 23, 1, 0, 'LABEL_FBVIDEO_EMBEDCODE', '', '', '', 'DESC_FBVIDEO_EMBEDCODE', 'form-control', 'textarea', 'PH_FBVIDEO_EMBEDCODE', '', 80),
 ('fbVideoWidth', '100%', 23, 0, 0, 'LABEL_FBVIDEO_WIDTH', '', '', '', 'DESC_FBVIDEO_WIDTH', 'form-control', '', 'PH_FBVIDEO_WIDTH', '', 81),
 ('fbVideoHeight', '700', 23, 0, 0, 'LABEL_FBVIDEO_HEIGHT', '', '', '', 'DESC_FBVIDEO_HEIGHT', 'form-control', '', 'PH_FBVIDEO_HEIGHT', '', 82),
 ('fbVideoHeading', '', 23, 1, 0, 'LABEL_FBVIDEO_HEADING', '', '', '', 'DESC_FBVIDEO_HEADING', 'form-control', '', 'PH_FBVIDEO_HEADING', '', 83),
@@ -2363,6 +2450,19 @@ CREATE TABLE `cms_widget_settings` (
   `description` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Daten für Tabelle `cms_widget_settings`
+--
+
+INSERT INTO `cms_widget_settings` (`id`, `widgetID`, `property`, `value`, `widgetType`, `activated`, `sortation`, `label`, `icon`, `heading`, `subtext`, `fieldClass`, `fieldType`, `placeholder`, `options`, `description`) VALUES
+(0, 1, 'fuckAdBlockTitle', 'AdBlock detected...', 36, 1, 1, 'LABEL_ADBLOCK_TITLE', '', '', '', 'form-control', 'input', 'PH_ADBLOCK_TITLE', '', 'DESC_ADBLOCK_TITLE'),
+(0, 1, 'fuckAdBlockText', 'It seems that you are using AdBlock. We truely understand this. But please, be fair and disable Adblock to support our project. It is on your own to help us. Thank you.', 36, 1, 2, 'LABEL_ADBLOCK_TEXT', '', '', '', 'form-control', 'textarea', 'PH_ADBLOCK_TEXT', '', 'DESC_ADBLOCK_TEXT'),
+(0, 1, 'fuckAdBlockLevel', 'low', 36, 1, 0, 'LABEL_ADBLOCK_LEVEL', '', '', '', 'form-control', 'select', '', 'low,Low Level:high,High Level', 'DESC_ADBLOCK_LEVEL'),
+(0, 1, 'fuckAdBlockLowBtnText', 'OK, got it!', 36, 1, 4, 'LABEL_ADBLOCK_LOWBTNTEXT', '', '', '', 'form-control', 'input', 'PH_ADBLOCK_LOWBTNTEXT', '', 'DESC_ADBLOCK_LOWBTNTEXT'),
+(0, 1, 'fuckAdBlockHighBtnText', 'Please disable your AdBlocker and click here.', 36, 1, 5, 'LABEL_ADBLOCK_HIGHBTNTEXT', '', '', '', 'form-control', 'input', 'PH_ADBLOCK_HIGHBTNTEXT', '', 'DESC_ADBLOCK_HIGHBTNTEXT'),
+(0, 1, 'fuckAdBlockBtnClass', 'btn btn-danger', 36, 1, 6, 'LABEL_ADBLOCK_BTNCLASS', '', '', '', 'form-control', 'input', 'PH_ADBLOCK_BTNCLASS', '', 'DESC_ADBLOCK_BTNCLASS'),
+(0, 1, 'fuckAdBlockLoadingType', '10', 36, 1, 7, 'LABEL_ADBLOCK_LOADINGTYPE', '', '', '', 'form-control', 'select', '', 'onPageLoad,on Page Load:10,after 10 Seconds:30,after 30 seconds:60,after 60 Seconds:120,after 2 Minutes:300,after 5 Minutes:600,every 10 Minutes:1800,every 30 Minutes:3600,every Hour,', 'DESC_ADBLOCK_LOADINGTYPE');
+
 -- --------------------------------------------------------
 
 --
@@ -2443,7 +2543,7 @@ ALTER TABLE `cms_blog_comments`
 -- Indizes für die Tabelle `cms_blog_items`
 --
 ALTER TABLE `cms_blog_items`
-  ADD PRIMARY KEY (`primkey`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indizes für die Tabelle `cms_follower`
@@ -2475,7 +2575,7 @@ ALTER TABLE `cms_logins`
 -- Indizes für die Tabelle `cms_menu`
 --
 ALTER TABLE `cms_menu`
-  ADD PRIMARY KEY (`TMPID`),
+  ADD PRIMARY KEY (`id`),
   ADD KEY `id` (`id`,`sort`,`gid`,`menuID`,`parentID`,`published`,`date_created`,`date_changed`,`date_publish`,`date_unpublish`,`text`,`href`);
 
 --
@@ -2544,10 +2644,10 @@ ALTER TABLE `cms_plugin_booking`
   ADD KEY `ip` (`ip`);
 
 --
--- AUTO_INCREMENT für Tabelle `cms_plugin_faq`
+-- Indizes für die Tabelle `cms_plugin_faq`
 --
 ALTER TABLE `cms_plugin_faq`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indizes für die Tabelle `cms_plugin_gallery`
@@ -2624,162 +2724,31 @@ ALTER TABLE `cms_templates`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `cms_template_settings`
---
-ALTER TABLE `cms_template_settings`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `templateID` (`templateID`);
-
---
--- Indizes für die Tabelle `cms_template_settings_types`
---
-ALTER TABLE `cms_template_settings_types`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indizes für die Tabelle `cms_tips`
---
-ALTER TABLE `cms_tips`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indizes für die Tabelle `cms_users`
---
-ALTER TABLE `cms_users`
-  ADD PRIMARY KEY (`id`,`username`),
-  ADD KEY `username` (`username`),
-  ADD KEY `gid` (`gid`),
-  ADD KEY `email` (`email`);
-
---
--- Indizes für die Tabelle `cms_user_groups`
---
-ALTER TABLE `cms_user_groups`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indizes für die Tabelle `cms_widgets`
---
-ALTER TABLE `cms_widgets`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indizes für die Tabelle `cms_widget_defaults`
---
-ALTER TABLE `cms_widget_defaults`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indizes für die Tabelle `cms_widget_settings`
---
-ALTER TABLE `cms_widget_settings`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `widgetID` (`widgetID`);
-
---
--- Indizes für die Tabelle `cms_widget_types`
---
-ALTER TABLE `cms_widget_types`
-  ADD PRIMARY KEY (`id`);
-
---
 -- AUTO_INCREMENT für exportierte Tabellen
 --
 
 --
--- AUTO_INCREMENT für Tabelle `cms_assets`
---
-ALTER TABLE `cms_assets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `cms_assets_types`
---
-ALTER TABLE `cms_assets_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
---
--- AUTO_INCREMENT für Tabelle `cms_blog_items`
---
-ALTER TABLE `cms_blog_items`
-  MODIFY `primkey` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `cms_follower`
---
-ALTER TABLE `cms_follower`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `cms_friends`
---
-ALTER TABLE `cms_friends`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `cms_logins`
---
-ALTER TABLE `cms_logins`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT für Tabelle `cms_menu`
 --
 ALTER TABLE `cms_menu`
-  MODIFY `TMPID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT für Tabelle `cms_meta_local`
 --
 ALTER TABLE `cms_meta_local`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 --
--- AUTO_INCREMENT für Tabelle `cms_newsletter`
+-- AUTO_INCREMENT für Tabelle `cms_plugin_faq`
 --
-ALTER TABLE `cms_newsletter`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `cms_notifications`
---
-ALTER TABLE `cms_notifications`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `cms_notifications_msg`
---
-ALTER TABLE `cms_notifications_msg`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `cms_plugin_gallery`
---
-ALTER TABLE `cms_plugin_gallery`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `cms_plugin_gallery_items`
---
-ALTER TABLE `cms_plugin_gallery_items`
+ALTER TABLE `cms_plugin_faq`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `cms_stats`
 --
 ALTER TABLE `cms_stats`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 --
 -- AUTO_INCREMENT für Tabelle `cms_syslog`
 --
 ALTER TABLE `cms_syslog`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `cms_template_settings`
---
-ALTER TABLE `cms_template_settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=989;
-
---
--- AUTO_INCREMENT für Tabelle `cms_tips`
---
-ALTER TABLE `cms_tips`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT für Tabelle `cms_widget_defaults`
---
-ALTER TABLE `cms_widget_defaults`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=180;
---
--- AUTO_INCREMENT für Tabelle `cms_widget_settings`
---
-ALTER TABLE `cms_widget_settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
