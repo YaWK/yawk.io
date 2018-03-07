@@ -2333,7 +2333,10 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('fbEventsType', '', 39, 1, 5, 'LABEL_FB_EVENTS_TYPE', '', '', '', 'DESC_FB_EVENTS_TYPE', 'form-control', 'select', '', 'future,Future Events (upcoming):past,Past Events (archive):both,Both (Upcoming and past)', 189),
 ('fbEventsShowCover', '', 39, 1, 6, 'LABEL_FB_EVENTS_SHOW_COVER', '', '', '', 'DESC_FB_EVENTS_SHOW_COVER', 'form-control', 'select', '', 'true,yes:false,No', 190),
 ('fbEventsShowCounter', '', 39, 1, 7, 'LABEL_FB_EVENTS_SHOW_COUNTER', '', '', '', 'DESC_FB_EVENTS_SHOW_COUNTER', 'form-control', 'select', '', 'true,yes:false,No', 191),
-('fbEventsLayout', '', 39, 1, 8, 'LABEL_FB_EVENTS_LAYOUT', '', '', '', 'DESC_FB_EVENTS_LAYOUT', 'form-control', 'select', '', 'left,Image Left:top,Image Top:right,Image Right:bottom,Image Bottom:minimal:Minimalism,table:Display as table', 192);
+('fbEventsLayout', '', 39, 1, 8, 'LABEL_FB_EVENTS_LAYOUT', '', '', '', 'DESC_FB_EVENTS_LAYOUT', 'form-control', 'select', '', 'left,Image Left:top,Image Top:right,Image Right:bottom,Image Bottom:minimal:Minimalism,table:Display as table', 192),
+('fbEventsSortation', 'asc', 39, 1, 9, 'LABEL_FB_EVENTS_SORTATION', '', '', '', 'DESC_FB_EVENTS_SORTATION', 'form-control', 'select', '', 'asc,Ascending:desc,Descending', 193),
+('fbEventsStartDate', '', 39, 1, 10, 'LABEL_FB_EVENTS_STARTDATE', '', '', '', 'DESC_FB_EVENTS_STARTDATE', 'form-control', 'input', '', '', 194),
+('fbEventsEndDate', '', 39, 1, 10, 'LABEL_FB_EVENTS_ENDDATE', '', '', '', 'DESC_FB_EVENTS_ENDDATE', 'form-control', 'input', '', '', 195);
 
 -- --------------------------------------------------------
 
