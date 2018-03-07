@@ -2606,6 +2606,26 @@ ALTER TABLE `cms_syslog_types`
 ALTER TABLE `cms_templates`
   ADD PRIMARY KEY (`id`);
 
+
+--
+-- Indizes für die Tabelle `cms_widget_defaults`
+--
+ALTER TABLE `cms_widget_defaults`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indizes für die Tabelle `cms_widget_defaults`
+--
+ALTER TABLE `cms_widget_settings`
+  ADD PRIMARY KEY (`id`);
+
+
+--
+-- Indizes für die Tabelle `cms_widget_types`
+--
+ALTER TABLE `cms_widget_types`
+  ADD PRIMARY KEY (`id`);
+
 --
 -- AUTO_INCREMENT für exportierte Tabellen
 --
