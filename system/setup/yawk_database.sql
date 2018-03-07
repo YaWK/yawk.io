@@ -33,9 +33,9 @@ CREATE TABLE `cms_assets` (
 --
 
 INSERT INTO `cms_assets` (`id`, `templateID`, `type`, `asset`, `link`) VALUES
-(0, 1, 'js', 'jQuery 1.x', 'system/engines/jquery/jquery-1.12.4.min.js'),
-(0, 1, 'css', 'Bootstrap 3 CSS', 'system/engines/bootstrap/dist/css/bootstrap.min.css'),
-(0, 1, 'js', 'Bootstrap 3 JS', 'system/engines/bootstrap/dist/js/bootstrap.min.js');
+(1, 1, 'js', 'jQuery 1.x', 'system/engines/jquery/jquery-1.12.4.min.js'),
+(2, 1, 'css', 'Bootstrap 3 CSS', 'system/engines/bootstrap/dist/css/bootstrap.min.css'),
+(3, 1, 'js', 'Bootstrap 3 JS', 'system/engines/bootstrap/dist/js/bootstrap.min.js');
 
 -- --------------------------------------------------------
 
@@ -2143,7 +2143,7 @@ CREATE TABLE `cms_widget_defaults` (
   `fieldType` varchar(128) NOT NULL,
   `placeholder` varchar(255) NOT NULL,
   `options` text NOT NULL,
-  `ID` int(11) NOT NULL
+  `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -2325,7 +2325,15 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('contentAnimatorClass', 'slideUp', 37, 1, 1, 'LABEL_CONTENTANIMATOR_CLASS', '', '', '', 'DESC_CONTENTANIMATOR_CLASS', 'form-control', 'select', '', 'slideUp,Slide Up:slideDown,Slide Down:slideLeft,Slide Left:slideRight,Slide Right:fade,Fade:fadeMedium,Fade Medium:fadeSlow,Fade Slow', 180),
 ('contentAnimatorScrollValue', '600', 37, 1, 2, 'LABEL_CONTENTANIMATOR_VALUE', '', '', '', 'DESC_CONTENTANIMATOR_VALUE', 'form-control', 'input', 'PH_CONTENTANIMATOR_VALUE', '', 181),
 ('youtubeAutoplay', 'false', 16, 1, 0, 'LABEL_YOUTUBE_AUTOPLAY', '', '', '', 'DESC_YOUTUBE_AUTOPLAY', 'form-control', 'select', '', 'true,true:false,false', 182),
-('embedPageName', 'index.html', 38, 1, 1, 'LABEL_EMBEDPAGE_NAME', '', '', '', 'DESC_EMBEDPAGE_NAME', 'form-control', '', '', '', 184);
+('embedPageName', 'index.html', 38, 1, 1, 'LABEL_EMBEDPAGE_NAME', '', '', '', 'DESC_EMBEDPAGE_NAME', 'form-control', '', '', '', 184),
+('fbEventsAppId', '', 39, 1, 1, 'LABEL_FB_EVENTS_APPID', '', '', '', 'DESC_FB_EVENTS_APPID', 'form-control', '', 'PH_FB_EVENTS_APPID', '', 185),
+('fbEventsPageId', '', 39, 1, 3, 'LABEL_FB_EVENTS_PAGEID', '', '', '', 'DESC_FB_EVENTS_PAGEID', 'form-control', '', 'PH_FB_EVENTS_PAGEID', '', 186),
+('fbEventsAccessToken', '', 39, 1, 2, 'LABEL_FB_EVENTS_ACCESS_TOKEN', '', '', '', 'DESC_FB_EVENTS_ACCESS_TOKEN', 'form-control', '', 'PH_FB_EVENTS_ACCESS_TOKEN', '', 187),
+('fbEventsYearRange', '', 39, 1, 4, 'LABEL_FB_EVENTS_YEAR_RANGE', '', '', '', 'DESC_FB_EVENTS_YEAR_RANGE', 'form-control', 'select', '', '1,1 Year:2,2 Years:3,3 Years:4,4 Years:5,5 Years:6,6 Years:7,7 Years:8,8 Years:9,9 Years:10,10 Years:15,15 Years:20,20 Years:30,30 Years:40,40 Years:50,50 Years', 188),
+('fbEventsType', '', 39, 1, 5, 'LABEL_FB_EVENTS_TYPE', '', '', '', 'DESC_FB_EVENTS_TYPE', 'form-control', 'select', '', 'future,Future Events (upcoming):past,Past Events (archive):both,Both (Upcoming and past)', 189),
+('fbEventsShowCover', '', 39, 1, 6, 'LABEL_FB_EVENTS_SHOW_COVER', '', '', '', 'DESC_FB_EVENTS_SHOW_COVER', 'form-control', 'select', '', 'true,yes:false,No', 190),
+('fbEventsShowCounter', '', 39, 1, 7, 'LABEL_FB_EVENTS_SHOW_COUNTER', '', '', '', 'DESC_FB_EVENTS_SHOW_COUNTER', 'form-control', 'select', '', 'true,yes:false,No', 191),
+('fbEventsLayout', '', 39, 1, 8, 'LABEL_FB_EVENTS_LAYOUT', '', '', '', 'DESC_FB_EVENTS_LAYOUT', 'form-control', 'select', '', 'left,Image Left:top,Image Top:right,Image Right:bottom,Image Bottom:minimal:Minimalism,table:Display as table', 192);
 
 -- --------------------------------------------------------
 
@@ -2407,11 +2415,24 @@ INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`)
 (35, 1, 'Responsive Voice JS', 'responsiveVoiceJS', 'Instant Text-To-Speech with Voice Consistency Across Devices'),
 (36, 1, 'AdBlock Blocker', 'fuckadblock', 'Detect and block AdBlocker'),
 (37, 1, 'Content Animator', 'contentAnimator', 'Enable Slide Animations for your content'),
-(38, 1, 'Embed Page', 'embed_page', 'Embed any of your static pages');
+(38, 1, 'Embed Page', 'embed_page', 'Embed any of your static pages'),
+(39, 1, 'Facebook Events', 'fb_events', 'Embed Facebook Events from your Facebook Page');
 
 --
 -- Indizes der exportierten Tabellen
 --
+
+--
+-- Indizes für die Tabelle `cms_asssets`
+--
+ALTER TABLE `cms_assets`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indizes für die Tabelle `cms_asssets_types`
+--
+ALTER TABLE `cms_assets_types`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indizes für die Tabelle `cms_blog`
@@ -2606,12 +2627,41 @@ ALTER TABLE `cms_syslog_types`
 ALTER TABLE `cms_templates`
   ADD PRIMARY KEY (`id`);
 
+--
+-- Indizes für die Tabelle `cms_template_settings`
+--
+ALTER TABLE `cms_template_settings`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indizes für die Tabelle `cms_template_settings_types`
+--
+ALTER TABLE `cms_template_settings_types`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indizes für die Tabelle `cms_user_tips`
+--
+ALTER TABLE `cms_tips`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indizes für die Tabelle `cms_users`
+--
+ALTER TABLE `cms_users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indizes für die Tabelle `cms_user_groups`
+--
+ALTER TABLE `cms_user_groups`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indizes für die Tabelle `cms_widget_defaults`
 --
 ALTER TABLE `cms_widget_defaults`
-  ADD PRIMARY KEY (`ID`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indizes für die Tabelle `cms_widget_defaults`
@@ -2629,6 +2679,18 @@ ALTER TABLE `cms_widget_types`
 --
 -- AUTO_INCREMENT für exportierte Tabellen
 --
+
+--
+-- AUTO_INCREMENT für Tabelle `cms_assets`
+--
+ALTER TABLE `cms_assets`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT für Tabelle `cms_assets_types`
+--
+ALTER TABLE `cms_assets_types`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT für Tabelle `cms_menu`
@@ -2658,6 +2720,12 @@ ALTER TABLE `cms_stats`
 ALTER TABLE `cms_syslog`
   MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT;
 
+--
+-- AUTO_INCREMENT für Tabelle `cms_widget_defaults`
+--
+
+ALTER TABLE `cms_widget_defaults`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `cms_widget_settings`
 --
