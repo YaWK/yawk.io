@@ -2657,4 +2657,10 @@ ALTER TABLE `cms_stats`
 
 ALTER TABLE `cms_syslog`
   MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT;
-  
+
+--
+-- AUTO_INCREMENT für Tabelle `cms_widget_settings`
+--
+
+ALTER TABLE `cms_widget_settings`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
