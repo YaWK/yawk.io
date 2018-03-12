@@ -1,24 +1,5 @@
--- phpMyAdmin SQL Dump
--- version 4.6.6deb4
--- https://www.phpmyadmin.net/
---
--- Host: localhost:3306
--- Erstellungszeit: 05. Mrz 2018 um 17:03
--- Server-Version: 10.1.23-MariaDB-9+deb9u1
--- PHP-Version: 7.0.27-0+deb9u1
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
---
--- Datenbank: `yawk_clone`
---
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `cms_assets`
---
 
 CREATE TABLE `cms_assets` (
   `id` int(11) NOT NULL,
@@ -28,20 +9,10 @@ CREATE TABLE `cms_assets` (
   `link` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Daten für Tabelle `cms_assets`
---
-
 INSERT INTO `cms_assets` (`id`, `templateID`, `type`, `asset`, `link`) VALUES
 (1, 1, 'js', 'jQuery 1.x', 'system/engines/jquery/jquery-1.12.4.min.js'),
 (2, 1, 'css', 'Bootstrap 3 CSS', 'system/engines/bootstrap/dist/css/bootstrap.min.css'),
 (3, 1, 'js', 'Bootstrap 3 JS', 'system/engines/bootstrap/dist/js/bootstrap.min.js');
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `cms_assets_types`
---
 
 CREATE TABLE `cms_assets_types` (
   `id` int(11) NOT NULL,
@@ -55,10 +26,6 @@ CREATE TABLE `cms_assets_types` (
   `url2` varchar(255) NOT NULL,
   `url3` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Daten für Tabelle `cms_assets_types`
---
 
 INSERT INTO `cms_assets_types` (`id`, `published`, `type`, `sortation`, `asset`, `property`, `internal`, `url1`, `url2`, `url3`) VALUES
 (1, 1, 1, 6, 'Bootstrap 3 JS', 'bootstrap3-js', 'system/engines/bootstrap/dist/js/bootstrap.min.js', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js', ''),
@@ -75,12 +42,6 @@ INSERT INTO `cms_assets_types` (`id`, `published`, `type`, `sortation`, `asset`,
 (13, 1, 2, 13, 'Bootstrap Notify JS', 'bootstrap-notify-js', 'system/engines/jquery/notify/bootstrap-notify.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/js/bootstrap-notify.min.js', '', ''),
 (14, 1, 2, 14, 'Bootstrap Notify CSS', 'bootstrap-notify-css', 'system/engines/jquery/notify/bootstrap-notify.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/css/bootstrap-notify.min.css', '', ''),
 (28, 1, 2, 7, 'Animate.css', 'Animate.css', 'system/engines/animateCSS/animate.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css', 'https://fastcdn.org/Animate.css/3.4.0/animate.min.css', '');
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `cms_blog`
---
 
 CREATE TABLE `cms_blog` (
   `id` int(11) NOT NULL,
@@ -105,12 +66,6 @@ CREATE TABLE `cms_blog` (
   `spacer` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `cms_blog_comments`
---
-
 CREATE TABLE `cms_blog_comments` (
   `id` int(11) NOT NULL,
   `blogid` int(11) NOT NULL,
@@ -119,7 +74,7 @@ CREATE TABLE `cms_blog_comments` (
   `gid` int(11) NOT NULL,
   `ip` varchar(64) NOT NULL,
   `published` int(1) NOT NULL DEFAULT '1',
-  `date_created` datetime NOT NULL,
+  `date_created` datetime DEFAULT CURRENT_TIMESTAMP,
   `name` varchar(64) NOT NULL,
   `email` varchar(255) NOT NULL,
   `comment` text NOT NULL,
@@ -127,12 +82,6 @@ CREATE TABLE `cms_blog_comments` (
   `isChild` int(1) NOT NULL DEFAULT '0',
   `parentID` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `cms_blog_items`
---
 
 CREATE TABLE `cms_blog_items` (
   `blogid` int(11) NOT NULL DEFAULT '1',
@@ -161,40 +110,23 @@ CREATE TABLE `cms_blog_items` (
   `voteUp` int(11) NOT NULL DEFAULT '0',
   `voteDown` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
--- ---------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `cms_follower`
---
 
 CREATE TABLE `cms_follower` (
   `id` int(11) NOT NULL,
-  `requestDate` datetime NOT NULL,
+  `requestDate` datetime DEFAULT NULL,
   `follower` int(11) NOT NULL,
   `hunted` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `cms_friends`
---
-
 CREATE TABLE `cms_friends` (
   `id` int(11) NOT NULL,
-  `requestDate` datetime NOT NULL,
-  `confirmDate` datetime NOT NULL,
+  `requestDate` datetime DEFAULT NULL,
+  `confirmDate` datetime DEFAULT NULL,
   `friendA` int(11) NOT NULL,
   `friendB` int(11) NOT NULL,
   `confirmed` int(1) NOT NULL DEFAULT '0',
   `aborted` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `cms_gfonts`
---
 
 CREATE TABLE `cms_gfonts` (
   `id` int(11) NOT NULL,
@@ -203,10 +135,6 @@ CREATE TABLE `cms_gfonts` (
   `setting` varchar(32) NOT NULL,
   `activated` int(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Daten für Tabelle `cms_gfonts`
---
 
 INSERT INTO `cms_gfonts` (`id`, `font`, `description`, `setting`, `activated`) VALUES
 (0, 'none', 'no google font selected', '', 0),
@@ -290,15 +218,9 @@ INSERT INTO `cms_gfonts` (`id`, `font`, `description`, `setting`, `activated`) V
 (88, 'Pavanam', 'Pavanam, sans-serif', '', 1),
 (89, 'News Cycle', 'News Cycle, sans-serif', '', 1);
 
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `cms_logins`
---
-
 CREATE TABLE `cms_logins` (
   `id` int(11) NOT NULL,
-  `datetime` datetime NOT NULL,
+  `datetime` datetime DEFAULT CURRENT_TIMESTAMP,
   `location` varchar(64) NOT NULL,
   `failed` int(11) NOT NULL DEFAULT '0',
   `ip` varchar(255) NOT NULL,
@@ -307,10 +229,6 @@ CREATE TABLE `cms_logins` (
   `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-
---
--- Tabellenstruktur für Tabelle `cms_menu`
---
 
 CREATE TABLE `cms_menu` (
   `TMPID` int(11) NOT NULL,
@@ -332,18 +250,8 @@ CREATE TABLE `cms_menu` (
   `blogid` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Daten für Tabelle `cms_menu`
---
-
 INSERT INTO `cms_menu` (`TMPID`, `id`, `sort`, `gid`, `menuID`, `parentID`, `published`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `title`, `text`, `href`, `target`, `divider`, `blogid`) VALUES
 (1, 1, 1, 1, 1, 0, 1, '2018-03-01 00:00:00', '2018-03-04 19:12:11', '2018-03-04 19:12:11', NULL, '', 'Welcome!', 'index.html', '_self', 0, 0);
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `cms_menu_names`
---
 
 CREATE TABLE `cms_menu_names` (
   `id` int(11) NOT NULL,
@@ -351,38 +259,18 @@ CREATE TABLE `cms_menu_names` (
   `published` int(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Daten für Tabelle `cms_menu_names`
---
-
 INSERT INTO `cms_menu_names` (`id`, `name`, `published`) VALUES
 (1, 'MainMenu', 1);
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `cms_meta_global`
---
 
 CREATE TABLE `cms_meta_global` (
   `name` varchar(255) NOT NULL,
   `content` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Daten für Tabelle `cms_meta_global`
---
-
 INSERT INTO `cms_meta_global` (`name`, `content`) VALUES
 ('author', 'YaWK'),
 ('description', 'This Text appears on search engines. It is the typical description of your page underneath the link or title of every search result.'),
 ('robots', 'all');
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `cms_meta_local`
---
 
 CREATE TABLE `cms_meta_local` (
   `id` int(11) NOT NULL,
@@ -391,30 +279,17 @@ CREATE TABLE `cms_meta_local` (
   `content` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `cms_newsletter`
---
-
 CREATE TABLE `cms_newsletter` (
   `id` int(11) NOT NULL,
-  `date_created` datetime NOT NULL,
+  `date_created` datetime DEFAULT CURRENT_TIMESTAMP,
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `active` int(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `cms_notifications`
---
-
 CREATE TABLE `cms_notifications` (
   `log_id` int(11) NOT NULL,
-  `log_date` datetime NOT NULL,
+  `log_date` datetime DEFAULT CURRENT_TIMESTAMP,
   `log_type` int(11) NOT NULL DEFAULT '0',
   `msg_id` int(11) NOT NULL DEFAULT '0',
   `fromUID` int(11) NOT NULL DEFAULT '0',
@@ -423,12 +298,6 @@ CREATE TABLE `cms_notifications` (
   `seen` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `cms_notifications_msg`
---
-
 CREATE TABLE `cms_notifications_msg` (
   `id` int(11) NOT NULL,
   `active` int(1) NOT NULL DEFAULT '1',
@@ -436,17 +305,11 @@ CREATE TABLE `cms_notifications_msg` (
   `message` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `cms_pages`
---
-
 CREATE TABLE `cms_pages` (
   `id` int(11) NOT NULL,
   `published` int(1) DEFAULT '0',
   `gid` int(11) DEFAULT '1',
-  `date_created` datetime DEFAULT NULL,
+  `date_created` datetime DEFAULT CURRENT_TIMESTAMP,
   `date_changed` datetime DEFAULT NULL,
   `date_publish` datetime DEFAULT NULL,
   `date_unpublish` datetime DEFAULT NULL,
@@ -460,16 +323,8 @@ CREATE TABLE `cms_pages` (
   `plugin` varchar(255) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Daten für Tabelle `cms_pages`
---
-
 INSERT INTO `cms_pages` (`id`, `published`, `gid`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `alias`, `title`, `bgimage`, `owner`, `menu`, `locked`, `blogid`, `plugin`) VALUES
-(1, 1, 1, '2017-03-08 00:00:00', '2017-09-13 00:20:21', '2017-03-08 00:00:00', NULL, 'index', 'Welcome to Yet another Web Kit!', '', -1, 0, 0, 0, '0');
-
---
--- Tabellenstruktur für Tabelle `cms_plugins`
---
+(1, 1, 1, '2018-03-08 00:00:00', '2018-03-08 00:00:00', '2018-03-08 00:00:00', NULL, 'index', 'Welcome to Yet another Web Kit!', '', -1, 0, 0, 0, '0');
 
 CREATE TABLE `cms_plugins` (
   `id` int(11) NOT NULL,
@@ -478,10 +333,6 @@ CREATE TABLE `cms_plugins` (
   `icon` varchar(128) NOT NULL,
   `activated` int(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Daten für Tabelle `cms_plugins`
---
 
 INSERT INTO `cms_plugins` (`id`, `name`, `description`, `icon`, `activated`) VALUES
 (1, 'tourdates', 'Termine, Events, Konzerte, Tourdaten u.&auml;. in einer sortierbaren Tabelle verwalten.', 'fa fa-table', 1),
@@ -493,19 +344,13 @@ INSERT INTO `cms_plugins` (`id`, `name`, `description`, `icon`, `activated`) VAL
 (7, 'userpage', 'Edit User Page Settings', 'fa fa-home', 1),
 (8, 'gallery', 'Create and manage image and video galleries', 'fa fa-photo', 1);
 
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `cms_plugin_booking`
---
-
 CREATE TABLE `cms_plugin_booking` (
   `id` int(11) NOT NULL,
   `uid` int(11) NOT NULL DEFAULT '0',
   `gid` int(11) NOT NULL DEFAULT '1',
-  `date_created` datetime NOT NULL,
-  `date_wish` datetime NOT NULL,
-  `date_alternative` datetime NOT NULL,
+  `date_created` datetime DEFAULT CURRENT_TIMESTAMP,
+  `date_wish` datetime DEFAULT NULL,
+  `date_alternative` datetime DEFAULT NULL,
   `confirmed` int(1) NOT NULL DEFAULT '0',
   `name` varchar(128) NOT NULL,
   `email` varchar(255) NOT NULL,
@@ -526,12 +371,6 @@ CREATE TABLE `cms_plugin_booking` (
   `invited` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `cms_plugin_faq`
---
-
 CREATE TABLE `cms_plugin_faq` (
   `id` int(11) NOT NULL,
   `sort` int(11) NOT NULL,
@@ -540,12 +379,6 @@ CREATE TABLE `cms_plugin_faq` (
   `question` text NOT NULL,
   `answer` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `cms_plugin_gallery`
---
 
 CREATE TABLE `cms_plugin_gallery` (
   `id` int(11) NOT NULL,
@@ -575,12 +408,6 @@ CREATE TABLE `cms_plugin_gallery` (
   `watermarkBorder` varchar(12) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `cms_plugin_gallery_items`
---
-
 CREATE TABLE `cms_plugin_gallery_items` (
   `id` int(11) NOT NULL,
   `galleryID` int(11) NOT NULL,
@@ -590,12 +417,6 @@ CREATE TABLE `cms_plugin_gallery_items` (
   `author` varchar(255) NOT NULL,
   `authorUrl` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `cms_plugin_msg`
---
 
 CREATE TABLE `cms_plugin_msg` (
   `msg_id` int(11) NOT NULL,
@@ -609,26 +430,14 @@ CREATE TABLE `cms_plugin_msg` (
   `spam` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `cms_plugin_tourdates`
---
-
 CREATE TABLE `cms_plugin_tourdates` (
   `id` int(11) NOT NULL,
-  `date` datetime NOT NULL,
+  `date` datetime DEFAULT NULL,
   `band` varchar(128) NOT NULL,
   `venue` varchar(128) NOT NULL,
   `published` int(1) NOT NULL DEFAULT '1',
   `fburl` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `cms_settings`
---
 
 CREATE TABLE `cms_settings` (
   `property` varchar(255) NOT NULL,
@@ -648,10 +457,6 @@ CREATE TABLE `cms_settings` (
   `options` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Daten für Tabelle `cms_settings`
---
-
 INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation`, `activated`, `label`, `icon`, `heading`, `subtext`, `fieldClass`, `fieldType`, `placeholder`, `description`, `options`) VALUES
 ('admin_email', '', '', 9, 5, 1, 'ADMIN_EMAIL_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('backendFooter', '0', '', 11, 5, 1, 'BACKENDFOOTER_LABEL', 'fa fa-chevron-down', 'BACKENDFOOTER_HEADING', 'BACKENDFOOTER_SUBTEXT', 'form-control', 'checkbox', '', '', ''),
@@ -664,7 +469,7 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('backendLanguage', 'de-DE', '', 19, 4, 1, 'BACKENDLANGUAGE_LABEL', '', '', '', 'form-control', '', '', '', ''),
 ('backendLayout', 'sidebar-mini', '', 2, 2, 1, 'BACKENDLAYOUT_LABEL', '', '', '', 'form-control', 'select', '', 'BACKENDLAYOUT_DESC', 'fixed,Fixed:sidebar-collapse,Sidebar Collapsed:sidebar-collapse sidebar-mini,Sidebar Mini Collapsed:sidebar-mini,Sidebar Mini Open:layout-boxed,Layout Boxed:layout-top-nav,Layout Top Nav'),
 ('backendLogoSubText', '.io', '', 12, 2, 1, 'BACKENDLOGOSUBTEXT_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
-('backendLogoText', 'http://raspi/web/clone', '', 12, 1, 1, 'BACKENDLOGOTEXT_LABEL', 'fa fa-bars', 'BACKENDLOGOTEXT_HEADING', 'BACKENDLOGOTEXT_SUBTEXT', 'form-control', 'input', '', '', ''),
+('backendLogoText', '', '', 12, 1, 1, 'BACKENDLOGOTEXT_LABEL', 'fa fa-bars', 'BACKENDLOGOTEXT_HEADING', 'BACKENDLOGOTEXT_SUBTEXT', 'form-control', 'input', '', '', ''),
 ('backendLogoUrl', '1', '', 12, 3, 1, 'BACKENDLOGOURL_LABEL', '', '', '', 'form-control', 'checkbox', '', '', ''),
 ('backendMessagesMenu', '1', '', 12, 4, 1, 'BACKENDMSGMENU_LABEL', 'fa fa-bell-o', 'BACKENDMSGMENU_HEADING', 'BACKENDMSGMENU_SUBTEXT', 'form-control', 'checkbox', '', '', ''),
 ('backendNotificationMenu', '1', '', 12, 5, 1, 'BACKENDNOTIFYMENU_LABEL', '', '', '', 'form-control', 'checkbox', '', '', ''),
@@ -699,10 +504,10 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('frontendFX', '0', '', 3, 3, 1, 'FRONTENDFX_LABEL', '', '', '', 'form-control', '', '', '', ''),
 ('frontendLanguage', 'de-DE', '', 19, 4, 1, 'FRONTENDLANGUAGE_LABEL', '', '', '', 'form-control', '', '', '', ''),
 ('globalmenuid', '1', '', 3, 2, 1, 'GLOBALMENUID_LABEL', 'fa fa-bars', 'GLOBALMENUID_HEADING', 'GLOBALMENUID_SUBTEXT', 'form-control', 'select', '', 'GLOBALMENUID_DESC', ''),
-('globalmetakeywords', 'YAWK, CMS, WORDPRESS, JOOMLA', '', 10, 0, 1, 'Global Site Keywords', '', '', '', 'form-control', '', '', '', ''),
-('globalmetatext', 'Clone of current repository (for testing purpose)', '', 10, 0, 1, 'Global Meta Description', '', '', '', 'form-control', '', '', '', ''),
+('globalmetakeywords', 'YAWK, CMS, Content Management System, Modern Website, Bootstrap Customization, Bootstrap CMS', '', 10, 0, 1, 'Global Site Keywords', '', '', '', 'form-control', '', '', '', ''),
+('globalmetatext', 'This is my official Website - made with YaWK', '', 10, 0, 1, 'Global Meta Description', '', '', '', 'form-control', '', '', '', ''),
 ('host', '', '', 9, 3, 1, 'HOST_LABEL', '', '', '', 'form-control', 'input', '', 'DATABASE_DESC', ''),
-('loadingTime', '0', '', 11, 10, 1, 'LOADINGTIME_LABEL', 'fa fa-signal', 'LOADINGTIME_HEADING', 'LOADINGTIME_SUBTEXT', 'form-control', 'checkbox', '', '', ''),
+('loadingTime', '1', '', 11, 10, 1, 'LOADINGTIME_LABEL', 'fa fa-signal', 'LOADINGTIME_HEADING', 'LOADINGTIME_SUBTEXT', 'form-control', 'checkbox', '', '', ''),
 ('logoutmenuid', '1', '', 6, 0, 1, 'Logout Menu ID for logged-in Users', '', '', '', 'form-control', '', '', '', ''),
 ('offline', '0', '', 8, 0, 1, 'OFFLINE_LABEL', 'fa fa-wrench', 'OFFLINE_HEADING', 'OFFLINE_SUBTEXT', 'form-control', 'checkbox', '', 'OFFLINE_DESC', ''),
 ('offlineimage', 'media/images/closed-sign-tm.jpg', '', 8, 0, 1, 'OFFLINEIMAGE_LABEL', '', '', '', 'form-control', 'input', 'media/images/logo.jpg', 'OFFLINEIMAGE_DESC', ''),
@@ -736,13 +541,13 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('signup_tospage', 'terms-of-service', '', 5, 0, 1, 'terms of service filename', '', '', '', 'form-control', '', '', '', ''),
 ('signup_tostext', 'Terms of service', '', 5, 0, 1, 'terms of service description', '', '', '', 'form-control', '', '', '', ''),
 ('signup_zipcode', '0', '', 5, 0, 1, 'require zipcode to signup', '', '', '', 'form-control', '', '', '', ''),
-('siteauthor', 'YaWK', '', 10, 0, 1, 'Site Author', '', '', '', 'form-control', '', '', '', ''),
-('sitename', 'YaWK Yet another WebKit CMS', '', 9, 2, 1, 'SITENAME_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+('siteauthor', 'made with YaWK', '', 10, 0, 1, 'Site Author', '', '', '', 'form-control', '', '', '', ''),
+('sitename', 'Yet another Web Kit CMS', '', 9, 2, 1, 'SITENAME_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('statsEnable', '1', '', 13, 2, 1, 'STATS_LABEL', 'fa fa-bar-chart', 'STATS_HEADING', 'STATS_SUBTEXT', 'form-control', 'select', '', 'STATS_DESC', '0,off:1,on'),
 ('syslogEnable', '1', '', 13, 1, 1, 'SYSLOG_LABEL', 'fa fa-terminal', 'SYSLOG_HEADING', 'SYSLOG_SUBTEXT', 'form-control', 'select', '', 'SYSLOG_DESC', '0,off:1,on'),
 ('timediff', '1', '', 7, 1, 1, 'TIMEDIFF_LABEL', 'fa fa-clock-o', 'TIMEDIFF_HEADING', 'TIMEDIFF_SUBTEXT', 'form-control', 'checkbox', '', 'TIMEDIFF_DESC', ''),
 ('timedifftext', 'This page is not online yet. Please come back in ', '', 7, 2, 1, 'TIMEDIFFTEXT_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
-('title', 'YaWK GitHub [clone]', '', 9, 1, 1, 'TITLE_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+('title', '', '', 9, 1, 1, 'TITLE_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('twitterstatus', '0', '', 4, 0, 1, 'Twitter on/off', '', '', '', 'form-control', '', '', '', ''),
 ('twitterurl', 'http://www.twitter.com', '', 4, 0, 1, 'URL zu Twitter Profil', '', '', '', 'form-control', '', '', '', ''),
 ('userlogin', '1', '', 17, 1, 1, 'USERLOGIN_LABEL', 'fa fa-lock', 'USERLOGIN_HEADING', 'USERLOGIN_SUBTEXT', 'form-control', 'checkbox', '', 'USERLOGIN_DESC', ''),
@@ -773,24 +578,14 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('userpage_profile', '1', '', 6, 0, 1, 'userpage profile enabled?', '', '', '', 'form-control', '', '', '', ''),
 ('userpage_settings', '1', '', 6, 0, 1, 'userpage`settings', '', '', '', 'form-control', '', '', '', ''),
 ('userpage_stats', '1', '', 6, 0, 1, 'userpage stats enabled?', '', '', '', 'form-control', '', '', '', ''),
-('yawkversion', '1.0 build 2017.5', '', 9, 2, 0, 'YAWKVERSION_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+('yawkversion', '1.0 build 2018.3', '', 9, 2, 0, 'YAWKVERSION_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('youtubeChannelUrl', 'http://www.youtube.com', '', 4, 0, 1, 'YouTube Channel URL', '', '', '', 'form-control', '', '', '', ''),
 ('youtubestatus', '0', '', 4, 0, 1, 'YouTube on/off', '', '', '', 'form-control', '', '', '', '');
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `cms_settings_types`
---
 
 CREATE TABLE `cms_settings_types` (
   `id` int(11) NOT NULL,
   `value` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Daten für Tabelle `cms_settings_types`
---
 
 INSERT INTO `cms_settings_types` (`id`, `value`) VALUES
 (1, 'system'),
@@ -815,12 +610,6 @@ INSERT INTO `cms_settings_types` (`id`, `value`) VALUES
 (20, 'backendFX'),
 (21, 'database');
 
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `cms_stats`
---
-
 CREATE TABLE `cms_stats` (
   `id` int(11) NOT NULL,
   `uid` int(11) NOT NULL,
@@ -835,17 +624,10 @@ CREATE TABLE `cms_stats` (
   `osVersion` varchar(64) NOT NULL,
   `browser` varchar(255) NOT NULL,
   `browserVersion` varchar(64) NOT NULL,
-  `date_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_created` datetime DEFAULT CURRENT_TIMESTAMP,
   `referer` varchar(255) NOT NULL,
   `page` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `cms_syslog`
---
-
 
 CREATE TABLE `cms_syslog` (
   `log_id` int(11) NOT NULL,
@@ -857,11 +639,7 @@ CREATE TABLE `cms_syslog` (
   `toGID` int(11) NOT NULL DEFAULT '0',
   `seen` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
--- --------------------------------------------------------
 
---
--- Tabellenstruktur für Tabelle `cms_syslog_types`
---
 CREATE TABLE `cms_syslog_types` (
   `id` int(11) NOT NULL,
   `active` int(1) NOT NULL DEFAULT '1',
@@ -883,11 +661,6 @@ INSERT INTO `cms_syslog_types` (`id`, `active`, `property`, `icon`, `type`) VALU
 (10, 1, 'settings', 'fa fa-gears', 'text-default'),
 (11, 1, 'widgets', 'fa fa-labels', 'text-default'),
 (12, 1, 'stats', 'fa fa-bar-chart', 'text-default');
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `cms_templates`
---
 
 CREATE TABLE `cms_templates` (
   `id` int(11) NOT NULL,
@@ -901,23 +674,13 @@ CREATE TABLE `cms_templates` (
   `weblink` varchar(255) NOT NULL,
   `subAuthor` varchar(255) NOT NULL,
   `subAuthorUrl` varchar(255) NOT NULL,
-  `modifyDate` datetime NOT NULL,
+  `modifyDate` datetime DEFAULT NULL,
   `version` varchar(64) NOT NULL,
   `license` varchar(128) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Daten für Tabelle `cms_templates`
---
-
 INSERT INTO `cms_templates` (`id`, `active`, `name`, `positions`, `description`, `releaseDate`, `author`, `authorUrl`, `weblink`, `subAuthor`, `subAuthorUrl`, `modifyDate`, `version`, `license`) VALUES
 (1, 1, 'yawk-bootstrap3', 'outerTop:outerLeft:outerRight:intro:globalmenu:top:leftMenu:mainTop:mainTopLeft:mainTopCenter:mainTopRight:main:mainBottom:mainBottomLeft:mainBottomCenter:mainBottomRight:mainFooter:mainFooterLeft:mainFooterCenter:mainFooterRight:rightMenu:bottom:footer:hiddentoolbar:debug:outerBottom', 'YaWK Bootstrap 3 Default Theme.', '2016-09-29 00:00:00', 'Daniel Retzl ', 'https://github.com/YaWK', 'http://www.yawk.io', 'Daniel Retzl', '', '2016-10-01 02:30:00', '1.0.0', 'GNU General Public License (GPL)');
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `cms_template_settings`
---
 
 CREATE TABLE `cms_template_settings` (
   `id` int(11) NOT NULL,
@@ -939,10 +702,6 @@ CREATE TABLE `cms_template_settings` (
   `heading` varchar(255) NOT NULL,
   `subtext` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Daten für Tabelle `cms_template_settings`
---
 
 INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `valueDefault`, `longValue`, `type`, `activated`, `sort`, `label`, `fieldClass`, `fieldType`, `options`, `placeholder`, `description`, `icon`, `heading`, `subtext`) VALUES
 (1, 1, 'heading-gfont', '76', '1', '', 0, 1, 0, 'Global GoogleFont ID', 'form-control', '', '', 'Default Google Font', '', '', '', ''),
@@ -1928,20 +1687,10 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (987, 1, 'pos-outerBottom-bgnone', ' ', 'none', '', 50, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
 (988, 1, 'pos-outerLeft-bg-size', 'cover', 'cover', '', 31, 1, 12, 'TPL_BODY_BG_IMAGE_SIZE', 'form-control', 'select', 'auto,auto:cover,cover:contain,contain:length,length:percentage,percentage:initial,inital:inherit,inherit', '', '', '', '', '');
 
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `cms_template_settings_types`
---
-
 CREATE TABLE `cms_template_settings_types` (
   `id` int(11) NOT NULL,
   `type` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Daten für Tabelle `cms_template_settings_types`
---
 
 INSERT INTO `cms_template_settings_types` (`id`, `type`) VALUES
 (1, 'positions'),
@@ -2000,12 +1749,6 @@ INSERT INTO `cms_template_settings_types` (`id`, `type`) VALUES
 (54, 'pos-body'),
 (55, 'tpl-assets-basic');
 
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `cms_tips`
---
-
 CREATE TABLE `cms_tips` (
   `id` int(11) NOT NULL,
   `published` int(1) NOT NULL,
@@ -2014,10 +1757,6 @@ CREATE TABLE `cms_tips` (
   `tipLink` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Daten für Tabelle `cms_tips`
---
-
 INSERT INTO `cms_tips` (`id`, `published`, `tipHeading`, `tipText`, `tipLink`) VALUES
 (1, 0, 'TOD_1_H', 'TOD_1_T', ''),
 (2, 1, 'TOD_2_H', 'TOD_2_T', ''),
@@ -2025,14 +1764,8 @@ INSERT INTO `cms_tips` (`id`, `published`, `tipHeading`, `tipText`, `tipLink`) V
 (4, 1, 'TOD_4_H', 'TOD_4_T', ''),
 (5, 1, 'TOD_5_H', 'TOD_5_T', '');
 
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `cms_users`
---
-
 CREATE TABLE `cms_users` (
-  `id` int(11) DEFAULT NULL,
+  `id` int(11) NOT NULL,
   `blocked` int(1) NOT NULL DEFAULT '0',
   `privacy` int(1) NOT NULL DEFAULT '0',
   `online` int(1) NOT NULL DEFAULT '0',
@@ -2040,7 +1773,7 @@ CREATE TABLE `cms_users` (
   `terms` int(1) NOT NULL DEFAULT '1',
   `username` varchar(48) DEFAULT NULL,
   `password` varchar(48) DEFAULT NULL,
-  `date_created` datetime DEFAULT NULL,
+  `date_created` datetime DEFAULT CURRENT_TIMESTAMP,
   `date_changed` datetime DEFAULT NULL,
   `date_expired` datetime DEFAULT NULL,
   `date_lastlogin` datetime DEFAULT NULL,
@@ -2065,24 +1798,11 @@ CREATE TABLE `cms_users` (
   `templateID` int(6) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `cms_users_online`
---
-
 CREATE TABLE `cms_users_online` (
   `uid` int(11) NOT NULL,
   `phpSessionID` varchar(128) NOT NULL,
   `currentTimeStamp` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `cms_user_groups`
---
 
 CREATE TABLE `cms_user_groups` (
   `id` int(11) NOT NULL,
@@ -2092,22 +1812,12 @@ CREATE TABLE `cms_user_groups` (
   `backend_allowed` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Daten für Tabelle `cms_user_groups`
---
-
 INSERT INTO `cms_user_groups` (`id`, `value`, `color`, `signup_allowed`, `backend_allowed`) VALUES
 (1, 'Guest', 'success', 1, 0),
 (2, 'User', 'info', 1, 0),
 (3, 'Moderator', 'warning', 1, 1),
 (4, 'Administrator', 'warning', 0, 1),
 (5, 'Root', 'danger', 0, 1);
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `cms_widgets`
---
 
 CREATE TABLE `cms_widgets` (
   `id` int(11) NOT NULL,
@@ -2118,15 +1828,10 @@ CREATE TABLE `cms_widgets` (
   `position` varchar(128) NOT NULL,
   `marginTop` int(11) NOT NULL,
   `marginBottom` int(11) NOT NULL,
-  `date_publish` datetime NOT NULL,
+  `date_publish` datetime DEFAULT CURRENT_TIMESTAMP,
   `date_unpublish` datetime DEFAULT NULL,
   `widgetTitle` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
--- -----------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `cms_widget_defaults`
---
 
 CREATE TABLE `cms_widget_defaults` (
   `property` varchar(256) NOT NULL,
@@ -2146,16 +1851,12 @@ CREATE TABLE `cms_widget_defaults` (
   `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Daten für Tabelle `cms_widget_defaults`
---
-
-INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated`, `sortation`, `label`, `icon`, `heading`, `subtext`, `description`, `fieldClass`, `fieldType`, `placeholder`, `options`, `ID`) VALUES
+INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated`, `sortation`, `label`, `icon`, `heading`, `subtext`, `description`, `fieldClass`, `fieldType`, `placeholder`, `options`, `id`) VALUES
 ('loginboxButtonText', 'Login', 1, 0, 0, 'LABEL_LOGINBOX_BTNTEXT', '', '', '', 'DESC_LOGINBOX_BTNTEXT', 'form-control', '', 'PH_LOGINBOX_BTNTEXT', '', 1),
 ('fbPageWidth', '450', 4, 1, 10, 'LABEL_FBPAGE_WIDTH', '', '', '', 'DESC_FBPAGE_WIDTH', 'form-control', '', 'PH_FBPAGE_WIDTH', '', 2),
 ('fbPageHeight', '265', 4, 1, 11, 'LABEL_FBPAGE_HEIGHT', '', '', '', 'DESC_FBPAGE_HEIGHT', 'form-control', '', 'PH_FBPAGE_HEIGHT', '', 3),
 ('fbPageUrl', 'http://www.facebook.com/platform', 4, 1, 1, 'LABEL_FBPAGE_URL', '', '', '', 'DESC_FBPAGE_URL', 'form-control', '', 'PH_FBPAGE_URL', '', 4),
-('fbPageAppID', '100710516666226', 4, 1, 2, 'LABEL_FBPAGE_APPID', '', '', '', 'DESC_FBPAGE_APPID', 'form-control', '', 'PH_FBPAGE_APPID', '', 5),
+('fbPageAppID', '', 4, 1, 2, 'LABEL_FBPAGE_APPID', '', '', '', 'DESC_FBPAGE_APPID', 'form-control', '', 'PH_FBPAGE_APPID', '', 5),
 ('fbLikeButtonWidth', '450', 5, 1, 8, 'LABEL_FBLIKE_BUTTON_WIDTH', '', '', '', 'DESC_FBLIKE_BUTTON_WIDTH', 'form-control', '', 'PH_FBLIKE_BUTTON_WIDTH', '', 6),
 ('fbLikeButtonHeight', '35', 5, 1, 9, 'LABEL_FBLIKE_BUTTON_HEIGHT', '', '', '', 'DESC_FBLIKE_BUTTON_HEIGHT', 'form-control', '', 'PH_FBLIKE_BUTTON_HEIGHT', '', 7),
 ('fbLikeButtonUrl', 'http://www.facebook.com/platform', 5, 1, 1, 'LABEL_FBLIKE_BUTTON_URL', '', '', '', 'DESC_FBLIKE_BUTTON_URL', 'form-control', '', 'PH_FBLIKE_BUTTON_URL', '', 8),
@@ -2338,12 +2039,6 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('fbEventsStartDate', '', 39, 1, 10, 'LABEL_FB_EVENTS_STARTDATE', '', '', '', 'DESC_FB_EVENTS_STARTDATE', 'form-control', 'input', '', '', 194),
 ('fbEventsEndDate', '', 39, 1, 10, 'LABEL_FB_EVENTS_ENDDATE', '', '', '', 'DESC_FB_EVENTS_ENDDATE', 'form-control', 'input', '', '', 195);
 
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `cms_widget_settings`
---
-
 CREATE TABLE `cms_widget_settings` (
   `id` int(11) NOT NULL,
   `widgetID` int(11) NOT NULL,
@@ -2362,11 +2057,6 @@ CREATE TABLE `cms_widget_settings` (
   `options` text NOT NULL,
   `description` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
--- ------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `cms_widget_types`
---
 
 CREATE TABLE `cms_widget_types` (
   `id` int(11) NOT NULL,
@@ -2375,10 +2065,6 @@ CREATE TABLE `cms_widget_types` (
   `folder` varchar(128) NOT NULL,
   `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Daten für Tabelle `cms_widget_types`
---
 
 INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`) VALUES
 (1, 1, 'Loginbox', 'loginbox', 'Display a User Login Box'),
@@ -2421,102 +2107,54 @@ INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`)
 (38, 1, 'Embed Page', 'embed_page', 'Embed any of your static pages'),
 (39, 1, 'Facebook Events', 'fb_events', 'Embed Facebook Events from your Facebook Page');
 
---
--- Indizes der exportierten Tabellen
---
 
---
--- Indizes für die Tabelle `cms_asssets`
---
 ALTER TABLE `cms_assets`
   ADD PRIMARY KEY (`id`);
 
---
--- Indizes für die Tabelle `cms_asssets_types`
---
 ALTER TABLE `cms_assets_types`
   ADD PRIMARY KEY (`id`);
 
---
--- Indizes für die Tabelle `cms_blog`
---
 ALTER TABLE `cms_blog`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id` (`id`);
 
---
--- Indizes für die Tabelle `cms_blog_comments`
---
 ALTER TABLE `cms_blog_comments`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id` (`id`);
 
---
--- Indizes für die Tabelle `cms_blog_items`
---
 ALTER TABLE `cms_blog_items`
   ADD PRIMARY KEY (`id`);
 
---
--- Indizes für die Tabelle `cms_follower`
---
 ALTER TABLE `cms_follower`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id` (`id`,`follower`,`hunted`);
 
---
--- Indizes für die Tabelle `cms_friends`
---
 ALTER TABLE `cms_friends`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id` (`id`,`friendA`,`friendB`,`confirmed`,`aborted`);
 
---
--- Indizes für die Tabelle `cms_gfonts`
---
 ALTER TABLE `cms_gfonts`
   ADD PRIMARY KEY (`id`);
 
---
--- Indizes für die Tabelle `cms_logins`
---
 ALTER TABLE `cms_logins`
   ADD PRIMARY KEY (`id`);
 
---
--- Indizes für die Tabelle `cms_menu`
---
 ALTER TABLE `cms_menu`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id` (`id`,`sort`,`gid`,`menuID`,`parentID`,`published`,`date_created`,`date_changed`,`date_publish`,`date_unpublish`,`text`,`href`);
 
---
--- Indizes für die Tabelle `cms_menu_names`
---
 ALTER TABLE `cms_menu_names`
   ADD PRIMARY KEY (`id`);
 
---
--- Indizes für die Tabelle `cms_meta_global`
---
 ALTER TABLE `cms_meta_global`
   ADD PRIMARY KEY (`name`);
 
---
--- Indizes für die Tabelle `cms_meta_local`
---
 ALTER TABLE `cms_meta_local`
   ADD PRIMARY KEY (`id`);
 
---
--- Indizes für die Tabelle `cms_newsletter`
---
 ALTER TABLE `cms_newsletter`
   ADD PRIMARY KEY (`id`);
 
---
--- Indizes für die Tabelle `cms_notifications`
---
 ALTER TABLE `cms_notifications`
   ADD PRIMARY KEY (`log_id`),
   ADD KEY `id` (`log_id`,`fromUID`),
@@ -2526,56 +2164,32 @@ ALTER TABLE `cms_notifications`
   ADD KEY `type` (`log_type`),
   ADD KEY `msg_id` (`msg_id`);
 
---
--- Indizes für die Tabelle `cms_notifications_msg`
---
 ALTER TABLE `cms_notifications_msg`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id` (`id`,`active`,`type`);
 
---
--- Indizes für die Tabelle `cms_pages`
---
 ALTER TABLE `cms_pages`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id` (`id`);
 
---
--- Indizes für die Tabelle `cms_plugins`
---
 ALTER TABLE `cms_plugins`
   ADD PRIMARY KEY (`id`);
 
---
--- Indizes für die Tabelle `cms_plugin_booking`
---
 ALTER TABLE `cms_plugin_booking`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id` (`id`,`uid`,`gid`,`date_created`,`date_wish`,`date_alternative`,`confirmed`,`todo`,`success`,`grade`,`visits`,`ban`,`outdated`,`cut`,`invited`),
   ADD KEY `name` (`name`,`email`),
   ADD KEY `ip` (`ip`);
 
---
--- Indizes für die Tabelle `cms_plugin_faq`
---
 ALTER TABLE `cms_plugin_faq`
   ADD PRIMARY KEY (`id`);
 
---
--- Indizes für die Tabelle `cms_plugin_gallery`
---
 ALTER TABLE `cms_plugin_gallery`
   ADD PRIMARY KEY (`id`);
 
---
--- Indizes für die Tabelle `cms_plugin_gallery_items`
---
 ALTER TABLE `cms_plugin_gallery_items`
   ADD PRIMARY KEY (`id`);
 
---
--- Indizes für die Tabelle `cms_plugin_msg`
---
 ALTER TABLE `cms_plugin_msg`
   ADD PRIMARY KEY (`msg_id`),
   ADD KEY `id` (`msg_id`),
@@ -2585,153 +2199,124 @@ ALTER TABLE `cms_plugin_msg`
   ADD KEY `msg_read` (`msg_read`,`trash`,`spam`);
 ALTER TABLE `cms_plugin_msg` ADD FULLTEXT KEY `msg_body` (`msg_body`);
 
---
--- Indizes für die Tabelle `cms_plugin_tourdates`
---
 ALTER TABLE `cms_plugin_tourdates`
   ADD PRIMARY KEY (`id`);
 
---
--- Indizes für die Tabelle `cms_settings`
---
 ALTER TABLE `cms_settings`
   ADD PRIMARY KEY (`property`),
   ADD KEY `property` (`property`),
   ADD KEY `value` (`value`),
   ADD KEY `type` (`type`);
 
---
--- Indizes für die Tabelle `cms_settings_types`
---
 ALTER TABLE `cms_settings_types`
   ADD PRIMARY KEY (`id`);
 
---
--- Indizes für die Tabelle `cms_stats`
---
 ALTER TABLE `cms_stats`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id` (`id`);
 
---
--- Indizes für die Tabelle `cms_syslog`
---
 ALTER TABLE `cms_syslog`
-  ADD PRIMARY KEY (`log_id`);
+  ADD PRIMARY KEY `log_id` (`log_id`),
+  ADD KEY `log_id` (`log_id`);
 
---
--- Indizes für die Tabelle `cms_syslog_types`
---
 ALTER TABLE `cms_syslog_types`
   ADD PRIMARY KEY (`id`);
 
---
--- Indizes für die Tabelle `cms_templates`
---
 ALTER TABLE `cms_templates`
   ADD PRIMARY KEY (`id`);
 
---
--- Indizes für die Tabelle `cms_template_settings`
---
 ALTER TABLE `cms_template_settings`
   ADD PRIMARY KEY (`id`);
 
---
--- Indizes für die Tabelle `cms_template_settings_types`
---
 ALTER TABLE `cms_template_settings_types`
   ADD PRIMARY KEY (`id`);
 
---
--- Indizes für die Tabelle `cms_user_tips`
---
 ALTER TABLE `cms_tips`
   ADD PRIMARY KEY (`id`);
 
---
--- Indizes für die Tabelle `cms_users`
---
 ALTER TABLE `cms_users`
   ADD PRIMARY KEY (`id`);
 
---
--- Indizes für die Tabelle `cms_user_groups`
---
 ALTER TABLE `cms_user_groups`
   ADD PRIMARY KEY (`id`);
 
---
--- Indizes für die Tabelle `cms_widget_defaults`
---
+ALTER TABLE `cms_widgets`
+  ADD PRIMARY KEY (`id`);
+
 ALTER TABLE `cms_widget_defaults`
   ADD PRIMARY KEY (`id`);
 
---
--- Indizes für die Tabelle `cms_widget_defaults`
---
 ALTER TABLE `cms_widget_settings`
   ADD PRIMARY KEY (`id`);
 
-
---
--- Indizes für die Tabelle `cms_widget_types`
---
 ALTER TABLE `cms_widget_types`
   ADD PRIMARY KEY (`id`);
 
---
--- AUTO_INCREMENT für exportierte Tabellen
---
-
---
--- AUTO_INCREMENT für Tabelle `cms_assets`
---
 ALTER TABLE `cms_assets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT für Tabelle `cms_assets_types`
---
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 ALTER TABLE `cms_assets_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
---
--- AUTO_INCREMENT für Tabelle `cms_menu`
---
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+ALTER TABLE `cms_blog`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `cms_blog_comments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `cms_blog_items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `cms_follower`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `cms_friends`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `cms_logins`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
---
--- AUTO_INCREMENT für Tabelle `cms_meta_local`
---
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `cms_menu_names`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 ALTER TABLE `cms_meta_local`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `cms_plugin_faq`
---
+ALTER TABLE `cms_newsletter`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `cms_notifications`
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `cms_notifications_msg`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `cms_plugins`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+ALTER TABLE `cms_plugin_booking`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_plugin_faq`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `cms_stats`
---
+ALTER TABLE `cms_plugin_gallery`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `cms_plugin_gallery_items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `cms_plugin_msg`
+  MODIFY `msg_id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `cms_plugin_tourdates`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_stats`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT für Tabelle `cms_syslog`
---
-
-ALTER TABLE `cms_syslog`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT für Tabelle `cms_widget_defaults`
---
-
-ALTER TABLE `cms_widget_defaults`
+ALTER TABLE `cms_settings_types`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+ALTER TABLE `cms_syslog_types`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+ALTER TABLE `cms_templates`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `cms_template_settings`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=989;
+ALTER TABLE `cms_template_settings_types`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+ALTER TABLE `cms_tips`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+ALTER TABLE `cms_users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `cms_widget_settings`
---
-
+ALTER TABLE `cms_user_groups`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+ALTER TABLE `cms_widgets`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `cms_widget_defaults`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=196;
 ALTER TABLE `cms_widget_settings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `cms_widget_types`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
