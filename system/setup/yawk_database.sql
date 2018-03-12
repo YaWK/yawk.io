@@ -2298,6 +2298,8 @@ ALTER TABLE `cms_stats`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_settings_types`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+ALTER TABLE `cms_settings_types`
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_syslog_types`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 ALTER TABLE `cms_templates`
