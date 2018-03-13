@@ -87,6 +87,16 @@ if (isset($_GET['widgetID']))
                 case 'fbEventsEndDate';
                     $fbEventsEndDate = $w_value;
                     break;
+
+                /* heading */
+                case 'fbEventsHeading';
+                    $heading = $w_value;
+                    break;
+
+                /* subtext */
+                case 'fbEventsSubtext';
+                    $subtext = $w_value;
+                    break;
             }
         } /* END LOAD PROPERTIES */
     } // end while fetch row (fetch widget settings)
@@ -189,11 +199,9 @@ if (isset($fbEventsAppId) && (!empty($fbEventsAppId)
 
     // sortation
     if ($fbEventsSortation === "asc")
-    {
-        // reverse array data to display upcoming event first
+    {   // reverse array data to display upcoming event first
         $obj['data'] = array_reverse($obj['data']);
     }
-
 
     echo $headline;
     echo "<pre>";
