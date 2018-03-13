@@ -439,13 +439,14 @@ namespace YAWK {
                             if ($status = $db->import($this->sqlFile, $lang))
                             {   // delete filepointer, because it is not needed anymore
                                 unlink($this->filePointer);
-                                \YAWK\alert::draw("success", "$lang[DB_IMPORT]", "$status", "", 2000);
+                                \YAWK\alert::draw("success", "$lang[DB_IMPORT]", "$lang[DB_IMPORT_OK]", "", 2000);
                             }
                             else
                                 {   // delete filepointer, start again at next try
                                     unlink($this->filePointer);
                                     $this->step2($setup, $language, $lang);
-                                    \YAWK\alert::draw("danger", "$lang[DB_IMPORT]", "$lang[DB_IMPORT_FAILED]", "", 2000);
+                                    \YAWK\alert::draw("danger", "$lang[DB_IMPORT]", "$lang[DB_IMPORT_FAILED]", "", 6000);
+                                    exit;
                                 }
                         }
                         else

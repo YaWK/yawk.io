@@ -114,16 +114,17 @@ namespace YAWK {
             // http://stackoverflow.com/questions/19751354/how-to-import-sql-file-in-mysql-database-using-php
             if (!isset($sqlfile) || (empty($sqlfile)))
             {
-                $filename = 'database.sql';
+                $filename = 'yawk_database.sql';
             }
             else
                 {
                     $filename = $sqlfile;
                 }
             // filename
-            $maxRuntime = 8; // less then your max script execution limit
+            // $maxRuntime = 8; // less then your max script execution limit
+            // $maxRuntime = 8; // less then your max script execution limit
 
-            $deadline = time()+$maxRuntime;
+            // $deadline = time()+$maxRuntime;
             $progressFilename = $filename.'_filepointer'; // tmp file for progress
             $errorFilename = $filename.'_error'; // tmp file for erro
 
@@ -145,7 +146,7 @@ namespace YAWK {
 
             $queryCount = 0;
             $query = '';
-            while($deadline>time() AND ($line=fgets($fp, 1024000)))
+            while($line=fgets($fp, 1024000))
             {
                 if(substr($line,0,2)=='--' OR trim($line)=='' )
                 {
@@ -162,22 +163,20 @@ namespace YAWK {
                        //exit;
                     }
                     $query = '';
-                    file_put_contents($progressFilename, ftell($fp)); // save the current file position for
+                    @file_put_contents($progressFilename, ftell($fp)); // save the current file position for
                     $queryCount++;
                 }
             }
 
-            $status = '';
             if(feof($fp))
             {
-                $status .= "$lang[DB_IMPORT_OK]";
+                return true;
             }
             else
                 {
-                    $status .= ftell($fp).'/'.filesize($filename).' '.(round(ftell($fp)/filesize($filename), 2)*100).'%'."\n";
-                    $status .= $queryCount." $lang[DB_QUERIES_PROCESSED]";
+                    // $status .= ftell($fp).'/'.filesize($filename).' '.(round(ftell($fp)/filesize($filename), 2)*100).'%'."\n";
+                    return false;
                 }
-            return $status;
         } // ./ import
 
 
