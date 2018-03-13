@@ -2037,7 +2037,9 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('fbEventsLayout', '', 39, 1, 8, 'LABEL_FB_EVENTS_LAYOUT', '', '', '', 'DESC_FB_EVENTS_LAYOUT', 'form-control', 'select', '', 'left,Image Left:top,Image Top:right,Image Right:bottom,Image Bottom:minimal:Minimalism,table:Display as table', 192),
 ('fbEventsSortation', 'asc', 39, 1, 9, 'LABEL_FB_EVENTS_SORTATION', '', '', '', 'DESC_FB_EVENTS_SORTATION', 'form-control', 'select', '', 'asc,Ascending:desc,Descending', 193),
 ('fbEventsStartDate', '', 39, 1, 10, 'LABEL_FB_EVENTS_STARTDATE', '', '', '', 'DESC_FB_EVENTS_STARTDATE', 'form-control', 'input', '', '', 194),
-('fbEventsEndDate', '', 39, 1, 10, 'LABEL_FB_EVENTS_ENDDATE', '', '', '', 'DESC_FB_EVENTS_ENDDATE', 'form-control', 'input', '', '', 195);
+('fbEventsEndDate', '', 39, 1, 11, 'LABEL_FB_EVENTS_ENDDATE', '', '', '', 'DESC_FB_EVENTS_ENDDATE', 'form-control', 'input', '', '', 195),
+('fbEventsHeading', '', 39, 1, 12, 'LABEL_FB_EVENTS_HEADING', '', '', '', 'DESC_FB_EVENTS_HEADING', 'form-control', '', 'PH_FB_EVENTS_HEADING', '', 196),
+('fbEventsSubtext', '', 39, 1, 13, 'LABEL_FB_EVENTS_SUBTEXT', '', '', '', 'DESC_FB_EVENTS_SUBTEXT', 'form-control', '', 'PH_FB_EVENTS_SUBTEXT', '', 197);
 
 CREATE TABLE `cms_widget_settings` (
   `id` int(11) NOT NULL,
