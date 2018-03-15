@@ -107,6 +107,10 @@ class events
     public $fontTitleEnd = '';
     /** @var string display <hr> between address and description */
     public $displaySpacer = 'true';
+    /** @var string background color of the event jumbotron box */
+    public $bgColor = '222222';
+    /** @var string text color of the event jumbotron box */
+    public $textColor = 'CCCCCC';
 
     public function __construct()
     {
@@ -833,7 +837,7 @@ class events
                 if (isset($this->layout) && ($this->layout == "left"))
                 {
                     // jumbotron output
-                    echo "<div class=\"jumbotron\" style=\"background-color:#222; color:#ccc;\">";
+                    echo "<div class=\"jumbotron\" style=\"background-color:#".$this->bgColor."; color:#".$this->textColor.";\">";
                     echo "<div class=\"row\">";
                     echo "<div class=\"col-md-4 text-center align-middle\">";
                     echo "".$coverImage."";
@@ -852,7 +856,7 @@ class events
                 if (isset($this->layout) && ($this->layout == "top"))
                 {
                     // jumbotron output
-                    echo "<div class=\"jumbotron\" style=\"background-color:#222; color:#ccc;\">";
+                    echo "<div class=\"jumbotron\" style=\"background-color:#".$this->bgColor."; color:#".$this->textColor.";\">";
                     echo "<div class=\"row\">";
                     echo "<div class=\"col-md-12 text-center align-middle\">";
                     echo "".$coverImage."<br>";
@@ -870,7 +874,7 @@ class events
                 if (isset($this->layout) && ($this->layout == "middle"))
                 {
                     // jumbotron output
-                    echo "<div class=\"jumbotron\" style=\"background-color:#222; color:#ccc;\">";
+                    echo "<div class=\"jumbotron\" style=\"background-color:#".$this->bgColor."; color:#".$this->textColor.";\">";
                     echo "<div class=\"row\">";
                     echo "<div class=\"col-md-12 text-center align-middle\">";
                     echo "".$fontTitleStart."".$canceled."".$delStart."".$this->event['name']."".$fontTitleEnd."";
@@ -887,7 +891,7 @@ class events
                 if (isset($this->layout) && ($this->layout == "middle2"))
                 {
                     // jumbotron output
-                    echo "<div class=\"jumbotron\" style=\"background-color:#222; color:#ccc;\">";
+                    echo "<div class=\"jumbotron\" style=\"background-color:#".$this->bgColor."; color:#".$this->textColor.";\">";
                     echo "<div class=\"row\">";
                     echo "<div class=\"col-md-12 text-center align-middle\">";
                     echo "".$fontTitleStart."".$canceled."".$delStart."".$this->event['name']."".$fontTitleEnd."";
@@ -904,7 +908,7 @@ class events
                 if (isset($this->layout) && ($this->layout == "middle3"))
                 {
                     // jumbotron output
-                    echo "<div class=\"jumbotron\" style=\"background-color:#222; color:#ccc;\">";
+                    echo "<div class=\"jumbotron\" style=\"background-color:#".$this->bgColor."; color:#".$this->textColor.";\">";
                     echo "<div class=\"row\">";
                     echo "<div class=\"col-md-12 text-center align-middle\">";
                     echo "".$fontTitleStart."".$canceled."".$delStart."".$this->event['name']."".$fontTitleEnd."";
@@ -921,7 +925,7 @@ class events
                 if (isset($this->layout) && ($this->layout == "right"))
                 {
                     // jumbotron output
-                    echo "<div class=\"jumbotron\" style=\"background-color:#222; color:#ccc;\">";
+                    echo "<div class=\"jumbotron\" style=\"background-color:#".$this->bgColor."; color:#".$this->textColor.";\">";
                     echo "<div class=\"row\">";
                     echo "<div class=\"col-md-8\">";
                     echo "".$fontTitleStart."".$canceled."".$delStart."".$this->event['name']."".$fontTitleEnd."";
@@ -940,7 +944,7 @@ class events
                 if (isset($this->layout) && ($this->layout == "bottom"))
                 {
                     // jumbotron output
-                    echo "<div class=\"jumbotron\" style=\"background-color:#222; color:#ccc;\">";
+                    echo "<div class=\"jumbotron\" style=\"background-color:#".$this->bgColor."; color:#".$this->textColor.";\">";
                     echo "<div class=\"row\">";
                     echo "<div class=\"col-md-12 text-center align-middle\">";
                     echo "".$fontTitleStart."".$canceled."".$delStart."".$this->event['name']."".$fontTitleEnd."";

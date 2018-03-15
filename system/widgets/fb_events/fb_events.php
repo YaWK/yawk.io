@@ -175,6 +175,16 @@ if (isset($_GET['widgetID']))
                 case 'fbEventsFontCanceledCss';
                     $fbEvents->fontEventCanceledCss = $w_value;
                     break;
+
+                /* bgcolor */
+                case 'fbEventsBgColor';
+                    $fbEvents->bgColor = $w_value;
+                    break;
+
+                /* text color */
+                case 'fbEventsTextColor';
+                    $fbEvents->textColor = $w_value;
+                    break;
             }
         } /* END LOAD PROPERTIES */
     } // end while fetch row (fetch widget settings)
