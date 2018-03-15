@@ -111,6 +111,8 @@ class events
     public $bgColor = '222222';
     /** @var string text color of the event jumbotron box */
     public $textColor = 'CCCCCC';
+    /** @var string address string */
+    public $address = '';
 
     public function __construct()
     {
@@ -225,6 +227,9 @@ class events
             {   // reverse array data to display upcoming event first
                 $obj['data'] = array_reverse($obj['data']);
             }
+
+
+            $i = 0;
 
             // walk through object data */
             foreach ($obj['data'] as $this->data => $this->event)
@@ -817,8 +822,54 @@ class events
                         $coverImage = '';
                     }
 
+                /* TODO ANIMATE  - */
+                if ($i < 1)
+                {
+                    $animate = " animated fadeIn";
+                }
+                else
+                {
+                    $animate = " animate";
+                }
 
+                // check address street var
+                if (isset($this->event['place']['location']['street']) && (!empty($this->event['place']['location']['street'])))
+                {
+                    $this->address = $this->event['place']['location']['street'].", ";
+                }
+                else
+                    {
+                        $this->address = '';
+                    }
+                // check address zip var
+                if (isset($this->event['place']['location']['zip']) && (!empty($this->event['place']['location']['zip'])))
+                {
+                    $this->address .= $this->event['place']['location']['zip'].", ";
+                }
+                else
+                {
+                    $this->address = '';
+                }
+                // check address city var
+                if (isset($this->event['place']['location']['city']) && (!empty($this->event['place']['location']['city'])))
+                {
+                    $this->address .= $this->event['place']['location']['city'].", ";
+                }
+                else
+                {
+                    $this->address = '';
+                }
+                // check address country var
+                if (isset($this->event['place']['location']['country']) && (!empty($this->event['place']['location']['country'])))
+                {
+                    $this->address .= $this->event['place']['location']['country'];
+                }
+                else
+                {
+                    $this->address = '';
+                }
 
+                // layouts start
                 if (isset($this->layout) && ($this->layout == "table"))
                 {
                     echo "<table border=\"0\" class=\"table table-responsive\">";
@@ -831,13 +882,13 @@ class events
                             echo "".$this->event['description']."</td>";
                         echo "</tr>";
                     echo "</table>";
-                    exit;
+                    $i++;
                 }
 
                 if (isset($this->layout) && ($this->layout == "left"))
                 {
                     // jumbotron output
-                    echo "<div class=\"jumbotron\" style=\"background-color:#".$this->bgColor."; color:#".$this->textColor.";\">";
+                    echo "<div class=\"jumbotron".$animate."\" style=\"background-color:#".$this->bgColor."; color:#".$this->textColor.";\">";
                     echo "<div class=\"row\">";
                     echo "<div class=\"col-md-4 text-center align-middle\">";
                     echo "".$coverImage."";
@@ -845,92 +896,97 @@ class events
                     echo "<div class=\"col-md-8\">";
                     echo "".$fontTitleStart."".$canceled."".$delStart."".$this->event['name']."".$fontTitleEnd."";
                     echo "".$fontDateStart."".$delStart."".$this->prettyDate." Uhr ".$fontDatewordStart."(".$this->dateString.")".$fontDatewordEnd."".$delEnd."".$fontDateEnd."<br>";
-                    echo "".$delStart."".$fontLocationStart."".$this->event['place']['name']."".$fontLocationEnd."<br>".$fontAddressStart."(".$this->event['place']['location']['street'] . ", " . $this->event['place']['location']['zip'] . " " . $this->event['place']['location']['city'] . ", " . $this->event['place']['location']['country'] . ")".$fontAddressEnd."".$delEnd."<hr>";
+                    echo "".$delStart."".$fontLocationStart."".$this->event['place']['name']."".$fontLocationEnd."<br>".$fontAddressStart."".$this->address."".$fontAddressEnd."".$delEnd."<hr>";
                     echo "".$fontDescriptionStart."".$this->event['description']."".$fontDescriptionEnd."";
                     echo "".$fontPeopleStart."".$this->showPeople."".$fontPeopleEnd."";
                     echo "</div>";
                     echo "</div>";
                     echo "</div><br><br>";
+                    $i++;
                 }
 
                 if (isset($this->layout) && ($this->layout == "top"))
                 {
                     // jumbotron output
-                    echo "<div class=\"jumbotron\" style=\"background-color:#".$this->bgColor."; color:#".$this->textColor.";\">";
+                    echo "<div class=\"jumbotron".$animate."\" style=\"background-color:#".$this->bgColor."; color:#".$this->textColor.";\">";
                     echo "<div class=\"row\">";
                     echo "<div class=\"col-md-12 text-center align-middle\">";
                     echo "".$coverImage."<br>";
                     echo "".$fontTitleStart."".$canceled."".$delStart."".$this->event['name']."".$fontTitleEnd."";
                     echo "".$fontDateStart."".$delStart."".$this->prettyDate." Uhr ".$fontDatewordStart."(".$this->dateString.")".$fontDatewordEnd."".$delEnd."".$fontDateEnd."<br>";
-                    echo "".$delStart."".$fontLocationStart."".$this->event['place']['name']."".$fontLocationEnd."<br>".$fontAddressStart."(".$this->event['place']['location']['street'] . ", " . $this->event['place']['location']['zip'] . " " . $this->event['place']['location']['city'] . ", " . $this->event['place']['location']['country'] . ")".$fontAddressEnd."".$delEnd."<hr>";
+                    echo "".$delStart."".$fontLocationStart."".$this->event['place']['name']."".$fontLocationEnd."<br>".$fontAddressStart."".$this->address."".$fontAddressEnd."".$delEnd."<hr>";
                     echo "".$fontDescriptionStart."".$this->event['description']."".$fontDescriptionEnd."";
                     echo "".$fontPeopleStart."".$this->showPeople."".$fontPeopleEnd."";
                     echo "</div>";
                     echo "</div>";
                     echo "</div><br><br>";
+                    $i++;
                 }
 
 
                 if (isset($this->layout) && ($this->layout == "middle"))
                 {
                     // jumbotron output
-                    echo "<div class=\"jumbotron\" style=\"background-color:#".$this->bgColor."; color:#".$this->textColor.";\">";
+                    echo "<div class=\"".$animate."\" style=\"background-color:#".$this->bgColor."; color:#".$this->textColor.";\">";
                     echo "<div class=\"row\">";
                     echo "<div class=\"col-md-12 text-center align-middle\">";
                     echo "".$fontTitleStart."".$canceled."".$delStart."".$this->event['name']."".$fontTitleEnd."";
                     echo "".$coverImage."<br>";
                     echo "".$fontDateStart."".$delStart."".$this->prettyDate." Uhr ".$fontDatewordStart."(".$this->dateString.")".$fontDatewordEnd."".$delEnd."".$fontDateEnd."<br>";
-                    echo "".$delStart."".$fontLocationStart."".$this->event['place']['name']."".$fontLocationEnd."<br>".$fontAddressStart."(".$this->event['place']['location']['street'] . ", " . $this->event['place']['location']['zip'] . " " . $this->event['place']['location']['city'] . ", " . $this->event['place']['location']['country'] . ")".$fontAddressEnd."".$delEnd."<hr>";
+                    echo "".$delStart."".$fontLocationStart."".$this->event['place']['name']."".$fontLocationEnd."<br>".$fontAddressStart."".$this->address."".$fontAddressEnd."".$delEnd."<hr>";
                     echo "".$fontDescriptionStart."".$this->event['description']."".$fontDescriptionEnd."";
                     echo "".$fontPeopleStart."".$this->showPeople."".$fontPeopleEnd."<br>";
                     echo "</div>";
                     echo "</div>";
                     echo "</div><br><br>";
+                    $i++;
                 }
 
                 if (isset($this->layout) && ($this->layout == "middle2"))
                 {
                     // jumbotron output
-                    echo "<div class=\"jumbotron\" style=\"background-color:#".$this->bgColor."; color:#".$this->textColor.";\">";
+                    echo "<div class=\"jumbotron".$animate."\" style=\"background-color:#".$this->bgColor."; color:#".$this->textColor.";\">";
                     echo "<div class=\"row\">";
                     echo "<div class=\"col-md-12 text-center align-middle\">";
                     echo "".$fontTitleStart."".$canceled."".$delStart."".$this->event['name']."".$fontTitleEnd."";
                     echo "".$fontDateStart."".$delStart."".$this->prettyDate." Uhr ".$fontDatewordStart."(".$this->dateString.")".$fontDatewordEnd."".$delEnd."".$fontDateEnd."";
                     echo "".$coverImage."<br><br>";
-                    echo "".$delStart."".$fontLocationStart."".$this->event['place']['name']."".$fontLocationEnd."<br>".$fontAddressStart."(".$this->event['place']['location']['street'] . ", " . $this->event['place']['location']['zip'] . " " . $this->event['place']['location']['city'] . ", " . $this->event['place']['location']['country'] . ")".$fontAddressEnd."".$delEnd."<hr>";
+                    echo "".$delStart."".$fontLocationStart."".$this->event['place']['name']."".$fontLocationEnd."<br>".$fontAddressStart."".$this->address."".$fontAddressEnd."".$delEnd."<hr>";
                     echo "".$fontDescriptionStart."".$this->event['description']."".$fontDescriptionEnd."";
                     echo "".$fontPeopleStart."".$this->showPeople."".$fontPeopleEnd."<br>";
                     echo "</div>";
                     echo "</div>";
                     echo "</div><br><br>";
+                    $i++;
                 }
 
                 if (isset($this->layout) && ($this->layout == "middle3"))
                 {
                     // jumbotron output
-                    echo "<div class=\"jumbotron\" style=\"background-color:#".$this->bgColor."; color:#".$this->textColor.";\">";
+                    echo "<div class=\"jumbotron".$animate."\" style=\"background-color:#".$this->bgColor."; color:#".$this->textColor.";\">";
                     echo "<div class=\"row\">";
                     echo "<div class=\"col-md-12 text-center align-middle\">";
                     echo "".$fontTitleStart."".$canceled."".$delStart."".$this->event['name']."".$fontTitleEnd."";
                     echo "".$fontDateStart."".$delStart."".$this->prettyDate." Uhr ".$fontDatewordStart."(".$this->dateString.")".$fontDatewordEnd."".$delEnd."".$fontDateEnd."";
-                    echo "".$delStart."".$fontLocationStart."".$this->event['place']['name']."".$fontLocationEnd."<br>".$fontAddressStart."(".$this->event['place']['location']['street'] . ", " . $this->event['place']['location']['zip'] . " " . $this->event['place']['location']['city'] . ", " . $this->event['place']['location']['country'] . ")".$fontAddressEnd."".$delEnd."";
+                    echo "".$delStart."".$fontLocationStart."".$this->event['place']['name']."".$fontLocationEnd."<br>".$fontAddressStart."".$this->address."".$fontAddressEnd."".$delEnd."";
                     echo "<br>".$coverImage."<br><hr>";
                     echo "".$fontDescriptionStart."".$this->event['description']."".$fontDescriptionEnd."";
                     echo "".$fontPeopleStart."".$this->showPeople."".$fontPeopleEnd."<br>";
                     echo "</div>";
                     echo "</div>";
                     echo "</div><br><br>";
+                    $i++;
                 }
 
                 if (isset($this->layout) && ($this->layout == "right"))
                 {
                     // jumbotron output
-                    echo "<div class=\"jumbotron\" style=\"background-color:#".$this->bgColor."; color:#".$this->textColor.";\">";
+                    echo "<div class=\"jumbotron".$animate."\" style=\"background-color:#".$this->bgColor."; color:#".$this->textColor.";\">";
                     echo "<div class=\"row\">";
                     echo "<div class=\"col-md-8\">";
                     echo "".$fontTitleStart."".$canceled."".$delStart."".$this->event['name']."".$fontTitleEnd."";
                     echo "".$fontDateStart."".$delStart."".$this->prettyDate." Uhr ".$fontDatewordStart."(".$this->dateString.")".$fontDatewordEnd."".$delEnd."".$fontDateEnd."<br>";
-                    echo "".$delStart."".$fontLocationStart."".$this->event['place']['name']."".$fontLocationEnd."<br>".$fontAddressStart."(".$this->event['place']['location']['street'] . ", " . $this->event['place']['location']['zip'] . " " . $this->event['place']['location']['city'] . ", " . $this->event['place']['location']['country'] . ")".$fontAddressEnd."".$delEnd."<hr>";
+                    echo "".$delStart."".$fontLocationStart."".$this->event['place']['name']."".$fontLocationEnd."<br>".$fontAddressStart."".$this->address."".$fontAddressEnd."".$delEnd."<hr>";
                     echo "".$fontDescriptionStart."".$this->event['description']."".$fontDescriptionEnd."";
                     echo "".$fontPeopleStart."".$this->showPeople."".$fontPeopleEnd."";
                     echo "</div>";
@@ -939,23 +995,25 @@ class events
                     echo "<br></div>";
                     echo "</div>";
                     echo "</div><br><br>";
+                    $i++;
                 }
 
                 if (isset($this->layout) && ($this->layout == "bottom"))
                 {
                     // jumbotron output
-                    echo "<div class=\"jumbotron\" style=\"background-color:#".$this->bgColor."; color:#".$this->textColor.";\">";
+                    echo "<div class=\"jumbotron".$animate."\" style=\"background-color:#".$this->bgColor."; color:#".$this->textColor.";\">";
                     echo "<div class=\"row\">";
                     echo "<div class=\"col-md-12 text-center align-middle\">";
                     echo "".$fontTitleStart."".$canceled."".$delStart."".$this->event['name']."".$fontTitleEnd."";
                     echo "".$fontDateStart."".$delStart."".$this->prettyDate." Uhr ".$fontDatewordStart."(".$this->dateString.")".$fontDatewordEnd."".$delEnd."".$fontDateEnd."<br>";
-                    echo "".$delStart."".$fontLocationStart."".$this->event['place']['name']."".$fontLocationEnd."<br>".$fontAddressStart."(".$this->event['place']['location']['street'] . ", " . $this->event['place']['location']['zip'] . " " . $this->event['place']['location']['city'] . ", " . $this->event['place']['location']['country'] . ")".$fontAddressEnd."".$delEnd."<hr>";
+                    echo "".$delStart."".$fontLocationStart."".$this->event['place']['name']."".$fontLocationEnd."<br>".$fontAddressStart."".$this->address."".$fontAddressEnd."".$delEnd."<hr>";
                     echo "".$fontDescriptionStart."".$this->event['description']."".$fontDescriptionEnd."";
                     echo "".$fontPeopleStart."".$this->showPeople."".$fontPeopleEnd."<br>";
                     echo "".$coverImage."<br>";
                     echo "</div>";
                     echo "</div>";
                     echo "</div><br><br>";
+                    $i++;
                 }
             }
         }

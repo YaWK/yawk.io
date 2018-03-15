@@ -213,6 +213,6 @@ else
 
 echo $fbEvents->headline;
 $fbEvents->display();
-exit;
+
 
 ?>
