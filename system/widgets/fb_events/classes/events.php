@@ -310,11 +310,8 @@ class events
                 {   // tomorrow
                     $this->dateString = "<span class=\"".$this->fontEventDatewordCss."\">morgen</span>";
                 }
-                else if ($until->days === 0)
-                {   // maybe tomorrow
-                    $this->dateString = "<span class=\"".$this->fontEventDatewordCss."\">morgen</span>";
-                }   // 0 days remaining, eventDate and currentDate are the same -
-                else if ($until->days === 0 && ($eventDateSimple === $currentDateSimple))
+                // 0 days remaining, eventDate and currentDate are the same -
+                else if ($eventDateSimple == $currentDateSimple)
                 {   // it must be today
                     $this->dateString = "<span class=\"".$this->fontEventDatewordCss."\">HEUTE !</span>";
                 }
@@ -805,11 +802,11 @@ class events
                         // check if custom cover class is set
                         if (isset($this->coverClass) && (!empty($this->coverClass)))
                         {   // yep, display it with custom class
-                            $coverImage = "<br><img width=\"300\" src=\"" . $this->event['cover']['source'] . "\" title=\"" . $this->event['name'] . "\" class=\"".$this->coverClass."\">";
+                            $coverImage = "<br><img src=\"" . $this->event['cover']['source'] . "\" title=\"" . $this->event['name'] . "\" class=\"".$this->coverClass."\">";
                         }
                         else
                             {   // default: img-thumbnail responsive
-                                $coverImage = "<br><img width=\"300\" src=\"" . $this->event['cover']['source'] . "\" title=\"" . $this->event['name'] . "\" class=\"img-thumbnail responsive\">";
+                                $coverImage = "<br><img src=\"" . $this->event['cover']['source'] . "\" title=\"" . $this->event['name'] . "\" class=\"img-thumbnail responsive\">";
                             }
                     }
                     else
