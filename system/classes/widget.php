@@ -330,7 +330,7 @@ namespace YAWK {
                                 echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;$setting[subtext]</h3>";
                             }
                             echo "<label for=\"$setting[property]\">$setting[label] $setting[description]</label>
-                                  <input type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
+                                  <input type=\"text\" class=\"form-control $setting[fieldType]\" id=\"$setting[property]\" name=\"$setting[property]\" 
 										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\">";
                         }
                     }

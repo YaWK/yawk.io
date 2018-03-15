@@ -31,6 +31,7 @@
         });
     });
 </script>
+<script type="text/javascript" src="../system/engines/jquery/jscolor/jscolor.js"></script>
 <?php
 /* page content start here */
 // check if widget obj is set
