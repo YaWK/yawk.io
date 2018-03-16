@@ -159,7 +159,7 @@ if (isset($_POST['save']) && (isset($_GET['action']) && (isset($_GET['id']))))
         background-repeat:".$tplSettings['body-bg-repeat'].";
         background-position:".$tplSettings['body-bg-position'].";
         background-attachment:".$tplSettings['body-bg-attachment'].";
-        background-size: ".$tplSettings['body-bg-attachment'].";
+        background-size: ".$tplSettings['body-bg-size'].";
         
         /* BODY BACKGROUND GRADIENT */
         ".$tplSettings['pos-body-bg-gradient-longValue']."
@@ -960,7 +960,7 @@ if (isset($_POST['save']) && (isset($_GET['action']) && (isset($_GET['id']))))
         background-repeat:".$tplSettings['pos-intro-bg-repeat'].";
         background-position:".$tplSettings['pos-intro-bg-position'].";
         background-attachment:".$tplSettings['pos-intro-bg-attachment'].";
-        background-size: ".$tplSettings['pos-intro-bg-attachment'].";
+        background-size: ".$tplSettings['pos-intro-bg-size'].";
         ".$tplSettings['pos-intro-bg-gradient-longValue']."
         ".$tplSettings['pos-intro-customCSS-longValue']."
         background: ".$tplSettings['pos-intro-bgnone'].";
