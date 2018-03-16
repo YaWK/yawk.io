@@ -2606,7 +2606,7 @@ namespace YAWK {
          */
         static function getPositionStatesArray($db, $templateID)
         {
-            $array = '';
+            $array = array();
             $sql = $db->query("SELECT property, value 
                                FROM {template_settings} 
                                WHERE property LIKE 'pos-%-enabled' AND 
@@ -2616,13 +2616,13 @@ namespace YAWK {
                 $prop = $row['property'];
                 $array[$prop] = $row['value'];
             }
-            if (is_array($array))
+            if (is_array($array) && (!empty($array)))
             {
                 return $array;
             }
             else
                 {
-                    return false;
+                    die("Positions array not set");
                 }
         }
 
