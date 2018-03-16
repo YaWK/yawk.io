@@ -1,4 +1,3 @@
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 CREATE TABLE `cms_assets` (
@@ -74,7 +73,7 @@ CREATE TABLE `cms_blog_comments` (
   `gid` int(11) NOT NULL,
   `ip` varchar(64) NOT NULL,
   `published` int(1) NOT NULL DEFAULT '1',
-  `date_created` datetime DEFAULT CURRENT_TIMESTAMP,
+  `date_created` datetime DEFAULT NULL,
   `name` varchar(64) NOT NULL,
   `email` varchar(255) NOT NULL,
   `comment` text NOT NULL,
@@ -95,8 +94,8 @@ CREATE TABLE `cms_blog_items` (
   `title` varchar(255) NOT NULL,
   `filename` varchar(255) NOT NULL,
   `subtitle` varchar(255) NOT NULL,
-  `date_created` datetime DEFAULT CURRENT_TIMESTAMP,
-  `date_changed` datetime DEFAULT CURRENT_TIMESTAMP,
+  `date_created` datetime DEFAULT NULL,
+  `date_changed` datetime DEFAULT NULL,
   `date_publish` datetime DEFAULT NULL,
   `date_unpublish` datetime DEFAULT NULL,
   `teasertext` text NOT NULL,
@@ -220,7 +219,7 @@ INSERT INTO `cms_gfonts` (`id`, `font`, `description`, `setting`, `activated`) V
 
 CREATE TABLE `cms_logins` (
   `id` int(11) NOT NULL,
-  `datetime` datetime DEFAULT CURRENT_TIMESTAMP,
+  `datetime` datetime DEFAULT NULL,
   `location` varchar(64) NOT NULL,
   `failed` int(11) NOT NULL DEFAULT '0',
   `ip` varchar(255) NOT NULL,
@@ -238,9 +237,9 @@ CREATE TABLE `cms_menu` (
   `menuID` int(11) DEFAULT '1',
   `parentID` int(11) DEFAULT '0',
   `published` int(1) DEFAULT '1',
-  `date_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `date_changed` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `date_publish` datetime DEFAULT CURRENT_TIMESTAMP,
+  `date_created` datetime DEFAULT NULL,
+  `date_changed` datetime DEFAULT NULL,
+  `date_publish` datetime DEFAULT NULL,
   `date_unpublish` datetime DEFAULT NULL,
   `title` varchar(255) NOT NULL,
   `text` varchar(100) NOT NULL,
@@ -281,7 +280,7 @@ CREATE TABLE `cms_meta_local` (
 
 CREATE TABLE `cms_newsletter` (
   `id` int(11) NOT NULL,
-  `date_created` datetime DEFAULT CURRENT_TIMESTAMP,
+  `date_created` datetime DEFAULT NULL,
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `active` int(1) NOT NULL DEFAULT '1'
@@ -289,7 +288,7 @@ CREATE TABLE `cms_newsletter` (
 
 CREATE TABLE `cms_notifications` (
   `log_id` int(11) NOT NULL,
-  `log_date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `log_date` datetime DEFAULT NULL,
   `log_type` int(11) NOT NULL DEFAULT '0',
   `msg_id` int(11) NOT NULL DEFAULT '0',
   `fromUID` int(11) NOT NULL DEFAULT '0',
@@ -309,7 +308,7 @@ CREATE TABLE `cms_pages` (
   `id` int(11) NOT NULL,
   `published` int(1) DEFAULT '0',
   `gid` int(11) DEFAULT '1',
-  `date_created` datetime DEFAULT CURRENT_TIMESTAMP,
+  `date_created` datetime DEFAULT NULL,
   `date_changed` datetime DEFAULT NULL,
   `date_publish` datetime DEFAULT NULL,
   `date_unpublish` datetime DEFAULT NULL,
@@ -348,7 +347,7 @@ CREATE TABLE `cms_plugin_booking` (
   `id` int(11) NOT NULL,
   `uid` int(11) NOT NULL DEFAULT '0',
   `gid` int(11) NOT NULL DEFAULT '1',
-  `date_created` datetime DEFAULT CURRENT_TIMESTAMP,
+  `date_created` datetime DEFAULT NULL,
   `date_wish` datetime DEFAULT NULL,
   `date_alternative` datetime DEFAULT NULL,
   `confirmed` int(1) NOT NULL DEFAULT '0',
@@ -624,14 +623,14 @@ CREATE TABLE `cms_stats` (
   `osVersion` varchar(64) NOT NULL,
   `browser` varchar(255) NOT NULL,
   `browserVersion` varchar(64) NOT NULL,
-  `date_created` datetime DEFAULT CURRENT_TIMESTAMP,
+  `date_created` datetime DEFAULT NULL,
   `referer` varchar(255) NOT NULL,
   `page` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `cms_syslog` (
   `log_id` int(11) NOT NULL,
-  `log_date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `log_date` datetime DEFAULT NULL,
   `log_type` int(11) NOT NULL DEFAULT '0',
   `message` varchar(255) NOT NULL,
   `fromUID` int(11) NOT NULL DEFAULT '0',
@@ -1773,7 +1772,7 @@ CREATE TABLE `cms_users` (
   `terms` int(1) NOT NULL DEFAULT '1',
   `username` varchar(48) DEFAULT NULL,
   `password` varchar(48) DEFAULT NULL,
-  `date_created` datetime DEFAULT CURRENT_TIMESTAMP,
+  `date_created` datetime DEFAULT NULL,
   `date_changed` datetime DEFAULT NULL,
   `date_expired` datetime DEFAULT NULL,
   `date_lastlogin` datetime DEFAULT NULL,
@@ -1828,7 +1827,7 @@ CREATE TABLE `cms_widgets` (
   `position` varchar(128) NOT NULL,
   `marginTop` int(11) NOT NULL,
   `marginBottom` int(11) NOT NULL,
-  `date_publish` datetime DEFAULT CURRENT_TIMESTAMP,
+  `date_publish` datetime DEFAULT NULL,
   `date_unpublish` datetime DEFAULT NULL,
   `widgetTitle` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -2338,7 +2337,7 @@ ALTER TABLE `cms_user_groups`
 ALTER TABLE `cms_widgets`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_defaults`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=196;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=217;
 ALTER TABLE `cms_widget_settings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_types`
