@@ -291,24 +291,67 @@ class events
 
                 // split month into smaller bits
                 else if ($until->days === 14)
-                {   // in exactly two weeks
-                    $this->dateString = "in zwei Wochen";
+                {
+                    if ($this->eventDate > $now)
+                    {
+                        // in exactly two weeks
+                        $this->dateString = "in zwei Wochen";
+                    }
+                    else
+                        {
+                            // two weeks ago
+                            $this->dateString = "vor zwei Wochen";
+                        }
                 }
                 else if ($until->days >= 8 && ($until->days <= 13))
-                {   // nearly two weeks
-                    $this->dateString = "in knapp zwei Wochen";
+                {   if ($this->eventDate > $now)
+                    {
+                        // nearly two weeks
+                        $this->dateString = "in knapp zwei Wochen";
+                    }
+                    else
+                        {
+                            // nearly two weeks ago
+                            $this->dateString = "vor knapp zwei Wochen";
+                        }
                 }
                 else if ($until->days === 7)
-                {   // in exactly one week
-                    $this->dateString = "in einer Woche";
+                {   if ($this->eventDate > $now)
+                    {
+                        // in exactly one week
+                        $this->dateString = "in einer Woche";
+                    }
+                    else
+                        {
+                            // exactly one week ago
+                            $this->dateString = "vor einer Woche";
+                        }
                 }
                 else if ($until->days === 2)
-                {   // in two days
-                    $this->dateString = "&uuml;bermorgen";
+                {
+                    if ($this->eventDate > $now)
+                    {
+                        // in two days
+                        $this->dateString = "&uuml;bermorgen";
+                    }
+                    else
+                        {
+                            // two days ago
+                            $this->dateString = "vorgestern";
+                        }
                 }
                 else if ($until->days === 1)
-                {   // tomorrow
-                    $this->dateString = "<span class=\"".$this->fontEventDatewordCss."\">morgen</span>";
+                {
+                    if ($this->eventDate > $now)
+                    {
+                        // tomorrow
+                        $this->dateString = "<span class=\"".$this->fontEventDatewordCss."\">morgen</span>";
+                    }
+                    else
+                        {
+                            // yesterday
+                            $this->dateString = "<span class=\"".$this->fontEventDatewordCss."\">gestern</span>";
+                        }
                 }
                 // 0 days remaining, eventDate and currentDate are the same -
                 else if ($eventDateSimple == $currentDateSimple)
@@ -316,8 +359,39 @@ class events
                     $this->dateString = "<span class=\"".$this->fontEventDatewordCss."\">HEUTE !</span>";
                 }
                 else
-                {   // any other amount of days
-                    $this->dateString = "$prepend $until->d Tagen";
+                {   if ($this->eventDate > $now)
+                    {
+                        // any other amount of days
+                        $this->dateString = "$prepend $until->d Tagen";
+                    }
+                    else
+                        {
+                            // must be yesterday
+                            if ($until->d === 0 && ($until->m === 0))
+                            {
+                                $this->dateString = "gestern";
+                            }
+                            else
+                                {   // x days ago
+                                    // less than two months
+                                    if ($until->m < 2)
+                                    {   // singular
+                                        $duration = "Monat";
+                                    }
+                                    else
+                                    {   // plural
+                                        $duration = "Monaten";
+                                    }
+                                    if ($until->m >= 1)
+                                    {
+                                        $this->dateString = "$prepend $until->m $duration";
+                                    }
+                                    else
+                                        {
+                                            $this->dateString = "$prepend $until->d Tagen";
+                                        }
+                                }
+                        }
                 }
 
                 // check if event is canceled
