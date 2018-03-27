@@ -955,7 +955,7 @@ class events
                 // check if hr class is set
                 if (isset($this->hrClass) && (!empty($this->hrClass)))
                 {
-                    $hrClass = " class=\"".$this->hrClass."\"";
+                    $hrClass = " class=\"".$this->hrClass."".$animate."\"";
                 }
                 else
                     {
@@ -964,19 +964,55 @@ class events
 
                 if (isset($this->canceledOn) && ($this->canceledOn == true))
                 {
-                // layouts start
-                if (isset($this->layout) && ($this->layout == "table"))
+
+                /* LAYOUTS */
+                // All Events will be displayed within one of the following layouts:
+
+                // MINIMAL
+                if (isset($this->layout) && ($this->layout == "minimal"))
                 {
-                    echo "<table border=\"0\" class=\"table table-responsive\">";
+                    echo "<div class=\"container-fluid\">";
+                    echo "<div class=\"row".$animate."\">";
+                    echo "<div class=\"col-md-12\">";
+                    echo "".$fontTitleStart."".$canceled."".$delStart."".$this->event['name']."".$fontTitleEnd."";
+                    echo "".$fontDateStart."".$delStart."".$this->prettyDate." Uhr ".$fontDatewordStart."(".$this->dateString.")".$fontDatewordEnd."".$delEnd."".$fontDateEnd."<br>";
+                    echo "".$delStart."".$fontLocationStart."".$this->event['place']['name']."".$fontLocationEnd."<br>".$fontAddressStart."".$this->address."".$fontAddressEnd."".$delEnd."<br><br>";
+                    echo "".$fontDescriptionStart."".$this->event['description']."".$fontDescriptionEnd."";
+                    echo "".$fontPeopleStart."".$this->showPeople."".$fontPeopleEnd."";
+                    echo "</div></div></div><br><br><br><br><br>";
+                    $i++;
+                }
+
+                // TABLE
+                // draw events within a classical table view
+                if (isset($this->layout) && ($this->layout == "table"))
+                {   // if cover should be displayed
+                    if (isset($this->showCover) && ($this->showCover === "true"))
+                    {   // if cover source is found (if event got a picture)
+                        if (isset($this->event['cover']['source']))
+                        {   // display facebook event picture
+                            $coverImage = " style=\"background-image:url(".$this->event['cover']['source'].");background-repeat:no-repeat;background-size:250px; width: 250px; height: 180px;\"";
+                        }
+                        else
+                            {   // no source found, leave empty
+                                $coverImage = '';
+                            }
+                    }
+                    else
+                        {   // cover image set to false - do not show cover image
+                            $coverImage = '';
+                        }
+                    echo "<div class=\"container-fluid\" style=\"background-color:#".$this->bgColor."; color:#".$this->textColor.";\">";
+                    echo "<table border=\"1\" cellpadding=\"1\" cellspacing=\"1\" class=\"table table-responsive".$animate."\">";
                         echo "<tr>";
-                            echo "<td>";
-                            echo "" . $delStart. "<small>" . $this->prettyDate . " Uhr<br><small>(" . $this->dateString . ")</small></small>" . $delEnd . "";
+                            echo "<td width=\"14%\"".$coverImage.">";
                             echo "</td>";
                             echo "<td>";
-                            echo "<b>" . $this->event['name'] . "</b><br>" . $this->event['place']['name'] . "<br><small>(" . $this->event['place']['location']['street'] . ", " . $this->event['place']['location']['zip'] . " " . $this->event['place']['location']['city'] . ", " . $this->event['place']['location']['country'] . ")</small><hr".$hrClass.">";
+                            echo "".$fontTitleStart."".$canceled."".$delStart."" . $this->event['name'] . "</b><br>" . $this->event['place']['name'] . "<br><small>" . $this->prettyDate . " Uhr <small>(" . $this->dateString . ")</small></small><br><small>(" . $this->event['place']['location']['street'] . ", " . $this->event['place']['location']['zip'] . " " . $this->event['place']['location']['city'] . ", " . $this->event['place']['location']['country'] . ")</small>".$fontTitleEnd."" . $delEnd . "<hr".$hrClass.">";
                             echo "".$this->event['description']."</td>";
                         echo "</tr>";
                     echo "</table>";
+                    echo "</div>";
                     $i++;
                 }
 
