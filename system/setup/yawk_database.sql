@@ -2060,7 +2060,9 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('fbEventsBgColor', '080808', 39, 1, 22, 'LABEL_FB_EVENTS_BGCOLOR', '', '', '', 'DESC_FB_EVENTS_BGCOLOR', 'form-control', 'color', 'PH_FB_EVENTS_BGCOLOR', '', 215),
 ('fbEventsTextColor', 'CCCCCC', 39, 1, 23, 'LABEL_FB_EVENTS_COLOR', '', '', '', 'DESC_FB_EVENTS_COLOR', 'form-control', 'color', 'PH_FB_EVENTS_COLOR', '', 216),
 ('fbEventsCanceledOn', 'true', 39, 1, 22, 'LABEL_FB_EVENTS_CANCELED_ON', '', '', '', 'DESC_FB_EVENTS_CANCELED_ON', 'form-control', 'select', '', 'true,true:false,false', 217),
-('fbEventsHrClass', '', 39, 1, 27, 'LABEL_FB_EVENTS_HR_CLASS', '', '', '', 'DESC_FB_EVENTS_CSS_CLASS', 'form-control', '', '', '', 218);
+('fbEventsHrClass', '', 39, 1, 27, 'LABEL_FB_EVENTS_HR_CLASS', '', '', '', 'DESC_FB_EVENTS_CSS_CLASS', 'form-control', '', '', '', 218),
+('fbEventsFbLink', 'true', 39, 1, 29, 'LABEL_FB_EVENTS_FBLINK', '', '', '', 'DESC_FB_EVENTS_FBLINK', 'form-control', 'select', '', 'true,true:false,false', 219),
+('fbEventsGoogleMap', 'true', 39, 1, 30, 'LABEL_FB_EVENTS_MAP', '', '', '', 'DESC_FB_EVENTS_MAP', 'form-control', 'select', '', 'true,true:false,false', 220);
 
 CREATE TABLE `cms_widget_settings` (
   `id` int(11) NOT NULL,

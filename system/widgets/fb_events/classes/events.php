@@ -113,10 +113,14 @@ class events
     public $textColor = 'CCCCCC';
     /** @var string address string */
     public $address = '';
-    /** @var string canceled events strike-trough? 0|1 */
+    /** @var string canceled events strike-trough? true|false */
     public $canceledOn = 'true';
     /** @var string css class of seperator line  */
     public $hrClass = '';
+    /** @var string facebook link? true|false */
+    public $fbLink = 'true';
+    /** @var string display google map? true|false */
+    public $googleMap = 'true';
 
     public function __construct()
     {
@@ -209,6 +213,7 @@ class events
             echo "</pre>";
             exit;
             */
+
             if (isset($obj) && (is_array($obj) && (is_array($obj['data']) && (empty($obj['data'])))))
             {
                 $now = new \DateTime();
@@ -506,8 +511,19 @@ class events
                 {
                     $fontTitleCss = '';
                 }
-                $fontTitleStart = "<".$this->fontEventNameH."".$fontTitleCss.">".$smallTagStart."";
-                $fontTitleEnd = "".$smallTagEnd."</".$this->fontEventNameH.">";
+                // check if facebook link is enabled
+                if (isset($this->fbLink) && ($this->fbLink === "true"))
+                {   // facebook link
+                    $fbLinkStart = "<a href=\"https://www.facebook.com/events/".$this->event['id']."\" title=\"auf Facebook &ouml;ffnen: ".$this->event['name']."\" target=\"_blank\">";
+                    $fbLinkEnd = "</a>";
+                }
+                else
+                    {   // facebook link disabled
+                        $fbLinkStart = '';
+                        $fbLinkEnd = '';
+                    }
+                $fontTitleStart = "".$fbLinkStart."<".$this->fontEventNameH."".$fontTitleCss.">".$smallTagStart."";
+                $fontTitleEnd = "".$smallTagEnd."</".$this->fontEventNameH.">".$fbLinkEnd."";
             }
             else
             {
@@ -889,11 +905,24 @@ class events
                         // check if custom cover class is set
                         if (isset($this->coverClass) && (!empty($this->coverClass)))
                         {   // yep, display it with custom class
-                            $coverImage = "<br><img src=\"" . $this->event['cover']['source'] . "\" title=\"" . $this->event['name'] . "\" class=\"".$this->coverClass."\">";
+                            // check if facebook link is enabled
+
+                            // check if facebook link is enabled
+                            if (isset($this->fbLink) && ($this->fbLink === "true"))
+                            {   // facebook link
+                                $fbLinkStart = "<a href=\"https://www.facebook.com/events/".$this->event['id']."\" title=\"auf Facebook &ouml;ffnen: ".$this->event['name']."\" target=\"_blank\">";
+                                $fbLinkEnd = "</a>";
+                            }
+                            else
+                            {   // facebook link disabled
+                                $fbLinkStart = '';
+                                $fbLinkEnd = '';
+                            }
+                            $coverImage = "<br>".$fbLinkStart."<img src=\"" . $this->event['cover']['source'] . "\" title=\"" . $this->event['name'] . "\" class=\"img-center ".$this->coverClass."\">".$fbLinkEnd."";
                         }
                         else
                             {   // default: img-thumbnail responsive
-                                $coverImage = "<br><img src=\"" . $this->event['cover']['source'] . "\" title=\"" . $this->event['name'] . "\" class=\"img-responsive\">";
+                                $coverImage = "<br><img src=\"" . $this->event['cover']['source'] . "\" title=\"" . $this->event['name'] . "\" class=\"img-thumbnail responsive\">";
                             }
                     }
                     else
@@ -952,6 +981,16 @@ class events
                     $this->address = '';
                 }
 
+                // check google map setting
+                //$latitude = $this->event['place']['location']['latitute'];
+                //$longitude = $this->event['place']['location']['longitute'];
+                if (isset($this->googleMap) && ($this->googleMap == "true"))
+                {
+                    $googleMapMarkup = "<a class=\"hvr-grow\" target=\"_blank\" title=\"auf Google Maps ansehen\" href=\"http://maps.google.de/maps/dir/".$this->event['place']['location']['latitude'].",".$this->event['place']['location']['longitude']."\"><i class=\"fa fa-map-marker\"></i></a>";
+                    $address = $this->address;
+                    $this->address = "".$address."&nbsp;&nbsp;".$googleMapMarkup."";
+                }
+
                 // check if hr class is set
                 if (isset($this->hrClass) && (!empty($this->hrClass)))
                 {
@@ -976,8 +1015,7 @@ class events
                     echo "<div class=\"col-md-12\">";
                     echo "".$fontTitleStart."".$canceled."".$delStart."".$this->event['name']."".$fontTitleEnd."";
                     echo "".$fontDateStart."".$delStart."".$this->prettyDate." Uhr ".$fontDatewordStart."(".$this->dateString.")".$fontDatewordEnd."".$delEnd."".$fontDateEnd."<br>";
-                    echo "".$delStart."".$fontLocationStart."".$this->event['place']['name']."".$fontLocationEnd."<br>".$fontAddressStart."".$this->address."".$fontAddressEnd."".$delEnd."<br><br>";
-                    echo "".$fontDescriptionStart."".$this->event['description']."".$fontDescriptionEnd."";
+                    echo "".$delStart."".$fontLocationStart."".$this->event['place']['name']."".$fontLocationEnd."<br>".$fontAddressStart."".$this->address."".$fontAddressEnd."".$delEnd."";
                     echo "".$fontPeopleStart."".$this->showPeople."".$fontPeopleEnd."";
                     echo "</div></div></div><br><br><br><br><br>";
                     $i++;

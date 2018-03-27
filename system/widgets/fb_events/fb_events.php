@@ -195,6 +195,16 @@ if (isset($_GET['widgetID']))
                 case 'fbEventsHrClass';
                     $fbEvents->hrClass = $w_value;
                     break;
+
+                /* facebook link */
+                case 'fbEventsFbLink';
+                    $fbEvents->fbLink = $w_value;
+                    break;
+
+                /* google map link */
+                case 'fbEventsGoogleMap';
+                    $fbEvents->googleMap = $w_value;
+                    break;
             }
         } /* END LOAD PROPERTIES */
     } // end while fetch row (fetch widget settings)
