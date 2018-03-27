@@ -185,6 +185,11 @@ if (isset($_GET['widgetID']))
                 case 'fbEventsTextColor';
                     $fbEvents->textColor = $w_value;
                     break;
+
+                /* canceled events */
+                case 'fbEventsCanceledOn';
+                    $fbEvents->canceledOn = $w_value;
+                    break;
             }
         } /* END LOAD PROPERTIES */
     } // end while fetch row (fetch widget settings)

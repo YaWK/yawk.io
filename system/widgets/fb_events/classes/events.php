@@ -113,6 +113,10 @@ class events
     public $textColor = 'CCCCCC';
     /** @var string address string */
     public $address = '';
+    /** @var string canceled events strike-trough? 0|1 */
+    public $canceledOn = 'true';
+    /** @var string <hr> line position  */
+    public $hr = 'true';
 
     public function __construct()
     {
@@ -395,11 +399,20 @@ class events
                 }
 
                 // check if event is canceled
-                if (isset($this->event['is_canceled']) && $this->event['is_canceled'] === true)
-                {   // set markup for canceled events
-                    $canceled = "<span class=\"".$this->fontEventCanceledCss."\">ACHTUNG! ABGESAGT!</span><br>";
-                    $delStart = "<del>";
-                    $delEnd = "</del>";
+                if (isset($this->canceledOn) && ($this->canceledOn == true))
+                {
+                    if (isset($this->event['is_canceled']) && $this->event['is_canceled'] === true)
+                    {   // set markup for canceled events
+                        $canceled = "<span class=\"".$this->fontEventCanceledCss."\">ACHTUNG! ABGESAGT!</span><br>";
+                        $delStart = "<del>";
+                        $delEnd = "</del>";
+                    }
+                    else
+                    {   // event is not canceled - no markup needed
+                        $canceled = '';
+                        $delStart = '';
+                        $delEnd = '';
+                    }
                 }
                 else
                 {   // event is not canceled - no markup needed
@@ -940,6 +953,8 @@ class events
                     $this->address = '';
                 }
 
+                if (isset($this->canceledOn) && ($this->canceledOn == true))
+                {
                 // layouts start
                 if (isset($this->layout) && ($this->layout == "table"))
                 {
@@ -1086,6 +1101,7 @@ class events
                     echo "</div><br><br>";
                     $i++;
                 }
+            }
             }
         }
         else
