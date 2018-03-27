@@ -115,8 +115,8 @@ class events
     public $address = '';
     /** @var string canceled events strike-trough? 0|1 */
     public $canceledOn = 'true';
-    /** @var string <hr> line position  */
-    public $hr = 'true';
+    /** @var string css class of seperator line  */
+    public $hrClass = '';
 
     public function __construct()
     {
@@ -893,7 +893,7 @@ class events
                         }
                         else
                             {   // default: img-thumbnail responsive
-                                $coverImage = "<br><img src=\"" . $this->event['cover']['source'] . "\" title=\"" . $this->event['name'] . "\" class=\"img-thumbnail responsive\">";
+                                $coverImage = "<br><img src=\"" . $this->event['cover']['source'] . "\" title=\"" . $this->event['name'] . "\" class=\"img-responsive\">";
                             }
                     }
                     else
@@ -906,7 +906,6 @@ class events
                         $coverImage = '';
                     }
 
-                /* TODO ANIMATE  - */
                 if ($i < 1)
                 {
                     $animate = " animated fadeIn";
@@ -953,6 +952,16 @@ class events
                     $this->address = '';
                 }
 
+                // check if hr class is set
+                if (isset($this->hrClass) && (!empty($this->hrClass)))
+                {
+                    $hrClass = " class=\"".$this->hrClass."\"";
+                }
+                else
+                    {
+                        $hrClass = '';
+                    }
+
                 if (isset($this->canceledOn) && ($this->canceledOn == true))
                 {
                 // layouts start
@@ -964,7 +973,7 @@ class events
                             echo "" . $delStart. "<small>" . $this->prettyDate . " Uhr<br><small>(" . $this->dateString . ")</small></small>" . $delEnd . "";
                             echo "</td>";
                             echo "<td>";
-                            echo "<b>" . $this->event['name'] . "</b><br>" . $this->event['place']['name'] . "<br><small>(" . $this->event['place']['location']['street'] . ", " . $this->event['place']['location']['zip'] . " " . $this->event['place']['location']['city'] . ", " . $this->event['place']['location']['country'] . ")</small><hr>";
+                            echo "<b>" . $this->event['name'] . "</b><br>" . $this->event['place']['name'] . "<br><small>(" . $this->event['place']['location']['street'] . ", " . $this->event['place']['location']['zip'] . " " . $this->event['place']['location']['city'] . ", " . $this->event['place']['location']['country'] . ")</small><hr".$hrClass.">";
                             echo "".$this->event['description']."</td>";
                         echo "</tr>";
                     echo "</table>";
@@ -982,12 +991,12 @@ class events
                     echo "<div class=\"col-md-8\">";
                     echo "".$fontTitleStart."".$canceled."".$delStart."".$this->event['name']."".$fontTitleEnd."";
                     echo "".$fontDateStart."".$delStart."".$this->prettyDate." Uhr ".$fontDatewordStart."(".$this->dateString.")".$fontDatewordEnd."".$delEnd."".$fontDateEnd."<br>";
-                    echo "".$delStart."".$fontLocationStart."".$this->event['place']['name']."".$fontLocationEnd."<br>".$fontAddressStart."".$this->address."".$fontAddressEnd."".$delEnd."<hr>";
+                    echo "".$delStart."".$fontLocationStart."".$this->event['place']['name']."".$fontLocationEnd."<br>".$fontAddressStart."".$this->address."".$fontAddressEnd."".$delEnd."<hr".$hrClass.">";
                     echo "".$fontDescriptionStart."".$this->event['description']."".$fontDescriptionEnd."";
                     echo "".$fontPeopleStart."".$this->showPeople."".$fontPeopleEnd."";
                     echo "</div>";
                     echo "</div>";
-                    echo "</div><br><br>";
+                    echo "</div><br><br><br>";
                     $i++;
                 }
 
@@ -1000,12 +1009,12 @@ class events
                     echo "".$coverImage."<br>";
                     echo "".$fontTitleStart."".$canceled."".$delStart."".$this->event['name']."".$fontTitleEnd."";
                     echo "".$fontDateStart."".$delStart."".$this->prettyDate." Uhr ".$fontDatewordStart."(".$this->dateString.")".$fontDatewordEnd."".$delEnd."".$fontDateEnd."<br>";
-                    echo "".$delStart."".$fontLocationStart."".$this->event['place']['name']."".$fontLocationEnd."<br>".$fontAddressStart."".$this->address."".$fontAddressEnd."".$delEnd."<hr>";
+                    echo "".$delStart."".$fontLocationStart."".$this->event['place']['name']."".$fontLocationEnd."<br>".$fontAddressStart."".$this->address."".$fontAddressEnd."".$delEnd."<hr".$hrClass.">";
                     echo "".$fontDescriptionStart."".$this->event['description']."".$fontDescriptionEnd."";
                     echo "".$fontPeopleStart."".$this->showPeople."".$fontPeopleEnd."";
                     echo "</div>";
                     echo "</div>";
-                    echo "</div><br><br>";
+                    echo "</div><br><br><br>";
                     $i++;
                 }
 
@@ -1013,18 +1022,19 @@ class events
                 if (isset($this->layout) && ($this->layout == "middle"))
                 {
                     // jumbotron output
+                    echo "<div class=\"container-fluid\">";
                     echo "<div class=\"".$animate."\" style=\"background-color:#".$this->bgColor."; color:#".$this->textColor.";\">";
                     echo "<div class=\"row\">";
-                    echo "<div class=\"col-md-12 text-center align-middle\">";
+                    echo "<div class=\"col-md-12 text-center align-middle\"><br>";
                     echo "".$fontTitleStart."".$canceled."".$delStart."".$this->event['name']."".$fontTitleEnd."";
                     echo "".$coverImage."<br>";
                     echo "".$fontDateStart."".$delStart."".$this->prettyDate." Uhr ".$fontDatewordStart."(".$this->dateString.")".$fontDatewordEnd."".$delEnd."".$fontDateEnd."<br>";
-                    echo "".$delStart."".$fontLocationStart."".$this->event['place']['name']."".$fontLocationEnd."<br>".$fontAddressStart."".$this->address."".$fontAddressEnd."".$delEnd."<hr>";
+                    echo "".$delStart."".$fontLocationStart."".$this->event['place']['name']."".$fontLocationEnd."<br>".$fontAddressStart."".$this->address."".$fontAddressEnd."".$delEnd."<hr".$hrClass.">";
                     echo "".$fontDescriptionStart."".$this->event['description']."".$fontDescriptionEnd."";
-                    echo "".$fontPeopleStart."".$this->showPeople."".$fontPeopleEnd."<br>";
+                    echo "".$fontPeopleStart."".$this->showPeople."".$fontPeopleEnd."<br><br><br>";
                     echo "</div>";
                     echo "</div>";
-                    echo "</div><br><br>";
+                    echo "</div><br><br><br>";
                     $i++;
                 }
 
@@ -1037,12 +1047,12 @@ class events
                     echo "".$fontTitleStart."".$canceled."".$delStart."".$this->event['name']."".$fontTitleEnd."";
                     echo "".$fontDateStart."".$delStart."".$this->prettyDate." Uhr ".$fontDatewordStart."(".$this->dateString.")".$fontDatewordEnd."".$delEnd."".$fontDateEnd."";
                     echo "".$coverImage."<br><br>";
-                    echo "".$delStart."".$fontLocationStart."".$this->event['place']['name']."".$fontLocationEnd."<br>".$fontAddressStart."".$this->address."".$fontAddressEnd."".$delEnd."<hr>";
+                    echo "".$delStart."".$fontLocationStart."".$this->event['place']['name']."".$fontLocationEnd."<br>".$fontAddressStart."".$this->address."".$fontAddressEnd."".$delEnd."<hr".$hrClass.">";
                     echo "".$fontDescriptionStart."".$this->event['description']."".$fontDescriptionEnd."";
                     echo "".$fontPeopleStart."".$this->showPeople."".$fontPeopleEnd."<br>";
                     echo "</div>";
                     echo "</div>";
-                    echo "</div><br><br>";
+                    echo "</div><br><br><br>";
                     $i++;
                 }
 
@@ -1055,12 +1065,12 @@ class events
                     echo "".$fontTitleStart."".$canceled."".$delStart."".$this->event['name']."".$fontTitleEnd."";
                     echo "".$fontDateStart."".$delStart."".$this->prettyDate." Uhr ".$fontDatewordStart."(".$this->dateString.")".$fontDatewordEnd."".$delEnd."".$fontDateEnd."";
                     echo "".$delStart."".$fontLocationStart."".$this->event['place']['name']."".$fontLocationEnd."<br>".$fontAddressStart."".$this->address."".$fontAddressEnd."".$delEnd."";
-                    echo "<br>".$coverImage."<br><hr>";
+                    echo "<br>".$coverImage."<br><hr".$hrClass.">";
                     echo "".$fontDescriptionStart."".$this->event['description']."".$fontDescriptionEnd."";
                     echo "".$fontPeopleStart."".$this->showPeople."".$fontPeopleEnd."<br>";
                     echo "</div>";
                     echo "</div>";
-                    echo "</div><br><br>";
+                    echo "</div><br><br><br>";
                     $i++;
                 }
 
@@ -1072,7 +1082,7 @@ class events
                     echo "<div class=\"col-md-8\">";
                     echo "".$fontTitleStart."".$canceled."".$delStart."".$this->event['name']."".$fontTitleEnd."";
                     echo "".$fontDateStart."".$delStart."".$this->prettyDate." Uhr ".$fontDatewordStart."(".$this->dateString.")".$fontDatewordEnd."".$delEnd."".$fontDateEnd."<br>";
-                    echo "".$delStart."".$fontLocationStart."".$this->event['place']['name']."".$fontLocationEnd."<br>".$fontAddressStart."".$this->address."".$fontAddressEnd."".$delEnd."<hr>";
+                    echo "".$delStart."".$fontLocationStart."".$this->event['place']['name']."".$fontLocationEnd."<br>".$fontAddressStart."".$this->address."".$fontAddressEnd."".$delEnd."<hr".$hrClass.">";
                     echo "".$fontDescriptionStart."".$this->event['description']."".$fontDescriptionEnd."";
                     echo "".$fontPeopleStart."".$this->showPeople."".$fontPeopleEnd."";
                     echo "</div>";
@@ -1080,7 +1090,7 @@ class events
                     echo "".$coverImage."";
                     echo "<br></div>";
                     echo "</div>";
-                    echo "</div><br><br>";
+                    echo "</div><br><br><br>";
                     $i++;
                 }
 
@@ -1092,13 +1102,13 @@ class events
                     echo "<div class=\"col-md-12 text-center align-middle\">";
                     echo "".$fontTitleStart."".$canceled."".$delStart."".$this->event['name']."".$fontTitleEnd."";
                     echo "".$fontDateStart."".$delStart."".$this->prettyDate." Uhr ".$fontDatewordStart."(".$this->dateString.")".$fontDatewordEnd."".$delEnd."".$fontDateEnd."<br>";
-                    echo "".$delStart."".$fontLocationStart."".$this->event['place']['name']."".$fontLocationEnd."<br>".$fontAddressStart."".$this->address."".$fontAddressEnd."".$delEnd."<hr>";
+                    echo "".$delStart."".$fontLocationStart."".$this->event['place']['name']."".$fontLocationEnd."<br>".$fontAddressStart."".$this->address."".$fontAddressEnd."".$delEnd."<hr".$hrClass.">";
                     echo "".$fontDescriptionStart."".$this->event['description']."".$fontDescriptionEnd."";
                     echo "".$fontPeopleStart."".$this->showPeople."".$fontPeopleEnd."<br>";
                     echo "".$coverImage."<br>";
                     echo "</div>";
                     echo "</div>";
-                    echo "</div><br><br>";
+                    echo "</div><br><br><br>";
                     $i++;
                 }
             }

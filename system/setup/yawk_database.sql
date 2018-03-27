@@ -2057,9 +2057,10 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('fbEventsFontPeopleCss', 'text-muted', 39, 1, 55, 'LABEL_FB_EVENTS_FONT_EVENT_PEOPLE_CSS', '', '', '', 'DESC_FB_EVENTS_CSS_CLASS', 'form-control', '', '', '', 212),
 ('fbEventsFontCanceled', 'h3', 39, 1, 56, 'LABEL_FB_EVENTS_FONT_EVENT_CANCELED', '', '', '', 'DESC_FB_EVENTS_FONT_EVENT_CANCELED', 'form-control', 'select', '', 'H1,H1:H2,H2:H3,H3:H4,H4:H5,H5:H6,H6:H1 small,H1 (small):H2 SMALL,H2 (small):H3 SMALL,H3 (small):H4 SMALL,H4 (small):H5 SMALL,H5 (small):H6 SMALL,H6 (small):globaltext,Global Text:small,Global Text (small)', 213),
 ('fbEventsFontCanceledCss', 'text-danger', 39, 1, 57, 'LABEL_FB_EVENTS_FONT_EVENT_CANCELED_CSS', '', '', '', 'DESC_FB_EVENTS_CSS_CLASS', 'form-control', '', '', '', 214),
-('fbEventsBgColor', '222222', 39, 1, 22, 'LABEL_FB_EVENTS_BGCOLOR', '', '', '', 'DESC_FB_EVENTS_BGCOLOR', 'form-control', 'color', 'PH_FB_EVENTS_BGCOLOR', '', 215),
+('fbEventsBgColor', '080808', 39, 1, 22, 'LABEL_FB_EVENTS_BGCOLOR', '', '', '', 'DESC_FB_EVENTS_BGCOLOR', 'form-control', 'color', 'PH_FB_EVENTS_BGCOLOR', '', 215),
 ('fbEventsTextColor', 'CCCCCC', 39, 1, 23, 'LABEL_FB_EVENTS_COLOR', '', '', '', 'DESC_FB_EVENTS_COLOR', 'form-control', 'color', 'PH_FB_EVENTS_COLOR', '', 216),
-('fbEventsCanceledOn', 'true', 39, 1, 22, 'LABEL_FB_EVENTS_CANCELED_ON', '', '', '', 'DESC_FB_EVENTS_CANCELED_ON', 'form-control', 'select', '', 'true,true:false,false', 217);
+('fbEventsCanceledOn', 'true', 39, 1, 22, 'LABEL_FB_EVENTS_CANCELED_ON', '', '', '', 'DESC_FB_EVENTS_CANCELED_ON', 'form-control', 'select', '', 'true,true:false,false', 217),
+('fbEventsHrClass', '', 39, 1, 27, 'LABEL_FB_EVENTS_HR_CLASS', '', '', '', 'DESC_FB_EVENTS_CSS_CLASS', 'form-control', '', '', '', 218);
 
 CREATE TABLE `cms_widget_settings` (
   `id` int(11) NOT NULL,
