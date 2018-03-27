@@ -33,14 +33,15 @@ INSERT INTO `cms_assets_types` (`id`, `published`, `type`, `sortation`, `asset`,
 (4, 1, 1, 2, 'jQuery 2.x', 'jquery-2', 'system/engines/jquery/jquery-2.2.4.min.js', 'http://code.jquery.com/jquery-2.2.4.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js', ''),
 (5, 1, 1, 3, 'jQuery 3.x', 'jquery-3', 'system/engines/jquery/jquery-3.2.1.min.js', 'http://code.jquery.com/jquery-3.2.1.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js', ''),
 (6, 1, 1, 4, 'jQuery UI 1.12 JS', 'jqueryUI', 'system/engines/jquery/jquery-ui.min.js', 'http://code.jquery.com/ui/1.12.1/jquery-ui.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js', ''),
-(8, 1, 2, 8, 'Font Awesome Icons', 'font-awesome', 'system/engines/font-awesome/css/font-awesome.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css', '', ''),
-(9, 1, 2, 9, 'Lightbox 2 JS', 'lightbox2-js', 'system/engines/jquery/lightbox2/js/lightbox.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/js/lightbox.min.js', '', ''),
-(10, 1, 2, 10, 'Lightbox 2 CSS', 'lightbox2-css', 'system/engines/jquery/lightbox2/css/lightbox.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/css/lightbox.min.css', '', ''),
-(11, 1, 2, 11, 'Ekko Lightbox JS', 'ekko-lightbox-js', 'system/engines/jquery/lightbox/ekko-lightbox.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.js', '', ''),
-(12, 1, 2, 12, 'Ekko Lightbox CSS', 'ekko-lightbox-css', 'system/engines/jquery/lightbox/ekko-lightbox.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css', 'system/engines/jquery/lightbox/dark.min.css', ''),
-(13, 1, 2, 13, 'Bootstrap Notify JS', 'bootstrap-notify-js', 'system/engines/jquery/notify/bootstrap-notify.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/js/bootstrap-notify.min.js', '', ''),
-(14, 1, 2, 14, 'Bootstrap Notify CSS', 'bootstrap-notify-css', 'system/engines/jquery/notify/bootstrap-notify.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/css/bootstrap-notify.min.css', '', ''),
-(28, 1, 2, 7, 'Animate.css', 'Animate.css', 'system/engines/animateCSS/animate.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css', 'https://fastcdn.org/Animate.css/3.4.0/animate.min.css', '');
+(7, 1, 2, 8, 'Font Awesome Icons', 'font-awesome', 'system/engines/font-awesome/css/font-awesome.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css', '', ''),
+(8, 1, 2, 9, 'Lightbox 2 JS', 'lightbox2-js', 'system/engines/jquery/lightbox2/js/lightbox.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/js/lightbox.min.js', '', ''),
+(9, 1, 2, 10, 'Lightbox 2 CSS', 'lightbox2-css', 'system/engines/jquery/lightbox2/css/lightbox.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/css/lightbox.min.css', '', ''),
+(10, 1, 2, 11, 'Ekko Lightbox JS', 'ekko-lightbox-js', 'system/engines/jquery/lightbox/ekko-lightbox.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.js', '', ''),
+(11, 1, 2, 12, 'Ekko Lightbox CSS', 'ekko-lightbox-css', 'system/engines/jquery/lightbox/ekko-lightbox.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css', 'system/engines/jquery/lightbox/dark.min.css', ''),
+(12, 1, 2, 13, 'Bootstrap Notify JS', 'bootstrap-notify-js', 'system/engines/jquery/notify/bootstrap-notify.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/js/bootstrap-notify.min.js', '', ''),
+(13, 1, 2, 14, 'Bootstrap Notify CSS', 'bootstrap-notify-css', 'system/engines/jquery/notify/bootstrap-notify.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/css/bootstrap-notify.min.css', '', ''),
+(14, 1, 2, 7, 'Animate.css', 'Animate.css', 'system/engines/animateCSS/animate.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css', 'https://fastcdn.org/Animate.css/3.4.0/animate.min.css', ''),
+(15, 1, 2, 15, 'Hover.css', 'Hover.css', '', 'https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.1.1/css/hover-min.css', '', '');
 
 CREATE TABLE `cms_blog` (
   `id` int(11) NOT NULL,
@@ -2276,7 +2277,7 @@ ALTER TABLE `cms_widget_types`
 ALTER TABLE `cms_assets`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 ALTER TABLE `cms_assets_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 ALTER TABLE `cms_blog`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_blog_comments`
