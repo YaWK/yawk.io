@@ -1,32 +1,32 @@
 <?php
-
-namespace YAWK\WIDGETS\FACEBOOK;
-class events
+namespace YAWK\WIDGETS\FACEBOOK
+{
+class fbEvents
 {
     /** @var string your app ID (from developers.facebook.com) */
-    public $appId = '';
+    public $fbEventsAppId = '';
     /** @var string your page ID (http://facebook.com/{YOURPAGEID} */
-    public $pageId = '';
+    public $fbEventsPageId = '';
     /** @var string your access token (secret word from developers.facebook.com) */
-    public $accessToken = '';
+    public $fbEventsAccessToken = '';
     /** @var string user defined layout */
-    public $layout = 'left';
+    public $fbEventsLayout = 'left';
     /** @var string show user counter? true|false */
-    public $showCounter = 'true';
+    public $fbEventsShowCounter = 'true';
     /** @var string show cover image? true|false */
-    public $showCover = 'true';
+    public $fbEventsShowCover = 'true';
     /** @var string any css class for the cover image */
-    public $coverClass = '';
+    public $fbEventsCoverClass = '';
     /** @var string which events should be shown? future|past|all */
-    public $type = 'future';
+    public $fbEventsType = 'future';
     /** @var string show events of this time range */
-    public $yearRange = '1';
+    public $fbEventsYearRange = '1';
     /** @var string how events should be sorted: ascending|descending */
-    public $sortation = 'asc';
+    public $fbEventsSortation = 'asc';
     /** @var string user defined start date */
-    public $startDate = '';
+    public $fbEventsStartDate = '';
     /** @var string user defined end date */
-    public $endDate = '';
+    public $fbEventsEndDate = '';
     /** @var string events since this date (used for calc) */
     public $sinceDate = '';
     /** @var string events until this date (used for calc) */
@@ -34,9 +34,9 @@ class events
     /** @var string headline before the widget (heading + subtext, if set) */
     public $headline = '';
     /** @var string heading before widget */
-    public $heading = '';
+    public $fbEventsHeading = '';
     /** @var string subtext before widget */
-    public $subtext = '';
+    public $fbEventsSubtext = '';
     /** @var string fields that should be selected from facebook graph */
     public $fields = 'id,name,description,place,start_time,cover,maybe_count,attending_count,is_canceled';
     /** @var object api result (as object) */
@@ -58,87 +58,92 @@ class events
     /** @var string how many people are interested - will be used in frontend view */
     public $showPeople = '';
     /** @var string font size of the event title */
-    public $fontEventName = 'h4';
+    public $fbEventsFontEventName = 'h2';
     /** @var string internal placeholder variable */
     public $fontEventNameH = '';
     /** @var string custom css of the event title */
-    public $fontEventNameCss = '';
+    public $fbEventsFontEventNameCss = '';
     /** @var string font size of the event date */
-    public $fontEventDate = 'h4';
+    public $fbEventsFontDate = 'h4';
     /** @var string internal placeholder variable */
     public $fontEventDateH = '';
     /** @var string custom css of the event date */
-    public $fontEventDateCss = '';
+    public $fbEventsFontDateCss = '';
     /** @var string dateword (dateString) as small tag? true|false */
-    public $fontEventDateword = 'true';
+    public $fbEventsFontDateword = 'true';
     /** @var string custom css of the dateword (dateString) */
-    public $fontEventDatewordCss = '';
+    public $fbEventsDatewordCss = '';
     /** @var string font size of the event location */
-    public $fontEventLocation = 'globaltext';
+    public $fbEventsFontLocation = 'globaltext';
     /** @var string custom css of the event location */
-    public $fontEventLocationCss = '';
+    public $fbEventsFontLocationCss = '';
     /** @var string internal placeholder var */
     public $fontEventLocationH = '';
     /** @var string font size of the event address */
-    public $fontEventAddress = 'globaltext';
+    public $fbEventsFontAddress = 'globaltext';
     /** @var string internal placeholder var */
     public $fontEventAddressH = '';
     /** @var string custom css of the event address */
-    public $fontEventAddressCss = '';
+    public $fbEventsFontAddressCss = '';
     /** @var string font size of the event description */
-    public $fontEventDescription= 'globaltext';
+    public $fbEventsFontDescription = 'globaltext';
     /** @var string internal placeholder var */
     public $fontEventDescriptionH = '';
     /** @var string custom css of the event description */
-    public $fontEventDescriptionCss = '';
+    public $fbEventsFontDescriptionCss = '';
     /** @var string font size of the event people (interested / attending) */
-    public $fontEventPeople = 'globaltext';
+    public $fbEventsFontPeople = 'globaltext';
     /** @var string internal placeholder var */
     public $fontEventPeopleH = '';
     /** @var string custom css of the event people (interested / attending) */
-    public $fontEventPeopleCss = 'text-muted';
+    public $fbEventsFontPeopleCss = 'text-muted';
     /** @var string font size of canceled event */
-    public $fontEventCanceled = 'h3';
+    public $fbEventsFontCanceled = 'h3';
     /** @var string custom css of canceled event */
-    public $fontEventCanceledCss = 'text-danger';
+    public $fbEventsFontCanceledCss = 'text-danger';
     /** @var string font title html markup start */
     public $fontTitleStart = '';
     /** @var string font title html markup end */
     public $fontTitleEnd = '';
     /** @var string display <hr> between address and description */
-    public $displaySpacer = 'true';
+    public $fbEventsDisplaySpacer = 'true';
     /** @var string background color of the event jumbotron box */
-    public $bgColor = '222222';
+    public $fbEventsBgColor = '222222';
     /** @var string text color of the event jumbotron box */
-    public $textColor = 'CCCCCC';
+    public $fbEventsTextColor = 'CCCCCC';
     /** @var string address string */
     public $address = '';
     /** @var string canceled events strike-trough? true|false */
-    public $canceledOn = 'true';
+    public $fbEventsCanceledOn = 'true';
     /** @var string css class of seperator line  */
-    public $hrClass = '';
+    public $fbEventsHrClass = '';
     /** @var string facebook link? true|false */
-    public $fbLink = 'true';
+    public $fbEventsFbLink = 'true';
     /** @var string display google map? true|false */
-    public $googleMap = 'true';
+    public $fbEventsGoogleMap = 'true';
 
-    public function __construct()
+    public function __construct($db)
     {
-        // get data from widget...
+        // load this widget settings from db
+        $widget = new \YAWK\widget();
+        $settings = $widget->getWidgetSettingsArray($db);
+        foreach ($settings as $property => $value)
+        {
+            $this->$property = $value;
+        }
     }
-
-
+    
     public function display()
     {
-        if (isset($this->appId) && (!empty($this->appId)
-        && (isset($this->accessToken) && (!empty($this->accessToken)
-        && (isset($this->pageId) && (!empty($this->pageId)))))))
+        if (isset($this->fbEventsAppId) && (!empty($this->fbEventsAppId)
+        && (isset($this->fbEventsAccessToken) && (!empty($this->fbEventsAccessToken)
+        && (isset($this->fbEventsPageId) && (!empty($this->fbEventsPageId)))))))
         {
             // include facebook SDK JS
             echo "<script>
             window.fbAsyncInit = function() {
                 FB.init({
-                    appId      : '" . $this->appId . "',
+                    appId      : '" . $this->fbEventsAppId . "',
                     xfbml      : true,
                     version    : 'v2.7'
                 });
@@ -156,37 +161,37 @@ class events
 
             // WHICH EVENTS TO DISPLAY?
             // evaluation of event type select field
-            if ($this->type === "all")
+            if ($this->fbEventsType === "all")
             {
                 // ALL EVENTS (FUTURE + PAST)
-                $this->sinceDate = date('Y-01-01', strtotime('-' . $this->yearRange . ' years'));
-                $this->untilDate = date('Y-01-01', strtotime('+' . $this->yearRange . ' years'));
+                $this->sinceDate = date('Y-01-01', strtotime('-' . $this->fbEventsYearRange . ' years'));
+                $this->untilDate = date('Y-01-01', strtotime('+' . $this->fbEventsYearRange . ' years'));
             }
-            elseif ($this->type == "future")
+            elseif ($this->fbEventsType == "future")
             {
                 // UPCOMING EVENTS
                 $this->sinceDate = date('Y-m-d');
-                $this->untilDate = date('Y-12-31', strtotime('+' . $this->yearRange . ' years'));
+                $this->untilDate = date('Y-12-31', strtotime('+' . $this->fbEventsYearRange . ' years'));
             }
-            elseif ($this->type === "past")
+            elseif ($this->fbEventsType === "past")
             {
                 // PAST EVENTS
-                $this->sinceDate = date('Y-01-01', strtotime('-' . $this->yearRange . ' years'));
+                $this->sinceDate = date('Y-01-01', strtotime('-' . $this->fbEventsYearRange . ' years'));
                 $this->untilDate = date('Y-m-d');
             }
             else
             {   // IF NOT SET - use default:
                 // UPCOMING EVENTS
                 $this->sinceDate = date('Y-m-d');
-                $this->untilDate = date('Y-12-31', strtotime('+' . $this->yearRange . ' years'));
+                $this->untilDate = date('Y-12-31', strtotime('+' . $this->fbEventsYearRange . ' years'));
             }
 
             // IF START + END DATE IS SET
-            if (isset($this->startDate) && (!empty($this->startDate))
-            && (isset($this->endDate) && (!empty($this->endDate))))
+            if (isset($this->fbEventsStartDate) && (!empty($this->fbEventsStartDate))
+            && (isset($this->fbEventsEndDate) && (!empty($this->fbEventsEndDate))))
             {
-                $this->sinceDate = date($this->startDate);
-                $this->untilDate = date($this->endDate);
+                $this->sinceDate = date($this->fbEventsStartDate);
+                $this->untilDate = date($this->fbEventsEndDate);
             }
 
             // unix timestamp years
@@ -197,7 +202,7 @@ class events
             // $this->fields="id,name,description,place,start_time,cover,maybe_count,attending_count,is_canceled";
 
             // prepare API call
-            $json_link = "https://graph.facebook.com/v2.7/{$this->pageId}/events/attending/?fields={$this->fields}&access_token={$this->accessToken}&since={$since_unix_timestamp}&until={$until_unix_timestamp}";
+            $json_link = "https://graph.facebook.com/v2.7/{$this->fbEventsPageId}/events/attending/?fields={$this->fields}&access_token={$this->fbEventsAccessToken}&since={$since_unix_timestamp}&until={$until_unix_timestamp}";
 
             // get json string
             $json = file_get_contents($json_link);
@@ -216,12 +221,11 @@ class events
 
             if (isset($obj) && (is_array($obj) && (is_array($obj['data']) && (empty($obj['data'])))))
             {
-                $now = new \DateTime();
-                if (isset($this->type) && (!empty($this->type) && $this->type == "future"))
+                if (isset($this->fbEventsType) && (!empty($this->fbEventsType) && $this->fbEventsType == "future"))
                 {
                     die ("Sorry, no upcoming events were found.");
                 }
-                else if (isset($this->type) && (!empty($this->type) && $this->type == "past"))
+                else if (isset($this->fbEventsType) && (!empty($this->fbEventsType) && $this->fbEventsType == "past"))
                 {
                     die ("Sorry, no past events were found.");
                 }
@@ -232,14 +236,39 @@ class events
             }
 
             // sortation
-            if ($this->sortation === "asc")
+            if ($this->fbEventsSortation === "asc")
             {   // reverse array data to display upcoming event first
                 $obj['data'] = array_reverse($obj['data']);
             }
 
-
+            // $i will be used for counting elements and to help animate content
             $i = 0;
 
+            /* HEADING */
+            // if a heading is set and not empty
+            if (isset($this->fbEventsHeading) && (!empty($this->fbEventsHeading)))
+            {   // add a h1 tag to heading string
+                $this->fbEventsHeading = "$this->fbEventsHeading";
+
+                // if subtext is set, add <small> subtext to string
+                if (isset($this->fbEventsSubtext) && (!empty($this->fbEventsSubtext)))
+                {   // build a headline with heading and subtext
+                    $this->fbEventsSubtext = "<small>$this->fbEventsSubtext</small>";
+                    $this->headline = "<h1>$this->fbEventsHeading&nbsp;"."$this->fbEventsSubtext</h1>";
+                }
+                else
+                {   // build just a headline - without subtext
+                    $this->headline = "<h1>$this->fbEventsHeading</h1>";    // draw just the heading
+                }
+            }
+            else
+            {   // leave empty if it's not set
+                $this->headline = '';
+            }
+            // OUTPUT HEADING (title)
+            echo $this->headline;
+
+            // DATA PROCESSING START HERE
             // walk through object data */
             foreach ($obj['data'] as $this->data => $this->event)
             {
@@ -354,18 +383,18 @@ class events
                     if ($this->eventDate > $now)
                     {
                         // tomorrow
-                        $this->dateString = "<span class=\"".$this->fontEventDatewordCss."\">morgen</span>";
+                        $this->dateString = "<span class=\"".$this->fbEventsDatewordCss."\">morgen</span>";
                     }
                     else
                         {
                             // yesterday
-                            $this->dateString = "<span class=\"".$this->fontEventDatewordCss."\">gestern</span>";
+                            $this->dateString = "<span class=\"".$this->fbEventsDatewordCss."\">gestern</span>";
                         }
                 }
                 // 0 days remaining, eventDate and currentDate are the same -
                 else if ($eventDateSimple == $currentDateSimple)
                 {   // it must be today
-                    $this->dateString = "<span class=\"".$this->fontEventDatewordCss."\">HEUTE !</span>";
+                    $this->dateString = "<span class=\"".$this->fbEventsDatewordCss."\">HEUTE !</span>";
                 }
                 else
                 {   if ($this->eventDate > $now)
@@ -404,11 +433,11 @@ class events
                 }
 
                 // check if event is canceled
-                if (isset($this->canceledOn) && ($this->canceledOn == true))
+                if (isset($this->fbEventsCanceledOn) && ($this->fbEventsCanceledOn == true))
                 {
                     if (isset($this->event['is_canceled']) && $this->event['is_canceled'] === true)
                     {   // set markup for canceled events
-                        $canceled = "<span class=\"".$this->fontEventCanceledCss."\">ACHTUNG! ABGESAGT!</span><br>";
+                        $canceled = "<span class=\"".$this->fbEventsFontCanceledCss."\">ACHTUNG! ABGESAGT!</span><br>";
                         $delStart = "<del>";
                         $delEnd = "</del>";
                     }
@@ -439,11 +468,11 @@ class events
                     {   // generate string that will be displayed in the frontend
                         if ($this->eventDate > $now)
                         {   // future events
-                            $this->showPeople = "<br><br><i class=\"$this->fontEventPeopleCss\">" . $this->iPeopleCount . " Personen sind daran interessiert oder werden dieses Konzert besuchen.</i>";
+                            $this->showPeople = "<br><br><i class=\"$this->fbEventsFontPeopleCss\">" . $this->iPeopleCount . " Personen sind daran interessiert oder werden dieses Konzert besuchen.</i>";
                         }
                         else
                             {   // past events
-                                $this->showPeople = "<br><br><i class=\"$this->fontEventPeopleCss\">" . $this->iPeopleCount . " Personen waren daran interessiert oder haben dieses Konzert besucht.</i>";
+                                $this->showPeople = "<br><br><i class=\"$this->fbEventsFontPeopleCss\">" . $this->iPeopleCount . " Personen waren daran interessiert oder haben dieses Konzert besucht.</i>";
                             }
                     }
                     else
@@ -457,42 +486,42 @@ class events
                     }
 
             /** FONT EVENT NAME SETTINGS */
-            if (isset($this->fontEventName) && (!empty($this->fontEventName)))
+            if (isset($this->fbEventsFontEventName) && (!empty($this->fbEventsFontEventName)))
             {
                 $smallTagStart = '';
                 $smallTagEnd = '';
 
-                if ($this->fontEventName == "H1 SMALL")
+                if ($this->fbEventsFontEventName == "H1 SMALL")
                 {
                     $this->fontEventNameH = "H1";
                     $smallTagStart = "<small>";
                     $smallTagEnd = "</small>";
                 }
-                else if ($this->fontEventName == "H2 SMALL")
+                else if ($this->fbEventsFontEventName == "H2 SMALL")
                 {
                     $this->fontEventNameH = "H2";
                     $smallTagStart = "<small>";
                     $smallTagEnd = "</small>";
                 }
-                else if ($this->fontEventName == "H3 SMALL")
+                else if ($this->fbEventsFontEventName == "H3 SMALL")
                 {
                     $this->fontEventNameH = "H3";
                     $smallTagStart = "<small>";
                     $smallTagEnd = "</small>";
                 }
-                else if ($this->fontEventName == "H4 SMALL")
+                else if ($this->fbEventsFontEventName == "H4 SMALL")
                 {
                     $this->fontEventNameH = "H4";
                     $smallTagStart = "<small>";
                     $smallTagEnd = "</small>";
                 }
-                else if ($this->fontEventName == "H5 SMALL")
+                else if ($this->fbEventsFontEventName == "H5 SMALL")
                 {
                     $this->fontEventNameH = "H5";
                     $smallTagStart = "<small>";
                     $smallTagEnd = "</small>";
                 }
-                else if ($this->fontEventName == "H6 SMALL")
+                else if ($this->fbEventsFontEventName == "H6 SMALL")
                 {
                     $this->fontEventNameH = "H6";
                     $smallTagStart = "<small>";
@@ -500,19 +529,19 @@ class events
                 }
                 else
                     {
-                        $this->fontEventNameH = $this->fontEventName;
+                        $this->fontEventNameH = $this->fbEventsFontEventName;
                     }
 
-                if (isset($this->fontEventNameCss) && (!empty($this->fontEventNameCss)))
+                if (isset($this->fbEventsFontEventNameCss) && (!empty($this->fbEventsFontEventNameCss)))
                 {
-                    $fontTitleCss = " class=\"".$this->fontEventNameCss."\"";
+                    $fontTitleCss = " class=\"".$this->fbEventsFontEventNameCss."\"";
                 }
                 else
                 {
                     $fontTitleCss = '';
                 }
                 // check if facebook link is enabled
-                if (isset($this->fbLink) && ($this->fbLink === "true"))
+                if (isset($this->fbEventsFbLink) && ($this->fbEventsFbLink === "true"))
                 {   // facebook link
                     $fbLinkStart = "<a href=\"https://www.facebook.com/events/".$this->event['id']."\" title=\"auf Facebook &ouml;ffnen: ".$this->event['name']."\" target=\"_blank\">";
                     $fbLinkEnd = "</a>";
@@ -532,42 +561,42 @@ class events
             }
 
             /** FONT EVENT DATE SETTINGS  */
-            if (isset($this->fontEventDate) && (!empty($this->fontEventDate)))
+            if (isset($this->fbEventsFontDate) && (!empty($this->fbEventsFontDate)))
                 {
                     $smallTagStartDate = '';
                     $smallTagEndDate = '';
 
-                    if ($this->fontEventDate == "H1 SMALL")
+                    if ($this->fbEventsFontDate == "H1 SMALL")
                     {
                         $this->fontEventDateH = "H1";
                         $smallTagStartDate = "<small>";
                         $smallTagEndDate = "</small>";
                     }
-                    else if ($this->fontEventDate == "H2 SMALL")
+                    else if ($this->fbEventsFontDate == "H2 SMALL")
                     {
                         $this->fontEventDateH = "H2";
                         $smallTagStartDate = "<small>";
                         $smallTagEndDate = "</small>";
                     }
-                    else if ($this->fontEventDate == "H3 SMALL")
+                    else if ($this->fbEventsFontDate == "H3 SMALL")
                     {
                         $this->fontEventDateH = "H3";
                         $smallTagStartDate = "<small>";
                         $smallTagEndDate = "</small>";
                     }
-                    else if ($this->fontEventDate == "H4 SMALL")
+                    else if ($this->fbEventsFontDate == "H4 SMALL")
                     {
                         $this->fontEventDateH = "H4";
                         $smallTagStartDate = "<small>";
                         $smallTagEndDate = "</small>";
                     }
-                    else if ($this->fontEventDate == "H5 SMALL")
+                    else if ($this->fbEventsFontDate == "H5 SMALL")
                     {
                         $this->fontEventDateH = "H5";
                         $smallTagStartDate = "<small>";
                         $smallTagEndDate = "</small>";
                     }
-                    else if ($this->fontEventDate == "H6 SMALL")
+                    else if ($this->fbEventsFontDate == "H6 SMALL")
                     {
                         $this->fontEventDateH = "H6";
                         $smallTagStartDate = "<small>";
@@ -575,12 +604,12 @@ class events
                     }
                     else
                         {
-                            $this->fontEventDateH = $this->fontEventDate;
+                            $this->fontEventDateH = $this->fbEventsFontDate;
                         }
 
-                    if (isset($this->fontEventDateCss) && (!empty($this->fontEventDateCss)))
+                    if (isset($this->fbEventsFontDateCss) && (!empty($this->fbEventsFontDateCss)))
                     {
-                        $fontDateCss = " class=\"".$this->fontEventDateCss."\"";
+                        $fontDateCss = " class=\"".$this->fbEventsFontDateCss."\"";
                     }
                     else
                     {
@@ -596,10 +625,10 @@ class events
                 }
 
                 /** FONT EVENT DATEWORD SETTINGS  */
-                if (isset($this->fontEventDateword) && (!empty($this->fontEventDateword)))
+                if (isset($this->fbEventsFontDateword) && (!empty($this->fbEventsFontDateword)))
                 {
 
-                    if ($this->fontEventDateword == "true")
+                    if ($this->fbEventsFontDateword == "true")
                     {
                         $smallTagStartDateword = "<small>";
                         $smallTagEndDateword = "</small>";
@@ -610,9 +639,9 @@ class events
                         $smallTagEndDateword = "";
                     }
 
-                    if (isset($this->fontEventDatewordCss) && (!empty($this->fontEventDatewordCss)))
+                    if (isset($this->fbEventsDatewordCss) && (!empty($this->fbEventsDatewordCss)))
                     {
-                        $fontDatewordCssStart = "<span class=\"".$this->fontEventDatewordCss."\">";
+                        $fontDatewordCssStart = "<span class=\"".$this->fbEventsDatewordCss."\">";
                         $fontDatewordCssEnd = "</span>";
                     }
                     else
@@ -631,42 +660,42 @@ class events
 
 
                 /** FONT EVENT Location SETTINGS  */
-                if (isset($this->fontEventLocation) && (!empty($this->fontEventLocation)))
+                if (isset($this->fbEventsFontLocation) && (!empty($this->fbEventsFontLocation)))
                 {
                     $smallTagStartLocation = '';
                     $smallTagEndLocation = '';
 
-                    if ($this->fontEventLocation == "H1 SMALL")
+                    if ($this->fbEventsFontLocation == "H1 SMALL")
                     {
                         $this->fontEventLocationH = "H1";
                         $smallTagStartLocation = "<small>";
                         $smallTagEndLocation = "</small>";
                     }
-                    else if ($this->fontEventLocation == "H2 SMALL")
+                    else if ($this->fbEventsFontLocation == "H2 SMALL")
                     {
                         $this->fontEventLocationH = "H2";
                         $smallTagStartLocation = "<small>";
                         $smallTagEndLocation = "</small>";
                     }
-                    else if ($this->fontEventLocation == "H3 SMALL")
+                    else if ($this->fbEventsFontLocation == "H3 SMALL")
                     {
                         $this->fontEventLocationH = "H3";
                         $smallTagStartLocation = "<small>";
                         $smallTagEndLocation = "</small>";
                     }
-                    else if ($this->fontEventLocation == "H4 SMALL")
+                    else if ($this->fbEventsFontLocation == "H4 SMALL")
                     {
                         $this->fontEventLocationH = "H4";
                         $smallTagStartLocation = "<small>";
                         $smallTagEndLocation = "</small>";
                     }
-                    else if ($this->fontEventLocation == "H5 SMALL")
+                    else if ($this->fbEventsFontLocation == "H5 SMALL")
                     {
                         $this->fontEventLocationH = "H5";
                         $smallTagStartLocation = "<small>";
                         $smallTagEndLocation = "</small>";
                     }
-                    else if ($this->fontEventLocation == "H6 SMALL")
+                    else if ($this->fbEventsFontLocation == "H6 SMALL")
                     {
                         $this->fontEventLocationH = "H6";
                         $smallTagStartLocation = "<small>";
@@ -674,12 +703,12 @@ class events
                     }
                     else
                     {
-                        $this->fontEventLocationH = $this->fontEventLocation;
+                        $this->fontEventLocationH = $this->fbEventsFontLocation;
                     }
 
-                    if (isset($this->fontEventLocationCss) && (!empty($this->fontEventLocationCss)))
+                    if (isset($this->fbEventsFontLocationCss) && (!empty($this->fbEventsFontLocationCss)))
                     {
-                        $fontLocationCss = " class=\"".$this->fontEventLocationCss."\"";
+                        $fontLocationCss = " class=\"".$this->fbEventsFontLocationCss."\"";
                     }
                     else
                     {
@@ -696,42 +725,42 @@ class events
 
 
                 /** FONT EVENT Address SETTINGS  */
-                    if (isset($this->fontEventAddress) && (!empty($this->fontEventAddress)))
+                    if (isset($this->fbEventsFontAddress) && (!empty($this->fbEventsFontAddress)))
                     {
                         $smallTagStartAddress = '';
                         $smallTagEndAddress = '';
 
-                        if ($this->fontEventAddress == "H1 SMALL")
+                        if ($this->fbEventsFontAddress == "H1 SMALL")
                         {
                             $this->fontEventAddressH = "H1";
                             $smallTagStartAddress = "<small>";
                             $smallTagEndAddress = "</small>";
                         }
-                        else if ($this->fontEventAddress == "H2 SMALL")
+                        else if ($this->fbEventsFontAddress == "H2 SMALL")
                         {
                             $this->fontEventAddressH = "H2";
                             $smallTagStartAddress = "<small>";
                             $smallTagEndAddress = "</small>";
                         }
-                        else if ($this->fontEventAddress == "H3 SMALL")
+                        else if ($this->fbEventsFontAddress == "H3 SMALL")
                         {
                             $this->fontEventAddressH = "H3";
                             $smallTagStartAddress = "<small>";
                             $smallTagEndAddress = "</small>";
                         }
-                        else if ($this->fontEventAddress == "H4 SMALL")
+                        else if ($this->fbEventsFontAddress == "H4 SMALL")
                         {
                             $this->fontEventAddressH = "H4";
                             $smallTagStartAddress = "<small>";
                             $smallTagEndAddress = "</small>";
                         }
-                        else if ($this->fontEventAddress == "H5 SMALL")
+                        else if ($this->fbEventsFontAddress == "H5 SMALL")
                         {
                             $this->fontEventAddressH = "H5";
                             $smallTagStartAddress = "<small>";
                             $smallTagEndAddress = "</small>";
                         }
-                        else if ($this->fontEventAddress == "H6 SMALL")
+                        else if ($this->fbEventsFontAddress == "H6 SMALL")
                         {
                             $this->fontEventAddressH = "H6";
                             $smallTagStartAddress = "<small>";
@@ -739,12 +768,12 @@ class events
                         }
                         else
                         {
-                            $this->fontEventAddressH = $this->fontEventAddress;
+                            $this->fontEventAddressH = $this->fbEventsFontAddress;
                         }
 
-                        if (isset($this->fontEventAddressCss) && (!empty($this->fontEventAddressCss)))
+                        if (isset($this->fbEventsFontAddressCss) && (!empty($this->fbEventsFontAddressCss)))
                         {
-                            $fontAddressCss = " class=\"".$this->fontEventAddressCss."\"";
+                            $fontAddressCss = " class=\"".$this->fbEventsFontAddressCss."\"";
                         }
                         else
                         {
@@ -761,42 +790,42 @@ class events
 
 
                 /** FONT EVENT Description SETTINGS  */
-                if (isset($this->fontEventDescription) && (!empty($this->fontEventDescription)))
+                if (isset($this->fbEventsFontDescription) && (!empty($this->fbEventsFontDescription)))
                 {
                     $smallTagStartDescription = '';
                     $smallTagEndDescription = '';
 
-                    if ($this->fontEventDescription == "H1 SMALL")
+                    if ($this->fbEventsFontDescription == "H1 SMALL")
                     {
                         $this->fontEventDescriptionH = "H1";
                         $smallTagStartDescription = "<small>";
                         $smallTagEndDescription = "</small>";
                     }
-                    else if ($this->fontEventDescription == "H2 SMALL")
+                    else if ($this->fbEventsFontDescription == "H2 SMALL")
                     {
                         $this->fontEventDescriptionH = "H2";
                         $smallTagStartDescription = "<small>";
                         $smallTagEndDescription = "</small>";
                     }
-                    else if ($this->fontEventDescription == "H3 SMALL")
+                    else if ($this->fbEventsFontDescription == "H3 SMALL")
                     {
                         $this->fontEventDescriptionH = "H3";
                         $smallTagStartDescription = "<small>";
                         $smallTagEndDescription = "</small>";
                     }
-                    else if ($this->fontEventDescription == "H4 SMALL")
+                    else if ($this->fbEventsFontDescription == "H4 SMALL")
                     {
                         $this->fontEventDescriptionH = "H4";
                         $smallTagStartDescription = "<small>";
                         $smallTagEndDescription = "</small>";
                     }
-                    else if ($this->fontEventDescription == "H5 SMALL")
+                    else if ($this->fbEventsFontDescription == "H5 SMALL")
                     {
                         $this->fontEventDescriptionH = "H5";
                         $smallTagStartDescription = "<small>";
                         $smallTagEndDescription = "</small>";
                     }
-                    else if ($this->fontEventDescription == "H6 SMALL")
+                    else if ($this->fbEventsFontDescription == "H6 SMALL")
                     {
                         $this->fontEventDescriptionH = "H6";
                         $smallTagStartDescription = "<small>";
@@ -804,12 +833,12 @@ class events
                     }
                     else
                     {
-                        $this->fontEventDescriptionH = $this->fontEventDescription;
+                        $this->fontEventDescriptionH = $this->fbEventsFontDescription;
                     }
 
-                    if (isset($this->fontEventDescriptionCss) && (!empty($this->fontEventDescriptionCss)))
+                    if (isset($this->fbEventsFontDescriptionCss) && (!empty($this->fbEventsFontDescriptionCss)))
                     {
-                        $fontDescriptionCss = " class=\"".$this->fontEventDescriptionCss."\"";
+                        $fontDescriptionCss = " class=\"".$this->fbEventsFontDescriptionCss."\"";
                     }
                     else
                     {
@@ -826,48 +855,48 @@ class events
 
 
                 /** FONT EVENT People SETTINGS  */
-                if (isset($this->fontEventPeople) && (!empty($this->fontEventPeople)))
+                if (isset($this->fbEventsFontPeople) && (!empty($this->fbEventsFontPeople)))
                 {
                     $smallTagStartPeople = '';
                     $smallTagEndPeople = '';
 
-                    if ($this->fontEventPeople == "H1 SMALL")
+                    if ($this->fbEventsFontPeople == "H1 SMALL")
                     {
                         $this->fontEventPeopleH = "H1";
                         $smallTagStartPeople = "<small>";
                         $smallTagEndPeople = "</small>";
                     }
-                    else if ($this->fontEventPeople == "H2 SMALL")
+                    else if ($this->fbEventsFontPeople == "H2 SMALL")
                     {
                         $this->fontEventPeopleH = "H2";
                         $smallTagStartPeople = "<small>";
                         $smallTagEndPeople = "</small>";
                     }
-                    else if ($this->fontEventPeople == "H3 SMALL")
+                    else if ($this->fbEventsFontPeople == "H3 SMALL")
                     {
                         $this->fontEventPeopleH = "H3";
                         $smallTagStartPeople = "<small>";
                         $smallTagEndPeople = "</small>";
                     }
-                    else if ($this->fontEventPeople == "H4 SMALL")
+                    else if ($this->fbEventsFontPeople == "H4 SMALL")
                     {
                         $this->fontEventPeopleH = "H4";
                         $smallTagStartPeople = "<small>";
                         $smallTagEndPeople = "</small>";
                     }
-                    else if ($this->fontEventPeople == "H5 SMALL")
+                    else if ($this->fbEventsFontPeople == "H5 SMALL")
                     {
                         $this->fontEventPeopleH = "H5";
                         $smallTagStartPeople = "<small>";
                         $smallTagEndPeople = "</small>";
                     }
-                    else if ($this->fontEventPeople == "H6 SMALL")
+                    else if ($this->fbEventsFontPeople == "H6 SMALL")
                     {
                         $this->fontEventPeopleH = "H6";
                         $smallTagStartPeople = "<small>";
                         $smallTagEndPeople = "</small>";
                     }
-                    else if ($this->fontEventPeople == "globaltext small")
+                    else if ($this->fbEventsFontPeople == "globaltext small")
                     {
                         $this->fontEventPeopleH = "span";
                         $smallTagStartPeople = "<small>";
@@ -875,12 +904,12 @@ class events
                     }
                     else
                     {
-                        $this->fontEventPeopleH = $this->fontEventPeople;
+                        $this->fontEventPeopleH = $this->fbEventsFontPeople;
                     }
 
-                    if (isset($this->fontEventPeopleCss) && (!empty($this->fontEventPeopleCss)))
+                    if (isset($this->fbEventsFontPeopleCss) && (!empty($this->fbEventsFontPeopleCss)))
                     {
-                        $fontPeopleCss = " class=\"".$this->fontEventPeopleCss."\"";
+                        $fontPeopleCss = " class=\"".$this->fbEventsFontPeopleCss."\"";
                     }
                     else
                     {
@@ -897,18 +926,18 @@ class events
 
 
                 // is cover image enabled by widget settings?
-                if (isset($this->showCover) && ($this->showCover == "true"))
+                if (isset($this->fbEventsShowCover) && ($this->fbEventsShowCover == "true"))
                 {   // if cover image source is set
                     if (isset($this->event['cover']['source']) && (!empty($this->event['cover']['source'])))
                     {
                         // img html markup
                         // check if custom cover class is set
-                        if (isset($this->coverClass) && (!empty($this->coverClass)))
+                        if (isset($this->fbEventsCoverClass) && (!empty($this->fbEventsCoverClass)))
                         {   // yep, display it with custom class
                             // check if facebook link is enabled
 
                             // check if facebook link is enabled
-                            if (isset($this->fbLink) && ($this->fbLink === "true"))
+                            if (isset($this->fbEventsFbLink) && ($this->fbEventsFbLink === "true"))
                             {   // facebook link
                                 $fbLinkStart = "<a href=\"https://www.facebook.com/events/".$this->event['id']."\" title=\"auf Facebook &ouml;ffnen: ".$this->event['name']."\" target=\"_blank\">";
                                 $fbLinkEnd = "</a>";
@@ -918,7 +947,7 @@ class events
                                 $fbLinkStart = '';
                                 $fbLinkEnd = '';
                             }
-                            $coverImage = "<br>".$fbLinkStart."<img src=\"" . $this->event['cover']['source'] . "\" title=\"" . $this->event['name'] . "\" class=\"img-center ".$this->coverClass."\">".$fbLinkEnd."";
+                            $coverImage = "<br>".$fbLinkStart."<img src=\"" . $this->event['cover']['source'] . "\" title=\"" . $this->event['name'] . "\" class=\"img-center ".$this->fbEventsCoverClass."\">".$fbLinkEnd."";
                         }
                         else
                             {   // default: img-thumbnail responsive
@@ -984,7 +1013,7 @@ class events
                 // check google map setting
                 //$latitude = $this->event['place']['location']['latitute'];
                 //$longitude = $this->event['place']['location']['longitute'];
-                if (isset($this->googleMap) && ($this->googleMap == "true"))
+                if (isset($this->fbEventsGoogleMap) && ($this->fbEventsGoogleMap == "true"))
                 {
                     $googleMapMarkup = "<a class=\"hvr-grow\" target=\"_blank\" title=\"auf Google Maps ansehen\" href=\"http://maps.google.de/maps/dir/".$this->event['place']['location']['latitude'].",".$this->event['place']['location']['longitude']."\"><i class=\"fa fa-map-marker\"></i></a>";
                     $address = $this->address;
@@ -992,23 +1021,23 @@ class events
                 }
 
                 // check if hr class is set
-                if (isset($this->hrClass) && (!empty($this->hrClass)))
+                if (isset($this->fbEventsHrClass) && (!empty($this->fbEventsHrClass)))
                 {
-                    $hrClass = " class=\"".$this->hrClass."".$animate."\"";
+                    $hrClass = " class=\"".$this->fbEventsHrClass."".$animate."\"";
                 }
                 else
                     {
                         $hrClass = '';
                     }
 
-                if (isset($this->canceledOn) && ($this->canceledOn == true))
+                if (isset($this->fbEventsCanceledOn) && ($this->fbEventsCanceledOn == true))
                 {
 
                 /* LAYOUTS */
                 // All Events will be displayed within one of the following layouts:
 
                 // MINIMAL
-                if (isset($this->layout) && ($this->layout == "minimal"))
+                if (isset($this->fbEventsLayout) && ($this->fbEventsLayout == "minimal"))
                 {
                     echo "<div class=\"container-fluid\">";
                     echo "<div class=\"row".$animate."\">";
@@ -1023,9 +1052,9 @@ class events
 
                 // TABLE
                 // draw events within a classical table view
-                if (isset($this->layout) && ($this->layout == "table"))
+                if (isset($this->fbEventsLayout) && ($this->fbEventsLayout == "table"))
                 {   // if cover should be displayed
-                    if (isset($this->showCover) && ($this->showCover === "true"))
+                    if (isset($this->fbEventsShowCover) && ($this->fbEventsShowCover === "true"))
                     {   // if cover source is found (if event got a picture)
                         if (isset($this->event['cover']['source']))
                         {   // display facebook event picture
@@ -1040,7 +1069,7 @@ class events
                         {   // cover image set to false - do not show cover image
                             $coverImage = '';
                         }
-                    echo "<div class=\"container-fluid\" style=\"background-color:#".$this->bgColor."; color:#".$this->textColor.";\">";
+                    echo "<div class=\"container-fluid\" style=\"background-color:#".$this->fbEventsBgColor."; color:#".$this->fbEventsTextColor.";\">";
                     echo "<table border=\"1\" cellpadding=\"1\" cellspacing=\"1\" class=\"table table-responsive".$animate."\">";
                         echo "<tr>";
                             echo "<td width=\"14%\"".$coverImage.">";
@@ -1054,10 +1083,10 @@ class events
                     $i++;
                 }
 
-                if (isset($this->layout) && ($this->layout == "left"))
+                if (isset($this->fbEventsLayout) && ($this->fbEventsLayout == "left"))
                 {
                     // jumbotron output
-                    echo "<div class=\"jumbotron".$animate."\" style=\"background-color:#".$this->bgColor."; color:#".$this->textColor.";\">";
+                    echo "<div class=\"jumbotron".$animate."\" style=\"background-color:#".$this->fbEventsBgColor."; color:#".$this->fbEventsTextColor.";\">";
                     echo "<div class=\"row\">";
                     echo "<div class=\"col-md-4 text-center align-middle\">";
                     echo "".$coverImage."";
@@ -1074,10 +1103,10 @@ class events
                     $i++;
                 }
 
-                if (isset($this->layout) && ($this->layout == "top"))
+                if (isset($this->fbEventsLayout) && ($this->fbEventsLayout == "top"))
                 {
                     // jumbotron output
-                    echo "<div class=\"jumbotron".$animate."\" style=\"background-color:#".$this->bgColor."; color:#".$this->textColor.";\">";
+                    echo "<div class=\"jumbotron".$animate."\" style=\"background-color:#".$this->fbEventsBgColor."; color:#".$this->fbEventsTextColor.";\">";
                     echo "<div class=\"row\">";
                     echo "<div class=\"col-md-12 text-center align-middle\">";
                     echo "".$coverImage."<br>";
@@ -1093,11 +1122,11 @@ class events
                 }
 
 
-                if (isset($this->layout) && ($this->layout == "middle"))
+                if (isset($this->fbEventsLayout) && ($this->fbEventsLayout == "middle"))
                 {
                     // jumbotron output
                     echo "<div class=\"container-fluid\">";
-                    echo "<div class=\"".$animate."\" style=\"background-color:#".$this->bgColor."; color:#".$this->textColor.";\">";
+                    echo "<div class=\"".$animate."\" style=\"background-color:#".$this->fbEventsBgColor."; color:#".$this->fbEventsTextColor.";\">";
                     echo "<div class=\"row\">";
                     echo "<div class=\"col-md-12 text-center align-middle\"><br>";
                     echo "".$fontTitleStart."".$canceled."".$delStart."".$this->event['name']."".$fontTitleEnd."";
@@ -1112,10 +1141,10 @@ class events
                     $i++;
                 }
 
-                if (isset($this->layout) && ($this->layout == "middle2"))
+                if (isset($this->fbEventsLayout) && ($this->fbEventsLayout == "middle2"))
                 {
                     // jumbotron output
-                    echo "<div class=\"jumbotron".$animate."\" style=\"background-color:#".$this->bgColor."; color:#".$this->textColor.";\">";
+                    echo "<div class=\"jumbotron".$animate."\" style=\"background-color:#".$this->fbEventsBgColor."; color:#".$this->fbEventsTextColor.";\">";
                     echo "<div class=\"row\">";
                     echo "<div class=\"col-md-12 text-center align-middle\">";
                     echo "".$fontTitleStart."".$canceled."".$delStart."".$this->event['name']."".$fontTitleEnd."";
@@ -1130,10 +1159,10 @@ class events
                     $i++;
                 }
 
-                if (isset($this->layout) && ($this->layout == "middle3"))
+                if (isset($this->fbEventsLayout) && ($this->fbEventsLayout == "middle3"))
                 {
                     // jumbotron output
-                    echo "<div class=\"jumbotron".$animate."\" style=\"background-color:#".$this->bgColor."; color:#".$this->textColor.";\">";
+                    echo "<div class=\"jumbotron".$animate."\" style=\"background-color:#".$this->fbEventsBgColor."; color:#".$this->fbEventsTextColor.";\">";
                     echo "<div class=\"row\">";
                     echo "<div class=\"col-md-12 text-center align-middle\">";
                     echo "".$fontTitleStart."".$canceled."".$delStart."".$this->event['name']."".$fontTitleEnd."";
@@ -1148,10 +1177,10 @@ class events
                     $i++;
                 }
 
-                if (isset($this->layout) && ($this->layout == "right"))
+                if (isset($this->fbEventsLayout) && ($this->fbEventsLayout == "right"))
                 {
                     // jumbotron output
-                    echo "<div class=\"jumbotron".$animate."\" style=\"background-color:#".$this->bgColor."; color:#".$this->textColor.";\">";
+                    echo "<div class=\"jumbotron".$animate."\" style=\"background-color:#".$this->fbEventsBgColor."; color:#".$this->fbEventsTextColor.";\">";
                     echo "<div class=\"row\">";
                     echo "<div class=\"col-md-8\">";
                     echo "".$fontTitleStart."".$canceled."".$delStart."".$this->event['name']."".$fontTitleEnd."";
@@ -1168,10 +1197,10 @@ class events
                     $i++;
                 }
 
-                if (isset($this->layout) && ($this->layout == "bottom"))
+                if (isset($this->fbEventsLayout) && ($this->fbEventsLayout == "bottom"))
                 {
                     // jumbotron output
-                    echo "<div class=\"jumbotron".$animate."\" style=\"background-color:#".$this->bgColor."; color:#".$this->textColor.";\">";
+                    echo "<div class=\"jumbotron".$animate."\" style=\"background-color:#".$this->fbEventsBgColor."; color:#".$this->fbEventsTextColor.";\">";
                     echo "<div class=\"row\">";
                     echo "<div class=\"col-md-12 text-center align-middle\">";
                     echo "".$fontTitleStart."".$canceled."".$delStart."".$this->event['name']."".$fontTitleEnd."";
@@ -1192,5 +1221,6 @@ class events
             {
                 die ("Unable to load data. AppID, Access Token or PageID is not set! Don't know what to do? Visit: <a href=\"http://developers.facebook.com\" target=\"_blank\">http://developers.facebook.com</a>");
             }
-    }
-}
+    } // end function display()
+}   // end class events
+} // end namespace
