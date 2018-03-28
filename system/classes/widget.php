@@ -48,8 +48,53 @@ namespace YAWK {
         public $widgetTitle;
         /** * @var string foldername of this widget */
         public $folder;
+        /** * @var string widget settings data array placeholder */
+        public $data;
 
 
+        /**
+         * Get widget settings and return it as array
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @return string full path to widgets folder
+         */
+        public function getWidgetSettingsArray($db)
+        {
+            // $_GET['widgetID'] will be generated in \YAWK\widget\loadWidgets($db, $position)
+            if (isset($_GET['widgetID']))
+            {
+                // widget ID
+                $this->id = $_GET['widgetID'];
+                // data var (will be an array if all went ok)
+                $this->data = '';
+
+                // get widget settings from db
+                $res = $db->query("SELECT property, value FROM {widget_settings}
+	                   WHERE widgetID = '".$this->id."'
+	                   AND activated = '1'");
+                // get data in loop
+                while($row = mysqli_fetch_assoc($res))
+                {   // set widget properties and values into this data array
+                    $this->data[$row['property']] = $row['value'];
+                } // end while fetch row (fetch widget settings)
+
+                // check if data array is set
+                if (is_array($this->data))
+                {   // ok, return widget settings array
+                    return ($this->data);
+                }
+                else
+                    {   // widget settings could not be retrieved
+                        die("Unable to load widget settings of widget ID: ".$this->id."");
+                    }
+            }
+            else
+                {   // no widget ID requested - do nothing.
+                    return null;
+                }
+        }
 
 
         /**
