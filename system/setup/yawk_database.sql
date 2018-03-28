@@ -2062,7 +2062,12 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('fbEventsCanceledOn', 'true', 39, 1, 22, 'LABEL_FB_EVENTS_CANCELED_ON', '', '', '', 'DESC_FB_EVENTS_CANCELED_ON', 'form-control', 'select', '', 'true,true:false,false', 217),
 ('fbEventsHrClass', '', 39, 1, 27, 'LABEL_FB_EVENTS_HR_CLASS', '', '', '', 'DESC_FB_EVENTS_CSS_CLASS', 'form-control', '', '', '', 218),
 ('fbEventsFbLink', 'true', 39, 1, 29, 'LABEL_FB_EVENTS_FBLINK', '', '', '', 'DESC_FB_EVENTS_FBLINK', 'form-control', 'select', '', 'true,true:false,false', 219),
-('fbEventsGoogleMap', 'true', 39, 1, 30, 'LABEL_FB_EVENTS_MAP', '', '', '', 'DESC_FB_EVENTS_MAP', 'form-control', 'select', '', 'true,true:false,false', 220);
+('fbEventsGoogleMap', 'true', 39, 1, 30, 'LABEL_FB_EVENTS_MAP', '', '', '', 'DESC_FB_EVENTS_MAP', 'form-control', 'select', '', 'true,true:false,false', 220),
+('fbExampleAppId', '', 40, 1, 1, 'LABEL_FB_EXAMPLE_APPID', '', 'FB_EXAMPLE_HEADING_GLOBAL', '', 'DESC_FB_EXAMPLE_APPID', 'form-control', '', 'PH_FB_EXAMPLE_APPID', '', 221),
+('fbExamplePageId', '', 40, 1, 3, 'LABEL_FB_EXAMPLE_PAGEID', '', '', '', 'DESC_FB_EXAMPLE_PAGEID', 'form-control', '', 'PH_FB_EXAMPLE_PAGEID', '', 222),
+('fbExampleAccessToken', '', 40, 1, 2, 'LABEL_FB_EXAMPLE_ACCESS_TOKEN', '', '', '', 'DESC_FB_EXAMPLE_ACCESS_TOKEN', 'form-control', '', 'PH_FB_EXAMPLE_ACCESS_TOKEN', '', 223),
+('fbExampleGraphRequest', '', 40, 1, 2, 'LABEL_FB_EXAMPLE_REQUEST', '', '', '', 'DESC_FB_EXAMPLE_REQUEST', 'form-control', '', 'PH_FB_EXAMPLE_REQUEST', '', 224),
+('fbExampleFields', 'id,name,description,place,start_time,cover,maybe_count,attending_count,is_canceled', 40, 1, 2, 'LABEL_FB_EXAMPLE_FIELDS', '', '', '', 'DESC_FB_EXAMPLE_FIELDS', 'form-control', '', 'PH_FB_EXAMPLE_FIELDS', '', 225);
 
 CREATE TABLE `cms_widget_settings` (
   `id` int(11) NOT NULL,
@@ -2130,8 +2135,8 @@ INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`)
 (36, 1, 'AdBlock Blocker', 'fuckadblock', 'Detect and block AdBlocker'),
 (37, 1, 'Content Animator', 'contentAnimator', 'Enable Slide Animations for your content'),
 (38, 1, 'Embed Page', 'embed_page', 'Embed any of your static pages'),
-(39, 1, 'Facebook Events', 'fb_events', 'Embed Facebook Events from your Facebook Page');
-
+(39, 1, 'Facebook Events', 'fb_events', 'Embed Facebook Events from your Facebook Page'),
+(40, 1, 'Facebook Graph Explorer', 'fb_example', 'Use the Facebook Graph API to get data - this is for demo and development purpose only!');
 
 ALTER TABLE `cms_assets`
   ADD PRIMARY KEY (`id`);
