@@ -12,7 +12,7 @@ namespace YAWK\WIDGETS\FACEBOOK
      * title, cover image or something else.</p>
      *
      * <p>You need an APP ID, as well as an access token for the facebook page you want to embed events from.
-     * For reasons, you (respectivly the app id / access token) needs administrative access rights to the facebook
+     * For reasons, you (respectively the app id / access token) needs administrative access rights to the facebook
      * page you want to grab events from. Create a new fb event widget in the backend, enter app id, access token
      * and your page id (facebook.com/YOURPAGE) and you're good to go. Experiment with the settings to fit your needs.
      *
