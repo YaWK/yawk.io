@@ -4,8 +4,8 @@ namespace YAWK\WIDGETS\FACEBOOK
     /**
      * <b>Use Facebook Graph API to get Events from a Facebook Page. Require App ID and Access Token.</b>
      *
-     * <p>With this widget, you are able to embed events from your facebook page on your website.
-     * It helps you to keep your website up to date. Ever been tired of doing the same content twice?
+     * <p>With this widget, you are able to embed events from your facebook page onto your website.
+     * It helps you to keep your website up to date. Have you ever been bored of adding the same content twice?
      * Previously it was like that: Add a event on facebook, invite your friends, add this date to your website.
      * This plugin makes it easy for you to keep focused on your social activities. If you change your facebook
      * event, the data on your website will be updated automatically. No matter if it's the event date, time
@@ -24,7 +24,7 @@ namespace YAWK\WIDGETS\FACEBOOK
      *
      * @package    YAWK
      * @author     Daniel Retzl <danielretzl@gmail.com>
-     * @copyright  2009-2016 Daniel Retzl
+     * @copyright  2018 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
