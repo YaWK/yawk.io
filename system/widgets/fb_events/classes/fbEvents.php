@@ -1,6 +1,35 @@
 <?php
 namespace YAWK\WIDGETS\FACEBOOK
 {
+    /**
+     * <b>Use Facebook Graph API to get Events from a Facebook Page. Require App ID and Access Token.</b>
+     *
+     * <p>With this widget, you are able to embed events from your facebook page on your website.
+     * It helps you to keep your website up to date. Ever been tired of doing the same content twice?
+     * Previously it was like that: Add a event on facebook, invite your friends, add this date to your website.
+     * This plugin makes it easy for you to keep focused on your social activities. If you change your facebook
+     * event, the data on your website will be updated automatically. No matter if it's the event date, time
+     * title, cover image or something else.</p>
+     *
+     * <p>You need an APP ID, as well as an access token for the facebook page you want to embed events from.
+     * For reasons, you (respectivly the app id / access token) needs administrative access rights to the facebook
+     * page you want to grab events from. Create a new fb event widget in the backend, enter app id, access token
+     * and your page id (facebook.com/YOURPAGE) and you're good to go. Experiment with the settings to fit your needs.
+     *
+     * This class only got 2 important methods: the constructor, which loads the settings for this widget,
+     * as well as the display() method. It connects to facebook, gets the data, walk through the array
+     * and manage the output of your events. This method could surely be more abstract. Code Improvement
+     * and abstraction will implemented due future updates on this class. A pragmatical approach - for now.
+     * </p>
+     *
+     * @package    YAWK
+     * @author     Daniel Retzl <danielretzl@gmail.com>
+     * @copyright  2009-2016 Daniel Retzl
+     * @license    https://opensource.org/licenses/MIT
+     * @version    1.0.0
+     * @link       http://yawk.io
+     * @annotation Use Facebook Graph API to get Events from a facebook page and embed this data with your own design.
+     */
 class fbEvents
 {
     /** @var string your app ID (from developers.facebook.com) */
@@ -269,7 +298,7 @@ class fbEvents
             echo $this->headline;
 
             // DATA PROCESSING START HERE
-            // walk through object data */
+            // walk through object data
             foreach ($obj['data'] as $this->data => $this->event)
             {
                 // the event date as obj
