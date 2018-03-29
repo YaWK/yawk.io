@@ -40,8 +40,6 @@ class fbEvents
     public $fbEventsAccessToken = '';
     /** @var string user defined layout */
     public $fbEventsLayout = 'left';
-    /** @var string show user counter? true|false */
-    public $fbEventsShowCounter = 'true';
     /** @var string show cover image? true|false */
     public $fbEventsShowCover = 'true';
     /** @var string any css class for the cover image */
@@ -81,7 +79,7 @@ class fbEvents
     /** @var string calculated date will be used in frontend view */
     public $dateString = '';
     /** @var string should interested people be shown? 0|1 */
-    public $showPeopleCounter = '1';
+    public $fbEventsShowCounter = '1';
     /** @var int how many people are interested or attending - used for calculations */
     public $iPeopleCount = '';
     /** @var string how many people are interested - will be used in frontend view */
@@ -485,7 +483,7 @@ class fbEvents
                 }
 
                 // check if people counter is enabled or disabled
-                if (isset($this->showPeopleCounter) && ($this->showPeopleCounter == "true"))
+                if (isset($this->fbEventsShowCounter) && ($this->fbEventsShowCounter == "true"))
                 {   // do it only, if maybe_count and attending_count are set and valid
                     if (isset($this->event['maybe_count']) && (!empty($this->event['maybe_count']))
                     && (isset($this->event['attending_count'])))
