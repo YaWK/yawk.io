@@ -8,5 +8,7 @@ include ('classes/fbExample.php');
 // create fb event object
 $example = new \YAWK\WIDGETS\FACEBOOK\fbExample($db);
 // basic data output
-$example->basicOutput();
+// $example->basicOutput();
+// $example->drawGallery();
+$example->printApiObject();
 ?>

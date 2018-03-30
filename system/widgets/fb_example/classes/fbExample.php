@@ -31,8 +31,8 @@ class fbExample
     public $fbExampleFields = 'id,name,description,place,start_time,cover,maybe_count,attending_count,is_canceled';
     /** @var object api result (as object) */
     public $apiObject;
-    /** @var array all api result data (multidimensional array) */
-    public $data = array();
+    /** @var string true|false was the js SDK loaded? */
+    public $jsSDKLoaded = 'false';
 
 
     public function __construct($db)
@@ -45,7 +45,7 @@ class fbExample
             $this->$property = $value;
         }
         // check if required settings are set
-        // $this->checkRequirements();
+        $this->checkRequirements();
     }
 
     public function checkRequirements()
@@ -112,85 +112,90 @@ class fbExample
     }
 
     public function loadJSSDK()
-    {
-        if ($this->checkAppId() == true)
-        {
-            // include facebook SDK JS
-            echo "<script>
-            window.fbAsyncInit = function() {
-                FB.init({
-                appId      : '" . $this->fbExampleAppId . "',
-                xfbml      : true,
-                version    : 'v2.7'
-                });
-            FB.AppEvents.logPageView();
-            };
-            
-            (function(d, s, id){
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id)) {return;}
-                js = d.createElement(s); js.id = id;
-                js.src = \"https://connect.facebook.net/en_US/sdk.js\";
-                fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));
-            </script>";
+    {   // check if fb JS SDK was loaded before
+        if ($this->jsSDKLoaded == 'false')
+        {   // check if app ID is set
+            if ($this->checkAppId() == true)
+            {
+                // include facebook SDK JS
+                echo "<script>
+                window.fbAsyncInit = function() {
+                    FB.init({
+                    appId      : '" . $this->fbExampleAppId . "',
+                    xfbml      : true,
+                    version    : 'v2.7'
+                    });
+                FB.AppEvents.logPageView();
+                };
+                
+                (function(d, s, id){
+                    var js, fjs = d.getElementsByTagName(s)[0];
+                    if (d.getElementById(id)) {return;}
+                    js = d.createElement(s); js.id = id;
+                    js.src = \"https://connect.facebook.net/en_US/sdk.js\";
+                    fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));
+                </script>";
+                $this->jsSDKLoaded = 'true';
+            }
+            else
+                {
+                    die ("unable to include facebook js SDK - checkAppId failed. Please check your app ID in the widget settings!");
+                }
         }
     }
 
     public function makeApiCall()
     {
-
-    }
-    
-    public function basicOutput()
-    {
-        $this->loadJSSDK();
-
-        // prepare fields
-        // $this->fields="id,name,description,place,start_time,cover,maybe_count,attending_count,is_canceled";
-
+        // check if fields are set
         if (isset($this->fbExampleFields) && (!empty($this->fbExampleFields)))
-        {
+        {   // set markup for api query string
             $fieldsMarkup = "&fields={$this->fbExampleFields}";
         }
         else
-            {
+            {   // no fields wanted, leave markup empty
                 $fieldsMarkup = '';
             }
 
         // prepare API call
         // $json_link = "https://graph.facebook.com/v2.7/{$this->fbExamplePageId}{$this->fbExampleGraphRequest}?fields={$this->fields}&access_token={$this->fbExampleAccessToken}";
-        $json_link = "https://graph.facebook.com/v2.7/{$this->fbExamplePageId}{$this->fbExampleGraphRequest}?access_token={$this->fbExampleAccessToken}".$fieldsMarkup."";
+        $json_link = "https://graph.facebook.com/v2.7/{$this->fbExamplePageId}{$this->fbExampleGraphRequest}?access_token={$this->fbExampleAccessToken}" . $fieldsMarkup . "";
 
         // get json string
         $json = file_get_contents($json_link);
 
         // convert json to object
-        $this->apiObject = json_decode($json, true, 512, JSON_BIGINT_AS_STRING);
+        return $this->apiObject = json_decode($json, true, 512, JSON_BIGINT_AS_STRING);
+    }
 
-        echo "<pre>";
-        echo "<h1>Settings</h1>";
-        print_r($this);
-        echo "</pre>";
-
-        foreach ($this->apiObject['data'] as $property => $value)
+    public function printApiObject()
+    {
+        $this->makeApiCall();
+        if (isset($this->apiObject) && (!empty($this->apiObject)))
         {
+            echo "<pre>";
+            print_r($this);
+            echo "</pre>";
+        }
+    }
+    
+    public function basicOutput()
+    {
+        $this->loadJSSDK();
+        $this->makeApiCall();
+
+        foreach ($this->apiObject['data'] as $property => $value) {
             echo "<b>$property </b>: $value<br>";
 
-            foreach ($value as $entry => $key)
-            {
+            foreach ($value as $entry => $key) {
 
                 echo "$entry : $key<br>";
 
-                if (is_array($key))
-                {
-                    foreach ($key as $p => $v)
-                    {
+                if (is_array($key)) {
+                    foreach ($key as $p => $v) {
                         echo "&nbsp;&nbsp;&nbsp;&nbsp;$p : $v<br>";
-                        if (is_array($v))
-                        {
-                            foreach ($v as $a => $b)
-                            {
+                        if (is_array($v)) {
+                            foreach ($v as $a => $b) {
                                 echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$a : $b<br>";
                             }
                         }
@@ -199,8 +204,50 @@ class fbExample
             }
             echo "<br>";
         }
+    }
 
-    } // end basic output
+        public function drawGallery()
+        {
+            $this->loadJSSDK();
+            $this->makeApiCall();
+
+            if (isset($this->apiObject['data']) && (!empty($this->apiObject)))
+            {
+                foreach ($this->apiObject as $property => $value)
+                {
+                    echo "$property : $value<br>";
+                    if (is_array($value))
+                    {
+                        foreach ($value as $entry => $key)
+                        {
+                            echo "$entry : $key <br>";
+                            if (is_array($key))
+                            {
+                                foreach ($key as $image)
+                                {
+                                    echo "$key : $image<br>";
+                                    if (is_array($key) || (is_array($image)))
+                                    {
+                                        foreach ($key as $arrayKey => $arrayValue)
+                                        {
+                                            echo "&nbsp;&nbsp;$arrayKey : $arrayValue<br>";
+                                            if (is_array($arrayValue))
+                                            {
+                                                foreach ($arrayValue as $p => $v)
+                                                {
+                                                    echo "&nbsp;&nbsp;$p : $v<br>";
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
 
 }   // end class events
 } // end namespace
