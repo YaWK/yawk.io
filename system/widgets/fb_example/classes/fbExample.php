@@ -33,6 +33,14 @@ class fbExample
     public $apiObject;
     /** @var string true|false was the js SDK loaded? */
     public $jsSDKLoaded = 'false';
+    /** @var string show events of this time range */
+    public $fbEventsYearRange = '1';
+    /** @var string user defined start date */
+    public $fbEventsStartDate = '';
+    /** @var string user defined end date */
+    public $fbEventsEndDate = '';
+    /** @var string which events should be shown? future|past|all */
+    public $fbEventsType = 'future';
 
 
     public function __construct($db)
