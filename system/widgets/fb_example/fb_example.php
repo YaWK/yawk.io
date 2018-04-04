@@ -9,6 +9,6 @@ include ('classes/fbExample.php');
 $example = new \YAWK\WIDGETS\FACEBOOK\fbExample($db);
 // basic data output
 // $example->basicOutput();
-// $example->drawGallery();
+// example->drawGallery();
 $example->printApiObject();
 ?>

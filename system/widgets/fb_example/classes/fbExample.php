@@ -213,9 +213,9 @@ class fbExample
 
             if (isset($this->apiObject['data']) && (!empty($this->apiObject)))
             {
-                foreach ($this->apiObject as $property => $value)
+                foreach ($this->apiObject['data'] as $property => $value)
                 {
-                    echo "$property : $value<br>";
+                    echo "<br><br>$property : $value<br>";
                     if (is_array($value))
                     {
                         foreach ($value as $entry => $key)
