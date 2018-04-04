@@ -1,5 +1,5 @@
 <?php
-namespace YAWK\WIDGETS {
+namespace YAWK\WIDGETS\JPLAYER\AUDIO {
     class jPlayer
     {
         /** * @var string current user name */

@@ -3,7 +3,7 @@ if (!isset($jPlayerVideo) || (empty($jPlayerVideo)))
 {   // include player class
     require_once ("system/widgets/jplayer_video/classes/jplayer_video.class.php");
     // create new player object
-    $jPlayerVideo = new \YAWK\WIDGETS\jPlayerVideo();
+    $jPlayerVideo = new \YAWK\WIDGETS\JPLAYER\VIDEO\jPlayerVideo();
 }
 ?>
 <?php

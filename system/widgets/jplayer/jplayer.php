@@ -3,7 +3,7 @@
     {   // include player class
         require_once ("system/widgets/jplayer/classes/jplayer.class.php");
         // create new player object
-        $jPlayer = new \YAWK\WIDGETS\jPlayer();
+        $jPlayer = new \YAWK\WIDGETS\JPLAYER\AUDIO\jPlayer();
     }
 ?>
 <?php

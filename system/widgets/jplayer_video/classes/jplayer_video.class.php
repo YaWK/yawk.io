@@ -1,5 +1,5 @@
 <?php
-namespace YAWK\WIDGETS {
+namespace YAWK\WIDGETS\JPLAYER\VIDEO {
     class jPlayerVideo
     {
         /** * @var string current user name */
