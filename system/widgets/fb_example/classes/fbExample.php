@@ -1,5 +1,5 @@
 <?php
-namespace YAWK\WIDGETS\FACEBOOK
+namespace YAWK\WIDGETS\FACEBOOK\EXAMPLE
 {
     /**
      * <b>Use Facebook Graph API to get any data from a Facebook Page. Require App ID and Access Token.</b>
