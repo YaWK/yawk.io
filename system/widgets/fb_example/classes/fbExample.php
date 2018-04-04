@@ -29,18 +29,22 @@ class fbExample
     public $fbExampleGraphRequest = '/feed/';
     /** @var string fields that should be selected from facebook graph */
     public $fbExampleFields = 'id,name,description,place,start_time,cover,maybe_count,attending_count,is_canceled';
-    /** @var object api result (as object) */
-    public $apiObject;
+    /** @var string show events of this time range */
+    public $fbExampleYearRange = '1';
+    /** @var string user defined start date */
+    public $fbExampleStartDate = '';
+    /** @var string user defined end date */
+    public $fbExampleEndDate = '';
+    /** @var string which events should be shown? future|past|all */
+    public $fbExampleType = 'future';
+    /** @var string events since this date (used for calc) */
+    public $sinceDate = '';
+    /** @var string events until this date (used for calc) */
+    public $untilDate = '';
     /** @var string true|false was the js SDK loaded? */
     public $jsSDKLoaded = 'false';
-    /** @var string show events of this time range */
-    public $fbEventsYearRange = '1';
-    /** @var string user defined start date */
-    public $fbEventsStartDate = '';
-    /** @var string user defined end date */
-    public $fbEventsEndDate = '';
-    /** @var string which events should be shown? future|past|all */
-    public $fbEventsType = 'future';
+    /** @var object api result (as object) */
+    public $apiObject;
 
 
     public function __construct($db)
@@ -155,6 +159,44 @@ class fbExample
 
     public function makeApiCall()
     {
+        // WHICH EVENTS TO DISPLAY?
+        // evaluation of event type select field
+        if ($this->fbExampleType == "all")
+        {
+            // ALL EVENTS (FUTURE + PAST)
+            $this->sinceDate = date('Y-01-01', strtotime('-' . $this->fbExampleYearRange . ' years'));
+            $this->untilDate = date('Y-01-01', strtotime('+' . $this->fbExampleYearRange . ' years'));
+        }
+        elseif ($this->fbExampleType == "future")
+        {
+            // UPCOMING EVENTS
+            $this->sinceDate = date('Y-m-d');
+            $this->untilDate = date('Y-12-31', strtotime('+' . $this->fbExampleYearRange . ' years'));
+        }
+        elseif ($this->fbExampleType == "past")
+        {
+            // PAST EVENTS
+            $this->sinceDate = date('Y-01-01', strtotime('-' . $this->fbExampleYearRange . ' years'));
+            $this->untilDate = date('Y-m-d');
+        }
+        else
+        {   // IF NOT SET - use default:
+            // UPCOMING EVENTS
+            $this->sinceDate = date('Y-m-d');
+            $this->untilDate = date('Y-12-31', strtotime('+' . $this->fbExampleYearRange . ' years'));
+        }
+
+        // IF START + END DATE IS SET
+        if (isset($this->fbExampleStartDate) && (!empty($this->fbExampleStartDate))
+            && (isset($this->fbExampleEndDate) && (!empty($this->fbExampleEndDate))))
+        {
+            $this->sinceDate = date($this->fbExampleStartDate);
+            $this->untilDate = date($this->fbExampleEndDate);
+        }
+
+        // unix timestamp years
+        $since_unix_timestamp = strtotime($this->sinceDate);
+        $until_unix_timestamp = strtotime($this->untilDate);
         // check if fields are set
         if (isset($this->fbExampleFields) && (!empty($this->fbExampleFields)))
         {   // set markup for api query string
@@ -167,7 +209,7 @@ class fbExample
 
         // prepare API call
         // $json_link = "https://graph.facebook.com/v2.7/{$this->fbExamplePageId}{$this->fbExampleGraphRequest}?fields={$this->fields}&access_token={$this->fbExampleAccessToken}";
-        $json_link = "https://graph.facebook.com/v2.7/{$this->fbExamplePageId}{$this->fbExampleGraphRequest}?access_token={$this->fbExampleAccessToken}" . $fieldsMarkup . "";
+        $json_link = "https://graph.facebook.com/v2.7/{$this->fbExamplePageId}{$this->fbExampleGraphRequest}?access_token={$this->fbExampleAccessToken}&since={$since_unix_timestamp}&until={$until_unix_timestamp}" . $fieldsMarkup . "";
 
         // get json string
         $json = file_get_contents($json_link);
