@@ -2066,11 +2066,11 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('fbExampleAppId', '', 40, 1, 1, 'LABEL_FB_EXAMPLE_APPID', '', 'FB_EXAMPLE_HEADING_GLOBAL', '', 'DESC_FB_EXAMPLE_APPID', 'form-control', '', 'PH_FB_EXAMPLE_APPID', '', 221),
 ('fbExamplePageId', '', 40, 1, 3, 'LABEL_FB_EXAMPLE_PAGEID', '', '', '', 'DESC_FB_EXAMPLE_PAGEID', 'form-control', '', 'PH_FB_EXAMPLE_PAGEID', '', 222),
 ('fbExampleAccessToken', '', 40, 1, 2, 'LABEL_FB_EXAMPLE_ACCESS_TOKEN', '', '', '', 'DESC_FB_EXAMPLE_ACCESS_TOKEN', 'form-control', '', 'PH_FB_EXAMPLE_ACCESS_TOKEN', '', 223),
-('fbExampleGraphRequest', '', 40, 1, 2, 'LABEL_FB_EXAMPLE_REQUEST', '', '', '', 'DESC_FB_EXAMPLE_REQUEST', 'form-control', '', 'PH_FB_EXAMPLE_REQUEST', '', 224),
-('fbExampleFields', 'id,name,description,place,start_time,cover,maybe_count,attending_count,is_canceled', 40, 1, 2, 'LABEL_FB_EXAMPLE_FIELDS', '', '', '', 'DESC_FB_EXAMPLE_FIELDS', 'form-control', '', 'PH_FB_EXAMPLE_FIELDS', '', 225),
-('fbExampleStartDate', '', 40, 1, 1, 'LABEL_FB_EXAMPLE_STARTDATE', '', '', '', 'DESC_FB_EXAMPLE_STARTDATE', 'form-control', 'input', '', '', 226),
-('fbExampleEndDate', '', 40, 1, 1, 'LABEL_FB_EXAMPLE_ENDDATE', '', '', '', 'DESC_FB_EXAMPLE_ENDDATE', 'form-control', 'input', '', '', 227),
-('fbEventsYearRange', '1', 40, 1, 1, 'LABEL_FB_EXAMPLE_YEAR_RANGE', '', '', '', 'DESC_FB_EXAMPLE_YEAR_RANGE', 'form-control', 'select', '', '1,1 Year:2,2 Years:3,3 Years:4,4 Years:5,5 Years:6,6 Years:7,7 Years:8,8 Years:9,9 Years:10,10 Years:15,15 Years:20,20 Years:30,30 Years:40,40 Years:50,50 Years', 228);
+('fbExampleGraphRequest', '', 40, 1, 4, 'LABEL_FB_EXAMPLE_REQUEST', '', '', '', 'DESC_FB_EXAMPLE_REQUEST', 'form-control', '', 'PH_FB_EXAMPLE_REQUEST', '', 224),
+('fbExampleFields', 'id,name,description,place,start_time,cover,maybe_count,attending_count,is_canceled', 40, 1, 5, 'LABEL_FB_EXAMPLE_FIELDS', '', '', '', 'DESC_FB_EXAMPLE_FIELDS', 'form-control', '', 'PH_FB_EXAMPLE_FIELDS', '', 225),
+('fbExampleStartDate', '', 40, 1, 6, 'LABEL_FB_EXAMPLE_STARTDATE', '', '', '', 'DESC_FB_EXAMPLE_STARTDATE', 'form-control', 'input', '', '', 226),
+('fbExampleEndDate', '', 40, 1, 7, 'LABEL_FB_EXAMPLE_ENDDATE', '', '', '', 'DESC_FB_EXAMPLE_ENDDATE', 'form-control', 'input', '', '', 227),
+('fbEventsYearRange', '1', 40, 1, 8, 'LABEL_FB_EXAMPLE_YEAR_RANGE', '', '', '', 'DESC_FB_EXAMPLE_YEAR_RANGE', 'form-control', 'select', '', '1,1 Year:2,2 Years:3,3 Years:4,4 Years:5,5 Years:6,6 Years:7,7 Years:8,8 Years:9,9 Years:10,10 Years:15,15 Years:20,20 Years:30,30 Years:40,40 Years:50,50 Years', 228);
 
 CREATE TABLE `cms_widget_settings` (
   `id` int(11) NOT NULL,
