@@ -10,7 +10,7 @@ if (!isset($fbEvents) || (empty($fbEvents)))
     // include widget class: facebook events
     include ('classes/fbEvents.php');
     // create fb event object
-    $fbEvents = new \YAWK\WIDGETS\FACEBOOK\fbEvents($db);
+    $fbEvents = new \YAWK\WIDGETS\FACEBOOK\EVENTS\fbEvents($db);
 }
 // display facebook events
 $fbEvents->display();

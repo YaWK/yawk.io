@@ -1,5 +1,5 @@
 <?php
-namespace YAWK\WIDGETS\FACEBOOK
+namespace YAWK\WIDGETS\FACEBOOK\EVENTS
 {
     /**
      * <b>Use Facebook Graph API to get Events from a Facebook Page. Require App ID and Access Token.</b>
