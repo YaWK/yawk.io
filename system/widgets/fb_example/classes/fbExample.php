@@ -26,7 +26,7 @@ class fbExample
     /** @var string your access token (secret word from developers.facebook.com) */
     public $fbExampleAccessToken = '';
     /** @var string your graph request */
-    public $fbExampleGraphRequest = '/feed/';
+    public $fbExampleGraphRequest = '/events/';
     /** @var string fields that should be selected from facebook graph */
     public $fbExampleFields = 'id,name,description,place,start_time,cover,maybe_count,attending_count,is_canceled';
     /** @var string show events of this time range */
@@ -218,15 +218,34 @@ class fbExample
         return $this->apiObject = json_decode($json, true, 512, JSON_BIGINT_AS_STRING);
     }
 
+    public function checkApiObjectData()
+    {
+        if (isset($this->apiObject['data']) && (!empty($this->apiObject['data'])))
+        {
+            return true;
+        }
+        else
+            {
+                return false;
+            }
+    }
+
     public function printApiObject()
     {
         $this->makeApiCall();
-        if (isset($this->apiObject) && (!empty($this->apiObject)))
+        if ($this->checkApiObjectData() === true)
         {
             echo "<pre>";
             print_r($this);
             echo "</pre>";
         }
+        else
+            {
+                echo "<pre>";
+                echo "Could not retrieve any data from Facebook. Please check your PageID, API request, field and date settings";
+                echo "</pre>";
+                exit;
+            }
     }
     
     public function basicOutput()
