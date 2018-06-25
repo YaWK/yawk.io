@@ -32,6 +32,8 @@ namespace YAWK\WIDGETS\FACEBOOK\EVENTS
      */
 class fbEvents
 {
+    /** @var object global widget object data */
+    public $widget = '';
     /** @var string your app ID (from developers.facebook.com) */
     public $fbEventsAppId = '';
     /** @var string your page ID (http://facebook.com/{YOURPAGEID} */
@@ -152,8 +154,8 @@ class fbEvents
     public function __construct($db)
     {
         // load this widget settings from db
-        $widget = new \YAWK\widget();
-        $settings = $widget->getWidgetSettingsArray($db);
+        $this->widget = new \YAWK\widget();
+        $settings = $this->widget->getWidgetSettingsArray($db);
         foreach ($settings as $property => $value)
         {
             $this->$property = $value;
@@ -172,7 +174,7 @@ class fbEvents
                 FB.init({
                     appId      : '" . $this->fbEventsAppId . "',
                     xfbml      : true,
-                    version    : 'v2.7'
+                    version    : 'v3.0'
                 });
                 FB.AppEvents.logPageView();
             };
@@ -246,23 +248,25 @@ class fbEvents
             exit;
             */
 
+            // if object is set, but array got not data...
             if (isset($obj) && (is_array($obj) && (is_array($obj['data']) && (empty($obj['data'])))))
-            {
+            {   // no upcoming data found
                 if (isset($this->fbEventsType) && (!empty($this->fbEventsType) && $this->fbEventsType == "future"))
                 {
                     die ("Sorry, no upcoming events were found.");
                 }
+                // no past data found
                 else if (isset($this->fbEventsType) && (!empty($this->fbEventsType) && $this->fbEventsType == "past"))
                 {
                     die ("Sorry, no past events were found.");
                 }
                 else
-                    {
+                    {   // in any other empty array case
                         die ("Sorry, no events were found.");
                     }
             }
 
-            // sortation
+            // sort data
             if ($this->fbEventsSortation === "asc")
             {   // reverse array data to display upcoming event first
                 $obj['data'] = array_reverse($obj['data']);
@@ -340,7 +344,7 @@ class fbEvents
                     $this->dateString = "$prepend $until->m $duration";
                 }
                     // not within a year
-                else if ($until->days > 365)
+                else if ($until->days >= 365)
                 {   // less than two years
                     if ($until->y < 2)
                     {   // singular
@@ -1102,8 +1106,8 @@ class fbEvents
                             echo "<td width=\"14%\"".$coverImage.">";
                             echo "</td>";
                             echo "<td>";
-                            echo "".$fontTitleStart."".$canceled."".$delStart."" . $this->event['name'] . "</b><br>" . $this->event['place']['name'] . "<br><small>" . $this->prettyDate . " Uhr <small>(" . $this->dateString . ")</small></small><br><small>(" . $this->event['place']['location']['street'] . ", " . $this->event['place']['location']['zip'] . " " . $this->event['place']['location']['city'] . ", " . $this->event['place']['location']['country'] . ")</small>".$fontTitleEnd."" . $delEnd . "<hr".$hrClass.">";
-                            echo "".$this->event['description']."</td>";
+                            echo "".$fontTitleStart."".$canceled."".$delStart."" . $this->event['name'] . "</b><br>" . $this->event['place']['name'] . "<br><small>" . $this->prettyDate . " Uhr <small>(" . $this->dateString . ")</small></small><br><small>(" . $this->event['place']['location']['street'] . ", " . $this->event['place']['location']['zip'] . " " . $this->event['place']['location']['city'] . ", " . $this->event['place']['location']['country'] . ")</small>".$fontTitleEnd."" . $delEnd . "<br>".$this->event['description']."";
+                            echo "</td>";
                         echo "</tr>";
                     echo "</table>";
                     echo "</div>";
