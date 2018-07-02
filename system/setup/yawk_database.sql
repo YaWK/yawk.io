@@ -2071,7 +2071,16 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('fbExampleStartDate', '', 40, 1, 6, 'LABEL_FB_EXAMPLE_STARTDATE', '', '', '', 'DESC_FB_EXAMPLE_STARTDATE', 'form-control', 'input', '', '', 226),
 ('fbExampleEndDate', '', 40, 1, 7, 'LABEL_FB_EXAMPLE_ENDDATE', '', '', '', 'DESC_FB_EXAMPLE_ENDDATE', 'form-control', 'input', '', '', 227),
 ('fbExampleYearRange', '1', 40, 1, 8, 'LABEL_FB_EXAMPLE_YEAR_RANGE', '', '', '', 'DESC_FB_EXAMPLE_YEAR_RANGE', 'form-control', 'select', '', '1,1 Year:2,2 Years:3,3 Years:4,4 Years:5,5 Years:6,6 Years:7,7 Years:8,8 Years:9,9 Years:10,10 Years:15,15 Years:20,20 Years:30,30 Years:40,40 Years:50,50 Years', 228),
-('fbExampleType', 'future', 40, 1, 9, 'LABEL_FB_EXAMPLE_TYPE', '', '', '', 'DESC_FB_EXAMPLE_TYPE', 'form-control', 'select', '', 'future,Future Events (upcoming):past,Past Events (archive):both,Both (Upcoming and past)', 229);
+('fbExampleType', 'future', 40, 1, 9, 'LABEL_FB_EXAMPLE_TYPE', '', '', '', 'DESC_FB_EXAMPLE_TYPE', 'form-control', 'select', '', 'future,Future Events (upcoming):past,Past Events (archive):both,Both (Upcoming and past)', 229),
+('fbGalleryAppId', '', 41, 1, 1, 'LABEL_FB_EXAMPLE_APPID', '', 'FB_EXAMPLE_HEADING_GLOBAL', '', 'DESC_FB_EXAMPLE_APPID', 'form-control', '', 'PH_FB_EXAMPLE_APPID', '', 230),
+('fbGalleryPageId', '', 41, 1, 3, 'LABEL_FB_EXAMPLE_PAGEID', '', '', '', 'DESC_FB_EXAMPLE_PAGEID', 'form-control', '', 'PH_FB_EXAMPLE_PAGEID', '', 231),
+('fbGalleryAccessToken', '', 41, 1, 2, 'LABEL_FB_EXAMPLE_ACCESS_TOKEN', '', '', '', 'DESC_FB_EXAMPLE_ACCESS_TOKEN', 'form-control', '', 'PH_FB_EXAMPLE_ACCESS_TOKEN', '', 232),
+('fbGalleryGraphRequest', '', 41, 1, 4, 'LABEL_FB_EXAMPLE_REQUEST', '', '', '', 'DESC_FB_EXAMPLE_REQUEST', 'form-control', '', 'PH_FB_EXAMPLE_REQUEST', '', 233),
+('fbGalleryFields', 'id,name,description,place,start_time,cover,maybe_count,attending_count,is_canceled', 41, 1, 5, 'LABEL_FB_EXAMPLE_FIELDS', '', '', '', 'DESC_FB_EXAMPLE_FIELDS', 'form-control', '', 'PH_FB_EXAMPLE_FIELDS', '', 234),
+('fbGalleryStartDate', '', 41, 1, 6, 'LABEL_FB_EXAMPLE_STARTDATE', '', '', '', 'DESC_FB_EXAMPLE_STARTDATE', 'form-control', 'input', '', '', 235),
+('fbGalleryEndDate', '', 41, 1, 7, 'LABEL_FB_EXAMPLE_ENDDATE', '', '', '', 'DESC_FB_EXAMPLE_ENDDATE', 'form-control', 'input', '', '', 236),
+('fbGalleryYearRange', '1', 41, 1, 8, 'LABEL_FB_EXAMPLE_YEAR_RANGE', '', '', '', 'DESC_FB_EXAMPLE_YEAR_RANGE', 'form-control', 'select', '', '1,1 Year:2,2 Years:3,3 Years:4,4 Years:5,5 Years:6,6 Years:7,7 Years:8,8 Years:9,9 Years:10,10 Years:15,15 Years:20,20 Years:30,30 Years:40,40 Years:50,50 Years', 237),
+('fbGalleryType', 'future', 41, 1, 9, 'LABEL_FB_EXAMPLE_TYPE', '', '', '', 'DESC_FB_EXAMPLE_TYPE', 'form-control', 'select', '', 'future,Future Events (upcoming):past,Past Events (archive):both,Both (Upcoming and past)', 238);
 
 CREATE TABLE `cms_widget_settings` (
   `id` int(11) NOT NULL,
@@ -2140,7 +2149,8 @@ INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`)
 (37, 1, 'Content Animator', 'contentAnimator', 'Enable Slide Animations for your content'),
 (38, 1, 'Embed Page', 'embed_page', 'Embed any of your static pages'),
 (39, 1, 'Facebook Events', 'fb_events', 'Embed Facebook Events from your Facebook Page'),
-(40, 1, 'Facebook Graph Explorer', 'fb_example', 'Use the Facebook Graph API to get data - this is for demo and development purpose only!');
+(40, 1, 'Facebook Graph Explorer', 'fb_example', 'Use the Facebook Graph API to get data - this is for demo and development purpose only!'),
+(41, 1, 'Facebook Gallery', 'fb_gallery', 'Embed photo albums from your Facebook page');
 
 ALTER TABLE `cms_assets`
   ADD PRIMARY KEY (`id`);
@@ -2351,8 +2361,8 @@ ALTER TABLE `cms_user_groups`
 ALTER TABLE `cms_widgets`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_defaults`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=217;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=238;
 ALTER TABLE `cms_widget_settings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
