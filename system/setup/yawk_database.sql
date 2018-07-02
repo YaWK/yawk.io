@@ -2079,8 +2079,8 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('fbGalleryFields', 'id,name,description,place,start_time,cover,maybe_count,attending_count,is_canceled', 41, 1, 5, 'LABEL_FB_EXAMPLE_FIELDS', '', '', '', 'DESC_FB_EXAMPLE_FIELDS', 'form-control', '', 'PH_FB_EXAMPLE_FIELDS', '', 234),
 ('fbGalleryStartDate', '', 41, 1, 6, 'LABEL_FB_EXAMPLE_STARTDATE', '', '', '', 'DESC_FB_EXAMPLE_STARTDATE', 'form-control', 'input', '', '', 235),
 ('fbGalleryEndDate', '', 41, 1, 7, 'LABEL_FB_EXAMPLE_ENDDATE', '', '', '', 'DESC_FB_EXAMPLE_ENDDATE', 'form-control', 'input', '', '', 236),
-('fbGalleryYearRange', '1', 41, 1, 8, 'LABEL_FB_EXAMPLE_YEAR_RANGE', '', '', '', 'DESC_FB_EXAMPLE_YEAR_RANGE', 'form-control', 'select', '', '1,1 Year:2,2 Years:3,3 Years:4,4 Years:5,5 Years:6,6 Years:7,7 Years:8,8 Years:9,9 Years:10,10 Years:15,15 Years:20,20 Years:30,30 Years:40,40 Years:50,50 Years', 237),
-('fbGalleryType', 'future', 41, 1, 9, 'LABEL_FB_EXAMPLE_TYPE', '', '', '', 'DESC_FB_EXAMPLE_TYPE', 'form-control', 'select', '', 'future,Future Events (upcoming):past,Past Events (archive):both,Both (Upcoming and past)', 238);
+('fbGalleryYearRange', '10', 41, 1, 8, 'LABEL_FB_EXAMPLE_YEAR_RANGE', '', '', '', 'DESC_FB_EXAMPLE_YEAR_RANGE', 'form-control', 'select', '', '1,1 Year:2,2 Years:3,3 Years:4,4 Years:5,5 Years:6,6 Years:7,7 Years:8,8 Years:9,9 Years:10,10 Years:15,15 Years:20,20 Years:30,30 Years:40,40 Years:50,50 Years', 237),
+('fbGalleryType', 'past', 41, 1, 9, 'LABEL_FB_EXAMPLE_TYPE', '', '', '', 'DESC_FB_EXAMPLE_TYPE', 'form-control', 'select', '', 'future,Future Events (upcoming):past,Past Events (archive):both,Both (Upcoming and past)', 238);
 
 CREATE TABLE `cms_widget_settings` (
   `id` int(11) NOT NULL,
