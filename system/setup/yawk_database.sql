@@ -2072,15 +2072,21 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('fbExampleEndDate', '', 40, 1, 7, 'LABEL_FB_EXAMPLE_ENDDATE', '', '', '', 'DESC_FB_EXAMPLE_ENDDATE', 'form-control', 'input', '', '', 227),
 ('fbExampleYearRange', '1', 40, 1, 8, 'LABEL_FB_EXAMPLE_YEAR_RANGE', '', '', '', 'DESC_FB_EXAMPLE_YEAR_RANGE', 'form-control', 'select', '', '1,1 Year:2,2 Years:3,3 Years:4,4 Years:5,5 Years:6,6 Years:7,7 Years:8,8 Years:9,9 Years:10,10 Years:15,15 Years:20,20 Years:30,30 Years:40,40 Years:50,50 Years', 228),
 ('fbExampleType', 'future', 40, 1, 9, 'LABEL_FB_EXAMPLE_TYPE', '', '', '', 'DESC_FB_EXAMPLE_TYPE', 'form-control', 'select', '', 'future,Future Events (upcoming):past,Past Events (archive):both,Both (Upcoming and past)', 229),
-('fbGalleryAppId', '', 41, 1, 1, 'LABEL_FB_EXAMPLE_APPID', '', 'FB_EXAMPLE_HEADING_GLOBAL', '', 'DESC_FB_EXAMPLE_APPID', 'form-control', '', 'PH_FB_EXAMPLE_APPID', '', 230),
-('fbGalleryPageId', '', 41, 1, 3, 'LABEL_FB_EXAMPLE_PAGEID', '', '', '', 'DESC_FB_EXAMPLE_PAGEID', 'form-control', '', 'PH_FB_EXAMPLE_PAGEID', '', 231),
-('fbGalleryAccessToken', '', 41, 1, 2, 'LABEL_FB_EXAMPLE_ACCESS_TOKEN', '', '', '', 'DESC_FB_EXAMPLE_ACCESS_TOKEN', 'form-control', '', 'PH_FB_EXAMPLE_ACCESS_TOKEN', '', 232),
-('fbGalleryGraphRequest', '', 41, 1, 4, 'LABEL_FB_EXAMPLE_REQUEST', '', '', '', 'DESC_FB_EXAMPLE_REQUEST', 'form-control', '', 'PH_FB_EXAMPLE_REQUEST', '', 233),
-('fbGalleryFields', 'id,name,description,place,start_time,cover,maybe_count,attending_count,is_canceled', 41, 1, 5, 'LABEL_FB_EXAMPLE_FIELDS', '', '', '', 'DESC_FB_EXAMPLE_FIELDS', 'form-control', '', 'PH_FB_EXAMPLE_FIELDS', '', 234),
-('fbGalleryStartDate', '', 41, 1, 6, 'LABEL_FB_EXAMPLE_STARTDATE', '', '', '', 'DESC_FB_EXAMPLE_STARTDATE', 'form-control', 'input', '', '', 235),
-('fbGalleryEndDate', '', 41, 1, 7, 'LABEL_FB_EXAMPLE_ENDDATE', '', '', '', 'DESC_FB_EXAMPLE_ENDDATE', 'form-control', 'input', '', '', 236),
-('fbGalleryYearRange', '10', 41, 1, 8, 'LABEL_FB_EXAMPLE_YEAR_RANGE', '', '', '', 'DESC_FB_EXAMPLE_YEAR_RANGE', 'form-control', 'select', '', '1,1 Year:2,2 Years:3,3 Years:4,4 Years:5,5 Years:6,6 Years:7,7 Years:8,8 Years:9,9 Years:10,10 Years:15,15 Years:20,20 Years:30,30 Years:40,40 Years:50,50 Years', 237),
-('fbGalleryType', 'past', 41, 1, 9, 'LABEL_FB_EXAMPLE_TYPE', '', '', '', 'DESC_FB_EXAMPLE_TYPE', 'form-control', 'select', '', 'future,Future Events (upcoming):past,Past Events (archive):both,Both (Upcoming and past)', 238);
+('fbGalleryAppId', '', 41, 1, 1, 'LABEL_FB_GALLERY_APPID', '', 'FB_GALLERY_HEADING_GLOBAL', '', 'DESC_FB_GALLERY_APPID', 'form-control', '', 'PH_FB_GALLERY_APPID', '', 230),
+('fbGalleryAlbumId', '', 41, 1, 3, 'LABEL_FB_GALLERY_ALBUMID', '', '', '', 'DESC_FB_GALLERY_ALBUMID', 'form-control', 'fbGallerySelect', 'PH_FB_GALLERY_ALBUMID', '', 231),
+('fbGalleryAccessToken', '', 41, 1, 2, 'LABEL_FB_GALLERY_ACCESS_TOKEN', '', '', '', 'DESC_FB_GALLERY_ACCESS_TOKEN', 'form-control', '', 'PH_FB_GALLERY_ACCESS_TOKEN', '', 232),
+('fbGalleryFields', 'images,source,name,id', 41, 1, 5, 'LABEL_FB_GALLERY_FIELDS', '', '', '', 'DESC_FB_GALLERY_FIELDS', 'form-control', '', 'PH_FB_GALLERY_FIELDS', '', 234),
+('fbGalleryStartDate', '', 41, 1, 30, 'LABEL_FB_GALLERY_STARTDATE', '', 'FB_GALLERY_HEADING_PERIOD', '', 'DESC_FB_GALLERY_STARTDATE', 'form-control', 'input', '', '', 235),
+('fbGalleryEndDate', '', 41, 1, 31, 'LABEL_FB_GALLERY_ENDDATE', '', '', '', 'DESC_FB_GALLERY_ENDDATE', 'form-control', 'input', '', '', 236),
+('fbGalleryYearRange', '10', 41, 1, 32, 'LABEL_FB_GALLERY_YEAR_RANGE', '', '', '', 'DESC_FB_GALLERY_YEAR_RANGE', 'form-control', 'select', '', '1,1 Year:2,2 Years:3,3 Years:4,4 Years:5,5 Years:6,6 Years:7,7 Years:8,8 Years:9,9 Years:10,10 Years:15,15 Years:20,20 Years:30,30 Years:40,40 Years:50,50 Years', 237),
+('fbGalleryType', 'past', 41, 1, 33, 'LABEL_FB_GALLERY_TYPE', '', '', '', 'DESC_FB_GALLERY_TYPE', 'form-control', 'select', '', 'past,Past Albums', 238),
+('fbGallerySortation', 'asc', 41, 1, 10, 'LABEL_FB_GALLERY_SORTATION', '', 'FB_GALLERY_HEADING_LAYOUT', '', 'DESC_FB_GALLERY_SORTATION', 'form-control', 'select', '', 'asc,Ascending:desc,Descending:shuffle,Shuffle', 239),
+('fbGalleryHeading', '', 41, 1, 11, 'LABEL_FB_GALLERY_HEADING', '', '', '', 'DESC_FB_GALLERY_HEADING', 'form-control', '', 'PH_FB_GALLERY_HEADING', '', 240),
+('fbGallerySubtext', '', 41, 1, 12, 'LABEL_FB_GALLERY_SUBTEXT', '', '', '', 'DESC_FB_GALLERY_SUBTEXT', 'form-control', '', 'PH_FB_GALLERY_SUBTEXT', '', 241),
+('fbGalleryLimit', '25', 41, 1, 13, 'LABEL_FB_GALLERY_LIMIT', '', '', '', 'DESC_FB_GALLERY_LIMIT', 'form-control', 'select', 'PH_FB_GALLERY_LIMIT', '1,1:2,2:3,3:4,4:5,5:6,6:7,7:8,8:9,9:10,10:11,11:12,12:13,13:14,14:15,15:16,16:17,17:18,18:19,19:20,20:21,21:22,22:23,23:24,24:25,25', 242),
+('fbGalleryLayout', '4', 41, 1, 14, 'LABEL_FB_GALLERY_LAYOUT', '', '', '', 'DESC_FB_GALLERY_LAYOUT', 'form-control', 'select', '', '12,Layout col-12:6,Layout col-6:4,Layout col-4:3,Layout col-3:2,Layout col-2:1,Layout col-1', 243),
+('fbGalleryImageInfo', '1', 41, 1, 15, 'LABEL_FB_GALLERY_INFO', '', '', '', 'DESC_FB_GALLERY_INFO', 'form-control', 'select', '', '1,Show info:0,Do not show info', 244);
+
 
 CREATE TABLE `cms_widget_settings` (
   `id` int(11) NOT NULL,
@@ -2361,7 +2367,7 @@ ALTER TABLE `cms_user_groups`
 ALTER TABLE `cms_widgets`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_defaults`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=238;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=244;
 ALTER TABLE `cms_widget_settings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_types`
