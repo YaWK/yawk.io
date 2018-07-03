@@ -2,12 +2,18 @@
 namespace YAWK\WIDGETS\FACEBOOK\GALLERY
 {
     /**
-     * <b>Use Facebook Graph API to get any data from a Facebook Page. Require App ID and Access Token.</b>
-     * <p>This is just an empty example widget for development and demo purpose!</p>
+     * <b>Use Facebook Graph API to get album photos from a Facebook Page. Requires an App ID and a valid access token.</b>
      *
-     * <p>It is recommended to play around with the facebook graph explorer.
-     * You can set any api call and fields you like to play around and explore the resulting array.
-     * You can use this widget as base for your own facebook api projects.</p>
+     * <p>With this widget, you are able to embed photos from your facebook page onto your website.
+     * It helps you to keep your website up to date. Have you ever been bored of adding the same content twice?
+     * If you change your facebook photo album the data on your website will be updated automatically. </p>
+     *
+     * <p>You need an APP ID, as well as a valid access token for the facebook page you want to embed photos from.
+     * For reasons, you (respectively the app id / access token) needs administrative access rights to the facebook
+     * page you want to grab photos from. Create a new fb gallery widget in the backend, enter app id, access token
+     * and press save widget settings. The page reloads and your albums will get loaded into a select field.
+     *
+     * </p>
      *
      * @package    YAWK
      * @author     Daniel Retzl <danielretzl@gmail.com>
@@ -15,7 +21,7 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Facebook Graph API explorer widget - for demo and development purpose only!
+     * @annotation Facebook Gallery Widget - grab photos from your Facebook albums.
      */
     class fbGallery
     {
@@ -29,7 +35,7 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
         public $fbGalleryGraphRequest = '/albums/';
         /** @var string fields that should be selected from facebook graph */
         public $fbGalleryFields = 'images,source,name,id';
-        /** @var string show events of this time range */
+        /** @var string show ITEMS of this time range */
         public $fbGalleryYearRange = '10';
         /** @var string user defined start date */
         public $fbGalleryStartDate = '';
@@ -41,7 +47,7 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
         public $fbGalleryHeading = '';
         /** @var string gallery small subtext beside heading */
         public $fbGallerySubtext = '';
-        /** @var string events since this date (used for calc) */
+        /** @var string ITEMS since this date (used for calc) */
         public $sinceDate = '';
         /** @var int limit entries to (n) */
         public $fbGalleryLimit = 0;
@@ -55,7 +61,7 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
         public $fbGalleryFixedImageHeight = 'auto';
         /** @var int shuffle 0|1 if true, images get shuffled on page load */
         public $shuffle = 0;
-        /** @var string events until this date (used for calc) */
+        /** @var string ITEMS until this date (used for calc) */
         public $untilDate = '';
         /** @var string true|false was the js SDK loaded? */
         public $jsSDKLoaded = 'false';
@@ -65,6 +71,11 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
         public $settings;
 
 
+        /**
+         * fbGallery constructor.
+         * Get widget settings into this->settings array and call checkRequirements
+         * @param $db
+         */
         public function __construct($db)
         {
             // load this widget settings from db
@@ -78,6 +89,9 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
             $this->checkRequirements();
         }
 
+        /**
+         * Check if all requirements are fulfilled to perform api call.
+         */
         public function checkRequirements()
         {
             $this->checkAppId();
@@ -85,62 +99,78 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
             $this->checkAlbumId();
         }
 
+        /**
+         * Check if App ID is set, not empty and numeric. Returns true if app ID is ok or abort with an error message.
+         * @return bool
+         */
         public function checkAppId()
-        {
+        {   // check if App ID is set and not empty
             if (isset($this->fbGalleryAppId) && (!empty($this->fbGalleryAppId)))
-            {
+            {   // is app ID a number for sure?
                 if (is_numeric($this->fbGalleryAppId))
-                {
+                {   // app id seems legit
                     return true;
                 }
                 else
-                {
+                {   // app id not numeric, abort with error message
                     die ("app ID is set, but not a numeric value! Please check your app ID - it should contain numbers only.");
                 }
             }
             else
-            {
+            {   // app id not set or empty, abort with error message
                 die ("app ID is not set. Please add your app ID. You can obtain it from http://developers.facebook.com");
             }
         }
 
+        /**
+         * Check if access token is correctly set. Returns true or abort with an error message
+         * @return bool
+         */
         public function checkAccessToken()
-        {
+        {   // check if access token is set and not empty
             if (isset($this->fbGalleryAccessToken) && (!empty($this->fbGalleryAccessToken)))
-            {
+            {   // check if access token is a string
                 if (is_string($this->fbGalleryAccessToken))
-                {
+                {   // access token seems legit
                     return true;
                 }
                 else
-                {
+                {   // access token is not a string, abort with error message
                     die ("Access token is set, but not a string value! Please check your access token.");
                 }
             }
             else
-            {
-                die ("Access token is not set. Please add your access token. You can obtain it from http://developers.facebook.com");
+            {   // access token is not set or empty, abort with error message
+                die ("Access token is not set. Please add your access token. You can obtain it from http://developers.facebook.com/apps");
             }
         }
+
+        /**
+         * Check if album id is correctly set. Returns true or abort with an error message
+         * @return bool
+         */
         public function checkAlbumId()
-        {
+        {   // check if Album ID is set and not empty
             if (isset($this->fbGalleryAlbumId) && (!empty($this->fbGalleryAlbumId)))
-            {
+            {   // check if album ID is a string
                 if (is_string($this->fbGalleryAlbumId))
-                {
+                {   // seems legit
                     return true;
                 }
                 else
-                {
+                {   // album id is not a string, abort with error msg
                     die ("Album ID is set, but not a string value! Please check your photo album ID.");
                 }
             }
             else
-            {
+            {   // album id is not set or empty, abort with error msg
                 die ("Album ID is not set. Please add your photo album ID.");
             }
         }
 
+        /**
+         * Load Facebook JS Code.
+         */
         public function loadJSSDK()
         {   // check if fb JS SDK was loaded before
             if ($this->jsSDKLoaded == 'false')
@@ -155,7 +185,7 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
                     xfbml      : true,
                     version    : 'v3.0'
                     });
-                FB.AppEvents.logPageView();
+                FB.AppITEMS.logPageView();
                 };
                 
                 (function(d, s, id){
@@ -169,37 +199,41 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
                     $this->jsSDKLoaded = 'true';
                 }
                 else
-                {
+                {   // check app ID failed, abort with error msg (app id not set correctly)
                     die ("unable to include facebook js SDK - checkAppId failed. Please check your app ID in the widget settings!");
                 }
             }
         }
 
+        /**
+         * Prepare object data, set json link, make API call and return apiObject
+         * @return object
+         */
         public function makeApiCall()
         {
-            // WHICH EVENTS TO DISPLAY?
+            // WHICH ITEMS TO DISPLAY?
             // evaluation of event type select field
             if ($this->fbGalleryType == "all")
             {
-                // ALL EVENTS (FUTURE + PAST)
+                // ALL ITEMS (FUTURE + PAST)
                 $this->sinceDate = date('Y-01-01', strtotime('-' . $this->fbGalleryYearRange . ' years'));
                 $this->untilDate = date('Y-01-01', strtotime('+' . $this->fbGalleryYearRange . ' years'));
             }
             elseif ($this->fbGalleryType == "future")
             {
-                // UPCOMING EVENTS
+                // UPCOMING ITEMS
                 $this->sinceDate = date('Y-m-d');
                 $this->untilDate = date('Y-12-31', strtotime('+' . $this->fbGalleryYearRange . ' years'));
             }
             elseif ($this->fbGalleryType == "past")
             {
-                // PAST EVENTS
+                // PAST ITEMS
                 $this->sinceDate = date('Y-01-01', strtotime('-' . $this->fbGalleryYearRange . ' years'));
                 $this->untilDate = date('Y-m-d');
             }
             else
             {   // IF NOT SET - use default:
-                // UPCOMING EVENTS
+                // UPCOMING ITEMS
                 $this->sinceDate = date('Y-m-d');
                 $this->untilDate = date('Y-12-31', strtotime('+' . $this->fbGalleryYearRange . ' years'));
             }
@@ -230,72 +264,34 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
             $json_link = "https://graph.facebook.com/v3.0/{$this->fbGalleryAlbumId}/photos$fieldsMarkup&access_token={$this->fbGalleryAccessToken}";
             // get json string
             $json = file_get_contents($json_link);
-
             // convert json to object
             return $this->apiObject = json_decode($json, true, 512, JSON_BIGINT_AS_STRING);
         }
 
+        /**
+         * Check if api object is set and not empty
+         * @return bool returns true or false
+         */
         public function checkApiObjectData()
-        {
+        {   // check if object data is set and not empty
             if (isset($this->apiObject['data']) && (!empty($this->apiObject['data'])))
-            {
+            {   // seems legit
                 return true;
             }
             else
-            {
+            {   // object not set or empty
                 return false;
             }
         }
 
-        public function printApiObject()
-        {
-            $this->makeApiCall();
-            if ($this->checkApiObjectData() === true)
-            {
-                echo "<pre>";
-                print_r($this);
-                echo "</pre>";
-            }
-            else
-            {
-                echo "<pre>";
-                echo "Could not retrieve any data from Facebook. Please check your PageID, API request, field and date settings";
-                echo "</pre>";
-                exit;
-            }
-        }
-
-        public function basicOutput()
-        {
-            $this->loadJSSDK();
-            $this->makeApiCall();
-
-            echo "Basic Output (test data)<hr>";
-            foreach ($this->apiObject['data'] as $property => $value) {
-                echo "<b>$property </b>: $value<br>";
-
-                foreach ($value as $entry => $key) {
-
-                    echo "$entry : $key<br>";
-
-                    if (is_array($key)) {
-                        foreach ($key as $p => $v) {
-                            echo "&nbsp;&nbsp;&nbsp;&nbsp;$p : $v<br>";
-                            if (is_array($v)) {
-                                foreach ($v as $a => $b) {
-                                    echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$a : $b<br>";
-                                }
-                            }
-                        }
-                    }
-                }
-                echo "<br>";
-            }
-        }
-
+        /**
+         * The heart of this widget: this method draws the gallery.
+         */
         public function drawGallery()
         {
+            // load facebook JS
             $this->loadJSSDK();
+            // make facebook api call
             $this->makeApiCall();
 
             /* ALBUM DETAILED VIEW */
@@ -418,44 +414,6 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
                     }
 
             */
-
-
-
-                    /*
-                    foreach ($value['images'] as $photo)
-                    {
-                        echo "<pre>";
-                        echo "<img src=\"".$photo['source']."\" class=\"img-responsive\">";
-                        echo "</pre>";
-                    }
-                    */
-                    /*
-                                        echo "<br><br>$property : $value<br>";
-
-                                        if (is_array($value)) {
-
-                                            foreach ($value as $entry => $key) {
-                                                echo "$entry : $key <br>";
-                                                if (is_array($key)) {
-                                                    foreach ($key as $image) {
-                                                        echo "$key : $image<br>";
-                                                        if (is_array($key) || (is_array($image))) {
-                                                            foreach ($key as $arrayKey => $arrayValue) {
-                                                                echo "&nbsp;&nbsp;$arrayKey : $arrayValue<br>";
-                                                                if (is_array($arrayValue)) {
-                                                                    foreach ($arrayValue as $p => $v) {
-                                                                        echo "&nbsp;&nbsp;$p : $v<br>";
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-
-                }
-            }*/
 
     }   // end class fbGallery
 } // end namespace
