@@ -22,7 +22,7 @@
  */
 namespace YAWK {
     /**
-     * Mobile Detect Library
+     * <b>Mobile Detect Library</b>
      */
     class Mobile_Detect
     {
