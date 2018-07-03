@@ -48,7 +48,7 @@ namespace YAWK {
         public $widgetTitle;
         /** * @var string foldername of this widget */
         public $folder;
-        /** * @var string widget settings data array placeholder */
+        /** * @var array widget settings data array placeholder */
         public $data;
 
 
@@ -87,7 +87,7 @@ namespace YAWK {
                 }
                 else
                     {   // widget settings could not be retrieved
-                        die("Unable to load widget settings of widget ID: ".$this->id."");
+                        die("Error: this data object is empty - unable to load widget settings of widget ID: ".$this->id."");
                     }
             }
             else
@@ -377,6 +377,92 @@ namespace YAWK {
                             echo "<label for=\"$setting[property]\">$setting[label] $setting[description]</label>
                                   <input type=\"text\" class=\"form-control $setting[fieldType]\" id=\"$setting[property]\" name=\"$setting[property]\" 
 										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\">";
+                        }
+
+
+                        /* FACEBOOK SELECT FIELD */
+                        if ($setting['fieldType'] === "fbGallerySelect")
+                        {   // display icon, heading and subtext, if its set
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                            {
+                                echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
+                            }
+                            // IMPORT FACEBOOK DATA, depending on APP ID and TOKEN
+                            // get APP ID from settings array
+                            $appId = $settings[0]['value'];
+                            // get TOKEN from settings array
+                            $token = $settings[1]['value'];
+                            if (isset($appId) && (is_string($appId) && (!empty($appId)
+                            && (isset($token) && (is_string($token) && (!empty($token)))))))
+                            {
+                                // include facebook SDK JS
+                                echo "<script>
+                                window.fbAsyncInit = function() {
+                                    FB.init({
+                                    appId      : '" . $appId . "',
+                                    xfbml      : true,
+                                    version    : 'v3.0'
+                                    });
+                                FB.AppEvents.logPageView();
+                                };
+                                
+                                (function(d, s, id){
+                                    var js, fjs = d.getElementsByTagName(s)[0];
+                                    if (d.getElementById(id)) {return;}
+                                    js = d.createElement(s); js.id = id;
+                                    js.src = \"https://connect.facebook.net/en_US/sdk.js\";
+                                    fjs.parentNode.insertBefore(js, fjs);
+                                }(document, 'script', 'facebook-jssdk'));
+                                </script>";
+
+                                // facebook data is set - try to get album list
+                                // prepare API call - get albums for this app id and token
+                                $json_link = "https://graph.facebook.com/v3.0/me/albums?access_token={$token}";
+
+                                // get json string
+                                $json = file_get_contents($json_link);
+
+                                // convert json to object
+                                $apiObject = json_decode($json, true, 512, JSON_BIGINT_AS_STRING);
+
+                                // stores all the field html markup
+                                $fbGallerySelectMarkup = '';
+                                // check if api object is set
+                                if (isset($apiObject) && (is_array($apiObject['data']) && (!empty($apiObject['data']))))
+                                {
+                                    // build the select field
+                                    $fbGallerySelectMarkup = "<label for=\"$setting[property]\">$setting[label]&nbsp;$setting[description]</label>";
+                                    $fbGallerySelectMarkup .= "<select class=\"form-control\" id=\"$setting[property]\" name=\"$setting[property]\">";
+
+                                    // walk trough data array
+                                    foreach ($apiObject['data'] as $data => $field)
+                                    {   // and add select options
+                                        if ($field['id'] == $settings[2]['value'])
+                                        {
+                                            $selected = " selected";
+                                        }
+                                        else { $selected = ''; }
+
+                                        $fbGallerySelectMarkup .= "<option value=\"$field[id]\"$selected>$field[name]</option>";
+                                    }
+                                    // close select field
+                                    $fbGallerySelectMarkup .= "</select>";
+                                }
+                                else
+                                    {   // could not determine facebook albums, let user enter the album ID manually
+                                        $fbGallerySelectMarkup = "<label for=\"$setting[property]\">$setting[label]&nbsp;$setting[description]</label>";
+                                        $fbGallerySelectMarkup .= "<input type=\"text\" class=\"form-control\" placeholder=\"$lang[PH_FB_GALLERY_ALBUMID]\" name=\"$setting[property]\" value=\"$setting[value]\">";
+                                    }
+                            }
+                            else
+                                {   // if appID and/or token are not set correctly,
+                                    // draw a simple input field where the album id can be entered manually
+                                    $fbGallerySelectMarkup = "<label for=\"$setting[property]\">$setting[label]&nbsp;$setting[description]</label>";
+                                    $fbGallerySelectMarkup .= "<input type=\"text\" class=\"form-control\" placeholder=\"$lang[PH_FB_GALLERY_ALBUMID]\"  name=\"$setting[property]\" value=\"$setting[value]\">";
+                                }
+
+                            // output select field / input field depending on code above
+                            echo $fbGallerySelectMarkup;
                         }
                     }
                 }
