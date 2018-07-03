@@ -2085,8 +2085,8 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('fbGallerySubtext', '', 41, 1, 12, 'LABEL_FB_GALLERY_SUBTEXT', '', '', '', 'DESC_FB_GALLERY_SUBTEXT', 'form-control', '', 'PH_FB_GALLERY_SUBTEXT', '', 241),
 ('fbGalleryLimit', '25', 41, 1, 13, 'LABEL_FB_GALLERY_LIMIT', '', '', '', 'DESC_FB_GALLERY_LIMIT', 'form-control', 'select', 'PH_FB_GALLERY_LIMIT', '1,1:2,2:3,3:4,4:5,5:6,6:7,7:8,8:9,9:10,10:11,11:12,12:13,13:14,14:15,15:16,16:17,17:18,18:19,19:20,20:21,21:22,22:23,23:24,24:25,25', 242),
 ('fbGalleryLayout', '4', 41, 1, 14, 'LABEL_FB_GALLERY_LAYOUT', '', '', '', 'DESC_FB_GALLERY_LAYOUT', 'form-control', 'select', '', '12,Layout col-12:6,Layout col-6:4,Layout col-4:3,Layout col-3:2,Layout col-2:1,Layout col-1', 243),
-('fbGalleryImageInfo', '1', 41, 1, 15, 'LABEL_FB_GALLERY_INFO', '', '', '', 'DESC_FB_GALLERY_INFO', 'form-control', 'select', '', '1,Show info:0,Do not show info', 244);
-
+('fbGalleryImageInfo', '1', 41, 1, 15, 'LABEL_FB_GALLERY_INFO', '', '', '', 'DESC_FB_GALLERY_INFO', 'form-control', 'select', '', '1,Show info:0,Do not show info', 244),
+('fbGalleryFixedImageHeight', 'auto', 41, 1, 16, 'LABEL_FB_GALLERY_IMAGEHEIGHT', '', '', '', 'DESC_FB_GALLERY_IMAGEHEIGHT', 'form-control', 'select', '', 'auto,auto:50px,50px:75px,75px:100px,100px:125px,125px:150px,150px:175px,175px:200px,200px:225px,225px:250px,250px:275px,275px:300px,300px:325px,325px:350px,350px:400px,400px:500px,500px', 245);
 
 CREATE TABLE `cms_widget_settings` (
   `id` int(11) NOT NULL,
@@ -2367,7 +2367,7 @@ ALTER TABLE `cms_user_groups`
 ALTER TABLE `cms_widgets`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_defaults`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=244;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=245;
 ALTER TABLE `cms_widget_settings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_types`
