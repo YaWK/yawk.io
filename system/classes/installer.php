@@ -2,7 +2,7 @@
 namespace YAWK {
 
     /**
-     * Class installer
+     * <b>Class installer</b>
      * @package YAWK
      */
     class installer

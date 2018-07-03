@@ -21,6 +21,9 @@
  * @version 2.8.32
  */
 namespace YAWK {
+    /**
+     * Mobile Detect Library
+     */
     class Mobile_Detect
     {
         /**
