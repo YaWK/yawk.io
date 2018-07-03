@@ -51,6 +51,8 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
         public $fbGalleryLayout = 6;
         /** @var int show info under the gallery? 0|1  */
         public $fbGalleryImageInfo = 1;
+        /** @var string fixed image height in pixels or auto (select field) */
+        public $fbGalleryFixedImageHeight = 'auto';
         /** @var int shuffle 0|1 if true, images get shuffled on page load */
         public $shuffle = 0;
         /** @var string events until this date (used for calc) */
@@ -352,6 +354,7 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
 
                 $i = 0; // loop indicator
                 // walk through data array to help animation (first items fadeIn on load)
+                // echo "<div class=\"row\">";
                 foreach ($this->apiObject['data'] as $property => $value)
                 {
                     // if loop runs for the first time
@@ -382,9 +385,10 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
                     // set layout div box, containing every single image
                     echo "<div class=\"col-md-$this->fbGalleryLayout text-center $animateMarkup\">
                           <a href=\"$fn\" data-lightbox=\"example-set\" data-title=\"$value[name]\">
-                          <img src=\"$fn\" alt=\"$value[name]\" class=\"img-responsive img-rounded hvr-grow\">
+                          <img src=\"$fn\" alt=\"$value[name]\" style=\"width:auto; height:$this->fbGalleryFixedImageHeight;\" class=\"img-responsive img-rounded hvr-grow\">
                           </a><br><small>$this->fbGalleryImageInfo</small><br><br></div>";
                 } // end foreach
+                // echo "</div>";
             }
             else
                 {   // api object not set or empty - abort with error
