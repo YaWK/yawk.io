@@ -22,37 +22,53 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
         /** @var string your app ID (from developers.facebook.com) */
         public $fbGalleryAppId = '';
         /** @var string your page ID (http://facebook.com/{YOURPAGEID} */
-        public $fbGalleryPageId = '';
+        public $fbGalleryAlbumId = '';
         /** @var string your access token (secret word from developers.facebook.com) */
         public $fbGalleryAccessToken = '';
-        /** @var string your graph request */
-        public $fbGalleryGraphRequest = '/events/';
+        /** @var string your graph request (the Album ID) */
+        public $fbGalleryGraphRequest = '/albums/';
         /** @var string fields that should be selected from facebook graph */
-        public $fbGalleryFields = 'id,name,description,place,start_time,cover,maybe_count,attending_count,is_canceled';
+        public $fbGalleryFields = 'images,source,name,id';
         /** @var string show events of this time range */
-        public $fbGalleryYearRange = '1';
+        public $fbGalleryYearRange = '10';
         /** @var string user defined start date */
         public $fbGalleryStartDate = '';
         /** @var string user defined end date */
         public $fbGalleryEndDate = '';
-        /** @var string which events should be shown? future|past|all */
-        public $fbGalleryType = 'future';
+        /** @var string which items should be shown? future|past|all */
+        public $fbGalleryType = 'past';
+        /** @var string gallery heading */
+        public $fbGalleryHeading = '';
+        /** @var string gallery small subtext beside heading */
+        public $fbGallerySubtext = '';
         /** @var string events since this date (used for calc) */
         public $sinceDate = '';
+        /** @var int limit entries to (n) */
+        public $fbGalleryLimit = 0;
+        /** @var string sortation */
+        public $fbGallerySortation = 'desc';
+        /** @var int layout */
+        public $fbGalleryLayout = 6;
+        /** @var int show info under the gallery? 0|1  */
+        public $fbGalleryImageInfo = 1;
+        /** @var int shuffle 0|1 if true, images get shuffled on page load */
+        public $shuffle = 0;
         /** @var string events until this date (used for calc) */
         public $untilDate = '';
         /** @var string true|false was the js SDK loaded? */
         public $jsSDKLoaded = 'false';
         /** @var object api result (as object) */
         public $apiObject;
+        /** @var array temporary settings array */
+        public $settings;
 
 
         public function __construct($db)
         {
             // load this widget settings from db
             $widget = new \YAWK\widget();
-            $settings = $widget->getWidgetSettingsArray($db);
-            foreach ($settings as $property => $value)
+            $this->settings = $widget->getWidgetSettingsArray($db);
+            foreach ($this->settings as $property => $value)
             {
                 $this->$property = $value;
             }
@@ -106,20 +122,20 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
         }
         public function checkPageId()
         {
-            if (isset($this->fbGalleryPageId) && (!empty($this->fbGalleryPageId)))
+            if (isset($this->fbGalleryAlbumId) && (!empty($this->fbGalleryAlbumId)))
             {
-                if (is_string($this->fbGalleryPageId))
+                if (is_string($this->fbGalleryAlbumId))
                 {
                     return true;
                 }
                 else
                 {
-                    die ("Page ID is set, but not a string value! Please check your page ID.");
+                    die ("Album ID is set, but not a string value! Please check your photo album ID.");
                 }
             }
             else
             {
-                die ("Page ID is not set. Please add your page ID. The Page ID is: https://www.facebook.com/{YOURPAGEID}");
+                die ("Album ID is not set. Please add your photo album ID.");
             }
         }
 
@@ -197,33 +213,19 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
             // unix timestamp years
             $since_unix_timestamp = strtotime($this->sinceDate);
             $until_unix_timestamp = strtotime($this->untilDate);
-            // check if pageID is set
-            if (isset($this->fbGalleryPageId) && (!empty($this->fbGalleryPageId)))
-            {
-                // set markup for pageID string
-                $pageIdMarkup = "{$this->fbGalleryPageId}";
-            }
-            else
-            {   // leave empty if no page id is given (to build custom graph string)
-                $this->fbGalleryPageId = '';
-            }
+
             // check if fields are set
             if (isset($this->fbGalleryFields) && (!empty($this->fbGalleryFields)))
             {   // set markup for api query string
-                $fieldsMarkup = "&fields={$this->fbGalleryFields}";
-                if (empty($this->fbGalleryPageId))
-                {
-                    $fieldsMarkup = "?fields={$this->fbGalleryFields}";
-                }
+                $fieldsMarkup = "?fields={$this->fbGalleryFields}";
             }
             else
             {   // no fields wanted, leave markup empty
                 $fieldsMarkup = '';
             }
 
-            // prepare API call
-            // $json_link = "https://graph.facebook.com/v2.7/{$this->fbGalleryPageId}{$this->fbGalleryGraphRequest}?fields={$this->fields}&access_token={$this->fbGalleryAccessToken}";
-            $json_link = "https://graph.facebook.com/v3.0/{$this->fbGalleryPageId}{$this->fbGalleryGraphRequest}?access_token={$this->fbGalleryAccessToken}&since={$since_unix_timestamp}&until={$until_unix_timestamp}" . $fieldsMarkup . "";
+            // prepare API call - get photos
+            $json_link = "https://graph.facebook.com/v3.0/{$this->fbGalleryAlbumId}/photos$fieldsMarkup&access_token={$this->fbGalleryAccessToken}";
             // get json string
             $json = file_get_contents($json_link);
 
@@ -293,22 +295,129 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
         {
             $this->loadJSSDK();
             $this->makeApiCall();
+
+            /* ALBUM DETAILED VIEW */
+            if (isset($this->apiObject['data']) && (!empty($this->apiObject))) {
+
+                // check if array needs to be sorted
+                if (is_string($this->fbGallerySortation) && ($this->fbGallerySortation == "desc"))
+                {
+                    // sort array ascending / descending
+                    $this->apiObject['data'] = array_reverse($this->apiObject['data']);
+                }
+
+                // check if images needs to be shuffled
+                elseif ($this->fbGallerySortation == "shuffle")
+                {   // shuffle images on page load
+                    shuffle($this->apiObject['data']);
+                }
+
+                // check if limit is set
+                if ($this->fbGalleryLimit > 0 && ($this->fbGalleryLimit != 25))
+                {   // limit images to x entries
+                    $this->apiObject['data'] = array_slice($this->apiObject['data'], 0, $this->fbGalleryLimit);
+                }
+
+                // check gallery layout
+                if (!isset($this->fbGalleryLayout) || (empty($this->fbGalleryLayout)))
+                {   // if no layout is set, use this as default value
+                    $this->fbGalleryLayout = 6;
+                }
+
+                // check heading
+                if (isset($this->fbGalleryHeading) && (!empty($this->fbGalleryHeading)))
+                {
+                    // if heading is set, build markup
+                    $this->fbGalleryHeading = "$this->fbGalleryHeading";
+                }
+                else
+                    {
+                        $this->fbGalleryHeading = '';
+                    }
+
+                // check subtext
+                if (isset($this->fbGallerySubtext) && (!empty($this->fbGallerySubtext)))
+                {
+                    // if subtext is set, build markup
+                    $this->fbGallerySubtext = "<small>$this->fbGallerySubtext</small>";
+                }
+                else
+                {
+                    $this->fbGallerySubtext = '';
+                }
+
+                echo "<div class=\"col-md-12\"><h1>$this->fbGalleryHeading&nbsp;$this->fbGallerySubtext</h1></div>";
+
+                // loop indicator
+                $i = 0;
+                foreach ($this->apiObject['data'] as $property => $value)
+                {
+                    // if loop runs for the first time
+                    if (isset($i) && ($i <= 3))
+                    {   // first element get this css class
+                        $animateMarkup = 'animated fadeIn';
+                    }
+                    else
+                        {   // set animate class
+                            $animateMarkup = "animate";
+                        }
+                        $i++;
+
+                    if (isset($this->fbGalleryImageInfo) && (!empty($this->fbGalleryImageInfo)))
+                    {
+                        // if image info is on
+                        $this->fbGalleryImageInfo = $value['name'];
+                    }
+                    else
+                        {
+                            $this->fbGalleryImageInfo = '';
+                        }
+                    // echo "<img src=\"$value[source]\"><br>";
+
+
+                    if ($value['name'] != "//Profile Pictures"
+                        && ($value['name'] != "//Cover Photos")) {
+                        $fn = $value['source'];
+
+//                        print_r($value);
+                        $fn = $value['images'];
+                        $fn = $value['images'][1]['source'];
+                        echo "<div class=\"col-md-$this->fbGalleryLayout text-center $animateMarkup\">
+
+                <a href=\"$fn\" data-lightbox=\"example-set\" data-title=\"$value[name]\">
+                <img src=\"$fn\" alt=\"$value[name]\" class=\"img-responsive img-rounded hvr-grow\">
+                </a><br><small>$this->fbGalleryImageInfo</small><br><br></div>
+              </a>";
+
+                        }
+                    }
+                }
+            }
+
+
+
+            /* ALBUM OVERVIEW */
+            /*
             if (isset($this->apiObject['data']) && (!empty($this->apiObject))) {
                 echo "<h1>Facebook Photo Albums</h1>";
 
                 foreach ($this->apiObject['data'] as $property => $value)
                 {
-                    if ($value['name'] != "// Profile Pictures"
-                        && ($value['name'] != "// Cover Photos"))
+                    if ($value['name'] != "//Profile Pictures"
+                        && ($value['name'] != "//Cover Photos"))
                     {
                         $fn = $value['picture']['data']['url'];
                         echo "<div class=\"col-md-2 text-center\">
-                <img src=\"$fn\" style=\"width:200px;\" class=\"img-responsive hvr-grow\"><h3>$value[name] 
+                <img src=\"$fn\" style=\"width:200px;\" class=\"img-responsive img-rounded hvr-grow\"><h3>$value[name] 
                 <small><i>($value[count])</i></small></h3><br>
                 </div>";
 
 
                     }
+
+            */
+
+
 
                     /*
                     foreach ($value['images'] as $photo)
@@ -342,9 +451,9 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
                                                 }
                                             }
                                         }
-                    */
+
                 }
-            }
-        }
+            }*/
+
     }   // end class events
 } // end namespace
