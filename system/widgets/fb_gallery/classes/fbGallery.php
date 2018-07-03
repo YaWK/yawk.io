@@ -80,7 +80,7 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
         {
             $this->checkAppId();
             $this->checkAccessToken();
-            $this->checkPageId();
+            $this->checkAlbumId();
         }
 
         public function checkAppId()
@@ -120,7 +120,7 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
                 die ("Access token is not set. Please add your access token. You can obtain it from http://developers.facebook.com");
             }
         }
-        public function checkPageId()
+        public function checkAlbumId()
         {
             if (isset($this->fbGalleryAlbumId) && (!empty($this->fbGalleryAlbumId)))
             {
@@ -331,7 +331,7 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
                     $this->fbGalleryHeading = "$this->fbGalleryHeading";
                 }
                 else
-                    {
+                    {   // no heading was set, leave empty
                         $this->fbGalleryHeading = '';
                     }
 
@@ -342,14 +342,16 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
                     $this->fbGallerySubtext = "<small>$this->fbGallerySubtext</small>";
                 }
                 else
-                {
+                {   // no subtext was set, leave empty
                     $this->fbGallerySubtext = '';
                 }
 
+                // draw heading + subtext
                 echo "<div class=\"col-md-12\"><h1>$this->fbGalleryHeading&nbsp;$this->fbGallerySubtext</h1></div>";
 
-                // loop indicator
-                $i = 0;
+
+                $i = 0; // loop indicator
+                // walk through data array to help animation (first items fadeIn on load)
                 foreach ($this->apiObject['data'] as $property => $value)
                 {
                     // if loop runs for the first time
@@ -358,41 +360,37 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
                         $animateMarkup = 'animated fadeIn';
                     }
                     else
-                        {   // set animate class
+                        {   // all other items - set animate class on them
                             $animateMarkup = "animate";
                         }
-                        $i++;
 
+                    $i++; // raise loop indicator
+
+                    // check if image info is set
                     if (isset($this->fbGalleryImageInfo) && (!empty($this->fbGalleryImageInfo)))
                     {
                         // if image info is on
                         $this->fbGalleryImageInfo = $value['name'];
                     }
                     else
-                        {
+                        {   // leave image info empty
                             $this->fbGalleryImageInfo = '';
                         }
-                    // echo "<img src=\"$value[source]\"><br>";
 
-
-                    if ($value['name'] != "//Profile Pictures"
-                        && ($value['name'] != "//Cover Photos")) {
-                        $fn = $value['source'];
-
-//                        print_r($value);
-                        $fn = $value['images'];
-                        $fn = $value['images'][1]['source'];
-                        echo "<div class=\"col-md-$this->fbGalleryLayout text-center $animateMarkup\">
-
-                <a href=\"$fn\" data-lightbox=\"example-set\" data-title=\"$value[name]\">
-                <img src=\"$fn\" alt=\"$value[name]\" class=\"img-responsive img-rounded hvr-grow\">
-                </a><br><small>$this->fbGalleryImageInfo</small><br><br></div>
-              </a>";
-
-                        }
-                    }
-                }
+                    // set filename to biggest image source
+                    $fn = $value['images'][0]['source'];
+                    // set layout div box, containing every single image
+                    echo "<div class=\"col-md-$this->fbGalleryLayout text-center $animateMarkup\">
+                          <a href=\"$fn\" data-lightbox=\"example-set\" data-title=\"$value[name]\">
+                          <img src=\"$fn\" alt=\"$value[name]\" class=\"img-responsive img-rounded hvr-grow\">
+                          </a><br><small>$this->fbGalleryImageInfo</small><br><br></div>";
+                } // end foreach
             }
+            else
+                {   // api object not set or empty - abort with error
+                    die("Unable to load Images from Facebook API because the apiObject is not set or empty.");
+                }
+        }
 
 
 
@@ -455,5 +453,5 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
                 }
             }*/
 
-    }   // end class events
+    }   // end class fbGallery
 } // end namespace
