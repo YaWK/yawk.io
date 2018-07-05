@@ -392,28 +392,5 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
                 }
         }
 
-
-
-            /* ALBUM OVERVIEW */
-            /*
-            if (isset($this->apiObject['data']) && (!empty($this->apiObject))) {
-                echo "<h1>Facebook Photo Albums</h1>";
-
-                foreach ($this->apiObject['data'] as $property => $value)
-                {
-                    if ($value['name'] != "//Profile Pictures"
-                        && ($value['name'] != "//Cover Photos"))
-                    {
-                        $fn = $value['picture']['data']['url'];
-                        echo "<div class=\"col-md-2 text-center\">
-                <img src=\"$fn\" style=\"width:200px;\" class=\"img-responsive img-rounded hvr-grow\"><h3>$value[name] 
-                <small><i>($value[count])</i></small></h3><br>
-                </div>";
-
-
-                    }
-
-            */
-
     }   // end class fbGallery
 } // end namespace
