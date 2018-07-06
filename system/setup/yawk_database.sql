@@ -2086,7 +2086,15 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('fbGalleryLimit', '25', 41, 1, 13, 'LABEL_FB_GALLERY_LIMIT', '', '', '', 'DESC_FB_GALLERY_LIMIT', 'form-control', 'select', 'PH_FB_GALLERY_LIMIT', '1,1:2,2:3,3:4,4:5,5:6,6:7,7:8,8:9,9:10,10:11,11:12,12:13,13:14,14:15,15:16,16:17,17:18,18:19,19:20,20:21,21:22,22:23,23:24,24:25,25', 242),
 ('fbGalleryLayout', '4', 41, 1, 14, 'LABEL_FB_GALLERY_LAYOUT', '', '', '', 'DESC_FB_GALLERY_LAYOUT', 'form-control', 'select', '', '12,Layout col-12:6,Layout col-6:4,Layout col-4:3,Layout col-3:2,Layout col-2:1,Layout col-1', 243),
 ('fbGalleryImageInfo', '1', 41, 1, 15, 'LABEL_FB_GALLERY_INFO', '', '', '', 'DESC_FB_GALLERY_INFO', 'form-control', 'select', '', '1,Show info:0,Do not show info', 244),
-('fbGalleryFixedImageHeight', 'auto', 41, 1, 16, 'LABEL_FB_GALLERY_IMAGEHEIGHT', '', '', '', 'DESC_FB_GALLERY_IMAGEHEIGHT', 'form-control', 'select', '', 'auto,auto:50px,50px:75px,75px:100px,100px:125px,125px:150px,150px:175px,175px:200px,200px:225px,225px:250px,250px:275px,275px:300px,300px:325px,325px:350px,350px:400px,400px:500px,500px', 245);
+('fbGalleryFixedImageHeight', 'auto', 41, 1, 16, 'LABEL_FB_GALLERY_IMAGEHEIGHT', '', '', '', 'DESC_FB_GALLERY_IMAGEHEIGHT', 'form-control', 'select', '', 'auto,auto:50px,50px:75px,75px:100px,100px:125px,125px:150px,150px:175px,175px:200px,200px:225px,225px:250px,250px:275px,275px:300px,300px:325px,325px:350px,350px:400px,400px:500px,500px', 245),
+('fbCoverAppId', '', 42, 1, 1, 'LABEL_FB_COVER_APPID', '', 'FB_COVER_HEADING_GLOBAL', '', 'DESC_FB_COVER_APPID', 'form-control', '', 'PH_FB_COVER_APPID', '', 246),
+('fbCoverAccessToken', '', 42, 1, 2, 'LABEL_FB_COVER_ACCESS_TOKEN', '', '', '', 'DESC_FB_COVER_ACCESS_TOKEN', 'form-control', '', 'PH_FB_COVER_ACCESS_TOKEN', '', 247),
+('fbCoverImageClass', 'img-responsive', 42, 1, 3, 'LABEL_FB_COVER_IMAGE_CLASS', '', '', '', 'DESC_FB_COVER_IMAGE_CLASS', 'form-control', '', 'PH_FB_COVER_IMAGE_CLASS', '', 248),
+('fbCoverImageWidth', '', 42, 1, 4, 'LABEL_FB_COVER_IMAGE_WIDTH', '', '', '', 'DESC_FB_COVER_IMAGE_WIDTH', 'form-control', '', 'PH_FB_COVER_IMAGE_WIDTH', '', 249),
+('fbCoverImageHeight', '', 42, 1, 5, 'LABEL_FB_COVER_IMAGE_HEIGHT', '', '', '', 'DESC_FB_COVER_IMAGE_HEIGHT', 'form-control', '', 'PH_FB_COVER_IMAGE_HEIGHT', '', 250),
+('fbCoverImageAlt', '', 42, 1, 6, 'LABEL_FB_COVER_IMAGE_ALT', '', '', '', 'DESC_FB_COVER_IMAGE_ALT', 'form-control', '', 'PH_FB_COVER_IMAGE_ALT', '', 251),
+('fbCoverImageTitle', '', 42, 1, 7, 'LABEL_FB_COVER_IMAGE_TITLE', '', '', '', 'DESC_FB_COVER_IMAGE_TITLE', 'form-control', '', 'PH_FB_COVER_IMAGE_TITLE', '', 252),
+('fbCoverImageStyle', '', 42, 1, 8, 'LABEL_FB_COVER_IMAGE_STYLE', '', '', '', 'DESC_FB_COVER_IMAGE_STYLE', 'form-control', '', 'PH_FB_COVER_IMAGE_STYLE', '', 253);
 
 CREATE TABLE `cms_widget_settings` (
   `id` int(11) NOT NULL,
@@ -2156,7 +2164,8 @@ INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`)
 (38, 1, 'Embed Page', 'embed_page', 'Embed any of your static pages'),
 (39, 1, 'Facebook Events', 'fb_events', 'Embed Facebook Events from your Facebook Page'),
 (40, 1, 'Facebook Graph Explorer', 'fb_example', 'Use the Facebook Graph API to get data - this is for demo and development purpose only!'),
-(41, 1, 'Facebook Gallery', 'fb_gallery', 'Embed photo albums from your Facebook page');
+(41, 1, 'Facebook Gallery', 'fb_gallery', 'Embed photo albums from your Facebook page'),
+(42, 1, 'Facebook Cover', 'fb_cover', 'Embed current cover image from your Facebook page');
 
 ALTER TABLE `cms_assets`
   ADD PRIMARY KEY (`id`);
@@ -2367,8 +2376,8 @@ ALTER TABLE `cms_user_groups`
 ALTER TABLE `cms_widgets`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_defaults`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=245;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=253;
 ALTER TABLE `cms_widget_settings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
