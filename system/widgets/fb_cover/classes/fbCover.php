@@ -40,13 +40,19 @@ class fbCover
     /** @var array array: holds the current widget settings */
     public $settings;
     /** @var object api result (as object) */
-    public $apiObject; // ☻
+    public $apiObject;
 
+    /**
+     * fbCover constructor. Loads all widget settings
+     * @param $db
+     */
     public function __construct($db)
     {
-        // load this widget settings from db
+        // create new widget object
         $widget = new \YAWK\widget();
+        // load this widget settings from db into array
         $this->settings = $widget->getWidgetSettingsArray($db);
+        // add settings to object property
         foreach ($this->settings as $property => $value)
         {
             $this->$property = $value;
@@ -55,50 +61,65 @@ class fbCover
         $this->checkRequirements();
     }
 
+    /**
+     * call check app id and access token
+     *
+     */
     public function checkRequirements()
     {
         $this->checkAppId();
         $this->checkAccessToken();
     }
 
+    /**
+     * check if app id is set
+     * @return bool return true or die with error message
+     */
     public function checkAppId()
-    {
+    {   // check of app id is set and not empty
         if (isset($this->fbCoverAppId) && (!empty($this->fbCoverAppId)))
-        {
+        {   // app id is set - check if its a number
             if (is_numeric($this->fbCoverAppId))
-            {
+            {   // ok, seems good
                 return true;
             }
             else
-                {
+                {   // not a number - abort with error msg
                     die ("app ID is set, but not a numeric value! Please check your app ID - it should contain numbers only.");
                 }
         }
         else
-            {
+            {   // app id not set or empty - abort with error msg
                 die ("app ID is not set. Please add your app ID. You can obtain it from http://developers.facebook.com");
             }
     }
 
+    /**
+     * check if access token is set
+     * @return bool return true or die with error message
+     */
     public function checkAccessToken()
-    {
+    {   // check if access token is set and not empty
         if (isset($this->fbCoverAccessToken) && (!empty($this->fbCoverAccessToken)))
-        {
+        {   // check if access token is a string
             if (is_string($this->fbCoverAccessToken))
-            {
+            {   // ok...
                 return true;
             }
             else
-            {
+            {   // access token is not a string - abort with error msg
                 die ("Access token is set, but not a string value! Please check your access token.");
             }
         }
         else
-        {
+        {   // access token is not set or empty - abort with error msg
             die ("Access token is not set. Please add your access token. You can obtain it from http://developers.facebook.com");
         }
     }
 
+    /**
+     * Load Facebook JS Code
+     */
     public function loadJSSDK()
     {   // check if fb JS SDK was loaded before
         if ($this->jsSDKLoaded == 'false')
@@ -133,10 +154,15 @@ class fbCover
         }
     }
 
+    /**
+     * Prepare and make the API call and decode the json into the apiObject property
+     * @return mixed Returns an array as obj property, containing the data
+     */
     public function makeApiCall()
     {
         // prepare API call
         $json_link = "https://graph.facebook.com/v3.0/me?fields=cover&access_token={$this->fbCoverAccessToken}";
+
         // get json string
         $json = file_get_contents($json_link);
 
@@ -145,68 +171,79 @@ class fbCover
     }
 
 
+    /**
+     * Draws the cover image onto screen.
+     *
+     */
     public function drawCoverImage()
     {
         $this->loadJSSDK();
         $this->makeApiCall();
 
+        // check if image class is set
         if (isset($this->fbCoverImageClass) && (empty($this->fbCoverImageClass)))
-        {
+        {   // if not, use this as default value:
             $this->fbCoverImageClass = "img-responsive";
         }
 
+        // check if alt tag was set
         if (isset($this->fbCoverImageAlt) && (!empty($this->fbCoverImageAlt)))
-        {
+        {   // it is, generate markup
             $altMarkup = " alt=\"$this->fbCoverImageAlt\"";
         }
         else
-            {
+            {   // not set, leave empty
                 $altMarkup = '';
             }
 
+        // check if cover image title is set
         if (isset($this->fbCoverImageTitle) && (!empty($this->fbCoverImageTitle)))
-        {
+        {   // it is, generate markup
             $titleMarkup = " title=\"$this->fbCoverImageTitle\"";
         }
         else
-            {
+            {   // not set, leave empty
                 $titleMarkup = '';
             }
 
+        // check if image height is set
         if (isset($this->fbCoverImageHeight) && (!empty($this->fbCoverImageHeight)))
-        {
+        {   // it is, set markup
             $heightMarkup = " height=\"$this->fbCoverImageHeight;\"";
         }
         else
-            {
+            {   // leave empty
                 $heightMarkup = '';
             }
 
+        // check if image width is set
         if (isset($this->fbCoverImageWidth) && (!empty($this->fbCoverImageWidth)))
-        {
+        {   // if height is set
             if (isset($heightMarkup) && (!empty($heightMarkup)))
-            {
+            {   // leave a space between tags
                 $widthMarkup = " width=\"$this->fbCoverImageWidth\"";
             }
             else
-                {
+                {   // height is not set - no space needed
                     $widthMarkup = "width=\"$this->fbCoverImageWidth\"";
                 }
         }
         else
-            {
+            {   // width not set - leave markup empty
                 $widthMarkup = '';
             }
 
+        // check if css style is set
         if (isset($this->fbCoverImageStyle) && (!empty($this->fbCoverImageStyle)))
-        {
+        {   // add style markup
             $styleMarkup = " style=\"$this->fbCoverImageStyle\"";
         }
         else
-            {
+            {   // no style markup needed
                 $styleMarkup = '';
             }
 
+        // finally: output the cover image
         echo "<img src=\"".$this->apiObject['cover']['source']."\" class=\"$this->fbCoverImageClass\"$styleMarkup"."$heightMarkup"."$widthMarkup"."$altMarkup"."$titleMarkup>";
     }
 
