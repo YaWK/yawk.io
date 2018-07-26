@@ -1,9 +1,8 @@
 <?php
-setcookie("guest", 1, time()+60);  /* verfällt in 1 Stunde */
 session_start();
-header('Cache-control: private');              // IE 6 FIX
-// error_reporting(E_ALL ^ E_STRICT);              // just for development purpose!!!
-// ini_set('display_errors', 1);       // DISPLAY ALL ERRORS - DEVELOPMENT ONLY!!!
+header('Cache-control: private');               // IE 6 FIX
+// error_reporting(E_ALL ^ E_STRICT);                // just for development purpose!!!
+// ini_set('display_errors', 1);                     // DISPLAY ALL ERRORS - DEVELOPMENT ONLY!!!
 error_reporting(0);                             // no error reporting
 $loadingTime = microtime(true);            // scripting start time (var gets used for benchmark, if enabled)
 
@@ -25,7 +24,6 @@ require_once '../system/classes/template.php';      // template class: methods t
 require_once '../system/classes/controller.php';    // basic controller class
 require_once '../system/classes/filemanager.php';   // filemanager class: methods to add, edit, upload and handle files
 require_once '../system/classes/sys.php';           // system class: methods and helpers for overall system use
-
 // PREPARE OBJECTS
 // database object
 if (!isset($db))
@@ -138,20 +136,12 @@ if (!isset($AdminLTE))
       // body markup
       echo "<body style=\"background-color: #ecf0f5\">";
       // draw login box
-      echo \YAWK\backend::drawLoginBox($db, "YaWK", "", "");
+      echo \YAWK\backend::drawLoginBox($db, $lang);
       // end section markup
       echo "<br><br></section></div>";
 
       // output js includes at bottom of page
       echo $AdminLTE->drawHtmlJSIncludes();
-
-      /*
-      // call checklogin (todo: is this really needed? think it's called double times. check this!)
-      if (\YAWK\backend::checkLogin($db))
-      {
-        // ...
-      }
-      */
 
       // html output end
       echo $AdminLTE->drawHtmlEnd($db);
