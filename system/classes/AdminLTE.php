@@ -1037,7 +1037,7 @@ namespace YAWK {
                 <!-- Content Header (Page header) -->
                 <section class=\"content-header\">";
                 /* Title on top */
-                $dashboard_subtext = $lang['DASHBOARD_SUBTEXT']."&nbsp;".\YAWK\user::getCurrentUserName()."!";
+                $dashboard_subtext = $lang['DASHBOARD_SUBTEXT']."&nbsp;".\YAWK\user::getCurrentUserName($lang)."!";
                 echo \YAWK\backend::getTitle($lang['DASHBOARD'], $dashboard_subtext);
                 /* breadcrumbs */
                 echo"<ol class=\"breadcrumb\">
