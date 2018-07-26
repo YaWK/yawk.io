@@ -45,7 +45,7 @@ require_once('system/classes/template.php');         // all template functions, 
 require_once('system/classes/sys.php');              // basic i/o and helper functions
 require_once('system/classes/controller.php');       // frontEnd init and filename filter controller
 require_once('system/classes/stats.php');            // statistics functions
-/* set database object */
+
 if (!isset($db)) {
     $db = new \YAWK\db();
 }
