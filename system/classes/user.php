@@ -96,9 +96,10 @@ namespace YAWK {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
+         * @param array $lang language array
          * @return string current username
          */
-        static function getCurrentUserName()
+        static function getCurrentUserName($lang)
         {
             if (isset($_SESSION['username']))
             {
@@ -106,7 +107,7 @@ namespace YAWK {
             }
             else
             {
-                return "Gast";
+                return $lang['GUEST'];
             }
         }
 
