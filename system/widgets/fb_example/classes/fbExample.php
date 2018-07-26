@@ -112,15 +112,19 @@ class fbExample
             {
                 return true;
             }
+            /* to allow custom url requests, this is uncommented.
             else
             {
                 die ("Page ID is set, but not a string value! Please check your page ID.");
             }
+            */
         }
+        /* to allow custom url requests, this is uncommented.
         else
         {
             die ("Page ID is not set. Please add your page ID. The Page ID is: https://www.facebook.com/{YOURPAGEID}");
         }
+        */
     }
 
     public function loadJSSDK()
@@ -135,7 +139,7 @@ class fbExample
                     FB.init({
                     appId      : '" . $this->fbExampleAppId . "',
                     xfbml      : true,
-                    version    : 'v2.7'
+                    version    : 'v3.0'
                     });
                 FB.AppEvents.logPageView();
                 };
@@ -197,10 +201,24 @@ class fbExample
         // unix timestamp years
         $since_unix_timestamp = strtotime($this->sinceDate);
         $until_unix_timestamp = strtotime($this->untilDate);
+        // check if pageID is set
+        if (isset($this->fbExamplePageId) && (!empty($this->fbExamplePageId)))
+        {
+            // set markup for pageID string
+            $pageIdMarkup = "{$this->fbExamplePageId}";
+        }
+        else
+            {   // leave empty if no page id is given (to build custom graph string)
+                $this->fbExamplePageId = '';
+            }
         // check if fields are set
         if (isset($this->fbExampleFields) && (!empty($this->fbExampleFields)))
         {   // set markup for api query string
             $fieldsMarkup = "&fields={$this->fbExampleFields}";
+            if (empty($this->fbExamplePageId))
+            {
+                $fieldsMarkup = "?fields={$this->fbExampleFields}";
+            }
         }
         else
             {   // no fields wanted, leave markup empty
@@ -209,8 +227,7 @@ class fbExample
 
         // prepare API call
         // $json_link = "https://graph.facebook.com/v2.7/{$this->fbExamplePageId}{$this->fbExampleGraphRequest}?fields={$this->fields}&access_token={$this->fbExampleAccessToken}";
-        $json_link = "https://graph.facebook.com/v2.7/{$this->fbExamplePageId}{$this->fbExampleGraphRequest}?access_token={$this->fbExampleAccessToken}&since={$since_unix_timestamp}&until={$until_unix_timestamp}" . $fieldsMarkup . "";
-
+        $json_link = "https://graph.facebook.com/v3.0/{$this->fbExamplePageId}{$this->fbExampleGraphRequest}?access_token={$this->fbExampleAccessToken}&since={$since_unix_timestamp}&until={$until_unix_timestamp}" . $fieldsMarkup . "";
         // get json string
         $json = file_get_contents($json_link);
 
@@ -279,31 +296,47 @@ class fbExample
         {
             $this->loadJSSDK();
             $this->makeApiCall();
+            if (isset($this->apiObject['data']) && (!empty($this->apiObject))) {
+                echo "<h1>Facebook Photo Albums</h1>";
 
-            if (isset($this->apiObject['data']) && (!empty($this->apiObject)))
-            {
                 foreach ($this->apiObject['data'] as $property => $value)
                 {
-                    echo "<br><br>$property : $value<br>";
-                    if (is_array($value))
+                    if ($value['name'] != "//Profile Pictures"
+                    && ($value['name'] !=
+                        != "//Cover Photos")
                     {
-                        foreach ($value as $entry => $key)
-                        {
+                    $fn = $value['picture']['data']['url'];
+                    echo "<div class=\"col-md-2 text-center\">
+                <img src=\"$fn\" style=\"width:200px;\" class=\"img-responsive hvr-grow\"><h3>$value[name] 
+                <small><i>($value[count])</i></small></h3><br>
+                </div>";
+
+
+                    }
+
+                    /*
+                    foreach ($value['images'] as $photo)
+                    {
+                        echo "<pre>";
+                        echo "<img src=\"".$photo['source']."\" class=\"img-responsive\">";
+                        echo "</pre>";
+                    }
+                    */
+/*
+                    echo "<br><br>$property : $value<br>";
+
+                    if (is_array($value)) {
+
+                        foreach ($value as $entry => $key) {
                             echo "$entry : $key <br>";
-                            if (is_array($key))
-                            {
-                                foreach ($key as $image)
-                                {
+                            if (is_array($key)) {
+                                foreach ($key as $image) {
                                     echo "$key : $image<br>";
-                                    if (is_array($key) || (is_array($image)))
-                                    {
-                                        foreach ($key as $arrayKey => $arrayValue)
-                                        {
+                                    if (is_array($key) || (is_array($image))) {
+                                        foreach ($key as $arrayKey => $arrayValue) {
                                             echo "&nbsp;&nbsp;$arrayKey : $arrayValue<br>";
-                                            if (is_array($arrayValue))
-                                            {
-                                                foreach ($arrayValue as $p => $v)
-                                                {
+                                            if (is_array($arrayValue)) {
+                                                foreach ($arrayValue as $p => $v) {
                                                     echo "&nbsp;&nbsp;$p : $v<br>";
                                                 }
                                             }
@@ -313,10 +346,9 @@ class fbExample
                             }
                         }
                     }
+*/
                 }
             }
         }
-
-
 }   // end class events
 } // end namespace

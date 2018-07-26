@@ -10,5 +10,6 @@ $example = new \YAWK\WIDGETS\FACEBOOK\EXAMPLE\fbExample($db);
 // basic data output
 // $example->basicOutput();
 // example->drawGallery();
+// $example->drawGallery();
 $example->printApiObject();
 ?>
