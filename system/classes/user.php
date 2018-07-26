@@ -96,7 +96,7 @@ namespace YAWK {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @param array $lang language array
+         * @param object $lang language obj
          * @return string current username
          */
         static function getCurrentUserName($lang)
