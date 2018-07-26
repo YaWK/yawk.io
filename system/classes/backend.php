@@ -217,7 +217,7 @@ namespace YAWK {
          * @param string $password The password
          * @return string Returns the complete html form.
          */
-        static function drawLoginForm($username, $password)
+        static function drawLoginForm($username, $password, $lang)
         { /**
          * draw login box
          */
@@ -232,8 +232,11 @@ namespace YAWK {
             $form = "<form role=\"form\" class=\"form-horizontal\" action=\"index.php\" method=\"post\">
             <input type=\"text\" class=\"form-control\" maxlength=\"128\" id=\"user\" value=\"".$username."\" name=\"user\" style=\"margin-bottom:4px;\" placeholder=\"Username\">
             <input type=\"password\" class=\"form-control\" id=\"password\" value=\"".$password."\" name=\"password\" placeholder=\"Password\"><br>
-            <button type=\"submit\" class=\"btn btn-success\"><i class=\"fa fa-lock\"></i> &nbsp;Login</button>
-            </form><br>";
+            <div class=\"row\">
+                <div class=\"col-md-6\"><button type=\"submit\" class=\"btn btn-success\"><i class=\"fa fa-lock\"></i> &nbsp;Login</button></div>
+                <div class=\"col-md-6 text-right\"><a class=\"btn btn-default\" data-toggle=\"modal\" data-target=\"#myModal\"><i class=\"fa fa-question-circle\"></i> &nbsp;$lang[PASSWORD_FORGOTTEN]</a></div>
+            </div>
+            </form>";
             return $form;
         }
 
@@ -245,26 +248,36 @@ namespace YAWK {
          * @param string $password The password
          * @return string Returns the complete html form
          */
-        static function drawLoginBox($db, $title, $username, $password)
+        static function drawLoginBox($db, $lang)
         { /**
          * draw login box
          */
-            if (!isset($username) || (empty($username)))
-            {   // set default username: empty
-                $username = "";
-            }
-            if (!isset($password) || (empty($password)))
-            {   // set default username: empty
-                $password = "";
-            }
-            if (!isset($title) || (empty($title)))
-            {   // set default username: empty
-                $password = "Backend";
-            }
             /* set focus on text field */
             \YAWK\backend::setFocus("user");
             /* get title and draw login box */
             $title = \YAWK\settings::getSetting($db, "title");
+            $modalWindow = " <!-- Modal -->
+              <div class=\"modal fade\" id=\"myModal\" role=\"dialog\">
+                <div class=\"modal-dialog\">
+                
+                  <!-- Modal content-->
+                  <div class=\"modal-content\">
+                    <div class=\"modal-header\">
+                      <button type=\"button\" class=\"close\" data-dismiss=\"modal\">&times;</button>
+                      <h4 class=\"modal-title\">$lang[PASSWORD_RESET]</h4>
+                    </div>
+                    <div class=\"modal-body\">
+                      <label for=\"email\">$lang[EMAIL]</label>
+                      <input type=\"text\" class=\"form-control\" id=\"email\" name=\"email\" placeholder=\"$lang[PASSWORD_RESET_HOWTO]\">
+                    </div>
+                    <div class=\"modal-footer\">
+                      <button type=\"submit\" class=\"btn btn-success\"><i class=\"fa fa-check\"></i> &nbsp;$lang[PASSWORD_RESET]</button>
+                      <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\"><i class=\"fa fa-times\"></i>&nbsp; $lang[CANCEL]</button>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>";
             // TEMPLATE WRAPPER - HEADER & breadcrumbs
             $loginBox = "
             <div class=\"row\" id=\"loginbox\"><br><br>
@@ -273,14 +286,14 @@ namespace YAWK {
                         <div class=\"box box-default\">
                             <div class=\"box-body\">
                             <h3>Login :: <small>" . $title . "</small></h3><br>";
-                        $loginBox .= \YAWK\backend::drawLoginForm("","");
-                        $loginBox .= "</div>
+                        $loginBox .= \YAWK\backend::drawLoginForm("","", $lang);
+                        $loginBox .= "
                         </div>
                         <br><br>
                     </div>
                     <div class=\"col-md-4\">&nbsp;</div>
                 </div>";
-            return $loginBox;
+            return $modalWindow.$loginBox;
         }
 
         /**
