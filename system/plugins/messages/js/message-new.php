@@ -20,7 +20,7 @@ $msg_to		=	$_POST['msg_to'];
 $msg_body	=	$_POST['msg_body'];
 $fromUID    =   $_POST['fromUID'];
 
-$toUID = \YAWK\user::getIdfromName($db, $msg_to);
+$toUID = \YAWK\user::getUserIdFromName($db, $msg_to);
 
 // remove HTML tags for security reasons
 // $msg_body = str_replace("\n", "<br>", $msg_body);
