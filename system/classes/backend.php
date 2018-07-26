@@ -257,6 +257,7 @@ namespace YAWK {
             /* get title and draw login box */
             $title = \YAWK\settings::getSetting($db, "title");
             $modalWindow = " <!-- Modal -->
+              <form method=\"POST\" action=\"index.php\">
               <div class=\"modal fade\" id=\"myModal\" role=\"dialog\">
                 <div class=\"modal-dialog\">
                 
@@ -269,15 +270,25 @@ namespace YAWK {
                     <div class=\"modal-body\">
                       <label for=\"email\">$lang[EMAIL]</label>
                       <input type=\"text\" class=\"form-control\" id=\"email\" name=\"email\" placeholder=\"$lang[PASSWORD_RESET_HOWTO]\">
+                      <div class=\"text-center\"><br><i>$lang[OR]</i><br></div>
+                      <label for=\"username\">$lang[USERNAME]</label>
+                      <input type=\"text\" class=\"form-control\" id=\"username\" name=\"username\" placeholder=\"$lang[USERNAME]\">
+                      <input type=\"hidden\" name=\"resetPassword\" id=\"resetPassword\" value=\"true\">
                     </div>
                     <div class=\"modal-footer\">
                       <button type=\"submit\" class=\"btn btn-success\"><i class=\"fa fa-check\"></i> &nbsp;$lang[PASSWORD_RESET]</button>
                       <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\"><i class=\"fa fa-times\"></i>&nbsp; $lang[CANCEL]</button>
+                      <hr>";
+                        $ip = $_SERVER['REMOTE_ADDR'];
+                        $hostname = gethostname();
+                        $network = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+                      $modalWindow .= "<div class=\"text-left small\"><i><small>Access from IP: $ip @ $hostname from network: $network will be logged.</small></i></div>
                     </div>
                   </div>
                   
                 </div>
-              </div>";
+              </div>
+              </form>";
             // TEMPLATE WRAPPER - HEADER & breadcrumbs
             $loginBox = "
             <div class=\"row\" id=\"loginbox\"><br><br>
