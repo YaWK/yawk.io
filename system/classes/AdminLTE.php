@@ -1003,7 +1003,7 @@ namespace YAWK {
 
             if(isset($_GET['page']))
             {   // load given page
-                include(\YAWK\controller::filterfilename($db, "includes/".$_GET['page']));
+                include(\YAWK\controller::filterfilename($db, $lang, "includes/".$_GET['page']));
                 self::drawHtmlContentClose();
             }
 
@@ -1011,7 +1011,7 @@ namespace YAWK {
             {   // load given plugin
                 $plugin = $_GET['plugin'];
                 $plugin_name = "../system/plugins/$plugin/admin/$plugin";
-                include(\YAWK\controller::filterfilename($db, $plugin_name));
+                include(\YAWK\controller::filterfilename($db, $lang, $plugin_name));
                 self::drawHtmlContentClose();
             }
             else if (isset($_GET['plugin']) && (isset($_GET['pluginpage'])))
@@ -1019,14 +1019,14 @@ namespace YAWK {
                 $plugin = $_GET['plugin'];
                 $pluginPage = $_GET['pluginpage'];
                 $plugin_name = "../system/plugins/$plugin/admin/$pluginPage";
-                include(\YAWK\controller::filterfilename($db, $plugin_name));
+                include(\YAWK\controller::filterfilename($db, $lang, $plugin_name));
                 self::drawHtmlContentClose();
             }
             else if (isset($_GET['pluginid']))
             {   // get plugin name for given id from db
                 $plugin = \YAWK\plugin::getNameById($db, $_GET['pluginid']);
                 $plugin_name = "../system/plugins/$plugin/admin/$plugin";
-                include(\YAWK\controller::filterfilename($db, $plugin_name));
+                include(\YAWK\controller::filterfilename($db, $lang, $plugin_name));
                 self::drawHtmlContentClose();
             }
             else if (!isset($_GET['page']))
@@ -1048,7 +1048,7 @@ namespace YAWK {
                 echo"
             <!-- Main content -->
               <section class=\"content\">";
-                include(\YAWK\controller::filterfilename($db, "includes/dashboard"));
+                include(\YAWK\controller::filterfilename($db, $lang, "includes/dashboard"));
                 self::drawHtmlContentClose();
                 \YAWK\AdminLTE::drawHtmlFooter($db);
             }

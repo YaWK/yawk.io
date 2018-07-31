@@ -37,7 +37,7 @@ class controller
     }
 
 
-    public static function filterfilename($db, $filename)
+    public static function filterfilename($db, $lang, $filename)
     {
         // check if user wants to reset password
         if (isset($_GET['resetPassword']) && ($_GET['resetPassword']) == true)
@@ -62,14 +62,81 @@ class controller
                     // display password changing form...
                     echo "<div class=\"container-fluid\">
                     <div class=\"row text-center\">
-                    <div class=\"col-md-12\">Success - display password reset form here</div></div>";
+                    <div class=\"col-md-4\">&nbsp;</div>
+                    <div class=\"col-md-4\"><br><br><h3>Please set your new password<br>
+                    <p class=\"small text-gray\">minimum 6 chars, special chars are allowed</small></h3><hr>";
+                    \YAWK\user::drawPasswordResetForm($db, $lang, $uid);
+                    echo "<hr><br><br></div>
+                    <div class=\"col-md-4\">&nbsp;</div></div>";
                     exit;
                 }
             }
             else
             {
-                die ("Error: your token is not set or wrong datatype. Vars you shall not manipulate, yoda said!");
+                die ("Error: your token is not set or wrong data type. Vars you shall not manipulate, yoda said!");
             }
+        }
+
+        // check if new user password should be set
+        if (isset($_GET['setNewPassword']) && ($_GET['setNewPassword'] == true))
+        {
+            // check if newPassword1 + newPassword2 are set, valid and equal...
+            if (isset($_POST['newPassword1']) && (!empty($_POST['newPassword1']) && (is_string($_POST['newPassword1']))
+            && (isset($_POST['newPassword2']) && (!empty($_POST['newPassword2']) && (is_string($_POST['newPassword2']))
+            && ($_POST['newPassword1'] == $_POST['newPassword2'])))))
+            {
+                // trim passwords
+                $_POST['newPassword1'] = trim($_POST['newPassword1']);
+                $_POST['newPassword2'] = trim($_POST['newPassword2']);
+                // strip html tags
+                $_POST['newPassword1'] = strip_tags($_POST['newPassword1']);
+                $_POST['newPassword2'] = strip_tags($_POST['newPassword2']);
+
+                // check if uid is set and valid
+                if (isset($_POST['uid']) && (!empty($_POST['uid']) && (is_numeric($_POST['uid']))))
+                {
+                    // set new password
+                    if (\YAWK\user::setNewPassword($db, $_POST['newPassword1'], $_POST['uid']) == true)
+                    {   // password change successful...
+                        // get username to pre-fill out the login form
+                        $user = \YAWK\user::getUserNameFromID($db, $_POST['uid']);
+                        // if username is NOT set correctly
+                        if (!isset($user) || (empty($user)) || (!is_string($user)))
+                        {   // no form pre-fill out
+                            $user = '';
+                        }
+
+                        // display password changing form...
+                        echo "<div class=\"container-fluid\">
+                        <div class=\"row text-center\">
+                        <div class=\"col-md-4\">&nbsp;</div>
+                        <div class=\"col-md-4\"><br><br><h3>Password changed!<br>
+                        <p class=\"small text-gray\">please login with your new password</small></h3><hr></div></div>";
+                        echo \YAWK\user::drawLoginBox("$user", $_POST['newPassword1']);
+                        echo "<hr><br><br><br><br>";
+                        exit;
+                    }
+                    else
+                        {
+                            // password could not be changed...
+                            echo "<div class=\"container-fluid\">
+                            <div class=\"row text-center\">
+                            <div class=\"col-md-4\">&nbsp;</div>
+                            <div class=\"col-md-4\"><br><br><h3>ERROR: Password could not be changed!<br>
+                            <p class=\"small text-gray\">Please try again or contact the page administrator.</small></h3><hr>";
+                            // draw reset form again
+                            \YAWK\user::drawPasswordResetForm($db, $lang, $_POST['uid']);
+                            echo "<br><br></div>
+                            <div class=\"col-md-4\">&nbsp;</div></div>";
+                            exit;
+                        }
+                }
+                else
+                    {   // user unknown, due this it is unable to handle this request
+                        return false;
+                    }
+            }
+
         }
 
         // lower cases

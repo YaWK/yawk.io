@@ -933,9 +933,10 @@ namespace YAWK {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db database
+         * @param object $lang language obj
          * @return mixed
          */
-        function getContent($db)
+        function getContent($db, $lang)
         {
             global $currentpage;
             if (isset($currentpage->date_publish)) {
@@ -996,7 +997,7 @@ namespace YAWK {
                 $currentpage->published == 0
             ) {
                 // show error
-                return include(\YAWK\controller::filterfilename($db, "content/errors/404.html"));
+                return include(\YAWK\controller::filterfilename($db, $lang, "content/errors/404.html"));
 
             } else {
 
@@ -1027,7 +1028,7 @@ namespace YAWK {
                     }
                     exit;
                 }
-                return include(\YAWK\controller::filterfilename($db, "content/pages/" . $this->alias));
+                return include(\YAWK\controller::filterfilename($db, $lang, "content/pages/" . $this->alias));
             }
         }
 

@@ -160,10 +160,64 @@ namespace YAWK {
             }
         }
 
-
+        /**
+         * Draw the form where users can reset their password.
+         * The password reset email leads to this form.
+         * @param object $db database obj
+         * @param object $lang language obj
+         * @param int $uid user ID
+         */
+        static function drawPasswordResetForm($db, $lang, $uid)
+        {
+            echo "<form action=\"index.php?setNewPassword=true\" method=\"POST\" role=\"form\">";
+            echo "<label for=\"newPassword1\">Password</label>";
+            echo "<input type=\"password\" class=\"form-control\" name=\"newPassword1\" id=\"newPassword1\">";
+            echo "<label for=\"newPassword2\">Password (again)</label>";
+            echo "<input type=\"password\" class=\"form-control\" name=\"newPassword2\" id=\"newPassword2\">";
+            echo "<input type=\"hidden\" value=\"$uid\" class=\"form-control\" name=\"uid\" id=\"uid\">";
+            echo "<button type=\"submit\" style=\"margin-top:5px;\" class=\"btn btn-success\">Set new password</button>";
+            echo "</form>";
+        }
 
         /**
-         * send an email to let the user reset his password
+         * Set a new user password
+         * @param string $newPassword The new password that will be stored in the database
+         * @param int $uid The affected user id
+         * @param object $db database obj
+         */
+        static function setNewPassword($db, $newPassword, $uid)
+        {
+            // check if new password is set and valid
+            if (isset($newPassword) && (!empty($newPassword)) && (is_string($newPassword)))
+            {   // check if uid is set and valid
+                if (isset($uid) && (!empty($uid)) && (is_numeric($uid)))
+                {
+                    // hash password
+                    $newPassword = md5($newPassword);
+
+                    // update database - change password
+                    if ($res = $db->query("UPDATE {users} SET password = '".$newPassword."' WHERE id = '".$uid."'"))
+                    {   // password changed successfully
+                        return true;
+                    }
+                    else
+                        {   // password cannot be changed
+                            return false;
+                        }
+                }
+                else
+                    {   // uid not set or not valid
+                        return false;
+                    }
+            }
+            else
+                {   // new password not set or not valid
+                    return false;
+                }
+        }
+
+        /**
+         * Send password change request email
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -226,7 +280,7 @@ namespace YAWK {
                                         $tokenLink = $url."index.php?resetPassword=true&token=$token";
                                     }
 
-                                $mailBody = "$lang[HELLO] $username!\n\r$lang[PASSWORD_RESET_REQUESTED]\n\r$lang[PASSWORD_RESET_MAILBODY]\n\r".$tokenLink."\n\r$lang[PASSWORD_RESET_REQUEST_WARNING]";
+                                $mailBody = "$lang[HELLO] $username!\n\r$lang[PASSWORD_RESET_REQUESTED]\n\r$lang[PASSWORD_RESET_MAILBODY]\n\r".$tokenLink."\n\r$lang[PASSWORD_RESET_REQUEST_WARNING].";
                                 if (\YAWK\email::sendEmail($from, $to, "", "$lang[PASSWORD_RESET] $url", $mailBody) === true)
                                 {   // reset password email sent
                                     \YAWK\sys::setSyslog($db, 3, "reset password email requested from $username ($to)", 0, 0, 0, 0);
@@ -1289,14 +1343,14 @@ namespace YAWK {
             */
 
             // prepare password
-            $password1 = htmlentities($password1);
-            $password2 = htmlentities($password2);
+            $password1 = strip_tags($password1);
+            $password2 = strip_tags($password2);
             // check password
             if ($password1 == $password2)
             {
                 $password = $password1;
                 $password = md5($password);
-                // vermeidung doppelter user
+                // create user
                 if ($res = $db->query("SELECT username FROM {users} WHERE username='" . $username . "'"))
                 {
                     $row = mysqli_fetch_row($res); // username is already taken
@@ -1945,10 +1999,10 @@ namespace YAWK {
             $html = "<div class=\"row\">
             <div class=\"col-md-4\">&nbsp;</div>
             <div class=\"col-md-4\"><form name=\"login\" role=\"form\" action=\"welcome.html\" method=\"POST\">
-                <input type=\"text\" id=\"user\" name=\"user\" value=\"".$username."\" class=\"form-control\" placeholder=\"Benutzername\">
-                <input type=\"password\" id=\"password\" name=\"password\" value=\"".$password."\" class=\"form-control\" placeholder=\"Passwort\">
+                <input type=\"text\" id=\"user\" name=\"user\" value=\"".$username."\" class=\"form-control animated fadeIn\" placeholder=\"Benutzername\">
+                <input type=\"password\" id=\"password\" name=\"password\" value=\"".$password."\" class=\"form-control animated fadeIn\" placeholder=\"Passwort\">
                 <input type=\"hidden\" name=\"login\" value=\"login\">
-                <input type=\"submit\" value=\"Sign&nbsp;in\" name=\"Login\" class=\"btn btn-success\" class=\"form-control\">
+                <input type=\"submit\" value=\"Login\" style=\"margin-top:5px;\" name=\"Login\" class=\"btn btn-success\" class=\"form-control animated fadeIn\">
             </form></div>
             <div class=\"col-md-4\">&nbsp;</div>
             </div>";
