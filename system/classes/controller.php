@@ -37,8 +37,41 @@ class controller
     }
 
 
-    public static function filterfilename($filename)
+    public static function filterfilename($db, $filename)
     {
+        // check if user wants to reset password
+        if (isset($_GET['resetPassword']) && ($_GET['resetPassword']) == true)
+        {
+            if (isset($_GET['token']) && (is_string($_GET['token'])))
+            {
+                // check if tokens match and returns the uid
+                $uid = \YAWK\user::checkResetToken($db, $_GET['token']);
+                // no uid
+                if ($uid == false)
+                {
+                    // display password changing form...
+                    echo "<div class=\"container-fluid\">
+                    <div class=\"row text-center\">
+                    <div class=\"col-md-12\"><b class=\"text-danger\"><br><br<b>Error during the password reset process.</b>
+                    <br><i>(User ID could not be retrieved)</i>
+                    <br><br>Please try again or contact the administrator.<br><br></div></div>";
+                    exit;
+                }
+                else
+                {
+                    // display password changing form...
+                    echo "<div class=\"container-fluid\">
+                    <div class=\"row text-center\">
+                    <div class=\"col-md-12\">Success - display password reset form here</div></div>";
+                    exit;
+                }
+            }
+            else
+            {
+                die ("Error: your token is not set or wrong datatype. Vars you shall not manipulate, yoda said!");
+            }
+        }
+
         // lower cases
         $filename = mb_strtolower($filename);
         // just numbers + chars are allowed, replace special chares,
@@ -58,7 +91,8 @@ class controller
 
         // what if file not exists...
         if (!file_exists($filename))
-        {   // file does not exist, load 404 page
+        {
+            // file does not exist, load 404 page
             $notfound = $filename;
             $filename = "content/errors/404.php";
             // check if call comes from frontend or backend
@@ -67,7 +101,8 @@ class controller
                 return $filename;
             }
             else
-            {   // call from backend, set path correctly
+            {
+                // call from backend, set path correctly
                 if (!isset($db)) { $db = new \YAWK\db(); }
                 \YAWK\sys::setSyslog($db, 5, "404 ERROR $notfound", 0, 0, 0, 0);
                 $filename = "../content/errors/404.php";
@@ -77,6 +112,5 @@ class controller
         // return file
         return $filename;
     }
-
 } // ./ class controller
 } // ./ namespace

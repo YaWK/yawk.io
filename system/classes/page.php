@@ -996,7 +996,7 @@ namespace YAWK {
                 $currentpage->published == 0
             ) {
                 // show error
-                return include(\YAWK\controller::filterfilename("content/errors/404.html"));
+                return include(\YAWK\controller::filterfilename($db, "content/errors/404.html"));
 
             } else {
 
@@ -1027,7 +1027,7 @@ namespace YAWK {
                     }
                     exit;
                 }
-                return include(\YAWK\controller::filterfilename("content/pages/" . $this->alias));
+                return include(\YAWK\controller::filterfilename($db, "content/pages/" . $this->alias));
             }
         }
 
