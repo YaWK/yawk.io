@@ -1795,8 +1795,8 @@ CREATE TABLE `cms_users` (
   `job` varchar(255) DEFAULT NULL,
   `likes` int(11) NOT NULL DEFAULT '0',
   `overrideTemplate` int(1) NOT NULL DEFAULT '1',
-  `templateID` int(6) NOT NULL DEFAULT '1'
-  `hashValue` varchar(255) DEFAULT NULL,
+  `templateID` int(6) NOT NULL DEFAULT '1',
+  `hashValue` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `cms_users_online` (
