@@ -149,8 +149,6 @@ if (\YAWK\user::isAnybodyThere())
             {
                 die("Unable to include template. Either database config is faulty or YaWK is not correctly installed.");
             }
-
-
         }
 }
 else

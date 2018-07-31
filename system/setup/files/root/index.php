@@ -11,6 +11,7 @@
  * <li>\YAWK\user</li>
  * <li>\YAWK\page</li>
  * <li>\YAWK\controller</li>
+ * <li>\YAWK\stats</li>
  * </ul>
  * <p>Those objects are holding all data used by the frontend. Additional
  * you can use any of that many static methods from other classes. See class
@@ -29,9 +30,9 @@
  */
 session_start();
 /* Error Reporting - this is for DEVELOPMENT PURPOSE ONLY! */
-error_reporting(E_ALL ^ E_STRICT);
+// error_reporting(E_ALL ^ E_STRICT);
 ini_set('display_errors', 0);
-//error_reporting(0);
+error_reporting(0);
 /* include core files */
 require_once('system/classes/db.php');               // database connection
 require_once('system/classes/settings.php');         // get/set settings from settings db
@@ -45,7 +46,7 @@ require_once('system/classes/template.php');         // all template functions, 
 require_once('system/classes/sys.php');              // basic i/o and helper functions
 require_once('system/classes/controller.php');       // frontEnd init and filename filter controller
 require_once('system/classes/stats.php');            // statistics functions
-
+/* set database object */
 if (!isset($db)) {
     $db = new \YAWK\db();
 }
@@ -59,7 +60,8 @@ if (!isset($user)) {
 }
 /* set page object */
 if (!isset($page)) {
-    $currentpage = new \YAWK\page();
+    $page = new \YAWK\page();
+    $currentpage = $page;
 }
 /* set controller object */
 if (!isset($controller)) {
@@ -83,6 +85,7 @@ if (isset($_GET['signup']) && ($_GET['signup']) == 1) {
     $signup = new \YAWK\PLUGINS\SIGNUP\signup();
     echo $signup->sayHello($db);
 }
+
 // URL controller - this loads the properties of each page */
 if (isset($_GET['include']) && (!empty($_GET['include'])))
 {
@@ -107,7 +110,7 @@ if (isset($_GET['include']) && (!empty($_GET['include'])))
         }
     }
     // URL is set and not empty - lets go, load properties for given page
-    $currentpage->loadProperties($db, $db->quote($_GET['include']));
+    $page->loadProperties($db, $db->quote($_GET['include']));
 
     // different GET controller actions can be done here...
 }
@@ -115,11 +118,12 @@ else
 {   // if no page is given, set index as default page
     $_GET['include'] = "index";
     // and load properties for it
-    $currentpage->loadProperties($db, $db->quote($_GET['include']));
+    $page->loadProperties($db, $db->quote($_GET['include']));
 }
 
 // get global selected template ID
-$selectedTemplate = \YAWK\settings::getSetting($db, "selectedTemplate");
+$template->id = \YAWK\settings::getSetting($db, "selectedTemplate");
+$template->selectedTemplate = $template->id;
 // call template controller
 if (\YAWK\user::isAnybodyThere())
 {   // user seems to be logged in...
@@ -130,28 +134,28 @@ if (\YAWK\user::isAnybodyThere())
     {   // set user template ID to session
         $_SESSION['userTemplateID'] = $user->templateID;
         // get template by user templateID
-        $templateName = \YAWK\template::getTemplateNameById($db, $user->templateID);
+        $template->name = \YAWK\template::getTemplateNameById($db, $user->templateID);
         // include page, based on user templateID
-        if(!@include("system/templates/$templateName/index.php"))
+        if(!include("system/templates/$template->name/index.php"))
         {   // if template not exists, show selectedTemplate
             $templateName = \YAWK\template::getTemplateNameById($db, $selectedTemplate);
-            include("system/templates/$templateName/index.php");
+            include("system/templates/$template->name/index.php");
         }
     }
     else
-        {   // user is not allowed to overrule template, show global default (selectedTemplate) instead.
-            $templateName = \YAWK\template::getTemplateNameById($db, $selectedTemplate);
-            if(!include("system/templates/$templateName/index.php"))
-            {
-                die("Unable to include template. Either database config is faulty or YaWK is not correctly installed.");
-            }
-        }
-}
-else
-    {   // user is NOT logged in, load default template (selectedTemplate) from settings db
-        $templateName = \YAWK\template::getTemplateNameById($db, $selectedTemplate);
-        if(!include("system/templates/$templateName/index.php"))
+    {   // user is not allowed to overrule template, show global default (selectedTemplate) instead.
+        $template->name = \YAWK\template::getTemplateNameById($db, $user->templateID);
+        if(!include("system/templates/$template->name/index.php"))
         {
             die("Unable to include template. Either database config is faulty or YaWK is not correctly installed.");
         }
     }
+}
+else
+{   // user is NOT logged in, load default template (selectedTemplate) from settings db
+    $template->name = \YAWK\template::getTemplateNameById($db, $user->templateID);
+    if(!include("system/templates/$template->name/index.php"))
+    {
+        die("Unable to include template. Either database config is faulty or YaWK is not correctly installed.");
+    }
+}
