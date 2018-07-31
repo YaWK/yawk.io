@@ -91,6 +91,139 @@ namespace YAWK {
             }
         }
 
+
+        /**
+         * @param string $length the length of your token
+         * @return string $token function returns the token
+         */
+        static function getToken($length)
+        {
+            $token = "";
+            $codeAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            $codeAlphabet.= "abcdefghijklmnopqrstuvwxyz";
+            $codeAlphabet.= "0123456789";
+            $max = strlen($codeAlphabet); // edited
+
+            for ($i=0; $i < $length; $i++)
+            {
+                $token .= $codeAlphabet[random_int(0, $max-1)];
+            }
+            // check if token is set
+            if (is_string($token))
+            {   // ok, return token
+                return $token;
+            }
+            else
+            {   // error generating token
+                return false;
+            }
+        }
+
+        /**
+         * Reset user password
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param string $username username from pwd reset form
+         * @param string $email email from pwd reset from
+         * @param object $lang language obj
+         * @return bool true|false
+         */
+        static function resetUserPassword($db, $username, $email, $lang)
+        {
+            // first of all we check if user entered a correct username or email string.
+            // afterwards, we get the UID for this user and store a personal hash value
+            // user will get an email, containing a link with the hash to the form where
+            // he can set his new password. If hash matches, password change is possible.
+            // Until this last step he can still login with his old credentials - password
+            // in database will not be touched until he enters a new one.
+
+            // check if username is set
+            if (isset($username) && (!empty($username) && (is_string($username))))
+            {
+                // user wants to reset with his username
+                $username = trim($username);
+                $username = strip_tags($username);
+                // get user id from username
+                $uid = self::getUserIdFromName($db, $username);
+                // if uid is NOT valid
+                if (empty($uid) || (!is_numeric($uid)))
+                {
+                    // throw error - UID is not valid
+                    \YAWK\alert::draw("danger", $lang['ERROR'], $lang['PASSWORD_RESET_UID_FAILED'], "", 3800);
+                    return false;
+                }
+                else
+                {
+                    // uid is valid, go ahead and generate hash value
+                    $token = self::getToken(64);
+
+                    // store token in database
+                    if ($res = $db->query("UPDATE {users} SET hashValue = '".$token."' WHERE id = '".$uid."'"))
+                    {
+                        // get email address of this user
+                        $to = \YAWK\user::getUserEmail($db, $username);
+                        // get admin email address
+                        $from = \YAWK\settings::getSetting($db, "admin_email");
+
+                        // check if $to is a valid email address
+                        if (filter_var($to, FILTER_VALIDATE_EMAIL))
+                        {
+                            // get full url to build the link
+                            $url = \YAWK\sys::getHost($db);
+                            if (filter_var($url, FILTER_VALIDATE_URL))
+                            {
+                                // append token and generate complete url
+                                $tokenLink = $url."?resetPassword=true&token=$token";
+                                $mailBody = "$lang[HELLO] $username\n\r$lang[PASSWORD_RESET_REQUESTED]\n\r$lang[PASSWORD_RESET_MAILBODY]\n\r".$tokenLink."\n\r$lang[PASSWORD_RESET_REQUEST_WARNING]";
+                                if (\YAWK\email::sendEmail($from, $to, "", $lang['PASSWORD_RESET'], $mailBody) === true)
+                                {   // reset password email sent
+                                    \YAWK\sys::setSyslog($db, 3, "reset password email requested from $username ($to)", 0, 0, 0, 0);
+                                    return true;
+
+                                }
+                                else
+                                    {   // FAILED to send password reset email
+                                        \YAWK\alert::draw("warning", $lang['ERROR'], "$lang[EMAIL_NOT_SENT] <br>(from: $from)<br>(to: $to)", "", 3800);
+                                        \YAWK\sys::setSyslog($db, 3, "error: failed to send reset password email to $username ($to)", 0, 0, 0, 0);
+                                        return false;
+                                    }
+                            }
+                            else
+                                {   // URL seems to be invalid, unable to generate token URL
+                                    \YAWK\alert::draw("warning", $lang['ERROR'], "$lang[PASSWORD_RESET_URL_INVALID] (url: $url)", "", 3800);
+                                    return false;
+                                }
+                        }
+                        else
+                            {   // NOT VALID EMAIL ADDRESS (to:)
+                                \YAWK\alert::draw("warning", $lang['ERROR'], $lang['EMAIL_ADD_INVALID'], "", 3800);
+                                return false;
+                            }
+                    }
+                    else
+                        {   // error: hash value could not be stored / updated in database
+                            \YAWK\alert::draw("warning", "Hash Value", "could not be stored.", "", 3800);
+                            return false;
+                        }
+                }
+            }
+            // no username set - check if email is set instead
+            elseif (isset($email) && (!empty($email) && (is_string($email))))
+            {
+                // user wants to reset with his email
+                $email = trim($email);
+                $email = strip_tags($email);
+                echo $email;
+                return true;
+            }
+            else
+                {
+                    \YAWK\alert::draw("warning", $lang['WARNING'], $lang['USERNAME_OR_EMAIL_NOT_SET'], "", 3800);
+                    return false;
+                }
+        }
+
         /**
          * return current username
          * @author Daniel Retzl <danielretzl@gmail.com>
@@ -706,12 +839,35 @@ namespace YAWK {
          * @param string $user username to get the ID from
          * @return string|bool
          */
-        static function getIdfromName($db, $user)
+        static function getUserIdFromName($db, $user)
         {
             /** @var $db \YAWK\db */
             if ($res = $db->query("SELECT id
 	                                FROM {users}
 	                                WHERE username = '".$user."'"))
+            {
+                $row = $res->fetch_row();
+                return $row[0];
+            }
+            // q failed
+            return false;
+        }
+
+        /**
+         * get ID for given email address
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param string $email email to get the ID from
+         * @return string|bool
+         */
+        static function getUserIdFromEmail($db, $email)
+        {
+            /** @var $db \YAWK\db */
+            if ($res = $db->query("SELECT id
+	                                FROM {users}
+	                                WHERE email = '".$email."'"))
             {
                 $row = $res->fetch_row();
                 return $row[0];
