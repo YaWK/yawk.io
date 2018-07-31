@@ -325,27 +325,27 @@ namespace YAWK {
         {
             if (empty($user->firstname))
             {
-                $currentuser = $user->username;
+                $currentUser = $user->username;
             }
             if (empty($user->lastname))
             {
-                $currentuser = $user->username;
+                $currentUser = $user->username;
             }
             if (!empty($user->firstname) && (empty($user->lastname)))
             {
-                $currentuser = $user->firstname;
+                $currentUser = $user->firstname;
             }
             if (empty($user->firstname) && (!empty($user->lastname)))
             {
-                $currentuser = $user->lastname;
+                $currentUser = $user->lastname;
             }
             if (!empty($user->firstname) && (!empty($user->lastname)))
             {
-                $currentuser = "$user->firstname"."&nbsp;"."$user->lastname";
+                $currentUser = "$user->firstname"."&nbsp;"."$user->lastname";
             }
-            if (isset($currentuser))
+            if (isset($currentUser))
             {
-                return $currentuser;
+                return $currentUser;
             }
             else
             {
