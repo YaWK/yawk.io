@@ -165,11 +165,13 @@ namespace YAWK {
                 if($user->loginBackEnd($db, $_POST['user'],$_POST['password']))
                 {   // create session var
                     $_SESSION['username'] = $_POST['user'];
+                    $_SESSION['passwordFail'] = 0;
                     $user->storeLogin($db, 0, "backend", $_POST['user'], $_POST['password']);
                     return true;
                 }
                 else
                 {   // if username or pwd is wrong
+                    $_SESSION['passwordFail']++;
                     $user->storeLogin($db, 1, "backend", $_POST['user'], $_POST['password']);
                     return false;
                 }
@@ -229,13 +231,20 @@ namespace YAWK {
             {   // set default username: empty
                 $password = "";
             }
+            if (isset($_SESSION['passwordFail']) && ($_SESSION['passwordFail'] > 1))
+            {
+                // password wrong after user's 2nd try - display reset button
+                $resetBtn = "<a class=\"btn btn-danger\" data-toggle=\"modal\" data-target=\"#myModal\"><i class=\"fa fa-question-circle\"></i> &nbsp;$lang[PASSWORD_FORGOTTEN]</a>";
+            }
+            else
+                {   // password not wrong - no button needed
+                    $resetBtn = "&nbsp;";
+                }
             $form = "<form role=\"form\" class=\"form-horizontal\" action=\"index.php\" method=\"post\">
             <input type=\"text\" class=\"form-control\" maxlength=\"128\" id=\"user\" value=\"".$username."\" name=\"user\" style=\"margin-bottom:4px;\" placeholder=\"Username\">
             <input type=\"password\" class=\"form-control\" id=\"password\" value=\"".$password."\" name=\"password\" placeholder=\"Password\"><br>
-            <div class=\"row\">
-                <div class=\"col-md-6\"><button type=\"submit\" class=\"btn btn-success\"><i class=\"fa fa-lock\"></i> &nbsp;Login</button></div>
-                <div class=\"col-md-6 text-right\"><a class=\"btn btn-default\" data-toggle=\"modal\" data-target=\"#myModal\"><i class=\"fa fa-question-circle\"></i> &nbsp;$lang[PASSWORD_FORGOTTEN]</a></div>
-            </div>
+            <button type=\"submit\" class=\"btn btn-success\"><i class=\"fa fa-lock\"></i> &nbsp;Login</button>
+            &nbsp;&nbsp;".$resetBtn."
             </form>";
             return $form;
         }
