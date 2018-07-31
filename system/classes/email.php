@@ -35,8 +35,15 @@ namespace YAWK {
 
             /* trim fields */
             $email_from = trim($email_from);
+            $email_to = trim($email_to);
+            $email_cc = trim($email_cc);
             $email_subject = trim($email_subject);
             $email_message = trim($email_message);
+
+            if (!isset($email_cc) || (empty($email_cc)))
+            {
+                $email_cc = false;
+            }
 
             /* validate email_to adress with regex */
             $email_exp = '/^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/';
