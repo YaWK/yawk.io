@@ -135,6 +135,39 @@ if (!isset($AdminLTE))
       // user is not logged in - set a basic body markup and display login box
       // body markup
       echo "<body style=\"background-color: #ecf0f5\">";
+
+      // reset password email request
+      if (isset($_POST['resetPasswordRequest']) && ($_POST['resetPasswordRequest'] == "true"))
+      {   // send reset email
+          if ($user::sendResetEmail($db, $_POST['username'], $_POST['email'], $lang) == true)
+          {   // email sent
+              \YAWK\alert::draw("success", "$lang[EMAIL_SENT]", "$lang[PLEASE_CHECK_YOUR_INBOX]", "", 2400);
+          }
+          else
+              {   // error: sending reset email failed
+                  \YAWK\alert::draw("danger", $lang['ERROR'], $lang['PASSWORD_RESET_FAILED'], "", 3800);
+              }
+      }
+
+      // reset password requested
+      if (isset($_GET['resetPassword']) && (!empty($_GET['resetPassword']) && ($_GET['resetPassword'] === true)))
+      {
+          // check if reset token is set
+          if (isset($_GET['token']) && (!empty($_GET['token']) && (is_string($_GET['token']))))
+          {
+              // check if sent token is equal to saved token
+              if ($user::checkResetToken($db, $_GET['token']) === true)
+              {
+                  // draw reset password form
+                  // ...
+              }
+              else
+                  {   // ERROR: token does not match with database - throw error
+                      \YAWK\alert::draw("danger", $lang['ERROR'], $lang['PASSWORD_RESET_TOKEN_INVALID'], "", 3800);
+                  }
+          }
+      }
+
       // draw login box
       echo \YAWK\backend::drawLoginBox($db, $lang);
       // end section markup
