@@ -85,6 +85,39 @@ if (isset($_GET['signup']) && ($_GET['signup']) == 1) {
     $signup = new \YAWK\PLUGINS\SIGNUP\signup();
     echo $signup->sayHello($db);
 }
+/*
+// check if user wants to reset password
+if (isset($_GET['resetPassword']) && ($_GET['resetPassword']) == true)
+{
+    if (isset($_GET['token']) && (is_string($_GET['token'])))
+    {
+        // set db connection
+        if (!isset($db) ||(empty($db))) { $db = new \YAWK\db(); }
+        // check if tokens match and returns the uid
+        $uid = \YAWK\user::checkResetToken($db, $_GET['token']);
+        // no uid
+        if ($uid == false)
+        {
+            echo "<br><br><br>wrong UID: $uid <br>token: $_GET[token]";
+            \YAWK\alert::draw("danger", "TOKEN ERROR", "No User ID with that token found. Please try again.", "", 3800);
+        }
+        else
+        {
+            // display password changing form...
+            // ....
+            echo "success - display form here";
+            \YAWK\alert::draw("success", "Form comes here...", "Display the Form to change password", "", 6800);
+        }
+    }
+    else
+    {
+        die ("token is not set or not a string");
+    }
+}
+*/
+
+
+
 // URL controller - this loads the properties of each page */
 if (isset($_GET['include']) && (!empty($_GET['include'])))
 {

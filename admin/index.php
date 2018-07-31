@@ -159,7 +159,15 @@ if (!isset($AdminLTE))
               if ($user::checkResetToken($db, $_GET['token']) === true)
               {
                   // draw reset password form
-                  // ...
+                  echo $_GET['token'];
+                  // echo \YAWK\backend::drawPasswordResetForm($db, $lang);
+                  // end section markup
+                  echo "<br><br></section></div>";
+                  // output js includes at bottom of page
+                  echo $AdminLTE->drawHtmlJSIncludes();
+                  // html output end
+                  echo $AdminLTE->drawHtmlEnd($db);
+                  exit;
               }
               else
                   {   // ERROR: token does not match with database - throw error
