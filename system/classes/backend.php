@@ -282,7 +282,7 @@ namespace YAWK {
                       <div class=\"text-center\"><br><i>$lang[OR]</i><br></div>
                       <label for=\"username\">$lang[USERNAME]</label>
                       <input type=\"text\" class=\"form-control\" id=\"username\" name=\"username\" placeholder=\"$lang[USERNAME]\">
-                      <input type=\"hidden\" name=\"resetPassword\" id=\"resetPassword\" value=\"true\">
+                      <input type=\"hidden\" name=\"resetPasswordRequest\" id=\"resetPasswordRequest\" value=\"true\">
                     </div>
                     <div class=\"modal-footer\">
                       <button type=\"submit\" class=\"btn btn-success\"><i class=\"fa fa-check\"></i> &nbsp;$lang[PASSWORD_RESET]</button>
