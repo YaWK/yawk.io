@@ -122,10 +122,10 @@ namespace YAWK {
 
 
         /**
-         * Check if password reset token matches
+         * Check if password reset token matches and return uid
          * @param object $db database obj
          * @param string $token token that was generated for this user
-         * @return bool true|false
+         * @return mixed returns the affected user id (or false)
          */
         static function checkResetToken($db, $token)
         {
@@ -133,18 +133,26 @@ namespace YAWK {
             if (isset($token) && (is_string($token)))
             {
                 // compare with stored token in database
-                if ($res = $db->query("SELECT FROM {users} hashValue WHERE hashValue = '".$token."'"))
+                if ($res = $db->query("SELECT FROM {users} id WHERE hashValue = '".$token."'"))
                 {
-                    // all good, token matches
-                    return true;
+                    // token matches, get user ID
+                    if ($row = mysqli_fetch_row($res))
+                    {
+                        // return user ID
+                        return $row[0];
+                    }
+                    else
+                        {   // no ID found
+                            return false;
+                        }
                 }
                 else
-                {   // no token with this value found
+                {   // no user with this token hash value found
                     return false;
                 }
             }
             else
-            {   // token not set or not a string value
+            {   // user token not set or wrong type
                 return false;
             }
         }
