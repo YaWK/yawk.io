@@ -93,20 +93,21 @@ namespace YAWK {
 
 
         /**
+         * Generate a safe token for password reset
          * @param string $length the length of your token
          * @return string $token function returns the token
          */
         static function getToken($length)
         {
             $token = "";
-            $codeAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            $codeAlphabet.= "abcdefghijklmnopqrstuvwxyz";
-            $codeAlphabet.= "0123456789";
-            $max = strlen($codeAlphabet); // edited
+            $code = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            $code.= "abcdefghijklmnopqrstuvwxyz";
+            $code.= "0123456789";
+            $max = strlen($code); // edited
 
             for ($i=0; $i < $length; $i++)
             {
-                $token .= $codeAlphabet[random_int(0, $max-1)];
+                $token .= $code[random_int(0, $max-1)];
             }
             // check if token is set
             if (is_string($token))
@@ -119,17 +120,49 @@ namespace YAWK {
             }
         }
 
+
         /**
-         * Reset user password
+         * Check if password reset token matches
+         * @param object $db database obj
+         * @param string $token token that was generated for this user
+         * @return bool true|false
+         */
+        static function checkResetToken($db, $token)
+        {
+            // check if token is set and in valid format
+            if (isset($token) && (is_string($token)))
+            {
+                // compare with stored token in database
+                if ($res = $db->query("SELECT FROM {users} hashValue WHERE hashValue = '".$token."'"))
+                {
+                    // all good, token matches
+                    return true;
+                }
+                else
+                {   // no token with this value found
+                    return false;
+                }
+            }
+            else
+            {   // token not set or not a string value
+                return false;
+            }
+        }
+
+
+
+        /**
+         * send an email to let the user reset his password
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
+         * @param object $db database obj
          * @param string $username username from pwd reset form
          * @param string $email email from pwd reset from
          * @param object $lang language obj
          * @return bool true|false
          */
-        static function resetUserPassword($db, $username, $email, $lang)
+        static function sendResetEmail($db, $username, $email, $lang)
         {
             // first of all we check if user entered a correct username or email string.
             // afterwards, we get the UID for this user and store a personal hash value
@@ -148,14 +181,12 @@ namespace YAWK {
                 $uid = self::getUserIdFromName($db, $username);
                 // if uid is NOT valid
                 if (empty($uid) || (!is_numeric($uid)))
-                {
-                    // throw error - UID is not valid
+                {   // throw error - UID is not valid
                     \YAWK\alert::draw("danger", $lang['ERROR'], $lang['PASSWORD_RESET_UID_FAILED'], "", 3800);
                     return false;
                 }
                 else
-                {
-                    // uid is valid, go ahead and generate hash value
+                {   // uid is valid, go ahead and generate hash value
                     $token = self::getToken(64);
 
                     // store token in database
@@ -179,6 +210,7 @@ namespace YAWK {
                                 if (\YAWK\email::sendEmail($from, $to, "", $lang['PASSWORD_RESET'], $mailBody) === true)
                                 {   // reset password email sent
                                     \YAWK\sys::setSyslog($db, 3, "reset password email requested from $username ($to)", 0, 0, 0, 0);
+                                    $_SESSION['passwordFail'] = 0;
                                     return true;
 
                                 }
@@ -256,16 +288,16 @@ namespace YAWK {
             if (isset($_SESSION['username']) && isset($_SESSION['uid']))
             {   // check if session logged_in status is true
                 if ($_SESSION['logged_in'] == true)
-                {
+                {   // user is logged in
                     return true;
                 }
                 else
-                    {
+                    {   // session is there, but user is not logged in
                         return false;
                     }
             }
             else
-                {
+                {   // no username or uid set in this session - user is not logged in
                     return false;
                 }
         }
