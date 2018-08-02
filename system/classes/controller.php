@@ -52,9 +52,9 @@ class controller
                     // display password changing form...
                     echo "<div class=\"container-fluid\">
                     <div class=\"row text-center\">
-                    <div class=\"col-md-12\"><b class=\"text-danger\"><br><br<b>Error during the password reset process.</b>
-                    <br><i>(User ID could not be retrieved)</i>
-                    <br><br>Please try again or contact the administrator.<br><br></div></div>";
+                    <div class=\"col-md-12\"><b class=\"text-danger\"><br><br<b>$lang[PASSWORD_RESET_ERROR]</b>
+                    <br><i>$lang[PASSWORD_RESET_ERROR_UID]</i>
+                    <br><br></div></div>";
                     exit;
                 }
                 else
@@ -64,7 +64,7 @@ class controller
                     <div class=\"row text-center\">
                     <div class=\"col-md-4\">&nbsp;</div>
                     <div class=\"col-md-4\"><br><br><h3>$lang[PASSWORD_RESET]<br>
-                    <p class=\"small text-gray\">minimum 6 chars, special chars are allowed</small></h3><hr>";
+                    <p class=\"small text-gray\">$lang[PASSWORD_REQUIREMENTS]</small></h3><hr>";
                     \YAWK\user::drawPasswordResetForm($db, $lang, $uid);
                     echo "<hr><br><br></div>
                     <div class=\"col-md-4\">&nbsp;</div></div>";
@@ -73,7 +73,7 @@ class controller
             }
             else
             {
-                die ("Error: your token is not set or wrong data type. Vars you shall not manipulate, yoda said!");
+                die ($lang['PASSWORD_RESET_ERROR_TOKEN']);
             }
         }
 
@@ -110,8 +110,8 @@ class controller
                         echo "<div class=\"container-fluid\">
                         <div class=\"row text-center\">
                         <div class=\"col-md-4\">&nbsp;</div>
-                        <div class=\"col-md-4\"><br><br><h3>Password changed!<br>
-                        <p class=\"small text-gray\">please login with your new password</small></h3><hr></div></div>";
+                        <div class=\"col-md-4\"><br><br><h3>$lang[PASSWORD_CHANGED]<br>
+                        <p class=\"small text-gray\">$lang[PASSWORD_CHANGED_LOGIN]</small></h3><hr></div></div>";
                         echo \YAWK\user::drawLoginBox("$user", $_POST['newPassword1']);
                         echo "<hr><br><br><br><br>";
                         exit;
@@ -122,8 +122,8 @@ class controller
                             echo "<div class=\"container-fluid\">
                             <div class=\"row text-center\">
                             <div class=\"col-md-4\">&nbsp;</div>
-                            <div class=\"col-md-4\"><br><br><h3>ERROR: Password could not be changed!<br>
-                            <p class=\"small text-gray\">Please try again or contact the page administrator.</small></h3><hr>";
+                            <div class=\"col-md-4\"><br><br><h3>$lang[PASSWORD_CHANGED_ERROR]<br>
+                            <p class=\"small text-gray\">$lang[PLEASE_TRY_AGAIN]</small></h3><hr>";
                             // draw reset form again
                             \YAWK\user::drawPasswordResetForm($db, $lang, $_POST['uid']);
                             echo "<br><br></div>
