@@ -198,20 +198,24 @@ namespace YAWK {
                     // update database - change password
                     if ($res = $db->query("UPDATE {users} SET password = '".$newPassword."' WHERE id = '".$uid."'"))
                     {   // password changed successfully
+                        \YAWK\sys::setSyslog($db, 3, "user $uid changed his password", $uid, 0, 0, 0);
                         return true;
                     }
                     else
                         {   // password cannot be changed
+                            \YAWK\sys::setSyslog($db, 5, "error: db error during password update", $uid, 0, 0, 0);
                             return false;
                         }
                 }
                 else
                     {   // uid not set or not valid
+                        \YAWK\sys::setSyslog($db, 5, "error: uid not set, empty or wrong datatype", $uid, 0, 0, 0);
                         return false;
                     }
             }
             else
                 {   // new password not set or not valid
+                    \YAWK\sys::setSyslog($db, 5, "error: new password not set or empty", $uid, 0, 0, 0);
                     return false;
                 }
         }
@@ -283,31 +287,34 @@ namespace YAWK {
                                 $mailBody = "$lang[HELLO] $username!\n\r$lang[PASSWORD_RESET_REQUESTED]\n\r$lang[PASSWORD_RESET_MAILBODY]\n\r".$tokenLink."\n\r$lang[PASSWORD_RESET_REQUEST_WARNING].";
                                 if (\YAWK\email::sendEmail($from, $to, "", "$lang[PASSWORD_RESET] $url", $mailBody) === true)
                                 {   // reset password email sent
-                                    \YAWK\sys::setSyslog($db, 3, "reset password email requested from $username ($to)", 0, 0, 0, 0);
+                                    \YAWK\sys::setSyslog($db, 3, "reset password email requested from $username ($to)", $uid, 0, 0, 0);
                                     $_SESSION['passwordFail'] = 0;
                                     return true;
                                 }
                                 else
                                     {   // FAILED to send password reset email
                                         \YAWK\alert::draw("warning", $lang['ERROR'], "$lang[EMAIL_NOT_SENT] <br>(from: $from)<br>(to: $to)", "", 3800);
-                                        \YAWK\sys::setSyslog($db, 3, "error: failed to send reset password email to $username ($to)", 0, 0, 0, 0);
+                                        \YAWK\sys::setSyslog($db, 5, "error: failed to send reset password email to $username ($to)", $uid, 0, 0, 0);
                                         return false;
                                     }
                             }
                             else
                                 {   // URL seems to be invalid, unable to generate token URL
                                     \YAWK\alert::draw("warning", $lang['ERROR'], "$lang[PASSWORD_RESET_URL_INVALID] (url: $url)", "", 3800);
+                                    \YAWK\sys::setSyslog($db, 5, "error: reset password failed due invalid token URL", $uid, 0, 0, 0);
                                     return false;
                                 }
                         }
                         else
                             {   // NOT VALID EMAIL ADDRESS (to:)
                                 \YAWK\alert::draw("warning", $lang['ERROR'], $lang['EMAIL_ADD_INVALID'], "", 3800);
+                                \YAWK\sys::setSyslog($db, 5, "error: $to email address failed", $uid, 0, 0, 0);
                                 return false;
                             }
                     }
                     else
                         {   // error: hash value could not be stored / updated in database
+                            \YAWK\sys::setSyslog($db, 5, "error: hash value could not be updated in database", $uid, 0, 0, 0);
                             \YAWK\alert::draw("warning", "Hash Value", "could not be stored.", "", 3800);
                             return false;
                         }
