@@ -45,11 +45,11 @@ namespace YAWK {
          * @link       http://yawk.io
          * @return string
          */
-        public function init($db)
+        public function init($db, $referer)
         {
             // set current language
             $this->httpAcceptedLanguage = $this->getClientLanguage();
-            $this->currentLanguage = $this->getCurrentLanguage();
+            $this->currentLanguage = $this->getCurrentLanguage($db, $referer);
             return $this->setLanguage($this->currentLanguage);
         }
 
@@ -61,7 +61,7 @@ namespace YAWK {
          * @link       http://yawk.io
          * @return string
          */
-        public function getCurrentLanguage()
+        public function getCurrentLanguage($db, $referer)
         {
             $currentLanguage = '';
             // check if a GET param is set
@@ -99,14 +99,27 @@ namespace YAWK {
                 }
                 else
                 {
-                    // get language setting from database
-                    if (!isset($db))
-                    {   // create new db object
-                        require_once '../system/classes/db.php';
-                        require_once '../system/classes/settings.php';
-                        $db = new \YAWK\db();
+                    if (isset($referer) && (is_string($referer)))
+                    {
+                        if ($referer == "frontend")
+                        {
+                            $languageProperty = "frontendLanguage";
+                        }
+                        else if ($referer == "backend")
+                        {
+                            $languageProperty = "backendLanguage";
+                        }
+                        else
+                            {
+                                $languageProperty = "backendLanguage";
+                            }
                     }
-                    if ($currentLanguage = \YAWK\settings::getSetting($db, "backendLanguage"))
+                    else
+                        {
+                            $languageProperty = "backendLanguage";
+                        }
+
+                    if ($currentLanguage = \YAWK\settings::getSetting($db, $languageProperty))
                     {
                         $_SESSION['lang'] = $currentLanguage;
                         // return current language from db-settings// if not, try to set it - with error supressor to avoid notices if output started before
@@ -350,8 +363,20 @@ namespace YAWK {
                 }
             }
             else
-            {   // set path to frontend
-                $this->pathToFile = "admin/language/";
+            {   // set path to FRONTEND
+                if (is_dir("system/language/"))
+                {   // set frontend language path
+                    $this->pathToFile = "system/language/";
+                }
+                // if frontend language files are not reachable, check if backend language files exist
+                else if (is_dir("admin/language"))
+                {   // load backend files instead
+                    $this->pathToFile = "admin/language";
+                }
+                else
+                    {   // no language files found (even no backend files)
+                        die ("ERROR: Unable to load language files. Several conditions failed - files are missing or corrupt. Please inform the page administrator about this concern.");
+                    }
             }
             return $this->pathToFile;
         }

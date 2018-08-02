@@ -36,6 +36,7 @@ error_reporting(1);
 /* include core files */
 require_once('system/classes/db.php');               // database connection
 require_once('system/classes/settings.php');         // get/set settings from settings db
+require_once 'system/classes/language.php';      // language class
 require_once('system/classes/alert.php');            // draw fancy JS-notification alert class
 require_once('system/classes/email.php');            // email functions
 require_once('system/classes/user.php');             // all get/set/handle user functions
@@ -50,6 +51,17 @@ require_once('system/classes/stats.php');            // statistics functions
 if (!isset($db)) {
     $db = new \YAWK\db();
 }
+
+/* language object */
+if (!isset($lang) || (empty($lang)))
+{   // create new language obj if none exists
+    $language = new YAWK\language();
+    // init language
+    $language->init($db, "frontend");
+    // convert object param to array !important
+    $lang = (array) $language->lang;
+}
+
 /* set template object */
 if (!isset($template)) {
     $template = new \YAWK\template();
@@ -138,7 +150,7 @@ if (\YAWK\user::isAnybodyThere())
         // include page, based on user templateID
         if(!include("system/templates/$template->name/index.php"))
         {   // if template not exists, show selectedTemplate
-            $templateName = \YAWK\template::getTemplateNameById($db, $selectedTemplate);
+            $templateName = \YAWK\template::getTemplateNameById($db, $template->selectedTemplate);
             include("system/templates/$template->name/index.php");
         }
     }

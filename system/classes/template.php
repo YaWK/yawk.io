@@ -992,7 +992,7 @@ namespace YAWK {
          * @param array $positions Positions [enabled] status array
          * @param array $indicators Positions [indicator] status array
          */
-        public static function getPositionDivBox($db, $position, $row, $bootstrapGrid, $positions, $indicators)
+        public static function getPositionDivBox($db, $lang, $position, $row, $bootstrapGrid, $positions, $indicators)
         {
             if (isset($row) && (!empty($row)))
             {
@@ -1028,7 +1028,7 @@ namespace YAWK {
                 // output position div box
                 echo "$startRow";
                 echo "<div class=\"$bootstrapGrid pos-$position\" id=\"$position\" $indicatorStyle>$indicatorText";
-                      \YAWK\template::setPosition($db, "$position-pos");
+                      \YAWK\template::setPosition($db, $lang, "$position-pos");
                 echo "</div>";
                 echo "$endRow";
             }
@@ -2666,7 +2666,7 @@ namespace YAWK {
          * @param object $db database
          * @param string $position the template position
          */
-        static function setPosition($db, $position)
+        static function setPosition($db, $lang, $position)
         {
             global $currentpage;
             $main_set = 0;
@@ -2703,7 +2703,7 @@ namespace YAWK {
                     else
                         {
                             echo "<div id=\"$position\">";
-                            $currentpage->getContent($db);
+                            $currentpage->getContent($db, $lang);
                             echo "</div>";
                             $main_set = 1;
                         }

@@ -63,7 +63,7 @@ class controller
                     echo "<div class=\"container-fluid\">
                     <div class=\"row text-center\">
                     <div class=\"col-md-4\">&nbsp;</div>
-                    <div class=\"col-md-4\"><br><br><h3>Please set your new password<br>
+                    <div class=\"col-md-4\"><br><br><h3>$lang[PASSWORD_RESET]<br>
                     <p class=\"small text-gray\">minimum 6 chars, special chars are allowed</small></h3><hr>";
                     \YAWK\user::drawPasswordResetForm($db, $lang, $uid);
                     echo "<hr><br><br></div>
