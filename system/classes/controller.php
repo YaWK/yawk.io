@@ -136,6 +136,20 @@ class controller
                         return false;
                     }
             }
+            else
+                {
+                    // show reset form again if user enters no password
+                    echo "<div class=\"container-fluid\">
+                            <div class=\"row text-center\">
+                            <div class=\"col-md-4\">&nbsp;</div>
+                            <div class=\"col-md-4\"><br><br><h3>$lang[PASSWORD_CHANGED_ERROR]<br>
+                            <p class=\"small text-gray\">$lang[PLEASE_TRY_AGAIN]</small></h3><hr>";
+                    // draw reset form again
+                    \YAWK\user::drawPasswordResetForm($db, $lang, $_POST['uid']);
+                    echo "<br><br></div>
+                            <div class=\"col-md-4\">&nbsp;</div></div>";
+                    exit;
+                }
 
         }
 
