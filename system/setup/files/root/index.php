@@ -50,6 +50,15 @@ require_once('system/classes/stats.php');            // statistics functions
 if (!isset($db)) {
     $db = new \YAWK\db();
 }
+/* language object */
+if (!isset($lang) || (empty($lang)))
+{   // create new language obj if none exists
+    $language = new YAWK\language();
+    // init language
+    $language->init($db, "frontend");
+    // convert object param to array !important
+    $lang = (array) $language->lang;
+}
 /* set template object */
 if (!isset($template)) {
     $template = new \YAWK\template();

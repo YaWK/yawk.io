@@ -36,7 +36,7 @@ if (!isset($lang) || (empty($lang)))
 {   // create new language obj if none exists
     $language = new YAWK\language();
     // init language
-    $language->init($db);
+    $language->init($db, "backend");
     // convert object param to array !important
     $lang = (array) $language->lang;
 }
