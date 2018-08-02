@@ -164,18 +164,18 @@ namespace YAWK {
          * Draw the form where users can reset their password.
          * The password reset email leads to this form.
          * @param object $db database obj
-         * @param object $lang language obj
+         * @param array $lang language array
          * @param int $uid user ID
          */
         static function drawPasswordResetForm($db, $lang, $uid)
         {
             echo "<form action=\"index.php?setNewPassword=true\" method=\"POST\" role=\"form\">";
-            echo "<label for=\"newPassword1\">Password</label>";
+            echo "<label for=\"newPassword1\">$lang[PASSWORD]</label>";
             echo "<input type=\"password\" class=\"form-control\" name=\"newPassword1\" id=\"newPassword1\">";
-            echo "<label for=\"newPassword2\">Password (again)</label>";
+            echo "<label for=\"newPassword2\">$lang[PASSWORD_REPEAT]</label>";
             echo "<input type=\"password\" class=\"form-control\" name=\"newPassword2\" id=\"newPassword2\">";
             echo "<input type=\"hidden\" value=\"$uid\" class=\"form-control\" name=\"uid\" id=\"uid\">";
-            echo "<button type=\"submit\" style=\"margin-top:5px;\" class=\"btn btn-success\">Set new password</button>";
+            echo "<button type=\"submit\" style=\"margin-top:5px;\" class=\"btn btn-success\">$lang[PASSWORD_SET_NEW]</button>";
             echo "</form>";
         }
 
