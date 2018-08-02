@@ -160,9 +160,9 @@ echo"</section>
                     $dbLanguage = \YAWK\settings::getSetting($db, "backendLanguage");
                     echo "<option value=\"$dbLanguage\">$lang[CURRENT] $dbLanguage</option>";
                     // get all language files from folder to array
-                    $languageFiles = \YAWK\filemanager::getFilesFromFolderToArray('language');
+                    $backendLanguageFiles = \YAWK\filemanager::getFilesFromFolderToArray('language');
                     // walk through array
-                    foreach ($languageFiles AS $file)
+                    foreach ($backendLanguageFiles AS $file)
                     {   // exclude .htaccess
                         if ($file != ".htaccess")
                         {   // extract language tag from filename
@@ -185,7 +185,7 @@ echo"</section>
                         // this has been declared before - no need to get it twice from database.
                         // $languageFiles = \YAWK\filemanager::getFilesFromFolderToArray('language'); // declared before
                         // walk through array
-                        foreach ($languageFiles AS $file)
+                        foreach ($backendLanguageFiles AS $file)
                         {   // exclude .htaccess
                             if ($file != ".htaccess")
                             {   // extract language tag from filename
@@ -209,13 +209,21 @@ echo"</section>
                         <option value="null"><?php echo $lang['PLEASE_SELECT']; ?></option>
                         <?php
                             // get all language files from folder to array
-                            $languageFiles = \YAWK\filemanager::getFilesFromFolderToArray('language');
+                            $backendLanguageFiles = \YAWK\filemanager::getFilesFromFolderToArray('language');
+                            $frontendLanguageFiles = \YAWK\filemanager::getFilesFromFolderToArray('../system/language');
                             // walk through array
-                            foreach ($languageFiles AS $file)
+                            foreach ($backendLanguageFiles AS $file)
                             {   // exclude .htaccess
                                 if ($file != ".htaccess")
                                 {   // create option for each language file
-                                    echo "<option value=\"language/$file\">$file</option>";
+                                    echo "<option value=\"language/$file\">backend/$file</option>";
+                                }
+                            }
+                            foreach ($frontendLanguageFiles AS $file)
+                            {   // exclude .htaccess
+                                if ($file != ".htaccess")
+                                {   // create option for each language file
+                                    echo "<option value=\"../system/language/$file\">frontend/$file</option>";
                                 }
                             }
                         ?>
