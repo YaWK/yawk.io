@@ -105,6 +105,7 @@ namespace YAWK {
          */
         public function init()
         {
+            $_SESSION['SETUP'] = TRUE;
             /* CHECK + SET LANGUAGE */
             // include language class
             $language = '';

@@ -54,7 +54,7 @@ namespace YAWK {
         }
 
         /**
-         * returns the currently set backend language
+         * returns the currently set language
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @copyright 2017 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
@@ -362,6 +362,14 @@ namespace YAWK {
                     $this->pathToFile = '';
                 }
             }
+
+            // if setup is running
+            else if (isset($_SESSION['SETUP']) && ($_SESSION['SETUP'] == TRUE))
+            {       // load backend language files
+                    $this->pathToFile = "admin/language/";
+            }
+
+            // in any other case load frontend language
             else
             {   // set path to FRONTEND
                 if (is_dir("system/language/"))
