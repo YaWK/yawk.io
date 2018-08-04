@@ -206,19 +206,3 @@ echo"</section><!-- Main content -->
     </div>
 </div>
 </form>
-
-    <div class="row animated fadeIn">
-
-        <div class="col-md-12">
-            <div class="box box-default">
-                <div class="box-header with-border">
-                    <h3 class="box-title"><?php echo "$lang[TPL_ADD_GFONT] <small>$lang[TPL_ADD_GFONT_SUBTEXT]</small>"; ?></h3>
-                </div>
-                <div class="box-body">
-                    <input type="text" class="form-control" id="gfont" name="gfont" placeholder="font eg. Ubuntu">
-                    <input type="text" class="form-control" name="gfontdescription" placeholder="description eg. Ubuntu, serif">
-                    <br><input id="savebutton" type="submit" class="btn btn-danger" name="addgfont" value="<?php echo "$lang[TPL_ADD_GFONT_BTN]"; ?>">
-                </div>
-            </div>
-        </div>
-    </div>
