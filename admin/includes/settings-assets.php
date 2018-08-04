@@ -170,7 +170,7 @@ echo"</section><!-- Main content -->
               <!-- BOX -->
               <div class=\"box box-default collapsed-box\">
                   <div class=\"box-header with-border\">
-                      <h3 class=\"box-title\">$row[asset] <small>$lang[EDIT]</small></h3>
+                      <h3 class=\"box-title\"><b>$row[sortation].</b> $row[asset] <small>$lang[EDIT]</small></h3>
                       <!-- box-tools -->
                       <div class=\"box-tools pull-right\">
                       <small><a href=\"index.php?page=settings-assets&toggle=1&published=$row[published]&id=$row[id]\">$assetStatus</a></small>
@@ -200,7 +200,7 @@ echo"</section><!-- Main content -->
                         <option value=\"2\" $assetType2Selected>$lang[OPTIONAL]</option>
                         <option value=\"3\" $assetType3Selected>$lang[USER_DEFINED]</option>
                       </select>
-                      <label for=\"sortation\">$lang[ORDER]</label>
+                      <label for=\"sortation\">$lang[LOADING_ORDER]</label>
                        <input type=\"text\" class=\"form-control\" name=\"sortation\" id=\"sortation\" value=\"$row[sortation]\" placeholder=\"$lang[ORDER_PH]\">
                       <a style=\"margin-top:2px;\" role=\"dialog\" data-confirm=\"$lang[ASSET_DEL] &laquo;$row[asset]&raquo;\"
                    title=\"$lang[ASSET] $lang[DELETE]\" href=\"index.php?page=settings-assets&delete=1&id=$row[id]&asset=$row[asset]\" class=\"btn btn-default pull-left\"><i class=\"fa fa-trash-o\"></i> $lang[DELETE]</a>
