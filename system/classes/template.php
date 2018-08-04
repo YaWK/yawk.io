@@ -2935,10 +2935,6 @@ namespace YAWK {
 
             foreach ($assets as $asset => $property)
             {
-                $resSortation = $db->query("SELECT sortation from {assets} 
-                                         WHERE templateID = '".$templateID."'
-                                         AND link = '".$property['url1']."'");
-
                 $resInternal = $db->query("SELECT link from {assets} 
                                          WHERE templateID = '".$templateID."'
                                          AND link = '".$property['internal']."'");

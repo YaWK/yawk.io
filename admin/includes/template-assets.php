@@ -112,16 +112,16 @@ if ($_GET['action'] === "setup")
                     $title = $value;
                     $value = '';
                 }
-                // title
-                if (substr($param, 0, 6) == "title-") {
-                    $title = $value;
+                // sortation
+                if (substr($param, 0, 10) == "sortation-") {
+                    $sortation = $value;
                     $value = '';
                 }
 
                 // if value is not empty
                 if (!empty($value) && ($value != "save"))
                 {   // add asset to database
-                    $db->query("INSERT INTO {assets} (templateID, type, asset, link) VALUES ('" . $template->id . "', '" . $type . "', '" . $title . "', '" . $value . "')");
+                    $db->query("INSERT INTO {assets} (templateID, type, sortation, asset, link) VALUES ('" . $template->id . "', '" . $type . "', '" . $sortation . "','" . $title . "', '" . $value . "')");
                 }
             }
         }
