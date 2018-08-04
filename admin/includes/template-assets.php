@@ -112,6 +112,11 @@ if ($_GET['action'] === "setup")
                     $title = $value;
                     $value = '';
                 }
+                // title
+                if (substr($param, 0, 6) == "title-") {
+                    $title = $value;
+                    $value = '';
+                }
 
                 // if value is not empty
                 if (!empty($value) && ($value != "save"))

@@ -2845,6 +2845,7 @@ namespace YAWK {
                 $assets[$prop]["url1"] = $row['url1'];
                 $assets[$prop]["url2"] = $row['url2'];
                 $assets[$prop]["url3"] = $row['url3'];
+                $assets[$prop]["sortation"] = $row['sortation'];
             }
             // check if assets is an array
             if (is_array($assets))
@@ -2934,6 +2935,10 @@ namespace YAWK {
 
             foreach ($assets as $asset => $property)
             {
+                $resSortation = $db->query("SELECT sortation from {assets} 
+                                         WHERE templateID = '".$templateID."'
+                                         AND link = '".$property['url1']."'");
+
                 $resInternal = $db->query("SELECT link from {assets} 
                                          WHERE templateID = '".$templateID."'
                                          AND link = '".$property['internal']."'");
@@ -2973,6 +2978,7 @@ namespace YAWK {
 
                 echo "<label for=\"include-$property[property]\">$property[asset]</label>
                       <input name=\"title-$property[property]\" value=\"$property[asset]\" type=\"hidden\">
+                      <input name=\"sortation-$property[property]\" value=\"$property[sortation]\" type=\"hidden\">
                       
                         <select id=\"include-$property[property]\" name=\"include-$property[property]\" class=\"form-control\">
                             <option name=\"null\" value=\"\">inactive</option>
@@ -2999,14 +3005,11 @@ namespace YAWK {
         public function loadActiveAssets($db, $templateID)
         {   /* @var \YAWK\db $db */
 
-            // create empty array
-            $assetArray = array();
-
             if (isset($templateID) && (!empty($templateID)))
             {
                 echo "
 <!-- ASSETS -->";
-                if ($res = $db->query("SELECT type, asset, link FROM {assets} WHERE templateID = '".$templateID."' ORDER BY type"))
+                if ($res = $db->query("SELECT type, asset, link FROM {assets} WHERE templateID = '".$templateID."' ORDER BY sortation"))
                 {
                     while ($row = mysqli_fetch_assoc($res))
                     {

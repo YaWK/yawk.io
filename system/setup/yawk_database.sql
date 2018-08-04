@@ -4,6 +4,7 @@ CREATE TABLE `cms_assets` (
   `id` int(11) NOT NULL,
   `templateID` int(11) NOT NULL,
   `type` varchar(11) NOT NULL,
+  `sortation` int(11) NOT NULL,
   `asset` varchar(255) NOT NULL,
   `link` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
