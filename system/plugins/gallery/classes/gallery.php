@@ -1526,14 +1526,14 @@ namespace YAWK\PLUGINS\GALLERY {
                                     </div>';
                                     echo '
                                     <div class="row">
-                                      <div class="col-md-4" id="imgCol-'.$this->itemID.'">
-                                          <a href="'.$row['folder']."/".$this->filename.'" data-lightbox="'.$galleryID.'" data-title="'.$this->itemTitle.'"><img class="img-thumbnail" id="img-'.$this->itemID.'" width="400" alt="'.$this->itemTitle.'" title="'.$this->itemTitle.'" src="' . $row['folder']."/".$this->filename . '"></a><br><br>
+                                      <div class="col-md-4 text-center" id="imgCol-'.$this->itemID.'">
+                                          <a href="'.$row['folder']."/".$this->filename.'" data-lightbox="'.$galleryID.'" data-title="'.$this->itemTitle.'"><img class="img-responsive img-rounded hvr-grow" id="img-'.$this->itemID.'" width="400" alt="'.$this->itemTitle.'" title="'.$this->itemTitle.'" src="' . $row['folder']."/".$this->filename . '"></a><br><br>
                                       </div>';
                                 }
                                 else
                                 {  echo '  
-                                      <div class="col-md-4" id="imgCol-'.$this->itemID.'">
-                                    <a href="'.$row['folder']."/".$this->filename.'" data-lightbox="'.$galleryID.'" data-title="'.$this->itemTitle.'"><img class="img-thumbnail" alt="'.$this->itemTitle.'" id="img-'.$this->itemID.'" width="400" title="'.$this->itemTitle.'" src="' . $row['folder']."/".$this->filename . '"></a>
+                                      <div class="col-md-4 text-center" id="imgCol-'.$this->itemID.'">
+                                    <a href="'.$row['folder']."/".$this->filename.'" data-lightbox="'.$galleryID.'" data-title="'.$this->itemTitle.'"><img class="img-responsive img-rounded hvr-grow" alt="'.$this->itemTitle.'" id="img-'.$this->itemID.'" width="400" title="'.$this->itemTitle.'" src="' . $row['folder']."/".$this->filename . '"></a><br><br>
                                       </div>';
                                 }
                                 $count++;
