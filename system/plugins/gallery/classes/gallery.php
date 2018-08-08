@@ -1526,13 +1526,13 @@ namespace YAWK\PLUGINS\GALLERY {
                                     </div>';
                                     echo '
                                     <div class="row">
-                                      <div class="col-md-4 text-center animate" id="imgCol-'.$this->itemID.'">
+                                      <div class="col-md-4 animate text-center" id="imgCol-'.$this->itemID.'">
                                           <a href="'.$row['folder']."/".$this->filename.'" data-lightbox="'.$galleryID.'" data-title="'.$this->itemTitle.'"><img class="img-responsive img-rounded hvr-grow" id="img-'.$this->itemID.'" width="400" alt="'.$this->itemTitle.'" title="'.$this->itemTitle.'" src="' . $row['folder']."/".$this->filename . '"></a><br><br>
                                       </div>';
                                 }
                                 else
                                 {  echo '  
-                                      <div class="col-md-4 text-center animate" id="imgCol-'.$this->itemID.'">
+                                      <div class="col-md-4 animate text-center" id="imgCol-'.$this->itemID.'">
                                     <a href="'.$row['folder']."/".$this->filename.'" data-lightbox="'.$galleryID.'" data-title="'.$this->itemTitle.'"><img class="img-responsive img-rounded hvr-grow"'.$this->itemTitle.'" id="img-'.$this->itemID.'" width="400" title="'.$this->itemTitle.'" src="' . $row['folder']."/".$this->filename . '"></a><br><br>
                                       </div>';
                                 }
