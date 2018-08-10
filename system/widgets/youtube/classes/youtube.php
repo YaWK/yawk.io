@@ -152,26 +152,32 @@ namespace YAWK\WIDGETS\YOUTUBE\VIDEO
             // switch plain youtube url to correct embed url string
             $this->youtubeVideoUrl = str_replace("watch?v=","embed/",$this->youtubeVideoUrl.$this->youtubeAutoplayMarkup);
 
-            // HTML output
-            echo "
-<!-- youtube video iframe -->
+
+            // css style to make it responsive
+                echo "
+
 <style>
 .videoWrapper {
-	position: relative;
-	padding-bottom: 56.25%; /* 16:9 */
-	padding-top: 25px;
-	height: 0;
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 */
+    padding-top: 25px;
+    height: 0;
 }
 .videoWrapper iframe {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
-</style>
+</style>";
+
+            // YouTube Video Embed HTML markup
+            echo "
+<!-- youtube video wrapper -->
 <div class=\"videoWrapper\">
 $this->headlineMarkup
+<!-- youtube video iframe -->
 <iframe width=\"$this->youtubeWidth\" 
         height=\"$this->youtubeHeight\" 
         src=\"$this->youtubeVideoUrl\" 
@@ -181,6 +187,7 @@ $this->headlineMarkup
         $this->cssMarkup>
 </iframe>
 $this->descriptionMarkup
+<!-- end video wrapper -->
 </div>";
         }
     }
