@@ -1,12 +1,16 @@
 <?php
-// create new db conn if none is set
+// check if db obj exits
 if (!isset($db) || (empty($db)))
-{   // establish new db connection
+{   // if not, create new db obj
     $db = new \YAWK\db();
 }
-// include youtube widget class
-require_once ('classes/youtube.php');
-// create youtube widget object
-$youtube = new \YAWK\WIDGETS\YOUTUBE\VIDEO\youtube($db);
-// draw obj data on screen
+// check if youtube obj is loaded
+if(!isset($youtube) || (empty($youtube)))
+{
+    // if not, include yt widget class
+    require_once ('classes/youtube.php');
+    // create yt widget object
+    $youtube = new \YAWK\WIDGETS\YOUTUBE\VIDEO\youtube($db);
+}
+// embed yt Video
 $youtube->embedVideo();
