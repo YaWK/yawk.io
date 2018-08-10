@@ -2142,7 +2142,7 @@ INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`)
 (13, 1, 'Gallery', 'gallery', 'Display a gallery at any position'),
 (14, 1, 'Twitch Stream', 'twitch', 'Embed Twitch Stream'),
 (15, 1, 'Sub Menu', 'submenu', 'Embed a Menu as Submenu at any position'),
-(16, 1, 'Youtube Stream', 'youtube', 'Embed YouTube Video'),
+(16, 1, 'Youtube Video', 'youtube', 'Embed any public YouTube Video'),
 (17, 1, 'Chaturbate Stream', 'chaturbate', 'Embed Chaturbate Cam Room'),
 (18, 1, 'Google Maps', 'google_maps', 'Embed Google Maps'),
 (19, 1, 'Cultural Broadcasting Archive', 'culturalbroadcasting', 'Embed Cultural Broadcasting Archive'),
