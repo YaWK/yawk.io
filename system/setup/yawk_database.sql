@@ -2096,7 +2096,8 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('fbCoverImageHeight', '', 42, 1, 5, 'LABEL_FB_COVER_IMAGE_HEIGHT', '', '', '', 'DESC_FB_COVER_IMAGE_HEIGHT', 'form-control', '', 'PH_FB_COVER_IMAGE_HEIGHT', '', 250),
 ('fbCoverImageAlt', '', 42, 1, 6, 'LABEL_FB_COVER_IMAGE_ALT', '', '', '', 'DESC_FB_COVER_IMAGE_ALT', 'form-control', '', 'PH_FB_COVER_IMAGE_ALT', '', 251),
 ('fbCoverImageTitle', '', 42, 1, 7, 'LABEL_FB_COVER_IMAGE_TITLE', '', '', '', 'DESC_FB_COVER_IMAGE_TITLE', 'form-control', '', 'PH_FB_COVER_IMAGE_TITLE', '', 252),
-('fbCoverImageStyle', '', 42, 1, 8, 'LABEL_FB_COVER_IMAGE_STYLE', '', '', '', 'DESC_FB_COVER_IMAGE_STYLE', 'form-control', '', 'PH_FB_COVER_IMAGE_STYLE', '', 253);
+('fbCoverImageStyle', '', 42, 1, 8, 'LABEL_FB_COVER_IMAGE_STYLE', '', '', '', 'DESC_FB_COVER_IMAGE_STYLE', 'form-control', '', 'PH_FB_COVER_IMAGE_STYLE', '', 253),
+('youtubeCssClass', '', 16, 1, 20, 'LABEL_YOUTUBE_CSSCLASS', '', '', '', 'DESC_YOUTUBE_CSSCLASS', 'form-control', '', 'PH_YOUTUBE_CSSCLASS', '', 254);
 
 CREATE TABLE `cms_widget_settings` (
   `id` int(11) NOT NULL,
@@ -2378,7 +2379,7 @@ ALTER TABLE `cms_user_groups`
 ALTER TABLE `cms_widgets`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_defaults`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=253;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=254;
 ALTER TABLE `cms_widget_settings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_types`
