@@ -86,7 +86,6 @@ namespace YAWK\WIDGETS\YOUTUBE\VIDEO
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @param object $db Database Object
          * @annotation This method does the setup and embed job
          */
         public function embedVideo()
@@ -156,7 +155,22 @@ namespace YAWK\WIDGETS\YOUTUBE\VIDEO
             // HTML output
             echo "
 <!-- youtube video iframe -->
-<div>
+<style>
+.videoWrapper {
+	position: relative;
+	padding-bottom: 56.25%; /* 16:9 */
+	padding-top: 25px;
+	height: 0;
+}
+.videoWrapper iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+</style>
+<div class=\"videoWrapper\">
 $this->headlineMarkup
 <iframe width=\"$this->youtubeWidth\" 
         height=\"$this->youtubeHeight\" 
