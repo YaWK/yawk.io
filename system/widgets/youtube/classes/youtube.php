@@ -49,6 +49,14 @@ namespace YAWK\WIDGETS\YOUTUBE\VIDEO
         /** @var string css markup */
         public $cssMarkup = '';
 
+        /**
+         * Load all widget settings from database and fill object params
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @annotation Load all widget settings on object init.
+         */
         public function __construct($db)
         {
             // load this widget settings from db
@@ -59,6 +67,13 @@ namespace YAWK\WIDGETS\YOUTUBE\VIDEO
             }
         }
 
+        /**
+         * Print all object data
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @annotation (for development and testing purpose)
+         */
         public function printObject()
         {
             echo "<pre>";
@@ -66,6 +81,14 @@ namespace YAWK\WIDGETS\YOUTUBE\VIDEO
             echo "</pre>";
         }
 
+        /**
+         * Check settings and embed the YouTube Video
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @annotation This method does the setup and embed job
+         */
         public function embedVideo()
         {
             // check if full screen is allowed
