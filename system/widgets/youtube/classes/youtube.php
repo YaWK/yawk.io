@@ -5,7 +5,7 @@ namespace YAWK\WIDGETS\YOUTUBE\VIDEO
      * <b>Embed any Facebook Video on your page.</b>
      *
      * <p>With this widget, you are able to embed any public YouTube Video that you like. Simply enter the
-     * Video URL, set a view settings and you're good to go. You do not need to play around with html or
+     * Video URL, set a few settings and you're good to go. You do not need to play around with html or
      * any YouTube embed code. This widget does all the work for you!</p>
      *
      * @package    YAWK
