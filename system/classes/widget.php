@@ -58,7 +58,7 @@ namespace YAWK {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db database
-         * @return string full path to widgets folder
+         * @return array|bool returns array with widget settings or null
          */
         public function getWidgetSettingsArray($db)
         {
@@ -87,13 +87,14 @@ namespace YAWK {
                 }
                 else
                     {   // widget settings could not be retrieved
-                        die("Error: this data object is empty - unable to load widget settings of widget ID: ".$this->id."");
+                        echo "Error: this data object is empty - unable to load widget settings of widget ID: ".$this->id."";
                     }
             }
             else
                 {   // no widget ID requested - do nothing.
                     return null;
                 }
+                return null;
         }
 
 
