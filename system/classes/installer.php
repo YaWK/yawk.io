@@ -126,12 +126,12 @@ namespace YAWK {
                     {
                         // client language is supported, set it
                         $language->currentLanguage = $language->currentLanguageGlobal;
-                        $language->setLanguage("$language->currentLanguageGlobal");
+                        $language->setLanguage($language->currentLanguageGlobal);
                     }
                     else
                     {
                         // client language is not supported - set default (eg. en-EN)
-                        $language->setDefault("$language->defaultLanguage");
+                        $language->setDefault($language->defaultLanguage);
                     }
                 }
                 // if current language is sent via form (POST data)
