@@ -2097,7 +2097,21 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('fbCoverImageAlt', '', 42, 1, 6, 'LABEL_FB_COVER_IMAGE_ALT', '', '', '', 'DESC_FB_COVER_IMAGE_ALT', 'form-control', '', 'PH_FB_COVER_IMAGE_ALT', '', 251),
 ('fbCoverImageTitle', '', 42, 1, 7, 'LABEL_FB_COVER_IMAGE_TITLE', '', '', '', 'DESC_FB_COVER_IMAGE_TITLE', 'form-control', '', 'PH_FB_COVER_IMAGE_TITLE', '', 252),
 ('fbCoverImageStyle', '', 42, 1, 8, 'LABEL_FB_COVER_IMAGE_STYLE', '', '', '', 'DESC_FB_COVER_IMAGE_STYLE', 'form-control', '', 'PH_FB_COVER_IMAGE_STYLE', '', 253),
-('youtubeCssClass', '', 16, 1, 20, 'LABEL_YOUTUBE_CSSCLASS', '', '', '', 'DESC_YOUTUBE_CSSCLASS', 'form-control', '', 'PH_YOUTUBE_CSSCLASS', '', 254);
+('youtubeCssClass', '', 16, 1, 20, 'LABEL_YOUTUBE_CSSCLASS', '', '', '', 'DESC_YOUTUBE_CSSCLASS', 'form-control', '', 'PH_YOUTUBE_CSSCLASS', '', 254),
+('newsletterThankYouTitle', 'Thank you', 12, 1, 5, 'LABEL_NEWSLETTER_TY_TITLE', '', '', '', 'DESC_NEWSLETTER_TY_TITLE', 'form-control', '', 'PH_NEWSLETTER_TY_TITLE', '', 255),
+('newsletterThankYouSubtext', 'that you subscribe our newsletter!', 12, 1, 6, 'LABEL_NEWSLETTER_TY_SUBTEXT', '', '', '', 'DESC_NEWSLETTER_TY_SUBTEXT', 'form-control', '', 'PH_NEWSLETTER_TY_SUBTEXT', '', 256),
+('newsletterTitle', 'Subscribe', 12, 1, 2, 'LABEL_NEWSLETTER_TITLE', '', '', '', 'DESC_NEWSLETTER_TITLE', 'form-control', '', 'PH_NEWSLETTER_TITLE', '', 257),
+('newsletterSubtext', 'to our Newsletter', 12, 1, 3, 'LABEL_NEWSLETTER_SUBTEXT', '', '', '', 'DESC_NEWSLETTER_SUBTEXT', 'form-control', '', 'PH_NEWSLETTER_SUBTEXT', '', 258),
+('newsletterBtnText', 'Subscribe', 12, 1, 9, 'LABEL_NEWSLETTER_BTNTEXT', '', '', '', 'DESC_NEWSLETTER_BTNTEXT', 'form-control', '', 'PH_NEWSLETTER_BTNTEXT', '', 259),
+('newsletterBtnClass', 'btn btn-success', 12, 1, 10, 'LABEL_NEWSLETTER_BTNCLASS', '', '', '', 'DESC_NEWSLETTER_BTNCLASS', 'form-control', '', 'PH_NEWSLETTER_BTNCLASS', '', 260),
+('newsletterBtnMarginTop', '5px', 12, 1, 11, 'LABEL_NEWSLETTER_BTNMARGINTOP', '', '', '', 'DESC_NEWSLETTER_BTNMARGINTOP', 'form-control', '', 'PH_NEWSLETTER_BTNMARGINTOP', '', 261),
+('newsletterBtnAlign', 'text-center', 12, 1, 12, 'LABEL_NEWSLETTER_BTNALIGN', '', '', '', 'DESC_NEWSLETTER_BTNALIGN', 'form-control', 'select', '', 'text-left,Left:text-center,Center:text-right,Right', 262),
+('newsletterNamePlaceholder', 'Name', 12, 1, 7, 'LABEL_NEWSLETTER_NAMEPH', '', '', '', 'DESC_NEWSLETTER_NAMEPH', 'form-control', '', 'PH_NEWSLETTER_NAMEPH', '', 263),
+('newsletterEmailPlaceholder', 'Email', 12, 1, 8, 'LABEL_NEWSLETTER_EMAILPH', '', '', '', 'DESC_NEWSLETTER_EMAILPH', 'form-control', '', 'PH_NEWSLETTER_EMAILPH', '', 264),
+('newsletterHideLabels', 'false', 12, 1, 13, 'LABEL_NEWSLETTER_HIDELABELS', '', '', '', 'DESC_NEWSLETTER_HIDELABELS', 'form-control', 'select', '', 'false,No:true,Yes', 265),
+('newsletterIcon', 'fa fa-envelope-o', 12, 1, 1, 'LABEL_NEWSLETTER_ICON', '', '', '', 'DESC_NEWSLETTER_ICON', 'form-control', '', 'PH_NEWSLETTER_ICON', '', 266),
+('newsletterFontSize', 'H2', 12, 1, 4, 'LABEL_NEWSLETTER_FONTSIZE', '', '', '', 'DESC_NEWSLETTER_FONTSIZE', 'form-control', 'select', '', 'H1,H1:H2,H2:H3,H3:H4,H4:H5,H5:H6,H6', 267);
+
 
 CREATE TABLE `cms_widget_settings` (
   `id` int(11) NOT NULL,
