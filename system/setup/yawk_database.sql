@@ -2110,7 +2110,8 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('newsletterEmailPlaceholder', 'Email', 12, 1, 8, 'LABEL_NEWSLETTER_EMAILPH', '', '', '', 'DESC_NEWSLETTER_EMAILPH', 'form-control', '', 'PH_NEWSLETTER_EMAILPH', '', 264),
 ('newsletterHideLabels', 'false', 12, 1, 13, 'LABEL_NEWSLETTER_HIDELABELS', '', '', '', 'DESC_NEWSLETTER_HIDELABELS', 'form-control', 'select', '', 'false,No:true,Yes', 265),
 ('newsletterIcon', 'fa fa-envelope-o', 12, 1, 1, 'LABEL_NEWSLETTER_ICON', '', '', '', 'DESC_NEWSLETTER_ICON', 'form-control', '', 'PH_NEWSLETTER_ICON', '', 266),
-('newsletterFontSize', 'H2', 12, 1, 4, 'LABEL_NEWSLETTER_FONTSIZE', '', '', '', 'DESC_NEWSLETTER_FONTSIZE', 'form-control', 'select', '', 'H1,H1:H2,H2:H3,H3:H4,H4:H5,H5:H6,H6', 267);
+('newsletterFontSize', 'H2', 12, 1, 4, 'LABEL_NEWSLETTER_FONTSIZE', '', '', '', 'DESC_NEWSLETTER_FONTSIZE', 'form-control', 'select', '', 'H1,H1:H2,H2:H3,H3:H4,H4:H5,H5:H6,H6', 267),
+('newsletterWidth', '', 12, 1, 14, 'LABEL_NEWSLETTER_WIDTH', '', '', '', 'DESC_NEWSLETTER_WIDTH', 'form-control', '', 'PH_NEWSLETTER_WIDTH', '', 268);
 
 
 CREATE TABLE `cms_widget_settings` (
