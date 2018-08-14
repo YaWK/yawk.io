@@ -1423,7 +1423,7 @@ namespace YAWK {
             if (($t = $diff->format("%m")) > 0)
                 $time_ago = (int)$t . ' '.$lang['MONTHS'].'';
             else if (($t = $diff->format("%d")) > 0)
-                $time_ago = (int)$t . ' '.$lang['DAYS'].'';
+                $time_ago = (int)$t . ' '.$lang['DAYS_P'].'';
             else if (($t = $diff->format("%H")) > 0)
                 $time_ago = (int)$t . ' '.$lang['HOURS'].'';
             else if (($t = $diff->format("%i")) > 0)
@@ -1434,7 +1434,7 @@ namespace YAWK {
             //    $time_ago = 'minutes';
 
             // if language is german, turn around the 'ago' term
-            if (\YAWK\language::getCurrentLanguage() === "de-DE")
+            if (\YAWK\language::getCurrentLanguageStatic() === "de-DE")
             {   // return reverse for germans
                 return $lang['AGO'] . ' '.$time_ago.'';
             }
