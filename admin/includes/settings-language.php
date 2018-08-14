@@ -69,29 +69,54 @@ if (isset($_POST['editLanguageBtn']))
 if (isset($_GET['restore']) && ($_GET['restore'] == 1) && ($_GET['action'] == true))
 {
     // total amount of language files
-    $fileCount = 0;
+    $frontendFileCount = 0;
+    $backendFileCount = 0;
     //  total amount of files copied
+    $frontendCopiedTotal = 0;
+    $backendCopiedTotal = 0;
     $copiedTotal = 0;
     // source directory to copy from
-    $src = "../system/backup/languages";
+    $backendSource = "../system/backup/languages/backend";
     // destination directory to copy to
-    $dst = "language";
+    $backendDestination = "language";
     // build array with all language files from backup folder
-    $files = glob("../system/backup/languages/*.ini");
-    // walk through array
-    foreach($files as $file){
+    $backendFiles = glob("../system/backup/languages/backend/*.ini");
+    // frontend settings
+    $frontendFileCount = 0;
+    $frontendSource = "../system/backup/languages/frontend";
+    $frontendDestination = "../system/language";
+    $frontendFiles = glob("../system/backup/languages/frontend/*.ini");
+
+    // copy backend language files from backup folder
+    foreach($backendFiles as $file){
         // add +1 to file counter
-        $fileCount++;
+        $backendFileCount++;
         // prepare current file
-        $current = str_replace($src,$dst,$file);
+        $current = str_replace($backendSource,$backendDestination,$file);
         // process file
         if (copy($file, $current))
         {   // add +1 to total counter
-            $copiedTotal++;
+            $backendCopiedTotal++;
         }
     }
+
+    // copy frontend language files from backup folder
+    foreach($frontendFiles as $file){
+        // add +1 to file counter
+        $frontendFileCount++;
+        // prepare current file
+        $current = str_replace($frontendSource,$frontendDestination,$file);
+        // process file
+        if (copy($file, $current))
+        {   // add +1 to total counter
+            $frontendCopiedTotal++;
+        }
+    }
+    $totalToCopy = $backendFileCount + $frontendFileCount;
+    $copiedTotal = $frontendCopiedTotal + $backendCopiedTotal;
+
     // if all items are processed
-    if ($fileCount === $copiedTotal)
+    if ($totalToCopy === $copiedTotal)
     {   // throw success msg
         \YAWK\alert::draw("success", "$lang[LANGUAGES] $lang[RESTORED]", "$lang[LANGUAGE] $lang[FILES] $lang[RESTORED]", "", 2400);
     }
