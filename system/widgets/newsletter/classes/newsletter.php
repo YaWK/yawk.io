@@ -4,9 +4,11 @@ namespace YAWK\WIDGETS\NEWSLETTER\SUBSCRIBE
     /**
      * <b>Let your users subscribe to a newsletter database.</b>
      *
-     * <p>With this widget, you are able to collect email addresses for your newsletter. The user can
-     * enter his name and email address. Will be processed via ajax to avoid page reload. Data will be
-     * entered in the newsletter database, which other plugins and widgets can access easily. </p>
+     * <p>With this widget, you are able to collect email addresses to build up your newsletter database.
+     * The user can enter his email address and (or) his/hers name. The form will be processed via ajax
+     * which means the page will not refresh by clicking on submit. Data will be entered in the newsletter
+     * database, which other plugins and widgets can access easily. In future releases, it is planned to
+     * implement a newsletter plugin, where admins can manage and send newsletters within the backend.</p>
      *
      * @package    YAWK
      * @author     Daniel Retzl <danielretzl@gmail.com>
