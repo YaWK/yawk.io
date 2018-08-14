@@ -1,5 +1,5 @@
 <?php
-namespace YAWK\WIDGETS\NEWSLETTER
+namespace YAWK\WIDGETS\NEWSLETTER\SUBSCRIBE
 {
     /**
      * <b>Let your users subscribe to a newsletter database.</b>
