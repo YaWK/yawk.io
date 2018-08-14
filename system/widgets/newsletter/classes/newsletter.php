@@ -46,6 +46,8 @@ namespace YAWK\WIDGETS\NEWSLETTER\SUBSCRIBE
         public $newsletterIcon = 'fa fa-envelope-o';
         /** @var string Font size of icon, heading and subtext */
         public $newsletterFontSize = 'h2';
+        /** @var string Width of the form elements */
+        public $newsletterWidth = '';
         /** @var string Btn Margin HTML Markup */
         public $markupBtnMarginTop = '';
         /** @var string Btn Class HTML Markup */
@@ -62,6 +64,8 @@ namespace YAWK\WIDGETS\NEWSLETTER\SUBSCRIBE
         public $markupFontSizeStart = '<H2>';
         /** @var string Font Size (H1-H6) HTML Markup End */
         public $markupFontSizeEnd = '</H2>';
+        /** @var string Form width HTML Markup */
+        public $markupFormWidth = '';
 
         /**
          * Load all widget settings from database and fill object params
@@ -167,7 +171,7 @@ namespace YAWK\WIDGETS\NEWSLETTER\SUBSCRIBE
             if (isset($this->newsletterHideLabels) && ($this->newsletterHideLabels == "false"))
             {   // label html markup code
                 $this->markupNameLabel = "<label for=\"name\">$this->newsletterNamePlaceholder</label>";
-                $this->markupEmailLabel = "<label for=\"email\">$this->newsletterEmailPlaceholder</label>";
+                $this->markupEmailLabel = "<br><label for=\"email\">$this->newsletterEmailPlaceholder</label>";
             }
             else
             {   // no labels
@@ -196,6 +200,21 @@ namespace YAWK\WIDGETS\NEWSLETTER\SUBSCRIBE
                 $this->markupFontSizeStart = "<H2>";
                 $this->markupFontSizeEnd = "</H2>";
             }
+
+            // check if form width is set
+            if (isset($this->newsletterWidth) && (!empty($this->newsletterWidth)))
+            {   // check if user appended a % sign
+                if (substr($this->newsletterWidth, -1) != "%")
+                {   // if not, append it for the user
+                    $this->newsletterWidth = $this->newsletterWidth."%";
+                }
+                // set html markup
+                $this->markupFormWidth = " style=\"width: $this->newsletterWidth;\"";
+            }
+            else
+                {   // no width requested, leave empty
+                    $this->markupFormWidth = '';
+                }
         }
 
         /**
@@ -212,12 +231,12 @@ namespace YAWK\WIDGETS\NEWSLETTER\SUBSCRIBE
             <div id=\"newsletterTitle\">$this->markupFontSizeStart$this->markupIcon$this->newsletterTitle <small>$this->newsletterSubtext</small>$this->markupFontSizeEnd</div>
             <form class=\"form-horizontal\" id=\"form\" method=\"post\">
                 $this->markupNameLabel
-                <input type=\"text\" name=\"name\" id=\"name\" class=\"form-control\" placeholder=\"$this->newsletterNamePlaceholder\">
+                <input type=\"text\" name=\"name\" id=\"name\" class=\"form-control\" placeholder=\"$this->newsletterNamePlaceholder\"$this->markupFormWidth>
                 $this->markupEmailLabel
-                <input type=\"text\" name=\"email\" id=\"email\" class=\"form-control\" placeholder=\"$this->newsletterEmailPlaceholder\">
+                <input type=\"text\" name=\"email\" id=\"email\" class=\"form-control\" placeholder=\"$this->newsletterEmailPlaceholder\"$this->markupFormWidth>
                 <input type=\"hidden\" name=\"thankYouTitle\" id=\"thankYouTitle\" value=\"$this->newsletterThankYouTitle\">
                 <input type=\"hidden\" name=\"thankYouSubtext\" id=\"thankYouSubtext\" value=\"$this->newsletterThankYouSubtext\">
-                <div$this->markupBtnAlign>
+                <div$this->markupBtnAlign$this->markupFormWidth>
                     <input type=\"button\" class=\"$this->markupBtnClass\" id=\"submit\" name=\"submit\" value=\"$this->newsletterBtnText\"$this->markupBtnMarginTop>
                 </div>
             </form>
