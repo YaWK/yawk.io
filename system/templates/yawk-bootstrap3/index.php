@@ -81,7 +81,7 @@ $col = '';
         \YAWK\template::getPositionDivBox($db, $lang, "outerTop", 1, "col-md-12", $positions, $indicators);
       ?>
       </div>
-      <div class="row text-center">
+      <div class="row">
           <?php
               // POSITION: outerLeft
               \YAWK\template::getPositionDivBox($db, $lang, "outerLeft", 0, "col-md-2", $positions, $indicators);
