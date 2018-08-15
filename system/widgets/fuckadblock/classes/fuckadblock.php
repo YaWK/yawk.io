@@ -1,6 +1,22 @@
 <?php
 namespace YAWK\WIDGETS\FUCKADBLOCK\BLOCK
 {
+    /**
+     * <b>AdBlock Blocker Widget</b>
+     *
+     * <p>If your website relay on advertising, this widget may be helpful. It can detect, if
+     * user has an AdBlocker installed. You can set different levels (low or high) - which means
+     * that you can say please disable your adblocker or force the user to disable, otherwise he
+     * dont see any content. Messages, title and buttons can get customized.</p>
+     *
+     * @package    YAWK
+     * @author     Daniel Retzl <danielretzl@gmail.com>
+     * @copyright  2018 Daniel Retzl
+     * @license    https://opensource.org/licenses/MIT
+     * @version    1.0.0
+     * @link       http://yawk.io
+     * @annotation Detect and react to user's installed AdBlocker.
+     */
     class fuckadblock
     {
         /** @var object global widget object data */
