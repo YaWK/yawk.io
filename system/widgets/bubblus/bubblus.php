@@ -11,5 +11,5 @@ if(!isset($bubblus) || (empty($bubblus)))
     // create bubblUs widget object
     $bubblus = new \YAWK\WIDGETS\BUBBLUS\MINDMAP\bubblus($db);
 }
-// embed bubblUs Presentation
+// embed bubblUs mindmap
 $bubblus->init();
