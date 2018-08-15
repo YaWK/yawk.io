@@ -14,5 +14,3 @@ if(!isset($contentAnimator) || (empty($contentAnimator)))
 }
 // init current contentAnimator
 $contentAnimator->init();
-
-?>
