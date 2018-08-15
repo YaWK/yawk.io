@@ -8,7 +8,7 @@ namespace YAWK\WIDGETS\CONTENTANIMATOR\ANIMATE
      * any html object in your DOM and the effect will be applied to the affected element. You can setup,
      * which effect you wish to be drawn, as well as the scroll distance to the object. Be careful to use
      * a not too big value, otherwise your users will think, that there is no more content before it got
-     * faded in. (or whichever effect you have activated)
+     * faded in. (or whichever effect you have activated)</p>
      *
      * @package    YAWK
      * @author     Daniel Retzl <danielretzl@gmail.com>

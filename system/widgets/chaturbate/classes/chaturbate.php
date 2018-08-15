@@ -7,7 +7,7 @@ namespace YAWK\WIDGETS\CHATURBATE\STREAM
      * <p>Chaturbate.com is an adult webcam streaming service. With this widget, you can embed any public
      * channel or stream from chaturbate onto your website. All you need is any chaturbate username you
      * wish to embed. But there are a few things to setup. If you like to, you are able to set width,
-     * height sound settings and more. By using this widget, embedding a stream from chaturbate is very easy.
+     * height sound settings and more. By using this widget, embedding a stream from chaturbate is very easy.</p>
      *
      * @package    YAWK
      * @author     Daniel Retzl <danielretzl@gmail.com>

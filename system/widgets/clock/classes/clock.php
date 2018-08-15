@@ -6,7 +6,7 @@ namespace YAWK\WIDGETS\CLOCK\CURRENT
      *
      * <p>The clock shows the current time. (wonder, oh wonder...) You can set the clock's font color,
      * alignment (left, center or right) as well as a custom css class to design it and put some FX on
-     * if you need to. If you need an analog clock anywhere on your website, this widget does the job.
+     * if you need to. If you need an analog clock anywhere on your website, this widget does the job.</p>
      *
      * @package    YAWK
      * @author     Daniel Retzl <danielretzl@gmail.com>
