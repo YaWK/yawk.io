@@ -1,16 +1,16 @@
 <?php
-// create new widget object
-$widget = new \YAWK\widget();
-// get widget data into array
-$data = $widget->getWidgetSettingsArray($db);
-// check if array is set, customHtmlCode is set
-if (is_array($data) && ((is_string($data['customHtmlCode']))
-// check if customHtmlCode is a string
-&& (!empty($data['customHtmlCode']))))
-{   // output custom html code
-    echo $data['customHtmlCode'];
+// check if db obj exits
+if (!isset($db) || (empty($db)))
+{   // if not, create new db obj
+    $db = new \YAWK\db();
 }
-else
-    {   // custom html code is not valid, leave empty
-        $customHtmlCode = '';
-    }
+// check if customHtmlCode obj is loaded
+if(!isset($customHtml) || (empty($customHtml)))
+{
+    // if not, include customHtmlCode widget class
+    require_once ('classes/custom_html.php');
+    // create customHtmlCode widget object
+    $customHtml = new \YAWK\WIDGETS\CUSTOM_HTML\CODE\customHtml($db);
+}
+// init current customHtmlCode
+$customHtml->init();
