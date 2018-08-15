@@ -380,6 +380,31 @@ namespace YAWK {
 										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\">";
                         }
 
+                        /* CODE EDITOR TEXTAREA */
+                        if ($setting['fieldType'] === "editor")
+                        {
+                            require_once ('editor.php');
+                            $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
+                            \YAWK\editor::loadJavascript($editorSettings);
+                            \YAWK\editor::setEditorSettingsForCustomHtmlWidget($editorSettings);
+
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                            {
+                                echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;$setting[subtext]</h3>";
+                            }
+
+                            if (isset($setting['longValue']) && (!empty($setting['longValue'])))
+                            {   // build a longValue tagged textarea and fill with longValue
+                                echo "<label for=\"$setting[property]-long\">$setting[label]&nbsp;$setting[description]</label>
+                                      <textarea cols=\"64\" rows=\"10\" class=\"$setting[fieldClass]\" id=\"$setting[property]-long\" name=\"$setting[property]-long\">$setting[longValue]</textarea>";
+                            }
+                            else
+                            {   // draw default textarea
+                                echo "<label for=\"$setting[property]\">$setting[label]&nbsp;$setting[description]</label>
+                                      <textarea cols=\"64\" rows=\"10\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\">$setting[value]</textarea>";
+                            }
+                        }
+
 
                         /* FACEBOOK SELECT FIELD */
                         if ($setting['fieldType'] === "fbGallerySelect")
