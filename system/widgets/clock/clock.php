@@ -1,46 +1,9 @@
 <?php
-
-$color = "999";
-$align = "text-center";
-$class = "text-success";
-
-if (isset($_GET['widgetID']))
-{
-	// widget ID
-	$widgetID = $_GET['widgetID'];
-
-	/* get widget settings from db */
-	$res = $db->query("SELECT * FROM {widget_settings}
-	                        WHERE widgetID = '".$widgetID."'
-	                        AND activated = '1'");
-	while ($row = mysqli_fetch_assoc($res))
-	{
-		$w_property = $row['property'];
-		$w_value = $row['value'];
-		$w_widgetType = $row['widgetType'];
-		$w_activated = $row['activated'];
-
-		/* LOAD PROPERTIES */
-		if (isset($w_property)){
-			switch($w_property)
-		  {
-		    case 'clockColor';
-		    $color = $w_value;
-		    break;
-		    
-		    case 'clockAlign';
-		    $align = $w_value;
-		    break;
-		    
-		    case 'clockClass';
-		    $class = $w_value;
-		    break;
-		    
-		  } // end switch  
-		} // no more properties
-	} // end while fetch array
-}
-
+$widget = new \YAWK\widget();
+$data = $widget->getWidgetSettingsArray($db);
+$color = $data['clockColor'];
+$align = $data['clockAlign'];
+$class = $data['clockClass'];
 ?>
 
 <body onload="clock();">
@@ -63,5 +26,5 @@ clock();
 </script>  
 
 <div class="<?php echo $align; ?>">
-	<p id="clockDiv" class="<?php echo $class; ?>" style="color:<?php echo "#"."$color;"; ?>"></p>
+	<div id="clockDiv" class="<?php echo $class; ?>" style="color:<?php echo "#"."$color;"; ?>"></div>
 </div>
