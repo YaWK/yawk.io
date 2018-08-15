@@ -43,7 +43,7 @@ namespace YAWK\WIDGETS\CUSTOM_HTML\CODE
         }
 
         /**
-         * Initialize: prepare JS and start the clock
+         * Init and load custom html code
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
