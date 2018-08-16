@@ -2111,7 +2111,19 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('newsletterHideLabels', 'false', 12, 1, 13, 'LABEL_NEWSLETTER_HIDELABELS', '', '', '', 'DESC_NEWSLETTER_HIDELABELS', 'form-control', 'select', '', 'false,No:true,Yes', 265),
 ('newsletterIcon', 'fa fa-envelope-o', 12, 1, 1, 'LABEL_NEWSLETTER_ICON', '', '', '', 'DESC_NEWSLETTER_ICON', 'form-control', '', 'PH_NEWSLETTER_ICON', '', 266),
 ('newsletterFontSize', 'H2', 12, 1, 4, 'LABEL_NEWSLETTER_FONTSIZE', '', '', '', 'DESC_NEWSLETTER_FONTSIZE', 'form-control', 'select', '', 'H1,H1:H2,H2:H3,H3:H4,H4:H5,H5:H6,H6', 267),
-('newsletterWidth', '', 12, 1, 14, 'LABEL_NEWSLETTER_WIDTH', '', '', '', 'DESC_NEWSLETTER_WIDTH', 'form-control', '', 'PH_NEWSLETTER_WIDTH', '', 268);
+('newsletterWidth', '', 12, 1, 14, 'LABEL_NEWSLETTER_WIDTH', '', '', '', 'DESC_NEWSLETTER_WIDTH', 'form-control', '', 'PH_NEWSLETTER_WIDTH', '', 268),
+('soundcloudUrl', '', 43, 1, 1, 'LABEL_SOUNDCLOUD_URL', '', '', '', 'DESC_SOUNDCLOUD_URL', 'form-control', '', 'PH_SOUNDCLOUD_URL', '', 269),
+('soundcloudTitle', '', 43, 1, 2, 'LABEL_SOUNDCLOUD_TITLE', '', '', '', 'DESC_SOUNDCLOUD_TITLE', 'form-control', '', 'PH_SOUNDCLOUD_TITLE', '', 270),
+('soundcloudSubtext', '', 12, 1, 3, 'LABEL_SOUNDCLOUD_SUBTEXT', '', '', '', 'DESC_SOUNDCLOUD_SUBTEXT', 'form-control', '', 'PH_SOUNDCLOUD_SUBTEXT', '', 271),
+('soundcloudAutoplay', 'false', 12, 1, 4, 'LABEL_SOUNDCLOUD_AUTOPLAY', '', '', '', 'DESC_SOUNDCLOUD_AUTOPLAY', 'form-control', 'select', '', 'true,true:false,false', 272),
+('soundcloudHideRelated', 'false', 43, 1, 5, 'LABEL_SOUNDCLOUD_HIDERELATED', '', '', '', 'DESC_SOUNDCLOUD_HIDERELATED', 'form-control', 'select', '', 'true,true:false,false', 273),
+('soundcloudShowComments', 'false', 43, 1, 6, 'LABEL_SOUNDCLOUD_SHOWCOMMENTS', '', '', '', 'DESC_SOUNDCLOUD_SHOWCOMMENTS', 'form-control', 'select', '', 'true,true:false,false', 274),
+('soundcloudShowUser', 'false', 43, 1, 7, 'LABEL_SOUNDCLOUD_SHOWUSER', '', '', '', 'DESC_SOUNDCLOUD_SHOWUSER', 'form-control', 'select', '', 'true,true:false,false', 275),
+('soundcloudShowReposts', 'false', 43, 1, 8, 'LABEL_SOUNDCLOUD_SHOWREPOSTS', '', '', '', 'DESC_SOUNDCLOUD_SHOWREPOSTS', 'form-control', 'select', '', 'true,true:false,false', 276),
+('soundcloudShowTeaser', 'false', 43, 1, 9, 'LABEL_SOUNDCLOUD_SHOWTEASER', '', '', '', 'DESC_SOUNDCLOUD_SHOWTEASER', 'form-control', 'select', '', 'true,true:false,false', 277),
+('soundcloudVisual', 'false', 43, 1, 10, 'LABEL_SOUNDCLOUD_VISUAL', '', '', '', 'DESC_SOUNDCLOUD_VISUAL', 'form-control', 'select', '', 'true,true:false,false', 278),
+('soundcloudWidth', '100%', 43, 1, 11, 'LABEL_SOUNDCLOUD_WIDTH', '', '', '', 'DESC_SOUNDCLOUD_WIDTH', 'form-control', '', 'PH_SOUNDCLOUD_WIDTH', '', 279),
+('soundcloudHeight', '300', 43, 1, 12, 'LABEL_SOUNDCLOUD_HEIGHT', '', '', '', 'DESC_SOUNDCLOUD_HEIGHT', 'form-control', '', 'PH_SOUNDCLOUD_HEIGHT', '', 280);
 
 
 CREATE TABLE `cms_widget_settings` (
@@ -2183,7 +2195,8 @@ INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`)
 (39, 1, 'Facebook Events', 'fb_events', 'Embed Facebook Events from your Facebook Page'),
 (40, 1, 'Facebook Graph Explorer', 'fb_example', 'Use the Facebook Graph API to get data - this is for demo and development purpose only!'),
 (41, 1, 'Facebook Gallery', 'fb_gallery', 'Embed photo albums from your Facebook page'),
-(42, 1, 'Facebook Cover', 'fb_cover', 'Embed current cover image from your Facebook page');
+(42, 1, 'Facebook Cover', 'fb_cover', 'Embed current cover image from your Facebook page'),
+(43, 1, 'SoundCloud', 'soundcloud', 'Embed any soundcloud song or playlist');
 
 ALTER TABLE `cms_assets`
   ADD PRIMARY KEY (`id`);
@@ -2394,8 +2407,8 @@ ALTER TABLE `cms_user_groups`
 ALTER TABLE `cms_widgets`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_defaults`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=254;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=280;
 ALTER TABLE `cms_widget_settings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
