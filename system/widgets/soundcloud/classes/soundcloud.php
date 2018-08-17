@@ -46,6 +46,8 @@ namespace YAWK\WIDGETS\SOUNDCLOUD\PLAYER
         public $soundcloudHeight = '300';
         /** @var string Headline HTML Markup */
         public $headline = '';
+        /** @var string Store an error msg, if one occurs */
+        public $errorMsg = '';
 
         /**
          * Load all widget settings from database and fill object
@@ -114,7 +116,7 @@ namespace YAWK\WIDGETS\SOUNDCLOUD\PLAYER
             }
             else
                 {   // throw error msg
-                    echo "Here should be a SoundCloud music player, but no SoundCloud URL was set.";
+                    $this->errorMsg = "Here should be a SoundCloud music player, but no SoundCloud URL was set.";
                 }
 
             // if a heading is set and not empty
@@ -149,6 +151,8 @@ namespace YAWK\WIDGETS\SOUNDCLOUD\PLAYER
         {
             // output headline
             echo $this->headline;
+            // throw error (if one occurs)
+            echo $this->errorMsg;
             // embed SoundCloud player
             echo "<iframe 
                     width=\"$this->soundcloudWidth\" 
