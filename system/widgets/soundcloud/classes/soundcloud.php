@@ -86,8 +86,8 @@ namespace YAWK\WIDGETS\SOUNDCLOUD\PLAYER
          */
         public function init()
         {
-            $this->setProperties();
-            $this->embedPlayer();
+           $this->setProperties();
+           $this->embedPlayer();
         }
 
         /**
@@ -102,7 +102,7 @@ namespace YAWK\WIDGETS\SOUNDCLOUD\PLAYER
             if (isset($this->soundcloudUrl) && (!empty($this->soundcloudUrl)
             && (is_string($this->soundcloudUrl))))
             {
-                
+                $this->soundcloudUrl = strstr($this->soundcloudUrl, 'soundcloud.com/');
             }
 
         }
@@ -122,7 +122,7 @@ namespace YAWK\WIDGETS\SOUNDCLOUD\PLAYER
                     scrolling=\"no\" 
                     frameborder=\"no\" 
                     allow=\"autoplay\" 
-                    src=\"https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/nasir44moudy/sets/motivation-within&color=%23ff5500&auto_play=$this->soundcloudAutoplay&hide_related=$this->soundcloudHideRelated&show_comments=$this->soundcloudShowComments&show_user=$this->soundcloudShowUser&show_reposts=$this->soundcloudShowReposts&show_teaser=$this->soundcloudShowTeaser&visual=$this->soundcloudVisual</iframe>\">
+                    src=\"https://w.soundcloud.com/player/?url=https%3A//$this->soundcloudUrl&color=%23ff5500&auto_play=$this->soundcloudAutoplay&hide_related=$this->soundcloudHideRelated&show_comments=$this->soundcloudShowComments&show_user=$this->soundcloudShowUser&show_reposts=$this->soundcloudShowReposts&show_teaser=$this->soundcloudShowTeaser&visual=$this->soundcloudVisual\">
                   </iframe>";
         }
     }
