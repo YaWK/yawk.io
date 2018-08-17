@@ -44,6 +44,8 @@ namespace YAWK\WIDGETS\SOUNDCLOUD\PLAYER
         public $soundcloudWidth = '100%';
         /** @var string Player Height (300) */
         public $soundcloudHeight = '300';
+        /** @var string Headline HTML Markup */
+        public $headline = '';
 
         /**
          * Load all widget settings from database and fill object
@@ -105,6 +107,23 @@ namespace YAWK\WIDGETS\SOUNDCLOUD\PLAYER
                 $this->soundcloudUrl = strstr($this->soundcloudUrl, 'soundcloud.com/');
             }
 
+            // if a heading is set and not empty
+            if (isset($this->soundcloudTitle) && (!empty($this->soundcloudTitle))) {   // add a h1 tag to heading string
+                $this->soundcloudTitle = "$this->soundcloudTitle";
+
+                // if subtext is set, add <small> subtext to string
+                if (isset($soundcloudSubtext) && (!empty($soundcloudSubtext))) {   // build a headline with heading and subtext
+                    $soundcloudSubtext = "<small>$soundcloudSubtext</small>";
+                    $this->headline = "<h1>$this->soundcloudTitle&nbsp;" . "$soundcloudSubtext</h1>";
+                } else {   // build just a headline - without subtext
+                    $this->headline = "<h1>$this->soundcloudTitle</h1>";    // draw just the heading
+                }
+            }
+            else
+            {   // leave empty if it's not set
+                $this->headline = '';
+            }
+
         }
 
         /**
@@ -116,6 +135,7 @@ namespace YAWK\WIDGETS\SOUNDCLOUD\PLAYER
          */
         public function embedPlayer()
         {
+            echo $this->headline;
             echo "<iframe 
                     width=\"$this->soundcloudWidth\" 
                     height=\"$this->soundcloudHeight\" 
