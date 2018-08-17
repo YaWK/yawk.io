@@ -78,6 +78,7 @@ namespace YAWK\WIDGETS\SOUNDCLOUD\PLAYER
             echo "<pre>";
             print_r($this);
             echo "</pre>";
+            exit;
         }
 
         /**
@@ -91,6 +92,7 @@ namespace YAWK\WIDGETS\SOUNDCLOUD\PLAYER
         {
             // set object properties
             $this->setProperties();
+            // $this->printObject();
             // embed the SoundCloud Player
             $this->embedPlayer();
         }
@@ -117,14 +119,12 @@ namespace YAWK\WIDGETS\SOUNDCLOUD\PLAYER
 
             // if a heading is set and not empty
             if (isset($this->soundcloudTitle) && (!empty($this->soundcloudTitle)))
-            {   // add a h1 tag to heading string
-                $this->soundcloudTitle = "$this->soundcloudTitle";
-
+            {
                 // if subtext is set, add <small> subtext to string
-                if (isset($soundcloudSubtext) && (!empty($soundcloudSubtext)))
+                if (isset($this->soundcloudSubtext) && (!empty($this->soundcloudSubtext)))
                 {   // build a headline with heading and subtext
-                    $soundcloudSubtext = "<small>$soundcloudSubtext</small>";
-                    $this->headline = "<h1>$this->soundcloudTitle&nbsp;" . "$soundcloudSubtext</h1>";
+                    $this->soundcloudSubtext = "<small>$this->soundcloudSubtext</small>";
+                    $this->headline = "<h1>$this->soundcloudTitle&nbsp;" . "$this->soundcloudSubtext</h1>";
                 }
                 else
                 {   // build just a headline - without subtext
