@@ -617,7 +617,7 @@ namespace YAWK {
          * @param string $subtext The Subtext
          * @return string|bool return the correct headline
          */
-        public function getHeading($heading, $subtext)
+        public static function getHeading($heading, $subtext)
         {
             // if a heading is set and not empty
             if (isset($heading) && (!empty($heading)))
