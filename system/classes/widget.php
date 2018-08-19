@@ -608,6 +608,37 @@ namespace YAWK {
             return $id;
         }
 
+        /**
+         * Get widget heading and subtext, return headline
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param string $heading The Heading
+         * @param string $subtext The Subtext
+         * @return string|bool return the correct headline
+         */
+        public function getHeading($heading, $subtext)
+        {
+            // if a heading is set and not empty
+            if (isset($heading) && (!empty($heading)))
+            {
+                // if subtext is set, add <small> subtext to string
+                if (isset($subtext) && (!empty($subtext)))
+                {   // build a headline with heading and subtext
+                    $subtext = "<small>$subtext</small>";
+                    return "<h1>$heading&nbsp;" . "$subtext</h1>";
+                }
+                else
+                {   // build just a headline - without subtext
+                    return  "<h1>$heading</h1>";    // draw just the heading
+                }
+            }
+            else
+            {   // leave empty if it's not set
+                return null;
+            }
+        }
+
 
         /**
          * load a widget into given position
