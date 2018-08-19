@@ -49,7 +49,7 @@ $(document).ready(function(){
         if (!email.trim()) {
         //    alert('Please insert your email!');
             // shake the form elements to get users attention
-            $( "#form" ).effect( "shake", {times:2}, 600 );
+            $( "#form" ).effect( "shake", {times:3}, 820 );
             return false;
         }
         else
