@@ -107,7 +107,7 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
             {
                 echo "Error: unable to load photo gallery because there is no gallery selected.";
             }
-            if ($res = $db->query("SELECT * from {plugin_gallery} WHERE id = '".$this->galleryID."'"))
+            if ($res = $db->query("SELECT folder from {plugin_gallery} WHERE id = '".$this->galleryID."'"))
             {
                 while ($row = mysqli_fetch_assoc($res))
                 {
