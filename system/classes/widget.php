@@ -405,6 +405,41 @@ namespace YAWK {
                             }
                         }
 
+                        /* SELECT FIELD */
+                        /* GALLERY SELECTOR */
+                        /** @var $db \YAWK\db */
+                        if ($setting['fieldType'] === "selectGallery")
+                        {   // display icon, heading and subtext, if its set
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                            {
+                                echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
+                            }
+                            // begin draw select
+                            echo "<label for=\"$setting[property]\">$setting[label]&nbsp;$setting[description]</label>
+                                  <select class=\"form-control\" id=\"$setting[property]\" name=\"$setting[property]\">";
+                            echo "<option value=\"$setting[value]\">$lang[SETTING_CURRENT] $setting[value]</option>";
+
+                            // select galleries from database
+                            if ($res = $db->query("SELECT id, title FROM {plugin_gallery}"))
+                            {   // fetch data
+                                while ($row = mysqli_fetch_array($res))
+                                {   // set current default value
+                                    if ($setting['value'] === $row[0])
+                                    {   // selected default value
+                                        $selected = "selected";
+                                    }
+                                    else
+                                        {   // option not selected
+                                            $selected = '';
+                                        }
+                                    // draw option
+                                    echo "<option value=\"$row[0]\"$selected>$row[1]</option>";
+                                }
+                                echo "<option value=\"\">$lang[NONE_SELECTED]</option>";
+                            }
+                            echo "</select>";
+                        }
+
 
                         /* FACEBOOK SELECT FIELD */
                         if ($setting['fieldType'] === "fbGallerySelect")
@@ -617,7 +652,7 @@ namespace YAWK {
          * @param string $subtext The Subtext
          * @return string|bool return the correct headline
          */
-        public static function getHeading($heading, $subtext)
+        public function getHeading($heading, $subtext)
         {
             // if a heading is set and not empty
             if (isset($heading) && (!empty($heading)))
@@ -626,11 +661,11 @@ namespace YAWK {
                 if (isset($subtext) && (!empty($subtext)))
                 {   // build a headline with heading and subtext
                     $subtext = "<small>$subtext</small>";
-                    return "<h1>$heading&nbsp;" . "$subtext</h1>";
+                    return "<h2>$heading&nbsp;" . "$subtext</h2>";
                 }
                 else
                 {   // build just a headline - without subtext
-                    return  "<h1>$heading</h1>";    // draw just the heading
+                    return  "<h2>$heading</h2>";    // draw just the heading
                 }
             }
             else
