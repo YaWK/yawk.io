@@ -2,17 +2,20 @@
 namespace YAWK\PLUGINS\GALLERY {
     /**
      * <b>Gallery Plugin</b>
-     * <p>Whenever you build a website, sooner or later you get to the point where you need to put a few images on a page.
+     * <p>Whenever you build a website, sooner or later you will get to the point where you need to put
+     * a few photos within a lightbox on your page.
      * YaWK's gallery plugin help you out! It can build image galleries automatically. It does a perfect batch
-     * job adding watermark or resizing images and much more. To add a new gallery, just place all your images
-     * in any folder and put that folder fia ftp to \media\images\yourfolder. In the backend, you can easily
-     * select any of your folders that are stored in the \media\images folder. The gallery will be automatically
-     * created for you.</p>
+     * job adding a watermark to every image or resize images and much more. To add a new gallery, just place
+     * all your images in any folder and put that folder fia ftp to /media/images/{yourfolder}. If you don't like to use ftp,
+     * you could also use yawk's built-in file manager to upload your files. Once the upload is complete, go
+     * back to the gallery plugin and select your uploaded folder. (Or any other folder that is stored under /media/images)
+     * Set some settings and you're ready to go. When the gallery is created, load the gallery widget into
+     * any layout position you like, select which gallery to show up and you are done.</p>
      * <p><b>Basic Features:</b></p>
      * <ul>
      * <li>put a text watermark onto all your images</li>
      * <li>change color and style of your watermark text</li>
-     * <li>use your own .ttf font (must be in \system\fonts)</li>
+     * <li>use any custom .ttf font (must be in /system/fonts)</li>
      * <li>or watermark images overlaying any transparent image (eg. your logo as .png)</li>
      * <li>watermark placement at bottom, middle or top, left or right with any margin</li>
      * <li>change the size of your images</li>
@@ -89,7 +92,7 @@ namespace YAWK\PLUGINS\GALLERY {
         public $watermark;
         /** * @var int 0|1 switch: 1 if watermark is enabled, zero if not */
         public $watermarkEnabled;
-        /** * @var string the image wich should be overlayed for watermarking */
+        /** * @var string the image which should be overlayed for watermarking */
         public $watermarkImage;
         /** * @var string watermark position */
         public $watermarkPosition;
@@ -109,6 +112,8 @@ namespace YAWK\PLUGINS\GALLERY {
         public $watermarkBorderColor;
         /** * @var string watermark border thickness in px */
         public $watermarkBorder;
+        /** * @var string headline */
+        public $headline;
 
         /**
          * define JS function doImageAction
