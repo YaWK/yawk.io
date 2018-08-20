@@ -1873,7 +1873,7 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('clockAlign', 'text-center', 8, 1, 0, 'LABEL_CLOCK_ALIGN', '', '', '', 'DESC_CLOCK_ALIGN', 'form-control', 'select', '', 'text-left,Left:text-center,Center:text-right,Right', 24),
 ('clockClass', 'h1', 8, 1, 0, 'LABEL_CLOCK_CLASS', '', '', '', 'DESC_CLOCK_CLASS', 'form-control', '', 'PH_CLOCK_CLASS', '', 25),
 ('customHtmlCode', '<h1>Hello World! <small>Replace this with any HTML Code</small></h1>', 10, 1, 0, 'LABEL_CUSTOM_HTML_CODE_CONTENT', '', '', '', 'DESC_CUSTOM_HTML_CODE_CONTENT', 'form-control', 'textarea', 'PH_CUSTOM_HTML_CODE_CONTENT', '', 27),
-('galleryID', '1', 13, 1, 0, 'LABEL_GALLERY_ID', '', '', '', 'DESC_GALLERY_ID', 'form-control', '', '', '', 28),
+('galleryID', '', 13, 1, 0, 'LABEL_GALLERY_ID', '', '', '', 'DESC_GALLERY_ID', 'form-control', 'selectGallery', '', '', 28),
 ('twitchChannel', 'belladonna1337', 14, 1, 1, 'LABEL_TWITCH_CHANNEL', '', '', '', 'DESC_TWITCH_CHANNEL', 'form-control', '', 'PH_TWITCH_CHANNEL', '', 29),
 ('twitchChat', '1', 14, 1, 7, 'LABEL_TWITCH_CHAT', '', '', '', 'DESC_TWITCH_CHAT', 'form-control', 'checkbox', '', '', 30),
 ('twitchChatHeight', '200', 14, 1, 8, 'LABEL_TWITCH_CHAT_HEIGHT', '', '', '', 'DESC_TWITCH_CHAT_HEIGHT', 'form-control', '', 'PH_TWITCH_CHAT_HEIGHT', '', 31),
