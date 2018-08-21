@@ -1873,7 +1873,7 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('clockAlign', 'text-center', 8, 1, 0, 'LABEL_CLOCK_ALIGN', '', '', '', 'DESC_CLOCK_ALIGN', 'form-control', 'select', '', 'text-left,Left:text-center,Center:text-right,Right', 24),
 ('clockClass', 'h1', 8, 1, 0, 'LABEL_CLOCK_CLASS', '', '', '', 'DESC_CLOCK_CLASS', 'form-control', '', 'PH_CLOCK_CLASS', '', 25),
 ('customHtmlCode', '<h1>Hello World! <small>Replace this with any HTML Code</small></h1>', 10, 1, 0, 'LABEL_CUSTOM_HTML_CODE_CONTENT', '', '', '', 'DESC_CUSTOM_HTML_CODE_CONTENT', 'form-control', 'textarea', 'PH_CUSTOM_HTML_CODE_CONTENT', '', 27),
-('galleryID', '', 13, 1, 0, 'LABEL_GALLERY_ID', '', '', '', 'DESC_GALLERY_ID', 'form-control', 'selectGallery', '', '', 28),
+('galleryID', '', 13, 1, 1, 'LABEL_GALLERY_ID', 'fa fa-photo', 'GALLERY_H_SELECT_GALLERY', '', 'DESC_GALLERY_ID', 'form-control', 'selectGallery', '', '', 28),
 ('twitchChannel', 'belladonna1337', 14, 1, 1, 'LABEL_TWITCH_CHANNEL', '', '', '', 'DESC_TWITCH_CHANNEL', 'form-control', '', 'PH_TWITCH_CHANNEL', '', 29),
 ('twitchChat', '1', 14, 1, 7, 'LABEL_TWITCH_CHAT', '', '', '', 'DESC_TWITCH_CHAT', 'form-control', 'checkbox', '', '', 30),
 ('twitchChatHeight', '200', 14, 1, 8, 'LABEL_TWITCH_CHAT_HEIGHT', '', '', '', 'DESC_TWITCH_CHAT_HEIGHT', 'form-control', '', 'PH_TWITCH_CHAT_HEIGHT', '', 31),
@@ -1987,8 +1987,8 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('preziHtml', '', 3, 1, 0, 'LABEL_PREZI_EMBEDCODE', '', '', '', 'DESC_PREZI_EMBEDCODE', 'form-control', 'textarea', 'PH_PREZI_EMBEDCODE', '', 139),
 ('preziHeading', '', 3, 1, 0, 'LABEL_PREZI_HEADING', '', '', '', 'DESC_PREZI_HEADING', 'form-control', '', 'PH_PREZI_HEADING', '', 140),
 ('preziSubtext', '', 3, 1, 0, 'LABEL_PREZI_SUBTEXT', '', '', '', 'DESC_PREZI_SUBTEXT', 'form-control', '', 'PH_PREZI_SUBTEXT', '', 141),
-('galleryHeading', '', 13, 1, 0, 'LABEL_GALLERY_HEADING', '', '', '', 'DESC_GALLERY_HEADING', 'form-control', '', 'PH_GALLERY_HEADING', '', 142),
-('gallerySubtext', '', 13, 1, 0, 'LABEL_GALLERY_SUBTEXT', '', '', '', 'DESC_GALLERY_SUBTEXT', 'form-control', '', 'PH_GALLERY_SUBTEXT', '', 143),
+('galleryHeading', '', 13, 1, 2, 'LABEL_GALLERY_HEADING', '', '', '', 'DESC_GALLERY_HEADING', 'form-control', '', 'PH_GALLERY_HEADING', '', 142),
+('gallerySubtext', '', 13, 1, 3, 'LABEL_GALLERY_SUBTEXT', '', '', '', 'DESC_GALLERY_SUBTEXT', 'form-control', '', 'PH_GALLERY_SUBTEXT', '', 143),
 ('googleMapsHeading', '', 18, 1, 0, 'LABEL_GOOGLEMAPS_HEADING', '', '', '', 'DESC_GOOGLEMAPS_HEADING', 'form-control', '', 'PH_GOOGLEMAPS_HEADING', '', 144),
 ('googleMapsSubtext', '', 18, 1, 0, 'LABEL_GOOGLEMAPS_SUBTEXT', '', '', '', 'DESC_GOOGLEMAPS_SUBTEXT', 'form-control', '', 'PH_GOOGLEMAPS_SUBTEXT', '', 145),
 ('loginboxHeading', '', 1, 1, 0, 'LABEL_LOGINBOX_HEADING', '', '', '', 'DESC_LOGINBOX_HEADING', 'form-control', '', 'PH_LOGINBOX_HEADING', '', 146),
@@ -2124,23 +2124,21 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('soundcloudVisual', 'false', 43, 1, 10, 'LABEL_SOUNDCLOUD_VISUAL', '', '', '', 'DESC_SOUNDCLOUD_VISUAL', 'form-control', 'select', '', 'true,true:false,false', 278),
 ('soundcloudWidth', '100%', 43, 1, 11, 'LABEL_SOUNDCLOUD_WIDTH', '', '', '', 'DESC_SOUNDCLOUD_WIDTH', 'form-control', '', 'PH_SOUNDCLOUD_WIDTH', '', 279),
 ('soundcloudHeight', '300', 43, 1, 12, 'LABEL_SOUNDCLOUD_HEIGHT', '', '', '', 'DESC_SOUNDCLOUD_HEIGHT', 'form-control', '', 'PH_SOUNDCLOUD_HEIGHT', '', 280),
-('galleryNavOnTouchDevices', 'false', 13, 1, 0, 'LABEL_GALLERY_NAVTOUCH', '', '', '', 'DESC_GALLERY_NAVTOUCH', 'form-control', 'select', '', 'true,true:false,false', 281),
-('galleryAlbumLabel', 'Image %1 of %2', 13, 1, 0, 'LABEL_GALLERY_ALBUMLABEL', '', '', '', 'DESC_GALLERY_ALBUMLABEL', 'form-control', '', 'PH_GALLERY_ALBUMLABEL', '', 282),
-('galleryDisableScrolling', 'false', 13, 1, 0, 'LABEL_GALLERY_DISABLE_SCROLL', '', '', '', 'DESC_GALLERY_DISABLE_SCROLL', 'form-control', 'select', '', 'true,true:false,false', 283),
-('galleryFadeDuration', '600', 13, 1, 0, 'LABEL_GALLERY_FADE_DURATION', '', '', '', 'DESC_GALLERY_FADE_DURATION', 'form-control', '', 'PH_GALLERY_DURATION', '', 284),
-('galleryFitImagesInViewport', 'true', 13, 1, 0, 'LABEL_GALLERY_FIT_IMAGES_VIEWPORT', '', '', '', 'DESC_GALLERY_FIT_IMAGES_VIEWPORT', 'form-control', 'select', '', 'true,true:false,false', 285),
-('galleryImageFadeDuration', '600', 13, 1, 0, 'LABEL_GALLERY_IMAGE_FADE_DURATION', '', '', '', 'DESC_GALLERY_IMAGE_FADE_DURATION', 'form-control', '', 'PH_GALLERY_IMAGE_FADE_DURATION', '', 286),
-('galleryMaxWidth', '', 13, 1, 0, 'LABEL_GALLERY_MAXWIDTH', '', '', '', 'DESC_GALLERY_MAXWIDTH', 'form-control', '', 'PH_GALLERY_MAXWIDTH', '', 287),
-('galleryMaxHeight', '', 13, 1, 0, 'LABEL_GALLERY_MAXHEIGHT', '', '', '', 'DESC_GALLERY_MAXHEIGHT', 'form-control', '', 'PH_GALLERY_MAXHEIGHT', '', 288),
-('galleryPositionFromTop', '50', 13, 1, 0, 'LABEL_GALLERY_POSTOP', '', '', '', 'DESC_GALLERY_POSTOP', 'form-control', '', 'PH_GALLERY_POSTOP', '', 289),
-('galleryResizeDuration', '700', 13, 1, 0, 'LABEL_GALLERY_RESIZE_DURATION', '', '', '', 'DESC_GALLERY_RESIZE_DURATION', 'form-control', '', 'PH_GALLERY_RESIZE_DURATION', '', 290),
-('galleryShowImageNumberLabel', 'true', 13, 1, 0, 'LABEL_GALLERY_IMAGE_LABEL', '', '', '', 'DESC_GALLERY_IMAGE_LABEL', 'form-control', 'select', '', 'true,true:false,false', 291),
-('galleryWrapAround', 'false', 13, 1, 0, 'LABEL_GALLERY_WRAP_AROUND', '', '', '', 'DESC_GALLERY_WRAP_AROUND', 'form-control', 'select', '', 'true,true:false,false', 292),
-('galleryLayoutRows', '3', 13, 1, 0, 'LABEL_GALLERY_LAYOUT_ROWS', '', '', '', 'DESC_GALLERY_LAYOUT_ROWS', 'form-control', 'select', '', '1,1:2,2:3,3:4,4:6,6:8,8:10,10:12,12', 293),
-('galleryShuffle', 'false', 13, 1, 0, 'LABEL_GALLERY_SHUFFLE', '', '', '', 'DESC_GALLERY_SHUFFLE', 'form-control', 'select', '', 'true,true:false,false', 294),
-('galleryTnWidth', '', 13, 1, 0, 'LABEL_GALLERY_TN_WIDTH', '', '', '', 'DESC_GALLERY_TN_WIDTH', 'form-control', '', 'PH_GALLERY_TN_WIDTH', '', 295),
-('galleryLayoutRows', '3', 13, 1, 0, 'LABEL_GALLERY_LAYOUT_ROWS', '', '', '', 'DESC_GALLERY_LAYOUT_ROWS', 'form-control', 'select', '', '1,1:2,2:3,3:4,4:6,6:12,12', 296),
-('galleryImageClass', 'img-responsive img-rounded hvr-grow', 13, 1, 0, 'LABEL_GALLERY_IMAGE_CLASS', '', '', '', 'DESC_GALLERY_IMAGE_CLASS', 'form-control', '', 'PH_GALLERY_IMAGE_CLASS', '', 297);
+('galleryNavOnTouchDevices', 'false', 13, 1, 9, 'LABEL_GALLERY_NAVTOUCH', '', '', '', 'DESC_GALLERY_NAVTOUCH', 'form-control', 'select', '', 'true,true:false,false', 281),
+('galleryAlbumLabel', 'Image %1 of %2', 13, 1, 5, 'LABEL_GALLERY_ALBUMLABEL', '' , '', '', 'DESC_GALLERY_ALBUMLABEL', 'form-control', '', 'PH_GALLERY_ALBUMLABEL', '', 282),
+('galleryDisableScrolling', 'false', 13, 1, 7, 'LABEL_GALLERY_DISABLE_SCROLL', '', '', '', 'DESC_GALLERY_DISABLE_SCROLL', 'form-control', 'select', '', 'true,true:false,false', 283),
+('galleryFadeDuration', '600', 13, 1, 30, 'LABEL_GALLERY_FADE_DURATION', 'fa fa-spinner', 'GALLERY_H_ANIMATION', '', 'DESC_GALLERY_FADE_DURATION', 'form-control', '', 'PH_GALLERY_DURATION', '', 284),
+('galleryFitImagesInViewport', 'true', 13, 1, 6, 'LABEL_GALLERY_FIT_IMAGES_VIEWPORT', '', '', '', 'DESC_GALLERY_FIT_IMAGES_VIEWPORT', 'form-control', 'select', '', 'true,true:false,false', 285),
+('galleryImageFadeDuration', '600', 13, 1, 31, 'LABEL_GALLERY_IMAGE_FADE_DURATION', '', '', '', 'DESC_GALLERY_IMAGE_FADE_DURATION', 'form-control', '', 'PH_GALLERY_IMAGE_FADE_DURATION', '', 286),
+('galleryMaxWidth', '', 13, 1, 25, 'LABEL_GALLERY_MAXWIDTH', '', '', '', 'DESC_GALLERY_MAXWIDTH', 'form-control', '', 'PH_GALLERY_MAXWIDTH', '', 287),
+('galleryPositionFromTop', '50', 13, 1, 24, 'LABEL_GALLERY_POSTOP', '', '', '', 'DESC_GALLERY_POSTOP', 'form-control', '', 'PH_GALLERY_POSTOP', '', 288),
+('galleryResizeDuration', '700', 13, 1, 32, 'LABEL_GALLERY_RESIZE_DURATION', '', '', '', 'DESC_GALLERY_RESIZE_DURATION', 'form-control', '', 'PH_GALLERY_RESIZE_DURATION', '', 289),
+('galleryShowImageNumberLabel', 'true', 13, 1, 4, 'LABEL_GALLERY_IMAGE_LABEL', 'fa fa-wrench', 'GALLERY_H_SETTINGS', '', 'DESC_GALLERY_IMAGE_LABEL', 'form-control', 'select', '', 'true,true:false,false', 290),
+('galleryWrapAround', 'false', 13, 1, 8, 'LABEL_GALLERY_WRAP_AROUND', '', '', '', 'DESC_GALLERY_WRAP_AROUND', 'form-control', 'select', '', 'true,true:false,false', 291),
+('galleryShuffle', 'false', 13, 1, 21, 'LABEL_GALLERY_SHUFFLE', '', '', '', 'DESC_GALLERY_SHUFFLE', 'form-control', 'select', '', 'true,true:false,false', 292),
+('galleryTnWidth', '', 13, 1, 22, 'LABEL_GALLERY_TN_WIDTH', '', '', '', 'DESC_GALLERY_TN_WIDTH', 'form-control', '', 'PH_GALLERY_TN_WIDTH', '', 293),
+('galleryLayoutRows', '3', 13, 1, 20, 'LABEL_GALLERY_LAYOUT_ROWS', 'fa fa-object-ungroup', 'GALLERY_H_LAYOUT', '', 'DESC_GALLERY_LAYOUT_ROWS', 'form-control', 'select', '', '1,1:2,2:3,3:4,4:6,6:12,12', 294),
+('galleryImageClass', 'img-responsive img-rounded hvr-grow', 13, 1, 23, 'LABEL_GALLERY_IMAGE_CLASS', '', '', '', 'DESC_GALLERY_IMAGE_CLASS', 'form-control', '', 'PH_GALLERY_IMAGE_CLASS', '', 295);
 
 
 CREATE TABLE `cms_widget_settings` (
@@ -2424,7 +2422,7 @@ ALTER TABLE `cms_user_groups`
 ALTER TABLE `cms_widgets`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_defaults`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=297;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=295;
 ALTER TABLE `cms_widget_settings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_types`
