@@ -56,6 +56,10 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
         public $galleryMaxWidth = '';
         /** @var string If set, the image height will be limited to this number, in pixels. Aspect ratio will not be maintained. */
         public $galleryMaxHeight = '';
+        /** @var string If set, the thumbnail image width will be limited to this number, in pixels. Aspect ratio will not be maintained. */
+        public $galleryTnWidth = '';
+        /** @var string If set, the thumbnail image height will be limited to this number, in pixels. Aspect ratio will not be maintained. */
+        public $galleryTnHeight = '';
         /** @var string The distance from top of viewport that the Lightbox container will appear, in pixels */
         public $galleryPositionFromTop = '50';
         /** @var string The time it takes for the Lightbox container to animate its width and height when transition between different size images, in milliseconds. */
@@ -64,6 +68,15 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
         public $galleryShowImageNumberLabel = true;
         /** @var bool If true, when a user reaches the last image in a set, the right navigation arrow will appear and they will be to continue moving forward which will take them back to the first image in the set. */
         public $galleryWrapAround = false;
+
+        /** @var int How many pictures should be drawn per row? */
+        public $galleryLayoutRows = 3;
+        /** @var bool true|false Shuffle Images */
+        public $galleryShuffle = false;
+
+        /** @var string <img Width HTML Markup */
+        public $galleryWidthMarkup = '';
+
 
         /**
          * Load all widget settings from database and fill object
@@ -140,10 +153,18 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
             if ($res = $db->query("SELECT folder from {plugin_gallery} WHERE id = '".$this->galleryID."'"))
             {
                 while ($row = mysqli_fetch_assoc($res))
-                {
+                {   // check if shuffle is enabled
+                    if (isset($this->galleryShuffle) && ($this->galleryShuffle === 'true'))
+                    {   // randomize pictures
+                        $order = "ORDER BY RAND()";
+                    }
+                    else
+                        {   // order by sortation
+                            $order = "ORDER BY sort ASC";
+                        }
                     if (!$getPreviewImages = $db->query("SELECT id, galleryID, sort, filename, title, author, authorUrl
                                                          from {plugin_gallery_items} 
-                                                         WHERE galleryID = '".$this->galleryID."' ORDER BY sort, filename DESC"))
+                                                         WHERE galleryID = '".$this->galleryID."' $order"))
                     {   // store info msg, if files could not be retrieved
                         $previewError = "Sorry, could not get preview images";
                     }
@@ -153,15 +174,62 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
                     }
                     else
                     {
-                        // prepare loop + heading
+                        // prepare loop vars
                         $count = 3;
+                        $divider = 3;
                         /** @var $widget \YAWK\widget */
                         // get headline
                         $this->headline = $this->getHeading($this->galleryHeading, $this->gallerySubtext);
                         // draw headline
                         echo $this->headline;
-                        echo '      <div class="row text-center">
-                                    ';
+                      //  echo '      <div class="row text-center">';
+
+                        // check gallery layout (how many cols per row)
+                        if ($this->galleryLayoutRows === "1")
+                        {
+                            $col = "col-md-12";
+                            $divider = 1;
+                        }
+                        elseif ($this->galleryLayoutRows === "2")
+                        {
+                            $col = "col-md-6";
+                            $divider = 2;
+                        }
+                        elseif ($this->galleryLayoutRows === "3")
+                        {
+                            $col = "col-md-4";
+                            $divider = 3;
+                        }
+                        elseif ($this->galleryLayoutRows === "4")
+                        {
+                            $col = "col-md-3";
+                            $divider = 4;
+                        }
+                        elseif ($this->galleryLayoutRows === "6")
+                        {
+                            $col = "col-md-2";
+                            $divider = 6;
+                        }
+                        elseif ($this->galleryLayoutRows === "12")
+                        {
+                            $col = "col-md-1";
+                            $divider = 12;
+                        }
+                        else
+                            {
+                                $col = "col-md-4";
+                            }
+
+                        // check thumbnail width
+                        if (isset($this->galleryTnWidth) && (!empty($this->galleryTnWidth)))
+                        {   // set tn width markup
+                            $this->galleryWidthMarkup = "width=\"$this->galleryTnWidth\" ";
+                        }
+                        else
+                            {   // no width markup needed
+                                $this->galleryWidthMarkup = '';
+                            }
+
                         foreach ($getPreviewImages as $property => $image)
                         {   // display preview images
                             for ($i = 0; $i < count($property); $i++)
@@ -174,22 +242,21 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
                                 $this->itemAuthorUrl = $image['authorUrl'];
                                 // $rnd = uniqid();
 
-                                if ($count % 3 == 0)
+                                if ($count / $divider == 0)
                                 { // time to break line
-                                    echo '
-                                    </div>';
-                                    echo '
-                                    <div class="row text-center">
-                                      <div class="col-md-4 animate text-center" id="imgCol-'.$this->itemID.'">
-                                          <a href="'.$row['folder']."/".$this->filename.'" data-lightbox="'.$this->galleryID.'" data-title="'.$this->itemTitle.'"><img class="img-responsive img-rounded hvr-grow" id="img-'.$this->itemID.'" width="400" alt="'.$this->itemTitle.'" title="'.$this->itemTitle.'" src="' . $row['folder']."/".$this->filename . '"></a><br><br>
-                                      </div>';
+                                    echo "
+                                    <div class=\"row text-center\">
+                                      <div class=\"$col animate text-center\" id=\"imgCol-".$this->itemID."\">
+                                        <a href=\"$row[folder]/$this->filename\" data-lightbox=\"$this->galleryID\" data-title=\"$this->itemTitle\"><img ".$this->galleryWidthMarkup."class=\"img-responsive img-rounded hvr-grow\" id=\"img-$this->itemID\" title=\"$this->itemTitle\" src=\"$row[folder]/$this->filename\"></a><br><br>
+                                      </div>
+                                    </div>";
                                 }
                                 else
                                 {
-                                    echo '  
-                                      <div class="col-md-4 animate text-center" id="imgCol-'.$this->itemID.'">
-                                        <a href="'.$row['folder']."/".$this->filename.'" data-lightbox="'.$this->galleryID.'" data-title="'.$this->itemTitle.'"><img class="img-responsive img-rounded hvr-grow" id="img-'.$this->itemID.'" width="400" title="'.$this->itemTitle.'" src="' . $row['folder']."/".$this->filename . '"></a><br><br>
-                                      </div>';
+                                    echo "
+                                      <div class=\"$col animate text-center\" id=\"imgCol-".$this->itemID."\">
+                                        <a href=\"$row[folder]/$this->filename\" data-lightbox=\"$this->galleryID\" data-title=\"$this->itemTitle\"><img ".$this->galleryWidthMarkup."class=\"img-responsive img-rounded hvr-grow\" id=\"img-$this->itemID\" title=\"$this->itemTitle\" src=\"$row[folder]/$this->filename\"></a><br><br>
+                                      </div>";
                                 }
                                 $count++;
                             }
