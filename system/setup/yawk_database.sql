@@ -2135,7 +2135,11 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('galleryPositionFromTop', '50', 13, 1, 0, 'LABEL_GALLERY_POSTOP', '', '', '', 'DESC_GALLERY_POSTOP', 'form-control', '', 'PH_GALLERY_POSTOP', '', 289),
 ('galleryResizeDuration', '700', 13, 1, 0, 'LABEL_GALLERY_RESIZE_DURATION', '', '', '', 'DESC_GALLERY_RESIZE_DURATION', 'form-control', '', 'PH_GALLERY_RESIZE_DURATION', '', 290),
 ('galleryShowImageNumberLabel', 'true', 13, 1, 0, 'LABEL_GALLERY_IMAGE_LABEL', '', '', '', 'DESC_GALLERY_IMAGE_LABEL', 'form-control', 'select', '', 'true,true:false,false', 291),
-('galleryWrapAround', 'false', 13, 1, 0, 'LABEL_GALLERY_WRAP_AROUND', '', '', '', 'DESC_GALLERY_WRAP_AROUND', 'form-control', 'select', '', 'true,true:false,false', 292);
+('galleryWrapAround', 'false', 13, 1, 0, 'LABEL_GALLERY_WRAP_AROUND', '', '', '', 'DESC_GALLERY_WRAP_AROUND', 'form-control', 'select', '', 'true,true:false,false', 292),
+('galleryLayoutRows', '3', 13, 1, 0, 'LABEL_GALLERY_LAYOUT_ROWS', '', '', '', 'DESC_GALLERY_LAYOUT_ROWS', 'form-control', 'select', '', '1,1:2,2:3,3:4,4:6,6:8,8:10,10:12,12', 293),
+('galleryShuffle', 'false', 13, 1, 0, 'LABEL_GALLERY_SHUFFLE', '', '', '', 'DESC_GALLERY_SHUFFLE', 'form-control', 'select', '', 'true,true:false,false', 294),
+('galleryTnWidth', '', 13, 1, 0, 'LABEL_GALLERY_TN_WIDTH', '', '', '', 'DESC_GALLERY_TN_WIDTH', 'form-control', '', 'PH_GALLERY_TN_WIDTH', '', 295),
+('galleryLayoutRows', '3', 13, 1, 0, 'LABEL_GALLERY_LAYOUT_ROWS', '', '', '', 'DESC_GALLERY_LAYOUT_ROWS', 'form-control', 'select', '', '1,1:2,2:3,3:4,4:6,6:12,12', 296;
 
 
 CREATE TABLE `cms_widget_settings` (
@@ -2419,7 +2423,7 @@ ALTER TABLE `cms_user_groups`
 ALTER TABLE `cms_widgets`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_defaults`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=291;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=296;
 ALTER TABLE `cms_widget_settings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_types`
