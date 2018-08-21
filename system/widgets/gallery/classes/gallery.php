@@ -192,7 +192,7 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
                     else
                     {
                         // prepare loop vars
-                        $count = 3;
+                        $count = 0;
                         $divider = 3;
                         /** @var $widget \YAWK\widget */
                         // get headline
@@ -263,15 +263,21 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
 
                                 echo "
                                 <div class=\"$col animate text-center\" id=\"imgCol-".$this->itemID."\">
-                                    <a href=\"$row[folder]/$this->filename\" data-lightbox=\"$this->galleryID\" data-title=\"$this->itemTitle\"><img ".$this->galleryWidthMarkup."class=\"$this->galleryImageClass\" id=\"img-$this->itemID\" title=\"$this->itemTitle\" src=\"$row[folder]/$this->filename\"></a><br><br>
+                                    <a href=\"$row[folder]/$this->filename\" data-lightbox=\"gallery-$this->galleryID\" data-title=\"$this->itemTitle\"><img ".$this->galleryWidthMarkup."class=\"$this->galleryImageClass\" id=\"img-$this->itemID\" title=\"$this->itemTitle\" src=\"$row[folder]/$this->filename\"></a><br><br>
                                 </div>
                                       ";
 
                                 $count++;
-                                if($count % $divider == 0) echo '
+
+                                // close tag, but never before the first run
+                                if ($count > 1)
+                                {
+                                    if($count % $divider == 0) echo '
                             </div> <!-- end row -->
                                 
                                 <div class="row text-center">';
+
+                                }
                             }
                         }
                         echo "</div>";
