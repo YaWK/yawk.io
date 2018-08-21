@@ -409,9 +409,15 @@ namespace YAWK {
                         /* GALLERY SELECTOR */
                         /** @var $db \YAWK\db */
                         if ($setting['fieldType'] === "selectGallery")
-                        {   // display icon, heading and subtext, if its set
+                        {
+                            // set required assets
+                            $requiredAssets = array('Lightbox 2 JS' => 'js', 'Lightbox 2 CSS' => 'css');
+                            // check if they are active in current template, if not, set them
+                            \YAWK\sys::checkIfAssetsAreLoaded($db, $requiredAssets, true);
+
+                            // display icon, heading and subtext, if its set
                             if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
-                            {
+                            {   // output heading
                                 echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
                             }
                             // begin draw select
