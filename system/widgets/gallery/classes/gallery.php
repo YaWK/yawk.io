@@ -138,15 +138,14 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
             <script type=\"text/javascript\">
                 lightbox.option({
                     'alwaysShowNavOnTouchDevices': $this->galleryNavOnTouchDevices,
-                    'albumLabel': \"$this->galleryAlbumLabel\",
+                    'albumLabel': $this->galleryAlbumLabel,
                     'disableScrolling': $this->galleryDisableScrolling,
-                    'fadeDuration': \"$this->galleryFadeDuration\",
+                    'fadeDuration': $this->galleryFadeDuration,
                     'fitImagesInViewport': $this->galleryFitImagesInViewport,
-                    'imageFadeDuration': \"$this->galleryImageFadeDuration\",
-                    'maxWidth': \"$this->galleryMaxWidth\",
-                    'maxHeight': \"$this->galleryMaxHeight\",
-                    'positionFromTop': \"$this->galleryPositionFromTop\",
-                    'resizeDuration': \"$this->galleryResizeDuration\",
+                    'imageFadeDuration': $this->galleryImageFadeDuration,
+                    'maxWidth': $this->galleryMaxWidth,
+                    'positionFromTop': $this->galleryPositionFromTop,
+                    'resizeDuration': $this->galleryResizeDuration,
                     'showImageNumberLabel': $this->galleryShowImageNumberLabel,
                     'wrapAround': $this->galleryWrapAround
             });
@@ -200,7 +199,8 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
                         $this->headline = $this->getHeading($this->galleryHeading, $this->gallerySubtext);
                         // draw headline
                         echo $this->headline;
-                      //  echo '      <div class="row text-center">';
+                        echo '
+                            <div class="row text-center">';
 
                         // check gallery layout (how many cols per row)
                         if ($this->galleryLayoutRows === "1")
@@ -248,6 +248,7 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
                                 $this->galleryWidthMarkup = '';
                             }
 
+
                         foreach ($getPreviewImages as $property => $image)
                         {   // display preview images
                             for ($i = 0; $i < count($property); $i++)
@@ -260,27 +261,21 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
                                 $this->itemAuthorUrl = $image['authorUrl'];
                                 // $rnd = uniqid();
 
-                                if ($count / $divider == 0)
-                                { // time to break line
-                                    echo "
-                                    <div class=\"row text-center\">
-                                      <div class=\"$col animate text-center\" id=\"imgCol-".$this->itemID."\">
-                                        <a href=\"$row[folder]/$this->filename\" data-lightbox=\"$this->galleryID\" data-title=\"$this->itemTitle\"><img ".$this->galleryWidthMarkup."class=\"$this->galleryImageClass\" id=\"img-$this->itemID\" title=\"$this->itemTitle\" src=\"$row[folder]/$this->filename\"></a><br><br>
-                                      </div>
-                                    </div>";
-                                }
-                                else
-                                {
-                                    echo "
-                                      <div class=\"$col animate text-center\" id=\"imgCol-".$this->itemID."\">
-                                        <a href=\"$row[folder]/$this->filename\" data-lightbox=\"$this->galleryID\" data-title=\"$this->itemTitle\"><img ".$this->galleryWidthMarkup."class=\"$this->galleryImageClass\" id=\"img-$this->itemID\" title=\"$this->itemTitle\" src=\"$row[folder]/$this->filename\"></a><br><br>
-                                      </div>";
-                                }
+                                echo "
+                                <div class=\"$col animate text-center\" id=\"imgCol-".$this->itemID."\">
+                                    <a href=\"$row[folder]/$this->filename\" data-lightbox=\"$this->galleryID\" data-title=\"$this->itemTitle\"><img ".$this->galleryWidthMarkup."class=\"$this->galleryImageClass\" id=\"img-$this->itemID\" title=\"$this->itemTitle\" src=\"$row[folder]/$this->filename\"></a><br><br>
+                                </div>
+                                      ";
+
                                 $count++;
+                                if($count % $divider == 0) echo '
+                            </div> <!-- end row -->
+                                
+                                <div class="row text-center">';
                             }
                         }
+                        echo "</div>";
                     }
-                    echo"</div>";
                 }
             }
         }
