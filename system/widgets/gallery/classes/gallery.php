@@ -26,10 +26,6 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
         public $galleryHeading = '';
         /** @var string Subtext will be displayed beside title */
         public $gallerySubtext = '';
-        /** @var string Image Language tag will be displayed under the fullscreen image */
-        public $galleryImageTag = '';
-        /** @var string Of Language tag will be displayed between %1 OF %2 */
-        public $galleryImageOfTag = '/';
 
         /** @var int Image Item ID */
         public $itemID = '';
@@ -43,6 +39,31 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
         public $itemAuthorUrl = '';
         /** @var string Headline above widget */
         public $headline = '';
+
+        /** @var bool galleryNavOnTouchDevices If true, the left and right navigation arrows which appear on mouse hover when viewing image sets will always be visible on devices which support touch. */
+        public $galleryNavOnTouchDevices = false;
+        /** @var string The text displayed below the caption when viewing an image set. The default text shows the current image number and the total number of images in the set. */
+        public $galleryAlbumLabel = 'Image %1 of %2';
+        /** @var bool If true, prevent the page from scrolling while Lightbox is open. This works by settings overflow hidden on the body. */
+        public $galleryDisableScrolling = false;
+        /** @var string The time it takes for the Lightbox container and overlay to fade in and out, in milliseconds. */
+        public $galleryFadeDuration = '600';
+        /** @var bool If true, resize images that would extend outside of the viewport so they fit neatly inside of it. This saves the user from having to scroll to see the entire image. */
+        public $galleryFitImagesInViewport = true;
+        /** @var string The time it takes for the image to fade in once loaded, in milliseconds. */
+        public $galleryImageFadeDuration = '600';
+        /** @var string If set, the image width will be limited to this number, in pixels. Aspect ratio will not be maintained. */
+        public $galleryMaxWidth = '';
+        /** @var string If set, the image height will be limited to this number, in pixels. Aspect ratio will not be maintained. */
+        public $galleryMaxHeight = '';
+        /** @var string The distance from top of viewport that the Lightbox container will appear, in pixels */
+        public $galleryPositionFromTop = '50';
+        /** @var string The time it takes for the Lightbox container to animate its width and height when transition between different size images, in milliseconds. */
+        public $galleryResizeDuration = '700';
+        /** @var bool If false, the text indicating the current image number and the total number of images in set (Ex. "image 2 of 4") will be hidden. */
+        public $galleryShowImageNumberLabel = true;
+        /** @var bool If true, when a user reaches the last image in a set, the right navigation arrow will appear and they will be to continue moving forward which will take them back to the first image in the set. */
+        public $galleryWrapAround = false;
 
         /**
          * Load all widget settings from database and fill object
@@ -89,9 +110,18 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
             <script src=\"../../system/engines/jquery/lightbox2/js/lightbox.min.js\"></script>
             <script type=\"text/javascript\">
                 lightbox.option({
-                    //  'albumLabel': \"Image %1 of %2\",
-                    'albumLabel': \"$this->galleryImageTag %1 $this->galleryImageOfTag %2\",
-                    'wrapAround': true
+                    'alwaysShowNavOnTouchDevices': $this->galleryNavOnTouchDevices,
+                    'albumLabel': \"$this->galleryAlbumLabel\",
+                    'disableScrolling': $this->galleryDisableScrolling,
+                    'fadeDuration': \"$this->galleryFadeDuration\",
+                    'fitImagesInViewport': $this->galleryFitImagesInViewport,
+                    'imageFadeDuration': \"$this->galleryImageFadeDuration\",
+                    'maxWidth': \"$this->galleryMaxWidth\",
+                    'maxHeight': \"$this->galleryMaxHeight\",
+                    'positionFromTop': \"$this->galleryPositionFromTop\",
+                    'resizeDuration': \"$this->galleryResizeDuration\",
+                    'showImageNumberLabel': $this->galleryShowImageNumberLabel,
+                    'wrapAround': $this->galleryWrapAround
             });
             </script>";
         }
