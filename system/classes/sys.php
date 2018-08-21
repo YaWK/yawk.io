@@ -17,6 +17,120 @@ namespace YAWK {
      */
     class sys
     {
+        /**
+         * Check if assets are loaded, load if switch is true
+         * @param $db object Database object
+         * @param $assets array Required assets as array
+         * @param $switch bool true|false If true, required assset gets loaded if not
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @return mixed
+         * @annotation This methods checks if given assets are loaded and load them on demand
+         */
+        static function checkIfAssetsAreLoaded($db, $assets, $switch)
+        {
+            // check if any assets are sent
+            if (isset($assets) && (!empty($assets) && (is_array($assets))))
+            {
+                // get current template ID
+                $templateID = \YAWK\template::getCurrentTemplateId($db);
+
+                // get the number of assets
+                $assetItems = count($assets);
+
+                // loop counter
+                $successful = 0;
+
+                // check if templateID is valid
+                if (!isset($templateID) || (empty($templateID) || (!is_numeric($templateID))))
+                {   // unable to get current template ID
+                    return false;
+                }
+                else    // valid template ID, go ahead and...
+                    {   // walk through required assets array
+                        foreach ($assets as $asset => $type)
+                        {
+                            // check if asset is loaded
+                            if ($res = $db->query(("SELECT asset FROM {assets}
+                            WHERE asset = '" . $asset . "' 
+                            AND templateID = '".$templateID."'")))
+                            {
+                                if ($row = (mysqli_fetch_row($res)))
+                                {
+                                    if (count($row) > 0)
+                                    {
+                                        // asset found, set loop counter +1
+                                        $successful++;
+                                    }
+                                }
+                                else    // asset not found
+                                {   // check if switch is true and asset should be loaded...
+                                    if (isset($switch) && ($switch == 'true'))
+                                    {   // select data from asset types db
+                                        if ($res = $db->query("SELECT * FROM {assets_types} WHERE asset = '".$asset."'"))
+                                        {   // foreach result
+                                            while ($row = (mysqli_fetch_assoc($res)))
+                                            {
+                                                // check link (internal or external)
+                                                if (isset($row['internal']) && (!empty($row['internal'])))
+                                                {   // internal link
+                                                    $row['link'] = $row['internal'];
+                                                }
+                                                elseif (isset($row['url1']) && (!empty($row['url1'])))
+                                                {   // external link
+                                                    $row['link'] = $row['url1'];
+                                                }
+
+                                                // load required asset into database
+                                                if ($db->query("INSERT INTO {assets} (templateID, type, sortation, asset, link) VALUES ('" . $templateID . "', '" . $type . "', '" . $row['sortation']. "','" . $row['asset'] . "', '" . $row['link'] . "')"))
+                                                {   // asset successfully loaded
+                                                    $successful++;
+                                                }
+                                                else
+                                                {   // no success - do nothing
+                                                    return \YAWK\alert::draw("danger", "ERROR", "Unable to insert Asset into Assets database. Please add this asset $asset manually.", "", 12000);
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            // required asset not found in database - add manually!
+                                            // die ('required asset is not in database - add manually!');
+                                            return \YAWK\alert::draw("danger", "ERROR", "Required Asset is not in the database! Please check, if this asset is registered!", "", 12000);
+                                        }
+                                        // select data of this asset
+                                    }
+                                    else
+                                    {   // switch is false, means enable asset is not requested
+                                        return \YAWK\alert::draw("warning", "Warning - please check this!", "Unable to load asset! $asset Please check required template assets manually!", "", 12000);
+                                    }
+                                }
+                            }
+                            else
+                                {   // error selecting asset from database
+                                    return \YAWK\alert::draw("warning", "Warning - this widget requires an additional asset!", "Asset $asset not loaded! Please load this asset within system/asset settings.", "", 12000);
+                                }
+                        }
+
+                        // check if count and assetItems match to see if everything worked like expected
+                        if ($assetItems === $successful)
+                        {   // all assets loaded
+                            // die ('Required assset was not loaded');
+                            return \YAWK\alert::draw("success", "Asset System Information", "I have found out that the required asset was not loaded. I've successfully fixed this for you.", "", 6200);
+                        }
+                        else
+                            {   // not all asset items could get loaded...
+                                // die ('Unable to load all assets');
+                                return \YAWK\alert::draw("warning", "Warning - please check this!", "Unable to load asset! $asset Please check required template assets manually!", "", 12000);
+                            }
+                    }
+            }
+            else
+                {   // no assets are set
+                    return false;
+                }
+        }
 
         /**
          * Display a multidimensional array line per line. Expects an array and property
