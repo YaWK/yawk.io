@@ -2123,7 +2123,19 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('soundcloudShowTeaser', 'false', 43, 1, 9, 'LABEL_SOUNDCLOUD_SHOWTEASER', '', '', '', 'DESC_SOUNDCLOUD_SHOWTEASER', 'form-control', 'select', '', 'true,true:false,false', 277),
 ('soundcloudVisual', 'false', 43, 1, 10, 'LABEL_SOUNDCLOUD_VISUAL', '', '', '', 'DESC_SOUNDCLOUD_VISUAL', 'form-control', 'select', '', 'true,true:false,false', 278),
 ('soundcloudWidth', '100%', 43, 1, 11, 'LABEL_SOUNDCLOUD_WIDTH', '', '', '', 'DESC_SOUNDCLOUD_WIDTH', 'form-control', '', 'PH_SOUNDCLOUD_WIDTH', '', 279),
-('soundcloudHeight', '300', 43, 1, 12, 'LABEL_SOUNDCLOUD_HEIGHT', '', '', '', 'DESC_SOUNDCLOUD_HEIGHT', 'form-control', '', 'PH_SOUNDCLOUD_HEIGHT', '', 280);
+('soundcloudHeight', '300', 43, 1, 12, 'LABEL_SOUNDCLOUD_HEIGHT', '', '', '', 'DESC_SOUNDCLOUD_HEIGHT', 'form-control', '', 'PH_SOUNDCLOUD_HEIGHT', '', 280),
+('galleryNavOnTouchDevices', 'false', 13, 1, 0, 'LABEL_GALLERY_NAVTOUCH', '', '', '', 'DESC_GALLERY_NAVTOUCH', 'form-control', 'select', '', 'true,true:false,false', 281),
+('galleryAlbumLabel', 'Image %1 of %2', 13, 1, 0, 'LABEL_GALLERY_ALBUMLABEL', '', '', '', 'DESC_GALLERY_ALBUMLABEL', 'form-control', '', 'PH_GALLERY_ALBUMLABEL', '', 282),
+('galleryDisableScrolling', 'false', 13, 1, 0, 'LABEL_GALLERY_DISABLE_SCROLL', '', '', '', 'DESC_GALLERY_DISABLE_SCROLL', 'form-control', 'select', '', 'true,true:false,false', 283),
+('galleryFadeDuration', '600', 13, 1, 0, 'LABEL_GALLERY_FADE_DURATION', '', '', '', 'DESC_GALLERY_FADE_DURATION', 'form-control', '', 'PH_GALLERY_DURATION', '', 284),
+('galleryFitImagesInViewport', 'true', 13, 1, 0, 'LABEL_GALLERY_FIT_IMAGES_VIEWPORT', '', '', '', 'DESC_GALLERY_FIT_IMAGES_VIEWPORT', 'form-control', 'select', '', 'true,true:false,false', 285),
+('galleryImageFadeDuration', '600', 13, 1, 0, 'LABEL_GALLERY_IMAGE_FADE_DURATION', '', '', '', 'DESC_GALLERY_IMAGE_FADE_DURATION', 'form-control', '', 'PH_GALLERY_IMAGE_FADE_DURATION', '', 286),
+('galleryMaxWidth', '', 13, 1, 0, 'LABEL_GALLERY_MAXWIDTH', '', '', '', 'DESC_GALLERY_MAXWIDTH', 'form-control', '', 'PH_GALLERY_MAXWIDTH', '', 287),
+('galleryMaxHeight', '', 13, 1, 0, 'LABEL_GALLERY_MAXHEIGHT', '', '', '', 'DESC_GALLERY_MAXHEIGHT', 'form-control', '', 'PH_GALLERY_MAXHEIGHT', '', 288),
+('galleryPositionFromTop', '50', 13, 1, 0, 'LABEL_GALLERY_POSTOP', '', '', '', 'DESC_GALLERY_POSTOP', 'form-control', '', 'PH_GALLERY_POSTOP', '', 289),
+('galleryResizeDuration', '700', 13, 1, 0, 'LABEL_GALLERY_RESIZE_DURATION', '', '', '', 'DESC_GALLERY_RESIZE_DURATION', 'form-control', '', 'PH_GALLERY_RESIZE_DURATION', '', 290),
+('galleryShowImageNumberLabel', 'true', 13, 1, 0, 'LABEL_GALLERY_IMAGE_LABEL', '', '', '', 'DESC_GALLERY_IMAGE_LABEL', 'form-control', 'select', '', 'true,true:false,false', 291),
+('galleryWrapAround', 'false', 13, 1, 0, 'LABEL_GALLERY_WRAP_AROUND', '', '', '', 'DESC_GALLERY_WRAP_AROUND', 'form-control', 'select', '', 'true,true:false,false', 292);
 
 
 CREATE TABLE `cms_widget_settings` (
@@ -2407,7 +2419,7 @@ ALTER TABLE `cms_user_groups`
 ALTER TABLE `cms_widgets`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_defaults`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=280;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=291;
 ALTER TABLE `cms_widget_settings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_types`
