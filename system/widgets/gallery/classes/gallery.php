@@ -76,6 +76,8 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
 
         /** @var string <img Width HTML Markup */
         public $galleryWidthMarkup = '';
+        /** @var string Image Class */
+        public $galleryImageClass = 'img-responsive img-rounded hvr-grow';
 
 
         /**
@@ -110,17 +112,29 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
             echo "</pre>";
         }
 
+        /**
+         * Init Gallery and load methods
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @annotation load Javascript and draw image gallery
+         */
         public function init($db)
         {
             $this->loadJavascript();
             $this->drawImageGallery($db);
         }
 
+        /**
+         * Check if lightbox asset is loaded and set lightbox options
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @annotation check lightbox asset and set options
+         */
         public function loadJavascript()
         {
             echo "
-            <link href=\"../../system/engines/jquery/lightbox2/css/lightbox.min.css\" rel=\"stylesheet\">
-            <script src=\"../../system/engines/jquery/lightbox2/js/lightbox.min.js\"></script>
             <script type=\"text/javascript\">
                 lightbox.option({
                     'alwaysShowNavOnTouchDevices': $this->galleryNavOnTouchDevices,
@@ -141,9 +155,13 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
 
 
         /**
-         * Draw Image Gallery
-         * @param object $db database
-        */
+         * Draw the gallery
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param db object Database object
+         * @annotation (for development and testing purpose)
+         */
         public function drawImageGallery($db)
         {   /** @var $db \YAWK\db **/
             if (!isset($this->galleryID) || (empty($this->galleryID)))
@@ -247,7 +265,7 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
                                     echo "
                                     <div class=\"row text-center\">
                                       <div class=\"$col animate text-center\" id=\"imgCol-".$this->itemID."\">
-                                        <a href=\"$row[folder]/$this->filename\" data-lightbox=\"$this->galleryID\" data-title=\"$this->itemTitle\"><img ".$this->galleryWidthMarkup."class=\"img-responsive img-rounded hvr-grow\" id=\"img-$this->itemID\" title=\"$this->itemTitle\" src=\"$row[folder]/$this->filename\"></a><br><br>
+                                        <a href=\"$row[folder]/$this->filename\" data-lightbox=\"$this->galleryID\" data-title=\"$this->itemTitle\"><img ".$this->galleryWidthMarkup."class=\"$this->galleryImageClass\" id=\"img-$this->itemID\" title=\"$this->itemTitle\" src=\"$row[folder]/$this->filename\"></a><br><br>
                                       </div>
                                     </div>";
                                 }
@@ -255,7 +273,7 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
                                 {
                                     echo "
                                       <div class=\"$col animate text-center\" id=\"imgCol-".$this->itemID."\">
-                                        <a href=\"$row[folder]/$this->filename\" data-lightbox=\"$this->galleryID\" data-title=\"$this->itemTitle\"><img ".$this->galleryWidthMarkup."class=\"img-responsive img-rounded hvr-grow\" id=\"img-$this->itemID\" title=\"$this->itemTitle\" src=\"$row[folder]/$this->filename\"></a><br><br>
+                                        <a href=\"$row[folder]/$this->filename\" data-lightbox=\"$this->galleryID\" data-title=\"$this->itemTitle\"><img ".$this->galleryWidthMarkup."class=\"$this->galleryImageClass\" id=\"img-$this->itemID\" title=\"$this->itemTitle\" src=\"$row[folder]/$this->filename\"></a><br><br>
                                       </div>";
                                 }
                                 $count++;
