@@ -134,21 +134,29 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
          */
         public function loadJavascript()
         {
+            if (isset($this->galleryMaxWidth) && (empty($this->galleryMaxWidth)))
+            {
+                $maxWidthMarkup = '';
+            }
+            else
+                {
+                    $maxWidthMarkup = "
+                    'maxWidth': $this->galleryMaxWidth,";
+                }
             echo "
             <script type=\"text/javascript\">
                 lightbox.option({
                     'alwaysShowNavOnTouchDevices': $this->galleryNavOnTouchDevices,
-                    'albumLabel': $this->galleryAlbumLabel,
+                    'albumLabel': \"$this->galleryAlbumLabel\",
                     'disableScrolling': $this->galleryDisableScrolling,
                     'fadeDuration': $this->galleryFadeDuration,
                     'fitImagesInViewport': $this->galleryFitImagesInViewport,
-                    'imageFadeDuration': $this->galleryImageFadeDuration,
-                    'maxWidth': $this->galleryMaxWidth,
+                    'imageFadeDuration': $this->galleryImageFadeDuration,$maxWidthMarkup
                     'positionFromTop': $this->galleryPositionFromTop,
                     'resizeDuration': $this->galleryResizeDuration,
                     'showImageNumberLabel': $this->galleryShowImageNumberLabel,
                     'wrapAround': $this->galleryWrapAround
-            });
+                });
             </script>";
         }
 
@@ -263,7 +271,7 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
 
                                 echo "
                                 <div class=\"$col animate text-center\" id=\"imgCol-".$this->itemID."\">
-                                    <a href=\"$row[folder]/$this->filename\" data-lightbox=\"gallery-$this->galleryID\" data-title=\"$this->itemTitle\"><img ".$this->galleryWidthMarkup."class=\"$this->galleryImageClass\" id=\"img-$this->itemID\" title=\"$this->itemTitle\" src=\"$row[folder]/$this->filename\"></a><br><br>
+                                    <a href=\"$row[folder]/$this->filename\" data-lightbox=\"$this->galleryID\" data-title=\"$this->itemTitle\"><img ".$this->galleryWidthMarkup."class=\"$this->galleryImageClass\" id=\"img-$this->itemID\" title=\"$this->itemTitle\" src=\"$row[folder]/$this->filename\"></a><br><br>
                                 </div>
                                       ";
 
