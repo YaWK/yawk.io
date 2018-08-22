@@ -2134,7 +2134,7 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('galleryPositionFromTop', '50', 13, 1, 24, 'LABEL_GALLERY_POSTOP', '', '', '', 'DESC_GALLERY_POSTOP', 'form-control', '', 'PH_GALLERY_POSTOP', '', 288),
 ('galleryResizeDuration', '700', 13, 1, 32, 'LABEL_GALLERY_RESIZE_DURATION', '', '', '', 'DESC_GALLERY_RESIZE_DURATION', 'form-control', '', 'PH_GALLERY_RESIZE_DURATION', '', 289),
 ('galleryShowImageNumberLabel', 'true', 13, 1, 4, 'LABEL_GALLERY_IMAGE_LABEL', 'fa fa-wrench', 'GALLERY_H_SETTINGS', '', 'DESC_GALLERY_IMAGE_LABEL', 'form-control', 'select', '', 'true,true:false,false', 290),
-('galleryWrapAround', 'false', 13, 1, 8, 'LABEL_GALLERY_WRAP_AROUND', '', '', '', 'DESC_GALLERY_WRAP_AROUND', 'form-control', 'select', '', 'true,true:false,false', 291),
+('galleryWrapAround', 'true', 13, 1, 8, 'LABEL_GALLERY_WRAP_AROUND', '', '', '', 'DESC_GALLERY_WRAP_AROUND', 'form-control', 'select', '', 'true,true:false,false', 291),
 ('galleryShuffle', 'false', 13, 1, 21, 'LABEL_GALLERY_SHUFFLE', '', '', '', 'DESC_GALLERY_SHUFFLE', 'form-control', 'select', '', 'true,true:false,false', 292),
 ('galleryTnWidth', '', 13, 1, 22, 'LABEL_GALLERY_TN_WIDTH', '', '', '', 'DESC_GALLERY_TN_WIDTH', 'form-control', '', 'PH_GALLERY_TN_WIDTH', '', 293),
 ('galleryLayoutRows', '3', 13, 1, 20, 'LABEL_GALLERY_LAYOUT_ROWS', 'fa fa-object-ungroup', 'GALLERY_H_LAYOUT', '', 'DESC_GALLERY_LAYOUT_ROWS', 'form-control', 'select', '', '1,1:2,2:3,3:4,4:6,6:12,12', 294),
