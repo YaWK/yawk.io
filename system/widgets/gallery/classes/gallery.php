@@ -134,12 +134,13 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
          */
         public function loadJavascript()
         {
+            // check if gallery max width is set
             if (isset($this->galleryMaxWidth) && (empty($this->galleryMaxWidth)))
-            {
+            {   // nope, no markup needed
                 $maxWidthMarkup = '';
             }
             else
-                {
+                {   // set gallery markup
                     $maxWidthMarkup = "
                     'maxWidth': $this->galleryMaxWidth,";
                 }
@@ -255,8 +256,7 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
                             {   // no width markup needed
                                 $this->galleryWidthMarkup = '';
                             }
-
-
+                        
                         foreach ($getPreviewImages as $property => $image)
                         {   // display preview images
                             for ($i = 0; $i < count($property); $i++)
