@@ -2138,7 +2138,9 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('galleryShuffle', 'false', 13, 1, 21, 'LABEL_GALLERY_SHUFFLE', '', '', '', 'DESC_GALLERY_SHUFFLE', 'form-control', 'select', '', 'true,true:false,false', 292),
 ('galleryTnWidth', '', 13, 1, 22, 'LABEL_GALLERY_TN_WIDTH', '', '', '', 'DESC_GALLERY_TN_WIDTH', 'form-control', '', 'PH_GALLERY_TN_WIDTH', '', 293),
 ('galleryLayoutRows', '3', 13, 1, 20, 'LABEL_GALLERY_LAYOUT_ROWS', 'fa fa-object-ungroup', 'GALLERY_H_LAYOUT', '', 'DESC_GALLERY_LAYOUT_ROWS', 'form-control', 'select', '', '1,1:2,2:3,3:4,4:6,6:12,12', 294),
-('galleryImageClass', 'img-responsive img-rounded hvr-grow', 13, 1, 23, 'LABEL_GALLERY_IMAGE_CLASS', '', '', '', 'DESC_GALLERY_IMAGE_CLASS', 'form-control', '', 'PH_GALLERY_IMAGE_CLASS', '', 295);
+('galleryImageClass', 'img-responsive img-rounded hvr-grow', 13, 1, 23, 'LABEL_GALLERY_IMAGE_CLASS', '', '', '', 'DESC_GALLERY_IMAGE_CLASS', 'form-control', '', 'PH_GALLERY_IMAGE_CLASS', '', 295),
+('exampleHeading', 'Example Heading', 44, 1, 1, 'LABEL_EXAMPLE_HEADING', '', '', '', 'DESC_EXAMPLE_HEADING', 'form-control', '', 'PH_EXAMPLE_HEADING', '', 296),
+('exampleSubtext', 'this is the subtext', 44, 1, 2, 'LABEL_EXAMPLE_SUBTEXT', '', '', '', 'DESC_EXAMPLE_SUBTEXT', 'form-control', '', 'PH_EXAMPLE_SUBTEXT', '', 297);
 
 
 CREATE TABLE `cms_widget_settings` (
@@ -2211,7 +2213,8 @@ INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`)
 (40, 1, 'Facebook Graph Explorer', 'fb_example', 'Use the Facebook Graph API to get data - this is for demo and development purpose only!'),
 (41, 1, 'Facebook Gallery', 'fb_gallery', 'Embed photo albums from your Facebook page'),
 (42, 1, 'Facebook Cover', 'fb_cover', 'Embed current cover image from your Facebook page'),
-(43, 1, 'SoundCloud', 'soundcloud', 'Embed any soundcloud song or playlist');
+(43, 1, 'SoundCloud', 'soundcloud', 'Embed any soundcloud song or playlist'),
+(44, 1, 'Example Widget', 'example', 'Empty widget (for DEMO and development purpose)');
 
 ALTER TABLE `cms_assets`
   ADD PRIMARY KEY (`id`);
@@ -2422,8 +2425,8 @@ ALTER TABLE `cms_user_groups`
 ALTER TABLE `cms_widgets`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_defaults`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=295;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=297;
 ALTER TABLE `cms_widget_settings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
