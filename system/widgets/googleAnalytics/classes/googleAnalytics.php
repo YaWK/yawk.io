@@ -79,16 +79,16 @@ namespace YAWK\WIDGETS\GOOGLE\ANALYTICS
 
                 // tracking code seems to be valid -
                 // embed Google Analytics
-                echo"<!-- google analytics -->
+                echo'<!-- google analytics -->
 <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src=\"https://www.googletagmanager.com/gtag/js?id=$this->gaTrackingCode\"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=$this->gaTrackingCode"></script>
 <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+    gtag(\'js\', new Date());
 
-    gtag('config', '$this->gaTrackingCode');
-</script>";
+    gtag(\'config\', \'$this->gaTrackingCode\');
+</script>';
             }
             else
                 {   // tracking code not set, empty or wrong data type
