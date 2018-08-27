@@ -208,7 +208,7 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
                         $this->headline = $this->getHeading($this->galleryHeading, $this->gallerySubtext);
                         // draw headline
                         echo $this->headline;
-                        echo '
+                        echo '<div class="container-fluid">
                             <div class="row text-center">';
 
                         // check gallery layout (how many cols per row)
@@ -288,7 +288,7 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
                                 }
                             }
                         }
-                        echo "</div>";
+                        echo "</div></div>";
                     }
                 }
             }
