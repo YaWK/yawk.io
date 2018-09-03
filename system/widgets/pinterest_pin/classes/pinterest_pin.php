@@ -50,11 +50,11 @@ namespace YAWK\WIDGETS\PINTEREST\PIN
         }
 
         /**
-         * Init example widget and call a function for demo purpose
+         * Init pinterest pin widget and call embed method
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation Example Widget Init
+         * @annotation Embed any public Pinterest Pin
          */
         public function init()
         {   // draw headline on screen
