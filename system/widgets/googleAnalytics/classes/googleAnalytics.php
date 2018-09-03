@@ -22,7 +22,7 @@ namespace YAWK\WIDGETS\GOOGLE\ANALYTICS
         /** @var object global widget object data */
         public $widget = '';
         /** @var string Tracking Code */
-        public $gaTrackingCode = '';
+        public $gaTrackingID = '';
 
         /**
          * Load all widget settings from database and fill object
@@ -70,12 +70,12 @@ namespace YAWK\WIDGETS\GOOGLE\ANALYTICS
 
         public function embed()
         {
-            if (isset($this->gaTrackingCode)
-                && (!empty($this->gaTrackingCode))
-                && (is_string($this->gaTrackingCode)))
+            if (isset($this->gaTrackingID)
+                && (!empty($this->gaTrackingID))
+                && (is_string($this->gaTrackingID)))
             {
                 // make sure that the string contains no html
-                $this->gaTrackingCode = strip_tags($this->gaTrackingCode);
+                $this->gaTrackingID = strip_tags($this->gaTrackingID);
 
                 // tracking code seems to be valid -
                 // embed Google Analytics
