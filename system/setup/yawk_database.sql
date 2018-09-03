@@ -1864,7 +1864,7 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('fbLikeButtonUrl', 'http://www.facebook.com/platform', 5, 1, 1, 'LABEL_FBLIKE_BUTTON_URL', '', '', '', 'DESC_FBLIKE_BUTTON_URL', 'form-control', '', 'PH_FBLIKE_BUTTON_URL', '', 8),
 ('fbLikeButtonAppID', '', 5, 1, 2, 'LABEL_FBLIKE_BUTTON_APPID', '', '', '', 'DESC_FBLIKE_BUTTON_APPID', 'form-control', '', 'PH_FBLIKE_BUTTON_APPID', '', 9),
 ('fbLikeButtonColorscheme', 'light', 5, 0, 5, 'LABEL_FBLIKE_BUTTON_COLORSCHEME', '', '', '', 'DESC_FBLIKE_BUTTON_COLORSCHEME', 'form-control', 'select', '', 'light,Light:dark,Dark', 10),
-('gaTrackingCode', '', 6, 1, 1, 'LABEL_GA_TRACKINGCODE', '', '', '', 'DESC_GA_TRACKINGCODE', 'form-control', '', 'PH_GA_TRACKINGCODE', '', 18),
+('gaTrackingCode', '', 6, 1, 1, 'LABEL_GA_TRACKING_ID', '', '', '', 'DESC_GA_TRACKING_ID', 'form-control', '', 'PH_GA_TRACKING_ID', '', 18),
 ('fbPageTabs', 'timeline', 4, 1, 3, 'LABEL_FBPAGE_TABS', '', '', '', 'DESC_FBPAGE_TABS', 'form-control', '', 'PH_FBPAGE_TABS', '', 19),
 ('fbPageSmallHeader', 'false', 4, 1, 5, 'LABEL_FBPAGE_SMALLHEADER', '', '', '', 'DESC_FBPAGE_SMALLHEADER', 'form-control', 'select', '', 'true,True:false,False', 20),
 ('fbPageAdaptContainerWidth', 'true', 4, 1, 4, 'LABEL_FBPAGE_ADAPTCONTAINERWIDTH', '', '', '', 'DESC_FBPAGE_ADAPTCONTAINERWIDTH', 'form-control', 'select', '', 'true,True:false,False', 21),
