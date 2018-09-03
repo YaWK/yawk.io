@@ -54,7 +54,7 @@ namespace YAWK\WIDGETS\PINTEREST\FOLLOW
          */
         public function init()
         {   // draw headline on screen
-            $this->getHeading($this->pinterestFollowHeading, $this->pinterestFollowSubtext);
+            echo $this->getHeading($this->pinterestFollowHeading, $this->pinterestFollowSubtext);
             $this->embedPinterestFollow();
         }
 
