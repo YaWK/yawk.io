@@ -58,11 +58,27 @@ namespace YAWK\WIDGETS\PINTEREST\FOLLOW
             $this->embedPinterestFollow();
         }
 
+        /**
+         * Embed Pinterest Follow Button
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @annotation Embed Pinterest Follow Button
+         */
         public function embedPinterestFollow()
-        {
-            echo '
-            <a data-pin-do="buttonFollow" href="'.$this->pinterestFollowUrl.'">Pinterest</a>
-            <script async defer src="//assets.pinterest.com/js/pinit.js"></script>';
+        {   // check if url is set
+            if (isset($this->pinterestFollowUrl)
+                && (!empty($this->pinterestFollowUrl)
+                && (is_string($this->pinterestFollowUrl))))
+            {   // embed pinterest follow button markup
+                echo '
+                    <a data-pin-do="buttonFollow" href="'.$this->pinterestFollowUrl.'">Pinterest</a>
+                    <script async defer src="//assets.pinterest.com/js/pinit.js"></script>';
+            }
+            else
+                {
+                    echo "Here should be a pinterest follow button, but no URL is set. Please add your pinterest url.";
+                }
         }
 
     }
