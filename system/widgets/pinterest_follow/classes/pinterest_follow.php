@@ -21,9 +21,9 @@ namespace YAWK\WIDGETS\PINTEREST\FOLLOW
         /** @var object global widget object data */
         public $widget = '';
         /** @var string Title that will be shown above widget */
-        public $exampleHeading = '';
+        public $pinterestFollowHeading = '';
         /** @var string Subtext will be displayed beside title */
-        public $exampleSubtext = '';
+        public $pinterestFollowSubtext = '';
         /** @var string The URL of your pinterest channel */
         public $pinterestFollowUrl = '';
 
@@ -54,7 +54,7 @@ namespace YAWK\WIDGETS\PINTEREST\FOLLOW
          */
         public function init()
         {   // draw headline on screen
-            $this->getHeading($this->exampleHeading, $this->exampleSubtext);
+            $this->getHeading($this->pinterestFollowHeading, $this->pinterestFollowSubtext);
             $this->embedPinterestFollow();
         }
 
