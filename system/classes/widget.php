@@ -53,6 +53,20 @@ namespace YAWK {
 
 
         /**
+         * Print all object data
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @annotation (for development and testing purpose)
+         */
+        public function printObject()
+        {   // output data to screen
+            echo "<pre>";
+            print_r($this);
+            echo "</pre>";
+        }
+
+        /**
          * Get widget settings and return it as array
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
