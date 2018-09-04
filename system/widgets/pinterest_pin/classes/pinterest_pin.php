@@ -81,7 +81,7 @@ namespace YAWK\WIDGETS\PINTEREST\PIN
             }
             else
                 {
-                    echo "Here should be a pinterest pin, URL is set. Please enter your pinterest pin.";
+                    echo "Here should be a pinterest pin, but no URL is set. Please enter your pinterest pin URL.";
                 }
         }
 
