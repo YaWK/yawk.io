@@ -81,7 +81,7 @@ namespace YAWK\WIDGETS\PLYR\PLAYER
          */
         public function init()
         {   // call any functions or methods you have previously defined in this class
-            echo $this->showHeading();
+            echo $this->getHeading($this->plyrHeading, $this->plyrSubtext);
             // check and set media file type
             $this->checkMediaFileType();
             // check and set poster image
@@ -92,6 +92,13 @@ namespace YAWK\WIDGETS\PLYR\PLAYER
             $this->embedPlyr();
         }
 
+        /**
+         * Check and set media file type
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @annotation check and set media file type
+        */
         public function checkMediaFileType()
         {
             if (isset($this->plyrMediaFile) && (!empty($this->plyrMediaFile)))
@@ -163,12 +170,14 @@ namespace YAWK\WIDGETS\PLYR\PLAYER
             <!-- plyr js -->
             <script src="system/widgets/plyr/js/plyr.js"></script>
             <!-- run plyr -->
-            <script>plyr.setup({ 
+            <script>
+            plyr.setup({ 
                 "autoplay":'.$this->plyrAutoplay.', 
                 "disableContextMenu": '.$this->plyrDisableContextMenu.', 
                 "hideControls": '.$this->plyrHideControls.', 
                 "showPosterOnEnd": '.$this->plyrShowPosterOnEnd.', 
-                "clickToPlay": '.$this->plyrClickToPlay.' });
+                "clickToPlay": '.$this->plyrClickToPlay.' 
+            });
             </script>
             <!-- plyr css -->
             <link type="text/css" rel="stylesheet" href="system/widgets/plyr/js/plyr.css">
@@ -176,13 +185,6 @@ namespace YAWK\WIDGETS\PLYR\PLAYER
             <!-- Rangetouch to fix <input type="range"> on touch devices (see https://rangetouch.com) -->
             <script src="system/widgets/plyr/js/rangetouch.js" async></script>';
         }
-
-        public function showHeading()
-        {
-            // draw headline on screen
-            return $this->getHeading($this->plyrHeading, $this->plyrSubtext);
-        }
-
     }
 }
 ?>
