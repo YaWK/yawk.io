@@ -132,7 +132,7 @@ class fbCover
                     FB.init({
                     appId      : '" . $this->fbCoverAppId . "',
                     xfbml      : true,
-                    version    : 'v3.0'
+                    version    : 'v3.1'
                     });
                 FB.AppEvents.logPageView();
                 };
@@ -161,7 +161,7 @@ class fbCover
     public function makeApiCall()
     {
         // prepare API call
-        $json_link = "https://graph.facebook.com/v3.0/me?fields=cover&access_token={$this->fbCoverAccessToken}";
+        $json_link = "https://graph.facebook.com/v3.1/me?fields=cover&access_token={$this->fbCoverAccessToken}";
 
         // get json string
         $json = file_get_contents($json_link);

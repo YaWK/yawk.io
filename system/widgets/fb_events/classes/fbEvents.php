@@ -174,7 +174,7 @@ class fbEvents
                 FB.init({
                     appId      : '" . $this->fbEventsAppId . "',
                     xfbml      : true,
-                    version    : 'v3.0'
+                    version    : 'v3.1'
                 });
                 FB.AppEvents.logPageView();
             };
@@ -231,8 +231,9 @@ class fbEvents
             // $this->fields="id,name,description,place,start_time,cover,maybe_count,attending_count,is_canceled";
 
             // prepare API call
-            $json_link = "https://graph.facebook.com/v2.7/{$this->fbEventsPageId}/events/attending/?fields={$this->fields}&access_token={$this->fbEventsAccessToken}&since={$since_unix_timestamp}&until={$until_unix_timestamp}";
-
+            // $json_link = "https://graph.facebook.com/v3.1/{$this->fbEventsPageId}/events/attending/?fields={$this->fields}&access_token={$this->fbEventsAccessToken}&since={$since_unix_timestamp}&until={$until_unix_timestamp}";
+            // $json_link = "https://graph.facebook.com/v2.7/{$this->fbEventsPageId}/events/attending/?fields={$this->fields}&access_token={$this->fbEventsAccessToken}&since={$since_unix_timestamp}&until={$until_unix_timestamp}";
+            $json_link = "https://graph.facebook.com/v3.1/me/events/?fields={$this->fields}&access_token={$this->fbEventsAccessToken}&since={$since_unix_timestamp}&until={$until_unix_timestamp}";
             // get json string
             $json = file_get_contents($json_link);
 

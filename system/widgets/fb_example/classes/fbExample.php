@@ -139,7 +139,7 @@ class fbExample
                     FB.init({
                     appId      : '" . $this->fbExampleAppId . "',
                     xfbml      : true,
-                    version    : 'v3.0'
+                    version    : 'v3.1'
                     });
                 FB.AppEvents.logPageView();
                 };
@@ -227,7 +227,7 @@ class fbExample
 
         // prepare API call
         // $json_link = "https://graph.facebook.com/v2.7/{$this->fbExamplePageId}{$this->fbExampleGraphRequest}?fields={$this->fields}&access_token={$this->fbExampleAccessToken}";
-        $json_link = "https://graph.facebook.com/v3.0/{$this->fbExamplePageId}{$this->fbExampleGraphRequest}?access_token={$this->fbExampleAccessToken}&since={$since_unix_timestamp}&until={$until_unix_timestamp}" . $fieldsMarkup . "";
+        $json_link = "https://graph.facebook.com/v3.1/{$this->fbExamplePageId}{$this->fbExampleGraphRequest}?access_token={$this->fbExampleAccessToken}&since={$since_unix_timestamp}&until={$until_unix_timestamp}" . $fieldsMarkup . "";
         // get json string
         $json = file_get_contents($json_link);
 

@@ -183,7 +183,7 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
                     FB.init({
                     appId      : '" . $this->fbGalleryAppId . "',
                     xfbml      : true,
-                    version    : 'v3.0'
+                    version    : 'v3.1'
                     });
                 FB.AppITEMS.logPageView();
                 };
@@ -261,7 +261,7 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
             }
 
             // prepare API call - get photos
-            $json_link = "https://graph.facebook.com/v3.0/{$this->fbGalleryAlbumId}/photos$fieldsMarkup&access_token={$this->fbGalleryAccessToken}";
+            $json_link = "https://graph.facebook.com/v3.1/{$this->fbGalleryAlbumId}/photos$fieldsMarkup&access_token={$this->fbGalleryAccessToken}";
             // get json string
             $json = file_get_contents($json_link);
             // convert json to object
