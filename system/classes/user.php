@@ -371,23 +371,59 @@ namespace YAWK {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @return bool return status
+         * @param object $db database obj
+         * @return string|bool return current username or false
          */
-        static function isAnybodyThere()
-        {   // check if session username + uid is set
-            if (isset($_SESSION['username']) && isset($_SESSION['uid']))
-            {   // check if session logged_in status is true
-                if ($_SESSION['logged_in'] == true)
-                {   // user is logged in
-                    return true;
+        static function isAnybodyThere($db)
+        {
+            // check if session is set
+            if (isset($_SESSION))
+            {
+                // check if session username + uid is set
+                if (isset($_SESSION['username']) && isset($_SESSION['uid']))
+                {   // check if session logged_in status is true
+                    if ($_SESSION['logged_in'] == true)
+                    {   // session username is set, check if its a non-empty string
+                        if (!empty($_SESSION['username']) && (is_string($_SESSION['username'])))
+                        {   // username seems to be valid -
+                            return $_SESSION['username'];
+                        }
+                        else
+                            {   // username seems not to be valid
+                                return false;
+                            }
+                    }
+                    else
+                        {   // user is there, but not logged in
+                            return false;
+                        }
                 }
                 else
-                    {   // session is there, but user is not logged in
+                    {   // session username is not set
+                        return false;
+                    }
+            }
+            // no session - check if $_GET is set instead
+            else if (isset($_GET))
+            {   // check if user param is set
+                if (isset($_GET['user']) && (!empty($_GET['user']) && (is_string($_GET['user']))))
+                {   // check if database says user is logged in
+                    if (self::isLoggedIn($db, $_GET['user']))
+                    {   // user is logged in
+                        return $_GET['user'];
+                    }
+                    else
+                        {   // user is not logged in
+                            return false;
+                        }
+                }
+                else
+                    {   // $_GET user is not set, empty or not valid
                         return false;
                     }
             }
             else
-                {   // no username or uid set in this session - user is not logged in
+                {   // no user is there
                     return false;
                 }
         }
@@ -2012,16 +2048,17 @@ namespace YAWK {
          * @param string $password password, as option
          * @return string
          */
-        static function drawLoginBox($username, $password){
+        static function drawLoginBox($username, $password)
+        {
             $html = "<div class=\"row\">
-            <div class=\"col-md-4\">&nbsp;</div>
-            <div class=\"col-md-4\"><form name=\"login\" role=\"form\" action=\"welcome.html\" method=\"POST\">
+            <!-- <div class=\"col-md-4\">&nbsp;</div> -->
+            <div class=\"col-md-4\"><form name=\"login\" id=\"loginForm\" role=\"form\" action=\"welcome.html\" method=\"POST\">
                 <input type=\"text\" id=\"user\" name=\"user\" value=\"".$username."\" class=\"form-control animated fadeIn\" placeholder=\"Benutzername\">
                 <input type=\"password\" id=\"password\" name=\"password\" value=\"".$password."\" class=\"form-control animated fadeIn\" placeholder=\"Passwort\">
                 <input type=\"hidden\" name=\"login\" value=\"login\">
-                <input type=\"submit\" value=\"Login\" style=\"margin-top:5px;\" name=\"Login\" class=\"btn btn-success\" class=\"form-control animated fadeIn\">
+                <input type=\"submit\" id=\"submitBtn\" value=\"Login\" style=\"margin-top:5px;\" name=\"Login\" class=\"btn btn-success animated fadeIn\">
             </form></div>
-            <div class=\"col-md-4\">&nbsp;</div>
+            <!-- <div class=\"col-md-4\">&nbsp;</div> -->
             </div>";
             return $html;
         }
@@ -2106,7 +2143,33 @@ namespace YAWK {
                 }
             }
             else
-            {
+            {   // if a username is sent via get param...
+                if (isset($_GET['user'])
+                    && (!empty($_GET['user'])
+                    && (is_string($_GET['user']))))
+                {
+                    // logout user
+                    if (!$res = $db->query("UPDATE {users}
+                                   SET online = '0'
+                                   WHERE username = '".$_GET['username']."'"))
+                    {   // unable to logout
+                        \YAWK\sys::setSyslog($db, 5, "could not logout <b>$_SESSION[username]</b> .", 0, 0, 0, 0);
+                        \YAWK\alert::draw("danger", "Error!", "Could not logout ".$_SESSION['username']." Please try again!","","3800");
+                        // DELETE SESSION
+                        $_SESSION['failed']=0;
+                        $_SESSION['logged_in']=0;
+                        session_destroy();
+                        return false;
+                    }
+                    else
+                        {   // user logged out from database, destroy session
+                            $_SESSION['failed']=0;
+                            $_SESSION['logged_in']=0;
+                            session_destroy();
+                            return true;
+                        }
+                }
+
                 // DELETE SESSION
                 $_SESSION['failed']=0;
                 $_SESSION['logged_in']=0;
