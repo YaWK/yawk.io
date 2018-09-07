@@ -30,9 +30,9 @@
  */
 session_start();
 /* Error Reporting - this is for DEVELOPMENT PURPOSE ONLY! */
-error_reporting(E_ALL ^ E_STRICT);
-ini_set('display_errors', 1);
-error_reporting(1);
+// error_reporting(E_ALL ^ E_STRICT);
+ini_set('display_errors', 0);
+error_reporting(0);
 /* include core files */
 require_once('system/classes/db.php');               // database connection
 require_once('system/classes/settings.php');         // get/set settings from settings db
@@ -85,6 +85,7 @@ if (!isset($stats)) {
     $stats->setStats($db);
 }
 // lets go with the frontEnd...
+// \YAWK\sys::outputObjects($template, $controller, $page, $user, $stats);
 // \YAWK\controller::frontEndInit($db, $currentpage, $user, $template);
 if (\YAWK\sys::isOffline($db)) {   // backend-users (admins) can see the frontend,
     // while the site is still offline to guests & no-admins
@@ -137,7 +138,7 @@ else
 $template->id = \YAWK\settings::getSetting($db, "selectedTemplate");
 $template->selectedTemplate = $template->id;
 // call template controller
-if (\YAWK\user::isAnybodyThere())
+if (\YAWK\user::isAnybodyThere($db))
 {   // user seems to be logged in...
     // load template name from {users}
     $user->loadProperties($db, $_SESSION['username']);
