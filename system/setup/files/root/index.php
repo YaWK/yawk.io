@@ -134,7 +134,7 @@ else
 $template->id = \YAWK\settings::getSetting($db, "selectedTemplate");
 $template->selectedTemplate = $template->id;
 // call template controller
-if (\YAWK\user::isAnybodyThere())
+if (\YAWK\user::isAnybodyThere($db))
 {   // user seems to be logged in...
     // load template name from {users}
     $user->loadProperties($db, $_SESSION['username']);
