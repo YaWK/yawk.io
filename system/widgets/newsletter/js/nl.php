@@ -31,6 +31,10 @@ else
         // quote data
         $name = $db->quote($name);
     }
+    else
+        {
+            $name = '';
+        }
 }
 
 // check email data
