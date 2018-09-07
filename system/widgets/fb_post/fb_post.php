@@ -4,7 +4,7 @@ if (!isset($fbLikePosting))
 {   // load facebook posting class
     require_once 'classes/fb_post.php';
     // create new facebook posting object
-    $fbLikePosting = new \YAWK\WIDGETS\FACEBOOK\POSTING\fbPosting($db);
+    $fbLikePosting = new \YAWK\WIDGETS\FACEBOOK\POSTING\fbVideo($db);
 }
 // init facebook posting button
 $fbLikePosting->init();
