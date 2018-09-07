@@ -36,6 +36,7 @@ error_reporting(0);
 /* include core files */
 require_once('system/classes/db.php');               // database connection
 require_once('system/classes/settings.php');         // get/set settings from settings db
+require_once 'system/classes/language.php';      // language class
 require_once('system/classes/alert.php');            // draw fancy JS-notification alert class
 require_once('system/classes/email.php');            // email functions
 require_once('system/classes/user.php');             // all get/set/handle user functions
@@ -50,6 +51,7 @@ require_once('system/classes/stats.php');            // statistics functions
 if (!isset($db)) {
     $db = new \YAWK\db();
 }
+
 /* language object */
 if (!isset($lang) || (empty($lang)))
 {   // create new language obj if none exists
@@ -59,6 +61,7 @@ if (!isset($lang) || (empty($lang)))
     // convert object param to array !important
     $lang = (array) $language->lang;
 }
+
 /* set template object */
 if (!isset($template)) {
     $template = new \YAWK\template();
@@ -82,6 +85,7 @@ if (!isset($stats)) {
     $stats->setStats($db);
 }
 // lets go with the frontEnd...
+// \YAWK\sys::outputObjects($template, $controller, $page, $user, $stats);
 // \YAWK\controller::frontEndInit($db, $currentpage, $user, $template);
 if (\YAWK\sys::isOffline($db)) {   // backend-users (admins) can see the frontend,
     // while the site is still offline to guests & no-admins
