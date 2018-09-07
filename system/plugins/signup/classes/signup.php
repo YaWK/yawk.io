@@ -45,7 +45,7 @@ namespace YAWK\PLUGINS\SIGNUP {
         public function sayHello($db)
         {   /** @var $db \YAWK\db */
             // greets user and load welcome page for given role(gid)
-            if (\YAWK\user::isAnybodyThere())
+            if (\YAWK\user::isAnybodyThere($db))
             {   // load userpage for signed in user
                 // if login session var is true, set username
                 $this->username = $_SESSION['username'];
