@@ -120,6 +120,10 @@ namespace YAWK\WIDGETS\NEWSLETTER\SUBSCRIBE
 
         /**
          * Load all required javascript files
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @annotation include required javascript assets (validade, messages and ajax js file)
          */
         public function includeJS()
         {
@@ -136,6 +140,10 @@ namespace YAWK\WIDGETS\NEWSLETTER\SUBSCRIBE
 
         /**
          * Set all object properties and html markup codes depending on current widget settings
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @annotation Set object properties and html markup
          */
         public function setProperties()
         {
