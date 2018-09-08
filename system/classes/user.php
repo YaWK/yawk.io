@@ -1817,7 +1817,7 @@ namespace YAWK {
                         // set logged_in session status to true
                         $_SESSION['logged_in'] = true;
                         // store successful login
-                        \YAWK\sys::setSyslog($db, 3, "login <b>$username</b> .", 0, 0, 0, 0);
+                        \YAWK\sys::setSyslog($db, 3, "login <b>$username</b>.", 0, 0, 0, 0);
                         // self::storeLogin($db, 0, "frontend", $username, $password);
                         return true;
                     }

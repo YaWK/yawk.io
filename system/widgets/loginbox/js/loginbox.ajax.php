@@ -38,18 +38,18 @@ else
     }
     else
         {   // name seems to be an invalid data type
-            $results = array('status' => false);
-            header('Content-type: application/json');
-            echo json_encode($results);
+            $result = array('status' => false);
+            header('Content-type: application/json; charset=UTF-8');
+            echo json_encode($result);
         }
 }
 
 // check password data
- if (!isset($_POST['password']) || (empty($_POST['password'])))
+if (!isset($_POST['password']) || (empty($_POST['password'])))
 {   // email is not set or empty
-    $results = array('status' => false);
-    header('Content-type: application/json');
-    echo json_encode($results);
+    $result = array('status' => false);
+    header('Content-type: application/json; charset=UTF-8');
+    echo json_encode($result);
 }
 
 //  password is set
@@ -63,26 +63,21 @@ else
             // login user and check if login was successful
             if (\YAWK\user::ajaxLogin($db, $user, $password) == true)
             {   // login successful
-                $results = array('status' => true);
-                header('Content-type: application/json');
-                echo json_encode($results);
-                // echo "true";
+                $result = array('status' => true);
+                header('Content-type: application/json; charset=UTF-8');
+                echo json_encode($result);
             }
             else
                 {   // login failed
-                    $results = array('status' => false);
-                    header('Content-type: application/json');
-                    echo json_encode($results);
-                    // echo "false";
+                    $result = array('status' => false);
+                    header('Content-type: application/json; charset=UTF-8');
+                    echo json_encode($result);
                 }
         }
         else
             {   // password is not a string - login failed
-                $results = array('status' => false);
-                header('Content-type: application/json');
-                echo json_encode($results);
-                // echo "false";
-
+                $result = array('status' => false);
+                header('Content-type: application/json; charset=UTF-8');
+                echo json_encode($result);
             }
     }
-
