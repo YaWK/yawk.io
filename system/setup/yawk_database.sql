@@ -1854,7 +1854,7 @@ CREATE TABLE `cms_widget_defaults` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated`, `sortation`, `label`, `icon`, `heading`, `subtext`, `description`, `fieldClass`, `fieldType`, `placeholder`, `options`, `id`) VALUES
-('loginboxButtonText', 'Login', 1, 0, 0, 'LABEL_LOGINBOX_BTNTEXT', '', '', '', 'DESC_LOGINBOX_BTNTEXT', 'form-control', '', 'PH_LOGINBOX_BTNTEXT', '', 1),
+('loginboxLoginBtnText', 'Login', 1, 1, 1, 'LABEL_LOGINBOX_LOGIN_BTNTEXT', '', '', '', 'DESC_LOGINBOX_LOGIN_BTNTEXT', 'form-control', '', 'PH_LOGINBOX_LOGIN_BTNTEXT', '', 1),
 ('fbPageWidth', '450', 4, 1, 10, 'LABEL_FBPAGE_WIDTH', '', '', '', 'DESC_FBPAGE_WIDTH', 'form-control', '', 'PH_FBPAGE_WIDTH', '', 2),
 ('fbPageHeight', '265', 4, 1, 11, 'LABEL_FBPAGE_HEIGHT', '', '', '', 'DESC_FBPAGE_HEIGHT', 'form-control', '', 'PH_FBPAGE_HEIGHT', '', 3),
 ('fbPageUrl', 'http://www.facebook.com/platform', 4, 1, 1, 'LABEL_FBPAGE_URL', '', '', '', 'DESC_FBPAGE_URL', 'form-control', '', 'PH_FBPAGE_URL', '', 4),
@@ -1991,8 +1991,8 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('gallerySubtext', '', 13, 1, 3, 'LABEL_GALLERY_SUBTEXT', '', '', '', 'DESC_GALLERY_SUBTEXT', 'form-control', '', 'PH_GALLERY_SUBTEXT', '', 143),
 ('googleMapsHeading', '', 18, 1, 0, 'LABEL_GOOGLEMAPS_HEADING', '', '', '', 'DESC_GOOGLEMAPS_HEADING', 'form-control', '', 'PH_GOOGLEMAPS_HEADING', '', 144),
 ('googleMapsSubtext', '', 18, 1, 0, 'LABEL_GOOGLEMAPS_SUBTEXT', '', '', '', 'DESC_GOOGLEMAPS_SUBTEXT', 'form-control', '', 'PH_GOOGLEMAPS_SUBTEXT', '', 145),
-('loginboxHeading', '', 1, 1, 0, 'LABEL_LOGINBOX_HEADING', '', '', '', 'DESC_LOGINBOX_HEADING', 'form-control', '', 'PH_LOGINBOX_HEADING', '', 146),
-('loginboxSubtext', '', 1, 1, 0, 'LABEL_LOGINBOX_SUBTEXT', '', '', '', 'DESC_LOGINBOX_SUBTEXT', 'form-control', '', 'PH_LOGINBOX_SUBTEXT', '', 147),
+('loginboxHeading', '', 1, 1, 10, 'LABEL_LOGINBOX_HEADING', '', '', '', 'DESC_LOGINBOX_HEADING', 'form-control', '', 'PH_LOGINBOX_HEADING', '', 146),
+('loginboxSubtext', '', 1, 1, 11, 'LABEL_LOGINBOX_SUBTEXT', '', '', '', 'DESC_LOGINBOX_SUBTEXT', 'form-control', '', 'PH_LOGINBOX_SUBTEXT', '', 147),
 ('jPlayerVideoUserMediaFolder', '', 33, 1, 2, 'LABEL_JPLAYER_USER_MEDIAFOLDER', '', '', '', 'DESC_JPLAYER_USER_MEDIAFOLDER', 'form-control', '', 'PH_JPLAYER_USER_MEDIAFOLDER', '', 148),
 ('jPlayerVideoWidth', '100%', 33, 0, 6, 'LABEL_JPLAYER_WIDTH', '', '', '', '', 'form-control', '', 'PH_JPLAYER_WIDTH', '', 149),
 ('jPlayerVideoHeading', 'Heading', 33, 1, 3, 'LABEL_JPLAYER_HEADING', '', '', '', 'DESC_JPLAYER_HEADING', 'form-control', '', 'PH_JPLAYER_HEADING', '', 150),
@@ -2140,7 +2140,14 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('galleryLayoutRows', '3', 13, 1, 20, 'LABEL_GALLERY_LAYOUT_ROWS', 'fa fa-object-ungroup', 'GALLERY_H_LAYOUT', '', 'DESC_GALLERY_LAYOUT_ROWS', 'form-control', 'select', '', '1,1:2,2:3,3:4,4:6,6:12,12', 294),
 ('galleryImageClass', 'img-responsive img-rounded hvr-grow', 13, 1, 23, 'LABEL_GALLERY_IMAGE_CLASS', '', '', '', 'DESC_GALLERY_IMAGE_CLASS', 'form-control', '', 'PH_GALLERY_IMAGE_CLASS', '', 295),
 ('exampleHeading', 'Example Heading', 44, 1, 1, 'LABEL_EXAMPLE_HEADING', '', '', '', 'DESC_EXAMPLE_HEADING', 'form-control', '', 'PH_EXAMPLE_HEADING', '', 296),
-('exampleSubtext', 'this is the subtext', 44, 1, 2, 'LABEL_EXAMPLE_SUBTEXT', '', '', '', 'DESC_EXAMPLE_SUBTEXT', 'form-control', '', 'PH_EXAMPLE_SUBTEXT', '', 297);
+('exampleSubtext', 'this is the subtext', 44, 1, 2, 'LABEL_EXAMPLE_SUBTEXT', '', '', '', 'DESC_EXAMPLE_SUBTEXT', 'form-control', '', 'PH_EXAMPLE_SUBTEXT', '', 297),
+('loginboxLogoutBtnText', 'Logout', 1, 1, 2, 'LABEL_LOGINBOX_LOGOUT_BTNTEXT', '', '', '', 'DESC_LOGINBOX_LOGOUT_BTNTEXT', 'form-control', '', 'PH_LOGINBOX_LOGOUT_BTNTEXT', '', 298),
+('loginboxLoginBtnClass', 'btn btn-success', 1, 1, 3, 'LABEL_LOGINBOX_LOGIN_BTNCLASS', '', '', '', 'DESC_LOGINBOX_LOGIN_BTNCLASS', 'form-control', '', 'PH_LOGINBOX_LOGIN_BTNCLASS', '', 299),
+('loginboxLogoutBtnClass', 'btn btn-danger active', 1, 1, 4, 'LABEL_LOGINBOX_LOGOUT_BTNCLASS', '', '', '', 'DESC_LOGINBOX_LOGOUT_BTNCLASS', 'form-control', '', 'PH_LOGINBOX_LOGOUT_BTNCLASS', '', 300),
+('loginboxLoginBtnMarginTop', '5px', 1, 1, 5, 'LABEL_LOGINBOX_LOGINBTN_MARGINTOP', '', '', '', 'DESC_LOGINBOX_LOGINBTN_MARGINTOP', 'form-control', '', 'PH_LOGINBOX_LOGINBTN_MARGINTOP', '', 301),
+('loginboxWidth', '100%', 1, 1, 6, 'LABEL_LOGINBOX_WIDTH', '', '', '', 'DESC_LOGINBOX_WIDTH', 'form-control', '', 'PH_LOGINBOX_WIDTH', '', 302),
+('loginboxFormClass', 'animated fadeIn', 1, 1, 7, 'LABEL_LOGINBOX_FORMCLASS', '', '', '', 'DESC_LOGINBOX_FORMCLASS', 'form-control', '', 'PH_LOGINBOX_FORMCLASS', '', 303),
+('loginboxProcessingMode', '', 1, 1, 7, 'LABEL_LOGINBOX_MODE', '', '', '', 'DESC_LOGINBOX_MODE', 'form-control', 'select', '', 'ajax,ajax:classic,classic', 304);
 
 
 CREATE TABLE `cms_widget_settings` (
@@ -2425,7 +2432,7 @@ ALTER TABLE `cms_user_groups`
 ALTER TABLE `cms_widgets`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_defaults`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=297;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=304;
 ALTER TABLE `cms_widget_settings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_types`
