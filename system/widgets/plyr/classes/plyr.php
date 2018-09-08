@@ -176,7 +176,7 @@ namespace YAWK\WIDGETS\PLYR\PLAYER
                 "disableContextMenu": '.$this->plyrDisableContextMenu.', 
                 "hideControls": '.$this->plyrHideControls.', 
                 "showPosterOnEnd": '.$this->plyrShowPosterOnEnd.', 
-                "clickToPlay": '.$this->plyrClickToPlay.' 
+                "clickToPlay": '.$this->plyrClickToPlay.'
             });
             </script>
             <!-- plyr css -->
