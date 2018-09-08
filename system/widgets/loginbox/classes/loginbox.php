@@ -47,6 +47,12 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
         public $loginboxFormClass = '';
         /** @var string form css class markup */
         public $loginboxFormClassMarkup = '';
+        /** @var string ajax|html form processing mode */
+        public $loginboxProcessingMode = 'html';
+        /** @var string markup for html/ajax processing mode */
+        public $loginboxProcessingModeFormMarkup = '';
+        /** @var string submit button type, depending on processing mode */
+        public $loginboxProcessingModeSubmitBtnType = 'submit';
 
         /**
          * Load all widget settings from database and fill object
@@ -92,22 +98,21 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
                     }
             }
             else
-                {
-                    // no user is there, draw loginbox
+                {   // no user is there, draw loginbox
                     $this->drawLoginBox("", "");
                 }
         }
 
         /**
-         * returns the login box html markup
+         * Prepare Loginbox form settings
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @param string $username username, as option
-         * @param string $password password, as option
+         * @annotation Evaluate loginbox settings and prepare html markup
          */
-        public function drawLoginBox($username, $password)
+        public function setProperties()
         {
+            /** MARGIN TOP */
             // check if loginbox button margin top is set and not empty
             if (isset($this->loginboxLoginBtnMarginTop) && (!empty($this->loginboxLoginBtnMarginTop)))
             {   // check last 2 chars of string to see if user missed px afterwards
@@ -119,10 +124,11 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
                 $this->loginboxLoginBtnMarginMarkup = " style=\"margin-top:$this->loginboxLoginBtnMarginTop;\"";
             }
             else
-                {   // no markup required
-                    $this->loginboxLoginBtnMarginMarkup = '';
-                }
+            {   // no markup required
+                $this->loginboxLoginBtnMarginMarkup = '';
+            }
 
+            /** FORM WIDTH */
             // check if form width is set and not empty
             if (isset($this->loginboxWidth) && (!empty($this->loginboxWidth)))
             {
@@ -145,6 +151,7 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
                 $this->loginboxWidthMarkup = '';
             }
 
+            /** FORM CLASS */
             // check form class
             if (isset($this->loginboxFormClass) && (!empty($this->loginboxFormClass)))
             {
@@ -156,14 +163,71 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
                 $this->loginboxFormClassMarkup = '';
             }
 
+            /** FORM PROCESSING MODE */
+            // check form processing mode (ajax or html)
+            if (isset($this->loginboxProcessingMode) && (!empty($this->loginboxProcessingMode)))
+            {   // if form processing is html
+                if ($this->loginboxProcessingMode === "html")
+                {   // set form markup html action....
+                    $this->loginboxProcessingModeFormMarkup = " action=\"index.html\" ";
+                    $this->loginboxProcessingModeSubmitBtnType = "submit";
+                }
+                else
+                {   // ajax request - load required js files
+                    $this->includeJS();
+                    // no additional form markup required
+                    $this->loginboxProcessingModeFormMarkup = "";
+                    // set submit btn type to prevent 'traditional' submit behavior
+                    $this->loginboxProcessingModeSubmitBtnType = "button";
+                }
+            }
+        }
+
+        /**
+         * Load required javascript file
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @annotation include required ajax js file
+         */
+        public function includeJS()
+        {
+            // load notify js
+            echo "<script type=\"text/javascript\" src=\"system/engines/jquery/notify/bootstrap-notify.min.js\"></script>";
+            echo "<link rel=\"stylesheet\" href=\"system/engines/jquery/notify/bootstrap-notify.min.css\">";
+            // load validate js
+            echo "<script type=\"text/javascript\" src=\"system/engines/jquery/jquery.validate.min.js\"></script>";
+            // if current language is german
+            if (\YAWK\language::getCurrentLanguageStatic() == "de-DE")
+            {   // load german language file
+                echo "<script type=\"text/javascript\" src=\"system/engines/jquery/messages_de.min.js\"></script>";
+            }
+            // load ajax file
+            echo "<script type=\"text/javascript\" src=\"system/widgets/loginbox/js/loginbox.ajax.js\"></script>";
+        }
+
+        /**
+         * returns the login box html markup
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param string $username username, as option
+         * @param string $password password, as option
+         */
+        public function drawLoginBox($username, $password)
+        {
+            // first of all: get settings for this loginbox
+            $this->setProperties();
+
+            // output the loginbox form itself
             echo "
-            <form name=\"login\"$this->loginboxFormClassMarkup id=\"loginForm\" role=\"form\" method=\"POST\"$this->loginboxWidthMarkup>
+            <form name=\"login\"$this->loginboxProcessingModeFormMarkup$this->loginboxFormClassMarkup id=\"loginForm\" role=\"form\" method=\"POST\"$this->loginboxWidthMarkup>
                 <input type=\"text\" id=\"user\" name=\"user\" value=\"".$username."\" class=\"form-control\" placeholder=\"Benutzername\">
                 <input type=\"password\" id=\"password\" name=\"password\" value=\"".$password."\" class=\"form-control\" placeholder=\"Passwort\">
                 <input type=\"hidden\" name=\"login\" value=\"login\">
-                <!-- <input type=\"submit\" id=\"submitBtn\" value=\"Login\" style=\"margin-top:5px;\" name=\"Login\" class=\"btn btn-success animated fadeIn\"> -->
-                <input type=\"button\" name=\"submit\" id=\"submit\" class=\"$this->loginboxLoginBtnClass\" value=\"$this->loginboxLoginBtnText\"$this->loginboxLoginBtnMarginMarkup> 
-            </form>";
+                <input type=\"$this->loginboxProcessingModeSubmitBtnType\" name=\"submit\" id=\"submit\" class=\"$this->loginboxLoginBtnClass\" value=\"$this->loginboxLoginBtnText\"$this->loginboxLoginBtnMarginMarkup> 
+            </form>
+            <div id=\"thankYouMessage\"></div>";
         }
 
         /**
