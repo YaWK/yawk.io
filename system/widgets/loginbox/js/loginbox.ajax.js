@@ -102,6 +102,7 @@ $(document).ready(function(){
                         {   // login successful
                             console.log('login true');
                             // hide login form
+                            $("#heading").hide();
                             $("#loginForm").hide();
                             // display hello user message
                             $("#thankYouMessage").append('<h2 class="animated fadeIn">Hello '+user+'! <small>You are logged in.</small></h2>');
