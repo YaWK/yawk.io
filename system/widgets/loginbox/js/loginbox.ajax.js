@@ -41,18 +41,21 @@ $(document).ready(function(){
         });
     }
 
+    var loginForm = $("#loginForm");
+
     // send the form when enter is pressed
-    $('#loginForm').keypress(function(event){
+    $(loginForm).keypress(function(event){
         var keycode = (event.keyCode ? event.keyCode : event.which);
-        if(keycode == '13'){
+        if(keycode === '13'){
             // invoke submit
             $('#submit').click();
         }
     });
 
     // on submit
-    $('#submit').click(function()
+    $(loginForm).submit(function(e)
     {   //
+        e.preventDefault();
         // get username value from form
         var	user =	$('#user').val();
         // get password from form
@@ -61,7 +64,7 @@ $(document).ready(function(){
         // shake form function
         function shakeForm()
         {   // if user/pass is wrong or not set pay attention with this animation
-            $( "#loginForm" ).effect( "shake", {times:3}, 820 );
+            $(loginForm).effect( "shake", {times:3}, 820 );
         }
         // if password or user is not set
         if (!password.trim() || (!user.trim())) {
@@ -79,6 +82,8 @@ $(document).ready(function(){
             type:'POST',
             // allow cross origin requests
             crossOrigin: true,
+            // set async to false to avoid double calls
+            async: false,
             // data string
             data: {user: user, password: password},
             // data:'user='+user+'&password='+password,

@@ -178,7 +178,7 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
                     // no additional form markup required
                     $this->loginboxProcessingModeFormMarkup = "";
                     // set submit btn type to prevent 'traditional' submit behavior
-                    $this->loginboxProcessingModeSubmitBtnType = "button";
+                    $this->loginboxProcessingModeSubmitBtnType = "submit";
                 }
             }
         }
@@ -222,13 +222,21 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
 
             // output the loginbox form itself
             echo "
+<div class=\"container-fluid\">
+<div class=\"row\">
+<div class=\"col-md-12\">
+
             <form name=\"login\"$this->loginboxProcessingModeFormMarkup$this->loginboxFormClassMarkup id=\"loginForm\" role=\"form\" method=\"POST\"$this->loginboxWidthMarkup>
                 <input type=\"text\" id=\"user\" name=\"user\" value=\"".$username."\" class=\"form-control\" placeholder=\"Benutzername\">
                 <input type=\"password\" id=\"password\" name=\"password\" value=\"".$password."\" class=\"form-control\" placeholder=\"Passwort\">
                 <input type=\"hidden\" name=\"login\" value=\"login\">
                 <input type=\"$this->loginboxProcessingModeSubmitBtnType\" name=\"submit\" id=\"submit\" class=\"$this->loginboxLoginBtnClass\" value=\"$this->loginboxLoginBtnText\"$this->loginboxLoginBtnMarginMarkup> 
             </form>
-            <div id=\"thankYouMessage\"></div>";
+            <div id=\"thankYouMessage\"></div>
+</div>
+</div>
+</div>
+";
 
         }
 
@@ -240,9 +248,17 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
          */
         public function drawLogoutButton($db)
         {
-            echo "<div id=\"logoutBtnWrapper\">Hallo <a href=\"welcome.html\" target=\"_self\"> ".$this->currentUser." </a>!&nbsp;&nbsp;
+            echo "
+
+<div class=\"container-fluid\">
+<div class=\"row\">
+<div class=\"col-md-12\">
+                    <div id=\"logoutBtnWrapper\">Hallo <a href=\"welcome.html\" target=\"_self\"> ".$this->currentUser." </a>!&nbsp;&nbsp;
                     <a href=\"welcome.html\" target=\"_self\"><i class=\"glyphicon glyphicon-home\"></i></a>&nbsp;&nbsp;
-		            <a href=\"".\YAWK\sys::getHost($db)."logout\" id=\"logoutBtn\" class=\"$this->loginboxLogoutBtnClass\" target=\"_self\">Logout</a></div>";
+		            <a href=\"".\YAWK\sys::getHost($db)."logout\" id=\"logoutBtn\" class=\"$this->loginboxLogoutBtnClass\" target=\"_self\">Logout</a></div>
+</div>
+</div>
+</div>";
         }
 
     }
