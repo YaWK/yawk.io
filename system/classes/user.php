@@ -1612,7 +1612,7 @@ namespace YAWK {
          * @param string $password password
          * @return bool
          */
-        function checkPassword($db, $username, $password)
+        static function checkPassword($db, $username, $password)
         {   /** @var $db \YAWK\db */
             $adminEmail = \YAWK\settings::getSetting($db, "admin_email");
             $host = \YAWK\settings::getSetting($db, "host");
@@ -1647,14 +1647,16 @@ namespace YAWK {
                 // username + pwd match, user is not blocked, not terminated...
                 return true;
             }
-            else {
-                // checkPassword failed
-                /* echo "<div class=\"container bg-danger\"><br><h2>Warning! <small>Login failed!</h2>
-                <b>Please check your login credentials and try again in a few seconds.</b>
-                <br><small>You will be redirected to <a class=\"small\" href=\"$host\">$host</a>.</small><br><br></div>";
-                \YAWK\sys::setTimeout("index.html", 10000); */
-                return false;
-            }
+            else
+                {
+                    // \YAWK\sys::setSyslog($db, 3, "login failed due wrong credentials from <b>".$username."</b>", 0, 0, 0, 0);
+                    // checkPassword failed
+                    /* echo "<div class=\"container bg-danger\"><br><h2>Warning! <small>Login failed!</h2>
+                    <b>Please check your login credentials and try again in a few seconds.</b>
+                    <br><small>You will be redirected to <a class=\"small\" href=\"$host\">$host</a>.</small><br><br></div>";
+                    \YAWK\sys::setTimeout("index.html", 10000); */
+                    return false;
+                }
         }
 
         /**
@@ -1716,6 +1718,41 @@ namespace YAWK {
             }
         }
 
+        public static function ajaxLogin($db, $user, $password)
+        {
+            // create new user class object
+            $userClass = new \YAWK\user();
+
+            // check user and password vars
+            if (isset($user) && (!empty($user) && (is_string($user)
+            && (isset($password) && (!empty($password) && (is_string($password)))))))
+            {
+                // check if user is logged in
+                if (self::isLoggedIn($db, $user) === false)
+                {
+                    // login successful
+                    if(self::login($db, $user, $password) === true)
+                    {   // login successful
+                        $userClass->storeLogin($db, 0, "frontend", $user, $password);
+                        // \YAWK\sys::setSyslog($db, "3", "ajax login successful", 0, 0, 0, 0);
+                        return true;
+                    }
+                    else
+                    {   // login failed
+                        $userClass->storeLogin($db, 1, "frontend", $user, $password);
+                        // \YAWK\sys::setSyslog($db, "5", "ajax login failed", 0, 0, 0, 0);
+                        return false;
+                    }
+                }
+                // in any other case
+                return false;
+            }
+            else
+                {   // login data wrong
+                    return false;
+                }
+        }
+
         /**
          * login user
          * @author Daniel Retzl <danielretzl@gmail.com>
@@ -1726,62 +1763,70 @@ namespace YAWK {
          * @param string $password password
          * @return bool
          */
-        function login($db, $username, $password)
-        {   /** @var $db \YAWK\db */
+        static function login($db, $username, $password)
+        {
+            /** @var $db \YAWK\db */
             if (empty($username && $password)){
-                echo "<div class=\"container bg-danger\"><br><h2><i class=\"fa fa-refresh fa-spin fa-fw\"></i>
-                  <span class=\"sr-only\">Loading...</span> Oops! <small>
-                  Missing login data...</small></h2><b>Please enter username and password.</b><br><br></div>";
                 return false;
             }
             if (empty($username || $password)){
-                echo "<div class=\"container bg-danger\"><br><h2><i class=\"fa fa-refresh fa-spin fa-fw\"></i>
-                  <span class=\"sr-only\">Loading...</span> Oops! <small>
-                  Missing login data...</small></h2><b>Please enter username and password.</b><br><br></div>";
                 return false;
             }
-
-            $date_now = date("Y-m-d G:i:s");
-            $this->username = strip_tags($username);
+            // remove html tags from username
+            $username = strip_tags($username);
+            // remove html tags from password
             $password = strip_tags($password);
+            // quote username
+            $username = $db->quote(trim($username));
+            // quote password
             $password = $db->quote(trim($password));
-            $this->username = $db->quote(trim($this->username));
-            $_SESSION['username'] = $this->username;
-            $username = $this->username;
-            if ($this->checkPassword($db, $username, $password)) {
-               // return true;
-                /* select and add login_count */
+            // set session username
+            $_SESSION['username'] = $username;
+
+            // if given username + password are correct
+            if (self::checkPassword($db, $username, $password))
+            {
+                // select login count
                 $res = $db->query("SELECT id, login_count, gid FROM {users} WHERE username='" . $username . "'");
                 $row = mysqli_fetch_row($res);
+                // add session user ID
                 $_SESSION['uid'] = $row[0];
+                // add session group ID
                 $_SESSION['gid'] = $row[2];
+                // set login counter
                 $login_count = $row[1] + 1;
-                $this->username = $username;
-                // datum + login count aktualisieren
+                // get current datetime
                 $date_now = date("Y-m-d G:i:s");
+                // update login counter
                 if (!$res = $db->query("UPDATE {users} SET
                                         date_lastlogin = '" . $date_now . "',
                                         login_count = '" . $login_count . "',
                                         online = '1',
                                         logged_in = '1'
-                      WHERE username = '" . $this->username . "'"))
+                      WHERE username = '" . $username . "'"))
                 {
-                    \YAWK\sys::setSyslog($db, 3, "failed to login <b>$username</b> .", 0, 0, 0, 0);
-                    echo "<div class=\"container bg-danger\"><br><h2><i class=\"fa fa-refresh fa-spin fa-fw\"></i>
-                          <span class=\"sr-only\">Warning!</span> <small>Database Error! Missing login data...</small></h2><br>
-                          <b>Could not log user into database. Expect some errors.</b><br><br></div>";
+                    \YAWK\sys::setSyslog($db, 3, "failed to update login counter ($login_count) of <b>$username</b> .", 0, 0, 0, 0);
                     return false;
                 }
-                else {
-                   // session_regenerate_id();
-                    $_SESSION['username'] = $this->username;
-                    $_SESSION['logged_in'] = true;
-                    $this->storeLogin($db, 0, "frontend", $username, $password);
-                }
-                return true;
-            } else {
-                \YAWK\sys::setSyslog($db, 3, "failed to login <b>$username</b> .", 0, 0, 0, 0);
-                return \YAWK\alert::draw("warning", "Login failed...", "Please try to re-login in a few seconds...", "",3000);
+                else
+                    {   // LOGIN SUCCESSFUL
+                        // try to re-new session ID
+                        @session_regenerate_id();
+                        // set session username
+                        $_SESSION['username'] = $username;
+                        // set logged_in session status to true
+                        $_SESSION['logged_in'] = true;
+                        // store successful login
+                        \YAWK\sys::setSyslog($db, 3, "login <b>$username</b> .", 0, 0, 0, 0);
+                        // self::storeLogin($db, 0, "frontend", $username, $password);
+                        return true;
+                    }
+            }
+            else
+                {   // check password failed
+                    \YAWK\sys::setSyslog($db, 5, "failed to login <b>$username</b> .", 0, 0, 0, 0);
+                    // return \YAWK\alert::draw("warning", "Login failed...", "Please try to re-login in a few seconds...", "",3000);
+                    return false;
 /*
                 if (!isset($_SESSION['failed'])){
                     $_SESSION['failed']=1;
@@ -2013,7 +2058,7 @@ namespace YAWK {
          * @param string $password password
          * @return bool
          */
-        function storeLogin($db, $failed, $location, $username, $password)
+        static function storeLogin($db, $failed, $location, $username, $password)
         {   /** @var $db \YAWK\db */
             if (!isset($location)){
                 $location = '';
@@ -2050,16 +2095,13 @@ namespace YAWK {
          */
         static function drawLoginBox($username, $password)
         {
-            $html = "<div class=\"row\">
-            <!-- <div class=\"col-md-4\">&nbsp;</div> -->
-            <div class=\"col-md-4\"><form name=\"login\" id=\"loginForm\" role=\"form\" action=\"welcome.html\" method=\"POST\">
+            $html = "
+            <form name=\"login\" id=\"loginForm\" role=\"form\" method=\"POST\">
                 <input type=\"text\" id=\"user\" name=\"user\" value=\"".$username."\" class=\"form-control animated fadeIn\" placeholder=\"Benutzername\">
                 <input type=\"password\" id=\"password\" name=\"password\" value=\"".$password."\" class=\"form-control animated fadeIn\" placeholder=\"Passwort\">
                 <input type=\"hidden\" name=\"login\" value=\"login\">
                 <input type=\"submit\" id=\"submitBtn\" value=\"Login\" style=\"margin-top:5px;\" name=\"Login\" class=\"btn btn-success animated fadeIn\">
-            </form></div>
-            <!-- <div class=\"col-md-4\">&nbsp;</div> -->
-            </div>";
+            </form>";
             return $html;
         }
 
@@ -2139,6 +2181,7 @@ namespace YAWK {
                     $_SESSION['failed']=0;
                     $_SESSION['logged_in']=0;
                     session_destroy();
+                    \YAWK\sys::setSyslog($db, 3, "logout <b>".$_SESSION['username']."</b>", 0, 0, 0, 0);
                     return true;
                 }
             }
@@ -2153,8 +2196,8 @@ namespace YAWK {
                                    SET online = '0'
                                    WHERE username = '".$_GET['username']."'"))
                     {   // unable to logout
-                        \YAWK\sys::setSyslog($db, 5, "could not logout <b>$_SESSION[username]</b> .", 0, 0, 0, 0);
-                        \YAWK\alert::draw("danger", "Error!", "Could not logout ".$_SESSION['username']." Please try again!","","3800");
+                        \YAWK\sys::setSyslog($db, 5, "could not logout <b>".$_GET['username']."</b> .", 0, 0, 0, 0);
+                        \YAWK\alert::draw("danger", "Error!", "Could not logout ".$_GET['username']." Please try again!","","3800");
                         // DELETE SESSION
                         $_SESSION['failed']=0;
                         $_SESSION['logged_in']=0;
@@ -2166,10 +2209,10 @@ namespace YAWK {
                             $_SESSION['failed']=0;
                             $_SESSION['logged_in']=0;
                             session_destroy();
+                            \YAWK\sys::setSyslog($db, 3, "logout <b>".$_GET['username']."</b>", 0, 0, 0, 0);
                             return true;
                         }
                 }
-
                 // DELETE SESSION
                 $_SESSION['failed']=0;
                 $_SESSION['logged_in']=0;
