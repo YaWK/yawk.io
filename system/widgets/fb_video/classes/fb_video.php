@@ -1,5 +1,5 @@
 <?php
-namespace YAWK\WIDGETS\FACEBOOK\video
+namespace YAWK\WIDGETS\FACEBOOK\VIDEO
 {
     /**
      * <b>Facebook video - embed any public facebook video on your page</b>
