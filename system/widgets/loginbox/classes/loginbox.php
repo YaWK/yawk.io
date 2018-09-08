@@ -27,6 +27,26 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
         public $loginboxSubtext = '';
         /** @var string Username */
         public $currentUser = '';
+        /** @var string Login Button Text */
+        public $loginboxLoginBtnText = "Login";
+        /** @var string Logout Button Text */
+        public $loginboxLogoutBtnText = "Logout";
+        /** @var string Login Button CSS Class */
+        public $loginboxLoginBtnClass = "btn btn-success";
+        /** @var string Logout Button CSS Class */
+        public $loginboxLogoutBtnClass = "btn btn-danger";
+        /** @var string Login Button margin-top */
+        public $loginboxLoginBtnMarginTop = "5px";
+        /** @var string Login Button margin top css markup */
+        public $loginboxLoginBtnMarginMarkup = '';
+        /** @var string form width */
+        public $loginboxWidth = '';
+        /** @var string form width css markup */
+        public $loginboxWidthMarkup = '';
+        /** @var string form css class */
+        public $loginboxFormClass = '';
+        /** @var string form css class markup */
+        public $loginboxFormClassMarkup = '';
 
         /**
          * Load all widget settings from database and fill object
@@ -63,23 +83,100 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
             {   // check if currentUser is logged in
                 if (\YAWK\user::isLoggedIn($db, $this->currentUser))
                 {
-                    // \YAWK\user::drawLogoutBtn();
-                    // user is logged in
-                    echo "
-                	Hallo <a href=\"welcome.html\" target=\"_self\"> ".$this->currentUser." </a>";
-                    echo"!&nbsp;&nbsp;<a href=\"welcome.html\" target=\"_self\"><i class=\"glyphicon glyphicon-home\"></i></a>&nbsp;&nbsp;
-		            <a href=\"".\YAWK\sys::getHost($db)."logout\" id=\"logoutBtn\" class=\"btn btn-danger active\" target=\"_self\">Logout</a>";
+                    // user is logged in...
+                    $this->drawLogoutButton($db);
                 }
                 else
                     {   // user is not logged in, draw loginbox
-                        echo \YAWK\user::drawLoginBox($this->currentUser, "");
+                        $this->drawLoginBox($this->currentUser, "");
                     }
             }
             else
                 {
                     // no user is there, draw loginbox
-                    echo \YAWK\user::drawLoginBox("", "");
+                    $this->drawLoginBox("", "");
                 }
+        }
+
+        /**
+         * returns the login box html markup
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param string $username username, as option
+         * @param string $password password, as option
+         */
+        public function drawLoginBox($username, $password)
+        {
+            // check if loginbox button margin top is set and not empty
+            if (isset($this->loginboxLoginBtnMarginTop) && (!empty($this->loginboxLoginBtnMarginTop)))
+            {   // check last 2 chars of string to see if user missed px afterwards
+                if (substr($this->loginboxLoginBtnMarginTop, -2) != "px")
+                {   // append px to value
+                    $this->loginboxLoginBtnMarginTop = $this->loginboxLoginBtnMarginTop."px";
+                }
+                // generate css style markup
+                $this->loginboxLoginBtnMarginMarkup = " style=\"margin-top:$this->loginboxLoginBtnMarginTop;\"";
+            }
+            else
+                {   // no markup required
+                    $this->loginboxLoginBtnMarginMarkup = '';
+                }
+
+            // check if form width is set and not empty
+            if (isset($this->loginboxWidth) && (!empty($this->loginboxWidth)))
+            {
+                // check last char of string to see if user missed % sign
+                if (substr($this->loginboxWidth, -1) != "%")
+                {   // append percent sign
+                    $this->loginboxWidth = $this->loginboxWidth."%";
+                }
+                // generate css style markup
+                $this->loginboxWidthMarkup = " style=\"width:$this->loginboxWidth;\"";
+
+                // check if width is set to 100%
+                if ($this->loginboxWidth === "100%" || $this->loginboxWidth === "100" || ($this->loginboxWidth === "0"))
+                {   // default behaviour, no markup needed
+                    $this->loginboxWidthMarkup = '';
+                }
+            }
+            else
+            {   // no markup required
+                $this->loginboxWidthMarkup = '';
+            }
+
+            // check form class
+            if (isset($this->loginboxFormClass) && (!empty($this->loginboxFormClass)))
+            {
+                // generate form class markup
+                $this->loginboxFormClassMarkup = " class=\"$this->loginboxFormClass\"";
+            }
+            else
+            {   // no markup required
+                $this->loginboxFormClassMarkup = '';
+            }
+
+            echo "
+            <form name=\"login\"$this->loginboxFormClassMarkup id=\"loginForm\" role=\"form\" method=\"POST\"$this->loginboxWidthMarkup>
+                <input type=\"text\" id=\"user\" name=\"user\" value=\"".$username."\" class=\"form-control\" placeholder=\"Benutzername\">
+                <input type=\"password\" id=\"password\" name=\"password\" value=\"".$password."\" class=\"form-control\" placeholder=\"Passwort\">
+                <input type=\"hidden\" name=\"login\" value=\"login\">
+                <!-- <input type=\"submit\" id=\"submitBtn\" value=\"Login\" style=\"margin-top:5px;\" name=\"Login\" class=\"btn btn-success animated fadeIn\"> -->
+                <input type=\"button\" name=\"submit\" id=\"submit\" class=\"$this->loginboxLoginBtnClass\" value=\"$this->loginboxLoginBtnText\"$this->loginboxLoginBtnMarginMarkup> 
+            </form>";
+        }
+
+        /**
+         * returns the logout btn html markup
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         */
+        public function drawLogoutButton($db)
+        {
+            echo "Hallo <a href=\"welcome.html\" target=\"_self\"> ".$this->currentUser." </a>!&nbsp;&nbsp;
+                    <a href=\"welcome.html\" target=\"_self\"><i class=\"glyphicon glyphicon-home\"></i></a>&nbsp;&nbsp;
+		            <a href=\"".\YAWK\sys::getHost($db)."logout\" id=\"logoutBtn\" class=\"$this->loginboxLogoutBtnClass\" target=\"_self\">Logout</a>";
         }
 
     }
