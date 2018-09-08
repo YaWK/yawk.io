@@ -218,7 +218,7 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
             // first of all: get settings for this loginbox
             $this->setProperties();
 
-            // bootstrap markup
+            // bootstrap layout markup
             echo "
                 <div class=\"container-fluid\">
                 <div class=\"row\">
@@ -251,16 +251,16 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
         public function drawLogoutButton($db)
         {
             echo "
-
-<div class=\"container-fluid\">
-<div class=\"row\">
-<div class=\"col-md-12\">
-                    <div id=\"logoutBtnWrapper\">Hallo <a href=\"welcome.html\" target=\"_self\"> ".$this->currentUser." </a>!&nbsp;&nbsp;
+            <div class=\"container-fluid\">
+            <div class=\"row\">
+            <div class=\"col-md-12\">
+                <div id=\"logoutBtnWrapper\">Hallo <a href=\"welcome.html\" target=\"_self\"> ".$this->currentUser." </a>!&nbsp;&nbsp;
                     <a href=\"welcome.html\" target=\"_self\"><i class=\"glyphicon glyphicon-home\"></i></a>&nbsp;&nbsp;
-		            <a href=\"".\YAWK\sys::getHost($db)."logout\" id=\"logoutBtn\" class=\"$this->loginboxLogoutBtnClass\" target=\"_self\">Logout</a></div>
-</div>
-</div>
-</div>";
+		            <a href=\"".\YAWK\sys::getHost($db)."logout\" id=\"logoutBtn\" class=\"$this->loginboxLogoutBtnClass\" target=\"_self\">Logout</a>
+		        </div>
+            </div>
+            </div>
+            </div>";
         }
 
     }
