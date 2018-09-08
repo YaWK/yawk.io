@@ -3,7 +3,6 @@
 session_start();
 // include required classes
 require_once '../../../classes/db.php';
-require_once '../../../classes/alert.php';
 require_once '../../../classes/sys.php';
 require_once '../../../classes/user.php';
 require_once '../../../classes/settings.php';
