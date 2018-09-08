@@ -20,12 +20,12 @@ if (!isset($user) || (empty($user)))
     $user = new \YAWK\user();
 }
 
-// check name data
+// check username data
 if (!isset($_POST['user']) || (empty($_POST['user'])))
 {   // name is not set echo false
     echo "false";
 }
-//  name is set
+//  user is set...
 else
 {   // check if it is a string
     if (is_string($_POST['user']))
