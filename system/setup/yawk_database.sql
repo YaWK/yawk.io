@@ -2147,7 +2147,7 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('loginboxLoginBtnMarginTop', '5px', 1, 1, 5, 'LABEL_LOGINBOX_LOGINBTN_MARGINTOP', '', '', '', 'DESC_LOGINBOX_LOGINBTN_MARGINTOP', 'form-control', '', 'PH_LOGINBOX_LOGINBTN_MARGINTOP', '', 301),
 ('loginboxWidth', '100%', 1, 1, 6, 'LABEL_LOGINBOX_WIDTH', '', '', '', 'DESC_LOGINBOX_WIDTH', 'form-control', '', 'PH_LOGINBOX_WIDTH', '', 302),
 ('loginboxFormClass', 'animated fadeIn', 1, 1, 7, 'LABEL_LOGINBOX_FORMCLASS', '', '', '', 'DESC_LOGINBOX_FORMCLASS', 'form-control', '', 'PH_LOGINBOX_FORMCLASS', '', 303),
-('loginboxProcessingMode', '', 1, 1, 7, 'LABEL_LOGINBOX_MODE', '', '', '', 'DESC_LOGINBOX_MODE', 'form-control', 'select', '', 'ajax,ajax:classic,classic', 304);
+('loginboxProcessingMode', 'ajax', 1, 1, 7, 'LABEL_LOGINBOX_MODE', '', '', '', 'DESC_LOGINBOX_MODE', 'form-control', 'select', '', 'ajax,javascript (AJAX mode):html,HTML (classic mode)', 304);
 
 
 CREATE TABLE `cms_widget_settings` (
