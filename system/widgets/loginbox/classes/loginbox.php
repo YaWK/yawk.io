@@ -94,12 +94,12 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
                 }
                 else
                     {   // user is not logged in, draw loginbox
-                        $this->drawLoginBox($this->currentUser, "");
+                        $this->drawLoginBox($db, $this->currentUser, "");
                     }
             }
             else
                 {   // no user is there, draw loginbox
-                    $this->drawLoginBox("", "");
+                    $this->drawLoginBox($db, "", "");
                 }
         }
 
@@ -211,10 +211,11 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
+         * @param object $db database object
          * @param string $username username, as option
          * @param string $password password, as option
          */
-        public function drawLoginBox($username, $password)
+        public function drawLoginBox($db, $username, $password)
         {
             // first of all: get settings for this loginbox
             $this->setProperties();
@@ -228,6 +229,7 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
                 <input type=\"$this->loginboxProcessingModeSubmitBtnType\" name=\"submit\" id=\"submit\" class=\"$this->loginboxLoginBtnClass\" value=\"$this->loginboxLoginBtnText\"$this->loginboxLoginBtnMarginMarkup> 
             </form>
             <div id=\"thankYouMessage\"></div>";
+
         }
 
         /**
@@ -238,9 +240,9 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
          */
         public function drawLogoutButton($db)
         {
-            echo "Hallo <a href=\"welcome.html\" target=\"_self\"> ".$this->currentUser." </a>!&nbsp;&nbsp;
+            echo "<div id=\"logoutBtnWrapper\">Hallo <a href=\"welcome.html\" target=\"_self\"> ".$this->currentUser." </a>!&nbsp;&nbsp;
                     <a href=\"welcome.html\" target=\"_self\"><i class=\"glyphicon glyphicon-home\"></i></a>&nbsp;&nbsp;
-		            <a href=\"".\YAWK\sys::getHost($db)."logout\" id=\"logoutBtn\" class=\"$this->loginboxLogoutBtnClass\" target=\"_self\">Logout</a>";
+		            <a href=\"".\YAWK\sys::getHost($db)."logout\" id=\"logoutBtn\" class=\"$this->loginboxLogoutBtnClass\" target=\"_self\">Logout</a></div>";
         }
 
     }
