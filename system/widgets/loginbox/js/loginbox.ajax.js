@@ -116,12 +116,9 @@ $(document).ready(function(){
                     }
             },
             error:function(data){
-                // shake form on error
+                // login failed
                 shakeForm();
-                // var thankYouMessage = $("#thankYouMessage");
                 console.log('Login failed / username or pwd wrong');
-                // $(thankYouMessage).append('<h2>Wrong Username or Password! <small>please try again.</small></h2>');
-                // alert("ERROR: AJAX PROCESSING FAILED! Please try to switch to classic HTML processing mode to avoid this problem.");
             }
         });
     });
