@@ -53,6 +53,14 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
         public $loginboxProcessingModeFormMarkup = '';
         /** @var string submit button type, depending on processing mode */
         public $loginboxProcessingModeSubmitBtnType = 'submit';
+        /** @var bool true|false Turn greeting on or off */
+        public $loginboxGreeting = '';
+        /** @var string Greeting Text */
+        public $loginboxGreetingText = '';
+        /** @var string Greeting Subtext */
+        public $loginboxGreetingSubtext = '';
+        /** @var bool true|false Show name within greeting? */
+        public $loginboxGreetingShowName= 'true';
 
         /**
          * Load all widget settings from database and fill object
@@ -234,6 +242,10 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
                     <input type=\"text\" id=\"user\" name=\"user\" value=\"".$username."\" class=\"form-control\" placeholder=\"Benutzername\">
                     <input type=\"password\" id=\"password\" name=\"password\" value=\"".$password."\" class=\"form-control\" placeholder=\"Passwort\">
                     <input type=\"hidden\" name=\"login\" value=\"login\">
+                    <input type=\"hidden\" id=\"loginboxGreeting\" name=\"loginboxGreeting\" value=\"".$this->loginboxGreeting."\">
+                    <input type=\"hidden\" id=\"loginboxGreetingText\" name=\"loginboxGreetingText\" value=\"".$this->loginboxGreetingText."\">
+                    <input type=\"hidden\" id=\"loginboxGreetingSubtext\" name=\"loginboxGreetingSubtext\" value=\"".$this->loginboxGreetingSubtext."\">
+                    <input type=\"hidden\" id=\"loginboxGreetingShowName\" name=\"loginboxGreetingShowName\" value=\"".$this->loginboxGreetingShowName."\">
                     <input type=\"$this->loginboxProcessingModeSubmitBtnType\" name=\"submit\" id=\"submit\" class=\"$this->loginboxLoginBtnClass\" value=\"$this->loginboxLoginBtnText\"$this->loginboxLoginBtnMarginMarkup> 
                 </form>
                 <div id=\"thankYouMessage\"></div>

@@ -1991,8 +1991,8 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('gallerySubtext', '', 13, 1, 3, 'LABEL_GALLERY_SUBTEXT', '', '', '', 'DESC_GALLERY_SUBTEXT', 'form-control', '', 'PH_GALLERY_SUBTEXT', '', 143),
 ('googleMapsHeading', '', 18, 1, 0, 'LABEL_GOOGLEMAPS_HEADING', '', '', '', 'DESC_GOOGLEMAPS_HEADING', 'form-control', '', 'PH_GOOGLEMAPS_HEADING', '', 144),
 ('googleMapsSubtext', '', 18, 1, 0, 'LABEL_GOOGLEMAPS_SUBTEXT', '', '', '', 'DESC_GOOGLEMAPS_SUBTEXT', 'form-control', '', 'PH_GOOGLEMAPS_SUBTEXT', '', 145),
-('loginboxHeading', '', 1, 1, 10, 'LABEL_LOGINBOX_HEADING', '', '', '', 'DESC_LOGINBOX_HEADING', 'form-control', '', 'PH_LOGINBOX_HEADING', '', 146),
-('loginboxSubtext', '', 1, 1, 11, 'LABEL_LOGINBOX_SUBTEXT', '', '', '', 'DESC_LOGINBOX_SUBTEXT', 'form-control', '', 'PH_LOGINBOX_SUBTEXT', '', 147),
+('loginboxHeading', '', 1, 1, 20, 'LABEL_LOGINBOX_HEADING', '', '', '', 'DESC_LOGINBOX_HEADING', 'form-control', '', 'PH_LOGINBOX_HEADING', '', 146),
+('loginboxSubtext', '', 1, 1, 21, 'LABEL_LOGINBOX_SUBTEXT', '', '', '', 'DESC_LOGINBOX_SUBTEXT', 'form-control', '', 'PH_LOGINBOX_SUBTEXT', '', 147),
 ('jPlayerVideoUserMediaFolder', '', 33, 1, 2, 'LABEL_JPLAYER_USER_MEDIAFOLDER', '', '', '', 'DESC_JPLAYER_USER_MEDIAFOLDER', 'form-control', '', 'PH_JPLAYER_USER_MEDIAFOLDER', '', 148),
 ('jPlayerVideoWidth', '100%', 33, 0, 6, 'LABEL_JPLAYER_WIDTH', '', '', '', '', 'form-control', '', 'PH_JPLAYER_WIDTH', '', 149),
 ('jPlayerVideoHeading', 'Heading', 33, 1, 3, 'LABEL_JPLAYER_HEADING', '', '', '', 'DESC_JPLAYER_HEADING', 'form-control', '', 'PH_JPLAYER_HEADING', '', 150),
@@ -2147,8 +2147,11 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('loginboxLoginBtnMarginTop', '5px', 1, 1, 5, 'LABEL_LOGINBOX_LOGINBTN_MARGINTOP', '', '', '', 'DESC_LOGINBOX_LOGINBTN_MARGINTOP', 'form-control', '', 'PH_LOGINBOX_LOGINBTN_MARGINTOP', '', 301),
 ('loginboxWidth', '100%', 1, 1, 6, 'LABEL_LOGINBOX_WIDTH', '', '', '', 'DESC_LOGINBOX_WIDTH', 'form-control', '', 'PH_LOGINBOX_WIDTH', '', 302),
 ('loginboxFormClass', 'animated fadeIn', 1, 1, 7, 'LABEL_LOGINBOX_FORMCLASS', '', '', '', 'DESC_LOGINBOX_FORMCLASS', 'form-control', '', 'PH_LOGINBOX_FORMCLASS', '', 303),
-('loginboxProcessingMode', 'ajax', 1, 1, 7, 'LABEL_LOGINBOX_MODE', '', '', '', 'DESC_LOGINBOX_MODE', 'form-control', 'select', '', 'ajax,javascript (AJAX mode):html,HTML (classic mode)', 304);
-
+('loginboxProcessingMode', 'ajax', 1, 1, 7, 'LABEL_LOGINBOX_MODE', '', '', '', 'DESC_LOGINBOX_MODE', 'form-control', 'select', '', 'ajax,javascript (AJAX mode):html,HTML (classic mode)', 304),
+('loginboxGreeting', 'true', 1, 1, 8, 'LABEL_LOGINBOX_GREETING', '', '', '', 'DESC_LOGINBOX_GREETING', 'form-control', 'select', '', 'true,true:false,false', 305),
+('loginboxGreetingText', 'Hello', 1, 1, 10, 'LABEL_LOGINBOX_GREETING_TEXT', '', '', '', 'DESC_LOGINBOX_GREETING_TEXT', 'form-control', '', 'PH_LOGINBOX_GREETING_TEXT', '', 306),
+('loginboxGreetingSubtext', 'You are logged in', 1, 1, 11, 'LABEL_LOGINBOX_GREETING_SUBTEXT', '', '', '', 'DESC_LOGINBOX_GREETING_SUBTEXT', 'form-control', '', 'PH_LOGINBOX_GREETING_SUBTEXT', '', 307),
+('loginboxGreetingShowName', 'true', 1, 1, 9, 'LABEL_LOGINBOX_GREETING_SHOW_NAME', '', '', '', 'DESC_LOGINBOX_GREETING_SHOW_NAME', 'form-control', 'select', '', 'true,true:false,false', 308);
 
 CREATE TABLE `cms_widget_settings` (
   `id` int(11) NOT NULL,
@@ -2432,7 +2435,7 @@ ALTER TABLE `cms_user_groups`
 ALTER TABLE `cms_widgets`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_defaults`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=304;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=308;
 ALTER TABLE `cms_widget_settings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_types`

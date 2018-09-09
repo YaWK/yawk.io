@@ -60,6 +60,11 @@ $(document).ready(function(){
         var	user =	$('#user').val();
         // get password from form
         var	password = $('#password').val();
+        // get greeting from form
+        var	loginboxGreeting = $('#loginboxGreeting').val();
+        var	loginboxGreetingText = $('#loginboxGreetingText').val();
+        var	loginboxGreetingSubtext = $('#loginboxGreetingSubtext').val();
+        var	loginboxGreetingShowName = $('#loginboxGreetingShowName').val();
 
         // shake form function
         function shakeForm()
@@ -104,8 +109,18 @@ $(document).ready(function(){
                             // hide login form
                             $("#heading").hide();
                             $("#loginForm").hide();
-                            // display hello user message
-                            $("#thankYouMessage").append('<h2 class="animated fadeIn">Hello '+user+'! <small>You are logged in.</small></h2>');
+
+                            if (loginboxGreeting === 'true')
+                            {
+                                if (loginboxGreetingShowName === 'true')
+                                {   // personal greeting with username
+                                    $("#thankYouMessage").append('<h2 class="animated fadeIn">'+loginboxGreetingText+' '+user+' <small>'+loginboxGreetingSubtext+'</small></h2>');
+                                }
+                                else
+                                    {   // greeting without name
+                                        $("#thankYouMessage").append('<h2 class="animated fadeIn">'+loginboxGreetingText+' <small>'+loginboxGreetingSubtext+'</small></h2>');
+                                    }
+                            }
                         }
                         else
                             {   // login failed
