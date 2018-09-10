@@ -2148,10 +2148,13 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('loginboxWidth', '100%', 1, 1, 6, 'LABEL_LOGINBOX_WIDTH', '', '', '', 'DESC_LOGINBOX_WIDTH', 'form-control', '', 'PH_LOGINBOX_WIDTH', '', 302),
 ('loginboxFormClass', 'animated fadeIn', 1, 1, 7, 'LABEL_LOGINBOX_FORMCLASS', '', '', '', 'DESC_LOGINBOX_FORMCLASS', 'form-control', '', 'PH_LOGINBOX_FORMCLASS', '', 303),
 ('loginboxProcessingMode', 'ajax', 1, 1, 7, 'LABEL_LOGINBOX_MODE', '', '', '', 'DESC_LOGINBOX_MODE', 'form-control', 'select', '', 'ajax,javascript (AJAX mode):html,HTML (classic mode)', 304),
-('loginboxGreeting', 'true', 1, 1, 8, 'LABEL_LOGINBOX_GREETING', '', '', '', 'DESC_LOGINBOX_GREETING', 'form-control', 'select', '', 'true,true:false,false', 305),
+('loginboxGreeting', 'greeting-max', 1, 1, 8, 'LABEL_LOGINBOX_GREETING', '', '', '', 'DESC_LOGINBOX_GREETING', 'form-control', 'select', '', 'greeting-max,Greeting with username:greeting-min,Greeting without username:greeting-button,Logout button only:greeting-none,No greeting (silent login)', 305),
 ('loginboxGreetingText', 'Hello', 1, 1, 10, 'LABEL_LOGINBOX_GREETING_TEXT', '', '', '', 'DESC_LOGINBOX_GREETING_TEXT', 'form-control', '', 'PH_LOGINBOX_GREETING_TEXT', '', 306),
 ('loginboxGreetingSubtext', 'You are logged in', 1, 1, 11, 'LABEL_LOGINBOX_GREETING_SUBTEXT', '', '', '', 'DESC_LOGINBOX_GREETING_SUBTEXT', 'form-control', '', 'PH_LOGINBOX_GREETING_SUBTEXT', '', 307),
-('loginboxGreetingShowName', 'true', 1, 1, 9, 'LABEL_LOGINBOX_GREETING_SHOW_NAME', '', '', '', 'DESC_LOGINBOX_GREETING_SHOW_NAME', 'form-control', 'select', '', 'true,true:false,false', 308);
+('loginboxGreetingTextType', 'H2', 1, 1, 12, 'LABEL_LOGINBOX_GREETING_TEXT_TYPE', '', '', '', 'DESC_LOGINBOX_GREETING_TEXT_TYPE', 'form-control', 'select', '', 'H1,H1:H2,H2:H3,H3:H4,H4:H5,H5:H6,H6:GLOBALTEXT,GLOBALTEXT', 308),
+('loginboxGreetingTextClass', 'animated fadeIn', 1, 1, 13, 'LABEL_LOGINBOX_GREETING_TEXT_CLASS', '', '', '', 'DESC_LOGINBOX_GREETING_TEXT_CLASS', 'form-control', '', 'PH_LOGINBOX_GREETING_TEXT_CLASS', '', 309),
+('loginboxRedirect', '', 1, 1, 14, 'LABEL_LOGINBOX_REDIRECT', '', '', '', 'DESC_LOGINBOX_REDIRECT', 'form-control', '', 'PH_LOGINBOX_REDIRECT', '', 310),
+('loginboxRedirectTime', '', 1, 1, 15, 'LABEL_LOGINBOX_REDIRECT_TIME', '', '', '', 'DESC_LOGINBOX_REDIRECT_TIME', 'form-control', '', 'PH_LOGINBOX_REDIRECT_TIME', '', 311);
 
 CREATE TABLE `cms_widget_settings` (
   `id` int(11) NOT NULL,
@@ -2435,7 +2438,7 @@ ALTER TABLE `cms_user_groups`
 ALTER TABLE `cms_widgets`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_defaults`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=308;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=311;
 ALTER TABLE `cms_widget_settings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_types`

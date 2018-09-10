@@ -115,13 +115,28 @@ if (isset($_GET['include']) && (!empty($_GET['include'])))
     if (isset($_POST['login']))
     {   // check given vars
         if (isset($_POST['user']) && (isset($_POST['password'])))
-        {
+        {   // check if user login was successful
             if ($user->login($db, $_POST['user'], $_POST['password']) === true)
-            {
-                $_GET['include'] = "index";
+            {   // check if custom redirect url after login is requested
+                if (isset($_POST['loginboxRedirect']) && (!empty($_POST['loginboxRedirect'])))
+                {   // redirect to custom url
+                    if (isset($_POST['loginboxRedirectTime']) && (!empty($_POST['loginboxRedirectTime']) && (is_numeric($_POST['loginboxRedirectTime']))))
+                    {   // delay before redirect
+                        \YAWK\sys::setTimeout($_POST['loginboxRedirect'], $_POST['loginboxRedirectTime']);
+                    }
+                    else
+                        {   // redirect w/o delay
+                            \YAWK\sys::setTimeout($_POST['loginboxRedirect'], 0);
+                        }
+                }
+                else
+                    {   // redirect to inded page (only in html mode)
+                        $_GET['include'] = "index";
+                    }
             }
         }
     }
+
     // URL is set and not empty - lets go, load properties for given page
     $page->loadProperties($db, $db->quote($_GET['include']));
 

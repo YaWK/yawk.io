@@ -71,6 +71,10 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
         public $loginboxGreetingTextClass = '';
         /** @var string Greeting text class html markup */
         public $loginboxGreetingTextClassMarkup = '';
+        /** @var string redirect to this page after successful login */
+        public $loginboxRedirect = '';
+        /** @var int delay before redirecting */
+        public $loginboxRedirectTime = 0;
 
         /**
          * Load all widget settings from database and fill object
@@ -223,7 +227,18 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
                 $this->loginboxGreetingTextClassMarkup = '';
             }
 
-            $this->loginboxLogoutBtnMarkup = '<a href="logout" id="logoutBtn" class="'.$this->loginboxLogoutBtnClass.'" target="_self">'.$this->loginboxLogoutBtnText.'</a>';
+            /** LOGOUT BUTTON MARKUP */
+            if (isset($this->loginboxRedirect) && (!empty($this->loginboxRedirect)))
+            {
+                // prepare redirect url
+                $this->loginboxRedirect = rawurlencode($this->loginboxRedirect);
+                // logout button with redirect url
+                $this->loginboxLogoutBtnMarkup = '<a href="logout" id="logoutBtn" class="'.$this->loginboxLogoutBtnClass.'" target="_self">'.$this->loginboxLogoutBtnText.'</a>';
+            }
+            else
+                {   // logout button without redirect url
+                    $this->loginboxLogoutBtnMarkup = '<a href="logout" id="logoutBtn" class="'.$this->loginboxLogoutBtnClass.'" target="_self">'.$this->loginboxLogoutBtnText.'</a>';
+                }
 
             /** SET GREETING AND LOGOUT BUTTON */
             // maximum greeting
@@ -304,6 +319,8 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
                     <input type=\"text\" id=\"user\" name=\"user\" value=\"".$username."\" class=\"form-control\" placeholder=\"Benutzername\">
                     <input type=\"password\" id=\"password\" name=\"password\" value=\"".$password."\" class=\"form-control\" placeholder=\"Passwort\">
                     <input type=\"hidden\" name=\"login\" value=\"login\">
+                    <input type=\"hidden\" id=\"loginboxRedirect\" name=\"loginboxRedirect\" value=\"".$this->loginboxRedirect."\">
+                    <input type=\"hidden\" id=\"loginboxRedirectTime\" name=\"loginboxRedirectTime\" value=\"".$this->loginboxRedirectTime."\">
                     <input type=\"hidden\" id=\"loginboxLogoutBtnText\" name=\"logoutBtnText\" value=\"".$this->loginboxLogoutBtnText."\">
                     <input type=\"hidden\" id=\"loginboxLogoutBtnClass\" name=\"logoutBtnClass\" value=\"".$this->loginboxLogoutBtnClass."\">
                     <input type=\"hidden\" id=\"loginboxGreeting\" name=\"loginboxGreeting\" value=\"".$this->loginboxGreeting."\">

@@ -69,6 +69,8 @@ $(document).ready(function(){
         var	loginboxGreetingShowName = $('#loginboxGreetingShowName').val();
         var	loginboxLogoutBtnText = $('#loginboxLogoutBtnText').val();
         var	loginboxLogoutBtnClass = $('#loginboxLogoutBtnClass').val();
+        var	loginboxRedirect = $('#loginboxRedirect').val();
+        var	loginboxRedirectTime = $('#loginboxRedirectTime').val();
 
         // the logout button
         var logoutBtn = '<a href="logout" id="logoutBtn" class="'+loginboxLogoutBtnClass+'" target="_self">'+loginboxLogoutBtnText+'</a>';
@@ -116,6 +118,21 @@ $(document).ready(function(){
                             // hide login form
                             $("#heading").hide();
                             $("#loginForm").hide();
+
+                            // check if redirect url is set
+                            if (loginboxRedirect)
+                            {   // check if redirect time is set
+                                if (loginboxRedirectTime)
+                                {   // use delay before redirecting
+                                    setTimeout(function () {
+                                        window.location.href = ""+loginboxRedirect+"";
+                                    }, loginboxRedirectTime);
+                                }
+                                else
+                                    {   // redirect instant w/o delay
+                                        window.location.replace(""+loginboxRedirect+"");
+                                    }
+                            }
 
                             // if greeting text type is set to globaltext
                             if (loginboxGreetingTextType === "GLOBALTEXT")
