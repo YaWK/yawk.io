@@ -19,9 +19,9 @@ $(document).ready(function(){
 
     // check form function
     function checkForm(){
-        console.log('check form called');
-
-        $('#loginForm').validate({ // initialize the plugin
+        // console.log('check form called');
+        // initialize form validation plugin
+        $('#loginForm').validate({
             // set placement of error messages
             errorPlacement: function(error, element) {
             error.insertBefore(element);
@@ -63,8 +63,15 @@ $(document).ready(function(){
         // get greeting from form
         var	loginboxGreeting = $('#loginboxGreeting').val();
         var	loginboxGreetingText = $('#loginboxGreetingText').val();
+        var	loginboxGreetingTextType = $('#loginboxGreetingTextType').val();
+        var	loginboxGreetingTextClass = $('#loginboxGreetingTextClass').val();
         var	loginboxGreetingSubtext = $('#loginboxGreetingSubtext').val();
         var	loginboxGreetingShowName = $('#loginboxGreetingShowName').val();
+        var	loginboxLogoutBtnText = $('#loginboxLogoutBtnText').val();
+        var	loginboxLogoutBtnClass = $('#loginboxLogoutBtnClass').val();
+
+        // the logout button
+        var logoutBtn = '<a href="logout" id="logoutBtn" class="'+loginboxLogoutBtnClass+'" target="_self">'+loginboxLogoutBtnText+'</a>';
 
         // shake form function
         function shakeForm()
@@ -87,8 +94,8 @@ $(document).ready(function(){
             type:'POST',
             // allow cross origin requests
             crossOrigin: true,
-            // set async to false to avoid double calls
-            async: false,
+            // set async to false if you experience double calls
+            async: true,
             // data string
             data: {user: user, password: password},
             // data:'user='+user+'&password='+password,
@@ -105,21 +112,52 @@ $(document).ready(function(){
                     {   // ajax was succesful, check php return
                         if (data.status === true)
                         {   // login successful
-                            console.log('login true');
+                            // console.log('login true');
                             // hide login form
                             $("#heading").hide();
                             $("#loginForm").hide();
 
-                            if (loginboxGreeting === 'true')
-                            {
-                                if (loginboxGreetingShowName === 'true')
-                                {   // personal greeting with username
-                                    $("#thankYouMessage").append('<h2 class="animated fadeIn">'+loginboxGreetingText+' '+user+' <small>'+loginboxGreetingSubtext+'</small></h2>');
+                            // if greeting text type is set to globaltext
+                            if (loginboxGreetingTextType === "GLOBALTEXT")
+                            {   // use html paragraph
+                                loginboxGreetingTextType = 'p';
+                            }
+
+                            // only add class if it is not empty
+                            if (loginboxGreetingTextClass)
+                            {   // set text class markup
+                                var loginboxGreetingTextClassMarkup = ' class="'+loginboxGreetingTextClass+'"';
+                            }
+                            else
+                                {   // no markup needed
+                                    loginboxGreetingTextClassMarkup = '';
                                 }
-                                else
-                                    {   // greeting without name
-                                        $("#thankYouMessage").append('<h2 class="animated fadeIn">'+loginboxGreetingText+' <small>'+loginboxGreetingSubtext+'</small></h2>');
-                                    }
+
+                            // maximum greeting
+                            if (loginboxGreeting === "greeting-max")
+                            {   // do a personal greeting with username
+                                $("#thankYouMessage").append('<'+loginboxGreetingTextType+''+loginboxGreetingTextClassMarkup+'>'+loginboxGreetingText+' '+user+' <small>'+loginboxGreetingSubtext+'</small></'+loginboxGreetingTextType+'>'+logoutBtn+'');
+                            }
+
+                            // minimal greeting
+                            if (loginboxGreeting === "greeting-min")
+                            {
+                                // welcome message without name
+                                $("#thankYouMessage").append('<'+loginboxGreetingTextType+''+loginboxGreetingTextClassMarkup+'>'+loginboxGreetingText+' <small>'+loginboxGreetingSubtext+'</small></'+loginboxGreetingTextType+'>'+logoutBtn+'');
+                            }
+
+                            // no greeting, just a logout button
+                            if (loginboxGreeting === "greeting-button")
+                            {
+                                // display logout button
+                                $("#thankYouMessage").append(''+logoutBtn+'');
+                            }
+
+                            // no greeting, silent login mode
+                            if (loginboxGreeting === "greeting-none")
+                            {
+                                // no welcome message
+                                $("#thankYouMessage").hide();
                             }
                         }
                         else
@@ -127,7 +165,7 @@ $(document).ready(function(){
                                 // shake form
                                 shakeForm();
                                 // write failed state to console
-                                console.log('login failed');
+                                // console.log('login failed');
                             }
                     }
             },

@@ -31,6 +31,8 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
         public $loginboxLoginBtnText = "Login";
         /** @var string Logout Button Text */
         public $loginboxLogoutBtnText = "Logout";
+        /** @var string Logout Button html markup */
+        public $loginboxLogoutBtnMarkup = "";
         /** @var string Login Button CSS Class */
         public $loginboxLoginBtnClass = "btn btn-success";
         /** @var string Logout Button CSS Class */
@@ -57,10 +59,18 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
         public $loginboxGreeting = '';
         /** @var string Greeting Text */
         public $loginboxGreetingText = '';
+        /** @var string Greeting html markup */
+        public $loginboxGreetingMarkup = '';
         /** @var string Greeting Subtext */
         public $loginboxGreetingSubtext = '';
         /** @var bool true|false Show name within greeting? */
-        public $loginboxGreetingShowName= 'true';
+        public $loginboxGreetingShowName = 'true';
+        /** @var string Greeting text type */
+        public $loginboxGreetingTextType = 'h2';
+        /** @var string Greeting text class */
+        public $loginboxGreetingTextClass = '';
+        /** @var string Greeting text class html markup */
+        public $loginboxGreetingTextClassMarkup = '';
 
         /**
          * Load all widget settings from database and fill object
@@ -115,7 +125,7 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
          * @link http://yawk.io
          * @annotation Evaluate loginbox settings and prepare html markup
          */
-        public function setProperties()
+        public function setLoginProperties()
         {
             /** MARGIN TOP */
             // check if loginbox button margin top is set and not empty
@@ -189,6 +199,59 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
         }
 
         /**
+         * Set properties of greeting and logout button
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @annotation set properties of greeting and logout button
+         */
+        public function setLogoutProperties()
+        {
+            /** GREETING TEXT MARKUP */
+            // check text type (H1-H6 / globaltext)
+            if (isset($this->loginboxGreetingTextType) && ($this->loginboxGreetingTextType === "GLOBALTEXT"))
+            {   // set paragraph as default text type
+                $this->loginboxGreetingTextType = "p";
+            }
+            // check greeting text css class
+            if (isset($this->loginboxGreetingTextClass) && (!empty($this->loginboxGreetingTextClass)))
+            {   // only add class if it is not empty
+                $this->loginboxGreetingTextClassMarkup = ' class="'.$this->loginboxGreetingTextClass.'"';
+            }
+            else
+            {   // no markup needed
+                $this->loginboxGreetingTextClassMarkup = '';
+            }
+
+            $this->loginboxLogoutBtnMarkup = '<a href="logout" id="logoutBtn" class="'.$this->loginboxLogoutBtnClass.'" target="_self">'.$this->loginboxLogoutBtnText.'</a>';
+
+            /** SET GREETING AND LOGOUT BUTTON */
+            // maximum greeting
+            if ($this->loginboxGreeting === "greeting-max")
+            {   // do a personal greeting with username
+                    $this->loginboxGreetingMarkup = '<'.$this->loginboxGreetingTextType.$this->loginboxGreetingTextClassMarkup.'>'.$this->loginboxGreetingText.' '.$this->currentUser.' <small>'.$this->loginboxGreetingSubtext.'</small></'.$this->loginboxGreetingTextType.'>'.$this->loginboxLogoutBtnMarkup.'';
+            }
+
+            // minimal greeting
+            if ($this->loginboxGreeting === "greeting-min")
+            {   // greeting without name
+                $this->loginboxGreetingMarkup = '<'.$this->loginboxGreetingTextType.$this->loginboxGreetingTextClassMarkup.'>'.$this->loginboxGreetingText.' <small>'.$this->loginboxGreetingSubtext.'</small></'.$this->loginboxGreetingTextType.'>'.$this->loginboxLogoutBtnMarkup.'';
+            }
+
+            // no greeting, just a logout button
+            if ($this->loginboxGreeting === "greeting-button")
+            {   // display logout button
+                $this->loginboxGreetingMarkup = $this->loginboxLogoutBtnMarkup;
+            }
+
+            // no greeting, silent login mode
+            if ($this->loginboxGreeting === "greeting-none")
+            {   // no welcome message - do nothing
+                $this->loginboxGreetingMarkup = '';
+            }
+        }
+
+        /**
          * Load required javascript file
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
@@ -222,9 +285,8 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
          */
         public function drawLoginBox($db, $username, $password)
         {
-
             // first of all: get settings for this loginbox
-            $this->setProperties();
+            $this->setLoginProperties();
 
             // bootstrap layout markup
             echo "
@@ -242,8 +304,12 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
                     <input type=\"text\" id=\"user\" name=\"user\" value=\"".$username."\" class=\"form-control\" placeholder=\"Benutzername\">
                     <input type=\"password\" id=\"password\" name=\"password\" value=\"".$password."\" class=\"form-control\" placeholder=\"Passwort\">
                     <input type=\"hidden\" name=\"login\" value=\"login\">
+                    <input type=\"hidden\" id=\"loginboxLogoutBtnText\" name=\"logoutBtnText\" value=\"".$this->loginboxLogoutBtnText."\">
+                    <input type=\"hidden\" id=\"loginboxLogoutBtnClass\" name=\"logoutBtnClass\" value=\"".$this->loginboxLogoutBtnClass."\">
                     <input type=\"hidden\" id=\"loginboxGreeting\" name=\"loginboxGreeting\" value=\"".$this->loginboxGreeting."\">
                     <input type=\"hidden\" id=\"loginboxGreetingText\" name=\"loginboxGreetingText\" value=\"".$this->loginboxGreetingText."\">
+                    <input type=\"hidden\" id=\"loginboxGreetingTextType\" name=\"loginboxGreetingTextType\" value=\"".$this->loginboxGreetingTextType."\">
+                    <input type=\"hidden\" id=\"loginboxGreetingTextClass\" name=\"loginboxGreetingTextClass\" value=\"".$this->loginboxGreetingTextClass."\">
                     <input type=\"hidden\" id=\"loginboxGreetingSubtext\" name=\"loginboxGreetingSubtext\" value=\"".$this->loginboxGreetingSubtext."\">
                     <input type=\"hidden\" id=\"loginboxGreetingShowName\" name=\"loginboxGreetingShowName\" value=\"".$this->loginboxGreetingShowName."\">
                     <input type=\"$this->loginboxProcessingModeSubmitBtnType\" name=\"submit\" id=\"submit\" class=\"$this->loginboxLoginBtnClass\" value=\"$this->loginboxLoginBtnText\"$this->loginboxLoginBtnMarginMarkup> 
@@ -262,19 +328,18 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
          */
         public function drawLogoutButton($db)
         {
+            // get logout button settings
+            $this->setLogoutProperties();
+
             echo "
             <div class=\"container-fluid\">
             <div class=\"row\">
             <div class=\"col-md-12\">
-                <div id=\"logoutBtnWrapper\">Hallo <a href=\"welcome.html\" target=\"_self\"> ".$this->currentUser." </a>!&nbsp;&nbsp;
-                    <a href=\"welcome.html\" target=\"_self\"><i class=\"glyphicon glyphicon-home\"></i></a>&nbsp;&nbsp;
-		            <a href=\"".\YAWK\sys::getHost($db)."logout\" id=\"logoutBtn\" class=\"$this->loginboxLogoutBtnClass\" target=\"_self\">Logout</a>
-		        </div>
+                ".$this->loginboxGreetingMarkup."
             </div>
             </div>
             </div>";
         }
-
     }
 }
 ?>
