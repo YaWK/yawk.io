@@ -84,7 +84,6 @@ $(document).ready(function(){
         if (!password.trim() || (!user.trim())) {
             // shake the form elements to get users attention
             shakeForm();
-            // $( "#loginForm" ).effect( "shake", {times:3}, 820 );
             return false;
         }
 

@@ -286,7 +286,7 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
                 echo "<script type=\"text/javascript\" src=\"system/engines/jquery/messages_de.min.js\"></script>";
             }
             // load ajax file
-            echo "<script type=\"text/javascript\" src=\"system/widgets/loginbox/js/loginbox.ajax.js\"></script>";
+            echo "<script type=\"text/javascript\" src=\"system/widgets/loginbox/js/loginbox.ajax.min.js\"></script>";
         }
 
         /**
