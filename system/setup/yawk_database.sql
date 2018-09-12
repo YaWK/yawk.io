@@ -2017,7 +2017,7 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('plyrDisableContextMenu', 'true', 34, 1, 3, 'LABEL_PLYR_DISABLE_CONTEXT_MENU', '', '', '', 'DESC_PLYR_DISABLE_CONTEXT_MENU', 'form-control', 'select', '', 'true,True:false,False', 169),
 ('plyrHideControls', 'true', 34, 1, 3, 'LABEL_PLYR_HIDE_CONTROLS', '', '', '', 'DESC_PLYR_HIDE_CONTROLS', 'form-control', 'select', '', 'true,True:false,False', 170),
 ('plyrShowPosterOnEnd', 'true', 34, 1, 3, 'LABEL_PLYR_SHOW_POSTER_ON_END', '', '', '', 'DESC_PLYR_SHOW_POSTER_ON_END', 'form-control', 'select', '', 'true,True:false,False', 171),
-('responsiveAudioJS', '//vws.responsivevoice.com/v/e?key=S2mbnNTl', 35, 1, 1, 'LABEL_RESP_VOICE', '', '', '', 'DESC_RESP_VOICE', 'form-control', 'input', 'PH_RESP_VOICE', '', 172),
+('socialBarHeading', '', 35, 1, 90, 'LABEL_SOCIALBAR_HEADING', '', '', '', 'DESC_SOCIALBAR_HEADING', 'form-control', '', 'PH_SOCIALBAR_HEADING', '', 172),
 ('fuckAdBlockTitle', 'AdBlock detected...', 36, 1, 1, 'LABEL_ADBLOCK_TITLE', '', '', '', 'DESC_ADBLOCK_TITLE', 'form-control', 'input', 'PH_ADBLOCK_TITLE', '', 173),
 ('fuckAdBlockText', 'It seems that you are using AdBlock. We truely understand this. But please, be fair and disable Adblock to support our project. It is on your own to help us. Thank you.', 36, 1, 2, 'LABEL_ADBLOCK_TEXT', '', '', '', 'DESC_ADBLOCK_TEXT', 'form-control', 'textarea', 'PH_ADBLOCK_TEXT', '', 174),
 ('fuckAdBlockLevel', 'low', 36, 1, 0, 'LABEL_ADBLOCK_LEVEL', '', '', '', 'DESC_ADBLOCK_LEVEL', 'form-control', 'select', '', 'low,Low Level:high,High Level', 175),
@@ -2154,7 +2154,17 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('loginboxGreetingTextType', 'H2', 1, 1, 42, 'LABEL_LOGINBOX_GREETING_TEXT_TYPE', '', '', '', 'DESC_LOGINBOX_GREETING_TEXT_TYPE', 'form-control', 'select', '', 'H1,H1:H2,H2:H3,H3:H4,H4:H5,H5:H6,H6:GLOBALTEXT,GLOBALTEXT', 308),
 ('loginboxGreetingTextClass', 'animated fadeIn', 1, 1, 25, 'LABEL_LOGINBOX_GREETING_TEXT_CLASS', '', '', '', 'DESC_LOGINBOX_GREETING_TEXT_CLASS', 'form-control', '', 'PH_LOGINBOX_GREETING_TEXT_CLASS', '', 309),
 ('loginboxRedirect', '', 1, 1, 32, 'LABEL_LOGINBOX_REDIRECT', '', '', '', 'DESC_LOGINBOX_REDIRECT', 'form-control', '', 'PH_LOGINBOX_REDIRECT', '', 310),
-('loginboxRedirectTime', '', 1, 1, 33, 'LABEL_LOGINBOX_REDIRECT_TIME', '', '', '', 'DESC_LOGINBOX_REDIRECT_TIME', 'form-control', '', 'PH_LOGINBOX_REDIRECT_TIME', '', 311);
+('loginboxRedirectTime', '', 1, 1, 33, 'LABEL_LOGINBOX_REDIRECT_TIME', '', '', '', 'DESC_LOGINBOX_REDIRECT_TIME', 'form-control', '', 'PH_LOGINBOX_REDIRECT_TIME', '', 311),
+('socialBarSubtext', '', 35, 1, 91, 'LABEL_SOCIALBAR_SUBTEXT', '', '', '', 'DESC_SOCIALBAR_SUBTEXT', 'form-control', '', 'PH_SOCIALBAR_SUBTEXT', '', 312),
+('socialBarFacebook', '', 35, 1, 1, 'LABEL_SOCIALBAR_FACEBOOK', '', '', '', 'DESC_SOCIALBAR_FACEBOOK', 'form-control', '', 'PH_SOCIALBAR_FACEBOOK', '', 313),
+('socialBarYoutube', '', 35, 1, 3, 'LABEL_SOCIALBAR_YOUTUBE', '', '', '', 'DESC_SOCIALBAR_YOUTUBE', 'form-control', '', 'PH_SOCIALBAR_YOUTUBE', '', 314),
+('socialBarPinterest', '', 35, 1, 6, 'LABEL_SOCIALBAR_PINTEREST', '', '', '', 'DESC_SOCIALBAR_PINTEREST', 'form-control', '', 'PH_SOCIALBAR_PINTEREST', '', 315),
+('socialBarInstagram', '', 35, 1, 2, 'LABEL_SOCIALBAR_INSTAGRAM', '', '', '', 'DESC_SOCIALBAR_INSTAGRAM', 'form-control', '', 'PH_SOCIALBAR_INSTAGRAM', '', 316),
+('socialBarTwitter', '', 35, 1, 4, 'LABEL_SOCIALBAR_TWITTER', '', '', '', 'DESC_SOCIALBAR_TWITTER', 'form-control', '', 'PH_SOCIALBAR_TWITTER', '', 317),
+('socialBarTumblr', '', 35, 1, 5, 'LABEL_SOCIALBAR_TUMBLR', '', '', '', 'DESC_SOCIALBAR_TUMBLR', 'form-control', '', 'PH_SOCIALBAR_TUMBLR', '', 318),
+('socialBarLinkedIn', '', 35, 1, 7, 'LABEL_SOCIALBAR_LINKEDIN', '', '', '', 'DESC_SOCIALBAR_LINKEDIN', 'form-control', '', 'PH_SOCIALBAR_LINKEDIN', '', 319),
+('socialBarXing', '', 35, 1, 8, 'LABEL_SOCIALBAR_XING', '', '', '', 'DESC_SOCIALBAR_XING', 'form-control', '', 'PH_SOCIALBAR_XING', '', 320),
+('socialBarGooglePlus', '', 35, 1, 9, 'LABEL_SOCIALBAR_GOOGLEPLUS', '', '', '', 'DESC_SOCIALBAR_GOOGLEPLUS', 'form-control', '', 'PH_SOCIALBAR_GOOGLEPLUS', '', 321);
 
 CREATE TABLE `cms_widget_settings` (
   `id` int(11) NOT NULL,
@@ -2218,7 +2228,7 @@ INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`)
 (32, 1, 'jPlayer Audio', 'jplayer', 'jPlayer Audio Player with playlist feature'),
 (33, 1, 'jPlayer Video', 'jplayer_video', 'jPlayer Video Player with playlist feature'),
 (34, 1, 'Plyr HTML5 Player', 'plyr', 'A simple, accessible HTML5 media player by @sam_potts'),
-(35, 1, 'Responsive Voice JS', 'responsiveVoiceJS', 'Instant Text-To-Speech with Voice Consistency Across Devices'),
+(35, 1, 'Social Bar', 'socialBar', 'Display icons and links to your social media profiles'),
 (36, 1, 'AdBlock Blocker', 'fuckadblock', 'Detect and block AdBlocker'),
 (37, 1, 'Content Animator', 'contentAnimator', 'Enable Slide Animations for your content'),
 (38, 1, 'Embed Page', 'embed_page', 'Embed any of your static pages'),
@@ -2438,7 +2448,7 @@ ALTER TABLE `cms_user_groups`
 ALTER TABLE `cms_widgets`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_defaults`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=311;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=321;
 ALTER TABLE `cms_widget_settings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_types`
