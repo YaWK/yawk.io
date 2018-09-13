@@ -1,87 +1,10 @@
 <?php
-// set default values
-$spotifyEmbedCode='<iframe src="https://embed.spotify.com/?uri=spotify%3Atrack%3A30LDuVfrePWbedYTc1mUCn" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>';
-$spotifyWidth="100%";
-$spotifyHeight="380";
-$heading = '';
-$subtext = '';
-
-// $_GET['widgetID'] will be generated in \YAWK\widget\loadWidgets($db, $position)
-if (isset($_GET['widgetID']))
-{
-    // widget ID
-    $widgetID = $_GET['widgetID'];
-
-    // get widget settings from db
-    $res = $db->query("SELECT * FROM {widget_settings}
-	                        WHERE widgetID = '".$widgetID."'
-	                        AND activated = '1'");
-    while($row = mysqli_fetch_assoc($res))
-    {   // set widget properties and values into vars
-        $w_property = $row['property'];
-        $w_value = $row['value'];
-        $w_widgetType = $row['widgetType'];
-        $w_activated = $row['activated'];
-        /* end of get widget properties */
-
-        /* filter and load those widget properties */
-        if (isset($w_property)){
-            switch($w_property)
-            {
-                /* url of the video to stream */
-                case 'spotifyEmbedCode';
-                    $spotifyEmbedCode = $w_value;
-                    break;
-
-                /* spotify width in px or & */
-                case 'spotifyWidth';
-                    $spotifyWidth = $w_value;
-                    break;
-
-                /* spotify height */
-                case 'spotifyHeight';
-                    $spotifyHeight = $w_value;
-                    break;
-
-                /* heading */
-                case 'spotifyHeading';
-                    $heading = $w_value;
-                    break;
-
-                /* subtext */
-                case 'spotifySubtext';
-                    $subtext = $w_value;
-                    break;
-            }
-        } /* END LOAD PROPERTIES */
-    } // end while fetch row (fetch widget settings)
+/** @var $db \YAWK\db */
+if (!isset($spotify))
+{   // load spotify widget class
+    require_once 'classes/spotify.php';
+    // create new spotify widget object
+    $spotify = new \YAWK\WIDGETS\SPOTIFY\EMBED\spotify($db);
 }
-
-// if a heading is set and not empty
-if (isset($heading) && (!empty($heading)))
-{   // add a h1 tag to heading string
-    $heading = "$heading";
-
-    // if subtext is set, add <small> subtext to string
-    if (isset($subtext) && (!empty($subtext)))
-    {   // build a headline with heading and subtext
-        $subtext = "<small>$subtext</small>";
-        $headline = "<h1>$heading&nbsp;"."$subtext</h1>";
-    }
-    else
-    {   // build just a headline - without subtext
-        $headline = "<h1>$heading</h1>";    // draw just the heading
-    }
-}
-else
-{   // leave empty if it's not set
-    $headline = '';
-}
-
-// switch plain youtube url to correct embed url string
-$spotifyEmbedCode = str_replace("width=\"300\"","width=\"$spotifyWidth\"",$spotifyEmbedCode);
-$spotifyEmbedCode = str_replace("height=\"380\"","height=\"$spotifyHeight\"",$spotifyEmbedCode);
-
-echo $headline;
-echo $spotifyEmbedCode;
-?>
+// init spotify widget
+$spotify->init();
