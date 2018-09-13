@@ -1728,7 +1728,7 @@ namespace YAWK {
         /**
          * check if objects exists and display their data
          */
-        static function outputObjects($template, $controller, $page, $user, $stats)
+        static function outputObjects($template, $lang, $controller, $page, $user, $stats)
         {
             $objects = get_defined_vars();
             if (isset($objects) && (is_array($objects)))

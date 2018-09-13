@@ -48,8 +48,6 @@ namespace YAWK {
          */
         public function displaySubMenu($db, $menuID)
         {   /** @var \YAWK\db  $db */
-            if ($this->isPublished($db, $menuID))
-            {
                 // get menu entries and draw navbar
                 $res = $db->query("SELECT * FROM {menu}
                                WHERE published = 1 
@@ -64,7 +62,6 @@ namespace YAWK {
                 echo "    </ul>
                     <button class=\"btn btn-danger navbar-btn\">Button</button>
                 </nav>";
-            }
         }
 
 
