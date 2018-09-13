@@ -156,7 +156,14 @@ namespace YAWK\WIDGETS\SOCIALBAR\DISPLAY
                     return false;
                 }
         }
-        
+
+        /**
+         * Filter and sanitize any socialBar URL
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @annotation filter, sanitize and strip tags from URLs
+         */
         public function filterUrl($url)
         {   // check if url is set and not empty
             if (isset($url) && (!empty($url)))
@@ -173,6 +180,13 @@ namespace YAWK\WIDGETS\SOCIALBAR\DISPLAY
                 }
         }
 
+        /**
+         * Draw social bar
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @annotation Set settings and draw social bar
+         */
         public function drawSocialBar()
         {
             // check if social bar elements array is set
@@ -264,7 +278,6 @@ namespace YAWK\WIDGETS\SOCIALBAR\DISPLAY
                 echo "</div>";
             }
         }
-
     }
 }
 ?>
