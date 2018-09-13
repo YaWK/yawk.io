@@ -71,8 +71,12 @@ namespace YAWK\WIDGETS\SOCIALBAR\DISPLAY
         public $socialBarLinkColor = '';
         /** @var array Social Bar Elements */
         public $socialBarElements = '';
-        /** @var array Social Bar Size */
+        /** @var string Social Bar Size */
         public $socialBarSize = 'H2';
+        /** @var string Social Bar Alignment (horizontal or vertical */
+        public $socialBarAlign = 'horizontal';
+        /** @var string Social Bar CSS Class */
+        public $socialBarClass = '';
 
         /**
          * Load all widget settings from database and fill object
@@ -205,15 +209,53 @@ namespace YAWK\WIDGETS\SOCIALBAR\DISPLAY
                             $title = '';
                         }
 
+                        // check alignment
+                        if (isset($this->socialBarAlign) && (!empty($this->socialBarAlign)))
+                        {   // if alignment is set to vertical
+                            if ($this->socialBarAlign === 'vertical')
+                            {   // generate linebreak markup
+                                $lineBreak = "<br>";
+                            }
+                            else
+                                {   // no linebreak, two blank spaces instead
+                                    $lineBreak = '&nbsp;&nbsp;';
+                                }
+                        }
+                        else
+                            {   // no alignment set - two blank spaces are default
+                                $lineBreak = '&nbsp;&nbsp;';
+                            }
+
                         // check if icon is set
                         if (isset($data['icon']) && (!empty($data['icon'])))
                         {
+                            // check social bar element class
+                            if (isset($this->socialBarClass) && (!empty($this->socialBarClass)))
+                            {   // set css class for this element
+                                $cssClass = " ".$this->socialBarClass."";
+                            }
+                            else
+                            {   // no class required, leave empty
+                                $cssClass = '';
+                            }
+
                             // draw social button
-                            echo "<a href=\"$data[url]\"".$this->socialBarLinkColor."$title target=\"$this->socialBarLinkTarget\"><i class=\"$data[icon]\"></i></a>&nbsp; ";
+                            echo "<a href=\"$data[url]\"".$this->socialBarLinkColor."$title target=\"$this->socialBarLinkTarget\"><i class=\"$data[icon]".$cssClass."\"></i></a>".$lineBreak."";
                         }
                         else
-                            {   // draw textlink
-                                echo "<a href=\"$data[url]\" title=\"$this->socialBarLinkTitle\" target=\"$this->socialBarLinkTarget\">$data[url]</a> ";
+                            {
+                                // check social bar element class
+                                if (isset($this->socialBarClass) && (!empty($this->socialBarClass)))
+                                {   // set css class for this element
+                                    $cssClass = " class=\"".$this->socialBarClass."\"";
+                                }
+                                else
+                                {   // no class required, leave empty
+                                    $cssClass = '';
+                                }
+
+                                // draw textlink
+                                echo "<a href=\"$data[url]\" title=\"$this->socialBarLinkTitle\" target=\"$this->socialBarLinkTarget\"".$cssClass.">$data[url]</a>".$lineBreak."";
                             }
                     }
                 }
