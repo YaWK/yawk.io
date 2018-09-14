@@ -1,4 +1,4 @@
-<h1>Attention: work in progress! <small>this project is done when it's done. (release soon)</small></h1>
+<h1>Attention: work in progress! <br><small>this project is done when it's done. (release soon)</small></h1>
 
 Official Website: http://yawk.io<br>
 Documentation: http://docs.yawk.io
