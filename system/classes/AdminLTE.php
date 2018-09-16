@@ -100,7 +100,7 @@ namespace YAWK {
     ".$this->paceLoader."
         
     <!-- Bootstrap 3.3.5 -->
-    <link rel=\"stylesheet\" href=\"../system/engines/bootstrap/dist/css/bootstrap.min.css\">
+    <link rel=\"stylesheet\" href=\"../system/engines/bootstrap3/dist/css/bootstrap.min.css\">
     <!-- Animate CSS -->
     <link rel=\"stylesheet\" href=\"../system/engines/animateCSS/animate.min.css\">
     <!-- Font Awesome -->
@@ -1230,7 +1230,7 @@ namespace YAWK {
         <!-- jQuery 1.11.3
         <script type=\"text/javascript\" src=\"../system/engines/jquery/jquery-1.11.3.min.js\"></script> -->
         <!-- Bootstrap 3.3.5 -->
-        <script type=\"text/javascript\" src=\"../system/engines/bootstrap/dist/js/bootstrap.min.js\"></script>
+        <script type=\"text/javascript\" src=\"../system/engines/bootstrap3/dist/js/bootstrap.min.js\"></script>
         <!-- data table -->
         <script type=\"text/javascript\" src=\"../system/engines/jquery/jquery.dataTables.min.js\"></script>
         <!-- AdminLTE App -->
