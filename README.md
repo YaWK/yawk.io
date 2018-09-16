@@ -1,7 +1,7 @@
 <h1>Attention: work in progress! <br><small>this project is done when it's done. (release soon)</small></h1>
 
-Official Website: <b>http://yawk.io</b><br>
-Documentation: <b>http://docs.yawk.io</b>
+Official Website: <b>https://yawk.io</b><br>
+Documentation: <b>https://docs.yawk.io</b>
 
 <h1>What is YaWK?</h1>
 <b>YaWK</b> = <b>Y</b>et <b>a</b>nother <b>W</b>eb<b>K</b>it<br> 
