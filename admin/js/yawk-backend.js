@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    /* modal dialog data-confirm */
+    //  modal dialog data-confirm
     $('a[data-confirm]').click(function(ev) {
         modal = '#dataConfirmModal';
         var href = $(this).attr('href');
@@ -16,29 +16,25 @@ $(document).ready(function() {
 
 
     function dismissNotifications(uid) {
-        // alert(uid);
         $.ajax({    // do ajax request
-            url: 'js/dismiss-notifications.php',
-            type: 'post',
-            data: 'uid=' + uid,
+            url: 'js/dismiss-notification.php',
+            type: 'POST',
             success: function (data) {
                 if (!data) {
                     alert('Something went wrong!');
                     return false;
                 }
-                else {
-                    $(data).hide().prependTo('#notificationDropdown');
-                    $('#notification-header').html('You have 0 notifications');
-                    $('#notification-menu').fadeOut();
-                }
             }
         });
+        // fade away the orange label on top
+        $("#bell-label").fadeOut();
+        $('#notification-header').html('You have 0 notifications');
+        $('#notification-menu').fadeOut();
     }
 
     // NOTIFICATION DISMISS BTN
     $("#dismiss").click(function()
-    {   // fade away the orange label on top
-        $("#bell-label").fadeOut();
+    {   // get uid from data value
         var uid = $(this).attr('data-uid');
         dismissNotifications(uid);
     });
