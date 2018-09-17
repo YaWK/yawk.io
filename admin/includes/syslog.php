@@ -34,7 +34,7 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
         {   // delete all user notifications
             if ($db->query("TRUNCATE TABLE {notifications}"))
             {   // success, reload page
-                \YAWK\alert::draw("success", "$lang[SYSLOG_DATA_DEL]", "$lang[SYSLOG_DATA_DEL_SUBTEXT]","index.php?page=syslog",4200);
+                \YAWK\alert::draw("success", "$lang[SYSLOG_DATA_DEL]", "$lang[SYSLOG_DATA_DEL_SUBTEXT]","",3600);
             }
         }
         else
@@ -52,7 +52,12 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
 
             <!-- btn clear log -->
             <a class="btn btn-success pull-right" role="dialog" title="<?php echo $lang['SYSLOG_CLEAR'];?>" data-confirm="<?php echo $lang['SYSLOG_DEL_CONFIRM']; ?>" href="index.php?page=syslog&clear=1">
-                <i class="fa fa-trash-o"></i> &nbsp;<?php print $lang['SYSLOG_CLEAR']; ?></a>
+                <i class="fa fa-trash-o"></i> &nbsp;<?php print $lang['SYSLOG_CLEAR']; ?>
+            </a>
+            <!-- btn syslog settings -->
+            <a class="btn btn-default pull-right" title="<?php echo $lang['SETTINGS'];?>" href="index.php?page=syslo-settings">
+                <i class="fa fa-cog"></i> &nbsp;<?php print $lang['SETTINGS']; ?>
+            </a>
 
 <table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-striped table-hover table-responsive" id="table-sort">
     <thead>
