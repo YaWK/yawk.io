@@ -4,9 +4,9 @@
             "bPaginate": false,
             "bLengthChange": false,
             "bFilter": true,
-            "bSort": false,
+            "bSort": true,
             "bInfo": true,
-            "bAutoWidth": false
+            "bAutoWidth": true
         } );
     } );
 </script>
@@ -51,7 +51,7 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
         <div class="box-body">
 
             <!-- btn clear log -->
-            <a class="btn btn-success pull-right" role="dialog" data-confirm="<?php echo $lang['SYSLOG_DEL_CONFIRM']; ?>" href="index.php?page=syslog&clear=1">
+            <a class="btn btn-success pull-right" role="dialog" title="<?php echo $lang['SYSLOG_CLEAR'];?>" data-confirm="<?php echo $lang['SYSLOG_DEL_CONFIRM']; ?>" href="index.php?page=syslog&clear=1">
                 <i class="fa fa-trash-o"></i> &nbsp;<?php print $lang['SYSLOG_CLEAR']; ?></a>
 
 <table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-striped table-hover table-responsive" id="table-sort">
@@ -68,7 +68,7 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
     <tbody>
     <?php
     /* load complete syslog, get all notifications */
-    $syslog = \YAWK\user::getAllNotifications($db, $lang);
+    $syslog = \YAWK\sys::getSyslog($db);
     if (is_array($syslog))
     {
         foreach ($syslog AS $log)
@@ -78,7 +78,7 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
             $log['property'] = strtoupper($log['property']);
             // calculate time ago view
             $time_ago = \YAWK\sys::time_ago($log['log_date'], $lang);
-
+            // 1 tbl row per syslog line
             echo "<tr class=\"".$log['type']."\">
                     <td>".$log['log_id']."</td>
                     <td><b>".$log['property']."</b></td>
@@ -92,4 +92,5 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
     ?>
     </tbody>
 </table>
-        </div></div>
+</div>
+</div>
