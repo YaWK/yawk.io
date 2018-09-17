@@ -14,7 +14,6 @@ $(document).ready(function() {
         return false;
     });
 
-
     function dismissNotifications(uid) {
         $.ajax({    // do ajax request
             url: 'js/dismiss-notification.php',
