@@ -2406,20 +2406,11 @@ namespace YAWK {
          */
         static function getAllNotifications($db, $lang)
         {   /** @var $db \YAWK\db */
-            if (isset($_GET['page']) && ($_GET['page'] === "syslog"))
-            {   // is call comes from syslog backend page,
-                // empty where clause to select all data from db
-                $where = '';
-            }
-            else
-            {   // call comes from notification menum just select all unread data
-                $where = "WHERE log.seen = '0'";
-            }
 
             if ($sql = $db->query("SELECT * FROM {syslog} AS log
                                        LEFT JOIN {syslog_types} AS types ON log.log_type=types.id
                                        LEFT JOIN {users} AS u ON log.fromUID=u.id
-                                       $where
+                                       WHERE log.seen = '0'
                                        GROUP BY log.log_id
                                        ORDER BY log.log_date DESC"))
             {   // create array
@@ -2466,7 +2457,7 @@ namespace YAWK {
             }
             else
             {   // q failed
-                \YAWK\sys::setSyslog($db, 3, "failed to get my notifications.", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 3, "failed to get my notifications.", $uid, 0, 0, 0);
                 return false;
             }
         }

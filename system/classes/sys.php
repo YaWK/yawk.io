@@ -1668,6 +1668,44 @@ namespace YAWK {
                     return null;
                 }
         }
+        /**
+         * get all syslog entries
+         * @author      Daniel Retzl <danielretzl@gmail.com>
+         * @version     1.0.0
+         * @link        http://yawk.io
+         * @param object $db database
+         * @return array|bool $syslogResults
+         */
+        static function getSyslog($db)
+        {   /** @var $db \YAWK\db */
+            // get syslog data from db
+            $syslogResults = array();
+            if ($res = $db->query("SELECT * FROM {syslog} AS log
+                                       LEFT JOIN {syslog_types} AS types ON log.log_type=types.id
+                                       LEFT JOIN {users} AS u ON log.fromUID=u.id
+                                       GROUP BY log.log_id
+                                       ORDER BY log.log_date DESC"))
+            {   // syslog entry set
+                while ($row = mysqli_fetch_assoc($res))
+                // check if array is set and not empty
+                {   // build syslog results array
+                    $syslogResults[] = $row;
+                }
+                // check if syslog array is set and not empty
+                if (is_array($syslogResults) && (!empty($syslogResults)))
+                {   // all good...
+                    return $syslogResults;
+                }
+                else
+                    {   // array is not set or empty
+                        return false;
+                    }
+            }
+            else
+            {   // failed to query syslog data from db
+                return false;
+            }
+        }
 
         /**
          * set a system notification for any user or admin
