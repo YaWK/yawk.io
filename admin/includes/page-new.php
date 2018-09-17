@@ -35,7 +35,7 @@ echo"<ol class=\"breadcrumb\">
     /* create page function */
     if($page->create($db, $alias, $menuID, $locked, $blogid, $plugin))
     {
-        YAWK\sys::setNotification($db, 1, "$lang[PAGE] $alias.html $lang[CREATED].", $user->id, 0, 0, 0);
+        // YAWK\sys::setNotification($db, 1, "$lang[PAGE] $alias.html $lang[CREATED].", $user->id, 0, 0, 0);
         \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[PAGE] $lang[CREATED]","","420");
         \YAWK\backend::setTimeout("index.php?page=pages",1260);
     }
