@@ -183,7 +183,7 @@ class controller
             {
                 // call from backend, set path correctly
                 if (!isset($db)) { $db = new \YAWK\db(); }
-                \YAWK\sys::setSyslog($db, 5, "404 ERROR $notfound", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 5, 1, "404 ERROR $notfound", 0, 0, 0, 0);
                 $filename = "../content/errors/404.php";
                 return $filename;
             }

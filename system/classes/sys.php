@@ -1604,15 +1604,16 @@ namespace YAWK {
          * @version     1.0.0
          * @link        http://yawk.io
          * @param object $db database
-         * @param int $log_type type to log?
+         * @param int    $log_category log category
+         * @param int    $log_type log type (info = 0 , warning = 1, error = 2)
          * @param string $message logging message
-         * @param int $fromUID affected from UID
-         * @param int $toUID affected to UID
-         * @param int $toGID affected GID
-         * @param int $seen 0|1 status if this entry has been overviewed
+         * @param int    $fromUID affected from UID
+         * @param int    $toUID affected to UID
+         * @param int    $toGID affected GID
+         * @param int    $seen 0|1 status if this entry has been overviewed
          * @return bool|null
          */
-        static function setSyslog($db, $log_type, $message, $fromUID, $toUID, $toGID, $seen)
+        static function setSyslog($db, $log_category, $log_type, $message, $fromUID, $toUID, $toGID, $seen)
         {   /** @var $db \YAWK\db */
             // THIS DB STORES ALL THE SYSLOG FOR ADMINISTRATOR REASONS
             // insert admin-friendly message of all data into syslog db
@@ -1620,21 +1621,28 @@ namespace YAWK {
             // get current log date
             $log_date = sys::now();
 
-            // check if log_type is empty
-            if (!isset($log_type) || (empty($log_type) || ($log_type === "0")))
-            {   // default value: system settings (type 1)
-                $log_type = 1;
-            }
-            // check if message is empty
-            if (!isset($message) || (empty($message) || ($message === "0")))
-            {   // default value
-                if (isset($_GET['page'])) { $page = $_GET['page']; } else { $page = 'no page set.'; }
-                $message = "something happened, but no text was set for logging. $page";
-            }
-
             // check if syslog is enabled
             if (\YAWK\settings::getSetting($db, "syslogEnable") === "1")
-            {   // check, if fromUID (user that affected the event) is set
+            {
+                // check if log_category is empty
+                if (!isset($log_category) || (empty($log_category) || ($log_category === "0")))
+                {   // default value: system settings (type 1)
+                    $log_category = 1;
+                }
+                // check if message is empty
+                if (!isset($message) || (empty($message) || ($message === "0")))
+                {   // default value
+                    if (isset($_GET['page'])) { $page = $_GET['page']; } else { $page = 'no page set.'; }
+                    $message = "something happened, but no text was set for logging. $page";
+                }
+
+                // check if log type is set
+                if (!isset($log_type) ||(empty($log_type)))
+                {
+                    $log_type = 0;
+                }
+
+                // check, if fromUID (user that affected the event) is set
                 if (!isset($fromUID) || (empty($fromUID) || ($fromUID === "0")))
                 {   // check if session uid is set
                     if (isset($_SESSION['uid']))
@@ -1647,8 +1655,9 @@ namespace YAWK {
                     }
                 }
                 // insert syslog entry into db
-                if ($db->query("INSERT INTO {syslog} (log_date, log_type,message,fromUID,toUID,toGID,seen)
+                if ($db->query("INSERT INTO {syslog} (log_date, log_category, log_type, message, fromUID, toUID, toGID, seen)
                                         VALUES ('".$log_date."',
+                                                '".$log_category."',
                                                 '".$log_type."',
                                                 '".$message."',
                                                 '".$fromUID."',
@@ -1681,7 +1690,7 @@ namespace YAWK {
             // get syslog data from db
             $syslogResults = array();
             if ($res = $db->query("SELECT * FROM {syslog} AS log
-                                       LEFT JOIN {syslog_types} AS types ON log.log_type=types.id
+                                       LEFT JOIN {syslog_categories} AS category ON log.log_category=category.id
                                        LEFT JOIN {users} AS u ON log.fromUID=u.id
                                        GROUP BY log.log_id
                                        ORDER BY log.log_date DESC"))
@@ -1710,22 +1719,24 @@ namespace YAWK {
         /**
          * set a system notification for any user or admin
          * @param object $db database
-         * @param int $log_type type to log
-         * @param int $msg_id message id
-         * @param int $fromUID affected from user ID
-         * @param int $toUID affected to user ID
-         * @param int $toGID affected to group ID
-         * @param int $seen 0|1 status if notification has been seen
+         * @param int    $log_category log category
+         * @param int    $log_category log type
+         * @param int    $msg_id message id
+         * @param int    $fromUID affected from user ID
+         * @param int    $toUID affected to user ID
+         * @param int    $toGID affected to group ID
+         * @param int    $seen 0|1 status if notification has been seen
          * @return bool
          */
-        static function setNotification($db, $log_type, $msg_id, $fromUID, $toUID, $toGID, $seen)
+        static function setNotification($db, $log_category, $log_type, $msg_id, $fromUID, $toUID, $toGID, $seen)
         {   /** @var $db \YAWK\db */
             // THIS ARE THE MESSAGES FOR END-USERS
             // (a copy of syslog) DUE PERFORMANCE REASONS
             // (only user-messages, no system messages...)
             // insert user-friendly message into notifications db
             if ($db->query("INSERT INTO {notifications} (log_type,msg_id,fromUID,toUID,toGID,seen)
-                                        VALUES ('".$log_type."',
+                                        VALUES ('".$log_category."',
+                                                '".$log_type."',
                                                 '".$msg_id."',
                                                 '".$fromUID."',
                                                 '".$toUID."',

@@ -293,6 +293,7 @@ CREATE TABLE `cms_newsletter` (
 CREATE TABLE `cms_notifications` (
   `log_id` int(11) NOT NULL,
   `log_date` datetime DEFAULT NULL,
+  `log_category` int(11) NOT NULL DEFAULT '0',
   `log_type` int(11) NOT NULL DEFAULT '0',
   `msg_id` int(11) NOT NULL DEFAULT '0',
   `fromUID` int(11) NOT NULL DEFAULT '0',
@@ -635,6 +636,7 @@ CREATE TABLE `cms_stats` (
 CREATE TABLE `cms_syslog` (
   `log_id` int(11) NOT NULL,
   `log_date` datetime DEFAULT NULL,
+  `log_category` int(11) NOT NULL DEFAULT '0',
   `log_type` int(11) NOT NULL DEFAULT '0',
   `message` varchar(255) NOT NULL,
   `fromUID` int(11) NOT NULL DEFAULT '0',
@@ -643,7 +645,7 @@ CREATE TABLE `cms_syslog` (
   `seen` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `cms_syslog_types` (
+CREATE TABLE `cms_syslog_categories` (
   `id` int(11) NOT NULL,
   `active` int(1) NOT NULL DEFAULT '1',
   `property` varchar(255) NOT NULL,
@@ -651,7 +653,7 @@ CREATE TABLE `cms_syslog_types` (
   `type` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `cms_syslog_types` (`id`, `active`, `property`, `icon`, `type`) VALUES
+INSERT INTO `cms_syslog_categories` (`id`, `active`, `property`, `icon`, `type`) VALUES
 (1, 1, 'system', 'fa fa-wrench', 'text-default'),
 (2, 1, 'pages', 'fa fa-wordpress', 'text-default'),
 (3, 1, 'user', 'fa fa-user-plus', 'text-blue'),

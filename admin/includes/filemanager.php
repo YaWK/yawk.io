@@ -145,7 +145,7 @@ if (isset($_POST['upload']))
             {   // store uploaded file
                 $file = basename( $_FILES['file']['name']);
                 // ok, set syslog entry
-                \YAWK\sys::setSyslog($db, 7, "$lang[UPLOADED] <b>$file</b>", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 7, 0, "$lang[UPLOADED] <b>$file</b>", 0, 0, 0, 0);
                 // upload OK, throw alert msg
                 print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[UPLOAD_SUCCESSFUL]: $lang[FILE] <strong>".$file."</strong>", "", 800);
             }
@@ -153,7 +153,7 @@ if (isset($_POST['upload']))
             {   // could not upload file, throw error
                 $file = basename( $_FILES['file']['name']);
                 // failed - set syslog entry
-                \YAWK\sys::setSyslog($db, 5, "$lang[UPLOAD_FAILED] <b>$file</b>", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 5, 1, "$lang[UPLOAD_FAILED] <b>$file</b>", 0, 0, 0, 0);
                 // throw error msg
                 echo YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[UPLOAD_FAILED]: ".$_FILES['file']['name']."", "", 5800);
             }
@@ -180,13 +180,13 @@ if (isset($_GET['delete']))
         // execute delete command
         if (YAWK\filemanager::deleteItem($file) === true)
         {   // DELETE SUCCESSFUL, set syslog entry
-            \YAWK\sys::setSyslog($db, 8, "$lang[DELETED] $file", 0, 0, 0, 0);
+            \YAWK\sys::setSyslog($db, 8, 0, "$lang[DELETED] $file", 0, 0, 0, 0);
             // throw success msg
             print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[FILE] $file $lang[DELETE_SUCCESSFUL]","","1200");
         }
         else
         {   // DELETE FAILED, set syslog entry
-            \YAWK\sys::setSyslog($db, 5, "$lang[DELETE_FAILED] $file", 0, 0, 0, 0);
+            \YAWK\sys::setSyslog($db, 5, 1, "$lang[DELETE_FAILED] $file", 0, 0, 0, 0);
             // throw error msg
             print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[FILE] $file $lang[DELETE_FAILED]","","2400");
         }
@@ -221,13 +221,13 @@ if (isset($_POST['renameItem']) && ($_POST['renameItem'] === "true"))
         // rename folder
         if (rename($from, $to))
         {
-            \YAWK\sys::setSyslog($db, 8, "$lang[$itemType] $lang[RENAMED]: $_POST[oldItemName] $lang[FILEMAN_TO] $_POST[newItemName]", 0, 0, 0, 0);
+            \YAWK\sys::setSyslog($db, 8, 0,"$lang[$itemType] $lang[RENAMED]: $_POST[oldItemName] $lang[FILEMAN_TO] $_POST[newItemName]", 0, 0, 0, 0);
             echo \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[$itemType] $lang[RENAMED]: <i>$_POST[oldItemName]</i> $lang[FILEMAN_TO] <b>$_POST[newItemName]</b>","","1200");
 
         }
         else
             {
-                \YAWK\sys::setSyslog($db, 5, "$lang[$itemType] $lang[RENAMED] $_POST[oldItemName] $lang[FILEMAN_TO] $_POST[newItemName] $lang[FAILED]", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 5, 0, "$lang[$itemType] $lang[RENAMED] $_POST[oldItemName] $lang[FILEMAN_TO] $_POST[newItemName] $lang[FAILED]", 0, 0, 0, 0);
                 echo \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[$itemType] $lang[RENAMED] $_POST[oldFolderName] $lang[FILEMAN_TO] $_POST[newFolderName] $lang[FAILED]","","4800");
             }
     }
@@ -289,13 +289,13 @@ if (isset($_POST['addFolder']) && ($_POST['addFolder'] === "true"))
     // create new folder...
     if (mkdir($newDirectory))
     {   // CREATE DIR SUCCESSFUL, set syslog entry
-        \YAWK\sys::setSyslog($db, 8, "$lang[CREATED] $newDirectory", 0, 0, 0, 0);
+        \YAWK\sys::setSyslog($db, 8, 0, "$lang[CREATED] $newDirectory", 0, 0, 0, 0);
         // throw success msg
         print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[FOLDER] $newDirectory $lang[CREATED]","","1200");
     }
     else
-        {   // CREATE DIR SUCCESSFUL, set syslog entry
-            \YAWK\sys::setSyslog($db, 8, "$lang[ERROR] $newDirectory $lang[WAS_NOT_CREATED]", 0, 0, 0, 0);
+        {   // failed to create directory, set syslog entry
+            \YAWK\sys::setSyslog($db, 8, 1,"$lang[ERROR] $newDirectory $lang[WAS_NOT_CREATED]", 0, 0, 0, 0);
             // throw success msg
             print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[FOLDER] $newDirectory $lang[CREATED]","","1200");
         }

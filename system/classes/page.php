@@ -101,7 +101,7 @@ namespace YAWK {
             }
             else {
                 // throw alert
-                \YAWK\sys::setSyslog($db, 5, "Could not fetch meta $type for page ID $id", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 5, 1, "Could not fetch meta $type for page ID $id", 0, 0, 0, 0);
                 \YAWK\alert::draw("warning", "Warning", "Could not fetch meta $type for page ID $id", "",4200);
             }
             // q failed
@@ -145,12 +145,12 @@ namespace YAWK {
                                         WHERE id = '" . $id . "'"))
                 {   // could not update pages db table
                     $status = \YAWK\sys::iStatusToString($published, "online", "offline");
-                    \YAWK\sys::setSyslog($db, 5, "failed to toggle $title status to $status", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 5, 1, "failed to toggle $title status to $status", 0, 0, 0, 0);
                     print alert::draw("danger", "Error", "Site Status could not be toggled.", "", 4200);
                 }
                 else
                     {   // ok, set syslog entry
-                        \YAWK\sys::setSyslog($db, 2, "toggled page $id to $status", 0, 0, 0, 0);
+                        \YAWK\sys::setSyslog($db, 2, 0, "toggled page $id to $status", 0, 0, 0, 0);
                     }
 
                 // TOGLE MENU STATUS
@@ -162,7 +162,7 @@ namespace YAWK {
                 }
                 else
                 {   // ok, set syslog entry
-                    \YAWK\sys::setSyslog($db, 7, "toggled menu $id to $status", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 7, 0, "toggled menu $id to $status", 0, 0, 0, 0);
                 }
             }
             else
@@ -196,7 +196,7 @@ namespace YAWK {
             {   //
                 print \YAWK\alert::draw("danger", "Error", "Site Lock could not be toggled.","page=pages",4200);
                 if ($locked === "0") { $status = "unlocked"; } else { $status = "locked"; }
-                \YAWK\sys::setSyslog($db, 2, "$status page id #$id", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 2,0,  "$status page id #$id", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -243,7 +243,7 @@ namespace YAWK {
             }
             else
             {
-                \YAWK\sys::setSyslog($db, 5, "could not fetch MAX(id)", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 5, 1, "could not fetch MAX(id)", 0, 0, 0, 0);
                 die ("Sorry, database error: could not fetch MAX(id).");
             }
             // ## add new page to db pages
@@ -267,7 +267,7 @@ namespace YAWK {
                 if (!$db->query("INSERT INTO {meta_local} (name,page,content)
                                           VALUES ('" . $desc . "', '" . $id . "', '" . $title . "')"))
                 {
-                    \YAWK\sys::setSyslog($db, 5, "could not store local meta tags", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 5, 1, "could not store local meta tags", 0, 0, 0, 0);
                     echo \YAWK\alert::draw("warning","Warning", "Could not store local meta tags", "", "");
                 }
 
@@ -275,7 +275,7 @@ namespace YAWK {
                 if (!$db->query("INSERT INTO {meta_local} (name,page,content)
                         VALUES ('" . $keyw . "','" . $id . "','" . $words . "')"))
                 {
-                    \YAWK\sys::setSyslog($db, 5, "Could not store local meta tags", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 5, 1, "Could not store local meta tags", 0, 0, 0, 0);
                     echo \YAWK\alert::draw("warning","Warning", "Could not store local meta tags", "", "");
                 }
 
@@ -285,7 +285,7 @@ namespace YAWK {
                 // copy file
                 if (!copy($file, $newfile) && !chmod($newfile, 0777))
                 {
-                    \YAWK\sys::setSyslog($db, 5, "copy failed: $file to $newfile", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 5, 1, "copy failed: $file to $newfile", 0, 0, 0, 0);
                     print \YAWK\alert::draw("danger", "Error!", "File could not be copied. permissions of /content/pages !", "", "");
                 }
 
@@ -297,7 +297,7 @@ namespace YAWK {
                 }
                 else
                 {   // select failed, throw error
-                    \YAWK\sys::setSyslog($db, 5, "could not select menu entry for $title", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 5, 1, "could not select menu entry for $title", 0, 0, 0, 0);
                     echo \YAWK\alert::draw("warning","Warning", "Could not select menu entry for: $title", "", "");
                 }
 
@@ -314,7 +314,7 @@ namespace YAWK {
                 else
                 {
                     // select MAX(id) from menu failed, throw error
-                    \YAWK\sys::setSyslog($db, 5, "Could not fetch MAX(id) from menu", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 5, 1, "Could not fetch MAX(id) from menu", 0, 0, 0, 0);
                     echo \YAWK\alert::draw("warning","Warning", "Could not fetch MAX(id) from menu", "", "");
                 }
 
@@ -332,29 +332,29 @@ namespace YAWK {
                     if ($db->query("INSERT INTO {menu} (id,sort,menuID,text,href)
                           VALUES('" . $id . "','" . $sort . "', '" . $menuID . "', '" . $title_new . "', '" . $link . "')"))
                     {
-                        \YAWK\sys::setSyslog($db, 5, "menu entry $title_new added", 0, 0, 0, 0);
+                        \YAWK\sys::setSyslog($db, 5, 0, "menu entry $title_new added", 0, 0, 0, 0);
                        return true;
                     }
                     else
                     {
                         // insert failed, throw error
-                        \YAWK\sys::setSyslog($db, 5, "Could not insert menu entry for: $title_new", 0, 0, 0, 0);
+                        \YAWK\sys::setSyslog($db, 5, 1, "Could not insert menu entry for: $title_new", 0, 0, 0, 0);
                         echo \YAWK\alert::draw("warning","Warning", "Could not insert menu entry for: $title_new", "", "");
                     }
                 }
                 else
                 {
                     // select failed, throw error
-                    \YAWK\sys::setSyslog($db, 5, "Could not select menu entry for: $menuID", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 5, 1, "Could not select menu entry for: $menuID", 0, 0, 0, 0);
                     echo \YAWK\alert::draw("warning","Warning", "Could not select menu entry for: $menuID", "", "");
                 }
             }
             else
             {
-                \YAWK\sys::setSyslog($db, 5, "could not insert data into pages table", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 5, 1, "could not insert data into pages table", 0, 0, 0, 0);
                 die ("Sorry, database error: could not insert data into pages table.");
             }
-            \YAWK\sys::setSyslog($db, 5, "copy $newfile failed.", 0, 0, 0, 0);
+            \YAWK\sys::setSyslog($db, 5, 1, "copy $newfile failed.", 0, 0, 0, 0);
             return false;
         }
 
@@ -371,17 +371,17 @@ namespace YAWK {
             /** @var $db \YAWK\db */
             // delete item from pages db
             if (!$res_pages = $db->query("DELETE FROM {pages} WHERE alias = '" . $this->alias . "'")) {
-                \YAWK\sys::setSyslog($db, 5, "could not delete page from database", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 5, 1, "could not delete page from database", 0, 0, 0, 0);
                 \YAWK\alert::draw("danger", "Error:", "could not delete page from database", "pages", "4300");
             }
             // delete item from menu db
             if (!$res_menu = $db->query("DELETE FROM {menu} WHERE href = '" . $this->alias . ".html'")) {
-                \YAWK\sys::setSyslog($db, 5, "could not delete menu entry from database", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 5, 1, "could not delete menu entry from database", 0, 0, 0, 0);
                 \YAWK\alert::draw("danger", "Error:", "could not delete menu entry from database", "pages", "4300");
             }
             // delete item from meta_local db
             if (!$res_menu = $db->query("DELETE FROM {meta_local} WHERE page = '" . $this->id. "'")) {
-                \YAWK\sys::setSyslog($db, 5, "could not delete local meta tags from database", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 5, 1, "could not delete local meta tags from database", 0, 0, 0, 0);
                 \YAWK\alert::draw("warning", "Warning:", "could not delete local meta tags from database", "pages", "4300");
             }
             // build path + filename
@@ -391,11 +391,11 @@ namespace YAWK {
                     \YAWK\alert::draw("danger", "Error:", "could not delete file from /content/ folder", "pages", "4300");
                     return false;
                 } else {
-                    \YAWK\sys::setSyslog($db, 2, "delete $filename", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 2, 0, "delete $filename", 0, 0, 0, 0);
                     return true;
                 }
             }
-            \YAWK\sys::setSyslog($db, 5, "file $filename does not exist. page->delete() failed", 0, 0, 0, 0);
+            \YAWK\sys::setSyslog($db, 5, 1, "file $filename does not exist. page->delete() failed", 0, 0, 0, 0);
             return false;
         }
 
@@ -453,7 +453,7 @@ namespace YAWK {
                 }
                 else
                 {   // throw error
-                    \YAWK\sys::setSyslog($db, 5, "Could not fetch MAX(id) FROM {blog}", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 5, 1, "Could not fetch MAX(id) FROM {blog}", 0, 0, 0, 0);
                     \YAWK\alert::draw("danger","Error:", "Could not fetch MAX(id) FROM {blog}", "page=page-new", "4300");
                 }
             }
@@ -473,7 +473,7 @@ namespace YAWK {
                 else
                 {   // throw error
                     $id = 1;
-                    \YAWK\sys::setSyslog($db, 5, "Could not fetch MAX(id) FROM {menu}", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 5, 1, "Could not fetch MAX(id) FROM {menu}", 0, 0, 0, 0);
                     \YAWK\alert::draw("danger","Error:", "Could not fetch MAX(id) FROM {menu}", "page=page-new", "4300");
                 }
                 // to increment sort var correctly, check if there is an entry in the menu
@@ -492,7 +492,7 @@ namespace YAWK {
                 else
                 {   // throw error
                     $sort = 1;
-                    \YAWK\sys::setSyslog($db, 5, "Could not fetch MAX(id) FROM {menu} WHERE menuID = $menuID", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 5, 1, "Could not fetch MAX(id) FROM {menu} WHERE menuID = $menuID", 0, 0, 0, 0);
                     \YAWK\alert::draw("danger","Error:", "Could not fetch MAX(id) FROM {menu} WHERE menuID = $menuID", "page=page-new", "4300");
                 }
 
@@ -518,7 +518,7 @@ namespace YAWK {
 	                                          '" . $link . "',
 	                                          '" . $blogid . "')"))
                 {   // throw error
-                    \YAWK\sys::setSyslog($db, 5, "Could not insert data into {menu}", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 5, 1, "Could not insert data into {menu}", 0, 0, 0, 0);
                     \YAWK\alert::draw("danger", "Error:", "Could not insert menu data", "page=page-new", "4300");
                 }
             } // ./ if menu != empty
@@ -564,7 +564,7 @@ namespace YAWK {
             else
                 {
                     $id = 1;
-                    \YAWK\sys::setSyslog($db, 5, "could not select MAX(id) from pages db", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 5, 1, "could not select MAX(id) from pages db", 0, 0, 0, 0);
                 }
 
             $alias = htmlentities($alias);
@@ -597,7 +597,7 @@ namespace YAWK {
             }
             else
             {   // error inserting page into database - throw error
-                \YAWK\sys::setSyslog($db, 5, "Could not insert page into database.", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 5, 1, "Could not insert page into database.", 0, 0, 0, 0);
                 \YAWK\alert::draw("danger", "Error!", "Could not insert page into database.", "", 4300);
             }
 
@@ -609,7 +609,7 @@ namespace YAWK {
                 fclose($handle);
                 chmod($filename, 0777);
             }
-            \YAWK\sys::setSyslog($db, 2, "add $filename", 0, 0, 0, 0);
+            \YAWK\sys::setSyslog($db, 2, 0, "added $filename", 0, 0, 0, 0);
             return true;
         }
 
@@ -658,7 +658,7 @@ namespace YAWK {
                     AND page = '" . $this->id . "'"))
                 {
                     // throw error msg
-                    \YAWK\sys::setSyslog($db, 5, "local meta description could not be stored in database.", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 5, 1, "local meta description could not be stored in database.", 0, 0, 0, 0);
                     \YAWK\alert::draw("warning", "Warning", "local meta description could not be stored in database.", "", 4200);
                 }
 
@@ -669,7 +669,7 @@ namespace YAWK {
                     AND page = '" . $this->id . "'"))
                 {
                     // throw error msg
-                    \YAWK\sys::setSyslog($db, 5, "local meta keywords could not be stored in database.", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 5, 1, "local meta keywords could not be stored in database.", 0, 0, 0, 0);
                     \YAWK\alert::draw("warning", "Warning", "local meta keywords could not be stored in database.", "", 4200);
                 }
 
@@ -682,7 +682,7 @@ namespace YAWK {
                     WHERE href = '" . $this->searchstring . "'"))
                 {
                     // throw error
-                    \YAWK\sys::setSyslog($db, 5, "menu entry could not be stored in database.", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 5, 1, "menu entry could not be stored in database.", 0, 0, 0, 0);
                     \YAWK\alert::draw("warning", "Warning", "menu entry could not be stored in database.", "", 6200);
                 }
 
@@ -704,7 +704,7 @@ namespace YAWK {
                     WHERE id = '" . $this->id . "'"))
                     {
                         // throw error
-                        \YAWK\sys::setSyslog($db, 5, "page data could not be stored in database.", 0, 0, 0, 0);
+                        \YAWK\sys::setSyslog($db, 5, 1, "page data could not be stored in database.", 0, 0, 0, 0);
                         // \YAWK\alert::draw("warning", "Warning", "page data could not be stored in database.", "", 6200);
                         \YAWK\alert::draw("danger", 'MySQL Error: ('.mysqli_errno($db).')', 'Database error: '.mysqli_error($db).'', "", 0);
                         return false;
@@ -712,7 +712,7 @@ namespace YAWK {
                     else
                     {
                         // update pages db worked, all fin
-                        \YAWK\sys::setSyslog($db, 2, "save $this->alias", 0, 0, 0, 0);
+                        \YAWK\sys::setSyslog($db, 2, 0, "save $this->alias", 0, 0, 0, 0);
                         return true;
                     }
                 }
@@ -732,7 +732,7 @@ namespace YAWK {
                     WHERE id = '" . $this->id . "'"))
                         {
                             // throw error
-                            \YAWK\sys::setSyslog($db, 5, "page data could not be stored in database.", 0, 0, 0, 0);
+                            \YAWK\sys::setSyslog($db, 5, 1, "page data could not be stored in database.", 0, 0, 0, 0);
                             // \YAWK\alert::draw("warning", "Warning", "page data could not be stored in database.", "", 6200);
                             \YAWK\alert::draw("danger", 'MySQL Error: ('.mysqli_errno($db).')', 'Database error: '.mysqli_error($db).'', "", 0);
                             return false;
@@ -740,7 +740,7 @@ namespace YAWK {
                         else
                         {
                             // update pages db worked, all fin
-                            \YAWK\sys::setSyslog($db, 2, "save $this->alias", 0, 0, 0, 0);
+                            \YAWK\sys::setSyslog($db, 2, 0, "save $this->alias", 0, 0, 0, 0);
                             return true;
                         }
                     }
@@ -919,7 +919,7 @@ namespace YAWK {
             }
             else
             {   // throw error
-                \YAWK\sys::setSyslog($db, 5, "Could not get property: $property from Paged Database.", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 5, 1, "Could not get property: $property from Paged Database.", 0, 0, 0, 0);
                 \YAWK\alert::draw("warning", "Warning", "Could not get property: $property from Paged Database.", "", "4200");
                 return false;
             }

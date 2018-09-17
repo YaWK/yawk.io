@@ -76,7 +76,7 @@ namespace YAWK {
 
             if (!$res = $db->query("SELECT * FROM {plugins} $sqlcode ORDER by name"))
             {
-                \YAWK\sys::setSyslog($db, 5, "failed to select plugin ", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 5, 1, "failed to select plugin ", 0, 0, 0, 0);
                 print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[PLUGIN_DB_ERROR]", "","");
                 $html = null;
             }
@@ -140,7 +140,7 @@ namespace YAWK {
             }
             else
             {   // q failed
-                \YAWK\sys::setSyslog($db, 5, "failed to get name of plugin $pluginId ", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 5, 1, "failed to get name of plugin $pluginId ", 0, 0, 0, 0);
                 return false;
             }
             // something else happened
@@ -168,7 +168,7 @@ namespace YAWK {
             }
             else
             {   // q failed, throw error
-                \YAWK\sys::setSyslog($db, 5, "failed to get id of plugin $pluginId ", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 5, 1, "failed to get id of plugin $pluginId ", 0, 0, 0, 0);
                 return \YAWK\alert::draw("danger", "Error!", "Could not get id of plugin: ".$plugin."","page=plugins","4800");
             }
             return false;
@@ -198,18 +198,18 @@ namespace YAWK {
                 // create new frontend plugin page
                 if ($page->create($db, $alias, 1, 0, 0, $plugin))
                 {   // all good
-                    \YAWK\sys::setSyslog($db, 9, "created page $alias for plugin $plugin", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 9, 0, "created page $alias for plugin $plugin", 0, 0, 0, 0);
                     return true;
                 }
                 else
                 {   // could not create page
-                    \YAWK\sys::setSyslog($db, 5, "failed to create page $alias for plugin $plugin. Maybe a permissions problem.", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 5, 1, "failed to create page $alias for plugin $plugin. Maybe a permissions problem.", 0, 0, 0, 0);
                     return false;
                 }
             }
             else
             {   // file exits
-                \YAWK\sys::setSyslog($db, 5, "failed to create page $alias for plugin $plugin. A page with that name still exits. File will not be overwritten.", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 5, 1, "failed to create page $alias for plugin $plugin. A page with that name still exits. File will not be overwritten.", 0, 0, 0, 0);
                 return false;
             }
         }

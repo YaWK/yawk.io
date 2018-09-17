@@ -349,7 +349,7 @@ namespace YAWK {
             else
                 {   // ini_get failed
                     if (!isset($db)) { $db = new \YAWK\db(); }
-                    \YAWK\sys::setSyslog($db, 5, "failed to ini_get post_max_size", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 5, 1, "failed to ini_get post_max_size", 0, 0, 0, 0);
                     return false;
                 }
         }

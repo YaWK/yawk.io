@@ -26,5 +26,5 @@ else
 }
 // NOTIFY + SYSLOG ENTRY
 // \YAWK\sys::setNotification($db, 3, "$sessionUsername declined your friendship request.", $sessionUID, $uid, 0, 0);
-\YAWK\sys::setNotification($db, 3, 3, $sessionUID, $uid, 0, 0);
-\YAWK\sys::setSyslog($db, 3, "$sessionUsername declined friendship with $requestUsername", $uid, $sessionUID, 0, 0);
+\YAWK\sys::setNotification($db, 3, 0, $sessionUID, $uid, 0, 0,0);
+\YAWK\sys::setSyslog($db, 3, 0, "$sessionUsername declined friendship with $requestUsername", $uid, $sessionUID, 0, 0);
