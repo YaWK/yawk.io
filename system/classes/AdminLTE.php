@@ -407,7 +407,6 @@ namespace YAWK {
          */
         function drawHtmlNavbarNotificationsMenu($db, $user, $lang)
         {
-
             echo "";
 
             $i_syslog = \YAWK\user::countNotifications($db);
@@ -415,21 +414,24 @@ namespace YAWK {
             $i_total = $i_syslog + $i_notifications;
             $notifications = \YAWK\user::getAllNotifications($db, $lang);
             $my_notifications = \YAWK\user::getMyNotifications($db, $_SESSION['uid']);
+            
             if ($i_total !== 0)
             {   // if notification available, ring bell and show label...
                 $bell = "swing";
                 $label = "<span id=\"bell-label\" class=\"label label-warning animated tada\">$i_total</span>";
-                $notification = "notifications";    // set plural
+                // set singular
+                $notification = $lang['SYSLOG_NOTIFICATIONS'];
             }
             else
             {   // no notification available
                 $bell = '';
                 $label = '';
-                $notification = 'notifications';
+                // set plural
+                $notification = $lang['SYSLOG_NOTIFICATIONS'];
             }
             if ($i_total === '1')
             {   // set singular correctly
-                $notification = "notification";
+                $notification = $lang['SYSLOG_NOTIFICATION'];
             }
             echo "<script type=\"text/javascript\">
             
@@ -443,12 +445,13 @@ namespace YAWK {
                   $label
                   </a>
                 <ul id=\"notification-dropdownlink\" class=\"dropdown-menu\">
-                  <li id=\"notification-header\" class=\"header\">You have $i_total $notification <small><small>(<a href=\"#\" id=\"dismiss\" data-uid=\"$_SESSION[uid]\" title=\"dismiss all\">mark as read</a>)</small></small></li>
+                  <li id=\"notification-header\" class=\"header\">$lang[SYSLOG_YOU_HAVE] $i_total $notification <small><small>(<a href=\"#\" id=\"dismiss\" data-uid=\"$_SESSION[uid]\" title=\"$lang[SYSLOG_DISMISS_ALL]\">$lang[SYSLOG_MARK_AS_READ]</a>)</small></small></li>
                   <li>
                     <!-- Inner Menu: contains the notifications -->
                     <ul id=\"notification-menu\" class=\"menu\">";
                     if (isset($my_notifications) && is_array($my_notifications))
                     {   // if personal notifications are available
+                        $i = 0;
                         foreach ($my_notifications as $my_note)
                         {
                             $getUsername = 0;
@@ -500,11 +503,12 @@ namespace YAWK {
                             {   // just output the plain notifiy msg from db
                                 $my_msg = $my_note['message'];
                             }
+                            $i++;
 
                             echo "<li><!-- start notification -->
                             <a href=\"index.php?page=friendslist\" id=\"labelNotification\" title=\"\">
                               <div class=\"pull-left\">
-                                <i id=\"labelNotification1\" class=\"$my_note[icon] $my_note[type]\"></i>&nbsp; <small><i>$my_msg</i><br>
+                                <i id=\"label-".$i."\" class=\"$my_note[icon] $my_note[type]\"></i>&nbsp; <small><i>$my_msg</i><br>
                               </div>
                               <h4>
                                 <small class=\"pull-right\"><br><i class=\"fa fa-clock-o\"></i> $timeAgo </small></small>
@@ -521,8 +525,8 @@ namespace YAWK {
                         {   // loop data
                             $timeAgo = \YAWK\sys::time_ago($note['log_date'], $lang);
 
-                            echo "<li><a href=\"#\" title=\"\">
-                            <div class=\"pull-left\" id=\"note-$note[id]\">
+                            echo "<li><a href=\"index.php?page=syslog#$note[log_id]\" title=\"\">
+                            <div class=\"pull-left\" id=\"note-$note[log_id]\">
                             <!-- User Image -->
                                 <i class=\"$note[icon] $note[type]\"></i>&nbsp; <small>$note[message]<br>
                             </div>
@@ -533,13 +537,11 @@ namespace YAWK {
                           <!-- The message -->
 
                         </a></li>";
-
-
                         }
                     }
                     echo "</ul>
                   </li>
-                  <li class=\"footer\"><a id=\"syslogLink\" data-uid=\"$_SESSION[uid]\" href=\"index.php?page=syslog\">View System Log</a></li>
+                  <li class=\"footer\"><a id=\"syslogLink\" data-uid=\"$_SESSION[uid]\" href=\"index.php?page=syslog\">$lang[SYSLOG_VIEW]</a></li>
                 </ul>
               </li>";
             return null;
