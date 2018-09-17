@@ -4,7 +4,7 @@
             "bPaginate": false,
             "bLengthChange": false,
             "bFilter": true,
-            "bSort": true,
+            "bSort": false,
             "bInfo": true,
             "bAutoWidth": true
         } );
