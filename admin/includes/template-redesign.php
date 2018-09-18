@@ -14,14 +14,14 @@
         function saveHotkey() {
             // simply disables save event for chrome
             $(window).keypress(function (event) {
-                if (!(event.which == 115 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) && !(event.which == 19)) return true;
+                if (!(event.which === 115 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) && !(event.which == 19)) return true;
                 event.preventDefault();
                 formmodified=0; // do not warn user, just save.
                 return false;
             });
             // used to process the cmd+s and ctrl+s events
             $(document).keydown(function (event) {
-                if (event.which == 83 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) {
+                if (event.which === 83 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) {
                     event.preventDefault();
                     $('#savebutton').click(); // SAVE FORM AFTER PRESSING STRG-S hotkey
                     formmodified=0; // do not warn user, just save.
@@ -42,13 +42,33 @@
                 formmodified=0; // do not warn user, just save the new theme.
             });
         });
+
         // now the function:
         window.onbeforeunload = confirmExit; // before close
         function confirmExit() {             // dialog
-            if (formmodified == 1) {         // if form has changed
+            if (formmodified === 1) {         // if form has changed
                 return "<?php echo $lang['LEAVE_REQUEST']; ?>";
             }
         }
+        $(function() {
+            // for bootstrap 3 use 'shown.bs.tab', for bootstrap 2 use 'shown' in the next line
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                // save the latest tab; use cookies if you like 'em better:
+                localStorage.setItem('lastTab', $(this).attr('href'));
+            });
+            // go to the latest tab, if it exists:
+            var lastTab = localStorage.getItem('lastTab');
+            if (lastTab) {
+                $('[href="' + lastTab + '"]').tab('show');
+                // to work correctly, we need to lowercase
+                var activeTab = lastTab.toLowerCase();
+                // and remove the first char (#)
+                var activeFolder = activeTab.slice(1);
+                // all done: set select default selected option
+                $('select option[value="'+activeFolder+'"]').prop('selected', true);
+            }
+        });
+
         // call tabCollapse: make the default bootstrap tabs responsive for handheld devices
         $('#tabs').tabCollapse({
             tabsClass: 'hidden-sm hidden-xs',
@@ -81,6 +101,8 @@ $template->loadProperties($db, $getID);
 $previewButton = "";
 // load all template settings into array
 $templateSettings = \YAWK\template::getAllSettingsIntoArray($db, $user);
+// get current bootstrap version
+$template->bootstrapVersion = $template->checkBootstrapVersion($db, $template->id);
 ?>
 <?php
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
@@ -120,28 +142,33 @@ echo"</section><!-- Main content -->
                     &nbsp; <?php echo $lang['TYPOGRAPHY']; ?></a>
             </li>
 
+            <?php
+            if ($template->bootstrapVersion == "3")
+            {
+                echo "
             <li>
-                <a href="#menu" aria-controls="menu" data-toggle="tab"><i class="fa fa-bars"></i>
-                    &nbsp; <?php echo $lang['MENU']; ?></a>
+                <a href=\"#menu\" aria-controls=\"menu\" data-toggle=\"tab\"><i class=\"fa fa-bars\"></i>
+                    &nbsp; $lang[MENU]</a>
             </li>
             <li>
-                <a href="#bootstrap" aria-controls="bootstrap" data-toggle="tab"><i class="fa fa-sticky-note-o"></i>
-                    &nbsp; <?php echo $lang['BOOTSTRAP3']; ?></a>
+                <a href=\"#bootstrap\" aria-controls=\"bootstrap\" data-toggle=\"tab\"><i class=\"fa fa-sticky-note-o\"></i>
+                    &nbsp; $lang[BOOTSTRAP3]</a>
             </li>
             <li>
-                <a href="#buttons" aria-controls="buttons" role="tab" data-toggle="tab"><i class="fa fa-toggle-on"></i>
-                    &nbsp; <?php echo $lang['FORMS']; ?></a>
+                <a href=\"#buttons\" aria-controls=\"buttons\" role=\"tab\" data-toggle=\"tab\"><i class=\"fa fa-toggle-on\"></i>
+                    &nbsp; $lang[FORMS]</a>
             </li>
             <li>
-                <a href="#images" aria-controls="images" role="tab" data-toggle="tab"><i class="fa fa-picture-o"></i>
-                    &nbsp; <?php echo $lang['IMAGES']; ?></a>
-            </li>
-            <!-- effects - disabled for now
-        <li role="presentation">
-            <a href="#effects" aria-controls="effects" role="tab" data-toggle="tab"><i class="fa fa-paper-plane-o"></i>
-                &nbsp; <?php // echo $lang['EFFECTS']; ?></a>
-        </li>
-        -->
+                <a href=\"#images\" aria-controls=\"images\" role=\"tab\" data-toggle=\"tab\"><i class=\"fa fa-picture-o\"></i>
+                    &nbsp; $lang[IMAGES]</a>
+            </li>";
+            }
+            elseif ($template->bootstrapVersion == "4")
+            {
+                // ....
+            }
+            ?>
+            
         </ul>
 
 
@@ -469,53 +496,59 @@ echo"</section><!-- Main content -->
         });
     </script>
     </div>
-<div class="tab-pane fade in" id="menu">
-    <h3><?php echo "$lang[GLOBAL_MENU] <small>$lang[NAVBAR]"; ?></small></h3>
-    <div class="row animated fadeIn">
-        <div class="col-md-3">
-            <div class="box box-default">
-                <div class="box-header">
-                    <h3 class="box-title"><?php echo "$lang[MENU] $lang[FONT] <small>$lang[COLORS]"; ?></small></h3>
+    <?php
+    if ($template->bootstrapVersion == "3")
+    {
+        echo "
+    <div class=\"tab-pane fade in\" id=\"menu\">
+    <h3>$lang[GLOBAL_MENU] <small>$lang[NAVBAR]</small></h3>
+    <div class=\"row animated fadeIn\">
+        <div class=\"col-md-3\">
+            <div class=\"box box-default\">
+                <div class=\"box-header\">
+                    <h3 class=\"box-title\">$lang[MENU] $lang[FONT] <small>$lang[COLORS]</small></h3>
                 </div>
-                <div class="box-body">
-                    <!-- menu font colors -menucolor -->
-                    <?php $template->getFormElements($db, $templateSettings, 10, $lang, $user); ?>
+                <div class=\"box-body\">
+                    <!-- menu font colors -menucolor -->";
+                    $template->getFormElements($db, $templateSettings, 10, $lang, $user);
+                echo "</div>
+            </div>
+        </div>
+
+        <div class=\"col-md-3\">
+            <div class=\"box box-default\">
+                <div class=\"box-header\">
+                    <h3 class=\"box-title\">$lang[MENU] $lang[BG] <small>$lang[COLORS]</small></h3>
+                </div>
+                <div class=\"box-body\">
+                    <!-- menu background color -menubgcolor -->";
+                    $template->getFormElements($db, $templateSettings, 11, $lang, $user);
+                echo "</div>
+            </div>
+        </div>
+
+        <div class=\"col-md-3\">
+            <div class=\"box box-default\">
+                <div class=\"box-header\">
+                    <h3 class=\"box-title\">$lang[MENU] $lang[DROPDOWN] <small>$lang[COLORS]</small></h3>
+                </div>
+                <div class=\"box-body\">
+                    <!-- menu background color -menudropdowncolor -->";
+                    $template->getFormElements($db, $templateSettings, 12, $lang, $user);
+                    echo "
                 </div>
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="box box-default">
-                <div class="box-header">
-                    <h3 class="box-title"><?php echo "$lang[MENU] $lang[BG] <small>$lang[COLORS]</small>"; ?></h3>
+        <div class=\"col-md-3\">
+            <div class=\"box box-default\">
+                <div class=\"box-header\">
+                    <h3 class=\"box-title\">$lang[MENU] $lang[NAVBAR] <small>$lang[POSITIONING]</small></h3>
                 </div>
-                <div class="box-body">
-                    <!-- menu background color -menubgcolor -->
-                    <?php $template->getFormElements($db, $templateSettings, 11, $lang, $user); ?>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="box box-default">
-                <div class="box-header">
-                    <h3 class="box-title"><?php echo "$lang[MENU] $lang[DROPDOWN] <small>$lang[COLORS]</small>"; ?></h3>
-                </div>
-                <div class="box-body">
-                    <!-- menu background color -menudropdowncolor -->
-                    <?php $template->getFormElements($db, $templateSettings, 12, $lang, $user); ?>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="box box-default">
-                <div class="box-header">
-                    <h3 class="box-title"><?php echo "$lang[MENU] $lang[NAVBAR] <small>$lang[POSITIONING]</small>"; ?></h3>
-                </div>
-                <div class="box-body">
-                    <!-- menu navbar margin top -navbar-marginTop -->
-                    <?php $template->getFormElements($db, $templateSettings, 13, $lang, $user); ?>
+                <div class=\"box-body\">
+                    <!-- menu navbar margin top -navbar-marginTop -->";
+                    $template->getFormElements($db, $templateSettings, 13, $lang, $user);
+                    echo "
                 </div>
             </div>
         </div>
@@ -523,52 +556,55 @@ echo"</section><!-- Main content -->
 </div>
 
 <!-- WELL,LISTGROUP, JUMBOTRON -->
-<div class="tab-pane fade in" id="bootstrap">
-    <h3><?php echo "$lang[BOOTSTRAP3] <small>$lang[SETTINGS]</small>"; ?></h3>
-    <div class="row animated fadeIn">
-        <div class="col-md-3">
-            <div class="box box-default">
-                <div class="box-header">
-                    <h3 class="box-title"><?php echo "$lang[WELL] $lang[BOX] <small>$lang[DESIGN]</small>"; ?></h3>
+<div class=\"tab-pane fade in\" id=\"bootstrap\">
+    <h3>$lang[BOOTSTRAP3] <small>$lang[SETTINGS]</small></h3>
+    <div class=\"row animated fadeIn\">
+        <div class=\"col-md-3\">
+            <div class=\"box box-default\">
+                <div class=\"box-header\">
+                    <h3 class=\"box-title\">$lang[WELL] $lang[BOX] <small>$lang[DESIGN]</small></h3>
                 </div>
-                <div class="box-body">
-                    <!-- well box design  well- -->
-                    <?php $template->getFormElements($db, $templateSettings, 14, $lang, $user); ?>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="box box-default">
-                <div class="box-header">
-                    <h3 class="box-title"><?php echo "$lang[LIST_GROUP] <small>$lang[DESIGN]</small>"; ?></h3>
-                </div>
-                <div class="box-body">
-                    <!-- listgroup design  listgroup-  -->
-                    <?php $template->getFormElements($db, $templateSettings, 15, $lang, $user); ?>
+                <div class=\"box-body\">
+                    <!-- well box design  well- -->";
+                    $template->getFormElements($db, $templateSettings, 14, $lang, $user);
+                    echo "
                 </div>
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="box box-default">
-                <div class="box-header">
-                    <h3 class="box-title"><?php echo "$lang[JUMBOTRON] <small>$lang[BOX] $lang[DESIGN]</small>"; ?></h3>
+        <div class=\"col-md-3\">
+            <div class=\"box box-default\">
+                <div class=\"box-header\">
+                    <h3 class=\"box-title\">$lang[LIST_GROUP] <small>$lang[DESIGN]</small></h3>
                 </div>
-                <div class="box-body">
-                    <!-- jumbotron design  jumbotron-  -->
-                    <?php $template->getFormElements($db, $templateSettings, 16, $lang, $user); ?>
+                <div class=\"box-body\">
+                    <!-- listgroup design  listgroup-  -->";
+                    $template->getFormElements($db, $templateSettings, 15, $lang, $user);
+                    echo "
                 </div>
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="box box-default">
-                <div class="box-header">
-                    <h3 class="box-title">... <small>...</small></h3>
+        <div class=\"col-md-3\">
+            <div class=\"box box-default\">
+                <div class=\"box-header\">
+                    <h3 class=\"box-title\">$lang[JUMBOTRON] <small>$lang[BOX] $lang[DESIGN]</small></h3>
                 </div>
-                <div class="box-body">
-                    <?php // $template->getSetting($db, "%-menudropdowncolor", "", ""); ?>
+                <div class=\"box-body\">
+                    <!-- jumbotron design  jumbotron-  -->";
+                    $template->getFormElements($db, $templateSettings, 16, $lang, $user);
+                    echo "
+                </div>
+            </div>
+        </div>
+
+        <div class=\"col-md-3\">
+            <div class=\"box box-default\">
+                <div class=\"box-header\">
+                    <h3 class=\"box-title\">... <small>...</small></h3>
+                </div>
+                <div class=\"box-body\">
+                     
                 </div>
             </div>
         </div>
@@ -576,112 +612,121 @@ echo"</section><!-- Main content -->
 </div>
 
 <!-- BUTTONS -->
-<div class="tab-pane fade in" id="buttons">
-    <h3><?php echo "$lang[FORMS] <small>$lang[AND] $lang[BUTTONS] </small>"; ?></h3>
-    <div class="row animated fadeIn">
+<div class=\"tab-pane fade in\" id=\"buttons\">
+    <h3>$lang[FORMS] <small>$lang[AND] $lang[BUTTONS] </small></h3>
+    <div class=\"row animated fadeIn\">
 
-        <div class="col-md-4">
+        <div class=\"col-md-4\">
             <!-- btn basic settings -->
-            <div class="box box-default">
-                <div class="box-header">
-                    <h3 class="box-title"><?php echo "$lang[BUTTON] <small>$lang[FONT] $lang[AND] $lang[BORDER] $lang[SETTINGS]</small>"; ?></h3>
+            <div class=\"box box-default\">
+                <div class=\"box-header\">
+                    <h3 class=\"box-title\">$lang[BUTTON] <small>$lang[FONT] $lang[AND] $lang[BORDER] $lang[SETTINGS]</small></h3>
                 </div>
-                <div class="box-body">
-                    <!-- btn settings    btn-   -->
-                    <?php $template->getFormElements($db, $templateSettings, 17, $lang, $user); ?>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="box box-default">
-                <div class="box-header">
-                    <h3 class="box-title"><?php echo "$lang[FORM] <small>$lang[SETTINGS]</small>"; ?></h3>
-                </div>
-                <div class="box-body">
-                    <!-- form settings    form-   -->
-                    <?php $template->getFormElements($db, $templateSettings, 25, $lang, $user); ?>
+                <div class=\"box-body\">
+                    <!-- btn settings    btn-   -->";
+                    $template->getFormElements($db, $templateSettings, 17, $lang, $user);
+                    echo "
                 </div>
             </div>
         </div>
 
-        <div class="col-md-4">
-            <div class="box box-default">
-                <div class="box-header">
-                    <h3 class="box-title"><?php echo "$lang[FORM] <small>$lang[SETTINGS]</small>"; ?></h3>
+        <div class=\"col-md-4\">
+            <div class=\"box box-default\">
+                <div class=\"box-header\">
+                    <h3 class=\"box-title\">$lang[FORM] <small>$lang[SETTINGS]</small></h3>
                 </div>
-                <div class="box-body">
-                    <!-- form settings    form-   -->
-                    <?php $template->getFormElements($db, $templateSettings, 51, $lang, $user); ?>
+                <div class=\"box-body\">
+                    <!-- form settings    form-   -->";
+                    $template->getFormElements($db, $templateSettings, 25, $lang, $user);
+                    echo "
+                </div>
+            </div>
+        </div>
+
+        <div class=\"col-md-4\">
+            <div class=\"box box-default\">
+                <div class=\"box-header\">
+                    <h3 class=\"box-title\">$lang[FORM] <small>$lang[SETTINGS]</small></h3>
+                </div>
+                <div class=\"box-body\">
+                    <!-- form settings    form-   -->";
+                    $template->getFormElements($db, $templateSettings, 51, $lang, $user);
+                    echo "
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row animated fadeIn">
-        <div class="col-md-2">
-            <div class="box box-default">
-                <div class="box-header">
-                    <h3 class="box-title">Default <small>Button</small></h3>
+    <div class=\"row animated fadeIn\">
+        <div class=\"col-md-2\">
+            <div class=\"box box-default\">
+                <div class=\"box-header\">
+                    <h3 class=\"box-title\">Default <small>Button</small></h3>
                 </div>
-                <div class="box-body">
-                    <!-- btn default    btn-default   -->
-                    <?php $template->getFormElements($db, $templateSettings, 18, $lang, $user); ?>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2">
-            <div class="box box-default">
-                <div class="box-header">
-                    <h3 class="box-title">Primary <small>Button</small></h3>
-                </div>
-                <div class="box-body">
-                    <!-- btn primary    btn-primary   -->
-                    <?php $template->getFormElements($db, $templateSettings, 19, $lang, $user); ?>
+                <div class=\"box-body\">
+                    <!-- btn default    btn-default   -->";
+                    $template->getFormElements($db, $templateSettings, 18, $lang, $user);
+                    echo "
                 </div>
             </div>
         </div>
-        <div class="col-md-2">
-            <div class="box box-default">
-                <div class="box-header">
-                    <h3 class="box-title">Success <small>Button</small></h3>
+        <div class=\"col-md-2\">
+            <div class=\"box box-default\">
+                <div class=\"box-header\">
+                    <h3 class=\"box-title\">Primary <small>Button</small></h3>
                 </div>
-                <div class="box-body">
-                    <!-- btn success   btn-success   -->
-                    <?php $template->getFormElements($db, $templateSettings, 20, $lang, $user); ?>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2">
-            <div class="box box-default">
-                <div class="box-header">
-                    <h3 class="box-title">Warning <small>Button</small></h3>
-                </div>
-                <div class="box-body">
-                    <!-- btn warning   btn-warning   -->
-                    <?php $template->getFormElements($db, $templateSettings, 21, $lang, $user); ?>
+                <div class=\"box-body\">
+                    <!-- btn primary    btn-primary   -->";
+                    $template->getFormElements($db, $templateSettings, 19, $lang, $user);
+                    echo "
                 </div>
             </div>
         </div>
-        <div class="col-md-2">
-            <div class="box box-default">
-                <div class="box-header">
-                    <h3 class="box-title">Danger <small>Button</small></h3>
+        <div class=\"col-md-2\">
+            <div class=\"box box-default\">
+                <div class=\"box-header\">
+                    <h3 class=\"box-title\">Success <small>Button</small></h3>
                 </div>
-                <div class="box-body">
-                    <!-- btn danger   btn-danger   -->
-                    <?php $template->getFormElements($db, $templateSettings, 22, $lang, $user); ?>
+                <div class=\"box-body\">
+                    <!-- btn success   btn-success   -->";
+                    $template->getFormElements($db, $templateSettings, 20, $lang, $user);
+                    echo "
                 </div>
             </div>
         </div>
-        <div class="col-md-2">
-            <div class="box box-default">
-                <div class="box-header">
-                    <h3 class="box-title">Info <small>Button</small></h3>
+        <div class=\"col-md-2\">
+            <div class=\"box box-default\">
+                <div class=\"box-header\">
+                    <h3 class=\"box-title\">Warning <small>Button</small></h3>
                 </div>
-                <div class="box-body">
-                    <!-- btn info   btn-info   -->
-                    <?php $template->getFormElements($db, $templateSettings, 23, $lang, $user); ?>
+                <div class=\"box-body\">
+                    <!-- btn warning   btn-warning   -->";
+                    $template->getFormElements($db, $templateSettings, 21, $lang, $user);
+                    echo "
+                </div>
+            </div>
+        </div>
+        <div class=\"col-md-2\">
+            <div class=\"box box-default\">
+                <div class=\"box-header\">
+                    <h3 class=\"box-title\">Danger <small>Button</small></h3>
+                </div>
+                <div class=\"box-body\">
+                    <!-- btn danger   btn-danger   -->";
+                    $template->getFormElements($db, $templateSettings, 22, $lang, $user);
+                    echo "
+                </div>
+            </div>
+        </div>
+        <div class=\"col-md-2\">
+            <div class=\"box box-default\">
+                <div class=\"box-header\">
+                    <h3 class=\"box-title\">Info <small>Button</small></h3>
+                </div>
+                <div class=\"box-body\">
+                    <!-- btn info   btn-info   -->";
+                    $template->getFormElements($db, $templateSettings, 23, $lang, $user);
+                    echo "
                 </div>
             </div>
         </div>
@@ -689,44 +734,52 @@ echo"</section><!-- Main content -->
 </div>
 
 <!-- IMAGES -->
-<div class="tab-pane fade in" id="images">
-    <h3><?php echo "$lang[IMAGE] <small>$lang[SETTINGS]</small>"; ?></h3>
-    <div class="row animated fadeIn">
-        <div class="col-md-3">
-            <div class="box box-default">
-                <div class="box-header">
-                    <h3 class="box-title"><?php echo "$lang[IMAGE] <small>$lang[EFFECTS]</small>"; ?></h3>
+<div class=\"tab-pane fade in\" id=\"images\">
+    <h3>$lang[IMAGE] <small>$lang[SETTINGS]</small></h3>
+    <div class=\"row animated fadeIn\">
+        <div class=\"col-md-3\">
+            <div class=\"box box-default\">
+                <div class=\"box-header\">
+                    <h3 class=\"box-title\">$lang[IMAGE] <small>$lang[EFFECTS]</small></h3>
                 </div>
-                <div class="box-body">
-                    <!-- image settings   img-   -->
-                    <?php $template->getFormElements($db, $templateSettings, 24, $lang, $user); ?>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="box box-default">
-                <div class="box-header">
-                    <h3 class="box-title">Any other thing <small>here...</small></h3>
-                </div>
-                <div class="box-body">
-                    <?php // $template->getSetting($db, "%-menubgcolor", "", ""); ?>
+                <div class=\"box-body\">
+                    <!-- image settings   img-   -->";
+                    $template->getFormElements($db, $templateSettings, 24, $lang, $user);
+                    echo "
                 </div>
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="box box-default">
-                <div class="box-header">
-                    <h3 class="box-title">Any other thing <small>here...</small></h3>
+        <div class=\"col-md-3\">
+            <div class=\"box box-default\">
+                <div class=\"box-header\">
+                    <h3 class=\"box-title\">Any other thing <small>here...</small></h3>
                 </div>
-                <div class="box-body">
-                    <?php // $template->getSetting($db, "%-menudropdowncolor", "", ""); ?>
+                <div class=\"box-body\">
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class=\"col-md-3\">
+            <div class=\"box box-default\">
+                <div class=\"box-header\">
+                    <h3 class=\"box-title\">Any other thing <small>here...</small></h3>
+                </div>
+                <div class=\"box-body\">
+                    
                 </div>
             </div>
         </div>
     </div>
-</div>
+</div>";
+    }
+    else if ($template->bootstrapVersion == "4")
+    {
+       // ...
+    }
+    ?>
+
 </div>
 
 
