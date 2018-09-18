@@ -62,12 +62,13 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
 <table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-striped table-hover table-responsive" id="table-sort">
     <thead>
     <tr>
-        <td width="3%"><strong><?php echo $lang['ID']; ?></strong></td>
-        <td width="13%"><strong><?php echo $lang['TYPE']; ?></strong></td>
-        <td width="8%"><strong><?php echo $lang['TIMESTAMP']; ?></strong></td>
-        <td width="10%" class="text-center"><strong><?php echo $lang['USER']; ?></strong></td>
-        <td width="54%"><strong><?php echo $lang['ACTION']; ?></strong></td>
-        <td width="12%" class="text-center"><strong><?php echo $lang['AFFECTED']; ?></strong></td>
+        <td><strong><?php echo $lang['ID']; ?></strong></td>
+        <td width="6%" class="text-center"><strong><?php echo $lang['TYPE']; ?></strong></td>
+        <td width="8%" class="text-center"><strong><?php echo $lang['GROUP']; ?></strong></td>
+        <td width="8%" class="text-center"><strong><?php echo $lang['TIMESTAMP']; ?></strong></td>
+        <td width="12%" class="text-center"><strong><?php echo $lang['USER']; ?></strong></td>
+        <td width="53%"><strong><?php echo $lang['ACTION']; ?></strong></td>
+        <td width="10%" class="text-center"><strong><?php echo $lang['AFFECTED']; ?></strong></td>
     </tr>
     </thead>
     <tbody>
@@ -84,13 +85,31 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
             // calculate time ago view
             $time_ago = \YAWK\sys::time_ago($log['log_date'], $lang);
             // 1 tbl row per syslog line
+            if ($log['log_type'] == 1)
+            {
+                $textMarkup = '';
+                $category = "<span class=\"label label-warning\">Warning</span>";
+            }
+            elseif ($log['log_type'] == 2)
+            {
+                $textMarkup = " class=\"text-red\"";
+                $category = "<span class=\"label label-danger\">ERROR</span>";
+
+            }
+            else
+                {
+                    $textMarkup = '';
+                    $category = "<span class=\"label label-default\">Info</span>";
+
+                }
             echo "<tr class=\"".$log['type']."\">
                     <td>".$log['log_id']."</td>
-                    <td><b>".$log['property']."</b></td>
-                    <td><small>$log[log_date]<br><small>".$time_ago."</small></td>
-                    <td class=\"text-center\"><a href=\"index.php?page=user-edit&user=$log[username]\" title=\"$log[username] ($lang[IN_NEW_WINDOW])\" target=\"_blank\">".$log['username']."</a></td>
-                    <td><i class=\"".$log['icon']."\"></i> &nbsp;&nbsp;".$log['message']."</td>
-                    <td class=\"text-center\">".$affected_user."</td>
+                    <td class=\"text-center\">".$category."</td>
+                    <td class=\"text-center\"><b$textMarkup>".$log['property']."</b></td>
+                    <td$textMarkup><small>$log[log_date]<br><small>".$time_ago."</small></td>
+                    <td class=\"text-center\"><a href=\"index.php?page=user-edit&user=$log[username]\" title=\"$log[username] ($lang[IN_NEW_WINDOW])\" target=\"_blank\"$textMarkup>".$log['username']."</a></td>
+                    <td$textMarkup><i class=\"".$log['icon']."\"></i> &nbsp;&nbsp;".$log['message']."</td>
+                    <td class=\"text-center\"><span$textMarkup>".$affected_user."</span></td>
                   </tr>";
         }
     }
