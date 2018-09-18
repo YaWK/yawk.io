@@ -1626,7 +1626,9 @@ namespace YAWK {
                 if(isset($res['blocked'])){ // check if user is blocked.
                     if ($res['blocked']==='1')
                     {
-                        \YAWK\sys::setSyslog($db, 3, 2, "<b>blocked user $username</b> tried to login.", 0, 0, 0, 0);
+                        // get user id of the blocked user who tried to login
+                        $uid = \YAWK\user::getUserIdFromName($db, $username);
+                        \YAWK\sys::setSyslog($db, 3, 2, "<b>blocked user $username</b> tried to login.", $uid, 0, 0, 0);
                         echo "<div class=\"container bg-danger\"><br><h2>We're Sorry! <small>Your Account is blocked.</h2><b>If you think
                         this is a mistake, contact the admin via email: </b>(<a class=\"text-danger\" href=\"mailto:$adminEmail\">$adminEmail</a>)
                         <b>for further information.</b><br><small>You will be redirected to <a class=\"small\" href=\"$host\">$host</a> in 30 seconds.</small><br><br></div>";
@@ -1636,7 +1638,8 @@ namespace YAWK {
                 }
                 if(isset($res['terminatedByUser'])){ // is user has canceled his account
                     if ($res['terminatedByUser']==='1'){ // check if user is
-                        \YAWK\sys::setSyslog($db, 3, 1, "failed to login <b>$username</b> user has deleted his account before - it does not exist anymore.", 0, 0, 0, 0);
+                        $uid = \YAWK\user::getUserIdFromName($db, $username);
+                        \YAWK\sys::setSyslog($db, 3, 1, "failed to login <b>$username</b> user has deleted his account before - it does not exist anymore.", $uid, 0, 0, 0);
                         echo "<div class=\"container bg-danger\"><br><h2>We're Sorry! <small>This account does not exist.</h2><b>If you think
                         this is a mistake, contact the admin via email: </b>(<a class=\"text-danger\" href=\"mailto:$adminEmail\">$adminEmail</a>)
                         <b>.</b><br><small>You will be redirected to <a class=\"small\" href=\"$host\">$host</a> in 30 seconds.</small><br><br></div>";
@@ -1805,7 +1808,7 @@ namespace YAWK {
                                         logged_in = '1'
                       WHERE username = '" . $username . "'"))
                 {
-                    \YAWK\sys::setSyslog($db, 3, 1, "failed to update login counter ($login_count) of <b>$username</b> .", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 3, 1, "failed to update login counter ($login_count) of <b>$username</b> .", $_SESSION['uid'], 0, 0, 0);
                     return false;
                 }
                 else
@@ -1817,14 +1820,15 @@ namespace YAWK {
                         // set logged_in session status to true
                         $_SESSION['logged_in'] = true;
                         // store successful login
-                        \YAWK\sys::setSyslog($db, 3, 0, "login <b>$username</b>.", 0, 0, 0, 0);
+                        \YAWK\sys::setSyslog($db, 3, 0, "login <b>$username</b>.", $_SESSION['uid'], 0, 0, 0);
                         // self::storeLogin($db, 0, "frontend", $username, $password);
                         return true;
                     }
             }
             else
                 {   // check password failed
-                    \YAWK\sys::setSyslog($db, 5, 1, "failed to login <b>$username</b> .", 0, 0, 0, 0);
+                    $uid = \YAWK\user::getUserIdFromName($db, $username);
+                    \YAWK\sys::setSyslog($db, 5, 1, "failed to login <b>$username</b>.", $uid, 0, 0, 0);
                     // return \YAWK\alert::draw("warning", "Login failed...", "Please try to re-login in a few seconds...", "",3000);
                     return false;
 /*
@@ -1935,7 +1939,8 @@ namespace YAWK {
                                         logged_in = '1'
                       WHERE username = '" . $this->username . "'"))
                     {
-                        \YAWK\sys::setSyslog($db, 3, 1, "failed to login <b>$username</b> .", 0, 0, 0, 0);
+                        $uid = \YAWK\user::getUserIdFromName($db, $username);
+                        \YAWK\sys::setSyslog($db, 3, 1, "failed to login <b>$username</b>.", $uid, 0, 0, 0);
                         echo \YAWK\alert::draw("warning", "Error!", "Could not log user into database. Expect some errors.","","3800");
                     }
                     else
@@ -1946,8 +1951,10 @@ namespace YAWK {
                     return true;
                 }
                 else
-                {  // user aint got the rights to login to backend
-                    \YAWK\sys::setSyslog($db, 3, 1, "failed to login <b>$username</b> user aint got sufficient rights to login. .", 0, 0, 0, 0);
+                {
+                    $uid = \YAWK\user::getUserIdFromName($db, $username);
+                    // user aint got the rights to login to backend
+                    \YAWK\sys::setSyslog($db, 3, 1, "failed to login <b>$username</b> user aint got sufficient rights to login. .", $uid, 0, 0, 0);
                     \YAWK\alert::draw("danger", "Login failed!", "You are not allowed to login here.", "", 10000);
 
                 }
@@ -1985,9 +1992,10 @@ namespace YAWK {
                                 }
                             </script>";
                     \YAWK\alert::draw("danger", "Login failed!", "Please check your login data and try to re-login in a few seconds!","","3500");
-                    \YAWK\sys::setSyslog($db, 3, 1, "failed to login <b>$username</b>.", 0, 0, 0, 0);
-                    // \YAWK\alert::draw("danger", "Login failed!", "Please check your login data and try again.", "", 6000);
-                    $this->storeLogin($db, 0, "backend", $username, $password);
+                    $uid = \YAWK\user::getUserIdFromName($db, $username);
+                $this->storeLogin($db, 0, "backend", $username, $password);
+                \YAWK\sys::setSyslog($db, 3, 1, "failed to login <b>$username</b>.", $uid, 0, 0, 0);
+                // \YAWK\alert::draw("danger", "Login failed!", "Please check your login data and try again.", "", 6000);
 
                 /**
                 if ($_SESSION['failed'] == 2){
