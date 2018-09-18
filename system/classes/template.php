@@ -42,6 +42,8 @@ namespace YAWK {
         public $modifyDate;
         /** * @var string template's version number */
         public $version;
+        /** * @var string the current loaded bootstrap version */
+        public $bootstrapVersion;
         /** * @var string template's license */
         public $license;
         /** * @var int which template is currently set to active? */
@@ -608,6 +610,7 @@ namespace YAWK {
             $filename = "../system/templates/$tplName/css/" . $alias . ".css";
             return $filename;
         }
+
 
         /**
          * return biggest ID from template database
@@ -3071,7 +3074,57 @@ namespace YAWK {
         }
 
 
+        /**
+         * Check which Bootstrap version is currently loaded in active template
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @return string 0|3|4|X
+         * @annotation return values: 0 = not loaded, 3 = bootstrap 3, 4 = bootstrap 4, X = multiple (false!)
+         */
+        public function checkBootstrapVersion($db, $templateID)
+        {   /** @var $db \YAWK\db */
 
+            // query database
+            if ($sql = $db->query("SELECT asset FROM {assets} WHERE templateID = '".$templateID."' AND asset LIKE '%Bootstrap%CSS'"))
+            {   // fetch data
+                while ($row = mysqli_fetch_row($sql))
+                {   // store data as array
+                    $asset[] = $row;
+                }
+            }
 
+            // check if there is more than 1 entry
+            if (isset($asset[1]) && (!empty($asset[1])))
+            {   // bootstrap seem to be loaded twice
+                return "X";
+            }
+
+            // check if asset array is set and not empty
+            if (isset($asset) && (is_array($asset) && (!empty($asset[0][0]))))
+            {
+                // check if str contains 3 (must be when  'Bootstrap 3 CSS' is loaded)
+                if (strstr($asset[0][0], "3"))
+                {   // bootstrap 3 is loaded
+                    return "3";
+                }
+                // check if str contains 4 (must be when  'Bootstrap 4 CSS' is loaded)
+                else if (strstr($asset[0][0], "4"))
+                {   // bootstrap 4 is loaded
+                    return "4";
+                }
+                // if 3 or 4 could not be detected...
+                else
+                {   // unable to identify current bootstrap version
+                    return "0";
+                }
+            }
+            // asset not set, no array or empty
+            else
+                {   // it seems that no bootstrap css is loaded
+                    return "0";
+                }
+        }
     } // ./class template
 } // ./namespace
