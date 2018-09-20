@@ -67,7 +67,7 @@ namespace YAWK {
         <!-- favicon -->
         <link rel=\"shortcut icon\" type=\"image/x-icon\" href=\"favicon.ico\">
         <!-- Bootstrap 3.3.5 -->
-        <link rel=\"stylesheet\" href=\"system/engines/bootstrap/dist/css/bootstrap.min.css\">
+        <link rel=\"stylesheet\" href=\"system/engines/bootstrap3/dist/css/bootstrap.min.css\">
         <!-- Animate CSS -->
         <link rel=\"stylesheet\" href=\"system/engines/animateCSS/animate.min.css\">
         <!-- Font Awesome -->
