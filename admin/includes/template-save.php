@@ -1,5 +1,5 @@
 <?php
-require_once '../system/classes/bootstrap.php';
+require_once '../system/classes/cssFramework.php';
 // check if template obj is set and create if not exists
 if (!isset($template)) { $template = new \YAWK\template(); }
 // new user obj if not exists
@@ -95,7 +95,7 @@ if (isset($_POST['save']) && (isset($_GET['action']) && (isset($_GET['id']))))
 
 
         $bootstrapVersion = $template->checkBootstrapVersion($db, $template->id);
-        $bootstrap = new \YAWK\bootstrap($bootstrapVersion, $tplSettings);
+        $bootstrap = new \YAWK\FRAMEWORK\cssFramework($bootstrapVersion, $tplSettings);
 
 
         // PREPARE SETTINGS.CSS
