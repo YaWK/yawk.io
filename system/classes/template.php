@@ -42,7 +42,7 @@ namespace YAWK {
         public $modifyDate;
         /** * @var string template's version number */
         public $version;
-        /** * @var string the current loaded bootstrap version */
+        /** * @var string the current loaded Bootstrap version */
         public $bootstrapVersion;
         /** * @var string template's license */
         public $license;
@@ -3106,23 +3106,23 @@ namespace YAWK {
             {
                 // check if str contains 3 (must be when  'Bootstrap 3 CSS' is loaded)
                 if (strstr($asset[0][0], "3"))
-                {   // bootstrap 3 is loaded
+                {   // Bootstrap 3 is loaded
                     return "3";
                 }
                 // check if str contains 4 (must be when  'Bootstrap 4 CSS' is loaded)
                 else if (strstr($asset[0][0], "4"))
-                {   // bootstrap 4 is loaded
+                {   // Bootstrap 4 is loaded
                     return "4";
                 }
                 // if 3 or 4 could not be detected...
                 else
-                {   // unable to identify current bootstrap version
+                {   // unable to identify current Bootstrap version
                     return "0";
                 }
             }
             // asset not set, no array or empty
             else
-                {   // it seems that no bootstrap css is loaded
+                {   // it seems that no Bootstrap css is loaded
                     return "0";
                 }
         }
