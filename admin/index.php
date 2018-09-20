@@ -2,7 +2,7 @@
 session_start();
 header('Cache-control: private');               // IE 6 FIX
 // error_reporting(E_ALL ^ E_STRICT);                // just for development purpose!!!
-// ini_set('display_errors', 1);                     // DISPLAY ALL ERRORS - DEVELOPMENT ONLY!!!
+ini_set('display_errors', 0);                     // DISPLAY ALL ERRORS - DEVELOPMENT ONLY!!!
 error_reporting(0);                             // no error reporting
 $loadingTime = microtime(true);            // scripting start time (var gets used for benchmark, if enabled)
 
@@ -30,7 +30,6 @@ if (!isset($db))
 {   // create new db obj if none exists
     $db = new \YAWK\db();
 }
-
 // language object
 if (!isset($lang) || (empty($lang)))
 {   // create new language obj if none exists
