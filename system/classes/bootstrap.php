@@ -1,14 +1,17 @@
 <?php
 namespace YAWK {
     /**
-     * <b>Bootstrap CSS check + return</b>
+     * <b>Bootstrap CSS check version + return corresponding css</b>
+     * <p>This is a helper function, used by admin/includes/template-save.php.
+     * It generates the custom css code for the current loaded bootstrap version,
+     * depending on the selection of the fields within the backend.</p>
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2009-2015 Daniel Retzl yawk.io
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Email class serve function sendEmail() to send email
+     * @annotation Helper function to output custom (overriden) bootstrap css (settings.css)
      */
     class bootstrap
     {
@@ -19,18 +22,65 @@ namespace YAWK {
         /** @var string all the css as string */
         public $cssCode = '';
 
+        // call constructor on object creation
         public function __construct($version, $tplSettings)
         {
-            $this->version = $version;
-            $this->tplSettings = $tplSettings;
+            // check if bootstrap version is set
+            if (isset($version) && (is_string($version) && (!empty($version))))
+            {
+                // set this bootstrap version
+                $this->version = $version;
+            }
+            else
+                {   // bootstrap version not set, try to query current active version
+                    if (!isset($db))
+                    {   // create new db object
+                        $db = new \YAWK\db;
+                    }
+                    // check if template obj is set
+                    if (!isset($template))
+                    {   // if not, create new template object
+                        $template = new \YAWK\template();
+                    }
+                    // get current template ID
+                    $currentTemplateID = \YAWK\template::getCurrentTemplateId($db);
+                    // check and set current bootstrap version
+                    $this->version = $template->checkBootstrapVersion($db, $currentTemplateID);
+                }
+
+            // check and set this template settings array
+            if (isset($tplSettings) && (is_array($tplSettings)) && (!empty($tplSettings)))
+            {   // set this template settings array
+                $this->tplSettings = $tplSettings;
+            }
+            else
+                {   // tpl settings param not set, empty or wrong type - try to query array instead
+                    if (!isset($db))
+                    {   // create new db object
+                        $db = new \YAWK\db;
+                    }
+                    // get current template ID
+                    $currentTemplateID = \YAWK\template::getCurrentTemplateId($db);
+                    // get template settings array
+                    $this->tplSettings = \YAWK\template::getTemplateSettingsArray($db, $currentTemplateID);
+                }
         }
 
+
+        /**
+         * Initialize and start check function
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @return string|null the generated css code as (big) string
+         * @annotation Init calls setBootstrapComponents and return all css code as string on success or null on error
+         */
         public function init()
         {
-            // load required methods
-            if ($this->check() === true)
+            // load required methods, depending on this bootstrap version
+            if ($this->setBootstrapComponents() === true)
             {
-                // ok, throw css code
+                // ok, return css code
                 return $this->cssCode;
             }
             else
@@ -39,23 +89,39 @@ namespace YAWK {
                 }
         }
 
+        /**
+         * Check and return generated CSS Code as string
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @return string|null the generated css code as (big) string
+         * @annotation Check CSS code and return it on success, otherwise return null
+         */
         public function outputCssCode()
-        {
+        {   // check if css code string is set and not empty
             if (isset($this->cssCode) && (is_string($this->cssCode) && (!empty($this->cssCode))))
-            {
+            {   // ok, return css code
                 return $this->cssCode;
             }
             else
-                {
+                {   // do nothing
                     return null;
                 }
         }
 
-        public function check()
+        /**
+         * Check if Bootstrap is version 3 or 4 and load the required component methods
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @return string|null the generated css code as (big) string
+         * @annotation Return true after executing component methods or false if Bootstrap version is unknown
+         */
+        public function setBootstrapComponents()
         {
-            // css tags for bootstrap 3
+            // if bootstrap 3 is loaded
             if ($this->version == 3)
-            {   // call bootstrap 3 methods
+            {   // set css tags for bootstrap 3
                 $this->bs3_WellCss();
                 $this->bs3_ListGroupCss();
                 $this->bs3_ButtonsCss();
@@ -64,20 +130,26 @@ namespace YAWK {
                 $this->bs3_JumbotronCss();
                 return true;
             }
-            // css tags for bootstrap 4
+            // if bootstrap 4 is loaded
             else if ($this->version == 4)
-            {   // call bootstrap 4 methods
+            {   // set css tags for bootstrap 4
                 //$this->getButtonCss();
                 //$this->getCardCss();
                 return true;
             }
             else
-                {
+                {   // unknown or not supported boostrap version
                     return false;
                 }
         }
 
-
+        /**
+         * Bootstrap 3: WELL Component CSS Code
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @annotation add bootstrap 3 well component to this css code string
+         */
         public function bs3_WellCss()
         {
             // well css code
@@ -97,6 +169,13 @@ namespace YAWK {
             ";
         }
 
+        /**
+         * Bootstrap 3: LIST GROUP Component CSS Code
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @annotation add bootstrap 3 list group component to this css code string
+         */
         public function bs3_ListGroupCss()
         {
             // list group css code
@@ -138,6 +217,13 @@ namespace YAWK {
            ";
         }
 
+        /**
+         * Bootstrap 3: BUTTONS Component CSS Code
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @annotation add bootstrap 3 buttons component to this css code string
+         */
         public function bs3_ButtonsCss()
         {
             // all css code for buttons
@@ -514,7 +600,14 @@ namespace YAWK {
               background-color: #".$this->tplSettings['btn-danger-color'].";
             }";
         }
-        
+
+        /**
+         * Bootstrap 4: FORMS Component CSS Code
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @annotation add bootstrap 3 forms component to this css code string
+         */
         public function bs3_FormsCss()
         {
             $this->cssCode .= "
@@ -556,6 +649,13 @@ namespace YAWK {
             ";
         }
 
+        /**
+         * Bootstrap 3: NAVBAR Component CSS Code
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @annotation add bootstrap 3 navbar component to this css code string
+         */
         public function bs3_NavbarCss()
         {
             $this->cssCode .= "
@@ -719,7 +819,14 @@ namespace YAWK {
            }
            ";
         }
-        
+
+        /**
+         * Bootstrap 3: JUMBOTRON Component CSS Code
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @annotation add bootstrap 3 jumbotron component to this css code string
+         */
         public function bs3_JumbotronCss()
         {
             $this->cssCode .= "
