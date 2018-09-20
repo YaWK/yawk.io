@@ -21,20 +21,21 @@
  *  $user                   // user object
  *  $stats                  // stats object
  */
+/* db object */
+/** @var $db \YAWK\db */
 /* language object */
-
+/** @var $lang \YAWK\language */
+/* template object */
+/** @var $template \YAWK\template */
 // \YAWK\sys::outputObjects($template, $controller, $page, $user, $stats);
 ?>
  <!-- To ensure proper rendering and touch zooming on phones and tablets -->
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta name="viewport" content="width=device-width, initial-scale=, shrink-to-fit=no">
  <!-- import meta tags -->
  <meta name="author" content="<?php echo YAWK\settings::getSetting($db, "siteauthor"); ?>">
  <meta name="keywords" content="<?php echo YAWK\settings::getSetting($db, "globalmetakeywords"); ?>">
  <meta name="description" content="<?php echo YAWK\settings::getSetting($db, "globalmetatext"); ?>">
  <meta charset="utf-8">
- <meta http-equiv="imagetoolbar" content="no">
-<!-- <meta name="google-site-verification" content="x557vK7Psu-reaTe6WOfjYXSKhCxUmfkRiX1sOKlTdA"> -->
- <meta http-equiv="X-UA-Compatible" content="IE=edge">
  <!-- apple touch icons -->
  <link rel="apple-touch-icon" sizes="120x120" href="media/images/apple-touch-icon-120x120-precomposed.png">
  <link rel="apple-touch-icon" sizes="152x152" href="media/images/apple-touch-icon-152x152-precomposed.png">
@@ -64,7 +65,6 @@ $template->loadActiveAssets($db, $template->id);
 <!-- import yawk app: custom js -->
 <script src="system/templates/<?php echo $template->name; ?>/js/custom.min.js"></script>
 </head>
-
 
 <body style="<?php echo YAWK\template::getActiveBodyFont($db); ?>" ondragstart="return false">
 
