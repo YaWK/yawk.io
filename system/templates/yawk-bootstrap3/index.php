@@ -53,9 +53,9 @@ $template->loadActiveAssets($db, $template->id);
 ?>
 
 <!-- SETTINGS.MIN.CSS YaWK template settings: Bootstrap core CSS override -->
-<link href="system/templates/<?php echo $template->name; ?>/css/settings.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="system/templates/<?php echo $template->name; ?>/css/settings.min.css">
 <!-- CUSTOM.MIN.CSS User defined CSS Rules -->
-<link href="system/templates/<?php echo $template->name; ?>/css/custom.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="system/templates/<?php echo $template->name; ?>/css/custom.min.css">
 
 <!--[if lt IE 9]>
 <script src="system/engines/jquery/html5shiv.min.js"></script>
