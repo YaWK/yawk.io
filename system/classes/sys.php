@@ -1599,6 +1599,62 @@ namespace YAWK {
         }
 
         /**
+         * Returns, if given syslog category ID is active or not
+         * @author      Daniel Retzl <danielretzl@gmail.com>
+         * @version     1.0.0
+         * @link        http://yawk.io
+         * @param object $db database object
+         * @param string $syslogCategoryID ID of the requested syslog category
+         * @return array
+         */
+        static function isSysLogCategoryActive($db, $syslogCategoryID)
+        {   /** @var $db \YAWK\db */
+            $syslogSettings = arraY();
+            if(isset($syslogCategoryID) && (!empty($syslogCategoryID)))
+            {   // query db
+                if ($sql = ($db->query("SELECT active, notify from {syslog_categories} WHERE id = '".$syslogCategoryID."'")))
+                {
+                    // fetch db
+                    while ($row = mysqli_fetch_assoc($sql))
+                    {
+                        $syslogSettings[] = $row;
+                    }
+                    // check if category should be logged (is active)
+                    if (isset($syslogSettings['active']) && (!empty($active['active']) && ($active['active'] === "1")))
+                    {   // category active
+                        $syslogSettings['active'] = 1;
+                    }
+                    else
+                    {   // category not active
+                        $syslogSettings['active'] = 0;
+                    }
+                    // check if category should be notyfied (is enabled)
+                    if (isset($syslogSettings['notify']) && (!empty($active['notify']) && ($active['notify'] === "1")))
+                    {   // notify active
+                        $syslogSettings['notify'] = 1;
+                    }
+                    else
+                    {   // notify not active
+                        $syslogSettings['notify'] = 0;
+                    }
+                }
+                else
+                    {   // unable to query database, set notification ON default
+                        $syslogSettings['active'] = 1;
+                        $syslogSettings['notify'] = 1;
+                        return $syslogSettings;
+                    }
+                    return $syslogSettings;
+            }
+            else
+                {   // no category ID was sent, set notification ON default
+                    $syslogSettings['active'] = 1;
+                    $syslogSettings['notify'] = 1;
+                    return $syslogSettings;
+                }
+        }
+
+        /**
          * set a syslog entry to database
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
@@ -1643,7 +1699,7 @@ namespace YAWK {
                 }
 
                 // check, if fromUID (user that affected the event) is set
-                if (!isset($fromUID) || (empty($fromUID) || ($fromUID === "0")))
+                if (!isset($fromUID) || (empty($fromUID) || ($fromUID == "0")))
                 {   // check if session uid is set
                     if (isset($_SESSION['uid']))
                     {   // ok, set var
@@ -1654,23 +1710,45 @@ namespace YAWK {
                         $fromUID = 0;
                     }
                 }
-                // insert syslog entry into db
-                if ($db->query("INSERT INTO {syslog} (log_date, log_category, log_type, message, fromUID, toUID, toGID, seen)
-                                        VALUES ('".$log_date."',
-                                                '".$log_category."',
-                                                '".$log_type."',
-                                                '".$message."',
-                                                '".$fromUID."',
-                                                '".$toUID."',
-                                                '".$toGID."',
-                                                '".$seen."')"))
-                {   // syslog entry set
-                    return true;
+
+
+                // get syslog settings (which category is active and should be notified)
+                $syslogSettings = self::isSysLogCategoryActive($db, $log_category);
+                // check if notification should be enabled for this category
+                if ($syslogSettings[0]['notify'] == 1)
+                {   // set syslog entry to state !seen (not seen)
+                    $seen = 0;  // means notification WILL be drawn
                 }
                 else
-                {   // insert q failed
-                    return false;
+                    {   // set syslog entry to state 'seen'
+                        $seen = 1;  // means notification will NOT be drawn
+                    }
+
+                // only add syslog entry if category is enabled for logging (active)
+                if ($syslogSettings[0]['active'] == 1)
+                {
+                    // insert syslog entry into db
+                    if ($db->query("INSERT INTO {syslog} (log_date, log_category, log_type, message, fromUID, toUID, toGID, seen)
+                                            VALUES ('".$log_date."',
+                                                    '".$log_category."',
+                                                    '".$log_type."',
+                                                    '".$message."',
+                                                    '".$fromUID."',
+                                                    '".$toUID."',
+                                                    '".$toGID."',
+                                                    '".$seen."')"))
+                    {   // syslog entry set
+                        return true;
+                    }
+                    else
+                    {   // insert q failed
+                        return false;
+                    }
                 }
+                else
+                    {   // syslog disabled for this category
+                        return null;
+                    }
             }
             else
                 {   // syslog is disabled
