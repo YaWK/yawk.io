@@ -650,22 +650,23 @@ CREATE TABLE `cms_syslog_categories` (
   `active` int(1) NOT NULL DEFAULT '1',
   `property` varchar(255) NOT NULL,
   `icon` varchar(128) NOT NULL,
-  `type` varchar(255) NOT NULL
+  `type` varchar(255) NOT NULL,
+  `notify` int(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `cms_syslog_categories` (`id`, `active`, `property`, `icon`, `type`) VALUES
-(1, 1, 'system', 'fa fa-wrench', 'text-default'),
-(2, 1, 'pages', 'fa fa-wordpress', 'text-default'),
-(3, 1, 'user', 'fa fa-user-plus', 'text-blue'),
-(4, 1, 'messaging', 'fa fa-envelope-o', 'text-green'),
-(5, 1, 'warning', 'fa fa-exclamation-triangle', 'text-red'),
-(6, 1, 'social', 'fa fa-facebook-official', 'text-default'),
-(7, 1, 'menu', 'fa fa-bars', 'text-default'),
-(8, 1, 'filemanager', 'fa fa-folder-open-o', 'text-default'),
-(9, 1, 'plugins', 'fa fa-plug', 'text-default'),
-(10, 1, 'settings', 'fa fa-gears', 'text-default'),
-(11, 1, 'widgets', 'fa fa-labels', 'text-default'),
-(12, 1, 'stats', 'fa fa-bar-chart', 'text-default');
+INSERT INTO `cms_syslog_categories` (`id`, `active`, `property`, `icon`, `type`, `notify`) VALUES
+(1, 1, 'system', 'fa fa-wrench', 'text-default', 1),
+(2, 1, 'pages', 'fa fa-wordpress', 'text-default', 1),
+(3, 1, 'user', 'fa fa-user-plus', 'text-blue', 1),
+(4, 1, 'messaging', 'fa fa-envelope-o', 'text-green', 1),
+(5, 1, 'warning', 'fa fa-exclamation-triangle', 'text-red', 1),
+(6, 1, 'social', 'fa fa-facebook-official', 'text-default', 1),
+(7, 1, 'menu', 'fa fa-bars', 'text-default', 1),
+(8, 1, 'filemanager', 'fa fa-folder-open-o', 'text-default', 1),
+(9, 1, 'plugins', 'fa fa-plug', 'text-default', 1),
+(10, 1, 'settings', 'fa fa-gears', 'text-default', 1),
+(11, 1, 'widgets', 'fa fa-labels', 'text-default', 1),
+(12, 1, 'stats', 'fa fa-bar-chart', 'text-default', 1);
 
 CREATE TABLE `cms_templates` (
   `id` int(11) NOT NULL,
