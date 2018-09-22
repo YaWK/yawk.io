@@ -2377,7 +2377,7 @@ ALTER TABLE `cms_syslog`
   ADD PRIMARY KEY `log_id` (`log_id`),
   ADD KEY `log_id` (`log_id`);
 
-ALTER TABLE `cms_syslog_types`
+ALTER TABLE `cms_syslog_categories`
   ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `cms_templates`
@@ -2458,7 +2458,7 @@ ALTER TABLE `cms_settings_types`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 ALTER TABLE `cms_syslog`
   MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT;
-ALTER TABLE `cms_syslog_types`
+ALTER TABLE `cms_syslog_categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 ALTER TABLE `cms_templates`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
