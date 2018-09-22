@@ -665,7 +665,7 @@ INSERT INTO `cms_syslog_categories` (`id`, `active`, `property`, `icon`, `type`,
 (8, 1, 'filemanager', 'fa fa-folder-open-o', 'text-default', 1),
 (9, 1, 'plugins', 'fa fa-plug', 'text-default', 1),
 (10, 1, 'settings', 'fa fa-gears', 'text-default', 1),
-(11, 1, 'widgets', 'fa fa-labels', 'text-default', 1),
+(11, 1, 'widgets', 'fa fa-tag', 'text-default', 1),
 (12, 1, 'stats', 'fa fa-bar-chart', 'text-default', 1);
 
 CREATE TABLE `cms_templates` (
