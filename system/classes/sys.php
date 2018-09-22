@@ -1677,6 +1677,7 @@ namespace YAWK {
                     return null;
                 }
         }
+
         /**
          * get all syslog entries
          * @author      Daniel Retzl <danielretzl@gmail.com>
@@ -1742,7 +1743,7 @@ namespace YAWK {
                                                 '".$toUID."',
                                                 '".$toGID."',
                                                 '".$seen."')"))
-            {   // set a notification into syslog
+            {   // set a notification into user notifications db
                 return true;
             }
             else
