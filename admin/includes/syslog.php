@@ -51,11 +51,11 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
         <div class="box-body">
 
             <!-- btn clear log -->
-            <a class="btn btn-success pull-right" role="dialog" title="<?php echo $lang['SYSLOG_CLEAR'];?>" data-confirm="<?php echo $lang['SYSLOG_DEL_CONFIRM']; ?>" href="index.php?page=syslog&clear=1">
+            <a class="btn btn-danger pull-right" role="dialog" title="<?php echo $lang['SYSLOG_CLEAR'];?>" data-confirm="<?php echo $lang['SYSLOG_DEL_CONFIRM']; ?>" href="index.php?page=syslog&clear=1">
                 <i class="fa fa-trash-o"></i> &nbsp;<?php print $lang['SYSLOG_CLEAR']; ?>
             </a>
             <!-- btn syslog settings -->
-            <a class="btn btn-default pull-right" title="<?php echo $lang['SETTINGS'];?>" href="index.php?page=syslo-settings">
+            <a class="btn btn-default pull-right" title="<?php echo $lang['SETTINGS'];?>" href="index.php?page=syslog-config">
                 <i class="fa fa-cog"></i> &nbsp;<?php print $lang['SETTINGS']; ?>
             </a>
 
@@ -67,7 +67,7 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
         <td width="8%" class="text-center"><strong><?php echo $lang['GROUP']; ?></strong></td>
         <td width="8%" class="text-center"><strong><?php echo $lang['TIMESTAMP']; ?></strong></td>
         <td width="12%" class="text-center"><strong><?php echo $lang['USER']; ?></strong></td>
-        <td width="53%"><strong><?php echo $lang['ACTION']; ?></strong></td>
+        <td width="53%"><strong><?php echo $lang['ENTRY']; ?></strong></td>
         <td width="10%" class="text-center"><strong><?php echo $lang['AFFECTED']; ?></strong></td>
     </tr>
     </thead>
