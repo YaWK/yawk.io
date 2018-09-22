@@ -48,6 +48,10 @@ if(isset($_POST))
         } );
     } );
 </script>
+<!-- Bootstrap toggle css -->
+<link rel="stylesheet" href="../system/engines/bootstrap-toggle/css/bootstrap-toggle.css">
+<!-- Bootstrap toggle js -->
+<script type="text/javascript" src="../system/engines/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
 <?php
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
@@ -105,10 +109,9 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
         <table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-striped table-hover table-responsive" id="table-sort">
             <thead>
             <tr>
-                <td><strong><?php echo $lang['ID']; ?></strong></td>
-                <td width="20%" class="text-right"><strong><?php echo $lang['CATEGORY']; ?></strong></td>
-                <td width="10%" class="text-left"><i class="fa fa-code"></i> &nbsp;<strong><?php echo $lang['LOG']; ?></strong></td>
-                <td width="10%" class="text-left"><i class="fa fa-bell-o"></i> &nbsp;<strong><?php echo $lang['NOTIFY']; ?></strong></td>
+                <td width="15%" class="text-left"><strong><?php echo $lang['CATEGORY']; ?></strong></td>
+                <td width="15%" class="text-center"><i class="fa fa-code"></i> &nbsp;<strong><?php echo $lang['LOG']; ?></strong></td>
+                <td width="10%" class="text-center"><i class="fa fa-bell-o"></i> &nbsp;<strong><?php echo $lang['NOTIFY']; ?></strong></td>
                 <td width="60%" class="text-center">&nbsp;</td>
             </tr>
             </thead>
@@ -138,15 +141,14 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
                         $notify_active = "";
                     }
                     echo "<tr>
-                    <td>".$category['id']."</td>
-                    <td class=\"text-right\">".$category['property']."&nbsp;&nbsp;<i class=\"".$category['icon']."\"></i></td>
-                    <td class=\"text-left\">
-                        <input type=\"hidden\" class=\"checkbox\" name=\"active[".$category['id']."]\" id=\"hidden-".$category['id']."\" value=\"off\">
-                        <input type=\"checkbox\" class=\"checkbox\" name=\"active[".$category['id']."]\" id=\"".$category['id']."\"$log_active>
+                    <td class=\"text-left\"><i style=\"color:#8c8c8c;\" class=\"".$category['icon']."\"></i>&nbsp;&nbsp;&nbsp;&nbsp; <b>".ucfirst($category['property'])."</b></td>
+                    <td class=\"text-center\">
+                        <input type=\"hidden\" name=\"active[".$category['id']."]\" id=\"hidden-".$category['id']."\" value=\"off\">
+                        <input type=\"checkbox\" data-on=\"$lang[ON_]\" data-off=\"$lang[OFF_]\" data-toggle=\"toggle\" data-onstyle=\"success\" data-offstyle=\"danger\" class=\"checkbox\" name=\"active[".$category['id']."]\" id=\"".$category['id']."\"$log_active>
                     </td>
-                    <td class=\"text-left\">
-                        <input type=\"hidden\" class=\"checkbox\" name=\"notify[".$category['id']."]\" id=\"hidden-".$category['id']."\" value=\"off\">
-                        <input type=\"checkbox\" class=\"checkbox\" name=\"notify[".$category['id']."]\"$notify_active>
+                    <td class=\"text-center\">
+                        <input type=\"hidden\" name=\"notify[".$category['id']."]\" id=\"hidden-".$category['id']."\" value=\"off\">
+                        <input type=\"checkbox\" data-on=\"<i class='fa fa-bell-o'>\" data-off=\"<i class='fa fa-bell-slash-o'>\" data-toggle=\"toggle\" data-onstyle=\"success\" data-offstyle=\"danger\" class=\"checkbox\" name=\"notify[".$category['id']."]\"$notify_active>
                     </td>
                     <td class=\"text-center\">&nbsp;</td>
                   </tr>";
