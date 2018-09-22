@@ -44,6 +44,8 @@ namespace YAWK {
         public $version;
         /** * @var string the current loaded Bootstrap version */
         public $bootstrapVersion;
+        /** * @var string required framework for this template */
+        public $framework;
         /** * @var string template's license */
         public $license;
         /** * @var int which template is currently set to active? */
@@ -240,6 +242,7 @@ namespace YAWK {
                 $this->subAuthorUrl = $row['subAuthorUrl'];
                 $this->modifyDate = $row['modifyDate'];
                 $this->version = $row['version'];
+                $this->framework = $row['framework'];
                 $this->license = $row['license'];
                 $this->selectedTemplate = \YAWK\settings::getSetting($db, "selectedTemplate");
                 return true;
@@ -3073,7 +3076,6 @@ namespace YAWK {
             }
         }
 
-
         /**
          * Check which Bootstrap version is currently loaded in active template
          * @author Daniel Retzl <danielretzl@gmail.com>
@@ -3104,21 +3106,39 @@ namespace YAWK {
             // check if asset array is set and not empty
             if (isset($asset) && (is_array($asset) && (!empty($asset[0][0]))))
             {
-                // check if str contains 3 (must be when  'Bootstrap 3 CSS' is loaded)
-                if (strstr($asset[0][0], "3"))
-                {   // Bootstrap 3 is loaded
-                    return "3";
+                // check if framework requirement match current loaded bootstrap version
+                // if boostrap 3 is required
+                if ($this->framework == "bootstrap3")
+                {
+                    // check if str contains 3 (must be when 'Bootstrap 3 CSS' is loaded, see sql query)
+                    if (strstr($asset[0][0], "3"))
+                    {   // Bootstrap 3 (is required and loaded)
+                        return "3";
+                    }
+                    else
+                    {   // wrong framework loaded - set syslog entry
+                        \YAWK\sys::setSyslog($db, 1, 2, "Wrong Bootstrap version loaded - $this->name requires $this->framework", $_SESSION['uid'], 0, 0, 0);
+                        return null;
+                    }
                 }
-                // check if str contains 4 (must be when  'Bootstrap 4 CSS' is loaded)
-                else if (strstr($asset[0][0], "4"))
-                {   // Bootstrap 4 is loaded
-                    return "4";
+                // if boostrap 4 is required
+                elseif ($this->framework == "bootstrap4")
+                {
+                    // check if str contains 4 (must be when 'Bootstrap 4 CSS' is loaded, see sql query)
+                    if (strstr($asset[0][0], "4"))
+                    {   // Bootstrap 4 (is required and loaded)
+                        return "4";
+                    }
+                    else
+                    {   // wrong framework loaded - set syslog entry
+                        \YAWK\sys::setSyslog($db, 1, 2, "Wrong Bootstrap version loaded - $this->name requires $this->framework", $_SESSION['uid'], 0, 0, 0);
+                        return null;
+                    }
                 }
-                // if 3 or 4 could not be detected...
                 else
-                {   // unable to identify current Bootstrap version
-                    return "0";
-                }
+                    {   // unknown framework
+                        return "0";
+                    }
             }
             // asset not set, no array or empty
             else

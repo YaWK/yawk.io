@@ -303,9 +303,16 @@ echo"</section><!-- Main content -->
                 }
                 else { $subauthor = ""; }
 
-                // subAuthor
+                // required framework
+                if (isset($template->framework) && (!empty($template->framework)))
+                {   // set required framework markup
+                    $framework = "<dt>$lang[FRAMEWORK]</dt><dd>$template->framework</dd>";
+                }
+                else { $framework = ""; }
+
+                // license
                 if (isset($template->license) && (!empty($template->license)))
-                {   // set subAuthor
+                {   // set license markup
                     $license = "<dt>$lang[LICENSE]</dt><dd>$template->license</dd>";
                 }
                 else { $license = ""; }
@@ -319,7 +326,7 @@ echo"</section><!-- Main content -->
                 <dt><?php echo $lang['STATUS']; ?></dt>
                 <dd><b><?php echo $infoBadge; ?></b></dd>
 
-                <?php echo $description.$author.$weblink.$license.$version.$releaseDate.$settings."<br>".$subauthor.$modifyDate; ?>
+                <?php echo $description.$author.$weblink.$framework.$license.$version.$releaseDate.$settings."<br>".$subauthor.$modifyDate; ?>
 
                 <dt>&nbsp;</dt>
                 <dd>&nbsp;</dd>
