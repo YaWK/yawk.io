@@ -7,7 +7,7 @@ namespace YAWK\FRAMEWORK {
      * depending on the selection of the fields within the backend.</p>
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
-     * @copyright  2009-2015 Daniel Retzl yawk.io
+     * @copyright  2018 Daniel Retzl yawk.io
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
