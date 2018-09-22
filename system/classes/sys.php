@@ -1796,6 +1796,41 @@ namespace YAWK {
         }
 
         /**
+         * get all syslog categories
+         * @author      Daniel Retzl <danielretzl@gmail.com>
+         * @version     1.0.0
+         * @link        http://yawk.io
+         * @param object $db database
+         * @return array|bool $syslogResults
+         */
+        static function getSyslogCategories($db)
+        {   /** @var $db \YAWK\db */
+            // get syslog data from db
+            $syslogCategories = array();
+            if ($res = $db->query("SELECT * FROM {syslog_categories} ORDER BY property"))
+            {   // syslog entry set
+                while ($row = mysqli_fetch_assoc($res))
+                    // check if array is set and not empty
+                {   // build syslog results array
+                    $syslogCategories[] = $row;
+                }
+                // check if syslog array is set and not empty
+                if (is_array($syslogCategories) && (!empty($syslogCategories)))
+                {   // all good...
+                    return $syslogCategories;
+                }
+                else
+                {   // array is not set or empty
+                    return false;
+                }
+            }
+            else
+            {   // failed to query syslog data from db
+                return false;
+            }
+        }
+
+        /**
          * set a system notification for any user or admin
          * @param object $db database
          * @param int    $log_category log category
