@@ -233,8 +233,9 @@ echo"</section><!-- Main content -->
                 <input type="text" class="form-control" name="url3" id="url3" placeholder="<?php echo $lang['ASSET_URL_PH']; ?>">
                 <label for="assetType"><?php echo $lang['TYPE']; ?></label>
                 <select class="form-control" name="assetType" id="assetType">
-                    <option value="2"><?php echo $lang['OPTIONAL']; ?></option>
                     <option value="1"><?php echo $lang['REQUIRED']; ?></option>
+                    <option value="2" selected><?php echo $lang['OPTIONAL']; ?></option>
+                    <option value="3"><?php echo $lang['USER_DEFINED']; ?></option>
                 </select>
                 <button class="btn btn-success pull-right" id="newAsset" name="newAsset" style="margin-top:2px;"><i id="savebuttonIcon" class="fa fa-check"></i>&nbsp;&nbsp;<?php echo $lang['ASSET_ADD']; ?></button>
             </form>
