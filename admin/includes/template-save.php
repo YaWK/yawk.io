@@ -94,8 +94,8 @@ if (isset($_POST['save']) && (isset($_GET['action']) && (isset($_GET['id']))))
         $bodySmallFontSettings = \YAWK\template::setCssBodySmallFontSettings("globaltext", $tplSettings);
 
 
-        $bootstrapVersion = $template->checkBootstrapVersion($db, $template->id);
-        $bootstrap = new \YAWK\FRAMEWORK\cssFramework($bootstrapVersion, $tplSettings);
+        $bootstrapVersion = $template->checkBootstrapVersion($db, $template->id, $lang);
+        $bootstrap = new \YAWK\FRAMEWORK\cssFramework($bootstrapVersion, $tplSettings, $lang);
 
 
         // PREPARE SETTINGS.CSS

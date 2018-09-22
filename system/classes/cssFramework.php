@@ -45,7 +45,7 @@ namespace YAWK\FRAMEWORK {
                     // get current template ID
                     $currentTemplateID = \YAWK\template::getCurrentTemplateId($db);
                     // check and set current bootstrap version
-                    $this->version = $template->checkBootstrapVersion($db, $currentTemplateID);
+                    $this->version = $template->checkBootstrapVersion($db, $currentTemplateID, $lang);
                 }
 
             // check and set this template settings array

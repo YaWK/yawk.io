@@ -102,7 +102,14 @@ $previewButton = "";
 // load all template settings into array
 $templateSettings = \YAWK\template::getAllSettingsIntoArray($db, $user);
 // get current bootstrap version
-$template->bootstrapVersion = $template->checkBootstrapVersion($db, $template->id);
+if (!$template->bootstrapVersion = $template->checkBootstrapVersion($db, $template->id, $lang))
+{
+    \YAWK\alert::draw("danger", $lang['ERROR'], $lang['FRAMEWORK_FALSE'], "", 0);
+}
+else if($template->bootstrapVersion == "X")
+{
+    \YAWK\alert::draw("danger", $lang['ERROR'], $lang['FRAMEWORK_MULTIPLE_FALSE'], "", 0);
+}
 ?>
 <?php
 // TEMPLATE WRAPPER - HEADER & breadcrumbs

@@ -3085,7 +3085,7 @@ namespace YAWK {
          * @return string 0|3|4|X
          * @annotation return values: 0 = not loaded, 3 = bootstrap 3, 4 = bootstrap 4, X = multiple (false!)
          */
-        public function checkBootstrapVersion($db, $templateID)
+        public function checkBootstrapVersion($db, $templateID, $lang)
         {   /** @var $db \YAWK\db */
 
             // query database
@@ -3100,6 +3100,7 @@ namespace YAWK {
             // check if there is more than 1 entry
             if (isset($asset[1]) && (!empty($asset[1])))
             {   // bootstrap seem to be loaded twice
+                \YAWK\sys::setSyslog($db, 1, 2, "Bootstrap loaded multiple times - template <b>$this->name</b> requires only <b>$this->framework</b>", $_SESSION['uid'], 0, 0, 0);
                 return "X";
             }
 
@@ -3117,7 +3118,7 @@ namespace YAWK {
                     }
                     else
                     {   // wrong framework loaded - set syslog entry
-                        \YAWK\sys::setSyslog($db, 1, 2, "Wrong Bootstrap version loaded - $this->name requires $this->framework", $_SESSION['uid'], 0, 0, 0);
+                        \YAWK\sys::setSyslog($db, 1, 2, "Wrong Bootstrap version loaded - template <b>$this->name</b> requires <b>$this->framework</b>", $_SESSION['uid'], 0, 0, 0);
                         return null;
                     }
                 }
@@ -3131,18 +3132,20 @@ namespace YAWK {
                     }
                     else
                     {   // wrong framework loaded - set syslog entry
-                        \YAWK\sys::setSyslog($db, 1, 2, "Wrong Bootstrap version loaded - $this->name requires $this->framework", $_SESSION['uid'], 0, 0, 0);
+                        \YAWK\sys::setSyslog($db, 1, 2, "Wrong Bootstrap version loaded - template <b>$this->name</b> requires <b>$this->framework</b>", $_SESSION['uid'], 0, 0, 0);
                         return null;
                     }
                 }
                 else
                     {   // unknown framework
+                        \YAWK\sys::setSyslog($db, 1, 2, "Template <b>$this->name</b> requires framework <b>$this->framework</b> is not supported yet.", $_SESSION['uid'], 0, 0, 0);
                         return "0";
                     }
             }
             // asset not set, no array or empty
             else
                 {   // it seems that no Bootstrap css is loaded
+                    \YAWK\sys::setSyslog($db, 1, 2, "Template <b>$this->name</b> requires <b>$this->framework</b>, but no corresponding asset is loaded.", $_SESSION['uid'], 0, 0, 0);
                     return "0";
                 }
         }
