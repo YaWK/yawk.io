@@ -189,7 +189,7 @@ echo"</section><!-- Main content -->
                 <?php echo "<h4><i class=\"fa fa-puzzle-piece\"></i> &nbsp;$lang[ASSETS] <small>$lang[TPL_ASSETS_SUBTEXT]</small></h4>"; ?>
             </div>
             <div class="col-md-2">
-                <button class="btn btn-success pull-right" type="submit" value="save" id="savebutton" name="save" style="margin-top:2px;"><i class="fa fa-check"></i>&nbsp;&nbsp;<?php echo $lang['DESIGN_SAVE']; ?></button>
+                <button class="btn btn-success pull-right" type="submit" value="save" id="savebutton" name="save" style="margin-top:2px;"><i class="fa fa-check" id="savebuttonIcon"></i>&nbsp;&nbsp;<?php echo $lang['DESIGN_SAVE']; ?></button>
             </div>
         </div>
     </div>
