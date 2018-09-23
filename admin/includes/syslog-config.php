@@ -106,6 +106,36 @@ if(isset($_POST))
             }
         });
 
+        // Toggle all syslog categories on / off
+        $('#toggleAllBtn').click(function(e)
+        {
+            // prevent page reload
+            e.preventDefault();
+            // select table
+            var table = $("#table-sort");
+            // select all checkboxes in this table
+            var selected = $('td input:checkbox',table);
+            // on each selected checkbox
+            $(selected).each(function()
+            {
+                //  $this reference to the clicked checkbox
+                var $this = $(this);
+                // store current checkbox selector
+                var currentCheckbox = '#'+this.id;
+                // check if checkbox is checked
+                if ($this.is(':checked'))
+                {   // toggle current checkbox (all)
+                    $(currentCheckbox).bootstrapToggle('toggle');
+                    // console.log(this.id+' is checked');
+                }
+                else
+                    {   // toggle not checked checkboxes
+                        $(currentCheckbox).bootstrapToggle('toggle');
+                        // console.log(this.name+' unchecked');
+                    }
+            });
+        });
+
     }); // end document ready
 </script>
 <!-- Bootstrap toggle css -->
@@ -124,7 +154,7 @@ echo \YAWK\backend::getTitle($lang['SYSLOG'], $lang['SYSLOG_CONFIG']);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
             <li><a href=\"index.php?page=syslog\" class=\"active\" title=\"$lang[SYSLOG]\"> $lang[SYSLOG]</a></li>
-            <li><a href=\"index.php?page=syslog\" class=\"active\" title=\"$lang[CONFIGURATION]\"> $lang[CONFIGURATION]</a></li>
+            <li><a href=\"index.php?page=syslog-config\" class=\"active\" title=\"$lang[CONFIGURATION]\"> $lang[CONFIGURATION]</a></li>
         </ol>
     </section>
     <!-- Main content -->
@@ -165,14 +195,18 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
         <a href="index.php?page=syslog" class="btn btn-default pull-right">
             <i class="fa fa-angle-double-left"></i>&nbsp;&nbsp; <?php print $lang['SYSLOG']; ?>
         </a>
+        <!-- toggle all -->
+        <button class="btn btn-default pull-right" id="toggleAllBtn" href="#" title="<?php print $lang['TOGGLE_ALL']; ?>">
+            <i class="fa fa-toggle-on"></i>
+        </button>
 
         <table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-striped table-hover table-responsive" id="table-sort">
             <thead>
             <tr>
-                <td width="15%" class="text-left"><strong><?php echo $lang['CATEGORY']; ?></strong></td>
-                <td width="15%" class="text-center"><i class="fa fa-code"></i> &nbsp;<strong><?php echo $lang['LOG']; ?></strong></td>
-                <td width="10%" class="text-center"><i class="fa fa-bell-o"></i> &nbsp;<strong><?php echo $lang['NOTIFY']; ?></strong></td>
-                <td width="60%" class="text-center">&nbsp;</td>
+                <td width="35%" class="text-left"><strong><?php echo $lang['CATEGORY']; ?></strong></td>
+                <td width="20%" class="text-center"><i class="fa fa-code"></i> &nbsp;<strong><?php echo $lang['LOG']; ?></strong></td>
+                <td width="25%" class="text-center"><i class="fa fa-bell-o"></i> &nbsp;<strong><?php echo $lang['NOTIFY']; ?></strong></td>
+                <td width="10%" class="text-center">&nbsp;</td>
             </tr>
             </thead>
             <tbody>
