@@ -11,6 +11,12 @@
     } );
 </script>
 <?php
+// check if syslog is enabled
+if (\YAWK\settings::getSetting($db, "syslogEnable") == false)
+{   // if not, throw a warning message
+    echo \YAWK\alert::draw("danger", $lang['SYSLOG_DISABLED'], $lang['SYSLOG_DISABLED_MSG'], "", 0);
+}
+
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
     <!-- Content Wrapper. Contains page content -->

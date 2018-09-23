@@ -143,6 +143,13 @@ if(isset($_POST))
 <!-- Bootstrap toggle js -->
 <script type="text/javascript" src="../system/engines/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
 <?php
+// check if syslog is enabled
+$syslogEnabled = \YAWK\settings::getSetting($db, "syslogEnable");
+if ($syslogEnabled == false)
+{   // if not, throw a warning message
+    echo \YAWK\alert::draw("danger", $lang['SYSLOG_DISABLED'], $lang['SYSLOG_DISABLED_MSG'], "", 0);
+}
+
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
     <!-- Content Wrapper. Contains page content -->
@@ -217,9 +224,20 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
             {
                 foreach ($syslogCategories AS $category)
                 {
+
+                    if ($syslogEnabled == false)
+                    {
+                        $disabled = " disabled readonly";
+                    }
+                    else
+                    {
+                        $disabled = '';
+                    }
+
+
                     if ($category['active'] == 1)
                     {
-                        $log_active = " checked";
+                        $log_active = " checked".$disabled;
                     }
                     else
                         {
@@ -228,7 +246,7 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
 
                     if ($category['notify'] == 1)
                     {
-                        $notify_active = " checked";
+                        $notify_active = " checked".$disabled;
                     }
                     else
                     {
