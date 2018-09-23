@@ -81,6 +81,31 @@ if(isset($_POST))
             $(savebutton).removeClass('btn btn-success').addClass('btn btn-warning disabled');
             $(savebuttonIcon).removeClass('fa fa-save').addClass('fa fa-spinner fa-spin fa-fw');
         });
+
+
+        // automatically turn off notifications if loggin is turned of for this category
+        // check if any checkbox has changed
+        $(':checkbox').change(function()
+        {   // $this is reference to the clicked checkbox
+            var $this = $(this);
+            // get ID attribute from this checkbox
+            var id = $(this).attr('id');
+            // the corresponding notify checkbox to the logging checkbox
+            var notifyCheckbox = '#notify'+id;
+            // check if clicked checkbox is currently checked
+            if ($this.is(':checked'))
+            {   // toggle corresponding notify checkbox ON
+                $(notifyCheckbox).bootstrapToggle('enable');
+                $(notifyCheckbox).bootstrapToggle('on');
+                // alert('checkbox '+id+ ' is now ON');
+            } else {
+                // toggle corresponding notify checkbox OFF
+                $(notifyCheckbox).bootstrapToggle('off');
+                $(notifyCheckbox).bootstrapToggle('disable');
+                // $(notifyCheckbox).bootstrapToggle.off;
+            }
+        });
+
     }); // end document ready
 </script>
 <!-- Bootstrap toggle css -->
@@ -129,7 +154,7 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
     <div class="box-body">
 
 
-        <form name="form" role="form" action="index.php?page=syslog-config" method="post">
+        <form name="form" id="form" role="form" action="index.php?page=syslog-config" method="post">
 
         <!-- savebutton -->
         <button class="btn btn-success pull-right" type="submit" title="<?php echo $lang['SAVE'];?>" id="savebutton">
@@ -179,11 +204,11 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
                     <td class=\"text-left\"><i style=\"color:#8c8c8c;\" class=\"".$category['icon']."\"></i>&nbsp;&nbsp;&nbsp;&nbsp; <b>".ucfirst($category['property'])."</b></td>
                     <td class=\"text-center\">
                         <input type=\"hidden\" name=\"active[".$category['id']."]\" id=\"hidden-".$category['id']."\" value=\"off\">
-                        <input type=\"checkbox\" data-on=\"$lang[ON_]\" data-off=\"$lang[OFF_]\" data-toggle=\"toggle\" data-onstyle=\"success\" data-offstyle=\"danger\" class=\"checkbox\" name=\"active[".$category['id']."]\" id=\"".$category['id']."\"$log_active>
+                        <input type=\"checkbox\" data-on=\"$lang[ON_]\" data-off=\"$lang[OFF_]\" data-toggle=\"toggle\" data-onstyle=\"success\" data-offstyle=\"danger\" class=\"checkbox\" data-activeID=\"".$category['id']."\" name=\"active[".$category['id']."]\" id=\"".$category['id']."\"$log_active>
                     </td>
                     <td class=\"text-center\">
                         <input type=\"hidden\" name=\"notify[".$category['id']."]\" id=\"hidden-".$category['id']."\" value=\"off\">
-                        <input type=\"checkbox\" data-on=\"<i class='fa fa-bell-o'>\" data-off=\"<i class='fa fa-bell-slash-o'>\" data-toggle=\"toggle\" data-onstyle=\"success\" data-offstyle=\"danger\" class=\"checkbox\" name=\"notify[".$category['id']."]\"$notify_active>
+                        <input type=\"checkbox\" data-on=\"<i class='fa fa-bell-o'>\" data-off=\"<i class='fa fa-bell-slash-o'>\" data-toggle=\"toggle\" data-onstyle=\"success\" data-offstyle=\"danger\" data-notifyID=\"".$category['id']."\" class=\"checkbox\" name=\"notify[".$category['id']."]\" id=\"notify".$category['id']."\"$notify_active>
                     </td>
                     <td class=\"text-center\">&nbsp;</td>
                   </tr>";
@@ -195,3 +220,4 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
         </form>
     </div>
 </div>
+
