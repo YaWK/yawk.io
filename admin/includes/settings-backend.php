@@ -52,7 +52,7 @@ echo"</section><!-- Main content -->
                 <?php echo "<h4><i class=\"fa fa-sign-in\"></i> &nbsp;$lang[BACKEND_SUBTEXT]</h4>"; ?>
             </div>
             <div class="col-md-2">
-                <button class="btn btn-success pull-right" id="save" name="save" style="margin-top:2px;"><i class="fa fa-check"></i>&nbsp;&nbsp;<?php echo $lang['SAVE_SETTINGS']; ?></button>
+                <button class="btn btn-success pull-right" id="savebutton" name="save" style="margin-top:2px;"><i class="fa fa-check" id="savebuttonIcon"></i>&nbsp;&nbsp;<?php echo $lang['SAVE_SETTINGS']; ?></button>
             </div>
         </div>
     </div>
@@ -90,6 +90,39 @@ echo"</section><!-- Main content -->
     </div>
 </form>
 <script type="text/javascript">
+$(document).ready(function()
+    {
+        function saveHotkey() {
+            // simply disables save event for chrome
+            $(window).keypress(function (event) {
+                if (!(event.which === 115 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) && !(event.which === 19)) return true;
+                event.preventDefault();
+                formmodified=0; // do not warn user, just save.
+                return false;
+            });
+            // used to process the cmd+s and ctrl+s events
+            $(document).keydown(function (event) {
+                if (event.which === 83 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) {
+                    event.preventDefault();
+                    $('#savebutton').click(); // SAVE FORM AFTER PRESSING STRG-S hotkey
+                    formmodified=0; // do not warn user, just save.
+                    // save(event);
+                    return false;
+                }
+            });
+        }
+        saveHotkey();
+
+
+        var savebutton = ('#savebutton');
+        var savebuttonIcon = ('#savebuttonIcon');
+        // ok, lets go...
+        // we need to check if user clicked on save button
+        $(savebutton).click(function() {
+            $(savebutton).removeClass('btn btn-success').addClass('btn btn-warning disabled');
+            $(savebuttonIcon).removeClass('fa fa-check').addClass('fa fa-spinner fa-spin fa-fw');
+        });
+
 
     var backendFooter = $('#backendFooter');
 
@@ -189,5 +222,7 @@ echo"</section><!-- Main content -->
             $("#backendFXtime").prop('disabled', true);
         }
     });
+
+});
     /* END CHECKBOX backend fx */
 </script>
