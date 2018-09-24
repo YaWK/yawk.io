@@ -379,6 +379,10 @@ namespace YAWK {
                 \YAWK\sys::setSyslog($db, 5, 1, "could not delete menu entry from database", 0, 0, 0, 0);
                 \YAWK\alert::draw("danger", "Error:", "could not delete menu entry from database", "pages", "4300");
             }
+            else
+                {   // deleted menu syslog entry
+                    \YAWK\sys::setSyslog($db, 2, 0, "deleted menu of ../content/pages/$this->alias.php", 0, 0, 0, 0);
+                }
             // delete item from meta_local db
             if (!$res_menu = $db->query("DELETE FROM {meta_local} WHERE page = '" . $this->id. "'")) {
                 \YAWK\sys::setSyslog($db, 5, 1, "could not delete local meta tags from database", 0, 0, 0, 0);
@@ -388,10 +392,11 @@ namespace YAWK {
             $filename = "../content/pages/" . $this->alias . ".php";
             if (file_exists($filename)) {
                 if (!unlink($filename)) {
+                    \YAWK\sys::setSyslog($db, 2, 2, "unable to delete $filename", 0, 0, 0, 0);
                     \YAWK\alert::draw("danger", "Error:", "could not delete file from /content/ folder", "pages", "4300");
                     return false;
                 } else {
-                    \YAWK\sys::setSyslog($db, 2, 0, "delete $filename", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 2, 0, "deleted $filename", 0, 0, 0, 0);
                     return true;
                 }
             }
@@ -523,7 +528,7 @@ namespace YAWK {
                 }
                 else
                     {   // success syslog entry
-                        \YAWK\sys::setSyslog($db, 5, 0, "added new menu: $title (id: $id)", 0, 0, 0, 0);
+                        \YAWK\sys::setSyslog($db, 7, 0, "added new menu: $title (id: $id)", 0, 0, 0, 0);
                     }
             } // ./ if menu != empty
 
