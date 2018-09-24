@@ -518,9 +518,13 @@ namespace YAWK {
 	                                          '" . $link . "',
 	                                          '" . $blogid . "')"))
                 {   // throw error
-                    \YAWK\sys::setSyslog($db, 5, 1, "Could not insert data into {menu}", 0, 0, 0, 0);
-                    \YAWK\alert::draw("danger", "Error:", "Could not insert menu data", "page=page-new", "4300");
+                    \YAWK\sys::setSyslog($db, 5, 1, "could not insert data into {menu}", 0, 0, 0, 0);
+                    \YAWK\alert::draw("danger", "Error:", "could not insert menu data", "page=page-new", "4300");
                 }
+                else
+                    {   // success syslog entry
+                        \YAWK\sys::setSyslog($db, 5, 0, "added new menu: $title (id: $id)", 0, 0, 0, 0);
+                    }
             } // ./ if menu != empty
 
             // if the method is called from the blog, set settings
@@ -564,7 +568,7 @@ namespace YAWK {
             else
                 {
                     $id = 1;
-                    \YAWK\sys::setSyslog($db, 5, 1, "could not select MAX(id) from pages db", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 2, 1, "could not select MAX(id) from pages db", 0, 0, 0, 0);
                 }
 
             $alias = htmlentities($alias);
@@ -592,13 +596,14 @@ namespace YAWK {
                 if (!$db->query("INSERT INTO {meta_local} (name, page, content)
                         VALUES ($desc, $id, $title)"))
                 {   // error inserting page into database - throw error
-                   // \YAWK\alert::draw("warning", "Error!", "Failed to insert meta description.", "", 4300);
+                    \YAWK\sys::setSyslog($db, 2, 2, "local meta tags could not be stored", 0, 0, 0, 0);
+                    // \YAWK\alert::draw("warning", "Error!", "Failed to insert meta description.", "", 4300);
                 }
             }
             else
             {   // error inserting page into database - throw error
-                \YAWK\sys::setSyslog($db, 5, 1, "Could not insert page into database.", 0, 0, 0, 0);
-                \YAWK\alert::draw("danger", "Error!", "Could not insert page into database.", "", 4300);
+                \YAWK\sys::setSyslog($db, 2, 2, "unable to add page into database.", 0, 0, 0, 0);
+                \YAWK\alert::draw("danger", "Error!", "unable to add new page ($alias) id: $id into pages database.", "", 4300);
             }
 
             // create file
@@ -609,7 +614,8 @@ namespace YAWK {
                 fclose($handle);
                 chmod($filename, 0777);
             }
-            \YAWK\sys::setSyslog($db, 2, 0, "added $filename", 0, 0, 0, 0);
+            //
+            \YAWK\sys::setSyslog($db, 2, 0, "created $filename", 0, 0, 0, 0);
             return true;
         }
 
@@ -643,12 +649,14 @@ namespace YAWK {
                 // try to rename the new file
                 if (!rename($oldFilename, $newFilename))
                 { // throw error msg
-                 \YAWK\alert::draw("warning","Warning!","Could not rename $oldFilename to new file: $newFilename","","");
+                    \YAWK\sys::setSyslog($db, 5, 2, "unable to rename $oldFilename to new file: $newFilename", 0, 0, 0, 0);
+                    \YAWK\alert::draw("warning","Warning!","unable to rename $oldFilename to new file: $newFilename","","");
                 }
                 else
                 {
                     // new file was stored, now do all the database stuff
                     // update meta tags, menu entries and finally the pages db itself
+                    \YAWK\sys::setSyslog($db, 5, 0, "updated file $oldFilename to new file $newFilename", 0, 0, 0, 0);
                 }
 
                 // update local meta description
@@ -658,7 +666,7 @@ namespace YAWK {
                     AND page = '" . $this->id . "'"))
                 {
                     // throw error msg
-                    \YAWK\sys::setSyslog($db, 5, 1, "local meta description could not be stored in database.", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 5, 2, "local meta description could not be updated in database.", 0, 0, 0, 0);
                     \YAWK\alert::draw("warning", "Warning", "local meta description could not be stored in database.", "", 4200);
                 }
 
@@ -669,7 +677,7 @@ namespace YAWK {
                     AND page = '" . $this->id . "'"))
                 {
                     // throw error msg
-                    \YAWK\sys::setSyslog($db, 5, 1, "local meta keywords could not be stored in database.", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 5, 2, "local meta keywords could not be stored in database.", 0, 0, 0, 0);
                     \YAWK\alert::draw("warning", "Warning", "local meta keywords could not be stored in database.", "", 4200);
                 }
 
@@ -712,7 +720,7 @@ namespace YAWK {
                     else
                     {
                         // update pages db worked, all fin
-                        \YAWK\sys::setSyslog($db, 2, 0, "save $this->alias", 0, 0, 0, 0);
+                        \YAWK\sys::setSyslog($db, 2, 0, "updated $this->alias", 0, 0, 0, 0);
                         return true;
                     }
                 }
@@ -740,16 +748,17 @@ namespace YAWK {
                         else
                         {
                             // update pages db worked, all fin
-                            \YAWK\sys::setSyslog($db, 2, 0, "save $this->alias", 0, 0, 0, 0);
+                            \YAWK\sys::setSyslog($db, 2, 0, "updated $this->alias", 0, 0, 0, 0);
                             return true;
                         }
                     }
-
-
             }
-            // something went wrong...
-            // \YAWK\sys::setSyslog($db, 5, "file $oldFilename does not exist.", 0, 0, 0, 0);
-            // return true;
+            else
+                {
+                    // something went wrong...
+                    \YAWK\sys::setSyslog($db, 5, 2, "file $oldFilename does not exist - unable to update and save file", 0, 0, 0, 0);
+                }
+            return true;
         } // ./ save function
 
 
@@ -860,7 +869,15 @@ namespace YAWK {
                     $this->plugin = $row['plugin'];
                     $this->alias = $alias;
                 }
+                else
+                    {   // unable to load page properties
+                        \YAWK\sys::setSyslog($db, 2, 2, "unable to load properties of page $alias", 0, 0, 0, 0);
+                    }
             }
+            else
+                {   // page not set - nunable to load page properties
+                    \YAWK\sys::setSyslog($db, 2, 2, "unable to load properties because page alias was not set", 0, 0, 0, 0);
+                }
         }
 
         /**
@@ -919,8 +936,8 @@ namespace YAWK {
             }
             else
             {   // throw error
-                \YAWK\sys::setSyslog($db, 5, 1, "Could not get property: $property from Paged Database.", 0, 0, 0, 0);
-                \YAWK\alert::draw("warning", "Warning", "Could not get property: $property from Paged Database.", "", "4200");
+                \YAWK\sys::setSyslog($db, 5, 1, "unable to get property: $property from Paged Database.", 0, 0, 0, 0);
+                \YAWK\alert::draw("warning", "Warning", "unable to get property: $property from Paged Database.", "", "4200");
                 return false;
             }
             // q failed
@@ -949,16 +966,14 @@ namespace YAWK {
                     }
                     else
                     {   // user is not allowed to view this content
+                        \YAWK\sys::setSyslog($db, 3, 1, "user with group ID $_SESSION[gid] is not allowed to view $currentpage->alias (required GID: $currentpage->gid)", 0, 0, 0, 0);
                         return false;
-                        // echo "Sorry!! You (Group ID: $_SESSION[gid]) ARE not allowed to view this content. This page is for users with >= roleID: $currentpage->gid";
-                        // exit;
                     }
                 }
                 else if ($currentpage->gid > 1)
                 {   // public user not allowed here, so....
+                    \YAWK\sys::setSyslog($db, 3, 1, "public user tried to get content of $currentpage->alias (required GID: $currentpage->gid)", 0, 0, 0, 0);
                     return false;
-                    // echo "Sorry Public User! You are not allowed to view this content. This page is for users with >= roleID: $currentpage->gid";
-                    // exit;
                 }
             }
             // GET STATUS

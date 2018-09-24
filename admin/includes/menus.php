@@ -1,4 +1,5 @@
 <?php
+/** @var $lang \YAWK\language */
 // CHECK MENU OBJECT
 if (!isset($menu))
 {   // create new menu object if its not set
@@ -8,7 +9,7 @@ if (!isset($menu))
 if (isset($_GET['toggle']) && ($_GET['toggle'] === "1"))
 {   // prepare vars
     $menu->id = ($db->quote($_GET['menuid']));
-    $menu->published = $menu->getMenuStatus($db, $menu->id, $lang);
+    $menu->published = $menu->getMenuStatus($db, $menu->id);
 
     // check status and toggle it
     if ($menu->published === '1')

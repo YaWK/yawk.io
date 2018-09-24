@@ -262,7 +262,7 @@ namespace YAWK {
             }
             else
             {   // q failed
-                \YAWK\sys::setSyslog($db, 5, 1, "$lang[SYSLOG_FAILED_TO_GET_MENU_STATUS] <b>$lang[ID]: $menuid</b> (menu::getMenuStatus)", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 5, 1, "failed to get menu status of menu <b>ID: $menuid</b> (menu::getMenuStatus)", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -836,7 +836,7 @@ namespace YAWK {
          * @param int $id affected menu id
          * @return string
          */
-        static function getMenuNameByID($db, $id)
+        static function getMenuNameByID($db, $id, $lang)
         {   /* @var $db \YAWK\db */
         global $lang;
             $menu = '';
