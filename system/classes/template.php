@@ -553,6 +553,56 @@ namespace YAWK {
         }
 
         /**
+         * get, set and minify custom.js file
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param string $content contains the js file content
+         * @param int $minify 0|1 if 1, the file gets minified before saving.
+         * @param int $templateID affected template ID
+         * @return bool
+         */
+        public function setCustomJsFile($db, $content, $minify, $templateID)
+        {   /** @var $db \YAWK\db */
+            // create template/css/custom.css (for development purpose in backend)
+            // prepare vars
+            $filename = self::getCustomJSFilename($db, "backend", $templateID);
+            // check if file need to be minified
+            if (isset($minify) && (!empty($minify)))
+            {   // minify is set
+                if ($minify === 1)
+                {   // create a minified version: template/js/custom.min.js (for production include)
+                    $filename = substr($filename, 0, -3);
+                    $filename = "$filename.min.js";
+                    $content = \YAWK\sys::minifyJs($content);
+                }
+                else
+                {
+                    \YAWK\sys::setSyslog($db, 5, 1, "failed to minify custom.js <b>$filename</b>", 0, 0, 0, 0);
+                }
+            }
+            // do all the file stuff, open, write, close and chmod to set permissions.
+            $handle = fopen($filename, "wb");
+            //$content = \YAWK\sys::replaceCarriageReturns("\n\r", $content);
+            $content = \YAWK\sys::replacePreTags("\n\r", $content);
+            if (!fwrite($handle, $content))
+            {   // write failed, throw error
+                \YAWK\alert::draw("danger", "Error!", "Could not write custom js $filename<br>Please check your file / owner or group permissions.", "", 4200);
+            }
+            if (!fclose($handle))
+            {   // close failed, throw error
+                \YAWK\alert::draw("warning", "Warning!", "Failed to close custom js $filename<br>Please try again and / or expect some errors.", "", 4200);
+            }
+            if (!chmod($filename, 0775))
+            {   // chmod failed, throw error
+                \YAWK\alert::draw("warning", "Warning!", "Failed to chmod(775) custom js $filename<br>Please check file / folder / owner / group permissions!", "", 4200);
+            }
+            // after all....
+            return true;
+        }
+
+        /**
          * return the content of custom.css
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
@@ -564,6 +614,22 @@ namespace YAWK {
         public function getCustomCSSFile($db, $templateID)
         {   // get the content from custom.css
             $filename = self::getCustomCSSFilename($db, "backend", $templateID);
+            $content = file_get_contents($filename);
+            return $content;
+        }
+
+        /**
+         * return the content of custom.js
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param int $templateID affected template ID
+         * @return string the content of custom.css
+         */
+        public function getCustomJSFile($db, $templateID)
+        {   // get the content from custom.css
+            $filename = self::getCustomJSFilename($db, "backend", $templateID);
             $content = file_get_contents($filename);
             return $content;
         }
@@ -611,6 +677,25 @@ namespace YAWK {
             $tplName = self::getCurrentTemplateName($db, $location, $templateID); // tpl name
             $alias = "custom"; // set CSS file name
             $filename = "../system/templates/$tplName/css/" . $alias . ".css";
+            return $filename;
+        }
+
+        /**
+         * return filename of custom js file
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param string $location frontend or backend
+         * @param int $templateID affected template ID
+         * @return string the template's custom css filename, including path
+         */
+        public function getCustomJSFilename($db, $location, $templateID)
+        {   /** @var $db \YAWK\db */
+            // prepare vars... path + filename
+            $tplName = self::getCurrentTemplateName($db, $location, $templateID); // tpl name
+            $alias = "custom"; // set JS file name
+            $filename = "../system/templates/$tplName/js/" . $alias . ".js";
             return $filename;
         }
 
