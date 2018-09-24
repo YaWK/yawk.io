@@ -218,7 +218,7 @@ echo"</section><!-- Main content -->
                 <?php echo "<h4><i class=\"fa fa-css3\"></i> &nbsp;Custom.CSS <small>$lang[TPL_CUSTOMCSS_SUBTEXT]</small></h4>"; ?>
             </div>
             <div class="col-md-2">
-                <button class="btn btn-success pull-right" id="savebutton" name="save" style="margin-top:2px;"><i class="fa fa-check"></i>&nbsp;&nbsp;<?php echo $lang['DESIGN_SAVE']; ?></button>
+                <button class="btn btn-success pull-right" id="savebutton" name="save" style="margin-top:2px;"><i class="fa fa-check"></i>&nbsp;&nbsp;<?php echo $lang['CUSTOM_CSS_SAVE']; ?></button>
             </div>
         </div>
     </div>
