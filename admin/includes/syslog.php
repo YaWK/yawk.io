@@ -9,6 +9,92 @@
             "bAutoWidth": true
         } );
     } );
+
+    // dismiss a single notification
+    // this function will be called by click on the envelope icon in the syslog table
+    function dismissNotification(id) {
+        $.ajax({    // do ajax request
+            url: 'js/dismiss-singleNotification.php',
+            type: 'POST',
+            data: {
+                "id": id
+            },
+            success: function (data) {
+                if (!data) {
+                    alert('Something went wrong!');
+                    return false;
+                }
+                else    // dismiss notification(id) successful
+                {   // ajax post-processing: update icons + bell label
+                    // get current icon with this id
+                    var currentIcon = '#envelope-'+id;
+                    // get current with this id
+                    var currentLink = '#link'+id;
+                    // store bell label (the yellow flag on the notification box)
+                    var bellLabel = '#bell-label';
+                    // remove closed envelope icon
+                    $(currentIcon).removeClass('fa fa-envelope-o');
+                    // add open envelope icon
+                    $(currentIcon).addClass('fa fa-envelope-open-o text-gray');
+                    // change onclick function call to reopen
+                    $(currentLink).attr("onclick","reopenNotification("+id+")");
+                    // get number of bell label notification counter
+                    var notificationCounter = $(bellLabel).text();
+                    // subtract -1 from counter
+                    notificationCounter--;
+                    // if notification counter is null
+                    if (!notificationCounter)
+                    {   // fade away the orange label on top
+                        $(bellLabel).fadeOut();
+                    }
+                    else
+                    {   // update bell label notification counter
+                        $(bellLabel).text(notificationCounter);
+                    }
+                }
+            }
+        });
+    }
+
+    // re-open a single notification
+    // this function will be called by click on the envelope icon in the syslog table
+    function reopenNotification(id) {
+        $.ajax({    // do ajax request
+            url: 'js/reopen-singleNotification.php',
+            type: 'POST',
+            data: {
+                "id": id
+            },
+            success: function (data) {
+                if (!data) {
+                    alert('Something went wrong!');
+                    return false;
+                }
+                else
+                {   // re-open notification(id) successful
+                    // ajax post-processing: update icons + bell label
+                    // get current icon with this id
+                    var currentIcon = '#envelope-'+id;
+                    // get current link with this id
+                    var currentLink = '#link'+id;
+                    // get current icon with this id
+                    var bellLabel = '#bell-label';
+                    // update envelope class: remove open envelope
+                    $(currentIcon).removeClass('fa fa-envelope-open-o text-gray');
+                    // update envelope class to closed envelope
+                    $(currentIcon).addClass('fa fa-envelope-o');
+                    // change onclick function call to reopen
+                    $(currentLink).attr("onclick","dismissNotification("+id+")");
+                    // uget bell label notification number
+                    var notificationCounter = $(bellLabel).text();
+                    // add +1 to notification counter
+                    notificationCounter++;
+                    // update bell label notification counter
+                    $(bellLabel).text(notificationCounter);
+                }
+            }
+        });
+    }
 </script>
 <?php
 // check if syslog is enabled
@@ -109,11 +195,11 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
                 }
             if ($log['seen'] == 0)
             {
-                $labelMarkup = "<i class=\"fa fa-envelope-o\" title=\"$lang[ID]: $log[log_id]\"></i> ";
+                $labelMarkup = "<a href=\"#\" onclick=\"dismissNotification('".$log['log_id']."')\" id=\"link".$log['log_id']."\" data-id=\"$log[log_id]\"><i class=\"fa fa-envelope-o\" id=\"envelope-$log[log_id]\" title=\"$lang[ID]: $log[log_id]\"></i></a>";
             }
             else
                 {
-                    $labelMarkup = "<i class=\"fa fa-envelope-open-o text-gray\" title=\"$lang[ID]: $log[log_id]\"></i> ";
+                    $labelMarkup = "<a href=\"#\" onclick=\"reopenNotification('".$log['log_id']."')\" id=\"link".$log['log_id']."\" data-id=\"$log[log_id]\"><i class=\"fa fa-envelope-open-o text-gray\" id=\"envelope-$log[log_id]\" title=\"$lang[ID]: $log[log_id]\"></i></a>";
                 }
             echo "<tr class=\"".$log['type']."\">
                     <td class=\"text-center\">$labelMarkup</td>
