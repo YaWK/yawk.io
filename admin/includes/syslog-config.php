@@ -224,6 +224,22 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
             {
                 foreach ($syslogCategories AS $category)
                 {
+                    if (strstr($category['property'], "success"))
+                    {
+                        $color = " text-green";
+                    }
+                    elseif (strstr($category['property'], "warning"))
+                    {
+                        $color = " text-orange";
+                    }
+                    elseif (strstr($category['property'], "error"))
+                    {
+                        $color = " text-red";
+                    }
+                    else
+                        {
+                            $color = " text-gray";
+                        }
 
                     if ($syslogEnabled == false)
                     {
@@ -253,7 +269,7 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
                         $notify_active = "";
                     }
                     echo "<tr>
-                    <td class=\"text-left\"><i style=\"color:#8c8c8c;\" class=\"".$category['icon']."\"></i>&nbsp;&nbsp;&nbsp;&nbsp; <b>".ucfirst($category['property'])."</b></td>
+                    <td class=\"text-left\"><i class=\"".$category['icon']."$color\"></i>&nbsp;&nbsp;&nbsp;&nbsp; <b>".ucfirst($category['property'])."</b></td>
                     <td class=\"text-center\">
                         <input type=\"hidden\" name=\"active[".$category['id']."]\" id=\"hidden-".$category['id']."\" value=\"off\">
                         <input type=\"checkbox\" data-on=\"$lang[ON_]\" data-off=\"$lang[OFF_]\" data-toggle=\"toggle\" data-onstyle=\"success\" data-offstyle=\"danger\" class=\"checkbox\" data-activeID=\"".$category['id']."\" name=\"active[".$category['id']."]\" id=\"".$category['id']."\"$log_active>
