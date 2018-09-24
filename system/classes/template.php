@@ -525,7 +525,7 @@ namespace YAWK {
                 {   // create a minified version: template/css/custom.min.css (for production include)
                     $filename = substr($filename, 0, -4);
                     $filename = "$filename.min.css";
-                    $content = \YAWK\sys::minify($content);
+                    $content = \YAWK\sys::minifyCSS($content);
                 }
                 else
                     {
