@@ -537,6 +537,40 @@ namespace YAWK {
             return $content;
         }
 
+
+        /**
+         * Minify any string: removes spaces, tabs and linebreaks.
+         * @author      Rodrigo54
+         * @version     1.0.0
+         * @link        https://gist.github.com/Rodrigo54/93169db48194d470188f
+         * @param       string $input the JS string to minify
+         * @return      mixed
+         */
+        static function minifyJs($input) {
+            if(trim($input) === "") return $input;
+            return preg_replace(
+                array(
+                    // Remove comment(s)
+                    '#\s*("(?:[^"\\\]++|\\\.)*+"|\'(?:[^\'\\\\]++|\\\.)*+\')\s*|\s*\/\*(?!\!|@cc_on)(?>[\s\S]*?\*\/)\s*|\s*(?<![\:\=])\/\/.*(?=[\n\r]|$)|^\s*|\s*$#',
+                    // Remove white-space(s) outside the string and regex
+                    '#("(?:[^"\\\]++|\\\.)*+"|\'(?:[^\'\\\\]++|\\\.)*+\'|\/\*(?>.*?\*\/)|\/(?!\/)[^\n\r]*?\/(?=[\s.,;]|[gimuy]|$))|\s*([!%&*\(\)\-=+\[\]\{\}|;:,.<>?\/])\s*#s',
+                    // Remove the last semicolon
+                    '#;+\}#',
+                    // Minify object attribute(s) except JSON attribute(s). From `{'foo':'bar'}` to `{foo:'bar'}`
+                    '#([\{,])([\'])(\d+|[a-z_][a-z0-9_]*)\2(?=\:)#i',
+                    // --ibid. From `foo['bar']` to `foo.bar`
+                    '#([a-z0-9_\)\]])\[([\'"])([a-z_][a-z0-9_]*)\2\]#i'
+                ),
+                array(
+                    '$1',
+                    '$1$2',
+                    '}',
+                    '$1$3',
+                    '$1.$3'
+                ),
+                $input);
+        }
+
         /**
          * copy an entire folder including subdirectories
          * @author      Daniel Retzl <danielretzl@gmail.com>
