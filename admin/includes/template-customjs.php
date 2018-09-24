@@ -12,14 +12,14 @@ if (isset($_POST['save']) && (isset($_GET['action']) && (isset($_GET['id']))))
             // process only if $_POST data is set and not empty
             // walk through save requests
             // position properties
-            if ($_GET['action'] === "template-customcss")
+            if ($_GET['action'] === "template-customjs")
             {
-                if (isset($_POST['customCSS']) && (!empty($_POST['customCSS'])))
+                if (isset($_POST['customJS']) && (!empty($_POST['customJS'])))
                 {
                     // save the content to /system/template/$NAME/css/custom.css
-                    $template->setCustomCssFile($db, $_POST['customCSS'], 0, $_GET['id']);
+                    $template->setCustomJsFile($db, $_POST['customJS'], 0, $_GET['id']);
                     // save a minified version to /system/template/$NAME/css/custom.min.css
-                    $template->setCustomCssFile($db, $_POST['customCSS'], 1, $_GET['id']);
+                    $template->setCustomJsFile($db, $_POST['customJS'], 1, $_GET['id']);
                 }
             }
         }
@@ -42,8 +42,6 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
 <link href="../system/engines/summernote/dist/summernote.css" rel="stylesheet">
 <script src="../system/engines/summernote/dist/summernote.min.js"></script>
 <script src="../system/engines/summernote/dist/summernote-cleaner.js"></script>
-<script src="../system/engines/summernote/dist/summernote-image-attributes.js"></script>
-<script src="../system/engines/summernote/dist/summernote-floats-bs.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -51,14 +49,15 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
         function saveHotkey() {
             // simply disables save event for chrome
             $(window).keypress(function (event) {
-                if (!(event.which == 115 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) && !(event.which == 19)) return true;
+                if (!(event.which === 115 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) && !(event.which == 19)) return true;
+                $('#savebutton').click(); // SAVE FORM AFTER PRESSING STRG-S hotkey
                 event.preventDefault();
                 formmodified=0; // do not warn user, just save.
                 return false;
             });
             // used to process the cmd+s and ctrl+s events
             $(document).keydown(function (event) {
-                if (event.which == 83 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) {
+                if (event.which === 83 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) {
                     event.preventDefault();
                     $('#savebutton').click(); // SAVE FORM AFTER PRESSING STRG-S hotkey
                     formmodified=0; // do not warn user, just save.
@@ -122,16 +121,6 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
                 // load an empty toolbar.
                 // in that case: just a plain code editor. no mice cinema.
             ],
-            // popover tooltips
-            popover: {
-                image: [
-                    ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
-                    /* ['float', ['floatLeft', 'floatRight', 'floatNone']], // those are the old regular float buttons */
-                    ['floatBS', ['floatBSLeft', 'floatBSNone', 'floatBSRight']],    // bootstrap class buttons (float/pull)
-                    ['custom', ['imageAttributes', 'imageShape']], // forked plugin: image-attributes.js
-                    ['remove', ['removeMedia']]
-                ]
-            },
             // language for plugin image-attributes.js
             lang: '<?php echo $lang['CURRENT_LANGUAGE']; ?>',
 
@@ -147,7 +136,7 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
                 autoCloseBrackets: <?php echo $editorSettings['editorCloseBrackets'];?>,      // auto insert close brackets
                 autoCloseTags: <?php echo $editorSettings['editorCloseTags']; ?>,             // auto insert close tags after opening
                 value: "<html>\n  " + document.documentElement.innerHTML + "\n</html>",       // all html
-                mode: "css",                                                                  // editor mode
+                mode: "javascript",                                                      // editor mode
                 matchTags: {bothTags: <?php echo $editorSettings['editorMatchTags']; ?>},     // hightlight matching tags: both
                 extraKeys: {
                     "Ctrl-J": "toMatchingTag",                                                // CTRL-J to jump to next matching tab
@@ -180,13 +169,6 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
 if (!isset($template)) { $template = new \YAWK\template(); }
 // new user object if not exists
 if (!isset($user)) { $user = new \YAWK\user(); }
-// $_GET['id'] or $_POST['id'] holds the template ID to edit.
-// If any one of these two is set, we're in "preview mode" - this means:
-// The user database holds two extra cols: overrideTemplate(int|0,1) and templateID
-// Any user who is allowed to override the Template, can edit a template and view it
-// in the frontend. -Without affecting the current active theme for any other user.
-// This is pretty cool when working on a new design: because you see changes, while others wont.
-// In theory, thereby every user can have a different frontend template activated.
 
 // load properties of current active template
 // get ID of current active template
@@ -203,43 +185,43 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 // draw Title on top
-echo \YAWK\backend::getTitle($lang['TPL'], "custom.css");
+echo \YAWK\backend::getTitle($lang['TPL'], "custom.js");
 echo \YAWK\backend::getTemplateBreadcrumbs($lang);
 echo"</section><!-- Main content -->
     <section class=\"content\">";
 /* page content start here */
 ?>
-<form id="template-edit-form" action="index.php?page=template-customcss&action=template-customcss&id=<?php echo $getID; ?>" method="POST">
+<form id="template-edit-form" action="index.php?page=template-customjs&action=template-customjs&id=<?php echo $getID; ?>" method="POST">
     <!-- title header -->
     <!-- REDESIGN -->
     <div class="box">
         <div class="box-body">
             <div class="col-md-10">
-                <?php echo "<h4><i class=\"fa fa-css3\"></i> &nbsp;Custom.CSS <small>$lang[TPL_CUSTOMCSS_SUBTEXT]</small></h4>"; ?>
+                <?php echo "<h4><i class=\"fa fa-code\"></i> &nbsp;$lang[CUSTOM_JS] <small>$lang[TPL_CUSTOMJS_SUBTEXT]</small></h4>"; ?>
             </div>
             <div class="col-md-2">
-                <button class="btn btn-success pull-right" id="savebutton" name="save" style="margin-top:2px;"><i class="fa fa-check" id="savebuttonIcon"></i>&nbsp;&nbsp;<?php echo $lang['CUSTOM_CSS_SAVE']; ?></button>
+                <button class="btn btn-success pull-right" id="savebutton" name="save" style="margin-top:2px;"><i class="fa fa-check" id="savebuttonIcon"></i>&nbsp;&nbsp;<?php echo $lang['CUSTOM_JS_SAVE']; ?></button>
             </div>
         </div>
     </div>
 
-    <!-- CUSTOM CSS -->
+    <!-- CUSTOM JS -->
     <div class="row">
         <div class="col-md-8">
-            <?php $customCSS = $template->getCustomCSSFile($db, $template->id); ?>
-            <textarea name="customCSS" cols="64" rows="28" id="summernote"><?php echo $customCSS; ?></textarea>
-            <label for="summernote"><small><?php echo $lang['YOU_EDIT']; ?>:</small> &nbsp;system/templates/<?php echo $template->name; ?>/css/custom.css</label>
+            <?php $customJS = $template->getCustomJSFile($db, $template->id); ?>
+            <textarea name="customJS" cols="64" rows="28" id="summernote"><?php echo $customJS; ?></textarea>
+            <label for="summernote"><small><?php echo $lang['YOU_EDIT']; ?>:</small> &nbsp;system/templates/<?php echo $template->name; ?>/js/custom.js</label>
         </div>
         <div class="col-md-4">
             <div class="box box-default">
                 <div class="box-header with-border">
-                    <h3 class="box-title"><?php echo $template->name; ?>/css/custom.css</h3>
+                    <h3 class="box-title"><?php echo $template->name; ?>/js/custom.js</h3>
                 </div>
                 <div class="box-body">
-                    <?php echo $lang['CUSTOM_CSS_DESC']; ?>
+                    <?php echo $lang['CUSTOM_JS_DESC']; ?>
                     <br><br>
-                    <i><?php echo $lang['CUSTOM_CSS_HELP']; ?></i><br>
-                    &raquo; <a href="http://www.w3schools.com/css/" title="open CSS overview in new TAB" target="_blank">w3schools.com/css/</a>
+                    <i><?php echo $lang['CUSTOM_JS_HELP']; ?></i><br>
+                    &raquo; <a href="http://www.w3schools.com/js/" title="open JS overview in new TAB" target="_blank">w3schools.com/js/</a>
 
                     <hr>
                     <b><i class="fa fa-lightbulb-o"></i> <?php echo $lang['DID_YOU_KNOW']; ?></b><br>
