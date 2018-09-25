@@ -21,31 +21,6 @@ if (isset($_GET['positionIndicatorStatus']))
             \YAWK\alert::draw("danger", $lang['ERROR'], $lang['SWITCHED_POS_INDICATOR_FAILED'], '', 5000);
         }
 }
-
-// check if any action is requested
-if (isset($_POST['save']) && (isset($_GET['action']) && (isset($_GET['id']))))
-{
-    if (isset($_POST) && (!empty($_POST)))
-    {
-        if (isset($_GET['action']))
-        {
-            // process only if $_POST data is set and not empty
-            // walk through save requests
-            // position properties
-            if ($_GET['action'] === "template-positions")
-            {
-                if ($template->saveProperties($db, $_GET['id'], $_POST))
-                {
-                    \YAWK\alert::draw("success", $lang['SUCCESS'], $lang['POSITIONS'] . "&nbsp;" . $lang['SAVED'], "", 2400);
-                }
-                else
-                {
-                    \YAWK\alert::draw("danger", $lang['ERROR'], $lang['POSITIONS'] . "&nbsp;" . $lang['NOT_SAVED'], "", 5000);
-                }
-            }
-        }
-    }
-}
 // load properties of current active template
 // $template->loadProperties($db, $getID);
 // load all template settings into array
