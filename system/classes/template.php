@@ -263,9 +263,10 @@ namespace YAWK {
          * @param object $db database object
          * @param int $id template id to save
          * @param array $data post data from form (new settings)
+         * @param array $oldTplSettings template settings array (old settings)
          * @return bool true or false
          */
-        public function saveProperties($db, $id, $data)
+        public function saveProperties($db, $id, $data, $oldTplSettings)
         {
             // check if data is set set
             if (!isset($data) || (!isset($id)))
@@ -289,18 +290,15 @@ namespace YAWK {
                 // save this property only if its NOT save or customcss
                 if ($property != "save" && $property != "customCSS")
                 {
-                    // save theme settings to database
-                    $this->setTemplateSetting($db, $id, $property, $value, $longValue);
+                    if ($oldTplSettings[$property] === $value)
+                    {   // if old settings and new settings are the same
+                        // do nothing
+                    }
+                    else
+                        {   // update template setting
+                            $this->setTemplateSetting($db, $id, $property, $value, $longValue);
+                        }
                 }
-                /*
-                // if save property is customCSS
-                elseif ($property == "customCSS")
-                {   // save the content to /system/template/$NAME/css/custom.css
-                    $this->setCustomCssFile($db, $value, 0, $id);
-                    // save a minified version to /system/template/$NAME/css/custom.min.css
-                    $this->setCustomCssFile($db, $value, 1, $id);
-                }
-                */
             }
             return true;
         }
@@ -1015,6 +1013,7 @@ namespace YAWK {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
+         * @param object $user User Object
          * @return array|bool
          */
         public static function getAllSettingsIntoArray($db, $user) // get all settings from db like property

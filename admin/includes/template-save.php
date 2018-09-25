@@ -8,7 +8,7 @@ if (!isset($user)) { $user = new \YAWK\user(); }
 $getID = \YAWK\settings::getSetting($db, "selectedTemplate");
 // load properties of current active template
 $template->loadProperties($db, $getID);
-
+$oldTplSettings = \YAWK\template::getTemplateSettingsArray($db, $template->id);
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
     <!-- Content Wrapper. Contains page content -->
@@ -40,7 +40,8 @@ if (isset($_POST['save']) && (isset($_GET['action']) && (isset($_GET['id']))))
             if ($_GET['action'] === "template-positions")
             {
                 $redirect = "template-positions";
-                if ($template->saveProperties($db, $_GET['id'], $_POST))
+                // check if value has changed...
+                if ($template->saveProperties($db, $_GET['id'], $_POST, $oldTplSettings))
                 {
                     \YAWK\alert::draw("success", $lang['SUCCESS'], $lang['POSITIONS'] . "&nbsp;" . $lang['SAVED'], "", 2400);
                 }
@@ -48,12 +49,13 @@ if (isset($_POST['save']) && (isset($_GET['action']) && (isset($_GET['id']))))
                 {
                     \YAWK\alert::draw("danger", $lang['ERROR'], $lang['POSITIONS'] . "&nbsp;" . $lang['NOT_SAVED'], "", 5000);
                 }
+
             }
             // redesign properties
             if ($_GET['action'] === "template-redesign")
             {
                 $redirect = "template-redesign";
-                if ($template->saveProperties($db, $_GET['id'], $_POST))
+                if ($template->saveProperties($db, $_GET['id'], $_POST, $oldTplSettings))
                 {
                     \YAWK\alert::draw("success", $lang['SUCCESS'], $lang['DESIGN_DETAILS'] . "&nbsp;" . $lang['SAVED'], "", 2400);
                 }

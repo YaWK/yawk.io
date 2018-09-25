@@ -146,6 +146,15 @@ $templateSettings = \YAWK\template::getAllSettingsIntoArray($db, $user);
         }
         saveHotkey();
 
+        var savebutton = ('#savebutton');
+        var savebuttonIcon = ('#savebuttonIcon');
+        // ok, lets go...
+        // we need to check if user clicked on save button
+        $(savebutton).click(function() {
+            $(savebutton).removeClass('btn btn-success').addClass('btn btn-warning disabled');
+            $(savebuttonIcon).removeClass('fa fa-check').addClass('fa fa-spinner fa-spin fa-fw');
+        });
+
         formmodified=0; // status
         $('form *').change(function(){ // if form has changed
             formmodified=1; // set status
@@ -190,7 +199,7 @@ echo"</section><!-- Main content -->
             <?php echo "<h4><i class=\"fa fa-cube\"></i> &nbsp;$lang[POSITIONS]  <small>$lang[TPL_POSITION_SETTINGS]</small></h4>"; ?>
         </div>
         <div class="col-md-2">
-            <button class="btn btn-success pull-right" id="savebutton" name="save" style="margin-top:2px;"><i class="fa fa-check"></i>&nbsp;&nbsp;<?php echo $lang['DESIGN_SAVE']; ?></button>
+            <button class="btn btn-success pull-right" id="savebutton" name="save" style="margin-top:2px;"><i class="fa fa-check" id="savebuttonIcon"></i>&nbsp;&nbsp;<?php echo $lang['DESIGN_SAVE']; ?></button>
         </div>
     </div>
 </div>
