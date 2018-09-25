@@ -313,20 +313,23 @@ namespace YAWK {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database object
+         * @param array $lang Language array
          * @return null
          */
-        function drawHtmlNavbarMessagesMenu($db){
+        function drawHtmlNavbarMessagesMenu($db, $lang){
             // count + return unread messages
             $i = \YAWK\user::countNewMessages($db, $_SESSION['uid']);
             if ($i === 1)
             {   // set singular
-                $msg = "message";
+                $msg = $lang['MESSAGE'];
+                $unread = $lang['UNREAD_SINGULAR'];
                 $label = "<span id=\"envelope-label\" class=\"label label-success animated swing\">$i</span>";
                 $animated = "animated tada";
             }
             else
             {   // set plural correctly
-                $msg = "messages";
+                $msg = $lang['MESSAGES'];
+                $unread = $lang['UNREAD_PLURAL'];
                 $label = "<span id=\"envelope-label\" class=\"label label-success animated swing\">$i</span>";
                 $animated = "animated tada";
             }
@@ -349,7 +352,7 @@ namespace YAWK {
                   $label
                 </a>
                 <ul class=\"dropdown-menu\">
-                  <li class=\"header\">You have $i unread $msg</li>
+                  <li class=\"header\">$lang[SYSLOG_YOU_HAVE] <span id=\"messagesCounterMenu\">$i</span> $unread $msg</li>
                   <li>
                     <!-- inner menu: contains the messages -->
                     <ul class=\"menu\">";
@@ -445,7 +448,7 @@ namespace YAWK {
                   $label
                   </a>
                 <ul id=\"notification-dropdownlink\" class=\"dropdown-menu\">
-                  <li id=\"notification-header\" class=\"header\">$lang[SYSLOG_YOU_HAVE] $i_total $notification <small><small>(<a href=\"#\" id=\"dismiss\" data-uid=\"$_SESSION[uid]\" title=\"$lang[SYSLOG_DISMISS_ALL]\">$lang[SYSLOG_MARK_AS_READ]</a>)</small></small></li>
+                  <li id=\"notification-header\" class=\"header\">$lang[SYSLOG_YOU_HAVE] <span id=\"notificationsMenuCounter\">$i_total</span> $notification <small><small>(<a href=\"#\" id=\"dismiss\" data-uid=\"$_SESSION[uid]\" title=\"$lang[SYSLOG_DISMISS_ALL]\">$lang[SYSLOG_MARK_AS_READ]</a>)</small></small></li>
                   <li>
                     <!-- Inner Menu: contains the notifications -->
                     <ul id=\"notification-menu\" class=\"menu\">";
@@ -525,8 +528,8 @@ namespace YAWK {
                         {   // loop data
                             $timeAgo = \YAWK\sys::time_ago($note['log_date'], $lang);
 
-                            echo "<li><a href=\"index.php?page=syslog#$note[log_id]\" title=\"\">
-                            <div class=\"pull-left\" id=\"note-$note[log_id]\">
+                            echo "<li id=\"note-$note[log_id]\"><a href=\"index.php?page=syslog#$note[log_id]\" title=\"\">
+                            <div class=\"pull-left\">
                             <!-- User Image -->
                                 <i class=\"$note[icon] $note[type]\"></i>&nbsp; <small>$note[message]<br>
                             </div>

@@ -32,6 +32,10 @@
                     var currentLink = '#link'+id;
                     // store bell label (the yellow flag on the notification box)
                     var bellLabel = '#bell-label';
+                    // select notification menu counter span
+                    var notificationCounterSpan = '#notificationsMenuCounter';
+                    // select notification menu counter span
+                    var notificationItem = '#note-'+id;
                     // remove closed envelope icon
                     $(currentIcon).removeClass('fa fa-envelope-o');
                     // add open envelope icon
@@ -40,16 +44,23 @@
                     $(currentLink).attr("onclick","reopenNotification("+id+")");
                     // get number of bell label notification counter
                     var notificationCounter = $(bellLabel).text();
+                    // get number of bell label notification counter
+                    var notificationCounterMenu = $(notificationCounterSpan).text();
                     // subtract -1 from counter
                     notificationCounter--;
+                    notificationCounterMenu--;
                     // if notification counter is null
                     if (!notificationCounter)
                     {   // fade away the orange label on top
                         $(bellLabel).fadeOut();
+                        $(notificationCounterSpan).text(notificationCounterMenu);
+                        $(notificationItem).fadeOut();
                     }
                     else
                     {   // update bell label notification counter
                         $(bellLabel).text(notificationCounter);
+                        $(notificationCounterSpan).text(notificationCounterMenu);
+                        $(notificationItem).fadeOut();
                     }
                 }
             }
@@ -79,6 +90,8 @@
                     var currentLink = '#link'+id;
                     // get current icon with this id
                     var bellLabel = '#bell-label';
+                    // select notification menu counter span
+                    var notificationCounterSpan = '#notificationsMenuCounter';
                     // update envelope class: remove open envelope
                     $(currentIcon).removeClass('fa fa-envelope-open-o text-gray');
                     // update envelope class to closed envelope
@@ -87,10 +100,14 @@
                     $(currentLink).attr("onclick","dismissNotification("+id+")");
                     // uget bell label notification number
                     var notificationCounter = $(bellLabel).text();
+                    // get number of bell label notification counter
+                    var notificationCounterMenu = $(notificationCounterSpan).text();
                     // add +1 to notification counter
                     notificationCounter++;
+                    notificationCounterMenu++;
                     // update bell label notification counter
                     $(bellLabel).text(notificationCounter);
+                    $(notificationCounterSpan).text(notificationCounterMenu);
                 }
             }
         });
