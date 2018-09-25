@@ -21,14 +21,8 @@ if (isset($_GET['positionIndicatorStatus']))
             \YAWK\alert::draw("danger", $lang['ERROR'], $lang['SWITCHED_POS_INDICATOR_FAILED'], '', 5000);
         }
 }
-// load properties of current active template
-// $template->loadProperties($db, $getID);
-// load all template settings into array
-
-// $template->selectedTemplate = \YAWK\settings::getSetting($db, "selectedTemplate");
+// get current template settings as array
 $templateSettings = \YAWK\template::getAllSettingsIntoArray($db, $user);
-// check template wrapper
-// \YAWK\template::checkWrapper($lang, $lang['POSITIONS'], $lang['POSITIONS']);
 
 ?>
 
