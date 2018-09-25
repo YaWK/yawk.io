@@ -29,7 +29,7 @@ echo"</section><!-- Main content -->
 <div class="col-md-12">
 <!-- website preview iframe -->
     <div class="embed-responsive embed-responsive-4by3">
-        <iframe id="preview" class="embed-responsive-item" src="../index.php"></iframe>
+       <iframe id="preview" class="embed-responsive-item" src="../index.php"></iframe>
     </div>
 </div>
 </div>
