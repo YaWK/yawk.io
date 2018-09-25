@@ -171,8 +171,8 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
         foreach ($syslog AS $log)
         {   // get username for affected uid
             $affected_user = \YAWK\user::getUserNameFromID($db, $log['toUID']);
-            // cpt. caps
-            $log['property'] = strtoupper($log['property']);
+            // improve view of category title (cpt. caps + remove post tags -warning -success and -error)
+            $log['property'] = strtoupper(substr($log['property'], 0, strpos($log['property'], '-')));
             // calculate time ago view
             $time_ago = \YAWK\sys::time_ago($log['log_date'], $lang);
             // 1 tbl row per syslog line
@@ -201,6 +201,7 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
                 {
                     $labelMarkup = "<a href=\"#\" onclick=\"reopenNotification('".$log['log_id']."')\" id=\"link".$log['log_id']."\" data-id=\"$log[log_id]\"><i class=\"fa fa-envelope-open-o text-gray\" id=\"envelope-$log[log_id]\" title=\"$lang[ID]: $log[log_id]\"></i></a>";
                 }
+
             echo "<tr class=\"".$log['type']."\">
                     <td class=\"text-center\">$labelMarkup</td>
                     <td class=\"text-center\">".$category."</td>
