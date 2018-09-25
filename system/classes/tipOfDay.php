@@ -42,7 +42,7 @@ namespace YAWK {
             }
             else
             {   // failed to set publish status
-                \YAWK\sys::setSyslog($db, 1, 1, "Failed to set tip of the day ID #$this->id to published state 0",0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 3, 1, "failed to set tip of the day ID #$this->id to published state 0",0, 0, 0, 0);
                 return false;
             }
         }

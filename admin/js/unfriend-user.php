@@ -28,7 +28,7 @@ if ($sql = $db->query("SELECT id FROM {friends}
                        WHERE confirmed = '1' AND friendA = '".$uid."' AND friendB = '".$hunted."'
                        OR confirmed = '1' AND friendA = '".$hunted."' AND friendB = '".$uid."'"))
         {   // un-followd with user
-            \YAWK\sys::setSyslog($db, 3, 0, "$userA un-friended $userB.", $uid, $hunted, 0, 0);
+            \YAWK\sys::setSyslog($db, 17, 0, "$userA un-friended $userB.", $uid, $hunted, 0, 0);
             \YAWK\sys::setNotification($db, 3, 0, "$userA un-friended you.", $uid, $hunted, 0, 0);
             \YAWK\alert::draw("danger","Disconnected with $userB", "You are not friend with $userB anymore.","",4200);
         }
@@ -37,7 +37,7 @@ if ($sql = $db->query("SELECT id FROM {friends}
     {   // user is not in db, follow now:
         if ($sql = $db->query("INSERT INTO {friends} (friendA, friendB) VALUES ('$uid', '$hunted')"))
         {   // put data into logfile
-            \YAWK\sys::setSyslog($db, 3, 0, "$userA asked $userB for friendship", $uid, $hunted, 0, 0);
+            \YAWK\sys::setSyslog($db, 17, 0, "$userA asked $userB for friendship", $uid, $hunted, 0, 0);
             \YAWK\sys::setNotification($db, 3, 0, "$userA want to be your friend<br>
                                                <b><i class=\"fa fa-check-circle-o text-green\"> </i>&nbsp;&nbsp;
                                                <i class=\"fa fa-times-circle-o text-red\"> </i></b>", $uid, $hunted, 0, 0);

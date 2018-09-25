@@ -27,12 +27,12 @@ if (isset($_POST['create']) && isset($_POST['blogid']))
     if ($blog->createItem($db, $blog->blogid, $blog->title, $blog->subtitle, $blog->published, $blog->teasertext, $blog->blogtext, $blog->date_publish, $blog->date_unpublish, $blog->thumbnail, $blog->youtubeUrl, $blog->weblink)) {
         // echo YAWK\alert::draw("success", "Success!", "Your entry $blog->title was saved.","plugin=blog&pluginpage=blog-entries&blogid=".$blog->blogid."", 9800);
         YAWK\alert::draw("success", "$lang[SUCCESS]", "$blog->title $lang[SAVED]", "plugin=blog&pluginpage=blog-entries&blogid=".$blog->blogid."", 1200);
-        \YAWK\sys::setSyslog($db, 1, "Blog Item $blog->title saved.", 0, 0, 0, 0);
+        \YAWK\sys::setSyslog($db, 5, 0, "blog item $blog->title saved", 0, 0, 0, 0);
     }
     else
     {   // create failed, throw error
         \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[BLOG_ADD_ITEM_FAILED]","","3800");
-        \YAWK\sys::setSyslog($db, 1, "Unable to save Blog Item $blog->title.", 0, 0, 0, 0);
+        \YAWK\sys::setSyslog($db, 7, 1, "unable to save blog item $blog->title", 0, 0, 0, 0);
     }
 }
 

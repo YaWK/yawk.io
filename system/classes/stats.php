@@ -389,7 +389,7 @@ namespace YAWK
                 // insert statistics into database
                 if ($this->insertData($db) === false)
                 {   // insert stats failed, add syslog entry
-                    \YAWK\sys::setSyslog($db, 12, 1, "could not insert stats into database.", "", "", "","");
+                    \YAWK\sys::setSyslog($db, 43, 1, "could not insert stats into database.", "", "", "","");
                 }
             }
             return null;
@@ -2154,7 +2154,7 @@ namespace YAWK
             }
             else
             {   // q failed, set syslog and throw error
-                \YAWK\sys::setSyslog($db, 5, 1, "failed to get stats from database.", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 43, 1, "failed to get stats from database.", 0, 0, 0, 0);
                 \YAWK\alert::draw("warning", "Warning!", "Fetch database error: getStatsArray failed.","","4800");
                 return false;
             }

@@ -14,7 +14,7 @@ if(isset($_POST))
         // update syslog_categories log (active) values
         if (!$db->query("UPDATE {syslog_categories} SET active = '".$value."' WHERE id = '".$property."' "))
         {   // make syslog entry on error
-            \YAWK\sys::setSyslog($db, 1, 1, "Unable to update syslog configuration - unable to set state of field: $property to value: $value", "", 0, 0, 0);
+            \YAWK\sys::setSyslog($db, 3, 1, "Unable to update syslog configuration - unable to set state of field: $property to value: $value", "", 0, 0, 0);
         }
     }
     // notification checkboxes
@@ -31,7 +31,7 @@ if(isset($_POST))
         // update syslog_categories notify values
         if (!$db->query("UPDATE {syslog_categories} SET notify = '".$value."' WHERE id = '".$property."' "))
         {   // make syslog entry on error
-            \YAWK\sys::setSyslog($db, 1, 1, "Unable to update syslog configuration - unable to set state of field: $property to value: $value", "", 0, 0, 0);
+            \YAWK\sys::setSyslog($db, 3, 1, "Unable to update syslog configuration - unable to set state of field: $property to value: $value", "", 0, 0, 0);
         }
     }
 }

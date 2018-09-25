@@ -1776,7 +1776,7 @@ namespace YAWK\PLUGINS\BLOG {
                                 '" . $this->blogid . "')")
                 ) {   // q insert page into database failed
                    //  \YAWK\alert::draw("danger", "Error: ", "Could not insert blog page into database.", "", "3800");
-                    \YAWK\sys::setSyslog($db, 1, "Could not insert blog page $alias into database.", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 7, 1, "failed to insert blog page $alias into database", 0, 0, 0, 0);
                     return false;
                 }
                 else
@@ -1792,13 +1792,13 @@ namespace YAWK\PLUGINS\BLOG {
                         VALUES ('" . $desc . "', '" . $page_id . "', '" . $title . "')")
                     ) {   // insert local meta description failed, throw error
                         // \YAWK\alert::draw("warning", "Warning: ", "Could not store local meta description in database!", "", "3800");
-                        \YAWK\sys::setSyslog($db, 1, "Unable to store local meta description in database.", 0, 0, 0, 0);
+                        \YAWK\sys::setSyslog($db, 7, 1, "failed to store local meta description of page ID $page_id", 0, 0, 0, 0);
                     }
                     if (!$res = $db->query("INSERT INTO {meta_local} (name,page,content)
                         VALUES ('" . $keyw . "','" . $page_id . "','" . $words . "')")
                     ) {   // insert local meta keywords failed, throw error
                         // \YAWK\alert::draw("warning", "Warning: ", "Could not store local meta keywords in database!", "", "3800");
-                        \YAWK\sys::setSyslog($db, 1, "Unable to store local meta keywords in database.", 0, 0, 0, 0);
+                        \YAWK\sys::setSyslog($db, 7, 1, "failed to store local meta keywords of page ID $page_id", 0, 0, 0, 0);
                     }
 
                     /* generate ID manually to prevent id holes    */
@@ -1890,13 +1890,13 @@ namespace YAWK\PLUGINS\BLOG {
                     } // ./ end insert blog item
                     else {   // insert blog item failed
                         // \YAWK\alert::draw("danger", "Error: ", "Could not insert blog item into database!", "", "3800");
-                        \YAWK\sys::setSyslog($db, 1, "Unable to insert blog item to db, affected: ID: $id \"$alias\" into blog ID: $blogid", 0, 0, 0, 0);
+                        \YAWK\sys::setSyslog($db, 7, 1, "failed to insert blog item to db, affected: ID: $id \"$alias\" into blog ID: $blogid", 0, 0, 0, 0);
                     }
                 } // ./ end insert blog page
             } // ./ end select MAXid
             else {   // q failed (getMAX id)
                 // \YAWK\alert::draw("danger", "Error: ", "Could not get MAX id from pages database.", "", "3800");
-                \YAWK\sys::setSyslog($db, 1, "Unable to get MAX ID from pages database", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 7, 1, "failed to get MAX ID from pages database", 0, 0, 0, 0);
                 return false;
             }
             return true;

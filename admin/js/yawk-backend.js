@@ -14,9 +14,9 @@ $(document).ready(function() {
         return false;
     });
 
-    function dismissNotifications(uid) {
+    function dismissNotifications() {
         $.ajax({    // do ajax request
-            url: 'js/dismiss-notification.php',
+            url: 'js/dismiss-notifications.php',
             type: 'POST',
             success: function (data) {
                 if (!data) {
@@ -34,9 +34,10 @@ $(document).ready(function() {
     // NOTIFICATION DISMISS BTN
     $("#dismiss").click(function()
     {   // get uid from data value
-        var uid = $(this).attr('data-uid');
-        dismissNotifications(uid);
+        // var uid = $(this).attr('data-uid');
+        dismissNotifications();
     });
+
 
     // BLOCKED USER BUTTON (user-edit.php)
     $("#blockedBtn").hover(function()
