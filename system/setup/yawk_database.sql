@@ -1728,7 +1728,64 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (985, 1, 'pos-hiddenToolbar-bgnone', ' ', 'none', '', 48, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
 (986, 1, 'pos-debug-bgnone', ' ', 'none', '', 49, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
 (987, 1, 'pos-outerBottom-bgnone', ' ', 'none', '', 50, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
-(988, 1, 'pos-outerLeft-bg-size', 'cover', 'cover', '', 31, 1, 12, 'TPL_BODY_BG_IMAGE_SIZE', 'form-control', 'select', 'auto,auto:cover,cover:contain,contain:length,length:percentage,percentage:initial,inital:inherit,inherit', '', '', '', '', '');
+(988, 1, 'pos-outerLeft-bg-size', 'cover', 'cover', '', 31, 1, 12, 'TPL_BODY_BG_IMAGE_SIZE', 'form-control', 'select', 'auto,auto:cover,cover:contain,contain:length,length:percentage,percentage:initial,inital:inherit,inherit', '', '', '', '', ''),
+(989, 1, 'pos-mainLeft-indicator', '1', '0', '', 56, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
+(990, 1, 'pos-mainLeft-vertical-align', 'baseline', 'baseline', '', 56, 1, 6, 'TPL_VERTICAL_ALIGN', 'form-control', 'select', 'baseline,baseline:sub,subscript:super,superscript:top,top:text-top,text-top:middle,middle:bottom,bottom:text-bottom,text-bottom:initial,initial:inherit,inherit', '', '', '', '', ''),
+(991, 1, 'pos-mainLeft-customCSS-longValue', '', '', '', 56, 1, 27, 'TPL_CUSTOM_CSS', 'form-control', 'textarea', '', 'TPL_CUSTOM_CSS_PLACEHOLDER', '', '', '', ''),
+(992, 1, 'pos-mainLeft-border-radius', '0 0 0 0', '12px 12px 12px 12px', '', 56, 1, 17, 'TPL_BORDER_RADIUS', 'form-control', '', '', 'TPL_BORDER_RADIUS_PLACEHOLDER', '', '', '', ''),
+(993, 1, 'pos-mainLeft-box-shadow-color', '000000', '888888', '', 56, 1, 19, 'TPL_BOX_SHADOW_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(994, 1, 'pos-mainLeft-box-shadow-width', '6px 6px 25px -8px', '6px 6px 25px -8px', '', 56, 1, 18, 'TPL_BOX_SHADOW', 'form-control', '', '', 'TPL_BOX_SHADOW_PLACEHOLDER', '', '', 'TPL_BOX_SHADOW_HEADING', 'TPL_BOX_SHADOW_SUBTEXT'),
+(995, 1, 'pos-mainLeft-border-style', 'none', 'solid', '', 56, 1, 15, 'TPL_BORDER_STYLE', 'form-control', 'select', 'none,none:hidden,hidden:dotted,dotted:dashed,dashed:solid,solid:double,double:groove,groove:ridge,ridge:inset,inset:outset,outset:initial,initial:inherit,inherit', '', '', '', '', ''),
+(996, 1, 'pos-mainLeft-border-color', '888888', '888888', '', 56, 1, 16, 'TPL_BORDER_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(997, 1, 'pos-mainLeft-border-width', '1px 1px 1px 1px', '1px 1px 1px 1px', '', 56, 1, 14, 'TPL_BORDER_WIDTH', 'form-control', '', '', 'TPL_BORDER_WIDTH_PLACEHOLDER', '', '', 'TPL_BORDER_HEADING', 'TPL_BORDER_SUBTEXT'),
+(998, 1, 'pos-mainLeft-padding', '0px', '0px', '', 56, 1, 23, 'TPL_PADDING', 'form-control', '', '', 'TPL_PADDING_PLACEHOLDER', '', '', '', ''),
+(999, 1, 'pos-mainLeft-overflow', 'visible', 'visible', '', 56, 1, 24, 'TPL_OVERFLOW', 'form-control', 'select', 'visible,visible:hidden,hidden:scroll,scroll:auto,auto:initial,initial:inherit,inherit', '', '', '', 'TPL_OVERFLOW_HEADING', 'TPL_OVERFLOW_SUBTEXT'),
+(1000, 1, 'pos-mainLeft-visibility', 'visible', 'visible', '', 56, 1, 26, 'TPL_VISIBILITY', 'form-control', 'select', 'visible,visible:hidden,hidden', '', '', '', '', ''),
+(1001, 1, 'pos-mainLeft-text-align', 'left', 'left', '', 56, 1, 5, 'TPL_TEXT_ALIGN', 'form-control', 'select', 'left,left:center,center:right,right:justify,justify:initial,initial:inherit,inherit', '', '', '', 'TPL_ALIGN_HEADING', 'TPL_ALIGN_SUBTEXT'),
+(1002, 1, 'pos-mainLeft-enabled', '1', '0', '', 56, 1, 1, 'TPL_POS_ACTIVE', 'form-control', 'checkbox toggle', '', '', '', '', 'TPL_POS_MAINLEFT_HEADING', 'TPL_POS_MAINLEFT_SUBTEXT'),
+(1003, 1, 'pos-mainLeft-bg-gradient-longValue', '', '', '', 56, 1, 13, 'TPL_POS_BG_GRADIENT', 'form-control', 'textarea', '', 'TPL_BG_GRADIENT_PLACEHOLDER', '', '', '', ''),
+(1004, 1, 'pos-mainLeft-zindex', '9999', '9999', '', 56, 1, 25, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
+(1005, 1, 'pos-mainLeft-width', '100%', '100%', '', 56, 1, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
+(1006, 1, 'pos-mainLeft-height', 'auto', 'auto', '', 56, 1, 3, 'TPL_POS_HEIGHT', 'form-control', '', '', 'TPL_HEIGHT_PLACEHOLDER', '', '', 'TPL_SIZE_HEADING', 'TPL_SIZE_SUBTEXT'),
+(1007, 1, 'pos-mainLeft-bgcolor', '000000', 'F8F8F8', '', 56, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(1008, 1, 'pos-mainLeft-position', 'static', 'static', '', 56, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
+(1009, 1, 'pos-mainLeft-marginBottom', '0px', '0px', '', 56, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
+(1010, 1, 'pos-mainLeft-marginTop', '0px', '0px', '', 56, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
+(1011, 1, 'pos-mainLeft-bg-image', '', 'any .jpg or .png you want', '', 56, 1, 8, 'TPL_BODY_BG_IMAGE', 'form-control', '', '', 'TPL_BODY_BG_IMAGE_PLACEHOLDER', '', '', '', ''),
+(1012, 1, 'pos-mainLeft-bg-attachment', 'fixed', 'fixed', '', 56, 1, 9, 'TPL_BODY_BG_IMAGE_ATTACH', 'form-control', 'select', 'scroll,scroll:fixed,fixed:local,local:initial,inital:inherit,inherit', '', '', '', '', ''),
+(1013, 1, 'pos-mainLeft-bg-position', 'center', 'center', '', 56, 1, 10, 'TPL_BODY_BG_IMAGE_POSITION', 'form-control', 'select', 'left-center,left-center:right-center,right-center:top-center,top-center:top,top:bottom,bottom', '', '', '', '', ''),
+(1014, 1, 'pos-mainLeft-bg-repeat', 'no-repeat', 'no-repeat', '', 56, 1, 11, 'TPL_BODY_BG_IMAGE_REPEAT', 'form-control', 'select', 'no-repeat,no-repeat:repeat-x,repeat-x:repeat-y,repeat-y:inherit,inherit', '', '', '', '', ''),
+(1015, 1, 'pos-mainLeft-bg-size', 'cover', 'cover', '', 56, 1, 12, 'TPL_BODY_BG_IMAGE_SIZE', 'form-control', 'select', 'auto,auto:cover,cover:contain,contain:length,length:percentage,percentage:initial,inital:inherit,inherit', '', '', '', '', ''),
+(1016, 1, 'pos-mainLeft-bgnone', ' ', 'none', '', 56, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(1017, 1, 'pos-mainRight-indicator', '1', '0', '', 57, 1, 28, 'TPL_POS_INDICATOR', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
+(1018, 1, 'pos-mainRight-vertical-align', 'baseline', 'baseline', '', 57, 1, 6, 'TPL_VERTICAL_ALIGN', 'form-control', 'select', 'baseline,baseline:sub,subscript:super,superscript:top,top:text-top,text-top:middle,middle:bottom,bottom:text-bottom,text-bottom:initial,initial:inherit,inherit', '', '', '', '', ''),
+(1019, 1, 'pos-mainRight-customCSS-longValue', '', '', '', 57, 1, 27, 'TPL_CUSTOM_CSS', 'form-control', 'textarea', '', 'TPL_CUSTOM_CSS_PLACEHOLDER', '', '', '', ''),
+(1020, 1, 'pos-mainRight-border-radius', '0 0 0 0', '12px 12px 12px 12px', '', 57, 1, 17, 'TPL_BORDER_RADIUS', 'form-control', '', '', 'TPL_BORDER_RADIUS_PLACEHOLDER', '', '', '', ''),
+(1021, 1, 'pos-mainRight-box-shadow-color', '000000', '888888', '', 57, 1, 19, 'TPL_BOX_SHADOW_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(1022, 1, 'pos-mainRight-box-shadow-width', '6px 6px 25px -8px', '6px 6px 25px -8px', '', 57, 1, 18, 'TPL_BOX_SHADOW', 'form-control', '', '', 'TPL_BOX_SHADOW_PLACEHOLDER', '', '', 'TPL_BOX_SHADOW_HEADING', 'TPL_BOX_SHADOW_SUBTEXT'),
+(1023, 1, 'pos-mainRight-border-style', 'none', 'solid', '', 57, 1, 15, 'TPL_BORDER_STYLE', 'form-control', 'select', 'none,none:hidden,hidden:dotted,dotted:dashed,dashed:solid,solid:double,double:groove,groove:ridge,ridge:inset,inset:outset,outset:initial,initial:inherit,inherit', '', '', '', '', ''),
+(1024, 1, 'pos-mainRight-border-color', '888888', '888888', '', 57, 1, 16, 'TPL_BORDER_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(1025, 1, 'pos-mainRight-border-width', '1px 1px 1px 1px', '1px 1px 1px 1px', '', 57, 1, 14, 'TPL_BORDER_WIDTH', 'form-control', '', '', 'TPL_BORDER_WIDTH_PLACEHOLDER', '', '', 'TPL_BORDER_HEADING', 'TPL_BORDER_SUBTEXT'),
+(1026, 1, 'pos-mainRight-padding', '0px', '0px', '', 57, 1, 23, 'TPL_PADDING', 'form-control', '', '', 'TPL_PADDING_PLACEHOLDER', '', '', '', ''),
+(1027, 1, 'pos-mainRight-overflow', 'visible', 'visible', '', 57, 1, 24, 'TPL_OVERFLOW', 'form-control', 'select', 'visible,visible:hidden,hidden:scroll,scroll:auto,auto:initial,initial:inherit,inherit', '', '', '', 'TPL_OVERFLOW_HEADING', 'TPL_OVERFLOW_SUBTEXT'),
+(1028, 1, 'pos-mainRight-visibility', 'visible', 'visible', '', 57, 1, 26, 'TPL_VISIBILITY', 'form-control', 'select', 'visible,visible:hidden,hidden', '', '', '', '', ''),
+(1029, 1, 'pos-mainRight-text-align', 'left', 'left', '', 57, 1, 5, 'TPL_TEXT_ALIGN', 'form-control', 'select', 'left,left:center,center:right,right:justify,justify:initial,initial:inherit,inherit', '', '', '', 'TPL_ALIGN_HEADING', 'TPL_ALIGN_SUBTEXT'),
+(1030, 1, 'pos-mainRight-enabled', '1', '0', '', 57, 1, 1, 'TPL_POS_ACTIVE', 'form-control', 'checkbox toggle', '', '', '', '', 'TPL_POS_MAINRIGHT_HEADING', 'TPL_POS_MAINRIGHT_SUBTEXT'),
+(1031, 1, 'pos-mainRight-bg-gradient-longValue', '', '', '', 57, 1, 13, 'TPL_POS_BG_GRADIENT', 'form-control', 'textarea', '', 'TPL_BG_GRADIENT_PLACEHOLDER', '', '', '', ''),
+(1032, 1, 'pos-mainRight-zindex', '9999', '9999', '', 57, 1, 25, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
+(1033, 1, 'pos-mainRight-width', '100%', '100%', '', 57, 1, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
+(1034, 1, 'pos-mainRight-height', 'auto', 'auto', '', 57, 1, 3, 'TPL_POS_HEIGHT', 'form-control', '', '', 'TPL_HEIGHT_PLACEHOLDER', '', '', 'TPL_SIZE_HEADING', 'TPL_SIZE_SUBTEXT'),
+(1035, 1, 'pos-mainRight-bgcolor', '000000', 'F8F8F8', '', 57, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(1036, 1, 'pos-mainRight-position', 'static', 'static', '', 57, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
+(1037, 1, 'pos-mainRight-marginBottom', '0px', '0px', '', 57, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
+(1038, 1, 'pos-mainRight-marginTop', '0px', '0px', '', 57, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
+(1039, 1, 'pos-mainRight-bg-image', '', 'any .jpg or .png you want', '', 57, 1, 8, 'TPL_BODY_BG_IMAGE', 'form-control', '', '', 'TPL_BODY_BG_IMAGE_PLACEHOLDER', '', '', '', ''),
+(1040, 1, 'pos-mainRight-bg-attachment', 'fixed', 'fixed', '', 57, 1, 9, 'TPL_BODY_BG_IMAGE_ATTACH', 'form-control', 'select', 'scroll,scroll:fixed,fixed:local,local:initial,inital:inherit,inherit', '', '', '', '', ''),
+(1041, 1, 'pos-mainRight-bg-position', 'center', 'center', '', 57, 1, 10, 'TPL_BODY_BG_IMAGE_POSITION', 'form-control', 'select', 'left-center,left-center:right-center,right-center:top-center,top-center:top,top:bottom,bottom', '', '', '', '', ''),
+(1042, 1, 'pos-mainRight-bg-repeat', 'no-repeat', 'no-repeat', '', 57, 1, 11, 'TPL_BODY_BG_IMAGE_REPEAT', 'form-control', 'select', 'no-repeat,no-repeat:repeat-x,repeat-x:repeat-y,repeat-y:inherit,inherit', '', '', '', '', ''),
+(1043, 1, 'pos-mainRight-bg-size', 'cover', 'cover', '', 57, 1, 12, 'TPL_BODY_BG_IMAGE_SIZE', 'form-control', 'select', 'auto,auto:cover,cover:contain,contain:length,length:percentage,percentage:initial,inital:inherit,inherit', '', '', '', '', ''),
+(1044, 1, 'pos-mainRight-bgnone', ' ', 'none', '', 57, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT');
+
 
 CREATE TABLE `cms_template_settings_types` (
   `id` int(11) NOT NULL,
@@ -1790,7 +1847,9 @@ INSERT INTO `cms_template_settings_types` (`id`, `type`) VALUES
 (52, 'fontfamily'),
 (53, 'font-linkcolors'),
 (54, 'pos-body'),
-(55, 'tpl-assets-basic');
+(55, 'tpl-assets-basic'),
+(56, 'pos-mainLeft'),
+(57, 'pos-mainRight');
 
 CREATE TABLE `cms_tips` (
   `id` int(11) NOT NULL,
@@ -2501,9 +2560,9 @@ ALTER TABLE `cms_syslog_categories`
 ALTER TABLE `cms_templates`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 ALTER TABLE `cms_template_settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=989;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1044;
 ALTER TABLE `cms_template_settings_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 ALTER TABLE `cms_tips`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 ALTER TABLE `cms_users`

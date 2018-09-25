@@ -197,9 +197,51 @@ $col = '';
                       </div>
                       <div class="row">
                           <?php
-                          // TODO: ADD POSITIONS MAIN LEFT + MAIN RIGHT
-                          // POSITION: main
-                          \YAWK\template::getPositionDivBox($db, $lang, "main", 0, "col-md-12", $positions, $indicators);
+                          if ($positions['pos-mainLeft-enabled'] === "1" && ($positions['pos-main-enabled'] === "1") && ($positions['pos-mainRight-enabled'] === "1"))
+                          {
+                              // POSITION: mainLeft
+                              \YAWK\template::getPositionDivBox($db, $lang, "mainLeft", 0, "col-md-4", $positions, $indicators);
+                              // POSITION: main
+                              \YAWK\template::getPositionDivBox($db, $lang, "main", 0, "col-md-4", $positions, $indicators);
+                              // POSITION: mainRight
+                              \YAWK\template::getPositionDivBox($db, $lang, "mainRight", 0, "col-md-4", $positions, $indicators);
+                          }
+                          else if ($positions['pos-mainLeft-enabled'] === "1" && ($positions['pos-main-enabled'] === "0") && ($positions['pos-mainRight-enabled'] === "0"))
+                          {
+                              // POSITION: mainLeft
+                              \YAWK\template::getPositionDivBox($db, $lang, "mainLeft", 0, "col-md-12", $positions, $indicators);
+                          }
+                          else if ($positions['pos-mainLeft-enabled'] === "0" && ($positions['pos-main-enabled'] === "1") && ($positions['pos-mainRight-enabled'] === "0"))
+                          {
+                              // POSITION: main
+                              \YAWK\template::getPositionDivBox($db, $lang, "main", 0, "col-md-12", $positions, $indicators);
+                          }
+                          else if ($positions['pos-mainLeft-enabled'] === "0" && ($positions['pos-main-enabled'] === "0") && ($positions['pos-mainRight-enabled'] === "1"))
+                          {
+                              // POSITION: mainRight
+                              \YAWK\template::getPositionDivBox($db, $lang, "mainRight", 0, "col-md-12", $positions, $indicators);
+                          }
+                          else if ($positions['pos-mainLeft-enabled'] === "1" && ($positions['pos-main-enabled'] === "1") && ($positions['pos-mainRight-enabled'] === "0"))
+                          {
+                              // POSITION: mainLeft
+                              \YAWK\template::getPositionDivBox($db, $lang, "mainLeft", 0, "col-md-6", $positions, $indicators);
+                              // POSITION: main
+                              \YAWK\template::getPositionDivBox($db, $lang, "main", 0, "col-md-6", $positions, $indicators);
+                          }
+                          else if ($positions['pos-mainLeft-enabled'] === "0" && ($positions['pos-main-enabled'] === "1") && ($positions['pos-mainRight-enabled'] === "1"))
+                          {
+                              // POSITION: main
+                              \YAWK\template::getPositionDivBox($db, $lang, "main", 0, "col-md-6", $positions, $indicators);
+                              // POSITION: mainRight
+                              \YAWK\template::getPositionDivBox($db, $lang, "mainRight", 0, "col-md-6", $positions, $indicators);
+                          }
+                          else if ($positions['pos-mainLeft-enabled'] === "1" && ($positions['pos-main-enabled'] === "0") && ($positions['pos-mainRight-enabled'] === "1"))
+                          {
+                              // POSITION: main
+                              \YAWK\template::getPositionDivBox($db, $lang, "mainLeft", 0, "col-md-6", $positions, $indicators);
+                              // POSITION: mainRight
+                              \YAWK\template::getPositionDivBox($db, $lang, "mainRight", 0, "col-md-6", $positions, $indicators);
+                          }
                           ?>
                       </div>
                       <div class="row">
