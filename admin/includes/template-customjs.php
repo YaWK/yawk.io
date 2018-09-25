@@ -207,7 +207,7 @@ echo"</section><!-- Main content -->
 
     <!-- CUSTOM JS -->
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-8 animated fadeIn">
             <?php $customJS = $template->getCustomJSFile($db, $template->id); ?>
             <textarea name="customJS" cols="64" rows="28" id="summernote"><?php echo $customJS; ?></textarea>
             <label for="summernote"><small><?php echo $lang['YOU_EDIT']; ?>:</small> &nbsp;system/templates/<?php echo $template->name; ?>/js/custom.js</label>

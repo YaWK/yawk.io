@@ -225,7 +225,7 @@ echo"</section><!-- Main content -->
 
     <!-- CUSTOM CSS -->
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-8 animated fadeIn">
             <?php $customCSS = $template->getCustomCSSFile($db, $template->id); ?>
             <textarea name="customCSS" cols="64" rows="28" id="summernote"><?php echo $customCSS; ?></textarea>
             <label for="summernote"><small><?php echo $lang['YOU_EDIT']; ?>:</small> &nbsp;system/templates/<?php echo $template->name; ?>/css/custom.css</label>
