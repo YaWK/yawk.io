@@ -403,9 +403,9 @@ class Mysqldump
         if (!$this->dumpSettings['skip-comments']) {
             // Some info about software, source and time
             $header = "-- mysqldump-php https://github.com/ifsnop/mysqldump-php".PHP_EOL.
-                    "--".PHP_EOL.
-                    "-- Host: {$this->host}\tDatabase: {$this->dbName}".PHP_EOL.
-                    "-- ------------------------------------------------------".PHP_EOL;
+                "--".PHP_EOL.
+                "-- Host: {$this->host}\tDatabase: {$this->dbName}".PHP_EOL.
+                "-- ------------------------------------------------------".PHP_EOL;
 
             if (!empty($this->version)) {
                 $header .= "-- Server version \t".$this->version.PHP_EOL;
@@ -585,7 +585,7 @@ class Mysqldump
             if (false === $this->dumpSettings['no-data']) { // don't break compatibility with old trigger
                 $this->listValues($table);
             } else if (true === $this->dumpSettings['no-data']
-                 || $this->matches($table, $this->dumpSettings['no-data'])) {
+                || $this->matches($table, $this->dumpSettings['no-data'])) {
                 continue;
             } else {
                 $this->listValues($table);
@@ -1001,7 +1001,7 @@ class Mysqldump
                 $lineSize += $this->compressManager->write(",(".implode(",", $vals).")");
             }
             if (($lineSize > $this->dumpSettings['net_buffer_length']) ||
-                    !$this->dumpSettings['extended-insert']) {
+                !$this->dumpSettings['extended-insert']) {
                 $onlyOnce = true;
                 $lineSize = $this->compressManager->write(";".PHP_EOL);
             }
@@ -1677,7 +1677,7 @@ class TypeAdapterMysql extends TypeAdapterFactory
     {
         $ret = "";
         if (!isset($row['Create View'])) {
-                throw new Exception("Error getting view structure, unknown output");
+            throw new Exception("Error getting view structure, unknown output");
         }
 
         $viewStmt = $row['Create View'];
@@ -1785,8 +1785,8 @@ class TypeAdapterMysql extends TypeAdapterFactory
             "/*!50003 SET collation_connection  = @saved_col_connection */ ;;".PHP_EOL.
             "DELIMITER ;".PHP_EOL.
             "/*!50106 SET TIME_ZONE= @save_time_zone */ ;".PHP_EOL.PHP_EOL;
-            // Commented because we are doing this in restore_parameters()
-            // "/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;" . PHP_EOL . PHP_EOL;
+        // Commented because we are doing this in restore_parameters()
+        // "/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;" . PHP_EOL . PHP_EOL;
 
         return $ret;
     }
@@ -1940,7 +1940,7 @@ class TypeAdapterMysql extends TypeAdapterFactory
         $this->check_parameters(func_num_args(), $expected_num_args = 1, __METHOD__);
         $args = func_get_args();
         return "DROP TABLE IF EXISTS `${args[0]}`;".PHP_EOL.
-                "/*!50001 DROP VIEW IF EXISTS `${args[0]}`*/;".PHP_EOL;
+            "/*!50001 DROP VIEW IF EXISTS `${args[0]}`*/;".PHP_EOL;
     }
 
     public function getDatabaseHeader()
