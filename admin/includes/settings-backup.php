@@ -1,4 +1,5 @@
 <?php
+
 /*
 // check status and do what you need to do
 if(isset($_GET['check']) && ($_GET['check']==1)) {
@@ -41,6 +42,17 @@ echo"<ol class=\"breadcrumb\">
     <!-- Main content -->
     <section class=\"content\">";
 /* page content start here */
+
+/** @var $db \YAWK\db */
+require_once '../system/classes/backup.php';        // backup methods and helpers
+// check if backup obj is set
+if (!isset($backup) || (empty($backup)))
+{   // create new backup obj
+    $backup = new \YAWK\BACKUP\backup();
+}
+echo "<div class=\"col-md-12\">";
+$backup->init();
+echo "</div>";
 ?>
 <div class="col-md-6">
     <div class="box">
@@ -68,6 +80,12 @@ echo"<ol class=\"breadcrumb\">
 </div>
 
  <div class="col-md-6">
+     <?php
+     echo "<pre>";
+     print_r($db->get_tables());
+     echo "</pre>";
+
+     ?>
   <?	// \YAWK\backup::getPackages();	?>
  </div>
 
