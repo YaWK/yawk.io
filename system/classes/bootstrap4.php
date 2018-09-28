@@ -1,7 +1,8 @@
 <?php
-namespace YAWK\FRAMEWORK\BOOTSTRAP4 {
+namespace YAWK\FRAMEWORK\BOOTSTRAP4
+{
     /**
-     * <b>Bootstrap 4 CSS methods </b>
+     * <b>Bootstrap 4 CSS methods</b>
      * <p>Extends \YAWK\bootstrap - this class serves all bootstrap 4 component methods
      * and set this->cssCode variable that will be used by \YAWK\bootstrap </p>
      *
