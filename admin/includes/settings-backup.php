@@ -1,4 +1,36 @@
 <?php
+if (isset($_POST))
+{
+    if (isset($_POST['action']))
+    {
+        switch ($_POST['action'])
+        {
+            case "startBackup":
+            {
+                /** @var $db \YAWK\db */
+                require_once '../system/classes/backup.php';        // backup methods and helpers
+                // check if backup obj is set
+                if (!isset($backup) || (empty($backup)))
+                {   // create new backup obj
+                    $backup = new \YAWK\BACKUP\backup();
+                }
+                if (isset($_POST['backupMethod']) && (!empty($_POST['backupMethod'])))
+                {
+                    $backup->backupMethod = $_POST['backupMethod'];
+                }
+                $backup->init();
+            }
+            break;
+
+            case "upload":
+            {
+                // restore a backup from file
+            }
+            break;
+
+        }
+    }
+}
 
 /*
 // check status and do what you need to do
@@ -51,13 +83,7 @@ echo"<ol class=\"breadcrumb\">
     <section class=\"content\">";
 /* page content start here */
 
-/** @var $db \YAWK\db */
-require_once '../system/classes/backup.php';        // backup methods and helpers
-// check if backup obj is set
-if (!isset($backup) || (empty($backup)))
-{   // create new backup obj
-    $backup = new \YAWK\BACKUP\backup();
-}
+
 ?>
 <div class="col-md-6">
     <div class="box">
@@ -67,7 +93,8 @@ if (!isset($backup) || (empty($backup)))
             </h3>
         </div>
         <div class="box-body">
-            <form name="backup" action="index.php?page=settings-backup" method="POST">
+            <form name="backup" action="index.php?page=settings-backup&action=startBackup" method="POST">
+                <input type="hidden" name="action" value="startBackup">
                 <button type="submit" class="btn btn-success pull-right" id="savebutton"><i class="fa fa-check" id="savebuttonIcon"></i> &nbsp;<?php echo $lang['BACKUP_CREATE']; ?></button>
                 <br><br>
                 <label for="backupMethod"><?php echo $lang['BACKUP_WHAT_TO_BACKUP']; ?></label>
@@ -86,7 +113,7 @@ if (!isset($backup) || (empty($backup)))
                 <br><br>
             </form>
             <?php
-            $backup->init();
+            // $backup->init();
             // \YAWK\backup::getPackages();	?>
         </div>
     </div>
@@ -102,6 +129,7 @@ if (!isset($backup) || (empty($backup)))
             <form enctype="multipart/form-data" class="dropzone text-center" action="index.php?page=settings-backup&action=upload" method="POST">
                 <input type="hidden" name="MAX_FILE_SIZE" value="">
                 <input type="hidden" name="upload" value="sent">
+                <input type="hidden" name="action" value="upload">
                 <br>
                 <button class="btn btn-success" type="submit"><i class="fa fa-upload"></i>&nbsp;&nbsp;&nbsp;<?php echo $lang['UPLOAD']; ?></button>
             </form>
