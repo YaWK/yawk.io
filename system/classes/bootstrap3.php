@@ -1,7 +1,8 @@
 <?php
-namespace YAWK\FRAMEWORK\BOOTSTRAP3 {
+namespace YAWK\FRAMEWORK\BOOTSTRAP3
+{
     /**
-     * <b>Bootstrap 3 CSS methods </b>
+     * <b>Bootstrap 3 CSS methods</b>
      * <p>Extends \YAWK\bootstrap - this class serves all bootstrap 3 component methods
      * and set this->cssCode variable that will be used by \YAWK\bootstrap </p>
      *
