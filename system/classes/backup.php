@@ -32,8 +32,6 @@ namespace YAWK\BACKUP
         public $backupSettings = array();
         /** @var bool overwrite backup files? */
         public $backupOverwrite = true;
-        /** @var string which backup method? */
-        public $method = "";
 
 
         /**
@@ -75,7 +73,14 @@ namespace YAWK\BACKUP
                         // create new database backup object
                         $this->mysqlBackup = new \YAWK\BACKUP\MYSQL\database($this->backupSettings);
                         // initialize database backup
-                        $this->mysqlBackup->init();
+                        if ($this->mysqlBackup->init() === true)
+                        {   // database backup successful
+                            echo "<b class=\"text-success\">Database Backup success</b>";
+                        }
+                        else
+                            {   // database backup failed
+                                echo "<b class=\"text-danger\">Database Backup failed</b>";
+                            }
                     }
                     break;
 
@@ -92,6 +97,11 @@ namespace YAWK\BACKUP
                     // what if no backup method is set?
                     // add default behavior
                 }
+        }
+
+        public function setInfoFile()
+        {
+
         }
     }
 }
