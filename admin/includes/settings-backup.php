@@ -29,6 +29,10 @@ if (isset($_GET['delete_item'])) {
 <link rel="stylesheet" href="../system/engines/bootstrap-toggle/css/bootstrap-toggle.css">
 <!-- Bootstrap toggle js -->
 <script type="text/javascript" src="../system/engines/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
+<!-- DROPZONE JS -->
+<script src="../system/engines/jquery/dropzone/dropzone.js"></script>
+<!-- DROPZONE CSS -->
+<link href="../system/engines/jquery/dropzone/dropzone.css" rel="stylesheet">
 <?php
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
@@ -91,10 +95,16 @@ if (!isset($backup) || (empty($backup)))
     <div class="box">
         <div class="box-header">
             <h3 class="box-title">
-                <?php echo $lang['BACKUP_RESTORE']." <small>".$lang['LOAD']."</small>"; ?>
+                <?php echo $lang['BACKUP_RESTORE']." <small>".$lang['TO_UPLOAD']."</small>"; ?>
             </h3>
         </div>
         <div class="box-body">
+            <form enctype="multipart/form-data" class="dropzone text-center" action="index.php?page=settings-backup&action=upload" method="POST">
+                <input type="hidden" name="MAX_FILE_SIZE" value="">
+                <input type="hidden" name="upload" value="sent">
+                <br>
+                <button class="btn btn-success" type="submit"><i class="fa fa-upload"></i>&nbsp;&nbsp;&nbsp;<?php echo $lang['UPLOAD']; ?></button>
+            </form>
             <br><br>
         </div>
     </div>
@@ -104,18 +114,20 @@ if (!isset($backup) || (empty($backup)))
  <div class="col-md-6">
      <div class="box">
          <div class="box-header">
-             <h1 class="box-title"><?php echo $lang['BACKUP_LATEST']; ?> <small><?php echo $lang['TO_DOWNLOAD']; ?></small></h1><hr>
+             <h1 class="box-title"><?php echo $lang['BACKUP_LATEST']; ?> <small><?php echo $lang['TO_DOWNLOAD']; ?></small></h1>
          </div>
          <div class="box-body">
-             <br><br>
+             <b>system/backup/current/</b>
+             <h3>&nbsp;&nbsp;&nbsp;<i class="fa fa-file-zip-o text-success"></i>&nbsp;&nbsp; <small><?php // .... ?></small></h3>
          </div>
      </div>
 
      <div class="box">
          <div class="box-header">
-             <h1 class="box-title"><?php echo $lang['BACKUP_ARCHIVE']; ?> <small><?php echo $lang['TO_DOWNLOAD']; ?></small></h1><hr>
+             <h1 class="box-title"><?php echo $lang['BACKUP_ARCHIVE']; ?> <small><?php echo $lang['TO_DOWNLOAD']; ?></small></h1>
          </div>
          <div class="box-body">
+             <b>system/backup/archive/</b>
              <br><br>
          </div>
      </div>
