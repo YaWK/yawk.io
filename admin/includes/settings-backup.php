@@ -25,6 +25,10 @@ if (isset($_GET['delete_item'])) {
 	}
 */
 ?>
+<!-- Bootstrap toggle css -->
+<link rel="stylesheet" href="../system/engines/bootstrap-toggle/css/bootstrap-toggle.css">
+<!-- Bootstrap toggle js -->
+<script type="text/javascript" src="../system/engines/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
 <?php
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
@@ -50,19 +54,36 @@ if (!isset($backup) || (empty($backup)))
 {   // create new backup obj
     $backup = new \YAWK\BACKUP\backup();
 }
-echo "<div class=\"col-md-12\">";
-$backup->init();
-echo "</div>";
 ?>
 <div class="col-md-6">
     <div class="box">
         <div class="box-header">
             <h3 class="box-title">
-                <?php echo $lang['BACKUP']." ".$lang['SHOW_FILES']; ?>
+                <?php echo $lang['BACKUP_CREATE']; ?>
             </h3>
         </div>
         <div class="box-body">
-            <a class="btn btn-success pull-right" href="index.php?page=backup&start=1"><i class="fa fa-save"></i>&nbsp; Backup erstellen</a>
+            <form name="backup" action="index.php?page=settings-backup" method="POST">
+                <button type="submit" class="btn btn-success pull-right" id="savebutton"><i class="fa fa-check" id="savebuttonIcon"></i> &nbsp;<?php echo $lang['BACKUP_CREATE']; ?></button>
+                <br><br>
+                <label for="backupMethod"><?php echo $lang['BACKUP_WHAT_TO_BACKUP']; ?></label>
+                <select name="backupMethod" id="backupMethod" class="form-control">
+                    <option name="complete" value="complete"><?php echo $lang['BACKUP_FULL']; ?></option>
+                    <option name="database" value="database"><?php echo $lang['BACKUP_DB_ONLY']; ?></option>
+                    <option name="files" value="files"><?php echo $lang['BACKUP_FILES_ONLY']; ?></option>
+                </select>
+
+                <br>
+                <input type="checkbox" data-on="<?php echo $lang['YES']; ?>" data-off="<?php echo $lang['NO']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="overwriteBackup" id="overwriteBackup" checked>
+                &nbsp;&nbsp;<label for="overwriteBackup"><?php echo $lang['BACKUP_OVERWRITE']; ?>&nbsp;&nbsp;</label>
+                <br><br>
+                <input type="checkbox" data-on="<?php echo $lang['YES']; ?>" data-off="<?php echo $lang['NO']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="zipBackup" id="zipBackup" checked>
+                &nbsp;&nbsp;<label for="zipBackup"><?php echo $lang['BACKUP_ZIP_ALLOWED']; ?>&nbsp;&nbsp;</label>
+                <br><br>
+            </form>
+            <?php
+            $backup->init();
+            // \YAWK\backup::getPackages();	?>
         </div>
     </div>
 </div>
@@ -70,44 +91,32 @@ echo "</div>";
     <div class="box">
         <div class="box-header">
             <h3 class="box-title">
-                <?php echo $lang['BACKUP']." ".$lang['BACKUP_SUBTEXT']; ?>
+                <?php echo $lang['BACKUP_RESTORE']." <small>".$lang['LOAD']."</small>"; ?>
             </h3>
         </div>
         <div class="box-body">
-            <a class="btn btn-success pull-right" href="index.php?page=backup&start=1"><i class="fa fa-save"></i>&nbsp; Backup erstellen</a>
+            <br><br>
         </div>
     </div>
 </div>
 
- <div class="col-md-6">
-     <?php
-     echo "<pre>";
-     print_r($db->get_tables());
-     echo "</pre>";
-
-     ?>
-  <?	// \YAWK\backup::getPackages();	?>
- </div>
 
  <div class="col-md-6">
      <div class="box">
          <div class="box-header">
-             <h1 class="box-title">Download <small>Backup</small></h1><hr>
+             <h1 class="box-title"><?php echo $lang['BACKUP_LATEST']; ?> <small><?php echo $lang['TO_DOWNLOAD']; ?></small></h1><hr>
          </div>
          <div class="box-body">
-             ...
+             <br><br>
          </div>
      </div>
 
      <div class="box">
          <div class="box-header">
-             <h1 class="box-title">Download <small>Backup</small></h1><hr>
+             <h1 class="box-title"><?php echo $lang['BACKUP_ARCHIVE']; ?> <small><?php echo $lang['TO_DOWNLOAD']; ?></small></h1><hr>
          </div>
          <div class="box-body">
-             <a class="btn" href="index.php?page=backup&download_all=1">Download all Packages</a>
              <br><br>
-             <h1>Delete <small>Backup</small></h1><hr>
-             <a id="savebutton2" class="btn" href="index.php?page=backup&delete_all=1">Backups l&ouml;schen</a>
          </div>
      </div>
  </div>
