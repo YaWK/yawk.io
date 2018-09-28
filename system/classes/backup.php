@@ -21,13 +21,15 @@ namespace YAWK\BACKUP
         /** @var object files backup object */
         public $filesBackup;
         /** @var string path, where the backup will be stored */
-        public $targetFolder = '../system/backup/';
+        public $targetFolder = '../system/backup/current/';
         /** @var string name of the backup .sql file */
         public $targetFilename = 'backup.zip';
         /** @var string files|database|complete */
         public $backupMethod = "database";
-        /** @var array folders which needs to be stored */
-        public $backupFolders = array();
+        /** @var string filename of the config file (default: config.nfo) */
+        public $configFilename = "backup.ini";
+        /** @var string config file, including path */
+        public $configFile = '';
         /** @var array backup settings */
         public $backupSettings = array();
         /** @var bool overwrite backup files? */
@@ -99,9 +101,63 @@ namespace YAWK\BACKUP
                 }
         }
 
-        public function setInfoFile()
+        public function setIniFile($targetFolder)
         {
+            if (isset($targetFolder) && (!empty($targetFolder)))
+            {
+                $this->targetFolder = $targetFolder;
+            }
+            else
+                {
+                    $this->targetFolder = '../system/backup/current/';
+                }
 
+            if (is_writeable($this->targetFolder))
+            {
+                $this->configFile = $this->targetFolder.$this->configFilename;
+                if (\YAWK\sys::writeIniFile($this->backupSettings, $this->configFile) === true)
+                {
+                    echo "$this->configFile written!<br>";
+
+                    if (is_file($this->configFile))
+                    {   // config file found!
+                        return true;
+                    }
+                    else
+                        {   // config file not found
+                            return false;
+                        }
+                }
+                else
+                    {   //
+                        echo "$this->configFile not written!<br>";
+                        return false;
+                    }
+            }
+            else
+                {
+                    echo "$this->targetFolder is not writeable!";
+                    return false;
+                }
         }
+
+        public function getIniFile($iniFile)
+        {
+            $this->configFile = $iniFile;
+            // check if ini file is there
+            if (is_file($this->configFile))
+            {
+                // update backup settings from ini file
+                $this->backupSettings = parse_ini_file($this->configFile);
+                echo "ini file parse successful!";
+                return true;
+            }
+            else
+                {   // no ini file found!
+                    echo "no ini file found!";
+                    return false;
+                }
+        }
+
     }
 }
