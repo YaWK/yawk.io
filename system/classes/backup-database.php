@@ -39,8 +39,12 @@ namespace YAWK\BACKUP\MYSQL
         private $prefix;
         /** @var string mysql port */
         private $port;
+        /** @var string backup mode (include|exclude|all) */
+        public $backupMode = 'exclude';
         /** @var array exclude tables */
-        public $excludeTables;
+        public $excludeTablesArray = array();
+        /** @var array include tables */
+        public $includeTablesArray = array();
         /** @var array mysqldump settings */
         public $dumpSettings = array();
         /** @var string path, where the backup will be stored */
@@ -65,10 +69,12 @@ namespace YAWK\BACKUP\MYSQL
             if ($this->startMysqlBackup() === true)
             {   // syslog: backup done
                 echo "startMysqlBackup done!<br>";
+                return true;
             }
             else
             {   // syslog: backup failed
                 echo "startMysqlBackup failed!<br>";
+                return false;
             }
         }
 
@@ -88,6 +94,75 @@ namespace YAWK\BACKUP\MYSQL
                 'exclude-tables'
                 => array());
             return $this->dumpSettings;
+        }
+
+        /**
+         * Exclude tables from backup
+         * @author      Daniel Retzl <danielretzl@gmail.com>
+         * @version     1.0.0
+         * @link        http://yawk.io
+         * @param       array $excludeTables array
+         * @return      array $this->dumpSettings
+         * @annotation  awaits an array with all tables that should be excluded
+         */
+        public function excludeTables($excludeTables)
+        {   // check if exclude tables are set
+            if (isset($excludeTables) && (is_array($excludeTables) && (!empty($excludeTables))))
+            {
+                // set excludeTables array
+                $this->excludeTablesArray = $excludeTables;
+
+                // walk through exclude tables array
+                foreach ($this->excludeTablesArray AS $exclude => $table)
+                {   // add exclude table to array
+                    $this->dumpSettings['exclude-tables'][] = $table;
+                }
+            }
+
+            // check if dump settings array is set and not empty
+            if (isset($this->dumpSettings['exclude-tables']) && (is_array($this->dumpSettings['exclude-tables']) && (!empty($this->dumpSettings['exclude-tables']))))
+            {   // return dump settings array
+                return $this->dumpSettings;
+            }
+            else
+                {   // no tables set for inclusion - return empty array
+                    return $this->dumpSettings['exclude-tables'] = array();
+                }
+        }
+
+
+        /**
+         * Include only this tables into backup
+         * @author      Daniel Retzl <danielretzl@gmail.com>
+         * @version     1.0.0
+         * @link        http://yawk.io
+         * @param       array $includeTables array
+         * @return      array $this->dumpSettings
+         * @annotation  awaits an array with all tables that should be included
+         */
+        public function includeTables($includeTables)
+        {   // check if include tables are set
+            if (isset($includeTables) && (is_array($includeTables) && (!empty($includeTables))))
+            {
+                // set includeTables array
+                $this->includeTablesArray = $includeTables;
+
+                // walk through include tables array
+                foreach ($this->includeTablesArray AS $include => $table)
+                {   // add include table to array
+                    $this->dumpSettings['include-tables'][] = $table;
+                }
+            }
+
+            // check if dump settings array is set and not empty
+            if (isset($this->dumpSettings['include-tables']) && (is_array($this->dumpSettings['include-tables']) && (!empty($this->dumpSettings['include-tables']))))
+            {   // return dump settings array
+                return $this->dumpSettings;
+            }
+            else
+            {   // no tables set for inclusion - return empty array
+                return $this->dumpSettings['include-tables'] = array();
+            }
         }
 
         /**
@@ -127,8 +202,50 @@ namespace YAWK\BACKUP\MYSQL
                 // ok, include class
                 require_once('../system/engines/mysqldump/Mysqldump.php');
 
-                // set mysqldump settings (include / exlude tables)
-                $this->dumpSettings = $this->setDumpSettings();
+                // backup mode sets if tables should be included or excluded (otherwise backup the whole database).
+                if (isset($this->backupMode))
+                {   // check and react to selected backup mode
+                    switch ($this->backupMode)
+                    {   // if only some tables should be included
+                        case "include":
+                        {
+                            // set include tables array
+                            $this->includeTablesArray = array('cms_assets', 'cms_assets_types');
+                            // set tables for inclusion
+                            $this->dumpSettings = $this->includeTables($this->includeTablesArray);
+                        }
+                        break;
+
+                        // if some tables should be excluded
+                        case "exclude":
+                        {
+                            // set exclude tables array
+                            $this->excludeTablesArray = array('cms_syslog', 'cms_template_settings', 'cms_stats', 'cms_widget_defaults', 'cms_assets', 'cms_assets_types');
+                            // set tables for exclusion
+                            $this->dumpSettings = $this->excludeTables($this->excludeTablesArray);
+                        }
+                        break;
+
+                        // all tables should be backuped
+                        case "all":
+                        {   // set empty dump settings - (dump all)
+                            $this->setDumpSettings();
+                        }
+                        break;
+
+                        // on any other value
+                        default:
+                        {   // set default dump settings - (dump all)
+                            $this->setDumpSettings();
+                        }
+                        break;
+                    }
+                }
+                else
+                    {
+                        // set empty dump settings - (dump all)
+                        $this->setDumpSettings();
+                    }
 
                 // load database config into this object
                 $this->getDatabaseConfig();
@@ -273,11 +390,11 @@ namespace YAWK\BACKUP\MYSQL
                     // open a new zip archive
                     if ($zip->open($filename, \ZipArchive::CREATE)!== TRUE)
                     {   // unable to open new zip archive
-                        exit("cannot open <$filename>\n");
+                        exit("cannot open $filename\n");
                     }
 
                     // add file to zip archive
-                    $zip->addFile($this->sqlBackup,$filename);
+                    $zip->addFile($this->sqlBackup,'backup.sql');
                     // output some stats...
                     // echo "numfiles: " . $zip->numFiles . "\n";
                     // echo "status:" . $zip->status . "\n";
