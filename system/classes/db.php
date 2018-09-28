@@ -1,5 +1,4 @@
 <?php
-
 namespace YAWK {
     /**
      * <b>Database class db</b> <i>extends \mysqli</i>
@@ -27,6 +26,7 @@ namespace YAWK {
             if (!isset($this->connection))
             {
                 $this->connection = new \mysqli($this->config['server'], $this->config['username'], $this->config['password'], $this->config['dbname'], $this->config['port']);
+
                 if (!$this->connection)
                 {
                     return false;
@@ -51,13 +51,13 @@ namespace YAWK {
         public function query($query)
         {
             // connect to the database
-            if ($connection = $this->connect())
+            if ($this->connection = $this->connect())
             {   // if connection is successful
                 // replace {} in str for db prefix
                 $query = str_replace("}", "", $query);
                 $query = str_replace("{", $this->config['prefix'], $query);
                 // query the database
-                return $connection->query($query);
+                return $this->connection->query($query);
             }
             else
                 {   // could not connect to database, exit with error
@@ -93,8 +93,8 @@ namespace YAWK {
          */
         public function error()
         {
-            $connection = $this->connect();
-            return $connection->error;
+            $this->connection = $this->connect();
+            return $this->connection->error;
         }
 
         /**
@@ -105,8 +105,8 @@ namespace YAWK {
          */
         public function quote($value)
         {
-            $connection = $this->connect();
-            return $connection->real_escape_string($value);
+            $this->connection = $this->connect();
+            return $this->connection->real_escape_string($value);
         }
 
         public function import($sqlfile, $lang)
