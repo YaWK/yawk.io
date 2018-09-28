@@ -48,13 +48,17 @@ namespace YAWK\BACKUP\MYSQL
         /** @var array mysqldump settings */
         public $dumpSettings = array();
         /** @var string path, where the backup will be stored */
-        public $sqlPath = '../system/backup/database/';
+        public $sqlPath = '../system/backup/current/database/';
         /** @var string default filename of backup.sql file */
         public $backupSqlFile = 'backup.sql';
         /** @var string name of the backup .sql file */
         public $sqlBackup = '';
         /** @var bool zip backup if possible */
         public $zipBackup = true;
+        /** @var bool remove files after zip is complete */
+        public $removeAfterZip = true;
+        /** @var string hash value of .sql file */
+        public $hashValue = '';
 
 
         /**
@@ -311,6 +315,43 @@ namespace YAWK\BACKUP\MYSQL
         }
 
         /**
+         * Write backup.ini file (used by backup restore methods)
+         * @author      Daniel Retzl <danielretzl@gmail.com>
+         * @version     1.0.0
+         * @link        http://yawk.io
+         * @annotation  write all relevant backup information into this file
+         * @return      array $this->backupSettings
+         */
+        public function setBackupSettings()
+        {
+            /** @var $db \YAWK\db */
+            // set some backup info variables
+            $this->backupSettings['DATE'] = \YAWK\sys::now();
+            $this->backupSettings['METHOD'] = $this->backupMethod;
+            $this->backupSettings['FILE'] = $this->backupSqlFile;
+            $this->backupSettings['HASH'] = $this->getHashValue();
+            $this->backupSettings['PATH'] = $this->sqlPath;
+            $this->backupSettings['SOURCE_FOLDER'] = $this->sqlBackup;
+            $this->backupSettings['OVERWRITE_ALLOWED'] = $this->backupOverwrite;
+            $this->backupSettings['USER_ID'] = $_SESSION['uid'];
+            return $this->backupSettings;
+        }
+
+        public function getHashValue()
+        {
+            // check if sql backup file is accessable
+            if (is_file($this->sqlBackup))
+            {   // generate hash value
+                return $this->hashValue = hash_file('md5', $this->sqlBackup);
+            }
+            else
+                {   // sql backup file not found
+                    // unable to generate hash value
+                    return false;
+                }
+        }
+
+        /**
          * Start mysqldump and check if .sql file exists. Zip it afterwards if enabled.
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
@@ -320,44 +361,77 @@ namespace YAWK\BACKUP\MYSQL
          */
         public function doSqlBackup()
         {
-            // try database backup
-            try
-            {   // try to start backup
-                $this->mysqldump->start($this->sqlBackup, $this->dumpSettings);
-            }
-            // catch error
-            catch (\Exception $e)
+            if (is_writeable($this->sqlPath))
             {
-                // output mysqldump error
-                echo 'mysqldump-php error: ' . $e->getMessage();
-            }
-            // check if file exists
-            if ($this->sqlFileExists())
-            {
-                // ok, backup done
-                // check if .sql file should be zipped
-                if ($this->zipBackup === true)
+                // try database backup
+                try
+                {   // try to start backup
+                    $this->mysqldump->start($this->sqlBackup, $this->dumpSettings);
+                }
+                // catch error
+                catch (\Exception $e)
                 {
-                    // generate zip archive
-                    if ($this->generateZipArchive($this->sqlBackup) === true)
+                    // output mysqldump error
+                    echo 'mysqldump-php error: ' . $e->getMessage();
+                }
+                // check if file exists
+                if ($this->sqlFileExists())
+                {
+                    // ok, backup done
+                    // add ini file
+                    $this->backupSettings = $this->setBackupSettings();
+                    if ($this->setIniFile($this->sqlPath) === true)
                     {
-                        // zip archive created
-                        return true;
+                        // backup ini file written
                     }
                     else
-                        {   // failed to create zip archive
-                            return false;
+                        {
+                            // set syslog entry: ini file not written
+                        }
+
+                    // check if .sql file should be zipped
+                    if ($this->zipBackup === true)
+                    {
+                        // generate zip archive
+                        if ($this->generateZipArchive($this->sqlBackup) === true)
+                        {
+                            // zip archive created
+                            return true;
+                        }
+                        else
+                            {   // failed to create zip archive
+                                return false;
+                            }
+                    }
+                    else
+                        {   // .sql file exists, no zip needed
+                            return true;
                         }
                 }
                 else
-                    {   // .sql file exists, no zip needed
-                        return true;
-                    }
+                {   // .sql file does not exist - backup failed?
+                    return false;
+                }
             }
             else
-            {   // .sql file does not exist - backup failed?
-                return false;
-            }
+                {
+                    if (is_dir($this->targetFolder))
+                    {
+                        if (!is_dir($this->targetFolder."database"))
+                        {
+                            if (!mkdir($this->targetFolder."database"))
+                            {
+                                die ('bad folder structure - aborting');
+                            }
+                        }
+                    }
+                    else
+                        {
+                            echo "target folder $this->targetFolder is not writeable";
+                        }
+                    echo "Backup Path $this->sqlPath is not writeable!";
+                    return false;
+                }
         }
 
         /**
@@ -393,8 +467,13 @@ namespace YAWK\BACKUP\MYSQL
                         exit("cannot open $filename\n");
                     }
 
-                    // add file to zip archive
-                    $zip->addFile($this->sqlBackup,'backup.sql');
+                    // add .sql file to zip archive
+                    $zip->addFile($this->sqlBackup,$this->backupSqlFile);
+                    // check if there is a backup.ini / config file
+                    if (is_file($this->sqlPath.$this->configFilename))
+                    {   // add backup.ini config file to zip archive
+                        $zip->addFile($this->sqlPath.$this->configFilename, $this->configFilename);
+                    }
                     // output some stats...
                     // echo "numfiles: " . $zip->numFiles . "\n";
                     // echo "status:" . $zip->status . "\n";
@@ -404,12 +483,29 @@ namespace YAWK\BACKUP\MYSQL
                     // check if zip file exists
                     if (is_file($filename))
                     {   // zip file created
-                        echo "ZIP file erstellt!<br>";
-                        return true;
+                        if ($this->removeAfterZip === true)
+                        {
+                            if (unlink ($this->sqlPath.$this->backupSqlFile)
+                            && (unlink ($this->sqlPath.$this->configFilename)))
+                            {
+                                echo "ZIP file created, backup files have been deleted.<br>";
+                                return true;
+                            }
+                            else
+                                {   // unable to delete backup files after zipping
+                                    // add syslog entry about that +
+                                    return true;
+                                }
+                        }
+                        else
+                            {
+                                echo "ZIP file created!<br>";
+                                return true;
+                            }
                     }
                     else
                     {   // zip file not created
-                        echo "ZIP file nicht erstellt<br>";
+                        echo "failed to create zip file!<br>";
                         return false;
                     }
                 }
