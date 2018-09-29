@@ -31,7 +31,7 @@ If you like, you can take a sneak peak - feel free to download the latest curren
 <br><br>
 But please consider - YaWK is is in constant development and underlies <i>nearly daily changes</i>. Due this fact it can not be guaranteed that everything work in this test version like expected. You may <i>possibly</i> encounter some major or minor warnings and bugs. 
 <br><br>
-Before YaWK will be released, you will get always the latest development version. After the first version is released, there will be a seperate development branch. You should wait for the official first release before you use YaWK in productive enviornments. I'm happy about comments, stars, followers and / or code contributions. Thank You.
+Before YaWK will be released, you will get always the latest development version. After the first version is released, there will be a seperate development branch. You should wait for the official first release before you use YaWK in productive environment. I'm happy about comments, stars, followers and / or code contributions. Thank You.
 
 
 <h3>Open Development</h3>
