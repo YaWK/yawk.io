@@ -25,7 +25,7 @@ Documentation: <b>https://docs.yawk.io</b>
 </ul>
 <hr>
 <h3>Download Notes:</h3>
-<u><b>Please remember:</b></u> before you download this pre-release version: YaWK is currently in active development and <b>NOT YET OFFICIALLY RELEASED</b>.
+<u><b>Please remember:</b></u> before you download this pre-release version: YaWK is currently in active development and <b>NOT YET RELEASED</b>.
 If you like, you can take a sneak peak - feel free to download the latest current development version from GitHub: <br>
 <br><b>https://github.com/YaWK/yawk.io/archive/master.zip</b>
 <br><br>
