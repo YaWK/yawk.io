@@ -48,7 +48,7 @@ namespace YAWK\BACKUP
         }
 
         /**
-         * this class starts a new backup, depending on chosen backup method
+         * Run a new backup, depending on chosen backup method
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
@@ -101,24 +101,34 @@ namespace YAWK\BACKUP
                 }
         }
 
+        /**
+         * Set backup information file (backup.ini)
+         * @param string $targetFolder folder where the ini file should be stored
+         * @author      Daniel Retzl <danielretzl@gmail.com>
+         * @version     1.0.0
+         * @link        http://yawk.io
+         * @return bool
+         */
         public function setIniFile($targetFolder)
-        {
+        {   // check if target folder is set
             if (isset($targetFolder) && (!empty($targetFolder)))
-            {
+            {   // set target folder property
                 $this->targetFolder = $targetFolder;
             }
             else
-                {
+                {   // target folder param not sent, set default value:
                     $this->targetFolder = '../system/backup/current/';
                 }
 
+            // check if target folder is writeable
             if (is_writeable($this->targetFolder))
-            {
+            {   // set configfile (string that includes path + filename)
                 $this->configFile = $this->targetFolder.$this->configFilename;
+                // check if ini file was written
                 if (\YAWK\sys::writeIniFile($this->backupSettings, $this->configFile) === true)
-                {
+                {   // set syslog: config file written successfully
                     echo "$this->configFile written!<br>";
-
+                    // check if config file is there
                     if (is_file($this->configFile))
                     {   // config file found!
                         return true;
@@ -129,20 +139,28 @@ namespace YAWK\BACKUP
                         }
                 }
                 else
-                    {   //
+                    {   // unable to write config file
                         echo "$this->configFile not written!<br>";
                         return false;
                     }
             }
             else
-                {
+                {   // target folder not writeable
                     echo "$this->targetFolder is not writeable!";
                     return false;
                 }
         }
 
-        public function getIniFile($iniFile)
-        {
+        /**
+         * Parse backup ini file
+         * @author      Daniel Retzl <danielretzl@gmail.com>
+         * @version     1.0.0
+         * @link        http://yawk.io
+         * @param $iniFile
+         * @return bool
+         */
+        public function parseIniFile($iniFile)
+        {   // set config file property
             $this->configFile = $iniFile;
             // check if ini file is there
             if (is_file($this->configFile))
@@ -154,6 +172,7 @@ namespace YAWK\BACKUP
             }
             else
                 {   // no ini file found!
+                    // set syslog entry
                     echo "no ini file found!";
                     return false;
                 }
