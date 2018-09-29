@@ -1,10 +1,12 @@
 <?php
+// check if post data is set
 if (isset($_POST))
-{
+{   // check if action is set
     if (isset($_POST['action']))
-    {
+    {   // check which action is requested
         switch ($_POST['action'])
         {
+            // start backup selected
             case "startBackup":
             {
                 /** @var $db \YAWK\db */
@@ -14,48 +16,25 @@ if (isset($_POST))
                 {   // create new backup obj
                     $backup = new \YAWK\BACKUP\backup();
                 }
+                // check if backup method is set
                 if (isset($_POST['backupMethod']) && (!empty($_POST['backupMethod'])))
-                {
+                {   // set backup method property depending on select field
                     $backup->backupMethod = $_POST['backupMethod'];
                 }
+                // initialize backup
                 $backup->init();
             }
             break;
 
+            // upload a backup archive
             case "upload":
             {
                 // restore a backup from file
             }
             break;
-
         }
     }
 }
-
-/*
-// check status and do what you need to do
-if(isset($_GET['check']) && ($_GET['check']==1)) {
-	backup::getPackages();
-	}
-
-if (isset($_GET['start']) && ($_GET['start']==1)) {
-	backup::start();
-	}
-
-if (isset($_GET['delete_all']) && ($_GET['delete_all']==1)) {
-	backup::deleteTarGzPackages();
-	backup::deleteMediaPackages();
-	backup::deleteSqlPackages();
-	}
-if (isset($_GET['download_all']) && ($_GET['download_all']==1)) {
-	backup::downloadAllPackages();
-	}
-
-if (isset($_GET['delete_item'])) {
-	$package = $_GET['delete_item'];
-	backup::deletePackage($package);
-	}
-*/
 ?>
 <!-- Bootstrap toggle css -->
 <link rel="stylesheet" href="../system/engines/bootstrap-toggle/css/bootstrap-toggle.css">
@@ -85,6 +64,7 @@ echo"<ol class=\"breadcrumb\">
 
 
 ?>
+<div class="row">
 <div class="col-md-6">
     <div class="box">
         <div class="box-header">
@@ -110,6 +90,8 @@ echo"<ol class=\"breadcrumb\">
                 <br><br>
                 <input type="checkbox" data-on="<?php echo $lang['YES']; ?>" data-off="<?php echo $lang['NO']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="zipBackup" id="zipBackup" checked>
                 &nbsp;&nbsp;<label for="zipBackup"><?php echo $lang['BACKUP_ZIP_ALLOWED']; ?>&nbsp;&nbsp;</label>
+                &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" data-on="<?php echo $lang['YES']; ?>" data-off="<?php echo $lang['NO']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="removeAfterZip" id="removeAfterZip" checked>
+                &nbsp;&nbsp;<label for="removeAfterZip"><?php echo $lang['BACKUP_REMOVE_AFTER_ZIP']; ?>&nbsp;&nbsp;</label>
                 <br><br>
             </form>
             <?php
@@ -133,31 +115,29 @@ echo"<ol class=\"breadcrumb\">
                 <br>
                 <button class="btn btn-success" type="submit"><i class="fa fa-upload"></i>&nbsp;&nbsp;&nbsp;<?php echo $lang['UPLOAD']; ?></button>
             </form>
+            <span class="pull-right">asdasd</span>
+            <br><br>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="box-header">
+            <h1 class="box-title"><?php echo $lang['BACKUP_LATEST']; ?> <small><?php echo $lang['TO_DOWNLOAD']; ?></small></h1>
+        </div>
+        <div class="box-body">
+            <b>system/backup/current/</b>
+            <h3>&nbsp;&nbsp;&nbsp;<i class="fa fa-file-zip-o text-green"></i>&nbsp;&nbsp; <small><?php // .... ?></small></h3>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="box-header">
+            <h1 class="box-title"><?php echo $lang['BACKUP_ARCHIVE']; ?> <small><?php echo $lang['TO_DOWNLOAD']; ?></small></h1>
+        </div>
+        <div class="box-body">
+            <b>system/backup/archive/</b>
             <br><br>
         </div>
     </div>
 </div>
-
-
- <div class="col-md-6">
-     <div class="box">
-         <div class="box-header">
-             <h1 class="box-title"><?php echo $lang['BACKUP_LATEST']; ?> <small><?php echo $lang['TO_DOWNLOAD']; ?></small></h1>
-         </div>
-         <div class="box-body">
-             <b>system/backup/current/</b>
-             <h3>&nbsp;&nbsp;&nbsp;<i class="fa fa-file-zip-o text-success"></i>&nbsp;&nbsp; <small><?php // .... ?></small></h3>
-         </div>
-     </div>
-
-     <div class="box">
-         <div class="box-header">
-             <h1 class="box-title"><?php echo $lang['BACKUP_ARCHIVE']; ?> <small><?php echo $lang['TO_DOWNLOAD']; ?></small></h1>
-         </div>
-         <div class="box-body">
-             <b>system/backup/archive/</b>
-             <br><br>
-         </div>
-     </div>
- </div>
-
+</div>
