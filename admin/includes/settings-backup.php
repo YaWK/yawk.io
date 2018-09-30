@@ -36,6 +36,37 @@ if (isset($_POST))
     }
 }
 ?>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#backupMethod").on('change', function() {
+            var backupMethod = this.value;
+
+            if (backupMethod === "complete")
+            {
+                $("#databaseMethods").hide();
+                $("#fileMethods").hide();
+                $("#completeMethods").fadeIn().removeClass('hidden');
+                // alert('BACKUP COMPLETE SELECTED: '+backupMethod);
+            }
+
+            if (backupMethod === "database")
+            {
+                $("#completeMethods").hide();
+                $("#fileMethods").hide();
+                $("#databaseMethods").fadeIn().removeClass('hidden');
+                // alert('BACKUP DATABASE SELECTED: '+backupMethod);
+            }
+
+            if (backupMethod === "files")
+            {
+                $("#databaseMethods").hide();
+                $("#completeMethods").hide();
+                $("#fileMethods").fadeIn().removeClass('hidden');
+                // alert('BACKUP FILES SELECTED: '+backupMethod);
+            }
+        });
+    });
+</script>
 <!-- Bootstrap toggle css -->
 <link rel="stylesheet" href="../system/engines/bootstrap-toggle/css/bootstrap-toggle.css">
 <!-- Bootstrap toggle js -->
@@ -93,6 +124,24 @@ echo"<ol class=\"breadcrumb\">
                 &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" data-on="<?php echo $lang['YES']; ?>" data-off="<?php echo $lang['NO']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="removeAfterZip" id="removeAfterZip" checked>
                 &nbsp;&nbsp;<label for="removeAfterZip"><?php echo $lang['BACKUP_REMOVE_AFTER_ZIP']; ?>&nbsp;&nbsp;</label>
                 <br><br>
+
+                <div id="completeMethods" class="hidden">
+                    <h3>Complete Backup</h3>
+                    <label id="someSetting2Label" for="someSetting2">Some additional setting 2...</label>
+                    <input type="checkbox" id="someSetting2" name="someSetting2">
+                </div>
+
+                <div id="databaseMethods" class="hidden">
+                    <h3>Database Settings </h3>
+                    <label id="someSettingLabel" for="someSetting">Some additional setting...</label>
+                    <input type="checkbox" id="someSetting" name="someSetting">
+                </div>
+
+                <div id="fileMethods" class="hidden">
+                    <h3>Files Backup</h3>
+                    <label id="someSetting3Label" for="someSetting3">Some additional setting 3...</label>
+                    <input type="checkbox" id="someSetting3" name="someSetting3">
+                </div>
             </form>
             <?php
             // $backup->init();
