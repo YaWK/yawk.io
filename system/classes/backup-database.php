@@ -63,10 +63,10 @@ namespace YAWK\BACKUP\MYSQL
          * @version     1.0.0
          * @link        http://yawk.io
          */
-        public function init()
+        public function init($db)
         {
             // start mysqlbackup
-            if ($this->startMysqlBackup() === true)
+            if ($this->startMysqlBackup($db) === true)
             {   // syslog: backup done
                 echo "startMysqlBackup done!<br>";
                 return true;
@@ -194,7 +194,7 @@ namespace YAWK\BACKUP\MYSQL
          * @annotation  create new $this->mysqldump object
          * @return      bool true|false
          */
-        public function includeMysqldumpClass()
+        public function includeMysqldumpClass($db)
         {
             // check if mysqldump class is there
             if (is_file('../system/engines/mysqldump/Mysqldump.php'))
@@ -256,6 +256,7 @@ namespace YAWK\BACKUP\MYSQL
             }
             else
             {   // unable to include class
+                \YAWK\sys::setSyslog($db, 52, 2, "unable to backup: failed to include mysqldump class", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -318,14 +319,14 @@ namespace YAWK\BACKUP\MYSQL
          * @annotation  write all relevant backup information into this file
          * @return      array $this->backupSettings
          */
-        public function setBackupSettings()
+        public function setBackupSettings($db)
         {
             /** @var $db \YAWK\db */
             // set some backup info variables
             $this->backupSettings['DATE'] = \YAWK\sys::now();
             $this->backupSettings['METHOD'] = $this->backupMethod;
             $this->backupSettings['FILE'] = $this->backupSqlFile;
-            $this->backupSettings['HASH'] = $this->getHashValue();
+            $this->backupSettings['HASH'] = $this->getHashValue($db);
             $this->backupSettings['PATH'] = $this->sqlPath;
             $this->backupSettings['SOURCE_FOLDER'] = $this->sqlBackup;
             $this->backupSettings['OVERWRITE_ALLOWED'] = $this->overwriteBackup;
@@ -333,7 +334,7 @@ namespace YAWK\BACKUP\MYSQL
             return $this->backupSettings;
         }
 
-        public function getHashValue()
+        public function getHashValue($db)
         {
             // check if sql backup file is accessable
             if (is_file($this->sqlBackup))
@@ -343,6 +344,7 @@ namespace YAWK\BACKUP\MYSQL
             else
                 {   // sql backup file not found
                     // unable to generate hash value
+                    \YAWK\sys::setSyslog($db, 52, 2, "failed to generate hash value - $this->sqlBackup not accessable", 0, 0, 0, 0);
                     return false;
                 }
         }
@@ -355,7 +357,7 @@ namespace YAWK\BACKUP\MYSQL
          * @annotation  return bool if $this->sqlBackup exists
          * @return      bool true|false
          */
-        public function doSqlBackup()
+        public function doSqlBackup($db)
         {
             if (is_writeable($this->sqlPath))
             {
@@ -368,14 +370,15 @@ namespace YAWK\BACKUP\MYSQL
                 catch (\Exception $e)
                 {
                     // output mysqldump error
-                    echo 'mysqldump-php error: ' . $e->getMessage();
+                    \YAWK\sys::setSyslog($db, 52, 2, "failed to create database backup - mysqldump failed with error: ".$e->getMessage()."", 0, 0, 0, 0);
+                    // echo 'mysqldump-php error: ' . $e->getMessage();
                 }
                 // check if file exists
                 if ($this->sqlFileExists())
                 {
                     // ok, backup done
                     // add ini file
-                    $this->backupSettings = $this->setBackupSettings();
+                    $this->backupSettings = $this->setBackupSettings($db);
                     if ($this->setIniFile($this->sqlPath) === true)
                     {
                         // backup ini file written
@@ -383,24 +386,26 @@ namespace YAWK\BACKUP\MYSQL
                     else
                         {
                             // set syslog entry: ini file not written
+                            \YAWK\sys::setSyslog($db, 51, 1, "failed to write $this->sqlPath/$this->configFile", 0, 0, 0, 0);
                         }
 
                     // check if .sql file should be zipped
                     if ($this->zipBackup === true)
                     {
                         // generate zip archive
-                        if ($this->generateZipArchive($this->sqlBackup) === true)
+                        if ($this->generateZipArchive($db, $this->sqlBackup) === true)
                         {
                             // zip archive created
                             return true;
                         }
                         else
                             {   // failed to create zip archive
+                                \YAWK\sys::setSyslog($db, 51, 1, "failed to create zip archive", 0, 0, 0, 0);
                                 return false;
                             }
                     }
                     else
-                        {   // .sql file exists, no zip needed
+                        {   // zip backup diabled, no zip needed
                             return true;
                         }
                 }
@@ -417,15 +422,15 @@ namespace YAWK\BACKUP\MYSQL
                         {
                             if (!mkdir($this->targetFolder."database"))
                             {
-                                die ('bad folder structure - aborting');
+                                \YAWK\sys::setSyslog($db, 52, 2, "failed to create database backup: unable to create $this->targetFolder/database - check folder permissions or try to create folder manually", 0, 0, 0, 0);
                             }
                         }
                     }
                     else
                         {
-                            echo "target folder $this->targetFolder is not writeable";
+                            // echo "target folder $this->targetFolder is not writeable";
                         }
-                    echo "Backup Path $this->sqlPath is not writeable!";
+                    \YAWK\sys::setSyslog($db, 51, 1, "failed to create database backup: $this->sqlPath is not writeable", 0, 0, 0, 0);
                     return false;
                 }
         }
@@ -439,7 +444,7 @@ namespace YAWK\BACKUP\MYSQL
          * @annotation  zip the .sql file and return bool if zip archive exists
          * @return      bool true|false
          */
-        public function generateZipArchive($sqlBackup)
+        public function generateZipArchive($db, $sqlBackup)
         {
             if ($this->zipBackup === true)
             {   // check if ZipArchive class is available
@@ -484,36 +489,34 @@ namespace YAWK\BACKUP\MYSQL
                             if (unlink ($this->sqlPath.$this->backupSqlFile)
                             && (unlink ($this->sqlPath.$this->configFilename)))
                             {
-                                echo "ZIP file created, backup files have been deleted.<br>";
                                 return true;
                             }
                             else
                                 {   // unable to delete backup files after zipping
-                                    // add syslog entry about that +
+                                    \YAWK\sys::setSyslog($db, 51, 1, "failed to delete backup files after adding .zip archive $filename", 0, 0, 0, 0);
                                     return true;
                                 }
                         }
                         else
                             {
-                                echo "ZIP file created!<br>";
+                                \YAWK\sys::setSyslog($db, 49, 0, "database backup successful - created $filename", 0, 0, 0, 0);
                                 return true;
                             }
                     }
                     else
                     {   // zip file not created
-                        echo "failed to create zip file!<br>";
+                        \YAWK\sys::setSyslog($db, 51, 1, "failed to create .zip file: $filename", 0, 0, 0, 0);
                         return false;
                     }
                 }
                 else
                 {   // ZipArchive class not available
-                    echo "ZIP class not found!<br>";
+                    \YAWK\sys::setSyslog($db, 51, 1, "failed create .zip archive - PHP ZIP class not available. Ask your web hosting provider about that", 0, 0, 0, 0);
                     return false;
                 }
             }
             else
                 {   // zip not enabled due settings
-                    echo "ZIP not enabled! (zip: $this->zipBackup)";
                     return false;
                 }
         }
@@ -529,41 +532,43 @@ namespace YAWK\BACKUP\MYSQL
          * @annotation  return bool if zip archive exists
          * @return      bool true|false
          */
-        public function startMysqlBackup()
+        public function startMysqlBackup($db)
         {
             // include mysqldump class
-            $this->includeMysqldumpClass();
+            $this->includeMysqldumpClass($db);
             // create folder and file string
             if ($this->sqlFileExists() === true)
             {   // check if backup overwrite is allowed
                 if ($this->isOverwriteAllowed() === true)
                 {   // do database backup
-                    if ($this->doSqlBackup() === true)
+                    if ($this->doSqlBackup($db) === true)
                     {   // ok, backup done
-                        echo "backup overwritten<br>";
+                        \YAWK\sys::setSyslog($db, 50, 0, "database backup overwritten", 0, 0, 0, 0);
                         return true;
                     }
                     else
                     {   // backup failed - unable to overwrite - check chmod settings!
-                        echo "backup error on overwrite<br>";
+                        \YAWK\sys::setSyslog($db, 52, 2, "failed to overwrite database backup", 0, 0, 0, 0);
                         return false;
                     }
                 }
                 else
                 {   // overwrite not allowed!
-                    echo "backup not written because overwrite is false<br>";
+                    \YAWK\sys::setSyslog($db, 51, 1, "failed to do database backup because overwrite is not enabled", 0, 0, 0, 0);
                     return false;
                     // return false;
                 }
             }
             else
             {   // .sql file does not exist - do database backup
-                if ($this->doSqlBackup() === true)
+                if ($this->doSqlBackup($db) === true)
                 {   // ok, backup done!
+                    \YAWK\sys::setSyslog($db, 50, 0, "database backup overwritten", 0, 0, 0, 0);
                     return true;
                 }
                 else
                 {   // backup failed!
+                    \YAWK\sys::setSyslog($db, 52, 2, "failed to write database backup", 0, 0, 0, 0);
                     return false;
                 }
             }

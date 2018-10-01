@@ -26,7 +26,7 @@ namespace YAWK\BACKUP
         public $targetFilename = 'backup.zip';
         /** @var string files|database|complete */
         public $backupMethod = "database";
-        /** @var string filename of the config file (default: config.nfo) */
+        /** @var string filename of the config file (default: backup.ini) */
         public $configFilename = "backup.ini";
         /** @var string config file, including path */
         public $configFile = '';
@@ -46,9 +46,16 @@ namespace YAWK\BACKUP
          * @version     1.0.0
          * @link        http://yawk.io
          */
-        public function init()
+        public function init($db)
         {   // run backup system
-            $this->run();
+            if ($this->run($db) === true)
+            {
+                return true;
+            }
+            else
+                {
+                    return false;
+                }
         }
 
         /**
@@ -57,8 +64,8 @@ namespace YAWK\BACKUP
          * @version     1.0.0
          * @link        http://yawk.io
          */
-        public function run()
-        {
+        public function run($db)
+        {   /** @var $db \YAWK\db */
             // check if backup method is set
             if (isset($this->backupMethod) && (!empty($this->backupMethod)))
             {   // which backup method should be executed?
@@ -79,13 +86,15 @@ namespace YAWK\BACKUP
                         // create new database backup object
                         $this->mysqlBackup = new \YAWK\BACKUP\MYSQL\database($this->backupSettings);
                         // initialize database backup
-                        if ($this->mysqlBackup->init() === true)
+                        if ($this->mysqlBackup->init($db) === true)
                         {   // database backup successful
-                            echo "<b class=\"text-success\">Database Backup success</b>";
+                            \YAWK\sys::setSyslog($db, 50, 3, "database backup created successfully", 0, 0, 0, 0);
+                            return true;
                         }
                         else
                             {   // database backup failed
-                                echo "<b class=\"text-danger\">Database Backup failed</b>";
+                                \YAWK\sys::setSyslog($db, 52, 2, "failed to create database backup", 0, 0, 0, 0);
+                                return false;
                             }
                     }
                     break;
