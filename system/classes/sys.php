@@ -2065,10 +2065,17 @@ namespace YAWK {
                 }
                 else $res[] = "$key = ".(is_numeric($val) ? $val : '"'.$val.'"');
             }
-            self::safefilerewrite($file, implode("\r\n", $res));
+            if (self::safeFileReWrite($file, implode("\r\n", $res)))
+            {   // ini file written
+                return true;
+            }
+            else
+                {   // failed to return ini file
+                    return false;
+                }
         }
 
-        static function safefilerewrite($fileName, $dataToSave)
+        static function safeFileReWrite($fileName, $dataToSave)
         {
             if ($fp = fopen($fileName, 'w'))
             {

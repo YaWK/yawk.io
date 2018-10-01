@@ -386,7 +386,7 @@ namespace YAWK\BACKUP\MYSQL
                     else
                         {
                             // set syslog entry: ini file not written
-                            \YAWK\sys::setSyslog($db, 51, 1, "failed to write $this->sqlPath/$this->configFile", 0, 0, 0, 0);
+                            \YAWK\sys::setSyslog($db, 51, 1, "failed to write $this->configFile", 0, 0, 0, 0);
                         }
 
                     // check if .sql file should be zipped
@@ -396,11 +396,12 @@ namespace YAWK\BACKUP\MYSQL
                         if ($this->generateZipArchive($db, $this->sqlBackup) === true)
                         {
                             // zip archive created
+                            \YAWK\sys::setSyslog($db, 50, 0, "database .zip archive created", 0, 0, 0, 0);
                             return true;
                         }
                         else
                             {   // failed to create zip archive
-                                \YAWK\sys::setSyslog($db, 51, 1, "failed to create zip archive", 0, 0, 0, 0);
+                                \YAWK\sys::setSyslog($db, 51, 1, "failed to create database zip archive", 0, 0, 0, 0);
                                 return false;
                             }
                     }
