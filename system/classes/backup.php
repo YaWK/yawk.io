@@ -33,7 +33,11 @@ namespace YAWK\BACKUP
         /** @var array backup settings */
         public $backupSettings = array();
         /** @var bool overwrite backup files? */
-        public $backupOverwrite = true;
+        public $overwriteBackup = true;
+        /** @var bool zip backup if possible */
+        public $zipBackup = true;
+        /** @var bool remove files after zip is complete */
+        public $removeAfterZip = true;
 
 
         /**
