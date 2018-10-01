@@ -54,7 +54,14 @@ if (isset($_POST))
                 }
 
                 // initialize backup
-                $backup->init();
+                if ($backup->init($db) === true)
+                {
+                    \YAWK\alert::draw("success", $lang['BACKUP_SUCCESSFUL'], $lang['BACKUP_SUCCESSFUL_TEXT'], "", 3400);
+                }
+                else
+                    {
+                        \YAWK\alert::draw("danger", $lang['BACKUP_FAILED'], $lang['BACKUP_FAILED_TEXT'], "", 6400);
+                    }
             }
             break;
 
@@ -80,12 +87,12 @@ if (isset($_POST))
             if ($('#zipBackup').is(':checked'))
             {   // disable remove after zip switch
                 $(removeAfterZipSwitch).bootstrapToggle('on');
-                $(removeAfterZipSwitch).attr('disabled', false);
+                $(removeAfterZipSwitch).prop('disabled', false);
             }
             else
                 {   // toggle + enable switch again
                     $(removeAfterZipSwitch).bootstrapToggle('off');
-                    $(removeAfterZipSwitch).attr('disabled', true);
+                    $(removeAfterZipSwitch).prop('disabled', true);
                 }
         });
 
@@ -183,7 +190,7 @@ echo"<ol class=\"breadcrumb\">
                 &nbsp;&nbsp;<label for="removeAfterZip"><?php echo $lang['BACKUP_REMOVE_AFTER_ZIP']; ?>&nbsp;&nbsp;</label>
                 <br><br>
 
-                <div id="completeMethods" class="hidden">
+                <div id="completeMethods">
                     <h3>Complete Backup</h3>
                     <label id="someSetting2Label" for="someSetting2">Some additional setting 2...</label>
                     <input type="checkbox" id="someSetting2" name="someSetting2">
