@@ -16,11 +16,43 @@ if (isset($_POST))
                 {   // create new backup obj
                     $backup = new \YAWK\BACKUP\backup();
                 }
+
                 // check if backup method is set
                 if (isset($_POST['backupMethod']) && (!empty($_POST['backupMethod'])))
                 {   // set backup method property depending on select field
                     $backup->backupMethod = $_POST['backupMethod'];
                 }
+
+                // check if zip is enabled
+                if (isset($_POST['zipBackup']) && (!empty($_POST['zipBackup'])))
+                {   // zip backup to true (checkbox is checked)
+                    $backup->zipBackup = $_POST['zipBackup'];
+                }
+                else
+                    {   // zip backup disabled - checkbox not checked
+                        $backup->zipBackup = false;
+                    }
+
+                // should files be removed after backup (save .zip file only)
+                if (isset($_POST['removeAfterZip']) && (!empty($_POST['removeAfterZip'])))
+                {   // set backup method property depending on select field
+                    $backup->removeAfterZip = $_POST['removeAfterZip'];
+                }
+                else
+                {   // remove files after zip disabled
+                    $backup->removeAfterZip = false;
+                }
+
+                // check if overwrite backup is allowed
+                if (isset($_POST['overwriteBackup']) && (!empty($_POST['overwriteBackup'])))
+                {   // set backup method property depending on select field
+                    $backup->overwriteBackup = $_POST['overwriteBackup'];
+                }
+                else
+                {   // do not allow to overwrite backup
+                    $backup->overwriteBackup = false;
+                }
+
                 // initialize backup
                 $backup->init();
             }
@@ -38,31 +70,57 @@ if (isset($_POST))
 ?>
 <script type="text/javascript">
     $(document).ready(function() {
+
+        // if zip is not allowed, remove after zip should be disabled
+        $('#zipBackup').change(function() {
+            // var remove after zip switch
+            var removeAfterZipSwitch = $('#removeAfterZip');
+
+            // check if zip is enabled or disabled
+            if ($('#zipBackup').is(':checked'))
+            {   // disable remove after zip switch
+                $(removeAfterZipSwitch).bootstrapToggle('on');
+                $(removeAfterZipSwitch).attr('disabled', false);
+            }
+            else
+                {   // toggle + enable switch again
+                    $(removeAfterZipSwitch).bootstrapToggle('off');
+                    $(removeAfterZipSwitch).attr('disabled', true);
+                }
+        });
+
+        // check if pulldown (select field) has changed (any item has been selected)
+        // and display additional according backup settings
         $("#backupMethod").on('change', function() {
+            // store backup method value as var
             var backupMethod = this.value;
 
+            // user selected complete backup method
             if (backupMethod === "complete")
-            {
+            {   // hide all other methods
                 $("#databaseMethods").hide();
                 $("#fileMethods").hide();
+                // display 'complete backup' settings
                 $("#completeMethods").fadeIn().removeClass('hidden');
-                // alert('BACKUP COMPLETE SELECTED: '+backupMethod);
             }
 
+            // user selected database backup method
             if (backupMethod === "database")
-            {
+            {   // hide all other methods
                 $("#completeMethods").hide();
                 $("#fileMethods").hide();
+                // display 'database backup' settings
                 $("#databaseMethods").fadeIn().removeClass('hidden');
-                // alert('BACKUP DATABASE SELECTED: '+backupMethod);
             }
 
+            // user selected file backup method
             if (backupMethod === "files")
             {
+                // hide all other methods
                 $("#databaseMethods").hide();
                 $("#completeMethods").hide();
+                // display 'file backup' settings
                 $("#fileMethods").fadeIn().removeClass('hidden');
-                // alert('BACKUP FILES SELECTED: '+backupMethod);
             }
         });
     });
@@ -116,12 +174,12 @@ echo"<ol class=\"breadcrumb\">
                 </select>
 
                 <br>
-                <input type="checkbox" data-on="<?php echo $lang['YES']; ?>" data-off="<?php echo $lang['NO']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="overwriteBackup" id="overwriteBackup" checked>
+                <input type="checkbox" data-on="<?php echo $lang['YES']; ?>" data-off="<?php echo $lang['NO']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="overwriteBackup" id="overwriteBackup" value="true" checked>
                 &nbsp;&nbsp;<label for="overwriteBackup"><?php echo $lang['BACKUP_OVERWRITE']; ?>&nbsp;&nbsp;</label>
                 <br><br>
-                <input type="checkbox" data-on="<?php echo $lang['YES']; ?>" data-off="<?php echo $lang['NO']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="zipBackup" id="zipBackup" checked>
+                <input type="checkbox" data-on="<?php echo $lang['YES']; ?>" data-off="<?php echo $lang['NO']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="zipBackup" id="zipBackup" value="true" checked>
                 &nbsp;&nbsp;<label for="zipBackup"><?php echo $lang['BACKUP_ZIP_ALLOWED']; ?>&nbsp;&nbsp;</label>
-                &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" data-on="<?php echo $lang['YES']; ?>" data-off="<?php echo $lang['NO']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="removeAfterZip" id="removeAfterZip" checked>
+                &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" data-on="<?php echo $lang['YES']; ?>" data-off="<?php echo $lang['NO']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="removeAfterZip" id="removeAfterZip" value="true" checked>
                 &nbsp;&nbsp;<label for="removeAfterZip"><?php echo $lang['BACKUP_REMOVE_AFTER_ZIP']; ?>&nbsp;&nbsp;</label>
                 <br><br>
 
@@ -143,9 +201,6 @@ echo"<ol class=\"breadcrumb\">
                     <input type="checkbox" id="someSetting3" name="someSetting3">
                 </div>
             </form>
-            <?php
-            // $backup->init();
-            // \YAWK\backup::getPackages();	?>
         </div>
     </div>
 </div>
