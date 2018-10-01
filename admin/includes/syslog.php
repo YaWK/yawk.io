@@ -193,23 +193,33 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
             // calculate time ago view
             $time_ago = \YAWK\sys::time_ago($log['log_date'], $lang);
             // 1 tbl row per syslog line
-            if ($log['log_type'] == 1)
+            if ($log['log_type'] == 0)
             {
                 $textMarkup = "";
-                $category = "<b>".$log['property']."</b><br><span class=\"label label-warning\">Warning</span>";
+                $category = "<b>".$log['property']."</b><br><span class=\"label label-default\">Info</span>";
+            }
+
+            elseif ($log['log_type'] == 1)
+            {
+                $textMarkup = "";
+                $category = "<b>".$log['property']."</b><br><span class=\"label label-warning\">WARNING</span>";
             }
             elseif ($log['log_type'] == 2)
             {
                 $textMarkup = " class=\"text-red\"";
                 $category = "<b>".$log['property']."</b><br><span class=\"label label-danger\">ERROR</span>";
-
+            }
+            elseif ($log['log_type'] == 3)
+            {
+                $textMarkup = "";
+                $category = "<b>".$log['property']."</b><br><span class=\"label label-success\">SUCCESS</span>";
             }
             else
-                {
-                    $textMarkup = "";
-                    $category = "<b>".$log['property']."</b><br><span class=\"label label-default\">Info</span>";
+            {
+                $textMarkup = "";
+                $category = "<b>".$log['property']."</b><br><span class=\"label label-default\">LOG</span>";
+            }
 
-                }
             if ($log['seen'] == 0)
             {
                 $labelMarkup = "<a href=\"#\" onclick=\"dismissNotification('".$log['log_id']."')\" id=\"link".$log['log_id']."\" data-id=\"$log[log_id]\"><i class=\"fa fa-envelope-o\" id=\"envelope-$log[log_id]\" title=\"$lang[ID]: $log[log_id]\"></i></a>";
