@@ -53,10 +53,6 @@ namespace YAWK\BACKUP\MYSQL
         public $backupSqlFile = 'backup.sql';
         /** @var string name of the backup .sql file */
         public $sqlBackup = '';
-        /** @var bool zip backup if possible */
-        public $zipBackup = true;
-        /** @var bool remove files after zip is complete */
-        public $removeAfterZip = true;
         /** @var string hash value of .sql file */
         public $hashValue = '';
 
@@ -276,7 +272,7 @@ namespace YAWK\BACKUP\MYSQL
         public function isOverwriteAllowed()
         {
             // check if overwrite is allowed
-            if ($this->backupOverwrite === true)
+            if ($this->overwriteBackup === true)
             {
                 // overwrite allowed
                 return true;
@@ -332,7 +328,7 @@ namespace YAWK\BACKUP\MYSQL
             $this->backupSettings['HASH'] = $this->getHashValue();
             $this->backupSettings['PATH'] = $this->sqlPath;
             $this->backupSettings['SOURCE_FOLDER'] = $this->sqlBackup;
-            $this->backupSettings['OVERWRITE_ALLOWED'] = $this->backupOverwrite;
+            $this->backupSettings['OVERWRITE_ALLOWED'] = $this->overwriteBackup;
             $this->backupSettings['USER_ID'] = $_SESSION['uid'];
             return $this->backupSettings;
         }
