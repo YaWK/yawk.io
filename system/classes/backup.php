@@ -82,9 +82,9 @@ namespace YAWK\BACKUP
                     case "database":
                     {
                         // include backup-database class
-                        require_once 'backup-database.php';
+                        require_once 'backup-mysqlBackup.php';
                         // create new database backup object
-                        $this->mysqlBackup = new \YAWK\BACKUP\MYSQL\database($this->backupSettings);
+                        $this->mysqlBackup = new \YAWK\BACKUP\DATABASE\mysqlBackup($this->backupSettings);
                         // initialize database backup
                         if ($this->mysqlBackup->init($db) === true)
                         {   // database backup successful

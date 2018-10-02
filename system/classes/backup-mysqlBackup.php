@@ -1,5 +1,5 @@
 <?php
-namespace YAWK\BACKUP\MYSQL
+namespace YAWK\BACKUP\DATABASE
 {
     /**
      * <b>YaWK Backup Component: Database Class</b>
@@ -19,7 +19,7 @@ namespace YAWK\BACKUP\MYSQL
      * @link       http://yawk.io
      * @annotation This class serves methods to store and retrieve mysql database.
      */
-    class database extends \YAWK\BACKUP\backup
+    class mysqlBackup extends \YAWK\BACKUP\backup
     {
         /** @var object mysqldump object */
         public $mysqldump;
