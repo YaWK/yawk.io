@@ -68,12 +68,12 @@ namespace YAWK\BACKUP\DATABASE
             // start mysqlbackup
             if ($this->startMysqlBackup($db) === true)
             {   // syslog: backup done
-                echo "startMysqlBackup done!<br>";
+                // echo "startMysqlBackup done!<br>";
                 return true;
             }
             else
             {   // syslog: backup failed
-                echo "startMysqlBackup failed!<br>";
+                // echo "startMysqlBackup failed!<br>";
                 return false;
             }
         }
