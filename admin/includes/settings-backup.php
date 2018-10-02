@@ -76,7 +76,26 @@ if (isset($_POST))
 }
 ?>
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function()
+    {
+        // check overwrite backup switch
+        $('#overwriteBackup').on('change', function()
+        {   // set switch + label vars
+            var overwriteBackupSwitch = $('#overwriteBackup');
+            var overwriteBackupLabel = $('#overwriteBackupLabel');
+            var overwriteLabelTextOn = $(overwriteBackupSwitch).attr("data-overwriteOn");
+            var overwriteLabelTextOff = $(overwriteBackupSwitch).attr("data-overwriteOff");
+
+            // check if overwrite switch is on
+            if ($(overwriteBackupSwitch).is(':checked'))
+            {   // set ON label text (overwrite current backup)
+                $(overwriteBackupLabel).text(overwriteLabelTextOn);
+            }
+            else
+                {   // set OFF label text (save to archive)
+                    $(overwriteBackupLabel).text(overwriteLabelTextOff);
+                }
+        });
 
         // if zip is not allowed, remove after zip should be disabled
         $('#zipBackup').change(function() {
@@ -105,6 +124,7 @@ if (isset($_POST))
             // user selected complete backup method
             if (backupMethod === "complete")
             {   // hide all other methods
+                $("#customSettings").hide();
                 $("#databaseMethods").hide();
                 $("#fileMethods").hide();
                 // display 'complete backup' settings
@@ -114,6 +134,7 @@ if (isset($_POST))
             // user selected database backup method
             if (backupMethod === "database")
             {   // hide all other methods
+                $("#customSettings").hide();
                 $("#completeMethods").hide();
                 $("#fileMethods").hide();
                 // display 'database backup' settings
@@ -124,10 +145,21 @@ if (isset($_POST))
             if (backupMethod === "files")
             {
                 // hide all other methods
+                $("#customSettings").hide();
                 $("#databaseMethods").hide();
                 $("#completeMethods").hide();
                 // display 'file backup' settings
                 $("#fileMethods").fadeIn().removeClass('hidden');
+            }
+
+            // user selected file backup method
+            if (backupMethod === "custom")
+            {
+                // hide all other methods
+                $("#databaseMethods").hide();
+                $("#completeMethods").hide();
+                // display 'file backup' settings
+                $("#customSettings").fadeIn().removeClass('hidden');
             }
         });
     });
@@ -162,6 +194,7 @@ echo"<ol class=\"breadcrumb\">
 ?>
 <div class="row">
 <div class="col-md-6">
+    <form name="backup" action="index.php?page=settings-backup&action=startBackup" method="POST">
     <div class="box">
         <div class="box-header">
             <h3 class="box-title">
@@ -169,20 +202,23 @@ echo"<ol class=\"breadcrumb\">
             </h3>
         </div>
         <div class="box-body">
-            <form name="backup" action="index.php?page=settings-backup&action=startBackup" method="POST">
                 <input type="hidden" name="action" value="startBackup">
                 <button type="submit" class="btn btn-success pull-right" id="savebutton"><i class="fa fa-check" id="savebuttonIcon"></i> &nbsp;<?php echo $lang['BACKUP_CREATE']; ?></button>
                 <br><br>
                 <label for="backupMethod"><?php echo $lang['BACKUP_WHAT_TO_BACKUP']; ?></label>
                 <select name="backupMethod" id="backupMethod" class="form-control">
-                    <option name="complete" value="complete"><?php echo $lang['BACKUP_FULL']; ?></option>
-                    <option name="database" value="database"><?php echo $lang['BACKUP_DB_ONLY']; ?></option>
-                    <option name="files" value="files"><?php echo $lang['BACKUP_FILES_ONLY']; ?></option>
+                  <optgroup label="Standard"></optgroup>
+                    <option name="complete" value="complete">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $lang['BACKUP_FULL']; ?></option>
+                    <option name="database" value="database">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $lang['BACKUP_DB_ONLY']; ?></option>
+                    <option name="files" value="files">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $lang['BACKUP_FILES_ONLY']; ?></option>
+                  <optgroup label="Benutzerdefniert"></optgroup>
+                    <option name="custom" value="custom">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $lang['BACKUP_CUSTOM']; ?></option>
+
                 </select>
 
                 <br>
-                <input type="checkbox" data-on="<?php echo $lang['YES']; ?>" data-off="<?php echo $lang['NO']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="overwriteBackup" id="overwriteBackup" value="true" checked>
-                &nbsp;&nbsp;<label for="overwriteBackup"><?php echo $lang['BACKUP_OVERWRITE']; ?>&nbsp;&nbsp;</label>
+                <input type="checkbox" data-on="<?php echo $lang['BACKUP_OVERWRITE_THIS']; ?>" data-off="<?php echo $lang['BACKUP_ARCHIVE_THIS']; ?>" data-overwriteOff="<?php echo $lang['BACKUP_OVERWRITE_OFF']; ?>" data-overwriteOn="<?php echo $lang['BACKUP_OVERWRITE_ON']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="info" class="checkbox" name="overwriteBackup" id="overwriteBackup" value="true" checked>
+                &nbsp;&nbsp;<label for="overwriteBackup" id="overwriteBackupLabel"><?php echo $lang['BACKUP_OVERWRITE']; ?>&nbsp;&nbsp;</label>
                 <br><br>
                 <input type="checkbox" data-on="<?php echo $lang['YES']; ?>" data-off="<?php echo $lang['NO']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="zipBackup" id="zipBackup" value="true" checked>
                 &nbsp;&nbsp;<label for="zipBackup"><?php echo $lang['BACKUP_ZIP_ALLOWED']; ?>&nbsp;&nbsp;</label>
@@ -190,6 +226,7 @@ echo"<ol class=\"breadcrumb\">
                 &nbsp;&nbsp;<label for="removeAfterZip"><?php echo $lang['BACKUP_REMOVE_AFTER_ZIP']; ?>&nbsp;&nbsp;</label>
                 <br><br>
 
+                <!--
                 <div id="completeMethods">
                     <h3>Complete Backup</h3>
                     <label id="someSetting2Label" for="someSetting2">Some additional setting 2...</label>
@@ -207,9 +244,32 @@ echo"<ol class=\"breadcrumb\">
                     <label id="someSetting3Label" for="someSetting3">Some additional setting 3...</label>
                     <input type="checkbox" id="someSetting3" name="someSetting3">
                 </div>
-            </form>
+                -->
         </div>
     </div>
+        <div class="box hidden" id="customSettings">
+            <div class="box-header">
+                <h3 class="box-title">
+                    <?php echo $lang['EXTENDED_SETTINGS']; ?>
+                </h3>
+            </div>
+            <div class="box-body">
+                <div>
+                    <h3><?php echo $lang['BACKUP_DATABASE_SETTINGS']; ?></h3>
+                    <label id="example1Label" for="example1Checkbox">Some additional Database Setting</label>
+                    <input type="checkbox" id="example1Checkbox" name="example1Checkbox"><br>
+                    <label id="example2Label" for="example2Checkbox">Some additional Database Setting</label>
+                    <input type="checkbox" id="example2Checkbox" name="example2Checkbox"><br>
+                    <label id="example3Label" for="example3Checkbox">Some additional Database Setting</label>
+                    <input type="checkbox" id="example3Checkbox" name="example3Checkbox"><br>
+
+                    <h3><?php echo $lang['BACKUP_FILES_SETTINGS']; ?></h3>
+                    <label id="example4Label" for="example4Checkbox">Some additional Database Setting</label>
+                    <input type="checkbox" id="example4Checkbox" name="example4Checkbox">
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
 <div class="col-md-6">
     <div class="box">
@@ -233,7 +293,7 @@ echo"<ol class=\"breadcrumb\">
 
     <div class="box">
         <div class="box-header">
-            <h1 class="box-title"><?php echo $lang['BACKUP_LATEST']; ?> <small><?php echo $lang['TO_DOWNLOAD']; ?></small></h1>
+            <h1 class="box-title"><?php echo $lang['BACKUP_ONGOING']; ?> <small><?php echo $lang['MANAGE']; ?></small></h1>
         </div>
         <div class="box-body">
             <b>system/backup/current/</b>
@@ -243,7 +303,7 @@ echo"<ol class=\"breadcrumb\">
 
     <div class="box">
         <div class="box-header">
-            <h1 class="box-title"><?php echo $lang['BACKUP_ARCHIVE']; ?> <small><?php echo $lang['TO_DOWNLOAD']; ?></small></h1>
+            <h1 class="box-title"><?php echo $lang['BACKUP_ARCHIVE']; ?> <small><?php echo $lang['MANAGE']; ?></small></h1>
         </div>
         <div class="box-body">
             <b>system/backup/archive/</b>
