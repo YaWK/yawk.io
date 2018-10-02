@@ -78,6 +78,37 @@ if (isset($_POST))
 <script type="text/javascript">
     $(document).ready(function()
     {
+        // EXTENDED SETTINGS
+        // To improve usability, backup settings are grouped
+        // this piece of js toggles all checkboxes of affected group
+
+        // MEDIA TOGGLE SWITCH
+        $('#mediaCheckAll').change(function() {
+            // get all checkboxes of this group
+            $('.checkbox-group-media').each(function() {
+                // toggle checkbox group
+                $(this).find('input[type="checkbox"]').each(function () { this.checked = !this.checked; });
+            });
+        });
+
+        // SYSTEM TOGGLE
+        $('#systemCheckAll').change(function() {
+            // get all checkboxes of this group
+            $('.checkbox-group-system').each(function() {
+                // toggle checkbox group
+                $(this).find('input[type="checkbox"]').each(function () { this.checked = !this.checked; });
+            });
+        });
+
+        // DATABASE TOGGLE
+        $('#databaseCheckAll').change(function() {
+            // get all checkboxes of this group
+            $('.checkbox-group-database').each(function() {
+                // toggle checkbox group
+                $(this).find('input[type="checkbox"]').each(function () { this.checked = !this.checked; });
+            });
+        });
+
         // check overwrite backup switch
         $('#overwriteBackup').on('change', function()
         {   // set switch + label vars
@@ -207,11 +238,11 @@ echo"<ol class=\"breadcrumb\">
                 <br><br>
                 <label for="backupMethod"><?php echo $lang['BACKUP_WHAT_TO_BACKUP']; ?></label>
                 <select name="backupMethod" id="backupMethod" class="form-control">
-                  <optgroup label="Standard"></optgroup>
+                  <optgroup label="<?php echo $lang['STANDARD']; ?>"></optgroup>
                     <option name="complete" value="complete">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $lang['BACKUP_FULL']; ?></option>
                     <option name="database" value="database">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $lang['BACKUP_DB_ONLY']; ?></option>
                     <option name="files" value="files">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $lang['BACKUP_FILES_ONLY']; ?></option>
-                  <optgroup label="Benutzerdefniert"></optgroup>
+                  <optgroup label="<?php echo $lang['CUSTOM']; ?>"></optgroup>
                     <option name="custom" value="custom">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $lang['BACKUP_CUSTOM']; ?></option>
 
                 </select>
@@ -255,17 +286,56 @@ echo"<ol class=\"breadcrumb\">
             </div>
             <div class="box-body">
                 <div>
-                    <h3><?php echo $lang['BACKUP_DATABASE_SETTINGS']; ?></h3>
-                    <label id="example1Label" for="example1Checkbox">Some additional Database Setting</label>
-                    <input type="checkbox" id="example1Checkbox" name="example1Checkbox"><br>
-                    <label id="example2Label" for="example2Checkbox">Some additional Database Setting</label>
-                    <input type="checkbox" id="example2Checkbox" name="example2Checkbox"><br>
-                    <label id="example3Label" for="example3Checkbox">Some additional Database Setting</label>
-                    <input type="checkbox" id="example3Checkbox" name="example3Checkbox"><br>
+                    <h3>
+                        <input type="checkbox" data-on="<i class='fa fa-folder-open-o'></i>" data-off="<?php echo $lang['OFF']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="mediaCheckAll" id="mediaCheckAll" value="true" checked>
+                        <label for="mediaCheckAll" id="mediaCheckAllLabel"> <?php echo $lang['BACKUP_MEDIA_FOLDER']; ?></label>
+                    </h3>
+                    <div class="checkbox-group-media">
+                    <?php
+                        // get media folder + subfolders into array
+                        $mediaFolderArray = \YAWK\filemanager::getSubfoldersToArray('../media/');
+                        // walk through folders and draw checkboxes
+                        foreach ($mediaFolderArray as $folder)
+                        {
+                            echo "&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type=\"checkbox\" data-name=\"$folder\" id=\"mediaFolder-$folder\" name=\"mediaFolder-$folder\" checked=\"checked\">
+                    <label id=\"mediaFolderLabel-$folder\" for=\"mediaFolder-$folder\">".ucfirst($folder)."</label><br>";
+                        }
+                    ?>
+                    </div>
+                    <h3>
+                        <input type="checkbox" data-on="<i class='fa fa-gears'></i>" data-off="<?php echo $lang['OFF']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="systemCheckAll" id="systemCheckAll" value="true" checked="checked">
+                        <label for="systemCheckAll" id="systemCheckAllLabel"> <?php echo $lang['SYSTEM']; ?></label>
+                    </h3>
+                    <div class="checkbox-group-system">
+                    <?php
+                    // get database tables
+                    $systemFolders = array('system/fonts', 'system/language', 'system/plugins', 'system/templates', 'system/widgets');
+                    foreach ($systemFolders AS $folder)
+                    {
+                        echo "&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type=\"checkbox\" id=\"system-$folder\" value=\"$folder\" name=\"system-$folder\" checked>
+                        <label id=\"systemLabel-$folder\" for=\"system-$folder\">$folder</label><br>";
+                    }
+                    ?>
+                    </div>
 
-                    <h3><?php echo $lang['BACKUP_FILES_SETTINGS']; ?></h3>
-                    <label id="example4Label" for="example4Checkbox">Some additional Database Setting</label>
-                    <input type="checkbox" id="example4Checkbox" name="example4Checkbox">
+                    <h3>
+                        <input type="checkbox" data-on="<i class='fa fa-database'></i>" data-off="<?php echo $lang['OFF']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="databaseCheckAll" id="databaseCheckAll" value="true" checked="checked">
+                        <label for="databaseCheckAll" id="databaseCheckAllLabel"> <?php echo $lang['DATABASE']; ?></label>
+                    </h3>
+                    <div class="checkbox-group-database">
+                    <?php
+                        // get database tables
+                        $dbTables = $db->get_tables();
+                        foreach ($dbTables AS $id=>$table)
+                        {
+                            echo "&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type=\"checkbox\" id=\"database-$table\" value=\"$table\" name=\"database-$table\" checked>
+                        <label id=\"databaseLabel-$table\" for=\"database-$table\">$table</label><br>";
+                        }
+                    ?>
+                    </div>
                 </div>
             </div>
         </div>
