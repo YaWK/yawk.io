@@ -105,6 +105,13 @@ namespace YAWK\BACKUP
                         // files + folder only
                     }
                     break;
+
+                    // custom backup selected
+                    case "custom":
+                    {
+                        // do custom backup stuff...
+                    }
+                    break;
                 }
             }
             else
