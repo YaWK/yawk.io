@@ -124,3 +124,9 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
 # override max upload file size
 # php_value upload_max_filesize 32M
 
+# SESSION TIMEOUT 60 Minutes
+<IfModule mod_php5.c>
+    # 3600 = 60 Minutes
+    php_value session.cookie_lifetime 3600
+    php_value session.gc_maxlifetime 3600
+</IfModule>
