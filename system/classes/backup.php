@@ -147,8 +147,6 @@ namespace YAWK\BACKUP
                 // check if ini file was written
                 if (\YAWK\sys::writeIniFile($this->backupSettings, $this->configFile) === true)
                 {
-                    // set syslog: config file written successfully
-                    // echo "$this->configFile written!<br>";
                     // check if config file is there
                     if (is_file($this->configFile))
                     {   // config file found!
@@ -181,7 +179,7 @@ namespace YAWK\BACKUP
          * @param $iniFile
          * @return bool
          */
-        public function parseIniFile($iniFile)
+        public function parseIniFile($db, $iniFile)
         {   // set config file property
             $this->configFile = $iniFile;
             // check if ini file is there
@@ -189,13 +187,13 @@ namespace YAWK\BACKUP
             {
                 // update backup settings from ini file
                 $this->backupSettings = parse_ini_file($this->configFile);
-                echo "ini file parse successful!";
+               //  echo "ini file parse successful!";
                 return true;
             }
             else
                 {   // no ini file found!
                     // set syslog entry
-                    echo "no ini file found!";
+                    \YAWK\sys::setSyslog($db, 51, 1, "failed to parse ini file - $this->configFile not found", 0, 0, 0, 0);
                     return false;
                 }
         }
