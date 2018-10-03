@@ -129,7 +129,7 @@ namespace YAWK\BACKUP
          * @link        http://yawk.io
          * @return bool
          */
-        public function setIniFile($targetFolder)
+        public function setIniFile($db, $targetFolder)
         {   // check if target folder is set
             if (isset($targetFolder) && (!empty($targetFolder)))
             {   // set target folder property
@@ -146,8 +146,9 @@ namespace YAWK\BACKUP
                 $this->configFile = $this->targetFolder.$this->configFilename;
                 // check if ini file was written
                 if (\YAWK\sys::writeIniFile($this->backupSettings, $this->configFile) === true)
-                {   // set syslog: config file written successfully
-                    echo "$this->configFile written!<br>";
+                {
+                    // set syslog: config file written successfully
+                    // echo "$this->configFile written!<br>";
                     // check if config file is there
                     if (is_file($this->configFile))
                     {   // config file found!
@@ -155,18 +156,19 @@ namespace YAWK\BACKUP
                     }
                     else
                         {   // config file not found
+                            \YAWK\sys::setSyslog($db, 51, 1, "backup ini file written, but not found - please check: $this->configFile", 0, 0, 0, 0);
                             return false;
                         }
                 }
                 else
                     {   // unable to write config file
-                        echo "$this->configFile not written!<br>";
+                        \YAWK\sys::setSyslog($db, 51, 1, "failed to write backup config file $this->configFile", 0, 0, 0, 0);
                         return false;
                     }
             }
             else
                 {   // target folder not writeable
-                    echo "$this->targetFolder is not writeable!";
+                    \YAWK\sys::setSyslog($db, 51, 1, "failed to write backup config file: $this->configFile - target folder not writeable", 0, 0, 0, 0);
                     return false;
                 }
         }

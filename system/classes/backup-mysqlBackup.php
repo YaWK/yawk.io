@@ -379,7 +379,7 @@ namespace YAWK\BACKUP\DATABASE
                     // ok, backup done
                     // add ini file
                     $this->backupSettings = $this->setBackupSettings($db);
-                    if ($this->setIniFile($this->sqlPath) === true)
+                    if ($this->setIniFile($db, $this->sqlPath) === true)
                     {
                         // backup ini file written
                     }
