@@ -1,7 +1,8 @@
 <?php
 // check if post data is set
 if (isset($_POST))
-{   // check if action is set
+{
+    // check if action is set
     if (isset($_POST['action']))
     {   // check which action is requested
         switch ($_POST['action'])
@@ -40,18 +41,23 @@ if (isset($_POST))
                 }
                 else
                 {   // remove files after zip disabled
-                    $backup->removeAfterZip = false;
+                    $backup->removeAfterZip = "false";
                 }
 
                 // check if overwrite backup is allowed
                 if (isset($_POST['overwriteBackup']) && (!empty($_POST['overwriteBackup'])))
                 {   // set backup method property depending on select field
-                    $backup->overwriteBackup = $_POST['overwriteBackup'];
+                    if ($_POST['overwriteBackup'] == "true")
+                    {
+                        $backup->overwriteBackup = $_POST['overwriteBackup'];
+                    }
+                    else
+                        {
+                            $backup->overwriteBackup = "false";
+                        }
                 }
-                else
-                {   // do not allow to overwrite backup
-                    $backup->overwriteBackup = false;
-                }
+
+                //
 
                 // initialize backup
                 if ($backup->init($db) === true)
@@ -82,6 +88,15 @@ if (isset($_POST))
         // To improve usability, backup settings are grouped
         // this piece of js toggles all checkboxes of affected group
 
+        // CONTENT TOGGLE SWITCH
+        $('#contentCheckAll').change(function() {
+            // get all checkboxes of this group
+            $('.checkbox-group-content').each(function() {
+                // toggle checkbox group
+                $(this).find('input[type="checkbox"]').each(function () { this.checked = !this.checked; });
+            });
+        });
+
         // MEDIA TOGGLE SWITCH
         $('#mediaCheckAll').change(function() {
             // get all checkboxes of this group
@@ -92,7 +107,7 @@ if (isset($_POST))
         });
 
         // SYSTEM TOGGLE
-        $('#systemCheckAll').change(function() {
+        $('#systemFolderCheckAll').change(function() {
             // get all checkboxes of this group
             $('.checkbox-group-system').each(function() {
                 // toggle checkbox group
@@ -248,34 +263,21 @@ echo"<ol class=\"breadcrumb\">
                 </select>
 
                 <br>
-                <input type="checkbox" data-on="<?php echo $lang['BACKUP_OVERWRITE_THIS']; ?>" data-off="<?php echo $lang['BACKUP_ARCHIVE_THIS']; ?>" data-overwriteOff="<?php echo $lang['BACKUP_OVERWRITE_OFF']; ?>" data-overwriteOn="<?php echo $lang['BACKUP_OVERWRITE_ON']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="info" class="checkbox" name="overwriteBackup" id="overwriteBackup" value="true" checked>
+            <input type="hidden" class="hidden" name="overwriteBackup" id="overwriteBackupHidden" value="false">
+            <input type="checkbox" data-on="<?php echo $lang['BACKUP_OVERWRITE_THIS']; ?>" data-off="<?php echo $lang['BACKUP_ARCHIVE_THIS']; ?>" data-overwriteOff="<?php echo $lang['BACKUP_OVERWRITE_OFF']; ?>" data-overwriteOn="<?php echo $lang['BACKUP_OVERWRITE_ON']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="info" class="checkbox" name="overwriteBackup" id="overwriteBackup" value="true" checked>
                 &nbsp;&nbsp;<label for="overwriteBackup" id="overwriteBackupLabel"><?php echo $lang['BACKUP_OVERWRITE']; ?>&nbsp;&nbsp;</label>
                 <br><br>
-                <input type="checkbox" data-on="<?php echo $lang['YES']; ?>" data-off="<?php echo $lang['NO']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="zipBackup" id="zipBackup" value="true" checked>
-                &nbsp;&nbsp;<label for="zipBackup"><?php echo $lang['BACKUP_ZIP_ALLOWED']; ?>&nbsp;&nbsp;</label>
-                &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" data-on="<?php echo $lang['YES']; ?>" data-off="<?php echo $lang['NO']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="removeAfterZip" id="removeAfterZip" value="true" checked>
-                &nbsp;&nbsp;<label for="removeAfterZip"><?php echo $lang['BACKUP_REMOVE_AFTER_ZIP']; ?>&nbsp;&nbsp;</label>
+                <input type="hidden" class="hidden" name="zipBackup" id="zipBackupHidden" value="false">
+                <input type="checkbox" data-on="<i class='fa fa-file-zip-o'></i>" data-off="<?php echo $lang['NO']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="zipBackup" id="zipBackup" value="true" checked>
+            &nbsp;&nbsp;<label for="zipBackup"><?php echo $lang['BACKUP_ZIP_ALLOWED']; ?>&nbsp;&nbsp;</label>
                 <br><br>
 
-                <!--
-                <div id="completeMethods">
-                    <h3>Complete Backup</h3>
-                    <label id="someSetting2Label" for="someSetting2">Some additional setting 2...</label>
-                    <input type="checkbox" id="someSetting2" name="someSetting2">
-                </div>
+            <!--
+            &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" data-on="<?php //echo $lang['YES']; ?>" data-off="<?php //echo $lang['NO']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="removeAfterZip" id="removeAfterZip" value="true" checked>
+                &nbsp;&nbsp;<label for="removeAfterZip"><?php //echo $lang['BACKUP_REMOVE_AFTER_ZIP']; ?>&nbsp;&nbsp;</label>
+                <br><br>
+            -->
 
-                <div id="databaseMethods" class="hidden">
-                    <h3>Database Settings </h3>
-                    <label id="someSettingLabel" for="someSetting">Some additional setting...</label>
-                    <input type="checkbox" id="someSetting" name="someSetting">
-                </div>
-
-                <div id="fileMethods" class="hidden">
-                    <h3>Files Backup</h3>
-                    <label id="someSetting3Label" for="someSetting3">Some additional setting 3...</label>
-                    <input type="checkbox" id="someSetting3" name="someSetting3">
-                </div>
-                -->
         </div>
     </div>
         <div class="box hidden" id="customSettings">
@@ -286,6 +288,24 @@ echo"<ol class=\"breadcrumb\">
             </div>
             <div class="box-body">
                 <div>
+                    <h3>
+                        <input type="checkbox" data-on="<i class='fa fa-file-o'></i>" data-off="<?php echo $lang['OFF']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="contentCheckAll" id="contentCheckAll" value="true" checked>
+                        <label for="contentCheckAll" id="contentCheckAllLabel"> <?php echo $lang['PAGES']; ?></label>
+                    </h3>
+                    <div class="checkbox-group-content">
+                        <?php
+                        // get content folder + subfolders into array
+                        $contentFolderArray = \YAWK\filemanager::getSubfoldersToArray('../content/');
+                        // walk through folders and draw checkboxes
+                        foreach ($contentFolderArray as $folder)
+                        {
+                            echo "&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type=\"checkbox\" data-name=\"$folder\" id=\"contentFolder-$folder\" name=\"contentFolder[]\" checked=\"checked\" value=\"$folder\">
+                    <label id=\"contentFolderLabel-$folder\" for=\"contentFolder-$folder\">".ucfirst($folder)."</label><br>";
+                        }
+                        ?>
+                    </div>
+
                     <h3>
                         <input type="checkbox" data-on="<i class='fa fa-folder-open-o'></i>" data-off="<?php echo $lang['OFF']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="mediaCheckAll" id="mediaCheckAll" value="true" checked>
                         <label for="mediaCheckAll" id="mediaCheckAllLabel"> <?php echo $lang['BACKUP_MEDIA_FOLDER']; ?></label>
@@ -298,14 +318,14 @@ echo"<ol class=\"breadcrumb\">
                         foreach ($mediaFolderArray as $folder)
                         {
                             echo "&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type=\"checkbox\" data-name=\"$folder\" id=\"mediaFolder-$folder\" name=\"mediaFolder-$folder\" checked=\"checked\">
+                    <input type=\"checkbox\" data-name=\"$folder\" id=\"mediaFolder-$folder\" name=\"mediaFolder[]\" checked=\"checked\" value=\"$folder\">
                     <label id=\"mediaFolderLabel-$folder\" for=\"mediaFolder-$folder\">".ucfirst($folder)."</label><br>";
                         }
                     ?>
                     </div>
                     <h3>
-                        <input type="checkbox" data-on="<i class='fa fa-gears'></i>" data-off="<?php echo $lang['OFF']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="systemCheckAll" id="systemCheckAll" value="true" checked="checked">
-                        <label for="systemCheckAll" id="systemCheckAllLabel"> <?php echo $lang['SYSTEM']; ?></label>
+                        <input type="checkbox" data-on="<i class='fa fa-gears'></i>" data-off="<?php echo $lang['OFF']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="systemFolderCheckAll" id="systemFolderCheckAll" value="true" checked="checked">
+                        <label for="systemFolderCheckAll" id="systemFolderCheckAllLabel"> <?php echo $lang['SYSTEM']; ?></label>
                     </h3>
                     <div class="checkbox-group-system">
                     <?php
@@ -314,8 +334,8 @@ echo"<ol class=\"breadcrumb\">
                     foreach ($systemFolders AS $folder)
                     {
                         echo "&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type=\"checkbox\" id=\"system-$folder\" value=\"$folder\" name=\"system-$folder\" checked>
-                        <label id=\"systemLabel-$folder\" for=\"system-$folder\">$folder</label><br>";
+                        <input type=\"checkbox\" id=\"systemFolder-$folder\" value=\"$folder\" name=\"systemFolder[]\" checked>
+                        <label id=\"systemFolderLabel-$folder\" for=\"systemFolder-$folder\">$folder</label><br>";
                     }
                     ?>
                     </div>
@@ -331,7 +351,7 @@ echo"<ol class=\"breadcrumb\">
                         foreach ($dbTables AS $id=>$table)
                         {
                             echo "&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type=\"checkbox\" id=\"database-$table\" value=\"$table\" name=\"database-$table\" checked>
+                        <input type=\"checkbox\" id=\"database-$table\" value=\"$table\" name=\"database[]\" checked>
                         <label id=\"databaseLabel-$table\" for=\"database-$table\">$table</label><br>";
                         }
                     ?>
