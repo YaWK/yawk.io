@@ -32,12 +32,12 @@ namespace YAWK\BACKUP
         public $configFile = '';
         /** @var array backup settings */
         public $backupSettings = array();
-        /** @var bool overwrite backup files? */
-        public $overwriteBackup = true;
-        /** @var bool zip backup if possible */
-        public $zipBackup = true;
-        /** @var bool remove files after zip is complete */
-        public $removeAfterZip = true;
+        /** @var string overwrite backup files? */
+        public $overwriteBackup = "true";
+        /** @var string zip backup if possible */
+        public $zipBackup = "true";
+        /** @var string remove files after zip is complete */
+        public $removeAfterZip = "true";
 
 
         /**
@@ -48,6 +48,7 @@ namespace YAWK\BACKUP
          */
         public function init($db)
         {   // run backup system
+
             if ($this->run($db) === true)
             {
                 return true;
@@ -63,6 +64,7 @@ namespace YAWK\BACKUP
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
+         * @return      bool
          */
         public function run($db)
         {   /** @var $db \YAWK\db */
@@ -80,20 +82,14 @@ namespace YAWK\BACKUP
 
                     // backup database only
                     case "database":
-                    {
-                        // include backup-database class
-                        require_once 'backup-mysqlBackup.php';
-                        // create new database backup object
-                        $this->mysqlBackup = new \YAWK\BACKUP\DATABASE\mysqlBackup($this->backupSettings);
-                        // initialize database backup
-                        if ($this->mysqlBackup->init($db) === true)
-                        {   // database backup successful
-                            \YAWK\sys::setSyslog($db, 50, 3, "database backup created successfully", 0, 0, 0, 0);
+                    {   // check if database backup has made
+
+                        if ($this->runDatabaseBackup($db) === true)
+                        {   // ok...
                             return true;
                         }
                         else
-                            {   // database backup failed
-                                \YAWK\sys::setSyslog($db, 52, 2, "failed to create database backup", 0, 0, 0, 0);
+                            {   // failed to run database backup
                                 return false;
                             }
                     }
@@ -129,16 +125,8 @@ namespace YAWK\BACKUP
          * @link        http://yawk.io
          * @return bool
          */
-        public function setIniFile($db, $targetFolder)
+        public function setIniFile($db)
         {   // check if target folder is set
-            if (isset($targetFolder) && (!empty($targetFolder)))
-            {   // set target folder property
-                $this->targetFolder = $targetFolder;
-            }
-            else
-                {   // target folder param not sent, set default value:
-                    $this->targetFolder = '../system/backup/current/';
-                }
 
             // check if target folder is writeable
             if (is_writeable($this->targetFolder))
@@ -196,6 +184,26 @@ namespace YAWK\BACKUP
                     \YAWK\sys::setSyslog($db, 51, 1, "failed to parse ini file - $this->configFile not found", 0, 0, 0, 0);
                     return false;
                 }
+        }
+
+        public function runDatabaseBackup($db)
+        {
+            // include backup-database class
+            require_once 'backup-mysqlBackup.php';
+            // create new database backup object
+            $this->mysqlBackup = new \YAWK\BACKUP\DATABASE\mysqlBackup($this->backupSettings);
+            // initialize database backup
+
+            if ($this->mysqlBackup->initMysqlBackup($db, $this->overwriteBackup, $this->zipBackup) === true)
+            {   // database backup successful
+                \YAWK\sys::setSyslog($db, 50, 3, "database backup created successfully", 0, 0, 0, 0);
+                return true;
+            }
+            else
+            {   // database backup failed
+                \YAWK\sys::setSyslog($db, 52, 2, "failed to create database backup", 0, 0, 0, 0);
+                return false;
+            }
         }
 
     }
