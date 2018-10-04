@@ -1956,7 +1956,6 @@ namespace YAWK {
                     // user aint got the rights to login to backend
                     \YAWK\sys::setSyslog($db, 12, 2, "failed to login <b>$username</b> user aint got sufficient rights to login. .", $uid, 0, 0, 0);
                     \YAWK\alert::draw("danger", "Login failed!", "You are not allowed to login here.", "", 10000);
-
                 }
             } // wrong password given
             else { // kick it back
@@ -1972,8 +1971,8 @@ namespace YAWK {
                     echo "<script>
                             // RE-LOGIN TIMER
                                 $('div *').prop('disabled', true);
-                                var count=8;
-                                var counter=setInterval(timer, 1000); // 1000 will  run it every 1 second
+                                var count = 8;
+                                var counter = setInterval(timer, 1000); // 1000 will  run it every 1 second
                                 function timer()
                                 {
                                     count=count-1;
@@ -2412,7 +2411,7 @@ namespace YAWK {
          * @param object $db database
          * @return array|bool
          */
-        static function getAllNotifications($db, $lang)
+        static function getAllNotifications($db)
         {   /** @var $db \YAWK\db */
 
             if ($sql = $db->query("SELECT * FROM {syslog} AS log

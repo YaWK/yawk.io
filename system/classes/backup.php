@@ -22,6 +22,14 @@ namespace YAWK\BACKUP
         public $filesBackup;
         /** @var string path, where the backup will be stored */
         public $targetFolder = '../system/backup/current/';
+        /** @var string current backup folder path */
+        public $currentBackupFolder = '../system/backup/current/';
+        /** @var array files in current backup folder */
+        public $currentBackupFiles = array();
+        /** @var string archive backup folder path */
+        public $archiveBackupFolder = '../system/backup/archive/';
+        /** @var array files in archive backup folder */
+        public $archiveBackupFiles = array();
         /** @var string name of the backup .sql file */
         public $targetFilename = 'backup.zip';
         /** @var string files|database|complete */
@@ -182,6 +190,29 @@ namespace YAWK\BACKUP
                 {   // no ini file found!
                     // set syslog entry
                     \YAWK\sys::setSyslog($db, 51, 1, "failed to parse ini file - $this->configFile not found", 0, 0, 0, 0);
+                    return false;
+                }
+        }
+
+        /**
+         * get all files from current backup folder into array
+         * @author      Daniel Retzl <danielretzl@gmail.com>
+         * @version     1.0.0
+         * @link        http://yawk.io
+         * @param $iniFile
+         * @return array|false
+         */
+        public function getCurrentBackupFilesArray()
+        {
+            // get current backup files into array
+            $this->currentBackupFiles = \YAWK\filemanager::getFilesFromFolderToArray($this->currentBackupFolder);
+            // check if backup files are set
+            if (is_array($this->currentBackupFiles))
+            {   // ok, return files
+                return $this->currentBackupFiles;
+            }
+            else
+                {   // array is not set
                     return false;
                 }
         }

@@ -1,9 +1,9 @@
 <?php
 session_start();
 header('Cache-control: private');               // IE 6 FIX
-// error_reporting(E_ALL ^ E_STRICT);                // just for development purpose!!!
-ini_set('display_errors', 0);                     // DISPLAY ALL ERRORS - DEVELOPMENT ONLY!!!
-error_reporting(0);                             // no error reporting
+error_reporting(E_ALL ^ E_STRICT);                // just for development purpose!!!
+ini_set('display_errors', 1);                     // DISPLAY ALL ERRORS - DEVELOPMENT ONLY!!!
+error_reporting(1);                             // no error reporting
 $loadingTime = microtime(true);            // scripting start time (var gets used for benchmark, if enabled)
 
 /* include controller classes */
@@ -88,7 +88,7 @@ if (!isset($AdminLTE))
             // check if messaging is enabled
             if (\YAWK\settings::getSetting($db, "backendMessagesMenu") == 1)
             {   // ok, draw msg icon and message navbar in upper right corner
-                echo $AdminLTE->drawHtmlNavbarMessagesMenu($db);
+                echo $AdminLTE->drawHtmlNavbarMessagesMenu($db, $lang);
             }
 
             // check, if backend notification is enabled
@@ -117,7 +117,7 @@ if (!isset($AdminLTE))
             }
 
             // right sidebar
-            echo $AdminLTE->drawHtmlRightSidebar();
+            echo $AdminLTE->drawHtmlRightSidebar($lang);
             // additional js includes at the bottom
             echo $AdminLTE->drawHtmlJSIncludes();
             // html end

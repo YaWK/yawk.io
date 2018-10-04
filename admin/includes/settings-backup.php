@@ -1,4 +1,12 @@
 <?php
+/** @var $db \YAWK\db */
+require_once '../system/classes/backup.php';        // backup methods and helpers
+// check if backup obj is set
+if (!isset($backup) || (empty($backup)))
+{   // create new backup obj
+    $backup = new \YAWK\BACKUP\backup();
+}
+
 // check if post data is set
 if (isset($_POST))
 {
@@ -10,14 +18,6 @@ if (isset($_POST))
             // start backup selected
             case "startBackup":
             {
-                /** @var $db \YAWK\db */
-                require_once '../system/classes/backup.php';        // backup methods and helpers
-                // check if backup obj is set
-                if (!isset($backup) || (empty($backup)))
-                {   // create new backup obj
-                    $backup = new \YAWK\BACKUP\backup();
-                }
-
                 // check if backup method is set
                 if (isset($_POST['backupMethod']) && (!empty($_POST['backupMethod'])))
                 {   // set backup method property depending on select field
@@ -56,8 +56,6 @@ if (isset($_POST))
                             $backup->overwriteBackup = "false";
                         }
                 }
-
-                //
 
                 // initialize backup
                 if ($backup->init($db) === true)
@@ -383,11 +381,33 @@ echo"<ol class=\"breadcrumb\">
 
     <div class="box">
         <div class="box-header">
-            <h1 class="box-title"><?php echo $lang['BACKUP_ONGOING']; ?> <small><?php echo $lang['MANAGE']; ?></small></h1>
+            <h3 class="box-title"><?php echo $lang['BACKUP_ONGOING']; ?> <small>system/backup/current/</small></h3>
         </div>
         <div class="box-body">
-            <b>system/backup/current/</b>
-            <h3>&nbsp;&nbsp;&nbsp;<i class="fa fa-file-zip-o text-green"></i>&nbsp;&nbsp; <small><?php // .... ?></small></h3>
+            <table class="table table-striped table-hover table-responsive">
+            <?php
+                $currentFiles = $backup->getCurrentBackupFilesArray();
+                foreach ($currentFiles as $file)
+                {
+                    $currentFile = "$backup->currentBackupFolder$file";
+                    $currentFileDate = date("F d Y H:i", filemtime($currentFile));
+                    $month = date("F", filemtime($currentFile));
+                    $year = date("Y", filemtime($currentFile));
+                    $ago = \YAWK\sys::time_ago($currentFileDate, $lang);
+                    echo "
+                <tr>
+                    <td width=\"10%\" class=\"text-center\"><h4><i class=\"fa fa-file-zip-o\"></i><br><small>$month<br>$year</small></h4></td>
+                    <td width=\"70%\"><h4><a href=\"$backup->currentBackupFolder$file\">$file</a><br><small><b>$currentFileDate</b><br><i>($ago)</i></small></h4></td>
+                    <td width=\"20%\">
+                      <h3>
+                        <i class=\"fa fa-trash-o\"></i>&nbsp;&nbsp;
+                        <i class=\"fa fa-archive text-red\"></i>
+                      </h3>
+                    </td>
+                </tr>";
+                }
+            ?>
+            </table>
         </div>
     </div>
 

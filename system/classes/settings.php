@@ -451,7 +451,14 @@ namespace YAWK {
             // fetch data from db
             if ($row = mysqli_fetch_row($sql))
             {   // return settings of property
-                return $row[0];
+                if (isset($row[0]) && (!empty($row[0])))
+                {
+                    return $row[0];
+                }
+                else
+                    {
+                        return false;
+                    }
             }
             else
             {   // q failed, throw error

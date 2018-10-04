@@ -91,7 +91,6 @@ namespace YAWK\WIDGETS\PREZI\EMBED
                   </iframe>';
             */
         }
-
     }
 }
 ?>

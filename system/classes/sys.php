@@ -1569,40 +1569,52 @@ namespace YAWK {
             /* calculate months */
             switch ($month) {
                 case "01":
-                    $month = "J&auml;nner";
+                    $month = "January";
+                    // $month = $lang['FEBRUARY'];
                     break;
                 case "02":
-                    $month = "Februar";
+                    $month = "February";
+                    // $month = $lang['FEBRUARY'];
                     break;
                 case "03":
-                    $month = "M&auml;rz";
+                    $month = "March";
+                    // $month = $lang['MARCH'];
                     break;
                 case "04":
                     $month = "April";
+                    // $month = $lang['APRIL'];
                     break;
                 case "05":
-                    $month = "Mai";
+                    $month = "May";
+                    // $month = $lang['MAY'];
                     break;
                 case "06":
-                    $month = "Juni";
+                    $month = "June";
+                    // $month = $lang['JUNE'];
                     break;
                 case "07":
-                    $month = "Juli";
+                    $month = "July";
+                    // $month = $lang['JULY'];
                     break;
                 case "08":
                     $month = "August";
+                    // $month = $lang['AUGUST'];
                     break;
                 case "09":
                     $month = "September";
+                    // $month = $lang['SEPTEMBER'];
                     break;
                 case "10":
-                    $month = "Oktober";
+                    $month = "October";
+                    // $month = $lang['OCTOBER'];
                     break;
                 case "11":
                     $month = "November";
+                    // $month = $lang['NOVEMBER'];
                     break;
                 case "12":
-                    $month = "Dezember";
+                    $month = "December";
+                    // $month = $lang['DECEMBER'];
                     break;
             }
             return $splitDate = array("year" => "$year", "day" => "$day", "month" => "$month", "time" => "$time");

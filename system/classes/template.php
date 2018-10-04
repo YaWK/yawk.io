@@ -1118,7 +1118,7 @@ namespace YAWK {
                 // output position div box
                 echo "$startRow";
                 echo "<div class=\"$bootstrapGrid pos-$position\" id=\"$position\" $indicatorStyle>$indicatorText";
-                      \YAWK\template::setPosition($db, $lang, "$position-pos");
+                      \YAWK\template::setPosition($db, $lang, "$position-pos", $lang);
                 echo "</div>";
                 echo "$endRow";
             }
@@ -2785,7 +2785,7 @@ namespace YAWK {
                     // if a blog is requested, load blog by given id
                     elseif (isset($_GET['blogid'])) {
                         $blog = new \YAWK\PLUGINS\BLOG\blog();
-                        $blog->getFrontendEntries($db, $_GET['blogid'], ''. '', '','');
+                        $blog->getFrontendEntries($db, $_GET['blogid'], '', '', '');
                         $blog->getFooter($db);
                         $blog->draw();
                         // in any other case, get content for requested static page
@@ -2793,7 +2793,7 @@ namespace YAWK {
                     else
                         {
                             echo "<div id=\"$position\">";
-                            $currentpage->getContent($db, $lang);
+                            $currentpage->getContent($db);
                             echo "</div>";
                             $main_set = 1;
                         }

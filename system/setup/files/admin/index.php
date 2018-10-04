@@ -89,7 +89,7 @@ if (!isset($AdminLTE))
             // check if messaging is enabled
             if (\YAWK\settings::getSetting($db, "backendMessagesMenu") == 1)
             {   // ok, draw msg icon and message navbar in upper right corner
-                echo $AdminLTE->drawHtmlNavbarMessagesMenu($db);
+                echo $AdminLTE->drawHtmlNavbarMessagesMenu($db, $lang);
             }
 
             // check, if backend notification is enabled
@@ -99,7 +99,7 @@ if (!isset($AdminLTE))
             }
 
             // user account menu
-            echo $AdminLTE->drawHtmlNavbarUserAccountMenu($db, $user);
+            echo $AdminLTE->drawHtmlNavbarUserAccountMenu($db, $user, $lang);
             // end navbar header
             echo $AdminLTE->drawHtmlNavbarHeaderEnd();
             // left sidebar (main menu)
@@ -118,7 +118,7 @@ if (!isset($AdminLTE))
             }
 
             // right sidebar
-            echo $AdminLTE->drawHtmlRightSidebar();
+            echo $AdminLTE->drawHtmlRightSidebar($lang);
             // additional js includes at the bottom
             echo $AdminLTE->drawHtmlJSIncludes();
             // html end

@@ -597,7 +597,7 @@ namespace YAWK\PLUGINS\BLOG {
                         {
                             if (isset($full_view) && ($full_view === 1))
                             {   // full view, display comments
-                                $this->html .= self::draw_commentbox($db);
+                                $this->html .= self::draw_commentbox($db, $lang);
                             }
                             else
                                 {   // display btn with link to the full view
@@ -1167,7 +1167,7 @@ namespace YAWK\PLUGINS\BLOG {
      * @param array $row The current dataset
      * @return null
     */
-    function getAllComments($db, $blogid, $itemid, $row)
+    function getAllComments($db, $blogid, $itemid, $row, $lang)
     {
         /** @var $db \YAWK\db */
         $replies = 0;
@@ -1233,7 +1233,7 @@ namespace YAWK\PLUGINS\BLOG {
                 $this->html .= "<div class=\"collapse\" id=\"replyBox$row[id]\"><blockquote>";
                 while ($row = mysqli_fetch_assoc($res)) {
                     //   self::draw_commentbox();
-                    self::getAllComments($db, $blogid, $itemid, $row);
+                    self::getAllComments($db, $blogid, $itemid, $row, $lang);
                 }
                 $this->html .= "</blockquote></div>";
             }
@@ -1253,7 +1253,7 @@ namespace YAWK\PLUGINS\BLOG {
      * @param int $itemid The item ID to get comments from
      * @return null
     */
-    function drawComments($db, $blogid, $itemid)
+    function drawComments($db, $blogid, $itemid, $lang)
     {
         /** @var $db \YAWK\db */
         // build html

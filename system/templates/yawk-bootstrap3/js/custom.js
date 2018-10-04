@@ -1,5 +1,5 @@
-$(document).ready(function () {
-
+$(document).ready(function () 
+{
     $('.scrollup').click(function () {
         $("html, body").animate({
             scrollTop: 0
@@ -16,17 +16,6 @@ $(document).ready(function () {
     $(document.body).css('padding-top', $('#topnavbar').height() - 50);
     $(window).resize(function(){
         $(document.body).css('padding-top', $('#topnavbar').height() - 50);
-    });
-
-
-    $('.list-group-item').mouseenter(function(){
-        $(this).animate({
-            backgroundColor: '#4b484b'
-        }, 220);
-    }).mouseleave(function(){
-        $(this).animate({
-            backgroundColor: '#383638'
-        }, 140);
     });
 
     // terminate user account button
@@ -57,35 +46,6 @@ $(document).ready(function () {
     // enable bootstrap tooltips globally
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
-    });
-
-    // VIDEO.JS HOTKEYS
-    // video-js.js is loaded @ startup in welcome.php
-    // this is neccesary to avoid obj videojs not found errors
-    if (typeof videojs == 'function'){
-    // select only if videojs function exists
-        $('#01-womanizer').ready(function() { // if loaded
-            // unleash hotkeys
-            videojs('01-womanizer').hotkeys({
-                volumeStep: 0.1,
-                seekStep: 5,
-                enableMute: true,
-                enableFullscreen: true,
-                enableVolumeScroll: true,
-                // Enhance existing simple hotkey with a complex hotkey
-                fullscreenKey: function(e) {
-                    // fullscreen with the F key or Ctrl+Enter
-                    return ((e.which === 70) || (e.ctrlKey && e.which === 13));
-                } // end custom hotkey
-            }); // end videojs hotkeys
-        }); // end video selector
-    } // end if videojs == function
-
-
-// Wait for window load
-    $(window).load(function() {
-        // Animate loader off screen
-        $(".se-pre-con").fadeOut("slow");
     });
 
 }); // EOF document ready

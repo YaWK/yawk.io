@@ -16,7 +16,7 @@ namespace YAWK\WIDGETS\CUSTOM_HTML\CODE
      * @version    1.0.0
      * @link       http://yawk.io
      * @annotation Embed a html/javascript code snippet.
-     */
+    */
     class customHtml
     {
         /** @var object global widget object data */
@@ -31,7 +31,7 @@ namespace YAWK\WIDGETS\CUSTOM_HTML\CODE
          * @link http://yawk.io
          * @param object $db Database Object
          * @annotation Load all widget settings on object init.
-         */
+        */
         public function __construct($db)
         {
             // load this widget settings from db
@@ -48,7 +48,7 @@ namespace YAWK\WIDGETS\CUSTOM_HTML\CODE
          * @version 1.0.0
          * @link http://yawk.io
          * @annotation use this method to run the clock
-         */
+        */
         public function init()
         {
             // check if customHtmlCode is set, not empty and a string

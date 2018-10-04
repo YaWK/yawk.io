@@ -415,7 +415,7 @@ namespace YAWK {
             $i_syslog = \YAWK\user::countNotifications($db);
             $i_notifications = \YAWK\user::countMyNotifications($db, $_SESSION['uid']);
             $i_total = $i_syslog + $i_notifications;
-            $notifications = \YAWK\user::getAllNotifications($db, $lang);
+            $notifications = \YAWK\user::getAllNotifications($db);
             $my_notifications = \YAWK\user::getMyNotifications($db, $_SESSION['uid']);
             
             if ($i_total !== 0)
@@ -709,7 +709,7 @@ namespace YAWK {
                 </li>";
 
                 // PAGES TREEVIEW MENU
-                if (strpos($_GET['page'], 'page') !== false)
+                if (isset($_GET['page']) && (strpos($_GET['page'], 'page') !== false))
                 { $activeClass = " class=\"active\""; }
                 else { $activeClass = ''; }
                 echo "<li$activeClass>
@@ -730,7 +730,7 @@ namespace YAWK {
                 </ul>";
 
                 // MENU TREEVIEW MENU
-                if (strpos($_GET['page'], 'menu') !== false)
+            if (isset($_GET['page']) && (strpos($_GET['page'], 'menu') !== false))
                 { $activeClass = " class=\"active\""; }
                 else { $activeClass = ''; }
                 echo "<li$activeClass>
@@ -751,7 +751,7 @@ namespace YAWK {
                     </ul>";
 
                 // USER TREEVIEW MENU
-                if (strpos($_GET['page'], 'user') !== false)
+                if (isset($_GET['page']) && (strpos($_GET['page'], 'user') !== false))
                 { $activeClass = " class=\"active\""; }
                 else { $activeClass = ''; }
                 echo "<li$activeClass>
@@ -771,7 +771,7 @@ namespace YAWK {
                       </ul>";
 
                 // PLUGINS TREEVIEW MENU
-                if (strpos($_GET['page'], 'plugin') !== false)
+                if (isset($_GET['page']) && (strpos($_GET['page'], 'plugin') !== false))
                 { $activeClass = " class=\"active\""; }
                 else { $activeClass = ''; }
                 echo "<li$activeClass>
@@ -792,7 +792,7 @@ namespace YAWK {
                       </ul>";
 
                 // WIDGETS TREEVIEW MENU
-                if (strpos($_GET['page'], 'widget') !== false)
+                if (isset($_GET['page']) && (strpos($_GET['page'], 'widget') !== false))
                 { $activeClass = " class=\"active\""; }
                 else { $activeClass = ''; }
                 echo "<li$activeClass>
@@ -813,7 +813,7 @@ namespace YAWK {
                       </ul>";
 
                 // FILEMANAGER TREEVIEW MENU
-                if (strpos($_GET['page'], 'filemanager') !== false)
+                if (isset($_GET['page']) && (strpos($_GET['page'], 'filemanager') !== false))
                 { $activeClass = " class=\"active\""; }
                 else { $activeClass = ''; }
                 echo "<li$activeClass>
@@ -834,7 +834,7 @@ namespace YAWK {
                       </ul>";
 
             // TEMPLATE TREEVIEW MENU
-            if (strpos($_GET['page'], 'template') !== false)
+            if (isset($_GET['page']) && (strpos($_GET['page'], 'template') !== false))
             {   $activeClass = " class=\"active\""; }
             else { $activeClass = ''; }
 
@@ -872,7 +872,7 @@ namespace YAWK {
                    </li>";
 
             // STATS TREEVIEW MENU
-            if (strpos($_GET['page'], 'stats') !== false)
+            if (isset($_GET['page']) && (strpos($_GET['page'], 'stats') !== false))
             { $activeClass = " class=\"active\""; }
             else { $activeClass = ''; }
             echo "<li$activeClass>
@@ -893,7 +893,7 @@ namespace YAWK {
                       </ul>";
 
             // HELP / SUPPORT TREEVIEW MENU
-            if (strpos($_GET['page'], 'help') !== false)
+            if (isset($_GET['page']) && (strpos($_GET['page'], 'help') !== false))
             { $activeClass = " class=\"active\""; }
             else { $activeClass = ''; }
             echo "<li$activeClass>
@@ -916,7 +916,7 @@ namespace YAWK {
                         </li>
                       </ul>";
 
-            if (strpos($_GET['page'], 'settings') !== false)
+            if (isset($_GET['page']) && (strpos($_GET['page'], 'settings') !== false))
             { $activeClass = " class=\"active\""; }
             else { $activeClass = ''; }
                 
@@ -1135,53 +1135,42 @@ namespace YAWK {
          * @link http://yawk.io
          * @return null
          */
-        function drawHtmlRightSidebar(){
+        function drawHtmlRightSidebar($lang){
             echo "
           <!-- Control Sidebar -->
           <aside class=\"control-sidebar control-sidebar-dark\">
             <!-- Create the tabs -->
             <ul class=\"nav nav-tabs nav-justified control-sidebar-tabs\">
-              <li class=\"active\"><a href=\"#control-sidebar-home-tab\" data-toggle=\"tab\"><i class=\"fa fa-home\"></i></a></li>
+              <li class=\"active\"><a href=\"#control-sidebar-home-tab\" data-toggle=\"tab\"><i class=\"fa fa-hdd-o\"></i></a></li>
               <li><a href=\"#control-sidebar-settings-tab\" data-toggle=\"tab\"><i class=\"fa fa-gears\"></i></a></li>
             </ul>
             <!-- Tab panes -->
             <div class=\"tab-content\">
               <!-- Home tab content -->
               <div class=\"tab-pane active\" id=\"control-sidebar-home-tab\">
-                <h3 class=\"control-sidebar-heading\">Backend Languages</h3>
-                <ul class=\"control-sidebar-menu\">";
-                if (!isset($_GET['page']) or (empty($_GET['page'])))
-                {
-                    $link_de = "index.php?&lang=de-DE";
-                    $link_en = "index.php?&lang=en-EN";
-                }
-                else
-                {
-                    $link_de = "index.php?page=$_GET[page]&lang=de-DE";
-                    $link_en = "index.php?page=$_GET[page]&lang=en-EN";
-                }
-            echo "<li>
-                    <a href=\"$link_en\">
-                      <i class=\"menu-icon\"><img class=\"img-circle\" src=\"flags/us.png\"></i>
+                <h3 class=\"control-sidebar-heading\">$lang[BACKUP]</h3>
+                <ul class=\"control-sidebar-menu\">
+                  <li>
+                    <a href=\"#\">
+                      <i class=\"menu-icon fa fa-hdd-o\"></i>
                       <div class=\"menu-info\">
-                        <h4 class=\"control-sidebar-subheading\">&nbsp;English (en-EN)</h4>
-                        <p>&nbsp;switch to english</p>
+                        <h4 class=\"control-sidebar-subheading\">Quick Backup</h4>
+                        <p>&nbsp;Refresh database backup</p>
                       </div>
                     </a>
                   </li>
                   <li>
-                    <a href=\"$link_de\">
-                     <!-- <i class=\"menu-icon fa fa-comment bg-yellow\"></i> -->
-                      <i class=\"menu-icon\"><img class=\"img-circle\" src=\"flags/de.png\"></i>
+                    <a href=\"#\">
+                      <i class=\"menu-icon fa fa-hdd-o\"></i>
                       <div class=\"menu-info\">
-                        <h4 class=\"control-sidebar-subheading\">&nbsp;German (de-DE)</h4>
-                        <p>&nbsp;switch to german</p>
+                        <h4 class=\"control-sidebar-subheading\">Complete Backup</h4>
+                        <p>&nbsp;Including media folder</p>
                       </div>
                     </a>
                   </li>
                 </ul><!-- /.control-sidebar-menu -->
 
-                <h3 class=\"control-sidebar-heading\">Tasks Progress</h3>
+                <h3 class=\"control-sidebar-heading\">Zeiterfassung</h3>
                 <ul class=\"control-sidebar-menu\">
                   <li>
                     <a href=\"javascript::;\">
@@ -1190,7 +1179,7 @@ namespace YAWK {
                         <span class=\"label label-danger pull-right\">70%</span>
                       </h4>
                       <div class=\"progress progress-xxs\">
-                        <div class=\"progress-bar progress-bar-danger\" style=\"width: 70%\"></div>
+                        <div class=\"progress-bar progress-bar-danger\" style=\"width: 20%\"></div>
                       </div>
                     </a>
                   </li>
