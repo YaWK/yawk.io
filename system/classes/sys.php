@@ -1697,17 +1697,62 @@ namespace YAWK {
             $date = new \DateTime($userdate);
             $diff = $date->diff(new \DateTime('now'));
 
-            if (($t = $diff->format("%m")) > 0)
-                $time_ago = (int)$t . ' '.$lang['MONTHS'].'';
-            else if (($t = $diff->format("%d")) > 0)
-                $time_ago = (int)$t . ' '.$lang['DAYS_P'].'';
-            else if (($t = $diff->format("%H")) > 0)
-                $time_ago = (int)$t . ' '.$lang['HOURS'].'';
-            else if (($t = $diff->format("%i")) > 0)
-                $time_ago = (int)$t . ' '.$lang['MINUTES'].'';
-            else if (($t = $diff->format("%s")) > 0)
-                $time_ago = (int)$t . ' '.$lang['SECONDS'].'';
-            // else
+            if ($t = $diff->format("%m"))
+            {
+                if ($t > 1)
+                {
+                    $time_ago = (int)$t . ' '.$lang['MONTHS'].'';
+                }
+                else if ($t < 2)
+                {
+                    $time_ago = (int)$t . ' '.$lang['MONTH'].'';
+                }
+            }
+            elseif ($t = $diff->format("%d"))
+            {
+                if ($t > 1)
+                {
+                    $time_ago = (int)$t . ' '.$lang['DAYS_P'].'';
+                }
+                else if ($t < 2)
+                {
+                    $time_ago = (int)$t . ' '.$lang['DAY'].'';
+                }
+            }
+
+            elseif ($t = $diff->format("%h"))
+            {
+                if ($t > 1)
+                {
+                    $time_ago = (int)$t . ' '.$lang['HOURS'].'';
+                }
+                else if ($t < 2)
+                {
+                    $time_ago = (int)$t . ' '.$lang['HOUR'].'';
+                }
+            }
+
+            elseif ($t = $diff->format("%i"))
+            {
+                if ($t > 1)
+                {
+                    $time_ago = (int)$t . ' '.$lang['MINUTES'].'';
+                }
+                else if ($t < 2)
+                {
+                    $time_ago = (int)$t . ' '.$lang['MINUTE'].'';
+                }
+            }
+
+            elseif ($t = $diff->format("%s"))
+            {
+                if ($t < 60)
+                {
+                    $time_ago = $lang['LESS_THAN_A_MINUTE'];
+                }
+            }
+
+// else
             //    $time_ago = 'minutes';
 
             // if language is german, turn around the 'ago' term
