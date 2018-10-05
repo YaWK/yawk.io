@@ -1697,7 +1697,19 @@ namespace YAWK {
             $date = new \DateTime($userdate);
             $diff = $date->diff(new \DateTime('now'));
 
-            if ($t = $diff->format("%m"))
+            if ($t = $diff->format("%y"))
+            {
+                if ($t > 1)
+                {
+                    $time_ago = (int)$t . ' '.$lang['YEARS'].'';
+                }
+                else if ($t < 2)
+                {
+                    $time_ago = (int)$t . ' '.$lang['YEAR'].'';
+                }
+            }
+
+            elseif ($t = $diff->format("%m"))
             {
                 if ($t > 1)
                 {
@@ -1710,7 +1722,24 @@ namespace YAWK {
             }
             elseif ($t = $diff->format("%d"))
             {
-                if ($t > 1)
+
+                if ($t >= 7 && $t < 13)
+                {
+                $time_ago = $lang['A_WEEK_AGO'];
+                }
+                elseif ($t >= 14 && $t < 20)
+                {
+                $time_ago = $lang['TWO_WEEKS_AGO'];
+                }
+                elseif ($t >= 21 && $t < 27)
+                {
+                $time_ago = $lang['THREE_WEEKS_AGO'];
+                }
+                elseif ($t >= 28 && $t < 31)
+                {
+                $time_ago = $lang['FOUR_WEEKS_AGO'];
+                }
+                else if ($t > 1)
                 {
                     $time_ago = (int)$t . ' '.$lang['DAYS_P'].'';
                 }
@@ -1751,9 +1780,6 @@ namespace YAWK {
                     $time_ago = $lang['LESS_THAN_A_MINUTE'];
                 }
             }
-
-// else
-            //    $time_ago = 'minutes';
 
             // if language is german, turn around the 'ago' term
             if (\YAWK\language::getCurrentLanguageStatic() === "de-DE")
