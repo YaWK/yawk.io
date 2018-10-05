@@ -28,6 +28,10 @@ namespace YAWK\BACKUP
         public $currentBackupFiles = array();
         /** @var string archive backup folder path */
         public $archiveBackupFolder = '../system/backup/archive/';
+        /** @var array all sub folders in archiveBackupFolder */
+        public $archiveBackupSubFolders = array();
+        /** @var string archive working subfolder */
+        public $archiveBackupSubFolder = '';
         /** @var array files in archive backup folder */
         public $archiveBackupFiles = array();
         /** @var string name of the backup .sql file */
@@ -199,7 +203,6 @@ namespace YAWK\BACKUP
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @param $iniFile
          * @return array|false
          */
         public function getCurrentBackupFilesArray()
@@ -215,6 +218,28 @@ namespace YAWK\BACKUP
                 {   // array is not set
                     return false;
                 }
+        }
+
+        /**
+         * get all files from archive backup folder into array
+         * @author      Daniel Retzl <danielretzl@gmail.com>
+         * @version     1.0.0
+         * @link        http://yawk.io
+         * @return array|false
+         */
+        public function getArchiveBackupFilesArray()
+        {
+            // get current backup files into array
+            $this->archiveBackupFiles = \YAWK\filemanager::getFilesFromFolderToArray($this->archiveBackupSubFolder);
+            // check if backup files are set
+            if (is_array($this->archiveBackupFiles))
+            {   // ok, return files
+                return $this->archiveBackupFiles;
+            }
+            else
+            {   // array is not set
+                return false;
+            }
         }
 
         public function runDatabaseBackup($db)
