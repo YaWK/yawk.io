@@ -463,6 +463,44 @@ namespace YAWK {
         }
 
         /**
+         * returns an multidimensional array containing subfolders + files of given folder
+         * @param string $folder to get files from
+         * @return array|null
+         */
+        static function ritit($folder)
+        {
+            if (isset($folder) && (!empty($folder) && (is_string($folder))))
+            {
+                $ritit = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($folder, \RecursiveDirectoryIterator::SKIP_DOTS), \RecursiveIteratorIterator::CHILD_FIRST);
+                $r = array();
+                foreach ($ritit as $splFileInfo) {
+
+                    $path = $splFileInfo->isDir()
+                        ? array($splFileInfo->getFilename() => array())
+                        : array($splFileInfo->getFilename());
+
+                    for ($depth = $ritit->getDepth() - 1; $depth >= 0; $depth--) {
+                        $path = array($ritit->getSubIterator($depth)->current()->getFilename() => $path);
+
+                    }
+                    $r = array_merge_recursive($r, $path);
+                }
+                if (is_array($r))
+                {
+                    return $r;
+                }
+                else
+                    {
+                        return null;
+                    }
+            }
+            else
+                {
+                    return null;
+                }
+        }
+
+        /**
          * calculate filesize from bytes
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
