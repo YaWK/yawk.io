@@ -6,6 +6,46 @@ if (!isset($backup) || (empty($backup)))
 {   // create new backup obj
     $backup = new \YAWK\BACKUP\backup();
 }
+// check if GET data is set
+if (isset($_GET))
+{
+    if (isset($_GET['deleteBackup']) == true)
+    {
+
+        if (isset($_GET['backupFolder']) && (!empty($_GET['backupFolder'])
+        && (isset($_GET['backupFile']) && (!empty($_GET['backupFile'])))))
+        {
+            // delete this backup file
+            if (is_dir($_GET['backupFolder']))
+            {
+                $file = $_GET['backupFolder'].$_GET['backupFile'];
+                if (is_file($file))
+                {
+                    if (unlink($file))
+                    {
+                        \YAWK\alert::draw("success", "Backup geloescht!", "deleted: $_GET[backupFile]", "", 2600);
+                    }
+                    else
+                        {
+                            \YAWK\alert::draw("danger", "Backup nicht geloescht!", "Backup file NICHT geloescht", "", 4200);
+                        }
+                }
+                else
+                    {
+                        \YAWK\alert::draw("warning", "File nicht gefunden!", "$_GET[backupFolder]$_GET[backupFile] not found!", "", 6200);
+                    }
+            }
+            else
+                {
+                    \YAWK\alert::draw("warning", "Folder nicht gefunden!", "$_GET[backupFolder] not found!", "", 6200);
+                }
+        }
+        else
+            {
+                \YAWK\alert::draw("warning", "Folder or File not set!", "Folder or file is not set!", "", 6200);
+            }
+    }
+}
 
 // check if post data is set
 if (isset($_POST))
@@ -83,8 +123,8 @@ if (isset($_POST))
     $(document).ready(function()
     {
         // EXTENDED SETTINGS
-        // To improve usability, backup settings are grouped
-        // this piece of js toggles all checkboxes of affected group
+        // to improve usability of 'custom backup', all required checkboxes are grouped.
+        // this piece of js manage the toggle switches on custom backup form
 
         // CONTENT TOGGLE SWITCH
         $('#contentCheckAll').change(function() {
@@ -263,7 +303,7 @@ echo"<ol class=\"breadcrumb\">
                 <br>
             <input type="hidden" class="hidden" name="overwriteBackup" id="overwriteBackupHidden" value="false">
             <input type="checkbox" data-on="<?php echo $lang['BACKUP_OVERWRITE_THIS']; ?>" data-off="<?php echo $lang['BACKUP_ARCHIVE_THIS']; ?>" data-overwriteOff="<?php echo $lang['BACKUP_OVERWRITE_OFF']; ?>" data-overwriteOn="<?php echo $lang['BACKUP_OVERWRITE_ON']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="info" class="checkbox" name="overwriteBackup" id="overwriteBackup" value="true" checked>
-                &nbsp;&nbsp;<label for="overwriteBackup" id="overwriteBackupLabel"><?php echo $lang['BACKUP_OVERWRITE']; ?>&nbsp;&nbsp;</label>
+                &nbsp;&nbsp;<label for="overwriteBackup" id="overwriteBackupLabel"><?php echo $lang['BACKUP_OVERWRITE_ON']; ?>&nbsp;&nbsp;</label>
                 <br><br>
                 <input type="hidden" class="hidden" name="zipBackup" id="zipBackupHidden" value="false">
                 <input type="checkbox" data-on="<i class='fa fa-file-zip-o'></i>" data-off="<?php echo $lang['NO']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="zipBackup" id="zipBackup" value="true" checked>
@@ -360,6 +400,109 @@ echo"<ol class=\"breadcrumb\">
     </form>
 </div>
 <div class="col-md-6">
+
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title"><?php echo $lang['BACKUP_ONGOING']; ?> <small>system/backup/current/</small></h3>
+        </div>
+        <div class="box-body">
+            <table class="table table-striped table-hover table-responsive">
+            <?php
+                $currentFiles = $backup->getCurrentBackupFilesArray();
+                $currentID = 0;
+                foreach ($currentFiles as $file)
+                {
+                    $currentID++;
+                    $currentFile = "$backup->currentBackupFolder$file";
+                    $currentFileDate = date("F d Y H:i", filemtime($currentFile));
+                    $month = date("F", filemtime($currentFile));
+                    $year = date("Y", filemtime($currentFile));
+                    $ago = \YAWK\sys::time_ago($currentFileDate, $lang);
+                    echo "
+                <tr id\"$currentID\">
+                    <td width=\"10%\" class=\"text-center\"><h4><i class=\"fa fa-file-zip-o\"></i><br><small>$month<br>$year</small></h4></td>
+                    <td width=\"70%\"><h4><a href=\"$backup->currentBackupFolder$file\">$file</a><br><small><b>$currentFileDate</b><br><i>($ago)</i></small></h4></td>
+                    <td width=\"20%\">
+                      <h4><br>
+                      
+                        <a href=\"$backup->currentBackupFolder$file\" title=\"$lang[TO_DOWNLOAD]\"><i class=\"fa fa-download\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href=\"#\" title=\"$lang[BACKUP_RESTORE]\"><i class=\"fa fa-history\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href=\"#\"><i class=\"fa fa-archive\" title=\"$lang[BACKUP_MOVE_TO_ARCHIVE]\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"$backup->currentBackupFolder$file ".$lang['DELETE']."? - $lang[BEWARE] $lang[UNDO_NOT_POSSIBLE]!\" title=\"$lang[ATTENTION] $lang[BACKUP] $lang[DELETE]\" href=\"index.php?page=settings-backup&deleteBackup=true&backupFolder=$backup->currentBackupFolder&backupFile=$file\">
+                        </a>
+                      </h4>
+                    </td>
+                </tr>";
+                }
+            ?>
+            </table>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title"><?php echo $lang['BACKUP_ARCHIVE']; ?> <small>system/backup/archive/</small></h3>
+        </div>
+        <div class="box-body">
+
+            <table class="table table-responsive">
+                <?php
+                // get all archive backup files into array
+                $backup->archiveBackupFiles = \YAWK\filemanager::ritit($backup->archiveBackupFolder);
+                // walk through archive folder
+                foreach ($backup->archiveBackupFiles as $folder => $files)
+                {
+                    // set current archive subfolder
+                    $backup->archiveBackupSubFolder = "$backup->archiveBackupFolder$folder/";
+                    // last change of archive subfolder (month)
+                    $month = date("F", filemtime($backup->archiveBackupSubFolder));
+                    // last change of archive subfolder (year)
+                    $year = date("Y", filemtime($backup->archiveBackupSubFolder));
+
+                    echo "
+                <tr id\"$currentID\">
+                    <td width=\"10%\" class=\"text-center\"><h4><i class=\"fa fa-archive\"></i><br><small>$month<br>$year</small></h4></td>
+                    <td width=\"90%\">
+                    
+                        <table class=\"table table-striped table-hover table-responsive\">
+                        <thead>
+                            <h4><a href=\"$backup->currentBackupFolder$file\"><i class=\"fa fa-folder-open-o\"></i> $folder</a></h4>
+                        </thead>";
+
+                    // walk through archive subfolder files
+                    foreach($files as $file => $value)
+                    {
+                        // set current archive/subfolder/file path
+                        $archiveFile = $backup->archiveBackupSubFolder.$value;
+                        // get date of current archive file
+                        $archiveFileDate = date("F d Y H:i", filemtime($archiveFile));
+                        // calculate how long is it ago...
+                        $ago = \YAWK\sys::time_ago($archiveFileDate, $lang);
+
+                        echo "<tr>
+                                <td width=\"80%\">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;<small><b><a href=\"$archiveFile\">$value</a> <small>$archiveFileDate</small></b></small>
+                                </td>
+
+                                <td width=\"20%\">
+                                    <a href=\"$archiveFile\" title=\"$lang[TO_DOWNLOAD]\"><i class=\"fa fa-download\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a href=\"#\" title=\"$lang[BACKUP_RESTORE]\"><i class=\"fa fa-history\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"$archiveFile ".$lang['DELETE']."? - $lang[BEWARE] $lang[UNDO_NOT_POSSIBLE]!\" title=\"$lang[ATTENTION] $lang[BACKUP] $lang[DELETE]\" href=\"index.php?page=settings-backup&deleteBackup=true&backupFolder=$backup->archiveBackupSubFolder&backupFile=$value\">
+                                </td>
+                                </tr>";
+                    }
+                        echo"</table>        
+                    </td>
+                </tr>";
+
+                }
+
+                ?>
+            </table>
+        </div>
+    </div>
+
+    <!-- UPLOAD / RESTORE BACKUP -->
     <div class="box">
         <div class="box-header">
             <h3 class="box-title">
@@ -375,48 +518,6 @@ echo"<ol class=\"breadcrumb\">
                 <button class="btn btn-success" type="submit"><i class="fa fa-upload"></i>&nbsp;&nbsp;&nbsp;<?php echo $lang['UPLOAD']; ?></button>
             </form>
             <span class="pull-right">asdasd</span>
-            <br><br>
-        </div>
-    </div>
-
-    <div class="box">
-        <div class="box-header">
-            <h3 class="box-title"><?php echo $lang['BACKUP_ONGOING']; ?> <small>system/backup/current/</small></h3>
-        </div>
-        <div class="box-body">
-            <table class="table table-striped table-hover table-responsive">
-            <?php
-                $currentFiles = $backup->getCurrentBackupFilesArray();
-                foreach ($currentFiles as $file)
-                {
-                    $currentFile = "$backup->currentBackupFolder$file";
-                    $currentFileDate = date("F d Y H:i", filemtime($currentFile));
-                    $month = date("F", filemtime($currentFile));
-                    $year = date("Y", filemtime($currentFile));
-                    $ago = \YAWK\sys::time_ago($currentFileDate, $lang);
-                    echo "
-                <tr>
-                    <td width=\"10%\" class=\"text-center\"><h4><i class=\"fa fa-file-zip-o\"></i><br><small>$month<br>$year</small></h4></td>
-                    <td width=\"70%\"><h4><a href=\"$backup->currentBackupFolder$file\">$file</a><br><small><b>$currentFileDate</b><br><i>($ago)</i></small></h4></td>
-                    <td width=\"20%\">
-                      <h3>
-                        <i class=\"fa fa-trash-o\"></i>&nbsp;&nbsp;
-                        <i class=\"fa fa-archive text-red\"></i>
-                      </h3>
-                    </td>
-                </tr>";
-                }
-            ?>
-            </table>
-        </div>
-    </div>
-
-    <div class="box">
-        <div class="box-header">
-            <h1 class="box-title"><?php echo $lang['BACKUP_ARCHIVE']; ?> <small><?php echo $lang['MANAGE']; ?></small></h1>
-        </div>
-        <div class="box-body">
-            <b>system/backup/archive/</b>
             <br><br>
         </div>
     </div>
