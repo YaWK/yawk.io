@@ -34,6 +34,10 @@ namespace YAWK\BACKUP
         public $archiveBackupSubFolder = '';
         /** @var array files in archive backup folder */
         public $archiveBackupFiles = array();
+        /** @var string archive backup file */
+        public $archiveBackupFile = '';
+        /** @var string new archive file */
+        public $archiveBackupNewFile = '';
         /** @var string name of the backup .sql file */
         public $targetFilename = 'backup.zip';
         /** @var string files|database|complete */
