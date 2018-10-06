@@ -45,6 +45,30 @@ if (isset($_GET))
                 \YAWK\alert::draw("warning", "Folder or File not set!", "Folder or file is not set!", "", 6200);
             }
     }
+    // check if delete archive folder is requested
+    if (isset($_GET['deleteArchiveSubFolder']) === true)
+    {   // check if backup folder and backup file are set and not empty
+        if (isset($_GET['archiveSubFolder']) && (!empty($_GET['archiveSubFolder'])))
+        {
+            $backup->archiveBackupSubFolder = $_GET['archiveSubFolder'];
+            // delete this backup file
+            if (is_dir($backup->archiveBackupSubFolder))
+            {   // path (backup folder and file)
+                if (\YAWK\filemanager::recursiveRemoveDirectory($backup->archiveBackupSubFolder) === true)
+                {
+                    \YAWK\alert::draw("success", "DELETED", "$backup->archiveBackupSubFolder", "", 3200);
+                }
+            }
+            else
+            {   // archive sub folder not found
+                \YAWK\alert::draw("warning", "Folder nicht gefunden!", "$_GET[backupFolder] not found!", "", 6200);
+            }
+        }
+        else
+        {   // backup folder or file not set
+            \YAWK\alert::draw("warning", "Archive Subfolder not set!", "no folder set!", "", 6200);
+        }
+    }
 }
 
 // check if post data is set
@@ -115,6 +139,70 @@ if (isset($_POST))
             case "upload":
             {
                 // restore a backup from file
+            }
+            break;
+
+            // move backup to archive
+            case "moveToArchive":
+            {
+                // check if filename was sent
+                if (isset($_POST['file']) && (!empty($_POST['file'])))
+                {
+                    // check if new folder was entered by user
+                    if (isset($_POST['newFolder']) && (!empty($_POST['newFolder'])))
+                    {
+                        // create new archive sub folder path
+                        $backup->archiveBackupSubFolder = $backup->archiveBackupFolder.$_POST['newFolder']."/";
+                        // create new directory in archive
+                        if (mkdir($backup->archiveBackupSubFolder))
+                        {   // all good, new archive subfolder created
+                            \YAWK\alert::draw("success", $_POST['file'], "$backup->archiveBackupSubFolder erstellt!", "", 6400);
+                        }
+                        else
+                            {   // failed to create new archive subfolder
+                                \YAWK\alert::draw("danger", $_POST['file'], "$backup->archiveBackupSubFolder NICHT erstellt!", "", 6400);
+                            }
+                    }
+                    // check if existing folder was selected by user
+                    else if (isset($_POST['selectFolder']) && (!empty($_POST['selectFolder'])))
+                    {   // set archive sub foder path
+                        $backup->archiveBackupSubFolder = $backup->archiveBackupFolder.$_POST['selectFolder']."/";
+                        \YAWK\alert::draw("info", $_POST['file'], $_POST['selectFolder'], "", 6400);
+                    }
+                    else
+                        {   // no folder was selected - throw error msg
+                            \YAWK\alert::draw("danger", $_POST['file'], "no folder selected", "", 6400);
+                        }
+
+                    // prepare backup move to archive...
+                    // old file
+                    $backup->archiveBackupFile = $backup->currentBackupFolder.$_POST['file'];
+                    // new file
+                    $backup->archiveBackupNewFile = $backup->archiveBackupSubFolder.$_POST['file'];
+                    // check if file can be moved
+                    if (file_exists($backup->archiveBackupFile)
+                    && ((!file_exists($backup->archiveBackupNewFile)) || is_writable($backup->archiveBackupNewFile)))
+                    {
+                        if (rename($backup->archiveBackupFile, $backup->archiveBackupNewFile))
+                        {   // success
+                            \YAWK\alert::draw("success", $_POST['file'], $backup->archiveBackupNewFile, "", 6400);
+                        }
+                        else
+                        {   // error: throw msg
+                            \YAWK\alert::draw("danger", $_POST['file'], "failed to move oldfile: $backup->archiveBackupFile to $backup->archiveBackupNewFile", "", 6400);
+                        }
+                    }
+                    else
+                        {
+                            \YAWK\alert::draw("warning", $_POST['file'], "unable to move file. wheter old file does not exist or new backup file is not writeable.", "", 6400);
+                        }
+
+                }
+                else
+                    {
+                        // no file was clicked - failed to select any file
+                        \YAWK\alert::draw("danger", "NO FILE SELECTED", "error: unable to get filename", "", 6400);
+                    }
             }
             break;
         }
@@ -247,6 +335,16 @@ if (isset($_POST))
                 // display 'file backup' settings
                 $("#customSettings").fadeIn().removeClass('hidden');
             }
+        });
+
+        // MODAL WINDOW:
+        // to archive a file, a modal window is used.
+        // this checks, if modal window is currently shown
+        $('#myModal').on('show.bs.modal', function(e) {
+            // if so, get the according file by read the data-file value
+            var file = e.relatedTarget.dataset.file;
+            // update hidden field in modal window with current file value
+            $("#file").val(file);
         });
     });
 </script>
@@ -384,6 +482,7 @@ echo"<ol class=\"breadcrumb\">
 </div>
 <div class="col-md-6">
 
+<!-- CURRENT BACKUP BOX -->
     <div class="box">
         <div class="box-header">
             <h3 class="box-title"><?php echo $lang['BACKUP_ONGOING']; ?> <small>system/backup/current/</small></h3>
@@ -414,7 +513,7 @@ echo"<ol class=\"breadcrumb\">
                       
                         <a href=\"$backup->currentBackupFolder$file\" title=\"$lang[TO_DOWNLOAD]\"><i class=\"fa fa-download\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
                         <a href=\"#\" title=\"$lang[BACKUP_RESTORE]\"><i class=\"fa fa-history\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href=\"#\"><i class=\"fa fa-archive\" title=\"$lang[BACKUP_MOVE_TO_ARCHIVE]\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href=\"#\" data-file=\"$file\" data-toggle=\"modal\" data-target=\"#myModal\" title=\"$lang[BACKUP_MOVE_TO_ARCHIVE]\"><i class=\"fa fa-archive\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
                         <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"$backup->currentBackupFolder$file ".$lang['DELETE']."? - $lang[BEWARE] $lang[UNDO_NOT_POSSIBLE]!\" title=\"$lang[ATTENTION] $lang[BACKUP] $lang[DELETE]\" href=\"index.php?page=settings-backup&deleteBackup=true&backupFolder=$backup->currentBackupFolder&backupFile=$file\">
                         </a>
                       </h4>
@@ -426,6 +525,7 @@ echo"<ol class=\"breadcrumb\">
         </div>
     </div>
 
+<!-- ARCHIVE BACKUP BOX -->
     <div class="box">
         <div class="box-header">
             <h3 class="box-title"><?php echo $lang['BACKUP_ARCHIVE']; ?> <small>system/backup/archive/</small></h3>
@@ -447,13 +547,15 @@ echo"<ol class=\"breadcrumb\">
                     $year = date("Y", filemtime($backup->archiveBackupSubFolder));
 
                     echo "
-                <tr id\"$currentID\">
+                <tr>
                     <td width=\"10%\" class=\"text-center\"><h4><i class=\"fa fa-archive\"></i><br><small>$month<br>$year</small></h4></td>
                     <td width=\"90%\">
                     
                         <table class=\"table table-striped table-hover table-responsive\">
                         <thead>
-                            <h4><a href=\"$backup->currentBackupFolder$file\"><i class=\"fa fa-folder-open-o\"></i> $folder</a></h4>
+                            <h4><i class=\"fa fa-folder-open-o\"></i> $folder<small>
+                            <a class=\"fa fa-trash-o pull-right\" role=\"dialog\" data-confirm=\"$backup->archiveBackupFolder ".$lang['DELETE']."? - $lang[BEWARE] $lang[UNDO_NOT_POSSIBLE]!\" title=\"$lang[ATTENTION] $lang[BACKUP_ARCHIVE] $lang[DELETE]\" href=\"index.php?page=settings-backup&deleteArchiveSubFolder=true&archiveSubFolder=$backup->archiveBackupSubFolder\"></a>
+                            </h4>
                         </thead>";
 
                     // walk through archive subfolder files
@@ -507,6 +609,59 @@ echo"<ol class=\"breadcrumb\">
         </div>
     </div>
 </div>
+</div>
+
+<!-- Modal --ADD FONT-- -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal2Label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form enctype="multipart/form-data" action="index.php?page=settings-backup&moveToArchive=true" method="POST">
+                <div class="modal-header">
+                    <!-- modal header with close controls -->
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i> </button>
+                    <br>
+                    <div class="col-md-1"><h3 class="modal-title"><i class="fa fa-archive"></i></h3></div>
+                    <div class="col-md-11"><h3 class="modal-title"><?php echo $lang['BACKUP_MOVE_TO_ARCHIVE']; ?></h3></div>
+                </div>
+
+                <!-- modal body -->
+                <div class="modal-body">
+                    <!-- ADD CUSTOM FONT -->
+                    <?php if (isset($_GET['file'])) { echo $_GET['file']; } ?>
+                    <h4><b><?php echo $lang['BACKUP_ADD_ARCHIVE_SUBFOLDER']; ?></b></h4>
+                    <?php
+                            $backup->archiveBackupSubFolders = \YAWK\filemanager::getSubfoldersToArray($backup->archiveBackupFolder);
+                            if (count($backup->archiveBackupSubFolders) > 0)
+                            {
+                                echo "
+                                  <label for=\"selectFolder\">$lang[BACKUP_FOLDER_SELECT]</label>
+                                  <select class=\"form-control\" name=\"selectFolder\" id=\"selectFolder\">
+                                  <option label=\"$lang[BACKUP_PLEASE_SELECT]\"></option>";
+                                foreach ($backup->archiveBackupSubFolders as $subFolder)
+                                {
+                                    echo "<option value=\"$subFolder\">$subFolder</option>";
+                                }
+
+                                echo"</select>
+                                <div class=\"text-center\"><br><i>$lang[OR]</i></div>";
+                            }
+                    ?>
+                    <label for="newFolder"><?php echo $lang['BACKUP_FOLDER_NAME']; ?></label>
+                    <input type="text" class="form-control" id="newFolder" name="newFolder" placeholder="<?php echo $lang['BACKUP_FOLDER_NAME_PH']; ?>">
+                    <input type="hidden" name="file" id="file" value=""> <!-- gets filled via JS -->
+                    <input type="hidden" name="action" id="action" value="moveToArchive"> <!-- gets filled via JS -->
+
+                </div>
+
+                <!-- modal footer /w submit btn -->
+                <div class="modal-footer">
+                    <input class="btn btn-large btn-default" data-dismiss="modal" aria-hidden="true" type="submit" value="<?php echo $lang['CANCEL']; ?>">
+                    <button class="btn btn-large btn-success" type="submit"><i class="fa fa-check"></i>&nbsp; <?php echo $lang['BACKUP_ARCHIVE_THIS']; ?></button>
+                    <br><br>
+                </div>
+            </form>
+        </div> <!-- modal content -->
+    </div> <!-- modal dialog -->
 </div>
 
 <!-- Bootstrap toggle css -->
