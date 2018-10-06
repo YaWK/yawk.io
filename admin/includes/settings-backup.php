@@ -8,40 +8,40 @@ if (!isset($backup) || (empty($backup)))
 }
 // check if GET data is set
 if (isset($_GET))
-{
+{   // check if delete is requested
     if (isset($_GET['deleteBackup']) == true)
-    {
-
+    {   // check if backup folder and backup file are set and not empty
         if (isset($_GET['backupFolder']) && (!empty($_GET['backupFolder'])
         && (isset($_GET['backupFile']) && (!empty($_GET['backupFile'])))))
         {
             // delete this backup file
             if (is_dir($_GET['backupFolder']))
-            {
+            {   // path (backup folder and file)
                 $file = $_GET['backupFolder'].$_GET['backupFile'];
+                // check if requested file is there
                 if (is_file($file))
-                {
+                {   // delete file
                     if (unlink($file))
-                    {
+                    {   // file deleted
                         \YAWK\alert::draw("success", "Backup geloescht!", "deleted: $_GET[backupFile]", "", 2600);
                     }
                     else
-                        {
+                        {   // failed to delete file
                             \YAWK\alert::draw("danger", "Backup nicht geloescht!", "Backup file NICHT geloescht", "", 4200);
                         }
                 }
                 else
-                    {
+                    {   // file not found - unable to delete
                         \YAWK\alert::draw("warning", "File nicht gefunden!", "$_GET[backupFolder]$_GET[backupFile] not found!", "", 6200);
                     }
             }
             else
-                {
+                {   // backup folder not found
                     \YAWK\alert::draw("warning", "Folder nicht gefunden!", "$_GET[backupFolder] not found!", "", 6200);
                 }
         }
         else
-            {
+            {   // backup folder or file not set
                 \YAWK\alert::draw("warning", "Folder or File not set!", "Folder or file is not set!", "", 6200);
             }
     }
@@ -58,6 +58,8 @@ if (isset($_POST))
             // start backup selected
             case "startBackup":
             {
+                // CHECK POST SETTINGS AND SET BACKUP PROPERTIES
+
                 // check if backup method is set
                 if (isset($_POST['backupMethod']) && (!empty($_POST['backupMethod'])))
                 {   // set backup method property depending on select field
@@ -88,22 +90,22 @@ if (isset($_POST))
                 if (isset($_POST['overwriteBackup']) && (!empty($_POST['overwriteBackup'])))
                 {   // set backup method property depending on select field
                     if ($_POST['overwriteBackup'] == "true")
-                    {
+                    {   // set overwrite backup property
                         $backup->overwriteBackup = $_POST['overwriteBackup'];
                     }
                     else
-                        {
+                        {   // false means backup will be saved in archive
                             $backup->overwriteBackup = "false";
                         }
                 }
 
                 // initialize backup
                 if ($backup->init($db) === true)
-                {
+                {   // ok, backup successful
                     \YAWK\alert::draw("success", $lang['BACKUP_SUCCESSFUL'], $lang['BACKUP_SUCCESSFUL_TEXT'], "", 3400);
                 }
                 else
-                    {
+                    {   // backup failed
                         \YAWK\alert::draw("danger", $lang['BACKUP_FAILED'], $lang['BACKUP_FAILED_TEXT'], "", 6400);
                     }
             }
@@ -248,14 +250,6 @@ if (isset($_POST))
         });
     });
 </script>
-<!-- Bootstrap toggle css -->
-<link rel="stylesheet" href="../system/engines/bootstrap-toggle/css/bootstrap-toggle.css">
-<!-- Bootstrap toggle js -->
-<script type="text/javascript" src="../system/engines/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
-<!-- DROPZONE JS -->
-<script src="../system/engines/jquery/dropzone/dropzone.js"></script>
-<!-- DROPZONE CSS -->
-<link href="../system/engines/jquery/dropzone/dropzone.css" rel="stylesheet">
 <?php
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
@@ -273,8 +267,6 @@ echo"<ol class=\"breadcrumb\">
     <!-- Main content -->
     <section class=\"content\">";
 /* page content start here */
-
-
 ?>
 <div class="row">
 <div class="col-md-6">
@@ -286,36 +278,27 @@ echo"<ol class=\"breadcrumb\">
             </h3>
         </div>
         <div class="box-body">
-                <input type="hidden" name="action" value="startBackup">
-                <button type="submit" class="btn btn-success pull-right" id="savebutton"><i class="fa fa-check" id="savebuttonIcon"></i> &nbsp;<?php echo $lang['BACKUP_CREATE']; ?></button>
-                <br><br>
-                <label for="backupMethod"><?php echo $lang['BACKUP_WHAT_TO_BACKUP']; ?></label>
-                <select name="backupMethod" id="backupMethod" class="form-control">
-                  <optgroup label="<?php echo $lang['STANDARD']; ?>"></optgroup>
+            <input type="hidden" name="action" value="startBackup">
+            <button type="submit" class="btn btn-success pull-right" id="savebutton"><i class="fa fa-check" id="savebuttonIcon"></i> &nbsp;<?php echo $lang['BACKUP_CREATE']; ?></button>
+            <br><br>
+            <label for="backupMethod"><?php echo $lang['BACKUP_WHAT_TO_BAC8KUP']; ?></label>
+            <select name="backupMethod" id="backupMethod" class="form-control">
+                <optgroup label="<?php echo $lang['STANDARD']; ?>"></optgroup>
                     <option name="complete" value="complete">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $lang['BACKUP_FULL']; ?></option>
                     <option name="database" value="database">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $lang['BACKUP_DB_ONLY']; ?></option>
                     <option name="files" value="files">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $lang['BACKUP_FILES_ONLY']; ?></option>
-                  <optgroup label="<?php echo $lang['CUSTOM']; ?>"></optgroup>
+                <optgroup label="<?php echo $lang['CUSTOM']; ?>"></optgroup>
                     <option name="custom" value="custom">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $lang['BACKUP_CUSTOM']; ?></option>
-
-                </select>
-
-                <br>
+            </select>
+            <br>
             <input type="hidden" class="hidden" name="overwriteBackup" id="overwriteBackupHidden" value="false">
             <input type="checkbox" data-on="<?php echo $lang['BACKUP_OVERWRITE_THIS']; ?>" data-off="<?php echo $lang['BACKUP_ARCHIVE_THIS']; ?>" data-overwriteOff="<?php echo $lang['BACKUP_OVERWRITE_OFF']; ?>" data-overwriteOn="<?php echo $lang['BACKUP_OVERWRITE_ON']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="info" class="checkbox" name="overwriteBackup" id="overwriteBackup" value="true" checked>
-                &nbsp;&nbsp;<label for="overwriteBackup" id="overwriteBackupLabel"><?php echo $lang['BACKUP_OVERWRITE_ON']; ?>&nbsp;&nbsp;</label>
-                <br><br>
-                <input type="hidden" class="hidden" name="zipBackup" id="zipBackupHidden" value="false">
-                <input type="checkbox" data-on="<i class='fa fa-file-zip-o'></i>" data-off="<?php echo $lang['NO']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="zipBackup" id="zipBackup" value="true" checked>
+            &nbsp;&nbsp;<label for="overwriteBackup" id="overwriteBackupLabel"><?php echo $lang['BACKUP_OVERWRITE_ON']; ?>&nbsp;&nbsp;</label>
+            <br><br>
+            <input type="hidden" class="hidden" name="zipBackup" id="zipBackupHidden" value="false">
+            <input type="checkbox" data-on="<i class='fa fa-file-zip-o'></i>" data-off="<?php echo $lang['NO']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="zipBackup" id="zipBackup" value="true" checked>
             &nbsp;&nbsp;<label for="zipBackup"><?php echo $lang['BACKUP_ZIP_ALLOWED']; ?>&nbsp;&nbsp;</label>
-                <br><br>
-
-            <!--
-            &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" data-on="<?php //echo $lang['YES']; ?>" data-off="<?php //echo $lang['NO']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="removeAfterZip" id="removeAfterZip" value="true" checked>
-                &nbsp;&nbsp;<label for="removeAfterZip"><?php //echo $lang['BACKUP_REMOVE_AFTER_ZIP']; ?>&nbsp;&nbsp;</label>
-                <br><br>
-            -->
-
+            <br><br>
         </div>
     </div>
         <div class="box hidden" id="customSettings">
@@ -408,18 +391,22 @@ echo"<ol class=\"breadcrumb\">
         <div class="box-body">
             <table class="table table-striped table-hover table-responsive">
             <?php
+                // get all current files into array
                 $currentFiles = $backup->getCurrentBackupFilesArray();
-                $currentID = 0;
                 foreach ($currentFiles as $file)
                 {
-                    $currentID++;
+                    // get current path (folder and file)
                     $currentFile = "$backup->currentBackupFolder$file";
+                    // get date of current file
                     $currentFileDate = date("F d Y H:i", filemtime($currentFile));
+                    // get month of current file
                     $month = date("F", filemtime($currentFile));
+                    // get year of current file
                     $year = date("Y", filemtime($currentFile));
+                    // calculate how long it is ago...
                     $ago = \YAWK\sys::time_ago($currentFileDate, $lang);
                     echo "
-                <tr id\"$currentID\">
+                <tr>
                     <td width=\"10%\" class=\"text-center\"><h4><i class=\"fa fa-file-zip-o\"></i><br><small>$month<br>$year</small></h4></td>
                     <td width=\"70%\"><h4><a href=\"$backup->currentBackupFolder$file\">$file</a><br><small><b>$currentFileDate</b><br><i>($ago)</i></small></h4></td>
                     <td width=\"20%\">
@@ -476,7 +463,7 @@ echo"<ol class=\"breadcrumb\">
                         $archiveFile = $backup->archiveBackupSubFolder.$value;
                         // get date of current archive file
                         $archiveFileDate = date("F d Y H:i", filemtime($archiveFile));
-                        // calculate how long is it ago...
+                        // calculate how long it is ago...
                         $ago = \YAWK\sys::time_ago($archiveFileDate, $lang);
 
                         echo "<tr>
@@ -494,9 +481,7 @@ echo"<ol class=\"breadcrumb\">
                         echo"</table>        
                     </td>
                 </tr>";
-
-                }
-
+                } // end foreach files
                 ?>
             </table>
         </div>
@@ -523,3 +508,12 @@ echo"<ol class=\"breadcrumb\">
     </div>
 </div>
 </div>
+
+<!-- Bootstrap toggle css -->
+<link rel="stylesheet" href="../system/engines/bootstrap-toggle/css/bootstrap-toggle.css">
+<!-- Bootstrap toggle js -->
+<script type="text/javascript" src="../system/engines/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
+<!-- DROPZONE JS -->
+<script src="../system/engines/jquery/dropzone/dropzone.js"></script>
+<!-- DROPZONE CSS -->
+<link href="../system/engines/jquery/dropzone/dropzone.css" rel="stylesheet">
