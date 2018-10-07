@@ -264,10 +264,12 @@ if (isset($_POST))
             if ($(overwriteBackupSwitch).is(':checked'))
             {   // set ON label text (overwrite current backup)
                 $(overwriteBackupLabel).text(overwriteLabelTextOn);
+                $('#archiveGroup').fadeOut();
             }
             else
                 {   // set OFF label text (save to archive)
                     $(overwriteBackupLabel).text(overwriteLabelTextOff);
+                    $('#archiveGroup').fadeIn().removeClass('hidden');
                 }
         });
 
@@ -388,15 +390,46 @@ echo"<ol class=\"breadcrumb\">
                 <optgroup label="<?php echo $lang['CUSTOM']; ?>"></optgroup>
                     <option name="custom" value="custom">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $lang['BACKUP_CUSTOM']; ?></option>
             </select>
-            <br>
-            <input type="hidden" class="hidden" name="overwriteBackup" id="overwriteBackupHidden" value="false">
-            <input type="checkbox" data-on="<?php echo $lang['BACKUP_OVERWRITE_THIS']; ?>" data-off="<?php echo $lang['BACKUP_ARCHIVE_THIS']; ?>" data-overwriteOff="<?php echo $lang['BACKUP_OVERWRITE_OFF']; ?>" data-overwriteOn="<?php echo $lang['BACKUP_OVERWRITE_ON']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="info" class="checkbox" name="overwriteBackup" id="overwriteBackup" value="true" checked>
-            &nbsp;&nbsp;<label for="overwriteBackup" id="overwriteBackupLabel"><?php echo $lang['BACKUP_OVERWRITE_ON']; ?>&nbsp;&nbsp;</label>
-            <br><br>
-            <input type="hidden" class="hidden" name="zipBackup" id="zipBackupHidden" value="false">
-            <input type="checkbox" data-on="<i class='fa fa-file-zip-o'></i>" data-off="<?php echo $lang['NO']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="zipBackup" id="zipBackup" value="true" checked>
-            &nbsp;&nbsp;<label for="zipBackup"><?php echo $lang['BACKUP_ZIP_ALLOWED']; ?>&nbsp;&nbsp;</label>
-            <br><br>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <br><br>
+                    <input type="hidden" class="hidden" name="overwriteBackup" id="overwriteBackupHidden" value="false">
+                    <input type="checkbox" data-on="<i class='fa fa-refresh'>" data-off="<i class='fa fa-archive'>" data-overwriteOff="<?php echo $lang['BACKUP_OVERWRITE_OFF']; ?>" data-overwriteOn="<?php echo $lang['BACKUP_OVERWRITE_ON']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="success" class="checkbox" name="overwriteBackup" id="overwriteBackup" value="true" checked>
+                    &nbsp;&nbsp;<label for="overwriteBackup" id="overwriteBackupLabel"><?php echo $lang['BACKUP_OVERWRITE_ON']; ?>&nbsp;&nbsp;</label>
+                    <br><br>
+                    <div id="archiveGroup" class="hidden">
+                        <?php
+                        $backup->archiveBackupSubFolders = \YAWK\filemanager::getSubfoldersToArray($backup->archiveBackupFolder);
+                        if (count($backup->archiveBackupSubFolders) > 0)
+                        {
+                            echo "
+                                  <label for=\"selectFolder\">$lang[BACKUP_FOLDER_SELECT]</label>
+                                  <select class=\"form-control\" name=\"selectFolder\" id=\"selectFolder\">
+                                  <option label=\"$lang[BACKUP_PLEASE_SELECT]\"></option>";
+                            foreach ($backup->archiveBackupSubFolders as $subFolder)
+                            {
+                                echo "<option value=\"$subFolder\">$subFolder</option>";
+                            }
+
+                            echo"</select>
+                                <div class=\"text-center\"><br><i>$lang[OR]</i><br><br></div>";
+                        }
+                        ?>
+                        <label for="newFolder"><?php echo $lang['BACKUP_FOLDER_NAME']; ?></label>
+                        <input type="text" id="newFolder" class="form-control">
+                        <br>
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                <br><br>
+                    <input type="hidden" class="hidden" name="zipBackup" id="zipBackupHidden" value="false">
+                    <input type="checkbox" data-on="<i class='fa fa-file-zip-o'></i>" data-off="<?php echo $lang['NO']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="zipBackup" id="zipBackup" value="true" checked>
+                    &nbsp;&nbsp;<label for="zipBackup"><?php echo $lang['BACKUP_ZIP_ALLOWED']; ?>&nbsp;&nbsp;</label>
+
+                </div>
+            </div>
         </div>
     </div>
         <div class="box hidden" id="customSettings">
