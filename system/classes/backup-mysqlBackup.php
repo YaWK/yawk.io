@@ -505,10 +505,35 @@ namespace YAWK\BACKUP\DATABASE
             // check if backup overwrite is allowed
             if ($this->overwriteBackup == "false")
             {
-                // overwrite not allowed - target folder NOT current
-                // set target folder to archive
-                $this->sqlPath = '../system/backup/archive/';
-                $this->targetFolder = '../system/backup/archive/';
+                if (isset($_POST))
+                {
+                    // check if new folder was entered by user
+                    if (isset($_POST['newFolder']) && (!empty($_POST['newFolder'])))
+                    {
+                        // create new archive sub folder path
+                        $this->archiveBackupSubFolder = $this->archiveBackupFolder.$_POST['newFolder']."/";
+
+                        // create new directory in archive
+                        if (mkdir($this->archiveBackupSubFolder))
+                        {   // all good, new archive subfolder created
+                            // set syslog entry: dir created
+                            \YAWK\sys::setSyslog($db, 50, 0, "archive directory created: $this->sqlPath", 0, 0, 0, 0);
+                        }
+                        else
+                        {   // failed to create new archive subfolder
+                            // set syslog entry: failed
+                            \YAWK\sys::setSyslog($db, 52, 0, "failed to create archive directory: $this->sqlPath", 0, 0, 0, 0);
+                        }
+                    }
+                    // check if existing folder was selected by user
+                    else if (isset($_POST['selectFolder']) && (!empty($_POST['selectFolder'])))
+                    {   // set archive sub foder path
+                        $this->archiveBackupSubFolder = $this->archiveBackupFolder.$_POST['selectFolder']."/";
+                    }
+
+                    $this->sqlPath = $this->archiveBackupSubFolder;
+                    $this->targetFolder = $this->archiveBackupSubFolder;
+                }
             }
 
             // check if a backup exists
