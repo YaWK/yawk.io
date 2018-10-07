@@ -582,8 +582,8 @@ echo"<ol class=\"breadcrumb\">
                     echo "
                 <tr>
                     <td width=\"10%\" class=\"text-center\"><h4><i class=\"fa fa-file-zip-o\"></i><br><small>$month<br>$year</small></h4></td>
-                    <td width=\"70%\"><h4><a href=\"$backup->currentBackupFolder$file\">$file</a><br><small><b>$currentFileDate</b><br><i>($ago)</i></small></h4></td>
-                    <td width=\"20%\">
+                    <td width=\"60%\"><h4><a href=\"$backup->currentBackupFolder$file\">$file</a><br><small><b>$currentFileDate</b><br><i>($ago)</i></small></h4></td>
+                    <td width=\"30%\" class=\"text-right\">
                       <h4><br>
                       
                         <a href=\"$backup->currentBackupFolder$file\" title=\"$lang[TO_DOWNLOAD]\"><i class=\"fa fa-download\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -650,14 +650,22 @@ echo"<ol class=\"breadcrumb\">
                         $ago = \YAWK\sys::time_ago($archiveFileDate, $lang);
 
                         echo "<tr>
-                                <td width=\"80%\">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;<small><b><a href=\"$archiveFile\">$value</a> <small>$archiveFileDate</small></b><b class=\"pull-right\">$archiveFileSize</b></small>
+                                <td width=\"62%\">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;<small><b><a href=\"$archiveFile\">$value</a><br>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <small>$archiveFileDate</small></b><small>&nbsp;&nbsp;<i>($ago)</i></small>
+                                </td>
+                                <td width=\"18%\">
+                                <div style=\"margin-top:-10px;\"><br>
+                                    <small><b>$archiveFileSize</b></small>
+                                </div>    
                                 </td>
 
-                                <td width=\"20%\">
+                                <td width=\"20%\" class=\"text-right\">
+                                <div style=\"margin-top:-10px;\"><br>
                                     <a href=\"$archiveFile\" title=\"$lang[TO_DOWNLOAD]\"><i class=\"fa fa-download\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
                                     <a href=\"#\" title=\"$lang[BACKUP_RESTORE]\"><i class=\"fa fa-history\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"$archiveFile ".$lang['DELETE']."? - $lang[BEWARE] $lang[UNDO_NOT_POSSIBLE]!\" title=\"$lang[ATTENTION] $lang[BACKUP] $lang[DELETE]\" href=\"index.php?page=settings-backup&deleteBackup=true&backupFolder=$backup->archiveBackupSubFolder&backupFile=$value\">
+                                    <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"$archiveFile ".$lang['DELETE']."? - $lang[BEWARE] $lang[UNDO_NOT_POSSIBLE]!\" title=\"$lang[ATTENTION] $lang[BACKUP] $lang[DELETE]\" href=\"index.php?page=settings-backup&deleteBackup=true&backupFolder=$backup->archiveBackupSubFolder&backupFile=$value\"></a>&nbsp;&nbsp;&nbsp;
+                                </div>
                                 </td>
                                 </tr>";
                     }
