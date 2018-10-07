@@ -110,6 +110,7 @@ if (isset($_POST))
                     $backup->removeAfterZip = "false";
                 }
 
+
                 // check if overwrite backup is allowed
                 if (isset($_POST['overwriteBackup']) && (!empty($_POST['overwriteBackup'])))
                 {   // set backup method property depending on select field
@@ -263,11 +264,13 @@ if (isset($_POST))
             // check if overwrite switch is on
             if ($(overwriteBackupSwitch).is(':checked'))
             {   // set ON label text (overwrite current backup)
+                $(overwriteBackupSwitch).val('true');
                 $(overwriteBackupLabel).text(overwriteLabelTextOn);
                 $('#archiveGroup').fadeOut();
             }
             else
                 {   // set OFF label text (save to archive)
+                    $(overwriteBackupSwitch).val('false');
                     $(overwriteBackupLabel).text(overwriteLabelTextOff);
                     $('#archiveGroup').fadeIn().removeClass('hidden');
                 }
@@ -400,7 +403,9 @@ echo"<ol class=\"breadcrumb\">
                     <br><br>
                     <div id="archiveGroup" class="hidden">
                         <?php
+                        // archive backup folders
                         $backup->archiveBackupSubFolders = \YAWK\filemanager::getSubfoldersToArray($backup->archiveBackupFolder);
+                        // if any folder is there, draw a select field to choose from
                         if (count($backup->archiveBackupSubFolders) > 0)
                         {
                             echo "
@@ -415,18 +420,25 @@ echo"<ol class=\"breadcrumb\">
                             echo"</select>
                                 <div class=\"text-center\"><br><i>$lang[OR]</i><br><br></div>";
                         }
+                        // otherwise draw text input field to create a folder
                         ?>
                         <label for="newFolder"><?php echo $lang['BACKUP_FOLDER_NAME']; ?></label>
-                        <input type="text" id="newFolder" class="form-control">
+                        <input type="text" id="newFolder" name="newFolder" class="form-control">
                         <br>
                     </div>
 
                 </div>
                 <div class="col-md-6">
                 <br><br>
-                    <input type="hidden" class="hidden" name="zipBackup" id="zipBackupHidden" value="false">
-                    <input type="checkbox" data-on="<i class='fa fa-file-zip-o'></i>" data-off="<?php echo $lang['NO']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="zipBackup" id="zipBackup" value="true" checked>
-                    &nbsp;&nbsp;<label for="zipBackup"><?php echo $lang['BACKUP_ZIP_ALLOWED']; ?>&nbsp;&nbsp;</label>
+                    <?php
+                        // add zip switch only if zip archive class is available
+                        if (class_exists('ZipArchive'))
+                        {
+                            echo "<input type=\"hidden\" class=\"hidden\" name=\"zipBackup\" id=\"zipBackupHidden\" value=\"false\">
+                            <input type=\"checkbox\" data-on=\"<i class='fa fa-file-zip-o'></i>\" data-off=\"$lang[NO]\" data-toggle=\"toggle\" data-onstyle=\"success\" data-offstyle=\"danger\" class=\"checkbox\" name=\"zipBackup\" id=\"zipBackup\" value=\"true\" checked>
+                            &nbsp;&nbsp;<label for=\"zipBackup\">$lang[BACKUP_ZIP_ALLOWED]&nbsp;&nbsp;</label>";
+                        }
+                    ?>
 
                 </div>
             </div>
@@ -587,7 +599,7 @@ echo"<ol class=\"breadcrumb\">
                         <table class=\"table table-striped table-hover table-responsive\">
                         <thead>
                             <h4><i class=\"fa fa-folder-open-o\"></i> $folder<small>
-                            <a class=\"fa fa-trash-o pull-right\" role=\"dialog\" data-confirm=\"$backup->archiveBackupFolder ".$lang['DELETE']."? - $lang[BEWARE] $lang[UNDO_NOT_POSSIBLE]!\" title=\"$lang[ATTENTION] $lang[BACKUP_ARCHIVE] $lang[DELETE]\" href=\"index.php?page=settings-backup&deleteArchiveSubFolder=true&archiveSubFolder=$backup->archiveBackupSubFolder\"></a>
+                            <a class=\"fa fa-trash-o pull-right\" role=\"dialog\" data-confirm=\"$folder ".$lang['DELETE']."? - $lang[BEWARE] $lang[UNDO_NOT_POSSIBLE]!\" title=\"$lang[ATTENTION] $lang[BACKUP_ARCHIVE] $lang[DELETE]\" href=\"index.php?page=settings-backup&deleteArchiveSubFolder=true&archiveSubFolder=$backup->archiveBackupSubFolder\"></a>
                             </h4>
                         </thead>";
 
