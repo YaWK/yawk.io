@@ -233,7 +233,7 @@ namespace YAWK {
                 $i = 0;
                 foreach ($files as $file_value) {
 
-                    $fsize = \YAWK\filemanager::sizeFilter($file_size[$i]);
+                    $fsize = \YAWK\filemanager::sizeFilter($file_size[$i], 1);
                     echo "<tr>
           <td class=\"text-right\">$fsize</td>
           <td class=\"text-left\"><a href='$path" . "/$file_value'><div style=\"width:100%\">$file_value</div></a></td>
@@ -507,13 +507,22 @@ namespace YAWK {
          * @license    https://opensource.org/licenses/MIT
          * @link       http://yawk.io
          * @param int|string $bytes
+         * @param int|string $precision
          * @return string rounded, human-readable bytes
          */
-        static function sizeFilter($bytes)
+        static function sizeFilter($bytes, $precision)
         {
+            // if no precision is set
+            if (!isset($precision) || (empty($precision)))
+            {   // set default: no decimal place
+                $precision = 0;
+            }
+            // different sizes
             $label = array('B', 'KB', 'MB', 'GB', 'TB', 'PB');
+            // calculate filesize
             for ($i = 0; $bytes >= 1024 && $i < (count($label) - 1); $bytes /= 1024, $i++) ;
-            return (round($bytes, 2) . " " . $label[$i]);
+            // return calculated filesize
+            return (round($bytes, $precision) . " " . $label[$i]);
         } // end class filter
     }
 }
