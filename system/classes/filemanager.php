@@ -509,7 +509,7 @@ namespace YAWK {
          * @param int|string $bytes
          * @return string rounded, human-readable bytes
          */
-        public function sizeFilter($bytes)
+        static function sizeFilter($bytes)
         {
             $label = array('B', 'KB', 'MB', 'GB', 'TB', 'PB');
             for ($i = 0; $bytes >= 1024 && $i < (count($label) - 1); $bytes /= 1024, $i++) ;
