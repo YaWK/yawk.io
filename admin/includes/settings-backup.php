@@ -621,6 +621,9 @@ echo"<ol class=\"breadcrumb\">
                     // last change of archive subfolder (year)
                     $year = date("Y", filemtime($backup->archiveBackupSubFolder));
 
+                    $archiveFolderDate = date("F d Y H:i", filemtime($backup->archiveBackupSubFolder));
+                    $lastUpdate = \YAWK\sys::time_ago($archiveFolderDate, $lang);
+
                     echo "
                 <tr>
                     <td width=\"10%\" class=\"text-center\"><h4><i class=\"fa fa-archive\"></i><br><small>$month<br>$year</small></h4></td>
@@ -628,8 +631,9 @@ echo"<ol class=\"breadcrumb\">
                     
                         <table class=\"table table-striped table-hover table-responsive\">
                         <thead>
-                            <h4><i class=\"fa fa-folder-open-o\"></i> $folder<small>
+                            <h4><i class=\"fa fa-folder-open-o\"></i> $folder <small><small><i>&nbsp;&nbsp;($lang[LAST_UPDATE] $lastUpdate)</i></small>
                             <a class=\"fa fa-trash-o fa-2x text-gray pull-right\" role=\"dialog\" data-confirm=\"$folder ".$lang['DELETE']."? - $lang[BEWARE] $lang[UNDO_NOT_POSSIBLE]!\" title=\"$lang[ATTENTION] $lang[BACKUP_ARCHIVE] $lang[DELETE]\" href=\"index.php?page=settings-backup&deleteArchiveSubFolder=true&archiveSubFolder=$backup->archiveBackupSubFolder\"></a>
+                            </small>
                             </h4>
                         </thead>";
 
@@ -640,12 +644,14 @@ echo"<ol class=\"breadcrumb\">
                         $archiveFile = $backup->archiveBackupSubFolder.$value;
                         // get date of current archive file
                         $archiveFileDate = date("F d Y H:i", filemtime($archiveFile));
+                        // get archive file size
+                        $archiveFileSize = \YAWK\filemanager::sizeFilter(filesize($archiveFile));
                         // calculate how long it is ago...
                         $ago = \YAWK\sys::time_ago($archiveFileDate, $lang);
 
                         echo "<tr>
                                 <td width=\"80%\">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;<small><b><a href=\"$archiveFile\">$value</a> <small>$archiveFileDate</small></b></small>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;<small><b><a href=\"$archiveFile\">$value</a> <small>$archiveFileDate</small></b><b class=\"pull-right\">$archiveFileSize</b></small>
                                 </td>
 
                                 <td width=\"20%\">
