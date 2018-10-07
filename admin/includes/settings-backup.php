@@ -260,6 +260,8 @@ if (isset($_POST))
             var overwriteBackupLabel = $('#overwriteBackupLabel');
             var overwriteLabelTextOn = $(overwriteBackupSwitch).attr("data-overwriteOn");
             var overwriteLabelTextOff = $(overwriteBackupSwitch).attr("data-overwriteOff");
+            var newFolder = $('#newFolder');
+            var selectFolder = $('#selectFolder');
 
             // check if overwrite switch is on
             if ($(overwriteBackupSwitch).is(':checked'))
@@ -273,7 +275,20 @@ if (isset($_POST))
                     $(overwriteBackupSwitch).val('false');
                     $(overwriteBackupLabel).text(overwriteLabelTextOff);
                     $('#archiveGroup').fadeIn().removeClass('hidden');
+
+                    // if text input field has focus
+                    $(newFolder).focus(function() {
+                        // select first option (please select....) to improve usability
+                        $(selectFolder).prop("selectedIndex", 0);
+                    });
+
+                    // if selectfolder changes...
+                    $(selectFolder).on('change', function() {
+                        // set newFolder text input field value to empty
+                        $(newFolder).val('');
+                    });
                 }
+
         });
 
         // if zip is not allowed, remove after zip should be disabled
@@ -342,15 +357,30 @@ if (isset($_POST))
             }
         });
 
-        // MODAL WINDOW:
+        // MODAL 'move to archive' WINDOW:
         // to archive a file, a modal window is used.
         // this checks, if modal window is currently shown
         $('#myModal').on('show.bs.modal', function(e) {
             // if so, get the according file by read the data-file value
             var file = e.relatedTarget.dataset.file;
+            var newFolderModal = $("#newFolderModal");
+            var selectFolderModal = $("#selectFolderModal");
             // update hidden field in modal window with current file value
             $("#file").val(file);
+            
+            // if text input field has focus
+            $(newFolderModal).focus(function() {
+                // select first option (please select....) to improve usability
+                $(selectFolderModal).prop("selectedIndex", 0);
+            });
+
+            // if selectfolder changes...
+            $(selectFolderModal).on('change', function() {
+                // set newFolder text input field value to empty
+                $(newFolderModal).val('');
+            });
         });
+
     });
 </script>
 <?php
@@ -656,7 +686,7 @@ echo"<ol class=\"breadcrumb\">
 </div>
 </div>
 
-<!-- Modal --ADD FONT-- -->
+<!-- Modal --MOVE TO ARCHIVE-- -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal2Label" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -671,7 +701,7 @@ echo"<ol class=\"breadcrumb\">
 
                 <!-- modal body -->
                 <div class="modal-body">
-                    <!-- ADD CUSTOM FONT -->
+                    <!-- SELECT BACKUP ARCHIVE SUB FOLDER -->
                     <?php if (isset($_GET['file'])) { echo $_GET['file']; } ?>
                     <h4><b><?php echo $lang['BACKUP_ADD_ARCHIVE_SUBFOLDER']; ?></b></h4>
                     <?php
@@ -680,8 +710,8 @@ echo"<ol class=\"breadcrumb\">
                             {
                                 echo "
                                   <label for=\"selectFolder\">$lang[BACKUP_FOLDER_SELECT]</label>
-                                  <select class=\"form-control\" name=\"selectFolder\" id=\"selectFolder\">
-                                  <option label=\"$lang[BACKUP_PLEASE_SELECT]\"></option>";
+                                  <select class=\"form-control\" name=\"selectFolder\" id=\"selectFolderModal\">
+                                  <option label=\"$lang[BACKUP_PLEASE_SELECT]\" id=\"pleaseSelect\"></option>";
                                 foreach ($backup->archiveBackupSubFolders as $subFolder)
                                 {
                                     echo "<option value=\"$subFolder\">$subFolder</option>";
@@ -692,7 +722,7 @@ echo"<ol class=\"breadcrumb\">
                             }
                     ?>
                     <label for="newFolder"><?php echo $lang['BACKUP_FOLDER_NAME']; ?></label>
-                    <input type="text" class="form-control" id="newFolder" name="newFolder" placeholder="<?php echo $lang['BACKUP_FOLDER_NAME_PH']; ?>">
+                    <input type="text" class="form-control" id="newFolderModal" name="newFolder" placeholder="<?php echo $lang['BACKUP_FOLDER_NAME_PH']; ?>">
                     <input type="hidden" name="file" id="file" value=""> <!-- gets filled via JS -->
                     <input type="hidden" name="action" id="action" value="moveToArchive"> <!-- gets filled via JS -->
 
