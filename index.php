@@ -29,14 +29,14 @@
  *
  */
 session_start();
-/* Error Reporting - this is for DEVELOPMENT PURPOSE ONLY! */
-// error_reporting(E_ALL ^ E_STRICT);
-ini_set('display_errors', 0);
-error_reporting(0);
+header('Cache-control: private');               // IE 6 FIX
+error_reporting(E_ALL ^ E_STRICT);              // just for development purpose!!!
+ini_set('display_errors', 1);                   // DISPLAY ALL ERRORS - DEVELOPMENT ONLY!!!
+error_reporting(0);                             // no error reporting
 /* include core files */
 require_once('system/classes/db.php');               // database connection
 require_once('system/classes/settings.php');         // get/set settings from settings db
-require_once 'system/classes/language.php';      // language class
+require_once 'system/classes/language.php';          // language class
 require_once('system/classes/alert.php');            // draw fancy JS-notification alert class
 require_once('system/classes/email.php');            // email functions
 require_once('system/classes/user.php');             // all get/set/handle user functions
@@ -68,7 +68,7 @@ if (!isset($template)) {
 }
 /* set user object */
 if (!isset($user)) {
-    $user = new \YAWK\user();
+    $user = new \YAWK\user($db);
 }
 /* set page object */
 if (!isset($page)) {
@@ -85,7 +85,7 @@ if (!isset($stats)) {
     $stats->setStats($db);
 }
 // lets go with the frontEnd...
-// \YAWK\sys::outputObjects($template, $controller, $page, $user, $stats);
+// \YAWK\sys::outputObjects($template, $language, $controller, $page, $user, $stats);
 // \YAWK\controller::frontEndInit($db, $currentpage, $user, $template);
 if (\YAWK\sys::isOffline($db)) {   // backend-users (admins) can see the frontend,
     // while the site is still offline to guests & no-admins

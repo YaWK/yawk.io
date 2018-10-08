@@ -1,10 +1,10 @@
 <?php
 session_start();
 header('Cache-control: private');               // IE 6 FIX
-error_reporting(E_ALL ^ E_STRICT);                // just for development purpose!!!
-ini_set('display_errors', 1);                     // DISPLAY ALL ERRORS - DEVELOPMENT ONLY!!!
-error_reporting(1);                             // no error reporting
-$loadingTime = microtime(true);            // scripting start time (var gets used for benchmark, if enabled)
+error_reporting(E_ALL ^ E_STRICT);              // just for development purpose!!!
+ini_set('display_errors', 1);                   // DISPLAY ALL ERRORS - DEVELOPMENT ONLY!!!
+error_reporting(0);                             // no error reporting
+$loadingTime = microtime(true);                 // scripting start time (var gets used for benchmark, if enabled)
 
 /* include controller classes */
 require_once '../system/classes/db.php';            // database
@@ -43,7 +43,7 @@ if (!isset($lang) || (empty($lang)))
 // user object
 if (!isset($user))
 {   // create new user obj if none exists
-    $user = new \YAWK\user();
+    $user = new \YAWK\user($db);
 }
 
 // page object
