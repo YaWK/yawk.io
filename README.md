@@ -1,4 +1,4 @@
-<h1>Attention: work in progress! <br><small>It's done when it's done. <i><small>(Release: "soon")</small></i></small></h1>
+<h1>Attention: work in progress! <br><small>It's done when it's done. <small>(release: soon)</small></small></h1>
 
 Official Website: <b>https://yawk.io</b><br>
 Documentation: <b>https://docs.yawk.io</b>
@@ -17,7 +17,7 @@ Documentation: <b>https://docs.yawk.io</b>
 </ul>
 <b>Update official website</b>
 <ul>
-<li>Update yawk.io to current YaWK version</li>
+<li>Update yawk.io to current version</li>
 <li>Add feature showcase</li>
 <li>Add support page</li>
 <li>Add user manual</li>
