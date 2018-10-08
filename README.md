@@ -8,20 +8,25 @@ Documentation: <b>https://docs.yawk.io</b>
 <b>YaWK is a free, open-source-bundle solution</b> CMS to build, design and operate any modern webpage or web-app. Designed to be slick, fast and reliable. Steady in development. It brings together, what belongs together. YaWK uses HTML, CSS, MySQL, PHP and JavaScript to bundle Bootstrap, jQuery, AdminLTE, FontAwesome and much more of your favourite daily use web open source tools and combines them into a new base for your daily work.
 <hr>
 <h3><u>R O A D M A P: <small>2018 final goals before release</small></u></h3>
-<b>currently in development:</b>
+<b>Currently in development:</b>
 <ul>
 <li>Update FrontEnd to Bootstrap 4 / add Bootstrap 4 template settings to backend</li>
 <li>Add YAWK\BACKUP System</li>
-<li>Refactor YAWK\DB Class</li>
+<li>Add templates and demo pages</li>
 <li><i><small>and of course: check and fix language errors, major and minor bugs</small></i></li>
 </ul>
-<b>Update official YaWK website</b>
+<b>Update official website</b>
 <ul>
-<li>Update Website to current YaWK version</li>
-<li>Add Feature Showcase</li>
-<li>Add Support Page</li>
-<li>Add User Manual</li>
-<li>Add Developer Manual</li>
+<li>Update yawk.io to current YaWK version</li>
+<li>Add feature showcase</li>
+<li>Add support page</li>
+<li>Add user manual</li>
+<li>Add developer manual</li>
+</ul>
+<b>Add social media channels</b>
+<ul>
+<li>YouTube channel</li>
+<li>Facebook page</li>
 </ul>
 <hr>
 <h3>Download Notes:</h3>
@@ -39,4 +44,4 @@ YaWK is an open source project, <b>built for everyone.</b> Actually there is <i>
 
 After spending years on this project, I decided to follow my fellows - I've uploaded it to GitHub and kept the repository private until the status of the project has got to a level where people can make use out of it. Though all efforts of "getting it to the point", this project is not finished yet - and never will be. It will stay in development, as long as I or somebody else take care about it.
 
-<h2><i>Stay tuned for upcoming website and project updates!</i></h2>
+<h4><i>Stay tuned for upcoming website and project updates!</i></h4>
