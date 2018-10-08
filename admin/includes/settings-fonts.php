@@ -214,8 +214,11 @@ echo"</section><!-- Main content -->
                 </div>
                 <div class="box-body">
                     <?php
-                        // draw google fonts list
+                    // check if google fonts are set
+                    if (isset($googleFonts) && (!empty($googleFonts)))
+                    {   // draw google fonts list
                         \YAWK\backend::drawFontList($googleFonts, $fontFolder, 'Google', $lang);
+                    }
                     ?>
                 </div>
             </div>
@@ -228,8 +231,11 @@ echo"</section><!-- Main content -->
                 </div>
                 <div class="box-body">
                     <?php
-                        // draw TTF font list
+                    // check if true type fonts are set
+                    if (isset($fontArray['ttf']) && (!empty($fontArray['ttf'])))
+                    {   // draw TTF font list
                         \YAWK\backend::drawFontList($fontArray['ttf'], $fontFolder, '.ttf', $lang);
+                    }
                     ?>
                 </div>
             </div>
@@ -242,8 +248,11 @@ echo"</section><!-- Main content -->
                 </div>
                 <div class="box-body">
                     <?php
-                        // draw OTF font list
+                    // check if otf fonts are set
+                    if (isset($fontArray['otf']) && (!empty($fontArray['otf'])))
+                    {   // draw OTF font list
                         \YAWK\backend::drawFontList($fontArray['otf'], $fontFolder, '.otf', $lang);
+                    }
                     ?>
                 </div>
             </div>
@@ -256,8 +265,11 @@ echo"</section><!-- Main content -->
                 </div>
                 <div class="box-body">
                     <?php
-                    // draw OTF font list
-                    \YAWK\backend::drawFontList($fontArray['woff'], $fontFolder, '.woff', $lang);
+                    // check if woff fonts are set
+                    if (isset($fontArray['woff']) && (!empty($font['woff'])))
+                    {   // draw OTF fonts list
+                        \YAWK\backend::drawFontList($fontArray['woff'], $fontFolder, '.woff', $lang);
+                    }
                     ?>
                 </div>
             </div>
