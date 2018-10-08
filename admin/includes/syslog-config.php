@@ -1,37 +1,43 @@
 <?php
 if(isset($_POST))
 {   // log checkboxes
-    foreach ($_POST['active'] as $property => $value)
-    {   // check checkbox value
-        if ($value == "on")
-        {   // set to numeric value
-            $value = 1;
-        }
-        else
+    if (isset($_POST['active']))
+    {
+        foreach ($_POST['active'] as $property => $value)
+        {   // check checkbox value
+            if ($value == "on")
+            {   // set to numeric value
+                $value = 1;
+            }
+            else
             {   // checkbox off
                 $value = 0;
             }
-        // update syslog_categories log (active) values
-        if (!$db->query("UPDATE {syslog_categories} SET active = '".$value."' WHERE id = '".$property."' "))
-        {   // make syslog entry on error
-            \YAWK\sys::setSyslog($db, 3, 1, "Unable to update syslog configuration - unable to set state of field: $property to value: $value", "", 0, 0, 0);
+            // update syslog_categories log (active) values
+            if (!$db->query("UPDATE {syslog_categories} SET active = '".$value."' WHERE id = '".$property."' "))
+            {   // make syslog entry on error
+                \YAWK\sys::setSyslog($db, 3, 1, "Unable to update syslog configuration - unable to set state of field: $property to value: $value", "", 0, 0, 0);
+            }
         }
     }
     // notification checkboxes
-    foreach ($_POST['notify'] as $property => $value)
-    {   // check checkbox values
-        if ($value == "on")
-        {   // set to numeric value
-            $value = 1;
-        }
-        else
-        {   // checkbox off
-            $value = 0;
-        }
-        // update syslog_categories notify values
-        if (!$db->query("UPDATE {syslog_categories} SET notify = '".$value."' WHERE id = '".$property."' "))
-        {   // make syslog entry on error
-            \YAWK\sys::setSyslog($db, 3, 1, "Unable to update syslog configuration - unable to set state of field: $property to value: $value", "", 0, 0, 0);
+    if (isset($_POST['notify']))
+    {
+        foreach ($_POST['notify'] as $property => $value)
+        {   // check checkbox values
+            if ($value == "on")
+            {   // set to numeric value
+                $value = 1;
+            }
+            else
+            {   // checkbox off
+                $value = 0;
+            }
+            // update syslog_categories notify values
+            if (!$db->query("UPDATE {syslog_categories} SET notify = '".$value."' WHERE id = '".$property."' "))
+            {   // make syslog entry on error
+                \YAWK\sys::setSyslog($db, 3, 1, "Unable to update syslog configuration - unable to set state of field: $property to value: $value", "", 0, 0, 0);
+            }
         }
     }
 }
