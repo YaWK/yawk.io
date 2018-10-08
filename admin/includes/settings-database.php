@@ -1,4 +1,7 @@
 <?php
+// get all template settings into array
+$settings = \YAWK\settings::getAllSettingsIntoArray($db);
+
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
     <!-- Content Wrapper. Contains page content -->
@@ -51,7 +54,7 @@ echo"</section><!-- Main content -->
             <!-- database settings -->
             <div class="box">
                 <div class="box-body">
-                    <?php \YAWK\settings::getFormElements($db, $newsletter, 21, $lang); ?>
+                    <?php \YAWK\settings::getFormElements($db, $settings, 21, $lang); ?>
                 </div>
             </div>
         </div>

@@ -32,9 +32,9 @@ if(isset($_POST['save']))
 }
 ?>
 <?php
-
 // get all template settings into array
 $settings = \YAWK\settings::getAllSettingsIntoArray($db);
+
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
     <!-- Content Wrapper. Contains page content -->
