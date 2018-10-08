@@ -14,7 +14,7 @@
 // check user obj
 if (!isset($user))
 {   // create new user obj
-    $user = new \YAWK\user();
+    $user = new \YAWK\user($db);
 }
 // disable preview (overrideTemplate)
 $user->setUserTemplate($db, 0, \YAWK\settings::getSetting($db, "selectedTemplate"), $user->id);

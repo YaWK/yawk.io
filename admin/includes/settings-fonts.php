@@ -4,7 +4,7 @@
 $fontFolder = "../system/fonts/";
 if (isset($_GET) && (!empty($_GET)))
 {   // user wants upload a custom font (ttf, otf or woff)
-    if ($_GET['add'] === "true")
+    if (isset($_GET['add']) && ($_GET['add'] === "true"))
     {   // check if data is here
         if (isset($_POST) && (!empty($_POST)))
         {   // check if new font file was sent
@@ -60,7 +60,7 @@ if (isset($_GET) && (!empty($_GET)))
     }
 
     // DELETE FONT ACTION REQUESTED
-    if ($_GET['delete'] === "true")
+    if (isset($_GET['delete']) && ($_GET['delete'] === "true"))
     {   // check which type of font it is
         if (isset($_GET['type']) && (!empty($_GET['type'])))
         {   // custom font (.ttf, .otf or .woff)
@@ -118,41 +118,64 @@ $cssOTF = '';
 $cssWOFF = '';
 $cssGoogleFont = '';
 
-// walk through ttf array
-foreach ($fontArray['ttf'] as $font)
-{   // css tag
-    $cssTTF .= "
-    @font-face { font-family: '$font';
-    src: url('$fontFolder$font') format('truetype'); }
-";
+// check if there are any true type fonts
+if (isset($fontArray['ttf']) && (!empty($fontArray['ttf'])))
+{
+    // walk through ttf array
+    foreach ($fontArray['ttf'] as $font)
+    {   // set ttf font family css
+        $cssTTF .= "
+        @font-face { font-family: '$font';
+        src: url('$fontFolder$font') format('truetype'); }
+        ";
+    }
 }
-// walk through otf array
-foreach ($fontArray['otf'] as $font)
-{   // css tag
-    $cssOTF .= "
-    @font-face { font-family: '$font';
-    src: url('$fontFolder$font') format('opentype'); }
-";
+// check if there are any otf type fonts
+if (isset($fontArray['otf']) && (!empty($fontArray['otf'])))
+{
+    // walk through otf array
+    foreach ($fontArray['otf'] as $font)
+    {   // set otf font family css
+        $cssOTF .= "
+        @font-face { font-family: '$font';
+        src: url('$fontFolder$font') format('opentype'); }
+        ";
+    }
 }
-// walk through ttf array
-foreach ($fontArray['woff'] as $font)
-{   // css tag
-    $cssWOFF .= "
-    @font-face { font-family: '$font';
-    src: url('$fontFolder$font') format('woff'); }
-";
+
+// check if there are any woff type fonts
+if (isset($fontArray['woff']) && (!empty($fontArray['woff'])))
+{
+    // walk through woff array
+    foreach ($fontArray['woff'] as $font)
+    {   // set woff font family css
+        $cssWOFF .= "
+        @font-face { font-family: '$font';
+        src: url('$fontFolder$font') format('woff'); }
+        ";
+    }
 }
-// walk through gFonts array
-foreach ($googleFonts as $gFont)
-{   // google font
-    $cssGoogleFont .= "
-<link href=\"https://fonts.googleapis.com/css?family=$gFont\" rel=\"stylesheet\">
-";
+
+// check if there are any google fonts
+if (isset($googleFonts) && (!empty($googleFonts)))
+{
+    // walk through google fonts array
+    foreach ($googleFonts as $gFont)
+    {   // set google font family css
+        $cssGoogleFont .= "
+        <link href=\"https://fonts.googleapis.com/css?family=$gFont\" rel=\"stylesheet\">
+        ";
+    }
 }
+
 // output Google <link href="...">
 echo $cssGoogleFont;
 // output custom font css styles
-echo "<style>".$cssTTF." ".$cssOTF." ".$cssWOFF." </style>";
+echo "<style>
+        ".$cssTTF."
+        ".$cssOTF."
+        ".$cssWOFF." 
+      </style>";
 ?>
 
 

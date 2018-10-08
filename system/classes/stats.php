@@ -1345,22 +1345,25 @@ namespace YAWK
          * @param object $db the database object
          * @param string $data array containing all the stats data
          * @param string $limit contains i number for sql limitation
+         * @param object $lang language array
          * @return array|bool containing weekdays and number of hits
          */
-        public function countWeekdays($db, $data, $lang)
+        public function countWeekdays($db, $data, $lang, $limit)
         {   /* @var $db \YAWK\db */
 
-        /*
             // check if limit (i) is set
             if (!isset($limit) || (empty($limit)))
             {   // set default value
-                $limit = 100;
+                $limitSql = '';
             }
-            */
+            else
+                {
+                    $limitSql = ' LIMIT '.$limit;
+                }
             // check if data array is set, if not load data from db
             if (!isset($data) || (empty($data) || (!is_array($data))))
             {   // data is not set or in false format, try to get it from database
-                if ($res = $db->query("SELECT date_created FROM {stats} ORDER BY id DESC LIMIT $limit"))
+                if ($res = $db->query("SELECT date_created FROM {stats} ORDER BY id DESC$limitSql"))
                 {   // create array
                     $data = array();
                     while ($row = mysqli_fetch_assoc($res))
@@ -3242,16 +3245,25 @@ namespace YAWK
          * @param string $limit contains i number for sql limitation
          * @param object $lang language array
          */
-            public function drawWeekdayBox($db, $data, $lang)
+            public function drawWeekdayBox($db, $data, $lang, $limit)
         {   /** @var $db \YAWK\db */
             // get data for this box
-            $weekdays = $this->countWeekdays($db, $data, $lang);
+            $weekdays = $this->countWeekdays($db, $data, $lang, $limit);
             $weekdaysPercent = $this->getWeekdaysPercent($lang);
+
+            if ($limit == 0)
+            {
+                $heading = $lang['WHOLE_PERIOD'];
+            }
+            else
+                {
+                    $heading = "$lang[THE_LATEST] $limit $lang[DAYS]";
+                }
 
             echo "<!-- donut box:  -->
         <div class=\"box box-default\">
             <div class=\"box-header with-border\">
-                <h3 class=\"box-title\">$lang[WEEKDAYS] <small>$lang[WEEKDAY_OVERVIEW]</small></h3>
+                <h3 class=\"box-title\">$lang[WEEKDAYS] <small>$lang[WEEKDAY_OVERVIEW] $heading</small></h3>
 
                 <div class=\"box-tools pull-right\">
                     <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"collapse\"><i class=\"fa fa-minus\"></i>

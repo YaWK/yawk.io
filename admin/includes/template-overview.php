@@ -18,7 +18,7 @@
 // check if template obj is set and create if not exists
 if (!isset($template)) { $template = new \YAWK\template(); }
 // new user obj if not exists
-if (!isset($user)) { $user = new \YAWK\user(); }
+if (!isset($user)) { $user = new \YAWK\user($db); }
 // get ID of current active template
 $getID = \YAWK\settings::getSetting($db, "selectedTemplate");
 // load properties of current active template

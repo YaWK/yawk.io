@@ -2,7 +2,7 @@
 // new template object if not exists
 if (!isset($template)) { $template = new \YAWK\template(); }
 // new user object if not exists
-if (!isset($user)) { $user = new \YAWK\user(); }
+if (!isset($user)) { $user = new \YAWK\user($db); }
 // $_GET['id'] or $_POST['id'] holds the template ID to edit.
 // If any one of these two is set, we're in "preview mode" - this means:
 // The user database holds two extra cols: overrideTemplate(int|0,1) and templateID
@@ -83,7 +83,7 @@ else {
 ?>
 
 <?php
-if ($_GET['action'] === "setup")
+if (isset($_GET['action']) && ($_GET['action'] === "setup"))
 {
     // update asset configuration
     if (isset($_POST['save']) && (!empty($_POST['save'])))

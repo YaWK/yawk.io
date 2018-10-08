@@ -69,6 +69,36 @@ if (isset($_GET))
             \YAWK\alert::draw("warning", "Archive Subfolder not set!", "no folder set!", "", 6200);
         }
     }
+    // check if complete archive folder should be downloaded
+    if (isset($_GET['downloadArchive']) == true)
+    {   // check if backup folder and backup file are set and not empty
+        if (isset($_GET['folder']) && (!empty($_GET['folder'])))
+        {
+            $backup->archiveBackupSubFolder = $backup->archiveBackupFolder.$_GET['folder'];
+
+            // zip this whole folder
+            if (is_dir($backup->archiveBackupSubFolder))
+            {   // zip (backup folder and file)
+                if ($backup->zipFolder($db, $backup->archiveBackupSubFolder, $backup->downloadFolder."$_GET[folder].zip") == true)
+                {
+                    \YAWK\alert::draw("success", "DOWNLOAD", "$backup->archiveBackupSubFolder", "", 3200);
+                }
+                else
+                    {
+                        \YAWK\alert::draw("danger", "ZIP nicht erstellt!", "$_GET[folder] not ziped!", "", 6200);
+                    }
+                \YAWK\alert::draw("info", "Folder gefunden!", "$_GET[folder] found!", "", 6200);
+            }
+            else
+            {   // archive sub folder not found
+                \YAWK\alert::draw("warning", "Folder nicht gefunden!", "$_GET[backupFolder] not found!", "", 6200);
+            }
+        }
+        else
+        {   // backup folder or file not set
+            \YAWK\alert::draw("warning", "Archive Subfolder not set!", "no folder set!", "", 6200);
+        }
+    }
 }
 
 // check if post data is set
@@ -381,6 +411,28 @@ if (isset($_POST))
             });
         });
 
+        $('a[href$="#downloadArchive"]').click(function() {
+            var folder = $(this).attr("data-folder");
+            var archiveBackupFolder = $(this).attr("data-archiveBackupFolder");
+            var downloadFolder = $(this).attr("data-downloadFolder");
+            $.ajax({    // do ajax request
+                url:'settings-backup-download.php',
+                type:'POST',
+                data:'folder='+folder+'&archiveBackupFolder='+archiveBackupFolder+'&downloadFolder='+downloadFolder,
+                success:function(data){
+                    if(! data ){
+                        alert('Something went wrong!');
+                        console.log('ajax error');
+                        return false;
+                    }
+                    else {
+                        // success
+                        console.log('ajax success');
+                    }
+                }
+            });
+        });
+
     });
 </script>
 <?php
@@ -414,7 +466,7 @@ echo"<ol class=\"breadcrumb\">
             <input type="hidden" name="action" value="startBackup">
             <button type="submit" class="btn btn-success pull-right" id="savebutton"><i class="fa fa-check" id="savebuttonIcon"></i> &nbsp;<?php echo $lang['BACKUP_CREATE']; ?></button>
             <br><br>
-            <label for="backupMethod"><?php echo $lang['BACKUP_WHAT_TO_BAC8KUP']; ?></label>
+            <label for="backupMethod"><?php echo $lang['BACKUP_WHAT_TO_BACKUP']; ?></label>
             <select name="backupMethod" id="backupMethod" class="form-control">
                 <optgroup label="<?php echo $lang['STANDARD']; ?>"></optgroup>
                     <option name="complete" value="complete">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $lang['BACKUP_FULL']; ?></option>
@@ -465,7 +517,7 @@ echo"<ol class=\"breadcrumb\">
                         if (class_exists('ZipArchive'))
                         {
                             echo "<input type=\"hidden\" class=\"hidden\" name=\"zipBackup\" id=\"zipBackupHidden\" value=\"false\">
-                            <input type=\"checkbox\" data-on=\"<i class='fa fa-file-zip-o'></i>\" data-off=\"$lang[NO]\" data-toggle=\"toggle\" data-onstyle=\"success\" data-offstyle=\"danger\" class=\"checkbox\" name=\"zipBackup\" id=\"zipBackup\" value=\"true\" checked>
+                            <input type=\"checkbox\" data-on=\"<i class='fa fa-file-zip-o'></i>\" data-off=\"$lang[OFF_]\" data-toggle=\"toggle\" data-onstyle=\"success\" data-offstyle=\"danger\" class=\"checkbox\" name=\"zipBackup\" id=\"zipBackup\" value=\"true\" checked>
                             &nbsp;&nbsp;<label for=\"zipBackup\">$lang[BACKUP_ZIP_ALLOWED]&nbsp;&nbsp;</label>";
                         }
                     ?>
@@ -483,7 +535,7 @@ echo"<ol class=\"breadcrumb\">
             <div class="box-body">
                 <div>
                     <h3>
-                        <input type="checkbox" data-on="<i class='fa fa-file-o'></i>" data-off="<?php echo $lang['OFF']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="contentCheckAll" id="contentCheckAll" value="true" checked>
+                        <input type="checkbox" data-on="<i class='fa fa-file-o'></i>" data-off="<?php echo $lang['OFF_']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="contentCheckAll" id="contentCheckAll" value="true" checked>
                         <label for="contentCheckAll" id="contentCheckAllLabel"> <?php echo $lang['PAGES']; ?></label>
                     </h3>
                     <div class="checkbox-group-content">
@@ -501,7 +553,7 @@ echo"<ol class=\"breadcrumb\">
                     </div>
 
                     <h3>
-                        <input type="checkbox" data-on="<i class='fa fa-folder-open-o'></i>" data-off="<?php echo $lang['OFF']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="mediaCheckAll" id="mediaCheckAll" value="true" checked>
+                        <input type="checkbox" data-on="<i class='fa fa-folder-open-o'></i>" data-off="<?php echo $lang['OFF_']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="mediaCheckAll" id="mediaCheckAll" value="true" checked>
                         <label for="mediaCheckAll" id="mediaCheckAllLabel"> <?php echo $lang['BACKUP_MEDIA_FOLDER']; ?></label>
                     </h3>
                     <div class="checkbox-group-media">
@@ -518,7 +570,7 @@ echo"<ol class=\"breadcrumb\">
                     ?>
                     </div>
                     <h3>
-                        <input type="checkbox" data-on="<i class='fa fa-gears'></i>" data-off="<?php echo $lang['OFF']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="systemFolderCheckAll" id="systemFolderCheckAll" value="true" checked="checked">
+                        <input type="checkbox" data-on="<i class='fa fa-gears'></i>" data-off="<?php echo $lang['OFF_']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="systemFolderCheckAll" id="systemFolderCheckAll" value="true" checked="checked">
                         <label for="systemFolderCheckAll" id="systemFolderCheckAllLabel"> <?php echo $lang['SYSTEM']; ?></label>
                     </h3>
                     <div class="checkbox-group-system">
@@ -535,7 +587,7 @@ echo"<ol class=\"breadcrumb\">
                     </div>
 
                     <h3>
-                        <input type="checkbox" data-on="<i class='fa fa-database'></i>" data-off="<?php echo $lang['OFF']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="databaseCheckAll" id="databaseCheckAll" value="true" checked="checked">
+                        <input type="checkbox" data-on="<i class='fa fa-database'></i>" data-off="<?php echo $lang['OFF_']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="databaseCheckAll" id="databaseCheckAll" value="true" checked="checked">
                         <label for="databaseCheckAll" id="databaseCheckAllLabel"> <?php echo $lang['DATABASE']; ?></label>
                     </h3>
                     <div class="checkbox-group-database">
@@ -633,6 +685,8 @@ echo"<ol class=\"breadcrumb\">
                         <thead>
                             <h4><i class=\"fa fa-folder-open-o\"></i> $folder <small><small><i>&nbsp;&nbsp;($lang[LAST_UPDATE] $lastUpdate)</i></small>
                             <a class=\"fa fa-trash-o fa-2x text-gray pull-right\" role=\"dialog\" data-confirm=\"$folder ".$lang['DELETE']."? - $lang[BEWARE] $lang[UNDO_NOT_POSSIBLE]!\" title=\"$lang[ATTENTION] $lang[BACKUP_ARCHIVE] $lang[DELETE]\" href=\"index.php?page=settings-backup&deleteArchiveSubFolder=true&archiveSubFolder=$backup->archiveBackupSubFolder\"></a>
+                            <a class=\"fa fa-history fa-2x text-gray pull-right hidden\" role=\"dialog\" data-confirm=\"$folder ".$lang['DELETE']."? - $lang[BEWARE] $lang[UNDO_NOT_POSSIBLE]!\" title=\"$lang[BACKUP_ARCHIVE_RESTORE]\" href=\"index.php?page=settings-backup&deleteArchiveSubFolder=true&archiveSubFolder=$backup->archiveBackupSubFolder\"></a>
+                            <a class=\"fa fa-download fa-2x text-gray pull-right\" title=\"$lang[BACKUP_ARCHIVE_DOWNLOAD]\" href=\"#downloadArchive\" data-archiveBackupFolder=\"$backup->archiveBackupFolder\" data-downloadFolder=\"$backup->downloadFolder\" data-folder=\"$folder\"></a>
                             </small>
                             </h4>
                         </thead>";
@@ -645,7 +699,7 @@ echo"<ol class=\"breadcrumb\">
                         // get date of current archive file
                         $archiveFileDate = date("F d Y H:i", filemtime($archiveFile));
                         // get archive file size
-                        $archiveFileSize = \YAWK\filemanager::sizeFilter(filesize($archiveFile));
+                        $archiveFileSize = \YAWK\filemanager::sizeFilter(filesize($archiveFile), 0);
                         // calculate how long it is ago...
                         $ago = \YAWK\sys::time_ago($archiveFileDate, $lang);
 
@@ -655,9 +709,9 @@ echo"<ol class=\"breadcrumb\">
                                     <small>$archiveFileDate</small></b><small>&nbsp;&nbsp;<i>($ago)</i></small>
                                 </td>
                                 <td width=\"18%\">
-                                <div style=\"margin-top:-10px;\"><br>
+                                <div style=\"margin-top:-10px;\" class=\"text-right\"><br>
                                     <small><b>$archiveFileSize</b></small>
-                                </div>    
+                                </div>
                                 </td>
 
                                 <td width=\"20%\" class=\"text-right\">

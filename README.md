@@ -1,4 +1,4 @@
-<h1>Attention: work in progress! <br><small>this project is done when it's done. (release soon)</small></h1>
+<h1>Attention: work in progress! <br><small>It's done when it's done. <i><small>(Release: "soon")</small></i></small></h1>
 
 Official Website: <b>https://yawk.io</b><br>
 Documentation: <b>https://docs.yawk.io</b>
@@ -13,7 +13,7 @@ Documentation: <b>https://docs.yawk.io</b>
 <li>Update FrontEnd to Bootstrap 4 / add Bootstrap 4 template settings to backend</li>
 <li>Add YAWK\BACKUP System</li>
 <li>Refactor YAWK\DB Class</li>
-<li><i><small>and of course: check for language errors, major and minor bugs</small></i></li>
+<li><i><small>and of course: check and fix language errors, major and minor bugs</small></i></li>
 </ul>
 <b>Update official YaWK website</b>
 <ul>
@@ -29,7 +29,7 @@ Documentation: <b>https://docs.yawk.io</b>
 If you like, you can take a sneak peak - feel free to download the latest current development version from GitHub: <br>
 <br><b>https://github.com/YaWK/yawk.io/archive/master.zip</b>
 <br><br>
-But please consider - YaWK is is in constant development and underlies <i>nearly daily changes</i>. Due this fact it can not be guaranteed that everything work in this test version like expected. You may <i>possibly</i> encounter some major or minor warnings and bugs. 
+But please consider - YaWK is is in constant development and underlies <i>nearly daily changes</i>. Due this fact it can not be guaranteed that everything work in this test version as expected. You may <i>possibly</i> encounter some major or minor warnings and bugs. 
 <br><br>
 Before YaWK will be released, you will always get the latest development version. After the first version is released, there will be a seperate development branch. You should wait for the official first release before you use YaWK in productive environment. I'm happy about comments, stars, followers and / or code contributions. Thank You!
 

@@ -133,6 +133,17 @@ namespace YAWK {
                             $disabled = '';
                         }
 
+                        // check if placeholder is set and not empty
+                        if (isset($setting['placeholder']) && (!empty($setting['placeholder'])))
+                        {
+                            $ph = $setting['placeholder'];
+                            $placeholder = $lang[$ph];
+                        }
+                        else
+                        {
+                            $placeholder = '';
+                        }
+
                         // CHECKBOX
                         if ($setting['fieldType'] === "checkbox")
                         {    // build a checkbox
@@ -241,7 +252,7 @@ namespace YAWK {
                             {   // build a longValue tagged textarea and fill with longValue
                                 $setting['longValue'] = nl2br($setting['longValue']);
                                 echo "<label for=\"$setting[property]-long\">$setting[label]</label>
-                                      <textarea cols=\"64\" rows=\"4\" placeholder=\"$lang[$placeholder]\" class=\"$setting[fieldClass]\" id=\"$setting[property]-long\" name=\"$setting[property]-long\"$disabled>$setting[longValue]</textarea>";
+                                      <textarea cols=\"64\" rows=\"4\" placeholder=\"$placeholder\" class=\"$setting[fieldClass]\" id=\"$setting[property]-long\" name=\"$setting[property]-long\"$disabled>$setting[longValue]</textarea>";
                                 echo "<p>$setting[description]</p>";
                             }
                             else
@@ -249,7 +260,7 @@ namespace YAWK {
                                 $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
                                 $setting['value'] = nl2br($setting['value']);
                                 echo "<label for=\"$setting[property]-long\">$setting[label]</label>
-                                      <textarea cols=\"64\" rows=\"4\" placeholder=\"$lang[$placeholder]\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\"$disabled>$setting[value]</textarea>";
+                                      <textarea cols=\"64\" rows=\"4\" placeholder=\"$placeholder\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\"$disabled>$setting[value]</textarea>";
                                 echo "<p>$setting[description]</p>";
                             }
                         }
@@ -264,20 +275,20 @@ namespace YAWK {
                             }
                             echo "<label for=\"$setting[property]\">$setting[label]</label>
                                   <input type=\"password\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
-										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\"$readonly$disabled><p>$setting[description]</p>";
+										 value=\"$setting[value]\" placeholder=\"$placeholder\"$readonly$disabled><p>$setting[description]</p>";
                         }
 
                         /* INPUT TEXT FIELD */
                         else if ($setting['fieldType'] === "input")
                         {    // draw an input field
-                            $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
+
                             if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
                             {
                                 echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
                             }
                             echo "<label for=\"$setting[property]\">$setting[label]</label>
                                   <input type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
-										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\"$readonly$disabled><p>$setting[description]</p>";
+										 value=\"$setting[value]\" placeholder=\"$placeholder\"$readonly$disabled><p>$setting[description]</p>";
                         }
 
                         /* INPUT TEXT FIELD */
@@ -290,7 +301,7 @@ namespace YAWK {
                             }
                             echo "<label for=\"$setting[property]\">$setting[label]</label>
                                   <input type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
-										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\"><p>$setting[description]</p>";
+										 value=\"$setting[value]\"><p>$setting[description]</p>";
                         }
                     }
                 }

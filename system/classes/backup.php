@@ -38,6 +38,8 @@ namespace YAWK\BACKUP
         public $archiveBackupFile = '';
         /** @var string new archive file */
         public $archiveBackupNewFile = '';
+        /** @var string upload folder */
+        public $downloadFolder = '../system/backup/download/';
         /** @var string name of the backup .sql file */
         public $targetFilename = 'backup.zip';
         /** @var string files|database|complete */
@@ -266,5 +268,73 @@ namespace YAWK\BACKUP
             }
         }
 
+        public function checkZipFunction()
+        {   // check if zip function exists
+            if (function_exists('ZipArchive'))
+            {   // ok
+                return true;
+            }
+            else
+                {   // zip function not available
+                    return false;
+                }
+        }
+
+        function zipFolder($db, $source, $destination)
+        {
+            if (!extension_loaded('zip') || !file_exists($source)) {
+                return false;
+            }
+
+            $zip = new \ZipArchive();
+            if (!$zip->open($destination, \ZIPARCHIVE::CREATE)) {
+                return false;
+            }
+
+            $source = str_replace('\\', '/', realpath($source));
+
+            if (is_dir($source) === true)
+            {
+                $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($source), \RecursiveIteratorIterator::SELF_FIRST);
+
+                foreach ($files as $file)
+                {
+                    $file = str_replace('\\', '/', $file);
+
+                    // Ignore "." and ".." folders
+                    if( in_array(substr($file, strrpos($file, '/')+1), array('.', '..')) )
+                    continue;
+
+                    $file = realpath($file);
+
+                    if (is_dir($file) === true)
+                    {
+                        $zip->addEmptyDir(str_replace($source . '/', '', $file . '/'));
+                    }
+                    else if (is_file($file) === true)
+                    {
+                        $zip->addFromString(str_replace($source . '/', '', $file), file_get_contents($file));
+                    }
+                }
+            }
+            else if (is_file($source) === true)
+            {
+                $zip->addFromString(basename($source), file_get_contents($source));
+            }
+
+            $zip->close();
+
+            if (is_file($destination))
+            {
+                return true;
+            }
+            else
+                {
+                    \YAWK\sys::setSyslog($db, 50, 3, "failed to create $destination", 0, 0, 0, 0);
+                    return false;
+                }
+
+
+        }
     }
 }

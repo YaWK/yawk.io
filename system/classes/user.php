@@ -82,7 +82,7 @@ namespace YAWK {
         /**
          * user constructor.
          */
-        function __construct()
+        function __construct($db)
         {
             if (!isset($db)){ $db = new \YAWK\db(); }
             if (isset($_SESSION['username']))
@@ -1698,7 +1698,7 @@ namespace YAWK {
         static function checkLogin($db)
         {   /** @var $db \YAWK\db */
             /* check user login */
-            $user = new \YAWK\user();
+            $user = new \YAWK\user($db);
             if(isset($_POST['user']) && isset($_POST['password'])) {
                 if($user->login($db, $_POST['user'],$_POST['password']))
                 {   // create session var
@@ -1724,7 +1724,7 @@ namespace YAWK {
         public static function ajaxLogin($db, $user, $password)
         {
             // create new user class object
-            $userClass = new \YAWK\user();
+            $userClass = new \YAWK\user($db);
 
             // check user and password vars
             if (isset($user) && (!empty($user) && (is_string($user)

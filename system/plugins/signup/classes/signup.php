@@ -51,7 +51,7 @@ namespace YAWK\PLUGINS\SIGNUP {
                 $this->username = $_SESSION['username'];
                 if (!isset($user))
                 {   // create new user object if it not exists
-                    $user = new \YAWK\user();
+                    $user = new \YAWK\user($db);
                 }
                 // load properties for this user
                 $user->loadProperties($db, $this->username);

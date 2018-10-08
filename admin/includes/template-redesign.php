@@ -84,7 +84,7 @@
 // new template object if not exists
 if (!isset($template)) { $template = new \YAWK\template(); }
 // new user object if not exists
-if (!isset($user)) { $user = new \YAWK\user(); }
+if (!isset($user)) { $user = new \YAWK\user($db); }
 
 // check, if a session is already running
 if (!isset($_SESSION) || (empty($_SESSION)))

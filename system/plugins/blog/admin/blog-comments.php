@@ -136,7 +136,7 @@ echo"<ol class=\"breadcrumb\">
         else {
             if (!isset($user))
             {
-                $user = new \YAWK\user();
+                $user = new \YAWK\user($db);
             }
             $comment_user = $user->getProperty($db, $row['uid'], "username");
         }

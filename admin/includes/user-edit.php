@@ -3,7 +3,7 @@
     {   // no username obj is set
         if (isset($_GET['user']))
         {   // create new user obj
-            $user = new \YAWK\user();
+            $user = new \YAWK\user($db);
             // load properties for given user
             $user->loadProperties($db, $_GET['user']);
         }

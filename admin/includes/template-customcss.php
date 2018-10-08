@@ -179,7 +179,7 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
 // new template object if not exists
 if (!isset($template)) { $template = new \YAWK\template(); }
 // new user object if not exists
-if (!isset($user)) { $user = new \YAWK\user(); }
+if (!isset($user)) { $user = new \YAWK\user($db); }
 // $_GET['id'] or $_POST['id'] holds the template ID to edit.
 // If any one of these two is set, we're in "preview mode" - this means:
 // The user database holds two extra cols: overrideTemplate(int|0,1) and templateID

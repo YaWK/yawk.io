@@ -44,7 +44,7 @@ if (!isset($lang) || (empty($lang)))
 // user object
 if (!isset($user))
 {   // create new user obj if none exists
-    $user = new \YAWK\user();
+    $user = new \YAWK\user($db);
 }
 
 // page object

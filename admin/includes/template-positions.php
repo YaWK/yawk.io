@@ -4,7 +4,7 @@ if (!isset($db)) { $db = new \YAWK\db(); }
 // new template object if not exists
 if (!isset($template)) { $template = new \YAWK\template(); }
 // new user object if not exists
-if (!isset($user)) { $user = new \YAWK\user(); }
+if (!isset($user)) { $user = new \YAWK\user($db); }
 
 // get ID of current active template
 $getID = \YAWK\settings::getSetting($db, "selectedTemplate");

@@ -3,7 +3,7 @@
 include 'system/plugins/userpage/classes/userpage.php';
 if (!isset($user) || (empty($user)))
 {
-    $user = new \YAWK\user();
+    $user = new \YAWK\user($db);
 }
 if (!isset($lang) || (empty($lang)))
 {

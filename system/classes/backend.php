@@ -63,7 +63,7 @@ namespace YAWK {
             <li><i class=\"fa fa-css3\"></i> &nbsp;<a href=\"index.php?page=template-customcss\" title=\"$lang[EDIT]\"> $lang[CUSTOM_CSS]</a></li>
             <li><i class=\"fa fa-code\"></i> &nbsp;<a href=\"index.php?page=template-customjs\" title=\"$lang[EDIT]\"> $lang[CUSTOM_JS]</a></li>
             <li><i class=\"fa fa-puzzle-piece\"></i> &nbsp;<a href=\"index.php?page=template-assets\" title=\"$lang[EDIT]\"> $lang[ASSETS]</a></li>
-            <li><i class=\"fa fa-eye\"></i> &nbsp;<a href=\"index.php?page=template-preview\" title=\"$lang[WATCH]\"> $lang[PREVIEW]</a></li>
+            <li><i class=\"fa fa-eye\"></i> &nbsp;<a href=\"index.php?page=template-preview\" title=\"$lang[WEBSITE] $lang[PREVIEW]\"> $lang[PREVIEW]</a></li>
         </ol></section>";
         }
 
@@ -161,7 +161,7 @@ namespace YAWK {
         static function checkLogin($db)
         {   /** @var $db \YAWK\db */
             /* check user login */
-            $user = new \YAWK\user();
+            $user = new \YAWK\user($db);
             if(isset($_POST['user']) && isset($_POST['password'])) {
                 if($user->loginBackEnd($db, $_POST['user'],$_POST['password']))
                 {   // create session var

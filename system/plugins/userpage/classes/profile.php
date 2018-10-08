@@ -38,7 +38,7 @@ namespace YAWK\PLUGINS\USERPAGE {
         {
             global $user;
             $this->username = $_SESSION['username'];
-            $user = new \YAWK\user();
+            $user = new \YAWK\user($db);
             $user->loadProperties($db, $this->username);
             if ($user->isLoggedIn($db, $user->username)) {
                 // user is logged in, draw profile page

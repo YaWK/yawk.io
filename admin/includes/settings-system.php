@@ -32,6 +32,8 @@ if(isset($_POST['save']))
 }
 ?>
 <?php
+// get all template settings into array
+$settings = \YAWK\settings::getAllSettingsIntoArray($db);
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
     <!-- Content Wrapper. Contains page content -->
@@ -64,8 +66,8 @@ echo"</section><!-- Main content -->
             <div class="box">
                 <div class="box-body">
                     <h3><?php echo $lang['SERVER']; ?> <small> <?php echo $lang['SERVER_SUBTEXT']; ?></small></h3>
-                    <?php \YAWK\settings::getFormElements($db, $newsletter, 9, $lang); ?>
-                    <?php \YAWK\settings::getFormElements($db, $newsletter, 16, $lang); ?>
+                    <?php \YAWK\settings::getFormElements($db, $settings, 9, $lang); ?>
+                    <?php \YAWK\settings::getFormElements($db, $settings, 16, $lang); ?>
                 </div>
             </div>
         </div>
@@ -73,7 +75,7 @@ echo"</section><!-- Main content -->
             <!-- database settings -->
             <div class="box">
                 <div class="box-body">
-                    <?php \YAWK\settings::getFormElements($db, $newsletter, 13, $lang); ?>
+                    <?php \YAWK\settings::getFormElements($db, $settings, 13, $lang); ?>
                 </div>
             </div>
         </div>
@@ -82,7 +84,7 @@ echo"</section><!-- Main content -->
             <div class="box">
                 <div class="box-body">
                     <h3><i class="fa fa-code"></i> <?php echo $lang['EDITOR']; ?> <small> <?php echo $lang['EDITOR_SUBTEXT']; ?></small></h3>
-                    <?php \YAWK\settings::getFormElements($db, $newsletter, 14, $lang); ?>
+                    <?php \YAWK\settings::getFormElements($db, $settings, 14, $lang); ?>
                 </div>
             </div>
         </div>

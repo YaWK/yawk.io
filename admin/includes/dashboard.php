@@ -121,7 +121,7 @@ if (\YAWK\settings::getSetting($db, "backendTipOfDay") == true)
 
     <div class="col-md-4">
         <!-- weekday stats -->
-        <?php $stats->drawWeekdayBox($db, $data, $lang); ?>
+        <?php $stats->drawWeekdayBox($db, $data, $lang, 0); ?>
         <!-- latest users -->
         <?php \YAWK\dashboard::drawLatestUsers($db, 8, $lang); ?>
         <!-- daytime stats -->

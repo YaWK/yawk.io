@@ -32,6 +32,9 @@ if(isset($_POST['save']))
 }
 ?>
 <?php
+
+// get all template settings into array
+$settings = \YAWK\settings::getAllSettingsIntoArray($db);
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
     <!-- Content Wrapper. Contains page content -->
@@ -62,13 +65,13 @@ echo"</section><!-- Main content -->
                 <div class="box">
                     <div class="box-body">
                         <!-- backend settings -->
-                        <?php \YAWK\settings::getFormElements($db, $newsletter, 2, $lang); ?>
+                        <?php \YAWK\settings::getFormElements($db, $settings, 2, $lang); ?>
                     </div>
                 </div>
                 <div class="box">
                     <div class="box-body">
                         <?php // \YAWK\settings::getFormElements($db, $settings, 19, $lang); ?>
-                        <?php \YAWK\settings::getFormElements($db, $newsletter, 20, $lang); ?>
+                        <?php \YAWK\settings::getFormElements($db, $settings, 20, $lang); ?>
                     </div>
                 </div>
             </div>
@@ -76,14 +79,14 @@ echo"</section><!-- Main content -->
                 <div class="box">
                     <div class="box-body">
                 <!-- footer settings -->
-                <?php \YAWK\settings::getFormElements($db, $newsletter, 11, $lang); ?>
+                <?php \YAWK\settings::getFormElements($db, $settings, 11, $lang); ?>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="box">
                     <div class="box-body">
-                <?php \YAWK\settings::getFormElements($db, $newsletter, 12, $lang); ?>
+                <?php \YAWK\settings::getFormElements($db, $settings, 12, $lang); ?>
                     </div>
                 </div>
             </div>

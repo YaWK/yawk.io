@@ -4,7 +4,7 @@
  */
 if (!isset($user))
 {
-  $user = new \YAWK\user();
+  $user = new \YAWK\user($db);
 }
   $user->logout($db);
   \YAWK\backend::drawContentWrapper();

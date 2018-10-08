@@ -70,11 +70,11 @@ echo"<ol class=\"breadcrumb\">
     <div class="box-body">
         <form action="index.php?page=stats" method="post" class="form-inline">
         <div class="col-md-4">
-            <?php echo "<h4><i class=\"fa fa-line-chart\"></i> &nbsp;$lang[STATS]&nbsp;<small>$lang[STATS_]</small></h4>"; ?>
+            <?php echo "<h4><i class=\"fa fa-line-chart\"></i> &nbsp;$lang[STATS]</h4>"; ?>
         </div>
         <div class="col-md-8">
-                <?php echo $lang['SHOW_DATA_OF']; ?>
-                <label for="interval"><?php echo $lang['interval']; ?></label>
+
+                <label for="interval"><?php echo $lang['SHOW_DATA_OF']; ?>&nbsp;</label>
                 <select id="interval" name="interval" class="form-control">
                     <?php
                     if (isset($_POST['interval']))
@@ -89,7 +89,7 @@ echo"<ol class=\"breadcrumb\">
                     }
                     ?>
                 </select>
-                <label for="period"><?php echo $lang['PERIOD']; ?></label>
+                <label for="period"></label>
                 <select id="period" name="period" class="form-control">
                     <?php
                     if (isset($_POST['period']) && (isset($_POST['period'])))
@@ -178,7 +178,7 @@ echo"<ol class=\"breadcrumb\">
                 <?php $stats->drawOverviewBox($lang); ?>
                 <!-- / box -->
                 <br>
-                <?php $stats->drawWeekdayBox($db, $data, $lang); ?>
+                <?php $stats->drawWeekdayBox($db, $data, $lang, 0); ?>
                 <br>
                 <?php $stats->getDaysOfMonthBox($lang); ?>
             </div>

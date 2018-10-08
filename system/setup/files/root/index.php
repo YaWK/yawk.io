@@ -68,7 +68,7 @@ if (!isset($template)) {
 }
 /* set user object */
 if (!isset($user)) {
-    $user = new \YAWK\user();
+    $user = new \YAWK\user($db);
 }
 /* set page object */
 if (!isset($page)) {

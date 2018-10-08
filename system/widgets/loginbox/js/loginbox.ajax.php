@@ -16,7 +16,7 @@ if (!isset($db) || (empty($db)))
 // check if user is set
 if (!isset($user) || (empty($user)))
 {   // create new user object
-    $user = new \YAWK\user();
+    $user = new \YAWK\user($db);
 }
 
 // check username data

@@ -168,7 +168,7 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
 // new template object if not exists
 if (!isset($template)) { $template = new \YAWK\template(); }
 // new user object if not exists
-if (!isset($user)) { $user = new \YAWK\user(); }
+if (!isset($user)) { $user = new \YAWK\user($db); }
 
 // load properties of current active template
 // get ID of current active template

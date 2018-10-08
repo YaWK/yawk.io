@@ -37,7 +37,7 @@ namespace YAWK\PLUGINS\USERPAGE {
         public function init($db){
             global $user;
             $this->username = $_SESSION['username'];
-            $user = new \YAWK\user();
+            $user = new \YAWK\user($db);
             $user->loadProperties($db, $this->username);
             if ($user->isLoggedIn($db, $user->username)){
                 $this->html .= $this->drawForm();
