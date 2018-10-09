@@ -262,6 +262,31 @@ namespace YAWK {
         }
 
         /**
+         * Draw backup icon on navbar top beside preview icon
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param array $lang Language Array
+         * @return null
+         */
+        function drawHtmlNavbarBackupIcon($lang)
+        {
+            // set menu to active if user clicked on preview icon
+            if (isset($_GET['page']) && (!empty($_GET['page']) && ($_GET['page'] === "settings-backup")))
+            {
+                $selected = ' class="active"';
+            }
+            else { $selected = ''; }
+            echo  "<li $selected>
+                <!-- preview eye icon -->
+                <a href=\"index.php?page=settings-backup\" title=\"$lang[BACKUP]\">
+                  <i class=\"fa fa-hdd-o\"></i>
+                </a>
+                </li>";
+            return null;
+        }
+
+        /**
          * Draw preview page icon on navbar top beside other notification icons
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
@@ -1148,7 +1173,8 @@ namespace YAWK {
             <div class=\"tab-content\">
               <!-- Home tab content -->
               <div class=\"tab-pane active\" id=\"control-sidebar-home-tab\">
-                <h3 class=\"control-sidebar-heading\">$lang[BACKUP]</h3>
+              <!--
+                <h3 class=\"control-sidebar-heading\">$ lang[BACKUP]</h3>
                 <ul class=\"control-sidebar-menu\">
                   <li>
                     <a href=\"#\">
@@ -1169,7 +1195,7 @@ namespace YAWK {
                     </a>
                   </li>
                 </ul><!-- /.control-sidebar-menu -->
-
+               <!-- 
                 <h3 class=\"control-sidebar-heading\">Zeiterfassung</h3>
                 <ul class=\"control-sidebar-menu\">
                   <li>
@@ -1190,6 +1216,7 @@ namespace YAWK {
               <div class=\"tab-pane\" id=\"control-sidebar-stats-tab\">Stats Tab Content</div><!-- /.tab-pane -->
               <!-- Settings tab content -->
               <div class=\"tab-pane\" id=\"control-sidebar-settings-tab\">
+              <!--
                 <form method=\"post\">
                   <h3 class=\"control-sidebar-heading\">General Settings</h3>
                   <div class=\"form-group\">
@@ -1200,7 +1227,7 @@ namespace YAWK {
                     <p>
                       Some information about this general settings option
                     </p>
-                  </div><!-- /.form-group -->
+                  </div><!-- /.form-group -- >
                 </form>
               </div><!-- /.tab-pane -->
             </div>
