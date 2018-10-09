@@ -94,9 +94,9 @@ if (!isset($_SESSION) || (empty($_SESSION)))
 }
 
 // get ID of current active template
-$getID = \YAWK\settings::getSetting($db, "selectedTemplate");
+$selectedTemplateID = \YAWK\settings::getSetting($db, "selectedTemplate");
 // load properties of current active template
-$template->loadProperties($db, $getID);
+$template->loadProperties($db, $selectedTemplateID);
 // previewButton is an empty string - why? this should be checked
 $previewButton = "";
 // load all template settings into array

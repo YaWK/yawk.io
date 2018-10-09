@@ -10,22 +10,7 @@ $getID = \YAWK\settings::getSetting($db, "selectedTemplate");
 $template->loadProperties($db, $getID);
 $oldTplSettings = \YAWK\template::getTemplateSettingsArray($db, $template->id);
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
-echo "
-    <!-- Content Wrapper. Contains page content -->
-    <div class=\"content-wrapper\" id=\"content-FX\">
-    <!-- Content Header (Page header) -->
-    <section class=\"content-header\">";
-/* draw Title on top */
-$t = "$lang[TEMPLATE] $lang[SET_AND_EDIT]";
-echo \YAWK\backend::getTitle($lang['TPL_MANAGER'], $t);
-echo"<ol class=\"breadcrumb\">
-            <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
-            <li><a href=\"index.php?page=template-manage\" title=\"$lang[TPL_MANAGER]\"> $lang[TPL_MANAGER]</a></li>
-            <li><b><a href=\"index.php?page=template-edit&id=$template->id\" class=\"active\" title=\"$lang[TPL_EDIT]\">$template->name</a></b></li>
-        </ol></section>
-    <!-- Main content -->
-    <section class=\"content\">";
-/* page content start here */
+
 // check if any action is requested
 
 if (isset($_POST['save']) && (isset($_GET['action']) && (isset($_GET['id']))))
@@ -43,7 +28,7 @@ if (isset($_POST['save']) && (isset($_GET['action']) && (isset($_GET['id']))))
                 // check if value has changed...
                 if ($template->saveProperties($db, $_GET['id'], $_POST, $oldTplSettings))
                 {
-                    \YAWK\alert::draw("success", $lang['SUCCESS'], $lang['POSITIONS'] . "&nbsp;" . $lang['SAVED'], "", 2400);
+                    \YAWK\alert::draw("success", $lang['SUCCESS'], $lang['POSITIONS'] . "&nbsp;" . $lang['SAVED'], "", 6400);
                 }
                 else
                 {

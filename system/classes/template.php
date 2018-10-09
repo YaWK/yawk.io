@@ -288,7 +288,7 @@ namespace YAWK {
                 }
 
                 // save this property only if its NOT save or customcss
-                if ($property != "save" && $property != "customCSS")
+                if ($property != "save" && ($property != "customCSS") && ($property != "testText"))
                 {
                     if ($oldTplSettings[$property] === $value)
                     {   // if old settings and new settings are the same
