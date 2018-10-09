@@ -280,12 +280,10 @@ namespace YAWK\BACKUP
             // initialize database backup (this will run mysqldump-php)
             if ($this->mysqlBackup->initMysqlBackup($db, $this->overwriteBackup, $this->zipBackup) === true)
             {   // database backup successful
-                \YAWK\sys::setSyslog($db, 50, 3, "database backup created", 0, 0, 0, 0);
                 return true;
             }
             else
             {   // database backup failed
-                \YAWK\sys::setSyslog($db, 52, 2, "failed to init mysql database backup", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -301,16 +299,8 @@ namespace YAWK\BACKUP
         {
             // check if zip extension is loaded
             if (extension_loaded('zip'))
-            {
-                // check if zip function exists
-                if (function_exists('ZipArchive'))
-                {   // ok
-                    return true;
-                }
-                else
-                {   // zip function not available
-                    return false;
-                }
+            {   // ok...
+                return true;
             }
             else
                 {   // zip extension is not loaded
