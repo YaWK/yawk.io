@@ -1,28 +1,28 @@
 /*!
  * Font Awesome Icon Picker
- * https://itsjavi.com/fontawesome-iconpicker/
+ * https://farbelous.github.io/fontawesome-iconpicker/
  *
  * Originally written by (c) 2016 Javi Aguilar
  * Licensed under the MIT License
- * https://github.com/itsjavi/fontawesome-iconpicker/blob/master/LICENSE
+ * https://github.com/farbelous/fontawesome-iconpicker/blob/master/LICENSE
  *
  */
 /*
  * Font Awesome Icon Picker
- * https://itsjavi.com/fontawesome-iconpicker/
+ * https://farbelous.github.io/fontawesome-iconpicker/
  *
  * Originally written by (c) 2016 Javi Aguilar
  * Licensed under the MIT License
- * https://github.com/itsjavi/fontawesome-iconpicker/blob/master/LICENSE
+ * https://github.com/farbelous/fontawesome-iconpicker/blob/master/LICENSE
  *
  */
 /*
  * Font Awesome Icon Picker
- * https://itsjavi.com/fontawesome-iconpicker/
+ * https://farbelous.github.io/fontawesome-iconpicker/
  *
  * Originally written by (c) 2016 Javi Aguilar
  * Licensed under the MIT License
- * https://github.com/itsjavi/fontawesome-iconpicker/blob/master/LICENSE
+ * https://github.com/farbelous/fontawesome-iconpicker/blob/master/LICENSE
  *
  */
 .iconpicker-popover.popover {
@@ -35,6 +35,7 @@
   text-align: left;
   width: 216px;
   background: #f7f7f7;
+  z-index: 9;
 }
 .iconpicker-popover.popover.top,
 .iconpicker-popover.popover.topLeftCorner,
@@ -322,6 +323,7 @@
 .iconpicker .iconpicker-item.iconpicker-selected {
   box-shadow: none;
   color: #fff;
+  background: #000;
 }
 .iconpicker-component {
   cursor: pointer;
