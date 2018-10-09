@@ -40,8 +40,6 @@ namespace YAWK\BACKUP
         public $archiveBackupNewFile = '';
         /** @var string upload folder */
         public $downloadFolder = '../system/backup/download/';
-        /** @var string name of the backup .sql file */
-        public $targetFilename = 'backup.zip';
         /** @var string files|database|complete */
         public $backupMethod = "database";
         /** @var string filename of the config file (default: backup.ini) */
@@ -57,22 +55,23 @@ namespace YAWK\BACKUP
         /** @var string remove files after zip is complete */
         public $removeAfterZip = "true";
 
-
         /**
          * Init Backup Class (start backup)
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
+         * @param       object $db database object
+         * @return      bool true: backup init success | false: backup init failed
          */
         public function init($db)
-        {   // run backup system
-
+        {
+            // run backup system
             if ($this->run($db) === true)
-            {
+            {   // init successful
                 return true;
             }
             else
-                {
+                {   // backup init failed
                     return false;
                 }
         }
@@ -82,7 +81,8 @@ namespace YAWK\BACKUP
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @return      bool
+         * @param       object $db database object
+         * @return      bool true: backup successful | false: backup failed
          */
         public function run($db)
         {   /** @var $db \YAWK\db */
@@ -95,19 +95,20 @@ namespace YAWK\BACKUP
                     case "complete":
                     {
                         // make a full backup of everything
+                        return true;
                     }
                     break;
 
                     // backup database only
                     case "database":
-                    {   // check if database backup has made
-
+                    {
+                        // run database backup
                         if ($this->runDatabaseBackup($db) === true)
-                        {   // ok...
+                        {   // db backup was successful
                             return true;
                         }
                         else
-                            {   // failed to run database backup
+                            {   // failed to run db backup
                                 return false;
                             }
                     }
@@ -117,6 +118,7 @@ namespace YAWK\BACKUP
                     case "files":
                     {
                         // files + folder only
+                        return true;
                     }
                     break;
 
@@ -124,14 +126,18 @@ namespace YAWK\BACKUP
                     case "custom":
                     {
                         // do custom backup stuff...
+                        return true;
                     }
                     break;
                 }
+                // unknown backup method -
+                return false;
             }
             else
                 {
                     // what if no backup method is set?
                     // add default behavior
+                    return false;
                 }
         }
 
@@ -142,6 +148,7 @@ namespace YAWK\BACKUP
          * @version     1.0.0
          * @link        http://yawk.io
          * @return bool
+         * @annotation  will be added to every .zip file to identify what to do during restore process
          */
         public function setIniFile($db)
         {   // check if target folder is set
@@ -166,7 +173,7 @@ namespace YAWK\BACKUP
                 }
                 else
                     {   // unable to write config file
-                        \YAWK\sys::setSyslog($db, 51, 1, "failed to write backup config file $this->configFile", 0, 0, 0, 0);
+                        \YAWK\sys::setSyslog($db, 52, 2, "failed to write backup config file $this->configFile", 0, 0, 0, 0);
                         return false;
                     }
             }
@@ -193,13 +200,21 @@ namespace YAWK\BACKUP
             {
                 // update backup settings from ini file
                 $this->backupSettings = parse_ini_file($this->configFile);
-               //  echo "ini file parse successful!";
-                return true;
+                // check backup settings array is set
+                if (is_array($this->backupSettings))
+                {   // ok...
+                    return true;
+                }
+                else
+                    {   // failed parse ini file: but array is not set
+                        \YAWK\sys::setSyslog($db, 52, 1, "failed to parse ini file: $this->configFile is there, but backupSettings array is not set", 0, 0, 0, 0);
+                        return false;
+                    }
             }
             else
                 {   // no ini file found!
                     // set syslog entry
-                    \YAWK\sys::setSyslog($db, 51, 1, "failed to parse ini file - $this->configFile not found", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 51, 1, "failed to parse ini file: $this->configFile not found", 0, 0, 0, 0);
                     return false;
                 }
         }
@@ -248,80 +263,132 @@ namespace YAWK\BACKUP
             }
         }
 
+        /**
+         * Include mysql backup class and run mysqldump backup
+         * @author      Daniel Retzl <danielretzl@gmail.com>
+         * @version     1.0.0
+         * @link        http://yawk.io
+         * @return      bool
+         */
         public function runDatabaseBackup($db)
         {
             // include backup-database class
             require_once 'backup-mysqlBackup.php';
             // create new database backup object
             $this->mysqlBackup = new \YAWK\BACKUP\DATABASE\mysqlBackup($this->backupSettings);
-            // initialize database backup
 
+            // initialize database backup (this will run mysqldump-php)
             if ($this->mysqlBackup->initMysqlBackup($db, $this->overwriteBackup, $this->zipBackup) === true)
             {   // database backup successful
-                \YAWK\sys::setSyslog($db, 50, 3, "database backup created successfully", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 50, 3, "database backup created", 0, 0, 0, 0);
                 return true;
             }
             else
             {   // database backup failed
-                \YAWK\sys::setSyslog($db, 52, 2, "failed to create database backup", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 52, 2, "failed to init mysql database backup", 0, 0, 0, 0);
                 return false;
             }
         }
 
+        /**
+         * Check if ZipArchive function exists
+         * @author      Daniel Retzl <danielretzl@gmail.com>
+         * @version     1.0.0
+         * @link        http://yawk.io
+         * @return      bool
+         */
         public function checkZipFunction()
-        {   // check if zip function exists
-            if (function_exists('ZipArchive'))
-            {   // ok
-                return true;
+        {
+            // check if zip extension is loaded
+            if (extension_loaded('zip'))
+            {
+                // check if zip function exists
+                if (function_exists('ZipArchive'))
+                {   // ok
+                    return true;
+                }
+                else
+                {   // zip function not available
+                    return false;
+                }
             }
             else
-                {   // zip function not available
+                {   // zip extension is not loaded
                     return false;
                 }
         }
 
+        /**
+         * Zip a whole folder from $source to $destination.zip
+         * @author      Daniel Retzl <danielretzl@gmail.com>
+         * @version     1.0.0
+         * @link        http://yawk.io
+         * @return      bool
+         */
         function zipFolder($db, $source, $destination)
         {
-            if (!extension_loaded('zip') || !file_exists($source)) {
+            // check if zip extension is available
+            if ($this->checkZipFunction() === false)
+            {   // if not
                 return false;
             }
 
+            // make sure $source file/folder exists
+            if (!file_exists($source))
+            {   // if not
+                return false;
+            }
+
+            // create new zip object
             $zip = new \ZipArchive();
-            if (!$zip->open($destination, \ZIPARCHIVE::CREATE)) {
+
+            // make sure to create and open new zip archive
+            if (!$zip->open($destination, \ZIPARCHIVE::CREATE))
+            {   // if not
                 return false;
             }
 
+            // set path slashes correctly
             $source = str_replace('\\', '/', realpath($source));
 
+            // check if $source is a directoy
             if (is_dir($source) === true)
             {
-                $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($source), \RecursiveIteratorIterator::SELF_FIRST);
+                // run recusrive iterators to store files in array
+                $elements = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($source), \RecursiveIteratorIterator::SELF_FIRST);
 
-                foreach ($files as $file)
+                // walk through folder
+                foreach ($elements as $file)
                 {
+                    // set path slashes correctly
                     $file = str_replace('\\', '/', $file);
 
-                    // Ignore "." and ".." folders
+                    // ignore dot folders (. and ..)
                     if( in_array(substr($file, strrpos($file, '/')+1), array('.', '..')) )
                     continue;
 
+                    // set file including path
                     $file = realpath($file);
 
+                    // check if current element is a directory
                     if (is_dir($file) === true)
-                    {
+                    {   // add folder to zip file
                         $zip->addEmptyDir(str_replace($source . '/', '', $file . '/'));
                     }
+                    // check if current element is a file
                     else if (is_file($file) === true)
-                    {
+                    {   // add file to zip archive
                         $zip->addFromString(str_replace($source . '/', '', $file), file_get_contents($file));
                     }
                 }
             }
+            // if $source is a file
             else if (is_file($source) === true)
-            {
+            {   // add file to zip archive
                 $zip->addFromString(basename($source), file_get_contents($source));
             }
 
+            // all done, close (and write) zip archive
             $zip->close();
 
             // check if .zip file is there
@@ -353,17 +420,14 @@ namespace YAWK\BACKUP
                                 });
                             </script>";
                 }
-
-                // ok, zip is there
+                // ZIP file created, force download js fired.
                 return true;
             }
             else
-                {
-                    \YAWK\sys::setSyslog($db, 50, 3, "failed to create $destination", 0, 0, 0, 0);
+                {   // failed to create download archive
+                    \YAWK\sys::setSyslog($db, 52, 3, "failed to create download archive: $destination", 0, 0, 0, 0);
                     return false;
                 }
-
-
         }
     }
 }
