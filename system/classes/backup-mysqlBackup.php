@@ -62,6 +62,10 @@ namespace YAWK\BACKUP\DATABASE
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
+         * @param       object $db database object
+         * @param       string $overwriteBackup if overwrite backup is allowed or not "true" | "false"
+         * @param       string $zipBackup if backup should be zipped or not "true" | "false"
+         * @return      bool
          */
         public function initMysqlBackup($db, $overwriteBackup, $zipBackup)
         {
@@ -70,13 +74,11 @@ namespace YAWK\BACKUP\DATABASE
             $this->zipBackup = $zipBackup;
 
             if ($this->startMysqlBackup($db) === true)
-            {   // syslog: backup done
-                // echo "startMysqlBackup done!<br>";
+            {   // mysql backup done
                 return true;
             }
             else
-            {   // syslog: backup failed
-                // echo "startMysqlBackup failed!<br>";
+            {   // mysql backup failed
                 return false;
             }
         }
@@ -90,7 +92,8 @@ namespace YAWK\BACKUP\DATABASE
          * @annotation mysqldump settings eg. include or exclude tables from database
          */
         public function setDumpSettings()
-        {   // generate dump settings array
+        {
+            // generate dump settings array
             $this->dumpSettings = array(
                 'include-tables'
                 => array(),
@@ -132,7 +135,6 @@ namespace YAWK\BACKUP\DATABASE
                     return $this->dumpSettings['exclude-tables'] = array();
                 }
         }
-
 
         /**
          * Include only this tables into backup
@@ -179,7 +181,7 @@ namespace YAWK\BACKUP\DATABASE
         {
             // get database configuration
             require ("../system/classes/dbconfig.php");
-            // set single vars (because mysqldump requires it that way)
+            // set configuration vars for mysqldump-php
             $this->host = $this->config['server'];
             $this->user = $this->config['username'];
             $this->pass = $this->config['password'];
@@ -187,7 +189,6 @@ namespace YAWK\BACKUP\DATABASE
             $this->prefix = $this->config['prefix'];
             $this->port = $this->config['port'];
         }
-
 
         /**
          * Include mysqldump-php and create new dump object
@@ -413,7 +414,7 @@ namespace YAWK\BACKUP\DATABASE
         {
             if ($this->zipBackup == "true")
             {   // check if ZipArchive class is available
-                if (class_exists('ZipArchive'))
+                if ($this->checkZipFunction() == true)
                 {
                     // ok, create new zip object
                     $zip = new \ZipArchive();
@@ -427,20 +428,25 @@ namespace YAWK\BACKUP\DATABASE
                     // generate zip filename
                     $filename = $this->sqlBackup.".zip";
 
-                    // open a new zip archive
-                    if ($zip->open($filename, \ZipArchive::CREATE)!== TRUE)
-                    {   // unable to open new zip archive
-                        exit("cannot open $filename\n");
+                    // open new zip archive
+                    if ($zip->open($filename, \ZipArchive::CREATE) !== TRUE)
+                    {   // failed to create new zip archive
+                        \YAWK\sys::setSyslog($db, 51, 2, "failed to create new zip archive $filename", 0, 0, 0, 0);
+                        return false;
                     }
 
                     // add .sql file to zip archive
                     $zip->addFile($this->sqlBackup,$this->backupSqlFile);
+
                     // check if there is a backup.ini / config file
                     if (is_file($this->sqlPath.$this->configFilename))
                     {   // add backup.ini config file to zip archive
                         $zip->addFile($this->sqlPath.$this->configFilename, $this->configFilename);
                     }
-                    // output some stats...
+                    else
+                        {   // backup config ini file not found
+                            \YAWK\sys::setSyslog($db, 51, 2, "failed to add $this->configFilename to archive $filename", 0, 0, 0, 0);
+                        }
                     // echo "numfiles: " . $zip->numFiles . "\n";
                     // echo "status:" . $zip->status . "\n";
                     // ok, close zip file
@@ -448,9 +454,10 @@ namespace YAWK\BACKUP\DATABASE
 
                     // check if zip file exists
                     if (is_file($filename))
-                    {   // zip file created
+                    {
+                        // zip file created
                         if ($this->removeAfterZip == "true")
-                        {
+                        {   // remove files
                             if (unlink ($this->sqlPath.$this->backupSqlFile)
                             && (unlink ($this->sqlPath.$this->configFilename)))
                             {
@@ -462,11 +469,7 @@ namespace YAWK\BACKUP\DATABASE
                                     return true;
                                 }
                         }
-                        else
-                            {
-                                \YAWK\sys::setSyslog($db, 49, 0, "database backup successful - created $filename", 0, 0, 0, 0);
-                                return true;
-                            }
+                        return true;
                     }
                     else
                     {   // zip file not created
@@ -542,7 +545,7 @@ namespace YAWK\BACKUP\DATABASE
                 // do database backup
                 if ($this->doSqlBackup($db) === true)
                 {   // ok, backup done
-                    \YAWK\sys::setSyslog($db, 50, 0, "database backup overwritten", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 50, 3, "database backup overwritten", 0, 0, 0, 0);
                     return true;
                 }
                 else
@@ -555,7 +558,7 @@ namespace YAWK\BACKUP\DATABASE
             {   // .sql file does not exist - do database backup
                 if ($this->doSqlBackup($db) === true)
                 {   // ok, backup done!
-                    \YAWK\sys::setSyslog($db, 50, 0, "database backup created", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 50, 3, "created database backup", 0, 0, 0, 0);
                     return true;
                 }
                 else
