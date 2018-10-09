@@ -172,7 +172,15 @@ namespace YAWK {
                 }
                 else
                 {   // if username or pwd is wrong
-                    $_SESSION['passwordFail']++;
+                    if (isset($_SESSION['passwordFail']))
+                    {   // add password fail counter
+                        $_SESSION['passwordFail']++;
+                    }
+                    else
+                        {   // first wrong try
+                            $_SESSION['passwordFail'] = 1;
+                        }
+                    // log this user login / store @ login db table
                     $user->storeLogin($db, 1, "backend", $_POST['user'], $_POST['password']);
                     return false;
                 }
