@@ -446,7 +446,7 @@ echo "
 echo \YAWK\backend::getTitle($lang['BACKUP'], $lang['BACKUP_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
-            <li class=\"active\"><a href=\"index.php?page=backup\" title=\"$lang[BACKUP]\"> $lang[BACKUP]</a></li>
+            <li class=\"active\"><a href=\"index.php?page=settings-backup\" title=\"$lang[BACKUP]\"> $lang[BACKUP]</a></li>
          </ol>
     </section>
     <!-- Main content -->
@@ -663,6 +663,8 @@ echo"<ol class=\"breadcrumb\">
                 <?php
                 // get all archive backup files into array
                 $backup->archiveBackupFiles = \YAWK\filemanager::ritit($backup->archiveBackupFolder);
+                // set ID for link: download whole archive
+                $archiveID = 0;
                 // walk through archive folder
                 foreach ($backup->archiveBackupFiles as $folder => $files)
                 {
@@ -676,6 +678,8 @@ echo"<ol class=\"breadcrumb\">
                     $archiveFolderDate = date("F d Y H:i", filemtime($backup->archiveBackupSubFolder));
                     $lastUpdate = \YAWK\sys::time_ago($archiveFolderDate, $lang);
 
+                    $archiveID++;
+
                     echo "
                 <tr>
                     <td width=\"10%\" class=\"text-center\"><h4><i class=\"fa fa-archive\"></i><br><small>$month<br>$year</small></h4></td>
@@ -686,7 +690,7 @@ echo"<ol class=\"breadcrumb\">
                             <h4><i class=\"fa fa-folder-open-o\"></i> $folder <small><small><i>&nbsp;&nbsp;($lang[LAST_UPDATE] $lastUpdate)</i></small>
                             <a class=\"fa fa-trash-o fa-2x text-gray pull-right\" role=\"dialog\" data-confirm=\"$folder ".$lang['DELETE']."? - $lang[BEWARE] $lang[UNDO_NOT_POSSIBLE]!\" title=\"$lang[ATTENTION] $lang[BACKUP_ARCHIVE] $lang[DELETE]\" href=\"index.php?page=settings-backup&deleteArchiveSubFolder=true&archiveSubFolder=$backup->archiveBackupSubFolder\"></a>
                             <a class=\"fa fa-history fa-2x text-gray pull-right hidden\" role=\"dialog\" data-confirm=\"$folder ".$lang['DELETE']."? - $lang[BEWARE] $lang[UNDO_NOT_POSSIBLE]!\" title=\"$lang[BACKUP_ARCHIVE_RESTORE]\" href=\"index.php?page=settings-backup&deleteArchiveSubFolder=true&archiveSubFolder=$backup->archiveBackupSubFolder\"></a>
-                            <a class=\"fa fa-download fa-2x text-gray pull-right\" title=\"$lang[BACKUP_ARCHIVE_DOWNLOAD]\" href=\"#downloadArchive\" data-archiveBackupFolder=\"$backup->archiveBackupFolder\" data-downloadFolder=\"$backup->downloadFolder\" data-folder=\"$folder\"></a>
+                            <a class=\"fa fa-download fa-2x text-gray pull-right\" id=\"archive-$archiveID\" title=\"$lang[BACKUP_ARCHIVE_DOWNLOAD]\" href=\"index.php?page=settings-backup&downloadArchive=true&folder=$folder&archiveID=$archiveID\" data-archiveBackupFolder=\"$backup->archiveBackupFolder\" data-downloadFolder=\"$backup->downloadFolder\" data-folder=\"$folder\"></a>
                             </small>
                             </h4>
                         </thead>";
@@ -747,7 +751,7 @@ echo"<ol class=\"breadcrumb\">
                 <br>
                 <button class="btn btn-success" type="submit"><i class="fa fa-upload"></i>&nbsp;&nbsp;&nbsp;<?php echo $lang['UPLOAD']; ?></button>
             </form>
-            <span class="pull-right">asdasd</span>
+            <span class="pull-right"></span>
             <br><br>
         </div>
     </div>

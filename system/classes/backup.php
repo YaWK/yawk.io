@@ -324,8 +324,37 @@ namespace YAWK\BACKUP
 
             $zip->close();
 
+            // check if .zip file is there
             if (is_file($destination))
             {
+                // INSTANT-DOWNLOAD WORKAROUND -
+                // to improve usability, the file will be served as direct downloaded.
+                // this piece of JS code changes the link (from generating .zip to download/zipfile.zip)
+                // due this method its not needed to send location headers (which is not possible at this stage)
+
+                // this 'hack' may not work in all browsers (untested in safari)
+
+                // check if archive ID is set
+                if (isset($_GET['archiveID']) && (!empty($_GET['archiveID'])))
+                {   // set var for JS: downloadArchiveLink (selector)
+                    $downloadArchiveLink = "#archive-".$_GET['archiveID'];
+                    // set var for JS: link to the file to download
+                    $downloadFile = $this->downloadFolder.$_GET['folder'].".zip";
+                    // dirty lil piece of JS code to emulate the user's click
+                    // (this avoids that he have to click twice to 1)generate + 2)download)
+                    echo "
+                            <script type='text/javascript'>
+                                $(document).ready(function()
+                                {   // change href attribute for this archive to direct donwload file
+                                    $('$downloadArchiveLink').attr('href', '$downloadFile')
+                                    // emulate a users click to force direct download
+                                    $('$downloadArchiveLink')[0].click();
+                                    // if this is not working, the user have to click on that link.
+                                });
+                            </script>";
+                }
+
+                // ok, zip is there
                 return true;
             }
             else
