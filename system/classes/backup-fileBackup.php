@@ -142,7 +142,7 @@ namespace YAWK\BACKUP\FILES
                 return false;
             }
 
-            // check if content folders are set
+            // CONTENT FOLDER PROCESSING
             if (isset($_POST['contentFolder']) && (!empty($_POST['contentFolder'])))
             {   // create content folder
                 if (!is_dir($this->tmpFolder.'content'))
@@ -184,49 +184,85 @@ namespace YAWK\BACKUP\FILES
             }
 
 
-            // check if content folders are set
+            // MEDIA FOLDER PROCESSING
             if (isset($_POST['mediaFolder']) && (!empty($_POST['mediaFolder'])))
             {   // create content folder
-                if(mkdir($this->tmpFolder.'media'))
-                {   // walk through content folder subdirectories
-                    foreach ($_POST['mediaFolder'] as $folder)
+                if (!is_dir($this->tmpFolder.'media'))
+                {
+                    if (!mkdir($this->tmpFolder . 'media'))
                     {
-                        // set current content folder property
-                        $this->currentFolder = $this->mediaFolder;
-                        $this->targetFolder = $this->tmpFolder.'media/';
-                        // copy content subfolder
-                        if ($this->copyFolder($db, $folder, $this->targetFolder) !== true)
-                        {
-                            \YAWK\sys::setSyslog($db, 51, 2, "failed to copy ".$this->currentFolder."$folder", 0, 0, 0, 0);
-                        }
+                        // return false
+                        \YAWK\sys::setSyslog($db, 51, 2, "failed to create " . $this->tmpFolder . "media", 0, 0, 0, 0);
                     }
                 }
-                else
-                {   // failed to create content folder
-                    \YAWK\sys::setSyslog($db, 51, 2, "failed to create ".$this->tmpFolder."media", 0, 0, 0, 0);
+
+                // walk through content folder subdirectories
+                foreach ($_POST['mediaFolder'] as $folder)
+                {
+                    // set current content folder property
+                    $this->currentFolder = $this->mediaFolder;
+                    $this->targetFolder = $this->tmpFolder.'media/';
+                    // check if parent dir exists
+                    if (is_dir($this->currentFolder.$folder))
+                    {
+                        // check if subdir NOT exists
+                        if (!is_dir($this->targetFolder.$folder))
+                        {
+                            // create subdir
+                            mkdir($this->targetFolder.$folder);
+                            $this->targetFolder = $this->tmpFolder.'media/'.$folder;
+                        }
+                        else
+                        {   // subdir exists, set target path
+                            $this->targetFolder = $this->tmpFolder.'media/'.$folder;
+                        }
+                    }
+                    // copy media subfolder
+                    if ($this->copyFolder($db, $folder, $this->targetFolder) !== true)
+                    {
+                        \YAWK\sys::setSyslog($db, 51, 2, "failed to create ".$this->mediaFolder."$folder", 0, 0, 0, 0);
+                    }
                 }
             }
 
-            // check if content folders are set
+            // SYSTEM FOLDER PROCESSING
             if (isset($_POST['systemFolder']) && (!empty($_POST['systemFolder'])))
             {   // create content folder
-                if(mkdir($this->tmpFolder.'system'))
-                {   // walk through content folder subdirectories
-                    foreach ($_POST['systemFolder'] as $folder)
+                if (!is_dir($this->tmpFolder.'system'))
+                {
+                    if (!mkdir($this->tmpFolder . 'system'))
                     {
-                        // set current content folder property
-                        $this->currentFolder = $this->systemFolder;
-                        $this->targetFolder = $this->tmpFolder.'system/';
-                        // copy content subfolder
-                        if ($this->copyFolder($db, $folder, $this->targetFolder) !== true)
-                        {
-                            \YAWK\sys::setSyslog($db, 51, 2, "failed to copy ".$this->currentFolder."$folder", 0, 0, 0, 0);
-                        }
+                        // return false
+                        \YAWK\sys::setSyslog($db, 51, 2, "failed to create " . $this->tmpFolder . "system", 0, 0, 0, 0);
                     }
                 }
-                else
-                {   // failed to create content folder
-                    \YAWK\sys::setSyslog($db, 51, 2, "failed to create ".$this->tmpFolder."system", 0, 0, 0, 0);
+
+                // walk through system folder subdirectories
+                foreach ($_POST['systemFolder'] as $folder)
+                {
+                    // set current content folder property
+                    $this->currentFolder = $this->systemFolder;
+                    $this->targetFolder = $this->tmpFolder.'system/';
+                    // check if parent dir exists
+                    if (is_dir($this->currentFolder.$folder))
+                    {
+                        // check if subdir NOT exists
+                        if (!is_dir($this->targetFolder.$folder))
+                        {
+                            // create subdir
+                            mkdir($this->targetFolder.$folder);
+                            $this->targetFolder = $this->tmpFolder.'system/'.$folder;
+                        }
+                        else
+                        {   // subdir exists, set target path
+                            $this->targetFolder = $this->tmpFolder.'system/'.$folder;
+                        }
+                    }
+                    // copy system subfolder
+                    if ($this->copyFolder($db, $folder, $this->targetFolder) !== true)
+                    {
+                        \YAWK\sys::setSyslog($db, 51, 2, "failed to create ".$this->systemFolder."$folder", 0, 0, 0, 0);
+                    }
                 }
             }
 
