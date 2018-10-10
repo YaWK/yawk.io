@@ -81,13 +81,12 @@ if (isset($_GET))
             {   // zip (backup folder and file)
                 if ($backup->zipFolder($db, $backup->archiveBackupSubFolder, $backup->downloadFolder."$_GET[folder].zip") == true)
                 {
-                    \YAWK\alert::draw("success", "DOWNLOAD", "$backup->archiveBackupSubFolder", "", 3200);
+                    \YAWK\alert::draw("success", $lang['BACKUP_ZIP_CREATED'], $lang['BACKUP_ZIP_CREATED_MSG'], "", 6200);
                 }
                 else
                     {
                         \YAWK\alert::draw("danger", "ZIP nicht erstellt!", "$_GET[folder] not ziped!", "", 6200);
                     }
-                \YAWK\alert::draw("info", "Folder gefunden!", "$_GET[folder] found!", "", 6200);
             }
             else
             {   // archive sub folder not found
@@ -576,7 +575,7 @@ echo"<ol class=\"breadcrumb\">
                     <div class="checkbox-group-system">
                     <?php
                     // get database tables
-                    $systemFolders = array('system/fonts', 'system/language', 'system/plugins', 'system/templates', 'system/widgets');
+                    $systemFolders = array('fonts', 'language', 'plugins', 'templates', 'widgets');
                     foreach ($systemFolders AS $folder)
                     {
                         echo "&nbsp;&nbsp;&nbsp;&nbsp;
