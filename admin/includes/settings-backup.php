@@ -346,43 +346,45 @@ if (isset($_POST))
 
             // user selected complete backup method
             if (backupMethod === "complete")
-            {   // hide all other methods
-                $("#customSettings").hide();
-                $("#databaseMethods").hide();
-                $("#fileMethods").hide();
-                // display 'complete backup' settings
-                $("#completeMethods").fadeIn().removeClass('hidden');
+            {
+                $("#customSettings").fadeIn().removeClass('hidden');
+                // hide all other methods
+                $("#contentBox").fadeIn();
+                $("#mediaBox").fadeIn();
+                $("#systemBox").fadeIn();
+                $("#database").fadeIn();
             }
 
             // user selected database backup method
             if (backupMethod === "database")
             {   // hide all other methods
-                $("#customSettings").hide();
-                $("#completeMethods").hide();
-                $("#fileMethods").hide();
-                // display 'database backup' settings
-                $("#databaseMethods").fadeIn().removeClass('hidden');
+                $("#customSettings").fadeIn().removeClass('hidden');
+                $("#contentBox").hide();
+                $("#mediaBox").hide();
+                $("#systemBox").hide();
+                $("#databaseBox").fadeIn();
             }
 
             // user selected file backup method
             if (backupMethod === "files")
-            {
-                // hide all other methods
-                $("#customSettings").hide();
-                $("#databaseMethods").hide();
-                $("#completeMethods").hide();
-                // display 'file backup' settings
-                $("#fileMethods").fadeIn().removeClass('hidden');
+            {   // hide all other methods
+                $("#customSettings").fadeIn().removeClass('hidden');
+                $("#contentBox").hide();
+                $("#databaseBox").hide();
+                $("#systemBox").hide();
+                $("#mediaBox").fadeIn();
             }
 
             // user selected file backup method
             if (backupMethod === "custom")
             {
-                // hide all other methods
-                $("#databaseMethods").hide();
-                $("#completeMethods").hide();
-                // display 'file backup' settings
                 $("#customSettings").fadeIn().removeClass('hidden');
+                // hide all other methods
+                $("#contentBox").fadeIn();
+                $("#mediaBox").fadeIn();
+                $("#systemBox").fadeIn();
+                $("#database").fadeIn();
+                // display 'file backup' settings
             }
         });
 
@@ -410,27 +412,6 @@ if (isset($_POST))
             });
         });
 
-        $('a[href$="#downloadArchive"]').click(function() {
-            var folder = $(this).attr("data-folder");
-            var archiveBackupFolder = $(this).attr("data-archiveBackupFolder");
-            var downloadFolder = $(this).attr("data-downloadFolder");
-            $.ajax({    // do ajax request
-                url:'settings-backup-download.php',
-                type:'POST',
-                data:'folder='+folder+'&archiveBackupFolder='+archiveBackupFolder+'&downloadFolder='+downloadFolder,
-                success:function(data){
-                    if(! data ){
-                        alert('Something went wrong!');
-                        console.log('ajax error');
-                        return false;
-                    }
-                    else {
-                        // success
-                        console.log('ajax success');
-                    }
-                }
-            });
-        });
 
     });
 </script>
@@ -533,76 +514,84 @@ echo"<ol class=\"breadcrumb\">
             </div>
             <div class="box-body">
                 <div>
-                    <h3>
-                        <input type="checkbox" data-on="<i class='fa fa-file-o'></i>" data-off="<?php echo $lang['OFF_']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="contentCheckAll" id="contentCheckAll" value="true" checked>
-                        <label for="contentCheckAll" id="contentCheckAllLabel"> <?php echo $lang['PAGES']; ?></label>
-                    </h3>
-                    <div class="checkbox-group-content">
-                        <?php
-                        // get content folder + subfolders into array
-                        $contentFolderArray = \YAWK\filemanager::getSubfoldersToArray('../content/');
-                        // walk through folders and draw checkboxes
-                        foreach ($contentFolderArray as $folder)
-                        {
-                            echo "&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type=\"checkbox\" data-name=\"$folder\" id=\"contentFolder-$folder\" name=\"contentFolder[]\" checked=\"checked\" value=\"$folder\">
-                    <label id=\"contentFolderLabel-$folder\" for=\"contentFolder-$folder\">".ucfirst($folder)."</label><br>";
-                        }
-                        ?>
+                    <div id="contentBox">
+                        <h3>
+                            <input type="checkbox" data-on="<i class='fa fa-file-o'></i>" data-off="<?php echo $lang['OFF_']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="contentCheckAll" id="contentCheckAll" value="true" checked>
+                            <label for="contentCheckAll" id="contentCheckAllLabel"> <?php echo $lang['PAGES']; ?></label>
+                        </h3>
+                        <div class="checkbox-group-content">
+                            <?php
+                            // get content folder + subfolders into array
+                            $contentFolderArray = \YAWK\filemanager::getSubfoldersToArray('../content/');
+                            // walk through folders and draw checkboxes
+                            foreach ($contentFolderArray as $folder)
+                            {
+                                echo "&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type=\"checkbox\" data-name=\"$folder\" id=\"contentFolder-$folder\" name=\"contentFolder[]\" checked=\"checked\" value=\"$folder\">
+                        <label id=\"contentFolderLabel-$folder\" for=\"contentFolder-$folder\">".ucfirst($folder)."</label><br>";
+                            }
+                            ?>
+                        </div>
                     </div>
-
+                    <div id="mediaBox">
                     <h3>
                         <input type="checkbox" data-on="<i class='fa fa-folder-open-o'></i>" data-off="<?php echo $lang['OFF_']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="mediaCheckAll" id="mediaCheckAll" value="true" checked>
                         <label for="mediaCheckAll" id="mediaCheckAllLabel"> <?php echo $lang['BACKUP_MEDIA_FOLDER']; ?></label>
                     </h3>
-                    <div class="checkbox-group-media">
-                    <?php
-                        // get media folder + subfolders into array
-                        $mediaFolderArray = \YAWK\filemanager::getSubfoldersToArray('../media/');
-                        // walk through folders and draw checkboxes
-                        foreach ($mediaFolderArray as $folder)
+                        <div class="checkbox-group-media">
+                        <?php
+                            // get media folder + subfolders into array
+                            $mediaFolderArray = \YAWK\filemanager::getSubfoldersToArray('../media/');
+                            // walk through folders and draw checkboxes
+                            foreach ($mediaFolderArray as $folder)
+                            {
+                                echo "&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type=\"checkbox\" data-name=\"$folder\" id=\"mediaFolder-$folder\" name=\"mediaFolder[]\" checked=\"checked\" value=\"$folder\">
+                        <label id=\"mediaFolderLabel-$folder\" for=\"mediaFolder-$folder\">".ucfirst($folder)."</label><br>";
+                            }
+                        ?>
+                        </div>
+                    </div>
+                    <div id="systemBox">
+                        <h3>
+                            <input type="checkbox" data-on="<i class='fa fa-gears'></i>" data-off="<?php echo $lang['OFF_']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="systemFolderCheckAll" id="systemFolderCheckAll" value="true" checked="checked">
+                            <label for="systemFolderCheckAll" id="systemFolderCheckAllLabel"> <?php echo $lang['SYSTEM']; ?></label>
+                        </h3>
+                        <div class="checkbox-group-system">
+                        <?php
+                        // get database tables
+                        $systemFolders = array('fonts', 'language', 'plugins', 'templates', 'widgets');
+                        foreach ($systemFolders AS $folder)
                         {
                             echo "&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type=\"checkbox\" data-name=\"$folder\" id=\"mediaFolder-$folder\" name=\"mediaFolder[]\" checked=\"checked\" value=\"$folder\">
-                    <label id=\"mediaFolderLabel-$folder\" for=\"mediaFolder-$folder\">".ucfirst($folder)."</label><br>";
+                            <input type=\"checkbox\" id=\"systemFolder-$folder\" value=\"$folder\" name=\"systemFolder[]\" checked>
+                            <label id=\"systemFolderLabel-$folder\" for=\"systemFolder-$folder\">$folder</label><br>";
                         }
-                    ?>
-                    </div>
-                    <h3>
-                        <input type="checkbox" data-on="<i class='fa fa-gears'></i>" data-off="<?php echo $lang['OFF_']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="systemFolderCheckAll" id="systemFolderCheckAll" value="true" checked="checked">
-                        <label for="systemFolderCheckAll" id="systemFolderCheckAllLabel"> <?php echo $lang['SYSTEM']; ?></label>
-                    </h3>
-                    <div class="checkbox-group-system">
-                    <?php
-                    // get database tables
-                    $systemFolders = array('fonts', 'language', 'plugins', 'templates', 'widgets');
-                    foreach ($systemFolders AS $folder)
-                    {
-                        echo "&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type=\"checkbox\" id=\"systemFolder-$folder\" value=\"$folder\" name=\"systemFolder[]\" checked>
-                        <label id=\"systemFolderLabel-$folder\" for=\"systemFolder-$folder\">$folder</label><br>";
-                    }
-                    ?>
+                        ?>
+                        </div>
                     </div>
 
-                    <h3>
-                        <input type="checkbox" data-on="<i class='fa fa-database'></i>" data-off="<?php echo $lang['OFF_']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="databaseCheckAll" id="databaseCheckAll" value="true" checked="checked">
-                        <label for="databaseCheckAll" id="databaseCheckAllLabel"> <?php echo $lang['DATABASE']; ?></label>
-                    </h3>
-                    <div class="checkbox-group-database">
-                    <?php
-                        // get database tables
-                        $dbTables = $db->get_tables();
-                        foreach ($dbTables AS $id=>$table)
-                        {
-                            echo "&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type=\"checkbox\" id=\"database-$table\" value=\"$table\" name=\"database[]\" checked>
-                        <label id=\"databaseLabel-$table\" for=\"database-$table\">$table</label><br>";
-                        }
-                    ?>
+                    <div id="databaseBox">
+                        <h3>
+                            <input type="checkbox" data-on="<i class='fa fa-database'></i>" data-off="<?php echo $lang['OFF_']; ?>" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" class="checkbox" name="databaseCheckAll" id="databaseCheckAll" value="true" checked="checked">
+                            <label for="databaseCheckAll" id="databaseCheckAllLabel"> <?php echo $lang['DATABASE']; ?></label>
+                        </h3>
+                        <div class="checkbox-group-database">
+                        <?php
+                            // get database tables
+                            $dbTables = $db->get_tables();
+                            foreach ($dbTables AS $id=>$table)
+                            {
+                                echo "&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type=\"checkbox\" id=\"database-$table\" value=\"$table\" name=\"database[]\" checked>
+                            <label id=\"databaseLabel-$table\" for=\"database-$table\">$table</label><br>";
+                            }
+                        ?>
+                        </div>
                     </div>
                 </div>
             </div>
+            <br><br>
         </div>
     </form>
 </div>
