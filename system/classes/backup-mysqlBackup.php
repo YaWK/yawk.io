@@ -40,7 +40,7 @@ namespace YAWK\BACKUP\DATABASE
         /** @var string mysql port */
         private $port;
         /** @var string backup mode (include|exclude|all) */
-        public $backupMode = 'all';
+        public $backupMode = 'include';
         /** @var array exclude tables */
         public $excludeTablesArray = array();
         /** @var array include tables */
@@ -206,6 +206,25 @@ namespace YAWK\BACKUP\DATABASE
                 // ok, include class
                 require_once('../system/engines/mysqldump/Mysqldump.php');
 
+                // check if database tables form is set
+                if (isset($_POST['database']) && (!empty($_POST['database'])))
+                {
+                    // walk through database tables array
+                    foreach ($_POST['database'] as $table)
+                    {
+                        // store table in array
+                        $this->includeTablesArray[] = $table;
+                    }
+
+                    // set tables to include
+                    $this->dumpSettings = $this->includeTables($this->includeTablesArray);
+                }
+                else
+                    {   // set default settings (dump all)
+                        $this->setDumpSettings();
+                    }
+/*
+ *
                 // backup mode sets if tables should be included or excluded (otherwise backup the whole database).
                 if (isset($this->backupMode))
                 {   // check and react to selected backup mode
@@ -213,8 +232,6 @@ namespace YAWK\BACKUP\DATABASE
                     {   // if only some tables should be included
                         case "include":
                         {
-                            // set include tables array
-                            $this->includeTablesArray = array('cms_assets', 'cms_assets_types');
                             // set tables for inclusion
                             $this->dumpSettings = $this->includeTables($this->includeTablesArray);
                         }
@@ -223,8 +240,6 @@ namespace YAWK\BACKUP\DATABASE
                         // if some tables should be excluded
                         case "exclude":
                         {
-                            // set exclude tables array
-                            $this->excludeTablesArray = array('cms_syslog', 'cms_template_settings', 'cms_stats', 'cms_widget_defaults', 'cms_assets', 'cms_assets_types');
                             // set tables for exclusion
                             $this->dumpSettings = $this->excludeTables($this->excludeTablesArray);
                         }
@@ -250,6 +265,7 @@ namespace YAWK\BACKUP\DATABASE
                         // set empty dump settings - (dump all)
                         $this->setDumpSettings();
                     }
+*/
 
                 // load database config into this object
                 $this->getDatabaseConfig();
