@@ -19,9 +19,11 @@ namespace YAWK\BACKUP
         /** @var object mysql backup object */
         public $mysqlBackup;
         /** @var object files backup object */
-        public $filesBackup;
+        public $fileBackup;
         /** @var string path, where the backup will be stored */
         public $targetFolder = '../system/backup/current/';
+        /** @var string source folder to backup */
+        public $sourceFolder = '';
         /** @var string current backup folder path */
         public $currentBackupFolder = '../system/backup/current/';
         /** @var array files in current backup folder */
@@ -40,6 +42,8 @@ namespace YAWK\BACKUP
         public $archiveBackupNewFile = '';
         /** @var string upload folder */
         public $downloadFolder = '../system/backup/download/';
+        /** @var string tmp folder */
+        public $tmpFolder = '../system/backup/tmp/';
         /** @var string files|database|complete */
         public $backupMethod = "database";
         /** @var string filename of the config file (default: backup.ini) */
@@ -114,7 +118,7 @@ namespace YAWK\BACKUP
                     }
                     break;
 
-                    // backup files only
+                    // backup media folder only
                     case "files":
                     {
                         // files + folder only
@@ -125,7 +129,7 @@ namespace YAWK\BACKUP
                     // custom backup selected
                     case "custom":
                     {
-                        // do custom backup stuff...
+                        $this->runFileBackup($db);
                         return true;
                     }
                     break;
@@ -287,6 +291,33 @@ namespace YAWK\BACKUP
                 return false;
             }
         }
+
+
+        /**
+         * Run File Backup from $sourceFolder
+         * @author      Daniel Retzl <danielretzl@gmail.com>
+         * @version     1.0.0
+         * @link        http://yawk.io
+         * @return      bool
+         */
+        public function runFileBackup($db)
+        {
+            // include fileBackup class
+            require_once 'backup-fileBackup.php';
+            // create new file backup object
+            $this->fileBackup = new \YAWK\BACKUP\FILES\fileBackup();
+
+            // initialize database backup (this will run mysqldump-php)
+            if ($this->fileBackup->initFolderBackup($db, $this->overwriteBackup, $this->zipBackup) === true)
+            {   // file backup successful
+                return true;
+            }
+            else
+            {   // file backup failed
+                return false;
+            }
+        }
+
 
         /**
          * Check if ZipArchive function exists
