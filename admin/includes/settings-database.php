@@ -53,10 +53,10 @@ echo"</section><!-- Main content -->
 
                             if (isset($_GET['extendedInfo']) && ($_GET['extendedInfo']) == true)
                             {   // get all table fields
-                                $q = $db->query("DESCRIBE $table");
+                                $q = $db->query("SHOW FULL COLUMNS FROM  $table");
                                 while($row = mysqli_fetch_assoc($q))
                                 {
-                                    echo "&nbsp;&nbsp;{$row['Field']} - {$row['Type']}<br>";
+                                    echo "&nbsp;&nbsp;{$row['Field']} - <i>{$row['Type']}</i><br>";
                                 }
                             }
                         echo "</td></tr>";
