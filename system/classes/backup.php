@@ -98,8 +98,15 @@ namespace YAWK\BACKUP
                     // backup complete system (templates, files, folder, database)
                     case "complete":
                     {
-                        // make a full backup of everything
-                        return true;
+                        // run backup of complete system (including database)
+                        if ($this->runFileBackup($db) === true)
+                        {   // success
+                            return true;
+                        }
+                        else
+                        {   // media folder backup failed
+                            return false;
+                        }
                     }
                     break;
 
@@ -119,18 +126,30 @@ namespace YAWK\BACKUP
                     break;
 
                     // backup media folder only
-                    case "files":
-                    {
-                        // files + folder only
-                        return true;
+                    case "mediaFolder":
+                    {   // run backup of media folder
+                        if ($this->runFileBackup($db) === true)
+                        {   // success
+                            return true;
+                        }
+                        else
+                            {   // media folder backup failed
+                                return false;
+                            }
                     }
                     break;
 
                     // custom backup selected
                     case "custom":
-                    {
-                        $this->runFileBackup($db);
-                        return true;
+                    {   // run backup of custom folder
+                        if($this->runFileBackup($db) === true)
+                        {   // success
+                            return true;
+                        }
+                        else
+                            {   // custom folder backup failed
+                                return false;
+                            }
                     }
                     break;
                 }
