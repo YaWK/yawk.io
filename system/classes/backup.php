@@ -100,6 +100,17 @@ namespace YAWK\BACKUP
                     // backup complete system (templates, files, folder, database)
                     case "complete":
                     {
+                        $this->storeSqlTmp = "false";
+                        // run database backup
+                        if ($this->runDatabaseBackup($db, $this->storeSqlTmp) === true)
+                        {
+                            // db backup successful
+                        }
+                        else
+                        {   // db backup FAILED
+                            // return false;
+                        }
+
                         // run backup of complete system (including database)
                         if ($this->runFileBackup($db) === true)
                         {   // success
