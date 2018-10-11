@@ -322,7 +322,7 @@ namespace YAWK\BACKUP\FILES
             // copy source folder to target folder
             if (\YAWK\sys::xcopy($this->sourceFolder, $this->targetFolder) === false)
             {   // failed to copy content folder
-                \YAWK\sys::setSyslog($db, 52, 2, "failed copy $this->sourceFolder to $this->targetFolder", 0, 0, 0, 0);
+                \YAWK\sys::setSyslog($db, 52, 2, "failed to copy $this->sourceFolder to $this->targetFolder", 0, 0, 0, 0);
                 return false;
             }
             else
