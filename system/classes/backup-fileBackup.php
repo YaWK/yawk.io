@@ -266,49 +266,17 @@ namespace YAWK\BACKUP\FILES
                 }
             }
 
-
-            // check if system database are set
-            if (isset($_POST['database']) && (!empty($_POST['database'])))
-            {   // create content folder
-                /*
-                if(mkdir($this->tmpFolder.'database'))
-                {
-                    // include backup-database class
-                    require_once 'backup-mysqlBackup.php';
-
-                    // create new database backup object
-                    $this->mysqlBackup = new \YAWK\BACKUP\DATABASE\mysqlBackup($this->backupSettings);
-
-                    // include these database tables
-                    $includeTables = array();
-
-                    // walk through database tables array
-                    foreach ($_POST['database'] as $table)
-                    {
-                        // store table in array
-                        $includeTables[] = $table;
-                    }
-
-                    // set tables to include
-                    $this->mysqlBackup->includeTablesArray($includeTables);
-
-                    // initialize database backup (this will run mysqldump-php)
-                    if ($this->mysqlBackup->initMysqlBackup($db, $this->overwriteBackup, $this->zipBackup) === true)
-                    {   // database backup successful
-                        return true;
-                    }
-                    else
-                    {   // database backup failed
-                        return false;
-                    }
-                }
-                else
-                {   // failed to create content folder
-                    \YAWK\sys::setSyslog($db, 51, 2, "failed to create ".$this->tmpFolder."system", 0, 0, 0, 0);
-                }
-                */
+            $source = $this->tmpFolder;
+            $destination = $this->tmpFolder."custom-backup.zip";
+            if ($this->zipFolder($db, $source, $destination) == true)
+            {
+                return true;
             }
-            return true;
+            else
+                {
+                    return false;
+                }
+
         }
 
 
@@ -346,7 +314,7 @@ namespace YAWK\BACKUP\FILES
         {
             // check if backup overwrite is allowed
             if ($this->overwriteBackup == "false")
-            {
+            {   // check if POST array is set (form was sent)
                 if (isset($_POST))
                 {
                     // check if new folder was entered by user
@@ -356,15 +324,18 @@ namespace YAWK\BACKUP\FILES
                         $this->archiveBackupSubFolder = $this->archiveBackupFolder.$_POST['newFolder']."/";
 
                         // create new directory in archive
-                        if (mkdir($this->archiveBackupSubFolder))
-                        {   // all good, new archive subfolder created
-                            // set syslog entry: dir created
-                            \YAWK\sys::setSyslog($db, 50, 0, "archive directory created: $this->targetFolder", 0, 0, 0, 0);
-                        }
-                        else
-                        {   // failed to create new archive subfolder
-                            // set syslog entry: failed
-                            \YAWK\sys::setSyslog($db, 52, 0, "failed to create archive directory: $this->targetFolder", 0, 0, 0, 0);
+                        if (!is_dir($this->archiveBackupSubFolder))
+                        {
+                            if (mkdir($this->archiveBackupSubFolder))
+                            {   // all good, new archive subfolder created
+                                // set syslog entry: dir created
+                                \YAWK\sys::setSyslog($db, 50, 0, "archive directory created: $this->targetFolder", 0, 0, 0, 0);
+                            }
+                            else
+                            {   // failed to create new archive subfolder
+                                // set syslog entry: failed
+                                \YAWK\sys::setSyslog($db, 52, 0, "failed to create archive directory: $this->targetFolder", 0, 0, 0, 0);
+                            }
                         }
                     }
                     // check if existing folder was selected by user
