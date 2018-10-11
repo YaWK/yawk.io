@@ -111,6 +111,7 @@ if (isset($_POST))
             // start backup selected
             case "startBackup":
             {
+
                 // CHECK POST SETTINGS AND SET BACKUP PROPERTIES
 
                 // check if backup method is set
@@ -242,6 +243,42 @@ if (isset($_POST))
 <script type="text/javascript">
     $(document).ready(function()
     {
+        // TRY TO DISABLE CTRL-S browser hotkey
+        function saveHotkey() {
+            // simply disables save event for chrome
+            $(window).keypress(function (event) {
+                if (!(event.which === 115 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) && !(event.which == 19)) return true;
+                event.preventDefault();
+                formmodified=0; // do not warn user, just save.
+                return false;
+            });
+            // used to process the cmd+s and ctrl+s events
+            $(document).keydown(function (event) {
+                if (event.which === 83 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) {
+                    event.preventDefault();
+                    $('#savebutton').click(); // SAVE FORM AFTER PRESSING STRG-S hotkey
+                    formmodified=0; // do not warn user, just save.
+                    // save(event);
+                    return false;
+                }
+            });
+        }
+        saveHotkey();
+
+        // ok, lets go...
+        // we need to check if user clicked on save button
+        $(savebutton).click(function() {
+
+            var savebutton = ('#savebutton');
+            var savebuttonIcon = ('#savebuttonIcon');
+            var savebuttonText = $('#savebuttonText');
+            var processingText = $(savebutton).attr("data-processingText");
+            var savebuttonTitle = $(savebutton).attr("data-processingTitle");
+
+            $(savebutton).removeClass('btn btn-success').addClass('btn btn-warning disabled').attr('title', savebuttonTitle);
+            $(savebuttonText).html(processingText);
+            $(savebuttonIcon).removeClass('fa fa-check').addClass('fa fa-spinner fa-spin fa-fw');
+        });
         // EXTENDED SETTINGS
         // to improve usability of 'custom backup', all required checkboxes are grouped.
         // this piece of js manage the toggle switches on custom backup form
@@ -492,7 +529,7 @@ echo"<ol class=\"breadcrumb\">
         </div>
         <div class="box-body">
             <input type="hidden" name="action" value="startBackup">
-            <button type="submit" class="btn btn-success pull-right" id="savebutton"><i class="fa fa-check" id="savebuttonIcon"></i> &nbsp;<?php echo $lang['BACKUP_CREATE']; ?></button>
+            <button type="submit" class="btn btn-success pull-right" id="savebutton" data-processingText="<?php echo $lang['BACKUP_PROCESSING']; ?>" data-processingTitle="<?php echo $lang['BACKUP_PROCESSING_TITLE']; ?>"><i class="fa fa-check" id="savebuttonIcon"></i> &nbsp;<span id="savebuttonText"><?php echo $lang['BACKUP_CREATE']; ?></span></button>
             <br><br>
             <label for="backupMethod"><?php echo $lang['BACKUP_WHAT_TO_BACKUP']; ?></label>
             <select name="backupMethod" id="backupMethod" class="form-control">
