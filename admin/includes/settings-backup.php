@@ -341,50 +341,98 @@ if (isset($_POST))
         // check if pulldown (select field) has changed (any item has been selected)
         // and display additional according backup settings
         $("#backupMethod").on('change', function() {
-            // store backup method value as var
+            // backup method (from select field)
             var backupMethod = this.value;
+            // content div box
+            var contentBox = $('#contentBox');
+            // mediaFolder div box
+            var mediaBox = $('#mediaBox');
+            // systemFolder div box
+            var systemBox = $('#systemBox');
+            // database div box
+            var databaseBox = $('#databaseBox');
+            // custom settings div box
+            var customSettings = $('#customSettings');
 
             // user selected complete backup method
             if (backupMethod === "complete")
             {
-                // hide all other methods
-                $("#contentBox").fadeIn();
-                $("#mediaBox").fadeIn();
-                $("#systemBox").fadeIn();
-                $("#databaseBox").fadeIn();
-                $("#customSettings").fadeIn().removeClass('hidden');
+                // enable all form fields
+                $(contentBox).find('input, button').removeAttr("disabled");
+                $(mediaBox).find('input, button').removeAttr("disabled");
+                $(systemBox).find('input, button').removeAttr("disabled");
+                $(databaseBox).find('input, button').removeAttr("disabled");
+
+                // fadeIn all form fields
+                $(contentBox).fadeIn();
+                $(mediaBox).fadeIn();
+                $(systemBox).fadeIn();
+                $(databaseBox).fadeIn();
+                // fadeIn form
+                $(customSettings).fadeIn().removeClass('hidden');
             }
 
             // user selected database backup method
             if (backupMethod === "database")
-            {   // hide all other methods
-                $("#contentBox").hide();
-                $("#mediaBox").hide();
-                $("#systemBox").hide();
-                $("#databaseBox").fadeIn();
-                $("#customSettings").fadeIn().removeClass('hidden');
+            {
+                // DATABASE FIELDS NEEDED - set form
+                // disable not needed form fields
+                $(contentBox).find('input, button').attr('disabled','disabled');
+                $(mediaBox).find('input, button').attr('disabled','disabled');
+                $(systemBox).find('input, button').attr('disabled','disabled');
+                // hide not needed form fields
+                $(contentBox).hide();
+                $(systemBox).hide();
+                $(mediaBox).hide();
+
+                // enable database form fields
+                $(databaseBox).find('input, button').removeAttr('disabled');
+                // fadeIn database box
+                $(databaseBox).fadeIn();
+                // fadeIn settings form
+                $(customSettings).fadeIn().removeClass('hidden');
+
             }
 
             // user selected file backup method
-            if (backupMethod === "files")
-            {   // hide all other methods
-                $("#contentBox").hide();
-                $("#databaseBox").hide();
-                $("#systemBox").hide();
-                $("#mediaBox").fadeIn();
-                $("#customSettings").fadeIn().removeClass('hidden');
+            if (backupMethod === "mediaFolder")
+            {
+                // MEDIA FOLDER NEEDED - set form
+                // disable not needed fields
+                $(contentBox).find('input, button').attr('disabled','disabled');
+                $(systemBox).find('input, button').attr('disabled','disabled');
+                $(databaseBox).find('input, button').attr('disabled','disabled');
+
+                // hide not needed form fields
+                $(contentBox).hide();
+                $(systemBox).hide();
+                $(databaseBox).hide();
+
+                // enable media form fields
+                $(mediaBox).find('input, button').removeAttr('disabled');
+                // fadeIn mediaFolder form fields
+                $(mediaBox).fadeIn();
+                // fadeIn settings form
+                $(customSettings).fadeIn().removeClass('hidden');
             }
 
             // user selected file backup method
             if (backupMethod === "custom")
             {
-                // hide all other methods
-                $("#contentBox").fadeIn();
-                $("#mediaBox").fadeIn();
-                $("#systemBox").fadeIn();
-                $("#databaseBox").fadeIn();
-                $("#customSettings").fadeIn().removeClass('hidden');
-                // display 'file backup' settings
+                // enable all form fields
+                $(contentBox).find('input, button').removeAttr("disabled");
+                $(mediaBox).find('input, button').removeAttr("disabled");
+                $(systemBox).find('input, button').removeAttr("disabled");
+                $(databaseBox).find('input, button').removeAttr("disabled");
+
+                // fadeIn all divs
+                $(contentBox).fadeIn();
+                $(mediaBox).fadeIn();
+                $(systemBox).fadeIn();
+                $(databaseBox).fadeIn();
+
+                // display form field
+                $(customSettings).fadeIn().removeClass('hidden');
             }
         });
 
@@ -451,7 +499,7 @@ echo"<ol class=\"breadcrumb\">
                 <optgroup label="<?php echo $lang['STANDARD']; ?>"></optgroup>
                     <option name="complete" value="complete">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $lang['BACKUP_FULL']; ?></option>
                     <option name="database" value="database">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $lang['BACKUP_DB_ONLY']; ?></option>
-                    <option name="files" value="files">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $lang['BACKUP_FILES_ONLY']; ?></option>
+                    <option name="mediaFolder" value="mediaFolder">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $lang['BACKUP_FILES_ONLY']; ?></option>
                 <optgroup label="<?php echo $lang['CUSTOM']; ?>"></optgroup>
                     <option name="custom" value="custom">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $lang['BACKUP_CUSTOM']; ?></option>
             </select>
