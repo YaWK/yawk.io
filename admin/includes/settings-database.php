@@ -31,6 +31,7 @@ echo"</section><!-- Main content -->
             <div class="box">
                 <div class="box-header with-border">
                     <h3 class="box-title"><?php echo $lang['DATABASE']; ?>  <small><?php echo $lang['DATABASE_SUBTEXT']; ?> </small></h3>
+                    <a href="index.php?page=settings-database&extendedInfo=true" class="btn btn-success pull-right"><i class="fa fa-database"></i>&nbsp; <?php echo $lang['SHOW_FIELDS']; ?></a>
                 </div>
                 <div class="box-body">
                     <?php
@@ -38,12 +39,27 @@ echo"</section><!-- Main content -->
 
                     $dbTables = $db->get_tables();
                     echo "<table id=\"table-sort\" class=\"table table-striped table-hover table-condensed table-responsive table-bordered\">
-									<tr class=\"text-bold\"><td>ID</td>
-										<td>TABLE</td>
+									<tr class=\"text-bold\"><td>$lang[ID]</td>
+										<td>$lang[TABLE]</td>
 									</tr>";
                     foreach ($dbTables AS $id=>$table)
                     {
-                        echo "<tr><td>$id</td><td>$table</td></tr>";
+                        echo "<tr>";
+                            echo "<td>";
+                            echo $id;
+                            echo "</td>";
+                            echo "<td>";
+                            echo "<b>$table</b><br>";
+
+                            if (isset($_GET['extendedInfo']) && ($_GET['extendedInfo']) == true)
+                            {   // get all table fields
+                                $q = $db->query("DESCRIBE $table");
+                                while($row = mysqli_fetch_assoc($q))
+                                {
+                                    echo "&nbsp;&nbsp;{$row['Field']} - {$row['Type']}<br>";
+                                }
+                            }
+                        echo "</td></tr>";
                     }
                     echo "</table>";
                     ?>
