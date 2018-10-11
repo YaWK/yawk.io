@@ -347,43 +347,43 @@ if (isset($_POST))
             // user selected complete backup method
             if (backupMethod === "complete")
             {
-                $("#customSettings").fadeIn().removeClass('hidden');
                 // hide all other methods
                 $("#contentBox").fadeIn();
                 $("#mediaBox").fadeIn();
                 $("#systemBox").fadeIn();
-                $("#database").fadeIn();
+                $("#databaseBox").fadeIn();
+                $("#customSettings").fadeIn().removeClass('hidden');
             }
 
             // user selected database backup method
             if (backupMethod === "database")
             {   // hide all other methods
-                $("#customSettings").fadeIn().removeClass('hidden');
                 $("#contentBox").hide();
                 $("#mediaBox").hide();
                 $("#systemBox").hide();
                 $("#databaseBox").fadeIn();
+                $("#customSettings").fadeIn().removeClass('hidden');
             }
 
             // user selected file backup method
             if (backupMethod === "files")
             {   // hide all other methods
-                $("#customSettings").fadeIn().removeClass('hidden');
                 $("#contentBox").hide();
                 $("#databaseBox").hide();
                 $("#systemBox").hide();
                 $("#mediaBox").fadeIn();
+                $("#customSettings").fadeIn().removeClass('hidden');
             }
 
             // user selected file backup method
             if (backupMethod === "custom")
             {
-                $("#customSettings").fadeIn().removeClass('hidden');
                 // hide all other methods
                 $("#contentBox").fadeIn();
                 $("#mediaBox").fadeIn();
                 $("#systemBox").fadeIn();
-                $("#database").fadeIn();
+                $("#databaseBox").fadeIn();
+                $("#customSettings").fadeIn().removeClass('hidden');
                 // display 'file backup' settings
             }
         });
@@ -565,7 +565,7 @@ echo"<ol class=\"breadcrumb\">
                         {
                             echo "&nbsp;&nbsp;&nbsp;&nbsp;
                             <input type=\"checkbox\" id=\"systemFolder-$folder\" value=\"$folder\" name=\"systemFolder[]\" checked>
-                            <label id=\"systemFolderLabel-$folder\" for=\"systemFolder-$folder\">$folder</label><br>";
+                            <label id=\"systemFolderLabel-$folder\" for=\"systemFolder-$folder\">".ucfirst($folder)."</label><br>";
                         }
                         ?>
                         </div>
