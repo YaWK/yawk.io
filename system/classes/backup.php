@@ -58,6 +58,8 @@ namespace YAWK\BACKUP
         public $zipBackup = "true";
         /** @var string remove files after zip is complete */
         public $removeAfterZip = "true";
+        /** @var string should .sql backup be stored in tmp folder? */
+        public $storeSqlTmp = "false";
 
         /**
          * Init Backup Class (start backup)
@@ -113,8 +115,9 @@ namespace YAWK\BACKUP
                     // backup database only
                     case "database":
                     {
+                        $this->storeSqlTmp = "false";
                         // run database backup
-                        if ($this->runDatabaseBackup($db) === true)
+                        if ($this->runDatabaseBackup($db, $this->storeSqlTmp) === true)
                         {   // db backup was successful
                             return true;
                         }
@@ -141,15 +144,33 @@ namespace YAWK\BACKUP
 
                     // custom backup selected
                     case "custom":
-                    {   // run backup of custom folder
+                    {
+                        // store .sql file in tmp folder (because we're doing a file package)
+                        $this->storeSqlTmp = "true";
+
+                        // check if database backup is requested by form
+                        if (isset($_POST['database']) && (!empty($_POST['database'])))
+                        {
+                            // run database backup
+                            if ($this->runDatabaseBackup($db, $this->storeSqlTmp) === true)
+                            {
+                                // db backup successful
+                            }
+                            else
+                            {   // db backup FAILED
+                                // return false;
+                            }
+                        }
+
+                        // run backup of custom folder
                         if($this->runFileBackup($db) === true)
                         {   // success
                             return true;
                         }
                         else
-                            {   // custom folder backup failed
-                                return false;
-                            }
+                        {   // custom folder backup failed
+                            return false;
+                        }
                     }
                     break;
                 }
@@ -180,6 +201,16 @@ namespace YAWK\BACKUP
             if (is_writeable($this->targetFolder))
             {   // set configfile (string that includes path + filename)
                 $this->configFile = $this->targetFolder.$this->configFilename;
+
+                if (isset($this->storeSqlTmp) && ($this->storeSqlTmp == "true"))
+                {
+                    if (!is_dir($this->tmpFolder."database"))
+                    {
+                        mkdir($this->tmpFolder."database");
+                    }
+                    $this->configFile = $this->tmpFolder."database/".$this->configFilename;
+                }
+
                 // check if ini file was written
                 if (\YAWK\sys::writeIniFile($this->backupSettings, $this->configFile) === true)
                 {
@@ -293,15 +324,19 @@ namespace YAWK\BACKUP
          * @link        http://yawk.io
          * @return      bool
          */
-        public function runDatabaseBackup($db)
+        public function runDatabaseBackup($db, $storeSqlTmp)
         {
+            if (isset($storeSqlTmp) && (!empty($storeSqlTmp)))
+            {
+                $this->storeSqlTmp = $storeSqlTmp;
+            }
             // include backup-database class
             require_once 'backup-mysqlBackup.php';
             // create new database backup object
             $this->mysqlBackup = new \YAWK\BACKUP\DATABASE\mysqlBackup($this->backupSettings);
 
             // initialize database backup (this will run mysqldump-php)
-            if ($this->mysqlBackup->initMysqlBackup($db, $this->overwriteBackup, $this->zipBackup) === true)
+            if ($this->mysqlBackup->initMysqlBackup($db, $this->overwriteBackup, $this->zipBackup, $this->storeSqlTmp) === true)
             {   // database backup successful
                 return true;
             }
