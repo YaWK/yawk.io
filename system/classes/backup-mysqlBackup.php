@@ -65,14 +65,25 @@ namespace YAWK\BACKUP\DATABASE
          * @param       object $db database object
          * @param       string $overwriteBackup if overwrite backup is allowed or not "true" | "false"
          * @param       string $zipBackup if backup should be zipped or not "true" | "false"
+         * @param       string $storeSqlTmp if backup should be stored in tmp/database "true" | "false"
          * @return      bool
          */
-        public function initMysqlBackup($db, $overwriteBackup, $zipBackup)
+        public function initMysqlBackup($db, $overwriteBackup, $zipBackup, $storeSqlTmp)
         {
-            // start mysqlbackup
+            // if overwrite backup is true
             $this->overwriteBackup = $overwriteBackup;
+            // zip true|false
             $this->zipBackup = $zipBackup;
+            // store .sql in tmp folder true|false
+            $this->storeSqlTmp = $storeSqlTmp;
 
+            // check if .sql file should be stored in tmp folder
+            if (isset($this->storeSqlTmp) && ($this->storeSqlTmp == "true"))
+            {   // if so, do not zip
+                $this->zipBackup = "false";
+            }
+
+            // start database backup
             if ($this->startMysqlBackup($db) === true)
             {   // mysql backup done
                 return true;
@@ -354,20 +365,44 @@ namespace YAWK\BACKUP\DATABASE
          */
         public function doSqlBackup($db)
         {
+
+            // check if .sql file should be stored in tmp folder...
+            if (isset($this->storeSqlTmp) && ($this->storeSqlTmp == "true"))
+            {   // check if subdir database exists
+                if (is_writeable($this->tmpFolder))
+                {
+                    if (!is_dir($this->tmpFolder."database"))
+                    {   // if not, create it
+                        mkdir($this->tmpFolder."database");
+                    }
+                    // set sql path to temp folder
+                    $this->sqlPath = $this->tmpFolder."database/";
+                    // set whole sql backup file path + filename
+                    $this->sqlBackup = $this->sqlPath.$this->backupSqlFile;
+                }
+                else
+                    {
+                        \YAWK\sys::setSyslog($db, 51, 1, "failed to create database backup: $this->tmpFolder is not writeable", 0, 0, 0, 0);
+                        return false;
+                    }
+            }
+
+            // check if .sql path is writeable
             if (is_writeable($this->sqlPath))
             {
-                // try database backup
+                // ok then...
                 try
                 {   // try to start backup
                     $this->mysqldump->start($this->sqlBackup, $this->dumpSettings);
                 }
-                // catch error
+                // on fail: catch error
                 catch (\Exception $e)
                 {
                     // output mysqldump error
-                    \YAWK\sys::setSyslog($db, 52, 2, "failed to create database backup - mysqldump failed with error: ".$e->getMessage()."", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 52, 2, "".$e->getMessage()."", 0, 0, 0, 0);
                     // echo 'mysqldump-php error: ' . $e->getMessage();
                 }
+
                 // check if file exists
                 if ($this->sqlFileExists())
                 {
@@ -533,15 +568,18 @@ namespace YAWK\BACKUP\DATABASE
                         $this->archiveBackupSubFolder = $this->archiveBackupFolder.$_POST['newFolder']."/";
 
                         // create new directory in archive
-                        if (mkdir($this->archiveBackupSubFolder))
-                        {   // all good, new archive subfolder created
-                            // set syslog entry: dir created
-                            \YAWK\sys::setSyslog($db, 50, 0, "archive directory created: $this->sqlPath", 0, 0, 0, 0);
-                        }
-                        else
-                        {   // failed to create new archive subfolder
-                            // set syslog entry: failed
-                            \YAWK\sys::setSyslog($db, 52, 0, "failed to create archive directory: $this->sqlPath", 0, 0, 0, 0);
+                        if (!is_dir($this->archiveBackupSubFolder))
+                        {
+                            if (mkdir($this->archiveBackupSubFolder))
+                            {   // all good, new archive subfolder created
+                                // set syslog entry: dir created
+                                \YAWK\sys::setSyslog($db, 50, 0, "archive directory created: $this->sqlPath", 0, 0, 0, 0);
+                            }
+                            else
+                            {   // failed to create new archive subfolder
+                                // set syslog entry: failed
+                                \YAWK\sys::setSyslog($db, 52, 0, "failed to create archive directory: $this->sqlPath", 0, 0, 0, 0);
+                            }
                         }
                     }
                     // check if existing folder was selected by user
@@ -550,7 +588,9 @@ namespace YAWK\BACKUP\DATABASE
                         $this->archiveBackupSubFolder = $this->archiveBackupFolder.$_POST['selectFolder']."/";
                     }
 
+                    // SET PATH WHERE .SQL FILE SHOULD BE STORED
                     $this->sqlPath = $this->archiveBackupSubFolder;
+                    // set archive backup subfolder
                     $this->targetFolder = $this->archiveBackupSubFolder;
                 }
             }
