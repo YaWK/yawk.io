@@ -370,7 +370,7 @@ namespace YAWK\BACKUP\DATABASE
             if (isset($this->storeSqlTmp) && ($this->storeSqlTmp == "true"))
             {   // check if subdir database exists
                 if (is_writeable($this->tmpFolder))
-                {
+                {   // check if tmp subdir (database) exists...
                     if (!is_dir($this->tmpFolder."database"))
                     {   // if not, create it
                         mkdir($this->tmpFolder."database");
