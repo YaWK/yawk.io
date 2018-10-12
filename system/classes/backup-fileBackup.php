@@ -267,9 +267,73 @@ namespace YAWK\BACKUP\FILES
             }
 
             $source = $this->tmpFolder;
-            $destination = $this->tmpFolder."custom-backup.zip";
-            if ($this->zipFolder($db, $source, $destination) == true)
+            $customBackupFile = $this->tmpFolder."custom-backup.zip";
+            if ($this->zipFolder($db, $source, $customBackupFile) == true)
             {
+        // TEST AREA
+                // check if backup overwrite is allowed
+                if ($this->overwriteBackup == "false")
+                {
+                    if (isset($_POST))
+                    {
+                        // check if new folder was entered by user
+                        if (isset($_POST['newFolder']) && (!empty($_POST['newFolder'])))
+                        {
+                            // create new archive sub folder path
+                            $this->archiveBackupSubFolder = $this->archiveBackupFolder.$_POST['newFolder']."/";
+
+                            // create new directory in archive
+                            if (!is_dir($this->archiveBackupSubFolder))
+                            {
+                                if (mkdir($this->archiveBackupSubFolder))
+                                {   // all good, new archive subfolder created
+                                    // set syslog entry: dir created
+                                    \YAWK\sys::setSyslog($db, 50, 0, "archive directory created: $this->archiveBackupSubFolder", 0, 0, 0, 0);
+                                }
+                                else
+                                {   // failed to create new archive subfolder
+                                    // set syslog entry: failed
+                                    \YAWK\sys::setSyslog($db, 52, 0, "failed to create archive directory: $this->archiveBackupSubFolder", 0, 0, 0, 0);
+                                }
+                            }
+                        }
+                        // check if existing folder was selected by user
+                        else if (isset($_POST['selectFolder']) && (!empty($_POST['selectFolder'])))
+                        {   // set archive sub foder path
+                            $this->archiveBackupSubFolder = $this->archiveBackupFolder.$_POST['selectFolder']."/";
+                        }
+
+                        // SET PATH WHERE .SQL FILE SHOULD BE STORED
+                        if (rename($customBackupFile, $this->archiveBackupSubFolder))
+                        {
+                            if (is_file($this->archiveBackupSubFolder."custom-backup.zip"))
+                            {
+                                \YAWK\sys::setSyslog($db, 49, 0, "created ".$this->archiveBackupSubFolder."custom-backup.zip", 0, 0, 0, 0);
+                                return true;
+                            }
+                            else
+                                {
+                                    \YAWK\sys::setSyslog($db, 52, 0, "failed to create ".$this->archiveBackupSubFolder."custom-backup.zip", 0, 0, 0, 0);
+                                    return false;
+                                }
+                        }
+                        else
+                            {
+                                \YAWK\sys::setSyslog($db, 52, 0, "failed to move ".$this->archiveBackupSubFolder."custom-backup.zip", 0, 0, 0, 0);
+                                return false;
+                            }
+                    }
+                    else
+                        {
+                            \YAWK\sys::setSyslog($db, 52, 0, "$_POST not set: unable to process ".$this->archiveBackupSubFolder."custom-backup.zip", 0, 0, 0, 0);
+                        }
+                }
+                else
+                    {
+                        \YAWK\sys::setSyslog($db, 52, 0, "overwrite backup false: ".$this->overwriteBackup."", 0, 0, 0, 0);
+                    }
+        // END TESTING AREA
+
                 return true;
             }
             else
