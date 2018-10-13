@@ -3126,7 +3126,7 @@ namespace YAWK
                                 //------------------
                                 // LINE CHART
                                 //------------------
-                               var lineChartData = {";echo $this->getJsonDaytimeLineChart($db, $dayTimes, $lang);echo "
+                               var lineChartData = {";print $this->getJsonDaytimeLineChart($db, $dayTimes, $lang);echo "};
                                var lineChartOptions = {
                                   //Boolean - If we should show the scale at all
                                   showScale: true,
