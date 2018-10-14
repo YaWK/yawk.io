@@ -1,9 +1,10 @@
 <?php
 /** @var $db \YAWK\db */
-require_once '../system/classes/backup.php';        // backup methods and helpers
-// check if backup obj is set
+// include backup class - main methods and helpers
+require_once '../system/classes/backup.php';
+// check if backup object is set
 if (!isset($backup) || (empty($backup)))
-{   // create new backup obj
+{   // create new backup object
     $backup = new \YAWK\BACKUP\backup();
 }
 // check if GET data is set
@@ -111,9 +112,7 @@ if (isset($_POST))
             // start backup selected
             case "startBackup":
             {
-
                 // CHECK POST SETTINGS AND SET BACKUP PROPERTIES
-
                 // check if backup method is set
                 if (isset($_POST['backupMethod']) && (!empty($_POST['backupMethod'])))
                 {   // set backup method property depending on select field
@@ -127,7 +126,10 @@ if (isset($_POST))
                 }
                 else
                     {   // zip backup disabled - checkbox not checked
-                        $backup->zipBackup = false;
+                        // $backup->zipBackup = false;
+
+                        // ALWAYS ZIP (toggle switch is removed for now, see line ~575)
+                        $backup->zipBackup = true;
                     }
 
                 // should files be removed after backup (save .zip file only)
@@ -157,7 +159,7 @@ if (isset($_POST))
                 // initialize backup
                 if ($backup->init($db) === true)
                 {   // ok, backup successful
-                    \YAWK\alert::draw("success", $lang['BACKUP_SUCCESSFUL'], $lang['BACKUP_SUCCESSFUL_TEXT'], "", 3400);
+                    \YAWK\alert::draw("success", $lang['BACKUP_SUCCESSFUL'], $lang['BACKUP_SUCCESSFUL_TEXT'], "", 2600);
                 }
                 else
                     {   // backup failed
@@ -187,7 +189,7 @@ if (isset($_POST))
                         // create new directory in archive
                         if (mkdir($backup->archiveBackupSubFolder))
                         {   // all good, new archive subfolder created
-                            \YAWK\alert::draw("success", $_POST['file'], "$backup->archiveBackupSubFolder $lang[CREATED]", "", 6400);
+                            \YAWK\alert::draw("success", $_POST['file'], "$backup->archiveBackupSubFolder $lang[CREATED]", "", 2600);
                         }
                         else
                             {   // failed to create new archive subfolder
@@ -215,7 +217,7 @@ if (isset($_POST))
                     {
                         if (rename($backup->archiveBackupFile, $backup->archiveBackupNewFile))
                         {   // success
-                            \YAWK\alert::draw("success", $_POST['file'], $backup->archiveBackupNewFile, "", 6400);
+                            \YAWK\alert::draw("success", $_POST['file'], $backup->archiveBackupNewFile, "", 2600);
                         }
                         else
                         {   // error: throw msg
@@ -267,19 +269,22 @@ if (isset($_POST))
         // ok, lets go...
         // we need to check if user clicked on save button
         $(savebutton).click(function() {
-
+            // add loading indicator to give the user feedback as long as his backup is processing
             var savebutton = ('#savebutton');
             var savebuttonIcon = ('#savebuttonIcon');
             var savebuttonText = $('#savebuttonText');
             var processingText = $(savebutton).attr("data-processingText");
             var savebuttonTitle = $(savebutton).attr("data-processingTitle");
 
+            // add some animation and disable the button to prevent nervous user actions...
             $(savebutton).removeClass('btn btn-success').addClass('btn btn-warning disabled').attr('title', savebuttonTitle);
             $(savebuttonText).html(processingText);
             $(savebuttonIcon).removeClass('fa fa-check').addClass('fa fa-spinner fa-spin fa-fw');
         });
+
         // EXTENDED SETTINGS
-        // to improve usability of 'custom backup', all required checkboxes are grouped.
+        // required checkboxes are grouped to improve usability of 'custom backup' method.
+        // grouping of toggle switches allows users to enable or disable a whole category.
         // this piece of js manage the toggle switches on custom backup form
 
         // CONTENT TOGGLE SWITCH
@@ -354,24 +359,6 @@ if (isset($_POST))
                     });
                 }
 
-        });
-
-        // if zip is not allowed, remove after zip should be disabled
-        $('#zipBackup').change(function() {
-            // var remove after zip switch
-            var removeAfterZipSwitch = $('#removeAfterZip');
-
-            // check if zip is enabled or disabled
-            if ($('#zipBackup').is(':checked'))
-            {   // disable remove after zip switch
-                $(removeAfterZipSwitch).bootstrapToggle('on');
-                $(removeAfterZipSwitch).prop('disabled', false);
-            }
-            else
-                {   // toggle + enable switch again
-                    $(removeAfterZipSwitch).bootstrapToggle('off');
-                    $(removeAfterZipSwitch).prop('disabled', true);
-                }
         });
 
         // check if pulldown (select field) has changed (any item has been selected)
@@ -577,13 +564,18 @@ echo"<ol class=\"breadcrumb\">
                 <div class="col-md-6">
                 <br><br>
                     <?php
-                        // add zip switch only if zip archive class is available
-                        if (class_exists('ZipArchive'))
-                        {
-                            echo "<input type=\"hidden\" class=\"hidden\" name=\"zipBackup\" id=\"zipBackupHidden\" value=\"false\">
-                            <input type=\"checkbox\" data-on=\"<i class='fa fa-file-zip-o'></i>\" data-off=\"$lang[OFF_]\" data-toggle=\"toggle\" data-onstyle=\"success\" data-offstyle=\"danger\" class=\"checkbox\" name=\"zipBackup\" id=\"zipBackup\" value=\"true\" checked>
-                            &nbsp;&nbsp;<label for=\"zipBackup\">$lang[BACKUP_ZIP_ALLOWED]&nbsp;&nbsp;</label>";
-                        }
+                    // ZIP TOGGLE SWITCH
+                    // this is disabled on default - because every backup should be zipped.
+                    //
+                    // add zip switch only if zip archive class is available
+                    /*
+                    if (class_exists('ZipArchive'))
+                    {
+                        echo "<input type=\"hidden\" class=\"hidden\" name=\"zipBackup\" id=\"zipBackupHidden\" value=\"false\">
+                        <input type=\"checkbox\" data-on=\"<i class='fa fa-file-zip-o'></i>\" data-off=\"$lang[OFF_]\" data-toggle=\"toggle\" data-onstyle=\"success\" data-offstyle=\"danger\" class=\"checkbox\" name=\"zipBackup\" id=\"zipBackup\" value=\"true\" checked>
+                        &nbsp;&nbsp;<label for=\"zipBackup\">$lang[BACKUP_ZIP_ALLOWED]&nbsp;&nbsp;</label>";
+                    }
+                    */
                     ?>
 
                 </div>
@@ -701,21 +693,24 @@ echo"<ol class=\"breadcrumb\">
                     $month = date("F", filemtime($currentFile));
                     // get year of current file
                     $year = date("Y", filemtime($currentFile));
+                    // get file size of current backup file
+                    $currentFileSize = \YAWK\filemanager::sizeFilter(filesize($currentFile), 0);
+
                     // calculate how long it is ago...
                     $ago = \YAWK\sys::time_ago($currentFileDate, $lang);
                     echo "
                 <tr>
                     <td width=\"10%\" class=\"text-center\"><h4><i class=\"fa fa-file-zip-o\"></i><br><small>$month<br>$year</small></h4></td>
-                    <td width=\"60%\"><h4><a href=\"$backup->currentBackupFolder$file\">$file</a><br><small><b>$currentFileDate</b><br><i>($ago)</i></small></h4></td>
-                    <td width=\"30%\" class=\"text-right\">
-                      <h4><br>
+                    <td width=\"51%\"><h4><a href=\"$backup->currentBackupFolder$file\">$file</a><br><small><b>$currentFileDate</b><br><i>($ago)</i></small></h4></td>
+                    <td width=\"12%\" class=\"text-right\"><br><small><b>$currentFileSize</b></small></td>
+                    <td width=\"27%\" class=\"text-right\">
+                      <br>
                       
                         <a href=\"$backup->currentBackupFolder$file\" title=\"$lang[TO_DOWNLOAD]\"><i class=\"fa fa-download\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
                         <a href=\"#\" title=\"$lang[BACKUP_RESTORE]\"><i class=\"fa fa-history\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
                         <a href=\"#\" data-file=\"$file\" data-toggle=\"modal\" data-target=\"#myModal\" title=\"$lang[BACKUP_MOVE_TO_ARCHIVE]\"><i class=\"fa fa-archive\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
                         <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"$backup->currentBackupFolder$file ".$lang['DELETE']."? - $lang[BEWARE] $lang[UNDO_NOT_POSSIBLE]!\" title=\"$lang[ATTENTION] $lang[BACKUP] $lang[DELETE]\" href=\"index.php?page=settings-backup&deleteBackup=true&backupFolder=$backup->currentBackupFolder&backupFile=$file\">
                         </a>
-                      </h4>
                     </td>
                 </tr>";
                 }
