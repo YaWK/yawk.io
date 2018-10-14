@@ -50,7 +50,7 @@ namespace YAWK\BACKUP\DATABASE
         /** @var string path, where the backup will be stored */
         public $sqlPath = '../system/backup/current/';
         /** @var string default filename of mysqldump .sql file */
-        public $backupSqlFile = 'backup-database.sql';
+        public $backupSqlFile = 'database-backup';
         /** @var string name of the backup .sql file */
         public $sqlBackup = '';
         /** @var string hash value of .sql file */
