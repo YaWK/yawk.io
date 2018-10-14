@@ -3,8 +3,10 @@ namespace YAWK\BACKUP
 {
     /**
      * <b>Backup Class</b>
-     * <p>Methods to backup and restore complete project data including: pages,
-     * menus, widgets, media folder and so on. This is a work in progress file!</p>
+     * <p>Methods to backup and restore complete or partial project data including:
+     * pages folder, media folder, system folder and database. The Backup can be
+     * stored and overwritten in current Folder. Otherwise it is possible to archive
+     * any backup. To do this, you can create a new folder to store the backup within.</p>
      *
      * @package    YAWK
      * @author     Daniel Retzl <danielretzl@gmail.com>
@@ -12,7 +14,7 @@ namespace YAWK\BACKUP
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation WORK IN PROGRESS!
+     * @annotation Backup Main Class
      */
     class backup
     {
@@ -61,19 +63,21 @@ namespace YAWK\BACKUP
         /** @var string should .sql backup be stored in tmp folder? */
         public $storeSqlTmp = "false";
 
+
+        // prepare temp folder on class instantiation
         public function __construct()
         {
+            // if tmp folder does not exist
             if (!is_dir($this->tmpFolder))
-            {
+            {   // create tmp folder
                 if (!mkdir($this->tmpFolder))
-                {
+                {   // unable to create tmp folder
                     return false;
                 }
                 else
-                    {
-                        // set writeable to owner + group
+                    {   // tmp folder created - try to set owner + group writeable
                         if (chmod($this->tmpFolder, 0775))
-                        {
+                        {   // ok...
                             return true;
                         }
                         else
@@ -89,7 +93,7 @@ namespace YAWK\BACKUP
         }
 
         /**
-         * Init Backup Class (start backup)
+         * Init Backup Class (run backup)
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
@@ -124,7 +128,7 @@ namespace YAWK\BACKUP
             {   // which backup method should be executed?
                 switch ($this->backupMethod)
                 {
-                    // backup complete system (templates, files, folder, database)
+                    // do a complete backup
                     case "complete":
                     {
                         // run backup of complete system (including database)
@@ -139,7 +143,7 @@ namespace YAWK\BACKUP
                     }
                     break;
 
-                    // backup database only
+                    // database only
                     case "database":
                     {
                         $this->storeSqlTmp = "false";
@@ -155,7 +159,7 @@ namespace YAWK\BACKUP
                     }
                     break;
 
-                    // backup media folder only
+                    // media folder only
                     case "mediaFolder":
                     {   // run backup of media folder
                         if ($this->runFileBackup($db) === true)
