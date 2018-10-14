@@ -228,7 +228,6 @@ if (isset($_POST))
                         {
                             \YAWK\alert::draw("warning", $_POST['file'], "$lang[BACKUP_FAILED_TO_MOVE] $backup->archiveBackupNewFile $lang[BACKUP_FAILED_TO_MOVE_CHMOD]", "", 6400);
                         }
-
                 }
                 else
                     {
