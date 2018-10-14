@@ -61,6 +61,33 @@ namespace YAWK\BACKUP
         /** @var string should .sql backup be stored in tmp folder? */
         public $storeSqlTmp = "false";
 
+        public function __construct()
+        {
+            if (!is_dir($this->tmpFolder))
+            {
+                if (!mkdir($this->tmpFolder))
+                {
+                    return false;
+                }
+                else
+                    {
+                        // set writeable to owner + group
+                        if (chmod($this->tmpFolder, 0775))
+                        {
+                            return true;
+                        }
+                        else
+                            {   // unable to set folder properties
+                                return false;
+                            }
+                    }
+            }
+            else
+                {   // all good - do nothing
+                    return null;
+                }
+        }
+
         /**
          * Init Backup Class (start backup)
          * @author      Daniel Retzl <danielretzl@gmail.com>
@@ -100,17 +127,6 @@ namespace YAWK\BACKUP
                     // backup complete system (templates, files, folder, database)
                     case "complete":
                     {
-                        $this->storeSqlTmp = "false";
-                        // run database backup
-                        if ($this->runDatabaseBackup($db, $this->storeSqlTmp) === true)
-                        {
-                            // db backup successful
-                        }
-                        else
-                        {   // db backup FAILED
-                            // return false;
-                        }
-
                         // run backup of complete system (including database)
                         if ($this->runFileBackup($db) === true)
                         {   // success
