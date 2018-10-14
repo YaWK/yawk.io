@@ -1,6 +1,9 @@
 <?php
 namespace YAWK\BACKUP\FILES
 {
+
+    use YAWK\sys;
+
     /**
      * <b>YaWK Backup Component: File Backup Class</b>
      *
@@ -272,7 +275,7 @@ namespace YAWK\BACKUP\FILES
             {
         // TEST AREA
                 // check if backup overwrite is allowed
-                if ($this->overwriteBackup == "false")
+                if (isset($_POST['overwriteBackup']) && ($_POST['overwriteBackup'] == "false"))
                 {
                     if (isset($_POST))
                     {
@@ -304,10 +307,11 @@ namespace YAWK\BACKUP\FILES
                         }
 
                         // SET PATH WHERE .SQL FILE SHOULD BE STORED
-                        if (rename($customBackupFile, $this->archiveBackupSubFolder))
+                        if (rename($customBackupFile, $this->archiveBackupSubFolder."custom-backup.zip"))
                         {
                             if (is_file($this->archiveBackupSubFolder."custom-backup.zip"))
                             {
+                                \YAWK\sys::recurseRmdir($this->tmpFolder);
                                 \YAWK\sys::setSyslog($db, 49, 0, "created ".$this->archiveBackupSubFolder."custom-backup.zip", 0, 0, 0, 0);
                                 return true;
                             }
@@ -329,8 +333,27 @@ namespace YAWK\BACKUP\FILES
                         }
                 }
                 else
-                    {
-                        \YAWK\sys::setSyslog($db, 52, 0, "overwrite backup false: ".$this->overwriteBackup."", 0, 0, 0, 0);
+                    {   // STORE TO CURRENT FOLDER
+                        // SET PATH WHERE .SQL FILE SHOULD BE STORED
+                        if (rename($customBackupFile, $this->currentBackupFolder."custom-backup.zip"))
+                        {
+                            if (is_file($this->currentBackupFolder."custom-backup.zip"))
+                            {
+                                \YAWK\sys::recurseRmdir($this->tmpFolder);
+                                \YAWK\sys::setSyslog($db, 49, 0, "created ".$this->currentBackupFolder."custom-backup.zip", 0, 0, 0, 0);
+                                return true;
+                            }
+                            else
+                            {
+                                \YAWK\sys::setSyslog($db, 52, 0, "failed to create ".$this->currentBackupFolder."custom-backup.zip", 0, 0, 0, 0);
+                                return false;
+                            }
+                        }
+                        else
+                        {
+                            \YAWK\sys::setSyslog($db, 52, 0, "failed to move ".$this->currentBackupFolder."custom-backup.zip", 0, 0, 0, 0);
+                            return false;
+                        }
                     }
         // END TESTING AREA
 
