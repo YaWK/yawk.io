@@ -234,49 +234,6 @@ namespace YAWK\BACKUP\DATABASE
                     {   // set default settings (dump all)
                         $this->setDumpSettings();
                     }
-/*
- *
-                // backup mode sets if tables should be included or excluded (otherwise backup the whole database).
-                if (isset($this->backupMode))
-                {   // check and react to selected backup mode
-                    switch ($this->backupMode)
-                    {   // if only some tables should be included
-                        case "include":
-                        {
-                            // set tables for inclusion
-                            $this->dumpSettings = $this->includeTables($this->includeTablesArray);
-                        }
-                        break;
-
-                        // if some tables should be excluded
-                        case "exclude":
-                        {
-                            // set tables for exclusion
-                            $this->dumpSettings = $this->excludeTables($this->excludeTablesArray);
-                        }
-                        break;
-
-                        // all tables should be backuped
-                        case "all":
-                        {   // set empty dump settings - (dump all)
-                            $this->setDumpSettings();
-                        }
-                        break;
-
-                        // on any other value
-                        default:
-                        {   // set default dump settings - (dump all)
-                            $this->setDumpSettings();
-                        }
-                        break;
-                    }
-                }
-                else
-                    {
-                        // set empty dump settings - (dump all)
-                        $this->setDumpSettings();
-                    }
-*/
 
                 // load database config into this object
                 $this->getDatabaseConfig();
@@ -340,6 +297,11 @@ namespace YAWK\BACKUP\DATABASE
             return $this->backupSettings;
         }
 
+        /**
+         * get hash value from .sql backup file
+         * @param $db
+         * @return bool|string
+         */
         public function getHashValue($db)
         {
             // check if sql backup file is accessable
