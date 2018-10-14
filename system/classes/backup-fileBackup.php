@@ -1,13 +1,9 @@
 <?php
 namespace YAWK\BACKUP\FILES
 {
-
-    use YAWK\sys;
-
     /**
      * <b>YaWK Backup Component: File Backup Class</b>
-     *
-     * <p>Methods to backup and restore any folder </p>
+     * <p>Methods to backup folders and files</p>
      *
      * @package    YAWK
      * @author     Daniel Retzl <danielretzl@gmail.com>
@@ -15,7 +11,7 @@ namespace YAWK\BACKUP\FILES
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation This class serves methods to store files.
+     * @annotation This class serves methods to create backup from files.
      */
     class fileBackup extends \YAWK\BACKUP\backup
     {
@@ -116,6 +112,14 @@ namespace YAWK\BACKUP\FILES
             return $this->backupSettings;
         }
 
+        /**
+         * Get and return hash value of $file
+         * @author      Daniel Retzl <danielretzl@gmail.com>
+         * @version     1.0.0
+         * @link        http://yawk.io
+         * @annotation  return bool if $this->backupZipFile exists
+         * @return      bool true|false
+         */
         public function getHashValue($db)
         {
             // check if sql backup file is accessable
@@ -272,8 +276,7 @@ namespace YAWK\BACKUP\FILES
                 }
             }
 
-            // ZIP IT + COPY TO FINAL DESTINATION
-
+            // PREPARE FINAL FILENAME
             // set filename of backup .zip archive (including path to tmp folder)
             // check, which filename the backup should have:
             if (isset($_POST['backupMethod']) && (!empty($_POST['backupMethod'])))
@@ -306,6 +309,7 @@ namespace YAWK\BACKUP\FILES
                 }
             }
 
+            // ZIP FOLDER + COPY TO FINAL DESTINATION
             // try to zip the whole tmp/ folder
             if ($this->zipFolder($db, $this->tmpFolder, $this->tmpFolder."$this->finalFilename") == true)
             {
@@ -344,21 +348,23 @@ namespace YAWK\BACKUP\FILES
 
                         // SET PATH WHERE BACKUP SHOULD BE STORED
                         if (rename($this->tmpFolder.$this->finalFilename, $this->archiveBackupSubFolder.$this->finalFilename))
-                        {
+                        {   // check if final filename exists
                             if (is_file($this->archiveBackupSubFolder.$this->finalFilename))
                             {
+                                // ok, delete tmp folder recursive
                                 \YAWK\sys::recurseRmdir($this->tmpFolder);
+                                // set positive syslog entry
                                 \YAWK\sys::setSyslog($db, 49, 0, "created ".$this->archiveBackupSubFolder."$this->finalFilename", 0, 0, 0, 0);
                                 return true;
                             }
                             else
-                                {
+                                {   // failed to create backup
                                     \YAWK\sys::setSyslog($db, 52, 0, "failed to create ".$this->archiveBackupSubFolder."$this->finalFilename", 0, 0, 0, 0);
                                     return false;
                                 }
                         }
                         else
-                            {
+                            {   // failed to move final backup file
                                 \YAWK\sys::setSyslog($db, 52, 0, "failed to move ".$this->archiveBackupSubFolder."$this->finalFilename", 0, 0, 0, 0);
                                 return false;
                             }
@@ -368,20 +374,22 @@ namespace YAWK\BACKUP\FILES
                         // SET PATH WHERE .SQL FILE SHOULD BE STORED
                         if (rename($this->tmpFolder.$this->finalFilename, $this->currentBackupFolder.$this->finalFilename))
                         {
+                            // check if final backup file is available in current folder
                             if (is_file($this->currentBackupFolder.$this->finalFilename))
-                            {
+                            {   // ok, remove tmp dir recursivly
                                 \YAWK\sys::recurseRmdir($this->tmpFolder);
+                                // set positive syslog entry
                                 \YAWK\sys::setSyslog($db, 49, 0, "created ".$this->currentBackupFolder."$this->finalFilename", 0, 0, 0, 0);
                                 return true;
                             }
                             else
-                            {
+                            {   // failed to create current backup
                                 \YAWK\sys::setSyslog($db, 52, 0, "failed to create ".$this->currentBackupFolder."$this->finalFilename", 0, 0, 0, 0);
                                 return false;
                             }
                         }
                         else
-                        {
+                        {   // failed to move backup archive to current folder
                             \YAWK\sys::setSyslog($db, 52, 0, "failed to move ".$this->currentBackupFolder."$this->finalFilename", 0, 0, 0, 0);
                             return false;
                         }
@@ -394,13 +402,20 @@ namespace YAWK\BACKUP\FILES
                     }
             }
             else
-                {
+                {   // failed to zip final backup file
                     \YAWK\sys::setSyslog($db, 52, 0, "unable to zip ".$this->finalFilename."", 0, 0, 0, 0);
                     return false;
                 }
         }
 
 
+        /**
+         * Copy a folder from source to target, including all subdirectories
+         * @param $db
+         * @param $folder
+         * @param $targetFolder
+         * @return bool
+         */
         public function copyFolder($db, $folder, $targetFolder)
         {
             // set source folder
@@ -415,16 +430,13 @@ namespace YAWK\BACKUP\FILES
                 return false;
             }
             else
-                {
+                {   // copy folder successful
                     return true;
                 }
         }
 
         /**
-         * Start and manage mysql backup routine.
-         * <p>First of all, mysqldump class will be included. Then, a check runs if a .sql backup file exists.
-         * if so, check if overwrite backup is allowed. If this is true, doSqlBackup method will be called.
-         * (This function does the real job).</p>
+         * Check settings and start file backup
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
@@ -446,7 +458,7 @@ namespace YAWK\BACKUP\FILES
 
                         // create new directory in archive
                         if (!is_dir($this->archiveBackupSubFolder))
-                        {
+                        {   // try to create archive subfolder
                             if (mkdir($this->archiveBackupSubFolder))
                             {   // all good, new archive subfolder created
                                 // set syslog entry: dir created
@@ -465,7 +477,7 @@ namespace YAWK\BACKUP\FILES
                         $this->archiveBackupSubFolder = $this->archiveBackupFolder.$_POST['selectFolder']."/";
                     }
 
-                    $this->targetFolder = $this->archiveBackupSubFolder;
+                    // set backup target folder
                     $this->targetFolder = $this->archiveBackupSubFolder;
                 }
             }
@@ -473,7 +485,7 @@ namespace YAWK\BACKUP\FILES
             // check if a backup exists
             if ($this->zipFileExists() === true)
             {
-                // do database backup
+                // do folder backup
                 if ($this->doFolderBackup($db) === true)
                 {   // ok, backup done
                     \YAWK\sys::setSyslog($db, 50, 3, "file backup overwritten", 0, 0, 0, 0);
@@ -486,7 +498,7 @@ namespace YAWK\BACKUP\FILES
                 }
             }
             else
-            {   // .sql file does not exist - do database backup
+            {   // file does not exist - do file backup
                 if ($this->doFolderBackup($db) === true)
                 {   // ok, backup done!
                     \YAWK\sys::setSyslog($db, 50, 3, "created file backup", 0, 0, 0, 0);
