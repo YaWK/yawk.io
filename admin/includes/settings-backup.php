@@ -23,26 +23,26 @@ if (isset($_GET))
                 {   // delete file
                     if (unlink($file))
                     {   // file deleted
-                        \YAWK\alert::draw("success", "Backup geloescht!", "deleted: $_GET[backupFile]", "", 2600);
+                        \YAWK\alert::draw("success", "$lang[BACKUP_DEL_SUCCESS]", "$lang[DELETED]: $_GET[backupFile]", "", 2600);
                     }
                     else
                         {   // failed to delete file
-                            \YAWK\alert::draw("danger", "Backup nicht geloescht!", "Backup file NICHT geloescht", "", 4200);
+                            \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[BACKUP_DEL_FAILED] $_GET[backupFile]", "", 4200);
                         }
                 }
                 else
                     {   // file not found - unable to delete
-                        \YAWK\alert::draw("warning", "File nicht gefunden!", "$_GET[backupFolder]$_GET[backupFile] not found!", "", 6200);
+                        \YAWK\alert::draw("warning", "$lang[FILE_NOT_FOUND]", "$_GET[backupFolder]$_GET[backupFile] $lang[NOT_FOUND] $lang[FILEMAN_FILE_DOES_NOT_EXIST]", "", 6200);
                     }
             }
             else
                 {   // backup folder not found
-                    \YAWK\alert::draw("warning", "Folder nicht gefunden!", "$_GET[backupFolder] not found!", "", 6200);
+                    \YAWK\alert::draw("warning", "$lang[DIR_NOT_FOUND]", "$_GET[backupFolder] $lang[NOT_FOUND]", "", 6200);
                 }
         }
         else
             {   // backup folder or file not set
-                \YAWK\alert::draw("warning", "Folder or File not set!", "Folder or file is not set!", "", 6200);
+                \YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[FILE_FOLDER_NOT_SET]", "", 6200);
             }
     }
     // check if delete archive folder is requested
@@ -56,17 +56,17 @@ if (isset($_GET))
             {   // path (backup folder and file)
                 if (\YAWK\filemanager::recursiveRemoveDirectory($backup->archiveBackupSubFolder) === true)
                 {
-                    \YAWK\alert::draw("success", "DELETED", "$backup->archiveBackupSubFolder", "", 3200);
+                    \YAWK\alert::draw("success", "$lang[DELETED]", "$backup->archiveBackupSubFolder", "", 3200);
                 }
             }
             else
             {   // archive sub folder not found
-                \YAWK\alert::draw("warning", "Folder nicht gefunden!", "$_GET[backupFolder] not found!", "", 6200);
+                \YAWK\alert::draw("warning", "$lang[FOLDER_NOT_FOUND]", "$_GET[backupFolder] $lang[NOT_FOUND]", "", 6200);
             }
         }
         else
         {   // backup folder or file not set
-            \YAWK\alert::draw("warning", "Archive Subfolder not set!", "no folder set!", "", 6200);
+            \YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[FILE_FOLDER_NOT_SET]", "", 6200);
         }
     }
     // check if complete archive folder should be downloaded
@@ -85,17 +85,17 @@ if (isset($_GET))
                 }
                 else
                     {
-                        \YAWK\alert::draw("danger", "ZIP nicht erstellt!", "$_GET[folder] not ziped!", "", 6200);
+                        \YAWK\alert::draw("danger", "$lang[ERROR]", "$_GET[folder] $lang[BACKUP_ZIP_CREATED_FAILED]", "", 6200);
                     }
             }
             else
             {   // archive sub folder not found
-                \YAWK\alert::draw("warning", "Folder nicht gefunden!", "$_GET[backupFolder] not found!", "", 6200);
+                \YAWK\alert::draw("warning", "$lang[ERROR]", "$_GET[backupFolder] $lang[NOT_FOUND]", "", 6200);
             }
         }
         else
         {   // backup folder or file not set
-            \YAWK\alert::draw("warning", "Archive Subfolder not set!", "no folder set!", "", 6200);
+            \YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[FILE_FOLDER_NOT_SET]", "", 6200);
         }
     }
 }
@@ -187,22 +187,21 @@ if (isset($_POST))
                         // create new directory in archive
                         if (mkdir($backup->archiveBackupSubFolder))
                         {   // all good, new archive subfolder created
-                            \YAWK\alert::draw("success", $_POST['file'], "$backup->archiveBackupSubFolder erstellt!", "", 6400);
+                            \YAWK\alert::draw("success", $_POST['file'], "$backup->archiveBackupSubFolder $lang[CREATED]", "", 6400);
                         }
                         else
                             {   // failed to create new archive subfolder
-                                \YAWK\alert::draw("danger", $_POST['file'], "$backup->archiveBackupSubFolder NICHT erstellt!", "", 6400);
+                                \YAWK\alert::draw("danger", $_POST['file'], "$backup->archiveBackupSubFolder $lang[WAS_NOT_CREATED]", "", 6400);
                             }
                     }
                     // check if existing folder was selected by user
                     else if (isset($_POST['selectFolder']) && (!empty($_POST['selectFolder'])))
                     {   // set archive sub foder path
                         $backup->archiveBackupSubFolder = $backup->archiveBackupFolder.$_POST['selectFolder']."/";
-                        \YAWK\alert::draw("info", $_POST['file'], $_POST['selectFolder'], "", 6400);
                     }
                     else
                         {   // no folder was selected - throw error msg
-                            \YAWK\alert::draw("danger", $_POST['file'], "no folder selected", "", 6400);
+                            \YAWK\alert::draw("danger", $_POST['file'], $lang['BACKUP_NO_FOLDER_SELECTED'], "", 6400);
                         }
 
                     // prepare backup move to archive...
@@ -220,19 +219,19 @@ if (isset($_POST))
                         }
                         else
                         {   // error: throw msg
-                            \YAWK\alert::draw("danger", $_POST['file'], "failed to move oldfile: $backup->archiveBackupFile to $backup->archiveBackupNewFile", "", 6400);
+                            \YAWK\alert::draw("danger", $_POST['file'], "$lang[BACKUP_FAILED_TO_MOVE] $backup->archiveBackupFile $lang[MOVE_TO] $backup->archiveBackupNewFile", "", 6400);
                         }
                     }
                     else
                         {
-                            \YAWK\alert::draw("warning", $_POST['file'], "unable to move file. wheter old file does not exist or new backup file is not writeable.", "", 6400);
+                            \YAWK\alert::draw("warning", $_POST['file'], "$lang[BACKUP_FAILED_TO_MOVE] $backup->archiveBackupNewFile $lang[BACKUP_FAILED_TO_MOVE_CHMOD]", "", 6400);
                         }
 
                 }
                 else
                     {
                         // no file was clicked - failed to select any file
-                        \YAWK\alert::draw("danger", "NO FILE SELECTED", "error: unable to get filename", "", 6400);
+                        \YAWK\alert::draw("danger", "$lang[BACKUP_NO_FILE_SELECTED]", "$lang[BACKUP_NO_FILE_SELECTED]", "", 6400);
                     }
             }
             break;
