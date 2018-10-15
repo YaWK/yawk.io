@@ -62,6 +62,10 @@ namespace YAWK\BACKUP
         public $removeAfterZip = "true";
         /** @var string should .sql backup be stored in tmp folder? */
         public $storeSqlTmp = "false";
+        /** @var string restore file */
+        public $restoreFile = '';
+        /** @var string restore from folder */
+        public $restoreFolder = '';
 
 
         // prepare temp folder on class instantiation
@@ -532,6 +536,32 @@ namespace YAWK\BACKUP
             else
                 {   // failed to create download archive
                     \YAWK\sys::setSyslog($db, 52, 3, "failed to create download archive: $destination", 0, 0, 0, 0);
+                    return false;
+                }
+        }
+
+        public function restore($db, $file, $folder)
+        {
+            if (isset($file) && (!empty($file)
+            && (isset($folder) && (!empty($folder)))))
+            {
+                // set restore file property
+                $this->restoreFile = $file;
+                $this->restoreFolder = $folder;
+
+                // check which backup should be made
+                if (is_writeable($this->tmpFolder))
+                {
+                    $source = $this->restoreFolder.$this->restoreFile;
+                    $target = $this->tmpFolder.$this->restoreFile;
+                    // copy file to tmp folder
+                    copy($source, $target);
+                    return true;
+                }
+            }
+            else
+                {   // no file set
+                    \YAWK\sys::setSyslog($db, 52, 1, "failed to restore backup: file not set", 0, 0, 0, 0);
                     return false;
                 }
         }
