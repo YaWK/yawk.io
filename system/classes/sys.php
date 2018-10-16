@@ -515,7 +515,15 @@ namespace YAWK {
             }
             // Clean up
             $dir->close();
-            return true;
+            // check if destination directory exists...
+            if (is_dir($dest))
+            {   // ok
+                return true;
+            }
+            else
+                {   // destination directory does not exist
+                    return false;
+                }
         }
 
         /**
