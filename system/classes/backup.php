@@ -66,6 +66,8 @@ namespace YAWK\BACKUP
         public $restoreFile = '';
         /** @var string restore from folder */
         public $restoreFolder = '';
+        /** @var string restore mode (database, mediafolder, complete, custom) */
+        public $restoreMode = '';
 
 
         // prepare temp folder on class instantiation
@@ -554,9 +556,61 @@ namespace YAWK\BACKUP
                 {
                     $source = $this->restoreFolder.$this->restoreFile;
                     $target = $this->tmpFolder.$this->restoreFile;
+
+                    // check, which type of backup it is...
+                    if (strstr($this->restoreFile, "database"))
+                    {
+                        // restore database backup
+                        $this->restoreMode = "database";
+                    }
+                    else if (strstr($this->restoreFile, "complete"))
+                    {
+                        $this->restoreMode = "complete";
+                    }
+                    else if (strstr($this->restoreFile, "mediafolder"))
+                    {
+                        $this->restoreMode = "mediafolder";
+                    }
+                    else if (strstr($this->restoreFile, "custom"))
+                    {
+                        $this->restoreMode = "custom";
+                    }
+
                     // copy file to tmp folder
                     copy($source, $target);
-                    return true;
+
+                    // check if backup file was copied...
+                    if (is_file($target))
+                    {   // ok, file exists...
+                        if ($this->checkZipFunction() === true)
+                        {
+                            // create new zip object
+                            $zip = new \ZipArchive;
+                            // open zip archive
+                            $res = $zip->open($target);
+                            // if zip open was successful
+                            if ($res === TRUE)
+                            {   // extract zip file
+                                $zip->extractTo($this->tmpFolder);
+                                // close zip file
+                                $zip->close();
+                                // zip extraction successful
+                                return true;
+                            }
+                            else
+                            {   // unable to open zip file
+                                return false;
+                            }
+                        }
+                        else
+                            {   // zip extension not loaded
+                                return false;
+                            }
+                    }
+                    else
+                        {   // no backup file copied to tmp folder
+                            return false;
+                        }
                 }
             }
             else

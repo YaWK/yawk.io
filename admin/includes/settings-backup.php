@@ -99,6 +99,28 @@ if (isset($_GET))
             \YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[FILE_FOLDER_NOT_SET]", "", 6200);
         }
     }
+
+    // check if restore is requested
+    if (isset($_GET['restore']) && ($_GET['restore'] == "true"))
+    {
+        if (isset($_GET['file']) && (!empty($_GET['file'])
+        && (isset($_GET['folder']) && (!empty($_GET['folder'])))))
+        {
+            $file = strip_tags($_GET['file']);
+            $folder = strip_tags($_GET['folder']);
+            // file exists
+            if ($backup->restore($db, $file, $folder) === true)
+            {   // restore successful
+                \YAWK\alert::draw("success", "$lang[SUCCESS]", "$file $lang[BACKUP_RESTORE_SUCCESS]", "", 2600);
+            }
+            else
+            {   // file does not exist
+                \YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[FILE_NOT_FOUND]", "", 0);
+            }
+        }
+    }
+
+
 }
 
 // check if post data is set
@@ -706,7 +728,7 @@ echo"<ol class=\"breadcrumb\">
                       <br>
                       
                         <a href=\"$backup->currentBackupFolder$file\" title=\"$lang[TO_DOWNLOAD]\"><i class=\"fa fa-download\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href=\"#\" title=\"$lang[BACKUP_RESTORE]\"><i class=\"fa fa-history\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href=\"index.php?page=settings-backup&restore=true&folder=$backup->currentBackupFolder&file=$file\" title=\"$lang[BACKUP_RESTORE]\"><i class=\"fa fa-history\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
                         <a href=\"#\" data-file=\"$file\" data-toggle=\"modal\" data-target=\"#myModal\" title=\"$lang[BACKUP_MOVE_TO_ARCHIVE]\"><i class=\"fa fa-archive\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
                         <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"$backup->currentBackupFolder$file ".$lang['DELETE']."? - $lang[BEWARE] $lang[UNDO_NOT_POSSIBLE]!\" title=\"$lang[ATTENTION] $lang[BACKUP] $lang[DELETE]\" href=\"index.php?page=settings-backup&deleteBackup=true&backupFolder=$backup->currentBackupFolder&backupFile=$file\">
                         </a>
