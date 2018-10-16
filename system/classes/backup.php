@@ -62,12 +62,18 @@ namespace YAWK\BACKUP
         public $removeAfterZip = "true";
         /** @var string should .sql backup be stored in tmp folder? */
         public $storeSqlTmp = "false";
-        /** @var string restore file */
+        /** @var string restore file (zip file) */
         public $restoreFile = '';
+        /** @var array restorable files (files from tmp folder) */
+        public $restoreFiles = array();
+        /** @var array restore folders (content, media, system) */
+        public $restoreFolders = array();
         /** @var string restore from folder */
         public $restoreFolder = '';
         /** @var string restore mode (database, mediafolder, complete, custom) */
         public $restoreMode = '';
+        /** @var array holds information about the restore process states */
+        public $restoreStatus = array();
 
 
         // prepare temp folder on class instantiation
@@ -137,6 +143,18 @@ namespace YAWK\BACKUP
                     // do a complete backup
                     case "complete":
                     {
+                        $this->storeSqlTmp = "true";
+
+                        // run database backup
+                        if ($this->runDatabaseBackup($db, $this->storeSqlTmp) === true)
+                        {   // db backup was successful
+                            // return true;
+                        }
+                        else
+                        {   // failed to run db backup
+                            // set syslog entry: db backup could not be made
+                        }
+
                         // run backup of complete system (including database)
                         if ($this->runFileBackup($db) === true)
                         {   // success
@@ -281,7 +299,7 @@ namespace YAWK\BACKUP
          * @version     1.0.0
          * @link        http://yawk.io
          * @param $iniFile
-         * @return bool
+         * @return array|false
          */
         public function parseIniFile($db, $iniFile)
         {   // set config file property
@@ -293,8 +311,8 @@ namespace YAWK\BACKUP
                 $this->backupSettings = parse_ini_file($this->configFile);
                 // check backup settings array is set
                 if (is_array($this->backupSettings))
-                {   // ok...
-                    return true;
+                {   // array is set, return backup settings
+                    return $this->backupSettings;
                 }
                 else
                     {   // failed parse ini file: but array is not set
@@ -559,8 +577,7 @@ namespace YAWK\BACKUP
 
                     // check, which type of backup it is...
                     if (strstr($this->restoreFile, "database"))
-                    {
-                        // restore database backup
+                    {   // restore database backup
                         $this->restoreMode = "database";
                     }
                     else if (strstr($this->restoreFile, "complete"))
@@ -581,10 +598,9 @@ namespace YAWK\BACKUP
 
                     // check if backup file was copied...
                     if (is_file($target))
-                    {   // ok, file exists...
+                    {   // file exists...
                         if ($this->checkZipFunction() === true)
-                        {
-                            // create new zip object
+                        {   // ok, create new zip object
                             $zip = new \ZipArchive;
                             // open zip archive
                             $res = $zip->open($target);
@@ -595,7 +611,103 @@ namespace YAWK\BACKUP
                                 // close zip file
                                 $zip->close();
                                 // zip extraction successful
-                                return true;
+
+                                // check if backup.ini file is there...
+                                if (is_file($this->tmpFolder.$this->configFilename))
+                                {
+                                    // ok, backup.ini found, parse data from file into array
+                                    $this->backupSettings = $this->parseIniFile($db, $this->tmpFolder.$this->configFilename);
+                                    // check if backup settings array is set and not empty
+                                    if (is_array($this->backupSettings) && (!empty($this->backupSettings)))
+                                    {
+                                        // PROCESS RESTORE METHODS
+                                        switch ($this->backupSettings['METHOD'])
+                                        {
+                                            // COMPLETE PROCESSING
+                                            case "complete":
+                                            {
+                                                // init restore folders array
+                                                $this->restoreFolders = array('content/', 'media/', 'system/');
+
+                                                // set required folders
+                                                foreach ($this->restoreFolders as $requiredFolder)
+                                                {
+                                                    // set required fields for complete restore method
+                                                    $this->restoreStatus[$requiredFolder]['required'] = "true";
+                                                }
+
+                                                // set database required as well
+                                                $this->restoreStatus['database']['required'] = "true";
+
+                                                // restore each required folder
+                                                foreach ($this->restoreFolders as $folder)
+                                                {
+                                                    // check if content, database, media and system folder exists...
+                                                    if (is_writeable(dirname($this->tmpFolder.$folder)))
+                                                    {   // restore content folder
+                                                        if (\YAWK\sys::xcopy($this->tmpFolder.$folder, "../$folder") === true)
+                                                        {
+                                                            // content folder restore successful
+                                                            $this->restoreStatus[$folder]['success'] = "true";
+                                                        }
+                                                        else
+                                                        {
+                                                            // failed to restore content folder
+                                                            $this->restoreStatus[$folder]['success'] = "false";
+                                                            $this->restoreStatus[$folder]['error'] = "failed to copy ".$this->tmpFolder."$folder check permissions of ../$folder";
+                                                        }
+                                                    }
+                                                    else
+                                                    {   // failed to restore ../content/ : folder not writeable
+                                                        $this->restoreStatus[$folder]['error'] = "failed to restore ../$folder : folder is not writeable";
+                                                    }
+                                                }
+
+                                                // complete restore done - check status
+                                                if ($this->restoreStatus[$this->restoreFolders[0]]['success'] === "true"
+                                                && ($this->restoreStatus[$this->restoreFolders[1]]['success'] === "true")
+                                                && ($this->restoreStatus[$this->restoreFolders[2]]['success'] === "true"))
+                                                {
+                                                    return true;
+                                                }
+                                                else
+                                                    {
+                                                        return false;
+                                                    }
+                                            }
+                                            break;
+
+                                            case "database":
+                                            {
+                                                die('db restore requested');
+                                            }
+                                            break;
+
+                                            case "mediaFolder":
+                                            {
+                                                die('mediafolder restore requested');
+                                            }
+                                            break;
+
+                                            case "custom":
+                                            {
+                                                die('custom restore requested');
+                                            }
+                                            break;
+                                        }
+//                                        return true;
+                                    }
+                                    else
+                                    {
+                                        // backup settings not set or empty
+                                        return false;
+                                    }
+                                }
+                                else
+                                    {
+                                        // backup.ini file not found - abort
+                                        return false;
+                                    }
                             }
                             else
                             {   // unable to open zip file
