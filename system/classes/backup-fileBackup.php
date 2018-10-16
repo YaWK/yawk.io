@@ -97,17 +97,13 @@ namespace YAWK\BACKUP\FILES
          * @annotation  write all relevant backup information into this file
          * @return      array $this->backupSettings
          */
-        public function setBackupSettings($db)
+        public function setBackupSettings()
         {
-            /** @var $db \YAWK\db */
             // set some backup info variables
             $this->backupSettings['DATE'] = \YAWK\sys::now();
             $this->backupSettings['METHOD'] = $this->backupMethod;
-            $this->backupSettings['FILE'] = $this->backupZipFile;
-            $this->backupSettings['HASH'] = $this->getHashValue($db);
+            $this->backupSettings['FILE'] = $this->finalFilename;
             $this->backupSettings['PATH'] = $this->targetFolder;
-            $this->backupSettings['SOURCE_FOLDER'] = $this->backupZipFile;
-            $this->backupSettings['OVERWRITE_ALLOWED'] = $this->overwriteBackup;
             $this->backupSettings['USER_ID'] = $_SESSION['uid'];
             return $this->backupSettings;
         }
@@ -117,20 +113,25 @@ namespace YAWK\BACKUP\FILES
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @annotation  return bool if $this->backupZipFile exists
-         * @return      bool true|false
+         * @annotation  return hashed string or false
+         * @return      string|bool
          */
-        public function getHashValue($db)
+        public function getHashValue($db, $file)
         {
+            // check if file is set
+            if (!isset($file) || (empty($file)))
+            {   // file not set
+                return false;
+            }
+
             // check if sql backup file is accessable
-            if (is_file($this->backupZipFile))
+            if (is_file($file))
             {   // generate hash value
-                return $this->hashValue = hash_file('md5', $this->backupZipFile);
+                return $this->hashValue = hash_file('md5', $file);
             }
             else
-            {   // sql backup file not found
-                // unable to generate hash value
-                \YAWK\sys::setSyslog($db, 52, 2, "failed to generate hash value - $this->backupZipFile not accessable", 0, 0, 0, 0);
+            {   // file not found: unable to generate hash value
+                \YAWK\sys::setSyslog($db, 52, 2, "failed to generate hash value - $file is not accessable", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -284,28 +285,46 @@ namespace YAWK\BACKUP\FILES
                 switch ($_POST['backupMethod'])
                 {
                     case "complete" :
-                        {
-                            $this->finalFilename = "complete-backup.zip";
-                        }
+                    {
+                        $this->finalFilename = "complete-backup.zip";
+                        $this->backupMethod = "complete";
+                    }
                     break;
 
                     case "mediaFolder" :
                     {
                         $this->finalFilename = "mediafolder-backup.zip";
+                        $this->backupMethod = "mediaFolder";
                     }
                     break;
 
                     case "custom" :
                     {
                         $this->finalFilename = "custom-backup.zip";
+                        $this->backupMethod = "custom";
                     }
                     break;
 
                     default:
-                        {
-                            $this->finalFilename = "backup.zip";
-                        }
+                    {
+                        $this->finalFilename = "backup.zip";
+                        $this->backupMethod = "unknown";
+                    }
 
+                }
+            }
+
+            // set backup settings
+            $this->backupSettings = $this->setBackupSettings();
+
+            // check if ini file was written
+            if (\YAWK\sys::writeIniFile($this->backupSettings, $this->tmpFolder.$this->configFilename) === true)
+            {
+                // check if config file is there
+                if (!is_file($this->tmpFolder.$this->configFilename))
+                {   // config file not found
+                    \YAWK\sys::setSyslog($db, 51, 1, "backup ini file written, but not found - please check: $this->configFilename", 0, 0, 0, 0);
+                    return false;
                 }
             }
 
@@ -346,7 +365,8 @@ namespace YAWK\BACKUP\FILES
                             $this->archiveBackupSubFolder = $this->archiveBackupFolder.$_POST['selectFolder']."/";
                         }
 
-                        // SET PATH WHERE BACKUP SHOULD BE STORED
+                        // STORE TO ARCHIVE FOLDER
+                        // move final *****-backup .zip to archive backup folder
                         if (rename($this->tmpFolder.$this->finalFilename, $this->archiveBackupSubFolder.$this->finalFilename))
                         {   // check if final filename exists
                             if (is_file($this->archiveBackupSubFolder.$this->finalFilename))
@@ -371,7 +391,7 @@ namespace YAWK\BACKUP\FILES
                     }
                     else
                     {   // STORE TO CURRENT FOLDER
-                        // SET PATH WHERE .SQL FILE SHOULD BE STORED
+                        // move final *****-backup .zip to current backup folder
                         if (rename($this->tmpFolder.$this->finalFilename, $this->currentBackupFolder.$this->finalFilename))
                         {
                             // check if final backup file is available in current folder
