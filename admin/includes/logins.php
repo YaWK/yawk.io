@@ -53,27 +53,30 @@ echo"<ol class=\"breadcrumb\">
     if (isset($_GET['user']) && (!empty($_GET['user'])))
     { $user = $_GET['user']; } else { $user = ''; } // if not, show all logins
 
-    foreach (\YAWK\user::getLoginData($db, $user) as $row)
+    $loginData = \YAWK\user::getLoginData($db, $user);
+    if (is_array($loginData) && (!empty($loginData)))
     {
-        if ($row['failed'] === '0')
+        foreach (\YAWK\user::getLoginData($db, $user) as $row)
         {
-            $pub = "success"; $pubtext="OK";
-            $text = "text-success text-center";
-        } else {
-            $pub = "danger"; $pubtext = "failed";
-            $text = "text-danger text-center";
-        }
-        if ($row['location'] === "backend"){
-            $locationText = "text-info text-center";
-        } else {
-            $locationText = "text-muted text-center";
-        }
-        if (isset($row['useragent']) && (!empty($row{'useragent'})))
-        {
-            $row['useragent'] = \YAWK\sys::getBrowser($row['useragent']);
-        }
+            if ($row['failed'] === '0')
+            {
+                $pub = "success"; $pubtext="OK";
+                $text = "text-success text-center";
+            } else {
+                $pub = "danger"; $pubtext = "failed";
+                $text = "text-danger text-center";
+            }
+            if ($row['location'] === "backend"){
+                $locationText = "text-info text-center";
+            } else {
+                $locationText = "text-muted text-center";
+            }
+            if (isset($row['useragent']) && (!empty($row{'useragent'})))
+            {
+                $row['useragent'] = \YAWK\sys::getBrowser($row['useragent']);
+            }
 
-        echo "<tr class=\"".$text."\" >
+            echo "<tr class=\"".$text."\" >
                 <td class=\"text-center\">
                   <i class=\"label label-$pub\">$pubtext</i></a>&nbsp;</td>
                 <td class=\"text-center\">".$row['id']."</td>
@@ -86,7 +89,9 @@ echo"<ol class=\"breadcrumb\">
                 <td class=\"text-center\">".$row['useragent']['name']." <small>".$row['useragent']['version']."</small></td>
 
               </tr>";
+        }
     }
+
     ?>
     </tbody>
 </table>
