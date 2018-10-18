@@ -56,7 +56,7 @@ echo"<ol class=\"breadcrumb\">
     $loginData = \YAWK\user::getLoginData($db, $user);
     if (is_array($loginData) && (!empty($loginData)))
     {
-        foreach (\YAWK\user::getLoginData($db, $user) as $row)
+        foreach ($loginData as $row)
         {
             if ($row['failed'] === '0')
             {
