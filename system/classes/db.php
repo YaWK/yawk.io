@@ -279,7 +279,6 @@ namespace YAWK
         public function dropTables($tables)
         {
             $processed = 0;
-
             // check if table was set
             if (!isset($tables) || (empty($tables)) || (!array($tables)))
             {

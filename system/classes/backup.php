@@ -603,6 +603,7 @@ namespace YAWK\BACKUP
                                 {
                                     // ok, backup.ini found, parse data from file into array
                                     $this->backupSettings = $this->parseIniFile($db, $this->tmpFolder.$this->configFilename);
+
                                     // check if backup settings array is set and not empty
                                     if (is_array($this->backupSettings) && (!empty($this->backupSettings)))
                                     {
@@ -733,6 +734,7 @@ namespace YAWK\BACKUP
                     // IF DATABASE RESTORE IS REQUESTED
                     else
                         {
+
                             if (is_file($this->tmpFolder."database-backup.sql_error"))
                             {
                                 unlink($this->tmpFolder."database-backup.sql_error");
@@ -743,17 +745,23 @@ namespace YAWK\BACKUP
                                 unlink($this->tmpFolder."database-backup.sql_filepointer");
                             }
 
-                            // get array with all tables that should be updated
-                            $activeTables = explode(',', $this->backupSettings['TABLES']);
-                            // delete not needed last item of array
-                            array_pop($activeTables);
-                            // drop all tables that should be updated
-                            $db->dropTables($activeTables);
-                            // print_r($activeTables);
 
                             // check if database file is in tmp/
                             if (file_exists($this->tmpFolder."database-backup.sql"))
                             {
+                                // check if backup.ini exists in tmp/database folder
+                                if (is_file($this->tmpFolder.$this->configFilename))
+                                {
+                                    // ok, database folder found, parse data from database/folder
+                                    $this->backupSettings = $this->parseIniFile($db, $this->tmpFolder.$this->configFilename);
+                                    // get array with all tables that should be updated
+                                    $activeTables = explode(',', $this->backupSettings['TABLES']);
+                                    // delete not needed last item of array
+                                    array_pop($activeTables);
+                                    // drop all tables that should be updated
+                                    $db->dropTables($activeTables);
+                                }
+
                                 if ($db->import($this->tmpFolder."database-backup.sql", '') === true)
                                 {
                                     $this->restoreStatus[]['database']['success'] = "true";
@@ -769,6 +777,19 @@ namespace YAWK\BACKUP
                             // check if database dir exists: tmp/database
                             else if (is_dir(dirname($this->tmpFolder."database/")))
                             {
+                                // check if backup.ini exists in tmp/database folder
+                                if (is_file($this->tmpFolder."database/".$this->configFilename))
+                                {
+                                    // ok, database folder found, parse data from database/folder
+                                    $this->backupSettings = $this->parseIniFile($db, $this->tmpFolder."database/".$this->configFilename);
+                                    // get array with all tables that should be updated
+                                    $activeTables = explode(',', $this->backupSettings['TABLES']);
+                                    // delete not needed last item of array
+                                    array_pop($activeTables);
+                                    // drop all tables that should be updated
+                                    $db->dropTables($activeTables);
+                                }
+
                                 // check if database file exists in tmp/database
                                 if (file_exists($this->tmpFolder."database/database-backup.sql"))
                                 {
