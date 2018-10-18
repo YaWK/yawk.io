@@ -494,12 +494,19 @@ namespace YAWK {
             // Simple copy for a file
             if (is_file($source))
             {
-                return copy($source, $dest);
+                if (copy($source, $dest) === false)
+                {
+                    return false;
+                }
             }
             // Make destination directory
             if (!is_dir($dest))
             {
-                mkdir($dest, $permissions);
+                if (!@mkdir($dest, $permissions)) {
+                    // $error = error_get_last();
+                    return false;
+                }
+
             }
             // Loop through the folder
             $dir = dir($source);
@@ -511,19 +518,14 @@ namespace YAWK {
                     continue;
                 }
                 // Deep copy directories
-                self::xcopy("$source/$entry", "$dest/$entry", $permissions);
+                if (self::xcopy("$source/$entry", "$dest/$entry", $permissions))
+                {
+                    // return false;
+                }
             }
             // Clean up
             $dir->close();
-            // check if destination directory exists...
-            if (is_dir($dest))
-            {   // ok
-                return true;
-            }
-            else
-                {   // destination directory does not exist
-                    return false;
-                }
+            return true;
         }
 
         /**

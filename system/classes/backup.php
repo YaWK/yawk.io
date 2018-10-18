@@ -529,7 +529,7 @@ namespace YAWK\BACKUP
                 // this piece of JS code changes the link (from generating .zip to download/zipfile.zip)
                 // due this method its not needed to send location headers (which is not possible at this stage)
 
-                // this 'hack' may not work in all browsers (untested in safari)
+                // this 'hack' should work in most browsers, but may not work in some. (eg: untested in safari)
 
                 // check if archive ID is set
                 if (isset($_GET['archiveID']) && (!empty($_GET['archiveID'])))
@@ -575,24 +575,6 @@ namespace YAWK\BACKUP
                     $source = $this->restoreFolder.$this->restoreFile;
                     $target = $this->tmpFolder.$this->restoreFile;
 
-                    // check, which type of backup it is...
-                    if (strstr($this->restoreFile, "database"))
-                    {   // restore database backup
-                        $this->restoreMode = "database";
-                    }
-                    else if (strstr($this->restoreFile, "complete"))
-                    {
-                        $this->restoreMode = "complete";
-                    }
-                    else if (strstr($this->restoreFile, "mediafolder"))
-                    {
-                        $this->restoreMode = "mediafolder";
-                    }
-                    else if (strstr($this->restoreFile, "custom"))
-                    {
-                        $this->restoreMode = "custom";
-                    }
-
                     // copy file to tmp folder
                     copy($source, $target);
 
@@ -626,72 +608,39 @@ namespace YAWK\BACKUP
                                             // COMPLETE PROCESSING
                                             case "complete":
                                             {
-                                                // init restore folders array
-                                                $this->restoreFolders = array('content/', 'media/', 'system/');
-
-                                                // set required folders
-                                                foreach ($this->restoreFolders as $requiredFolder)
+                                                // set folders for complete restore
+                                                $this->restoreFolders = \YAWK\filemanager::getSubfoldersToArray($this->tmpFolder);
+                                                $this->restoreStatus = $this->doRestore($this->restoreFolders);
                                                 {
-                                                    // set required fields for complete restore method
-                                                    $this->restoreStatus[$requiredFolder]['required'] = "true";
+                                                    return $this->restoreStatus;
                                                 }
-
-                                                // set database required as well
-                                                $this->restoreStatus['database']['required'] = "true";
-
-                                                // restore each required folder
-                                                foreach ($this->restoreFolders as $folder)
-                                                {
-                                                    // check if content, database, media and system folder exists...
-                                                    if (is_writeable(dirname($this->tmpFolder.$folder)))
-                                                    {   // restore content folder
-                                                        if (\YAWK\sys::xcopy($this->tmpFolder.$folder, "../$folder") === true)
-                                                        {
-                                                            // content folder restore successful
-                                                            $this->restoreStatus[$folder]['success'] = "true";
-                                                        }
-                                                        else
-                                                        {
-                                                            // failed to restore content folder
-                                                            $this->restoreStatus[$folder]['success'] = "false";
-                                                            $this->restoreStatus[$folder]['error'] = "failed to copy ".$this->tmpFolder."$folder check permissions of ../$folder";
-                                                        }
-                                                    }
-                                                    else
-                                                    {   // failed to restore ../content/ : folder not writeable
-                                                        $this->restoreStatus[$folder]['error'] = "failed to restore ../$folder : folder is not writeable";
-                                                    }
-                                                }
-
-                                                // complete restore done - check status
-                                                if ($this->restoreStatus[$this->restoreFolders[0]]['success'] === "true"
-                                                && ($this->restoreStatus[$this->restoreFolders[1]]['success'] === "true")
-                                                && ($this->restoreStatus[$this->restoreFolders[2]]['success'] === "true"))
-                                                {
-                                                    return true;
-                                                }
-                                                else
-                                                    {
-                                                        return false;
-                                                    }
                                             }
                                             break;
 
                                             case "database":
-                                            {
+                                            {   // restore database
                                                 die('db restore requested');
                                             }
                                             break;
 
                                             case "mediaFolder":
-                                            {
-                                                die('mediafolder restore requested');
+                                            {   // set media folder restore
+                                                // $this->restoreFolders = \YAWK\filemanager::getSubfoldersToArray($this->tmpFolder);
+                                                $this->restoreFolders = array('media/');
+                                                $this->restoreStatus = $this->doRestore($this->restoreFolders);
+                                                {
+                                                    return $this->restoreStatus;
+                                                }
                                             }
                                             break;
 
                                             case "custom":
-                                            {
-                                                die('custom restore requested');
+                                            {   // get custom restore folders
+                                                $this->restoreFolders = \YAWK\filemanager::getSubfoldersToArray($this->tmpFolder);
+                                                $this->restoreStatus = $this->doRestore($this->restoreFolders);
+                                                {
+                                                    return $this->restoreStatus;
+                                                }
                                             }
                                             break;
                                         }
@@ -700,36 +649,223 @@ namespace YAWK\BACKUP
                                     else
                                     {
                                         // backup settings not set or empty
+                                        \YAWK\sys::setSyslog($db, 52, 1, "failed to restore backup: restore settings array is not set", 0, 0, 0, 0);
                                         return false;
                                     }
                                 }
                                 else
                                     {
                                         // backup.ini file not found - abort
+                                        \YAWK\sys::setSyslog($db, 52, 1, "failed to restore backup: ini file not found - $this->tmpFolder.$this->configFilename", 0, 0, 0, 0);
                                         return false;
                                     }
                             }
                             else
                             {   // unable to open zip file
+                                \YAWK\sys::setSyslog($db, 52, 1, "failed to restore: unable to open ZIP file", 0, 0, 0, 0);
                                 return false;
                             }
                         }
                         else
                             {   // zip extension not loaded
+                                \YAWK\sys::setSyslog($db, 52, 1, "failed to restore: unable to unzip backup package - ZIP extension not loaded.", 0, 0, 0, 0);
                                 return false;
                             }
                     }
                     else
-                        {   // no backup file copied to tmp folder
+                        {   // target file not found - no backup file copied to tmp folder
+                            \YAWK\sys::setSyslog($db, 52, 1, "failed to copy backup package: $source not copied to $target", 0, 0, 0, 0);
                             return false;
                         }
                 }
+                else
+                    {
+                        // tmp folder is not writeable
+                        \YAWK\sys::setSyslog($db, 52, 1, "failed to restore backup: tmp folder ($this->tmpFolder) is not writeable", 0, 0, 0, 0);
+                        return false;
+                    }
             }
             else
                 {   // no file set
                     \YAWK\sys::setSyslog($db, 52, 1, "failed to restore backup: file not set", 0, 0, 0, 0);
                     return false;
                 }
+        }
+
+        public function doRestore($restoreFolders)
+        {
+            // check if restore folders are set
+            if (isset($restoreFolders) && (!empty($restoreFolders)))
+            {   // restore folders not set or empty
+                $this->restoreFolders = $restoreFolders;
+            }
+
+            // restore each required folder
+            foreach ($this->restoreFolders as $folder)
+            {
+                // check if content, database, media and system folder exists...
+                if (is_dir(dirname($this->tmpFolder.$folder)))
+                {
+                    // copy all folders except database
+                    if ($folder !== "database")
+                    {
+                        // restore folder
+                        if (\YAWK\sys::xcopy($this->tmpFolder . $folder, "../$folder") === true)
+                        {
+                            $this->restoreStatus[][$folder]['success'] = "true";
+                        }
+                        else
+                        {
+                            // failed to restore folder
+                            $this->restoreStatus[][$folder]['success'] = "false";
+                            $this->restoreStatus[][$folder]['error'] = "failed to copy " . $this->tmpFolder . "$folder check permissions of ../$folder";
+                        }
+                    }
+                }
+                else
+                {   // failed to restore - folder does not exist or not writeable
+                    $this->restoreStatus[][$folder]['error'] = "failed to restore ../$folder : folder is not there or not writeable";
+                }
+            }
+            /*
+
+            // count restore elements
+            $count = count($this->restoreStatus);
+
+            // walk through folders
+            foreach($this->restoreStatus as $folder => $status)
+            {   //
+                foreach($status as $value)
+                {
+                    echo $value."<br>";
+                }
+            }
+            echo "<br>".$count;
+
+            //
+            echo "<pre>";
+            print_r($this->restoreStatus);
+            echo "<pre>";
+            exit;
+
+            */
+            return $this->restoreStatus;
+            // return true;
+            /*
+
+            if ($this->restoreStatus[$this->restoreFolders[0]]['success'] === "true"
+            && ($this->restoreStatus[$this->restoreFolders[1]]['success'] === "true"
+            && ($this->restoreStatus[$this->restoreFolders[2]]['success'] === "true")))
+            {
+                return true;
+            }
+            else
+            {
+                /*
+                echo "<pre>";
+                print_r($this->restoreStatus);
+                echo "</pre>";
+                return false;
+
+            }
+            */
+
+        }
+
+        public function checkFolders($restoreFolders)
+        {
+            if (!isset($restoreFolders) || (empty($restoreFolders)))
+            {
+                return false;
+            }
+            // set folders to process
+            // $restoreFolders = array('../content/', '../media/', '../system/fonts/', '../system/widgets/');
+            // set filemode
+            $filemode = 0755;
+
+            // walk through folders
+            foreach ($restoreFolders as $folder)
+            {   // check if permissions are high enough
+                if ($this->checkPermissions($folder) !== 0775
+                || ($this->checkPermissions($folder) !== 0777))
+                {
+                    $folder = "../".$folder;
+                    // if not:
+                    // iterate folder recursive
+                    $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($folder));
+                    // walk through items...
+                    foreach($iterator as $item)
+                    {   // try to set folder permissions
+                        if ($this->setPermissions($item, $filemode) === false)
+                        {   // unable to set permissions
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+
+        public function setPermissions($folder, $filemode)
+        {   // check if filemode is set
+            if (!isset($filemode) || (empty($filemode)))
+            {   // nope -
+                return false;
+            }
+
+            // check if folder is set, not empty and correct type
+            if (isset($folder) && (!empty($folder) && (is_string($folder))))
+            {
+                // set path
+                $folder = "../".$folder;
+
+                // check if folder exists...
+                if (is_dir(dirname($folder)))
+                {
+                    // try to set folder to writeable for owner + group
+                    if (chmod($folder, $filemode))
+                    {
+                        return true;
+                    }
+                    else
+                        {   // failed to chmod
+                            // PERMISSION PROBLEM - user have to edit chmod settings via FTP manually
+                            return false;
+                        }
+                }
+                else
+                    {   // directory not exists
+                        return false;
+                    }
+            }
+            else
+                {   // folder not set, empty or wrong type
+                    return false;
+                }
+        }
+
+
+        public function checkPermissions($folder)
+        {
+            // check if folder is set, not empty and correct type
+            if (isset($folder) && (!empty($folder) && (is_string($folder))))
+            {
+                // set path
+                $folder = "../".$folder;
+                // check if folder exists...
+                if (is_dir(dirname($folder)))
+                {   // return permissions as string eg '0755'
+                    return substr(sprintf('%o', fileperms($folder)), -4);
+                }
+                else
+                {   // folder does not exist
+                    return null;
+                }
+            }
+            else
+            {   // folder not set, empty or wrong type
+                return null;
+            }
         }
     }
 }

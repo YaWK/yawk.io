@@ -106,9 +106,49 @@ if (isset($_GET))
         if (isset($_GET['file']) && (!empty($_GET['file'])
         && (isset($_GET['folder']) && (!empty($_GET['folder'])))))
         {
+            // strip html + script tags
             $file = strip_tags($_GET['file']);
             $folder = strip_tags($_GET['folder']);
-            // file exists
+
+            // start restore method
+            $restoreStatus = $backup->restore($db, $file, $folder);
+
+            $status = "<br><br>";
+            $alertClass = "";
+            $langTag = "";
+            $alertText = "";
+
+            foreach ($restoreStatus as $value)
+            {
+                foreach ($value as $element => $folder)
+                {
+                    $status .= "<i>&nbsp;&nbsp;".$element."&nbsp;&nbsp;";
+                    foreach ($folder as $state)
+                    {
+                        if ($state === "true")
+                        {
+                            $icon = "<i class=\"fa fa-check\"></i>";
+                            $alertClass = "success";
+                            $langTag = "SUCCESS";
+                            $alertText = $lang['BACKUP_RESTORE_SUCCESS'];
+                        }
+                        else
+                            {
+                                $icon = "<i class=\"fa fa-times\"></i>";
+                                $alertClass = "danger";
+                                $langTag = "ERROR";
+                                $alertText = $restoreStatus['ERROR'];
+                            }
+                        $status .= $icon."</i><br>";
+                    }
+                }
+            }
+            // echo "FOLDER: ".$status;
+            \YAWK\alert::draw("$alertClass", "$lang[$langTag]", "$file $alertText $status", "", 6400);
+
+
+            /*
+            // start restore method
             if ($backup->restore($db, $file, $folder) === true)
             {   // restore successful
                 \YAWK\alert::draw("success", "$lang[SUCCESS]", "$file $lang[BACKUP_RESTORE_SUCCESS]", "", 2600);
@@ -117,6 +157,7 @@ if (isset($_GET))
             {   // file does not exist
                 \YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[FILE_NOT_FOUND]", "", 0);
             }
+            */
         }
     }
 
@@ -809,7 +850,7 @@ echo"<ol class=\"breadcrumb\">
                                 <td width=\"20%\" class=\"text-right\">
                                 <div style=\"margin-top:-10px;\"><br>
                                     <a href=\"$archiveFile\" title=\"$lang[TO_DOWNLOAD]\"><i class=\"fa fa-download\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a href=\"#\" title=\"$lang[BACKUP_RESTORE]\"><i class=\"fa fa-history\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a href=\"index.php?page=settings-backup&restore=true&folder=$backup->archiveBackupFolder&file=$value\" title=\"$lang[BACKUP_RESTORE]\"><i class=\"fa fa-history\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
                                     <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"$archiveFile ".$lang['DELETE']."? - $lang[BEWARE] $lang[UNDO_NOT_POSSIBLE]!\" title=\"$lang[ATTENTION] $lang[BACKUP] $lang[DELETE]\" href=\"index.php?page=settings-backup&deleteBackup=true&backupFolder=$backup->archiveBackupSubFolder&backupFile=$value\"></a>&nbsp;&nbsp;&nbsp;
                                 </div>
                                 </td>
