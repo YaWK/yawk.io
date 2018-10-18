@@ -850,7 +850,7 @@ echo"<ol class=\"breadcrumb\">
                                 <td width=\"20%\" class=\"text-right\">
                                 <div style=\"margin-top:-10px;\"><br>
                                     <a href=\"$archiveFile\" title=\"$lang[TO_DOWNLOAD]\"><i class=\"fa fa-download\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a href=\"index.php?page=settings-backup&restore=true&folder=$backup->archiveBackupFolder&file=$value\" title=\"$lang[BACKUP_RESTORE]\"><i class=\"fa fa-history\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a href=\"index.php?page=settings-backup&restore=true&folder=$backup->archiveBackupSubFolder&file=$value\" title=\"$lang[BACKUP_RESTORE]\"><i class=\"fa fa-history\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
                                     <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"$archiveFile ".$lang['DELETE']."? - $lang[BEWARE] $lang[UNDO_NOT_POSSIBLE]!\" title=\"$lang[ATTENTION] $lang[BACKUP] $lang[DELETE]\" href=\"index.php?page=settings-backup&deleteBackup=true&backupFolder=$backup->archiveBackupSubFolder&backupFile=$value\"></a>&nbsp;&nbsp;&nbsp;
                                 </div>
                                 </td>
