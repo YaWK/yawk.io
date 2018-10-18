@@ -610,7 +610,7 @@ namespace YAWK\BACKUP
                                             {
                                                 // set folders for complete restore
                                                 $this->restoreFolders = \YAWK\filemanager::getSubfoldersToArray($this->tmpFolder);
-                                                $this->restoreStatus = $this->doRestore($this->restoreFolders);
+                                                $this->restoreStatus = $this->doRestore($db, $this->restoreFolders);
                                                 {
                                                     return $this->restoreStatus;
                                                 }
@@ -619,7 +619,11 @@ namespace YAWK\BACKUP
 
                                             case "database":
                                             {   // restore database
-                                                die('db restore requested');
+                                                $this->restoreFolders = array('database');
+                                                $this->restoreStatus = $this->doRestore($db, $this->restoreFolders);
+                                                {
+                                                    return $this->restoreStatus;
+                                                }
                                             }
                                             break;
 
@@ -627,7 +631,7 @@ namespace YAWK\BACKUP
                                             {   // set media folder restore
                                                 // $this->restoreFolders = \YAWK\filemanager::getSubfoldersToArray($this->tmpFolder);
                                                 $this->restoreFolders = array('media/');
-                                                $this->restoreStatus = $this->doRestore($this->restoreFolders);
+                                                $this->restoreStatus = $this->doRestore($db, $this->restoreFolders);
                                                 {
                                                     return $this->restoreStatus;
                                                 }
@@ -637,7 +641,7 @@ namespace YAWK\BACKUP
                                             case "custom":
                                             {   // get custom restore folders
                                                 $this->restoreFolders = \YAWK\filemanager::getSubfoldersToArray($this->tmpFolder);
-                                                $this->restoreStatus = $this->doRestore($this->restoreFolders);
+                                                $this->restoreStatus = $this->doRestore($db, $this->restoreFolders);
                                                 {
                                                     return $this->restoreStatus;
                                                 }
@@ -692,7 +696,7 @@ namespace YAWK\BACKUP
                 }
         }
 
-        public function doRestore($restoreFolders)
+        public function doRestore($db, $restoreFolders)
         {
             // check if restore folders are set
             if (isset($restoreFolders) && (!empty($restoreFolders)))
@@ -721,55 +725,61 @@ namespace YAWK\BACKUP
                             $this->restoreStatus[][$folder]['error'] = "failed to copy " . $this->tmpFolder . "$folder check permissions of ../$folder";
                         }
                     }
+
+                    // IF DATABASE RESTORE IS REQUESTED
+                    else
+                        {
+                            if (is_file($this->tmpFolder."database-backup.sql_error"))
+                            {
+                                unlink($this->tmpFolder."database-backup.sql_error");
+                            }
+
+                            if (is_file($this->tmpFolder."database-backup.sql_filepointer"))
+                            {
+                                unlink($this->tmpFolder."database-backup.sql_filepointer");
+                            }
+
+                            if (file_exists($this->tmpFolder."database-backup.sql"))
+                            {
+                                if ($db->import($this->tmpFolder."database-backup.sql", '') === true)
+                                {
+                                    $this->restoreStatus[]['database']['success'] = "true";
+                                    //return $this->restoreStatus;
+                                }
+                                else
+                                    {
+                                        $this->restoreStatus[]['database']['success'] = "true";
+                                        $this->restoreStatus[]['database']['error'] = "failed to restore database backup.";
+                                        //return $this->restoreStatus;
+                                    }
+                            }
+                            else if (is_dir(dirname($this->tmpFolder."database/")))
+                            {
+                                if ($db->import($this->tmpFolder."database-backup.sql", '') === true)
+                                {
+                                    $this->restoreStatus[]['database']['success'] = "true";
+                                    //return $this->restoreStatus;
+                                }
+                                else
+                                {
+                                    $this->restoreStatus[]['database']['success'] = "true";
+                                    $this->restoreStatus[]['database']['error'] = "failed to restore database backup.";
+                                    // return $this->restoreStatus;
+                                }
+                            }
+
+                        }
                 }
                 else
                 {   // failed to restore - folder does not exist or not writeable
                     $this->restoreStatus[][$folder]['error'] = "failed to restore ../$folder : folder is not there or not writeable";
                 }
             }
-            /*
 
-            // count restore elements
-            $count = count($this->restoreStatus);
-
-            // walk through folders
-            foreach($this->restoreStatus as $folder => $status)
-            {   //
-                foreach($status as $value)
-                {
-                    echo $value."<br>";
-                }
-            }
-            echo "<br>".$count;
-
-            //
-            echo "<pre>";
-            print_r($this->restoreStatus);
-            echo "<pre>";
-            exit;
-
-            */
+            // restore fin - delete tmp folder
+            \YAWK\sys::recurseRmdir($this->tmpFolder);
+            // and return restore status
             return $this->restoreStatus;
-            // return true;
-            /*
-
-            if ($this->restoreStatus[$this->restoreFolders[0]]['success'] === "true"
-            && ($this->restoreStatus[$this->restoreFolders[1]]['success'] === "true"
-            && ($this->restoreStatus[$this->restoreFolders[2]]['success'] === "true")))
-            {
-                return true;
-            }
-            else
-            {
-                /*
-                echo "<pre>";
-                print_r($this->restoreStatus);
-                echo "</pre>";
-                return false;
-
-            }
-            */
-
         }
 
         public function checkFolders($restoreFolders)
