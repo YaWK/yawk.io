@@ -5,7 +5,7 @@ require_once '../system/classes/backup.php';
 // check if backup object is set
 if (!isset($backup) || (empty($backup)))
 {   // create new backup object
-    $backup = new \YAWK\BACKUP\backup();
+    $backup = new \YAWK\BACKUP\backup($db);
 }
 // check if GET data is set
 if (isset($_GET))

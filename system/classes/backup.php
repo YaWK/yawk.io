@@ -77,31 +77,35 @@ namespace YAWK\BACKUP
 
 
         // prepare temp folder on class instantiation
-        public function __construct()
+        public function __construct($db)
         {
-            // if tmp folder does not exist
-            if (!is_dir($this->tmpFolder))
-            {   // create tmp folder
-                if (!mkdir($this->tmpFolder))
-                {   // unable to create tmp folder
-                    return false;
-                }
-                else
+            // check and create required folders
+            $requiredFolders = array($this->tmpFolder, $this->currentBackupFolder, $this->archiveBackupFolder);
+
+            foreach ($requiredFolders as $folder)
+            {
+                // if tmp folder does not exist
+                if (!is_dir($folder))
+                {   // create tmp folder
+                    if (!mkdir($folder))
+                    {   // unable to create tmp folder
+                        \YAWK\sys::setSyslog($db, 52, 2, "failed to create " . $folder . "", 0, 0, 0, 0);
+                        // return false;
+                    }
+                    else
                     {   // tmp folder created - try to set owner + group writeable
-                        if (chmod($this->tmpFolder, 0775))
+                        if (chmod($folder, 0775))
                         {   // ok...
-                            return true;
+                            // return true;
                         }
                         else
-                            {   // unable to set folder properties
-                                return false;
-                            }
+                        {   // unable to set folder properties
+                            \YAWK\sys::setSyslog($db, 52, 2, "failed to set permissions of folder " . $folder . "", 0, 0, 0, 0);
+                            // return false;
+                        }
                     }
-            }
-            else
-                {   // all good - do nothing
-                    return null;
                 }
+            }
         }
 
         /**
@@ -414,7 +418,7 @@ namespace YAWK\BACKUP
             // include fileBackup class
             require_once 'backup-fileBackup.php';
             // create new file backup object
-            $this->fileBackup = new \YAWK\BACKUP\FILES\fileBackup();
+            $this->fileBackup = new \YAWK\BACKUP\FILES\fileBackup($db);
 
             // initialize database backup (this will run mysqldump-php)
             if ($this->fileBackup->initFolderBackup($db, $this->overwriteBackup, $this->zipBackup) === true)
@@ -739,6 +743,7 @@ namespace YAWK\BACKUP
                                 unlink($this->tmpFolder."database-backup.sql_filepointer");
                             }
 
+                            // check if database file is in tmp/
                             if (file_exists($this->tmpFolder."database-backup.sql"))
                             {
                                 if ($db->import($this->tmpFolder."database-backup.sql", '') === true)
@@ -753,18 +758,23 @@ namespace YAWK\BACKUP
                                         //return $this->restoreStatus;
                                     }
                             }
+                            // check if database dir exists: tmp/database
                             else if (is_dir(dirname($this->tmpFolder."database/")))
                             {
-                                if ($db->import($this->tmpFolder."database-backup.sql", '') === true)
+                                // check if database file exists in tmp/database
+                                if (file_exists($this->tmpFolder."database/database-backup.sql"))
                                 {
-                                    $this->restoreStatus[]['database']['success'] = "true";
-                                    //return $this->restoreStatus;
-                                }
-                                else
-                                {
-                                    $this->restoreStatus[]['database']['success'] = "true";
-                                    $this->restoreStatus[]['database']['error'] = "failed to restore database backup.";
-                                    // return $this->restoreStatus;
+                                    if ($db->import($this->tmpFolder."database/database-backup.sql", '') === true)
+                                    {
+                                        $this->restoreStatus[]['database']['success'] = "true";
+                                        //return $this->restoreStatus;
+                                    }
+                                    else
+                                    {
+                                        $this->restoreStatus[]['database']['success'] = "true";
+                                        $this->restoreStatus[]['database']['error'] = "failed to restore database backup.";
+                                        //return $this->restoreStatus;
+                                    }
                                 }
                             }
 
