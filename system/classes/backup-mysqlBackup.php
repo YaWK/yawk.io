@@ -294,6 +294,11 @@ namespace YAWK\BACKUP\DATABASE
             $this->backupSettings['SOURCE_FOLDER'] = $this->sqlBackup;
             $this->backupSettings['OVERWRITE_ALLOWED'] = $this->overwriteBackup;
             $this->backupSettings['USER_ID'] = $_SESSION['uid'];
+            $this->backupSettings['TABLES'] = '';
+            foreach ($this->dumpSettings['include-tables'] as $table)
+            {
+                $this->backupSettings['TABLES'] .= $table.",";
+            }
             return $this->backupSettings;
         }
 

@@ -271,5 +271,28 @@ namespace YAWK
             return $tableList;
         }
 
+        /**
+         * Drop table from a database
+         * @param array $tables the tables to drop
+         * @return bool
+         */
+        public function dropTables($tables)
+        {
+            $processed = 0;
+
+            // check if table was set
+            if (!isset($tables) || (empty($tables)) || (!array($tables)))
+            {
+                return false;
+            }
+            foreach ($tables as $table)
+            {
+                if ($this->query("DROP TABLE `".$table."`") === true)
+                {
+                    $processed++;
+                }
+            }
+            return true;
+        }
     } // EOF ./dbclass
 }// ./namespace

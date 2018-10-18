@@ -743,6 +743,14 @@ namespace YAWK\BACKUP
                                 unlink($this->tmpFolder."database-backup.sql_filepointer");
                             }
 
+                            // get array with all tables that should be updated
+                            $activeTables = explode(',', $this->backupSettings['TABLES']);
+                            // delete not needed last item of array
+                            array_pop($activeTables);
+                            // drop all tables that should be updated
+                            $db->dropTables($activeTables);
+                            // print_r($activeTables);
+
                             // check if database file is in tmp/
                             if (file_exists($this->tmpFolder."database-backup.sql"))
                             {
