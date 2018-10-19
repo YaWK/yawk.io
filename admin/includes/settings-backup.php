@@ -328,6 +328,12 @@ if (isset($_POST))
         }
         saveHotkey();
 
+        function restoreIconSpinner()
+        {
+            // TODO: add JS code for loading indicator
+            // while backup gets restored...
+        }
+
         // ok, lets go...
         // we need to check if user clicked on save button
         $(savebutton).click(function() {
@@ -544,8 +550,6 @@ if (isset($_POST))
                 $(newFolderModal).val('');
             });
         });
-
-
     });
 </script>
 <?php
@@ -794,6 +798,7 @@ echo"<ol class=\"breadcrumb\">
                 $backup->archiveBackupFiles = \YAWK\filemanager::ritit($backup->archiveBackupFolder);
                 // set ID for link: download whole archive
                 $archiveID = 0;
+                $restoreID = 0;
                 // walk through archive folder
                 foreach ($backup->archiveBackupFiles as $folder => $files)
                 {
@@ -836,6 +841,8 @@ echo"<ol class=\"breadcrumb\">
                         // calculate how long it is ago...
                         $ago = \YAWK\sys::time_ago($archiveFileDate, $lang);
 
+                        $restoreID++;
+
                         echo "<tr>
                                 <td width=\"62%\">
                                     &nbsp;&nbsp;&nbsp;&nbsp;<small><b><a href=\"$archiveFile\">$value</a><br>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -850,7 +857,7 @@ echo"<ol class=\"breadcrumb\">
                                 <td width=\"20%\" class=\"text-right\">
                                 <div style=\"margin-top:-10px;\"><br>
                                     <a href=\"$archiveFile\" title=\"$lang[TO_DOWNLOAD]\"><i class=\"fa fa-download\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a href=\"index.php?page=settings-backup&restore=true&folder=$backup->archiveBackupSubFolder&file=$value\" title=\"$lang[BACKUP_RESTORE]\"><i class=\"fa fa-history\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a onclick=\"setSpinner($restoreID)\" id=\"restoreLink$restoreID\" href=\"index.php?page=settings-backup&restore=true&folder=$backup->archiveBackupSubFolder&file=$value\" title=\"$lang[BACKUP_RESTORE]\"><i id=\"restoreIcon$restoreID\" class=\"fa fa-history\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
                                     <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"$archiveFile ".$lang['DELETE']."? - $lang[BEWARE] $lang[UNDO_NOT_POSSIBLE]!\" title=\"$lang[ATTENTION] $lang[BACKUP] $lang[DELETE]\" href=\"index.php?page=settings-backup&deleteBackup=true&backupFolder=$backup->archiveBackupSubFolder&backupFile=$value\"></a>&nbsp;&nbsp;&nbsp;
                                 </div>
                                 </td>
