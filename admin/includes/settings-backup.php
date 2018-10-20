@@ -100,6 +100,28 @@ if (isset($_GET))
         }
     }
 
+
+    if (isset($_GET['currentRestoreID']) && (!empty($_GET['currentRestoreID'])))
+    {   // remove html tags from restore ID
+        $selector = "restoreCurrentIcon".$_GET['currentRestoreID'];
+    }
+    else if (isset($_GET['archiveRestoreID']) && (!empty($_GET['archiveRestoreID'])))
+    {   // remove html tags from restore ID
+        $selector = "restoreArchiveIcon".$_GET['archiveRestoreID'];
+    }
+    else { $selector = 'undefined'; }
+    // set spinner loading icon
+    /*
+    echo "
+        <script>        
+            $(document).ready(function()
+            {
+                console.log($selector);
+                $('#$selector').removeClass('fa fa-history').addClass('fa fa-spinner fa-spin fa-3x fa-fw'); 
+            });
+        </script>";
+    */
+
     // check if restore is requested
     if (isset($_GET['restore']) && ($_GET['restore'] == "true"))
     {
@@ -145,6 +167,7 @@ if (isset($_GET))
             }
             // echo "FOLDER: ".$status;
             \YAWK\alert::draw("$alertClass", "$lang[$langTag]", "$file $alertText $status", "", 6400);
+
 
 
             /*
@@ -328,12 +351,6 @@ if (isset($_POST))
         }
         saveHotkey();
 
-        function restoreIconSpinner()
-        {
-            // TODO: add JS code for loading indicator
-            // while backup gets restored...
-        }
-
         // ok, lets go...
         // we need to check if user clicked on save button
         $(savebutton).click(function() {
@@ -349,6 +366,8 @@ if (isset($_POST))
             $(savebuttonText).html(processingText);
             $(savebuttonIcon).removeClass('fa fa-check').addClass('fa fa-spinner fa-spin fa-fw');
         });
+
+
 
         // EXTENDED SETTINGS
         // required checkboxes are grouped to improve usability of 'custom backup' method.
@@ -570,7 +589,7 @@ echo"<ol class=\"breadcrumb\">
     <section class=\"content\">";
 /* page content start here */
 ?>
-<div class="row">
+<div class="row" id="pageBody">
 <div class="col-md-6">
     <form name="backup" action="index.php?page=settings-backup&action=startBackup" method="POST">
     <div class="box">
@@ -581,7 +600,16 @@ echo"<ol class=\"breadcrumb\">
         </div>
         <div class="box-body">
             <input type="hidden" name="action" value="startBackup">
-            <button type="submit" class="btn btn-success pull-right" id="savebutton" data-processingText="<?php echo $lang['BACKUP_PROCESSING']; ?>" data-processingTitle="<?php echo $lang['BACKUP_PROCESSING_TITLE']; ?>"><i class="fa fa-check" id="savebuttonIcon"></i> &nbsp;<span id="savebuttonText"><?php echo $lang['BACKUP_CREATE']; ?></span></button>
+            <button type="submit"
+                    class="btn btn-success pull-right"
+                    id="savebutton"
+                    data-processingText="<?php echo $lang['BACKUP_PROCESSING']; ?>"
+                    data-processingTitle="<?php echo $lang['BACKUP_PROCESSING_TITLE']; ?>"
+                    data-restoreText="<?php echo $lang['BACKUP_RESTORE_TEXT']; ?>"
+                    data-restoreTitle="<?php echo $lang['BACKUP_RESTORE_TITLE']; ?>">
+                <i class="fa fa-check" id="savebuttonIcon"></i> &nbsp;
+                <span id="savebuttonText"><?php echo $lang['BACKUP_CREATE']; ?></span>
+            </button>
             <br><br>
             <label for="backupMethod"><?php echo $lang['BACKUP_WHAT_TO_BACKUP']; ?></label>
             <select name="backupMethod" id="backupMethod" class="form-control">
@@ -749,6 +777,9 @@ echo"<ol class=\"breadcrumb\">
             <?php
                 // get all current files into array
                 $currentFiles = $backup->getCurrentBackupFilesArray();
+                // set ID for spinning restore Icon
+                $currentRestoreID = 0;
+
                 foreach ($currentFiles as $file)
                 {
                     // get current path (folder and file)
@@ -764,21 +795,70 @@ echo"<ol class=\"breadcrumb\">
 
                     // calculate how long it is ago...
                     $ago = \YAWK\sys::time_ago($currentFileDate, $lang);
+
+                    $currentRestoreID++;
+
                     echo "
-                <tr>
-                    <td width=\"10%\" class=\"text-center\"><h4><i class=\"fa fa-file-zip-o\"></i><br><small>$month<br>$year</small></h4></td>
-                    <td width=\"51%\"><h4><a href=\"$backup->currentBackupFolder$file\">$file</a><br><small><b>$currentFileDate</b><br><i>($ago)</i></small></h4></td>
-                    <td width=\"12%\" class=\"text-right\"><br><small><b>$currentFileSize</b></small></td>
-                    <td width=\"27%\" class=\"text-right\">
-                      <br>
-                      
-                        <a href=\"$backup->currentBackupFolder$file\" title=\"$lang[TO_DOWNLOAD]\"><i class=\"fa fa-download\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href=\"index.php?page=settings-backup&restore=true&folder=$backup->currentBackupFolder&file=$file\" title=\"$lang[BACKUP_RESTORE]\"><i class=\"fa fa-history\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href=\"#\" data-file=\"$file\" data-toggle=\"modal\" data-target=\"#myModal\" title=\"$lang[BACKUP_MOVE_TO_ARCHIVE]\"><i class=\"fa fa-archive\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"$backup->currentBackupFolder$file ".$lang['DELETE']."? - $lang[BEWARE] $lang[UNDO_NOT_POSSIBLE]!\" title=\"$lang[ATTENTION] $lang[BACKUP] $lang[DELETE]\" href=\"index.php?page=settings-backup&deleteBackup=true&backupFolder=$backup->currentBackupFolder&backupFile=$file\">
-                        </a>
-                    </td>
-                </tr>";
+                    <tr>
+                        <td width=\"10%\" class=\"text-center\"><h4><i id=\"zipIcon$currentRestoreID\" class=\"fa fa-file-zip-o\"></i><br><small>$month<br>$year</small></h4></td>
+                        <td width=\"51%\" class=\"text-left\"><h4><a href=\"$backup->currentBackupFolder$file\">$file</a><br><small><b>$currentFileDate</b><br><i>($ago)</i></small></h4></td>
+                        <td width=\"12%\" class=\"text-right\"><br><small><b>$currentFileSize</b></small></td>
+                        <td width=\"27%\" class=\"text-right\">
+                          <br>
+                          
+                            <a href=\"$backup->currentBackupFolder$file\" title=\"$lang[TO_DOWNLOAD]\"><i class=\"fa fa-download\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a id=\"restoreCurrent$currentRestoreID\" data-restoreID=\"$currentRestoreID\" data-location=\"archive\" href=\"index.php?page=settings-backup&restore=true&folder=$backup->currentBackupFolder&file=$file&currentRestoreID=$currentRestoreID\" data-title=\"$lang[BACKUP_RESTORE]\"><i id=\"restoreCurrentIcon$currentRestoreID\" class=\"fa fa-history\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href=\"#\" data-file=\"$file\" data-toggle=\"modal\" data-target=\"#myModal\" title=\"$lang[BACKUP_MOVE_TO_ARCHIVE]\"><i class=\"fa fa-archive\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"$backup->currentBackupFolder$file ".$lang['DELETE']."? - $lang[BEWARE] $lang[UNDO_NOT_POSSIBLE]!\" title=\"$lang[ATTENTION] $lang[BACKUP] $lang[DELETE]\" href=\"index.php?page=settings-backup&deleteBackup=true&backupFolder=$backup->currentBackupFolder&backupFile=$file\">
+                            </a>
+                        </td>
+                    </tr>";
+                    /* JS LOOP FOR CURRENT RESTORE ICONS
+                     * JS code to add click functions to each current restore icon
+                     *
+                     * The page loads with restore icons on by default. If any restore
+                     * icon is clicked, the icon changes itself to a spinning indicator.
+                     * after restore is processed, page reloads and default restore icons will be loaded.
+                     *
+                     * To indicate that restore is in progress and make sure it cannot be interrupted
+                     * by clicking on 'create Backup', this create backup btn will be disabled and changed
+                     * to btn-warning. The btn also gets another text, indicating that restore is going on.
+                     * after restore is processed, page reloads and default savebutton will be loaded.
+                    */
+
+                    echo "
+                        <script>
+                            $(document).ready(function()
+                            {
+                                // prepare vars
+                                var selectLink = '#restoreCurrent$currentRestoreID';
+                                var selector = '#restoreCurrentIcon$currentRestoreID';
+                                var zipIcon = '#zipIcon$currentRestoreID'
+                                var savebutton = ('#savebutton');
+                                var savebuttonIcon = ('#savebuttonIcon');
+                                var savebuttonText = $('#savebuttonText');
+                                var processingText = $(savebutton).attr(\"data-restoreText\");
+                                var savebuttonTitle = $(savebutton).attr(\"data-restoreTitle\");
+                                
+                                // click event for each restore icon
+                                $(selector).click(function() {
+                                // add spinner icon 
+                                $(zipIcon).removeClass('fa fa-file-zip-o').addClass('fa fa-spinner fa-spin fa-fw');
+                                $(selector).removeClass('fa fa-history').addClass('fa fa-spinner fa-spin fa-fw');
+                                // add some animation and disable the button to prevent nervous user actions
+                                $(savebutton).removeClass('btn btn-success').addClass('btn btn-warning disabled').attr('title', savebuttonTitle);
+                                // add spinner icon to savebutton
+                                $(savebuttonIcon).removeClass('fa fa-check').addClass('fa fa-spinner fa-spin fa-fw');
+                                // change savebutton text to somewhat like: 'restore in process...'
+                                $(savebuttonText).html(processingText);
+                                // avoid double clicks and other nervous dumbclicks
+                                $(selectLink).css( 'cursor', 'wait' ).attr('title', savebuttonTitle);
+                                $(document.body).css( 'cursor', 'wait' );
+                                $(selectLink).preventDefault();
+                                $(savebutton).preventDefault();
+                                });
+                            });
+                         </script>";
                 }
             ?>
             </table>
@@ -798,7 +878,8 @@ echo"<ol class=\"breadcrumb\">
                 $backup->archiveBackupFiles = \YAWK\filemanager::ritit($backup->archiveBackupFolder);
                 // set ID for link: download whole archive
                 $archiveID = 0;
-                $restoreID = 0;
+                // set ID for spinning restore Icon
+                $archiveRestoreID = 0;
                 // walk through archive folder
                 foreach ($backup->archiveBackupFiles as $folder => $files)
                 {
@@ -815,8 +896,8 @@ echo"<ol class=\"breadcrumb\">
                     $archiveID++;
 
                     echo "
-                <tr>
-                    <td width=\"10%\" class=\"text-center\"><h4><i class=\"fa fa-archive\"></i><br><small>$month<br>$year</small></h4></td>
+                    <tr>
+                    <td width=\"10%\" class=\"text-center\"><h4><i id=\"archiveIcon$archiveID\"  class=\"fa fa-archive\"></i><br><small>$month<br>$year</small></h4></td>
                     <td width=\"90%\">
                     
                         <table class=\"table table-striped table-hover table-responsive\">
@@ -841,27 +922,75 @@ echo"<ol class=\"breadcrumb\">
                         // calculate how long it is ago...
                         $ago = \YAWK\sys::time_ago($archiveFileDate, $lang);
 
-                        $restoreID++;
+                        $archiveRestoreID++;
 
-                        echo "<tr>
-                                <td width=\"62%\">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;<small><b><a href=\"$archiveFile\">$value</a><br>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <small>$archiveFileDate</small></b><small>&nbsp;&nbsp;<i>($ago)</i></small>
-                                </td>
-                                <td width=\"18%\">
-                                <div style=\"margin-top:-10px;\" class=\"text-right\"><br>
-                                    <small><b>$archiveFileSize</b></small>
+                        echo "
+                        <tr>
+                            <td width=\"62%\">
+                                &nbsp;&nbsp;&nbsp;&nbsp;<small><b><a href=\"$archiveFile\">$value</a><br>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <small>$archiveFileDate</small></b><small>&nbsp;&nbsp;<i>($ago)</i></small>
+                            </td>
+                            <td width=\"18%\">
+                                <div style=\"margin-top:-10px;\" class=\"text-right\">
+                                    <br><small><b>$archiveFileSize</b></small>
                                 </div>
-                                </td>
-
-                                <td width=\"20%\" class=\"text-right\">
+                            </td>
+    
+                            <td width=\"20%\" class=\"text-right\">
                                 <div style=\"margin-top:-10px;\"><br>
                                     <a href=\"$archiveFile\" title=\"$lang[TO_DOWNLOAD]\"><i class=\"fa fa-download\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a onclick=\"setSpinner($restoreID)\" id=\"restoreLink$restoreID\" href=\"index.php?page=settings-backup&restore=true&folder=$backup->archiveBackupSubFolder&file=$value\" title=\"$lang[BACKUP_RESTORE]\"><i id=\"restoreIcon$restoreID\" class=\"fa fa-history\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a id=\"restoreArchive$archiveRestoreID\" data-restoreID=\"$archiveRestoreID\" href=\"index.php?page=settings-backup&restore=true&folder=$backup->archiveBackupSubFolder&file=$value&archiveRestoreID=$archiveRestoreID\" title=\"$lang[BACKUP_RESTORE]\"><i id=\"restoreArchiveIcon$archiveRestoreID\" class=\"fa fa-history\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
                                     <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"$archiveFile ".$lang['DELETE']."? - $lang[BEWARE] $lang[UNDO_NOT_POSSIBLE]!\" title=\"$lang[ATTENTION] $lang[BACKUP] $lang[DELETE]\" href=\"index.php?page=settings-backup&deleteBackup=true&backupFolder=$backup->archiveBackupSubFolder&backupFile=$value\"></a>&nbsp;&nbsp;&nbsp;
                                 </div>
-                                </td>
-                                </tr>";
+                            </td>
+                        </tr>";
+
+                        /* JS LOOP FOR ARCHIVE RESTORE ICONS
+                         * JS code to add click functions to each archive restore icon
+                         *
+                         * The page loads with restore icons on by default. If any restore
+                         * icon is clicked, the icon changes itself to a spinning indicator.
+                         * after restore is processed, page reloads and default restore icons will be loaded.
+                         *
+                         * To indicate that restore is in progress and make sure it cannot be interrupted
+                         * by clicking on 'create Backup', this create backup btn will be disabled and changed
+                         * to btn-warning. The btn also gets another text, indicating that restore is going on.
+                         * after restore is processed, page reloads and default savebutton will be loaded.
+                        */
+
+                        echo "
+                        <script>
+                            $(document).ready(function()
+                            {
+                                // prepare vars
+                                var selectLink = '#restoreArchive$archiveRestoreID';
+                                var selector = '#restoreArchiveIcon$archiveRestoreID';
+                                var archiveIcon = '#archiveIcon$archiveID'
+                                var savebutton = ('#savebutton');
+                                var savebuttonIcon = ('#savebuttonIcon');
+                                var savebuttonText = $('#savebuttonText');
+                                var processingText = $(savebutton).attr(\"data-restoreText\");
+                                var savebuttonTitle = $(savebutton).attr(\"data-restoreTitle\");
+                                
+                                // click event for each restore icon
+                                $(selector).click(function() {
+                                // add spinner icon 
+                                $(archiveIcon).removeClass('fa fa-archive').addClass('fa fa-spinner fa-spin fa-fw');
+                                $(selector).removeClass('fa fa-history').addClass('fa fa-spinner fa-spin fa-fw');
+                                // add some animation and disable the button to prevent nervous user actions
+                                $(savebutton).removeClass('btn btn-success').addClass('btn btn-warning disabled').attr('title', savebuttonTitle);
+                                // add spinner icon to savebutton
+                                $(savebuttonIcon).removeClass('fa fa-check').addClass('fa fa-spinner fa-spin fa-fw');
+                                // change savebutton text to somewhat like: 'restore in process...'
+                                $(savebuttonText).html(processingText);
+                                // avoid double clicks and other nervous dumbclicks
+                                $(selectLink).css( 'cursor', 'wait' ).attr('title', savebuttonTitle);
+                                $(document.body).css( 'cursor', 'wait' );
+                                $(selectLink).preventDefault();
+                                $(savebutton).preventDefault();
+                                });
+                            });
+                         </script>";
                     }
                         echo"</table>        
                     </td>
