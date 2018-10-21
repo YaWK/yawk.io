@@ -226,46 +226,93 @@ if (isset($_POST))
                 print_r($_FILES);
                 echo "<hr>";
                 echo "</pre>";
-                */
+                exit;
+                /*
+                [backupFile] => Array
 
+            [name] => complete-backup.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => /tmp/phpCV4Ks9
+            [error] => 0
+            [size] => 3178451
+            */
 
-                // SET USER IMAGE UPLOAD SETTINGS
-                if (!is_dir(dirname($backup->tmpFolder)))
+                // SET UPLOAD SETTINGS
+                // check if new folder was entered by user
+                if (isset($_POST['newFolder']) && (!empty($_POST['newFolder'])))
                 {
-                    if (!mkdir($backup->tmpFolder))
+                    $_POST['newFolder'] = strip_tags($_POST['newFolder']);
+                    // create new archive sub folder path
+                    $backup->restoreFolder = "../system/backup/archive/".$_POST['newFolder']."/";
+                    if (!mkdir($backup->restoreFolder))
                     {
-                        \YAWK\alert::draw("danger", $lang['BACKUP_FAILED'], $lang['BACKUP_FAILED_MKDIR_TMP_FOLDER'], "", 6400);
+                        // failed to create archive sub folder
+                        \YAWK\alert::draw("success", $_lang['ERROR'], "$backup->restoreFolder $lang[WAS_NOT_CREATED]", "", 2600);
                     }
                 }
-                if (!is_writeable(dirname($backup->tmpFolder)))
-                {
-                    \YAWK\alert::draw("danger", $lang['BACKUP_FAILED'], $lang['BACKUP_FAILED_MKDIR_TMP_FOLDER'], "", 6400);
+
+                // check if existing folder was selected by user
+                else if (isset($_POST['selectFolder']) && (!empty($_POST['selectFolder'])))
+                {   // set archive sub foder path
+                    $backup->restoreFolder = $_POST['selectFolder'];
+                }
+                else
+                {   // no folder was selected - throw error msg
+                    \YAWK\alert::draw("danger", $_POST['file'], $lang['BACKUP_NO_FOLDER_SELECTED'], "", 6400);
                 }
 
-                $target_file = $backup->tmpFolder . basename("upload.zip");
-                $uploadOk = 1;
+                if (!is_writeable(dirname($backup->restoreFolder)))
+                {
+                    \YAWK\alert::draw("danger", $lang['BACKUP_FAILED'], $lang['BACKUP_FAILED_WRITE_FOLDER'], "", 6400);
+                }
 
-                // Check file size
-                if ($_FILES["backupFile"]["size"] > 67108864) {
+                // set target file name
+                $backup->restoreFile = $backup->restoreFolder . basename($_FILES['backupFile']['name']);
+
+                // check if file type is ZIP
+                if ($_FILES['backupFile']['type'] !== 'application/x-zip-compressed')
+                {   // if not, throw alert
+                    \YAWK\alert::draw("danger", $lang['BACKUP_FAILED'], $lang['BACKUP_NOT_A_ZIP_FILE'], "", 6400);
+                }
+
+                // check file size
+                if ($_FILES["backupFile"]["size"] > 67108864)
+                {
+                    // file is too large
                     echo \YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[FILE_UPLOAD_TOO_LARGE]","","4800");
-                    $uploadOk = 0;
                 }
 
                 // Allow certain file formats
-
-                $fileType = pathinfo($target_file,PATHINFO_EXTENSION);
-                if($fileType != "zip" && $fileType != "ZIP" && $fileType != "7z" && $fileType != "gzip") {
+                $fileType = pathinfo($backup->restoreFile,PATHINFO_EXTENSION);
+                if($fileType != "zip" && $fileType != "ZIP" && $fileType != "7z" && $fileType != "gzip")
+                {
                     echo \YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[UPLOAD_ONLY_ZIP_ALLOWED]","","4800");
-                    $uploadOk = 0;
                 }
 
-                // Check if $uploadOk is set to 0 by an error
-                if ($uploadOk == 0) {
+                // check for errors
+                if ($_FILES['backupFile']['error'] !== 0)
+                {
                     echo \YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[FILE_UPLOAD_FAILED]","","4800");
-                    // if everything is ok, try to upload file
-                } else {
-                    if (!move_uploaded_file($_FILES["backupFile"]["tmp_name"], $target_file)) {
-                        echo \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[FILE_UPLOAD_ERROR]","","4800");
+                }
+                else
+                {   // try to move uploaded file
+                    if (!move_uploaded_file($_FILES["backupFile"]["tmp_name"], $backup->restoreFile))
+                    {   // throw error msg
+                        echo \YAWK\alert::draw("danger", "$lang[ERROR]", "$backup->restoreFile - $lang[FILE_UPLOAD_ERROR]","","4800");
+                    }
+                    else
+                    {   // file upload seem to be successful...
+                        // check if uploaded file is there
+                        if (is_file($backup->restoreFile))
+                        {
+                            // here we could check more things - eg latest file timestamp
+                            // throw success message
+                            echo \YAWK\alert::draw("success", "$lang[UPLOAD_SUCCESSFUL]", "$backup->restoreFile $lang[BACKUP_UPLOAD_SUCCESS]","","4800");
+                        }
+                        else
+                            {
+                                echo \YAWK\alert::draw("danger", "$lang[ERROR]", "$backup->restoreFile - $lang[FILE_UPLOAD_ERROR]","","4800");
+                            }
                     }
                 }
                 // restore a backup from file
@@ -921,11 +968,11 @@ echo"<ol class=\"breadcrumb\">
                     // set current archive subfolder
                     $backup->archiveBackupSubFolder = "$backup->archiveBackupFolder$folder/";
                     // last change of archive subfolder (month)
-                    $month = date("F", filemtime($backup->archiveBackupSubFolder));
+                    $month = date("F", @filemtime($backup->archiveBackupSubFolder));
                     // last change of archive subfolder (year)
-                    $year = date("Y", filemtime($backup->archiveBackupSubFolder));
+                    $year = date("Y", @filemtime($backup->archiveBackupSubFolder));
 
-                    $archiveFolderDate = date("F d Y H:i", filemtime($backup->archiveBackupSubFolder));
+                    $archiveFolderDate = date("F d Y H:i", @filemtime($backup->archiveBackupSubFolder));
                     $lastUpdate = \YAWK\sys::time_ago($archiveFolderDate, $lang);
 
                     $archiveID++;
@@ -1155,7 +1202,7 @@ echo"<ol class=\"breadcrumb\">
 
                         foreach ($backup->archiveBackupSubFolders as $subFolder)
                         {
-                            echo "<option value=\"$subFolder\">&nbsp;&nbsp;&nbsp;&nbsp;$subFolder</option>";
+                            echo "<option value=\"../system/backup/archive/$subFolder/\">&nbsp;&nbsp;&nbsp;&nbsp;$subFolder</option>";
                         }
 
                     }
