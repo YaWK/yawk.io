@@ -190,7 +190,6 @@ if (isset($_POST))
                     $backup->removeAfterZip = "false";
                 }
 
-
                 // check if overwrite backup is allowed
                 if (isset($_POST['overwriteBackup']) && (!empty($_POST['overwriteBackup'])))
                 {   // set backup method property depending on select field
@@ -219,24 +218,6 @@ if (isset($_POST))
             // upload a backup archive
             case "upload":
             {
-                /*
-                echo "<pre>";
-                print_r($_POST);
-                echo "<hr>";
-                print_r($_FILES);
-                echo "<hr>";
-                echo "</pre>";
-                exit;
-                /*
-                [backupFile] => Array
-
-            [name] => complete-backup.zip
-            [type] => application/x-zip-compressed
-            [tmp_name] => /tmp/phpCV4Ks9
-            [error] => 0
-            [size] => 3178451
-            */
-
                 // SET UPLOAD SETTINGS
                 // check if new folder was entered by user
                 if (isset($_POST['newFolder']) && (!empty($_POST['newFolder'])))
