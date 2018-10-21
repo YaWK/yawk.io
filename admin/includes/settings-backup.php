@@ -100,28 +100,6 @@ if (isset($_GET))
         }
     }
 
-
-    if (isset($_GET['currentRestoreID']) && (!empty($_GET['currentRestoreID'])))
-    {   // remove html tags from restore ID
-        $selector = "restoreCurrentIcon".$_GET['currentRestoreID'];
-    }
-    else if (isset($_GET['archiveRestoreID']) && (!empty($_GET['archiveRestoreID'])))
-    {   // remove html tags from restore ID
-        $selector = "restoreArchiveIcon".$_GET['archiveRestoreID'];
-    }
-    else { $selector = 'undefined'; }
-    // set spinner loading icon
-    /*
-    echo "
-        <script>        
-            $(document).ready(function()
-            {
-                console.log($selector);
-                $('#$selector').removeClass('fa fa-history').addClass('fa fa-spinner fa-spin fa-3x fa-fw'); 
-            });
-        </script>";
-    */
-
     // check if restore is requested
     if (isset($_GET['restore']) && ($_GET['restore'] == "true"))
     {
@@ -167,24 +145,8 @@ if (isset($_GET))
             }
             // echo "FOLDER: ".$status;
             \YAWK\alert::draw("$alertClass", "$lang[$langTag]", "$file $alertText $status", "", 6400);
-
-
-
-            /*
-            // start restore method
-            if ($backup->restore($db, $file, $folder) === true)
-            {   // restore successful
-                \YAWK\alert::draw("success", "$lang[SUCCESS]", "$file $lang[BACKUP_RESTORE_SUCCESS]", "", 2600);
-            }
-            else
-            {   // file does not exist
-                \YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[FILE_NOT_FOUND]", "", 0);
-            }
-            */
         }
     }
-
-
 }
 
 // check if post data is set
@@ -257,6 +219,55 @@ if (isset($_POST))
             // upload a backup archive
             case "upload":
             {
+                /*
+                echo "<pre>";
+                print_r($_POST);
+                echo "<hr>";
+                print_r($_FILES);
+                echo "<hr>";
+                echo "</pre>";
+                */
+
+
+                // SET USER IMAGE UPLOAD SETTINGS
+                if (!is_dir(dirname($backup->tmpFolder)))
+                {
+                    if (!mkdir($backup->tmpFolder))
+                    {
+                        \YAWK\alert::draw("danger", $lang['BACKUP_FAILED'], $lang['BACKUP_FAILED_MKDIR_TMP_FOLDER'], "", 6400);
+                    }
+                }
+                if (!is_writeable(dirname($backup->tmpFolder)))
+                {
+                    \YAWK\alert::draw("danger", $lang['BACKUP_FAILED'], $lang['BACKUP_FAILED_MKDIR_TMP_FOLDER'], "", 6400);
+                }
+
+                $target_file = $backup->tmpFolder . basename("upload.zip");
+                $uploadOk = 1;
+
+                // Check file size
+                if ($_FILES["backupFile"]["size"] > 67108864) {
+                    echo \YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[FILE_UPLOAD_TOO_LARGE]","","4800");
+                    $uploadOk = 0;
+                }
+
+                // Allow certain file formats
+
+                $fileType = pathinfo($target_file,PATHINFO_EXTENSION);
+                if($fileType != "zip" && $fileType != "ZIP" && $fileType != "7z" && $fileType != "gzip") {
+                    echo \YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[UPLOAD_ONLY_ZIP_ALLOWED]","","4800");
+                    $uploadOk = 0;
+                }
+
+                // Check if $uploadOk is set to 0 by an error
+                if ($uploadOk == 0) {
+                    echo \YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[FILE_UPLOAD_FAILED]","","4800");
+                    // if everything is ok, try to upload file
+                } else {
+                    if (!move_uploaded_file($_FILES["backupFile"]["tmp_name"], $target_file)) {
+                        echo \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[FILE_UPLOAD_ERROR]","","4800");
+                    }
+                }
                 // restore a backup from file
             }
             break;
@@ -557,6 +568,30 @@ if (isset($_POST))
             // update hidden field in modal window with current file value
             $("#file").val(file);
             
+            // if text input field has focus
+            $(newFolderModal).focus(function() {
+                // select first option (please select....) to improve usability
+                $(selectFolderModal).prop("selectedIndex", 0);
+            });
+
+            // if selectfolder changes...
+            $(selectFolderModal).on('change', function() {
+                // set newFolder text input field value to empty
+                $(newFolderModal).val('');
+            });
+        });
+
+        // MODAL 'RESTORE (upload) FILE' WINDOW:
+        // to archive a file, a modal window is used.
+        // this checks, if modal window is currently shown
+        $('#restoreModal').on('show.bs.modal', function(e) {
+            // if so, get the according file by read the data-file value
+            var file = e.relatedTarget.dataset.file;
+            var newFolderModal = $("#newFolderModal2");
+            var selectFolderModal = $("#selectFolderModal2");
+            // update hidden field in modal window with current file value
+            $("#file").val(file);
+
             // if text input field has focus
             $(newFolderModal).focus(function() {
                 // select first option (please select....) to improve usability
@@ -1005,17 +1040,20 @@ echo"<ol class=\"breadcrumb\">
     <div class="box">
         <div class="box-header">
             <h3 class="box-title">
-                <?php echo $lang['BACKUP_RESTORE']." <small>".$lang['TO_UPLOAD']."</small>"; ?>
+                <?php echo $lang['BACKUP_UPLOAD']." <small>".$lang['BACKUP_UPLOAD_TO_FOLDER']."</small>"; ?>
             </h3>
         </div>
         <div class="box-body">
+            <button id="upload" data-toggle="modal" data-target="#restoreModal" class="btn btn-success"><i class="fa fa-upload"></i>&nbsp;&nbsp; <?php echo $lang['BACKUP_UPLOAD']; ?></button>
+            <!--
             <form enctype="multipart/form-data" class="dropzone text-center" action="index.php?page=settings-backup&action=upload" method="POST">
                 <input type="hidden" name="MAX_FILE_SIZE" value="">
                 <input type="hidden" name="upload" value="sent">
                 <input type="hidden" name="action" value="upload">
                 <br>
-                <button class="btn btn-success" type="submit"><i class="fa fa-upload"></i>&nbsp;&nbsp;&nbsp;<?php echo $lang['UPLOAD']; ?></button>
+                <button class="btn btn-success" type="submit"><i class="fa fa-upload"></i>&nbsp;&nbsp;&nbsp;<?php // echo $lang['UPLOAD']; ?></button>
             </form>
+            -->
             <span class="pull-right"></span>
             <br><br>
         </div>
@@ -1047,7 +1085,7 @@ echo"<ol class=\"breadcrumb\">
                             {
                                 echo "
                                   <label for=\"selectFolder\">$lang[BACKUP_FOLDER_SELECT]</label>
-                                  <select class=\"form-control\" name=\"selectFolder\" id=\"selectFolderModal\">
+                                  <option value=\"currentFolder\" id=\"currentFolder\">Current Folder</option>
                                   <option label=\"$lang[BACKUP_PLEASE_SELECT]\" id=\"pleaseSelect\"></option>";
                                 foreach ($backup->archiveBackupSubFolders as $subFolder)
                                 {
@@ -1074,13 +1112,76 @@ echo"<ol class=\"breadcrumb\">
             </form>
         </div> <!-- modal content -->
     </div> <!-- modal dialog -->
-</div>
+</div> <!-- modal fade window -->
+
+
+<!-- Modal --RESTORE TO ARCHIVE-- -->
+<div class="modal fade" id="restoreModal" tabindex="-1" role="dialog" aria-labelledby="myModal2Label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="index.php?page=settings-backup" method="post" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <!-- modal header with close controls -->
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i> </button>
+                    <br>
+                    <div class="col-md-1"><h3 class="modal-title"><i class="fa fa-upload"></i></h3></div>
+                    <div class="col-md-11"><h3 class="modal-title"><?php echo $lang['BACKUP_UPLOAD_TO_FOLDER']; ?></h3></div>
+                </div>
+
+                <!-- modal body -->
+                <div class="modal-body">
+                    <!-- SELECT BACKUP ARCHIVE SUB FOLDER -->
+                    <?php if (isset($_GET['file'])) { echo $_GET['file']; } ?>
+                    <h4><b><?php echo $lang['SELECT_FILE']; ?>:</b></h4>
+                    <input type="file" name="backupFile" id="backupFile" class="form-control">
+                    <!-- MAX_FILE_SIZE muss vor dem Dateiupload Input Feld stehen -->
+                    <input type="hidden" name="MAX_FILE_SIZE" value="67108864">
+                    <br><br>
+
+
+                    <h4><b><?php echo $lang['BACKUP_ADD_ARCHIVE_SUBFOLDER']; ?></b></h4>
+                    <?php
+                    $backup->archiveBackupSubFolders = \YAWK\filemanager::getSubfoldersToArray($backup->archiveBackupFolder);
+
+                    echo"<label for=\"selectFolder\">$lang[BACKUP_FOLDER_SELECT]</label>
+                                  <select class=\"form-control\" name=\"selectFolder\" id=\"selectFolderModal2\">
+                                  <option label=\"$lang[BACKUP_PLEASE_SELECT]\" id=\"pleaseSelect\"></option>
+                                  <optgroup label=\"$lang[BACKUP_ONGOING]\">$lang[BACKUP_ONGOING]</optgroup>
+                                  <option value=\"$backup->currentBackupFolder\" id=\"currentFolder\">&nbsp;&nbsp;&nbsp;&nbsp;$lang[BACKUP_ONGOING]</option>";
+
+                    if (count($backup->archiveBackupSubFolders) > 0)
+                    {
+                        echo "<optgroup label=\"$lang[BACKUP_ARCHIVE]\">$lang[BACKUP_ARCHIVE]</optgroup>";
+
+                        foreach ($backup->archiveBackupSubFolders as $subFolder)
+                        {
+                            echo "<option value=\"$subFolder\">&nbsp;&nbsp;&nbsp;&nbsp;$subFolder</option>";
+                        }
+
+                    }
+
+                    echo"</select>
+                                <div class=\"text-center\"><br><i>$lang[OR]</i></div>";
+                    ?>
+                    <label for="newFolder"><?php echo $lang['BACKUP_FOLDER_NAME']; ?></label>
+                    <input type="text" class="form-control" id="newFolderModal2" name="newFolder" placeholder="<?php echo $lang['BACKUP_FOLDER_NAME_PH']; ?>">
+                    <input type="hidden" name="action" id="action" value="upload"> <!-- gets filled via JS -->
+
+                </div>
+
+                <!-- modal footer /w submit btn -->
+                <div class="modal-footer">
+                    <input class="btn btn-large btn-default" data-dismiss="modal" aria-hidden="true" type="submit" value="<?php echo $lang['CANCEL']; ?>">
+                    <button class="btn btn-large btn-success" type="submit"><i class="fa fa-check"></i>&nbsp; <?php echo $lang['BACKUP_UPLOAD']; ?></button>
+                    <br><br>
+                </div>
+            </form>
+        </div> <!-- modal content -->
+    </div> <!-- modal dialog -->
+</div> <!-- modal fade window -->
+
 
 <!-- Bootstrap toggle css -->
 <link rel="stylesheet" href="../system/engines/bootstrap-toggle/css/bootstrap-toggle.css">
 <!-- Bootstrap toggle js -->
 <script type="text/javascript" src="../system/engines/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
-<!-- DROPZONE JS -->
-<script src="../system/engines/jquery/dropzone/dropzone.js"></script>
-<!-- DROPZONE CSS -->
-<link href="../system/engines/jquery/dropzone/dropzone.css" rel="stylesheet">
