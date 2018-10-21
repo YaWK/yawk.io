@@ -1,16 +1,11 @@
 <?php
 if (!isset($user))
 {   // generate new user object
-    $user = new YAWK\user();
+    $user = new \YAWK\user($db);
 }
 // TOGGLE USER
 if (isset($_GET['toggle']) && $_GET['toggle'] === "1")
 {
-    // username is not set
-    if (!isset($user))
-    {   // create new object
-        $user = new YAWK\user();
-    }
     if (isset($_GET['blocked']))
     {   // set user obj property
         $user->blocked = $_GET['blocked'];
