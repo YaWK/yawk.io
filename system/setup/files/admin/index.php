@@ -1,10 +1,10 @@
 <?php
 session_start();
 header('Cache-control: private');               // IE 6 FIX
-// error_reporting(E_ALL ^ E_STRICT);                // just for development purpose!!!
-ini_set('display_errors', 0);         // DISPLAY ALL ERRORS - DEVELOPMENT ONLY!!!
-error_reporting(0);                             // no error reporting
-$loadingTime = microtime(true);            // scripting start time (var gets used for benchmark, if enabled)
+error_reporting(E_ALL ^ E_STRICT);              // just for development purpose!!!
+ini_set('display_errors', 1);                   // DISPLAY ALL ERRORS - DEVELOPMENT ONLY!!!
+// error_reporting(0);                             // no error reporting
+$loadingTime = microtime(true);                 // scripting start time (var gets used for benchmark, if enabled)
 
 /* include controller classes */
 require_once '../system/classes/db.php';            // database
@@ -30,7 +30,6 @@ if (!isset($db))
 {   // create new db obj if none exists
     $db = new \YAWK\db();
 }
-
 // language object
 if (!isset($lang) || (empty($lang)))
 {   // create new language obj if none exists
@@ -84,6 +83,9 @@ if (!isset($AdminLTE))
             echo $AdminLTE->drawHtmlNavbarRightMenu();
 
             // navbar: draw preview icon
+            echo $AdminLTE->drawHtmlNavbarBackupIcon($lang);
+
+            // navbar: draw preview icon
             echo $AdminLTE->drawHtmlNavbarPreviewIcon($lang);
 
             // check if messaging is enabled
@@ -99,7 +101,7 @@ if (!isset($AdminLTE))
             }
 
             // user account menu
-            echo $AdminLTE->drawHtmlNavbarUserAccountMenu($db, $user, $lang);
+            echo $AdminLTE->drawHtmlNavbarUserAccountMenu($db, $user);
             // end navbar header
             echo $AdminLTE->drawHtmlNavbarHeaderEnd();
             // left sidebar (main menu)
@@ -159,6 +161,7 @@ if (!isset($AdminLTE))
                 if ($user::checkResetToken($db, $_GET['token']) === true)
                 {
                     // draw reset password form
+                    echo $_GET['token'];
                     // echo \YAWK\backend::drawPasswordResetForm($db, $lang);
                     // end section markup
                     echo "<br><br></section></div>";

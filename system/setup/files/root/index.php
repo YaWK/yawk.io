@@ -29,14 +29,14 @@
  *
  */
 session_start();
-/* Error Reporting - this is for DEVELOPMENT PURPOSE ONLY! */
-// error_reporting(E_ALL ^ E_STRICT);
-ini_set('display_errors', 0);
-error_reporting(0);
+header('Cache-control: private');               // IE 6 FIX
+error_reporting(E_ALL ^ E_STRICT);              // just for development purpose!!!
+ini_set('display_errors', 1);                   // DISPLAY ALL ERRORS - DEVELOPMENT ONLY!!!
+error_reporting(0);                             // no error reporting
 /* include core files */
 require_once('system/classes/db.php');               // database connection
 require_once('system/classes/settings.php');         // get/set settings from settings db
-require_once 'system/classes/language.php';      // language class
+require_once 'system/classes/language.php';          // language class
 require_once('system/classes/alert.php');            // draw fancy JS-notification alert class
 require_once('system/classes/email.php');            // email functions
 require_once('system/classes/user.php');             // all get/set/handle user functions
@@ -85,7 +85,7 @@ if (!isset($stats)) {
     $stats->setStats($db);
 }
 // lets go with the frontEnd...
-// \YAWK\sys::outputObjects($template, $controller, $page, $user, $stats);
+// \YAWK\sys::outputObjects($template, $language, $controller, $page, $user, $stats);
 // \YAWK\controller::frontEndInit($db, $currentpage, $user, $template);
 if (\YAWK\sys::isOffline($db)) {   // backend-users (admins) can see the frontend,
     // while the site is still offline to guests & no-admins
@@ -115,13 +115,28 @@ if (isset($_GET['include']) && (!empty($_GET['include'])))
     if (isset($_POST['login']))
     {   // check given vars
         if (isset($_POST['user']) && (isset($_POST['password'])))
-        {
+        {   // check if user login was successful
             if ($user->login($db, $_POST['user'], $_POST['password']) === true)
-            {
-                $_GET['include'] = "index";
+            {   // check if custom redirect url after login is requested
+                if (isset($_POST['loginboxRedirect']) && (!empty($_POST['loginboxRedirect'])))
+                {   // redirect to custom url
+                    if (isset($_POST['loginboxRedirectTime']) && (!empty($_POST['loginboxRedirectTime']) && (is_numeric($_POST['loginboxRedirectTime']))))
+                    {   // delay before redirect
+                        \YAWK\sys::setTimeout($_POST['loginboxRedirect'], $_POST['loginboxRedirectTime']);
+                    }
+                    else
+                    {   // redirect w/o delay
+                        \YAWK\sys::setTimeout($_POST['loginboxRedirect'], 0);
+                    }
+                }
+                else
+                {   // redirect to inded page (only in html mode)
+                    $_GET['include'] = "index";
+                }
             }
         }
     }
+
     // URL is set and not empty - lets go, load properties for given page
     $page->loadProperties($db, $db->quote($_GET['include']));
 

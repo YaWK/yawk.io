@@ -14,9 +14,8 @@ RewriteRule ^([^\.]+)$ \index.php?page=$1 [NC,L]
 # off for tinymce
 #RewriteRule ^(.*).htm$ \index.php?include=$1
 
-# SESSION TIMEOUT 7200 = 120 Minutes
-<IfModule mod_php5.c>
-    # neverending session
-    php_value session.cookie_lifetime 0
-    php_value session.gc_maxlifetime 0
-</IfModule>
+# override max post size
+php_value post_max_size 64M
+
+# override max upload file size
+php_value upload_max_filesize 64M
