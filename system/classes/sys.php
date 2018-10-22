@@ -139,18 +139,25 @@ namespace YAWK {
          */
         static function array2lines($array, $property)
         {
-
-            echo "<h2 class=\"myClass\">$property</h2>";
-            foreach ($array[$property] as $item => $key)
+            if (!isset($array) || (!isset($property)))
             {
-                $linkProperty = str_replace(" ", "+", $item);
-                if (is_array($key))
+                echo 'array or property not set';
+            }
+
+            if (isset($array) && (isset($array[$property]) && (isset($property))))
+            {
+                echo "<h2 class=\"myClass\">$property</h2>";
+                foreach ($array[$property] as $item => $key)
                 {
-                    echo "<li class=\"list-group-item\"><a href=\"https://www.google.at/search?q=php.net+$linkProperty\" title=\"google this: $item setting\" target=\"_blank\"><b>$item</b> = $key[0]</a></li>";
-                }
-                else
-                {
-                    echo "<li class=\"list-group-item\"><a href=\"https://www.google.at/search?q=php.net+$linkProperty\" title=\"google this: $item setting\" target=\"_blank\"><b>$item</b> = $key</a></li>";
+                    $linkProperty = str_replace(" ", "+", $item);
+                    if (is_array($key))
+                    {
+                        echo "<li class=\"list-group-item\"><a href=\"https://www.google.at/search?q=php.net+$linkProperty\" title=\"google this: $item setting\" target=\"_blank\"><b>$item</b> = $key[0]</a></li>";
+                    }
+                    else
+                    {
+                        echo "<li class=\"list-group-item\"><a href=\"https://www.google.at/search?q=php.net+$linkProperty\" title=\"google this: $item setting\" target=\"_blank\"><b>$item</b> = $key</a></li>";
+                    }
                 }
             }
         }
@@ -171,7 +178,7 @@ namespace YAWK {
                     ul = document.getElementById(\"phpinfoList\");
                     li = ul.getElementsByTagName('li');
     
-                    // Loop through all list items, and hide those who don't match the search query
+                    // Loop through all list items, hide those who don't match the search query
                     for (i = 0; i < li.length; i++) {
                         a = li[i].getElementsByTagName(\"a\")[0];
                         if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
