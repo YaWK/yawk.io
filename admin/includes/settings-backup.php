@@ -462,6 +462,8 @@ if (isset($_POST))
             var overwriteLabelTextOff = $(overwriteBackupSwitch).attr("data-overwriteOff");
             var newFolder = $('#newFolder');
             var selectFolder = $('#selectFolder');
+            var backupHelpOngoingBox = $('#backupHelp-ongoing');
+            var backupHelpArchiveBox = $('#backupHelp-archive');
 
             // check if overwrite switch is on
             if ($(overwriteBackupSwitch).is(':checked'))
@@ -469,12 +471,21 @@ if (isset($_POST))
                 $(overwriteBackupSwitch).val('true');
                 $(overwriteBackupLabel).text(overwriteLabelTextOn);
                 $('#archiveGroup').fadeOut();
+
+                // set ongoing help
+                $(backupHelpOngoingBox).removeClass('hidden').addClass('fadeIn');
+                $(backupHelpArchiveBox).addClass('hidden');
             }
             else
                 {   // set OFF label text (save to archive)
                     $(overwriteBackupSwitch).val('false');
                     $(overwriteBackupLabel).text(overwriteLabelTextOff);
                     $('#archiveGroup').fadeIn().removeClass('hidden');
+                    $(backupHelpOngoingBox).removeClass('hidden').addClass('fadeIn');
+
+                    // set archive help
+                    $(backupHelpArchiveBox).removeClass('hidden').addClass('fadeIn');
+                    $(backupHelpOngoingBox).addClass('hidden');
 
                     // if text input field has focus
                     $(newFolder).focus(function() {
@@ -724,20 +735,14 @@ echo"<ol class=\"breadcrumb\">
                 </div>
                 <div class="col-md-6">
                 <br><br>
-                    <?php
-                    // ZIP TOGGLE SWITCH
-                    // this is disabled on default - because every backup should be zipped.
-                    //
-                    // add zip switch only if zip archive class is available
-                    /*
-                    if (class_exists('ZipArchive'))
-                    {
-                        echo "<input type=\"hidden\" class=\"hidden\" name=\"zipBackup\" id=\"zipBackupHidden\" value=\"false\">
-                        <input type=\"checkbox\" data-on=\"<i class='fa fa-file-zip-o'></i>\" data-off=\"$lang[OFF_]\" data-toggle=\"toggle\" data-onstyle=\"success\" data-offstyle=\"danger\" class=\"checkbox\" name=\"zipBackup\" id=\"zipBackup\" value=\"true\" checked>
-                        &nbsp;&nbsp;<label for=\"zipBackup\">$lang[BACKUP_ZIP_ALLOWED]&nbsp;&nbsp;</label>";
-                    }
-                    */
-                    ?>
+                    <div id="backupHelp-ongoing">
+                        <b><?php echo $lang['BACKUP_HELP_ONGOING_TITLE']; ?></b><br>
+                        <?php echo $lang['BACKUP_HELP_ONGOING_TEXT']; ?>
+                    </div>
+                    <div id="backupHelp-archive" class="hidden">
+                        <b><?php echo $lang['BACKUP_HELP_ARCHIVE_TITLE']; ?></b><br>
+                        <?php echo $lang['BACKUP_HELP_ARCHIVE_TEXT']; ?>
+                    </div>
 
                 </div>
             </div>
@@ -1185,7 +1190,6 @@ echo"<ol class=\"breadcrumb\">
                         {
                             echo "<option value=\"../system/backup/archive/$subFolder/\">&nbsp;&nbsp;&nbsp;&nbsp;$subFolder</option>";
                         }
-
                     }
 
                     echo"</select>
