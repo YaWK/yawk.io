@@ -408,6 +408,7 @@ if (isset($_POST))
             $(savebutton).removeClass('btn btn-success').addClass('btn btn-warning disabled').attr('title', savebuttonTitle);
             $(savebuttonText).html(processingText);
             $(savebuttonIcon).removeClass('fa fa-check').addClass('fa fa-spinner fa-spin fa-fw');
+            $(document.body).css( 'cursor', 'wait' );
         });
 
 
