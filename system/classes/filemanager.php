@@ -333,6 +333,52 @@ namespace YAWK {
         }
 
         /**
+         * get and return post_max_size value from phpinfo()
+         * @author     Daniel Retzl <danielretzl@gmail.com>
+         * @copyright  2009-2016 Daniel Retzl
+         * @license    https://opensource.org/licenses/MIT
+         * @link       http://yawk.io
+         * @return     string|false
+         */
+        static function getPostMaxSize()
+        {
+
+            if ($postMaxSize = ini_get('post_max_size'))
+            {   // return post max filesize
+                return $postMaxSize;
+            }
+            else
+            {   // ini_get failed
+                if (!isset($db)) { $db = new \YAWK\db(); }
+                \YAWK\sys::setSyslog($db, 27, 1, "failed to ini_get post_max_size", 0, 0, 0, 0);
+                return false;
+            }
+        }
+
+        /**
+         * get and return upload max filesize value from phpinfo()
+         * @author     Daniel Retzl <danielretzl@gmail.com>
+         * @copyright  2009-2016 Daniel Retzl
+         * @license    https://opensource.org/licenses/MIT
+         * @link       http://yawk.io
+         * @return     string|false
+         */
+        static function getUploadMaxFilesize()
+        {
+
+            if ($upload_max_filesize = ini_get('upload_max_filesize'))
+            {   // upload_max_filesize
+                return $upload_max_filesize;
+            }
+            else
+            {   // ini_get failed
+                if (!isset($db)) { $db = new \YAWK\db(); }
+                \YAWK\sys::setSyslog($db, 27, 1, "failed to ini_get upload_max_filesize", 0, 0, 0, 0);
+                return false;
+            }
+        }
+
+        /**
          * get and return PHP max file size setting
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
@@ -340,11 +386,17 @@ namespace YAWK {
          * @link       http://yawk.io
          * @return bool|string
          */
-        static function getPhpMaxFileSize()
+        static function getPhpMaxUploadSize()
         {
+            $returnValue = '';
+
             if ($postMaxSize = ini_get('post_max_size'))
             {   // return post max filesize
-                return "$postMaxSize";
+                $returnValue = $postMaxSize;
+            }
+            if ($upload_max_filesize = ini_get('upload_max_filesize'))
+            {   // upload_max_filesize
+                $returnValue .= " (".$upload_max_filesize.")";
             }
             else
                 {   // ini_get failed
@@ -352,6 +404,8 @@ namespace YAWK {
                     \YAWK\sys::setSyslog($db, 27, 1, "failed to ini_get post_max_size", 0, 0, 0, 0);
                     return false;
                 }
+
+            return $returnValue;
         }
 
 

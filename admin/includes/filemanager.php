@@ -345,7 +345,7 @@ else
 <div class="box box-default">
     <div class="box-body">
 
-<?php $maxFileSize = \YAWK\filemanager::getPhpMaxFileSize(); ?>
+<?php $maxFileSize = \YAWK\filemanager::getPhpMaxUploadSize(); ?>
 <!-- FILE UPLOAD MODAL DIALOG -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
