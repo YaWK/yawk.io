@@ -221,13 +221,13 @@ if (isset($_POST))
                 // SET UPLOAD SETTINGS
                 // check if new folder was entered by user
                 if (isset($_POST['newFolder']) && (!empty($_POST['newFolder'])))
-                {
+                {   // remove html tags from new folder
                     $_POST['newFolder'] = strip_tags($_POST['newFolder']);
-                    // create new archive sub folder path
+                    // update restore folder path
                     $backup->restoreFolder = "../system/backup/archive/".$_POST['newFolder']."/";
+                    // try to create new directory
                     if (!mkdir($backup->restoreFolder))
-                    {
-                        // failed to create archive sub folder
+                    {   // failed to create archive sub folder
                         \YAWK\alert::draw("success", $_lang['ERROR'], "$backup->restoreFolder $lang[WAS_NOT_CREATED]", "", 2600);
                     }
                 }
@@ -242,19 +242,14 @@ if (isset($_POST))
                     \YAWK\alert::draw("danger", $_POST['file'], $lang['BACKUP_NO_FOLDER_SELECTED'], "", 6400);
                 }
 
+                // check if restore folder is writeable
                 if (!is_writeable(dirname($backup->restoreFolder)))
-                {
+                {   // if not, throw alert message
                     \YAWK\alert::draw("danger", $lang['BACKUP_FAILED'], $lang['BACKUP_FAILED_WRITE_FOLDER'], "", 6400);
                 }
 
                 // set target file name
                 $backup->restoreFile = $backup->restoreFolder . basename($_FILES['backupFile']['name']);
-
-                // check if file type is ZIP
-                if ($_FILES['backupFile']['type'] !== 'application/x-zip-compressed')
-                {   // if not, throw alert
-                    \YAWK\alert::draw("danger", $lang['BACKUP_FAILED'], $lang['BACKUP_NOT_A_ZIP_FILE'], "", 6400);
-                }
 
                 // check file size
                 if ($_FILES["backupFile"]["size"] > 67108864)
@@ -263,7 +258,13 @@ if (isset($_POST))
                     echo \YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[FILE_UPLOAD_TOO_LARGE]","","4800");
                 }
 
-                // Allow certain file formats
+                // check if file type is ZIP
+                if ($_FILES['backupFile']['type'] !== 'application/x-zip-compressed')
+                {   // if not, throw alert
+                    \YAWK\alert::draw("danger", $lang['BACKUP_FAILED'], $lang['BACKUP_NOT_A_ZIP_FILE'], "", 6400);
+                }
+
+                // check if file extension is zip (or similar)
                 $fileType = pathinfo($backup->restoreFile,PATHINFO_EXTENSION);
                 if($fileType != "zip" && $fileType != "ZIP" && $fileType != "7z" && $fileType != "gzip")
                 {
@@ -272,7 +273,7 @@ if (isset($_POST))
 
                 // check for errors
                 if ($_FILES['backupFile']['error'] !== 0)
-                {
+                {   // unknown error - upload failed
                     echo \YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[FILE_UPLOAD_FAILED]","","4800");
                 }
                 else
@@ -291,7 +292,7 @@ if (isset($_POST))
                             echo \YAWK\alert::draw("success", "$lang[UPLOAD_SUCCESSFUL]", "$backup->restoreFile $lang[BACKUP_UPLOAD_SUCCESS]","","4800");
                         }
                         else
-                            {
+                            {   // failed to check uploaded file - file not found
                                 echo \YAWK\alert::draw("danger", "$lang[ERROR]", "$backup->restoreFile - $lang[FILE_UPLOAD_ERROR]","","4800");
                             }
                     }
@@ -368,6 +369,9 @@ if (isset($_POST))
 <script type="text/javascript">
     $(document).ready(function()
     {
+
+        $('[data-toggle="tooltip"]').tooltip();
+
         // TRY TO DISABLE CTRL-S browser hotkey
         function saveHotkey() {
             // simply disables save event for chrome
@@ -1073,16 +1077,6 @@ echo"<ol class=\"breadcrumb\">
         </div>
         <div class="box-body">
             <button id="upload" data-toggle="modal" data-target="#restoreModal" class="btn btn-success"><i class="fa fa-upload"></i>&nbsp;&nbsp; <?php echo $lang['BACKUP_UPLOAD']; ?></button>
-            <!--
-            <form enctype="multipart/form-data" class="dropzone text-center" action="index.php?page=settings-backup&action=upload" method="POST">
-                <input type="hidden" name="MAX_FILE_SIZE" value="">
-                <input type="hidden" name="upload" value="sent">
-                <input type="hidden" name="action" value="upload">
-                <br>
-                <button class="btn btn-success" type="submit"><i class="fa fa-upload"></i>&nbsp;&nbsp;&nbsp;<?php // echo $lang['UPLOAD']; ?></button>
-            </form>
-            -->
-            <span class="pull-right"></span>
             <br><br>
         </div>
     </div>
@@ -1162,6 +1156,12 @@ echo"<ol class=\"breadcrumb\">
                     <?php if (isset($_GET['file'])) { echo $_GET['file']; } ?>
                     <h4><b><?php echo $lang['SELECT_FILE']; ?>:</b></h4>
                     <input type="file" name="backupFile" id="backupFile" class="form-control">
+                    <label for="backupFile"><?php echo $lang['POST_MAX_SIZE']; echo \YAWK\filemanager::getPostMaxSize();
+                        echo " &nbsp; / &nbsp; ".$lang['UPLOAD_MAX_SIZE']; echo \YAWK\filemanager::getUploadMaxFilesize(); ?>
+                        <i class="fa fa-question-circle-o text-info" data-placement="auto right" data-toggle="tooltip" title="" data-original-title="<?php echo $lang['UPLOAD_MAX_PHP']; ?>"></i>
+
+                    </label>
+
                     <!-- MAX_FILE_SIZE muss vor dem Dateiupload Input Feld stehen -->
                     <input type="hidden" name="MAX_FILE_SIZE" value="67108864">
                     <br><br>
@@ -1201,6 +1201,8 @@ echo"<ol class=\"breadcrumb\">
                 <div class="modal-footer">
                     <input class="btn btn-large btn-default" data-dismiss="modal" aria-hidden="true" type="submit" value="<?php echo $lang['CANCEL']; ?>">
                     <button class="btn btn-large btn-success" type="submit"><i class="fa fa-check"></i>&nbsp; <?php echo $lang['BACKUP_UPLOAD']; ?></button>
+                    <br><br>
+                    <span class="pull-left text-red"><i class="fa fa-exclamation-triangle"></i> &nbsp;<?php echo $lang['BACKUP_UPLOAD_OVERWRITE_WARNING']; ?></span>
                     <br><br>
                 </div>
             </form>
