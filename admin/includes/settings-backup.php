@@ -24,25 +24,30 @@ if (isset($_GET))
                 {   // delete file
                     if (unlink($file))
                     {   // file deleted
+                        \YAWK\sys::setSyslog($db, 50, 3, "deleted backup: $file", 0, 0, 0, 0);
                         \YAWK\alert::draw("success", "$lang[BACKUP_DEL_SUCCESS]", "$lang[DELETED]: $_GET[backupFile]", "", 2600);
                     }
                     else
                         {   // failed to delete file
+                            \YAWK\sys::setSyslog($db, 52, 2, "failed to delete backup: $file", 0, 0, 0, 0);
                             \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[BACKUP_DEL_FAILED] $_GET[backupFile]", "", 4200);
                         }
                 }
                 else
                     {   // file not found - unable to delete
+                        \YAWK\sys::setSyslog($db, 51, 1, "unable to delete backup: $file - file not found", 0, 0, 0, 0);
                         \YAWK\alert::draw("warning", "$lang[FILE_NOT_FOUND]", "$_GET[backupFolder]$_GET[backupFile] $lang[NOT_FOUND] $lang[FILEMAN_FILE_DOES_NOT_EXIST]", "", 6200);
                     }
             }
             else
                 {   // backup folder not found
+                    \YAWK\sys::setSyslog($db, 51, 1, "unable to delete backup: $_GET[backupFolder] - folder not found", 0, 0, 0, 0);
                     \YAWK\alert::draw("warning", "$lang[DIR_NOT_FOUND]", "$_GET[backupFolder] $lang[NOT_FOUND]", "", 6200);
                 }
         }
         else
             {   // backup folder or file not set
+                \YAWK\sys::setSyslog($db, 51, 1, "failed to delete backup: file or folder not set or not valid", 0, 0, 0, 0);
                 \YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[FILE_FOLDER_NOT_SET]", "", 6200);
             }
     }
@@ -57,16 +62,19 @@ if (isset($_GET))
             {   // path (backup folder and file)
                 if (\YAWK\filemanager::recursiveRemoveDirectory($backup->archiveBackupSubFolder) === true)
                 {
+                    \YAWK\sys::setSyslog($db, 50, 3, "deleted complete archive: $backup->archiveBackupSubFolder", 0, 0, 0, 0);
                     \YAWK\alert::draw("success", "$lang[DELETED]", "$backup->archiveBackupSubFolder", "", 3200);
                 }
             }
             else
             {   // archive sub folder not found
+                \YAWK\sys::setSyslog($db, 52, 2, "failed to delete archive: $backup->archiveBackupSubFolder", 0, 0, 0, 0);
                 \YAWK\alert::draw("warning", "$lang[FOLDER_NOT_FOUND]", "$_GET[backupFolder] $lang[NOT_FOUND]", "", 6200);
             }
         }
         else
         {   // backup folder or file not set
+            \YAWK\sys::setSyslog($db, 51, 1, "unable to delete archive - archive subfolder not set.", 0, 0, 0, 0);
             \YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[FILE_FOLDER_NOT_SET]", "", 6200);
         }
     }
@@ -75,34 +83,39 @@ if (isset($_GET))
     {   // check if backup folder and backup file are set and not empty
         if (isset($_GET['folder']) && (!empty($_GET['folder'])))
         {
+            // set backup archive sub folder
             $backup->archiveBackupSubFolder = $backup->archiveBackupFolder.$_GET['folder'];
 
             // zip this whole folder
             if (is_dir($backup->archiveBackupSubFolder))
             {   // zip (backup folder and file)
                 if ($backup->zipFolder($db, $backup->archiveBackupSubFolder, $backup->downloadFolder."$_GET[folder].zip") == true)
-                {
+                {   // zipped file / download requested
+                    \YAWK\sys::setSyslog($db, 50, 0, "downloaded: $backup->downloadFolder$_GET[folder].zip", 0, 0, 0, 0);
                     \YAWK\alert::draw("success", $lang['BACKUP_ZIP_CREATED'], $lang['BACKUP_ZIP_CREATED_MSG'], "", 6200);
                 }
                 else
-                    {
+                    {   // failed to zip for download
+                        \YAWK\sys::setSyslog($db, 51, 1, "failed to zip $backup->downloadFolder$_GET[folder].zip for downloading", 0, 0, 0, 0);
                         \YAWK\alert::draw("danger", "$lang[ERROR]", "$_GET[folder] $lang[BACKUP_ZIP_CREATED_FAILED]", "", 6200);
                     }
             }
             else
             {   // archive sub folder not found
+                \YAWK\sys::setSyslog($db, 51, 0, "failed to download: $backup->downloadFolder$_GET[folder].zip - $backup->archiveBackupSubFolder not found.", 0, 0, 0, 0);
                 \YAWK\alert::draw("warning", "$lang[ERROR]", "$_GET[backupFolder] $lang[NOT_FOUND]", "", 6200);
             }
         }
         else
         {   // backup folder or file not set
+            \YAWK\sys::setSyslog($db, 51, 0, "failed to zip download: folder or file not set", 0, 0, 0, 0);
             \YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[FILE_FOLDER_NOT_SET]", "", 6200);
         }
     }
 
     // check if restore is requested
     if (isset($_GET['restore']) && ($_GET['restore'] == "true"))
-    {
+    {   // check if file and folder are set
         if (isset($_GET['file']) && (!empty($_GET['file'])
         && (isset($_GET['folder']) && (!empty($_GET['folder'])))))
         {
@@ -113,38 +126,62 @@ if (isset($_GET))
             // start restore method
             $restoreStatus = $backup->restore($db, $file, $folder);
 
+            // how many elements should be restored?
+            $totalElements = count($restoreStatus);
+            // success elements counter
+            $successElements = 0;
+            // failed elements counter
+            $failedElements = 0;
+
+            // init status text variable (will be displayed in the success / error alert box)
             $status = "<br><br>";
+            // success | danger css class
             $alertClass = "";
+            // SUCCESS | ERROR language tag
             $langTag = "";
+            // custom alert text
             $alertText = "";
 
+            // walk through restore status array
             foreach ($restoreStatus as $value)
-            {
+            {   // foreach element
                 foreach ($value as $element => $folder)
-                {
+                {   // add element to status text
                     $status .= "<i>&nbsp;&nbsp;".$element."&nbsp;&nbsp;";
+                    // check state for each folder
                     foreach ($folder as $state)
                     {
+                        // set vars if state is true
                         if ($state === "true")
                         {
                             $icon = "<i class=\"fa fa-check\"></i>";
                             $alertClass = "success";
-                            $langTag = "SUCCESS";
                             $alertText = $lang['BACKUP_RESTORE_SUCCESS'];
+                            $successElements++;
                         }
                         else
-                            {
-                                $icon = "<i class=\"fa fa-times\"></i>";
-                                $alertClass = "danger";
-                                $langTag = "ERROR";
-                                $alertText = $restoreStatus['ERROR'];
-                            }
+                        {   // set vars if state is false
+                            $icon = "<i class=\"fa fa-times\"></i>";
+                            $alertClass = "danger";
+                            $alertText = $restoreStatus['ERROR'];
+                            $failedElements++;
+                        }
                         $status .= $icon."</i><br>";
                     }
                 }
             }
-            // echo "FOLDER: ".$status;
-            \YAWK\alert::draw("$alertClass", "$lang[$langTag]", "$file $alertText $status", "", 6400);
+
+            // all elements processed successful
+            if ($totalElements == $successElements)
+            {   // restore successful
+                \YAWK\sys::setSyslog($db, 50, 3, "successfully restored $successElements of $totalElements from $_GET[folder]$file", 0, 0, 0, 0);
+                \YAWK\alert::draw("$alertClass", "$lang[SUCCESS]", "$file $alertText $status", "", 6400);
+            }
+            else
+            {   // restore failed
+                \YAWK\sys::setSyslog($db, 50, 3, "failed to restore $failedElements of $totalElements from $_GET[folder]$file", 0, 0, 0, 0);
+                \YAWK\alert::draw("$alertClass", "$lang[ERROR]", "$file $alertText $status", "", 6400);
+            }
         }
     }
 }
@@ -411,8 +448,6 @@ if (isset($_POST))
             $(document.body).css( 'cursor', 'wait' );
         });
 
-
-
         // EXTENDED SETTINGS
         // required checkboxes are grouped to improve usability of 'custom backup' method.
         // grouping of toggle switches allows users to enable or disable a whole category.
@@ -533,7 +568,7 @@ if (isset($_POST))
                 $(mediaBox).fadeIn();
                 $(systemBox).fadeIn();
                 $(databaseBox).fadeIn();
-                // fadeIn form
+                // fadeIn custom settings form
                 $(customSettings).fadeIn().removeClass('hidden');
             }
 
