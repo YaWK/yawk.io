@@ -11,7 +11,6 @@ Documentation: <b>https://docs.yawk.io</b>
 <b>Currently in development:</b>
 <ul>
 <li>Update FrontEnd to Bootstrap 4 / add Bootstrap 4 template settings to backend</li>
-<li>Add YAWK\BACKUP System</li>
 <li>Add templates and demo pages</li>
 <li><i><small>and of course: check and fix language errors, major and minor bugs</small></i></li>
 </ul>
@@ -25,8 +24,7 @@ Documentation: <b>https://docs.yawk.io</b>
 </ul>
 <b>Add social media channels</b>
 <ul>
-<li>YouTube channel</li>
-<li>Facebook page</li>
+<li>YouTube tutorial videos</li>
 </ul>
 <hr>
 <h3>Download Notes:</h3>
