@@ -561,7 +561,7 @@ namespace YAWK {
          * @license    https://opensource.org/licenses/MIT
          * @link       http://yawk.io
          * @param int|string $bytes
-         * @param int|string $precision
+         * @param int|string $precision how many decimal places?
          * @return string rounded, human-readable bytes
          */
         static function sizeFilter($bytes, $precision)
