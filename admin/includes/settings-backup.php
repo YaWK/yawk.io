@@ -265,6 +265,7 @@ if (isset($_POST))
                     // try to create new directory
                     if (!mkdir($backup->restoreFolder))
                     {   // failed to create archive sub folder
+                        \YAWK\sys::setSyslog($db, 51, 1, "failed to upload - unable to create $backup->restoreFolder", 0, 0, 0, 0);
                         \YAWK\alert::draw("success", $_lang['ERROR'], "$backup->restoreFolder $lang[WAS_NOT_CREATED]", "", 2600);
                     }
                 }
@@ -276,28 +277,36 @@ if (isset($_POST))
                 }
                 else
                 {   // no folder was selected - throw error msg
+                    \YAWK\sys::setSyslog($db, 51, 1, "failed to upload - no folder was set", 0, 0, 0, 0);
                     \YAWK\alert::draw("danger", $_POST['file'], $lang['BACKUP_NO_FOLDER_SELECTED'], "", 6400);
                 }
 
                 // check if restore folder is writeable
                 if (!is_writeable(dirname($backup->restoreFolder)))
                 {   // if not, throw alert message
+                    \YAWK\sys::setSyslog($db, 51, 1, "failed to upload - restore folder $backup->restoreFolder is not writeable. Please check folder permissions", 0, 0, 0, 0);
                     \YAWK\alert::draw("danger", $lang['BACKUP_FAILED'], $lang['BACKUP_FAILED_WRITE_FOLDER'], "", 6400);
                 }
 
                 // set target file name
                 $backup->restoreFile = $backup->restoreFolder . basename($_FILES['backupFile']['name']);
+                $maxFileSize = \YAWK\filemanager::getUploadMaxFilesize();
+                $postMaxSize = \YAWK\filemanager::getPostMaxSize();
 
                 // check file size
-                if ($_FILES["backupFile"]["size"] > 67108864)
+                if ($_FILES["backupFile"]["size"] > $maxFileSize || $postMaxSize)
                 {
+                    // calculate and filter current filesize
+                    $currentFileSize = \YAWK\filemanager::sizeFilter($_FILES["backupFile"]["size"], 2);
                     // file is too large
+                    \YAWK\sys::setSyslog($db, 51, 1, "failed to upload - $backup->restoreFile ($currentFileSize) exceeeds post_max_size: $postMaxSize upload_max_filesize: $maxFileSize", 0, 0, 0, 0);
                     echo \YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[FILE_UPLOAD_TOO_LARGE]","","4800");
                 }
 
                 // check if file type is ZIP
                 if ($_FILES['backupFile']['type'] !== 'application/x-zip-compressed')
                 {   // if not, throw alert
+                    \YAWK\sys::setSyslog($db, 51, 1, "failed to upload - $backup->restoreFile is not a zip - uploaded filetype: $_FILES[backupFile][type]", 0, 0, 0, 0);
                     \YAWK\alert::draw("danger", $lang['BACKUP_FAILED'], $lang['BACKUP_NOT_A_ZIP_FILE'], "", 6400);
                 }
 
@@ -305,18 +314,21 @@ if (isset($_POST))
                 $fileType = pathinfo($backup->restoreFile,PATHINFO_EXTENSION);
                 if($fileType != "zip" && $fileType != "ZIP" && $fileType != "7z" && $fileType != "gzip")
                 {
+                    \YAWK\sys::setSyslog($db, 51, 1, "failed to upload file - extension $fileType seems not to be a zip file", 0, 0, 0, 0);
                     echo \YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[UPLOAD_ONLY_ZIP_ALLOWED]","","4800");
                 }
 
                 // check for errors
                 if ($_FILES['backupFile']['error'] !== 0)
                 {   // unknown error - upload failed
+                    \YAWK\sys::setSyslog($db, 52, 2, "failed to upload file - unknown error ($_FILES[backupFile][error]) processing file $_FILES[backupFile][name]", 0, 0, 0, 0);
                     echo \YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[FILE_UPLOAD_FAILED]","","4800");
                 }
                 else
                 {   // try to move uploaded file
                     if (!move_uploaded_file($_FILES["backupFile"]["tmp_name"], $backup->restoreFile))
                     {   // throw error msg
+                        \YAWK\sys::setSyslog($db, 52, 2, "failed to move upload file $backup->restoreFile to folder $_FILES[backupFile][tmp_name]", 0, 0, 0, 0);
                         echo \YAWK\alert::draw("danger", "$lang[ERROR]", "$backup->restoreFile - $lang[FILE_UPLOAD_ERROR]","","4800");
                     }
                     else
@@ -326,10 +338,12 @@ if (isset($_POST))
                         {
                             // here we could check more things - eg latest file timestamp
                             // throw success message
+                            \YAWK\sys::setSyslog($db, 50, 3, "uploaded backup package $backup->restoreFile successfully", 0, 0, 0, 0);
                             echo \YAWK\alert::draw("success", "$lang[UPLOAD_SUCCESSFUL]", "$backup->restoreFile $lang[BACKUP_UPLOAD_SUCCESS]","","4800");
                         }
                         else
                             {   // failed to check uploaded file - file not found
+                                \YAWK\sys::setSyslog($db, 51, 2, "failed to check uploaded file - $backup->restoreFile not found.", 0, 0, 0, 0);
                                 echo \YAWK\alert::draw("danger", "$lang[ERROR]", "$backup->restoreFile - $lang[FILE_UPLOAD_ERROR]","","4800");
                             }
                     }
@@ -356,6 +370,7 @@ if (isset($_POST))
                         }
                         else
                             {   // failed to create new archive subfolder
+                                \YAWK\sys::setSyslog($db, 51, 2, "failed to create new archive subfolder $backup->archiveBackupSubFolder", 0, 0, 0, 0);
                                 \YAWK\alert::draw("danger", $_POST['file'], "$backup->archiveBackupSubFolder $lang[WAS_NOT_CREATED]", "", 6400);
                             }
                     }
@@ -366,6 +381,7 @@ if (isset($_POST))
                     }
                     else
                         {   // no folder was selected - throw error msg
+                            \YAWK\sys::setSyslog($db, 50, 0, "failed to move backup to archive folder: $backup->archiveBackupSubFolder - no folder was selected", 0, 0, 0, 0);
                             \YAWK\alert::draw("danger", $_POST['file'], $lang['BACKUP_NO_FOLDER_SELECTED'], "", 6400);
                         }
 
@@ -380,21 +396,25 @@ if (isset($_POST))
                     {
                         if (rename($backup->archiveBackupFile, $backup->archiveBackupNewFile))
                         {   // success
+                            \YAWK\sys::setSyslog($db, 50, 0, "archive backup: $backup->archiveBackupFile to $backup->archiveBackupNewFile successful", 0, 0, 0, 0);
                             \YAWK\alert::draw("success", $_POST['file'], $backup->archiveBackupNewFile, "", 2600);
                         }
                         else
                         {   // error: throw msg
+                            \YAWK\sys::setSyslog($db, 52, 2, "failed to move backup to archive: $backup->archiveBackupFile to $backup->archiveBackupNewFile", 0, 0, 0, 0);
                             \YAWK\alert::draw("danger", $_POST['file'], "$lang[BACKUP_FAILED_TO_MOVE] $backup->archiveBackupFile $lang[MOVE_TO] $backup->archiveBackupNewFile", "", 6400);
                         }
                     }
                     else
                         {
+                            \YAWK\sys::setSyslog($db, 52, 2, "failed to move backup to archive because backup file is missing or not writeable $backup->archiveBackupNewFile", 0, 0, 0, 0);
                             \YAWK\alert::draw("warning", $_POST['file'], "$lang[BACKUP_FAILED_TO_MOVE] $backup->archiveBackupNewFile $lang[BACKUP_FAILED_TO_MOVE_CHMOD]", "", 6400);
                         }
                 }
                 else
                     {
                         // no file was clicked - failed to select any file
+                        \YAWK\sys::setSyslog($db, 52, 2, "failed to move backup to archive: no file selected - this should not be possible.", 0, 0, 0, 0);
                         \YAWK\alert::draw("danger", "$lang[BACKUP_NO_FILE_SELECTED]", "$lang[BACKUP_NO_FILE_SELECTED]", "", 6400);
                     }
             }

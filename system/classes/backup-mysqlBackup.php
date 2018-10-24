@@ -393,7 +393,7 @@ namespace YAWK\BACKUP\DATABASE
                         if ($this->generateZipArchive($db, $this->sqlBackup) === true)
                         {
                             // zip archive created
-                            \YAWK\sys::setSyslog($db, 50, 0, "database .zip archive created", 0, 0, 0, 0);
+                            \YAWK\sys::setSyslog($db, 49, 0, "created database backup $this->sqlBackup", 0, 0, 0, 0);
                             return true;
                         }
                         else
@@ -540,12 +540,12 @@ namespace YAWK\BACKUP\DATABASE
                             if (mkdir($this->archiveBackupSubFolder))
                             {   // all good, new archive subfolder created
                                 // set syslog entry: dir created
-                                \YAWK\sys::setSyslog($db, 50, 0, "archive directory created: $this->sqlPath", 0, 0, 0, 0);
+                                \YAWK\sys::setSyslog($db, 49, 0, "archive directory created: $this->archiveBackupSubFolder", 0, 0, 0, 0);
                             }
                             else
                             {   // failed to create new archive subfolder
                                 // set syslog entry: failed
-                                \YAWK\sys::setSyslog($db, 52, 0, "failed to create archive directory: $this->sqlPath", 0, 0, 0, 0);
+                                \YAWK\sys::setSyslog($db, 52, 0, "failed to create archive directory: $this->archiveBackupSubFolder", 0, 0, 0, 0);
                             }
                         }
                     }
@@ -581,7 +581,7 @@ namespace YAWK\BACKUP\DATABASE
             {   // .sql file does not exist - do database backup
                 if ($this->doSqlBackup($db) === true)
                 {   // ok, backup done!
-                    \YAWK\sys::setSyslog($db, 50, 3, "created database backup", 0, 0, 0, 0);
+                    // \YAWK\sys::setSyslog($db, 50, 3, "created database backup", 0, 0, 0, 0);
                     return true;
                 }
                 else

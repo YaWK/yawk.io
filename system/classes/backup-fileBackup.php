@@ -350,7 +350,7 @@ namespace YAWK\BACKUP\FILES
                                 if (mkdir($this->archiveBackupSubFolder))
                                 {   // all good, new archive subfolder created
                                     // set syslog entry: dir created
-                                    \YAWK\sys::setSyslog($db, 50, 0, "archive directory created: $this->archiveBackupSubFolder", 0, 0, 0, 0);
+                                    \YAWK\sys::setSyslog($db, 49, 0, "archive directory created: $this->archiveBackupSubFolder", 0, 0, 0, 0);
                                 }
                                 else
                                 {   // failed to create new archive subfolder
@@ -374,7 +374,7 @@ namespace YAWK\BACKUP\FILES
                                 // ok, delete tmp folder recursive
                                 \YAWK\sys::recurseRmdir($this->tmpFolder);
                                 // set positive syslog entry
-                                \YAWK\sys::setSyslog($db, 49, 0, "created ".$this->archiveBackupSubFolder."$this->finalFilename", 0, 0, 0, 0);
+                                \YAWK\sys::setSyslog($db, 49, 3, "created ".$this->archiveBackupSubFolder."$this->finalFilename", 0, 0, 0, 0);
                                 return true;
                             }
                             else
@@ -399,7 +399,7 @@ namespace YAWK\BACKUP\FILES
                             {   // ok, remove tmp dir recursivly
                                 \YAWK\sys::recurseRmdir($this->tmpFolder);
                                 // set positive syslog entry
-                                \YAWK\sys::setSyslog($db, 49, 0, "created ".$this->currentBackupFolder."$this->finalFilename", 0, 0, 0, 0);
+                                \YAWK\sys::setSyslog($db, 49, 3, "created ".$this->currentBackupFolder."$this->finalFilename", 0, 0, 0, 0);
                                 return true;
                             }
                             else
@@ -482,12 +482,12 @@ namespace YAWK\BACKUP\FILES
                             if (mkdir($this->archiveBackupSubFolder))
                             {   // all good, new archive subfolder created
                                 // set syslog entry: dir created
-                                \YAWK\sys::setSyslog($db, 50, 0, "archive directory created: $this->targetFolder", 0, 0, 0, 0);
+                                \YAWK\sys::setSyslog($db, 49, 0, "archive directory created: $this->archiveBackupSubFolder", 0, 0, 0, 0);
                             }
                             else
                             {   // failed to create new archive subfolder
                                 // set syslog entry: failed
-                                \YAWK\sys::setSyslog($db, 52, 0, "failed to create archive directory: $this->targetFolder", 0, 0, 0, 0);
+                                \YAWK\sys::setSyslog($db, 52, 0, "failed to create archive directory: $this->archiveBackupSubFolder", 0, 0, 0, 0);
                             }
                         }
                     }
@@ -521,7 +521,7 @@ namespace YAWK\BACKUP\FILES
             {   // file does not exist - do file backup
                 if ($this->doFolderBackup($db) === true)
                 {   // ok, backup done!
-                    \YAWK\sys::setSyslog($db, 50, 3, "created file backup", 0, 0, 0, 0);
+                    // \YAWK\sys::setSyslog($db, 50, 3, "created file backup", 0, 0, 0, 0);
                     return true;
                 }
                 else
