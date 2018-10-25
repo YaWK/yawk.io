@@ -9,10 +9,10 @@ CREATE TABLE `cms_assets` (
   `link` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `cms_assets` (`id`, `templateID`, `type`, `asset`, `link`) VALUES
-(1, 1, 'js', 'jQuery 1.x', 'system/engines/jquery/jquery-1.12.4.min.js'),
-(2, 1, 'css', 'Bootstrap 3 CSS', 'system/engines/bootstrap/dist/css/bootstrap.min.css'),
-(3, 1, 'js', 'Bootstrap 3 JS', 'system/engines/bootstrap/dist/js/bootstrap.min.js');
+INSERT INTO `cms_assets` (`id`, `templateID`, `type`, `sortation`, `asset`, `link`) VALUES
+(1, 1, 'js', 1, 'jQuery 1.x', 'system/engines/jquery/jquery-1.12.4.min.js'),
+(2, 1, 'css', 5, 'Bootstrap 3 CSS', 'system/engines/bootstrap/dist/css/bootstrap.min.css'),
+(3, 1, 'js', 6, 'Bootstrap 3 JS', 'system/engines/bootstrap/dist/js/bootstrap.min.js');
 
 CREATE TABLE `cms_assets_types` (
   `id` int(11) NOT NULL,
@@ -1746,12 +1746,12 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (999, 1, 'pos-mainLeft-overflow', 'visible', 'visible', '', 56, 1, 24, 'TPL_OVERFLOW', 'form-control', 'select', 'visible,visible:hidden,hidden:scroll,scroll:auto,auto:initial,initial:inherit,inherit', '', '', '', 'TPL_OVERFLOW_HEADING', 'TPL_OVERFLOW_SUBTEXT'),
 (1000, 1, 'pos-mainLeft-visibility', 'visible', 'visible', '', 56, 1, 26, 'TPL_VISIBILITY', 'form-control', 'select', 'visible,visible:hidden,hidden', '', '', '', '', ''),
 (1001, 1, 'pos-mainLeft-text-align', 'left', 'left', '', 56, 1, 5, 'TPL_TEXT_ALIGN', 'form-control', 'select', 'left,left:center,center:right,right:justify,justify:initial,initial:inherit,inherit', '', '', '', 'TPL_ALIGN_HEADING', 'TPL_ALIGN_SUBTEXT'),
-(1002, 1, 'pos-mainLeft-enabled', '1', '0', '', 56, 1, 1, 'TPL_POS_ACTIVE', 'form-control', 'checkbox toggle', '', '', '', '', 'TPL_POS_MAINLEFT_HEADING', 'TPL_POS_MAINLEFT_SUBTEXT'),
+(1002, 1, 'pos-mainLeft-enabled', '0', '0', '', 56, 1, 1, 'TPL_POS_ACTIVE', 'form-control', 'checkbox toggle', '', '', '', '', 'TPL_POS_MAINLEFT_HEADING', 'TPL_POS_MAINLEFT_SUBTEXT'),
 (1003, 1, 'pos-mainLeft-bg-gradient-longValue', '', '', '', 56, 1, 13, 'TPL_POS_BG_GRADIENT', 'form-control', 'textarea', '', 'TPL_BG_GRADIENT_PLACEHOLDER', '', '', '', ''),
 (1004, 1, 'pos-mainLeft-zindex', '9999', '9999', '', 56, 1, 25, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (1005, 1, 'pos-mainLeft-width', '100%', '100%', '', 56, 1, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
 (1006, 1, 'pos-mainLeft-height', 'auto', 'auto', '', 56, 1, 3, 'TPL_POS_HEIGHT', 'form-control', '', '', 'TPL_HEIGHT_PLACEHOLDER', '', '', 'TPL_SIZE_HEADING', 'TPL_SIZE_SUBTEXT'),
-(1007, 1, 'pos-mainLeft-bgcolor', '000000', 'F8F8F8', '', 56, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(1007, 1, 'pos-mainLeft-bgcolor', 'F8F8F8', 'F8F8F8', '', 56, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (1008, 1, 'pos-mainLeft-position', 'static', 'static', '', 56, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (1009, 1, 'pos-mainLeft-marginBottom', '0px', '0px', '', 56, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (1010, 1, 'pos-mainLeft-marginTop', '0px', '0px', '', 56, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
@@ -1774,12 +1774,12 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (1027, 1, 'pos-mainRight-overflow', 'visible', 'visible', '', 57, 1, 24, 'TPL_OVERFLOW', 'form-control', 'select', 'visible,visible:hidden,hidden:scroll,scroll:auto,auto:initial,initial:inherit,inherit', '', '', '', 'TPL_OVERFLOW_HEADING', 'TPL_OVERFLOW_SUBTEXT'),
 (1028, 1, 'pos-mainRight-visibility', 'visible', 'visible', '', 57, 1, 26, 'TPL_VISIBILITY', 'form-control', 'select', 'visible,visible:hidden,hidden', '', '', '', '', ''),
 (1029, 1, 'pos-mainRight-text-align', 'left', 'left', '', 57, 1, 5, 'TPL_TEXT_ALIGN', 'form-control', 'select', 'left,left:center,center:right,right:justify,justify:initial,initial:inherit,inherit', '', '', '', 'TPL_ALIGN_HEADING', 'TPL_ALIGN_SUBTEXT'),
-(1030, 1, 'pos-mainRight-enabled', '1', '0', '', 57, 1, 1, 'TPL_POS_ACTIVE', 'form-control', 'checkbox toggle', '', '', '', '', 'TPL_POS_MAINRIGHT_HEADING', 'TPL_POS_MAINRIGHT_SUBTEXT'),
+(1030, 1, 'pos-mainRight-enabled', '0', '0', '', 57, 1, 1, 'TPL_POS_ACTIVE', 'form-control', 'checkbox toggle', '', '', '', '', 'TPL_POS_MAINRIGHT_HEADING', 'TPL_POS_MAINRIGHT_SUBTEXT'),
 (1031, 1, 'pos-mainRight-bg-gradient-longValue', '', '', '', 57, 1, 13, 'TPL_POS_BG_GRADIENT', 'form-control', 'textarea', '', 'TPL_BG_GRADIENT_PLACEHOLDER', '', '', '', ''),
 (1032, 1, 'pos-mainRight-zindex', '9999', '9999', '', 57, 1, 25, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (1033, 1, 'pos-mainRight-width', '100%', '100%', '', 57, 1, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
 (1034, 1, 'pos-mainRight-height', 'auto', 'auto', '', 57, 1, 3, 'TPL_POS_HEIGHT', 'form-control', '', '', 'TPL_HEIGHT_PLACEHOLDER', '', '', 'TPL_SIZE_HEADING', 'TPL_SIZE_SUBTEXT'),
-(1035, 1, 'pos-mainRight-bgcolor', '000000', 'F8F8F8', '', 57, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(1035, 1, 'pos-mainRight-bgcolor', 'F8F8F8', 'F8F8F8', '', 57, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
 (1036, 1, 'pos-mainRight-position', 'static', 'static', '', 57, 1, 20, 'TPL_POS_POSITION', 'form-control', 'select', 'static,static:relative,relative:fixed,fixed:absolute,absolute', '', '', '', 'TPL_POSITION_HEADING', 'TPL_POSITION_SUBTEXT'),
 (1037, 1, 'pos-mainRight-marginBottom', '0px', '0px', '', 57, 1, 22, 'TPL_POS_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
 (1038, 1, 'pos-mainRight-marginTop', '0px', '0px', '', 57, 1, 21, 'TPL_POS_MARGIN_TOP', 'form-control', '', '', 'TPL_MARGIN_PLACEHOLDER', '', '', '', ''),
