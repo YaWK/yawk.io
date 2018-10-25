@@ -2974,7 +2974,7 @@ namespace YAWK {
                 {
                     // check, if link is external
                     if (strpos($row['link'], 'http://') !== false || (strpos($row['link'], 'https://') !== false)) {
-                        $icon = "fa fa-globe";
+                        $icon = "fa fa-cloud";
                         $title = "$lang[EXTERNAL]";
                     }
                     else
