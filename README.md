@@ -37,9 +37,14 @@ But please consider - YaWK is is in constant development and underlies <i>nearly
 Before YaWK will be released, you will always get the latest development version. After the first version is released, there will be a seperate development branch. You should wait for the official first release before you use YaWK in productive environment. I'm happy about comments, stars, followers and / or code contributions. Thank You!
 
 
-<h3>Open Development</h3>
-YaWK is an open source project, <b>built for everyone.</b> Actually there is <i>no big business company or foundation behind it</i>. It is mostly a one man show, - originally developed for my own, personal purpose. It was never meant to go public. But the bigger the project growed, the more people told me to make it accessable to the public crowd. 
+<h3>Why all this? - there are so many CMS around...</h3>
+YaWK is an open source project, <b>built for everyone.</b> Actually there is <i>no big business company or foundation behind it</i>. It is mostly a one man show, - originally developed for my own, personal purpose because I was not satisfied with all other solutions. So I took the challenge and started developing an overall tool that fits my personal needs. It was never meant to go public. But the bigger the project growed, the more people told me to make it accessable to the public crowd. 
 
 After spending years on this project, I decided to follow my fellows - I've uploaded it to GitHub and kept the repository private until the status of the project has got to a level where people can make use out of it. Though all efforts of "getting it to the point", this project is not finished yet - and never will be. It will stay in development, as long as I or somebody else take care about it.
+
+
+<h3>Do you want to become part of this project?</h3>
+If you want to put your manpower and knowledge into this project, please feel free to contact me via Email. danielretzl@gmail.com 
+
 
 <h4><i>Stay tuned for upcoming website and project updates!</i></h4>
