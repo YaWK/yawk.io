@@ -18,9 +18,9 @@ Documentation: <b>https://docs.yawk.io</b>
 <ul>
 <li>Update yawk.io to current version</li>
 <li>Add feature showcase</li>
-<li>Add support page</li>
-<li>Add user manual</li>
-<li>Add developer manual</li>
+<li>Add support page <small><i>(and ticket system)</i></small></li>
+<li>Add admin handbook <small><i>(pdf and / or html)</i></small></li>
+<li>Add developer manual <small><i>(http://docs.yawk.io)</i></small></li>
 </ul>
 <b>Add social media channels</b>
 <ul>
