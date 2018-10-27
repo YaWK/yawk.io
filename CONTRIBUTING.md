@@ -31,7 +31,8 @@ to the stability, functionality, or testability of YaWK will
 generally not be accepted.
 <br><br>
 <b>Do you have questions about the source code?</b><br>
-Ask any question about the use of YaWK on our support page. https://support.yawk.io
+Ask any question about the use of YaWK on our support page. 
+<br><i>(support page is work in progress - coming soon)</i>
 <br><br>
 <b>Do you need further assistance?</b>
 <br>If you experience any problems or having any suggestions, you are invited 
