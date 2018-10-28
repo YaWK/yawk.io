@@ -18,6 +18,22 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
         /** @var string all the css as string */
         public $cssCode = '';
 
+        public function init()
+        {
+            // set css tags for Bootstrap 4
+            $this->bs4_Cards();
+
+            // check if css code is set, not empty and correct type
+            if (isset($this->cssCode) && (is_string($this->cssCode) && (!empty($this->cssCode))))
+            {   // all good, return all generated code
+                return $this->cssCode;
+            }
+            else
+            {   // css code is not set properly
+                return null;
+            }
+        }
+
         /**
          * Bootstrap 4: CARDS Component CSS Code
          * @author Daniel Retzl <danielretzl@gmail.com>
