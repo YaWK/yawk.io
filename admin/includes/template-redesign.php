@@ -172,7 +172,11 @@ echo"</section><!-- Main content -->
             }
             elseif ($template->bootstrapVersion == "4")
             {
-                // ....
+                echo
+                "<li>
+                    <a href=\"#bs4-cards\" aria-controls=\"bs4-cards\" data-toggle=\"tab\"><i class=\"fa fa-bars\"></i>
+                        &nbsp; $lang[CARDS]</a>
+                </li>";
             }
             ?>
             
@@ -224,15 +228,8 @@ echo"</section><!-- Main content -->
     <script>
         $(document).ready(function () {
 
-            // TODO: THIS IS WAAAAYYYY NOT READY...!!
             // switch preview from text to link
-            /*
-             $("#switchPreview").click(function() {
-             // alert('you flipped the switch!');
-             $("#h1-preview").replaceWith( "<div class=\"h1\" id=\"h1-preview\"><a href=\"#\">H1 Heading (link)</div>");
-             // $("#h1-preview").css("text-decoration", "underline");
-             });
-             */
+
             // call set default values and preview font function
             previewFont($("#h1-fontfamily"), 'H1 Heading', 'h1-preview', $("#h1-preview"), $("#h1-size"), $("#h1-fontcolor"), $("#h1-fontshadowsize"), $("#h1-fontshadowcolor"), $("#h1-fontweight"), $("#h1-fontstyle"), $("#h1-textdecoration"));
             previewFont($("#h2-fontfamily"), 'H2 Heading', 'h2-preview', $("#h2-preview"), $("#h2-size"), $("#h2-fontcolor"), $("#h2-fontshadowsize"), $("#h2-fontshadowcolor"), $("#h2-fontweight"), $("#h2-fontstyle"), $("#h2-textdecoration"));
@@ -783,7 +780,61 @@ echo"</section><!-- Main content -->
     }
     else if ($template->bootstrapVersion == "4")
     {
-       // ...
+       echo "<!-- CARDS TAB -->
+<div class=\"tab-pane fade in\" id=\"bs4-cards\">
+    <h3>$lang[BOOTSTRAP4] <small>$lang[CARDS]</small></h3>
+    <div class=\"row animated fadeIn\">
+        <div class=\"col-md-3\">
+            <div class=\"box box-default\">
+                <div class=\"box-header\">
+                    <h3 class=\"box-title\">$lang[CARDS] <small>$lang[SETTINGS]</small></h3>
+                </div>
+                <div class=\"box-body\">
+                    <!-- add bootstrap 4 here  -->";
+                    $template->getFormElements($db, $templateSettings, 58, $lang, $user);
+                    echo "
+                </div>
+            </div>
+        </div>
+
+        <div class=\"col-md-3\">
+            <div class=\"box box-default\">
+                <div class=\"box-header\">
+                    <h3 class=\"box-title\">$lang[LIST_GROUP] <small>$lang[DESIGN]</small></h3>
+                </div>
+                <div class=\"box-body\">
+                    <!-- more bootstrap 4 here -->";
+                    // $template->getFormElements($db, $templateSettings, 15, $lang, $user);
+                    echo "
+                </div>
+            </div>
+        </div>
+
+        <div class=\"col-md-3\">
+            <div class=\"box box-default\">
+                <div class=\"box-header\">
+                    <h3 class=\"box-title\">$lang[JUMBOTRON] <small>$lang[BOX] $lang[DESIGN]</small></h3>
+                </div>
+                <div class=\"box-body\">
+                    <!-- more bootstrap 4 here -->";
+                    // $template->getFormElements($db, $templateSettings, 16, $lang, $user);
+                    echo "
+                </div>
+            </div>
+        </div>
+
+        <div class=\"col-md-3\">
+            <div class=\"box box-default\">
+                <div class=\"box-header\">
+                    <h3 class=\"box-title\">... <small>...</small></h3>
+                </div>
+                <div class=\"box-body\">
+                     
+                </div>
+            </div>
+        </div>
+    </div>
+</div>";
     }
     ?>
 
