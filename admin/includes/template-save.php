@@ -49,6 +49,19 @@ if (isset($_POST['save']) && (isset($_GET['action']) && (isset($_GET['id']))))
                     \YAWK\alert::draw("danger", $lang['ERROR'], $lang['DESIGN_DETAILS'] . "&nbsp;" . $lang['NOT_SAVED'], "", 5000);
                 }
             }
+            // typography properties
+            if ($_GET['action'] === "template-typography")
+            {
+                $redirect = "template-typography";
+                if ($template->saveProperties($db, $_GET['id'], $_POST, $oldTplSettings))
+                {
+                    // \YAWK\alert::draw("success", $lang['SUCCESS'], $lang['TYPO_DETAILS'] . "&nbsp;" . $lang['SAVED'], "", 2400);
+                }
+                else
+                {
+                    // \YAWK\alert::draw("danger", $lang['ERROR'], $lang['TYPO_DETAILS'] . "&nbsp;" . $lang['NOT_SAVED'], "", 5000);
+                }
+            }
             // if save property is customCSS
             if ($_GET['action'] === "template-customcss")
             {

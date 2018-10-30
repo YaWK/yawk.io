@@ -881,6 +881,9 @@ namespace YAWK {
                         <li ";echo (isset($_GET['page']) && $_GET['page'] == 'template-redesign') ? "class=\"active\"" : ""; echo">
                             <a href=\"index.php?page=template-redesign\"><i class=\"fa fa-paint-brush\"></i> $lang[DESIGN]</a>
                         </li>
+                        <li ";echo (isset($_GET['page']) && $_GET['page'] == 'template-typography') ? "class=\"active\"" : ""; echo">
+                            <a href=\"index.php?page=template-typography\"><i class=\"fa fa-text-height\"></i> $lang[TYPOGRAPHY]</a>
+                        </li>
                         <li ";echo (isset($_GET['page']) && $_GET['page'] == 'template-customcss') ? "class=\"active\"" : ""; echo">
                             <a href=\"index.php?page=template-customcss\"><i class=\"fa fa-css3\"></i> $lang[CUSTOM_CSS]</a>
                         </li>

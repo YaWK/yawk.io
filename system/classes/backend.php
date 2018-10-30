@@ -60,6 +60,7 @@ namespace YAWK {
             <li><i class=\"fa fa-home\"></i> &nbsp;<a href=\"index.php?page=template-overview\" title=\"$lang[EDIT]\"> $lang[OVERVIEW]</a></li>
             <li><i class=\"fa fa-cube\"></i> &nbsp;<a href=\"index.php?page=template-positions\" title=\"$lang[EDIT]\"> $lang[POSITIONS]</a></li>
             <li><i class=\"fa fa-paint-brush\"></i> &nbsp;<a href=\"index.php?page=template-redesign\" title=\"$lang[EDIT]\"> $lang[DESIGN]</a></li>
+            <li><i class=\"fa fa-text-height\"></i> &nbsp;<a href=\"index.php?page=template-typography\" title=\"$lang[EDIT]\"> $lang[TYPOGRAPHY]</a></li>
             <li><i class=\"fa fa-css3\"></i> &nbsp;<a href=\"index.php?page=template-customcss\" title=\"$lang[EDIT]\"> $lang[CUSTOM_CSS]</a></li>
             <li><i class=\"fa fa-code\"></i> &nbsp;<a href=\"index.php?page=template-customjs\" title=\"$lang[EDIT]\"> $lang[CUSTOM_JS]</a></li>
             <li><i class=\"fa fa-puzzle-piece\"></i> &nbsp;<a href=\"index.php?page=template-assets\" title=\"$lang[EDIT]\"> $lang[ASSETS]</a></li>
