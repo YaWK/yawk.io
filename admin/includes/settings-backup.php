@@ -935,10 +935,9 @@ echo"<ol class=\"breadcrumb\">
                           <br>
                           
                             <a href=\"$backup->currentBackupFolder$file\" title=\"$lang[TO_DOWNLOAD]\"><i class=\"fa fa-download\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a id=\"restoreCurrent$currentRestoreID\" data-restoreID=\"$currentRestoreID\" data-location=\"archive\" href=\"index.php?page=settings-backup&restore=true&folder=$backup->currentBackupFolder&file=$file&currentRestoreID=$currentRestoreID\" data-title=\"$lang[BACKUP_RESTORE]\"><i id=\"restoreCurrentIcon$currentRestoreID\" class=\"fa fa-history\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a title=\"$lang[BACKUP_RESTORE_QUESTION_TITLE]\" data-cancelBtnText=\"$lang[CANCEL]\" data-okBtnText=\"$lang[BACKUP_RESTORE]\" data-icon=\"fa fa-history\" data-title=\"$lang[BACKUP_RESTORE_QUESTION]\" id=\"restoreCurrent$currentRestoreID\" data-restoreID=\"$currentRestoreID\" data-location=\"archive\" href=\"index.php?page=settings-backup&restore=true&folder=$backup->currentBackupFolder&file=$file&currentRestoreID=$currentRestoreID\"><i id=\"restoreCurrentIcon$currentRestoreID\" class=\"fa fa-history\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
                             <a href=\"#\" data-file=\"$file\" data-toggle=\"modal\" data-target=\"#myModal\" title=\"$lang[BACKUP_MOVE_TO_ARCHIVE]\"><i class=\"fa fa-archive\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"$backup->currentBackupFolder$file ".$lang['DELETE']."? - $lang[BEWARE] $lang[UNDO_NOT_POSSIBLE]!\" title=\"$lang[ATTENTION] $lang[BACKUP] $lang[DELETE]\" href=\"index.php?page=settings-backup&deleteBackup=true&backupFolder=$backup->currentBackupFolder&backupFile=$file\">
-                            </a>
+                            <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"$backup->currentBackupFolder$file ".$lang['DELETE']."? - $lang[BEWARE] $lang[UNDO_NOT_POSSIBLE]!\" title=\"$lang[ATTENTION] $lang[BACKUP] $lang[DELETE]\" href=\"index.php?page=settings-backup&deleteBackup=true&backupFolder=$backup->currentBackupFolder&backupFile=$file\"></a>
                         </td>
                     </tr>";
                     /* JS LOOP FOR CURRENT RESTORE ICONS
@@ -969,7 +968,7 @@ echo"<ol class=\"breadcrumb\">
                                 var savebuttonTitle = $(savebutton).attr(\"data-restoreTitle\");
                                 
                                 // click event for each restore icon
-                                $(selector).click(function() {
+                                $(selectLink).click(function() {
                                 // add spinner icon 
                                 $(zipIcon).removeClass('fa fa-file-zip-o').addClass('fa fa-spinner fa-spin fa-fw');
                                 $(selector).removeClass('fa fa-history').addClass('fa fa-spinner fa-spin fa-fw');
@@ -982,9 +981,10 @@ echo"<ol class=\"breadcrumb\">
                                 // avoid double clicks and other nervous dumbclicks
                                 $(selectLink).css( 'cursor', 'wait' ).attr('title', savebuttonTitle);
                                 $(document.body).css( 'cursor', 'wait' );
-                                $(selectLink).preventDefault();
+                                // $(selectLink).preventDefault();
                                 $(savebutton).preventDefault();
                                 });
+                                
                             });
                          </script>";
                 }

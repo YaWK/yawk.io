@@ -46,10 +46,10 @@ echo"<ol class=\"breadcrumb\">
     echo " <small>";echo \YAWK\settings::getSettingDescription($db, "yawkversion");echo"</small>";
 
     // SET VARS
-    $FILE_PATH = "/xampp/htdocs/yawk-LTE/"; // full path
+    $FILE_PATH = "../"; // full path
     $data = \YAWK\sys::countCodeLines($FILE_PATH, '.php');
 
-    echo"<p>$FILE_PATH <br>umfasst insgesamt <b>$data[files]</b> $data[type] files mit exakt <b>$data[lines]</b> Zeilen $data[type] Code</p><br>";
+    echo"<br>YaWK ($FILE_PATH) umfasst insgesamt <b>$data[files]</b> $data[type] files mit exakt <b>$data[lines]</b> Zeilen $data[type] Code</p><br>";
 
     echo "<h4>Server Statistik</h4>";
     if (\YAWK\sys::checkZlib() === true)

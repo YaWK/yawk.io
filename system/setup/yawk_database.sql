@@ -1853,7 +1853,8 @@ INSERT INTO `cms_template_settings_types` (`id`, `type`) VALUES
 (54, 'pos-body'),
 (55, 'tpl-assets-basic'),
 (56, 'pos-mainLeft'),
-(57, 'pos-mainRight');
+(57, 'pos-mainRight'),
+(58, 'bs4-card');
 
 CREATE TABLE `cms_tips` (
   `id` int(11) NOT NULL,
@@ -2566,7 +2567,7 @@ ALTER TABLE `cms_templates`
 ALTER TABLE `cms_template_settings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1044;
 ALTER TABLE `cms_template_settings_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 ALTER TABLE `cms_tips`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 ALTER TABLE `cms_users`
