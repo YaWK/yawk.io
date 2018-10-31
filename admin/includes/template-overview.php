@@ -13,7 +13,40 @@
         // set text of heading span
         // $("#tplHeading").text(newTplName);
     }
+
 </script>
+<?php
+// check if template download is requested
+if (isset($_GET) && (!empty($_GET)))
+{
+    if (isset($_GET['action']) && ($_GET['action']) === "download")
+    {   // check if template folder is set
+        if (isset($_GET['folder']) && (!empty($_GET['folder'])))
+        {
+            // strip html and js tags from folder
+            $templateFolder = strip_tags($_GET['folder']);
+            // strip html and js tags from folder
+            $templateID = strip_tags($_GET['id']);
+            // create new tpl object
+            $template = new \YAWK\template();
+            // call download template method
+            if ($template->downloadTemplate($db, $templateFolder, $templateID) === true)
+            {   // success
+                \YAWK\alert::draw("success", $lang['TPL_ZIP_CREATED_TITLE'], $lang['TPL_ZIP_CREATED_MSG'], "", 0);
+            }
+            else
+                {   // ERROR: generating download package failed
+                    \YAWK\alert::draw("danger", $lang['TPL_ZIP_FAILED_TITLE'], $lang['TPL_ZIP_FAILED_MSG'], "", 0);
+                }
+        }
+        else
+            {   // no template folder set
+                die ('no folder sent');
+            }
+    }
+}
+?>
+
 <?php
 // check if template obj is set and create if not exists
 if (!isset($template)) { $template = new \YAWK\template(); }
@@ -343,7 +376,10 @@ echo"</section><!-- Main content -->
     </div>
     <div class="col-md-7">
         <div class="box">
-            <div class="box-header"><h3 class="box-title"><?php echo $lang['TPL_MANAGE']; ?></h3></div>
+            <div class="box-header">
+                <h3 class="box-title"><?php echo $lang['TPL_MANAGE']; ?></h3>
+                <a href="index.php?page=template-overview&upload=1&" class="btn btn-success pull-right"><?php echo $lang['TPL_UPLOAD']; ?></a>
+            </div>
             <div class="box-body">
 
                 <table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-striped table-hover table-responsive" id="table-sort">
@@ -418,15 +454,15 @@ echo"</section><!-- Main content -->
                             }
 
                             // set template image (screen shot)
-                            $screenshot = "../system/templates/".$activeTemplate."/img/screenshot.jpg";
+                            $screenshot = "../system/templates/".$row['name']."/images/screenshot.jpg";
                             if (!file_exists($screenshot))
                             {   // sorry, no screenshot available
                                 $screenshot = "$lang[NO_SCREENSHOT]";
-                                $screenshot = "<img src=\"http://placehold.it/220x150\" class=\"img-responsive img-rounded\">";
+                                // $screenshot = "<img src=\"http://placehold.it/220x150\" class=\"img-responsive img-rounded\">";
                             }
                             else
                             {   // screenshot found, display
-                                $screenshot = "<img src=\"../system/templates/".$activeTemplate."/img/screenshot.jpg\" width=\"200\" class=\"img-rounded\">";
+                                $screenshot = "<img src=\"../system/templates/".$row['name']."/images/screenshot.jpg\" width=\"200\" class=\"img-rounded\">";
                             }
 
                             // set copy icon
@@ -434,6 +470,7 @@ echo"</section><!-- Main content -->
                             $tplName = $row['name'];
                             $description = "copy of: ".$row['name']."";
                             $copyIcon = "<a title=\"$lang[COPY]\" onclick=\"setCopyTplSettings('$tplName');\" href=\"#\" data-toggle=\"modal\" data-target=\"#myModal\" data-tplName=\"$row[name]\"><i class=\"fa fa-copy\"></i></a>";
+                            $downloadIcon = "<a id=\"downloadTemplateLink-$row[id]\" title=\"$lang[TPL_DOWNLOAD]\" href=\"index.php?page=template-overview&action=download&folder=$tplName&id=$row[id]\" data-tplName=\"$tplName\"><i id=\"downloadTemplateIcon-$row[id]\" class=\"fa fa-file-zip-o\"></i></a>";
 
                             echo "<tr>
           <td class=\"text-center\">
@@ -444,6 +481,7 @@ echo"</section><!-- Main content -->
           <td>".$activeBoldStart."<a href=\"index.php?page=template-positions&id=".$row['id']."\"><div style=\"width:100%\">".$row['name']."</div></a>".$activeBoldEnd."".$row['description']."</td>
           <td><a href=\"index.php?page=template-positions&id=".$row['id']."\" title=\"$lang[EDIT]: ".$row['name']."\">".$screenshot."</a></td>
           <td class=\"text-center\">
+            $downloadIcon &nbsp;
             $copyIcon &nbsp;
             $deleteIcon 
           </td>
