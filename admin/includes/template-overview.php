@@ -13,7 +13,6 @@
         // set text of heading span
         // $("#tplHeading").text(newTplName);
     }
-
 </script>
 <?php
 // check if template download is requested
@@ -87,11 +86,11 @@ if (isset($_GET['delete']) && ($_GET['delete'] === "1"))
     {   // escape chars
         $_GET['templateID'] = $db->quote($_GET['templateID']);
         if (\YAWK\template::deleteTemplate($db, $_GET['templateID']))
-        {   // throw success msg
+        {   // delete success msg
             \YAWK\alert::draw("success", "<i class=\"fa fa-trash-o\"></i> $lang[TPL] $lang[DELETED]", "$lang[SUCCESS]", "", 3000);
         }
         else
-        {
+        {   // failed to delete template
             \YAWK\alert::draw("danger", "$lang[TPL_FAILED_TO_DELETE] $_GET[templateID]", "$lang[PLEASE_TRY_AGAIN]", "", 3000);
         }
     }
@@ -378,7 +377,7 @@ echo"</section><!-- Main content -->
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title"><?php echo $lang['TPL_MANAGE']; ?></h3>
-                <a href="index.php?page=template-overview&upload=1&" class="btn btn-success pull-right"><?php echo $lang['TPL_UPLOAD']; ?></a>
+                <a href="#" data-toggle="modal" data-target="#uploadModal" class="btn btn-success pull-right"><?php echo $lang['TPL_UPLOAD']; ?></a>
             </div>
             <div class="box-body">
 
@@ -496,7 +495,7 @@ echo"</section><!-- Main content -->
     </div>
 </div>
 
-<!-- Modal --RENAME FOLDER  -- -->
+<!-- Modal --COPY TEMPLATE-- -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal2Label" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -540,6 +539,36 @@ echo"</section><!-- Main content -->
                 <!-- modal footer /w submit btn -->
                 <div class="modal-footer">
                     <input class="btn btn-large btn-success" type="submit" value="<?php echo $lang['SAVE_NEW_THEME_AS']; ?>">
+                    <br><br>
+                </div>
+            </form>
+        </div> <!-- modal content -->
+    </div> <!-- modal dialog -->
+</div>
+
+
+<!-- Modal --UPLOAD MODAL-- -->
+<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form enctype="multipart/form-data" action="index.php?page=template-overview&savenewtheme=true" method="POST">
+                <div class="modal-header">
+                    <!-- modal header with close controls -->
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i> </button>
+                    <br>
+                    <div class="col-md-1"><h3 class="modal-title"><i class="fa fa-copy"></i></h3></div>
+                    <div class="col-md-11"><h3 class="modal-title"><?php echo $lang['TPL_INSTALL']; ?> <!-- gets filled via JS setRenameFieldState--></h3></div>
+                </div>
+
+                <!-- modal body -->
+                <div class="modal-body">
+                    <!-- save to... folder select options -->
+
+                </div>
+
+                <!-- modal footer /w submit btn -->
+                <div class="modal-footer">
+                    <input class="btn btn-large btn-success" type="submit" value="<?php echo $lang['TPL_UPLOAD']; ?>">
                     <br><br>
                 </div>
             </form>
