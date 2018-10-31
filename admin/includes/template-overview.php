@@ -31,11 +31,11 @@ if (isset($_GET) && (!empty($_GET)))
             // call download template method
             if ($template->downloadTemplate($db, $templateFolder, $templateID) === true)
             {   // success
-                \YAWK\alert::draw("success", $lang['TPL_ZIP_CREATED_TITLE'], $lang['TPL_ZIP_CREATED_MSG'], "", 0);
+                \YAWK\alert::draw("success", $lang['TPL_ZIP_CREATED_TITLE'], $lang['TPL_ZIP_CREATED_MSG'], "", 2400);
             }
             else
                 {   // ERROR: generating download package failed
-                    \YAWK\alert::draw("danger", $lang['TPL_ZIP_FAILED_TITLE'], $lang['TPL_ZIP_FAILED_MSG'], "", 0);
+                    \YAWK\alert::draw("danger", $lang['TPL_ZIP_FAILED_TITLE'], $lang['TPL_ZIP_FAILED_MSG'], "", 8600);
                 }
         }
         else
@@ -556,7 +556,7 @@ echo"</section><!-- Main content -->
                     <!-- modal header with close controls -->
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i> </button>
                     <br>
-                    <div class="col-md-1"><h3 class="modal-title"><i class="fa fa-copy"></i></h3></div>
+                    <div class="col-md-1"><h3 class="modal-title"><i class="fa fa-download"></i></h3></div>
                     <div class="col-md-11"><h3 class="modal-title"><?php echo $lang['TPL_INSTALL']; ?> <!-- gets filled via JS setRenameFieldState--></h3></div>
                 </div>
 
