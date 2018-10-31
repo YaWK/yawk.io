@@ -13,6 +13,17 @@
         // set text of heading span
         // $("#tplHeading").text(newTplName);
     }
+
+$(document).ready(function() {
+        $('#table-sort').dataTable( {
+            "bPaginate": false,
+            "bLengthChange": false,
+            "bFilter": true,
+            "bSort": false,
+            "bInfo": true,
+            "bAutoWidth": false
+        } );
+    } );
 </script>
 <?php
 // check if template download is requested
@@ -379,11 +390,11 @@ echo"</section><!-- Main content -->
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title"><?php echo $lang['TPL_MANAGE']; ?></h3>
-                <a href="#" data-toggle="modal" data-target="#uploadModal" class="btn btn-success pull-right"><?php echo $lang['TPL_UPLOAD']; ?></a>
             </div>
             <div class="box-body">
 
-                <table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-striped table-hover table-responsive" id="table-sort">
+                <a href="#" data-toggle="modal" data-target="#uploadModal" class="btn btn-success pull-right"><?php echo $lang['TPL_UPLOAD']; ?></a>
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" id="table-sort" class="table table-striped table-hover table-responsive">
                     <thead>
                     <tr>
                         <td class="text-center"><strong><?php echo $lang['STATUS']; ?></strong></td>
