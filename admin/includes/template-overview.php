@@ -268,6 +268,7 @@ echo"</section><!-- Main content -->
             <div class="box-header with-border">
                 <h3 class="box-title"><?php echo "$lang[DETAILS] <small>$lang[OF_CURRENT_ACTIVE_THEME]"; ?></small></h3>
             </div>
+            <div class="box-body">
             <dl class="dl-horizontal">
                 <?php
                 // PREPARE TEMPLATE DETAILS VARS
@@ -371,6 +372,7 @@ echo"</section><!-- Main content -->
                 <dt>&nbsp;</dt>
                 <dd>&nbsp;</dd>
             </dl>
+            </div>
         </div>
     </div>
     <div class="col-md-7">
