@@ -22,6 +22,12 @@ namespace YAWK {
         public $active;
         /** * @var string template name */
         public $name;
+        /** * @var array db config array */
+        public $config;
+        /** * @var string template folder (root path of all templates */
+        public $folder = '../system/templates/';
+        /** * @var string template sub folder (template name, eg. ../system/templates/SUBFOLDER */
+        public $subFolder;
         /** * @var string positions as string */
         public $positions;
         /** * @var string template description */
@@ -36,7 +42,7 @@ namespace YAWK {
         public $weblink;
         /** * @var string sub-author who has modified the template */
         public $subAuthor;
-        /** * @var string sub-author's url*/
+        /** * @var string sub-author's url */
         public $subAuthorUrl;
         /** * @var string datetime when this template was modified */
         public $modifyDate;
@@ -50,7 +56,7 @@ namespace YAWK {
         public $license;
         /** * @var int which template is currently set to active? */
         public $selectedTemplate;
-        /** * @var string path to own true type fonts  */
+        /** * @var string path to own true type fonts */
         public $ttfPath = "../system/fonts";
 
 
@@ -72,38 +78,34 @@ namespace YAWK {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @param int $templateID ID of the affected template
-         * @param int $status value to set (0|1)
+         * @param int    $templateID ID of the affected template
+         * @param int    $status value to set (0|1)
          * @param object $db
          * @return bool true|false
          */
         public function switchPositionIndicators($db, $templateID, $status)
         {
             // if template param is not set
-            if (!isset($templateID) || (!is_numeric($templateID)))
-            {   // get current active template ID
+            if (!isset($templateID) || (!is_numeric($templateID))) {   // get current active template ID
                 $templateID = self::getCurrentTemplateId($db);
             }
 
             // if status parameter is not set
-            if (!isset($status) || (!is_numeric($status)))
-            {   // turn off is default behaviour
+            if (!isset($status) || (!is_numeric($status))) {   // turn off is default behaviour
                 $status = 0;
             }
 
             // update position indicator status
             if ($db->query("UPDATE {template_settings} 
-                                   SET value = '".$status."'
+                                   SET value = '" . $status . "'
                                    WHERE property 
                                    LIKE '%indicator%'
-                                   AND templateID = '".$templateID."'"))
-            {   // all good,
+                                   AND templateID = '" . $templateID . "'")
+            ) {   // all good,
                 return true;
+            } else {   // update position indicators failed
+                return false;
             }
-            else
-                {   // update position indicators failed
-                    return false;
-                }
         }
 
         /**
@@ -115,18 +117,18 @@ namespace YAWK {
          * @return array|bool|mixed|string
          */
         static function getTemplatePositions($db)
-        {   /** @var $db \YAWK\db */
+        {
+            /** @var $db \YAWK\db */
             $res = '';
             // fetch template id
             $tpl_id = settings::getSetting($db, "selectedTemplate");
             // fetch template positions
             if ($res = $db->query("SELECT positions
 	                              FROM {templates}
-	                              WHERE id = '" . $tpl_id . "'"))
-            {   // fetch data
+	                              WHERE id = '" . $tpl_id . "'")
+            ) {   // fetch data
                 $posArray = array();
-                while ($row = $res->fetch_assoc())
-                {
+                while ($row = $res->fetch_assoc()) {
                     $posArray[] = $row;
                 }
                 $pos = $posArray[0]['positions'];
@@ -134,9 +136,7 @@ namespace YAWK {
                 $positions = explode(':', $pos);
                 // return tpl positions
                 return $positions;
-            }
-            else
-            {
+            } else {
                 // q failed
                 \YAWK\sys::setSyslog($db, 47, 1, "failed to get template positions of template id: <b>$tpl_id</b> ", 0, 0, 0, 0);
                 return false;
@@ -160,11 +160,11 @@ namespace YAWK {
          * @return bool
          */
         public function saveAs($db, $newID, $template, $new_template, $description, $author, $authorUrl, $weblink, $version, $license)
-        {   /** @var \YAWK\db $db */
+        {
+            /** @var \YAWK\db $db */
             // save theme as new template
 
-            if (!isset($newID) || (empty($newID)))
-            {
+            if (!isset($newID) || (empty($newID))) {
                 $newID = \YAWK\template::getMaxId($db);
             }
 
@@ -181,12 +181,9 @@ namespace YAWK {
             $now = \YAWK\sys::now();
 
             // check if new tpl folder already exists
-            if (file_exists("../system/templates/$new_template/"))
-            {   // overwrite data
+            if (file_exists("../system/templates/$new_template/")) {   // overwrite data
                 \YAWK\sys::full_copy("../system/templates/yawk-bootstrap3", "../system/templates/$new_template");
-            }
-            else
-            {   // copy data into new template directory
+            } else {   // copy data into new template directory
                 \YAWK\sys::full_copy("../system/templates/yawk-bootstrap3", "../system/templates/$new_template");
             }
 
@@ -200,13 +197,11 @@ namespace YAWK {
   	                                      '" . $weblink . "',
   	                                      '" . $now . "',
   	                                      '" . $version . "',
-  	                                      '" . $license . "')"))
-            {   // success
+  	                                      '" . $license . "')")
+            ) {   // success
                 // do something
                 // store each setting with new tpl id in database
-            }
-            else
-            {   // q failed, throw error
+            } else {   // q failed, throw error
                 \YAWK\sys::setSyslog($db, 47, 1, "failed to save <b>$new_template</b> as new template ", 0, 0, 0, 0);
                 \YAWK\alert::draw("warning", "Warning!", "Could not insert your template $new_template into database.", "", 6200);
                 return false;
@@ -221,13 +216,13 @@ namespace YAWK {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db database object
-         * @param int $id template id to load
+         * @param int    $id template id to load
          * @return bool true or false
          */
         public function loadProperties($db, $id)
         {
             /** @var $db \YAWK\db $res */
-            $res = $db->query("SELECT * FROM {templates} WHERE id = '".$id."'");
+            $res = $db->query("SELECT * FROM {templates} WHERE id = '" . $id . "'");
             if ($row = mysqli_fetch_assoc($res)) {
                 $this->id = $row['id'];
                 $this->active = $row['active'];
@@ -246,9 +241,7 @@ namespace YAWK {
                 $this->license = $row['license'];
                 $this->selectedTemplate = \YAWK\settings::getSetting($db, "selectedTemplate");
                 return true;
-            }
-            else
-            {   // could not fetch tpl properties, throw error...
+            } else {   // could not fetch tpl properties, throw error...
                 \YAWK\sys::setSyslog($db, 47, 1, "failed to load properties of template id: <b>$id</b> ", 0, 0, 0, 0);
                 \YAWK\alert::draw("danger", "Warning!", "Could not fetch template properties. Expect a buggy view.", "", 3000);
                 return false;
@@ -261,43 +254,34 @@ namespace YAWK {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db database object
-         * @param int $id template id to save
-         * @param array $data post data from form (new settings)
-         * @param array $oldTplSettings template settings array (old settings)
+         * @param int    $id template id to save
+         * @param array  $data post data from form (new settings)
+         * @param array  $oldTplSettings template settings array (old settings)
          * @return bool true or false
          */
         public function saveProperties($db, $id, $data, $oldTplSettings)
         {
             // check if data is set set
-            if (!isset($data) || (!isset($id)))
-            {   // if not, abort
+            if (!isset($data) || (!isset($id))) {   // if not, abort
                 return false;
             }
 
             // walk through all post data settings
-            foreach($data as $property => $value)
-            {
+            foreach ($data as $property => $value) {
                 // check, if settings is a long value
-                if (fnmatch('*-longValue', $property))
-                {   // it is, set long value indicator to true
+                if (fnmatch('*-longValue', $property)) {   // it is, set long value indicator to true
                     $longValue = 1;
-                }
-                else
-                {   // not a long value
+                } else {   // not a long value
                     $longValue = 0;
                 }
 
                 // save this property only if its NOT save or customcss
-                if ($property != "save" && ($property != "customCSS") && ($property != "testText"))
-                {
-                    if ($oldTplSettings[$property] === $value)
-                    {   // if old settings and new settings are the same
+                if ($property != "save" && ($property != "customCSS") && ($property != "testText")) {
+                    if ($oldTplSettings[$property] === $value) {   // if old settings and new settings are the same
                         // do nothing
+                    } else {   // update template setting
+                        $this->setTemplateSetting($db, $id, $property, $value, $longValue);
                     }
-                    else
-                        {   // update template setting
-                            $this->setTemplateSetting($db, $id, $property, $value, $longValue);
-                        }
                 }
             }
             return true;
@@ -312,7 +296,8 @@ namespace YAWK {
          * @return array|bool
          */
         static function getTemplateIds($db)
-        {   /** @var \YAWK\db $db */
+        {
+            /** @var \YAWK\db $db */
             // returns an array with all template IDs
             $mysqlRes = $db->query("SELECT id, name
 	                              FROM {templates}
@@ -320,12 +305,9 @@ namespace YAWK {
             while ($row = mysqli_fetch_assoc($mysqlRes)) {
                 $res[] = $row;
             }
-            if (!empty($res))
-            {   // yey, return array
+            if (!empty($res)) {   // yey, return array
                 return $res;
-            }
-            else
-            {   // could not fetch array
+            } else {   // could not fetch array
                 \YAWK\sys::setSyslog($db, 47, 1, "failed get template id and name ", 0, 0, 0, 0);
                 return false;
             }
@@ -337,11 +319,12 @@ namespace YAWK {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db database
-         * @param int $templateID affected template ID
+         * @param int    $templateID affected template ID
          * @return int the number of settings for this template
          */
         static function countTemplateSettings($db, $templateID)
-        {   /** @var $db \YAWK\db */
+        {
+            /** @var $db \YAWK\db */
             // count + return settings from given tpl ID
             $res = $db->query("SELECT id FROM {template_settings}
                                         WHERE templateID = '" . $templateID . "'");
@@ -355,28 +338,24 @@ namespace YAWK {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db database
-         * @param int $templateID affected template ID
+         * @param int    $templateID affected template ID
          * @return string|null
          */
         public static function getTemplateNameById($db, $templateID)
-        {   /** @var $db \YAWK\db */
-            if (!isset($templateID) || (empty($templateID)))
-            {   // template id is not set, try to get current template
+        {
+            /** @var $db \YAWK\db */
+            if (!isset($templateID) || (empty($templateID))) {   // template id is not set, try to get current template
                 $templateID = \YAWK\settings::getSetting($db, "selectedTemplate");
             }
-                // query template name
-                if ($res = $db->query("SELECT name from {templates} WHERE id = $templateID"))
-                {   // fetch data
-                    if ($row = mysqli_fetch_row($res))
-                    {   // return current name
-                        return $row[0];
-                    }
+            // query template name
+            if ($res = $db->query("SELECT name from {templates} WHERE id = $templateID")) {   // fetch data
+                if ($row = mysqli_fetch_row($res)) {   // return current name
+                    return $row[0];
                 }
-                else
-                {   // exit and throw error
-                    \YAWK\sys::setSyslog($db, 47, 1, "failed to get template name by id <b>$templateID</b> ", 0, 0, 0, 0);
-                    // die ("Please check database connection.");
-                }
+            } else {   // exit and throw error
+                \YAWK\sys::setSyslog($db, 47, 1, "failed to get template name by id <b>$templateID</b> ", 0, 0, 0, 0);
+                // die ("Please check database connection.");
+            }
             return null;
         }
 
@@ -387,56 +366,44 @@ namespace YAWK {
          * @link http://yawk.io
          * @param object $db database
          * @param string $location frontend or backend
-         * @param int $templateID affected template ID
+         * @param int    $templateID affected template ID
          * @return bool|string
          */
         public static function getCurrentTemplateName($db, $location, $templateID)
-        {   /** @var $db \YAWK\db */
-            if (!isset($location) || (empty($location)))
-            {   // if location is empty, set frontend as default
+        {
+            /** @var $db \YAWK\db */
+            if (!isset($location) || (empty($location))) {   // if location is empty, set frontend as default
                 $location = "frontend";
                 $prefix = "";
-            }
-            else
-            {   // check location to set path correctly
-                if ($location == "frontend")
-                {   // call from frontend
+            } else {   // check location to set path correctly
+                if ($location == "frontend") {   // call from frontend
                     $prefix = "";
-                }
-                else
-                {   // call from backend
+                } else {   // call from backend
                     $prefix = "../";
                 }
             }
             // NO TEMPLATE ID IS SET...
-            if (!isset($templateID) || (empty($templateID)))
-            {
+            if (!isset($templateID) || (empty($templateID))) {
                 // check if user has its own template
                 // $userTemplateID = \YAWK\user::getUserTemplateID($db, )
                 // no templateID sent via param, set current selected template ID
                 $templateID = \YAWK\settings::getSetting($db, "selectedTemplate");
             }
             // get current template name from database
-            $tpldir = $prefix."system/templates/";
+            $tpldir = $prefix . "system/templates/";
             if ($res = $db->query("SELECT name FROM {templates}
-                       WHERE id = $templateID"))
-            {   // fetch data
-                if ($row = mysqli_fetch_row($res))
-                {   // check if selected tpl exists
-                    if (!$dir = @opendir("$tpldir" . $row[0]))
-                    {   // if directory could not be opened: throw error
+                       WHERE id = $templateID")
+            ) {   // fetch data
+                if ($row = mysqli_fetch_row($res)) {   // check if selected tpl exists
+                    if (!$dir = @opendir("$tpldir" . $row[0])) {   // if directory could not be opened: throw error
                         \YAWK\sys::setSyslog($db, 47, 1, "failed to load template directory of template id: <b>$templateID</b>", 0, 0, 0, 0);
-                        return "<b>Oh-oh! There was a big error. . .</b> <u>you shall not see this!</u><br><br>Unable to load template ".$row[0].".&nbsp; I am deeply sorry.<br> I am sure my administrator is hurry to fix that problem.<br> yours,<br>YaWK <i><small>(Yet another Web Kit)</i></small>";
-                    }
-                    else
-                    {   // return template name
+                        return "<b>Oh-oh! There was a big error. . .</b> <u>you shall not see this!</u><br><br>Unable to load template " . $row[0] . ".&nbsp; I am deeply sorry.<br> I am sure my administrator is hurry to fix that problem.<br> yours,<br>YaWK <i><small>(Yet another Web Kit)</i></small>";
+                    } else {   // return template name
                         return $row[0];
                     }
-                }
-                else
-                {   // could not fetch template -
+                } else {   // could not fetch template -
                     // - in that case set default template
-                   // print alert::draw("warning", "Warning: ", "Template kann nicht gelesen werden, default template gesetzt. (yawk-bootstrap3)","page=settings-system","4800");
+                    // print alert::draw("warning", "Warning: ", "Template kann nicht gelesen werden, default template gesetzt. (yawk-bootstrap3)","page=settings-system","4800");
                     return "template ID $templateID not in database...?";
                 }
             }
@@ -450,49 +417,42 @@ namespace YAWK {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db database
-         * @param int $tplId affected template ID
+         * @param int    $tplId affected template ID
          * @param string $content contains the css file content
-         * @param int $minify 0|1 if 1, file gets minified before saving.
+         * @param int    $minify 0|1 if 1, file gets minified before saving.
          * @return bool
          */
         public function writeTemplateCssFile($db, $tplId, $content, $minify)
-        {   /** @var $db \YAWK\db */
+        {
+            /** @var $db \YAWK\db */
             // check whether templateID is not set or empty
-            if (!isset($tplId) || (empty($tplId)))
-            {   // set default value: template 1
+            if (!isset($tplId) || (empty($tplId))) {   // set default value: template 1
                 $tplId = 1;
             }
             // prepare vars
             $filename = self::getSettingsCSSFilename($db, "backend", $tplId);
             // check if file need to be minified
-            if (isset($minify) && (!empty($minify)))
-            {   // minify is set
-                if ($minify === 1)
-                {   // create a minified version: template/css/custom.min.css (for production include)
+            if (isset($minify) && (!empty($minify))) {   // minify is set
+                if ($minify === 1) {   // create a minified version: template/css/custom.min.css (for production include)
                     $filename = substr($filename, 0, -4);
                     $filename = "$filename.min.css";
                     $content = \YAWK\sys::minifyCSS($content);
+                } else {   // failed to minify, insert syslog
+                    \YAWK\sys::setSyslog($db, 47, 1, "failed to minify template css <b>$filename</b>", 0, 0, 0, 0);
                 }
-                else
-                    {   // failed to minify, insert syslog
-                        \YAWK\sys::setSyslog($db, 47, 1, "failed to minify template css <b>$filename</b>", 0, 0, 0, 0);
-                    }
             }
             // do all the file stuff, open, write, close and chmod to set permissions.
             $handle = fopen($filename, "wb");
 
-            if (!fwrite($handle, $content))
-            {   // write failed, throw error
+            if (!fwrite($handle, $content)) {   // write failed, throw error
                 \YAWK\sys::setSyslog($db, 48, 2, "failed to write <b>$filename</b> Please check file / folder owner or group permissions", 0, 0, 0, 0);
                 \YAWK\alert::draw("danger", "Error!", "Could not template CSS file $filename<br>Please check your file / owner or group permissions.", "", 4200);
             }
-            if (!fclose($handle))
-            {   // close failed, throw error
+            if (!fclose($handle)) {   // close failed, throw error
                 \YAWK\sys::setSyslog($db, 47, 1, "failed to close <b>$filename</b>", 0, 0, 0, 0);
                 \YAWK\alert::draw("warning", "Warning!", "Failed to template CSS file close $filename<br>Please try again and / or expect some errors.", "", 4200);
             }
-            if (!chmod($filename, 0775))
-            {   // chmod failed, throw error
+            if (!chmod($filename, 0775)) {   // chmod failed, throw error
                 \YAWK\sys::setSyslog($db, 47, 1, "failed to chmod 775 to template CSS file <b>$filename</b>", 0, 0, 0, 0);
                 \YAWK\alert::draw("warning", "Warning!", "Failed to chmod(775) $filename<br>Please check file / folder / owner / group permissions!", "", 4200);
             }
@@ -507,43 +467,37 @@ namespace YAWK {
          * @link http://yawk.io
          * @param object $db database
          * @param string $content contains the css file content
-         * @param int $minify 0|1 if 1, the file gets minified before saving.
-         * @param int $templateID affected template ID
+         * @param int    $minify 0|1 if 1, the file gets minified before saving.
+         * @param int    $templateID affected template ID
          * @return bool
          */
         public function setCustomCssFile($db, $content, $minify, $templateID)
-        {   /** @var $db \YAWK\db */
+        {
+            /** @var $db \YAWK\db */
             // create template/css/custom.css (for development purpose in backend)
             // prepare vars
             $filename = self::getCustomCSSFilename($db, "backend", $templateID);
             // check if file need to be minified
-            if (isset($minify) && (!empty($minify)))
-            {   // minify is set
-                if ($minify === 1)
-                {   // create a minified version: template/css/custom.min.css (for production include)
+            if (isset($minify) && (!empty($minify))) {   // minify is set
+                if ($minify === 1) {   // create a minified version: template/css/custom.min.css (for production include)
                     $filename = substr($filename, 0, -4);
                     $filename = "$filename.min.css";
                     $content = \YAWK\sys::minifyCSS($content);
+                } else {
+                    \YAWK\sys::setSyslog($db, 47, 1, "failed to minify file <b>$filename</b>", 0, 0, 0, 0);
                 }
-                else
-                    {
-                        \YAWK\sys::setSyslog($db, 47, 1, "failed to minify file <b>$filename</b>", 0, 0, 0, 0);
-                    }
             }
             // do all the file stuff, open, write, close and chmod to set permissions.
             $handle = fopen($filename, "wb");
             //$content = \YAWK\sys::replaceCarriageReturns("\n\r", $content);
             $content = \YAWK\sys::replacePreTags("\n\r", $content);
-            if (!fwrite($handle, $content))
-            {   // write failed, throw error
+            if (!fwrite($handle, $content)) {   // write failed, throw error
                 \YAWK\alert::draw("danger", "Error!", "Could not write custom css $filename<br>Please check your file / owner or group permissions.", "", 4200);
             }
-            if (!fclose($handle))
-            {   // close failed, throw error
+            if (!fclose($handle)) {   // close failed, throw error
                 \YAWK\alert::draw("warning", "Warning!", "Failed to close custom css $filename<br>Please try again and / or expect some errors.", "", 4200);
             }
-            if (!chmod($filename, 0775))
-            {   // chmod failed, throw error
+            if (!chmod($filename, 0775)) {   // chmod failed, throw error
                 \YAWK\alert::draw("warning", "Warning!", "Failed to chmod(775) custom css $filename<br>Please check file / folder / owner / group permissions!", "", 4200);
             }
             // after all....
@@ -557,26 +511,23 @@ namespace YAWK {
          * @link http://yawk.io
          * @param object $db database
          * @param string $content contains the js file content
-         * @param int $minify 0|1 if 1, the file gets minified before saving.
-         * @param int $templateID affected template ID
+         * @param int    $minify 0|1 if 1, the file gets minified before saving.
+         * @param int    $templateID affected template ID
          * @return bool
          */
         public function setCustomJsFile($db, $content, $minify, $templateID)
-        {   /** @var $db \YAWK\db */
+        {
+            /** @var $db \YAWK\db */
             // create template/css/custom.css (for development purpose in backend)
             // prepare vars
             $filename = self::getCustomJSFilename($db, "backend", $templateID);
             // check if file need to be minified
-            if (isset($minify) && (!empty($minify)))
-            {   // minify is set
-                if ($minify === 1)
-                {   // create a minified version: template/js/custom.min.js (for production include)
+            if (isset($minify) && (!empty($minify))) {   // minify is set
+                if ($minify === 1) {   // create a minified version: template/js/custom.min.js (for production include)
                     $filename = substr($filename, 0, -3);
                     $filename = "$filename.min.js";
                     $content = \YAWK\sys::minifyJs($content);
-                }
-                else
-                {
+                } else {
                     \YAWK\sys::setSyslog($db, 47, 1, "failed to minify file <b>$filename</b>", 0, 0, 0, 0);
                 }
             }
@@ -584,16 +535,13 @@ namespace YAWK {
             $handle = fopen($filename, "wb");
             //$content = \YAWK\sys::replaceCarriageReturns("\n\r", $content);
             $content = \YAWK\sys::replacePreTags("\n\r", $content);
-            if (!fwrite($handle, $content))
-            {   // write failed, throw error
+            if (!fwrite($handle, $content)) {   // write failed, throw error
                 \YAWK\alert::draw("danger", "Error!", "failed to write file $filename<br>Please check your file / owner or group permissions.", "", 4200);
             }
-            if (!fclose($handle))
-            {   // close failed, throw error
+            if (!fclose($handle)) {   // close failed, throw error
                 \YAWK\alert::draw("warning", "Warning!", "Failed to close custom js $filename<br>Please try again and / or expect some errors.", "", 4200);
             }
-            if (!chmod($filename, 0775))
-            {   // chmod failed, throw error
+            if (!chmod($filename, 0775)) {   // chmod failed, throw error
                 \YAWK\alert::draw("warning", "Warning!", "Failed to chmod(775) custom js $filename<br>Please check file / folder / owner / group permissions!", "", 4200);
             }
             // after all....
@@ -606,7 +554,7 @@ namespace YAWK {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db database
-         * @param int $templateID affected template ID
+         * @param int    $templateID affected template ID
          * @return string the content of custom.css
          */
         public function getCustomCSSFile($db, $templateID)
@@ -622,7 +570,7 @@ namespace YAWK {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db database
-         * @param int $templateID affected template ID
+         * @param int    $templateID affected template ID
          * @return string the content of custom.css
          */
         public function getCustomJSFile($db, $templateID)
@@ -639,18 +587,17 @@ namespace YAWK {
          * @link http://yawk.io
          * @param object $db database
          * @param string $location frontend or backend
-         * @param int $templateID affected template ID
+         * @param int    $templateID affected template ID
          * @return string the template's css filename, including path
          */
         public function getSettingsCSSFilename($db, $location, $templateID)
-        {   /** @var $db \YAWK\db */
+        {
+            /** @var $db \YAWK\db */
             // prepare vars... path + filename
-            if (!isset($templateID) || (empty($templateID)))
-            {
+            if (!isset($templateID) || (empty($templateID))) {
                 $templateID = self::getCurrentTemplateId($db);
             }
-            if (!isset($location) || (empty($location)))
-            {
+            if (!isset($location) || (empty($location))) {
                 $location = "Backend";
             }
             $tplName = self::getCurrentTemplateName($db, $location, $templateID); // tpl name
@@ -666,11 +613,12 @@ namespace YAWK {
          * @link http://yawk.io
          * @param object $db database
          * @param string $location frontend or backend
-         * @param int $templateID affected template ID
+         * @param int    $templateID affected template ID
          * @return string the template's custom css filename, including path
          */
         public function getCustomCSSFilename($db, $location, $templateID)
-        {   /** @var $db \YAWK\db */
+        {
+            /** @var $db \YAWK\db */
             // prepare vars... path + filename
             $tplName = self::getCurrentTemplateName($db, $location, $templateID); // tpl name
             $alias = "custom"; // set CSS file name
@@ -685,11 +633,12 @@ namespace YAWK {
          * @link http://yawk.io
          * @param object $db database
          * @param string $location frontend or backend
-         * @param int $templateID affected template ID
+         * @param int    $templateID affected template ID
          * @return string the template's custom css filename, including path
          */
         public function getCustomJSFilename($db, $location, $templateID)
-        {   /** @var $db \YAWK\db */
+        {
+            /** @var $db \YAWK\db */
             // prepare vars... path + filename
             $tplName = self::getCurrentTemplateName($db, $location, $templateID); // tpl name
             $alias = "custom"; // set JS file name
@@ -707,23 +656,18 @@ namespace YAWK {
          * @return int|bool
          */
         public static function getMaxId($db)
-        {   /* @var $db \YAWK\db */
-            if ($res = $db->query("SELECT MAX(id) from {templates}"))
-            {   // fetch id
-                if ($row = mysqli_fetch_row($res))
-                {
+        {
+            /* @var $db \YAWK\db */
+            if ($res = $db->query("SELECT MAX(id) from {templates}")) {   // fetch id
+                if ($row = mysqli_fetch_row($res)) {
                     return $row[0];
-                }
-                else
-                    {
-                        \YAWK\sys::setSyslog($db, 47, 1, "failed to get MAX(id) from template db", 0, 0, 0, 0);
-                        return false;
-                    }
-            }
-            else
-                {
+                } else {
+                    \YAWK\sys::setSyslog($db, 47, 1, "failed to get MAX(id) from template db", 0, 0, 0, 0);
                     return false;
                 }
+            } else {
+                return false;
+            }
         }
 
         /** delete template settings css file
@@ -736,26 +680,19 @@ namespace YAWK {
          */
         function deleteSettingsCSSFile($db, $filename)
         {   // if no filename is given
-            if (!isset($filename) || (empty($filename)))
-            {   // set default filename
+            if (!isset($filename) || (empty($filename))) {   // set default filename
                 $filename = self::getSettingsCSSFilename($db, '', '');
             }
             // we want the settings.css file to be overridden, so check if file exists and delete it if needed.
-            if (file_exists($filename))
-            {   // if there is a file, delete it.
-                if (!unlink($filename))
-                {   // delete failed, throw error
+            if (file_exists($filename)) {   // if there is a file, delete it.
+                if (!unlink($filename)) {   // delete failed, throw error
                     \YAWK\sys::setSyslog($db, 47, 1, "failed to delete file <b>$filename</b>", 0, 0, 0, 0);
-                    \YAWK\alert::draw("danger", "Error!", "Failed to unlink $filename<br>Please delete this file and check file / folder / owner or group permissions!", "",6200);
+                    \YAWK\alert::draw("danger", "Error!", "Failed to unlink $filename<br>Please delete this file and check file / folder / owner or group permissions!", "", 6200);
                     return false;
-                }
-                else
-                {   // delete worked
+                } else {   // delete worked
                     return true;
                 }
-            }
-            else
-            {   // file does not exist
+            } else {   // file does not exist
                 \YAWK\sys::setSyslog($db, 47, 1, "failed to delete settings css file because it does not exist.", 0, 0, 0, 0);
                 return true;
             }
@@ -767,36 +704,32 @@ namespace YAWK {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db database
-         * @param int $id affected template ID
+         * @param int    $id affected template ID
          * @param string $property template settings property
          * @param string $value template settings value
          * @return bool
          */
         function setTemplateSetting($db, $id, $property, $value, $longValue)
-        {   /** @var $db \YAWK\db */
+        {
+            /** @var $db \YAWK\db */
             $property = $db->quote($property);
             $value = $db->quote($value);
             $longValue = $db->quote($longValue);
             $value = strip_tags($value);
             $longValue = strip_tags($longValue);
-            if ($longValue === "1")
-            {
-                $sql ="SET longValue = '".$value."'";
+            if ($longValue === "1") {
+                $sql = "SET longValue = '" . $value . "'";
+            } else {
+                $sql = "SET value = '" . $value . "'";
             }
-            else
-                {
-                    $sql = "SET value = '".$value."'";
-                }
 
             if ($res = $db->query("UPDATE {template_settings}
                                    $sql
                                    WHERE property = '" . $property . "'
-                                   AND templateID = '".$id."'"))
-            {   // success
+                                   AND templateID = '" . $id . "'")
+            ) {   // success
                 return true;
-            }
-            else
-            {   // q failed
+            } else {   // q failed
                 \YAWK\sys::setSyslog($db, 47, 1, "failed to set template #$id setting <b>$value</b> of <b>$property</b> ", 0, 0, 0, 0);
                 return false;
             }
@@ -809,28 +742,25 @@ namespace YAWK {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db database
-         * @param int $templateID affected template ID
+         * @param int    $templateID affected template ID
          * @return bool
          */
         public static function setTemplateActive($db, $templateID)
-        {   /** @var $db \YAWK\db */
-            if (!isset($templateID) && (empty($templateID)))
-            {   // if template id is not set, get it from database
+        {
+            /** @var $db \YAWK\db */
+            if (!isset($templateID) && (empty($templateID))) {   // if template id is not set, get it from database
                 $templateID = \YAWK\settings::getSetting($db, "selectedTemplate");
             }
             // null active template in table
-            if (!$res = $db->query("UPDATE {templates} SET active = 0 WHERE active != 0"))
-            {   // error: abort.
+            if (!$res = $db->query("UPDATE {templates} SET active = 0 WHERE active != 0")) {   // error: abort.
                 return false;
             }
             if ($res = $db->query("UPDATE {templates}
                                    SET active = 1
-                                   WHERE id = $templateID"))
-            {   // success
+                                   WHERE id = $templateID")
+            ) {   // success
                 return true;
-            }
-            else
-            {   // q failed
+            } else {   // q failed
                 \YAWK\sys::setSyslog($db, 47, 1, "failed to set template #$templateID active ", 0, 0, 0, 0);
                 return false;
             }
@@ -843,59 +773,55 @@ namespace YAWK {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db database
-         * @param int $templateID template ID
-         * @param int $newID template ID
+         * @param int    $templateID template ID
+         * @param int    $newID template ID
          */
         public static function copyTemplateSettings($db, $templateID, $newID)
-        {   /** @var $db \YAWK\db */
+        {
+            /** @var $db \YAWK\db */
 
-        $res = $db->query("INSERT INTO {template_settings} 
+            $res = $db->query("INSERT INTO {template_settings} 
         (templateID, property, value, valueDefault, longValue, type, activated, sort, label, fieldClass, fieldType, 
         options, placeholder, description, icon, heading, subtext)
-        SELECT '".$newID."', property, value, valueDefault, longValue, type, activated, sort, label, fieldClass, fieldType, 
+        SELECT '" . $newID . "', property, value, valueDefault, longValue, type, activated, sort, label, fieldClass, fieldType, 
         options, placeholder, description, icon, heading, subtext 
         FROM {template_settings} 
-        WHERE templateID = '".$templateID."'");
+        WHERE templateID = '" . $templateID . "'");
 
-            if (!$res)
-            {
+            if (!$res) {
                 \YAWK\sys::setSyslog($db, 47, 1, "failed to copy template settings of template #$templateID ", 0, 0, 0, 0);
                 \YAWK\alert::draw("danger", "Could not copy settings", "please try again.", "", 5000);
-            }
-            else
-            {
+            } else {
                 \YAWK\alert::draw("success", "Settings copied", "successful", "", 5000);
 
-                 $update = $db->query("UPDATE {template_settings} SET templateID='".$newID."' WHERE templateID=0");
-                 if ($update)
-                 {
-                     \YAWK\alert::draw("success", "Settings are set-up", "successful", "", 5000);
-                 }
-                 else
-                 {
-                     \YAWK\sys::setSyslog($db, 47, 1, "failed to set new template settings of template #$templateID ", 0, 0, 0, 0);
-                     \YAWK\alert::draw("warning", "Could not set new template settings", "unable to alter IDs.", "", 5000);
-                 }
-             }
-         }
+                $update = $db->query("UPDATE {template_settings} SET templateID='" . $newID . "' WHERE templateID=0");
+                if ($update) {
+                    \YAWK\alert::draw("success", "Settings are set-up", "successful", "", 5000);
+                } else {
+                    \YAWK\sys::setSyslog($db, 47, 1, "failed to set new template settings of template #$templateID ", 0, 0, 0, 0);
+                    \YAWK\alert::draw("warning", "Could not set new template settings", "unable to alter IDs.", "", 5000);
+                }
+            }
+        }
 
-         /**
-          * Add a new template setting to the database.
-          * @author Daniel Retzl <danielretzl@gmail.com>
-          * @version 1.0.0
-          * @link http://yawk.io
-          * @param object $db database
-          * @param string $property template property
-          * @param string $value template value
-          * @param string $valueDefault default value
-          * @param string $label setting label
-          * @param string $fieldclass class for the input field (eg. color or form-control)
-          * @param string $placeholder placeholder for the input field
-          * @return bool
-          */
-                // alter IDs
+        /**
+         * Add a new template setting to the database.
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param string $property template property
+         * @param string $value template value
+         * @param string $valueDefault default value
+         * @param string $label setting label
+         * @param string $fieldclass class for the input field (eg. color or form-control)
+         * @param string $placeholder placeholder for the input field
+         * @return bool
+         */
+        // alter IDs
         function addTemplateSetting($db, $property, $value, $valueDefault, $label, $fieldclass, $placeholder)
-        {   /** @var $db \YAWK\db  */
+        {
+            /** @var $db \YAWK\db */
             $active = 1;
             $sort = 0;
             $templateID = \YAWK\settings::getSetting($db, "selectedTemplate"); // self::getCurrentTemplateId($db);
@@ -907,12 +833,10 @@ namespace YAWK {
             $fieldclass = $db->quote($fieldclass);
             $placeholder = $db->quote($placeholder);
             if ($res = $db->query("INSERT INTO {template_settings} (templateID, property, value, valueDefault, label, activated, sort, fieldClass, placeholder)
-                                   VALUES('" . $templateID . "','" . $property . "', '" . $value . "', '" . $valueDefault . "', '" . $label . "', '" . $active . "', '" . $sort . "', '" . $fieldclass . "', '" . $placeholder . "')"))
-            {   // success
+                                   VALUES('" . $templateID . "','" . $property . "', '" . $value . "', '" . $valueDefault . "', '" . $label . "', '" . $active . "', '" . $sort . "', '" . $fieldclass . "', '" . $placeholder . "')")
+            ) {   // success
                 return true;
-            }
-            else
-            {   // q failed
+            } else {   // q failed
                 \YAWK\sys::setSyslog($db, 47, 1, "failed to add template setting $property:$value ", 0, 0, 0, 0);
                 return false;
             }
@@ -931,16 +855,14 @@ namespace YAWK {
          * @return bool
          */
         public function setTemplateDetails($db, $description, $author, $authorUrl, $id)
-        {    /** @var $db \YAWK\db  */
-            if ($res = $db->query("UPDATE {templates} SET description = '".$description."', subAuthor = '".$author."', subAuthorUrl = '".$authorUrl."' WHERE id = '".$id."'"))
-            {   // template details updated...
+        {
+            /** @var $db \YAWK\db */
+            if ($res = $db->query("UPDATE {templates} SET description = '" . $description . "', subAuthor = '" . $author . "', subAuthorUrl = '" . $authorUrl . "' WHERE id = '" . $id . "'")) {   // template details updated...
                 return true;
+            } else {   // could not save template details
+                \YAWK\sys::setSyslog($db, 47, 1, "failed to set template details", 0, 0, 0, 0);
+                return false;
             }
-            else
-                {   // could not save template details
-                    \YAWK\sys::setSyslog($db, 47, 1, "failed to set template details", 0, 0, 0, 0);
-                    return false;
-                }
         }
 
         /**
@@ -949,61 +871,50 @@ namespace YAWK {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db database
-         * @param int $templateID template ID of the template you wish to delete
+         * @param int    $templateID template ID of the template you wish to delete
          * @return bool
          */
         static function deleteTemplate($db, $templateID)
-        {   /** @var $db \YAWK\db  */
-            if (!isset($templateID) && (empty($templateID)))
-            {   // no templateID is set...
+        {
+            /** @var $db \YAWK\db */
+            if (!isset($templateID) && (empty($templateID))) {   // no templateID is set...
                 \YAWK\sys::setSyslog($db, 47, 1, "failed to delete template because templateID was missing.", 0, 0, 0, 0);
                 return false;
-            }
-            else
-                {   // quote var, just to be sure its clean
-                    $templateID = $db->quote($templateID);
+            } else {   // quote var, just to be sure its clean
+                $templateID = $db->quote($templateID);
 
-                    // to delete the files, we need to get the template folder's name
-                    // this function checks if template exits in database + if folder physically in on disk
-                    $templateFolder = \YAWK\template::getCurrentTemplateName($db, "backend", $templateID);
+                // to delete the files, we need to get the template folder's name
+                // this function checks if template exits in database + if folder physically in on disk
+                $templateFolder = \YAWK\template::getCurrentTemplateName($db, "backend", $templateID);
 
-                    // delete template folder from disk
-                    if (!\YAWK\sys::recurseRmdir("../system/templates/$templateFolder"))
-                    {   // booh, deleting recurse did not work
-                        \YAWK\sys::setSyslog($db, 47, 1, "failed to delete recursive ../system/templates/$templateFolder", 0, 0, 0, 0);
-                        return false;
-                    }
-
-                    // delete template from database {templates}
-                    if (!$res = $db->query("DELETE FROM {templates} WHERE id = $templateID"))
-                    {   // if failed
-                        \YAWK\sys::setSyslog($db, 47, 1, "failed to delete template ID: $templateID from database", 0, 0, 0, 0);
-                        return false;
-                    }
-                    else
-                        {   // ALTER table and set auto_increment value to prevent errors when deleting + adding new tpl
-                            if ($res = $db->query("SELECT MAX(id) FROM {templates}"))
-                            {   // get MAX ID
-                                $row = mysqli_fetch_row($res);
-                                if (!$res = $db->query("ALTER TABLE {templates} AUTO_INCREMENT $row[0]"))
-                                {   // could not select auto encrement
-                                    \YAWK\sys::setSyslog($db, 47, 1, "failed alter auto increment templates table ", 0, 0, 0, 0);
-                                    return false;
-                                }
-                            }
-                        }
-
-                    // delete template settings for requested templateID
-                    if (!$res = $db->query("DELETE FROM {template_settings} WHERE templateID = $templateID"))
-                    {   // delete settings failed...
-                        \YAWK\sys::setSyslog($db, 47, 1, "failed to delete template settings of ID: $templateID", 0, 0, 0, 0);
-                        return false;
-                    }
-                    else
-                        {   // all good so far.
-                            return true;
-                        }
+                // delete template folder from disk
+                if (!\YAWK\sys::recurseRmdir("../system/templates/$templateFolder")) {   // booh, deleting recurse did not work
+                    \YAWK\sys::setSyslog($db, 47, 1, "failed to delete recursive ../system/templates/$templateFolder", 0, 0, 0, 0);
+                    return false;
                 }
+
+                // delete template from database {templates}
+                if (!$res = $db->query("DELETE FROM {templates} WHERE id = $templateID")) {   // if failed
+                    \YAWK\sys::setSyslog($db, 47, 1, "failed to delete template ID: $templateID from database", 0, 0, 0, 0);
+                    return false;
+                } else {   // ALTER table and set auto_increment value to prevent errors when deleting + adding new tpl
+                    if ($res = $db->query("SELECT MAX(id) FROM {templates}")) {   // get MAX ID
+                        $row = mysqli_fetch_row($res);
+                        if (!$res = $db->query("ALTER TABLE {templates} AUTO_INCREMENT $row[0]")) {   // could not select auto encrement
+                            \YAWK\sys::setSyslog($db, 47, 1, "failed alter auto increment templates table ", 0, 0, 0, 0);
+                            return false;
+                        }
+                    }
+                }
+
+                // delete template settings for requested templateID
+                if (!$res = $db->query("DELETE FROM {template_settings} WHERE templateID = $templateID")) {   // delete settings failed...
+                    \YAWK\sys::setSyslog($db, 47, 1, "failed to delete template settings of ID: $templateID", 0, 0, 0, 0);
+                    return false;
+                } else {   // all good so far.
+                    return true;
+                }
+            }
         }
 
 
@@ -1019,57 +930,44 @@ namespace YAWK {
         public static function getAllSettingsIntoArray($db, $user) // get all settings from db like property
         {
             // get template settings
-            if (isset($user))
-            {   // get template settings for this user
-                if ($user->overrideTemplate == 1)
-                {
+            if (isset($user)) {   // get template settings for this user
+                if ($user->overrideTemplate == 1) {
                     $sql = "SELECT ts.property, ts.value, ts.longValue, ts.valueDefault, ts.type, ts.label, ts.sort, ts.fieldClass, ts.fieldType, ts.placeholder, ts.description, ts.options, ts.activated, ts.icon, ts.heading, ts.subtext
                                        FROM {template_settings} ts
                                        JOIN {users} u on u.templateID = ts.templateID
                                        WHERE ts.activated = 1 && u.id = $user->id
                                        ORDER BY ts.sort";
-                }
-                else
-                {
+                } else {
                     $sql = "SELECT ts.property, ts.value, ts.longValue, ts.valueDefault, ts.type, ts.label, ts.sort, ts.fieldClass, ts.fieldType, ts.placeholder, ts.description, ts.options, ts.activated, ts.icon, ts.heading, ts.subtext
                                        FROM {template_settings} ts
                                        JOIN {settings} s on s.value = ts.templateID
                                        WHERE ts.activated = 1 && s.property = 'selectedTemplate'
                                        ORDER BY ts.sort";
                 }
-            }
-            else
-            {
+            } else {
                 \YAWK\sys::setSyslog($db, 47, 1, "failed to get template settings array - user is not set or empty", 0, 0, 0, 0);
                 return false;
             }
 
             /* @var $db \YAWK\db */
-           // if ($res= $db->query("SELECT * FROM {template_settings} ORDER by property"))
-            if ($res = $db->query($sql))
-            {
+            // if ($res= $db->query("SELECT * FROM {template_settings} ORDER by property"))
+            if ($res = $db->query($sql)) {
                 $settingsArray = array();
-                while ($row = $res->fetch_assoc())
-                {   // fill array
+                while ($row = $res->fetch_assoc()) {   // fill array
                     $settingsArray[$row['property']] = $row;
                 }
-            }
-            else
-            {   // q failed, throw error
+            } else {   // q failed, throw error
                 \YAWK\sys::setSyslog($db, 5, 1, "failed to query template settings", 0, 0, 0, 0);
                 // \YAWK\alert::draw("warning", "Warning!", "Fetch database error: getSettingsArray failed.","","4800");
                 return false;
             }
 
             // check if array has been generated
-            if (is_array($settingsArray) && (!empty($settingsArray)))
-            {   // all good -
+            if (is_array($settingsArray) && (!empty($settingsArray))) {   // all good -
                 return $settingsArray;
+            } else {   // error generating settings array -
+                return false;
             }
-            else
-                {   // error generating settings array -
-                    return false;
-                }
         }
 
         /**
@@ -1079,46 +977,36 @@ namespace YAWK {
          * @link http://yawk.io
          * @param object $db Database object
          * @param string $position The position to load
-         * @param array $positions Positions [enabled] status array
-         * @param array $indicators Positions [indicator] status array
+         * @param array  $positions Positions [enabled] status array
+         * @param array  $indicators Positions [indicator] status array
          */
         public static function getPositionDivBox($db, $lang, $position, $row, $bootstrapGrid, $positions, $indicators)
         {
-            if (isset($row) && (!empty($row)))
-            {
-                if ($row === "1")
-                {
+            if (isset($row) && (!empty($row))) {
+                if ($row === "1") {
                     $startRow = "<div class=\"row\">";
                     $endRow = "</div>";
-                }
-                else
-                    {
-                        $startRow = '';
-                        $endRow = '';
-                    }
-            }
-            else
-                {
+                } else {
                     $startRow = '';
                     $endRow = '';
                 }
+            } else {
+                $startRow = '';
+                $endRow = '';
+            }
             // check if position is enabled
-            if ($positions["pos-$position-enabled"] === "1")
-            {   // check if position indicator is enabled
-                if ($indicators["pos-$position-indicator"] === "1")
-                {   // display position indicator
+            if ($positions["pos-$position-enabled"] === "1") {   // check if position indicator is enabled
+                if ($indicators["pos-$position-indicator"] === "1") {   // display position indicator
                     $indicatorStyle = "style=\"border: 2px solid red;\"";
                     $indicatorText = "<i><b>$position</b></i>";
-                }
-                else
-                {   // no position indicator set
+                } else {   // no position indicator set
                     $indicatorStyle = '';
                     $indicatorText = '';
                 }
                 // output position div box
                 echo "$startRow";
                 echo "<div class=\"$bootstrapGrid pos-$position\" id=\"$position\" $indicatorStyle>$indicatorText";
-                      \YAWK\template::setPosition($db, $lang, "$position-pos", $lang);
+                \YAWK\template::setPosition($db, $lang, "$position-pos", $lang);
                 echo "</div>";
                 echo "$endRow";
             }
@@ -1135,111 +1023,83 @@ namespace YAWK {
         public function getFormElements($db, $settings, $type, $lang, $user)
         {   // loop trough array
             // removed not needed checkup
-            if(!isset($type) && (empty($type)))
-            {	// if param 'type' is missing, set type 1 as default
+            if (!isset($type) && (empty($type))) {    // if param 'type' is missing, set type 1 as default
                 $type = 1;
             }
             // loop trough settings array
-            foreach ($settings as $setting)
-            {
+            foreach ($settings as $setting) {
                 // field type not set or empty
-                if (!isset($setting['fieldType']) && (empty($fieldType)))
-                {   // set input field as common default
+                if (!isset($setting['fieldType']) && (empty($fieldType))) {   // set input field as common default
                     $setting['fieldType'] = "input";
-                }
-                else
-                {   // settings type must be equal to param $type
+                } else {   // settings type must be equal to param $type
                     // equals settings category
-                    if ($setting['type'] === "$type" && ($setting['activated'] === "1"))
-                    {
+                    if ($setting['type'] === "$type" && ($setting['activated'] === "1")) {
                         // check if ICON is set
                         // if an icon is set, it will be drawn before the heading, to the left.
-                        if (isset($setting['icon']) && (!empty($setting['icon'])))
-                        {   // fill it w icon
+                        if (isset($setting['icon']) && (!empty($setting['icon']))) {   // fill it w icon
                             $setting['icon'] = "<i class=\"$setting[icon]\"></i>";
-                        }
-                        else
-                        {   // leave empty - no icon available
+                        } else {   // leave empty - no icon available
                             $setting['icon'] = '';
                         }
 
                         // check if LABEL is set
                         // The label sits directly above, relative to the setting form element
-                        if (isset($setting['label']) && (!empty($setting['label'])))
-                        {   // if its set, put it into $lang array for L11n
+                        if (isset($setting['label']) && (!empty($setting['label']))) {   // if its set, put it into $lang array for L11n
                             $setting['label'] = $lang[$setting['label']];
-                        }
-                        else
-                        {   // otherwise throw error
+                        } else {   // otherwise throw error
                             $setting['label'] = 'sorry, there is not label set. meh!';
                         }
 
                         // check if HEADING is set
                         // if set, a <H3>Heading</H3> will be shown above the setting
-                        if (isset($setting['heading']) && (!empty($setting['heading'])))
-                        {   // L11n
+                        if (isset($setting['heading']) && (!empty($setting['heading']))) {   // L11n
                             $setting['heading'] = $lang[$setting['heading']];
-                        }
-                        else
-                        {   // leave empty - no heading for that setting
+                        } else {   // leave empty - no heading for that setting
                             $setting['heading'] = '';
                         }
 
                         // check if SUBTEXT is set
                         // this is shown in <small>tags</small> beneath the heading
-                        if (isset($setting['subtext']) && (!empty($setting['subtext'])))
-                        {   // L11n
+                        if (isset($setting['subtext']) && (!empty($setting['subtext']))) {   // L11n
                             $setting['subtext'] = $lang[$setting['subtext']];
-                        }
-                        else
-                        {   // leave empty - no subtext beneath the heading
+                        } else {   // leave empty - no subtext beneath the heading
                             $setting['subtext'] = '';
                         }
 
                         // check if description is set
                         // the description will be shown underneath the form element
-                        if (isset($setting['description']) && (!empty($setting['description'])))
-                        {   // L11n
+                        if (isset($setting['description']) && (!empty($setting['description']))) {   // L11n
                             $setting['description'] = $lang[$setting['description']];
-                        }
-                        else
-                        {   // leave empty - no description available
+                        } else {   // leave empty - no description available
                             $setting['description'] = '';
                         }
 
                         /* SELECT FIELD */
-                        if ($setting['fieldType'] === "select")
-                        {   // display icon, heading and subtext, if its set
-                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
-                            {
+                        if ($setting['fieldType'] === "select") {   // display icon, heading and subtext, if its set
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext'])))) {
                                 echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
                             }
                             // begin draw select
                             echo "<label for=\"$setting[property]\">$setting[label]
                                   <small><i class=\"small\" style=\"font-weight:normal\">$lang[DEFAULT]: $setting[valueDefault]</i></small></label>
                                   <select class=\"form-control\" id=\"$setting[property]\" name=\"$setting[property]\">";
-                                echo "<option value=\"$setting[value]\">$lang[SETTING_CURRENT] $setting[value]</option>";
-                                // explode option string into array
-                                $optionValues = explode(":", $setting['options']);
-                                foreach ($optionValues as $value)
-                                {
-                                    // extract value from option setting string
-                                    // $optionValue = preg_replace("/,[a-zA-Z0-9]*/", "", $value);
-                                    // extract description from option setting
-                                    $optionDesc = preg_replace('/.*,(.*)/','$1', $value);
-                                    $optionValue = preg_split("/,[a-zA-Z0-9]*/", $value);
+                            echo "<option value=\"$setting[value]\">$lang[SETTING_CURRENT] $setting[value]</option>";
+                            // explode option string into array
+                            $optionValues = explode(":", $setting['options']);
+                            foreach ($optionValues as $value) {
+                                // extract value from option setting string
+                                // $optionValue = preg_replace("/,[a-zA-Z0-9]*/", "", $value);
+                                // extract description from option setting
+                                $optionDesc = preg_replace('/.*,(.*)/', '$1', $value);
+                                $optionValue = preg_split("/,[a-zA-Z0-9]*/", $value);
 
-                                    echo "<option value=\"$optionValue[0]\">$optionDesc</option>";
-                                }
-                                echo "</select>";
-                                echo "<p>$setting[description]</p>";
-                        }
-
-                        /* RADIO BUTTTONS */
-                        else if ($setting['fieldType'] === "radio")
-                        {
-                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
-                            {
+                                echo "<option value=\"$optionValue[0]\">$optionDesc</option>";
+                            }
+                            echo "</select>";
+                            echo "<p>$setting[description]</p>";
+                        } /* RADIO BUTTTONS */
+                        else if ($setting['fieldType'] === "radio") {
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext'])))) {
                                 echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
                             }
                             echo "<label for=\"$setting[property]\">$setting[label]</label>
@@ -1247,132 +1107,94 @@ namespace YAWK {
                             echo "<input type=\"radio\" value=\"$setting[value]\">$lang[SETTING_CURRENT] $setting[value]</option>";
                             // explode option string into array
                             $optionValues = explode(":", $setting['options']);
-                            foreach ($optionValues as $value)
-                            {
+                            foreach ($optionValues as $value) {
                                 // extract value from option setting string
                                 $optionValue = preg_replace("/,[a-zA-Z0-9]*/", "", $value);
                                 // extract description from option setting
-                                $optionDesc = preg_replace('/.*,(.*)/','$1',$value);
+                                $optionDesc = preg_replace('/.*,(.*)/', '$1', $value);
 
                                 echo "<option value=\"$optionValue\">$optionDesc</option>";
                             }
                             echo "</select>";
                             echo "<p>$setting[description]</p>";
-                        }
-
-                        // CHECKBOX
-                        else if ($setting['fieldType'] === "checkbox")
-                        {    // build a checkbox
-                            if ($setting['value'] === "1")
-                            {   // set checkbox to checked
+                        } // CHECKBOX
+                        else if ($setting['fieldType'] === "checkbox") {    // build a checkbox
+                            if ($setting['value'] === "1") {   // set checkbox to checked
                                 $checked = "checked";
-                            }
-                            else
-                            {   // checkbox not checked
+                            } else {   // checkbox not checked
                                 $checked = "";
                             }
-                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
-                            {
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext'])))) {
                                 echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
                             }
                             echo "<input type=\"hidden\" name=\"$setting[property]\" value=\"0\">
                               <input type=\"checkbox\" id=\"$setting[property]\" name=\"$setting[property]\" value=\"1\" $checked>
                               <label for=\"$setting[property]\">&nbsp; $setting[label]</label><p>$setting[description]</p>";
-                        }
-
-                        // CHECKBOX as toggle switch
-                        else if ($setting['fieldType'] === "checkbox toggle")
-                        {    // build a checkbox
-                            if ($setting['value'] === "1")
-                            {   // set checkbox to checked
+                        } // CHECKBOX as toggle switch
+                        else if ($setting['fieldType'] === "checkbox toggle") {    // build a checkbox
+                            if ($setting['value'] === "1") {   // set checkbox to checked
                                 $checked = "checked";
-                            }
-                            else
-                            {   // checkbox not checked
+                            } else {   // checkbox not checked
                                 $checked = "";
                             }
-                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
-                            {
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext'])))) {
                                 echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
                             }
                             echo "<input type=\"hidden\" name=\"$setting[property]\" value=\"0\">
                               <input type=\"checkbox\" data-on=\"$lang[ON_]\" data-off=\"$lang[OFF_]\" data-toggle=\"toggle\" data-onstyle=\"success\" data-offstyle=\"danger\" id=\"$setting[property]\" name=\"$setting[property]\" value=\"1\" $checked>
                               <label for=\"$setting[property]\">&nbsp; $setting[label]</label><p>$setting[description]</p>";
-                        }
-
-                        /* TEXTAREA */
-                        else if ($setting['fieldType'] === "textarea")
-                        {    // if a long value is set
+                        } /* TEXTAREA */
+                        else if ($setting['fieldType'] === "textarea") {    // if a long value is set
                             $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
-                            if (isset($setting['longValue']) && (!empty($setting['longValue'])))
-                            {   // build a longValue tagged textarea and fill with longValue
+                            if (isset($setting['longValue']) && (!empty($setting['longValue']))) {   // build a longValue tagged textarea and fill with longValue
                                 $setting['longValue'] = nl2br($setting['longValue']);
-                                if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
-                                {
+                                if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext'])))) {
                                     echo "<h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
                                 }
                                 echo "<label for=\"$setting[property]\">$setting[label]</label>
                                       <textarea cols=\"64\" rows=\"4\" class=\"$setting[fieldClass]\" placeholder=\"$lang[$placeholder]\" id=\"$setting[property]\" name=\"$setting[property]\">$setting[longValue]</textarea>";
                                 echo "<p>$setting[description]</p>";
-                            }
-                            else
-                            {   // draw default textarea
+                            } else {   // draw default textarea
                                 $setting['value'] = nl2br($setting['value']);
-                                if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
-                                {
+                                if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext'])))) {
                                     echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
                                 }
                                 echo "<label for=\"$setting[property]-long\">$setting[label]</label>
                                       <textarea cols=\"64\" rows=\"4\" class=\"$setting[fieldClass]\" placeholder=\"$lang[$placeholder]\" id=\"$setting[property]\" name=\"$setting[property]\">$setting[value]</textarea>";
                                 echo "<p>$setting[description]</p>";
                             }
-                        }
-
-                        /* INPUT PASSWORD FIELD */
-                        else if ($setting['fieldType'] === "password")
-                        {    // draw an input field
+                        } /* INPUT PASSWORD FIELD */
+                        else if ($setting['fieldType'] === "password") {    // draw an input field
                             $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
-                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
-                            {
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext'])))) {
                                 echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
                             }
                             echo "<label for=\"$setting[property]\">$setting[label]</label>
                                   <input type=\"password\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
 										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\"><p>$setting[description]</p>";
-                        }
-
-                        /* INPUT TEXT FIELD */
-                        else if ($setting['fieldType'] === "input")
-                        {   // draw an input field
+                        } /* INPUT TEXT FIELD */
+                        else if ($setting['fieldType'] === "input") {   // draw an input field
                             $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
-                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
-                            {
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext'])))) {
                                 echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
                             }
                             echo "<label for=\"$setting[property]\">$setting[label]
                                   <small><i class=\"small\" style=\"font-weight:normal\">$lang[DEFAULT]: $setting[valueDefault]</i></small></label>
                                   <input type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
 										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\"><p>$setting[description]</p>";
-                        }
-
-                        /* COLOR TEXT FIELD */
-                        else if ($setting['fieldType'] === "color")
-                        {    // draw a color input field
+                        } /* COLOR TEXT FIELD */
+                        else if ($setting['fieldType'] === "color") {    // draw a color input field
                             $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
-                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
-                            {
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext'])))) {
                                 echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
                             }
                             echo "<label for=\"$setting[property]\">$setting[label]
                                   <small><i class=\"small\" style=\"font-weight:normal\">$lang[DEFAULT]: $setting[valueDefault]</i></small></label>
                                   <input type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
 										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\"><p>$setting[description]</p>";
-                        }
-                        else
-                        {    // draw an input field
+                        } else {    // draw an input field
                             $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
-                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
-                            {
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext'])))) {
                                 echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
                             }
                             echo "<label for=\"$setting[property]\">$setting[label]
@@ -1380,12 +1202,12 @@ namespace YAWK {
                                   <input type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
 										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\"><p>$setting[description]</p>";
 
-                         }
-
                         }
+
                     }
                 }
             }
+        }
 
 
         /**
@@ -1424,82 +1246,69 @@ namespace YAWK {
             $fontRowSmallShadowSize = "$fontRow-smallshadowsize";
             $fontRowSmallShadowColor = "$fontRow-smallshadowcolor";
 
-            if ($fontRow === "globaltext" xor ($fontRow === "menufont"))
-            {
+            if ($fontRow === "globaltext" xor ($fontRow === "menufont")) {
                 $col = 4;
+            } else {
+                $col = 2;
             }
-            else { $col = 2; }
 
             $FONT_ROW = strtoupper($fontRow);
-            $labelFontSize = "TPL_".$FONT_ROW."_SIZE";
-            $labelFontColor = "TPL_".$FONT_ROW."_COLOR";
-            $labelSmallColor = "TPL_".$FONT_ROW."_SMALLCOLOR";
+            $labelFontSize = "TPL_" . $FONT_ROW . "_SIZE";
+            $labelFontColor = "TPL_" . $FONT_ROW . "_COLOR";
+            $labelSmallColor = "TPL_" . $FONT_ROW . "_SMALLCOLOR";
 
 
             // check if description is set
             // the description will be shown right beside the label as small info icon
-            if (isset($templateSettings[$fontRowFontfamily]['description']) && (!empty($templateSettings[$fontRowFontfamily]['description'])))
-            {   // L11n
+            if (isset($templateSettings[$fontRowFontfamily]['description']) && (!empty($templateSettings[$fontRowFontfamily]['description']))) {   // L11n
                 $fontRowFamilyDesc = $lang[$templateSettings[$fontRowFontfamily]['description']];
                 $fontRowFamilyInfoBtn = "&nbsp;<small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$fontRowFamilyDesc\"></i></small>";
+            } else {
+                $fontRowFamilyInfoBtn = '';
             }
-            else
-                {
-                    $fontRowFamilyInfoBtn = '';
-                }
             // check if font family default value is set
-            if (isset($templateSettings[$fontRowFontfamily]['valueDefault']) && (!empty($templateSettings[$fontRowFontfamily]['valueDefault'])))
-            {   // default values:
-                $fontRowFamilyDefault = "<i class=\"h6 small\">default: ".$templateSettings[$fontRowFontfamily]['valueDefault']."</i>";
+            if (isset($templateSettings[$fontRowFontfamily]['valueDefault']) && (!empty($templateSettings[$fontRowFontfamily]['valueDefault']))) {   // default values:
+                $fontRowFamilyDefault = "<i class=\"h6 small\">default: " . $templateSettings[$fontRowFontfamily]['valueDefault'] . "</i>";
+            } else {
+                $fontRowFamilyDefault = '';
             }
-            else
-                {
-                    $fontRowFamilyDefault = '';
-                }
 
             // check if font size is set
-            if (isset($templateSettings[$fontRowSize]['valueDefault']) && (!empty($templateSettings[$fontRowSize]['valueDefault'])))
-            {   // default values:
-                $fontRowSizeDefault = "<i class=\"h6 small\">(".$templateSettings[$fontRowSize]['valueDefault'].")</i>";
-            }
-            else
-            {
+            if (isset($templateSettings[$fontRowSize]['valueDefault']) && (!empty($templateSettings[$fontRowSize]['valueDefault']))) {   // default values:
+                $fontRowSizeDefault = "<i class=\"h6 small\">(" . $templateSettings[$fontRowSize]['valueDefault'] . ")</i>";
+            } else {
                 $fontRowSizeDefault = '';
             }
 
             $html = "
                 <div class=\"col-md-$col\">
-                    <div class=\"$previewClass\" id=\"$fontRow-preview\" style=\"height: auto; overflow:hidden; font-size: ".$templateSettings[$fontRowSize]['value']."; color: #".$templateSettings[$fontRowColor]['value'].";\">$fontRow Heading</div>
+                    <div class=\"$previewClass\" id=\"$fontRow-preview\" style=\"height: auto; overflow:hidden; font-size: " . $templateSettings[$fontRowSize]['value'] . "; color: #" . $templateSettings[$fontRowColor]['value'] . ";\">$fontRow Heading</div>
                
                     <label for=\"$fontRowFontfamily\">$FONT_ROW $lang[TPL_FONTFAMILY] $fontRowFamilyInfoBtn</label>";
             $html .= $this->drawFontFamilySelectField($db, $lang, "$fontRowFontfamily", $templateSettings[$fontRowFontfamily]['value']);
             $html .= "
                 
                     <label for=\"$fontRowSize\">$lang[$labelFontSize] $fontRowSizeDefault</label>
-                    <input id=\"$fontRowSize\" name=\"$fontRowSize\" value=\"".$templateSettings[$fontRowSize]['value']."\" class=\"form-control\">
+                    <input id=\"$fontRowSize\" name=\"$fontRowSize\" value=\"" . $templateSettings[$fontRowSize]['value'] . "\" class=\"form-control\">
                 
                     <label for=\"$fontRowColor\">$lang[$labelFontColor]</label>
-                    <input id=\"$fontRowColor\" name=\"$fontRowColor\" class=\"form-control color\" value=\"".$templateSettings[$fontRowColor]['value']."\">
+                    <input id=\"$fontRowColor\" name=\"$fontRowColor\" class=\"form-control color\" value=\"" . $templateSettings[$fontRowColor]['value'] . "\">
                
                     <label for=\"$fontRowFontShadowSize\">$lang[TPL_FONTSHADOWSIZE]</label>
-                    <input id=\"$fontRowFontShadowSize\" name=\"$fontRowFontShadowSize\" class=\"form-control\" value=\"".$templateSettings[$fontRowFontShadowSize]['value']."\" placeholder=\"2px 2px\">
+                    <input id=\"$fontRowFontShadowSize\" name=\"$fontRowFontShadowSize\" class=\"form-control\" value=\"" . $templateSettings[$fontRowFontShadowSize]['value'] . "\" placeholder=\"2px 2px\">
                 
                     <label for=\"$fontRowFontShadowColor\">$lang[TPL_FONTSHADOWCOLOR]</label>
-                    <input id=\"$fontRowFontShadowColor\" name=\"$fontRowFontShadowColor\" value=\"".$templateSettings[$fontRowFontShadowColor]['value']."\" class=\"form-control color\">
+                    <input id=\"$fontRowFontShadowColor\" name=\"$fontRowFontShadowColor\" value=\"" . $templateSettings[$fontRowFontShadowColor]['value'] . "\" class=\"form-control color\">
                 
                     <label for=\"$fontRowFontWeight\">$lang[TPL_FONTWEIGHT]</label>
                     <select id=\"$fontRowFontWeight\" name=\"$fontRowFontWeight\" class=\"form-control\">";
 
             $fontweightStyles = array("normal", "bold", "bolder", "lighter", "100", "200", "300", "400 [normal]", "500", "600", "700 [bold]", "800", "900", "initial", "inherit");
-            foreach ($fontweightStyles as $weight)
-            {
+            foreach ($fontweightStyles as $weight) {
                 $currentFontWeight = "$fontRow-fontweight";
-                if ($weight === $templateSettings[$currentFontWeight]['value'])
-                {
+                if ($weight === $templateSettings[$currentFontWeight]['value']) {
                     $selected = "selected aria-selected=\"true\"";
-                }
-                else
-                {
+                } else {
                     $selected = '';
                 }
                 $html .= "<option value=\"$weight\" $selected>$weight</option>";
@@ -1510,35 +1319,27 @@ namespace YAWK {
                     <select id=\"$fontRowFontStyle\" name=\"$fontRowFontStyle\" class=\"form-control\">";
 
             $fontStyles = array("normal", "italic", "oblique", "initial", "inherit");
-            foreach ($fontStyles as $style)
-            {
+            foreach ($fontStyles as $style) {
                 $currentFontStyle = "$fontRow-fontstyle";
-                if ($style === $templateSettings[$currentFontStyle]['value'])
-                {
+                if ($style === $templateSettings[$currentFontStyle]['value']) {
                     $selected = "selected aria-selected=\"true\"";
-                }
-                else
-                {
+                } else {
                     $selected = '';
                 }
                 $html .= "<option value=\"$style\" $selected>$style</option>";
             }
 
-            $html .="</select>
+            $html .= "</select>
                 
                     <label for=\"$fontRowTextdecoration\">$lang[TPL_TEXTDECORATION]</label>
                     <select id=\"$fontRowTextdecoration\" name=\"$fontRowTextdecoration\" class=\"form-control\">";
 
             $textdecorationTypes = array("none", "underline", "overline", "line-through", "intial", "inherit");
-            foreach ($textdecorationTypes as $decoration)
-            {
+            foreach ($textdecorationTypes as $decoration) {
                 $currentFontDecoration = "$fontRow-textdecoration";
-                if ($decoration === $templateSettings[$currentFontDecoration]['value'])
-                {
+                if ($decoration === $templateSettings[$currentFontDecoration]['value']) {
                     $selected = "selected aria-selected=\"true\"";
-                }
-                else
-                {
+                } else {
                     $selected = '';
                 }
                 $html .= "<option value=\"$decoration\" $selected>$decoration</option>";
@@ -1546,46 +1347,38 @@ namespace YAWK {
             $html .= "</select>";
 
             // LINK SETTINGS START HERE
-              $html .= "
+            $html .= "
 
                     <label for=\"$fontRowLinkTextDecoration\">$lang[TPL_LINK_TEXTDECORATION]</label>
                     <select id=\"$fontRowLinkTextDecoration\" name=\"$fontRowLinkTextDecoration\" class=\"form-control\">";
 
-            foreach ($textdecorationTypes as $decoration)
-            {
+            foreach ($textdecorationTypes as $decoration) {
                 $currentLinkTextDecoration = "$fontRow-linktextdecoration";
-                if ($decoration === $templateSettings[$currentLinkTextDecoration]['value'])
-                {
+                if ($decoration === $templateSettings[$currentLinkTextDecoration]['value']) {
                     $selected = "selected aria-selected=\"true\"";
-                }
-                else
-                {
+                } else {
                     $selected = '';
                 }
                 $html .= "<option value=\"$decoration\" $selected>$decoration</option>";
             }
             $html .= "</select>
                         <label for=\"$fontRow-alink\">$lang[TPL_LINK_COLOR]</label>
-                        <input id=\"$fontRow-alink\" name=\"$fontRow-alink\" value=\"".$templateSettings[$fontRowALinkColor]['value']."\" class=\"form-control color\">
+                        <input id=\"$fontRow-alink\" name=\"$fontRow-alink\" value=\"" . $templateSettings[$fontRowALinkColor]['value'] . "\" class=\"form-control color\">
                    
                         <label for=\"$fontRow-avisited\">$lang[TPL_LINK_VISITED_COLOR]</label>
-                        <input id=\"$fontRow-avisited\" name=\"$fontRow-avisited\" value=\"".$templateSettings[$fontRowAVisitedColor]['value']."\" class=\"form-control color\"> 
+                        <input id=\"$fontRow-avisited\" name=\"$fontRow-avisited\" value=\"" . $templateSettings[$fontRowAVisitedColor]['value'] . "\" class=\"form-control color\"> 
                     
                         <label for=\"$fontRow-ahover\">$lang[TPL_LINK_HOVER_COLOR]</label>
-                        <input id=\"$fontRow-ahover\" name=\"$fontRow-ahover\" value=\"".$templateSettings[$fontRowAHoverColor]['value']."\" class=\"form-control color\"> 
+                        <input id=\"$fontRow-ahover\" name=\"$fontRow-ahover\" value=\"" . $templateSettings[$fontRowAHoverColor]['value'] . "\" class=\"form-control color\"> 
                    
                     <label for=\"$fontRowLinkFontWeight\">$lang[TPL_LINK_TEXTDECORATION]</label>
                         <select id=\"$fontRowLinkFontWeight\" name=\"$fontRowLinkFontWeight\" class=\"form-control\">";
 
-            foreach ($fontweightStyles as $weight)
-            {
+            foreach ($fontweightStyles as $weight) {
                 $currentLinkFontWeight = "$fontRow-linkfontweight";
-                if ($weight === $templateSettings[$currentLinkFontWeight]['value'])
-                {
+                if ($weight === $templateSettings[$currentLinkFontWeight]['value']) {
                     $selected = "selected aria-selected=\"true\"";
-                }
-                else
-                {
+                } else {
                     $selected = '';
                 }
                 $html .= "<option value=\"$weight\" $selected>$weight</option>";
@@ -1595,33 +1388,25 @@ namespace YAWK {
                     <label for=\"$fontRowLinkFontStyle\">$lang[TPL_LINK_FONTSTYLE]</label>
                     <select id=\"$fontRowLinkFontStyle\" name=\"$fontRowLinkFontStyle\" class=\"form-control\">";
 
-            foreach ($fontStyles as $style)
-            {
+            foreach ($fontStyles as $style) {
                 $currentLinkFontStyle = "$fontRow-linkfontstyle";
-                if ($style === $templateSettings[$currentLinkFontStyle]['value'])
-                {
+                if ($style === $templateSettings[$currentLinkFontStyle]['value']) {
                     $selected = "selected aria-selected=\"true\"";
-                }
-                else
-                {
+                } else {
                     $selected = '';
                 }
                 $html .= "<option value=\"$style\" $selected>$style</option>";
             }
 
-            $html .="</select>
+            $html .= "</select>
                     <label for=\"$fontRowHoverTextDecoration\">$lang[TPL_HOVER_TEXTDECORATION]</label>
                     <select id=\"$fontRowHoverTextDecoration\" name=\"$fontRowHoverTextDecoration\" class=\"form-control\">";
 
-            foreach ($textdecorationTypes as $decoration)
-            {
+            foreach ($textdecorationTypes as $decoration) {
                 $currentFontDecoration = "$fontRow-hovertextdecoration";
-                if ($decoration === $templateSettings[$currentFontDecoration]['value'])
-                {
+                if ($decoration === $templateSettings[$currentFontDecoration]['value']) {
                     $selected = "selected aria-selected=\"true\"";
-                }
-                else
-                {
+                } else {
                     $selected = '';
                 }
                 $html .= "<option value=\"$decoration\" $selected>$decoration</option>";
@@ -1631,17 +1416,17 @@ namespace YAWK {
 
             // SMALL TAG COLOR
             $html .= "<label for=\"$fontRowSmallColor\">$lang[TPL_SMALLCOLOR]</label>
-                    <input id=\"$fontRowSmallColor\" name=\"$fontRowSmallColor\" class=\"form-control color\" value=\"".$templateSettings[$fontRowSmallColor]['value']."\">";
+                    <input id=\"$fontRowSmallColor\" name=\"$fontRowSmallColor\" class=\"form-control color\" value=\"" . $templateSettings[$fontRowSmallColor]['value'] . "\">";
 
             // SMALL TAG SHADOW SIZE
             $html .= "<label for=\"$fontRowSmallShadowSize\">$lang[TPL_SMALLSHADOWSIZE]</label>
-                    <input id=\"$fontRowSmallShadowSize\" name=\"$fontRowSmallShadowSize\" class=\"form-control\" value=\"".$templateSettings[$fontRowSmallShadowSize]['value']."\" placeholder=\"2px 2px\">";
+                    <input id=\"$fontRowSmallShadowSize\" name=\"$fontRowSmallShadowSize\" class=\"form-control\" value=\"" . $templateSettings[$fontRowSmallShadowSize]['value'] . "\" placeholder=\"2px 2px\">";
             // SMALL TAG SHADOW COLOR
             $html .= "<label for=\"$fontRowSmallShadowColor\">$lang[TPL_SMALLSHADOWCOLOR]</label>
-                    <input id=\"$fontRowSmallShadowColor\" name=\"$fontRowSmallShadowColor\" value=\"".$templateSettings[$fontRowSmallShadowColor]['value']."\" class=\"form-control color\">";
+                    <input id=\"$fontRowSmallShadowColor\" name=\"$fontRowSmallShadowColor\" value=\"" . $templateSettings[$fontRowSmallShadowColor]['value'] . "\" class=\"form-control color\">";
 
             // end font div box
-            $html .="
+            $html .= "
             </div>";
 
             echo $html;
@@ -1659,17 +1444,13 @@ namespace YAWK {
         static public function getFontsFromFolder($folder)
         {
             // if no folder is given
-            if (!isset($folder) || (empty($folder)))
-            {   // set default folder
+            if (!isset($folder) || (empty($folder))) {   // set default folder
                 $folder = '../system/fonts/';
-            }
-            else
-            {
+            } else {
                 // make sure that there is a slash at the end
                 $folder = rtrim($folder, '/') . '/';
                 // check if folder is a directory
-                if (!is_dir($folder))
-                {   // if not, abort
+                if (!is_dir($folder)) {   // if not, abort
                     return "Folder <b>$folder</b> is not a valid folder";
                 }
             }
@@ -1681,33 +1462,26 @@ namespace YAWK {
             // walk through folder
             foreach ($iterator as $file) {
                 // exclude dots
-                if (!$file->isDot())
-                {   // check filetype
-                    if ($file->getExtension() === "ttf")
-                    {   // add ttf fonts to array
+                if (!$file->isDot()) {   // check filetype
+                    if ($file->getExtension() === "ttf") {   // add ttf fonts to array
                         $fontArray['ttf'][] = $file->getFilename();
                     }
                     // check filetype
-                    if ($file->getExtension() === "otf")
-                    {   // add otf fonts to array
+                    if ($file->getExtension() === "otf") {   // add otf fonts to array
                         $fontArray['otf'][] = $file->getFilename();
                     }
                     // check filetype
-                    if ($file->getExtension() === "woff")
-                    {   // add woff fonts to array
+                    if ($file->getExtension() === "woff") {   // add woff fonts to array
                         $fontArray['woff'][] = $file->getFilename();
                     }
                 }
             }
             // check if font array is set and not empty
-            if (is_array($fontArray) && (!empty($fontArray)))
-            {   // all good
+            if (is_array($fontArray) && (!empty($fontArray))) {   // all good
                 return $fontArray;
+            } else {   // array not set or empty, throw message
+                return "No fonts found in $folder";
             }
-            else
-                {   // array not set or empty, throw message
-                    return "No fonts found in $folder";
-                }
         }
 
         /**
@@ -1723,27 +1497,22 @@ namespace YAWK {
          * @return bool
          */
         function getSetting($db, $filter, $special, $readonly, $user)
-        {   /** @var $db \YAWK\db  */
+        {
+            /** @var $db \YAWK\db */
             // build sql query string
             // to build the template-settings page correct within one function
             // the query string will be manipulated like
-            if ($filter != '%-color')
-            {   // don't fetch -color settings
+            if ($filter != '%-color') {   // don't fetch -color settings
                 $sql = "&& ts.property NOT RLIKE '.*-color'";
             }
-            if ($filter != '%-bgcolor')
-            {   // don't fetch -bgcolor settings
+            if ($filter != '%-bgcolor') {   // don't fetch -bgcolor settings
                 $sql = "&& ts.property NOT RLIKE '.*-bgcolor'";
-            }
-            else
-            {
+            } else {
                 $sql = '';
             }
 
-            if (isset($readonly))
-            {   // if any field should be readonly
-                switch ($readonly)
-                {   // set html code
+            if (isset($readonly)) {   // if any field should be readonly
+                switch ($readonly) {   // set html code
                     case "readonly":
                         $readonly = "readonly=\"readonly\"";
                         break;
@@ -1753,44 +1522,35 @@ namespace YAWK {
                 }
             }
             // OVERRIDE SETTINGS
-            if (isset($user))
-            {
-                if ($user->overrideTemplate == 1)
-                {
+            if (isset($user)) {
+                if ($user->overrideTemplate == 1) {
                     $sql = "SELECT ts.property, ts.value, ts.longValue, ts.valueDefault, ts.label, ts.fieldClass, ts.placeholder
                                        FROM {template_settings} ts
                                        JOIN {users} u on u.templateID = ts.templateID
                                        WHERE ts.activated = 1 && u.id = $user->id && ts.property
                                        LIKE '$filter' && ts.property NOT RLIKE '.*-pos' $sql ORDER BY ts.sort";
-                }
-                else
-                    {
-                        $sql = "SELECT ts.property, ts.value, ts.longValue, ts.valueDefault, ts.label, ts.fieldClass, ts.placeholder
+                } else {
+                    $sql = "SELECT ts.property, ts.value, ts.longValue, ts.valueDefault, ts.label, ts.fieldClass, ts.placeholder
                                        FROM {template_settings} ts
                                        JOIN {settings} s on s.value = ts.templateID
                                        WHERE ts.activated = 1 && s.property = 'selectedTemplate' && ts.property
                                        LIKE '$filter' && ts.property NOT RLIKE '.*-pos' $sql ORDER BY ts.sort";
-                    }
-            }
-            else
-                {
-                    \YAWK\sys::setSyslog($db, 47, 1, "failed to get template setting - user is not set or empty.", 0, 0, 0, 0);
-                    return false;
                 }
+            } else {
+                \YAWK\sys::setSyslog($db, 47, 1, "failed to get template setting - user is not set or empty.", 0, 0, 0, 0);
+                return false;
+            }
 
-            if ($res = $db->query($sql))
-            {
+            if ($res = $db->query($sql)) {
                 $x = 1; // <h> tags count var
                 // draw input fields / template-settings.php
-                while ($row = mysqli_fetch_assoc($res))
-                {   // fetch template settings in loop
+                while ($row = mysqli_fetch_assoc($res)) {   // fetch template settings in loop
                     $property = $row['property'];
                     $value = $row['value'];
                     // $property = substr("$property", 0, -4);
                     // echo  "<label for=\"".$row['property']."\">" . $row['description'] . "</label><br>";
 
-                    if ($filter == "h%-fontsize")
-                    {   // case <h> fontsize
+                    if ($filter == "h%-fontsize") {   // case <h> fontsize
                         // draw a textfield
                         echo "<div style=\"display:inline-block;\"><label for=\"" . htmlentities($row['property']) . "\">";
                         echo "<legend>";
@@ -1800,14 +1560,12 @@ namespace YAWK {
                     }
                     if (fnmatch('*-longValue', $filter)) {
                         // draw a textfield
-                        echo "<label for=\"".$row['property']."\"><small>" . $row['label'] . " <i class=\"h6 small\">default: ".$row['valueDefault']."</i></small></label><br>";
+                        echo "<label for=\"" . $row['property'] . "\"><small>" . $row['label'] . " <i class=\"h6 small\">default: " . $row['valueDefault'] . "</i></small></label><br>";
                         echo "<div style=\"display:inline-block; width:90%;\"><label for=\"" . htmlentities($row['property']) . "\">";
                         echo "<input type=\"hidden\" name=\"$row[property]-long\" id=\"longValue\" value=\"1\">";
-                        echo "<textarea cols=\"85\" rows=\"12\" id=\"".$row['property']."\" $readonly class=\"form-control\" style=\"font-weight:normal;\" name=\"" . htmlentities($row['property']) . "\">".$row['longValue']."</textarea>";
-                    }
-                    else
-                    {   // draw a textfield
-                        echo "<label for=\"".$row['property']."\"><small>" . $row['label'] . " <i class=\"h6 small\">default: ".$row['valueDefault']."</i></small></label><br>";
+                        echo "<textarea cols=\"85\" rows=\"12\" id=\"" . $row['property'] . "\" $readonly class=\"form-control\" style=\"font-weight:normal;\" name=\"" . htmlentities($row['property']) . "\">" . $row['longValue'] . "</textarea>";
+                    } else {   // draw a textfield
+                        echo "<label for=\"" . $row['property'] . "\"><small>" . $row['label'] . " <i class=\"h6 small\">default: " . $row['valueDefault'] . "</i></small></label><br>";
                         echo "<div style=\"display:inline-block; \">";
                         echo "<input id=\"";
                         echo $row['property'];
@@ -1820,8 +1578,7 @@ namespace YAWK {
                         echo "name=\"" . htmlentities($row['property']) . "\" value=\"" . htmlentities($row['value']) . "\" /><br>";
                     }
 
-                    if ($special == "slider")
-                    {   // set slider html
+                    if ($special == "slider") {   // set slider html
                         // if method is called with slider parameter, draw one with given property name
                         echo "<div id=\"slider-";
                         echo $row['property'];
@@ -1829,9 +1586,7 @@ namespace YAWK {
                     }
                     echo "</div></label>";
                 }
-            }
-            else
-            {   // q failed
+            } else {   // q failed
                 \YAWK\sys::setSyslog($db, 47, 1, "failed to query template setting ", 0, 0, 0, 0);
                 return false;
             }
@@ -1853,18 +1608,15 @@ namespace YAWK {
          * @link http://yawk.io
          * @param object $db database
          * @param string $selectName selectName
-         * @param array $lang language array
+         * @param array  $lang language array
          */
         public function drawFontFamilySelectField($db, $lang, $selectName, $defaultValue)
         {
-            if (isset($defaultValue) && (!empty($defaultValue)))
-            {
+            if (isset($defaultValue) && (!empty($defaultValue))) {
                 $defaultValueOption = "<option value=\"$defaultValue\" selected aria-selected=\"true\">$defaultValue</option>";
+            } else {
+                $defaultValueOption = '';
             }
-            else
-                {
-                    $defaultValueOption = '';
-                }
             $selectField = ''; // init var to hold select field html code
             $selectField =
                 "
@@ -1895,15 +1647,13 @@ namespace YAWK {
             $otfFonts = array();    // all .otf files
             $woffFonts = array();   // all .woff files
 
-            foreach ($dir as $item)
-            {
+            foreach ($dir as $item) {
                 if (!$item->isDot()
-                    && (!$item->isDir()))
-                {
+                    && (!$item->isDir())
+                ) {
                     // workaround: todo what about filenames with spaces?
                     // check if it is a true type file
-                    if (strtolower(substr($item, -3)) === "ttf")
-                    {
+                    if (strtolower(substr($item, -3)) === "ttf") {
                         // workaround: if dots are in there, the form does not work.
                         // so lets change the dots to '-' and let option pass trough
                         $item = str_replace(".", "-", $item);
@@ -1911,15 +1661,13 @@ namespace YAWK {
                         $ttfFonts[] = "<option value=\"$item\">&nbsp;&nbsp;$item</option>";
                     }
                     // check if it is a otf file
-                    if (strtolower(substr($item, -3)) === "otf")
-                    {
+                    if (strtolower(substr($item, -3)) === "otf") {
                         $item = str_replace(".", "-", $item);
                         // add option to select field
                         $otfFonts[] = "<option value=\"$item\">&nbsp;&nbsp;$item</option>";
                     }
                     // check if it is a woff file
-                    if (strtolower(substr($item, -3)) === "woff")
-                    {
+                    if (strtolower(substr($item, -3)) === "woff") {
                         // workaround: change dots to '-' to let option pass trough
                         $item = str_replace(".", "-", $item);
                         // add option to select field
@@ -1929,21 +1677,18 @@ namespace YAWK {
             }
 
             // add .ttf fonts to select option
-            $selectField .="<optgroup label=\"True Type Fonts (system/fonts/*.ttf)\"></optgroup>";
-            foreach ($ttfFonts as $ttfFont)
-            {   // add ttf option to select field
+            $selectField .= "<optgroup label=\"True Type Fonts (system/fonts/*.ttf)\"></optgroup>";
+            foreach ($ttfFonts as $ttfFont) {   // add ttf option to select field
                 $selectField .= $ttfFont;
             }
             // add .otf fonts to select option
-            $selectField .="<optgroup label=\"Open Type Fonts (system/fonts/*.otf)\"></optgroup>";
-            foreach ($otfFonts as $otfFont)
-            {   // add ttf option to select field
+            $selectField .= "<optgroup label=\"Open Type Fonts (system/fonts/*.otf)\"></optgroup>";
+            foreach ($otfFonts as $otfFont) {   // add ttf option to select field
                 $selectField .= $otfFont;
             }
             // add .woff fonts to select option
-            $selectField .="<optgroup label=\"Web Open Font Format (system/fonts/*.woff)\"></optgroup>";
-            foreach ($woffFonts as $woffFont)
-            {   // add ttf option to select field
+            $selectField .= "<optgroup label=\"Web Open Font Format (system/fonts/*.woff)\"></optgroup>";
+            foreach ($woffFonts as $woffFont) {   // add ttf option to select field
                 $selectField .= $woffFont;
             }
 
@@ -1951,15 +1696,14 @@ namespace YAWK {
             // fill google fonts array
             $googleFonts = $this->getGoogleFontsArray($db);
             // add google fonts to select option
-            $selectField .="<optgroup label=\"Google Fonts\"></optgroup>";
-            foreach ($googleFonts as $gFont)
-            {
+            $selectField .= "<optgroup label=\"Google Fonts\"></optgroup>";
+            foreach ($googleFonts as $gFont) {
                 // add google font option to select field
                 // add option to select field
                 $selectField .= "<option value=\"$gFont-gfont\">&nbsp;&nbsp;$gFont (Google Font)</option>";
             }
             // close select option
-            $selectField .="</select>";
+            $selectField .= "</select>";
 
             // finally: output the html code of this select field
             return $selectField;
@@ -1979,22 +1723,17 @@ namespace YAWK {
             // array that holds the data
             $googleFonts = array();
             // select google fonts from database
-            if ($sql = $db->query("SELECT font FROM {gfonts} ORDER BY font"))
-            {   // for every single row...
-                while ($row = mysqli_fetch_array($sql))
-                {   // add font to array
+            if ($sql = $db->query("SELECT font FROM {gfonts} ORDER BY font")) {   // for every single row...
+                while ($row = mysqli_fetch_array($sql)) {   // add font to array
                     $googleFonts[] = $row['0'];
                 }
             }
             // check if googleFont is set and an array and not empty
-            if (isset($googleFonts) && (is_array($googleFonts) && (!empty($googleFonts))))
-            {   // return array containing all google fonts
+            if (isset($googleFonts) && (is_array($googleFonts) && (!empty($googleFonts)))) {   // return array containing all google fonts
                 return $googleFonts;
+            } else {   // no google font in database...
+                return null;
             }
-            else
-                {   // no google font in database...
-                    return null;
-                }
         }
 
         /**
@@ -2004,11 +1743,12 @@ namespace YAWK {
          * @link http://yawk.io
          * @param object $db database
          * @param string $item the font
-         * @param array $lang language array
+         * @param array  $lang language array
          * @return bool
          */
         function getgFonts($db, $item, $lang)
-        {   /** @var $db \YAWK\db */
+        {
+            /** @var $db \YAWK\db */
             $nc = '';
             $gfontID = '';
             // query fonts
@@ -2016,21 +1756,18 @@ namespace YAWK {
                                               FROM {template_settings} ts
                                               JOIN {settings} s on s.value = ts.templateID
                                               WHERE ts.activated = 1 && s.property = 'selectedTemplate' && ts.property = '$item'
-                                              ORDER BY sort"))
-            {
+                                              ORDER BY sort")
+            ) {
                 // draw radio buttons in loop...
                 while ($row = mysqli_fetch_assoc($res)) {
                     $gfontID = $row['value'];
-                    if ($gfontID === '0')
-                    {   // checked
+                    if ($gfontID === '0') {   // checked
                         $nc = "checked=\"checked\"";
-                    }
-                    else
-                    {   // not checked
+                    } else {   // not checked
                         $nc = "";
                     }
                 }
-            echo "<div id=\"nogooglefont\">
+                echo "<div id=\"nogooglefont\">
                        <label for=\"fontType\">$lang[FONT_TYPE_SELECTOR]</label>
                        <select id=\"fontType\" name=\"fontType\" class=\"form-control\">
                             <optgroup label=\"System Fonts\">
@@ -2042,16 +1779,16 @@ namespace YAWK {
                        </select>
                   </div><br>";
 
-                  // <input type=\"radio\" name=\"global-gfont\" value=\"0\" $nc> | Use system default fonts
+                // <input type=\"radio\" name=\"global-gfont\" value=\"0\" $nc> | Use system default fonts
 
-            echo "<div id=\"googlefontcontainer\">";
+                echo "<div id=\"googlefontcontainer\">";
 
-            if ($res = $db->query("SELECT id, font, description, activated
+                if ($res = $db->query("SELECT id, font, description, activated
     							FROM {gfonts}
     							WHERE activated = 1
     							AND id != 0
-    							ORDER BY font"))
-                {
+    							ORDER BY font")
+                ) {
                     while ($row = mysqli_fetch_array($res)) {
                         //	test output:
                         $id = $row[0];
@@ -2066,19 +1803,15 @@ namespace YAWK {
                         echo "<link href=\"http://fonts.googleapis.com/css?family=$row[1]\" rel=\"stylesheet\" type=\"text/css\">";
                         echo "<div id=\"googlefont\">
 <a class=\"pull-right\" data-confirm=\"Google Font &laquo;$value&raquo; wirklich l&ouml;schen?\" href='index.php?page=template-edit&deletegfont=1&gfontid=$id'><i style=\"margin-bottom:5px;\" class=\"fa fa-trash-o\"></i></a>
-<input type=\"radio\" $checked name=\"".$item."\" value=\"$id\">
+<input type=\"radio\" $checked name=\"" . $item . "\" value=\"$id\">
 | <span style=\"font-family:$row[1]; font-size:18px;\">$description</span>
 <hr></div>";
                     } // ./ end while
-                }
-                else
-                {   // fetch loop failed
+                } else {   // fetch loop failed
                     return false;
                 }
-            echo "</div>";
-            }
-            else
-            {   // q failed;
+                echo "</div>";
+            } else {   // q failed;
                 \YAWK\sys::setSyslog($db, 47, 1, "failed to get google fonts from database ", 0, 0, 0, 0);
                 return false;
             }
@@ -2093,45 +1826,38 @@ namespace YAWK {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db database
-         * @param int $gfontid google font ID you wish to delete
+         * @param int    $gfontid google font ID you wish to delete
          * @param string $gfont google font (name) you wish to delete
          * @return bool
          */
         public static function deleteGfont($db, $gfontid, $gfont)
-        {   /** @var $db \YAWK\db */
+        {
+            /** @var $db \YAWK\db */
 
             // no google font ID was sent
-            if (!isset($gfontid) || (empty($gfontid)))
-            {   // check if google font name was sent
-                if (isset($gfont) && (!empty($gfont)))
-                {
+            if (!isset($gfontid) || (empty($gfontid))) {   // check if google font name was sent
+                if (isset($gfont) && (!empty($gfont))) {
                     // try to delete google font by name
                     if ($res = $db->query("DELETE from {gfonts}
-                     			   WHERE font LIKE '%" . $gfont . "%'"))
-                    {   // success
+                     			   WHERE font LIKE '%" . $gfont . "%'")
+                    ) {   // success
                         return true;
-                    }
-                    else
-                    {   // q failed
+                    } else {   // q failed
                         \YAWK\sys::setSyslog($db, 47, 1, "failed to delete google font ID: $gfontid ", 0, 0, 0, 0);
                         return false;
                     }
+                }
+            } else {   // delete google font by ID
+                if ($res = $db->query("DELETE from {gfonts}
+                     			   WHERE id = '" . $gfontid . "'")
+                ) {   // success
+                    return true;
+                } else {   // q failed
+                    \YAWK\sys::setSyslog($db, 47, 1, "failed to delete google font ID: $gfontid ", 0, 0, 0, 0);
+                    return false;
                 }
             }
-            else
-                {   // delete google font by ID
-                    if ($res = $db->query("DELETE from {gfonts}
-                     			   WHERE id = '" . $gfontid . "'"))
-                    {   // success
-                        return true;
-                    }
-                    else
-                    {   // q failed
-                        \YAWK\sys::setSyslog($db, 47, 1, "failed to delete google font ID: $gfontid ", 0, 0, 0, 0);
-                        return false;
-                    }
-                }
-                return false;
+            return false;
         }
 
         /**
@@ -2145,35 +1871,29 @@ namespace YAWK {
          * @return bool
          */
         public static function addgfont($db, $gfont, $description)
-        {   /** @var $db \YAWK\db */
-            if (empty($gfont))
-            {   // no font was sent
+        {
+            /** @var $db \YAWK\db */
+            if (empty($gfont)) {   // no font was sent
                 return false;
             }
-            if (empty($description))
-            {   // no description was sent
+            if (empty($description)) {   // no description was sent
                 return false;
             }
             $gfont = $db->quote($gfont);
             $description = $db->quote($description);
             // ## select max ID from gfonts
-            if ($res = $db->query("SELECT MAX(id) FROM {gfonts}"))
-            {   // fetch data
+            if ($res = $db->query("SELECT MAX(id) FROM {gfonts}")) {   // fetch data
                 $row = mysqli_fetch_row($res);
                 $id = $row[0] + 1;
                 if ($res = $db->query("INSERT INTO {gfonts} (id, font, description)
-  	                                   VALUES('" . $id . "', '" . $gfont . "', '" . $description . "')"))
-                {   // success
+  	                                   VALUES('" . $id . "', '" . $gfont . "', '" . $description . "')")
+                ) {   // success
                     return true;
-                }
-                else
-                {   // fetch failed
+                } else {   // fetch failed
                     \YAWK\sys::setSyslog($db, 47, 1, "failed to insert new google font to database", 0, 0, 0, 0);
                     return false;
                 }
-            }
-            else
-            {   // q failed
+            } else {   // q failed
                 \YAWK\sys::setSyslog($db, 47, 1, "failed to get MAX(id) from google fonts database", 0, 0, 0, 0);
                 return false;
             }
@@ -2186,24 +1906,19 @@ namespace YAWK {
             // get font type by cutting off file extension
             $fontType = substr($fontFamily, -4);
             // check file types
-            if ($fontType === "-ttf")
-            {
+            if ($fontType === "-ttf") {
                 $filename = str_replace("-ttf", ".ttf", $fontFamily);
                 $bodyFontFaceCSS = "@font-face {
                 font-family: $fontFamily;
                 src: url('../../../fonts/$filename');
                 }";
-            }
-            elseif ($fontType === "-otf")
-            {
+            } elseif ($fontType === "-otf") {
                 $filename = str_replace("-otf", ".otf", $fontFamily);
                 $bodyFontFaceCSS = "@font-face {
                 font-family: $fontFamily;
                 src: url('../../../fonts/$filename');
                 }";
-            }
-            elseif ($fontType === "woff")
-            {
+            } elseif ($fontType === "woff") {
                 $filename = str_replace("-woff", ".woff", $fontFamily);
                 $bodyFontFaceCSS = "@font-face {
                 font-family: $fontFamily;
@@ -2270,8 +1985,7 @@ namespace YAWK {
             $fontStyle = $tplSettings["$cssTagName-fontstyle"];
             $fontTextDecoration = $tplSettings["$cssTagName-textdecoration"];
             // check, if it's a google font
-            if (substr($fontFamily, -6) === "-gfont")
-            {
+            if (substr($fontFamily, -6) === "-gfont") {
                 $googleFont = substr($fontFamily, 0, -6);
                 $bodyFontCSS = "
                     font-family: $googleFont !important;
@@ -2282,9 +1996,7 @@ namespace YAWK {
                     font-style: $fontStyle;
                     text-decoration: $fontTextDecoration;
                 ";
-            }
-            else
-            {
+            } else {
                 $bodyFontCSS = "
                     font-family: $fontFamily;
                     font-size: $fontSize;
@@ -2322,8 +2034,7 @@ namespace YAWK {
             // get font type by cutting off file extension
             $fontType = substr($fontFamily, -4);
             // check file types
-            if ($fontType === "-ttf")
-            {
+            if ($fontType === "-ttf") {
                 $filename = str_replace("-ttf", ".ttf", $fontFamily);
                 $fontCSS = "@font-face {
                 font-family: $fontFamily;
@@ -2361,9 +2072,7 @@ namespace YAWK {
                     text-shadow: $smallShadowSize #$smallShadowColor;
                 }
                 ";
-            }
-            elseif ($fontType === "-otf")
-            {
+            } elseif ($fontType === "-otf") {
                 $filename = str_replace("-otf", ".otf", $fontFamily);
                 $fontCSS = "@font-face {
                 font-family: $fontFamily;
@@ -2401,9 +2110,7 @@ namespace YAWK {
                         text-shadow: $smallShadowSize #$smallShadowColor;
                     }
                 ";
-            }
-            elseif ($fontType === "woff")
-            {
+            } elseif ($fontType === "woff") {
                 $filename = str_replace("-woff", ".woff", $fontFamily);
                 $fontCSS = "@font-face {
                 font-family: $fontFamily;
@@ -2441,10 +2148,8 @@ namespace YAWK {
                         text-shadow: $smallShadowSize #$smallShadowColor;
                     }
                 ";
-            }
-            // check, if it's a google font
-            elseif (substr($fontFamily, -6) === "-gfont")
-            {
+            } // check, if it's a google font
+            elseif (substr($fontFamily, -6) === "-gfont") {
                 $googleFont = substr($fontFamily, 0, -6);
                 $fontCSS = "
                 $cssTagName
@@ -2480,10 +2185,8 @@ namespace YAWK {
                         text-shadow: $smallShadowSize #$smallShadowColor;
                     }
                 ";
-            }
-            else
-                {
-                    $fontCSS = "
+            } else {
+                $fontCSS = "
                     $cssTagName 
                     {
                         font-family: $fontFamily;
@@ -2517,12 +2220,13 @@ namespace YAWK {
                         text-shadow: $smallShadowSize #$smallShadowColor;
                     }
                     ";
-                }
+            }
             return $fontCSS;
         }
 
         static function getActiveBodyFont($db)
-        {   /* @var \YAWK\db $db */
+        {
+            /* @var \YAWK\db $db */
             $bodyFont = \YAWK\template::getTemplateSetting($db, "value", "globaltext-fontfamily");
             $bodyFontFamily = "font-family: $bodyFont";
             return $bodyFontFamily;
@@ -2539,44 +2243,37 @@ namespace YAWK {
          * @return null|string
          */
         static function getActivegfont($db, $status, $property)
-        {   /* @var \YAWK\db $db */
+        {
+            /* @var \YAWK\db $db */
             if ($res = $db->query("SELECT id, font, setting
                      FROM {gfonts}
                      WHERE activated = 1
                       AND id = (SELECT ts.value
                       FROM {template_settings} ts
                       JOIN {settings} s on s.value = ts.templateID
-                      WHERE ts.activated = 1 && s.property = 'selectedTemplate' && ts.property = '$property')"))
-            {
+                      WHERE ts.activated = 1 && s.property = 'selectedTemplate' && ts.property = '$property')")
+            ) {
                 while ($row = mysqli_fetch_array($res)) {
                     // if no google font is selected
                     if ($row[1] === "0") {
                         return "font-family: Arial";
                     }
                     // css include output for index.php
-                    if ($status == "url")
-                    {//
-                        if (isset($row[2]) || (!empty($row[2])))
-                        {
+                    if ($status == "url") {//
+                        if (isset($row[2]) || (!empty($row[2]))) {
                             return "
 <link rel=\"stylesheet\" href=\"http://fonts.googleapis.com/css?family=$row[1]:$row[2]\" type=\"text/css\" media=\"all\">";
-                        }
-                        else
-                            {
-                                return "
+                        } else {
+                            return "
 <link rel=\"stylesheet\" href=\"http://fonts.googleapis.com/css?family=$row[1]\" type=\"text/css\" media=\"all\">";
-                            }
-                    }
-                    else
-                        {
-                            return "font-family: $row[1];";
                         }
+                    } else {
+                        return "font-family: $row[1];";
+                    }
                 }
+            } else {   // could not get active google font
+                return "could not get active google font";
             }
-            else
-                {   // could not get active google font
-                    return "could not get active google font";
-                }
             return null;
         }
 
@@ -2592,17 +2289,13 @@ namespace YAWK {
         {
             $fonts = array(); // hold all fonts
             $googleFontFamilyString = ''; // the string the contains all google font families to minimize requests
-            if ($sql = $db->query("SELECT value FROM {template_settings} WHERE property LIKE '%-fontfamily'"))
-            {
-                while ($row = mysqli_fetch_row($sql))
-                {
+            if ($sql = $db->query("SELECT value FROM {template_settings} WHERE property LIKE '%-fontfamily'")) {
+                while ($row = mysqli_fetch_row($sql)) {
                     $fonts[] = $row[0];
                 }
             }
-            foreach ($fonts as $googleFont)
-            {
-                if (substr($googleFont, -6) === "-gfont")
-                {
+            foreach ($fonts as $googleFont) {
+                if (substr($googleFont, -6) === "-gfont") {
                     // remove font indicator
                     $googleFont = rtrim($googleFont, "gfont");
                     $googleFont = rtrim($googleFont, "-");
@@ -2612,10 +2305,9 @@ namespace YAWK {
                     $googleFontFamilyString .= "|";
                 }
             }
-            if (!empty($googleFontFamilyString))
-            {
+            if (!empty($googleFontFamilyString)) {
                 // remove last | because its not needed
-                $googleFontFamilyString = rtrim ($googleFontFamilyString, "|");
+                $googleFontFamilyString = rtrim($googleFontFamilyString, "|");
                 echo "<link href=\"https://fonts.googleapis.com/css?family=$googleFontFamilyString\" rel=\"stylesheet\">";
             }
 
@@ -2632,18 +2324,17 @@ namespace YAWK {
          * @return bool
          */
         static function getTemplateSetting($db, $field, $property)
-        {   /** @var $db \YAWK\db */
+        {
+            /** @var $db \YAWK\db */
             $tpl_id = settings::getSetting($db, "selectedTemplate");
             if ($res = $db->query("SELECT $field
                         	FROM {template_settings}
                             WHERE property = '" . $property . "'
-                            AND templateID = '" . $tpl_id . "'"))
-            {   // fetch data
+                            AND templateID = '" . $tpl_id . "'")
+            ) {   // fetch data
                 $row = mysqli_fetch_row($res);
                 return $row[0];
-            }
-            else
-            {   // q failed
+            } else {   // q failed
                 return false;
             }
         }
@@ -2656,23 +2347,22 @@ namespace YAWK {
          * @param object $db database
          */
         static function includeHeader($db)
-        {   /** @var \YAWK\db $db */
+        {
+            /** @var \YAWK\db $db */
             global $currentpage;
             $i = 1;
             $host = \YAWK\settings::getSetting($db, "host");
             echo "<title>" . $currentpage->title . "</title>
       <meta http-equiv=\"Content-Type\" content=\"text/html; charset=\"utf-8\">
       <link rel=\"shortcut icon\" href=\"favicon.ico\" type=\"image/x-icon\">
-      <base href=\"".$host."/\">";
+      <base href=\"" . $host . "/\">";
             $get_localtags = $db->query("SELECT name, content
                     FROM {meta_local}
                     WHERE page = '" . $currentpage->id . "'");
             while ($row = mysqli_fetch_row($get_localtags)) {
                 if (isset($row['1']) && !empty($row['1'])) {
                     echo "<meta name=\"" . $row[0] . "\" content=\"" . $row[1] . "\" />";
-                }
-                else
-                {
+                } else {
                     $get_globaltags = $db->query("SELECT content
 		                        FROM {meta_global}
 		                        WHERE name = 'description'");
@@ -2691,7 +2381,7 @@ namespace YAWK {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db database
-         * @param int $templateID ID of the current selected template
+         * @param int    $templateID ID of the current selected template
          * @return array|bool $array template positions 0|1
          */
         static function getPositionStatesArray($db, $templateID)
@@ -2700,20 +2390,16 @@ namespace YAWK {
             $sql = $db->query("SELECT property, value 
                                FROM {template_settings} 
                                WHERE property LIKE 'pos-%-enabled' AND 
-                               templateID = '".$templateID."'");
-            while ($row = mysqli_fetch_assoc($sql))
-            {
+                               templateID = '" . $templateID . "'");
+            while ($row = mysqli_fetch_assoc($sql)) {
                 $prop = $row['property'];
                 $array[$prop] = $row['value'];
             }
-            if (is_array($array) && (!empty($array)))
-            {
+            if (is_array($array) && (!empty($array))) {
                 return $array;
+            } else {
+                die("Positions array not set");
             }
-            else
-                {
-                    die("Positions array not set");
-                }
         }
 
         /**
@@ -2722,7 +2408,7 @@ namespace YAWK {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db database
-         * @param int $templateID ID of the current template
+         * @param int    $templateID ID of the current template
          * @return array|bool $array position indicator 0|1
          */
         static function getPositionIndicatorStatusArray($db, $templateID)
@@ -2732,18 +2418,14 @@ namespace YAWK {
                                FROM {template_settings} 
                                WHERE property 
                                LIKE 'pos-%-indicator'
-                               AND templateID = '".$templateID."'");
-            while ($row = mysqli_fetch_assoc($sql))
-            {
+                               AND templateID = '" . $templateID . "'");
+            while ($row = mysqli_fetch_assoc($sql)) {
                 $prop = $row['property'];
                 $array[$prop] = $row['value'];
             }
-            if (is_array($array))
-            {
+            if (is_array($array)) {
                 return $array;
-            }
-            else
-            {
+            } else {
                 return false;
             }
         }
@@ -2768,35 +2450,30 @@ namespace YAWK {
                 // substr, because css definitions are without -pos (changefix?!)
                 $position = substr("$position", 0, -4);
                 // if main, we need to include the content page
-                if ($position == "main")
-                {
+                if ($position == "main") {
                     // if user is given to index.php, load userpage
-                    if (isset($_GET['user'])){
+                    if (isset($_GET['user'])) {
                         // if var is set, but empty, show all users
-                        if (empty($_GET['user'])){
+                        if (empty($_GET['user'])) {
                             echo "<h2>Show all users</h2>";
                             \YAWK\user::getUserList($db);
-                        }
-                        else {
+                        } else {
                             // show userpage
                             echo "<h2>Show Profile of user $_GET[user]</h2>";
                         }
-                    }
-                    // if a blog is requested, load blog by given id
+                    } // if a blog is requested, load blog by given id
                     elseif (isset($_GET['blogid'])) {
                         $blog = new \YAWK\PLUGINS\BLOG\blog();
                         $blog->getFrontendEntries($db, $_GET['blogid'], '', '', '');
                         $blog->getFooter($db);
                         $blog->draw();
                         // in any other case, get content for requested static page
+                    } else {
+                        echo "<div id=\"$position\">";
+                        $currentpage->getContent($db);
+                        echo "</div>";
+                        $main_set = 1;
                     }
-                    else
-                        {
-                            echo "<div id=\"$position\">";
-                            $currentpage->getContent($db);
-                            echo "</div>";
-                            $main_set = 1;
-                        }
                 }
 
                 // if position is globalmenu
@@ -2819,13 +2496,13 @@ namespace YAWK {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db database
-         * @param int $templateID affected template ID
+         * @param int    $templateID affected template ID
          * @return array
          */
         static function getTemplateSettingsArray($db, $templateID)
-        {   /* @var \YAWK\db $db */
-            if (!isset($templateID) || (empty($templateID)))
-            {   // if no templateID is set, take current template ID from settings db
+        {
+            /* @var \YAWK\db $db */
+            if (!isset($templateID) || (empty($templateID))) {   // if no templateID is set, take current template ID from settings db
                 $templateID = settings::getSetting($db, "selectedTemplate");
             }
             $array = array();
@@ -2833,7 +2510,7 @@ namespace YAWK {
                         	FROM {template_settings}
                             WHERE templateID = $templateID");
 
-            while ($row = mysqli_fetch_assoc($res)){
+            while ($row = mysqli_fetch_assoc($res)) {
                 $prop = $row['property'];
                 $array[$prop] = $row['value'];
                 $array[$prop] .= $row['longValue'];
@@ -2851,9 +2528,9 @@ namespace YAWK {
          * @return array
          */
         static function checkWrapper($lang, $title, $subtitle)
-        {   /* @var \YAWK\db $db */
-            if (!isset($_GET['hideWrapper']))
-            {
+        {
+            /* @var \YAWK\db $db */
+            if (!isset($_GET['hideWrapper'])) {
                 // draw the admin lte wrapper around content to include breadcrumbs and start content section
                 // TEMPLATE WRAPPER - HEADER & breadcrumbs
                 echo "
@@ -2863,7 +2540,7 @@ namespace YAWK {
                         <section class=\"content-header\">";
                 /* draw Title on top */
                 echo \YAWK\backend::getTitle($lang[$title], $lang[$subtitle]);
-                echo"<ol class=\"breadcrumb\">
+                echo "<ol class=\"breadcrumb\">
                                 <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
                                 <li><a href=\"index.php?page=users\" class=\"active\" title=\"$lang[USERS]\"> $lang[USERS]</a></li>
                             </ol>
@@ -2872,14 +2549,12 @@ namespace YAWK {
                         <section class=\"content\">";
                 /* page content start here */
                 return null;
-            }
-            else    // if wrapper is set
-                {   // check if hide status is 1
-                    if ($_GET['hideWrapper'] === 1)
-                    {
-                        // no wrapper needed - do nothing
-                    }
+            } else    // if wrapper is set
+            {   // check if hide status is 1
+                if ($_GET['hideWrapper'] === 1) {
+                    // no wrapper needed - do nothing
                 }
+            }
             return null;
         }
 
@@ -2890,30 +2565,24 @@ namespace YAWK {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db database object
-         * @param int $type 0 = all, 1 = required, 2 = optional, 3 = additional
+         * @param int    $type 0 = all, 1 = required, 2 = optional, 3 = additional
          * @return array
          */
         public static function getAssetsByType($db, $type)
-        {   /* @var \YAWK\db $db */
+        {
+            /* @var \YAWK\db $db */
             // check if type is set
-            if (!isset($type) || (empty($type)))
-            {   // if its not set, get all assets from db, no matter which type they are
+            if (!isset($type) || (empty($type))) {   // if its not set, get all assets from db, no matter which type they are
                 $typeSQLCode = ''; // terminate db query
-            }
-            else
-            {   // check if type is a number
-                if (is_numeric($type) || (is_int($type)))
-                {   // and build additional sql string
+            } else {   // check if type is a number
+                if (is_numeric($type) || (is_int($type))) {   // and build additional sql string
                     $typeSQLCode = "AND type = '$type'";
 
                     // if type is zero, fetch all data
-                    if ($type === 0)
-                    {   // terminate db query
+                    if ($type === 0) {   // terminate db query
                         $typeSQLCode = '';
                     }
-                }
-                else
-                {   // type is not a number, get all data
+                } else {   // type is not a number, get all data
                     $typeSQLCode = ''; // terminate db query
                 }
             }
@@ -2926,8 +2595,7 @@ namespace YAWK {
                             WHERE published = '1' 
                             $typeSQLCode ORDER by sortation, asset");
             // fetch data in loop
-            while ($row = mysqli_fetch_assoc($res))
-            {   // build assets array
+            while ($row = mysqli_fetch_assoc($res)) {   // build assets array
                 $prop = $row['asset'];
                 $assets[$prop]["asset"] = $prop;
                 $assets[$prop]["property"] = $row['property'];
@@ -2938,14 +2606,11 @@ namespace YAWK {
                 $assets[$prop]["sortation"] = $row['sortation'];
             }
             // check if assets is an array
-            if (is_array($assets))
-            {   // all good
+            if (is_array($assets)) {   // all good
                 return $assets;
+            } else {   // error: exit with msg
+                die ('unable to return assets array - maybe database is corrupt or missing.');
             }
-            else
-                {   // error: exit with msg
-                    die ('unable to return assets array - maybe database is corrupt or missing.');
-                }
         }
 
         /**
@@ -2954,34 +2619,30 @@ namespace YAWK {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db database object
-         * @param int $templateID ID of the affectd template
-         * @param array $lang language array
+         * @param int    $templateID ID of the affectd template
+         * @param array  $lang language array
          * @return null
          */
         public static function drawAssetsTitles($db, $templateID, $lang)
         {
             /* @var \YAWK\db $db */
             // if no template ID is set
-            if (!isset($templateID) || (empty($templateID)))
-            {   // get current ID from database
+            if (!isset($templateID) || (empty($templateID))) {   // get current ID from database
                 $templateID = \YAWK\settings::getSetting($db, "selectedTemplate");
             }
             if ($res = $db->query("SELECT asset, link FROM {assets} 
-                                          WHERE templateID = '".$templateID."' 
-                                          ORDER BY asset"))
-            {
-                while ($row = mysqli_fetch_assoc($res))
-                {
+                                          WHERE templateID = '" . $templateID . "' 
+                                          ORDER BY asset")
+            ) {
+                while ($row = mysqli_fetch_assoc($res)) {
                     // check, if link is external
                     if (strpos($row['link'], 'http://') !== false || (strpos($row['link'], 'https://') !== false)) {
                         $icon = "fa fa-cloud";
                         $title = "$lang[EXTERNAL]";
+                    } else {
+                        $icon = "fa fa-server";
+                        $title = "$lang[INTERNAL]";
                     }
-                    else
-                        {
-                            $icon = "fa fa-server";
-                            $title = "$lang[INTERNAL]";
-                        }
                     $qString = rawurlencode($row['asset']);
 
                     echo "<small><a href=\"index.php?page=template-assets\" data-toggle=\"tooltip\" title=\"$title\"><i class=\"$icon text-info\"></i></a></small> &nbsp;$row[asset] &nbsp;<small><a href=\"https://www.google.at/search?q=$qString\" target=\"_blank\" data-toggle=\"tooltip\" title=\"$row[asset] $lang[GOOGLE_THIS]\"><i class=\"fa fa-question-circle-o\"></i></a></small><br>";
@@ -2998,24 +2659,23 @@ namespace YAWK {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db database object
-         * @param int $type 0 = all, 1 = required, 2 = optional, 3 = additional
-         * @param int $templateID id of the affected template
-         * @param array $lang language array
+         * @param int    $type 0 = all, 1 = required, 2 = optional, 3 = additional
+         * @param int    $templateID id of the affected template
+         * @param array  $lang language array
          * @return null
          */
         public static function drawAssetsSelectFields($db, $type, $templateID, $lang)
-        {   /* @var \YAWK\db $db */
+        {
+            /* @var \YAWK\db $db */
 
             // check type and load assets data
             // if type is not set
-            if (!isset($type) || (empty($type)))
-            {   // set to zero -this will get all assets in array
+            if (!isset($type) || (empty($type))) {   // set to zero -this will get all assets in array
                 $type = 0;
             }
 
             // check if templateID is set
-            if (!isset($templateID) || (empty($templateID)))
-            {
+            if (!isset($templateID) || (empty($templateID))) {
                 // get current template ID
                 $templateID = \YAWK\settings::getSetting($db, "selectedTemplate");
             }
@@ -3023,44 +2683,51 @@ namespace YAWK {
             // get assets, depending on type from database
             $assets = \YAWK\template::getAssetsByType($db, $type);
 
-            foreach ($assets as $asset => $property)
-            {
+            foreach ($assets as $asset => $property) {
                 $resInternal = $db->query("SELECT link from {assets} 
-                                         WHERE templateID = '".$templateID."'
-                                         AND link = '".$property['internal']."'");
+                                         WHERE templateID = '" . $templateID . "'
+                                         AND link = '" . $property['internal'] . "'");
 
                 $resUrl1 = $db->query("SELECT link from {assets} 
-                                         WHERE templateID = '".$templateID."'
-                                         AND link = '".$property['url1']."'");
+                                         WHERE templateID = '" . $templateID . "'
+                                         AND link = '" . $property['url1'] . "'");
 
                 $resUrl2 = $db->query("SELECT link from {assets} 
-                                         WHERE templateID = '".$templateID."'
-                                         AND link = '".$property['url2']."'");
+                                         WHERE templateID = '" . $templateID . "'
+                                         AND link = '" . $property['url2'] . "'");
 
                 $resUrl3 = $db->query("SELECT link from {assets} 
-                                         WHERE templateID = '".$templateID."'
-                                         AND link = '".$property['url3']."'");
+                                         WHERE templateID = '" . $templateID . "'
+                                         AND link = '" . $property['url3'] . "'");
 
                 $row = mysqli_fetch_assoc($resInternal);
-               // print_r($res);
-                if ($row['link'] === $property['internal'])
-                { $selectedInternal = " selected"; }
-                else { $selectedInternal = ''; }
+                // print_r($res);
+                if ($row['link'] === $property['internal']) {
+                    $selectedInternal = " selected";
+                } else {
+                    $selectedInternal = '';
+                }
 
                 $row = mysqli_fetch_assoc($resUrl1);
-                if ($row['link'] === $property['url1'])
-                { $selectedUrl1 = " selected"; }
-                else { $selectedUrl1 = ''; }
+                if ($row['link'] === $property['url1']) {
+                    $selectedUrl1 = " selected";
+                } else {
+                    $selectedUrl1 = '';
+                }
 
                 $row = mysqli_fetch_assoc($resUrl2);
-                if ($row['link'] === $property['url2'])
-                { $selectedUrl2 = " selected"; }
-                else { $selectedUrl2 = ''; }
+                if ($row['link'] === $property['url2']) {
+                    $selectedUrl2 = " selected";
+                } else {
+                    $selectedUrl2 = '';
+                }
 
                 $row = mysqli_fetch_assoc($resUrl3);
-                if ($row['link'] === $property['url3'])
-                { $selectedUrl3 = " selected"; }
-                else { $selectedUrl3 = ''; }
+                if ($row['link'] === $property['url3']) {
+                    $selectedUrl3 = " selected";
+                } else {
+                    $selectedUrl3 = '';
+                }
 
                 echo "<label for=\"include-$property[property]\">$property[asset]</label>
                       <input name=\"title-$property[property]\" value=\"$property[asset]\" type=\"hidden\">
@@ -3072,46 +2739,40 @@ namespace YAWK {
                             <option name=\"value\"$selectedInternal>$property[internal]</option>
                             <optgroup label=\"external\">external</optgroup>
                             <option name=\"value\"$selectedUrl1>$property[url1]</option>";
-                            if (!empty($property['url2']))
-                            {   // display 2nd external asset link
-                                echo "
+                if (!empty($property['url2'])) {   // display 2nd external asset link
+                    echo "
                             <option name=\"value\"$selectedUrl2>$property[url2]</option>";
-                            }
-                            if (!empty($property['url3']))
-                            {
-                                echo "
+                }
+                if (!empty($property['url3'])) {
+                    echo "
                             <option name=\"value\"$selectedUrl3>$property[url3]</option>";
-                            }
-                        echo "
+                }
+                echo "
                             </select>";
             }
             return null;
         }
 
         public function loadActiveAssets($db, $templateID)
-        {   /* @var \YAWK\db $db */
+        {
+            /* @var \YAWK\db $db */
 
-            if (isset($templateID) && (!empty($templateID)))
-            {
+            if (isset($templateID) && (!empty($templateID))) {
                 echo "
 <!-- ASSETS -->";
-                if ($res = $db->query("SELECT type, asset, link FROM {assets} WHERE templateID = '".$templateID."' ORDER BY sortation"))
-                {
-                    while ($row = mysqli_fetch_assoc($res))
-                    {
+                if ($res = $db->query("SELECT type, asset, link FROM {assets} WHERE templateID = '" . $templateID . "' ORDER BY sortation")) {
+                    while ($row = mysqli_fetch_assoc($res)) {
                         // CSS
-                        if ($row['type'] === "css")
-                        {   // load css asset
+                        if ($row['type'] === "css") {   // load css asset
                             echo "
  <!-- load CSS: $row[asset] -->
- <link rel=\"stylesheet\" href=\"".$row['link']."\" type=\"text/css\" media=\"all\">";
+ <link rel=\"stylesheet\" href=\"" . $row['link'] . "\" type=\"text/css\" media=\"all\">";
                         }
                         // JS
-                        if ($row['type'] === "js")
-                        {   // load js asset
+                        if ($row['type'] === "js") {   // load js asset
                             echo "
  <!-- load JS: $row[asset] -->
- <script src=\"".$row['link']."\"></script>";
+ <script src=\"" . $row['link'] . "\"></script>";
                         }
                     }
                 }
@@ -3125,34 +2786,29 @@ namespace YAWK {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db database
-         * @param int $templateID template ID
-         * @param int $newID template ID
+         * @param int    $templateID template ID
+         * @param int    $newID template ID
          */
         public static function copyAssets($db, $templateID, $newID)
-        {   /** @var $db \YAWK\db */
+        {
+            /** @var $db \YAWK\db */
 
             $res = $db->query("INSERT INTO {assets} (templateID, type, asset, link)
-                                      SELECT '".$newID."', type, asset, link
+                                      SELECT '" . $newID . "', type, asset, link
                                       FROM {assets} 
-                                      WHERE templateID = '".$templateID."'");
+                                      WHERE templateID = '" . $templateID . "'");
 
-            if (!$res)
-            {
+            if (!$res) {
                 \YAWK\sys::setSyslog($db, 48, 2, "failed to copy assets of template #$templateID", 0, 0, 0, 0);
                 \YAWK\alert::draw("danger", "Could not copy assets", "please try again.", "", 5000);
-            }
-            else
-            {
+            } else {
                 \YAWK\alert::draw("success", "Assets copied", "successful", "", 5000);
 
 
-                $update = $db->query("UPDATE {assets} SET templateID='".$newID."' WHERE templateID=0");
-                if ($update)
-                {
+                $update = $db->query("UPDATE {assets} SET templateID='" . $newID . "' WHERE templateID=0");
+                if ($update) {
                     \YAWK\alert::draw("success", "Assets are set-up", "successful", "", 5000);
-                }
-                else
-                {
+                } else {
                     \YAWK\sys::setSyslog($db, 48, 2, "failed to copy assets of template #$templateID", 0, 0, 0, 0);
                     \YAWK\alert::draw("warning", "Could not copy template assets", "unable to alter IDs.", "", 5000);
                 }
@@ -3170,67 +2826,299 @@ namespace YAWK {
          * @annotation return values: 0 = not loaded, 3 = bootstrap 3, 4 = bootstrap 4, X = multiple (false!)
          */
         public function checkBootstrapVersion($db, $templateID, $lang)
-        {   /** @var $db \YAWK\db */
+        {
+            /** @var $db \YAWK\db */
 
             // query database
-            if ($sql = $db->query("SELECT asset FROM {assets} WHERE templateID = '".$templateID."' AND asset LIKE '%Bootstrap%CSS'"))
-            {   // fetch data
-                while ($row = mysqli_fetch_row($sql))
-                {   // store data as array
+            if ($sql = $db->query("SELECT asset FROM {assets} WHERE templateID = '" . $templateID . "' AND asset LIKE '%Bootstrap%CSS'")) {   // fetch data
+                while ($row = mysqli_fetch_row($sql)) {   // store data as array
                     $asset[] = $row;
                 }
             }
 
             // check if there is more than 1 entry
-            if (isset($asset[1]) && (!empty($asset[1])))
-            {   // bootstrap seem to be loaded twice
+            if (isset($asset[1]) && (!empty($asset[1]))) {   // bootstrap seem to be loaded twice
                 \YAWK\sys::setSyslog($db, 48, 2, "bootstrap loaded multiple times - template <b>$this->name</b> requires only <b>$this->framework</b>", $_SESSION['uid'], 0, 0, 0);
                 return "X";
             }
 
             // check if asset array is set and not empty
-            if (isset($asset) && (is_array($asset) && (!empty($asset[0][0]))))
-            {
+            if (isset($asset) && (is_array($asset) && (!empty($asset[0][0])))) {
                 // check if framework requirement match current loaded bootstrap version
                 // if boostrap 3 is required
-                if ($this->framework == "bootstrap3")
-                {
+                if ($this->framework == "bootstrap3") {
                     // check if str contains 3 (must be when 'Bootstrap 3 CSS' is loaded, see sql query)
-                    if (strstr($asset[0][0], "3"))
-                    {   // Bootstrap 3 (is required and loaded)
+                    if (strstr($asset[0][0], "3")) {   // Bootstrap 3 (is required and loaded)
                         return "3";
-                    }
-                    else
-                    {   // wrong framework loaded - set syslog entry
+                    } else {   // wrong framework loaded - set syslog entry
                         \YAWK\sys::setSyslog($db, 48, 2, "wrong Bootstrap version loaded - template <b>$this->name</b> requires <b>$this->framework</b>", $_SESSION['uid'], 0, 0, 0);
                         return null;
                     }
-                }
-                // if boostrap 4 is required
-                elseif ($this->framework == "bootstrap4")
-                {
+                } // if boostrap 4 is required
+                elseif ($this->framework == "bootstrap4") {
                     // check if str contains 4 (must be when 'Bootstrap 4 CSS' is loaded, see sql query)
-                    if (strstr($asset[0][0], "4"))
-                    {   // Bootstrap 4 (is required and loaded)
+                    if (strstr($asset[0][0], "4")) {   // Bootstrap 4 (is required and loaded)
                         return "4";
-                    }
-                    else
-                    {   // wrong framework loaded - set syslog entry
+                    } else {   // wrong framework loaded - set syslog entry
                         \YAWK\sys::setSyslog($db, 48, 2, "wrong Bootstrap version loaded - template <b>$this->name</b> requires <b>$this->framework</b>", $_SESSION['uid'], 0, 0, 0);
                         return null;
                     }
+                } else {   // unknown framework
+                    \YAWK\sys::setSyslog($db, 48, 2, "template <b>$this->name</b> requires framework <b>$this->framework</b> is not supported yet.", $_SESSION['uid'], 0, 0, 0);
+                    return "0";
+                }
+            } // asset not set, no array or empty
+            else {   // it seems that no Bootstrap css is loaded
+                \YAWK\sys::setSyslog($db, 48, 2, "template <b>$this->name</b> requires <b>$this->framework</b>, but no corresponding asset is loaded.", $_SESSION['uid'], 0, 0, 0);
+                return "0";
+            }
+        }
+
+        /**
+         * Create a zip file from template and force direct download
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param string $templateFolder the template folder to zip + download
+         * @param int $templateID ID of the template to process
+         * @return bool true|false
+         * @annotation dump database settings into .sql files, zip tpl folder and serve .zip for direct download
+         */
+        public function downloadTemplate($db, $templateFolder, $templateID)
+        {
+            // check if template folder is set and valid
+            if (!isset($templateFolder) || (empty($templateFolder) || (!is_string($templateFolder))))
+            {   // required param not set
+                return false;
+            }
+            else
+            {   // set template folder property
+                $this->subFolder = $templateFolder;
+                $this->name = $templateFolder;
+            }
+            // check if template ID is set and valid
+            if (!isset($templateID) || (empty($templateID) || (!is_numeric($templateID))))
+            {   // required param not set
+                return false;
+            }
+            else
+            {   // set template ID property
+                $this->id = $templateID;
+            }
+
+            // params are set, next step:
+            // dump all .sql data of this template into .sql file
+            if (is_file('../system/classes/dbconfig.php'))
+            {
+                // get database configuration
+                require("../system/classes/dbconfig.php");
+                // set configuration vars for mysqldump-php
+                $host = $this->config['server'];
+                $user = $this->config['username'];
+                $pass = $this->config['password'];
+                $dbname = $this->config['dbname'];
+                $prefix = $this->config['prefix'];
+            }
+            else
+            {   // unable to get db config
+                return false;
+            }
+
+            // check if mysqldump class is there
+            if (is_file('../system/engines/mysqldump/Mysqldump.php'))
+            {
+                // ok, include class
+                require_once('../system/engines/mysqldump/Mysqldump.php');
+
+                // check if template folder is writeable
+                if (is_writeable($this->folder))
+                {
+                    // db table: template-settings
+                    $dumpSettings = array('include-tables' => array(''.$prefix.'template_settings'));
+                    // export settings for this template ID only:
+                    $dumpSettings['where'] = 'templateID='.$this->id.'';
+                    // create new mysqldump object
+                    $mysqldump = new \Ifsnop\Mysqldump\Mysqldump("mysql:host=$host;dbname=$dbname", $user, $pass, $dumpSettings);
+                    // 1st backup file - all this template settings
+                    try
+                    {   // try to start backup
+                        $mysqldump->start($this->folder.$this->subFolder.'/'.$this->name.'-template_settings.sql');
+                    }
+                    catch (\Exception $e)
+                    {
+                        // output mysqldump error
+                        \YAWK\sys::setSyslog($db, 52, 2, "" . $e->getMessage() . "", 0, 0, 0, 0);
+                    }
+
+                    // db table: templates
+                    $dumpSettings = array('include-tables' => array(''.$prefix.'templates'));
+                    $dumpSettings['where'] = 'id='.$this->id.'';
+                    // create new mysqldump object
+                    $mysqldump = new \Ifsnop\Mysqldump\Mysqldump("mysql:host=$host;dbname=$dbname", $user, $pass, $dumpSettings);
+                    // 2nd .sql file dump
+                    try
+                    {   // try to start backup
+                        $mysqldump->start($this->folder.$this->subFolder.'/'.$this->name.'-templates.sql');
+                    } // on fail: catch error
+                    catch (\Exception $e)
+                    {
+                        // output mysqldump error
+                        \YAWK\sys::setSyslog($db, 52, 2, "" . $e->getMessage() . "", 0, 0, 0, 0);
+                    }
+
+                    // db table: template_settings_types
+                    $dumpSettings = array('include-tables' => array(''.$prefix.'template_settings_types'));
+                    // create new mysqldump object
+                    $mysqldump = new \Ifsnop\Mysqldump\Mysqldump("mysql:host=$host;dbname=$dbname", $user, $pass, $dumpSettings);
+                    // 2nd .sql file dump
+                    try
+                    {   // try to start backup
+                        $mysqldump->start($this->folder.$this->subFolder.'/'.$this->name.'-template_settings_types.sql');
+                    }
+                    catch (\Exception $e)
+                    {
+                        // output mysqldump error
+                        \YAWK\sys::setSyslog($db, 52, 2, "" . $e->getMessage() . "", 0, 0, 0, 0);
+                    }
+
+                    // db table: assets
+                    $dumpSettings = array('include-tables' => array(''.$prefix.'assets'));
+                    $dumpSettings['where'] = 'templateID='.$this->id.'';
+                    // create new mysqldump object
+                    $mysqldump = new \Ifsnop\Mysqldump\Mysqldump("mysql:host=$host;dbname=$dbname", $user, $pass, $dumpSettings);
+                    // 2nd .sql file dump
+                    try
+                    {   // try to start backup
+                        $mysqldump->start($this->folder.$this->subFolder.'/'.$this->name.'-assets.sql');
+                    }
+                    catch (\Exception $e)
+                    {
+                        // output mysqldump error
+                        \YAWK\sys::setSyslog($db, 52, 2, "" . $e->getMessage() . "", 0, 0, 0, 0);
+                    }
+
+                    // check, if all files have been written
+                    if (is_file($this->folder.$this->subFolder.'/'.$this->name.'-template_settings_types.sql')
+                    && (is_file($this->folder.$this->subFolder.'/'.$this->name.'-template_settings_types.sql')
+                    && (is_file($this->folder.$this->subFolder.'/'.$this->name.'-template_settings_types.sql')
+                    && (is_file($this->folder.$this->subFolder.'/'.$this->name.'-assets.sql')))))
+                    {
+                        // all files seem to be processed successfully....
+                        // now we're going to zip the whole template folder, containing the .sql files
+
+                        $source = $this->folder.$this->subFolder;
+                        $destination = $this->folder.$this->name.'.zip';
+                        // check if zip extension is loaded
+                        if (extension_loaded('zip'))
+                        {   // ok...
+                            // make sure $source file/folder exists
+                            if (!file_exists($source))
+                            {   // if not
+                                return false;
+                            }
+
+                            // create new zip object
+                            $zip = new \ZipArchive();
+
+                            // make sure to create and open new zip archive
+                            if (!$zip->open($destination, \ZIPARCHIVE::CREATE))
+                            {   // if not
+                                return false;
+                            }
+
+                            // set path slashes correctly
+                            $source = str_replace('\\', '/', realpath($source));
+
+                            // check if $source is a directoy
+                            if (is_dir($source) === true)
+                            {
+                                // run recusrive iterators to store files in array
+                                $elements = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($source), \RecursiveIteratorIterator::SELF_FIRST);
+
+                                // walk through folder
+                                foreach ($elements as $file)
+                                {
+                                    // set path slashes correctly
+                                    $file = str_replace('\\', '/', $file);
+
+                                    // ignore dot folders (. and ..)
+                                    if( in_array(substr($file, strrpos($file, '/')+1), array('.', '..')) )
+                                        continue;
+
+                                    // set file including path
+                                    $file = realpath($file);
+
+                                    // check if current element is a directory
+                                    if (is_dir($file) === true)
+                                    {   // add folder to zip file
+                                        $zip->addEmptyDir(str_replace($source . '/', '', $file . '/'));
+                                    }
+                                    // check if current element is a file
+                                    else if (is_file($file) === true)
+                                    {   // add file to zip archive
+                                        $zip->addFromString(str_replace($source . '/', '', $file), file_get_contents($file));
+                                    }
+                                }
+                            }
+                            // if $source is a file
+                            else if (is_file($source) === true)
+                            {   // add file to zip archive
+                                $zip->addFromString(basename($source), file_get_contents($source));
+                            }
+
+                            // all done, close (and write) zip archive
+                            $zip->close();
+                            if (is_file($destination))
+                            {   // destination zip file is there.
+
+                                // check if template ID is set
+                                if (isset($_GET['id']) && (!empty($_GET['id'])))
+                                {   // set var for JS: downloadArchiveLink (selector)
+                                    $downloadTemplateLink = "#downloadTemplateLink-".$_GET['id'];
+                                    // set var for JS: link to the file to download
+                                    $downloadFile = $destination;
+                                    // dirty lil piece of JS code to emulate the user's click
+                                    // (this avoids that he have to click twice to 1)generate + 2)download)
+                                    echo "
+                                    <script type='text/javascript'>
+                                        $(document).ready(function()
+                                        {   // change href attribute for this archive to direct donwload file
+                                            var oldLink = $('$downloadTemplateLink').attr('href');
+                                            $('$downloadTemplateLink').attr('href', '$downloadFile')
+                                            // emulate a users click to force direct download
+                                            $('$downloadTemplateLink')[0].click();
+                                            // if this is not working, the user have to click on that link.
+                                        });
+                                    </script>";
+                                }
+                                // download file generated, direct download forced...
+                                return true;
+                            }
+                            else
+                                {   // zip not generated
+                                    return false;
+                                }
+                        }
+                        else
+                        {   // zip extension is not loaded
+                            return false;
+                        }
+                    }
+                    else
+                        {   // .sql files not written
+                            return false;
+                        }
                 }
                 else
-                    {   // unknown framework
-                        \YAWK\sys::setSyslog($db, 48, 2, "template <b>$this->name</b> requires framework <b>$this->framework</b> is not supported yet.", $_SESSION['uid'], 0, 0, 0);
-                        return "0";
-                    }
+                {   // unable to include class
+                    \YAWK\sys::setSyslog($db, 52, 2, "unable to backup: failed to include mysqldump class", 0, 0, 0, 0);
+                    return false;
+                }
             }
-            // asset not set, no array or empty
             else
-                {   // it seems that no Bootstrap css is loaded
-                    \YAWK\sys::setSyslog($db, 48, 2, "template <b>$this->name</b> requires <b>$this->framework</b>, but no corresponding asset is loaded.", $_SESSION['uid'], 0, 0, 0);
-                    return "0";
+                {   // mysqldump class not available!
+                    return false;
                 }
         }
     } // ./class template
