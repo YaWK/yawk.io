@@ -3097,27 +3097,31 @@ namespace YAWK {
                             }
                             else
                                 {   // zip not generated
+                                    \YAWK\sys::setSyslog($db, 52, 2, "failed to create template $this->name.zip package - zip file not there", 0, 0, 0, 0);
                                     return false;
                                 }
                         }
                         else
                         {   // zip extension is not loaded
+                            \YAWK\sys::setSyslog($db, 52, 2, "failed to create template .zip package: PHP zip extension not loaded.", 0, 0, 0, 0);
                             return false;
                         }
                     }
                     else
                         {   // .sql files not written
+                            \YAWK\sys::setSyslog($db, 52, 2, "failed to zip .sql files: $this->folder$this->subFolder/$this->name-*.sql not found", 0, 0, 0, 0);
                             return false;
                         }
                 }
                 else
                 {   // unable to include class
-                    \YAWK\sys::setSyslog($db, 52, 2, "unable to backup: failed to include mysqldump class", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 52, 2, "create template .zip package failed: folder $this->folder is not writeable. Please check folder group permissions", 0, 0, 0, 0);
                     return false;
                 }
             }
             else
                 {   // mysqldump class not available!
+                    \YAWK\sys::setSyslog($db, 52, 2, "unable to backup: failed to include mysqldump class", 0, 0, 0, 0);
                     return false;
                 }
         }
