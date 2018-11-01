@@ -24,8 +24,12 @@ namespace YAWK {
         public $name;
         /** * @var array db config array */
         public $config;
-        /** * @var string template folder (root path of all templates */
+        /** * @var string template folder (root path of all templates) */
         public $folder = '../system/templates/';
+        /** * @var string template tmp folder (where uploads will be unpacked) */
+        public $tmpFolder = '../system/templates/tmp/';
+        /** * @var string upload file (including complete path) */
+        public $uploadFile = '';
         /** * @var string template sub folder (template name, eg. ../system/templates/SUBFOLDER */
         public $subFolder;
         /** * @var string positions as string */
@@ -3124,6 +3128,135 @@ namespace YAWK {
                     \YAWK\sys::setSyslog($db, 52, 2, "unable to backup: failed to include mysqldump class", 0, 0, 0, 0);
                     return false;
                 }
+        }
+
+        /**
+         * Upload a template (install / update)
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database object
+         * @param array $postData data that has been sent by upload form
+         * @param array $postFiles uploaded file that has been sent by upload form
+         * @return bool true|false
+         * @annotation upload .zip file, unpack to tmp folder,
+         */
+        public function uploadTemplate($db, $postData, $postFiles, $lang)
+        {
+            // check if param are set and valid...
+            if (!isset($postData)
+            || (empty($postData)
+            || (!is_array($postData))))
+            {   // post data wrong
+                return false;
+            }
+            if (!isset($postFiles['templateFile'])
+            || (empty($postFiles['templateFile'])
+            || (!is_array($postFiles['templateFile']))))
+            {   // post file data wrong
+                return false;
+            }
+
+            /*
+            print_r($postData);
+            print_r($postFiles);
+            exit;
+            */
+
+            // check if template folder is writeable
+            if (is_writeable(dirname($this->folder)))
+            {
+                if (!is_dir(dirname($this->tmpFolder)))
+                {
+                    if (!mkdir($this->tmpFolder))
+                    {
+                        return false;
+                    }
+                }
+
+                if (is_dir(dirname($this->tmpFolder)))
+                {
+                    // uploaded file checks for size, type and file extension
+                    $maxFileSize = \YAWK\filemanager::getUploadMaxFilesize();
+                    $postMaxSize = \YAWK\filemanager::getPostMaxSize();
+
+                    $this->uploadFile = $this->tmpFolder.$postFiles['templateFile']['name'];
+
+                    // check file size
+                    if ($postFiles['templateFile']['size'] > $maxFileSize || $postMaxSize)
+                    {
+                        // calculate and filter current filesize
+                        $currentFileSize = \YAWK\filemanager::sizeFilter($postFiles["templateFile"]["size"], 2);
+                        // file is too large
+                        \YAWK\sys::setSyslog($db, 51, 1, "failed to upload - ".$postFiles['templateFile']['name']." ($currentFileSize) exceeeds post_max_size: $postMaxSize upload_max_filesize: $maxFileSize", 0, 0, 0, 0);
+                        // echo \YAWK\alert::draw("warning", $lang['ERROR'], $lang['FILE_UPLOAD_TOO_LARGE'], "", 4800);
+                    }
+
+                    // check if file type is ZIP
+                    if ($postFiles['templateFile']['type'] !== 'application/x-zip-compressed')
+                    {   // if not, throw alert
+                        \YAWK\sys::setSyslog($db, 51, 1, "failed to upload - ".$postFiles['templateFile']['name']." is not a zip - uploaded filetype: ".$postFiles['templateFile']['type']."", 0, 0, 0, 0);
+                        // \YAWK\alert::draw("danger", $lang['BACKUP_FAILED'], $lang['BACKUP_NOT_A_ZIP_FILE'], "", 6400);
+                    }
+
+                    // check if file extension is zip (or similar)
+                    $fileType = pathinfo($postFiles['templateFile']['tmp_name'],PATHINFO_EXTENSION);
+                    if($fileType != "zip" && $fileType != "ZIP" && $fileType != "7z" && $fileType != "gzip")
+                    {
+                        \YAWK\sys::setSyslog($db, 51, 1, "failed to upload ".$postFiles['templateFile']['name']." - extension $fileType seems not to be a zip file", 0, 0, 0, 0);
+                        // echo \YAWK\alert::draw("warning", $lang['ERROR'], $lang['UPLOAD_ONLY_ZIP_ALLOWED'], "", 4800);
+                    }
+
+                    // check for errors
+                    if ($postFiles['backupFile']['error'] !== 0)
+                    {   // unknown error - upload failed
+                        \YAWK\sys::setSyslog($db, 52, 2, "failed to upload file - unknown error (".$postFiles['templateFile']['error'].") processing file ".$postFiles['templateFile']['name']."", 0, 0, 0, 0);
+                        // echo \YAWK\alert::draw("warning", $lang['ERROR'], $lang['FILE_UPLOAD_FAILED'], "", 4800);
+                    }
+                    else
+                    {   // try to move uploaded file
+                        if (!move_uploaded_file($postFiles['templateFile']['tmp_name'], $this->uploadFile))
+                        {   // throw error msg
+                            \YAWK\sys::setSyslog($db, 52, 2, "failed to move upload file $this->uploadFile to folder ".$postFiles['templateFile']['tmp_name']."", 0, 0, 0, 0);
+                            // echo \YAWK\alert::draw("danger", "$lang[ERROR]", "$this->uploadFile - $lang[FILE_UPLOAD_ERROR]","","4800");
+                        }
+                        else
+                        {   // file upload seem to be successful...
+                            // check if uploaded file is there
+                            if (is_file($this->uploadFile))
+                            {
+                                // here we could check more things - eg latest file timestamp
+
+                                // TODO: 
+                                // process upload:
+                                //  unzip
+                                //  xcopy files
+                                //  read sql files / re-init database
+                                //  recursive delete tmp folder
+
+                                // throw success message
+                                \YAWK\sys::setSyslog($db, 50, 3, "uploaded template package $this->uploadFile successfully", 0, 0, 0, 0);
+                                // echo \YAWK\alert::draw("success", "$lang[UPLOAD_SUCCESSFUL]", "$this->uploadFile $lang[BACKUP_UPLOAD_SUCCESS]","","4800");
+                            }
+                            else
+                            {   // failed to check uploaded file - file not found
+                                \YAWK\sys::setSyslog($db, 51, 2, "failed to check uploaded file - $this->uploadFile not found.", 0, 0, 0, 0);
+                                // echo \YAWK\alert::draw("danger", "$lang[ERROR]", "$this->uploadFile - $lang[FILE_UPLOAD_ERROR]","","4800");
+                            }
+                        }
+                    }
+                }
+                else
+                    {
+                        return false;
+                    }
+            }
+            else
+                {
+                    return false;
+                }
+
+            return true;
         }
     } // ./class template
 } // ./namespace

@@ -26,9 +26,10 @@ $(document).ready(function() {
     } );
 </script>
 <?php
-// check if template download is requested
+// check if param is requested
 if (isset($_GET) && (!empty($_GET)))
 {
+    // ACTION: download
     if (isset($_GET['action']) && ($_GET['action']) === "download")
     {   // check if template folder is set
         if (isset($_GET['folder']) && (!empty($_GET['folder'])))
@@ -52,6 +53,28 @@ if (isset($_GET) && (!empty($_GET)))
         else
             {   // no template folder set
                 die ('no folder sent');
+            }
+    }
+    // ACTION: upload
+    if (isset($_GET['action']) && ($_GET['action']) === "upload")
+    {   // check if post data is set
+        if (isset($_POST) && (!empty($_POST)))
+        {
+            // create new template object
+            $template = new \YAWK\template();
+            // call download template method
+            if ($template->uploadTemplate($db, $_POST, $_FILES, $lang) === true)
+            {   // success
+                \YAWK\alert::draw("success", $lang['TPL_UPLOAD_SUCCESS_TITLE'], $lang['TPL_UPLOAD_SUCCESS_MSG'], "", 2400);
+            }
+            else
+            {   // ERROR: generating download package failed
+                \YAWK\alert::draw("danger", $lang['TPL_UPLOAD_FAILED_TITLE'], $lang['TPL_UPLOAD_FAILED_MSG'], "", 8600);
+            }
+        }
+        else
+            {   // no post data set - throw error
+                \YAWK\alert::draw("danger", $lang['ERROR'], $lang['UPLOAD_FAILED'], "", 8600);
             }
     }
 }
@@ -564,7 +587,7 @@ echo"</section><!-- Main content -->
 <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form enctype="multipart/form-data" action="index.php?page=template-overview&savenewtheme=true" method="POST">
+            <form enctype="multipart/form-data" action="index.php?page=template-overview&action=upload" method="POST">
                 <div class="modal-header">
                     <!-- modal header with close controls -->
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i> </button>
@@ -575,13 +598,23 @@ echo"</section><!-- Main content -->
 
                 <!-- modal body -->
                 <div class="modal-body">
-                    <!-- save to... folder select options -->
+                    <!-- template upload field -->
+                    <input type="hidden" name="MAX_FILE_SIZE" value="67108864">
+                    <input type="file" name="templateFile" id="templateFile" title="<?php echo $lang['TPL_SELECT_FILE']; ?>" class="btn btn-lg btn-default">
+                    <label for="templateFile"><?php echo $lang['POST_MAX_SIZE']; echo \YAWK\filemanager::getPostMaxSize();
+                        echo " &nbsp; / &nbsp; ".$lang['UPLOAD_MAX_SIZE']; echo \YAWK\filemanager::getUploadMaxFilesize(); ?>
+                        &nbsp;<i class="fa fa-question-circle-o text-info" data-placement="auto right" data-toggle="tooltip" title="" data-original-title="<?php echo $lang['UPLOAD_MAX_PHP']; ?>"></i>
+                    </label>
+                    <hr>
+                    <i class="fa fa-exclamation-triangle animated tada"></i> &nbsp;<?php echo $lang['TPL_UPLOAD_HELP']; ?>
+                    <?php echo $lang['TPL_UPLOAD_TIP']; ?>
 
                 </div>
 
                 <!-- modal footer /w submit btn -->
                 <div class="modal-footer">
-                    <input class="btn btn-large btn-success" type="submit" value="<?php echo $lang['TPL_UPLOAD']; ?>">
+                    <input class="btn btn-large btn-default" data-dismiss="modal" aria-hidden="true" type="submit" value="<?php echo $lang['CANCEL']; ?>">
+                    <button class="btn btn-success" type="submit"><i class="fa fa-check"></i> &nbsp;&nbsp;<?php echo $lang['TPL_UPLOAD']; ?></button>
                     <br><br>
                 </div>
             </form>
