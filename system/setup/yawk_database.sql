@@ -11,8 +11,8 @@ CREATE TABLE `cms_assets` (
 
 INSERT INTO `cms_assets` (`id`, `templateID`, `type`, `sortation`, `asset`, `link`) VALUES
 (1, 1, 'js', 1, 'jQuery 1.x', 'system/engines/jquery/jquery-1.12.4.min.js'),
-(2, 1, 'css', 5, 'Bootstrap 3 CSS', 'system/engines/bootstrap/dist/css/bootstrap.min.css'),
-(3, 1, 'js', 6, 'Bootstrap 3 JS', 'system/engines/bootstrap/dist/js/bootstrap.min.js');
+(2, 1, 'css', 5, 'Bootstrap 3 CSS', 'system/engines/bootstrap3/dist/css/bootstrap.min.css'),
+(3, 1, 'js', 6, 'Bootstrap 3 JS', 'system/engines/bootstrap3/dist/js/bootstrap.min.js');
 
 CREATE TABLE `cms_assets_types` (
   `id` int(11) NOT NULL,
