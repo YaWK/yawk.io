@@ -3011,7 +3011,7 @@ namespace YAWK {
                         // all files seem to be processed successfully....
                         // now we're going to zip the whole template folder, containing the .sql files
 
-                        $source = $this->folder.$this->subFolder;
+                        $source = $this->folder.$this->subFolder."/";
                         $destination = $this->folder.$this->name.'.zip';
                         // check if zip extension is loaded
                         if (extension_loaded('zip'))
@@ -3030,6 +3030,7 @@ namespace YAWK {
                             {   // if not
                                 return false;
                             }
+
 
                             // set path slashes correctly
                             $source = str_replace('\\', '/', realpath($source));
@@ -3208,7 +3209,7 @@ namespace YAWK {
                     }
 
                     // check for errors
-                    if ($postFiles['backupFile']['error'] !== 0)
+                    if ($postFiles['templateFile']['error'] !== 0)
                     {   // unknown error - upload failed
                         \YAWK\sys::setSyslog($db, 52, 2, "failed to upload file - unknown error (".$postFiles['templateFile']['error'].") processing file ".$postFiles['templateFile']['name']."", 0, 0, 0, 0);
                         // echo \YAWK\alert::draw("warning", $lang['ERROR'], $lang['FILE_UPLOAD_FAILED'], "", 4800);
@@ -3227,8 +3228,20 @@ namespace YAWK {
                             {
                                 // here we could check more things - eg latest file timestamp
 
-                                // TODO: 
-                                // process upload:
+                                // TODO:
+                                // ok, create new zip object
+                                $zip = new \ZipArchive;
+                                // open zip archive
+                                $res = $zip->open($this->uploadFile);
+                                // if zip open was successful
+                                if ($res === TRUE)
+                                {   // extract zip file
+                                    $zip->extractTo($this->tmpFolder);
+                                    // close zip file
+                                    $zip->close();
+                                }
+
+                                // process upload
                                 //  unzip
                                 //  xcopy files
                                 //  read sql files / re-init database
