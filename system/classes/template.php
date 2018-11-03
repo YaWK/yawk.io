@@ -2911,7 +2911,58 @@ namespace YAWK {
                 $this->id = $templateID;
             }
 
+            if (!is_dir(dirname($this->tmpFolder)))
+            {
+                // check if tmp directory exists...
+                if (!mkdir(dirname($this->tmpFolder)))
+                {   // failed to create tmp folder
+                    // todo: add syslog entry
+                    return false;
+                }
+            }
+
             // params are set, next step:
+            // check if tmp directory exists and is empty
+            if (is_writeable(dirname($this->tmpFolder)))
+            {
+                // prepare temp folder...
+                // PHP 5 >= 5.3.0
+                $iterator = new \FilesystemIterator($this->tmpFolder);
+                // check if directory is empty
+                if ($iterator->valid() === false)
+                {
+                    // tmp folder NOT empty - try to delete containing files
+                    if (\YAWK\filemanager::recursiveRemoveDirectory($this->tmpFolder) === false)
+                    {   // unable to prepare (empty) tmp folder
+                        // todo: add syslog entry
+                        return false;
+                    }
+                }
+
+                // tmp folder is writeable and empty
+
+                // check if subfolder exists...
+                if (!is_dir(dirname($this->tmpFolder.$this->subFolder)))
+                {
+                    // check if tmp directory exists...
+                    if (!mkdir(dirname($this->tmpFolder.$this->subFolder)))
+                    {   // failed to create tmp sub folder
+                        // todo: add syslog entry
+                        return false;
+                    }
+                }
+
+                // next step is to copy the whole template folder into tmp folder
+                if (\YAWK\sys::xcopy($this->folder.$this->subFolder."/", $this->tmpFolder.$this->name) === false)
+                {   // failed to copy template into tmp folder
+                    // todo: add syslog entry
+                }
+
+                // check if template was copied....
+
+
+            }
+
             // dump all .sql data of this template into .sql file
             if (is_file('../system/classes/dbconfig.php'))
             {
@@ -2936,7 +2987,7 @@ namespace YAWK {
                 require_once('../system/engines/mysqldump/Mysqldump.php');
 
                 // check if template folder is writeable
-                if (is_writeable($this->folder))
+                if (is_writeable($this->tmpFolder.$this->name))
                 {
                     // db table: template-settings
                     $dumpSettings = array('include-tables' => array(''.$prefix.'template_settings'));
@@ -2947,7 +2998,7 @@ namespace YAWK {
                     // 1st backup file - all this template settings
                     try
                     {   // try to start backup
-                        $mysqldump->start($this->folder.$this->subFolder.'/'.$this->name.'-template_settings.sql');
+                        $mysqldump->start($this->tmpFolder.$this->name.'/'.$this->name.'-template_settings.sql');
                     }
                     catch (\Exception $e)
                     {
@@ -2963,7 +3014,7 @@ namespace YAWK {
                     // 2nd .sql file dump
                     try
                     {   // try to start backup
-                        $mysqldump->start($this->folder.$this->subFolder.'/'.$this->name.'-templates.sql');
+                        $mysqldump->start($this->tmpFolder.$this->name.'/'.$this->name.'-templates.sql');
                     } // on fail: catch error
                     catch (\Exception $e)
                     {
@@ -2978,7 +3029,7 @@ namespace YAWK {
                     // 2nd .sql file dump
                     try
                     {   // try to start backup
-                        $mysqldump->start($this->folder.$this->subFolder.'/'.$this->name.'-template_settings_types.sql');
+                        $mysqldump->start($this->tmpFolder.$this->name.'/'.$this->name.'-template_settings_types.sql');
                     }
                     catch (\Exception $e)
                     {
@@ -2994,7 +3045,7 @@ namespace YAWK {
                     // 2nd .sql file dump
                     try
                     {   // try to start backup
-                        $mysqldump->start($this->folder.$this->subFolder.'/'.$this->name.'-assets.sql');
+                        $mysqldump->start($this->tmpFolder.$this->name.'/'.$this->name.'-assets.sql');
                     }
                     catch (\Exception $e)
                     {
@@ -3003,22 +3054,44 @@ namespace YAWK {
                     }
 
                     // check, if all files have been written
-                    if (is_file($this->folder.$this->subFolder.'/'.$this->name.'-template_settings_types.sql')
-                    && (is_file($this->folder.$this->subFolder.'/'.$this->name.'-template_settings_types.sql')
-                    && (is_file($this->folder.$this->subFolder.'/'.$this->name.'-template_settings_types.sql')
-                    && (is_file($this->folder.$this->subFolder.'/'.$this->name.'-assets.sql')))))
+                    if (is_file($this->tmpFolder.$this->name.'/'.$this->name.'-template_settings_types.sql')
+                    && (is_file($this->tmpFolder.$this->name.'/'.$this->name.'-template_settings_types.sql')
+                    && (is_file($this->tmpFolder.$this->name.'/'.$this->name.'-template_settings_types.sql')
+                    && (is_file($this->tmpFolder.$this->name.'/'.$this->name.'-assets.sql')))))
                     {
                         // all files seem to be processed successfully....
-                        // now we're going to zip the whole template folder, containing the .sql files
 
-                        $source = $this->folder.$this->subFolder."/";
-                        $destination = $this->folder.$this->name.'.zip';
+                        // set source (path to the affected template)
+                        $source = $this->tmpFolder.$this->name."/";
+                        // set target (path to the zip file that will be generated)
+                        $destination = $this->tmpFolder.$this->name.'.zip';
+
+                        // set data for ini file
+                        $iniData['DATE'] = \YAWK\sys::now();
+                        $iniData['NAME'] = $this->name;
+                        $iniData['FOLDER'] = $this->folder;
+                        $iniData['SUBFOLDER'] = $this->subFolder;
+                        $iniData['TARGET_PATH'] = $this->folder.$this->subFolder."/";
+                        $iniData['FRAMEWORK'] = $this->framework;
+                        $iniData['AUTHOR'] = $this->author;
+                        $iniData['LICENSE'] = $this->license;
+
+                        // write ini file
+                        if (\YAWK\sys::writeIniFile($iniData, $source.$this->name.".ini") === false)
+                        {
+                            // failed to write ini file:
+                            // set syslog entry
+                            return false;
+                        }
+
+                        // next step is to zip the whole template folder, containing all files
+
                         // check if zip extension is loaded
                         if (extension_loaded('zip'))
-                        {   // ok...
-                            // make sure $source file/folder exists
-                            if (!file_exists($source))
-                            {   // if not
+                        {
+                            // make sure $source (template folder) exists
+                            if (!is_dir(dirname($source)))
+                            {   // if folder does not exist
                                 return false;
                             }
 
@@ -3030,7 +3103,6 @@ namespace YAWK {
                             {   // if not
                                 return false;
                             }
-
 
                             // set path slashes correctly
                             $source = str_replace('\\', '/', realpath($source));
@@ -3074,8 +3146,16 @@ namespace YAWK {
 
                             // all done, close (and write) zip archive
                             $zip->close();
+
                             if (is_file($destination))
                             {   // destination zip file is there.
+
+                                // delete all files from tmp folder - except the created zipfile
+                                if (\YAWK\filemanager::recursiveRemoveDirectory($this->tmpFolder.$this->subFolder) === false)
+                                {   // warning: failed to delete tmp files
+                                    // todo: add syslog warning
+                                    // return false;
+                                }
 
                                 // check if template ID is set
                                 if (isset($_GET['id']) && (!empty($_GET['id'])))
@@ -3229,7 +3309,8 @@ namespace YAWK {
                                 // here we could check more things - eg latest file timestamp
 
                                 // TODO:
-                                // ok, create new zip object
+                                // unpack zip file
+                                // create new zip object
                                 $zip = new \ZipArchive;
                                 // open zip archive
                                 $res = $zip->open($this->uploadFile);
