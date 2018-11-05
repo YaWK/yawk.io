@@ -41,7 +41,7 @@ if (isset($_GET) && (!empty($_GET)))
             // create new tpl object
             $template = new \YAWK\template();
             // call download template method
-            if ($template->downloadTemplate($db, $templateFolder, $templateID) === true)
+            if ($template->downloadTemplate($db, $templateFolder, $templateID, $user) === true)
             {   // success
                 \YAWK\alert::draw("success", $lang['TPL_ZIP_CREATED_TITLE'], $lang['TPL_ZIP_CREATED_MSG'], "", 2400);
             }
