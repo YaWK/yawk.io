@@ -252,6 +252,67 @@ namespace YAWK {
             }
         }
 
+
+        /**
+         * load template properties and return as array
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database object
+         * @param int    $id template id to load
+         * @return bool true or false
+         */
+        public function loadPropertiesIntoArray($db, $id)
+        {
+            /** @var $db \YAWK\db $res */
+            $res = $db->query("SELECT * FROM {templates} WHERE id = '" . $id . "'");
+            if ($row = mysqli_fetch_assoc($res))
+            {
+                if (!is_array($row) || (empty($row)))
+                {   // not an array or empty...
+                    return false;
+                }
+                else
+                    {   // return array
+                        return $row;
+                    }
+            }
+            else
+            {   // could not fetch tpl properties, throw error...
+                \YAWK\sys::setSyslog($db, 47, 1, "failed to load properties of template id <b>$id</b> into array", 0, 0, 0, 0);
+                return false;
+            }
+        }
+
+        /**
+         * load template settings of ID and return as array
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database object
+         * @param int    $id template id to load
+         * @return array|false
+         */
+        public function loadAllSettingsIntoArray($db, $id)
+        {
+            /** @var $db \YAWK\db $res */
+            $res = $db->query("SELECT * FROM {template_settings} WHERE templateID = '" . $id . "'");
+            while ($row = mysqli_fetch_assoc($res))
+            {
+                $templateSettings[] = $row;
+            }
+
+            if (isset($templateSettings) && (is_array($templateSettings) && (!empty($templateSettings))))
+            {   // not an array or empty...
+                return $templateSettings;
+            }
+            else
+                {   // could not fetch tpl properties, throw error...
+                    \YAWK\sys::setSyslog($db, 47, 1, "failed to load template_settings of template id <b>$id</b> into array", 0, 0, 0, 0);
+                    return false;
+                }
+        }
+
         /**
          * save new template properties into database
          * @author Daniel Retzl <danielretzl@gmail.com>
@@ -290,6 +351,36 @@ namespace YAWK {
             }
             return true;
         }
+
+
+        /**
+         * load template_settings_types and return as array
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database object
+         * @param int    $id template id to load
+         * @return array|false
+         */
+        public function loadSettingsTypesIntoArray($db)
+        {
+            /** @var $db \YAWK\db $res */
+            $res = $db->query("SELECT * FROM {template_settings_types}");
+            while ($row = mysqli_fetch_assoc($res))
+            {
+                $settingsTypes[] = $row;
+            }
+            if (isset($settingsTypes) && (is_array($settingsTypes) && (!empty($settingsTypes))))
+            {   // all good,
+                return $settingsTypes;
+            }
+            else
+                {   // could not fetch tpl properties, throw error...
+                    \YAWK\sys::setSyslog($db, 47, 1, "failed to load template_settings_types into array", 0, 0, 0, 0);
+                    return false;
+                }
+        }
+
 
         /**
          * return array with all template id's + names.
@@ -933,8 +1024,13 @@ namespace YAWK {
          */
         public static function getAllSettingsIntoArray($db, $user) // get all settings from db like property
         {
+            if (!isset($user) || empty($user))
+            {
+                $user = new \YAWK\user($db);
+            }
             // get template settings
-            if (isset($user)) {   // get template settings for this user
+            if (isset($user))
+            {   // get template settings for this user
                 if ($user->overrideTemplate == 1) {
                     $sql = "SELECT ts.property, ts.value, ts.longValue, ts.valueDefault, ts.type, ts.label, ts.sort, ts.fieldClass, ts.fieldType, ts.placeholder, ts.description, ts.options, ts.activated, ts.icon, ts.heading, ts.subtext
                                        FROM {template_settings} ts
@@ -2783,6 +2879,33 @@ namespace YAWK {
             }
         }
 
+        public function loadActiveAssetsIntoArray($db, $templateID)
+        {
+            /* @var \YAWK\db $db */
+
+            if (isset($templateID) && (!empty($templateID)))
+            {
+                if ($sql = $db->query("SELECT * FROM {assets} WHERE templateID = '" . $templateID . "'"))
+                {   // fetch data
+                    while ($row = mysqli_fetch_assoc($sql)) {   // store data as array
+                        $assets[] = $row;
+                    }
+                }
+                if (isset($assets) && (is_array($assets) && (!empty($assets))))
+                {
+                    return $assets;
+                }
+                else
+                    {
+                        return false;
+                    }
+            }
+            else
+                {   // template ID is not set
+                    return false;
+                }
+        }
+
 
         /**
          * copy template settings into a new template
@@ -2876,339 +2999,6 @@ namespace YAWK {
                 \YAWK\sys::setSyslog($db, 48, 2, "template <b>$this->name</b> requires <b>$this->framework</b>, but no corresponding asset is loaded.", $_SESSION['uid'], 0, 0, 0);
                 return "0";
             }
-        }
-
-        /**
-         * Create a zip file from template and force direct download
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
-         * @param object $db database
-         * @param string $templateFolder the template folder to zip + download
-         * @param int $templateID ID of the template to process
-         * @return bool true|false
-         * @annotation dump database settings into .sql files, zip tpl folder and serve .zip for direct download
-         */
-        public function downloadTemplate($db, $templateFolder, $templateID)
-        {
-            // check if template folder is set and valid
-            if (!isset($templateFolder) || (empty($templateFolder) || (!is_string($templateFolder))))
-            {   // required param not set
-                return false;
-            }
-            else
-            {   // set template folder property
-                $this->subFolder = $templateFolder;
-                $this->name = $templateFolder;
-            }
-            // check if template ID is set and valid
-            if (!isset($templateID) || (empty($templateID) || (!is_numeric($templateID))))
-            {   // required param not set
-                return false;
-            }
-            else
-            {   // set template ID property
-                $this->id = $templateID;
-            }
-
-            if (!is_dir(dirname($this->tmpFolder)))
-            {
-                // check if tmp directory exists...
-                if (!mkdir(dirname($this->tmpFolder)))
-                {   // failed to create tmp folder
-                    // todo: add syslog entry
-                    return false;
-                }
-            }
-
-            // params are set, next step:
-            // check if tmp directory exists and is empty
-            if (is_writeable(dirname($this->tmpFolder)))
-            {
-                // prepare temp folder...
-                // PHP 5 >= 5.3.0
-                $iterator = new \FilesystemIterator($this->tmpFolder);
-                // check if directory is empty
-                if ($iterator->valid() === false)
-                {
-                    // tmp folder NOT empty - try to delete containing files
-                    if (\YAWK\filemanager::recursiveRemoveDirectory($this->tmpFolder) === false)
-                    {   // unable to prepare (empty) tmp folder
-                        // todo: add syslog entry
-                        return false;
-                    }
-                }
-
-                // tmp folder is writeable and empty
-
-                // check if subfolder exists...
-                if (!is_dir(dirname($this->tmpFolder.$this->subFolder)))
-                {
-                    // check if tmp directory exists...
-                    if (!mkdir(dirname($this->tmpFolder.$this->subFolder)))
-                    {   // failed to create tmp sub folder
-                        // todo: add syslog entry
-                        return false;
-                    }
-                }
-
-                // next step is to copy the whole template folder into tmp folder
-                if (\YAWK\sys::xcopy($this->folder.$this->subFolder."/", $this->tmpFolder.$this->name) === false)
-                {   // failed to copy template into tmp folder
-                    // todo: add syslog entry
-                }
-
-                // check if template was copied....
-
-
-            }
-
-            // dump all .sql data of this template into .sql file
-            if (is_file('../system/classes/dbconfig.php'))
-            {
-                // get database configuration
-                require("../system/classes/dbconfig.php");
-                // set configuration vars for mysqldump-php
-                $host = $this->config['server'];
-                $user = $this->config['username'];
-                $pass = $this->config['password'];
-                $dbname = $this->config['dbname'];
-                $prefix = $this->config['prefix'];
-            }
-            else
-            {   // unable to get db config
-                return false;
-            }
-
-            // check if mysqldump class is there
-            if (is_file('../system/engines/mysqldump/Mysqldump.php'))
-            {
-                // ok, include class
-                require_once('../system/engines/mysqldump/Mysqldump.php');
-
-                // check if template folder is writeable
-                if (is_writeable($this->tmpFolder.$this->name))
-                {
-                    // db table: template-settings
-                    $dumpSettings = array('include-tables' => array(''.$prefix.'template_settings'));
-                    // export settings for this template ID only:
-                    $dumpSettings['where'] = 'templateID='.$this->id.'';
-                    // create new mysqldump object
-                    $mysqldump = new \Ifsnop\Mysqldump\Mysqldump("mysql:host=$host;dbname=$dbname", $user, $pass, $dumpSettings);
-                    // 1st backup file - all this template settings
-                    try
-                    {   // try to start backup
-                        $mysqldump->start($this->tmpFolder.$this->name.'/'.$this->name.'-template_settings.sql');
-                    }
-                    catch (\Exception $e)
-                    {
-                        // output mysqldump error
-                        \YAWK\sys::setSyslog($db, 52, 2, "" . $e->getMessage() . "", 0, 0, 0, 0);
-                    }
-
-                    // db table: templates
-                    $dumpSettings = array('include-tables' => array(''.$prefix.'templates'));
-                    $dumpSettings['where'] = 'id='.$this->id.'';
-                    // create new mysqldump object
-                    $mysqldump = new \Ifsnop\Mysqldump\Mysqldump("mysql:host=$host;dbname=$dbname", $user, $pass, $dumpSettings);
-                    // 2nd .sql file dump
-                    try
-                    {   // try to start backup
-                        $mysqldump->start($this->tmpFolder.$this->name.'/'.$this->name.'-templates.sql');
-                    } // on fail: catch error
-                    catch (\Exception $e)
-                    {
-                        // output mysqldump error
-                        \YAWK\sys::setSyslog($db, 52, 2, "" . $e->getMessage() . "", 0, 0, 0, 0);
-                    }
-
-                    // db table: template_settings_types
-                    $dumpSettings = array('include-tables' => array(''.$prefix.'template_settings_types'));
-                    // create new mysqldump object
-                    $mysqldump = new \Ifsnop\Mysqldump\Mysqldump("mysql:host=$host;dbname=$dbname", $user, $pass, $dumpSettings);
-                    // 2nd .sql file dump
-                    try
-                    {   // try to start backup
-                        $mysqldump->start($this->tmpFolder.$this->name.'/'.$this->name.'-template_settings_types.sql');
-                    }
-                    catch (\Exception $e)
-                    {
-                        // output mysqldump error
-                        \YAWK\sys::setSyslog($db, 52, 2, "" . $e->getMessage() . "", 0, 0, 0, 0);
-                    }
-
-                    // db table: assets
-                    $dumpSettings = array('include-tables' => array(''.$prefix.'assets'));
-                    $dumpSettings['where'] = 'templateID='.$this->id.'';
-                    // create new mysqldump object
-                    $mysqldump = new \Ifsnop\Mysqldump\Mysqldump("mysql:host=$host;dbname=$dbname", $user, $pass, $dumpSettings);
-                    // 2nd .sql file dump
-                    try
-                    {   // try to start backup
-                        $mysqldump->start($this->tmpFolder.$this->name.'/'.$this->name.'-assets.sql');
-                    }
-                    catch (\Exception $e)
-                    {
-                        // output mysqldump error
-                        \YAWK\sys::setSyslog($db, 52, 2, "" . $e->getMessage() . "", 0, 0, 0, 0);
-                    }
-
-                    // check, if all files have been written
-                    if (is_file($this->tmpFolder.$this->name.'/'.$this->name.'-template_settings_types.sql')
-                    && (is_file($this->tmpFolder.$this->name.'/'.$this->name.'-template_settings_types.sql')
-                    && (is_file($this->tmpFolder.$this->name.'/'.$this->name.'-template_settings_types.sql')
-                    && (is_file($this->tmpFolder.$this->name.'/'.$this->name.'-assets.sql')))))
-                    {
-                        // all files seem to be processed successfully....
-
-                        // set source (path to the affected template)
-                        $source = $this->tmpFolder.$this->name."/";
-                        // set target (path to the zip file that will be generated)
-                        $destination = $this->tmpFolder.$this->name.'.zip';
-
-                        // set data for ini file
-                        $iniData['DATE'] = \YAWK\sys::now();
-                        $iniData['NAME'] = $this->name;
-                        $iniData['FOLDER'] = $this->folder;
-                        $iniData['SUBFOLDER'] = $this->subFolder;
-                        $iniData['TARGET_PATH'] = $this->folder.$this->subFolder."/";
-                        $iniData['FRAMEWORK'] = $this->framework;
-                        $iniData['AUTHOR'] = $this->author;
-                        $iniData['LICENSE'] = $this->license;
-
-                        // write ini file
-                        if (\YAWK\sys::writeIniFile($iniData, $source.$this->name.".ini") === false)
-                        {
-                            // failed to write ini file:
-                            // set syslog entry
-                            return false;
-                        }
-
-                        // next step is to zip the whole template folder, containing all files
-
-                        // check if zip extension is loaded
-                        if (extension_loaded('zip'))
-                        {
-                            // make sure $source (template folder) exists
-                            if (!is_dir(dirname($source)))
-                            {   // if folder does not exist
-                                return false;
-                            }
-
-                            // create new zip object
-                            $zip = new \ZipArchive();
-
-                            // make sure to create and open new zip archive
-                            if (!$zip->open($destination, \ZIPARCHIVE::CREATE))
-                            {   // if not
-                                return false;
-                            }
-
-                            // set path slashes correctly
-                            $source = str_replace('\\', '/', realpath($source));
-
-                            // check if $source is a directoy
-                            if (is_dir($source) === true)
-                            {
-                                // run recusrive iterators to store files in array
-                                $elements = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($source), \RecursiveIteratorIterator::SELF_FIRST);
-
-                                // walk through folder
-                                foreach ($elements as $file)
-                                {
-                                    // set path slashes correctly
-                                    $file = str_replace('\\', '/', $file);
-
-                                    // ignore dot folders (. and ..)
-                                    if( in_array(substr($file, strrpos($file, '/')+1), array('.', '..')) )
-                                        continue;
-
-                                    // set file including path
-                                    $file = realpath($file);
-
-                                    // check if current element is a directory
-                                    if (is_dir($file) === true)
-                                    {   // add folder to zip file
-                                        $zip->addEmptyDir(str_replace($source . '/', '', $file . '/'));
-                                    }
-                                    // check if current element is a file
-                                    else if (is_file($file) === true)
-                                    {   // add file to zip archive
-                                        $zip->addFromString(str_replace($source . '/', '', $file), file_get_contents($file));
-                                    }
-                                }
-                            }
-                            // if $source is a file
-                            else if (is_file($source) === true)
-                            {   // add file to zip archive
-                                $zip->addFromString(basename($source), file_get_contents($source));
-                            }
-
-                            // all done, close (and write) zip archive
-                            $zip->close();
-
-                            if (is_file($destination))
-                            {   // destination zip file is there.
-
-                                // delete all files from tmp folder - except the created zipfile
-                                if (\YAWK\filemanager::recursiveRemoveDirectory($this->tmpFolder.$this->subFolder) === false)
-                                {   // warning: failed to delete tmp files
-                                    // todo: add syslog warning
-                                    // return false;
-                                }
-
-                                // check if template ID is set
-                                if (isset($_GET['id']) && (!empty($_GET['id'])))
-                                {   // set var for JS: downloadArchiveLink (selector)
-                                    $downloadTemplateLink = "#downloadTemplateLink-".$_GET['id'];
-                                    // set var for JS: link to the file to download
-                                    $downloadFile = $destination;
-                                    // dirty lil piece of JS code to emulate the user's click
-                                    // (this avoids that he have to click twice to 1)generate + 2)download)
-                                    echo "
-                                    <script type='text/javascript'>
-                                        $(document).ready(function()
-                                        {   // change href attribute for this archive to direct donwload file
-                                            var oldLink = $('$downloadTemplateLink').attr('href');
-                                            $('$downloadTemplateLink').attr('href', '$downloadFile')
-                                            // emulate a users click to force direct download
-                                            $('$downloadTemplateLink')[0].click();
-                                            // if this is not working, the user have to click on that link.
-                                        });
-                                    </script>";
-                                }
-                                // download file generated, direct download forced...
-                                return true;
-                            }
-                            else
-                                {   // zip not generated
-                                    \YAWK\sys::setSyslog($db, 52, 2, "failed to create template $this->name.zip package - zip file not there", 0, 0, 0, 0);
-                                    return false;
-                                }
-                        }
-                        else
-                        {   // zip extension is not loaded
-                            \YAWK\sys::setSyslog($db, 52, 2, "failed to create template .zip package: PHP zip extension not loaded.", 0, 0, 0, 0);
-                            return false;
-                        }
-                    }
-                    else
-                        {   // .sql files not written
-                            \YAWK\sys::setSyslog($db, 52, 2, "failed to zip .sql files: $this->folder$this->subFolder/$this->name-*.sql not found", 0, 0, 0, 0);
-                            return false;
-                        }
-                }
-                else
-                {   // unable to include class
-                    \YAWK\sys::setSyslog($db, 52, 2, "create template .zip package failed: folder $this->folder is not writeable. Please check folder group permissions", 0, 0, 0, 0);
-                    return false;
-                }
-            }
-            else
-                {   // mysqldump class not available!
-                    \YAWK\sys::setSyslog($db, 52, 2, "unable to backup: failed to include mysqldump class", 0, 0, 0, 0);
-                    return false;
-                }
         }
 
         /**
@@ -3309,8 +3099,7 @@ namespace YAWK {
                                 // here we could check more things - eg latest file timestamp
 
                                 // TODO:
-                                // unpack zip file
-                                // create new zip object
+                                // create zip object + extract to tmp folder
                                 $zip = new \ZipArchive;
                                 // open zip archive
                                 $res = $zip->open($this->uploadFile);
@@ -3351,6 +3140,276 @@ namespace YAWK {
                 }
 
             return true;
+        }
+
+        /**
+         * Create a zip file from template and force direct download
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param string $templateFolder the template folder to zip + download
+         * @param int $templateID ID of the template to process
+         * @param object $user user object
+         * @return bool true|false
+         * @annotation dump database settings into .sql files, zip tpl folder and serve .zip for direct download
+         */
+        public function downloadTemplate($db, $templateFolder, $templateID, $user)
+        {
+            // check if template folder is set and valid
+            if (!isset($templateFolder) || (empty($templateFolder) || (!is_string($templateFolder))))
+            {   // required param not set
+                return false;
+            }
+            else
+            {   // set template folder property
+                $this->subFolder = $templateFolder;
+                $this->name = $templateFolder;
+            }
+            // check if template ID is set and valid
+            if (!isset($templateID) || (empty($templateID) || (!is_numeric($templateID))))
+            {   // required param not set
+                return false;
+            }
+            else
+            {   // set template ID property
+                $this->id = $templateID;
+            }
+
+            if (!is_dir(dirname($this->tmpFolder)))
+            {
+                // check if tmp directory exists...
+                if (!mkdir(dirname($this->tmpFolder)))
+                {   // failed to create tmp folder
+                    // todo: add syslog entry
+                    return false;
+                }
+            }
+
+            // params are set, next step:
+            // check if tmp directory exists and is empty
+            if (is_writeable(dirname($this->tmpFolder)))
+            {
+                // check if subfolder exists...
+                if (!is_dir(dirname($this->tmpFolder.$this->subFolder)))
+                {
+                    // check if tmp directory exists...
+                    if (!mkdir(dirname($this->tmpFolder.$this->subFolder)))
+                    {   // failed to create tmp sub folder
+                        // todo: add syslog entry
+                        return false;
+                    }
+                }
+
+                // next step is to copy the whole template folder into tmp folder
+                if (\YAWK\sys::xcopy($this->folder.$this->subFolder."/", $this->tmpFolder.$this->name) === false)
+                {   // failed to copy template into tmp folder
+                    // todo: add syslog entry
+                }
+
+                // check if template folder is writeable
+                if (is_writeable($this->tmpFolder.$this->name))
+                {
+                    // GET TEMPLATE DEPENDING DATABASE DATA
+                    // get current template data
+                    $templateData = self::loadPropertiesIntoArray($db, $this->id);
+                    $templateAssets = self::loadActiveAssetsIntoArray($db, $this->id);
+                    $templateSettings = self::loadAllSettingsIntoArray($db, $this->id);
+                    $templateSettingsTypes = self::loadSettingsTypesIntoArray($db);
+
+                    // encode arrays to JSON
+                    $templateData = json_encode($templateData);
+                    $templateAssets = json_encode($templateAssets);
+                    $templateSettings = json_encode($templateSettings);
+                    $templateSettingsTypes = json_encode($templateSettingsTypes);
+
+                    // write templates.json
+                    if (!file_put_contents($this->tmpFolder.$this->name."/"."templates.json", $templateData))
+                    {
+                        // todo: add syslog - failed to write templates.json
+                    }
+                    // write assets.json
+                    if (!file_put_contents($this->tmpFolder.$this->name."/"."assets.json", $templateAssets))
+                    {
+                        // todo: add syslog - failed to write assets.json
+                    }
+                    // write template_settings.json
+                    if (!file_put_contents($this->tmpFolder.$this->name."/"."template_settings.json", $templateSettings))
+                    {
+                        // todo: add syslog - failed to write template_settings.json
+                    }
+                    // write template_settings_types.json
+                    if (!file_put_contents($this->tmpFolder.$this->name."/"."template_settings_types.json", $templateSettingsTypes))
+                    {
+                        // todo: add syslog - failed to write template_settings_types.json
+                    }
+
+                    // get template properties
+                    $this->loadProperties($db, $this->id);
+                    // get year only from release date
+                    $year = (substr($this->releaseDate, 0, 4));
+                    // include class
+                    require_once('../system/classes/licenses.php');
+                    // create license object
+                    $license = new \YAWK\licenses($this->license, $this->description, $year, $this->author, $this->tmpFolder.$this->name."/");
+                    // write license file
+                    if ($license->writeLicenseFile() === false)
+                    {
+                        // todo: add syslog - failed to write license file
+                    }
+                }
+
+                // check if .json files have been written...
+                if (is_file($this->tmpFolder.$this->name.'/assets.json')
+                && (is_file($this->tmpFolder.$this->name.'/templates.json')
+                && (is_file($this->tmpFolder.$this->name.'/template_settings.json')
+                && (is_file($this->tmpFolder.$this->name.'/template_settings_types.json')))))
+                {
+                    // ok, all files seem to be processed successfully
+
+                    // set source (path to the affected template)
+                    $source = $this->tmpFolder.$this->name."/";
+                    // set target (path to the zip file that will be generated)
+                    $destination = $this->tmpFolder.$this->name.'.zip';
+
+                    // set data for ini file
+                    $iniData['DATE'] = \YAWK\sys::now();
+                    $iniData['NAME'] = $this->name;
+                    $iniData['FOLDER'] = $this->folder;
+                    $iniData['SUBFOLDER'] = $this->subFolder;
+                    $iniData['TARGET_PATH'] = $this->folder.$this->subFolder."/";
+                    $iniData['ID'] = $this->id;
+                    $iniData['FRAMEWORK'] = $this->framework;
+                    $iniData['AUTHOR'] = $this->author;
+                    $iniData['LICENSE'] = $this->license;
+
+                    // write ini file
+                    if (\YAWK\sys::writeIniFile($iniData, $source.$this->name.".ini") === false)
+                    {
+                        // failed to write ini file:
+                        // todo: set syslog entry
+                        return false;
+                    }
+
+                    // next step is to zip the whole template folder, containing all files
+
+                    // check if zip extension is loaded
+                    if (extension_loaded('zip'))
+                    {
+                        // make sure $source (template folder) exists
+                        if (!is_dir(dirname($source)))
+                        {   // if folder does not exist
+                            return false;
+                        }
+
+                        // create new zip object
+                        $zip = new \ZipArchive();
+
+                        // make sure to create and open new zip archive
+                        if (!$zip->open($destination, \ZIPARCHIVE::CREATE))
+                        {   // if not
+                            return false;
+                        }
+
+                        // set path slashes correctly
+                        $source = str_replace('\\', '/', realpath($source));
+
+                        // check if $source is a directoy
+                        if (is_dir($source) === true)
+                        {
+                            // run recusrive iterators to store files in array
+                            $elements = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($source), \RecursiveIteratorIterator::SELF_FIRST);
+
+                            // walk through folder
+                            foreach ($elements as $file)
+                            {
+                                // set path slashes correctly
+                                $file = str_replace('\\', '/', $file);
+
+                                // ignore dot folders (. and ..)
+                                if( in_array(substr($file, strrpos($file, '/')+1), array('.', '..')) )
+                                    continue;
+
+                                // set file including path
+                                $file = realpath($file);
+
+                                // check if current element is a directory
+                                if (is_dir($file) === true)
+                                {   // add folder to zip file
+                                    $zip->addEmptyDir(str_replace($source . '/', '', $file . '/'));
+                                }
+                                // check if current element is a file
+                                else if (is_file($file) === true)
+                                {   // add file to zip archive
+                                    $zip->addFromString(str_replace($source . '/', '', $file), file_get_contents($file));
+                                }
+                            }
+                        }
+                        // if $source is a file
+                        else if (is_file($source) === true)
+                        {   // add file to zip archive
+                            $zip->addFromString(basename($source), file_get_contents($source));
+                        }
+
+                        // all done, close (and write) zip archive
+                        $zip->close();
+
+                        if (is_file($destination))
+                        {   // destination zip file is there.
+
+                            // delete all files from tmp folder - except the created zipfile
+                            if (\YAWK\filemanager::recursiveRemoveDirectory($this->tmpFolder.$this->subFolder) === false)
+                            {   // warning: failed to delete tmp files
+                                // todo: add syslog entry
+                                // return false;
+                            }
+
+                            // check if template ID is set
+                            if (isset($_GET['id']) && (!empty($_GET['id'])))
+                            {   // set var for JS: downloadArchiveLink (selector)
+                                $downloadTemplateLink = "#downloadTemplateLink-".$_GET['id'];
+                                // set var for JS: link to the file to download
+                                $downloadFile = $destination;
+                                // dirty lil piece of JS code to emulate the user's click
+                                // (this avoids that he have to click twice to 1)generate + 2)download)
+                                echo "
+                                    <script type='text/javascript'>
+                                        $(document).ready(function()
+                                        {   // change href attribute for this archive to direct donwload file
+                                            var oldLink = $('$downloadTemplateLink').attr('href');
+                                            $('$downloadTemplateLink').attr('href', '$downloadFile')
+                                            // emulate a users click to force direct download
+                                            $('$downloadTemplateLink')[0].click();
+                                            // if this is not working, the user have to click on that link.
+                                        });
+                                    </script>";
+                            }
+                            // download file generated, direct download forced...
+                            return true;
+                        }
+                        else
+                        {   // zip not generated
+                            \YAWK\sys::setSyslog($db, 52, 2, "failed to create template $this->name.zip package - zip file not there", 0, 0, 0, 0);
+                            return false;
+                        }
+                    }
+                    else
+                    {   // zip extension is not loaded
+                        \YAWK\sys::setSyslog($db, 52, 2, "failed to create template .zip package: PHP zip extension not loaded.", 0, 0, 0, 0);
+                        return false;
+                    }
+                }
+                else
+                {   // .sql files not written
+                    \YAWK\sys::setSyslog($db, 52, 2, ".json files missing: $this->folder$this->subFolder/*.json not found", 0, 0, 0, 0);
+                    return false;
+                }
+            }
+            else
+            {   // unable to include class
+                \YAWK\sys::setSyslog($db, 52, 2, "create template .zip package failed: folder $this->folder is not writeable. Please check folder group permissions", 0, 0, 0, 0);
+                return false;
+            }
         }
     } // ./class template
 } // ./namespace
