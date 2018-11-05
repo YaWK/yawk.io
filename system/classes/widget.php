@@ -370,13 +370,24 @@ namespace YAWK {
                         if ($setting['fieldType'] === "input")
                         {    // draw an input field
                             $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
+                            // check if placeholder is set in language array
+                            if (isset($lang[$placeholder]))
+                            {   // if so, set placeholder
+                                $placeholder = $lang[$placeholder];
+                            }
+                            else
+                                {   // leave empty if placeholder does not exist in language array
+                                    $placeholder = '';
+                                }
+                            // set icon, heading and subtext markup
                             if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
                             {
                                 echo "<h3>$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h3>";
                             }
+                            // output input text field
                             echo "<label for=\"$setting[property]\">$setting[label]&nbsp;$setting[description]</label>
-                                  <input type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
-										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\">";
+                                  <input type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" 
+                                  name=\"$setting[property]\" value=\"$setting[value]\" placeholder=\"$placeholder\">";
                         }
 
                         /* COLORPICKER TEXT FIELD */
