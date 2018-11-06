@@ -3028,12 +3028,6 @@ namespace YAWK {
                 return false;
             }
 
-            /*
-            print_r($postData);
-            print_r($postFiles);
-            exit;
-            */
-
             // check if template folder is writeable
             if (is_writeable(dirname($this->folder)))
             {
@@ -3045,6 +3039,7 @@ namespace YAWK {
                     }
                 }
 
+                // check if tmp folder exits
                 if (is_dir(dirname($this->tmpFolder)))
                 {
                     // uploaded file checks for size, type and file extension
@@ -3111,8 +3106,74 @@ namespace YAWK {
                                     $zip->close();
                                 }
 
-                                // process upload
-                                //  unzip
+                                // check and read .ini file
+                                if (is_file($this->tmpFolder.'template.ini'))
+                                {
+                                    // parse ini file into array
+                                    if ($iniFile = parse_ini_file($this->tmpFolder."template.ini") === false)
+                                    {   // unable to parse ini file
+                                        // todo: add syslog: failed to parse ini
+                                        return false;
+                                    }
+                                }
+                                else
+                                    {   // ini file not there
+                                        // todo: add syslog: template.ini not found
+                                        return false;
+                                    }
+
+                                // check if assets.json exists
+                                if (is_file($this->tmpFolder.'assets.json'))
+                                {   // read and decode json file into array
+                                    $assets = json_decode(file_get_contents($this->tmpFolder.'assets.json'), true);
+                                }
+                                else
+                                    {   //
+                                        $assets = '';
+                                    }
+
+                                if (is_file($this->tmpFolder.'template_settings.json'))
+                                {
+                                    $templateSettings = json_decode(file_get_contents($this->tmpFolder.'template_settings.json'), true);
+                                }
+                                else
+                                    {
+                                        $templateSettings = '';
+                                    }
+
+                                if (is_file($this->tmpFolder.'template_settings_types.json'))
+                                {
+                                    $templateSettingsTypes = json_decode(file_get_contents($this->tmpFolder.'template_settings_types.json'), true);
+                                }
+                                else
+                                    {
+                                        $templateSettingsTypes = '';
+                                    }
+
+                                if (is_file($this->tmpFolder.'templates.json'))
+                                {
+                                    $templates = json_decode(file_get_contents($this->tmpFolder.'templates.json'), true);
+                                }
+                                else
+                                    {
+                                        $templates = '';
+                                    }
+
+                                print_r($assets);
+                                print_r($templates);
+                                print_r($templateSettings);
+                                print_r($templateSettingsTypes);
+                                exit;
+
+                                // check if template with same name exists
+
+                                // if yes, which ID got this template?
+                                // manipulate arrays and change template ID to the one that was found
+
+                                // if no: add template base data; retrieve (new) ID
+                                // manipulate arrays and change template ID to the (new) one that was found
+
+
                                 //  xcopy files
                                 //  read sql files / re-init database
                                 //  recursive delete tmp folder
@@ -3130,7 +3191,7 @@ namespace YAWK {
                     }
                 }
                 else
-                    {
+                    {   // tmp folder does not exist
                         return false;
                     }
             }
@@ -3284,7 +3345,7 @@ namespace YAWK {
                     $iniData['LICENSE'] = $this->license;
 
                     // write ini file
-                    if (\YAWK\sys::writeIniFile($iniData, $source.$this->name.".ini") === false)
+                    if (\YAWK\sys::writeIniFile($iniData, $source."template.ini") === false)
                     {
                         // failed to write ini file:
                         // todo: set syslog entry
