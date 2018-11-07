@@ -2483,7 +2483,8 @@ ALTER TABLE `cms_syslog_categories`
   ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `cms_templates`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id` (`id`);
 
 ALTER TABLE `cms_template_settings`
   ADD PRIMARY KEY (`id`);
@@ -2563,7 +2564,7 @@ ALTER TABLE `cms_syslog`
 ALTER TABLE `cms_syslog_categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 ALTER TABLE `cms_templates`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 ALTER TABLE `cms_template_settings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1044;
 ALTER TABLE `cms_template_settings_types`
