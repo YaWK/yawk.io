@@ -78,6 +78,39 @@ namespace YAWK {
         }
 
         /**
+         * Check if a template with given name already exists, return true or false
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db
+         * @param string $name
+         * @return bool true|false
+         */
+        public function checkIfTemplateAlreadyExists($db, $name)
+        {
+            if (isset($name) && (!empty($name) && (is_string($name))))
+            {
+                $name = strip_tags($name);
+
+                $result = $db->query("SELECT name FROM {templates} WHERE name = '$name'");
+                if($result->num_rows == 0)
+                {
+                    // template not found
+                    return false;
+                }
+                else
+                    {
+                        // template aready exists
+                        return true;
+                    }
+            }
+            else
+                {   // template param not set, empty or wrong type
+                    return false;
+                }
+        }
+
+        /**
          * switch all positions indicators on or off
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
@@ -3159,23 +3192,49 @@ namespace YAWK {
                                         $templates = '';
                                     }
 
+                                /*
                                 print_r($assets);
                                 print_r($templates);
                                 print_r($templateSettings);
                                 print_r($templateSettingsTypes);
                                 exit;
+                                */
 
                                 // check if template with same name exists
+                                if ($this->checkIfTemplateAlreadyExists($db, $iniFile['NAME']) === false)
+                                {
+                                    // TEMPLATE DOES NOT EXIST YET - INSTALL IT!
+                                    //  1.) add template to templates database
+                                    //  2.) retrieve ID of this new added template
+                                    //  3.) manipulate assets + template_settings arrays
+                                    //      (means: change template ID to the new created one)
+                                    //
+                                    //  4.) INSERT data of these arrays into related db tables
+                                    //  5.) delete json files from tmp folder (unwanted in target)
+                                    //  6.) delete ini file (unwanted in target)
+                                    //  7.) next step - xcopy files
+                                    //  -fin- template installed - if all went good
 
-                                // if yes, which ID got this template?
-                                // manipulate arrays and change template ID to the one that was found
+                                    // step 1.) add template to templates database
 
-                                // if no: add template base data; retrieve (new) ID
-                                // manipulate arrays and change template ID to the (new) one that was found
+                                }
+                                else
+                                    {
+                                        // TEMPLATE ALREADY EXISTS - OVERWRITE IT!
+                                        //  1.) check, which ID got this template?
+                                        //  2.) manipulate assets + template_settings arrays
+                                        //      (means: change template ID to the one of the existing template that was found)
+                                        //
+                                        //  4.) UPDATE data of these arrays into related db tables
+                                        //  5.) delete json files from tmp folder (unwanted in target)
+                                        //  6.) delete ini file (unwanted in target)
+                                        //  7.) next step - xcopy files
+                                        //  -fin- template installed - if all went good
+                                    }
+
 
 
                                 //  xcopy files
-                                //  read sql files / re-init database
                                 //  recursive delete tmp folder
 
                                 // throw success message
