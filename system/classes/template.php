@@ -88,19 +88,29 @@ namespace YAWK {
          */
         public function checkIfTemplateAlreadyExists($db, $name)
         {
+            // check if name is set, not empty and valid type
             if (isset($name) && (!empty($name) && (is_string($name))))
             {
+                // strip unwanted code
                 $name = strip_tags($name);
 
+                // check if template is already in database
                 $result = $db->query("SELECT name FROM {templates} WHERE name = '$name'");
+                // if there are no rows
                 if($result->num_rows == 0)
-                {
-                    // template not found
-                    return false;
+                {   // template not found in database...
+                    // there should also be no folder with this name, lets check this
+                    if (!is_dir(dirname('../system/templates/$name')))
+                    {   // directory does not exist!
+                        return false;
+                    }
+                    else
+                        {   // template folder already exists
+                            return true;
+                        }
                 }
                 else
-                    {
-                        // template aready exists
+                    {   // template aready exists
                         return true;
                     }
             }
