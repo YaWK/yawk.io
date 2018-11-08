@@ -18,6 +18,8 @@ namespace YAWK {
     {
         /** * @var int template ID */
         public $id;
+        /** * @var int last added ID */
+        public $lastID;
         /** * @var int 0|1 is this template active? */
         public $active;
         /** * @var string template name */
@@ -229,14 +231,13 @@ namespace YAWK {
 
             // check if new tpl folder already exists
             if (file_exists("../system/templates/$new_template/")) {   // overwrite data
-                \YAWK\sys::full_copy("../system/templates/yawk-bootstrap3", "../system/templates/$new_template");
+                \YAWK\sys::full_copy("../system/templates/$template->name", "../system/templates/$new_template");
             } else {   // copy data into new template directory
-                \YAWK\sys::full_copy("../system/templates/yawk-bootstrap3", "../system/templates/$new_template");
+                \YAWK\sys::full_copy("../system/templates/$template->name", "../system/templates/$new_template");
             }
 
-            if ($res = $db->query("INSERT INTO {templates} (id, name, description, releaseDate, author, authorUrl, weblink, modifyDate, version, license)
-  	                               VALUES('" . $newID . "', 
-  	                                      '" . $new_template . "', 
+            if ($res = $db->query("INSERT INTO {templates} (name, description, releaseDate, author, authorUrl, weblink, modifyDate, version, license)
+  	                               VALUES('" . $new_template . "', 
   	                                      '" . $description . "',
   	                                      '" . $now . "',
   	                                      '" . $author . "',
@@ -245,14 +246,16 @@ namespace YAWK {
   	                                      '" . $now . "',
   	                                      '" . $version . "',
   	                                      '" . $license . "')")
-            ) {   // success
-                // do something
-                // store each setting with new tpl id in database
-            } else {   // q failed, throw error
-                \YAWK\sys::setSyslog($db, 47, 1, "failed to save <b>$new_template</b> as new template ", 0, 0, 0, 0);
-                \YAWK\alert::draw("warning", "Warning!", "Could not insert your template $new_template into database.", "", 6200);
-                return false;
+            )
+            {   // success
+                $this->lastID = $this->$db->insert_id;
             }
+            else
+                {   // q failed, throw error
+                    \YAWK\sys::setSyslog($db, 47, 1, "failed to save <b>$new_template</b> as new template ", 0, 0, 0, 0);
+                    // \YAWK\alert::draw("warning", "Warning!", "Could not insert your template $new_template into database.", "", 6200);
+                    return false;
+                }
             // all good.
             return true;
         }
@@ -3044,6 +3047,21 @@ namespace YAWK {
             }
         }
 
+        public function emptyTmpFolder()
+        {
+            foreach(glob($this->tmpFolder."*") as $file)
+            {
+                if(!is_dir($file))
+                {
+                    unlink($file);
+                }
+                else
+                    {
+                        \YAWK\filemanager::recursiveRemoveDirectory($file);
+                    }
+            }
+        }
+
         /**
          * Upload a template (install / update)
          * @author Daniel Retzl <danielretzl@gmail.com>
@@ -3074,47 +3092,24 @@ namespace YAWK {
             // check if template folder is writeable
             if (is_writeable(dirname($this->folder)))
             {
-                if (!is_dir(dirname($this->tmpFolder)))
+                // check if tmp folder is there
+                if (is_dir(dirname($this->tmpFolder)) === false)
                 {
-                    if (!mkdir($this->tmpFolder))
+                    // try to create tmp folder
+                    if (mkdir($this->tmpFolder) === false)
                     {
                         return false;
                     }
                 }
+                else
+                    {   // prepare (empty) temp directory
+                        $this->emptyTmpFolder();
+                    }
 
                 // check if tmp folder exits
                 if (is_dir(dirname($this->tmpFolder)))
                 {
-                    // uploaded file checks for size, type and file extension
-                    $maxFileSize = \YAWK\filemanager::getUploadMaxFilesize();
-                    $postMaxSize = \YAWK\filemanager::getPostMaxSize();
-
                     $this->uploadFile = $this->tmpFolder.$postFiles['templateFile']['name'];
-
-                    // check file size
-                    if ($postFiles['templateFile']['size'] > $maxFileSize || $postMaxSize)
-                    {
-                        // calculate and filter current filesize
-                        $currentFileSize = \YAWK\filemanager::sizeFilter($postFiles["templateFile"]["size"], 2);
-                        // file is too large
-                        \YAWK\sys::setSyslog($db, 51, 1, "failed to upload - ".$postFiles['templateFile']['name']." ($currentFileSize) exceeeds post_max_size: $postMaxSize upload_max_filesize: $maxFileSize", 0, 0, 0, 0);
-                        // echo \YAWK\alert::draw("warning", $lang['ERROR'], $lang['FILE_UPLOAD_TOO_LARGE'], "", 4800);
-                    }
-
-                    // check if file type is ZIP
-                    if ($postFiles['templateFile']['type'] !== 'application/x-zip-compressed')
-                    {   // if not, throw alert
-                        \YAWK\sys::setSyslog($db, 51, 1, "failed to upload - ".$postFiles['templateFile']['name']." is not a zip - uploaded filetype: ".$postFiles['templateFile']['type']."", 0, 0, 0, 0);
-                        // \YAWK\alert::draw("danger", $lang['BACKUP_FAILED'], $lang['BACKUP_NOT_A_ZIP_FILE'], "", 6400);
-                    }
-
-                    // check if file extension is zip (or similar)
-                    $fileType = pathinfo($postFiles['templateFile']['tmp_name'],PATHINFO_EXTENSION);
-                    if($fileType != "zip" && $fileType != "ZIP" && $fileType != "7z" && $fileType != "gzip")
-                    {
-                        \YAWK\sys::setSyslog($db, 51, 1, "failed to upload ".$postFiles['templateFile']['name']." - extension $fileType seems not to be a zip file", 0, 0, 0, 0);
-                        // echo \YAWK\alert::draw("warning", $lang['ERROR'], $lang['UPLOAD_ONLY_ZIP_ALLOWED'], "", 4800);
-                    }
 
                     // check for errors
                     if ($postFiles['templateFile']['error'] !== 0)
@@ -3202,13 +3197,12 @@ namespace YAWK {
                                         $templates = '';
                                     }
 
-                                /*
+                                    /*
                                 print_r($assets);
                                 print_r($templates);
                                 print_r($templateSettings);
                                 print_r($templateSettingsTypes);
-                                exit;
-                                */
+                                    */
 
                                 // check if template with same name exists
                                 if ($this->checkIfTemplateAlreadyExists($db, $iniFile['NAME']) === false)
@@ -3224,12 +3218,28 @@ namespace YAWK {
                                     //  6.) delete ini file (unwanted in target)
                                     //  7.) next step - xcopy files
                                     //  -fin- template installed - if all went good
+                                    die('template does not exist');
 
                                     // step 1.) add template to templates database
+                                    if ($this->saveAs($db,
+                                            '',
+                                            $this,
+                                            $iniFile['NAME'],
+                                            $iniFile['DESCRIPTION'],
+                                            $iniFile['AUTHOR'],
+                                            $iniFile['AUTHOR_URL'],
+                                            $iniFile['WEBLINK'],
+                                            $iniFile['VERSION'],
+                                            $iniFile['LICENSE']) === true)
+                                    {
+                                        die($this->lastID);
+                                    }
 
                                 }
                                 else
                                     {
+                                        die('template already exist');
+
                                         // TEMPLATE ALREADY EXISTS - OVERWRITE IT!
                                         //  1.) check, which ID got this template?
                                         //  2.) manipulate assets + template_settings arrays
@@ -3268,8 +3278,6 @@ namespace YAWK {
                 {
                     return false;
                 }
-
-            return true;
         }
 
         /**
@@ -3335,10 +3343,11 @@ namespace YAWK {
                 if (\YAWK\sys::xcopy($this->folder.$this->subFolder."/", $this->tmpFolder.$this->name) === false)
                 {   // failed to copy template into tmp folder
                     // todo: add syslog entry
+                    return false;
                 }
 
                 // check if template folder is writeable
-                if (is_writeable($this->tmpFolder.$this->name))
+                if (is_writeable($this->tmpFolder.$this->subFolder))
                 {
                     // GET TEMPLATE DEPENDING DATABASE DATA
                     // get current template data
@@ -3398,7 +3407,7 @@ namespace YAWK {
                     // ok, all files seem to be processed successfully
 
                     // set source (path to the affected template)
-                    $source = $this->tmpFolder.$this->name."/";
+                    $source = $this->tmpFolder;
                     // set target (path to the zip file that will be generated)
                     $destination = $this->tmpFolder.$this->name.'.zip';
 
@@ -3410,11 +3419,15 @@ namespace YAWK {
                     $iniData['TARGET_PATH'] = $this->folder.$this->subFolder."/";
                     $iniData['ID'] = $this->id;
                     $iniData['FRAMEWORK'] = $this->framework;
+                    $iniData['DESCRIPTION'] = $this->description;
                     $iniData['AUTHOR'] = $this->author;
+                    $iniData['AUTHOR_URL'] = $this->authorUrl;
+                    $iniData['WEBLINK'] = $this->weblink;
+                    $iniData['VERSION'] = $this->version;
                     $iniData['LICENSE'] = $this->license;
 
                     // write ini file
-                    if (\YAWK\sys::writeIniFile($iniData, $source."template.ini") === false)
+                    if (\YAWK\sys::writeIniFile($iniData, $this->tmpFolder."template.ini") === false)
                     {
                         // failed to write ini file:
                         // todo: set syslog entry
