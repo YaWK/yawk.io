@@ -3114,14 +3114,14 @@ namespace YAWK {
                     // check for errors
                     if ($postFiles['templateFile']['error'] !== 0)
                     {   // unknown error - upload failed
-                        \YAWK\sys::setSyslog($db, 52, 2, "failed to upload file - unknown error (".$postFiles['templateFile']['error'].") processing file ".$postFiles['templateFile']['name']."", 0, 0, 0, 0);
+                        \YAWK\sys::setSyslog($db, 48, 2, "failed to upload file - unknown error (".$postFiles['templateFile']['error'].") processing file ".$postFiles['templateFile']['name']."", 0, 0, 0, 0);
                         // echo \YAWK\alert::draw("warning", $lang['ERROR'], $lang['FILE_UPLOAD_FAILED'], "", 4800);
                     }
                     else
                     {   // try to move uploaded file
                         if (!move_uploaded_file($postFiles['templateFile']['tmp_name'], $this->uploadFile))
                         {   // throw error msg
-                            \YAWK\sys::setSyslog($db, 52, 2, "failed to move upload file $this->uploadFile to folder ".$postFiles['templateFile']['tmp_name']."", 0, 0, 0, 0);
+                            \YAWK\sys::setSyslog($db, 48, 2, "failed to move upload file $this->uploadFile to folder ".$postFiles['templateFile']['tmp_name']."", 0, 0, 0, 0);
                             // echo \YAWK\alert::draw("danger", "$lang[ERROR]", "$this->uploadFile - $lang[FILE_UPLOAD_ERROR]","","4800");
                         }
                         else
@@ -3150,13 +3150,14 @@ namespace YAWK {
                                     // parse ini file into array
                                     if ($iniFile = parse_ini_file($this->tmpFolder."template.ini") === false)
                                     {   // unable to parse ini file
-                                        // todo: add syslog: failed to parse ini
+                                        \YAWK\sys::setSyslog($db, 48, 2, "failed to parse ini file ".$this->tmpFolder."template.ini ", 0, 0, 0, 0);
                                         return false;
                                     }
                                 }
                                 else
                                     {   // ini file not there
                                         // todo: add syslog: template.ini not found
+                                        \YAWK\sys::setSyslog($db, 48, 2, "failed to parse ini file ".$this->tmpFolder."template.ini - file not found", 0, 0, 0, 0);
                                         return false;
                                     }
 
@@ -3168,6 +3169,7 @@ namespace YAWK {
                                 else
                                     {   //
                                         $assets = '';
+                                        \YAWK\sys::setSyslog($db, 48, 1, "failed to get ".$this->tmpFolder."assets.json - file not found", 0, 0, 0, 0);
                                     }
 
                                 if (is_file($this->tmpFolder.'template_settings.json'))
@@ -3177,6 +3179,7 @@ namespace YAWK {
                                 else
                                     {
                                         $templateSettings = '';
+                                        \YAWK\sys::setSyslog($db, 48, 1, "failed to get ".$this->tmpFolder."template_settings.json - file not found", 0, 0, 0, 0);
                                     }
 
                                 if (is_file($this->tmpFolder.'template_settings_types.json'))
@@ -3186,6 +3189,7 @@ namespace YAWK {
                                 else
                                     {
                                         $templateSettingsTypes = '';
+                                        \YAWK\sys::setSyslog($db, 48, 1, "failed to get ".$this->tmpFolder."template_settings_types.json - file not found", 0, 0, 0, 0);
                                     }
 
                                 if (is_file($this->tmpFolder.'templates.json'))
@@ -3195,6 +3199,7 @@ namespace YAWK {
                                 else
                                     {
                                         $templates = '';
+                                        \YAWK\sys::setSyslog($db, 48, 1, "failed to get ".$this->tmpFolder."templates.json - file not found", 0, 0, 0, 0);
                                     }
 
                                     /*
@@ -3205,51 +3210,53 @@ namespace YAWK {
                                     */
 
                                 // check if template with same name exists
-                                if ($this->checkIfTemplateAlreadyExists($db, $iniFile['NAME']) === false)
+                                if ($this->checkIfTemplateAlreadyExists($db, $iniFile['NAME']) === true)
                                 {
-                                    // TEMPLATE DOES NOT EXIST YET - INSTALL IT!
-                                    //  1.) add template to templates database
-                                    //  2.) retrieve ID of this new added template
-                                    //  3.) manipulate assets + template_settings arrays
-                                    //      (means: change template ID to the new created one)
+                                    die('template already exist');
+
+                                    // TEMPLATE ALREADY EXISTS - OVERWRITE IT!
+                                    //  1.) check, which ID got this template?
+                                    //  2.) manipulate assets + template_settings arrays
+                                    //      (means: change template ID to the one of the existing template that was found)
                                     //
-                                    //  4.) INSERT data of these arrays into related db tables
+                                    //  4.) UPDATE data of these arrays into related db tables
                                     //  5.) delete json files from tmp folder (unwanted in target)
                                     //  6.) delete ini file (unwanted in target)
                                     //  7.) next step - xcopy files
                                     //  -fin- template installed - if all went good
-                                    die('template does not exist');
-
-                                    // step 1.) add template to templates database
-                                    if ($this->saveAs($db,
-                                            '',
-                                            $this,
-                                            $iniFile['NAME'],
-                                            $iniFile['DESCRIPTION'],
-                                            $iniFile['AUTHOR'],
-                                            $iniFile['AUTHOR_URL'],
-                                            $iniFile['WEBLINK'],
-                                            $iniFile['VERSION'],
-                                            $iniFile['LICENSE']) === true)
-                                    {
-                                        die($this->lastID);
-                                    }
 
                                 }
                                 else
                                     {
-                                        die('template already exist');
 
-                                        // TEMPLATE ALREADY EXISTS - OVERWRITE IT!
-                                        //  1.) check, which ID got this template?
-                                        //  2.) manipulate assets + template_settings arrays
-                                        //      (means: change template ID to the one of the existing template that was found)
+                                        // TEMPLATE DOES NOT EXIST YET - INSTALL IT!
+                                        //  1.) add template to templates database
+                                        //  2.) retrieve ID of this new added template
+                                        //  3.) manipulate assets + template_settings arrays
+                                        //      (means: change template ID to the new created one)
                                         //
-                                        //  4.) UPDATE data of these arrays into related db tables
+                                        //  4.) INSERT data of these arrays into related db tables
                                         //  5.) delete json files from tmp folder (unwanted in target)
                                         //  6.) delete ini file (unwanted in target)
                                         //  7.) next step - xcopy files
                                         //  -fin- template installed - if all went good
+                                        die('template does not exist');
+
+                                        // step 1.) add template to templates database
+                                        if ($this->saveAs($db,
+                                                '',
+                                                $this,
+                                                $iniFile['NAME'],
+                                                $iniFile['DESCRIPTION'],
+                                                $iniFile['AUTHOR'],
+                                                $iniFile['AUTHOR_URL'],
+                                                $iniFile['WEBLINK'],
+                                                $iniFile['VERSION'],
+                                                $iniFile['LICENSE']) === true)
+                                        {
+                                            die($this->lastID);
+                                        }
+
                                     }
 
 
@@ -3258,24 +3265,24 @@ namespace YAWK {
                                 //  recursive delete tmp folder
 
                                 // throw success message
-                                \YAWK\sys::setSyslog($db, 50, 3, "uploaded template package $this->uploadFile successfully", 0, 0, 0, 0);
-                                // echo \YAWK\alert::draw("success", "$lang[UPLOAD_SUCCESSFUL]", "$this->uploadFile $lang[BACKUP_UPLOAD_SUCCESS]","","4800");
+                                \YAWK\sys::setSyslog($db, 46, 3, "uploaded template package $this->uploadFile successfully", 0, 0, 0, 0);
                             }
                             else
                             {   // failed to check uploaded file - file not found
-                                \YAWK\sys::setSyslog($db, 51, 2, "failed to check uploaded file - $this->uploadFile not found.", 0, 0, 0, 0);
-                                // echo \YAWK\alert::draw("danger", "$lang[ERROR]", "$this->uploadFile - $lang[FILE_UPLOAD_ERROR]","","4800");
+                                \YAWK\sys::setSyslog($db, 48, 1, "failed to check uploaded file upload file: $this->uploadFile not found", 0, 0, 0, 0);
                             }
                         }
                     }
                 }
                 else
                     {   // tmp folder does not exist
+                        \YAWK\sys::setSyslog($db, 48, 1, "failed to uploaded tempalte: ../system/templates/tmp/ does not exist or is not accessable", 0, 0, 0, 0);
                         return false;
                     }
             }
             else
                 {
+                    \YAWK\sys::setSyslog($db, 48, 1, "failed to uploaded template: $this->folder is not writeable", 0, 0, 0, 0);
                     return false;
                 }
         }
