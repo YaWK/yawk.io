@@ -102,8 +102,9 @@ namespace YAWK {
                 if($result->num_rows == 0)
                 {   // template not found in database...
                     // there should also be no folder with this name, lets check this
-                    if (!is_dir(dirname('../system/templates/$name')))
+                    if (!is_dir(dirname("../system/templates/$name")))
                     {   // directory does not exist!
+                        \YAWK\sys::setSyslog($db, 45, 0, "template folder does not exist: ../system/templates/$name", 0, 0, 0, 0);
                         return false;
                     }
                     else
@@ -118,6 +119,7 @@ namespace YAWK {
             }
             else
                 {   // template param not set, empty or wrong type
+                    \YAWK\sys::setSyslog($db, 45, 0, "template param $name not set or wrong type", 0, 0, 0, 0);
                     return false;
                 }
         }
