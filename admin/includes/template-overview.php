@@ -488,7 +488,7 @@ echo"</section><!-- Main content -->
                                 $activeBoldEnd = "";
                             }
 
-                            // set template image (screen shot)
+                            // set template image (screenshot)
                             $screenshot = "../system/templates/".$row['name']."/images/screenshot.jpg";
                             if (!file_exists($screenshot))
                             {   // sorry, no screenshot available
@@ -568,7 +568,6 @@ echo"</section><!-- Main content -->
                         <option value="GPL-3.0">GPL 3.0 License</option>
                         <option value="LGPL-2.0">Lesser GPL 2.0</option>
                         <option value="LGPL-2.1">Lesser GPL 2.1</option>
-                        <option value="MPL-2.0">Mozilla Public License 2.0</option>
                     </select>
                 </div>
 
