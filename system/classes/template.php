@@ -3268,19 +3268,15 @@ namespace YAWK {
                                     $templates['id'] = $this->id;
 
                                     // update ID in assets array
-                                    $i = 0;
-                                    foreach ($assets as $asset)
+                                    foreach ($assets as &$asset)
                                     {
-                                        $assets[$i]['templateID'] = $this->id;
-                                        $i++;
+                                        $asset[$i]['templateID'] = $this->id;
                                     }
 
                                     // update ID in template_settings array
-                                    $i = 0;
-                                    foreach ($templateSettings as $templateSetting)
+                                    foreach ($templateSettings as &$templateSetting)
                                     {
-                                        $templateSettings[$i]['templateID'] = $this->id;
-                                        $i++;
+                                        $templateSetting['templateID'] = $this->id;
                                     }
 
                                     //  4.) UPDATE data of these arrays into related db tables
