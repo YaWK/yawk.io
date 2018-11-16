@@ -3270,7 +3270,7 @@ namespace YAWK {
                                     // update ID in assets array
                                     foreach ($assets as &$asset)
                                     {
-                                        $asset[$i]['templateID'] = $this->id;
+                                        $asset['templateID'] = $this->id;
                                     }
 
                                     // update ID in template_settings array
