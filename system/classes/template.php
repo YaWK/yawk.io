@@ -495,6 +495,41 @@ namespace YAWK {
             return null;
         }
 
+
+        /**
+         * return template ID for given name
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param string $name affected template name
+         * @return int|null
+         */
+        public static function getTemplateIdByName($db, $name)
+        {
+            /** @var $db \YAWK\db */
+            if (!isset($name) || (empty($name)))
+            {   // template name is not set
+                return null;
+            }
+            // query template name
+            if ($res = $db->query("SELECT id from {templates} WHERE name = '$name'"))
+            {   // fetch data
+                if ($row = mysqli_fetch_row($res))
+                {   // return ID
+                    return $row[0];
+                }
+            }
+            else
+                {
+                    // exit and throw error
+                    \YAWK\sys::setSyslog($db, 47, 1, "failed to get template ID by name <b>$name</b> ", 0, 0, 0, 0);
+                    return null;
+                }
+            // any other case is an error
+            return null;
+        }
+
         /**
          * return current active template name
          * @author Daniel Retzl <danielretzl@gmail.com>
@@ -3219,18 +3254,45 @@ namespace YAWK {
                                 // check if template with same name exists
                                 if ($this->checkIfTemplateAlreadyExists($db, $iniFile['NAME']) === true)
                                 {
-                                    die('template already exists');
+                                    // die('template already exists');
 
                                     // TEMPLATE ALREADY EXISTS - OVERWRITE IT!
                                     //  1.) check, which ID got this template?
+                                    $this->id = self::getTemplateIdByName($db, $iniFile['NAME']);
+
+
                                     //  2.) manipulate assets + template_settings arrays
-                                    //      (means: change template ID to the one of the existing template that was found)
-                                    //
+                                    //  (means: change template ID to the one of the existing template that was found)
+
+                                    // update ID in templates array
+                                    $templates['id'] = $this->id;
+
+                                    // update ID in assets array
+                                    $i = 0;
+                                    foreach ($assets as $asset)
+                                    {
+                                        $assets[$i]['templateID'] = $this->id;
+                                        $i++;
+                                    }
+
+                                    // update ID in template_settings array
+                                    $i = 0;
+                                    foreach ($templateSettings as $templateSetting)
+                                    {
+                                        $templateSettings[$i]['templateID'] = $this->id;
+                                        $i++;
+                                    }
+
                                     //  4.) UPDATE data of these arrays into related db tables
+                                    // print_r($templates);
+                                    // print_r($assets);
+                                    // print_r($templateSettings);
+                                    // print_r($templateSettingsTypes);
+
                                     //  5.) delete json files from tmp folder (unwanted in target)
                                     //  6.) delete ini file (unwanted in target)
                                     //  7.) next step - xcopy files
-                                    //  -fin- template installed - if all went good
+                                    //  -fin- template updated - if all went good
 
                                 }
                                 else
