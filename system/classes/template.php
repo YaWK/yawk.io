@@ -97,23 +97,16 @@ namespace YAWK {
                 $name = strip_tags($name);
 
                 // check if template is already in database
-                $result = $db->query("SELECT name FROM {templates} WHERE name = '$name'");
+                $result = $db->query("SELECT name FROM {templates} WHERE name = '".$name."'");
                 // if there are no rows
                 if($result->num_rows == 0)
                 {   // template not found in database...
-                    // there should also be no folder with this name, lets check this
-                    if (!is_dir(dirname("../system/templates/$name")))
-                    {   // directory does not exist!
-                        \YAWK\sys::setSyslog($db, 45, 0, "template folder does not exist: ../system/templates/$name", 0, 0, 0, 0);
-                        return false;
-                    }
-                    else
-                        {   // template folder already exists
-                            return true;
-                        }
+                    \YAWK\sys::setSyslog($db, 45, 0, "template $name not found in database", 0, 0, 0, 0);
+                    return false;
                 }
                 else
-                    {   // template aready exists
+                    {   // template exists in database
+                        \YAWK\sys::setSyslog($db, 45, 0, "template $name already exists in database", 0, 0, 0, 0);
                         return true;
                     }
             }
@@ -3091,9 +3084,24 @@ namespace YAWK {
                 return false;
             }
 
+            // prepare (empty) temp directory
+            $this->emptyTmpFolder();
+
+            // check if tmp folder exists...
+            if (!is_dir(dirname($this->tmpFolder)))
+            {
+                // try to create tmp folder
+                if (!mkdir($this->tmpFolder))
+                {
+                    // add syslog: failed to create $this->tmpFolder
+                    return false;
+                }
+            }
+
             // check if template folder is writeable
             if (is_writeable(dirname($this->folder)))
             {
+                /*
                 // check if tmp folder is there
                 if (is_dir(dirname($this->tmpFolder)) === false)
                 {
@@ -3107,7 +3115,7 @@ namespace YAWK {
                     {   // prepare (empty) temp directory
                         $this->emptyTmpFolder();
                     }
-
+                */
                 // check if tmp folder exits
                 if (is_dir(dirname($this->tmpFolder)))
                 {
@@ -3133,7 +3141,6 @@ namespace YAWK {
                             {
                                 // here we could check more things - eg latest file timestamp
 
-                                // TODO:
                                 // create zip object + extract to tmp folder
                                 $zip = new \ZipArchive;
                                 // open zip archive
@@ -3146,75 +3153,73 @@ namespace YAWK {
                                     $zip->close();
                                 }
 
-                                // check and read .ini file
+                                // check and read template.ini file - stores all information about the template
                                 if (is_file($this->tmpFolder.'template.ini'))
                                 {
-                                    // parse ini file into array
-                                    if ($iniFile = parse_ini_file($this->tmpFolder."template.ini") === false)
-                                    {   // unable to parse ini file
+                                    // try to parse ini file into array
+                                    if (!$iniFile = parse_ini_file($this->tmpFolder."template.ini"))
+                                    {   // error: unable to parse ini file
                                         \YAWK\sys::setSyslog($db, 48, 2, "failed to parse ini file ".$this->tmpFolder."template.ini ", 0, 0, 0, 0);
                                         return false;
                                     }
                                 }
                                 else
-                                    {   // ini file not there
-                                        // todo: add syslog: template.ini not found
-                                        \YAWK\sys::setSyslog($db, 48, 2, "failed to parse ini file ".$this->tmpFolder."template.ini - file not found", 0, 0, 0, 0);
-                                        return false;
-                                    }
+                                {   // error: ini file not there
+                                    \YAWK\sys::setSyslog($db, 48, 2, "failed to parse ini file ".$this->tmpFolder."template.ini - file not found", 0, 0, 0, 0);
+                                    return false;
+                                }
+
+                                //
+                                $this->targetPath = $iniFile['TARGET_PATH'];
+                                $this->subFolder = $iniFile['SUBFOLDER']."/";
+
 
                                 // check if assets.json exists
-                                if (is_file($this->tmpFolder.'assets.json'))
+                                if (is_file($this->tmpFolder.$this->subFolder.'assets.json'))
                                 {   // read and decode json file into array
-                                    $assets = json_decode(file_get_contents($this->tmpFolder.'assets.json'), true);
+                                    $assets = json_decode(file_get_contents($this->tmpFolder.$this->subFolder.'assets.json'), true);
                                 }
                                 else
                                     {   //
                                         $assets = '';
-                                        \YAWK\sys::setSyslog($db, 48, 1, "failed to get ".$this->tmpFolder."assets.json - file not found", 0, 0, 0, 0);
+                                        \YAWK\sys::setSyslog($db, 48, 1, "failed to get ".$this->tmpFolder.$this->subFolder."assets.json - file not found", 0, 0, 0, 0);
                                     }
 
-                                if (is_file($this->tmpFolder.'template_settings.json'))
+                                if (is_file($this->tmpFolder.$this->subFolder.'template_settings.json'))
                                 {
-                                    $templateSettings = json_decode(file_get_contents($this->tmpFolder.'template_settings.json'), true);
+                                    $templateSettings = json_decode(file_get_contents($this->tmpFolder.$this->subFolder.'template_settings.json'), true);
                                 }
                                 else
                                     {
                                         $templateSettings = '';
-                                        \YAWK\sys::setSyslog($db, 48, 1, "failed to get ".$this->tmpFolder."template_settings.json - file not found", 0, 0, 0, 0);
+                                        \YAWK\sys::setSyslog($db, 48, 1, "failed to get ".$this->tmpFolder.$this->subFolder."template_settings.json - file not found", 0, 0, 0, 0);
                                     }
 
-                                if (is_file($this->tmpFolder.'template_settings_types.json'))
+                                if (is_file($this->tmpFolder.$this->subFolder.'template_settings_types.json'))
                                 {
-                                    $templateSettingsTypes = json_decode(file_get_contents($this->tmpFolder.'template_settings_types.json'), true);
+                                    $templateSettingsTypes = json_decode(file_get_contents($this->tmpFolder.$this->subFolder.'template_settings_types.json'), true);
                                 }
                                 else
                                     {
                                         $templateSettingsTypes = '';
-                                        \YAWK\sys::setSyslog($db, 48, 1, "failed to get ".$this->tmpFolder."template_settings_types.json - file not found", 0, 0, 0, 0);
+                                        \YAWK\sys::setSyslog($db, 48, 1, "failed to get ".$this->tmpFolder.$this->subFolder."template_settings_types.json - file not found", 0, 0, 0, 0);
                                     }
 
-                                if (is_file($this->tmpFolder.'templates.json'))
+                                if (is_file($this->tmpFolder.$this->subFolder.'templates.json'))
                                 {
-                                    $templates = json_decode(file_get_contents($this->tmpFolder.'templates.json'), true);
+                                    $templates = json_decode(file_get_contents($this->tmpFolder.$this->subFolder.'templates.json'), true);
                                 }
                                 else
                                     {
                                         $templates = '';
-                                        \YAWK\sys::setSyslog($db, 48, 1, "failed to get ".$this->tmpFolder."templates.json - file not found", 0, 0, 0, 0);
+                                        \YAWK\sys::setSyslog($db, 48, 1, "failed to get ".$this->tmpFolder.$this->subFolder."templates.json - file not found", 0, 0, 0, 0);
                                     }
 
-                                    /*
-                                print_r($assets);
-                                print_r($templates);
-                                print_r($templateSettings);
-                                print_r($templateSettingsTypes);
-                                    */
 
                                 // check if template with same name exists
                                 if ($this->checkIfTemplateAlreadyExists($db, $iniFile['NAME']) === true)
                                 {
-                                    die('template already exist');
+                                    die('template already exists');
 
                                     // TEMPLATE ALREADY EXISTS - OVERWRITE IT!
                                     //  1.) check, which ID got this template?
