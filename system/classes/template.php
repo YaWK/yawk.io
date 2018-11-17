@@ -3285,6 +3285,35 @@ namespace YAWK {
                                     // print_r($templateSettings);
                                     // print_r($templateSettingsTypes);
 
+                                    if ($db->query("UPDATE {templates} 
+                                                    SET id = '".$this->id."',
+                                                        active = 1,
+                                                        name = '".$iniFile['NAME']."',
+                                                        positions ='outerTop:outerLeft:outerRight:intro:globalmenu:top:leftMenu:mainTop:mainTopLeft:mainTopCenter:mainTopRight:main:mainBottom:mainBottomLeft:mainBottomCenter:mainBottomRight:mainFooter:mainFooterLeft:mainFooterCenter:mainFooterRight:rightMenu:bottom:footer:hiddentoolbar:debug:outerBottom',
+                                                        description = '".$iniFile['DESCRIPTION']."',
+                                                        modifyDate = '".$iniFile['DATE']."',
+                                                        author = '".$iniFile['AUTHOR']."',
+                                                        authorUrl = '".$iniFile['AUTHOR_URL']."',
+                                                        weblink = '".$iniFile['WEBLINK']."',
+                                                        version = '".$iniFile['VERSION']."',
+                                                        framework = '".$iniFile['FRAMEWORK']."',
+                                                        license = '".$iniFile['LICENSE']."'
+                                    WHERE name = '".$iniFile['NAME']."'"))
+                                    {
+                                        // success: updated templates database
+                                        \YAWK\sys::setSyslog($db, 45, 0, "template $iniFile[NAME] - database updated", 0, 0, 0, 0);
+                                    }
+                                    else
+                                        {   // error: failed to update tempaltes db
+                                            \YAWK\sys::setSyslog($db, 47, 0, "failed to updated template $iniFile[NAME] - template db NOT updated", 0, 0, 0, 0);
+                                        }
+
+                                    // update assets database
+                                    foreach ($assets as $asset)
+                                    {
+                                        // process asset data
+                                    }
+
                                     //  5.) delete json files from tmp folder (unwanted in target)
                                     //  6.) delete ini file (unwanted in target)
                                     //  7.) next step - xcopy files
