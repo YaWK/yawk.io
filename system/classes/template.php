@@ -3313,7 +3313,7 @@ namespace YAWK {
                                     WHERE name = '".$iniFile['NAME']."'"))
                                     {
                                         // success: updated templates database
-                                        \YAWK\sys::setSyslog($db, 45, 0, "template $iniFile[NAME] - templates db updated", 0, 0, 0, 0);
+                                        // \YAWK\sys::setSyslog($db, 45, 0, "template $iniFile[NAME] - templates db updated", 0, 0, 0, 0);
                                     }
                                     else
                                         {   // error: failed to update templates db
@@ -3332,7 +3332,7 @@ namespace YAWK {
                                                     WHERE link = '".$asset['link']."' AND templateID = '".$iniFile['ID']."'"))
                                         {
                                             // success: updated templates database
-                                            \YAWK\sys::setSyslog($db, 45, 0, "template $iniFile[NAME] - assets db updated", 0, 0, 0, 0);
+                                            // \YAWK\sys::setSyslog($db, 45, 0, "template $iniFile[NAME] - assets db updated", 0, 0, 0, 0);
                                         }
                                         else
                                         {   // error: failed to update templates db
@@ -3419,6 +3419,8 @@ namespace YAWK {
 
                                     // create a fresh, empty tmp folder
                                     mkdir($this->tmpFolder);
+
+                                    return true;
 
                                     //  5.) delete json files from tmp folder (unwanted in target)
                                     //  6.) delete ini file (unwanted in target)
