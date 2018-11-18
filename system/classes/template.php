@@ -3346,33 +3346,79 @@ namespace YAWK {
                                     foreach ($templateSettings as $templateSetting)
                                     {
                                         if ($db->query("UPDATE {template_settings} 
-                                                    SET templateID = '".$this->id."',
-                                                        property = '".$templateSetting['property']."',
-                                                        value = '".$templateSetting['value']."',
-                                                        valueDefault = '".$templateSetting['valueDefault']."',
-                                                        longValue = '".$templateSetting['longValue']."',
-                                                        type = '".$templateSetting['type']."',
-                                                        activated = '".$templateSetting['activated']."',
-                                                        sort = '".$templateSetting['sort']."',
-                                                        label = '".$templateSetting['label']."',
-                                                        fieldClass = '".$templateSetting['fieldClass']."',
-                                                        fieldType = '".$templateSetting['fieldType']."',
-                                                        options = '".$templateSetting['options']."',
-                                                        placeholder = '".$templateSetting['placeholder']."',
-                                                        description = '".$templateSetting['description']."',
-                                                        icon = '".$templateSetting['icon']."',
-                                                        heading = '".$templateSetting['heading']."',
-                                                        subtext = '".$templateSetting['subtext']."'
-                                                    WHERE property = '".$templateSetting['property']."' AND templateID = '".$iniFile['ID']."'"))
-                                            {
-                                                // success: updated templates database
-                                                // \YAWK\sys::setSyslog($db, 45, 0, "template $iniFile[NAME] - template_settings db updated", 0, 0, 0, 0);
-                                            }
+                                        SET templateID = '".$this->id."',
+                                            property = '".$templateSetting['property']."',
+                                            value = '".$templateSetting['value']."',
+                                            valueDefault = '".$templateSetting['valueDefault']."',
+                                            longValue = '".$templateSetting['longValue']."',
+                                            type = '".$templateSetting['type']."',
+                                            activated = '".$templateSetting['activated']."',
+                                            sort = '".$templateSetting['sort']."',
+                                            label = '".$templateSetting['label']."',
+                                            fieldClass = '".$templateSetting['fieldClass']."',
+                                            fieldType = '".$templateSetting['fieldType']."',
+                                            options = '".$templateSetting['options']."',
+                                            placeholder = '".$templateSetting['placeholder']."',
+                                            description = '".$templateSetting['description']."',
+                                            icon = '".$templateSetting['icon']."',
+                                            heading = '".$templateSetting['heading']."',
+                                            subtext = '".$templateSetting['subtext']."'
+                                        WHERE property = '".$templateSetting['property']."' AND templateID = '".$iniFile['ID']."'"))
+                                        {
+                                            // success: updated templates database
+                                            // \YAWK\sys::setSyslog($db, 45, 0, "template $iniFile[NAME] - template_settings db updated", 0, 0, 0, 0);
+                                        }
                                         else
                                         {   // error: failed to update templates db
-                                            // \YAWK\sys::setSyslog($db, 47, 0, "failed to update template $iniFile[NAME] - template_settings db NOT updated", 0, 0, 0, 0);
+                                            \YAWK\sys::setSyslog($db, 47, 0, "failed to update property $templateSetting[property] of template $iniFile[NAME] - template_settings db NOT updated", 0, 0, 0, 0);
                                         }
                                     }
+
+                                    // update template settings types
+                                    foreach ($templateSettingsTypes as $templateSettingsType)
+                                    {
+                                        if ($db->query("UPDATE {template_settings_types} 
+                                        SET type = '".$templateSettingsType['type']."'
+                                        WHERE type = '".$templateSettingsType['type']."'"))
+                                        {
+                                            // success: updated templates database
+                                            // \YAWK\sys::setSyslog($db, 45, 0, "template $iniFile[NAME] - template_settings db updated", 0, 0, 0, 0);
+                                        }
+                                        else
+                                        {   // error: failed to update templates db
+                                            \YAWK\sys::setSyslog($db, 47, 0, "failed to update type $templateSettingsType[type] - template_settings_types db NOT updated", 0, 0, 0, 0);
+                                        }
+                                    }
+
+                                    // delete unwanted json files - they are not needed anymore
+                                    if (!unlink ($this->tmpFolder.$this->subFolder."assets.json"))
+                                    {
+                                        \YAWK\sys::setSyslog($db, 47, 0, "failed to delete ".$this->tmpFolder.$this->subFolder."assets.json", 0, 0, 0, 0);
+                                    }
+                                    if (!unlink ($this->tmpFolder.$this->subFolder."template_settings.json"))
+                                    {
+                                        \YAWK\sys::setSyslog($db, 47, 0, "failed to delete ".$this->tmpFolder.$this->subFolder."template_settings.json", 0, 0, 0, 0);
+                                    }
+                                    if (!unlink ($this->tmpFolder.$this->subFolder."template_settings_types.json"))
+                                    {
+                                        \YAWK\sys::setSyslog($db, 47, 0, "failed to delete ".$this->tmpFolder.$this->subFolder."template_settings_types.json", 0, 0, 0, 0);
+                                    }
+                                    if (!unlink ($this->tmpFolder.$this->subFolder."templates.json"))
+                                    {
+                                        \YAWK\sys::setSyslog($db, 47, 0, "failed to delete ".$this->tmpFolder.$this->subFolder."templates.json", 0, 0, 0, 0);
+                                    }
+
+                                    // copy template folder
+                                    \YAWK\sys::xcopy($this->tmpFolder.$this->subFolder, $this->folder.$this->subFolder);
+
+                                    // remove tmp folder
+                                    if (!\YAWK\filemanager::recursiveRemoveDirectory($this->tmpFolder))
+                                    {   // failed to remove tmp folder
+                                        \YAWK\sys::setSyslog($db, 47, 0, "failed to remove tmp folder $this->tmpFolder", 0, 0, 0, 0);
+                                    }
+
+                                    // create a fresh, empty tmp folder
+                                    mkdir($this->tmpFolder);
 
                                     //  5.) delete json files from tmp folder (unwanted in target)
                                     //  6.) delete ini file (unwanted in target)
