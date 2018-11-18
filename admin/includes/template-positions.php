@@ -312,137 +312,164 @@ echo"</section><!-- Main content -->
                 $enabledBorder = "border: 1px solid #4CAE4C;";
                 $disabledBorder = "border: 1px dashed #ccc;";
 
-                if ($templateSettings['pos-outerTop-enabled']['value'] === "1")
+                if (isset($templateSettings['pos-outerTop-enabled']['value'])
+                    && ($templateSettings['pos-outerTop-enabled']['value']) === "1")
                 {   $outerTopEnabled = $enabledBorder; }
                 else
                 {   $outerTopEnabled = $disabledBorder; }
 
-                if ($templateSettings['pos-intro-enabled']['value'] === "1")
+                if (isset($templateSettings['pos-intro-enabled']['value'])
+                    && ($templateSettings['pos-intro-enabled']['value']) === "1")
                 {   $introEnabled = $enabledBorder; }
                 else
                 {   $introEnabled = $disabledBorder; }
 
-                if ($templateSettings['pos-outerLeft-enabled']['value'] === "1")
+                if (isset($templateSettings['pos-outerLeft-enabled']['value'])
+                    && ($templateSettings['pos-outerLeft-enabled']['value']) === "1")
                 {   $outerLeftEnabled = $enabledBorder; }
                 else
                 {   $outerLeftEnabled = $disabledBorder; }
 
-                if ($templateSettings['pos-globalmenu-enabled']['value'] === "1")
+                if (isset($templateSettings['pos-globalmenu-enabled']['value'])
+                    && ($templateSettings['pos-globalmenu-enabled']['value']) === "1")
                 {   $globalmenuEnabled = $enabledBorder; }
                 else
                 {   $globalmenuEnabled = $disabledBorder; }
 
-                if ($templateSettings['pos-top-enabled']['value'] === "1")
+                if (isset($templateSettings['pos-top-enabled']['value'])
+                    && ($templateSettings['pos-top-enabled']['value']) === "1")
                 {   $topEnabled = $enabledBorder; }
                 else
                 {   $topEnabled = $disabledBorder; }
 
-                if ($templateSettings['pos-leftMenu-enabled']['value'] === "1")
+                if (isset($templateSettings['pos-leftMenu-enabled']['value'])
+                    && ($templateSettings['pos-leftMenu-enabled']['value']) === "1")
                 {   $leftMenuEnabled = $enabledBorder; }
                 else
                 {   $leftMenuEnabled = $disabledBorder; }
 
-                if ($templateSettings['pos-mainTop-enabled']['value'] === "1")
+                if (isset($templateSettings['pos-mainTop-enabled']['value'])
+                    && ($templateSettings['pos-mainTop-enabled']['value']) === "1")
                 {   $mainTopEnabled = $enabledBorder; }
                 else
                 {   $mainTopEnabled = $disabledBorder; }
 
-                if ($templateSettings['pos-mainTopLeft-enabled']['value'] === "1")
+                if (isset($templateSettings['pos-mainTopLeft-enabled']['value'])
+                    && ($templateSettings['pos-mainTopLeft-enabled']['value']) === "1")
                 {   $mainTopLeftEnabled = $enabledBorder; }
                 else
                 {   $mainTopLeftEnabled = $disabledBorder; }
 
-                if ($templateSettings['pos-mainTopCenter-enabled']['value'] === "1")
+                if (isset($templateSettings['pos-mainTopCenter-enabled']['value'])
+                    && ($templateSettings['pos-mainTopCenter-enabled']['value']) === "1")
                 {   $mainTopCenterEnabled = $enabledBorder; }
                 else
                 {   $mainTopCenterEnabled = $disabledBorder; }
 
-                if ($templateSettings['pos-mainTopRight-enabled']['value'] === "1")
+                if (isset($templateSettings['pos-mainTopRight-enabled']['value'])
+                    && ($templateSettings['pos-mainTopRight-enabled']['value']) === "1")
                 {   $mainTopRightEnabled = $enabledBorder; }
                 else
                 {   $mainTopRightEnabled = $disabledBorder; }
 
-                if ($templateSettings['pos-mainLeft-enabled']['value'] === "1")
+                if (isset($templateSettings['pos-mainLeft-enabled']['value'])
+                    && ($templateSettings['pos-mainLeft-enabled']['value']) === "1")
                 {   $mainLeftEnabled = $enabledBorder; }
                 else
                 {   $mainLeftEnabled = $disabledBorder; }
 
-                if ($templateSettings['pos-main-enabled']['value'] === "1")
+                if (isset($templateSettings['pos-main-enabled']['value'])
+                    && ($templateSettings['pos-main-enabled']['value']) === "1")
                 {   $mainEnabled = $enabledBorder; }
                 else
                 {   $mainEnabled = $disabledBorder; }
 
-                if ($templateSettings['pos-mainRight-enabled']['value'] === "1")
+                if (isset($templateSettings['pos-mainRight-enabled']['value'])
+                    && ($templateSettings['pos-mainRight-enabled']['value']) === "1")
                 {   $mainRightEnabled = $enabledBorder; }
                 else
                 {   $mainRightEnabled = $disabledBorder; }
 
-                if ($templateSettings['pos-mainBottom-enabled']['value'] === "1")
+                if (isset($templateSettings['pos-mainBottom-enabled']['value'])
+                    && ($templateSettings['pos-mainBottom-enabled']['value']) === "1")
                 {   $mainBottomEnabled = $enabledBorder; }
                 else
                 {   $mainBottomEnabled = $disabledBorder; }
 
-                if ($templateSettings['pos-mainBottomLeft-enabled']['value'] === "1")
+                if (isset($templateSettings['pos-mainBottomLeft-enabled']['value'])
+                    && ($templateSettings['pos-mainBottomLeft-enabled']['value']) === "1")
                 {   $mainBottomLeftEnabled = $enabledBorder; }
                 else
                 {   $mainBottomLeftEnabled = $disabledBorder; }
 
-                if ($templateSettings['pos-mainBottomCenter-enabled']['value'] === "1")
+                if (isset($templateSettings['pos-mainBottomCenter-enabled']['value'])
+                    && ($templateSettings['pos-mainBottomCenter-enabled']['value']) === "1")
                 {   $mainBottomCenterEnabled = $enabledBorder; }
                 else
                 {   $mainBottomCenterEnabled = $disabledBorder; }
 
-                if ($templateSettings['pos-mainBottomRight-enabled']['value'] === "1")
+                if (isset($templateSettings['pos-mainBottomRight-enabled']['value'])
+                    && ($templateSettings['pos-mainBottomRight-enabled']['value']) === "1")
                 {   $mainBottomRightEnabled = $enabledBorder; }
                 else
                 {   $mainBottomRightEnabled = $disabledBorder; }
 
-                if ($templateSettings['pos-mainFooter-enabled']['value'] === "1")
+                if (isset($templateSettings['pos-mainFooter-enabled']['value'])
+                    && ($templateSettings['pos-mainFooter-enabled']['value']) === "1")
                 {   $mainFooterEnabled = $enabledBorder; }
                 else
                 {   $mainFooterEnabled = $disabledBorder; }
 
-                if ($templateSettings['pos-mainFooterLeft-enabled']['value'] === "1")
+                if (isset($templateSettings['pos-mainFooterLeft-enabled']['value'])
+                    && ($templateSettings['pos-mainFooterLeft-enabled']['value']) === "1")
                 {   $mainFooterLeftEnabled = $enabledBorder; }
                 else
                 {   $mainFooterLeftEnabled = $disabledBorder; }
 
-                if ($templateSettings['pos-mainFooterCenter-enabled']['value'] === "1")
+                if (isset($templateSettings['pos-mainFooterCenter-enabled']['value'])
+                    && ($templateSettings['pos-mainFooterCenter-enabled']['value']) === "1")
                 {   $mainFooterCenterEnabled = $enabledBorder; }
                 else
                 {   $mainFooterCenterEnabled = $disabledBorder; }
 
-                if ($templateSettings['pos-mainFooterRight-enabled']['value'] === "1")
+                if (isset($templateSettings['pos-mainFooterRight-enabled']['value'])
+                    && ($templateSettings['pos-mainFooterRight-enabled']['value'])=== "1")
                 {   $mainFooterRightEnabled = $enabledBorder; }
                 else
                 {   $mainFooterRightEnabled = $disabledBorder; }
 
-                if ($templateSettings['pos-rightMenu-enabled']['value'] === "1")
+                if (isset($templateSettings['pos-rightMenu-enabled']['value'])
+                    && ($templateSettings['pos-rightMenu-enabled']['value']) === "1")
                 {   $rightMenuEnabled = $enabledBorder; }
                 else
                 {   $rightMenuEnabled = $disabledBorder; }
 
-                if ($templateSettings['pos-footer-enabled']['value'] === "1")
+                if (isset($templateSettings['pos-footer-enabled']['value'])
+                    && ($templateSettings['pos-footer-enabled']['value']) === "1")
                 {   $footerEnabled = $enabledBorder; }
                 else
                 {   $footerEnabled = $disabledBorder; }
 
-                if ($templateSettings['pos-hiddenToolbar-enabled']['value'] === "1")
+                if (isset($templateSettings['pos-hiddenToolbar-enabled']['value'])
+                    && ($templateSettings['pos-hiddenToolbar-enabled']['value']) === "1")
                 {   $hiddenToolbarEnabled = $enabledBorder; }
                 else
                 {   $hiddenToolbarEnabled = $disabledBorder; }
 
-                if ($templateSettings['pos-debug-enabled']['value'] === "1")
+                if (isset($templateSettings['pos-debug-enabled']['value'])
+                    && ($templateSettings['pos-debug-enabled']['value']) === "1")
                 {   $debugEnabled = $enabledBorder; }
                 else
                 {   $debugEnabled = $disabledBorder; }
 
-                if ($templateSettings['pos-outerRight-enabled']['value'] === "1")
+                if (isset($templateSettings['pos-outerRight-enabled']['value'])
+                    && ($templateSettings['pos-outerRight-enabled']['value']) === "1")
                 {   $outerRightEnabled = $enabledBorder; }
                 else
                 {   $outerRightEnabled = $disabledBorder; }
 
-                if ($templateSettings['pos-outerBottom-enabled']['value'] === "1")
+                if (isset($templateSettings['pos-outerBottom-enabled']['value'])
+                    && ($templateSettings['pos-outerBottom-enabled']['value']) === "1")
                 {   $outerBottomEnabled = $enabledBorder; }
                 else
                 {   $outerBottomEnabled = $disabledBorder; }
