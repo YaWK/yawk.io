@@ -3301,16 +3301,31 @@ namespace YAWK {
                                     WHERE name = '".$iniFile['NAME']."'"))
                                     {
                                         // success: updated templates database
-                                        \YAWK\sys::setSyslog($db, 45, 0, "template $iniFile[NAME] - database updated", 0, 0, 0, 0);
+                                        \YAWK\sys::setSyslog($db, 45, 0, "template $iniFile[NAME] - templates db updated", 0, 0, 0, 0);
                                     }
                                     else
-                                        {   // error: failed to update tempaltes db
-                                            \YAWK\sys::setSyslog($db, 47, 0, "failed to updated template $iniFile[NAME] - template db NOT updated", 0, 0, 0, 0);
+                                        {   // error: failed to update templates db
+                                            \YAWK\sys::setSyslog($db, 47, 0, "failed to update template $iniFile[NAME] - templates db NOT updated", 0, 0, 0, 0);
                                         }
 
                                     // update assets database
                                     foreach ($assets as $asset)
                                     {
+                                        if ($db->query("UPDATE {templates} 
+                                                    SET templateID = '".$this->id."',
+                                                        type = '".$asset['type']."',
+                                                        sortation = '".$asset['sortation']."',
+                                                        asset = '".$asset['asset']."',
+                                                        link = '".$asset['link']."'
+                                                    WHERE templateID = '".$iniFile['ID']."'"))
+                                        {
+                                            // success: updated templates database
+                                            \YAWK\sys::setSyslog($db, 45, 0, "template $iniFile[NAME] - assets db updated", 0, 0, 0, 0);
+                                        }
+                                        else
+                                        {   // error: failed to update templates db
+                                            \YAWK\sys::setSyslog($db, 47, 0, "failed to update template $iniFile[NAME] - assets db NOT updated", 0, 0, 0, 0);
+                                        }
                                         // process asset data
                                     }
 
