@@ -3171,7 +3171,6 @@ namespace YAWK {
                             if (is_file($this->uploadFile))
                             {
                                 // here we could check more things - eg latest file timestamp
-
                                 // create zip object + extract to tmp folder
                                 $zip = new \ZipArchive;
                                 // open zip archive
@@ -3200,52 +3199,54 @@ namespace YAWK {
                                     return false;
                                 }
 
-                                //
+                                // set target path
                                 $this->targetPath = $iniFile['TARGET_PATH'];
+                                // set subfolder
                                 $this->subFolder = $iniFile['SUBFOLDER']."/";
 
-
-                                // check if assets.json exists
+                                // read assets.json into array
                                 if (is_file($this->tmpFolder.$this->subFolder.'assets.json'))
                                 {   // read and decode json file into array
                                     $assets = json_decode(file_get_contents($this->tmpFolder.$this->subFolder.'assets.json'), true);
                                 }
                                 else
-                                    {   //
+                                    {   // assets.json not found
                                         $assets = '';
                                         \YAWK\sys::setSyslog($db, 48, 1, "failed to get ".$this->tmpFolder.$this->subFolder."assets.json - file not found", 0, 0, 0, 0);
                                     }
 
+                                // read template settings into array
                                 if (is_file($this->tmpFolder.$this->subFolder.'template_settings.json'))
-                                {
+                                {   // read and decode json file into array
                                     $templateSettings = json_decode(file_get_contents($this->tmpFolder.$this->subFolder.'template_settings.json'), true);
                                 }
                                 else
-                                    {
+                                    {   // template_settings.json not found
                                         $templateSettings = '';
                                         \YAWK\sys::setSyslog($db, 48, 1, "failed to get ".$this->tmpFolder.$this->subFolder."template_settings.json - file not found", 0, 0, 0, 0);
                                     }
 
+                                // read template_settings_types into array
                                 if (is_file($this->tmpFolder.$this->subFolder.'template_settings_types.json'))
-                                {
+                                {   // read and decode json into array
                                     $templateSettingsTypes = json_decode(file_get_contents($this->tmpFolder.$this->subFolder.'template_settings_types.json'), true);
                                 }
                                 else
-                                    {
+                                    {   // template_settings_types json file not found
                                         $templateSettingsTypes = '';
                                         \YAWK\sys::setSyslog($db, 48, 1, "failed to get ".$this->tmpFolder.$this->subFolder."template_settings_types.json - file not found", 0, 0, 0, 0);
                                     }
 
+                                // read templates.json into array
                                 if (is_file($this->tmpFolder.$this->subFolder.'templates.json'))
-                                {
+                                {   // read and decode json into array
                                     $templates = json_decode(file_get_contents($this->tmpFolder.$this->subFolder.'templates.json'), true);
                                 }
                                 else
-                                    {
+                                    {   // templates.json file not found
                                         $templates = '';
                                         \YAWK\sys::setSyslog($db, 48, 1, "failed to get ".$this->tmpFolder.$this->subFolder."templates.json - file not found", 0, 0, 0, 0);
                                     }
-
 
                                 // check if template with same name exists
                                 if ($this->checkIfTemplateAlreadyExists($db, $iniFile['NAME']) === true)
@@ -3402,14 +3403,13 @@ namespace YAWK {
 
                                     // create a fresh, empty tmp folder
                                     mkdir($this->tmpFolder);
-
                                     return true;
                                 }
                                 else
                                     {
-
                                         // TEMPLATE DOES NOT EXIST YET - INSTALL IT!
                                         //  1.) add template to templates database
+
                                         //  2.) retrieve ID of this new added template
                                         //  3.) manipulate assets + template_settings arrays
                                         //      (means: change template ID to the new created one)
@@ -3438,8 +3438,6 @@ namespace YAWK {
 
                                     }
 
-
-
                                 //  xcopy files
                                 //  recursive delete tmp folder
 
@@ -3460,7 +3458,7 @@ namespace YAWK {
                     }
             }
             else
-                {
+                {   // tmp folder is not writeable
                     \YAWK\sys::setSyslog($db, 48, 1, "failed to uploaded template: $this->folder is not writeable", 0, 0, 0, 0);
                     return false;
                 }
@@ -3476,7 +3474,7 @@ namespace YAWK {
          * @param int $templateID ID of the template to process
          * @param object $user user object
          * @return bool true|false
-         * @annotation dump database settings into .sql files, zip tpl folder and serve .zip for direct download
+         * @annotation dump database settings into .json files, write template.ini and license file, zip the whole template folder and serve .zip for direct download
          */
         public function downloadTemplate($db, $templateFolder, $templateID, $user)
         {
@@ -3520,15 +3518,15 @@ namespace YAWK {
                     // check if tmp directory exists...
                     if (!mkdir(dirname($this->tmpFolder.$this->subFolder)))
                     {   // failed to create tmp sub folder
-                        // todo: add syslog entry
+                        \YAWK\sys::setSyslog($db, 47, 0, "failed to create ".$this->tmpFolder.$this->subFolder."", 0, 0, 0, 0);
                         return false;
                     }
                 }
 
                 // next step is to copy the whole template folder into tmp folder
-                if (\YAWK\sys::xcopy($this->folder.$this->subFolder."/", $this->tmpFolder.$this->name) === false)
+                if (\YAWK\sys::xcopy($this->folder.$this->subFolder."/", $this->tmpFolder.$this->subFolder) === false)
                 {   // failed to copy template into tmp folder
-                    // todo: add syslog entry
+                    \YAWK\sys::setSyslog($db, 47, 0, "failed to copy template into tmp folder: ".$this->tmpFolder.$this->subFolder."", 0, 0, 0, 0);
                     return false;
                 }
 
@@ -3542,31 +3540,32 @@ namespace YAWK {
                     $templateSettings = self::loadAllSettingsIntoArray($db, $this->id);
                     $templateSettingsTypes = self::loadSettingsTypesIntoArray($db);
 
-                    // encode arrays to JSON
+                    // encode arrays to JSON format
                     $templateData = json_encode($templateData);
                     $templateAssets = json_encode($templateAssets);
                     $templateSettings = json_encode($templateSettings);
                     $templateSettingsTypes = json_encode($templateSettingsTypes);
 
+                    // write json arrays into files
                     // write templates.json
-                    if (!file_put_contents($this->tmpFolder.$this->name."/"."templates.json", $templateData))
-                    {
-                        // todo: add syslog - failed to write templates.json
+                    if (!file_put_contents($this->tmpFolder.$this->subFolder."/"."templates.json", $templateData))
+                    {   // error writing templates.json
+                        \YAWK\sys::setSyslog($db, 48, 0, "failed to write ".$this->tmpFolder.$this->subFolder."templates.json", 0, 0, 0, 0);
                     }
                     // write assets.json
                     if (!file_put_contents($this->tmpFolder.$this->name."/"."assets.json", $templateAssets))
-                    {
-                        // todo: add syslog - failed to write assets.json
+                    {   // error writing assets.json
+                        \YAWK\sys::setSyslog($db, 48, 0, "failed to write ".$this->tmpFolder.$this->subFolder."assets.json", 0, 0, 0, 0);
                     }
                     // write template_settings.json
                     if (!file_put_contents($this->tmpFolder.$this->name."/"."template_settings.json", $templateSettings))
-                    {
-                        // todo: add syslog - failed to write template_settings.json
+                    {   // error writing template_settings.json
+                        \YAWK\sys::setSyslog($db, 48, 0, "failed to write ".$this->tmpFolder.$this->subFolder."template_settings.json", 0, 0, 0, 0);
                     }
                     // write template_settings_types.json
                     if (!file_put_contents($this->tmpFolder.$this->name."/"."template_settings_types.json", $templateSettingsTypes))
-                    {
-                        // todo: add syslog - failed to write template_settings_types.json
+                    {   // error writing template_settings_types.json
+                        \YAWK\sys::setSyslog($db, 48, 0, "failed to write ".$this->tmpFolder.$this->subFolder."template_settings_types.json", 0, 0, 0, 0);
                     }
 
                     // get template properties
@@ -3579,16 +3578,16 @@ namespace YAWK {
                     $license = new \YAWK\licenses($this->license, $this->description, $year, $this->author, $this->tmpFolder.$this->name."/");
                     // write license file
                     if ($license->writeLicenseFile() === false)
-                    {
-                        // todo: add syslog - failed to write license file
+                    {   // failed to write license file
+                        \YAWK\sys::setSyslog($db, 47, 0, "failed to write license file ($this->license license) to ".$this->tmpFolder.$this->subFolder."", 0, 0, 0, 0);
                     }
                 }
 
                 // check if .json files have been written...
-                if (is_file($this->tmpFolder.$this->name.'/assets.json')
-                && (is_file($this->tmpFolder.$this->name.'/templates.json')
-                && (is_file($this->tmpFolder.$this->name.'/template_settings.json')
-                && (is_file($this->tmpFolder.$this->name.'/template_settings_types.json')))))
+                if (is_file($this->tmpFolder.$this->subFolder.'/assets.json')
+                && (is_file($this->tmpFolder.$this->subFolder.'/templates.json')
+                && (is_file($this->tmpFolder.$this->subFolder.'/template_settings.json')
+                && (is_file($this->tmpFolder.$this->subFolder.'/template_settings_types.json')))))
                 {
                     // ok, all files seem to be processed successfully
 
@@ -3616,7 +3615,7 @@ namespace YAWK {
                     if (\YAWK\sys::writeIniFile($iniData, $this->tmpFolder."template.ini") === false)
                     {
                         // failed to write ini file:
-                        // todo: set syslog entry
+                        \YAWK\sys::setSyslog($db, 47, 0, "failed to write ".$this->tmpFolder."template.ini ", 0, 0, 0, 0);
                         return false;
                     }
 
@@ -3689,7 +3688,7 @@ namespace YAWK {
                             // delete all files from tmp folder - except the created zipfile
                             if (\YAWK\filemanager::recursiveRemoveDirectory($this->tmpFolder.$this->subFolder) === false)
                             {   // warning: failed to delete tmp files
-                                // todo: add syslog entry
+                                \YAWK\sys::setSyslog($db, 47, 0, "failed to delete tmp folder ".$this->tmpFolder.$this->subFolder."", 0, 0, 0, 0);
                                 // return false;
                             }
 
@@ -3700,7 +3699,7 @@ namespace YAWK {
                                 // set var for JS: link to the file to download
                                 $downloadFile = $destination;
                                 // dirty lil piece of JS code to emulate the user's click
-                                // (this avoids that he have to click twice to 1)generate + 2)download)
+                                // (this avoids that he have to click twice - 1st click to generate + 2nd click to download)
                                 echo "
                                     <script type='text/javascript'>
                                         $(document).ready(function()
