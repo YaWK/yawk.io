@@ -3116,7 +3116,7 @@ namespace YAWK {
          */
         public function uploadTemplate($db, $postData, $postFiles, $lang)
         {
-            // check if param are set and valid...
+            // check if params are set and valid...
             if (!isset($postData)
             || (empty($postData)
             || (!is_array($postData))))
@@ -3147,21 +3147,6 @@ namespace YAWK {
             // check if template folder is writeable
             if (is_writeable(dirname($this->folder)))
             {
-                /*
-                // check if tmp folder is there
-                if (is_dir(dirname($this->tmpFolder)) === false)
-                {
-                    // try to create tmp folder
-                    if (mkdir($this->tmpFolder) === false)
-                    {
-                        return false;
-                    }
-                }
-                else
-                    {   // prepare (empty) temp directory
-                        $this->emptyTmpFolder();
-                    }
-                */
                 // check if tmp folder exits
                 if (is_dir(dirname($this->tmpFolder)))
                 {
@@ -3268,12 +3253,17 @@ namespace YAWK {
                                     // die('template already exists');
 
                                     // TEMPLATE ALREADY EXISTS - OVERWRITE IT!
-                                    //  1.) check, which ID got this template?
+                                    //  .) check, which ID got this template?
+                                    //  .) manipulate assets + template_settings arrays
+                                    //     (means: change template ID to the one of the existing template that was found)
+                                    //  .) UPDATE data of these arrays into related db tables
+                                    //  .) delete json files from tmp folder (unwanted in target)
+                                    //  .) xcopy files and overwrite template folder
+                                    //  .) empty tmp directory
+                                    //  -fin- template updated - if all went good
+
+                                    // get ID of installed template
                                     $this->id = self::getTemplateIdByName($db, $iniFile['NAME']);
-
-
-                                    //  2.) manipulate assets + template_settings arrays
-                                    //  (means: change template ID to the one of the existing template that was found)
 
                                     // update ID in templates array
                                     $templates['id'] = $this->id;
@@ -3289,13 +3279,6 @@ namespace YAWK {
                                     {
                                         $templateSetting['templateID'] = $this->id;
                                     }
-
-                                    //  4.) UPDATE data of these arrays into related db tables
-                                    // print_r($templates);
-                                    // print_r($assets);
-                                    // print_r($templateSettings);
-                                    // print_r($templateSettingsTypes);
-
 
                                     if ($db->query("UPDATE {templates} 
                                                     SET id = '".$this->id."',
@@ -3421,12 +3404,6 @@ namespace YAWK {
                                     mkdir($this->tmpFolder);
 
                                     return true;
-
-                                    //  5.) delete json files from tmp folder (unwanted in target)
-                                    //  6.) delete ini file (unwanted in target)
-                                    //  7.) next step - xcopy files
-                                    //  -fin- template updated - if all went good
-
                                 }
                                 else
                                     {
