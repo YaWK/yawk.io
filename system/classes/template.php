@@ -1064,28 +1064,32 @@ namespace YAWK {
                 \YAWK\sys::setSyslog($db, 47, 1, "failed to delete template because templateID was missing.", 0, 0, 0, 0);
                 return false;
             }
-            else
-                {
-                // quote var, just to be sure its clean
-                $templateID = $db->quote($templateID);
 
-                // to delete the files, we need to get the template folder's name
-                // this function checks if template exits in database + if folder physically exists on disk
-                $templateFolder = \YAWK\template::getCurrentTemplateName($db, "backend", $templateID);
+            // quote var, just to be sure its clean
+            $templateID = $db->quote($templateID);
 
+            // to delete the files, we need to get the template folder's name
+            // this function checks if template exits in database + if folder physically exists on disk
+            $templateFolder = \YAWK\template::getCurrentTemplateName($db, "backend", $templateID);
+
+            // check if template folder exists...
+            if (is_dir(dirname("../system/templates/".$templateFolder."")))
+            {
                 // delete template folder from disk
                 if (!\YAWK\sys::recurseRmdir("../system/templates/$templateFolder"))
                 {   // booh, deleting recurse did not work
                     \YAWK\sys::setSyslog($db, 47, 1, "failed to delete recursive ../system/templates/$templateFolder", 0, 0, 0, 0);
                     return false;
                 }
+            }
 
-                // delete template from database {templates}
-                if (!$res = $db->query("DELETE FROM {templates} WHERE id = $templateID")) {   // if failed
-                    \YAWK\sys::setSyslog($db, 47, 1, "failed to delete template ID: $templateID from database", 0, 0, 0, 0);
-                    return false;
-                }
-                else
+            // delete template from database {templates}
+            if (!$res = $db->query("DELETE FROM {templates} WHERE id = $templateID"))
+            {   // failed to delete from database
+                \YAWK\sys::setSyslog($db, 47, 1, "failed to delete template ID: $templateID from database", 0, 0, 0, 0);
+                return false;
+            }
+            else
                 {
                     // ALTER table and set auto_increment value to prevent errors when deleting + adding new tpl
                     /*
@@ -1106,11 +1110,9 @@ namespace YAWK {
                     \YAWK\sys::setSyslog($db, 47, 1, "failed to delete template settings of ID: $templateID", 0, 0, 0, 0);
                     return false;
                 }
-                else
-                    {   // all good so far.
-                        return true;
-                    }
-            }
+
+                // all good - no false = template should be deleted
+                return true;
         }
 
 
