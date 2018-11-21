@@ -1059,18 +1059,23 @@ namespace YAWK {
         static function deleteTemplate($db, $templateID)
         {
             /** @var $db \YAWK\db */
-            if (!isset($templateID) && (empty($templateID))) {   // no templateID is set...
+            if (!isset($templateID) && (empty($templateID)))
+            {   // no templateID is set...
                 \YAWK\sys::setSyslog($db, 47, 1, "failed to delete template because templateID was missing.", 0, 0, 0, 0);
                 return false;
-            } else {   // quote var, just to be sure its clean
+            }
+            else
+                {
+                // quote var, just to be sure its clean
                 $templateID = $db->quote($templateID);
 
                 // to delete the files, we need to get the template folder's name
-                // this function checks if template exits in database + if folder physically in on disk
+                // this function checks if template exits in database + if folder physically exists on disk
                 $templateFolder = \YAWK\template::getCurrentTemplateName($db, "backend", $templateID);
 
                 // delete template folder from disk
-                if (!\YAWK\sys::recurseRmdir("../system/templates/$templateFolder")) {   // booh, deleting recurse did not work
+                if (!\YAWK\sys::recurseRmdir("../system/templates/$templateFolder"))
+                {   // booh, deleting recurse did not work
                     \YAWK\sys::setSyslog($db, 47, 1, "failed to delete recursive ../system/templates/$templateFolder", 0, 0, 0, 0);
                     return false;
                 }
@@ -1079,23 +1084,32 @@ namespace YAWK {
                 if (!$res = $db->query("DELETE FROM {templates} WHERE id = $templateID")) {   // if failed
                     \YAWK\sys::setSyslog($db, 47, 1, "failed to delete template ID: $templateID from database", 0, 0, 0, 0);
                     return false;
-                } else {   // ALTER table and set auto_increment value to prevent errors when deleting + adding new tpl
-                    if ($res = $db->query("SELECT MAX(id) FROM {templates}")) {   // get MAX ID
+                }
+                else
+                {
+                    // ALTER table and set auto_increment value to prevent errors when deleting + adding new tpl
+                    /*
+                    if ($res = $db->query("SELECT MAX(id) FROM {templates}"))
+                    {   // get MAX ID
                         $row = mysqli_fetch_row($res);
                         if (!$res = $db->query("ALTER TABLE {templates} AUTO_INCREMENT $row[0]")) {   // could not select auto encrement
                             \YAWK\sys::setSyslog($db, 47, 1, "failed alter auto increment templates table ", 0, 0, 0, 0);
                             return false;
                         }
                     }
+                    */
                 }
 
                 // delete template settings for requested templateID
-                if (!$res = $db->query("DELETE FROM {template_settings} WHERE templateID = $templateID")) {   // delete settings failed...
+                if (!$res = $db->query("DELETE FROM {template_settings} WHERE templateID = $templateID"))
+                {   // delete settings failed...
                     \YAWK\sys::setSyslog($db, 47, 1, "failed to delete template settings of ID: $templateID", 0, 0, 0, 0);
                     return false;
-                } else {   // all good so far.
-                    return true;
                 }
+                else
+                    {   // all good so far.
+                        return true;
+                    }
             }
         }
 
@@ -3419,21 +3433,29 @@ namespace YAWK {
                                         //  6.) delete ini file (unwanted in target)
                                         //  7.) next step - xcopy files
                                         //  -fin- template installed - if all went good
-                                        die('template does not exist');
+                                        // die('template does not exist');
 
                                         // step 1.) add template to templates database
-                                        if ($this->saveAs($db,
-                                                '',
-                                                $this,
-                                                $iniFile['NAME'],
-                                                $iniFile['DESCRIPTION'],
-                                                $iniFile['AUTHOR'],
-                                                $iniFile['AUTHOR_URL'],
-                                                $iniFile['WEBLINK'],
-                                                $iniFile['VERSION'],
-                                                $iniFile['LICENSE']) === true)
+                                        if ($db->query("INSERT INTO {templates} (active, name, positions, description, releaseDate, modifyDate, author, authorUrl, weblink, version, framework, license)
+                                        VALUES ('1', 
+                                                '".$iniFile['NAME']."', 
+                                                'outerTop:outerLeft:outerRight:intro:globalmenu:top:leftMenu:mainTop:mainTopLeft:mainTopCenter:mainTopRight:main:mainBottom:mainBottomLeft:mainBottomCenter:mainBottomRight:mainFooter:mainFooterLeft:mainFooterCenter:mainFooterRight:rightMenu:bottom:footer:hiddentoolbar:debug:outerBottom', 
+                                                '".$iniFile['DESCRIPTION']."', 
+                                                '".$iniFile['DATE']."', 
+                                                '".$iniFile['DATE']."', 
+                                                '".$iniFile['AUTHOR']."', 
+                                                '".$iniFile['AUTHOR_URL']."', 
+                                                '".$iniFile['WEBLINK']."', 
+                                                '".$iniFile['VERSION']."', 
+                                                '".$iniFile['FRAMEWORK']."', 
+                                                '".$iniFile['LICENSE']."')"))
                                         {
-                                            die($this->lastID);
+                                            // success: updated templates database
+                                            // \YAWK\sys::setSyslog($db, 45, 0, "added template $iniFile[NAME] to templates db", 0, 0, 0, 0);
+                                        }
+                                        else
+                                        {   // error: failed to insert new template into db
+                                            \YAWK\sys::setSyslog($db, 47, 0, "failed to insert new template: $iniFile[NAME] - templates db NOT updated", 0, 0, 0, 0);
                                         }
 
                                     }
