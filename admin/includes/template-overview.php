@@ -15,6 +15,45 @@
     }
 
 $(document).ready(function() {
+
+    // store all elements in vars
+    uploadModal = $("#uploadModal");
+    savebutton = $("#savebutton");
+    savebuttonIcon = $("#savebuttonIcon");
+    savebuttonText = $("#savebuttonText");
+    cancelButton = $("#cancelButton");
+    dismissButton = $("#dismissButton");
+    loadingText = $(savebutton).attr("data-loadingText");
+
+    // following code will be executed when modal upload window is shown
+    $(uploadModal).on('shown.bs.modal', function () {
+
+        // indicate loading state by click on upload button
+        $(savebutton).click(function() {
+
+            // disable close on outer click
+            $(uploadModal).attr('data-backdrop', 'static');
+            // disable close on keyboard (ESC key)
+            $(uploadModal).attr('data-keyboard', 'false');
+
+            // change color of button
+            $(savebutton).removeClass('btn btn-success').addClass('btn btn-warning');
+            // add loading indicator (spinning icon)
+            $(savebuttonIcon).removeClass('fa fa-check').addClass('fa fa-spinner fa-spin fa-fw');
+            // hide times icon in upper right corner
+            $(dismissButton).fadeOut();
+            // load add loading indicator text to upload btn
+            $(savebuttonText).html(loadingText);
+
+            // disable buttons to avoid interrupt by user
+            $(cancelButton).prop("disabled", true);
+            $(savebutton).attr("disabled", true);
+            // submit the form - upload template
+            $('form#uploadForm').submit();
+        });
+    });
+
+        // make template table sortable
         $('#table-sort').dataTable( {
             "bPaginate": false,
             "bLengthChange": false,
@@ -583,13 +622,13 @@ echo"</section><!-- Main content -->
 
 
 <!-- Modal --UPLOAD MODAL-- -->
-<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
+<div class="modal fade" id="uploadModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form enctype="multipart/form-data" action="index.php?page=template-overview&action=upload" method="POST">
+            <form enctype="multipart/form-data" id="uploadForm" action="index.php?page=template-overview&action=upload" method="POST">
                 <div class="modal-header">
                     <!-- modal header with close controls -->
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i> </button>
+                    <button id="dismissButton" type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i> </button>
                     <br>
                     <div class="col-md-1"><h3 class="modal-title"><i class="fa fa-download"></i></h3></div>
                     <div class="col-md-11"><h3 class="modal-title"><?php echo $lang['TPL_INSTALL']; ?> <!-- gets filled via JS setRenameFieldState--></h3></div>
@@ -612,8 +651,8 @@ echo"</section><!-- Main content -->
 
                 <!-- modal footer /w submit btn -->
                 <div class="modal-footer">
-                    <input class="btn btn-large btn-default" data-dismiss="modal" aria-hidden="true" type="submit" value="<?php echo $lang['CANCEL']; ?>">
-                    <button class="btn btn-success" type="submit"><i class="fa fa-check"></i> &nbsp;&nbsp;<?php echo $lang['TPL_UPLOAD']; ?></button>
+                    <input id="cancelButton" class="btn btn-large btn-default" data-dismiss="modal" aria-hidden="true" type="submit" value="<?php echo $lang['CANCEL']; ?>">
+                    <button id="savebutton" data-loadingText="<?php echo $lang['TPL_LOADING']; ?>" class="btn btn-success" type="submit"><i id="savebuttonIcon" class="fa fa-check"></i> &nbsp;&nbsp;<span id="savebuttonText"><?php echo $lang['TPL_UPLOAD']; ?></span></button>
                     <br><br>
                 </div>
             </form>
