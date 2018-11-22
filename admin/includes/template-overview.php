@@ -508,21 +508,21 @@ echo"</section><!-- Main content -->
                             if ($row['id'] == ($userTemplateID) && ($row['id'] == $activeTemplateId))
                             {
                                 $previewLabel = "<a href=\"index.php?page=template-overview&overrideTemplate=1&id=".$row['id']."\" data-toggle=\"tooltip\" title=\"$lang[TPL_CURRENTLY_ACTIVE]\">
-                                <span class=\"label label-success\"><i class=\"fa fa-eye\"></i> $lang[ACTIVE]</span></a>";
+                                <span class=\"label label-success\"><i class=\"fa fa-eye\"></i> &nbsp;&nbsp;$lang[ACTIVE]</span></a>";
                                 $activeBoldStart = "<b>";
                                 $activeBoldEnd = "</b>";
                             }
                             else if ($row['id'] == ($userTemplateID))
                             {
                                 $previewLabel = "<a href=\"index.php?page=template-overview&overrideTemplate=1&id=".$row['id']."\" data-toggle=\"tooltip\" title=\"$lang[TPL_ENABLE_PREVIEW]\">
-                                <span class=\"label label-success\"><i class=\"fa fa-eye\"></i> $lang[PREVIEW] $lang[ACTIVE]</span></a>";
+                                <span class=\"label label-success\"><i class=\"fa fa-eye-slash\"></i> &nbsp;&nbsp;$lang[PREVIEW] $lang[ACTIVE]</span></a>";
                                 $activeBoldStart = "<b>";
                                 $activeBoldEnd = "</b>";
                             }
                             else
                             {
                                 $previewLabel = "<a href=\"index.php?page=template-overview&overrideTemplate=1&id=".$row['id']."\" data-toggle=\"tooltip\" title=\"$lang[TPL_ENABLE_PREVIEW]\">
-                                <span class=\"label label-default\"><i class=\"fa fa-eye\"></i> $lang[PREVIEW]</span></a>";
+                                <span class=\"label label-default\"><i class=\"fa fa-eye-slash\"></i> &nbsp;&nbsp;$lang[PREVIEW]</span></a>";
                                 $activeBoldStart = "";
                                 $activeBoldEnd = "";
                             }
@@ -552,7 +552,7 @@ echo"</section><!-- Main content -->
             <span class=\"label label-$pub\">$pubtext</span></a>&nbsp;</td>
           <td>".$previewLabel."</td>
           <td>".$row['id']."</td>
-          <td>".$activeBoldStart."<a href=\"index.php?page=template-positions&id=".$row['id']."\"><div style=\"width:100%\">".$row['name']."</div></a>".$activeBoldEnd."".$row['description']."</td>
+          <td>".$activeBoldStart."<a href=\"index.php?page=template-positions&id=".$row['id']."\"><div style=\"width:100%\">".$row['name']."</div></a>".$row['description']."".$activeBoldEnd."</td>
           <td><a href=\"index.php?page=template-positions&id=".$row['id']."\" title=\"$lang[EDIT]: ".$row['name']."\">".$screenshot."</a></td>
           <td class=\"text-center\">
             $downloadIcon &nbsp;
