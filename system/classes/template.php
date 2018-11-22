@@ -106,7 +106,7 @@ namespace YAWK {
                 }
                 else
                     {   // template exists in database
-                        \YAWK\sys::setSyslog($db, 45, 0, "template $name already exists in database", 0, 0, 0, 0);
+                        \YAWK\sys::setSyslog($db, 45, 0, "template $name updated", 0, 0, 0, 0);
                         return true;
                     }
             }
@@ -3438,7 +3438,7 @@ namespace YAWK {
                                         // die('template does not exist');
 
                                         // step 1.) add template to templates database
-                                        if ($db->query("INSERT INTO {templates} (active, name, positions, description, releaseDate, modifyDate, author, authorUrl, weblink, version, framework, license)
+                                        if ($res = $db->query("INSERT INTO {templates} (active, name, positions, description, releaseDate, modifyDate, author, authorUrl, weblink, version, framework, license)
                                         VALUES ('1', 
                                                 '".$iniFile['NAME']."', 
                                                 'outerTop:outerLeft:outerRight:intro:globalmenu:top:leftMenu:mainTop:mainTopLeft:mainTopCenter:mainTopRight:main:mainBottom:mainBottomLeft:mainBottomCenter:mainBottomRight:mainFooter:mainFooterLeft:mainFooterCenter:mainFooterRight:rightMenu:bottom:footer:hiddentoolbar:debug:outerBottom', 
@@ -3452,8 +3452,22 @@ namespace YAWK {
                                                 '".$iniFile['FRAMEWORK']."', 
                                                 '".$iniFile['LICENSE']."')"))
                                         {
+                                            $this->id = self::getMaxId($db);
+
+                                            // update ID in assets array
+                                            foreach ($assets as &$asset)
+                                            {
+                                                $asset['templateID'] = $this->id;
+                                            }
+
+                                            // update ID in template_settings array
+                                            foreach ($templateSettings as &$templateSetting)
+                                            {
+                                                $templateSetting['templateID'] = $this->id;
+                                            }
+
                                             // success: updated templates database
-                                            // \YAWK\sys::setSyslog($db, 45, 0, "added template $iniFile[NAME] to templates db", 0, 0, 0, 0);
+                                            \YAWK\sys::setSyslog($db, 45, 0, "added template $iniFile[NAME] - last ID: ".$maxID." to templates db", 0, 0, 0, 0);
                                         }
                                         else
                                         {   // error: failed to insert new template into db
