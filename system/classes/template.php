@@ -3453,25 +3453,9 @@ namespace YAWK {
                                     {
 
                                         //  2.) retrieve ID of this new added template
-                                        $this->id = self::getMaxId($db);
+                                        $this->id = self::getTemplateIdByName($db, $iniFile['NAME']);
 
-                                        /*
-                                        //  3.) manipulate assets + template_settings arrays
-                                        // update ID in assets array
-                                        foreach ($assets as &$asset)
-                                        {
-                                            $asset['templateID'] = $this->id;
-                                        }
-
-                                        // update ID in template_settings array
-                                        foreach ($templateSettings as &$templateSetting)
-                                        {
-                                            $templateSetting['templateID'] = $this->id;
-                                        }
-                                        */
-
-                                        //  4.) INSERT data of these arrays into related db tables
-
+                                        // add assets to database
                                         foreach ($assets as $asset)
                                         {
                                             $db->query("INSERT INTO {assets} (templateID, type, sortation, asset, link)
@@ -3484,6 +3468,7 @@ namespace YAWK {
                                                         )");
                                         }
 
+                                        // add template settings to database
                                         foreach ($templateSettings as $templateSetting)
                                         {
                                             $db->query("INSERT INTO {template_settings} 
