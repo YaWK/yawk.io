@@ -3558,6 +3558,9 @@ namespace YAWK {
                     \YAWK\sys::setSyslog($db, 48, 1, "failed to uploaded template: $this->folder is not writeable", 0, 0, 0, 0);
                     return false;
                 }
+
+            // if something else went wrong
+            return false;
         }
 
         /**
