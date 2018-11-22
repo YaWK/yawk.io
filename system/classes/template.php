@@ -3422,59 +3422,132 @@ namespace YAWK {
                                     return true;
                                 }
                                 else
+                                {
+                                    // TEMPLATE DOES NOT EXIST YET - INSTALL IT!
+                                    //  1.) add template to templates database
+                                    //  2.) retrieve ID of this new added template
+                                    //  3.) manipulate assets + template_settings arrays
+                                    //      (means: change template ID to the new created one)
+                                    //
+                                    //  4.) INSERT data of these arrays into related db tables
+                                    //  5.) delete json files from tmp folder (unwanted in target)
+                                    //  6.) delete ini file (unwanted in target)
+                                    //  7.) next step - xcopy files
+                                    //  -fin- template installed - if all went good
+                                    // die('template does not exist');
+
+                                    // step 1.) add template to templates database
+                                    if ($res = $db->query("INSERT INTO {templates} (active, name, positions, description, releaseDate, modifyDate, author, authorUrl, weblink, version, framework, license)
+                                    VALUES ('1', 
+                                            '".$iniFile['NAME']."', 
+                                            'outerTop:outerLeft:outerRight:intro:globalmenu:top:leftMenu:mainTop:mainTopLeft:mainTopCenter:mainTopRight:main:mainBottom:mainBottomLeft:mainBottomCenter:mainBottomRight:mainFooter:mainFooterLeft:mainFooterCenter:mainFooterRight:rightMenu:bottom:footer:hiddentoolbar:debug:outerBottom', 
+                                            '".$iniFile['DESCRIPTION']."', 
+                                            '".$iniFile['DATE']."', 
+                                            '".$iniFile['DATE']."', 
+                                            '".$iniFile['AUTHOR']."', 
+                                            '".$iniFile['AUTHOR_URL']."', 
+                                            '".$iniFile['WEBLINK']."', 
+                                            '".$iniFile['VERSION']."', 
+                                            '".$iniFile['FRAMEWORK']."', 
+                                            '".$iniFile['LICENSE']."')"))
                                     {
-                                        // TEMPLATE DOES NOT EXIST YET - INSTALL IT!
-                                        //  1.) add template to templates database
 
                                         //  2.) retrieve ID of this new added template
+                                        $this->id = self::getMaxId($db);
+
+                                        /*
                                         //  3.) manipulate assets + template_settings arrays
-                                        //      (means: change template ID to the new created one)
-                                        //
-                                        //  4.) INSERT data of these arrays into related db tables
-                                        //  5.) delete json files from tmp folder (unwanted in target)
-                                        //  6.) delete ini file (unwanted in target)
-                                        //  7.) next step - xcopy files
-                                        //  -fin- template installed - if all went good
-                                        // die('template does not exist');
-
-                                        // step 1.) add template to templates database
-                                        if ($res = $db->query("INSERT INTO {templates} (active, name, positions, description, releaseDate, modifyDate, author, authorUrl, weblink, version, framework, license)
-                                        VALUES ('1', 
-                                                '".$iniFile['NAME']."', 
-                                                'outerTop:outerLeft:outerRight:intro:globalmenu:top:leftMenu:mainTop:mainTopLeft:mainTopCenter:mainTopRight:main:mainBottom:mainBottomLeft:mainBottomCenter:mainBottomRight:mainFooter:mainFooterLeft:mainFooterCenter:mainFooterRight:rightMenu:bottom:footer:hiddentoolbar:debug:outerBottom', 
-                                                '".$iniFile['DESCRIPTION']."', 
-                                                '".$iniFile['DATE']."', 
-                                                '".$iniFile['DATE']."', 
-                                                '".$iniFile['AUTHOR']."', 
-                                                '".$iniFile['AUTHOR_URL']."', 
-                                                '".$iniFile['WEBLINK']."', 
-                                                '".$iniFile['VERSION']."', 
-                                                '".$iniFile['FRAMEWORK']."', 
-                                                '".$iniFile['LICENSE']."')"))
+                                        // update ID in assets array
+                                        foreach ($assets as &$asset)
                                         {
-                                            $this->id = self::getMaxId($db);
-
-                                            // update ID in assets array
-                                            foreach ($assets as &$asset)
-                                            {
-                                                $asset['templateID'] = $this->id;
-                                            }
-
-                                            // update ID in template_settings array
-                                            foreach ($templateSettings as &$templateSetting)
-                                            {
-                                                $templateSetting['templateID'] = $this->id;
-                                            }
-
-                                            // success: updated templates database
-                                            \YAWK\sys::setSyslog($db, 45, 0, "added template $iniFile[NAME] - last ID: ".$maxID." to templates db", 0, 0, 0, 0);
+                                            $asset['templateID'] = $this->id;
                                         }
-                                        else
-                                        {   // error: failed to insert new template into db
-                                            \YAWK\sys::setSyslog($db, 47, 0, "failed to insert new template: $iniFile[NAME] - templates db NOT updated", 0, 0, 0, 0);
+
+                                        // update ID in template_settings array
+                                        foreach ($templateSettings as &$templateSetting)
+                                        {
+                                            $templateSetting['templateID'] = $this->id;
                                         }
+                                        */
+
+                                        //  4.) INSERT data of these arrays into related db tables
+
+                                        foreach ($assets as $asset)
+                                        {
+                                            $db->query("INSERT INTO {assets} (templateID, type, sortation, asset, link)
+                                                        VALUES (
+                                                        '".$this->id."',
+                                                        '".$asset['type']."',
+                                                        '".$asset['sortation']."',
+                                                        '".$asset['asset']."',
+                                                        '".$asset['link']."'
+                                                        )");
+                                        }
+
+                                        foreach ($templateSettings as $templateSetting)
+                                        {
+                                            $db->query("INSERT INTO {template_settings} 
+                                            (templateID, property, value, valueDefault, longValue, type, activated, sort, label, fieldClass, fieldType, options, placeholder, description, icon, heading, subtext)
+                                            VALUES ('".$this->id."',
+                                                    '".$templateSetting['property']."',
+                                                    '".$templateSetting['value']."',
+                                                    '".$templateSetting['valueDefault']."',
+                                                    '".$templateSetting['longValue']."',
+                                                    '".$templateSetting['type']."',
+                                                    '".$templateSetting['activated']."',
+                                                    '".$templateSetting['sort']."',
+                                                    '".$templateSetting['label']."',
+                                                    '".$templateSetting['fieldClass']."',
+                                                    '".$templateSetting['fieldType']."',
+                                                    '".$templateSetting['options']."',
+                                                    '".$templateSetting['placeholder']."',
+                                                    '".$templateSetting['description']."',
+                                                    '".$templateSetting['icon']."',
+                                                    '".$templateSetting['heading']."',
+                                                    '".$templateSetting['subtext']."')");
+                                        }
+
+                                        // delete unwanted json files - they are not needed anymore
+                                        if (!unlink ($this->tmpFolder.$this->subFolder."assets.json"))
+                                        {
+                                            \YAWK\sys::setSyslog($db, 47, 0, "failed to delete ".$this->tmpFolder.$this->subFolder."assets.json", 0, 0, 0, 0);
+                                        }
+                                        if (!unlink ($this->tmpFolder.$this->subFolder."template_settings.json"))
+                                        {
+                                            \YAWK\sys::setSyslog($db, 47, 0, "failed to delete ".$this->tmpFolder.$this->subFolder."template_settings.json", 0, 0, 0, 0);
+                                        }
+                                        if (!unlink ($this->tmpFolder.$this->subFolder."template_settings_types.json"))
+                                        {
+                                            \YAWK\sys::setSyslog($db, 47, 0, "failed to delete ".$this->tmpFolder.$this->subFolder."template_settings_types.json", 0, 0, 0, 0);
+                                        }
+                                        if (!unlink ($this->tmpFolder.$this->subFolder."templates.json"))
+                                        {
+                                            \YAWK\sys::setSyslog($db, 47, 0, "failed to delete ".$this->tmpFolder.$this->subFolder."templates.json", 0, 0, 0, 0);
+                                        }
+
+                                        // copy template folder
+                                        \YAWK\sys::xcopy($this->tmpFolder.$this->subFolder, $this->folder.$this->subFolder);
+
+                                        // remove tmp folder
+                                        if (!\YAWK\filemanager::recursiveRemoveDirectory($this->tmpFolder))
+                                        {   // failed to remove tmp folder
+                                            \YAWK\sys::setSyslog($db, 47, 0, "failed to remove tmp folder $this->tmpFolder", 0, 0, 0, 0);
+                                        }
+
+                                        // create a fresh, empty tmp folder
+                                        mkdir($this->tmpFolder);
+
+                                        // success: updated templates database
+                                        \YAWK\sys::setSyslog($db, 45, 0, "added template <b>$iniFile[NAME] ID: ".$this->id."</b> to templates db", 0, 0, 0, 0);
+                                        return true;
 
                                     }
+                                    else
+                                    {   // error: failed to insert new template into db
+                                        \YAWK\sys::setSyslog($db, 47, 0, "failed to insert new template: $iniFile[NAME] - templates db NOT updated", 0, 0, 0, 0);
+                                    }
+
+                                }
 
                                 //  xcopy files
                                 //  recursive delete tmp folder
@@ -3683,7 +3756,7 @@ namespace YAWK {
                         // check if $source is a directoy
                         if (is_dir($source) === true)
                         {
-                            // run recusrive iterators to store files in array
+                            // run recursive iterators to store files in array
                             $elements = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($source), \RecursiveIteratorIterator::SELF_FIRST);
 
                             // walk through folder
