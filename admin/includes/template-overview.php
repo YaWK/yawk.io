@@ -638,7 +638,7 @@ echo"</section><!-- Main content -->
                 <div class="modal-body">
                     <!-- template upload field -->
                     <input type="hidden" name="MAX_FILE_SIZE" value="67108864">
-                    <input type="file" name="templateFile" id="templateFile" title="<?php echo $lang['TPL_SELECT_FILE']; ?>" class="btn btn-lg btn-default">
+                    <input type="file" name="templateFile" id="templateFile" title="<?php echo $lang['TPL_SELECT_FILE']; ?>" class="btn btn-lg btn-default" style="width: 100%;">
                     <label for="templateFile"><?php echo $lang['POST_MAX_SIZE']; echo \YAWK\filemanager::getPostMaxSize();
                         echo " &nbsp; / &nbsp; ".$lang['UPLOAD_MAX_SIZE']; echo \YAWK\filemanager::getUploadMaxFilesize(); ?>
                         &nbsp;<i class="fa fa-question-circle-o text-info" data-placement="auto right" data-toggle="tooltip" title="" data-original-title="<?php echo $lang['UPLOAD_MAX_PHP']; ?>"></i>
