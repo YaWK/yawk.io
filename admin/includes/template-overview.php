@@ -143,6 +143,9 @@ if (isset($_GET['toggle']) && ($_GET['toggle'] === "1"))
             \YAWK\template::setTemplateActive($db, $_GET['templateID']);
             $user->setUserTemplate($db, 0, $_GET['templateID'], $user->id);
             $user->overrideTemplate = 0;
+
+            // load properties to make sure to view the latest active template properties
+            $template->loadProperties($db, $_GET['templateID']);
         }
         else
         {
@@ -332,7 +335,6 @@ echo"</section><!-- Main content -->
         </div>
     </div>
 </div>
-
 <!-- OVERVIEW -->
 <!-- list TEMPLATE HOME PAGE (DETAILS) -->
 <div class="row animated fadeIn">
