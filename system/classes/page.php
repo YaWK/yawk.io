@@ -879,8 +879,22 @@ namespace YAWK {
                     $this->alias = $alias;
                 }
                 else
-                    {   // unable to load page properties
-                        \YAWK\sys::setSyslog($db, 7, 2, "failed to load properties of page $alias", 0, 0, 0, 0);
+                    {   // 404 error handling
+                        if ($this->alias == "content/errors/404")
+                        {   // check if user is logged in (session uid is set in that case)
+                            if (isset($_SESSION['uid']) && (!empty($_SESSION['uid'])))
+                            {   // logged in user created a 404 error
+                                \YAWK\sys::setSyslog($db, 7, 2, "404: file not found - displayed $alias instead", $_SESSION['uid'], 0, 0, 0);
+                            }
+                            else
+                                {   // user is not logged in - unknown user created a 404 error
+                                    \YAWK\sys::setSyslog($db, 7, 2, "404: file not found - displayed $alias instead", 0, 0, 0, 0);
+                                }
+                        }
+                        else
+                            {   // failed to load page properties
+                                \YAWK\sys::setSyslog($db, 7, 2, "failed to load properties of page $alias - page may not exist", 0, 0, 0, 0);
+                            }
                     }
             }
             else
