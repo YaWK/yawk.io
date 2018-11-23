@@ -124,12 +124,7 @@ if (isset($_GET) && (!empty($_GET)))
 if (!isset($template)) { $template = new \YAWK\template(); }
 // new user obj if not exists
 if (!isset($user)) { $user = new \YAWK\user($db); }
-// get ID of current active template
-$getID = \YAWK\settings::getSetting($db, "selectedTemplate");
-// load properties of current active template
-$template->loadProperties($db, $getID);
-// previewButton is an empty string - why? this should be checked
-$previewButton = "";
+
 
 // TOGGLE TEMPLATE
 // set selectedTemplate online/offline (visible for everybody)
@@ -312,6 +307,13 @@ else {
 
 // check template wrapper
 // \YAWK\template::checkWrapper($lang, $lang['TPL'], $lang['OVERVIEW']);
+
+// get ID of current active template
+$getID = \YAWK\settings::getSetting($db, "selectedTemplate");
+// load properties of current active template
+$template->loadProperties($db, $getID);
+// previewButton is an empty string - why? this should be checked
+$previewButton = "";
 ?>
 <?php
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
