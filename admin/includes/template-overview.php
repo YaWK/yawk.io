@@ -606,7 +606,6 @@ echo"</section><!-- Main content -->
                     <select id="newTplLicense" class="form-control" name="newTplLicense">
                         <option value=""><?php echo $lang['PLEASE_SELECT']; ?></option>
                         <option value="MIT">MIT License</option>
-                        <option value="Apache-2.0">Apache-2.0 License</option>
                         <option value="GPL-2.0">GPL 2.0 License</option>
                         <option value="GPL-3.0">GPL 3.0 License</option>
                         <option value="LGPL-2.0">Lesser GPL 2.0</option>
