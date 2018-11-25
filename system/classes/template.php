@@ -224,6 +224,8 @@ namespace YAWK {
 
             $now = \YAWK\sys::now();
 
+            // TODO: change full_copy to xcopy method
+            // TODO: update template check methods
             // check if new tpl folder already exists
             if (file_exists("../system/templates/$new_template/")) {   // overwrite data
                 \YAWK\sys::full_copy("../system/templates/$template->name", "../system/templates/$new_template");
