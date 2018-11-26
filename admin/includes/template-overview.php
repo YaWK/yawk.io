@@ -245,7 +245,6 @@ if (isset($_POST['savenewtheme']) && (!empty($_POST['savenewtheme']))
     \YAWK\template::copyTemplateSettings($db, $template->id, $template->newId);
     // copy assets
     \YAWK\template::copyAssets($db, $template->id, $template->newId);
-
 }
 
 // OVERRIDE TEMPLATE
