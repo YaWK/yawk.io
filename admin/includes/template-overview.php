@@ -171,23 +171,18 @@ if (isset($_GET['delete']) && ($_GET['delete'] === "1"))
 if (isset($_POST['savenewtheme']) && (!empty($_POST['savenewtheme']))
 || (isset($_GET['savenewtheme']) && (!empty($_GET['savenewtheme']))))
 {
-    $newID = '';
-    $getID = '';
-
-    // SAVE AS new theme
-    // get new template id
-    $oldTemplateId = $template->id;
-    $newID = \YAWK\template::getMaxId($db);
-    $newTplId = $newID++;
-    $template->id = $newTplId;
+    if (isset($_POST['name']) && (!empty($_POST['name'])))
+    {
+        $template->name = $db->quote($_POST['name']);
+    }
 
     if (isset($_POST['newTplName']) && (!empty($_POST['newTplName'])))
     {
-        $template->name = $db->quote($_POST['newTplName']);
+        $template->newTplName = $db->quote($_POST['newTplName']);
     }
     else if (isset($_GET['newthemename']) && (!empty($_GET['newthemename'])))
     {
-        $template->name = $db->quote($_GET['newthemename']);
+        $template->newTplName = $db->quote($_GET['newthemename']);
     }
 
     if (isset($_POST['newTplDescription']) && (!empty($_POST['newTplDescription'])))
@@ -233,20 +228,25 @@ if (isset($_POST['savenewtheme']) && (!empty($_POST['savenewtheme']))
     }
     else { $template->license = ''; }
 
-    // save as new theme
-    $template->saveAs($db, $newID, $template, $template->name, $template->description, $template->author, $template->authorUrl, $template->weblink, $template->version, $template->license);
+    // SAVE AS new theme
+    // get new template id
+    $template->newId = \YAWK\template::getMaxId($db);
+    // save as new theme (new template settings must be set before)
+    $template->saveAs($db);
     // set the new theme active in template
-    \YAWK\template::setTemplateActive($db, $newID);
+    \YAWK\template::setTemplateActive($db, $template->newId);
     // copy the template settings into the new template
-    \YAWK\template::copyTemplateSettings($db, $oldTemplateId, $newID);
+    \YAWK\template::copyTemplateSettings($db, $template->id, $template->newId);
     // copy assets
-    \YAWK\template::copyAssets($db, $oldTemplateId, $newID);
+    \YAWK\template::copyAssets($db, $template->id, $template->newId);
+
 }
 
 // OVERRIDE TEMPLATE
 // check if call comes from template-manage or template-edit form
 if (isset($_GET['id']) && (is_numeric($_GET['id']) || (isset($_POST['id']) && (is_numeric($_POST['id'])))))
 {
+    $getID = '';
     if (empty($_GET['id']) || (!empty($_POST['id']))) { $getID = $_POST['id']; }
     else if (!empty($_GET['id']) || (empty($_POST['id']))) { $getID = $_GET['id']; }
     else { $getID = \YAWK\settings::getSetting($db, "selectedTemplate");  }
@@ -592,6 +592,7 @@ echo"</section><!-- Main content -->
                     <!-- save to... folder select options -->
                     <label id="newTplNameLabel" for="newTplName"><?php echo $lang['TPL_NEW_NAME']; ?></label>
                     <input id="newTplName" class="form-control" name="newTplName">
+                    <input id="name" type="hidden" name="name" value="<?php echo $template->name; ?>">
                     <label for="newTplDescription"><?php echo $lang['DESCRIPTION']; ?></label>
                     <textarea id="newTplDescription" class="form-control" name="newTplDescription" placeholder="<?php echo $lang['SHORT_DESCRIPTION_PH']; ?>"></textarea>
                     <label id="newTplAuthorLAbel" for="newTplAuthor"><?php echo $lang['AUTHOR']; ?></label>

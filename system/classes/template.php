@@ -18,12 +18,14 @@ namespace YAWK {
     {
         /** * @var int template ID */
         public $id;
-        /** * @var int last added ID */
-        public $lastID;
+        /** * @var int new TPL ID (latest template) */
+        public $newId;
         /** * @var int 0|1 is this template active? */
         public $active;
         /** * @var string template name */
         public $name;
+        /** * @var string new template name */
+        public $newTplName;
         /** * @var array db config array */
         public $config;
         /** * @var string template folder (root path of all templates) */
@@ -203,58 +205,59 @@ namespace YAWK {
          * @param string $license
          * @return bool
          */
-        public function saveAs($db, $newID, $template, $new_template, $description, $author, $authorUrl, $weblink, $version, $license)
+        public function saveAs($db)
         {
             /** @var \YAWK\db $db */
-            // save theme as new template
-
-            if (!isset($newID) || (empty($newID))) {
-                $newID = \YAWK\template::getMaxId($db);
-            }
-
+            // prepare vars
             $replace = array("/ä/", "/ü/", "/ö/", "/Ä/", "/Ü/", "/Ö/", "/ß/"); // array of special chars
             $chars = array("ae", "ue", "oe", "Ae", "Ue", "Oe", "ss"); // array of replacement chars
-            $new_template = preg_replace($replace, $chars, $new_template);      // replace with preg
+            $this->newTplName = preg_replace($replace, $chars, $this->newTplName);      // replace with preg
             // final check: just numbers and chars are allowed
-            $new_template = preg_replace("/[^a-z0-9\-\/]/i", "", $new_template);
+            $this->newTplName = preg_replace("/[^a-z0-9\-\/]/i", "", $this->newTplName);
             // same goes on for $template->name
-            $template->name = preg_replace($replace, $chars, $template->name);  // replace with preg
+            $this->name = preg_replace($replace, $chars, $this->name);  // replace with preg
             // final check: just numbers and chars are allowed
-            $template->name = preg_replace("/[^a-z0-9\-\/]/i", "", $template->name);
-
+            $this->name = preg_replace("/[^a-z0-9\-\/]/i", "", $this->name);
+            // get current timestamp
             $now = \YAWK\sys::now();
+            // copy template from source to destination
+            //\YAWK\sys::xcopy("../system/templates/$this->name", "../system/templates/$this->newTplName");
 
-            // TODO: change full_copy to xcopy method
-            // TODO: update template check methods
-            // check if new tpl folder already exists
-            if (file_exists("../system/templates/$new_template/")) {   // overwrite data
-                \YAWK\sys::full_copy("../system/templates/$template->name", "../system/templates/$new_template");
-            } else {   // copy data into new template directory
-                \YAWK\sys::full_copy("../system/templates/$template->name", "../system/templates/$new_template");
-            }
-
+            // copy new template into database
             if ($res = $db->query("INSERT INTO {templates} (name, description, releaseDate, author, authorUrl, weblink, modifyDate, version, license)
-  	                               VALUES('" . $new_template . "', 
-  	                                      '" . $description . "',
+  	                               VALUES('" . $this->newTplName . "', 
+  	                                      '" . $this->description . "',
   	                                      '" . $now . "',
-  	                                      '" . $author . "',
-  	                                      '" . $authorUrl . "',
-  	                                      '" . $weblink . "',
+  	                                      '" . $this->author . "',
+  	                                      '" . $this->authorUrl . "',
+  	                                      '" . $this->weblink . "',
   	                                      '" . $now . "',
-  	                                      '" . $version . "',
-  	                                      '" . $license . "')")
-            )
-            {   // success
-                $this->lastID = $this->$db->insert_id;
+  	                                      '" . $this->version . "',
+  	                                      '" . $this->license . "')"))
+            {
+
             }
             else
-                {   // q failed, throw error
-                    \YAWK\sys::setSyslog($db, 47, 1, "failed to save <b>$new_template</b> as new template ", 0, 0, 0, 0);
-                    // \YAWK\alert::draw("warning", "Warning!", "Could not insert your template $new_template into database.", "", 6200);
-                    return false;
-                }
-            // all good.
-            return true;
+            {   // q failed, throw error
+                \YAWK\sys::setSyslog($db, 47, 1, "failed to save <b>$this->newTplName</b> as new template", 0, 0, 0, 0);
+                // \YAWK\alert::draw("warning", "Warning!", "Could not insert your template $new_template into database.", "", 6200);
+                return false;
+            }
+            // tpl added to database successful
+            // check if template folder exists
+            if (is_dir(dirname("../system/templates/$this->name")))
+            {
+                // ok, start to copy template to new destination
+                \YAWK\sys::xcopy("../system/templates/$this->name", "../system/templates/$this->newTplName");
+                \YAWK\sys::setSyslog($db, 47, 1, "copy template folder from ../system/templates/$this->name to ../system/templates/$this->newTplName", 0, 0, 0, 0);
+                return true;
+            }
+            else
+            {   // template folder does not exist
+                // what should we copy if nothing exists?
+                \YAWK\sys::setSyslog($db, 47, 1, "failed to copy template - template name $this->name does not exist", 0, 0, 0, 0);
+                return false;
+            }
         }
 
         /**
@@ -289,8 +292,8 @@ namespace YAWK {
                 $this->selectedTemplate = \YAWK\settings::getSetting($db, "selectedTemplate");
                 return true;
             } else {   // could not fetch tpl properties, throw error...
-                \YAWK\sys::setSyslog($db, 47, 1, "failed to load properties of template id: <b>$id</b> ", 0, 0, 0, 0);
-                \YAWK\alert::draw("danger", "Warning!", "Could not fetch template properties. Expect a buggy view.", "", 3000);
+                \YAWK\sys::setSyslog($db, 47, 1, "failed to load properties of template <b>$this->name</b> (id: <b>$id</b>)", 0, 0, 0, 0);
+                // \YAWK\alert::draw("danger", "Warning!", "Could not fetch template properties. Expect a buggy view.", "", 3000);
                 return false;
             }
         }
