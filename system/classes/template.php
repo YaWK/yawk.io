@@ -1088,6 +1088,21 @@ namespace YAWK {
                 }
             }
 
+
+            // delete template settings of requested templateID
+            if (!$res = $db->query("DELETE FROM {template_settings} WHERE templateID = $templateID"))
+            {   // delete settings failed...
+                \YAWK\sys::setSyslog($db, 47, 1, "failed to delete template settings of ID: $templateID", 0, 0, 0, 0);
+                return false;
+            }
+
+            // delete assets of requested templateID
+            if (!$res = $db->query("DELETE FROM {assets} WHERE templateID = $templateID"))
+            {   // delete settings failed...
+                \YAWK\sys::setSyslog($db, 47, 1, "failed to delete template assets of ID: $templateID", 0, 0, 0, 0);
+                return false;
+            }
+
             // delete template from database {templates}
             if (!$res = $db->query("DELETE FROM {templates} WHERE id = $templateID"))
             {   // failed to delete from database
@@ -1097,24 +1112,17 @@ namespace YAWK {
             else
                 {
                     // ALTER table and set auto_increment value to prevent errors when deleting + adding new tpl
-                    /*
                     if ($res = $db->query("SELECT MAX(id) FROM {templates}"))
                     {   // get MAX ID
                         $row = mysqli_fetch_row($res);
-                        if (!$res = $db->query("ALTER TABLE {templates} AUTO_INCREMENT $row[0]")) {   // could not select auto encrement
+                        if (!$res = $db->query("ALTER TABLE {templates} AUTO_INCREMENT $row[0]"))
+                        {   // could not select auto increment
                             \YAWK\sys::setSyslog($db, 47, 1, "failed alter auto increment templates table ", 0, 0, 0, 0);
                             return false;
                         }
                     }
-                    */
                 }
 
-                // delete template settings for requested templateID
-                if (!$res = $db->query("DELETE FROM {template_settings} WHERE templateID = $templateID"))
-                {   // delete settings failed...
-                    \YAWK\sys::setSyslog($db, 47, 1, "failed to delete template settings of ID: $templateID", 0, 0, 0, 0);
-                    return false;
-                }
 
                 // all good - no false = template should be deleted
                 return true;

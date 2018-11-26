@@ -171,6 +171,11 @@ if (isset($_GET['delete']) && ($_GET['delete'] === "1"))
 if (isset($_POST['savenewtheme']) && (!empty($_POST['savenewtheme']))
 || (isset($_GET['savenewtheme']) && (!empty($_GET['savenewtheme']))))
 {
+    if (isset($_POST['id']) && (!empty($_POST['id'])))
+    {
+        $template->id = $db->quote($_POST['id']);
+    }
+
     if (isset($_POST['name']) && (!empty($_POST['name'])))
     {
         $template->name = $db->quote($_POST['name']);
@@ -228,10 +233,11 @@ if (isset($_POST['savenewtheme']) && (!empty($_POST['savenewtheme']))
     }
     else { $template->license = ''; }
 
-    // SAVE AS new theme
     // get new template id
     $template->newId = \YAWK\template::getMaxId($db);
-    // save as new theme (new template settings must be set before)
+    $template->newId++;
+
+    // SAVE AS new theme
     $template->saveAs($db);
     // set the new theme active in template
     \YAWK\template::setTemplateActive($db, $template->newId);
@@ -593,6 +599,7 @@ echo"</section><!-- Main content -->
                     <label id="newTplNameLabel" for="newTplName"><?php echo $lang['TPL_NEW_NAME']; ?></label>
                     <input id="newTplName" class="form-control" name="newTplName">
                     <input id="name" type="hidden" name="name" value="<?php echo $template->name; ?>">
+                    <input id="id" type="hidden" name="id" value="<?php echo $template->id; ?>">
                     <label for="newTplDescription"><?php echo $lang['DESCRIPTION']; ?></label>
                     <textarea id="newTplDescription" class="form-control" name="newTplDescription" placeholder="<?php echo $lang['SHORT_DESCRIPTION_PH']; ?>"></textarea>
                     <label id="newTplAuthorLAbel" for="newTplAuthor"><?php echo $lang['AUTHOR']; ?></label>
