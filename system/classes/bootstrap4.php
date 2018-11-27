@@ -2,6 +2,7 @@
 namespace YAWK\FRAMEWORK\BOOTSTRAP4
 {
     /**
+     * TODO: add all bootstrap 4 methods
      * <b>Bootstrap 4 CSS methods</b>
      * <p>Extends \YAWK\bootstrap - this class serves all bootstrap 4 component methods
      * and set this->cssCode variable that will be used by \YAWK\bootstrap </p>
