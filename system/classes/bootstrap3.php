@@ -4,7 +4,7 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP3
     /**
      * <b>Bootstrap 3 CSS methods</b>
      * <p>Extends \YAWK\bootstrap - this class serves all bootstrap 3 component methods
-     * and set this->cssCode variable that will be used by \YAWK\bootstrap </p>
+     * and set this->cssCode variable that will be used by \YAWK\FRAMEWORK\cssFramework() </p>
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2009-2015 Daniel Retzl yawk.io
