@@ -1239,70 +1239,91 @@ namespace YAWK {
         public function getFormElements($db, $settings, $type, $lang, $user)
         {   // loop trough array
             // removed not needed checkup
-            if (!isset($type) && (empty($type))) {    // if param 'type' is missing, set type 1 as default
-                $type = 1;
+            if (!isset($type) && (empty($type)))
+            {    // if param 'type' is missing, set type 1 as default
+                 $type = 1;
             }
             // loop trough settings array
-            foreach ($settings as $setting) {
+            foreach ($settings as $setting)
+            {
                 // field type not set or empty
-                if (!isset($setting['fieldType']) && (empty($fieldType))) {   // set input field as common default
+                if (!isset($setting['fieldType']) && (empty($fieldType)))
+                {   // set input field as common default
                     $setting['fieldType'] = "input";
-                } else {   // settings type must be equal to param $type
+                }
+                else
+                    {   // settings type must be equal to param $type
                     // equals settings category
-                    if ($setting['type'] === "$type" && ($setting['activated'] === "1")) {
+                    if ($setting['type'] === "$type" && ($setting['activated'] === "1"))
+                    {
                         // check if ICON is set
                         // if an icon is set, it will be drawn before the heading, to the left.
-                        if (isset($setting['icon']) && (!empty($setting['icon']))) {   // fill it w icon
+                        if (isset($setting['icon']) && (!empty($setting['icon'])))
+                        {   // fill it w icon
                             $setting['icon'] = "<i class=\"$setting[icon]\"></i>";
-                        } else {   // leave empty - no icon available
-                            $setting['icon'] = '';
                         }
+                        else
+                            {   // leave empty - no icon available
+                                $setting['icon'] = '';
+                            }
 
                         // check if LABEL is set
                         // The label sits directly above, relative to the setting form element
-                        if (isset($setting['label']) && (!empty($setting['label']))) {   // if its set, put it into $lang array for L11n
+                        if (isset($setting['label']) && (!empty($setting['label'])))
+                        {   // if its set, put it into $lang array for L11n
                             $setting['label'] = $lang[$setting['label']];
-                        } else {   // otherwise throw error
-                            $setting['label'] = 'sorry, there is not label set. meh!';
                         }
+                        else
+                            {   // otherwise throw error
+                                $setting['label'] = 'sorry, there is not label set. meh!';
+                            }
 
                         // check if HEADING is set
                         // if set, a <H3>Heading</H3> will be shown above the setting
-                        if (isset($setting['heading']) && (!empty($setting['heading']))) {   // L11n
+                        if (isset($setting['heading']) && (!empty($setting['heading'])))
+                        {   // L11n
                             $setting['heading'] = $lang[$setting['heading']];
-                        } else {   // leave empty - no heading for that setting
-                            $setting['heading'] = '';
                         }
+                        else
+                            {   // leave empty - no heading for that setting
+                                $setting['heading'] = '';
+                            }
 
                         // check if SUBTEXT is set
                         // this is shown in <small>tags</small> beneath the heading
-                        if (isset($setting['subtext']) && (!empty($setting['subtext']))) {   // L11n
+                        if (isset($setting['subtext']) && (!empty($setting['subtext'])))
+                        {   // L11n
                             $setting['subtext'] = $lang[$setting['subtext']];
-                        } else {   // leave empty - no subtext beneath the heading
-                            $setting['subtext'] = '';
                         }
+                        else
+                            {   // leave empty - no subtext beneath the heading
+                                $setting['subtext'] = '';
+                            }
 
                         // check if description is set
-                        // the description will be shown underneath the form element
-                        if (isset($setting['description']) && (!empty($setting['description']))) {   // L11n
+                        // the description will be shown right beside the label
+                        if (isset($setting['description']) && (!empty($setting['description'])))
+                        {   // L11n
                             $setting['description'] = $lang[$setting['description']];
-                        } else {   // leave empty - no description available
-                            $setting['description'] = '';
+                            $setting['description'] = "&nbsp;<small><i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"$setting[description]\"></i></small>";
                         }
 
                         /* SELECT FIELD */
-                        if ($setting['fieldType'] === "select") {   // display icon, heading and subtext, if its set
-                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext'])))) {
+                        if ($setting['fieldType'] === "select")
+                        {   // display icon, heading and subtext, if its set
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                            {
                                 echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
                             }
                             // begin draw select
-                            echo "<label for=\"$setting[property]\">$setting[label]
+                            echo "<label for=\"$setting[property]\">$setting[label]&nbsp;$setting[description]&nbsp;
                                   <small><i class=\"small\" style=\"font-weight:normal\">$lang[DEFAULT]: $setting[valueDefault]</i></small></label>
                                   <select class=\"form-control\" id=\"$setting[property]\" name=\"$setting[property]\">";
                             echo "<option value=\"$setting[value]\">$lang[SETTING_CURRENT] $setting[value]</option>";
                             // explode option string into array
                             $optionValues = explode(":", $setting['options']);
-                            foreach ($optionValues as $value) {
+                            foreach ($optionValues as $value)
+                            {
                                 // extract value from option setting string
                                 // $optionValue = preg_replace("/,[a-zA-Z0-9]*/", "", $value);
                                 // extract description from option setting
@@ -1312,18 +1333,24 @@ namespace YAWK {
                                 echo "<option value=\"$optionValue[0]\">$optionDesc</option>";
                             }
                             echo "</select>";
-                            echo "<p>$setting[description]</p>";
-                        } /* RADIO BUTTTONS */
-                        else if ($setting['fieldType'] === "radio") {
-                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext'])))) {
+
+                        }
+
+                        /* RADIO BUTTTONS */
+                        else if ($setting['fieldType'] === "radio")
+                        {
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                            {
                                 echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
                             }
-                            echo "<label for=\"$setting[property]\">$setting[label]</label>
+                            echo "<label for=\"$setting[property]\">$setting[label]&nbsp;$setting[description]&nbsp;</label>
                                   <input type=\"radio\" id=\"$setting[property]\" name=\"$setting[property]\">";
                             echo "<input type=\"radio\" value=\"$setting[value]\">$lang[SETTING_CURRENT] $setting[value]</option>";
+
                             // explode option string into array
                             $optionValues = explode(":", $setting['options']);
-                            foreach ($optionValues as $value) {
+                            foreach ($optionValues as $value)
+                            {
                                 // extract value from option setting string
                                 $optionValue = preg_replace("/,[a-zA-Z0-9]*/", "", $value);
                                 // extract description from option setting
@@ -1332,94 +1359,132 @@ namespace YAWK {
                                 echo "<option value=\"$optionValue\">$optionDesc</option>";
                             }
                             echo "</select>";
-                            echo "<p>$setting[description]</p>";
-                        } // CHECKBOX
-                        else if ($setting['fieldType'] === "checkbox") {    // build a checkbox
-                            if ($setting['value'] === "1") {   // set checkbox to checked
+                        }
+
+                        // CHECKBOX
+                        else if ($setting['fieldType'] === "checkbox")
+                        {    // build a checkbox
+                            if ($setting['value'] === "1")
+                            {   // set checkbox to checked
                                 $checked = "checked";
-                            } else {   // checkbox not checked
-                                $checked = "";
                             }
-                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext'])))) {
+                            else
+                                {   // checkbox not checked
+                                    $checked = "";
+                                }
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                            {
                                 echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
                             }
                             echo "<input type=\"hidden\" name=\"$setting[property]\" value=\"0\">
                               <input type=\"checkbox\" id=\"$setting[property]\" name=\"$setting[property]\" value=\"1\" $checked>
-                              <label for=\"$setting[property]\">&nbsp; $setting[label]</label><p>$setting[description]</p>";
-                        } // CHECKBOX as toggle switch
-                        else if ($setting['fieldType'] === "checkbox toggle") {    // build a checkbox
-                            if ($setting['value'] === "1") {   // set checkbox to checked
+                              <label for=\"$setting[property]\">&nbsp; $setting[label]&nbsp;$setting[description]&nbsp;</label>";
+                        }
+
+                        // CHECKBOX as toggle switch
+                        else if ($setting['fieldType'] === "checkbox toggle")
+                        {
+                            // build a checkbox
+                            if ($setting['value'] === "1")
+                            {   // set checkbox to checked
                                 $checked = "checked";
-                            } else {   // checkbox not checked
-                                $checked = "";
                             }
-                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext'])))) {
+                            else
+                                {   // checkbox not checked
+                                    $checked = "";
+                                }
+
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                            {
                                 echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
                             }
                             echo "<input type=\"hidden\" name=\"$setting[property]\" value=\"0\">
                               <input type=\"checkbox\" data-on=\"$lang[ON_]\" data-off=\"$lang[OFF_]\" data-toggle=\"toggle\" data-onstyle=\"success\" data-offstyle=\"danger\" id=\"$setting[property]\" name=\"$setting[property]\" value=\"1\" $checked>
-                              <label for=\"$setting[property]\">&nbsp; $setting[label]</label><p>$setting[description]</p>";
-                        } /* TEXTAREA */
-                        else if ($setting['fieldType'] === "textarea") {    // if a long value is set
-                            $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
-                            if (isset($setting['longValue']) && (!empty($setting['longValue']))) {   // build a longValue tagged textarea and fill with longValue
-                                $setting['longValue'] = nl2br($setting['longValue']);
-                                if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext'])))) {
-                                    echo "<h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
-                                }
-                                echo "<label for=\"$setting[property]\">$setting[label]</label>
-                                      <textarea cols=\"64\" rows=\"4\" class=\"$setting[fieldClass]\" placeholder=\"$lang[$placeholder]\" id=\"$setting[property]\" name=\"$setting[property]\">$setting[longValue]</textarea>";
-                                echo "<p>$setting[description]</p>";
-                            } else {   // draw default textarea
-                                $setting['value'] = nl2br($setting['value']);
-                                if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext'])))) {
-                                    echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
-                                }
-                                echo "<label for=\"$setting[property]-long\">$setting[label]</label>
-                                      <textarea cols=\"64\" rows=\"4\" class=\"$setting[fieldClass]\" placeholder=\"$lang[$placeholder]\" id=\"$setting[property]\" name=\"$setting[property]\">$setting[value]</textarea>";
-                                echo "<p>$setting[description]</p>";
-                            }
-                        } /* INPUT PASSWORD FIELD */
-                        else if ($setting['fieldType'] === "password") {    // draw an input field
-                            $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
-                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext'])))) {
-                                echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
-                            }
-                            echo "<label for=\"$setting[property]\">$setting[label]</label>
-                                  <input type=\"password\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
-										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\"><p>$setting[description]</p>";
-                        } /* INPUT TEXT FIELD */
-                        else if ($setting['fieldType'] === "input") {   // draw an input field
-                            $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
-                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext'])))) {
-                                echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
-                            }
-                            echo "<label for=\"$setting[property]\">$setting[label]
-                                  <small><i class=\"small\" style=\"font-weight:normal\">$lang[DEFAULT]: $setting[valueDefault]</i></small></label>
-                                  <input type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
-										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\"><p>$setting[description]</p>";
-                        } /* COLOR TEXT FIELD */
-                        else if ($setting['fieldType'] === "color") {    // draw a color input field
-                            $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
-                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext'])))) {
-                                echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
-                            }
-                            echo "<label for=\"$setting[property]\">$setting[label]
-                                  <small><i class=\"small\" style=\"font-weight:normal\">$lang[DEFAULT]: $setting[valueDefault]</i></small></label>
-                                  <input type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
-										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\"><p>$setting[description]</p>";
-                        } else {    // draw an input field
-                            $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
-                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext'])))) {
-                                echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
-                            }
-                            echo "<label for=\"$setting[property]\">$setting[label]
-                                  <small><i class=\"small\" style=\"font-weight:normal\">$lang[DEFAULT]: $setting[valueDefault]</i></small></label>
-                                  <input type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
-										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\"><p>$setting[description]</p>";
-
+                              <label for=\"$setting[property]\">&nbsp; $setting[label]&nbsp;$setting[description]&nbsp;</label>";
                         }
 
+                        /* TEXTAREA */
+                        else if ($setting['fieldType'] === "textarea")
+                        {    // if a long value is set
+                            $placeholder = $setting['placeholder'];
+                            // store placeholder from array in var to use it at language array
+                            if (isset($setting['longValue']) && (!empty($setting['longValue'])))
+                            {   // build a longValue tagged textarea and fill with longValue
+                                $setting['longValue'] = nl2br($setting['longValue']);
+                                if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                                {
+                                    echo "<h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
+                                }
+                                echo "<label for=\"$setting[property]\">$setting[label]&nbsp;$setting[description]&nbsp;</label>
+                                      <textarea cols=\"64\" rows=\"4\" class=\"$setting[fieldClass]\" placeholder=\"$lang[$placeholder]\" id=\"$setting[property]\" name=\"$setting[property]\">$setting[longValue]</textarea>";
+                            }
+                            else
+                                {   // draw default textarea
+                                    $setting['value'] = nl2br($setting['value']);
+                                    if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                                    {
+                                        echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
+                                    }
+                                    echo "<label for=\"$setting[property]-long\">$setting[label]&nbsp;$setting[description]&nbsp;</label>
+                                          <textarea cols=\"64\" rows=\"4\" class=\"$setting[fieldClass]\" placeholder=\"$lang[$placeholder]\" id=\"$setting[property]\" name=\"$setting[property]\">$setting[value]</textarea>";
+                                }
+                        }
+
+                        /* INPUT PASSWORD FIELD */
+                        else if ($setting['fieldType'] === "password")
+                        {    // draw an input field
+                            $placeholder = $setting['placeholder'];
+                            // store placeholder from array in var to use it at language array
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                            {
+                                echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
+                            }
+                            echo "<label for=\"$setting[property]\">$setting[label]</label>&nbsp;$setting[description]&nbsp;
+                                  <input type=\"password\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
+										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\">";
+                        }
+                        /* INPUT TEXT FIELD */
+                        else if ($setting['fieldType'] === "input")
+                        {   // draw an input field
+                            $placeholder = $setting['placeholder'];
+                            // store placeholder from array in var to use it at language array
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                            {
+                                echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
+                            }
+                            echo "<label for=\"$setting[property]\">$setting[label]&nbsp;$setting[description]&nbsp;
+                                  <small><i class=\"small\" style=\"font-weight:normal\">$lang[DEFAULT]: $setting[valueDefault]</i></small></label>
+                                  <input type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
+										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\">";
+                        }
+
+                        /* COLOR TEXT FIELD */
+                        else if ($setting['fieldType'] === "color")
+                        {    // draw a color input field
+                            $placeholder = $setting['placeholder'];     // store placeholder from array in var to use it at language array
+                            if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                            {
+                                echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
+                            }
+                            echo "<label for=\"$setting[property]\">$setting[label]&nbsp;$setting[description]&nbsp;
+                                  <small><i class=\"small\" style=\"font-weight:normal\">$lang[DEFAULT]: $setting[valueDefault]</i></small></label>
+                                  <input type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
+										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\">";
+                        }
+                        else
+                            {
+                                // draw an input field
+                                $placeholder = $setting['placeholder'];
+                                // store placeholder from array in var to use it at language array
+                                if (!empty($setting['icon']) || (!empty($setting['heading']) || (!empty($setting['subtext']))))
+                                {
+                                    echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
+                                }
+                                echo "<label for=\"$setting[property]\">$setting[label]&nbsp;$setting[description]&nbsp;
+                                      <small><i class=\"small\" style=\"font-weight:normal\">$lang[DEFAULT]: $setting[valueDefault]</i></small></label>
+                                      <input type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
+                                             value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\">";
+                        }
                     }
                 }
             }
