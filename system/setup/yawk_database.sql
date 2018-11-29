@@ -11,8 +11,8 @@ CREATE TABLE `cms_assets` (
 
 INSERT INTO `cms_assets` (`id`, `templateID`, `type`, `sortation`, `asset`, `link`) VALUES
 (1, 1, 'js', 1, 'jQuery 1.x', 'system/engines/jquery/jquery-1.12.4.min.js'),
-(2, 1, 'css', 5, 'Bootstrap 3 CSS', 'system/engines/bootstrap3/dist/css/bootstrap.min.css'),
-(3, 1, 'js', 6, 'Bootstrap 3 JS', 'system/engines/bootstrap3/dist/js/bootstrap.min.js');
+(2, 1, 'css', 5, 'Bootstrap 4 CSS', 'system/engines/bootstrap4/css/bootstrap.min.css'),
+(3, 1, 'js', 6, 'Bootstrap 4 JS', 'system/engines/bootstrap4/js/bootstrap.min.js');
 
 CREATE TABLE `cms_assets_types` (
   `id` int(11) NOT NULL,
@@ -727,7 +727,7 @@ CREATE TABLE `cms_templates` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `cms_templates` (`id`, `active`, `name`, `positions`, `description`, `releaseDate`, `author`, `authorUrl`, `weblink`, `subAuthor`, `subAuthorUrl`, `modifyDate`, `version`, `framework`, `license`) VALUES
-(1, 1, 'yawk-bootstrap3', 'outerTop:outerLeft:outerRight:intro:globalmenu:top:leftMenu:mainTop:mainTopLeft:mainTopCenter:mainTopRight:main:mainBottom:mainBottomLeft:mainBottomCenter:mainBottomRight:mainFooter:mainFooterLeft:mainFooterCenter:mainFooterRight:rightMenu:bottom:footer:hiddentoolbar:debug:outerBottom', 'YaWK Bootstrap 3 Default Theme.', '2016-09-29 00:00:00', 'Daniel Retzl ', 'https://github.com/YaWK', 'http://www.yawk.io', 'Daniel Retzl', '', '2016-10-01 02:30:00', '1.0.0', 'bootstrap3', 'GNU General Public License (GPL)');
+(1, 1, 'YaWK-bootstrap4', 'outerTop:outerLeft:outerRight:intro:globalmenu:top:leftMenu:mainTop:mainTopLeft:mainTopCenter:mainTopRight:main:mainBottom:mainBottomLeft:mainBottomCenter:mainBottomRight:mainFooter:mainFooterLeft:mainFooterCenter:mainFooterRight:rightMenu:bottom:footer:hiddentoolbar:debug:outerBottom', 'Bootstrap 4 Default Theme.', '2018-30-11 00:15:00', 'Daniel Retzl ', 'https://github.com/YaWK', 'http://www.yawk.io', 'Daniel Retzl', '', '2018-11-30 00:15:00', '1.0.0', 'bootstrap4', 'MIT');
 
 CREATE TABLE `cms_template_settings` (
   `id` int(11) NOT NULL,
@@ -1788,7 +1788,17 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (1041, 1, 'pos-mainRight-bg-position', 'center', 'center', '', 57, 1, 10, 'TPL_BODY_BG_IMAGE_POSITION', 'form-control', 'select', 'left-center,left-center:right-center,right-center:top-center,top-center:top,top:bottom,bottom', '', '', '', '', ''),
 (1042, 1, 'pos-mainRight-bg-repeat', 'no-repeat', 'no-repeat', '', 57, 1, 11, 'TPL_BODY_BG_IMAGE_REPEAT', 'form-control', 'select', 'no-repeat,no-repeat:repeat-x,repeat-x:repeat-y,repeat-y:inherit,inherit', '', '', '', '', ''),
 (1043, 1, 'pos-mainRight-bg-size', 'cover', 'cover', '', 57, 1, 12, 'TPL_BODY_BG_IMAGE_SIZE', 'form-control', 'select', 'auto,auto:cover,cover:contain,contain:length,length:percentage,percentage:initial,inital:inherit,inherit', '', '', '', '', ''),
-(1044, 1, 'pos-mainRight-bgnone', ' ', 'none', '', 57, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT');
+(1044, 1, 'pos-mainRight-bgnone', ' ', 'none', '', 57, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
+(1045, 1, 'card-bgcolor', 'FFFFFF', '#fff', '', 58, 1, 1, 'TPL_CARD_BGCOLOR', 'form-control color', 'color', '', 'TPL_COLOR_PLACEHOLDER', 'TPL_CARD_BGCOLOR_DESC', '', '', ''),
+(1046, 1, 'card-border', '1px solid', '1px solid', '', 58, 1, 1, 'TPL_CARD_BORDER', 'form-control', '', '', 'TPL_CARD_BORDER_PH', 'TPL_CARD_BORDER_DESC', '', '', ''),
+(1047, 1, 'card-bordercolor', 'D9D9D9', '#d9d9d9', '', 58, 1, 1, 'TPL_CARD_BORDERCOLOR', 'form-control color', 'color', '', 'TPL_COLOR_PLACEHOLDER', 'TPL_CARD_BORDERCOLOR_DESC', '', '', ''),
+(1048, 1, 'card-border-radius', '0.25rem', '0.25rem', '', 58, 1, 1, 'TPL_CARD_BORDER_RADIUS', 'form-control', '', '', 'TPL_CARD_BORDER_RADIUS_PH', 'TPL_CARD_BORDER_RADIUS_DESC', '', '', ''),
+(1049, 1, 'card-body-padding', '1.25rem', '1.25rem', '', 58, 1, 1, 'TPL_CARD_BODY_PADDING', 'form-control', '', '', 'TPL_CARD_BODY_PADDING_PH', 'TPL_CARD_BODY_PADDING_DESC', '', 'LAYOUT', 'PADDING_MARGIN'),
+(1050, 1, 'card-title-margin-bottom', '0.75rem', '0.75rem', '', 58, 1, 1, 'TPL_CARD_TITLE_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_CARD_TITLE_MARGIN_BOTTOM_PH', 'TPL_CARD_TITLE_MARGIN_BOTTOM_DESC', '', '', ''),
+(1051, 1, 'card-link-margin-left', '1.25rem', '1.25rem', '', 58, 1, 1, 'TPL_CARD_LINK_MARGIN_LEFT', 'form-control', '', '', 'TPL_CARD_LINK_MARGIN_LEFT_PH', 'TPL_CARD_LINK_MARGIN_LEFT_DESC', '', '', ''),
+(1052, 1, 'card-header-padding', '0.75rem 1.25rem', '0.75rem 1.25rem', '', 58, 1, 1, 'TPL_CARD_HEADER_PADDING', 'form-control', '', '', 'TPL_CARD_HEADER_PADDING_PH', 'TPL_CARD_HEADER_PADDING_DESC', '', '', ''),
+(1053, 1, 'card-header-border-bottom', '1px solid', '1px solid', '', 58, 1, 1, 'TPL_CARD_HEADER_BORDER', 'form-control', '', '', 'TPL_CARD_HEADER_BORDER_PH', 'TPL_CARD_HEADER_BORDER_DESC', '', '', ''),
+(1054, 1, 'card-header-border-bottom-color', 'D9D9D9', '#d9d9d9', '', 58, 1, 1, 'TPL_CARD_HEADER_BORDER_COLOR', 'form-control color', 'color', '', 'TPL_CARD_HEADER_BORDER_COLOR_PH', 'TPL_CARD_HEADER_BORDER_COLOR_DESC', '', '', '');
 
 
 CREATE TABLE `cms_template_settings_types` (
