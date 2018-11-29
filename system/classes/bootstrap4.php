@@ -55,10 +55,10 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
               flex-direction: column;
               min-width: 0;
               word-wrap: break-word;
-              background-color: #fff;
+              background-color: #" . $this->tplSettings['card-bgcolor'] . ";
               background-clip: border-box;
-              border: 1px solid rgba(0, 0, 0, 0.125);
-              border-radius: 0.25rem;
+              border: ".$this->tplSettings['card-border']." #".$this->tplSettings['card-bordercolor'].";
+              border-radius: ".$this->tplSettings['card-border-radius'].";
             }
             
             .card > hr {
@@ -67,23 +67,23 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
             }
             
             .card > .list-group:first-child .list-group-item:first-child {
-              border-top-left-radius: 0.25rem;
-              border-top-right-radius: 0.25rem;
+              border-top-left-radius: ".$this->tplSettings['card-border-radius'].";
+              border-top-right-radius: ".$this->tplSettings['card-border-radius'].";
             }
             
             .card > .list-group:last-child .list-group-item:last-child {
-              border-bottom-right-radius: 0.25rem;
-              border-bottom-left-radius: 0.25rem;
+              border-bottom-right-radius: ".$this->tplSettings['card-border-radius'].";
+              border-bottom-left-radius: ".$this->tplSettings['card-border-radius'].";
             }
             
             .card-body {
               -ms-flex: 1 1 auto;
               flex: 1 1 auto;
-              padding: 1.25rem;
+              padding: ".$this->tplSettings['card-body-padding'].";
             }
             
             .card-title {
-              margin-bottom: 0.75rem;
+              margin-bottom: ".$this->tplSettings['card-title-margin-bottom'].";
             }
             
             .card-subtitle {
@@ -100,11 +100,11 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
             }
             
             .card-link + .card-link {
-              margin-left: 1.25rem;
+              margin-left: ".$this->tplSettings['card-link-margin-left'].";
             }
             
             .card-header {
-              padding: 0.75rem 1.25rem;
+              padding: 0rem 0rem;
               margin-bottom: 0;
               background-color: rgba(0, 0, 0, 0.03);
               border-bottom: 1px solid rgba(0, 0, 0, 0.125);
