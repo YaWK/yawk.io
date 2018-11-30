@@ -119,7 +119,7 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
             }
             
             .card-footer {
-              padding: 0.75rem 1.25rem;
+              padding: ".$this->tplSettings['card-footer-padding'].";
               background-color: rgba(0, 0, 0, 0.03);
               border-top: 1px solid rgba(0, 0, 0, 0.125);
             }

@@ -590,7 +590,7 @@ namespace YAWK {
                     }
                 } else {   // could not fetch template -
                     // - in that case set default template
-                    // print alert::draw("warning", "Warning: ", "Template kann nicht gelesen werden, default template gesetzt. (yawk-bootstrap3)","page=settings-system","4800");
+                    // print alert::draw("warning", "Warning: ", "Template kann nicht gelesen werden, default template gesetzt. (YaWK-bootstrap3)","page=settings-system","4800");
                     return "template ID $templateID not in database...?";
                 }
             }
