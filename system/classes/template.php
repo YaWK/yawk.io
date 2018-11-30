@@ -1243,6 +1243,11 @@ namespace YAWK {
             {    // if param 'type' is missing, set type 1 as default
                  $type = 1;
             }
+            if (!isset($settings) || (is_array($settings) === false))
+            {
+                die('Template settings are missing. Please re-install template.');
+            }
+
             // loop trough settings array
             foreach ($settings as $setting)
             {
