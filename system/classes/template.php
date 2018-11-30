@@ -1245,7 +1245,7 @@ namespace YAWK {
             }
             if (!isset($settings) || (is_array($settings) === false))
             {
-                echo ('Template settings are missing. Please re-install template.');
+                echo 'Template settings are missing. Please re-install template.';
             }
             else
                 {
