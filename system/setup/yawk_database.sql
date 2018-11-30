@@ -727,7 +727,8 @@ CREATE TABLE `cms_templates` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `cms_templates` (`id`, `active`, `name`, `positions`, `description`, `releaseDate`, `author`, `authorUrl`, `weblink`, `subAuthor`, `subAuthorUrl`, `modifyDate`, `version`, `framework`, `license`) VALUES
-(1, 1, 'YaWK-bootstrap4', 'outerTop:outerLeft:outerRight:intro:globalmenu:top:leftMenu:mainTop:mainTopLeft:mainTopCenter:mainTopRight:main:mainBottom:mainBottomLeft:mainBottomCenter:mainBottomRight:mainFooter:mainFooterLeft:mainFooterCenter:mainFooterRight:rightMenu:bottom:footer:hiddentoolbar:debug:outerBottom', 'Bootstrap 4 Default Theme.', '2018-30-11 00:15:00', 'Daniel Retzl ', 'https://github.com/YaWK', 'http://www.yawk.io', 'Daniel Retzl', '', '2018-11-30 00:15:00', '1.0.0', 'bootstrap4', 'MIT');
+(1, 1, 'YaWK-bootstrap4', 'outerTop:outerLeft:outerRight:intro:globalmenu:top:leftMenu:mainTop:mainTopLeft:mainTopCenter:mainTopRight:main:mainBottom:mainBottomLeft:mainBottomCenter:mainBottomRight:mainFooter:mainFooterLeft:mainFooterCenter:mainFooterRight:rightMenu:bottom:footer:hiddentoolbar:debug:outerBottom', 'Bootstrap 4 Default Theme.', '2018-30-11 00:15:00', 'Daniel Retzl ', 'https://github.com/YaWK', 'http://www.yawk.io', 'Daniel Retzl', '', '2018-11-30 00:15:00', '1.0.0', 'bootstrap4', 'MIT'),
+(2, 0, 'YaWK-bootstrap3', 'outerTop:outerLeft:outerRight:intro:globalmenu:top:leftMenu:mainTop:mainTopLeft:mainTopCenter:mainTopRight:main:mainBottom:mainBottomLeft:mainBottomCenter:mainBottomRight:mainFooter:mainFooterLeft:mainFooterCenter:mainFooterRight:rightMenu:bottom:footer:hiddentoolbar:debug:outerBottom', 'Bootstrap 3 Default Theme.', '2018-30-11 02:00:00', 'Daniel Retzl ', 'https://github.com/YaWK', 'http://www.yawk.io', 'Daniel Retzl', '', '2018-11-30 02:00:00', '1.0.0', 'bootstrap3', 'MIT');
 
 CREATE TABLE `cms_template_settings` (
   `id` int(11) NOT NULL,
@@ -1798,7 +1799,8 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (1051, 1, 'card-link-margin-left', '1.25rem', '1.25rem', '', 58, 1, 1, 'TPL_CARD_LINK_MARGIN_LEFT', 'form-control', '', '', 'TPL_CARD_LINK_MARGIN_LEFT_PH', 'TPL_CARD_LINK_MARGIN_LEFT_DESC', '', '', ''),
 (1052, 1, 'card-header-padding', '0.75rem 1.25rem', '0.75rem 1.25rem', '', 58, 1, 1, 'TPL_CARD_HEADER_PADDING', 'form-control', '', '', 'TPL_CARD_HEADER_PADDING_PH', 'TPL_CARD_HEADER_PADDING_DESC', '', '', ''),
 (1053, 1, 'card-header-border-bottom', '1px solid', '1px solid', '', 58, 1, 1, 'TPL_CARD_HEADER_BORDER', 'form-control', '', '', 'TPL_CARD_HEADER_BORDER_PH', 'TPL_CARD_HEADER_BORDER_DESC', '', '', ''),
-(1054, 1, 'card-header-border-bottom-color', 'D9D9D9', '#d9d9d9', '', 58, 1, 1, 'TPL_CARD_HEADER_BORDER_COLOR', 'form-control color', 'color', '', 'TPL_CARD_HEADER_BORDER_COLOR_PH', 'TPL_CARD_HEADER_BORDER_COLOR_DESC', '', '', '');
+(1054, 1, 'card-header-border-bottom-color', 'D9D9D9', '#d9d9d9', '', 58, 1, 1, 'TPL_CARD_HEADER_BORDER_COLOR', 'form-control color', 'color', '', 'TPL_CARD_HEADER_BORDER_COLOR_PH', 'TPL_CARD_HEADER_BORDER_COLOR_DESC', '', '', ''),
+(1054, 1, 'card-footer-padding', '0.75rem 1.25rem', '0.75rem 1.25rem', '', 58, 1, 1, 'TPL_CARD_FOOTER_PADDING', 'form-control', '', '', 'TPL_CARD_FOOTER_PADDING_PH', 'TPL_CARD_FOOTER_PADDING_DESC', '', '', '');
 
 
 CREATE TABLE `cms_template_settings_types` (
@@ -2576,7 +2578,7 @@ ALTER TABLE `cms_syslog_categories`
 ALTER TABLE `cms_templates`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 ALTER TABLE `cms_template_settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1044;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1054;
 ALTER TABLE `cms_template_settings_types`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 ALTER TABLE `cms_tips`
