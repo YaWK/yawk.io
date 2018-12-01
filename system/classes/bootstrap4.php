@@ -106,7 +106,7 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
             .card-header {
               padding: ".$this->tplSettings['card-header-padding'].";
               margin-bottom: 0;
-              background-color: rgba(0, 0, 0, 0.03);
+              background-color: #".$this->tplSettings['card-header-bgcolor'].";
               border-bottom: ".$this->tplSettings['card-header-border-bottom']." #".$this->tplSettings['card-header-border-bottom-color'].";
             }
             
