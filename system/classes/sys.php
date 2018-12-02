@@ -516,23 +516,30 @@ namespace YAWK {
 
             }
             // Loop through the folder
-            $dir = dir($source);
-            while (false !== $entry = $dir->read())
+            if(!is_dir($source))
             {
-                // Skip pointers
-                if ($entry == '.' || $entry == '..')
-                {
-                    continue;
-                }
-                // Deep copy directories
-                if (self::xcopy("$source/$entry", "$dest/$entry", $permissions))
-                {
-                    // return false;
-                }
+                return false;
             }
-            // Clean up
-            $dir->close();
-            return true;
+            else
+                {
+                    $dir = dir($source);
+                    while (false !== $entry = $dir->read())
+                    {
+                        // Skip pointers
+                        if ($entry == '.' || $entry == '..')
+                        {
+                            continue;
+                        }
+                        // Deep copy directories
+                        if (self::xcopy("$source/$entry", "$dest/$entry", $permissions))
+                        {
+                            // return false;
+                        }
+                    }
+                    // Clean up
+                    $dir->close();
+                    return true;
+                }
         }
 
         /**
