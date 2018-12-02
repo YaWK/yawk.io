@@ -120,8 +120,8 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
             
             .card-footer {
               padding: ".$this->tplSettings['card-footer-padding'].";
-              background-color: rgba(0, 0, 0, 0.03);
-              border-top: 1px solid rgba(0, 0, 0, 0.125);
+              background-color: #".$this->tplSettings['card-footer-bgcolor'].";
+              border-top: ".$this->tplSettings['card-footer-border-top']." #".$this->tplSettings['card-footer-border-top-color'].";
             }
             
             .card-footer:last-child {
