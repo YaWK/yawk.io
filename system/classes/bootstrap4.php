@@ -96,7 +96,7 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
             }
             
             .card-link:hover {
-              text-decoration: none;
+              text-decoration: ".$this->tplSettings['card-link-decoration'].";
             }
             
             .card-link + .card-link {
