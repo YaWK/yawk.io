@@ -1801,7 +1801,8 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (1053, 1, 'card-header-border-bottom', '1px solid', '1px solid', '', 59, 1, 1, 'TPL_CARD_HEADER_BORDER', 'form-control', '', '', 'TPL_CARD_HEADER_BORDER_PH', 'TPL_CARD_HEADER_BORDER_DESC', '', '', ''),
 (1054, 1, 'card-header-border-bottom-color', 'D9D9D9', '#d9d9d9', '', 59, 1, 1, 'TPL_CARD_HEADER_BORDER_COLOR', 'form-control color', 'color', '', 'TPL_CARD_HEADER_BORDER_COLOR_PH', 'TPL_CARD_HEADER_BORDER_COLOR_DESC', '', '', ''),
 (1055, 1, 'card-footer-padding', '0.75rem 1.25rem', '0.75rem 1.25rem', '', 61, 1, 1, 'TPL_CARD_FOOTER_PADDING', 'form-control', '', '', 'TPL_CARD_FOOTER_PADDING_PH', 'TPL_CARD_FOOTER_PADDING_DESC', '', '', ''),
-(1056, 1, 'card-header-bgcolor', 'F7F7F7', '#F7F7F7', '', 59, 1, 1, 'TPL_CARD_HEADER_BGCOLOR', 'form-control color', 'color', '', 'TPL_CARD_HEADER_BGCOLOR_PH', 'TPL_CARD_HEADER_BGCOLOR_DESC', '', '', '');
+(1056, 1, 'card-header-bgcolor', 'F7F7F7', '#F7F7F7', '', 59, 1, 1, 'TPL_CARD_HEADER_BGCOLOR', 'form-control color', 'color', '', 'TPL_CARD_HEADER_BGCOLOR_PH', 'TPL_CARD_HEADER_BGCOLOR_DESC', '', '', ''),
+(1057, 1, 'card-link-decoration', 'none', 'none', '', 58, 1, 1, 'TPL_CARD_LINK_DECORATION', 'form-control', 'select', 'none,none:underline,underline:underline dotted,underline dotted:underline dashed,underline dashed:overline,overline:overline dotted,overline dotted:overline dashed,overline dashed:underline overline,both', '', 'TPL_CARD_LINK_DECORATION', '', '', '');
 
 
 CREATE TABLE `cms_template_settings_types` (
@@ -2582,7 +2583,7 @@ ALTER TABLE `cms_syslog_categories`
 ALTER TABLE `cms_templates`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 ALTER TABLE `cms_template_settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1055;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1057;
 ALTER TABLE `cms_template_settings_types`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 ALTER TABLE `cms_tips`
