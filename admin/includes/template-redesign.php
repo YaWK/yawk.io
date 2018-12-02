@@ -472,7 +472,7 @@ echo"</section><!-- Main content -->
                     <h3 class=\"box-title\">$lang[CARDS] <small>$lang[SETTINGS]</small></h3>
                 </div>
                 <div class=\"box-body\">
-                    <!-- add bootstrap 4 here  -->";
+                    <!-- card global settings -->";
                     $template->getFormElements($db, $templateSettings, 58, $lang, $user);
                     echo "
                 </div>
@@ -482,11 +482,11 @@ echo"</section><!-- Main content -->
         <div class=\"col-md-3\">
             <div class=\"box box-default\">
                 <div class=\"box-header\">
-                    <h3 class=\"box-title\">$lang[LIST_GROUP] <small>$lang[DESIGN]</small></h3>
+                    <h3 class=\"box-title\">$lang[CARDS] <small>$lang[HEADER]</small></h3>
                 </div>
                 <div class=\"box-body\">
-                    <!-- more bootstrap 4 here -->";
-                    // $template->getFormElements($db, $templateSettings, 15, $lang, $user);
+                    <!-- card header -->";
+                    $template->getFormElements($db, $templateSettings, 59, $lang, $user);
                     echo "
                 </div>
             </div>
@@ -495,11 +495,11 @@ echo"</section><!-- Main content -->
         <div class=\"col-md-3\">
             <div class=\"box box-default\">
                 <div class=\"box-header\">
-                    <h3 class=\"box-title\">$lang[JUMBOTRON] <small>$lang[BOX] $lang[DESIGN]</small></h3>
+                    <h3 class=\"box-title\">$lang[CARDS] <small>$lang[BODY]</small></h3>
                 </div>
                 <div class=\"box-body\">
-                    <!-- more bootstrap 4 here -->";
-                    // $template->getFormElements($db, $templateSettings, 16, $lang, $user);
+                    <!-- card body -->";
+                    $template->getFormElements($db, $templateSettings, 60, $lang, $user);
                     echo "
                 </div>
             </div>
@@ -508,10 +508,12 @@ echo"</section><!-- Main content -->
         <div class=\"col-md-3\">
             <div class=\"box box-default\">
                 <div class=\"box-header\">
-                    <h3 class=\"box-title\">... <small>...</small></h3>
+                    <h3 class=\"box-title\">$lang[CARDS] <small>$lang[FOOTER]</small></h3>
                 </div>
                 <div class=\"box-body\">
-                     
+                    <!-- card footer -->";
+                    $template->getFormElements($db, $templateSettings, 61, $lang, $user);
+                    echo "
                 </div>
             </div>
         </div>
