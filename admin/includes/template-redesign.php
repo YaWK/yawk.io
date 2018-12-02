@@ -469,11 +469,11 @@ echo"</section><!-- Main content -->
         <div class=\"col-md-3\">
             <div class=\"box box-default\">
                 <div class=\"box-header\">
-                    <h3 class=\"box-title\">$lang[CARDS] <small>$lang[SETTINGS]</small></h3>
+                    <h3 class=\"box-title\">$lang[CARDS] <small>$lang[BODY]</small></h3>
                 </div>
                 <div class=\"box-body\">
-                    <!-- card global settings -->";
-                    $template->getFormElements($db, $templateSettings, 58, $lang, $user);
+                    <!-- card body -->";
+                    $template->getFormElements($db, $templateSettings, 60, $lang, $user);
                     echo "
                 </div>
             </div>
@@ -495,11 +495,11 @@ echo"</section><!-- Main content -->
         <div class=\"col-md-3\">
             <div class=\"box box-default\">
                 <div class=\"box-header\">
-                    <h3 class=\"box-title\">$lang[CARDS] <small>$lang[BODY]</small></h3>
+                    <h3 class=\"box-title\">$lang[CARDS] <small>$lang[FOOTER]</small></h3>
                 </div>
                 <div class=\"box-body\">
-                    <!-- card body -->";
-                    $template->getFormElements($db, $templateSettings, 60, $lang, $user);
+                    <!-- card footer -->";
+                    $template->getFormElements($db, $templateSettings, 61, $lang, $user);
                     echo "
                 </div>
             </div>
@@ -508,11 +508,11 @@ echo"</section><!-- Main content -->
         <div class=\"col-md-3\">
             <div class=\"box box-default\">
                 <div class=\"box-header\">
-                    <h3 class=\"box-title\">$lang[CARDS] <small>$lang[FOOTER]</small></h3>
+                    <h3 class=\"box-title\">$lang[CARDS] <small>$lang[SETTINGS]</small></h3>
                 </div>
                 <div class=\"box-body\">
-                    <!-- card footer -->";
-                    $template->getFormElements($db, $templateSettings, 61, $lang, $user);
+                    <!-- card link settings -->";
+                    $template->getFormElements($db, $templateSettings, 58, $lang, $user);
                     echo "
                 </div>
             </div>
