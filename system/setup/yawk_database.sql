@@ -1790,11 +1790,11 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (1042, 1, 'pos-mainRight-bg-repeat', 'no-repeat', 'no-repeat', '', 57, 1, 11, 'TPL_BODY_BG_IMAGE_REPEAT', 'form-control', 'select', 'no-repeat,no-repeat:repeat-x,repeat-x:repeat-y,repeat-y:inherit,inherit', '', '', '', '', ''),
 (1043, 1, 'pos-mainRight-bg-size', 'cover', 'cover', '', 57, 1, 12, 'TPL_BODY_BG_IMAGE_SIZE', 'form-control', 'select', 'auto,auto:cover,cover:contain,contain:length,length:percentage,percentage:initial,inital:inherit,inherit', '', '', '', '', ''),
 (1044, 1, 'pos-mainRight-bgnone', ' ', 'none', '', 57, 1, 6, 'TPL_BODY_BG_NONE', 'form-control', 'select', 'transparent,transparent: ,not transparent', '', '', '', 'TPL_BG_HEADING', 'TPL_BG_SUBTEXT'),
-(1045, 1, 'card-bgcolor', 'FFFFFF', '#fff', '', 58, 1, 1, 'TPL_CARD_BGCOLOR', 'form-control color', 'color', '', 'TPL_COLOR_PLACEHOLDER', 'TPL_CARD_BGCOLOR_DESC', '', '', ''),
-(1046, 1, 'card-border', '1px solid', '1px solid', '', 58, 1, 1, 'TPL_CARD_BORDER', 'form-control', '', '', 'TPL_CARD_BORDER_PH', 'TPL_CARD_BORDER_DESC', '', '', ''),
-(1047, 1, 'card-bordercolor', 'D9D9D9', '#d9d9d9', '', 58, 1, 1, 'TPL_CARD_BORDERCOLOR', 'form-control color', 'color', '', 'TPL_COLOR_PLACEHOLDER', 'TPL_CARD_BORDERCOLOR_DESC', '', '', ''),
-(1048, 1, 'card-border-radius', '0.25rem', '0.25rem', '', 58, 1, 1, 'TPL_CARD_BORDER_RADIUS', 'form-control', '', '', 'TPL_CARD_BORDER_RADIUS_PH', 'TPL_CARD_BORDER_RADIUS_DESC', '', '', ''),
-(1049, 1, 'card-body-padding', '1.25rem', '1.25rem', '', 60, 1, 1, 'TPL_CARD_BODY_PADDING', 'form-control', '', '', 'TPL_CARD_BODY_PADDING_PH', 'TPL_CARD_BODY_PADDING_DESC', '', 'LAYOUT', 'PADDING_MARGIN'),
+(1045, 1, 'card-bgcolor', 'FFFFFF', '#fff', '', 60, 1, 1, 'TPL_CARD_BGCOLOR', 'form-control color', 'color', '', 'TPL_COLOR_PLACEHOLDER', 'TPL_CARD_BGCOLOR_DESC', '', '', ''),
+(1046, 1, 'card-border', '1px solid', '1px solid', '', 60, 1, 1, 'TPL_CARD_BORDER', 'form-control', '', '', 'TPL_CARD_BORDER_PH', 'TPL_CARD_BORDER_DESC', '', '', ''),
+(1047, 1, 'card-bordercolor', 'D9D9D9', '#d9d9d9', '', 60, 1, 1, 'TPL_CARD_BORDERCOLOR', 'form-control color', 'color', '', 'TPL_COLOR_PLACEHOLDER', 'TPL_CARD_BORDERCOLOR_DESC', '', '', ''),
+(1048, 1, 'card-border-radius', '0.25rem', '0.25rem', '', 60, 1, 1, 'TPL_CARD_BORDER_RADIUS', 'form-control', '', '', 'TPL_CARD_BORDER_RADIUS_PH', 'TPL_CARD_BORDER_RADIUS_DESC', '', '', ''),
+(1049, 1, 'card-body-padding', '1.25rem', '1.25rem', '', 60, 1, 1, 'TPL_CARD_BODY_PADDING', 'form-control', '', '', 'TPL_CARD_BODY_PADDING_PH', 'TPL_CARD_BODY_PADDING_DESC', '', '', ''),
 (1050, 1, 'card-title-margin-bottom', '0.75rem', '0.75rem', '', 59, 1, 1, 'TPL_CARD_TITLE_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_CARD_TITLE_MARGIN_BOTTOM_PH', 'TPL_CARD_TITLE_MARGIN_BOTTOM_DESC', '', '', ''),
 (1051, 1, 'card-link-margin-left', '1.25rem', '1.25rem', '', 58, 1, 1, 'TPL_CARD_LINK_MARGIN_LEFT', 'form-control', '', '', 'TPL_CARD_LINK_MARGIN_LEFT_PH', 'TPL_CARD_LINK_MARGIN_LEFT_DESC', '', '', ''),
 (1052, 1, 'card-header-padding', '0.75rem 1.25rem', '0.75rem 1.25rem', '', 59, 1, 1, 'TPL_CARD_HEADER_PADDING', 'form-control', '', '', 'TPL_CARD_HEADER_PADDING_PH', 'TPL_CARD_HEADER_PADDING_DESC', '', '', ''),
@@ -1802,8 +1802,10 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (1054, 1, 'card-header-border-bottom-color', 'D9D9D9', '#d9d9d9', '', 59, 1, 1, 'TPL_CARD_HEADER_BORDER_COLOR', 'form-control color', 'color', '', 'TPL_CARD_HEADER_BORDER_COLOR_PH', 'TPL_CARD_HEADER_BORDER_COLOR_DESC', '', '', ''),
 (1055, 1, 'card-footer-padding', '0.75rem 1.25rem', '0.75rem 1.25rem', '', 61, 1, 1, 'TPL_CARD_FOOTER_PADDING', 'form-control', '', '', 'TPL_CARD_FOOTER_PADDING_PH', 'TPL_CARD_FOOTER_PADDING_DESC', '', '', ''),
 (1056, 1, 'card-header-bgcolor', 'F7F7F7', '#F7F7F7', '', 59, 1, 1, 'TPL_CARD_HEADER_BGCOLOR', 'form-control color', 'color', '', 'TPL_CARD_HEADER_BGCOLOR_PH', 'TPL_CARD_HEADER_BGCOLOR_DESC', '', '', ''),
-(1057, 1, 'card-link-decoration', 'none', 'none', '', 58, 1, 1, 'TPL_CARD_LINK_DECORATION', 'form-control', 'select', 'none,none:underline,underline:underline dotted,underline dotted:underline dashed,underline dashed:overline,overline:overline dotted,overline dotted:overline dashed,overline dashed:underline overline,both', '', 'TPL_CARD_LINK_DECORATION', '', '', '');
-
+(1057, 1, 'card-link-decoration', 'none', 'none', '', 58, 1, 1, 'TPL_CARD_LINK_DECORATION', 'form-control', 'select', 'none,none:underline,underline:underline dotted,underline dotted:underline dashed,underline dashed:overline,overline:overline dotted,overline dotted:overline dashed,overline dashed:underline overline,both', '', 'TPL_CARD_LINK_DECORATION', '', '', ''),
+(1058, 1, 'card-footer-bgcolor', 'F7F7F7', '#F7F7F7', '', 61, 1, 1, 'TPL_CARD_FOOTER_BGCOLOR', 'form-control color', 'color', '', 'TPL_CARD_FOOTER_BGCOLOR_PH', 'TPL_CARD_FOOTER_BGCOLOR_DESC', '', '', ''),
+(1059, 1, 'card-footer-border-bottom', '1px solid', '1px solid', '', 61, 1, 1, 'TPL_CARD_FOOTER_BORDER', 'form-control', '', '', 'TPL_CARD_FOOTER_BORDER_PH', 'TPL_CARD_FOOTER_BORDER_DESC', '', '', ''),
+(1060, 1, 'card-footer-border-bottom-color', 'D9D9D9', '#d9d9d9', '', 61, 1, 1, 'TPL_CARD_FOOTER_BORDER_COLOR', 'form-control color', 'color', '', 'TPL_CARD_FOOTER_BORDER_COLOR_PH', 'TPL_CARD_FOOTER_BORDER_COLOR_DESC', '', '', '');
 
 CREATE TABLE `cms_template_settings_types` (
   `id` int(11) NOT NULL,
@@ -2583,7 +2585,7 @@ ALTER TABLE `cms_syslog_categories`
 ALTER TABLE `cms_templates`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 ALTER TABLE `cms_template_settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1057;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1060;
 ALTER TABLE `cms_template_settings_types`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 ALTER TABLE `cms_tips`
