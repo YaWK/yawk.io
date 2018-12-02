@@ -1794,14 +1794,14 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (1046, 1, 'card-border', '1px solid', '1px solid', '', 58, 1, 1, 'TPL_CARD_BORDER', 'form-control', '', '', 'TPL_CARD_BORDER_PH', 'TPL_CARD_BORDER_DESC', '', '', ''),
 (1047, 1, 'card-bordercolor', 'D9D9D9', '#d9d9d9', '', 58, 1, 1, 'TPL_CARD_BORDERCOLOR', 'form-control color', 'color', '', 'TPL_COLOR_PLACEHOLDER', 'TPL_CARD_BORDERCOLOR_DESC', '', '', ''),
 (1048, 1, 'card-border-radius', '0.25rem', '0.25rem', '', 58, 1, 1, 'TPL_CARD_BORDER_RADIUS', 'form-control', '', '', 'TPL_CARD_BORDER_RADIUS_PH', 'TPL_CARD_BORDER_RADIUS_DESC', '', '', ''),
-(1049, 1, 'card-body-padding', '1.25rem', '1.25rem', '', 58, 1, 1, 'TPL_CARD_BODY_PADDING', 'form-control', '', '', 'TPL_CARD_BODY_PADDING_PH', 'TPL_CARD_BODY_PADDING_DESC', '', 'LAYOUT', 'PADDING_MARGIN'),
-(1050, 1, 'card-title-margin-bottom', '0.75rem', '0.75rem', '', 58, 1, 1, 'TPL_CARD_TITLE_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_CARD_TITLE_MARGIN_BOTTOM_PH', 'TPL_CARD_TITLE_MARGIN_BOTTOM_DESC', '', '', ''),
+(1049, 1, 'card-body-padding', '1.25rem', '1.25rem', '', 60, 1, 1, 'TPL_CARD_BODY_PADDING', 'form-control', '', '', 'TPL_CARD_BODY_PADDING_PH', 'TPL_CARD_BODY_PADDING_DESC', '', 'LAYOUT', 'PADDING_MARGIN'),
+(1050, 1, 'card-title-margin-bottom', '0.75rem', '0.75rem', '', 59, 1, 1, 'TPL_CARD_TITLE_MARGIN_BOTTOM', 'form-control', '', '', 'TPL_CARD_TITLE_MARGIN_BOTTOM_PH', 'TPL_CARD_TITLE_MARGIN_BOTTOM_DESC', '', '', ''),
 (1051, 1, 'card-link-margin-left', '1.25rem', '1.25rem', '', 58, 1, 1, 'TPL_CARD_LINK_MARGIN_LEFT', 'form-control', '', '', 'TPL_CARD_LINK_MARGIN_LEFT_PH', 'TPL_CARD_LINK_MARGIN_LEFT_DESC', '', '', ''),
-(1052, 1, 'card-header-padding', '0.75rem 1.25rem', '0.75rem 1.25rem', '', 58, 1, 1, 'TPL_CARD_HEADER_PADDING', 'form-control', '', '', 'TPL_CARD_HEADER_PADDING_PH', 'TPL_CARD_HEADER_PADDING_DESC', '', '', ''),
-(1053, 1, 'card-header-border-bottom', '1px solid', '1px solid', '', 58, 1, 1, 'TPL_CARD_HEADER_BORDER', 'form-control', '', '', 'TPL_CARD_HEADER_BORDER_PH', 'TPL_CARD_HEADER_BORDER_DESC', '', '', ''),
-(1054, 1, 'card-header-border-bottom-color', 'D9D9D9', '#d9d9d9', '', 58, 1, 1, 'TPL_CARD_HEADER_BORDER_COLOR', 'form-control color', 'color', '', 'TPL_CARD_HEADER_BORDER_COLOR_PH', 'TPL_CARD_HEADER_BORDER_COLOR_DESC', '', '', ''),
-(1055, 1, 'card-footer-padding', '0.75rem 1.25rem', '0.75rem 1.25rem', '', 58, 1, 1, 'TPL_CARD_FOOTER_PADDING', 'form-control', '', '', 'TPL_CARD_FOOTER_PADDING_PH', 'TPL_CARD_FOOTER_PADDING_DESC', '', '', ''),
-(1056, 1, 'card-header-bgcolor', 'F7F7F7', '#F7F7F7', '', 58, 1, 1, 'TPL_CARD_HEADER_BGCOLOR', 'form-control color', 'color', '', 'TPL_CARD_HEADER_BGCOLOR_PH', 'TPL_CARD_HEADER_BGCOLOR_DESC', '', '', '');
+(1052, 1, 'card-header-padding', '0.75rem 1.25rem', '0.75rem 1.25rem', '', 59, 1, 1, 'TPL_CARD_HEADER_PADDING', 'form-control', '', '', 'TPL_CARD_HEADER_PADDING_PH', 'TPL_CARD_HEADER_PADDING_DESC', '', '', ''),
+(1053, 1, 'card-header-border-bottom', '1px solid', '1px solid', '', 59, 1, 1, 'TPL_CARD_HEADER_BORDER', 'form-control', '', '', 'TPL_CARD_HEADER_BORDER_PH', 'TPL_CARD_HEADER_BORDER_DESC', '', '', ''),
+(1054, 1, 'card-header-border-bottom-color', 'D9D9D9', '#d9d9d9', '', 59, 1, 1, 'TPL_CARD_HEADER_BORDER_COLOR', 'form-control color', 'color', '', 'TPL_CARD_HEADER_BORDER_COLOR_PH', 'TPL_CARD_HEADER_BORDER_COLOR_DESC', '', '', ''),
+(1055, 1, 'card-footer-padding', '0.75rem 1.25rem', '0.75rem 1.25rem', '', 61, 1, 1, 'TPL_CARD_FOOTER_PADDING', 'form-control', '', '', 'TPL_CARD_FOOTER_PADDING_PH', 'TPL_CARD_FOOTER_PADDING_DESC', '', '', ''),
+(1056, 1, 'card-header-bgcolor', 'F7F7F7', '#F7F7F7', '', 59, 1, 1, 'TPL_CARD_HEADER_BGCOLOR', 'form-control color', 'color', '', 'TPL_CARD_HEADER_BGCOLOR_PH', 'TPL_CARD_HEADER_BGCOLOR_DESC', '', '', '');
 
 
 CREATE TABLE `cms_template_settings_types` (
@@ -1867,7 +1867,10 @@ INSERT INTO `cms_template_settings_types` (`id`, `type`) VALUES
 (55, 'tpl-assets-basic'),
 (56, 'pos-mainLeft'),
 (57, 'pos-mainRight'),
-(58, 'bs4-card');
+(58, 'bs4-card'),
+(59, 'bs4-header'),
+(60, 'bs4-body'),
+(61, 'bs4-footer');
 
 CREATE TABLE `cms_tips` (
   `id` int(11) NOT NULL,
