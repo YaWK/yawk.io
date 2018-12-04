@@ -172,6 +172,10 @@ echo"</section><!-- Main content -->
                 "<li>
                     <a href=\"#bs4-cards\" aria-controls=\"bs4-cards\" data-toggle=\"tab\"><i class=\"fa fa-bars\"></i>
                         &nbsp; $lang[CARDS]</a>
+                </li>
+                <li>
+                <a href=\"#images\" aria-controls=\"images\" role=\"tab\" data-toggle=\"tab\"><i class=\"fa fa-picture-o\"></i>
+                    &nbsp; $lang[IMAGES]</a>
                 </li>";
             }
             ?>
@@ -462,6 +466,48 @@ echo"</section><!-- Main content -->
     }
     else if ($template->bootstrapVersion == "4")
     {
+
+        echo"<!-- IMAGES -->
+<div class=\"tab-pane fade in\" id=\"images\">
+    <h3>$lang[IMAGE] <small>$lang[SETTINGS]</small></h3>
+    <div class=\"row animated fadeIn\">
+        <div class=\"col-md-3\">
+            <div class=\"box box-default\">
+                <div class=\"box-header\">
+                    <h3 class=\"box-title\">$lang[IMAGE] <small>$lang[EFFECTS]</small></h3>
+                </div>
+                <div class=\"box-body\">
+                    <!-- image settings   img-   -->";
+                    $template->getFormElements($db, $templateSettings, 24, $lang, $user);
+                    echo "
+                </div>
+            </div>
+        </div>
+
+        <div class=\"col-md-3\">
+            <div class=\"box box-default\">
+                <div class=\"box-header\">
+                    <h3 class=\"box-title\">Any other thing <small>here...</small></h3>
+                </div>
+                <div class=\"box-body\">
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class=\"col-md-3\">
+            <div class=\"box box-default\">
+                <div class=\"box-header\">
+                    <h3 class=\"box-title\">Any other thing <small>here...</small></h3>
+                </div>
+                <div class=\"box-body\">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>";
+        
        echo "<!-- CARDS TAB -->
 <div class=\"tab-pane fade in\" id=\"bs4-cards\">
     <h3>$lang[BOOTSTRAP4] <small>$lang[CARDS]</small></h3>
