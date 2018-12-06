@@ -174,8 +174,12 @@ echo"</section><!-- Main content -->
                         &nbsp; $lang[CARDS]</a>
                 </li>
                 <li>
-                <a href=\"#images\" aria-controls=\"images\" role=\"tab\" data-toggle=\"tab\"><i class=\"fa fa-picture-o\"></i>
-                    &nbsp; $lang[IMAGES]</a>
+                    <a href=\"#images\" aria-controls=\"images\" role=\"tab\" data-toggle=\"tab\"><i class=\"fa fa-picture-o\"></i>
+                        &nbsp; $lang[IMAGES]</a>
+                </li>
+                <li>
+                    <a href=\"#buttons\" aria-controls=\"buttons\" role=\"tab\" data-toggle=\"tab\"><i class=\"fa fa-toggle-on\"></i>
+                        &nbsp; $lang[FORMS]</a>
                 </li>";
             }
             ?>
@@ -559,6 +563,129 @@ echo"</section><!-- Main content -->
                 <div class=\"box-body\">
                     <!-- card link settings -->";
                     $template->getFormElements($db, $templateSettings, 58, $lang, $user);
+                    echo "
+                </div>
+            </div>
+        </div>
+    </div>
+</div>";
+
+
+echo"<!-- BUTTONS -->
+<div class=\"tab-pane fade in\" id=\"buttons\">
+    <h3>$lang[FORMS] <small>$lang[AND] $lang[BUTTONS] </small></h3>
+    <div class=\"row animated fadeIn\">
+
+        <div class=\"col-md-4\">
+            <!-- btn basic settings -->
+            <div class=\"box box-default\">
+                <div class=\"box-header\">
+                    <h3 class=\"box-title\">$lang[BUTTON] <small>$lang[FONT] $lang[AND] $lang[BORDER] $lang[SETTINGS]</small></h3>
+                </div>
+                <div class=\"box-body\">
+                    <!-- btn settings    btn-   -->";
+                    $template->getFormElements($db, $templateSettings, 17, $lang, $user);
+                    echo "
+                </div>
+            </div>
+        </div>
+
+        <div class=\"col-md-4\">
+            <div class=\"box box-default\">
+                <div class=\"box-header\">
+                    <h3 class=\"box-title\">$lang[FORM] <small>$lang[SETTINGS]</small></h3>
+                </div>
+                <div class=\"box-body\">
+                    <!-- form settings    form-   -->";
+                    $template->getFormElements($db, $templateSettings, 25, $lang, $user);
+                    echo "
+                </div>
+            </div>
+        </div>
+
+        <div class=\"col-md-4\">
+            <div class=\"box box-default\">
+                <div class=\"box-header\">
+                    <h3 class=\"box-title\">$lang[FORM] <small>$lang[SETTINGS]</small></h3>
+                </div>
+                <div class=\"box-body\">
+                    <!-- form settings    form-   -->";
+                    $template->getFormElements($db, $templateSettings, 51, $lang, $user);
+                    echo "
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class=\"row animated fadeIn\">
+        <div class=\"col-md-2\">
+            <div class=\"box box-default\">
+                <div class=\"box-header\">
+                    <h3 class=\"box-title\">Default <small>Button</small></h3>
+                </div>
+                <div class=\"box-body\">
+                    <!-- btn default    btn-default   -->";
+                    $template->getFormElements($db, $templateSettings, 18, $lang, $user);
+                    echo "
+                </div>
+            </div>
+        </div>
+        <div class=\"col-md-2\">
+            <div class=\"box box-default\">
+                <div class=\"box-header\">
+                    <h3 class=\"box-title\">Primary <small>Button</small></h3>
+                </div>
+                <div class=\"box-body\">
+                    <!-- btn primary    btn-primary   -->";
+                    $template->getFormElements($db, $templateSettings, 19, $lang, $user);
+                    echo "
+                </div>
+            </div>
+        </div>
+        <div class=\"col-md-2\">
+            <div class=\"box box-default\">
+                <div class=\"box-header\">
+                    <h3 class=\"box-title\">Success <small>Button</small></h3>
+                </div>
+                <div class=\"box-body\">
+                    <!-- btn success   btn-success   -->";
+                    $template->getFormElements($db, $templateSettings, 20, $lang, $user);
+                    echo "
+                </div>
+            </div>
+        </div>
+        <div class=\"col-md-2\">
+            <div class=\"box box-default\">
+                <div class=\"box-header\">
+                    <h3 class=\"box-title\">Warning <small>Button</small></h3>
+                </div>
+                <div class=\"box-body\">
+                    <!-- btn warning   btn-warning   -->";
+                    $template->getFormElements($db, $templateSettings, 21, $lang, $user);
+                    echo "
+                </div>
+            </div>
+        </div>
+        <div class=\"col-md-2\">
+            <div class=\"box box-default\">
+                <div class=\"box-header\">
+                    <h3 class=\"box-title\">Danger <small>Button</small></h3>
+                </div>
+                <div class=\"box-body\">
+                    <!-- btn danger   btn-danger   -->";
+                    $template->getFormElements($db, $templateSettings, 22, $lang, $user);
+                    echo "
+                </div>
+            </div>
+        </div>
+        <div class=\"col-md-2\">
+            <div class=\"box box-default\">
+                <div class=\"box-header\">
+                    <h3 class=\"box-title\">Info <small>Button</small></h3>
+                </div>
+                <div class=\"box-body\">
+                    <!-- btn info   btn-info   -->";
+                    $template->getFormElements($db, $templateSettings, 23, $lang, $user);
                     echo "
                 </div>
             </div>
