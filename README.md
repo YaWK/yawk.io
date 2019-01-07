@@ -15,7 +15,7 @@ and <a href="https://github.com/YaWK/yawk.io/projects" target="_blank">current o
 to 
 see what's going on and what has been done over the past few days, weeks, months and years.
 <hr>
-<h3><u>R O A D M A P: <small>2018 final goals before release</small></u></h3>
+<h3><u>R O A D M A P: <small>2019 final goals before release</small></u></h3>
 <b>Currently in development:</b>
 <ul>
 <li>Update FrontEnd to Bootstrap 4 / add Bootstrap 4 template settings to backend <i><small>(scheduled until 02/2019)</small></i></li>
