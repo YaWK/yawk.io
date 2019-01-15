@@ -148,7 +148,6 @@ class controller
                             <div class=\"col-md-4\">&nbsp;</div></div>";
                     exit;
                 }
-
         }
 
         // lower cases
@@ -167,6 +166,11 @@ class controller
         }
         // append file extension
         $filename .= ".php";
+
+        if ($filename == "content/pages/.php"){
+            echo "<br><br><br><br>";
+            die("Unable to display page - filename not set. output of \$filename: $filename");
+        }
 
         // what if file not exists...
         if (!file_exists($filename))

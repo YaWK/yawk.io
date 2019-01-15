@@ -1198,10 +1198,12 @@ namespace YAWK {
          */
         public static function getPositionDivBox($db, $lang, $position, $row, $bootstrapGrid, $positions, $indicators)
         {
+            global $currentpage;
             if (isset($row) && (!empty($row))) {
                 if ($row === "1") {
                     $startRow = "<div class=\"row\">";
-                    $endRow = "</div>";
+                    $endRow = "
+                                 </div>";
                 } else {
                     $startRow = '';
                     $endRow = '';
@@ -1210,6 +1212,7 @@ namespace YAWK {
                 $startRow = '';
                 $endRow = '';
             }
+
             // check if position is enabled
             if ($positions["pos-$position-enabled"] === "1") {   // check if position indicator is enabled
                 if ($indicators["pos-$position-indicator"] === "1") {   // display position indicator
@@ -1222,8 +1225,9 @@ namespace YAWK {
                 // output position div box
                 echo "$startRow";
                 echo "<div class=\"$bootstrapGrid pos-$position\" id=\"$position\" $indicatorStyle>$indicatorText";
-                \YAWK\template::setPosition($db, $lang, "$position-pos", $lang);
-                echo "</div>";
+                \YAWK\template::setPosition($db, $lang, "$position-pos", $currentpage);
+                echo "
+                      </div>";
                 echo "$endRow";
             }
         }
@@ -2726,9 +2730,8 @@ namespace YAWK {
          * @param object $db database
          * @param string $position the template position
          */
-        static function setPosition($db, $lang, $position)
+        static function setPosition($db, $lang, $position, $currentpage)
         {
-            global $currentpage;
             $main_set = 0;
             $globalmenu_set = 0;
             // get template setting for given pos
@@ -2758,7 +2761,7 @@ namespace YAWK {
                         // in any other case, get content for requested static page
                     } else {
                         echo "<div id=\"$position\">";
-                        $currentpage->getContent($db);
+                        $currentpage->getContent($db, $lang);
                         echo "</div>";
                         $main_set = 1;
                     }

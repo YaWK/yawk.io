@@ -127,6 +127,15 @@ namespace YAWK {
     
     <!-- YaWK Backend JS Functions -->
     <script type=\"text/javascript\" src=\"js/yawk-backend.js\"></script>
+    
+    <!-- favicons -->
+    <link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"apple-touch-icon.png\">
+    <link rel=\"icon\" type=\"image/png\" sizes=\"32x32\" href=\"favicon-32x32.png\">
+    <link rel=\"icon\" type=\"image/png\" sizes=\"16x16\" href=\"favicon-16x16.png\">
+    <link rel=\"manifest\" href=\"site.webmanifest\">
+    <link rel=\"mask-icon\" href=\"safari-pinned-tab.svg\" color=\"#000000\">
+    <meta name=\"msapplication-TileColor\" content=\"#000000\">
+    <meta name=\"theme-color\" content=\"#ffffff\">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

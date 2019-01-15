@@ -81,8 +81,8 @@ namespace YAWK {
             {
                 // widget ID
                 $this->id = $_GET['widgetID'];
-                // data var (will be an array if all went ok)
-                $this->data = '';
+                // data array
+                $this->data = array();
 
                 // get widget settings from db
                 $res = $db->query("SELECT property, value FROM {widget_settings}
@@ -100,9 +100,12 @@ namespace YAWK {
                     return ($this->data);
                 }
                 else
-                    {   // widget settings could not be retrieved
-                        echo "Error: this data object is empty - unable to load widget settings of widget ID: ".$this->id."";
-                    }
+                {   // widget settings could not be retrieved
+                    echo "Error: this data object is empty - unable to load widget settings of widget ID: ".$this->id."";
+                    echo "<pre>";
+                    print_r($this);
+                    echo "</pre>";
+                }
             }
             else
                 {   // no widget ID requested - do nothing.
@@ -570,7 +573,7 @@ namespace YAWK {
          * @param string $positions widget / template positions
          * @return bool
          */
-        static function create($db, $widgetType, $pageID, $positions, $date_publish)
+        static function create($db, $widgetType, $pageID, $positions)
         {
             /** @var $db \YAWK\db */
             global $status;
@@ -591,14 +594,13 @@ namespace YAWK {
 
                 // add new widget to db
                 if ($res_widgets = $db->query("INSERT INTO {widgets}
-                                (id, published, widgetType, pageID, sort, position, date_publish)
+                                (id, published, widgetType, pageID, sort, position)
 	                        VALUES('" . $id . "',
 	                        '" . $published . "',
 	                        '" . $widgetType . "',
 	                        '" . $pageID . "',
 	                        '" . $sort . "',
-	                        '" . $positions . "',
-	                        '" . $date_publish . "')"))
+	                        '" . $positions . "')"))
                 {
                     // get default settings for this widget
                     if ($res_defaults = $db->query("SELECT * FROM {widget_defaults}

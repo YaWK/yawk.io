@@ -705,7 +705,7 @@ namespace YAWK {
 
                 // update page db
                 // check unpublish date
-                if ($this->date_unpublish == "0000-00-00 00:00:00" || (empty($this->date_unpublish)))
+                if ($this->date_unpublish == "0000-00-00 00:00:00" || (empty($this->date_unpublish) || $this->date_unpublish == NULL))
                 {
                     // sql code with NULL unpublish date
                     if (!$db->query("UPDATE {pages} 
@@ -723,7 +723,7 @@ namespace YAWK {
                         // throw error
                         \YAWK\sys::setSyslog($db, 23, 1, "failed to update database of page $this->title", 0, 0, 0, 0);
                         // \YAWK\alert::draw("warning", "Warning", "page data could not be stored in database.", "", 6200);
-                        \YAWK\alert::draw("danger", 'MySQL Error: ('.mysqli_errno($db).')', 'Database error: '.mysqli_error($db).'', "", 0);
+                        // \YAWK\alert::draw("danger", 'MySQL Error: ('.mysqli_errno().')', 'Database error: '.mysqli_error($db).'', "", 0);
                         return false;
                     }
                     else
@@ -736,7 +736,7 @@ namespace YAWK {
                 else
                     {
                         // sql code with correct, user-selected unpublish date
-                        if (!$db->query("UPDATE {pages} 
+                        if ($res = !$db->query("UPDATE {pages} 
                     SET published = '" . $this->published . "',
                         gid = '" . $this->gid . "',
                         date_changed = '" . $date_changed . "',
@@ -750,8 +750,7 @@ namespace YAWK {
                         {
                             // throw error
                             \YAWK\sys::setSyslog($db, 23, 1, "failed to update page $this->title", 0, 0, 0, 0);
-                            // \YAWK\alert::draw("warning", "Warning", "page data could not be stored in database.", "", 6200);
-                            \YAWK\alert::draw("danger", 'MySQL Error: ('.mysqli_errno($db).')', 'Database error: '.mysqli_error($db).'', "", 0);
+                            \YAWK\alert::draw("warning", "Warning", "failed to store data of $this->alias in database.", "", 6200);
                             return false;
                         }
                         else
@@ -765,7 +764,7 @@ namespace YAWK {
             else
                 {
                     // something went wrong...
-                    \YAWK\sys::setSyslog($db, 7, 2, "unable toupdate file - $oldFilename does not exist", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 7, 2, "unable to update file - $oldFilename does not exist", 0, 0, 0, 0);
                 }
             return true;
         } // ./ save function
@@ -807,6 +806,7 @@ namespace YAWK {
          */
         function writeContent($dirprefix, $content)
         {
+            /** @var $db \YAWK\db $alias */
             $alias = $this->alias;
             /* alias string manipulation */
             $alias = mb_strtolower($alias); // lowercase
@@ -826,6 +826,7 @@ namespace YAWK {
             }
             else
                 {
+                    \YAWK\sys::setSyslog($db, 7, 2, "unable to write content to file $filename", 0, 0, 0, 0);
                     return false;
                 }
         }
@@ -979,6 +980,10 @@ namespace YAWK {
         function getContent($db, $lang)
         {
             global $currentpage;
+            if (!isset($currentpage) || (empty($currentpage)))
+            {
+                die("CRITICAL ERROR: unable to display content - currentpage var is not set.");
+            }
             if (isset($currentpage->date_publish)) {
                 // ROLE CHECK
                 if (isset($_SESSION['gid'])) {
@@ -1033,11 +1038,13 @@ namespace YAWK {
                 $time_now <= $time_published &&
                 $date_now <= $date_published ||
                 $currentpage->published == 0
-            ) {
+            )
+            {
                 // show error
                 return include(\YAWK\controller::filterfilename($db, $lang, "content/errors/404.html"));
 
-            } else {
+            }
+            else {
 
                 if ($currentpage->date_publish > $now) {
                     $timediff = settings::getSetting($db, "timediff");

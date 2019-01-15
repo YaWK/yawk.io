@@ -364,15 +364,19 @@ if (isset($_POST))
                         // create new archive sub folder path
                         $backup->archiveBackupSubFolder = $backup->archiveBackupFolder.$_POST['newFolder']."/";
                         // create new directory in archive
+                        if (!is_dir(dirname($backup->archiveBackupSubFolder)))
+                        {
+
+                        }
                         if (mkdir($backup->archiveBackupSubFolder))
                         {   // all good, new archive subfolder created
                             \YAWK\alert::draw("success", $_POST['file'], "$backup->archiveBackupSubFolder $lang[CREATED]", "", 2600);
                         }
                         else
-                            {   // failed to create new archive subfolder
-                                \YAWK\sys::setSyslog($db, 51, 2, "failed to create new archive subfolder $backup->archiveBackupSubFolder", 0, 0, 0, 0);
-                                \YAWK\alert::draw("danger", $_POST['file'], "$backup->archiveBackupSubFolder $lang[WAS_NOT_CREATED]", "", 6400);
-                            }
+                        {   // failed to create new archive subfolder
+                            \YAWK\sys::setSyslog($db, 51, 2, "failed to create new archive subfolder $backup->archiveBackupSubFolder", 0, 0, 0, 0);
+                            \YAWK\alert::draw("danger", $_POST['file'], "$backup->archiveBackupSubFolder $lang[WAS_NOT_CREATED]", "", 6400);
+                        }
                     }
                     // check if existing folder was selected by user
                     else if (isset($_POST['selectFolder']) && (!empty($_POST['selectFolder'])))

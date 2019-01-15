@@ -22,7 +22,9 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
         public function init()
         {
             // set css tags for Bootstrap 4
-            $this->bs4_Cards();
+            $this->bs4_CardsCss();
+            // bootstrap 4 buttons
+            $this->bs4_ButtonsCss();
 
             // check if css code is set, not empty and correct type
             if (isset($this->cssCode) && (is_string($this->cssCode) && (!empty($this->cssCode))))
@@ -42,7 +44,7 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
          * @link http://yawk.io
          * @annotation add bootstrap 4 cards component to this css code string
          */
-        public function bs4_Cards()
+        public function bs4_CardsCss()
         {
             // cards css code
             $this->cssCode = "   
@@ -290,8 +292,391 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
                 width: 100%;
               }
             }
-
             ";
+        }
+
+        /**
+         * Bootstrap 4: BUTTONS Component CSS Code
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @annotation add Bootstrap 3 buttons component to this css code string
+         */
+        public function bs4_ButtonsCss()
+        {
+            // all css code for buttons
+            $this->cssCode .= "
+           /* BUTTONS */
+            .btn {
+              color: #".$this->tplSettings['btn-default-color'].";
+              display: inline-block;
+              padding: 6px 12px;
+              margin-bottom: 0;
+              font-size: ".$this->tplSettings['btn-fontsize'].";
+              font-weight: ".$this->tplSettings['btn-font-weight'].";
+              line-height: 1.42857143;
+              text-align: center;
+              white-space: nowrap;
+              vertical-align: middle;
+              -ms-touch-action: manipulation;
+                  touch-action: manipulation;
+              cursor: pointer;
+              -webkit-user-select: none;
+                 -moz-user-select: none;
+                  -ms-user-select: none;
+                      user-select: none;
+              background-image: none;
+              border: ".$this->tplSettings['btn-border']." ".$this->tplSettings['btn-border-style']." transparent;
+              border-radius: ".$this->tplSettings['btn-border-radius'].";
+            }
+        
+            .btn-default {
+                color: #".$this->tplSettings['btn-default-color'].";
+                background-color: #".$this->tplSettings['btn-default-background-color'].";
+                border-color: #".$this->tplSettings['btn-default-border-color'].";
+            }
+            .btn-default:focus,
+            .btn-default.focus {
+                color: #".$this->tplSettings['btn-default-color'].";
+                background-color: #".$this->tplSettings['btn-default-focus-background-color'].";
+                border-color: #".$this->tplSettings['btn-default-focus-background-color'].";
+            }
+            .btn-default:hover {
+              color: #".$this->tplSettings['btn-default-hover-color'].";
+              background-color: #".$this->tplSettings['btn-default-hover-background-color'].";
+              border-color: #".$this->tplSettings['btn-default-hover-border-color'].";
+            }
+            .btn-default:active,
+            .btn-default.active,
+            .open > .dropdown-toggle.btn-default {
+              color: #".$this->tplSettings['btn-default-color'].";
+              background-color: #".$this->tplSettings['btn-default-focus-background-color'].";
+              border-color: #".$this->tplSettings['btn-default-hover-border-color'].";
+            }
+            .btn-default:active:hover,
+            .btn-default.active:hover,
+            .open > .dropdown-toggle.btn-default:hover,
+            .btn-default:active:focus,
+            .btn-default.active:focus,
+            .open > .dropdown-toggle.btn-default:focus,
+            .btn-default:active.focus,
+            .btn-default.active.focus,
+            .open > .dropdown-toggle.btn-default.focus {
+              color: #".$this->tplSettings['btn-default-color'].";
+              background-color: #".$this->tplSettings['btn-default-focus-background-color'].";
+              border-color: #".$this->tplSettings['btn-default-hover-border-color'].";
+            }
+            .btn-default:active,
+            .btn-default.active,
+            .open > .dropdown-toggle.btn-default {
+              background-image: none;
+            }
+            .btn-default.disabled:hover,
+            .btn-default[disabled]:hover,
+            fieldset[disabled] .btn-default:hover,
+            .btn-default.disabled:focus,
+            .btn-default[disabled]:focus,
+            fieldset[disabled] .btn-default:focus,
+            .btn-default.disabled.focus,
+            .btn-default[disabled].focus,
+            fieldset[disabled] .btn-default.focus {
+              background-color: #".$this->tplSettings['btn-default-background-color'].";
+              border-color: #".$this->tplSettings['btn-default-border-color'].";
+            }
+            .btn-default .badge {
+              color: #".$this->tplSettings['btn-default-background-color'].";
+              background-color: #".$this->tplSettings['btn-default-color'].";
+            }
+        
+            .btn-primary {
+              color: #".$this->tplSettings['btn-primary-color'].";
+              background-color: #".$this->tplSettings['btn-primary-background-color'].";
+              border-color: #".$this->tplSettings['btn-primary-border-color'].";
+            }
+            .btn-primary:focus,
+            .btn-primary.focus {
+              color: #".$this->tplSettings['btn-primary-color'].";
+              background-color: #".$this->tplSettings['btn-primary-focus-background-color'].";
+              border-color: #".$this->tplSettings['btn-primary-focus-border-color'].";
+            }
+            .btn-primary:hover {
+              color: #".$this->tplSettings['btn-primary-color'].";
+              background-color: #".$this->tplSettings['btn-primary-hover-background-color'].";
+              border-color: #".$this->tplSettings['btn-primary-hover-border-color'].";
+            }
+            .btn-primary:active,
+            .btn-primary.active,
+            .open > .dropdown-toggle.btn-primary {
+              color: #".$this->tplSettings['btn-primary-color'].";
+              background-color: #".$this->tplSettings['btn-primary-focus-background-color'].";
+              border-color: #".$this->tplSettings['btn-primary-hover-border-color'].";
+            }
+            .btn-primary:active:hover,
+            .btn-primary.active:hover,
+            .open > .dropdown-toggle.btn-primary:hover,
+            .btn-primary:active:focus,
+            .btn-primary.active:focus,
+            .open > .dropdown-toggle.btn-primary:focus,
+            .btn-primary:active.focus,
+            .btn-primary.active.focus,
+            .open > .dropdown-toggle.btn-primary.focus {
+              color: #".$this->tplSettings['btn-primary-color'].";
+              background-color: #".$this->tplSettings['btn-primary-focus-background-color'].";
+              border-color: #".$this->tplSettings['btn-primary-hover-border-color'].";
+            }
+            .btn-primary:active,
+            .btn-primary.active,
+            .open > .dropdown-toggle.btn-primary {
+              background-image: none;
+            }
+            .btn-primary.disabled:hover,
+            .btn-primary[disabled]:hover,
+            fieldset[disabled] .btn-primary:hover,
+            .btn-primary.disabled:focus,
+            .btn-primary[disabled]:focus,
+            fieldset[disabled] .btn-primary:focus,
+            .btn-primary.disabled.focus,
+            .btn-primary[disabled].focus,
+            fieldset[disabled] .btn-primary.focus {
+              background-color: #".$this->tplSettings['btn-primary-background-color'].";
+              border-color: #".$this->tplSettings['btn-primary-border-color'].";
+            }
+            .btn-primary .badge {
+              color: #".$this->tplSettings['btn-primary-background-color'].";
+              background-color: #".$this->tplSettings['btn-primary-color'].";
+            }
+        
+            .btn-success {
+              color: #".$this->tplSettings['btn-success-color'].";
+              background-color: #".$this->tplSettings['btn-success-background-color'].";
+              border-color: #".$this->tplSettings['btn-success-background-color'].";
+            }
+            .btn-success:focus,
+            .btn-success.focus {
+              color: #".$this->tplSettings['btn-success-color'].";
+              background-color: #".$this->tplSettings['btn-success-focus-background-color'].";
+              border-color: #".$this->tplSettings['btn-success-focus-border-color'].";
+            }
+            .btn-success:hover {
+              color: #".$this->tplSettings['btn-success-hover-color'].";
+              background-color: #".$this->tplSettings['btn-success-hover-background-color'].";
+              border-color: #".$this->tplSettings['btn-success-hover-border-color'].";
+            }
+            .btn-success:active,
+            .btn-success.active,
+            .open > .dropdown-toggle.btn-success {
+              color: #".$this->tplSettings['btn-success-color'].";
+              background-color: #".$this->tplSettings['btn-success-focus-background-color'].";
+              border-color: #".$this->tplSettings['btn-success-hover-border-color'].";
+            }
+            .btn-success:active:hover,
+            .btn-success.active:hover,
+            .open > .dropdown-toggle.btn-success:hover,
+            .btn-success:active:focus,
+            .btn-success.active:focus,
+            .open > .dropdown-toggle.btn-success:focus,
+            .btn-success:active.focus,
+            .btn-success.active.focus,
+            .open > .dropdown-toggle.btn-success.focus {
+              color: #".$this->tplSettings['btn-success-color'].";
+              background-color: #".$this->tplSettings['btn-success-hover-border-color'].";
+              border-color: #".$this->tplSettings['btn-success-focus-border-color'].";
+            }
+            .btn-success:active,
+            .btn-success.active,
+            .open > .dropdown-toggle.btn-success {
+              background-image: none;
+            }
+            .btn-success.disabled:hover,
+            .btn-success[disabled]:hover,
+            fieldset[disabled] .btn-success:hover,
+            .btn-success.disabled:focus,
+            .btn-success[disabled]:focus,
+            fieldset[disabled] .btn-success:focus,
+            .btn-success.disabled.focus,
+            .btn-success[disabled].focus,
+            fieldset[disabled] .btn-success.focus {
+              background-color: #5cb85c;
+              border-color: #4cae4c;
+            }
+            .btn-success .badge {
+              color: #".$this->tplSettings['btn-success-background-color'].";
+              background-color: #".$this->tplSettings['btn-success-color'].";
+            }
+        
+            .btn-info {
+              color: #".$this->tplSettings['btn-info-color'].";
+              background-color: #".$this->tplSettings['btn-info-background-color'].";
+              border-color: #".$this->tplSettings['btn-info-border-color'].";
+            }
+            .btn-info:focus,
+            .btn-info.focus {
+              color: #".$this->tplSettings['btn-info-color'].";
+              background-color: #".$this->tplSettings['btn-info-focus-background-color'].";
+              border-color: #".$this->tplSettings['btn-info-focus-border-color'].";
+            }
+            .btn-info:hover {
+              color: #".$this->tplSettings['btn-info-hover-color'].";
+              background-color: #".$this->tplSettings['btn-info-hover-background-color'].";
+              border-color: #".$this->tplSettings['btn-info-hover-border-color'].";
+            }
+            .btn-info:active,
+            .btn-info.active,
+            .open > .dropdown-toggle.btn-info {
+              color: #".$this->tplSettings['btn-info-color'].";
+              background-color: #".$this->tplSettings['btn-info-focus-background-color'].";
+              border-color: #".$this->tplSettings['btn-info-hover-border-color'].";
+            }
+            .btn-info:active:hover,
+            .btn-info.active:hover,
+            .open > .dropdown-toggle.btn-info:hover,
+            .btn-info:active:focus,
+            .btn-info.active:focus,
+            .open > .dropdown-toggle.btn-info:focus,
+            .btn-info:active.focus,
+            .btn-info.active.focus,
+            .open > .dropdown-toggle.btn-info.focus {
+              color: #".$this->tplSettings['btn-info-color'].";
+              background-color: #".$this->tplSettings['btn-info-hover-border-color'].";
+              border-color: #".$this->tplSettings['btn-info-focus-border-color'].";
+            }
+            .btn-info:active,
+            .btn-info.active,
+            .open > .dropdown-toggle.btn-info {
+              background-image: none;
+            }
+            .btn-info.disabled:hover,
+            .btn-info[disabled]:hover,
+            fieldset[disabled] .btn-info:hover,
+            .btn-info.disabled:focus,
+            .btn-info[disabled]:focus,
+            fieldset[disabled] .btn-info:focus,
+            .btn-info.disabled.focus,
+            .btn-info[disabled].focus,
+            fieldset[disabled] .btn-info.focus {
+              background-color: #5bc0de;
+              border-color: #46b8da;
+            }
+            .btn-info .badge {
+              color: #".$this->tplSettings['btn-info-background-color'].";
+              background-color: #".$this->tplSettings['btn-info-color'].";
+            }
+        
+            .btn-warning {
+              color: #".$this->tplSettings['btn-warning-color'].";
+              background-color: #".$this->tplSettings['btn-warning-background-color'].";
+              border-color: #".$this->tplSettings['btn-warning-border-color'].";
+            }
+            .btn-warning:focus,
+            .btn-warning.focus {
+              color: #".$this->tplSettings['btn-warning-color'].";
+              background-color: #".$this->tplSettings['btn-warning-focus-background-color'].";
+              border-color: #".$this->tplSettings['btn-warning-focus-border-color'].";
+            }
+            .btn-warning:hover {
+              color: #".$this->tplSettings['btn-warning-hover-color'].";
+              background-color: #".$this->tplSettings['btn-warning-hover-background-color'].";
+              border-color: #".$this->tplSettings['btn-warning-hover-border-color'].";
+            }
+            .btn-warning:active,
+            .btn-warning.active,
+            .open > .dropdown-toggle.btn-warning {
+              color: #".$this->tplSettings['btn-warning-color'].";
+              background-color: #".$this->tplSettings['btn-warning-focus-background-color'].";
+              border-color: #".$this->tplSettings['btn-warning-hover-border-color'].";
+            }
+            .btn-warning:active:hover,
+            .btn-warning.active:hover,
+            .open > .dropdown-toggle.btn-warning:hover,
+            .btn-warning:active:focus,
+            .btn-warning.active:focus,
+            .open > .dropdown-toggle.btn-warning:focus,
+            .btn-warning:active.focus,
+            .btn-warning.active.focus,
+            .open > .dropdown-toggle.btn-warning.focus {
+              color: #".$this->tplSettings['btn-warning-color'].";
+              background-color: #".$this->tplSettings['btn-warning-hover-border-color'].";
+              border-color: #".$this->tplSettings['btn-warning-focus-border-color'].";
+            }
+            .btn-warning:active,
+            .btn-warning.active,
+            .open > .dropdown-toggle.btn-warning {
+              background-image: none;
+            }
+            .btn-warning.disabled:hover,
+            .btn-warning[disabled]:hover,
+            fieldset[disabled] .btn-warning:hover,
+            .btn-warning.disabled:focus,
+            .btn-warning[disabled]:focus,
+            fieldset[disabled] .btn-warning:focus,
+            .btn-warning.disabled.focus,
+            .btn-warning[disabled].focus,
+            fieldset[disabled] .btn-warning.focus {
+              background-color: #f0ad4e;
+              border-color: #eea236;
+            }
+            .btn-warning .badge {
+              color: #".$this->tplSettings['btn-warning-background-color'].";
+              background-color: #".$this->tplSettings['btn-warning-color'].";
+            }
+        
+            .btn-danger {
+              color: #".$this->tplSettings['btn-danger-color'].";
+              background-color: #".$this->tplSettings['btn-danger-background-color'].";
+              border-color: #".$this->tplSettings['btn-danger-border-color'].";
+            }
+            .btn-danger:focus,
+            .btn-danger.focus {
+              color: #".$this->tplSettings['btn-danger-color'].";
+              background-color: #".$this->tplSettings['btn-danger-focus-background-color'].";
+              border-color: #".$this->tplSettings['btn-danger-focus-border-color'].";
+            }
+            .btn-danger:hover {
+              color: #".$this->tplSettings['btn-danger-hover-color'].";
+              background-color: #".$this->tplSettings['btn-danger-hover-background-color'].";
+              border-color: #".$this->tplSettings['btn-danger-hover-border-color'].";
+            }
+            .btn-danger:active,
+            .btn-danger.active,
+            .open > .dropdown-toggle.btn-danger {
+              color: #".$this->tplSettings['btn-danger-color'].";
+              background-color: #".$this->tplSettings['btn-danger-focus-background-color'].";
+              border-color: #".$this->tplSettings['btn-danger-hover-border-color'].";
+            }
+            .btn-danger:active:hover,
+            .btn-danger.active:hover,
+            .open > .dropdown-toggle.btn-danger:hover,
+            .btn-danger:active:focus,
+            .btn-danger.active:focus,
+            .open > .dropdown-toggle.btn-danger:focus,
+            .btn-danger:active.focus,
+            .btn-danger.active.focus,
+            .open > .dropdown-toggle.btn-danger.focus {
+              color: #".$this->tplSettings['btn-danger-color'].";
+              background-color: #".$this->tplSettings['btn-danger-hover-border-color'].";
+              border-color: #".$this->tplSettings['btn-danger-focus-border-color'].";
+            }
+            .btn-danger:active,
+            .btn-danger.active,
+            .open > .dropdown-toggle.btn-danger {
+              background-image: none;
+            }
+            .btn-danger.disabled:hover,
+            .btn-danger[disabled]:hover,
+            fieldset[disabled] .btn-danger:hover,
+            .btn-danger.disabled:focus,
+            .btn-danger[disabled]:focus,
+            fieldset[disabled] .btn-danger:focus,
+            .btn-danger.disabled.focus,
+            .btn-danger[disabled].focus,
+            fieldset[disabled] .btn-danger.focus {
+              background-color: #d9534f;
+              border-color: #d43f3a;
+            }
+            .btn-danger .badge {
+              color: #".$this->tplSettings['btn-danger-background-color'].";
+              background-color: #".$this->tplSettings['btn-danger-color'].";
+            }";
         }
     }
 }

@@ -11,7 +11,7 @@ if (isset($_GET['add']) && ($_GET['add'] === "1"))
     $positions = $db->quote($_POST['positions']);
     $date_publish = \YAWK\sys::now();
 
-    $newWidgetID = YAWK\widget::create($db, $widgetType, $pageID, $positions, $date_publish);
+    $newWidgetID = YAWK\widget::create($db, $widgetType, $pageID, $positions);
     if (is_int($newWidgetID) || (is_numeric($newWidgetID)))
     {    // success
         print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[WIDGET_CREATE_OK]", "page=widget-edit&widget=$newWidgetID", 800);

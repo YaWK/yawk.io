@@ -194,50 +194,47 @@ namespace YAWK {
          * @return bool
          */
         static function addEntry($db, $menu, $text, $href)
-        {
+        {   /** @var $db \YAWK\db */
+
+            // get menu name
             $menuName = \YAWK\menu::getMenuNameByID($db, $menu);
-            /** @var $db \YAWK\db */
-            $date_created = date("Y-m-d G:i:s");
 
             // ## select max ID from menu + add menu entry
-            $res = $db->query("SELECT MAX(id), MAX(sort) FROM {menu}
+            $res = $db->query("SELECT MAX(sort) FROM {menu}
                                WHERE menuID = '".$menu."'");
 
             $row = mysqli_fetch_row($res);
-            if (isset($row[0]) && $row[1]) { // set id to 1
-                $id = $row[0] + 1;
-                $sort = $row[1] + 1;
-            } else {
-                $id = 1;
-                $sort = 1;
+            if (isset($row[0]))
+            {   // add sortation
+                $sort = $row[0] + 1;
             }
+            else
+                {   // sortation
+                    $sort = 1;
+                }
 
-            if (!isset($id)) {
-                $id = 1;
-            }
+            // make sure that sort var is set
             if (!isset($sort)) {
                 $sort = 1;
             }
-            // echo "<br><br>$id $sort $title $href"; exit;
 
-            /* do query */
+            // add menu entry
             if ($res = $db->query("INSERT INTO {menu} 
-                                        (id, sort, menuID, text, href)
-                                        VALUES ('" . $id . "',
-                                        '" . $sort . "',
+                                        (sort, menuID, text, href)
+                                        VALUES ('" . $sort . "',
                                         '" . $menu . "',
                                         '" . $text . "',
                                         '" . $href . "')"))
-            {
-                // entry added
+            {   // menu entry added
                 \YAWK\sys::setSyslog($db, 21, 0, "added menu entry <b>$text</b> to <b>$menuName</b>", 0, 0, 0, 0);
                 return true;
             }
-            else {
-                // failed
-                \YAWK\sys::setSyslog($db, 23, 1, "failed to add menu entry <b>$text</b> to <b>$menuName</b>", 0, 0, 0, 0);
-                return false;
-            }
+            else
+                {
+                    // add menu entry failed
+                    \YAWK\sys::setSyslog($db, 23, 1, "failed to add menu entry <b>$text</b> to <b>$menuName</b>", 0, 0, 0, 0);
+                    return false;
+                }
         }
 
         /**
@@ -836,9 +833,8 @@ namespace YAWK {
          * @param int $id affected menu id
          * @return string
          */
-        static function getMenuNameByID($db, $id, $lang)
+        static function getMenuNameByID($db, $id)
         {   /* @var $db \YAWK\db */
-        global $lang;
             $menu = '';
             if ($res = $db->query("SELECT name from {menu_names} WHERE id = $id"))
             {
@@ -849,7 +845,7 @@ namespace YAWK {
             }
             else
                 {
-                    $menu = $lang['MENU_SEL_FAILED'];
+                   $menu = "MENU SELECT ID: $id failed";
                 }
                 return $menu;
         }
