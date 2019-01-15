@@ -1062,6 +1062,20 @@ class fbEvents
                         $hrClass = '';
                     }
 
+                // search for links in event description and set html markup to link them
+                if (isset($this->event['description']) && (!empty($this->event['description'])))
+                {
+                    // regex filter
+                    $reg_exUrl = "/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/";
+
+                    // check if there is a URL in the string
+                    if(preg_match($reg_exUrl, $this->event['description'], $url))
+                    {
+                        // change urls to true hyperlinks
+                        $this->event['description'] = preg_replace($reg_exUrl, '<a href="'.$url[0].'" target="_blank">'.$url[0].'</a> ', $this->event['description']);
+                    }
+                }
+
                 if (isset($this->fbEventsCanceledOn) && ($this->fbEventsCanceledOn == true))
                 {
 
