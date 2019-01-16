@@ -1953,13 +1953,13 @@ CREATE TABLE `cms_widgets` (
   `published` int(1) NOT NULL DEFAULT '1',
   `widgetType` int(11) NOT NULL,
   `pageID` int(11) NOT NULL,
-  `sort` int(11) NOT NULL,
-  `position` varchar(128) NOT NULL,
-  `marginTop` int(11) NOT NULL,
-  `marginBottom` int(11) NOT NULL,
-  `date_publish` datetime DEFAULT NULL,
+  `sort` int(11) DEFAULT NULL,
+  `position` varchar(128) DEFAULT NULL,
+  `marginTop` int(11) DEFAULT NULL,
+  `marginBottom` int(11) DEFAULT NULL,
+  `date_publish` datetime DEFAULT CURRENT_TIMESTAMP,
   `date_unpublish` datetime DEFAULT NULL,
-  `widgetTitle` varchar(255) NOT NULL
+  `widgetTitle` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `cms_widget_defaults` (
