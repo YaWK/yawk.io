@@ -2314,7 +2314,10 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('socialBarLinkTarget', '_blank', 35, 1, 4, 'LABEL_SOCIALBAR_TARGET', '', '', '', 'DESC_SOCIALBAR_TARGET', 'form-control', 'select', '', '_self,_self (this window):_blank,_blank (new window):_parent,_parent (parent window)', 341),
 ('socialBarSize', 'H2', 35, 1, 5, 'LABEL_SOCIALBAR_SIZE', '', '', '', 'DESC_SOCIALBAR_SIZE', 'form-control', 'select', '', 'H1,H1:H2,H2:H3,H3:H4,H4:H5,H5:H6,H6:P,GLOBALTEXT', 342),
 ('socialBarAlign', 'horizontal', 35, 1, 6, 'LABEL_SOCIALBAR_ALIGN', '', '', '', 'DESC_SOCIALBAR_ALIGN', 'form-control', 'select', '', 'horizontal,horizontal:vertical,vertical', 343),
-('socialBarClass', 'hvr hvr-grow', 35, 1, 7, 'LABEL_SOCIALBAR_CLASS', '', '', '', 'DESC_SOCIALBAR_CLASS', 'form-control', '', 'PH_SOCIALBAR_CLASS', '', 344);
+('socialBarClass', 'hvr hvr-grow', 35, 1, 7, 'LABEL_SOCIALBAR_CLASS', '', '', '', 'DESC_SOCIALBAR_CLASS', 'form-control', '', 'PH_SOCIALBAR_CLASS', '', 344),
+('bookingHeading', '', 45, 1, 1, 'LABEL_BOOKING_HEADING', '', '', '', 'DESC_BOOKING_HEADING', 'form-control', '', '', '', 345),
+('bookingSubtext', '', 45, 1, 1, 'LABEL_BOOKING_SUBTEXT', '', '', '', 'DESC_BOOKING_SUBTEXT', 'form-control', '', '', '', 346),
+('bookingIcon', '', 45, 1, 1, 'LABEL_BOOKING_ICON', '', '', '', 'DESC_BOOKING_ICON', 'form-control', '', '', '', 347);
 
 CREATE TABLE `cms_widget_settings` (
   `id` int(11) NOT NULL,
@@ -2387,7 +2390,8 @@ INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`)
 (41, 1, 'Facebook Gallery', 'fb_gallery', 'Embed photo albums from your Facebook page'),
 (42, 1, 'Facebook Cover', 'fb_cover', 'Embed current cover image from your Facebook page'),
 (43, 1, 'SoundCloud', 'soundcloud', 'Embed any soundcloud song or playlist'),
-(44, 1, 'Example Widget', 'example', 'Empty widget (for DEMO and development purpose)');
+(44, 1, 'Example Widget', 'example', 'Empty widget (for DEMO and development purpose)'),
+(45, 1, 'Booking Widget', 'booking', 'Booking widget (corresponding to the booking plugin)');
 
 ALTER TABLE `cms_assets`
   ADD PRIMARY KEY (`id`);
@@ -2599,8 +2603,8 @@ ALTER TABLE `cms_user_groups`
 ALTER TABLE `cms_widgets`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_defaults`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=344;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=347;
 ALTER TABLE `cms_widget_settings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
