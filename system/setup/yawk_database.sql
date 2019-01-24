@@ -2317,7 +2317,24 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('socialBarClass', 'hvr hvr-grow', 35, 1, 7, 'LABEL_SOCIALBAR_CLASS', '', '', '', 'DESC_SOCIALBAR_CLASS', 'form-control', '', 'PH_SOCIALBAR_CLASS', '', 344),
 ('bookingHeading', '', 45, 1, 1, 'LABEL_BOOKING_HEADING', '', '', '', 'DESC_BOOKING_HEADING', 'form-control', '', '', '', 345),
 ('bookingSubtext', '', 45, 1, 1, 'LABEL_BOOKING_SUBTEXT', '', '', '', 'DESC_BOOKING_SUBTEXT', 'form-control', '', '', '', 346),
-('bookingIcon', '', 45, 1, 1, 'LABEL_BOOKING_ICON', '', '', '', 'DESC_BOOKING_ICON', 'form-control', '', '', '', 347);
+('bookingIcon', '', 45, 1, 1, 'LABEL_BOOKING_ICON', '', '', '', 'DESC_BOOKING_ICON', 'form-control', '', '', '', 347),
+('bookingBand', 'required', 45, 1, 1, 'LABEL_BOOKING_BAND', '', '', '', 'DESC_BOOKING_F_BAND', 'form-control', 'select', '', 'required,required:true,true,false,false', 348),
+('bookingEventDatetime', 'required', 45, 1, 1, 'LABEL_BOOKING_EVENTDATETIME', '', '', '', 'DESC_BOOKING_EVENTDATETIME', 'form-control', 'select', '', 'required,required:true,true,false,false', 349),
+('bookingEventSoundcheck', 'required', 45, 1, 1, 'LABEL_BOOKING_SOUNDCHECK', '', '', '', 'DESC_BOOKING_SOUNDCHECK', 'form-control', 'select', '', 'required,required:true,true,false,false', 350),
+('bookingEventShowtime', 'required', 45, 1, 1, 'LABEL_BOOKING_SHOWTIME', '', '', '', 'DESC_BOOKING_SHOWTIME', 'form-control', 'select', '', 'required,required:true,true,false,false', 351),
+('bookingSoundcheckDuration', 'required', 45, 1, 1, 'LABEL_BOOKING_SOUNDCHECK_DURATION', '', '', '', 'DESC_BOOKING_SOUNDCHECK_DURATION', 'form-control', 'select', '', 'required,required:true,true,false,false', 352),
+('bookingShowtimeDuration', 'required', 45, 1, 1, 'LABEL_BOOKING_SHOWTIME_DURATION', '', '', '', 'DESC_BOOKING_SHOWTIME_DURATION', 'form-control', 'select', '', 'required,required:true,true,false,false', 353),
+('bookingLocation', 'required', 45, 1, 1, 'LABEL_BOOKING_LOCATION', '', '', '', 'DESC_BOOKING_LOCATION', 'form-control', 'select', '', 'required,required:true,true,false,false', 354),
+('bookingLocationType', 'required', 45, 1, 1, 'LABEL_BOOKING_LOCATION_TYPE', '', '', '', 'DESC_BOOKING_LOCATION_TYPE', 'form-control', 'select', '', 'required,required:true,true,false,false', 355),
+('bookingCrowdAmount', 'required', 45, 1, 1, 'LABEL_BOOKING_CROWD_AMOUNT', '', '', '', 'DESC_BOOKING_CROWD_AMOUNT', 'form-control', 'select', '', 'required,required:true,true,false,false', 356),
+('bookingPaAvailable', 'required', 45, 1, 1, 'LABEL_BOOKING_PA_AVAILABLE', '', '', '', 'DESC_BOOKING_PA_AVAILABLE', 'form-control', 'select', '', 'mandatory,mandatory:true,true:false,false', 357),
+('bookingTechAvailable', 'required', 45, 1, 1, 'LABEL_BOOKING_TECH_AVAILABLE', '', '', '', 'DESC_BOOKING_TECH_AVAILABLE', 'form-control', 'select', '', 'mandatory,mandatory:true,true:false,false', 358),
+('bookingHotelAvailable', 'required', 45, 1, 1, 'LABEL_BOOKING_HOTEL_AVAILABLE', '', '', '', 'DESC_BOOKING_HOTEL_AVAILABLE', 'form-control', 'select', '', 'mandatory,mandatory:true,true:false,false', 359),
+('bookingMessage', 'required', 45, 1, 1, 'LABEL_BOOKING_MESSAGE', '', '', '', 'DESC_BOOKING_MESSAGE', 'form-control', 'select', '', 'required,required:true,true,false,false', 360),
+('bookingEmail', 'required', 45, 1, 1, 'LABEL_BOOKING_EMAIL', '', '', '', 'DESC_BOOKING_EMAIL', 'form-control', 'select', '', 'mandatory,mandatory:true,true:false,false', 361),
+('bookingContactName', 'required', 45, 1, 1, 'LABEL_BOOKING_CONTACT_NAME', '', '', '', 'DESC_BOOKING_CONTACT_NAME', 'form-control', 'select', '', 'required,required:true,true,false,false', 362),
+('bookingPhone', 'required', 45, 1, 1, 'LABEL_BOOKING_PHONE', '', '', '', 'DESC_BOOKING_PHONE', 'form-control', 'select', '', 'required,required:true,true,false,false', 363),
+('bookingSetAmount', 'required', 45, 1, 1, 'LABEL_BOOKING_SET_AMOUNT', '', '', '', 'DESC_BOOKING_SET_AMOUNT', 'form-control', 'select', '', 'required,required:true,true,false,false', 364);
 
 CREATE TABLE `cms_widget_settings` (
   `id` int(11) NOT NULL,
