@@ -291,7 +291,7 @@ namespace YAWK\PLUGINS\BOOKING {
         }
 
         /**
-         * draw (output) html of the frontend form. This is displayed to the user. He will use it for booking.
+         * draw (output) html of the frontend form. This is displayed to the user. He will use to place a booking
          * @return string
          */
         public function getFrontendForm()
