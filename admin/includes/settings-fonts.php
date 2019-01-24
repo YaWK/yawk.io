@@ -266,8 +266,8 @@ echo"</section><!-- Main content -->
                 <div class="box-body">
                     <?php
                     // check if woff fonts are set
-                    if (isset($fontArray['woff']) && (!empty($font['woff'])))
-                    {   // draw OTF fonts list
+                    if (isset($fontArray['woff']) && (!empty($fontArray['woff'])))
+                    {   // draw WOFF fonts list
                         \YAWK\backend::drawFontList($fontArray['woff'], $fontFolder, '.woff', $lang);
                     }
                     ?>
