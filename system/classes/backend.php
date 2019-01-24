@@ -481,7 +481,7 @@ namespace YAWK {
                     else
                         {   // download font icon
                             echo "<a href=\"$folder$font\" title=\"$lang[DOWNLOAD] $font\"><i class=\"fa fa-arrow-circle-o-down pull-right\" 
-                            data-toggle=\"tooltip\" title=\"$lang[TO_DOWNLOAD]\" style=\"margin-top:4px;\"></i></a>&nbsp;";
+                            data-toggle=\"tooltip\" title=\"$lang[TO_DOWNLOAD]\" style=\"margin-top:4px;\"></i></a>&nbsp;&nbsp;";
                         }
                     // close tags
                     echo "</small></h4><hr>";

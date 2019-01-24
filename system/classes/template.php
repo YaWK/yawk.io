@@ -1766,6 +1766,10 @@ namespace YAWK {
                     if ($file->getExtension() === "woff") {   // add woff fonts to array
                         $fontArray['woff'][] = $file->getFilename();
                     }
+                    // check filetype
+                    if ($file->getExtension() === "WOFF") {   // add woff fonts to array
+                        $fontArray['woff'][] = $file->getFilename();
+                    }
                 }
             }
             // check if font array is set and not empty
@@ -1959,7 +1963,7 @@ namespace YAWK {
                         $otfFonts[] = "<option value=\"$item\">&nbsp;&nbsp;$item</option>";
                     }
                     // check if it is a woff file
-                    if (strtolower(substr($item, -3)) === "woff") {
+                    if (strtolower(substr($item, -4)) === "woff") {
                         // workaround: change dots to '-' to let option pass trough
                         $item = str_replace(".", "-", $item);
                         // add option to select field
