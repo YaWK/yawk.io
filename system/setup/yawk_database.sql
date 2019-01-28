@@ -2621,7 +2621,7 @@ ALTER TABLE `cms_user_groups`
 ALTER TABLE `cms_widgets`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_defaults`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=347;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=365;
 ALTER TABLE `cms_widget_settings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_types`
