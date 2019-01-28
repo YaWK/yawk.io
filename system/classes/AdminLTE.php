@@ -118,6 +118,9 @@ namespace YAWK {
 
     <!-- jQuery 2.1.4 -->
     <script type=\"text/javascript\" src=\"../system/engines/jquery/jquery-2.2.3.min.js\"></script>
+    
+    <!-- moment.js (used by datetimepicker) --> 
+    <script type=\"text/javascript\" src=\"../system/engines/jquery/moment.min.js\"></script>
 
     <!-- jQuery 3.0.0 -->
     <!-- <script type=\"text/javascript\" src=\"../system/engines/jquery/jquery-3.0.0.min.js\"></script> -->
