@@ -69,6 +69,10 @@ namespace YAWK\WIDGETS\BOOKING\FORM
         public $bookingPhone = '';
         /** @var string how many sets should be played? required|true|false */
         public $bookingSetAmount = '';
+        /** @var string admin email address where booking will be sent to */
+        public $bookingAdminEmail = '';
+        /** @var string html email true|false */
+        public $bookingHtmlEmail = '';
 
 
         /**
@@ -125,7 +129,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                 if (isset($this->bookingSubtext) && (!empty($this->bookingSubtext)))
                 {   // build a headline with heading and subtext
                     $this->bookingSubtext = "<small>$this->bookingSubtext</small>";
-                    $this->bookingHeadline = "<div id=\"bookingHeading\"><h1>$this->bookingIcon"."$this->bookingHeading&nbsp;"."$this->bookingSubtext</h1></div>";
+                    $this->bookingHeadline = "<div id=\"bookingHeading\"><h1>&nbsp;$this->bookingIcon"."$this->bookingHeading&nbsp;"."$this->bookingSubtext</h1></div>";
                 }
                 else
                 {   // headline only - without subtext
@@ -365,37 +369,6 @@ namespace YAWK\WIDGETS\BOOKING\FORM
 
             // load booking form
             echo $this->getFrontendForm();
-
-            /*
-            // include booking plugin class
-            include 'system/plugins/booking/classes/booking.php';
-
-            // generate new booking obj
-            $booking = new \YAWK\PLUGINS\BOOKING\booking();
-
-            // check if form was sent
-            if (isset($_POST['sent']) && $_POST['sent'] === '1')
-            {
-                // create new booking method
-                $booking = $booking->create($db);
-                // thank you page...
-                echo "<div style=\"text-align: center; margin-top: 20%; margin-bottom: 600px;\"><h1>Thank you <small>for your booking...</small></h1>
-                      <p>We will get in contact with you soon! <br>
-                      <br><a href=\"index.html\">Back to Home Page</a></p></div>";
-            }
-            else
-            {
-                // draw headline, if set
-                echo "$this->bookingHeadline<hr>";
-
-
-                // load booking form
-                echo $this->getFrontendForm();
-
-                // print obj data
-                // $this->printObject();
-            }
-            */
         }
 
         /**
@@ -409,7 +382,9 @@ namespace YAWK\WIDGETS\BOOKING\FORM
 
             $html .= "
 <form class=\"form\" id=\"bookingForm\" method=\"post\" action=\"system/widgets/booking/js/process-booking-data.php\">
-    <div class=\"col-md-4\">";
+    <div class=\"col-md-4\">
+    <input type=\"hidden\" name=\"bookingAdminEmail\" id=\"bookingAdminEmail\" value=\"".$this->bookingAdminEmail."\">
+    <input type=\"hidden\" name=\"bookingHtmlEmail\" id=\"bookingHtmlEmail\" value=\"".$this->bookingHtmlEmail."\">";
 
             // NAME
             if ($this->bookingContactName !== "false")
@@ -419,8 +394,10 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                 else { $requiredMarkup = ""; }
 
                 $html .= "
-                <label for=\"name\">Name".$requiredMarkup."</label>
-                <input type=\"text\" name=\"name\" id=\"name\" class=\"form-control\" placeholder=\"Your name\">
+                <label for=\"name\">Name".$requiredMarkup."
+                    <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Ihr Name (bzw. der Veranstalter)\"></i>
+                </label>
+                <input type=\"text\" name=\"name\" id=\"name\" class=\"form-control\" placeholder=\"Name / Veranstalter\">
                 <br>";
             }
 
@@ -432,7 +409,9 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                 else { $requiredMarkup = ""; }
 
                 $html .= "
-            <label for=\"email\">Email".$requiredMarkup."</label>
+            <label for=\"email\">Email".$requiredMarkup."
+                <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Bitte geben Sie hier Ihre Emailadresse ein. Sie wird nicht weitergegeben und nur f&uuml;r Fragen zu Ihrer Buchung verwendet.\"></i>
+            </label>
             <input type=\"text\" name=\"email\" id=\"email\" class=\"form-control\" placeholder=\"you@email.com\">
             <br>";
             }
@@ -445,7 +424,9 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                 else { $requiredMarkup = ""; }
 
                 $html .= "
-        <label for=\"phone\">Phone".$requiredMarkup."</label>
+        <label for=\"phone\">Phone".$requiredMarkup."
+            <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Durchs reden kommen die Leut' zam - ein kurzes Telefonat ist oft effizienter als zahllose Emails zu senden. F&uuml;r R&uuml;ckfragen und Absprachen im Vorfeld ben&ouml;tigen wir Ihre Telefonnumer.\"></i>
+        </label>
         <input type=\"text\" name=\"phone\" id=\"phone\" class=\"form-control\" placeholder=\"+00 1234 / 1234567\">
         <br>
         <h3>Booking - Ablauf<br></h3>
@@ -479,8 +460,10 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                 else { $requiredMarkup = ""; }
 
                 $html .= "
-                    <label for=\"eventDateTime\">Event Date + Time".$requiredMarkup."</label>
-                    <input type=\"text\" name=\"eventDateTime\" autocomplete=\"off\" id=\"eventDateTime\" class=\"form-control\" placeholder=\"select Date\">
+                    <label for=\"eventDateTime\">Veranstaltungszeitpunkt".$requiredMarkup."
+                        <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Bitte geben Sie hier das Datum und die Uhrzeit der Veranstaltung ein.\"></i>
+                    </label>
+                    <input type=\"text\" name=\"eventDateTime\" autocomplete=\"off\" id=\"eventDateTime\" class=\"form-control\" placeholder=\"Datum und Uhrzeit\">
                     <br>";
             }
 
@@ -492,8 +475,10 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                 else { $requiredMarkup = ""; }
 
                 $html .= "
-                    <label for=\"eventSoundcheck\">Soundcheck Uhrzeit".$requiredMarkup."</label>
-                    <input type=\"text\" name=\"eventSoundcheck\" autocomplete=\"off\" id=\"eventSoundcheck\" class=\"form-control timepicker\" placeholder=\"select Time\">
+                    <label for=\"eventSoundcheck\">Soundcheck Uhrzeit".$requiredMarkup."
+                        <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Bitte geben Sie hier an, zu welcher Uhrzeit der Soundcheck durchgef&uuml;hrt werden kann.\"></i>
+                    </label>
+                    <input type=\"text\" name=\"eventSoundcheck\" autocomplete=\"off\" id=\"eventSoundcheck\" class=\"form-control timepicker\" placeholder=\"Uhrzeit ausw&auml;hlen\">
                     <br>";
             }
 
@@ -505,7 +490,9 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                 else { $requiredMarkup = ""; }
 
                 $html .= "
-                    <label for=\"soundcheckDuration\">Soundcheck Zeitrahmen".$requiredMarkup."</label>
+                    <label for=\"soundcheckDuration\">Soundcheck Zeitrahmen".$requiredMarkup."
+                        <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Bitte geben Sie hier an, welcher Zeitrahmen f&uuml;r den Soundcheck vorgesehen ist.\"></i>
+                    </label>
                     <select name=\"soundcheckDuration\" id=\"soundcheckDuration\" class=\"form-control\">
                     <option value=\"\">bitte ausw&auml;hlen</option>
                     <option value=\"30 Minuten\">30 Minuten</option>
@@ -524,8 +511,10 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                 else { $requiredMarkup = ""; }
 
                 $html .= "
-                    <label for=\"eventShowtime\">Showtime Uhrzeit".$requiredMarkup."</label>
-                    <input type=\"text\" name=\"eventShowtime\" autocomplete=\"off\" id=\"eventShowtime\" class=\"form-control timepicker\" placeholder=\"select Time\">
+                    <label for=\"eventShowtime\">Showtime Uhrzeit".$requiredMarkup."
+                        <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Bitte geben Sie hier an, f&uuml;r welche Uhrzeit die Show (Beginn) angesetzt ist.\"></i>
+                    </label>
+                    <input type=\"text\" name=\"eventShowtime\" autocomplete=\"off\" id=\"eventShowtime\" class=\"form-control timepicker\" placeholder=\"Uhrzeit ausw&auml;hlen\">
                     <br>";
             }
 
@@ -537,7 +526,9 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                 else { $requiredMarkup = ""; }
 
                 $html .= "
-                    <label for=\"showtimeDuration\">Showtime Zeitrahmen".$requiredMarkup."</label>
+                    <label for=\"showtimeDuration\">Showtime Zeitrahmen".$requiredMarkup."
+                        <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Bitte geben Sie hier an, welcher Zeitrahmen (Gesamtspieldauer) f&uuml;r das Konzert vorgesehen ist.\"></i>
+                    </label>
                     <select name=\"showtimeDuration\" id=\"showtimeDuration\" class=\"form-control\">
                     <option value=\"\">bitte ausw&auml;hlen</option>
                     <option value=\"30 Minuten\">30 Minuten</option>
@@ -559,14 +550,16 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                 else { $requiredMarkup = ""; }
 
                 $html .= "
-                    <label for=\"setAmount\">Anzahl Sets".$requiredMarkup."</label>
+                    <label for=\"setAmount\">Anzahl Sets".$requiredMarkup."
+                        <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Bitte geben Sie hier an, wie viele Sets gespielt werden sollen.\"></i>
+                    </label>
                     <select name=\"setAmount\" id=\"setAmount\" class=\"form-control\">
                     <option value=\"\">bitte ausw&auml;hlen</option>
                     <option value=\"1\">1</option>
                     <option value=\"2\">2</option>
                     <option value=\"3\">3</option>
                     <option value=\"4\">4</option>
-                    <option value=\"unbekannt - nach Vereinbarung\">Nach Vereinbarung</option>
+                    <option value=\"keine Angabe - nach Vereinbarung\">keine Angabe / Nach Vereinbarung</option>
                     </select>";
             }
 
@@ -582,13 +575,16 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                 else { $requiredMarkup = ""; }
 
                 $html .= "
-                        <label for=\"band\">Band".$requiredMarkup."</label>
+                        <label for=\"band\">Band".$requiredMarkup."
+                            <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Bitte geben Sie hier an, welche Band sie buchen m&ouml;chten.\"></i>
+                        </label>
                         <select name=\"band\" id=\"band\" class=\"form-control\">
                         <option value=\"\">bitte ausw&auml;hlen</option>
                         <option value=\"Duo: Stephan Heiner &amp; B&ouml;rns Funkyfingers\">Duo: Stephan Heiner &amp; B&ouml;rns Funkyfingers</option>
                         <option value=\"Trio: BSB (B&ouml;rns, Stephan, Bertl)\">Trio: BSB (B&ouml;rns, Stephan, Bertl)</option>
                         <option value=\"Tommy Lee &amp; Glacestrizzis\">Tommy Lee &amp; Glacestrizzis</option>
                         <option value=\"WiR &amp; Jetzt\">WiR &amp; Jetzt</option>
+                        <option value=\"Nach Vereinbarung\">Nach Vereinbarung</option>
                         </select>
                         <br>";
             }
@@ -601,7 +597,9 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                 else { $requiredMarkup = ""; }
 
                 $html .= "
-                        <label for=\"locationType\">Art der Veranstaltung".$requiredMarkup."</label>
+                        <label for=\"locationType\">Art der Veranstaltung".$requiredMarkup."
+                            <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Bitte w&auml;hlen Sie, um welche Art von Veranstaltung es sich handelt.\"></i>
+                        </label>
                         <select name=\"locationType\" id=\"locationType\" class=\"form-control\">
                         <option value=\"\">bitte ausw&auml;hlen</option>
                         <option value=\"Hochzeit\">Hochzeit</option>
@@ -610,7 +608,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                         <option value=\"Firmen Event\">Firmen Event</option>
                         <option value=\"Weihnachtsfeier\">Weihnachtsfeier</option>
                         <option value=\"Gro&szlig;veranstaltung\">Gro&szlig;veranstaltung</option>
-                        <option value=\"Andere\">Andere</option>
+                        <option value=\"Nach Absprache\">Nach Absprache</option>
                         </select>
                         <br>";
             }
@@ -623,7 +621,9 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                 else { $requiredMarkup = ""; }
 
                 $html .= "
-                        <label for=\"location\">Location".$requiredMarkup."</label>
+                        <label for=\"location\">Location".$requiredMarkup."
+                            <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Bitte w&auml;hlen Sie, ob die Veranstaltung drinnen (Indoor) oder draussen (Outdoor) stattfindet.\"></i>
+                        </label>
                         <select name=\"location\" id=\"location\" class=\"form-control\">
                         <option value=\"\">bitte ausw&auml;hlen</option>
                         <option value=\"Indoor\">Indoor</option>
@@ -640,7 +640,9 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                 else { $requiredMarkup = ""; }
 
                 $html .= "
-                        <label for=\"crowdAmount\">Gr&ouml;&szlig;e".$requiredMarkup."</label>
+                        <label for=\"crowdAmount\">Gr&ouml;&szlig;e".$requiredMarkup."
+                            <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Wieviele Menschen werden bei der Veranstaltung in etwa erwartet?\"></i>
+                        </label>
                         <select name=\"crowdAmount\" id=\"crowdAmount\" class=\"form-control\">
                         <option value=\"\">bitte ausw&auml;hlen</option>
                         <option value=\"0 - 50\">0 - 50 Personen</option>
@@ -662,6 +664,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
 
                 $html .= "
                         <div class=\"text-right\">
+                        &nbsp;&nbsp;<i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Bitte geben Sie an, ob eine entsprechende Ton- und Lichtanlage (PA / Beschallung, B&uuml;hnenmonitoring, Mischpult, Verkabelung) vorhanden ist, oder von uns mitgebracht werden soll.\"></i>
                         <label for=\"paAvailable\">Anlage vorhanden".$requiredMarkup."&nbsp;&nbsp;</label>
                         <input type=\"radio\" name=\"paAvailable\" value=\"Ja\"> Ja
                         &nbsp;&nbsp;<input type=\"radio\" name=\"paAvailable\" value=\"Nein\"> Nein
@@ -677,7 +680,8 @@ namespace YAWK\WIDGETS\BOOKING\FORM
 
                 $html .= "                        
                         <div class=\"text-right\">
-                        <label for=\"techAvailable\">Techniker vor Ort".$requiredMarkup."&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        &nbsp;&nbsp;<i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Bitte geben Sie an, ob eine fachlich kompetenter Tontechniker vor Ort ist, der die Veranstaltung (inkl. Soundcheck) tontechnisch betreut oder ob ein Tontechniker von uns eingesetzt werden soll.\"></i>
+                        <label for=\"techAvailable\">Techniker vor Ort".$requiredMarkup."&nbsp;&nbsp;</label>
                         <input type=\"radio\" name=\"techAvailable\" value=\"Ja\"> Ja
                         &nbsp;&nbsp;<input type=\"radio\" name=\"techAvailable\" value=\"Nein\"> Nein
                         </div><hr>";
@@ -692,7 +696,8 @@ namespace YAWK\WIDGETS\BOOKING\FORM
 
                 $html .= "
                         <div class=\"text-right\">
-                        <label for=\"hotelAvailable\">&Uuml;bernachtung".$requiredMarkup."&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        &nbsp;&nbsp;<i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Bitte geben Sie an, ob eine &Uuml;bernachtung m&ouml;glich ist (bei Veranstaltungen die sich &uuml;ber mehrere Tage erstrecken)\"></i>
+                        <label for=\"hotelAvailable\">&Uuml;bernachtung".$requiredMarkup."&nbsp;&nbsp;</label>
                         <input type=\"radio\" name=\"hotelAvailable\" value=\"Ja\"> Ja
                         &nbsp;&nbsp;<input type=\"radio\" name=\"hotelAvailable\" value=\"Nein\"> Nein
                         </div>";
@@ -709,12 +714,16 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                 else { $requiredMarkup = ""; }
 
                 $html .= "
-                    <label for=\"message\">Anmerkungen".$requiredMarkup."</label>
+                    <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Bitte schreiben Sie weitere Informationen und die Adresse zu Ihrer Veranstaltung in dieses Textfeld. ACHTUNG: Bitte beachten Sie, dass f&uuml;r eine erfolgreiche Buchung die &Uuml;bermittlung der Adresse der Veranstaltung unbedingt n&ouml;tig ist.\"></i>
+                    <label for=\"message\">Anmerkungen / Adresse".$requiredMarkup."
+                    </label>
                     <textarea name=\"message\" id=\"message\" class=\"form-control\" rows=\"4\"></textarea>
                     <br>";
             }
 
-            $html .="<label for=\"mailCopy\">Kopie dieser Nachricht an mich senden. &nbsp;
+            $html .="
+                <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Auf Wunsch erhalten Sie eine Kopie dieser Nachricht an Ihre Emailadresse zugestellt.\"></i>
+                <label for=\"mailCopy\">Kopie dieser Nachricht an mich senden. &nbsp;
                 <input type=\"checkbox\" name=\"mailCopy\" value=\"1\" checked aria-checked=\"true\" id=\"mailCopy\"></label>
                 <button type=\"submit\" class=\"btn btn-success pull-right disabled\" style=\"margin-top:1%;\" contenteditable=\"false\"><i class=\"fa fa-paper-plane-o\"></i> &nbsp;Jetzt unverbindlich anfragen</button>
                 <input type=\"hidden\" name=\"sent\" value=\"1\">";
