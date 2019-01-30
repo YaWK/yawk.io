@@ -5,6 +5,7 @@ $("#bookingForm").submit(function(e) {
 
     var form = $(this);
     var url = form.attr('action');
+    var thankYouMessage = $("#thankYouMessage");
 
     $.ajax({
         type: "POST",
@@ -12,13 +13,10 @@ $("#bookingForm").submit(function(e) {
         data: form.serialize(), // serializes the form's elements.
         success: function(data)
         {
-            // $("#bookingForm").hide();
-            alert('success: '+data); // show response from the php script.
-            console.log('ajax post successful');
-
-            // hide form and display success message
-            $("#bookingForm").hide();
-
+            // hide form
+            $(this).hide();
+            // display thank you message
+            thankYouMessage.removeClass("hidden").addClass("animated fadeIn");
         },
         error: function (request, status, error)
         {
