@@ -129,11 +129,11 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                 if (isset($this->bookingSubtext) && (!empty($this->bookingSubtext)))
                 {   // build a headline with heading and subtext
                     $this->bookingSubtext = "<small>$this->bookingSubtext</small>";
-                    $this->bookingHeadline = "<div id=\"bookingHeading\"><h1>&nbsp;$this->bookingIcon"."$this->bookingHeading&nbsp;"."$this->bookingSubtext</h1></div>";
+                    $this->bookingHeadline = "<div id=\"bookingHeading\" class=\"animated fadeIn speed2\"><h1>&nbsp;$this->bookingIcon"."$this->bookingHeading&nbsp;"."$this->bookingSubtext</h1></div>";
                 }
                 else
                 {   // headline only - without subtext
-                    $this->bookingHeadline = "<h1>$this->bookingHeading</h1>";    // draw just the heading
+                    $this->bookingHeadline = "<h1 class=\"animated fadeIn speed2\">$this->bookingHeading</h1>";    // draw just the heading
                 }
             }
             else
@@ -367,21 +367,47 @@ namespace YAWK\WIDGETS\BOOKING\FORM
             // draw headline, if set
             echo "$this->bookingHeadline<hr>";
 
-            // load booking form
-            echo $this->getFrontendForm();
+            // draw booking form
+            echo $this->drawFrontendForm();
+
+            // draw thank you message div (hidden until submit)
+            echo $this->drawThankYouMessage();
+        }
+
+        /**
+         * draw (output) thank you message
+         * (will be displayed after successful submit)
+         * @return string html code
+         */
+        public function drawThankYouMessage()
+        {
+            $html = "";
+            $html .= "
+            <div class=\"hidden\" id=\"thankYouMessage\">
+            <div class=\"col-md-2\">&nbsp;</div>
+            <div class=\"col-md-8 text-center\"><h2>Danke f&uuml;r Ihre Buchungsanfrage!<br>
+            <small>Ihre Anfrage wird so schnell als m&ouml;glich bearbeitet.</small><br><br>
+            <i class=\"fa fa-handshake-o text-muted\"></i></h2>
+            <br><hr><a href=\"http://www.funkyfingers.at/\" target=\"_self\">Zur Startseite</a> 
+            | <a href=\"booking.html\" target=\"_self\">Weitere Buchung</a></div>
+            <div class=\"col-md-2\">&nbsp;</div>
+            </div>
+            ";
+            // return html data
+            return $html;
         }
 
         /**
          * draw (output) html of the frontend form. This is displayed to the user. He will use to place a booking
          * @return string
          */
-        public function getFrontendForm()
+        public function drawFrontendForm()
         {
             // init form html code markup variable
             $html = "";
 
             $html .= "
-<form class=\"form\" id=\"bookingForm\" method=\"post\" action=\"system/widgets/booking/js/process-booking-data.php\">
+<form class=\"form animated fadeIn speed4\" id=\"bookingForm\" method=\"post\" action=\"system/widgets/booking/js/process-booking-data.php\">
     <div class=\"col-md-4\">
     <input type=\"hidden\" name=\"bookingAdminEmail\" id=\"bookingAdminEmail\" value=\"".$this->bookingAdminEmail."\">
     <input type=\"hidden\" name=\"bookingHtmlEmail\" id=\"bookingHtmlEmail\" value=\"".$this->bookingHtmlEmail."\">";
@@ -584,7 +610,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                         <option value=\"Trio: BSB (B&ouml;rns, Stephan, Bertl)\">Trio: BSB (B&ouml;rns, Stephan, Bertl)</option>
                         <option value=\"Tommy Lee &amp; Glacestrizzis\">Tommy Lee &amp; Glacestrizzis</option>
                         <option value=\"WiR &amp; Jetzt\">WiR &amp; Jetzt</option>
-                        <option value=\"Nach Vereinbarung\">Nach Vereinbarung</option>
+                        <option value=\"keine Angabe / nach Vereinbarung\">keine Angabe / nach Vereinbarung</option>
                         </select>
                         <br>";
             }
@@ -608,7 +634,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                         <option value=\"Firmen Event\">Firmen Event</option>
                         <option value=\"Weihnachtsfeier\">Weihnachtsfeier</option>
                         <option value=\"Gro&szlig;veranstaltung\">Gro&szlig;veranstaltung</option>
-                        <option value=\"Nach Absprache\">Nach Absprache</option>
+                        <option value=\"keine Angabe / nach Vereinbarung\">keine Angabe / nach Vereinbarung</option>
                         </select>
                         <br>";
             }
@@ -632,7 +658,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                         <br>";
             }
 
-            // LOCATION
+            // SIZE (CROWD AMOUNT)
             if ($this->bookingCrowdAmount !== "false")
             {
                 if ($this->bookingCrowdAmount === "required")
@@ -641,7 +667,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
 
                 $html .= "
                         <label for=\"crowdAmount\">Gr&ouml;&szlig;e".$requiredMarkup."
-                            <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Wieviele Menschen werden bei der Veranstaltung in etwa erwartet?\"></i>
+                            <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Wie gro&szlig; ist Ihre Veranstaltung? (Wie viele Menschen werden sch&auml;tzungsweise erwartet?) Diese Information ist wichtig f&uuml;r uns, um unser Equipment entsprechend abzustimmen.\"></i>
                         </label>
                         <select name=\"crowdAmount\" id=\"crowdAmount\" class=\"form-control\">
                         <option value=\"\">bitte ausw&auml;hlen</option>
@@ -725,7 +751,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                 <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Auf Wunsch erhalten Sie eine Kopie dieser Nachricht an Ihre Emailadresse zugestellt.\"></i>
                 <label for=\"mailCopy\">Kopie dieser Nachricht an mich senden. &nbsp;
                 <input type=\"checkbox\" name=\"mailCopy\" value=\"1\" checked aria-checked=\"true\" id=\"mailCopy\"></label>
-                <button type=\"submit\" class=\"btn btn-success pull-right disabled\" style=\"margin-top:1%;\" contenteditable=\"false\"><i class=\"fa fa-paper-plane-o\"></i> &nbsp;Jetzt unverbindlich anfragen</button>
+                <button type=\"submit\" class=\"btn btn-success pull-right hvr-grow\" style=\"margin-top:1%;\" contenteditable=\"false\"><i class=\"fa fa-paper-plane-o\"></i> &nbsp;Jetzt unverbindlich anfragen</button>
                 <input type=\"hidden\" name=\"sent\" value=\"1\">";
 
 
