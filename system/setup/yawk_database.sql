@@ -2336,7 +2336,8 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('bookingPhone', 'required', 45, 1, 1, 'LABEL_BOOKING_PHONE', '', '', '', 'DESC_BOOKING_PHONE', 'form-control', 'select', '', 'required,required:true,true:false,false', 363),
 ('bookingSetAmount', 'required', 45, 1, 1, 'LABEL_BOOKING_SET_AMOUNT', '', '', '', 'DESC_BOOKING_SET_AMOUNT', 'form-control', 'select', '', 'required,required:true,true:false,false', 364),
 ('bookingAdminEmail', '', 45, 1, 1, 'LABEL_BOOKING_ADMIN_EMAIL', '', '', '', 'DESC_BOOKING_ADMIN_EMAIL', 'form-control', '', '', '', 365),
-('bookingHtmlEmail', 'true', 45, 1, 1, 'LABEL_BOOKING_HTML_EMAIL', '', '', '', 'DESC_BOOKING_HTML_EMAIL', 'form-control', 'select', '', 'true,true:false,false', 366);
+('bookingHtmlEmail', 'true', 45, 1, 1, 'LABEL_BOOKING_HTML_EMAIL', '', '', '', 'DESC_BOOKING_HTML_EMAIL', 'form-control', 'select', '', 'true,true:false,false', 366),
+('bookingAdminCCEmail', '', 45, 1, 1, 'LABEL_BOOKING_ADMIN_CC_EMAIL', '', '', '', 'DESC_BOOKING_ADMIN_CC_EMAIL', 'form-control', '', '', '', 367);
 
 CREATE TABLE `cms_widget_settings` (
   `id` int(11) NOT NULL,
@@ -2622,7 +2623,7 @@ ALTER TABLE `cms_user_groups`
 ALTER TABLE `cms_widgets`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_defaults`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=366;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=367;
 ALTER TABLE `cms_widget_settings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_types`

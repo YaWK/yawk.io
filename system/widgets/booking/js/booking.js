@@ -14,9 +14,9 @@ $("#bookingForm").submit(function(e) {
         success: function(data)
         {
             // hide form
-            $(this).hide();
+            $("#bookingForm").hide();
             // display thank you message
-            thankYouMessage.removeClass("hidden").addClass("animated fadeIn");
+            thankYouMessage.removeClass("hidden").addClass("animated fadeIn speed6");
         },
         error: function (request, status, error)
         {

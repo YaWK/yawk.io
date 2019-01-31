@@ -407,8 +407,8 @@ namespace YAWK\WIDGETS\BOOKING\FORM
             $html = "";
 
             $html .= "
-<form class=\"form animated fadeIn speed4\" id=\"bookingForm\" method=\"post\" action=\"system/widgets/booking/js/process-booking-data.php\">
-    <div class=\"col-md-4\">
+<form class=\"form\" id=\"bookingForm\" method=\"post\" action=\"system/widgets/booking/js/process-booking-data.php\">
+    <div class=\"col-md-4 animated fadeIn speed3\">
     <input type=\"hidden\" name=\"bookingAdminEmail\" id=\"bookingAdminEmail\" value=\"".$this->bookingAdminEmail."\">
     <input type=\"hidden\" name=\"bookingHtmlEmail\" id=\"bookingHtmlEmail\" value=\"".$this->bookingHtmlEmail."\">";
 
@@ -453,27 +453,29 @@ namespace YAWK\WIDGETS\BOOKING\FORM
         <label for=\"phone\">Phone".$requiredMarkup."
             <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Durchs reden kommen die Leut' zam - ein kurzes Telefonat ist oft effizienter als zahllose Emails zu senden. F&uuml;r R&uuml;ckfragen und Absprachen im Vorfeld ben&ouml;tigen wir Ihre Telefonnumer.\"></i>
         </label>
-        <input type=\"text\" name=\"phone\" id=\"phone\" class=\"form-control\" placeholder=\"+00 1234 / 1234567\">
+        <input type=\"text\" name=\"phone\" id=\"phone\" class=\"form-control\" placeholder=\"+43 123 1234567\">
         <br>
-        <h3>Booking - Ablauf<br></h3>
-        <h4>1. Formular ausf&uuml;llen</h4>
-            <p>Bitte f&uuml;llen Sie das Formular so umfangreich als m&ouml;glich aus.
-            Je mehr Daten Sie bereits im Vorfeld &uuml;bermitteln, umso konkreter kann 
-            auf Ihre Anfrage reagiert werden.</p>
-        <h4>2. Emailbest&auml;tigung</h4>
-            <p>Nach dem Absenden erhalten Sie eine automatische Best&uml;tigung,
-            falls Sie das entsprechende H&auml;kchen nicht entfernt haben.</p>
-        <h4>3. Wir rufen zur&uuml;ck</h4>
-            <p>Jede Booking Anfrage wird so schnell als m&ouml;glich bearbeitet.
-            Wir checken unsere Terminkalender und pr&uuml;fen, ob ein Konzert an
-            dem von Ihnen gew&uuml;nschten Zeitraum m&ouml;glich ist. Sie erhalten 
-            innerhalb von 3 Tagen R&uuml;ckmeldung. Ihre Anfrage ist unverbindlich!</p>";
+        <div class=\"animated fadeIn speed4 delay-10s\">
+            <h3>Booking - Ablauf<br></h3>
+            <h4>1. Formular ausf&uuml;llen</h4>
+                <p>Bitte f&uuml;llen Sie das Formular so umfangreich als m&ouml;glich aus.
+                Je mehr Daten Sie bereits im Vorfeld &uuml;bermitteln, umso konkreter kann 
+                auf Ihre Anfrage reagiert werden.</p>
+            <h4>2. Emailbest&auml;tigung</h4>
+                <p>Nach dem Absenden erhalten Sie eine automatische Best&uml;tigung,
+                falls Sie das entsprechende H&auml;kchen nicht entfernt haben.</p>
+            <h4>3. Wir rufen zur&uuml;ck</h4>
+                <p>Jede Booking Anfrage wird so schnell als m&ouml;glich bearbeitet.
+                Wir checken unsere Terminkalender und pr&uuml;fen, ob ein Konzert an
+                dem von Ihnen gew&uuml;nschten Zeitraum m&ouml;glich ist. Sie erhalten 
+                innerhalb von 3 Tagen R&uuml;ckmeldung. Ihre Anfrage ist unverbindlich!</p>
+        </div>";
 
             }
             $html .= "
 <br><br>
             </div>
-            <div class=\"col-md-8\">
+            <div class=\"col-md-8 animated fadeIn speed4 delay-6s\">
             <div class=\"row\">
             <div class=\"col-md-5\">
             <!-- left -->";
@@ -590,7 +592,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
             }
 
             $html .= "</div>
-                <div class=\"col-md-7\">
+                <div class=\"col-md-7 animated fadeIn speed4 delay-8s\">
                 <!-- right -->";
 
             // BAND SELECT FIELD
