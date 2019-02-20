@@ -19,7 +19,7 @@ see what's going on and what has been done over the past few days, weeks, months
 <b>Currently in development:</b>
 <ul>
 <li>Update FrontEnd to Bootstrap 4 / add Bootstrap 4 template settings to backend <i><small>(scheduled until 02/2019)</small></i></li>
-<li>Add templates and demo pages <i><small>(scheduled until 02/2019)</small></i></li>
+<li>Add templates and demo pages <i><small>(scheduled until end of 03/2019)</small></i></li>
 <li><i><small>and of course: check and fix language errors, major and minor bugs</small></i></li>
 </ul>
 <b>Update official website</b>
