@@ -1957,7 +1957,7 @@ CREATE TABLE `cms_widgets` (
   `position` varchar(128) DEFAULT NULL,
   `marginTop` int(11) DEFAULT NULL,
   `marginBottom` int(11) DEFAULT NULL,
-  `date_publish` datetime DEFAULT CURRENT_TIMESTAMP,
+  `date_publish` datetime DEFAULT NULL,
   `date_unpublish` datetime DEFAULT NULL,
   `widgetTitle` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
