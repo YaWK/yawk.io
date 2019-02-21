@@ -3055,19 +3055,21 @@ namespace YAWK {
             if (isset($templateID) && (!empty($templateID))) {
                 echo "
 <!-- ASSETS -->";
-                if ($res = $db->query("SELECT type, asset, link FROM {assets} WHERE templateID = '" . $templateID . "' ORDER BY sortation")) {
-                    while ($row = mysqli_fetch_assoc($res)) {
-                        // CSS
-                        if ($row['type'] === "css") {   // load css asset
-                            echo "
- <!-- load CSS: $row[asset] -->
- <link rel=\"stylesheet\" href=\"" . $row['link'] . "\" type=\"text/css\" media=\"all\">";
-                        }
+                if ($res = $db->query("SELECT type, asset, link FROM {assets} WHERE templateID = '" . $templateID . "' ORDER BY sortation ASC")) {
+                    while ($row = mysqli_fetch_assoc($res))
+                    {
                         // JS
                         if ($row['type'] === "js") {   // load js asset
                             echo "
  <!-- load JS: $row[asset] -->
  <script src=\"" . $row['link'] . "\"></script>";
+                        }
+
+                        // CSS
+                        if ($row['type'] === "css") {   // load css asset
+                            echo "
+ <!-- load CSS: $row[asset] -->
+ <link rel=\"stylesheet\" href=\"" . $row['link'] . "\" type=\"text/css\" media=\"all\">";
                         }
                     }
                 }
