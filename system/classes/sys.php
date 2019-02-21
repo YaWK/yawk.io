@@ -879,11 +879,29 @@ namespace YAWK {
             /* get offline message + image */
             $offlinemsg = \YAWK\settings::getSetting($db, "offlinemsg");
             $offlineimg = \YAWK\settings::getSetting($db, "offlineimage");
+
+            // include bootstrap js
+            echo "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js\"></script>";
+            // include bootstrap css
+            echo "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css\">";
+            // include jquery
+            echo "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js\"></script>";
+            // include animate.css
+            echo "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css\" />";
+
             // draw offline message
-            echo "<div class=\"text-center\">
-                    <img src=\"".$offlineimg."\"><br><br>
-                    ".$offlinemsg."<br><br>
-                  </div>";
+            echo "<div class=\"container-fluid\">";
+            echo "<div class=\"row\">";
+                echo "<div class=\"col-md-2\"></div>";
+                echo "<div class=\"col-md-8 text-center\">
+                        <br><br>
+                        <img src=\"".$offlineimg."\" class=\"img-responsive mx-auto d-block animated flipInX\" title=\"This website is under construction. Come back again later.\">
+                        <br><br>
+                        <div class=\"animated fadeIn\">".$offlinemsg."</div>
+                      </div>";
+                echo "<div class=\"col-md-2\"></div>";
+            echo "</div>";
+            echo "</div>";
             exit;
         }
 
