@@ -488,13 +488,14 @@ namespace YAWK {
                             if (isset($appId) && (is_string($appId) && (!empty($appId)
                             && (isset($token) && (is_string($token) && (!empty($token)))))))
                             {
+                                /*
                                 // include facebook SDK JS
                                 echo "<script>
                                 window.fbAsyncInit = function() {
                                     FB.init({
                                     appId      : '" . $appId . "',
                                     xfbml      : true,
-                                    version    : 'v3.0'
+                                    version    : 'v3.3'
                                     });
                                 FB.AppEvents.logPageView();
                                 };
@@ -507,16 +508,24 @@ namespace YAWK {
                                     fjs.parentNode.insertBefore(js, fjs);
                                 }(document, 'script', 'facebook-jssdk'));
                                 </script>";
+                                */
 
                                 // facebook data is set - try to get album list
                                 // prepare API call - get albums for this app id and token
-                                $json_link = "https://graph.facebook.com/v3.0/me/albums?access_token={$token}";
+                                $json_link = "https://graph.facebook.com/v3.3/me/albums?access_token={$token}";
 
                                 // get json string
-                                $json = file_get_contents($json_link);
+                                // $json = file_get_contents($json_link);
+
+                                // use curl to get json string / apiObject
+                                $curl = curl_init();
+                                curl_setopt($curl, CURLOPT_URL, $json_link);
+                                curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+                                $apiObject = json_decode(curl_exec($curl), true, 512, JSON_BIGINT_AS_STRING);
+                                curl_close($curl);
 
                                 // convert json to object
-                                $apiObject = json_decode($json, true, 512, JSON_BIGINT_AS_STRING);
+                                // $apiObject = json_decode($json, true, 512, JSON_BIGINT_AS_STRING);
 
                                 // stores all the field html markup
                                 $fbGallerySelectMarkup = '';
@@ -1156,7 +1165,7 @@ namespace YAWK {
             if ($this->date_unpublish === "0000-00-00 00:00:00" || (empty($this->date_unpublish)))
             {
                 // sql code when date_unpublish is a zero date (NULL)
-                if ($res = $db->query("UPDATE {widgets} SET
+                if ($db->query("UPDATE {widgets} SET
                                         published = '" . $this->published . "',
                                         widgetType = '" . $this->widgetType . "',
                                         pageID = '" . $this->pageID . "',
@@ -1171,7 +1180,7 @@ namespace YAWK {
                 }
                 else
                 {   // q failed
-                    \YAWK\sys::setSyslog($db, 39, 1, "failed to save widget settings of ID<b>$this->id</b>", 0, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 39, 1, "failed to save widget settings of ID: <b>$this->id</b> (unpublish not set)", 0, 0, 0, 0);
                     return false;
                 }
 
@@ -1179,7 +1188,7 @@ namespace YAWK {
             else
                 {
                     // sql code with qualified, user selected unpublish date
-                    if ($res = $db->query("UPDATE {widgets} SET
+                    if ($db->query("UPDATE {widgets} SET
                                         published = '" . $this->published . "',
                                         widgetType = '" . $this->widgetType . "',
                                         pageID = '" . $this->pageID . "',
@@ -1194,7 +1203,7 @@ namespace YAWK {
                     }
                     else
                     {   // q failed
-                        \YAWK\sys::setSyslog($db, 39, 1, "failed to save widget settings of ID<b>$this->id</b>", 0, 0, 0, 0);
+                        \YAWK\sys::setSyslog($db, 39, 1, "failed to save widget settings of ID: <b>$this->id</b> (unpublish set)", 0, 0, 0, 0);
                         return false;
                     }
                 }
