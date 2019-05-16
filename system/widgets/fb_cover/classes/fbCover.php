@@ -126,6 +126,7 @@ class fbCover
         {   // check if app ID is set
             if ($this->checkAppId() == true)
             {
+                /*
                 // include facebook SDK JS
                 echo "<script>
                 window.fbAsyncInit = function() {
@@ -146,6 +147,7 @@ class fbCover
                 }(document, 'script', 'facebook-jssdk'));
                 </script>";
                 $this->jsSDKLoaded = 'true';
+                */
             }
             else
                 {
@@ -161,13 +163,22 @@ class fbCover
     public function makeApiCall()
     {
         // prepare API call
-        $json_link = "https://graph.facebook.com/v3.1/me?fields=cover&access_token={$this->fbCoverAccessToken}";
+        $json_link = "https://graph.facebook.com/v3.3/me?fields=cover&access_token={$this->fbCoverAccessToken}";
 
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $json_link);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        // decode json and create object
+        $this->apiObject = json_decode(curl_exec($curl), true, 512, JSON_BIGINT_AS_STRING);
+        curl_close($curl);
+
+        return $this->apiObject;
+
+        // OUTDATED:
         // get json string
-        $json = file_get_contents($json_link);
-
+        // $json = file_get_contents($json_link);
         // convert json to object
-        return $this->apiObject = json_decode($json, true, 512, JSON_BIGINT_AS_STRING);
+        // return $this->apiObject = json_decode($json, true, 512, JSON_BIGINT_AS_STRING);
     }
 
 
