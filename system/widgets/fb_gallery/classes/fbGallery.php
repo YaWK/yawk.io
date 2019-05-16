@@ -177,13 +177,14 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
             {   // check if app ID is set
                 if ($this->checkAppId() == true)
                 {
+                    /*
                     // include facebook SDK JS
                     echo "<script>
                 window.fbAsyncInit = function() {
                     FB.init({
                     appId      : '" . $this->fbGalleryAppId . "',
                     xfbml      : true,
-                    version    : 'v3.1'
+                    version    : 'v3.3'
                     });
                 FB.AppITEMS.logPageView();
                 };
@@ -197,11 +198,14 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
                 }(document, 'script', 'facebook-jssdk'));
                 </script>";
                     $this->jsSDKLoaded = 'true';
+                    */
                 }
+                /*
                 else
                 {   // check app ID failed, abort with error msg (app id not set correctly)
                     die ("unable to include facebook js SDK - checkAppId failed. Please check your app ID in the widget settings!");
                 }
+                */
             }
         }
 
@@ -261,11 +265,18 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
             }
 
             // prepare API call - get photos
-            $json_link = "https://graph.facebook.com/v3.1/{$this->fbGalleryAlbumId}/photos$fieldsMarkup&access_token={$this->fbGalleryAccessToken}";
+            $json_link = "https://graph.facebook.com/v3.3/{$this->fbGalleryAlbumId}/photos$fieldsMarkup&access_token={$this->fbGalleryAccessToken}";
+
             // get json string
-            $json = file_get_contents($json_link);
+            $curl = curl_init();
+            curl_setopt($curl, CURLOPT_URL, $json_link);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            $this->apiObject = json_decode(curl_exec($curl), true, 512, JSON_BIGINT_AS_STRING);
+            curl_close($curl);
+
+            // $json = file_get_contents($json_link);
             // convert json to object
-            return $this->apiObject = json_decode($json, true, 512, JSON_BIGINT_AS_STRING);
+            return $this->apiObject;
         }
 
         /**
@@ -376,12 +387,39 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
                             $this->fbGalleryImageInfo = '';
                         }
 
+                    // random align images
+                    $randomInt = rand(1,5);
+                    if ($randomInt == 1)
+                    {
+                        $imgClass = "img-lefty";
+                    }
+                    elseif ($randomInt == 2)
+                    {
+                        $imgClass = "img-lefty-less";
+                    }
+                    elseif ($randomInt == 3)
+                    {
+                        $imgClass = "img-righty";
+                    }
+                    elseif ($randomInt == 4)
+                    {
+                        $imgClass = "img-righty-less";
+                    }
+                    elseif ($randomInt == 5)
+                    {
+                        $imgClass = "img-thumbnail";
+                    }
+                    else
+                        {   // default value:
+                            $imgClass = "img-thumbnail";
+                        }
+
                     // set filename to biggest image source
                     $fn = $value['images'][0]['source'];
                     // set layout div box, containing every single image
                     echo "<div class=\"col-md-$this->fbGalleryLayout text-center $animateMarkup\">
                           <a href=\"$fn\" data-lightbox=\"example-set\" data-title=\"$value[name]\">
-                          <img src=\"$fn\" alt=\"$value[name]\" style=\"width:auto; height:$this->fbGalleryFixedImageHeight;\" class=\"img-responsive img-rounded hvr-grow\">
+                          <img src=\"$fn\" alt=\"$value[name]\" style=\"width:auto; height:$this->fbGalleryFixedImageHeight;\" class=\"img-responsive ".$imgClass." hvr-grow\">
                           </a><br><small>$this->fbGalleryImageInfo</small><br><br></div>";
                 } // end foreach
                 // echo "</div>";
