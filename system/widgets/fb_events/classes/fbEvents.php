@@ -168,6 +168,7 @@ class fbEvents
         && (isset($this->fbEventsAccessToken) && (!empty($this->fbEventsAccessToken)
         && (isset($this->fbEventsPageId) && (!empty($this->fbEventsPageId)))))))
         {
+            /*
             // include facebook SDK JS
             echo "<script>
             window.fbAsyncInit = function() {
@@ -187,6 +188,7 @@ class fbEvents
                 fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
             </script>";
+            */
 
             // WHICH EVENTS TO DISPLAY?
             // evaluation of event type select field
@@ -233,12 +235,19 @@ class fbEvents
             // prepare API call
             // $json_link = "https://graph.facebook.com/v3.1/{$this->fbEventsPageId}/events/attending/?fields={$this->fields}&access_token={$this->fbEventsAccessToken}&since={$since_unix_timestamp}&until={$until_unix_timestamp}";
             // $json_link = "https://graph.facebook.com/v2.7/{$this->fbEventsPageId}/events/attending/?fields={$this->fields}&access_token={$this->fbEventsAccessToken}&since={$since_unix_timestamp}&until={$until_unix_timestamp}";
-            $json_link = "https://graph.facebook.com/v3.1/me/events/?fields={$this->fields}&access_token={$this->fbEventsAccessToken}&since={$since_unix_timestamp}&until={$until_unix_timestamp}";
+            // $json_link = "https://graph.facebook.com/v3.1/me/events/?fields={$this->fields}&access_token={$this->fbEventsAccessToken}&since={$since_unix_timestamp}&until={$until_unix_timestamp}";
+            $json_link = "https://graph.facebook.com/v3.3/me/events/?fields={$this->fields}&access_token={$this->fbEventsAccessToken}&since={$since_unix_timestamp}&until={$until_unix_timestamp}";
             // get json string
-            $json = file_get_contents($json_link);
-
+            // $json = file_get_contents($json_link);
             // convert json to object
-            $obj = json_decode($json, true, 512, JSON_BIGINT_AS_STRING);
+            // $obj = json_decode($json, true, 512, JSON_BIGINT_AS_STRING);
+
+            $curl = curl_init();
+            curl_setopt($curl, CURLOPT_URL, $json_link);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            // decode json and create object
+            $obj = json_decode(curl_exec($curl), true, 512, JSON_BIGINT_AS_STRING);
+            curl_close($curl);
 
             /*
             echo "<pre>";
