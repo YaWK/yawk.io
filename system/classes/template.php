@@ -1195,8 +1195,9 @@ namespace YAWK {
          * @param string $position The position to load
          * @param array  $positions Positions [enabled] status array
          * @param array  $indicators Positions [indicator] status array
+         * @param object $template Template object
          */
-        public static function getPositionDivBox($db, $lang, $position, $row, $bootstrapGrid, $positions, $indicators)
+        public static function getPositionDivBox($db, $lang, $position, $row, $bootstrapGrid, $positions, $indicators, $template)
         {
             global $currentpage;
             if (isset($row) && (!empty($row))) {
@@ -1213,19 +1214,24 @@ namespace YAWK {
                 $endRow = '';
             }
 
-            // check if position is enabled
-            if ($positions["pos-$position-enabled"] === "1") {   // check if position indicator is enabled
-                if ($indicators["pos-$position-indicator"] === "1") {   // display position indicator
+            // check if position indicator is enabled
+            if ($positions["pos-$position-enabled"] === "1")
+            {   // check if position indicator is enabled
+                if ($indicators["pos-$position-indicator"] === "1")
+                {   // display position indicator
                     $indicatorStyle = "style=\"border: 2px solid red;\"";
                     $indicatorText = "<i><b>$position</b></i>";
-                } else {   // no position indicator set
-                    $indicatorStyle = '';
-                    $indicatorText = '';
                 }
+                else
+                    {   // no position indicator set
+                        $indicatorStyle = '';
+                        $indicatorText = '';
+                    }
+
                 // output position div box
                 echo "$startRow";
                 echo "<div class=\"$bootstrapGrid pos-$position\" id=\"$position\" $indicatorStyle>$indicatorText";
-                \YAWK\template::setPosition($db, $lang, "$position-pos", $currentpage);
+                \YAWK\template::setPosition($db, $lang, "$position-pos", $currentpage, $template);
                 echo "
                       </div>";
                 echo "$endRow";
@@ -2733,8 +2739,10 @@ namespace YAWK {
          * @link http://yawk.io
          * @param object $db database
          * @param string $position the template position
+         * @param object $template template object
+
          */
-        static function setPosition($db, $lang, $position, $currentpage)
+        static function setPosition($db, $lang, $position, $currentpage, $template)
         {
             $main_set = 0;
             $globalmenu_set = 0;
@@ -2773,7 +2781,7 @@ namespace YAWK {
 
                 // if position is globalmenu
                 if ($position == "globalmenu") {
-                    \YAWK\menu::displayGlobalMenu($db);
+                    \YAWK\menu::displayGlobalMenu($db, $template);
                     $globalmenu_set = 1;
                 }
                 // in any other case, simply load a div box onto given position
@@ -3141,6 +3149,43 @@ namespace YAWK {
         }
 
         /**
+         * Return which Bootstrap version is currently loaded in given template
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @return string Which Bootstrap v is setup in given template ID
+         */
+        public static function returnCurrentBootstrapVersion($db, $templateID)
+        {
+            // query database
+            if ($sql = $db->query("SELECT asset FROM {assets} WHERE templateID = '" . $templateID . "' AND asset LIKE '%Bootstrap%CSS'")) {   // fetch data
+                while ($row = mysqli_fetch_row($sql)) {   // store data as array
+                    $asset[] = $row;
+                }
+            }
+
+            // check if asset array is set and not empty
+            if (isset($asset) && (is_array($asset) && (!empty($asset[0][0]))))
+            {
+                if ($asset[0][0] === "Bootstrap 4 CSS")
+                {   // v4
+                    return "4";
+                }
+
+                else if ($asset[0][0] === "Bootstrap 3 CSS")
+                {   // v3
+                    return "3";
+                }
+                else
+                    {   // unable to detect bootstrap version, maybe this template ID does not load bootstrap
+                        return "0";
+                    }
+            }
+            return null;
+        }
+
+        /**
          * Check which Bootstrap version is currently loaded in active template
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
@@ -3167,7 +3212,8 @@ namespace YAWK {
             }
 
             // check if asset array is set and not empty
-            if (isset($asset) && (is_array($asset) && (!empty($asset[0][0])))) {
+            if (isset($asset) && (is_array($asset) && (!empty($asset[0][0]))))
+            {
                 // check if framework requirement match current loaded bootstrap version
                 // if boostrap 3 is required
                 if ($this->framework == "bootstrap3") {
@@ -3188,7 +3234,7 @@ namespace YAWK {
                         return null;
                     }
                 } else {   // unknown framework
-                    \YAWK\sys::setSyslog($db, 48, 2, "template <b>$this->name</b> requires framework <b>$this->framework</b> is not supported yet.", $_SESSION['uid'], 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 48, 2, "template <b>$this->name</b> requires framework: [<b>$this->framework</b>] - UNABLE TO DETECT CURRENT FRAMEWORK.", $_SESSION['uid'], 0, 0, 0);
                     return "0";
                 }
             } // asset not set, no array or empty

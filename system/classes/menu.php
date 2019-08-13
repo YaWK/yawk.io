@@ -98,14 +98,15 @@ namespace YAWK {
          * @version    1.0.0
          * @link       http://yawk.io
          * @param object $db database
+         * @param object $template template object
          */
-        static function displayGlobalMenu($db)
+        static function displayGlobalMenu($db, $template)
         {   /** @var \YAWK\db  $db */
             $res = $db->query("SELECT value FROM {settings}
                                WHERE property = 'globalmenuid'");
             if ($row = mysqli_fetch_row($res)) {
                 if ($published = self::getMenuStatus($db, $row[0]) != '0') {
-                    self::display($db, $row[0]);
+                    self::display($db, $row[0], $template);
                 }
             }
         }
@@ -643,8 +644,9 @@ namespace YAWK {
          * @link       http://yawk.io
          * @param object $db database obj
          * @param int $id affected menu ID
+         * @param object $template template obj
          */
-        static function display($db, $id)
+        static function display($db, $id, $template)
         {   /** @var \YAWK\db $db */
             $divider = '';
             if (isset($_SESSION['gid'])) {
@@ -676,29 +678,121 @@ namespace YAWK {
 
             // Menu builder function, parentId 0 is the root
 
-            function buildMenu($db, $parent, $menu, $id, $currentRole, $divider)
+            function buildMenu($db, $parent, $menu, $id, $currentRole, $divider, $template)
             {   /** @var \YAWK\db $db */
-           // echo "<pre>";print_r($menu);echo"</pre>"; exit;
-                $titleCode = '';
-                /*
-                    if ($menu['items']['divider'] === '1')
-                        {
-                         $divider_html = "<li class=\"divider-vertical\"></li>";
+
+                // check if template ID is set
+                if (isset($template) && (!empty($template)))
+                {
+                    if (isset($template->id) && (!empty($template->id)))
+                    {
+                        $bootstrapVersion = \YAWK\template::returnCurrentBootstrapVersion($db, $template->id);
+                    }
+                    else
+                        {   // get tpl ID
+                            $template->id = \YAWK\template::getCurrentTemplateId($db);
+                            $bootstrapVersion = \YAWK\template::returnCurrentBootstrapVersion($db, $template->id);
                         }
-                */
+                }
+                else
+                    {
+                        $templateID = \YAWK\template::getCurrentTemplateId($db);
+                        $bootstrapVersion = \YAWK\template::returnCurrentBootstrapVersion($db, $templateID);
+                    }
+
+                // echo "<pre>";print_r($menu);echo"</pre>"; exit;
+                $navBarBrand = '';
                 $title_status = template::getTemplateSetting($db, "value", "globalmenu-title");
-                if ($title_status != '0') {
+                if ($title_status != '0')
+                {
                     // get menu title
                     $res = $db->query("SELECT name FROM {menu_names} WHERE id='" . $id . "'");
                     $row = mysqli_fetch_row($res);
                     $menuName = $row[0];
-                    if (!empty($menuName)) {
-                        $titleCode = "<a class=\"navbar-brand\" href=\"index.html\">" . $menuName . "</a>";
-                    } else {
-                        $titleCode = "";
+                    if (!empty($menuName))
+                    {
+                        $navBarBrand = "<a class=\"navbar-brand\" href=\"index.html\">" . $menuName . "</a>";
                     }
+                    else
+                        {
+                            $navBarBrand = "";
+                        }
                 }
 
+            if ($bootstrapVersion == "4")
+            {
+                $html = "";
+                $html .= "
+<nav class=\"navbar navbar-expand-lg navbar-light bg-light\">
+  <a class=\"navbar-brand\" href=\"#\">".$navBarBrand."</a>
+  <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarSupportedContent\" aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">
+    <span class=\"navbar-toggler-icon\"></span>
+  </button>
+
+  <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">";
+                // echo "<pre>"; print_r($menu); echo "</pre>";
+
+                $html .="
+    <ul class=\"navbar-nav mr-auto\">";
+                foreach ($menu['parents'][$parent] as $itemId) {
+                    // set parent w/o child items
+                    if (!isset($menu['parents'][$itemId])) {
+
+                        if (!isset($menu['items'][$itemId]['title']) || (empty($menu['items'][$itemId]['title']))) {
+                            $title = "";
+                        } else {
+                            $title = "title=\"" . $menu['items'][$itemId]['title'] . "\"";
+                        }
+                        $html .= "
+        <li class=\"nav-item\">
+            <a class=\"nav-link\" href=\"" . $menu['items'][$itemId]['href'] . "\" target=\"" . $menu['items'][$itemId]['target'] . "\" $title>" . $menu['items'][$itemId]['text'] . "</a>
+        </li>";
+                    }
+
+                    // menu item got at least 1 child item and should react as dropdown toggle
+                    else
+                        {
+                            $html .= "
+        <li class=\"nav-item dropdown\">
+            <a class=\"nav-link dropdown-toggle\" href=\"" . $menu['items'][$itemId]['href'] . "\" id=\"" . $menu['items'][$itemId]['text'] . "\" role=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">" . $menu['items'][$itemId]['text'] . "</a>
+";
+                        }
+
+                    // set parents w child items (dropdown lists)
+                    if (isset($menu['parents'][$itemId])) {
+                        $html .= "
+            <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\">";
+
+                        // select child items from db
+                        foreach ($menu['parents'][$itemId] as $child) {
+                            if (!isset($menu['items'][$itemId]['title']) || (empty($menu['items'][$itemId]['title'])))
+                            {
+                                $title = "";
+                            }
+                            else
+                            {
+                                $title = "title=\"$menu[items][$itemId][title]\"";
+                            }
+                            $html .= "
+                <a class=\"dropdown-item\" href=\"" . $menu['items'][$child]['href']."\" target=\"".$menu['items'][$itemId]['target']."\" $title>".$menu['items'][$child]['text']."</a>";
+                        }
+                        // dropdown navi ends here
+                        $html .= "
+            </div>
+        </li>";
+
+                    }
+                }
+                $html.="
+    </ul>
+  </div>
+</nav>";
+
+            return $html;
+            }
+
+            else if ($bootstrapVersion == "3")
+            {
                 $html = "";
                 $html .= "
              <nav class=\"navbar navbar-default navbar-fixed-top\" role=\"navigation\" id=\"topnavbar\">
@@ -711,7 +805,7 @@ namespace YAWK {
                 <span class=\"icon-bar\"></span>
                 <span class=\"icon-bar\"></span>
               </button>
-              $titleCode
+              $navBarBrand
               </div> <!-- end nav header -->
             <div id=\"navbar\" class=\"navbar-collapse collapse\">";
                 if (isset($menu['parents'][$parent])) {
@@ -730,7 +824,7 @@ namespace YAWK {
                             {
                                 $title = "title=\"".$menu['items'][$itemId]['title']."\"";
                             }
-                            $html .= "<li>\n  <a href=\"".$menu['items'][$itemId]['href']."\" target=\"".$menu['items'][$itemId]['target']."\" $title>" . $menu['items'][$itemId]['text'] . "</a>\n</li> \n";
+                            $html .= "<li><a href=\"".$menu['items'][$itemId]['href']."\" target=\"".$menu['items'][$itemId]['target']."\" $title>" . $menu['items'][$itemId]['text'] . "</a></li>";
                             // vertical spacer
                             // $html .= "".$divider_html."";
 
@@ -772,22 +866,29 @@ namespace YAWK {
                     else {$html .= "</ul>
                             <ul class=\"nav navbar-nav navbar-collapse navbar-right\">
                              <li>";
-                           // check if userlogin is allowed
-                            if (\YAWK\settings::getSetting($db, 'userlogin') === '1')
-                            {   // load loginbox into navbar
-                                $html .= \YAWK\user::drawMenuLoginBox("","", "light");
-                            }
+                        // check if userlogin is allowed
+                        if (\YAWK\settings::getSetting($db, 'userlogin') === '1')
+                        {   // load loginbox into navbar
+                            $html .= \YAWK\user::drawMenuLoginBox("","", "light");
+                        }
                         $html .= "</li></ul>";
                     }
                     $html .= "<!-- /.nav-collapse -->
   </div><!-- /navbar-inn -->
  </div> <!-- /container -->
 </nav><!-- navbar -->";
-                }
+
+            }
                 return $html;
+                }
+                else
+                    {
+                        "Unable to load Bootstrap Menu";
+                    }
+            return null;
             }
 
-            echo buildMenu($db, 0, $menu, $id, $currentRole, $divider);
+            echo buildMenu($db, 0, $menu, $id, $currentRole, $divider, $template);
 
         }
 
