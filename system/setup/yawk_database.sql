@@ -977,7 +977,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (221, 1, 'pos-globalmenu-text-align', 'left', 'left', '', 28, 1, 5, 'TPL_TEXT_ALIGN', 'form-control', 'select', 'left,left:center,center:right,right:justify,justify:initial,initial:inherit,inherit', '', '', '', 'TPL_ALIGN_HEADING', 'TPL_ALIGN_SUBTEXT'),
 (222, 1, 'pos-globalmenu-enabled', '1', '0', '', 28, 1, 1, 'TPL_POS_ACTIVE', 'form-control', 'checkbox toggle', '', '', '', '', 'TPL_POS_GLOBALMENU_HEADING', 'TPL_POS_GLOBALMENU_SUBTEXT'),
 (223, 1, 'pos-globalmenu-bg-gradient-longValue', '', '', '', 28, 1, 14, 'TPL_POS_BG_GRADIENT', 'form-control', 'textarea', '', 'TPL_BG_GRADIENT_PLACEHOLDER', '', '', '', ''),
-(224, 1, 'pos-globalmenu-zindex', '9999', '9999', '', 28, 1, 26, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
+(224, 1, 'pos-globalmenu-zindex', '10000', '10000', '', 28, 1, 26, 'TPL_POS_ZINDEX', 'form-control', '', '', 'TPL_ZINDEX_PLACEHOLDER', '', '', '', ''),
 (225, 1, 'pos-globalmenu-width', '100%', '100%', '', 28, 1, 4, 'TPL_POS_WIDTH', 'form-control', '', '', 'TPL_WIDTH_PLACEHOLDER', '', '', '', ''),
 (226, 1, 'pos-globalmenu-height', 'auto', 'auto', '', 28, 1, 3, 'TPL_POS_HEIGHT', 'form-control', '', '', 'TPL_HEIGHT_PLACEHOLDER', '', '', 'TPL_SIZE_HEADING', 'TPL_SIZE_SUBTEXT'),
 (227, 1, 'pos-globalmenu-bgcolor', 'F8F8F8', 'F8F8F8', '', 28, 1, 7, 'TPL_POS_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
