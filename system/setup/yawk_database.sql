@@ -2359,6 +2359,8 @@ CREATE TABLE `cms_widget_settings` (
   `options` text NOT NULL,
   `description` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+INSERT INTO `cms_widget_settings` (`id`, `widgetID`, `property`, `value`, `widgetType`, `activated`, `sortation`, `label`, `icon`, `heading`, `subtext`, `fieldClass`, `fieldType`, `placeholder`, `options`, `description`) VALUES
+(1, 18, 'fbEventsStartDate', '', 39, 1, 12, 'LABEL_FB_EVENTS_STARTDATE', '', '', '', 'form-control', 'input', '', '', 'DESC_FB_EVENTS_STARTDATE');
 
 CREATE TABLE `cms_widget_types` (
   `id` int(11) NOT NULL,
