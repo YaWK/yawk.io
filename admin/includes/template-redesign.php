@@ -494,7 +494,7 @@ echo"</section><!-- Main content -->
                     <h3 class=\"box-title\">$lang[JUMBOTRON] <small>$lang[SETTINGS]</small></h3>
                 </div>
                 <div class=\"box-body\">
-                    <!-- jumbotron settings -->";
+                    <!-- jumbotron settings bs4 -->";
                     $template->getFormElements($db, $templateSettings, 16, $lang, $user);
                 echo"</div>
             </div>
