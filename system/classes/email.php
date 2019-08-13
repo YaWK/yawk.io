@@ -57,25 +57,32 @@ namespace YAWK {
                 'Reply-To: ' . $email_from . "\r\n" .
                 'X-Mailer: PHP/' . phpversion();
 
-            if ($email_cc === TRUE) {
+            if ($email_cc === TRUE)
+            {
                 /* send email to website admin */
                 $sent = @mail($email_to, $email_subject, $email_message, $headers);
                 /* send email copy to user */
                 $sent = @mail($email_from, $email_subject, $email_message, $headers);
-            } else {
-                /* just send email to website admin */
-                $sent = @mail($email_to, $email_subject, $email_message, $headers);
             }
-            if ($sent){
+            else
+                {
+                    /* just send email to website admin */
+                    $sent = @mail($email_to, $email_subject, $email_message, $headers);
+                }
+            if ($sent)
+            {
                 return true;
             }
             else
-            {   // sending failed
+            {
+                // sending failed
+                /*
                 if(!isset($db) || (empty($db)))
                 {
                     $db = new \YAWK\db();
                 }
                 \YAWK\sys::setSyslog($db, 15, 1, "send email to $email_to failed", 0, 0, 0, 0);
+                */
                 return false;
             }
 

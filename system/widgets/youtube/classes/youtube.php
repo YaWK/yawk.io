@@ -174,9 +174,9 @@ namespace YAWK\WIDGETS\YOUTUBE\VIDEO
 
             // YouTube Video Embed HTML markup
             echo "
+$this->headlineMarkup
 <!-- youtube video wrapper -->
 <div class=\"videoWrapper\">
-$this->headlineMarkup
 <!-- youtube video iframe -->
 <iframe width=\"$this->youtubeWidth\" 
         height=\"$this->youtubeHeight\" 

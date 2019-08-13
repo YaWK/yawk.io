@@ -29,7 +29,7 @@ $(document).ready(function ()
             "Diese Aktion kann nicht rueckgaengig gemacht werden.");
             if (terminateUser === true){
                 // the php file who set the user off in db
-                  $.get('system/templates/yawk-bootstrap3/js/terminate-user.php', function(data) {
+                  $.get('system/templates/YaWK-bootstrap3/js/terminate-user.php', function(data) {
                    if (data === "true"){
                        setTimeout ("window.location='logout.html'", 0);
                       //  alert ("it worked!");

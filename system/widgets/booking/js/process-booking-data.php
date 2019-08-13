@@ -18,12 +18,14 @@ if (isset($_POST))
     if (!isset($_POST['adminEmail']) || (empty($_POST['adminEmail'])))
     {
         // adminEmail not set - try to get it from YaWK's system settings
-        $systemAdminEmail = \YAWK\settings::getSetting($db, "admin_email");
+        $_POST['adminEmail'] = \YAWK\settings::getSetting($db, "admin_email");
         // if system adminEmail address is also not set
-        if (!isset($systemAdminEmail) || (empty($systemAdminEmail)))
+        if (!isset($_POST['adminEmail']) || (empty($_POST['adminEmail'])))
         {
-            // todo: if no email addresses are set
-            // todo: a solution would be to add $_POST data to plugin/booking database...
+            $systemAdminEmail = "false";
+            echo "false";
+            // todo: if no email addresses are set:
+            // todo: solution would be to insert (add) $_POST data into the plugin / booking database...
         }
     }
 
@@ -32,7 +34,7 @@ if (isset($_POST))
     $message = "
     <html>
     <head>
-        <title>Neue Booking Anfrage</title>
+        <title>Booking Anfrage</title>
         <style type=\"text/css\">
         body{
 
@@ -66,7 +68,7 @@ if (isset($_POST))
         </style>
     </head>
     <body>
-    <h2>Neue Booking Anfrage <small>funkyfingers.at</small></h2>
+    <h2>Booking Anfrage <small>funkyfingers.at</small></h2>
         <table width=\"100%\" cellspacing=\"2\" cellpadding=\"2\" border=\"1\" id=\"bookingTable\">
             <tr>
                 <th>Abfrage</th>
@@ -182,30 +184,15 @@ if (isset($_POST))
     $header .= "Content-type: text/html; charset=utf-8\r\n";
     // $header .= "X-Mailer: PHP ".phpversion()."";
 
-    //
-    $sent = mail($_POST['email'], $subject, $message, $header);
+    // send booking email to recipient
+    $sent = mail($_POST['adminEmail'], $subject, $message, $header);
+
+    // check if copy should be sent
+    if (isset($_POST['mailCopy']) && (!empty($_POST['mailCopy'])) && ($_POST['mailCopy'] == "true"))
+    {   // send copy to sender
+        $sent = mail($_POST['email'], $subject, $message, $header);
+    }
+
     echo "true";
 
 }
-// PROCESS FORM DATA
-// check required fields for valid data
-// check email + email copy field
-// email this booking request
-// optional: check for database flag
-//           + add entry to db if requested
-
-// log booking process to syslog
-
-// $uid = $_POST['uid'];
-// SET NOTIFICATION STATUS TO SEEN
-/*
-if ($db->query("UPDATE {syslog} SET seen = '1' WHERE seen = '0'"))
-{   // success
-    echo "true";
-}
-else
-{   // q failed
-    echo "false";
-    // echo \YAWK\alert::draw("warning","Warning!", "Could not set notification status. Please try again.",'',4200);
-}
-*/

@@ -331,7 +331,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
             <script type=\"text/javascript\" src=\"system/engines/jquery/jquery.validate.min.js\"></script>
             <script type=\"text/javascript\" src=\"system/engines/jquery/messages_de.min.js\"></script>";
 
-            echo "<script type=\"text/javascript\" src=\"system/widgets/booking/js/booking.js\"></script>";
+            // echo "<script type=\"text/javascript\" src=\"system/widgets/booking/js/booking.js\"></script>";
             echo "
 <link rel=\"stylesheet\" href=\"system/engines/jquery/timepicker/jquery.timepicker.css\">
 <script src=\"//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js\"></script>";
@@ -340,13 +340,43 @@ namespace YAWK\WIDGETS\BOOKING\FORM
             <script type=\"text/javascript\">
                 $(document).ready(function () {
                 
-                    // FORM VALIDATION SETTINGS
-                    $('#bookingForm').validate({ // initialize the plugin
+                var bookingForm = $('#bookingForm');
+                (bookingForm).validate({ 
+                    // initialize the plugin
                         rules: {
                             $validateJsCode
-                        }
-                    });
+                        },
+                    submitHandler: function(){
+                        //var data = $(form).serialize();
+                        //do your ajax with the data here
+                        
+                        var type = 'POST';
+                        var url = 'system/widgets/booking/js/process-booking-data.php';
+                        var thankYouMessage = $('#thankYouMessage');
                     
+                        $.ajax({
+                            type: type,
+                            url: url,
+                            data: bookingForm.serialize(), // serializes the form's elements.
+                            success: function(data)
+                            {
+                                // hide form
+                                $(bookingForm).hide();
+                                // display thank you message
+                                thankYouMessage.removeClass('hidden').addClass('animated fadeIn speed6');
+                            },
+                            error: function (request, status, error)
+                            {
+                                // error output
+                                alert('error: '+data);
+                                console.log('ERROR: ajax post failed with error '+data);
+                    
+                                // shake form
+                                $(bookingForm).shake();
+                            }
+                        });
+                    }
+                 });
                     
                     $('#eventDateTime').datetimepicker({
                         format: 'YYYY-DD-MM HH:mm',
@@ -407,7 +437,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
             $html = "";
 
             $html .= "
-<form class=\"form\" id=\"bookingForm\" method=\"post\" action=\"system/widgets/booking/js/process-booking-data.php\">
+<form class=\"form\" id=\"bookingForm\" method=\"post\" action=\"\">
     <div class=\"col-md-4 animated fadeIn speed3\">
     <input type=\"hidden\" name=\"bookingAdminEmail\" id=\"bookingAdminEmail\" value=\"".$this->bookingAdminEmail."\">
     <input type=\"hidden\" name=\"bookingHtmlEmail\" id=\"bookingHtmlEmail\" value=\"".$this->bookingHtmlEmail."\">";
@@ -423,7 +453,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                 <label for=\"name\">Name".$requiredMarkup."
                     <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Ihr Name (bzw. der Veranstalter)\"></i>
                 </label>
-                <input type=\"text\" name=\"name\" id=\"name\" class=\"form-control\" placeholder=\"Name / Veranstalter\">
+                <input type=\"text\" name=\"name\" id=\"name\" class=\"form-control\" placeholder=\"Name / Veranstalter\" autocomplete=\"off\">
                 <br>";
             }
 
@@ -438,7 +468,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
             <label for=\"email\">Email".$requiredMarkup."
                 <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Bitte geben Sie hier Ihre Emailadresse ein. Sie wird nicht weitergegeben und nur f&uuml;r Fragen zu Ihrer Buchung verwendet.\"></i>
             </label>
-            <input type=\"text\" name=\"email\" id=\"email\" class=\"form-control\" placeholder=\"you@email.com\">
+            <input type=\"text\" name=\"email\" id=\"email\" class=\"form-control\" placeholder=\"you@email.com\" autocomplete=\"off\">
             <br>";
             }
 
@@ -453,7 +483,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
         <label for=\"phone\">Phone".$requiredMarkup."
             <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Durchs reden kommen die Leut' zam - ein kurzes Telefonat ist oft effizienter als zahllose Emails zu senden. F&uuml;r R&uuml;ckfragen und Absprachen im Vorfeld ben&ouml;tigen wir Ihre Telefonnumer.\"></i>
         </label>
-        <input type=\"text\" name=\"phone\" id=\"phone\" class=\"form-control\" placeholder=\"+43 123 1234567\">
+        <input type=\"text\" name=\"phone\" id=\"phone\" class=\"form-control\" placeholder=\"+43 123 1234567\" autocomplete=\"off\">
         <br>
         <div class=\"animated fadeIn speed4 delay-10s\">
             <h3>Booking - Ablauf<br></h3>
@@ -464,7 +494,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
             <h4>2. Emailbest&auml;tigung</h4>
                 <p>Nach dem Absenden erhalten Sie eine automatische Best&uml;tigung,
                 falls Sie das entsprechende H&auml;kchen nicht entfernt haben.</p>
-            <h4>3. Wir rufen zur&uuml;ck</h4>
+            <h4>3. Wir melden uns bei Ihnen</h4>
                 <p>Jede Booking Anfrage wird so schnell als m&ouml;glich bearbeitet.
                 Wir checken unsere Terminkalender und pr&uuml;fen, ob ein Konzert an
                 dem von Ihnen gew&uuml;nschten Zeitraum m&ouml;glich ist. Sie erhalten 
@@ -493,6 +523,30 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                     </label>
                     <input type=\"text\" name=\"eventDateTime\" autocomplete=\"off\" id=\"eventDateTime\" class=\"form-control\" placeholder=\"Datum und Uhrzeit\">
                     <br>";
+            }
+
+            // SHOWTIME Duration
+            if ($this->bookingShowtimeDuration !== "false")
+            {
+                if ($this->bookingShowtimeDuration === "required")
+                { $requiredMarkup = "*"; }
+                else { $requiredMarkup = ""; }
+
+                $html .= "
+                    <label for=\"showtimeDuration\">Showtime Zeitrahmen".$requiredMarkup."
+                        <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Bitte geben Sie hier an, welcher Zeitrahmen (Gesamtspieldauer) f&uuml;r das Konzert vorgesehen ist.\"></i>
+                    </label>
+                    <select name=\"showtimeDuration\" id=\"showtimeDuration\" class=\"form-control\">
+                    <option value=\"\">bitte ausw&auml;hlen</option>
+                    <option value=\"30 Minuten\">30 Minuten</option>
+                    <option value=\"45 Minuten\">45 Minuten</option>
+                    <option value=\"1 Stunde \">1 Stunde</option>
+                    <option value=\"1,5 Stunden\">1,5 Stunden</option>
+                    <option value=\"2 Stunden\">2 Stunden</option>
+                    <option value=\"3 Stunden\">3 Stunden</option>
+                    <option value=\"4 Stunden\">4 Stunden</option>
+                    <option value=\"keine Angabe - nach Vereinbarung\">keine Angabe / nach Vereinbarung</option>
+                    </select><br>";
             }
 
             // SOUNDCHECK TIME
@@ -544,30 +598,6 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                     </label>
                     <input type=\"text\" name=\"eventShowtime\" autocomplete=\"off\" id=\"eventShowtime\" class=\"form-control timepicker\" placeholder=\"Uhrzeit ausw&auml;hlen\">
                     <br>";
-            }
-
-            // SHOWTIME Duration
-            if ($this->bookingShowtimeDuration !== "false")
-            {
-                if ($this->bookingShowtimeDuration === "required")
-                { $requiredMarkup = "*"; }
-                else { $requiredMarkup = ""; }
-
-                $html .= "
-                    <label for=\"showtimeDuration\">Showtime Zeitrahmen".$requiredMarkup."
-                        <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Bitte geben Sie hier an, welcher Zeitrahmen (Gesamtspieldauer) f&uuml;r das Konzert vorgesehen ist.\"></i>
-                    </label>
-                    <select name=\"showtimeDuration\" id=\"showtimeDuration\" class=\"form-control\">
-                    <option value=\"\">bitte ausw&auml;hlen</option>
-                    <option value=\"30 Minuten\">30 Minuten</option>
-                    <option value=\"45 Minuten\">45 Minuten</option>
-                    <option value=\"1 Stunde \">1 Stunde</option>
-                    <option value=\"1,5 Stunden\">1,5 Stunden</option>
-                    <option value=\"2 Stunden\">2 Stunden</option>
-                    <option value=\"3 Stunden\">3 Stunden</option>
-                    <option value=\"4 Stunden\">4 Stunden</option>
-                    <option value=\"keine Angabe - nach Vereinbarung\">keine Angabe / nach Vereinbarung</option>
-                    </select><br>";
             }
 
             // SET AMOUNT
@@ -630,11 +660,9 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                         </label>
                         <select name=\"locationType\" id=\"locationType\" class=\"form-control\">
                         <option value=\"\">bitte ausw&auml;hlen</option>
-                        <option value=\"Hochzeit\">Hochzeit</option>
-                        <option value=\"Geburtstagsparty\">Geburtstagsparty</option>
                         <option value=\"Private Veranstaltung\">Private Veranstaltung</option>
-                        <option value=\"Firmen Event\">Firmen Event</option>
-                        <option value=\"Weihnachtsfeier\">Weihnachtsfeier</option>
+                        <option value=\"Firmen Veranstaltung\">Firmen Event</option>
+                        <option value=\"Hochzeit\">Hochzeit</option>
                         <option value=\"Gro&szlig;veranstaltung\">Gro&szlig;veranstaltung</option>
                         <option value=\"keine Angabe / nach Vereinbarung\">keine Angabe / nach Vereinbarung</option>
                         </select>
@@ -656,6 +684,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                         <option value=\"\">bitte ausw&auml;hlen</option>
                         <option value=\"Indoor\">Indoor</option>
                         <option value=\"Outdoor\">Outdoor</option>
+                        <option value=\"keine Angabe / nach Vereinbarung\">keine Angabe / nach Vereinbarung</option>
                         </select>
                         <br>";
             }
@@ -745,15 +774,15 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                     <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Bitte schreiben Sie weitere Informationen und die Adresse zu Ihrer Veranstaltung in dieses Textfeld. ACHTUNG: Bitte beachten Sie, dass f&uuml;r eine erfolgreiche Buchung die &Uuml;bermittlung der Adresse der Veranstaltung unbedingt n&ouml;tig ist.\"></i>
                     <label for=\"message\">Anmerkungen / Adresse".$requiredMarkup."
                     </label>
-                    <textarea name=\"message\" id=\"message\" class=\"form-control\" rows=\"4\"></textarea>
+                    <textarea name=\"message\" id=\"message\" class=\"form-control\" rows=\"4\" autocomplete=\"off\"></textarea>
                     <br>";
             }
 
             $html .="
                 <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Auf Wunsch erhalten Sie eine Kopie dieser Nachricht an Ihre Emailadresse zugestellt.\"></i>
                 <label for=\"mailCopy\">Kopie dieser Nachricht an mich senden. &nbsp;
-                <input type=\"checkbox\" name=\"mailCopy\" value=\"1\" checked aria-checked=\"true\" id=\"mailCopy\"></label>
-                <button type=\"submit\" class=\"btn btn-success pull-right hvr-grow\" style=\"margin-top:1%;\" contenteditable=\"false\"><i class=\"fa fa-paper-plane-o\"></i> &nbsp;Jetzt unverbindlich anfragen</button>
+                <input type=\"checkbox\" name=\"mailCopy\" value=\"true\" id=\"mailCopy\"></label>
+                <button type=\"submit\" id=\"submitbutton\" class=\"btn btn-success pull-right hvr-grow\" style=\"margin-top:1%;\" contenteditable=\"false\"><i class=\"fa fa-paper-plane-o\"></i> &nbsp;Jetzt unverbindlich anfragen</button>
                 <input type=\"hidden\" name=\"sent\" value=\"1\">";
 
 

@@ -294,196 +294,191 @@ namespace YAWK\PLUGINS\BOOKING {
          * draw (output) html of the frontend form. This is displayed to the user. He will use to place a booking
          * @return string
          */
-        public function getFrontendForm()
+        public function getFrontendForm($config, $lang)
         {
-$html = "<form class=\"form\" id=\"form\" method=\"post\" action=\"booking.html\">
-        <div class=\"row\">
-            <div class=\"col-md-4\">
-                <p>How can we contact you?</p>
+            /*
+            echo "<pre>";
+            echo "<h1>THIS object:</h1>";
+            print_r($this);
+            echo "<hr>";
+            echo "<h2>config object:</h2>";
+            print_r($config);
+            echo "</pre>";
+            */
+
+            // init form html code markup variable
+            $html = "";
+
+            $html .= "
+<form class=\"form\" id=\"form\" method=\"post\" action=\"booking.html\">
+    <div class=\"row\">
+    <div class=\"col-md-4\">";
+
+        // NAME
+        if ($config->bookingContactName !== "false")
+        {
+            if ($config->bookingContactName === "required")
+            { $requiredMarkup = "*"; }
+            else { $requiredMarkup = ""; }
+
+            $html .= "
+                <label for=\"name\">Name".$requiredMarkup."</label>
                 <input type=\"text\" name=\"name\" id=\"name\" class=\"form-control\" placeholder=\"Your name\">
-                <label for=\"name\"><strong>Name</strong></label>
-                <input type=\"text\" name=\"email\" id=\"email\" class=\"form-control\" placeholder=\"you@email.com\">
-                <label for=\"email\">Email</label>
-                <input type=\"text\" name=\"phone\" id=\"phone\" class=\"form-control\" placeholder=\"+00 1234 / 1234567\">
-                <label >Phone Number</label>
+                <br>";
+        }
+
+        // EMAIL
+        if ($config->bookingEmail !== "false")
+        {
+            if ($config->bookingEmail === "required")
+            { $requiredMarkup = "*"; }
+            else { $requiredMarkup = ""; }
+
+            $html .= "
+            <label for=\"email\">Email".$requiredMarkup."</label>
+            <input type=\"text\" name=\"email\" id=\"email\" class=\"form-control\" placeholder=\"you@email.com\">
+            <br>";
+        }
+
+        // PHONE
+        if ($config->bookingPhone !== "false")
+        {
+            if ($config->bookingPhone === "required")
+            { $requiredMarkup = "*"; }
+            else { $requiredMarkup = ""; }
+
+            $html .= "
+        <label for=\"phone\">Phone".$requiredMarkup."</label>
+        <input type=\"text\" name=\"phone\" id=\"phone\" class=\"form-control\" placeholder=\"+00 1234 / 1234567\">
+        <br>";
+        }
+                $html .= "
 <br><br>
             </div>
             <div class=\"col-md-8\">
-                <p>Select Date:</p>
-                        <select name=\"datewish-month\" class=\"form-control\">
-                            <option value=\"00\" selected disabled>- Month -</option>
-                            <option value=\"01\">January</option>
-                            <option value=\"02\">February</option>
-                            <option value=\"03\">March</option>
-                            <option value=\"04\">April</option>
-                            <option value=\"05\">May</option>
-                            <option value=\"06\">June</option>
-                            <option value=\"07\">July</option>
-                            <option value=\"08\">August</option>
-                            <option value=\"09\">September</option>
-                            <option value=\"10\">October</option>
-                            <option value=\"11\">November</option>
-                            <option value=\"12\">December</option>
+            <div class=\"row\">
+            <div class=\"col-md-6\">
+            <!-- left -->";
+
+            // EVENT DATE TIME
+                if ($config->bookingEventDatetime !== "false")
+                {
+                    if ($config->bookingEventDatetime === "required")
+                    { $requiredMarkup = "*"; }
+                    else { $requiredMarkup = ""; }
+
+                    $html .= "
+                    <label for=\"eventDateTime\">Event Date + Time".$requiredMarkup."</label>
+                    <input type=\"text\" name=\"eventDateTime\" id=\"eventDateTime\" class=\"form-control\" placeholder=\"select Date\">
+                    <br>";
+                }
+
+                $html .= "</div>
+                <div class=\"col-md-6\">
+                <!-- right -->";
+
+                // EVENT DATE TIME
+                if ($config->bookingBand !== "false")
+                {
+                    if ($config->bookingBand === "required")
+                    { $requiredMarkup = "*"; }
+                    else { $requiredMarkup = ""; }
+
+                    $html .= "
+                        <label for=\"band\">Band".$requiredMarkup."</label>
+                        <select name=\"band\" id=\"band\" class=\"form-control\">
+                        <option value=\"\">bitte ausw&auml;hlen</option>
+                        <option value=\"Duo: Stephan Heiner &amp; B&ouml;rns Funkyfingers\">Duo: Stephan Heiner &amp; B&ouml;rns Funkyfingers</option>
+                        <option value=\"Trio: BSB (B&ouml;rns, Stephan, Bertl)\">Trio: BSB (B&ouml;rns, Stephan, Bertl)</option>
+                        <option value=\"Tommy Lee &amp; Glacestrizzis\">Tommy Lee &amp; Glacestrizzis</option>
+                        <option value=\"WiR &amp; Jetzt\">WiR &amp; Jetzt</option>
                         </select>
-                        <select name=\"datewish-day\" class=\"form-control\">
-                            <option value=\"00\" selected disabled>- Day -</option>
-                            <option value=\"01\">1</option>
-                            <option value=\"02\">2</option>
-                            <option value=\"03\">3</option>
-                            <option value=\"04\">4</option>
-                            <option value=\"05\">5</option>
-                            <option value=\"06\">6</option>
-                            <option value=\"07\">7</option>
-                            <option value=\"08\">8</option>
-                            <option value=\"09\">9</option>
-                            <option value=\"10\">10</option>
-                            <option value=\"11\">11</option>
-                            <option value=\"12\">12</option>
-                            <option value=\"13\">13</option>
-                            <option value=\"14\">14</option>
-                            <option value=\"15\">15</option>
-                            <option value=\"16\">16</option>
-                            <option value=\"17\">17</option>
-                            <option value=\"18\">18</option>
-                            <option value=\"19\">19</option>
-                            <option value=\"20\">20</option>
-                            <option value=\"21\">21</option>
-                            <option value=\"22\">22</option>
-                            <option value=\"23\">23</option>
-                            <option value=\"24\">24</option>
-                            <option value=\"25\">25</option>
-                            <option value=\"26\">26</option>
-                            <option value=\"27\">27</option>
-                            <option value=\"28\">28</option>
-                            <option value=\"29\">29</option>
-                            <option value=\"30\">30</option>
-                            <option value=\"31\">31</option>
+                        <br>";
+                }
+
+            // EVENT TYPE
+            if ($config->bookingLocationType !== "false")
+            {
+                if ($config->bookingLocationType === "required")
+                { $requiredMarkup = "*"; }
+                else { $requiredMarkup = ""; }
+
+                $html .= "
+                        <label for=\"locationType\">Art der Veranstaltung".$requiredMarkup."</label>
+                        <select name=\"locationType\" id=\"locationType\" class=\"form-control\">
+                        <option value=\"\">bitte ausw&auml;hlen</option>
+                        <option value=\"Hochzeit\">Hochzeit</option>
+                        <option value=\"Geburtstagsparty\">Geburtstagsparty</option>
+                        <option value=\"Private Veranstaltung\">Private Veranstaltung</option>
+                        <option value=\"Firmen Event\">Firmen Event</option>
+                        <option value=\"Weihnachtsfeier\">Weihnachtsfeier</option>
+                        <option value=\"Gro&szlig;veranstaltung\">Gro&szlig;veranstaltung</option>
+                        <option value=\"Andere\">Andere</option>
                         </select>
-                        <select name=\"datewish-time\" class=\"form-control\">
-                            <option value=\"00:00\" selected disabled>Time</option>
-                            <option value=\"08:30\">08:30</option>
-                            <option value=\"09:00\">09:00</option>
-                            <option value=\"09:30\">09:30</option>
-                            <option value=\"10:00\">10:00</option>
-                            <option value=\"10:30\">10:30</option>
-                            <option value=\"11:00\">11:00</option>
-                            <option value=\"11:30\">11:30</option>
-                            <option value=\"12:00\">12:00</option>
-                            <option value=\"12:30\">12:30</option>
-                            <option value=\"13:00\">13:00</option>
-                            <option value=\"13:30\">13:30</option>
-                            <option value=\"14:00\">14:00</option>
-                            <option value=\"14:30\">14:30</option>
-                            <option value=\"15:00\">15:00</option>
-                            <option value=\"15:30\">15:30</option>
-                            <option value=\"16:00\">16:00</option>
-                            <option value=\"16:30\">16:30</option>
-                            <option value=\"17:00\">17:00</option>
-                            <option value=\"17:30\">17:30</option>
-                            <option value=\"18:00\">18:00</option>
-                            <option value=\"18:30\">18:30</option>
-                            <option value=\"19:00\">19:00</option>
-                            <option value=\"19:30\">19:30</option>
-                            <option value=\"20:00\">20:00</option>
-                            <option value=\"20:30\">20:30</option>
-                            <option value=\"21:00\">21:00</option>
-                            <option value=\"21:30\">21:30</option>
-                            <option value=\"22:00\">22:00</option>
-                            <option value=\"22:30\">22:30</option>
-                            <option value=\"23:00\">23:00</option>
+                        <br>";
+            }
+
+            // LOCATION
+            if ($config->bookingLocation !== "false")
+            {
+                if ($config->bookingLocation === "required")
+                { $requiredMarkup = "*"; }
+                else { $requiredMarkup = ""; }
+
+                $html .= "
+                        <label for=\"location\">Location".$requiredMarkup."</label>
+                        <select name=\"location\" id=\"location\" class=\"form-control\">
+                        <option value=\"\">bitte ausw&auml;hlen</option>
+                        <option value=\"Indoor\">Indoor</option>
+                        <option value=\"Outdoor\">Outdoor</option>
                         </select>
-                <br>
-                <p>Alternative?</p>
-                        <select name=\"alternative-month\" class=\"form-control\">
-                            <option value=\"00\" selected disabled>- Month -</option>
-                            <option value=\"01\">January</option>
-                            <option value=\"02\">February</option>
-                            <option value=\"03\">March</option>
-                            <option value=\"04\">April</option>
-                            <option value=\"05\">May</option>
-                            <option value=\"06\">June</option>
-                            <option value=\"07\">July</option>
-                            <option value=\"08\">August</option>
-                            <option value=\"09\">September</option>
-                            <option value=\"10\">October</option>
-                            <option value=\"11\">November</option>
-                            <option value=\"12\">December</option>
+                        <br>";
+            }
+
+            // LOCATION
+            if ($config->bookingCrowdAmount !== "false")
+            {
+                if ($config->bookingCrowdAmount === "required")
+                { $requiredMarkup = "*"; }
+                else { $requiredMarkup = ""; }
+
+                $html .= "
+                        <label for=\"crowdAmount\">Gr&ouml;&szlig;e".$requiredMarkup."</label>
+                        <select name=\"crowdAmount\" id=\"crowdAmount\" class=\"form-control\">
+                        <option value=\"\">bitte ausw&auml;hlen</option>
+                        <option value=\"0 - 50\">0 - 50 Personen</option>
+                        <option value=\"50 - 100\">50 - 100 Personen</option>
+                        <option value=\"100 - 200\">100 - 200 Personen</option>
+                        <option value=\"300 - 500\">300 - 500 Personen</option>
+                        <option value=\"500 - 1000\">500 - 1000 Personen</option>
+                        <option value=\"> 1000\">> 1000 Personen</option>
                         </select>
-                        <select name=\"alternative-day\" class=\"form-control\">
-                            <option value=\"00\" selected disabled>- Day -</option>
-                            <option value=\"01\">1</option>
-                            <option value=\"02\">2</option>
-                            <option value=\"03\">3</option>
-                            <option value=\"04\">4</option>
-                            <option value=\"05\">5</option>
-                            <option value=\"06\">6</option>
-                            <option value=\"07\">7</option>
-                            <option value=\"08\">8</option>
-                            <option value=\"09\">9</option>
-                            <option value=\"10\">10</option>
-                            <option value=\"11\">11</option>
-                            <option value=\"12\">12</option>
-                            <option value=\"13\">13</option>
-                            <option value=\"14\">14</option>
-                            <option value=\"15\">15</option>
-                            <option value=\"16\">16</option>
-                            <option value=\"17\">17</option>
-                            <option value=\"18\">18</option>
-                            <option value=\"19\">19</option>
-                            <option value=\"20\">20</option>
-                            <option value=\"21\">21</option>
-                            <option value=\"22\">22</option>
-                            <option value=\"23\">23</option>
-                            <option value=\"24\">24</option>
-                            <option value=\"25\">25</option>
-                            <option value=\"26\">26</option>
-                            <option value=\"27\">27</option>
-                            <option value=\"28\">28</option>
-                            <option value=\"29\">29</option>
-                            <option value=\"30\">30</option>
-                            <option value=\"31\">31</option>
-                        </select>
-                        <select name=\"alternative-time\" class=\"form-control\">
-                            <option value=\"00:00\" selected disabled>Time</option>
-                            <option value=\"08:30\">08:30</option>
-                            <option value=\"09:00\">09:00</option>
-                            <option value=\"09:30\">09:30</option>
-                            <option value=\"10:00\">10:00</option>
-                            <option value=\"10:30\">10:30</option>
-                            <option value=\"11:00\">11:00</option>
-                            <option value=\"11:30\">11:30</option>
-                            <option value=\"12:00\">12:00</option>
-                            <option value=\"12:30\">12:30</option>
-                            <option value=\"13:00\">13:00</option>
-                            <option value=\"13:30\">13:30</option>
-                            <option value=\"14:00\">14:00</option>
-                            <option value=\"14:30\">14:30</option>
-                            <option value=\"15:00\">15:00</option>
-                            <option value=\"15:30\">15:30</option>
-                            <option value=\"16:00\">16:00</option>
-                            <option value=\"16:30\">16:30</option>
-                            <option value=\"17:00\">17:00</option>
-                            <option value=\"17:30\">17:30</option>
-                            <option value=\"18:00\">18:00</option>
-                            <option value=\"18:30\">18:30</option>
-                            <option value=\"19:00\">19:00</option>
-                            <option value=\"19:30\">19:30</option>
-                            <option value=\"20:00\">20:00</option>
-                            <option value=\"20:30\">20:30</option>
-                            <option value=\"21:00\">21:00</option>
-                            <option value=\"21:30\">21:30</option>
-                            <option value=\"22:00\">22:00</option>
-                            <option value=\"22:30\">22:30</option>
-                            <option value=\"23:00\">23:00</option>
-                        </select>
-                <br>
-                <label>Your Message</label>
-                <textarea name=\"message\" id=\"message\" class=\"form-control\" rows=\"10\"></textarea>
-                <label for=\"mailCopy\">Send a copy of this message to myself. &nbsp;
+                        <br>";
+            }
+
+                $html .="</div>
+                </div>";
+
+            // MESSAGE
+            if ($config->bookingMessage !== "false")
+            {
+                if ($config->bookingMessage === "required")
+                { $requiredMarkup = "*"; }
+                else { $requiredMarkup = ""; }
+
+                $html .= "
+                    <label for=\"message\">Message".$requiredMarkup."</label>
+                    <textarea name=\"mesage\" id=\"message\" class=\"form-control\" rows=\"8\"></textarea>
+                    <br>";
+            }
+
+                $html .="<label for=\"mailCopy\">Send a copy of this message to myself. &nbsp;
                 <input type=\"checkbox\" name=\"mailCopy\" value=\"1\" checked aria-checked=\"true\" id=\"mailCopy\"></label>
                 <button type=\"submit\" class=\"btn btn-success pull-right\" style=\"margin-top:1%;\" contenteditable=\"false\"><i class=\"fa fa-envelope-o\"></i> &nbsp;Send Message</button>
-                <input type=\"hidden\" name=\"sent\" value=\"1\">
-                </div>
+                <input type=\"hidden\" name=\"sent\" value=\"1\">";
+
+
+                $html .= "</div>
                 </div>
     </form>";
                 return $html;

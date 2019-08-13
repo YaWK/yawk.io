@@ -21,8 +21,10 @@ namespace YAWK\WIDGETS\GOOGLE\ANALYTICS
     {
         /** @var object global widget object data */
         public $widget = '';
-        /** @var string Tracking Code */
+        /** @var string Tracking ID */
         public $gaTrackingID = '';
+        /** @var string Tracking Code */
+        public $gaTrackingCode = '';
 
         /**
          * Load all widget settings from database and fill object
@@ -39,6 +41,7 @@ namespace YAWK\WIDGETS\GOOGLE\ANALYTICS
             $settings = $this->widget->getWidgetSettingsArray($db);
             foreach ($settings as $property => $value) {
                 $this->$property = $value;
+                $this->gaTrackingID = $this->gaTrackingCode;
             }
         }
 
@@ -71,8 +74,7 @@ namespace YAWK\WIDGETS\GOOGLE\ANALYTICS
         public function embed()
         {
             if (isset($this->gaTrackingID)
-                && (!empty($this->gaTrackingID))
-                && (is_string($this->gaTrackingID)))
+            && (!empty($this->gaTrackingID)))
             {
                 // make sure that the string contains no html
                 $this->gaTrackingID = strip_tags($this->gaTrackingID);
@@ -81,13 +83,12 @@ namespace YAWK\WIDGETS\GOOGLE\ANALYTICS
                 // embed Google Analytics
                 echo'<!-- google analytics -->
 <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=$this->gaTrackingCode"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id='.$this->gaTrackingID.'"></script>
 <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag(\'js\', new Date());
-
-    gtag(\'config\', \'$this->gaTrackingCode\');
+    gtag(\'config\', \''.$this->gaTrackingCode.'\');
 </script>';
             }
             else

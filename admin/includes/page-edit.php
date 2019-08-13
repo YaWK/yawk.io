@@ -225,11 +225,12 @@ $(document).ready(function() {
 $(document).ready(function() {
 // load datetimepicker  (start time)
 $('#datetimepicker1').datetimepicker({
-    format: 'yyyy-mm-dd hh:ii:ss'
+    format: 'YYYY-MM-DD HH:mm:ss'
 });
 // load 2nd datetimepicker (end time)
 $('#datetimepicker2').datetimepicker({
-    format: 'yyyy-mm-dd hh:ii:ss'
+    format: 'YYYY-MM-DD HH:mm:ss'
+
 });
 
 }); //]]>  /* END document.ready */
@@ -312,11 +313,11 @@ echo "
                   </div>
                   <div class="box-body">
                       <label for="datetimepicker1"><?php print $lang['START_PUBLISH']; ?></label>
-                      <input class="form-control" id="datetimepicker1" data-date-format="yyyy-mm-dd hh:mm:ss" name="date_publish" maxlength="19" value="<?php print $page->date_publish; ?>">
+                      <input class="form-control" id="datetimepicker1" name="date_publish" maxlength="19" value="<?php print $page->date_publish; ?>">
 
                       <!-- END PUBLISH DATE -->
                       <label for="datetimepicker2"><?php print $lang['END_PUBLISH']; ?></label>
-                      <input type="text" class="form-control" id="datetimepicker2" name="date_unpublish" data-date-format="yyyy-mm-dd hh:mm:ss" maxlength="19" value="<?php print $page->date_unpublish; ?>">
+                      <input type="text" class="form-control" id="datetimepicker2" name="date_unpublish" maxlength="19" value="<?php print $page->date_unpublish; ?>">
 
                       <label for="gidselect"> <?php print $lang['PAGE_VISIBLE']; ?></label>
                       <select id="gidselect" name="gid" class="form-control">

@@ -2,14 +2,14 @@
     function saveHotkey() {
         // simply disables save event for chrome
         $(window).keypress(function (event) {
-            if (!(event.which == 115 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) && !(event.which == 19)) return true;
+            if (!(event.which === 115 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) && !(event.which == 19)) return true;
             event.preventDefault();
             formmodified=0; // do not warn user, just save.
             return false;
         });
         // used to process the cmd+s and ctrl+s events
         $(document).keydown(function (event) {
-            if (event.which == 83 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) {
+            if (event.which === 83 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) {
                 event.preventDefault();
                 $('#savebutton').click(); // SAVE FORM AFTER PRESSING STRG-S hotkey
                 formmodified=0; // do not warn user, just save.
@@ -63,10 +63,17 @@ else
         $widget->date_unpublish = $db->quote($_POST['date_unpublish']);
         $widget->widgetTitle = $db->quote($_POST['widgetTitle']);
         $widget->blocked = isset($_POST['mystatus']);
-        // save widget state
-  	    $widget->save($db);
-      \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[WIDGET] $lang[SETTINGS] $lang[SAVED]", "","1200");
-  }
+
+      // save widget state
+  	    if ($widget->save($db) === true)
+  	    {
+            \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[WIDGET] $lang[SETTINGS] $lang[SAVED]", "","1200");
+        }
+        else
+            {
+                \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[WIDGET] $lang[SETTINGS] $lang[NOT_SAVED]", "","2400");
+            }
+
    	  foreach($_POST as $property=>$value)
       {
    		if($property != "save")
@@ -77,7 +84,7 @@ else
             }
    	    }
  	  }
-
+  }
 
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
@@ -105,11 +112,12 @@ echo"<ol class=\"breadcrumb\">
     $(document).ready(function() {
 // load datetimepicker  (start time)
         $('#datetimepicker1').datetimepicker({
-            format: 'yyyy-mm-dd hh:ii:ss'
+            // format: 'yyyy-mm-dd hh:ii:ss'
+            format: 'YYYY-MM-DD HH:mm:ss'
         });
 // load 2nd datetimepicker (end time)
         $('#datetimepicker2').datetimepicker({
-            format: 'yyyy-mm-dd hh:ii:ss'
+            format: 'YYYY-MM-DD HH:mm:ss'
         });
 
     }); //]]>  /* END document.ready */
@@ -119,7 +127,7 @@ echo"<ol class=\"breadcrumb\">
 <form name="form" role="form" action="index.php?page=widget-edit&widget=<?php echo $widget->id; ?>" method="post">
 <div class="row">
 <!-- LEFT -->
-<div class="col-md-5">
+<div class="col-md-4">
 <!-- BASIC WIDGET SETTINGS -->
 <div class="box box-default">
   <div class="box-header with-border">
@@ -162,11 +170,11 @@ echo"<ol class=\"breadcrumb\">
   <br>
   <!-- DATE_PUBLISH -->
   <label for ="datetimepicker1"><?php echo $lang['START_PUBLISH']; ?></label>
-      <input id="datetimepicker1" name="date_publish" class="form-control" value="<?php echo $widget->date_publish; ?>">
+      <input id="datetimepicker1" name="date_publish" autocomplete="off" class="form-control" value="<?php echo $widget->date_publish; ?>">
 
   <!-- DATE_UNPUBLISH -->
   <label for ="datetimepicker2"><?php echo $lang['END_PUBLISH']; ?></label>
-    <input id="datetimepicker2" name="date_unpublish" class="form-control" value="<?php echo $widget->date_unpublish; ?>">
+    <input id="datetimepicker2" name="date_unpublish" autocomplete="off" class="form-control" value="<?php echo $widget->date_unpublish; ?>">
   <br>
       <!-- MARGIN TOP -->
       <label><?php echo "$lang[MARGIN_TOP] <i><small>$lang[LEAVE_BLANK_FOR_NO_MARGIN]</small></i>"; ?></label>
@@ -193,7 +201,7 @@ echo"<ol class=\"breadcrumb\">
 </div> <!-- end left col -->
 
 <!-- RIGHT -->
-  <div class="col-md-7">
+  <div class="col-md-8">
     <div class="box box-default">
     <div class="box-header with-border">
     <h3 class="box-title"><?php echo "$widget->name $lang[WIDGET] $lang[SETTINGS]"; ?></h3>

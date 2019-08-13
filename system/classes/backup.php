@@ -703,6 +703,7 @@ namespace YAWK\BACKUP
 
         public function doRestore($db, $restoreFolders)
         {
+            /** @var \YAWK\db $db */
             // check if restore folders are set
             if (isset($restoreFolders) && (!empty($restoreFolders)))
             {   // restore folders not set or empty

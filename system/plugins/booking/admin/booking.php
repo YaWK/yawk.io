@@ -71,6 +71,7 @@ echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
             <li><a href=\"index.php?page=plugins\" title=\"$lang[PLUGINS]\"> $lang[PLUGINS]</a></li>
             <li class=\"active\"><a href=\"index.php?plugin=booking\" title=\"$lang[BOOKING]\"> $lang[BOOKING]</a></li>
+            <li><a href=\"index.php?plugin=booking-setup\" title=\"$lang[SETUP]\"> $lang[SETUP]</a></li>
          </ol>
     </section>
     <!-- Main content -->
@@ -80,6 +81,9 @@ echo"<ol class=\"breadcrumb\">
 <div class="box box-default">
     <div class="box-body">
 
+<!-- backward btn -->
+<a class="btn btn-default" href="index.php?plugin=booking&pluginpage=booking-setup" style="float:right;">
+<i class="fa fa-wrench"></i> &nbsp;<?php print $lang['SETUP']; ?></a>
 <!-- backward btn -->
 <a class="btn btn-default" href="index.php?page=plugins" style="float:right;">
 <i class="glyphicon glyphicon-backward"></i> &nbsp;<?php print $lang['BACK']; ?></a>

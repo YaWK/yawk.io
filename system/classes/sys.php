@@ -1366,10 +1366,9 @@ namespace YAWK {
             $i = 1;
             $host = \YAWK\settings::getSetting($db, "host");
             echo "<title>" . $currentpage->title . "</title>
-<meta http-equiv=\"Content-Type\" content=\"text/html; charset=\"utf-8\" />
+<meta http-equiv=\"Content-Type\" content=\"text/html\">
 <link rel=\"shortcut icon\" href=\"favicon.ico\" type=\"image/x-icon\">
-<base href=\"".$host."/\">
-";
+<base href=\"".$host."/\">";
             $get_localtags = $db->query("SELECT name, content
                     FROM {meta_local}
                     WHERE page = '" . $currentpage->id . "'");
