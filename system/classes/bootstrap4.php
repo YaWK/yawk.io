@@ -25,8 +25,10 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
             $this->bs4_CardsCss();
             // bootstrap 4 buttons
             $this->bs4_ButtonsCss();
-            // bootstrap 4 buttons
+            // bootstrap 4 jumbotron
             $this->bs4_JumbotronCss();
+            // bootstrap 4 list groups
+            $this->bs4_ListGroupCss();
 
             // check if css code is set, not empty and correct type
             if (isset($this->cssCode) && (is_string($this->cssCode) && (!empty($this->cssCode))))
@@ -738,6 +740,228 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
               }
             }
             ";
+        }
+
+        /**
+         * Bootstrap 4: LIST GROUP Component CSS Code
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @annotation add Bootstrap 4 list group component to this css code string
+         */
+        public function bs4_ListGroupCss()
+        {
+            // list group css code
+            $this->cssCode .= "
+            /* LIST GROUP */
+            .list-group {
+              display: -ms-flexbox;
+              display: flex;
+              -ms-flex-direction: column;
+              flex-direction: column;
+              padding-left: ".$this->tplSettings['listgroup-paddingLeft'].";
+              margin-bottom: ".$this->tplSettings['listgroup-marginBottom'].";
+              color: #".$this->tplSettings['listgroup-fontColor'].";
+            }
+            
+            .list-group-item-action {
+              width: 100%;
+              color: #".$this->tplSettings['listgroup-fontColor'].";
+              text-align: inherit;
+            }
+            
+            .list-group-item-action:hover, .list-group-item-action:focus {
+              color: #".$this->tplSettings['listgroup-fontColor'].";
+              text-decoration: none;
+              background-color: #f8f9fa;
+            }
+            
+            .list-group-item-action:active {
+              color: #212529;
+              background-color: #e9ecef;
+            }
+            
+            .list-group-item {
+              position: ".$this->tplSettings['listgroup-itemPosition'].";
+              display: ".$this->tplSettings['listgroup-itemDisplay'].";
+              padding: ".$this->tplSettings['listgroup-itemPadding'].";
+              margin-bottom: -1px;
+              background-color: #".$this->tplSettings['background-listgroup'].";
+              border: ".$this->tplSettings['listgroup-itemBorder'].";
+            }
+            
+            .list-group-item:first-child {
+              border-top-left-radius: ".$this->tplSettings['listgroup-firstChild-topLeft-radius'].";
+              border-top-right-radius: ".$this->tplSettings['listgroup-firstChild-topRight-radius'].";
+            }
+            
+            .list-group-item:last-child {
+              margin-bottom: 0;
+              border-bottom-right-radius: ".$this->tplSettings['listgroup-lastChild-bottomRight-radius'].";
+              border-bottom-left-radius: ".$this->tplSettings['listgroup-lastChild-bottomLeft-radius'].";
+            }
+            
+            .list-group-item:hover, .list-group-item:focus {
+              z-index: 1;
+              text-decoration: none;
+            }
+            
+            .list-group-item.disabled, .list-group-item:disabled {
+              color: #6c757d;
+              background-color: #fff;
+            }
+            
+            .list-group-item.active {
+              z-index: 2;
+              color: #".$this->tplSettings['listgroup-itemActiveColor'].";
+              background-color: #".$this->tplSettings['listgroup-itemActiveBackgroundColor'].";
+              border-color: #".$this->tplSettings['listgroup-itemActiveBorderColor'].";
+            }";
+
+            /*
+            
+            .list-group-flush .list-group-item {
+              border-right: 0;
+              border-left: 0;
+              border-radius: 0;
+            }
+            
+            .list-group-flush:first-child .list-group-item:first-child {
+              border-top: 0;
+            }
+            
+            .list-group-flush:last-child .list-group-item:last-child {
+              border-bottom: 0;
+            }
+            
+            .list-group-item-primary {
+              color: #004085;
+              background-color: #b8daff;
+            }
+            
+            .list-group-item-primary.list-group-item-action:hover, .list-group-item-primary.list-group-item-action:focus {
+              color: #004085;
+              background-color: #9fcdff;
+            }
+            
+            .list-group-item-primary.list-group-item-action.active {
+              color: #fff;
+              background-color: #004085;
+              border-color: #004085;
+            }
+            
+            .list-group-item-secondary {
+              color: #383d41;
+              background-color: #d6d8db;
+            }
+            
+            .list-group-item-secondary.list-group-item-action:hover, .list-group-item-secondary.list-group-item-action:focus {
+              color: #383d41;
+              background-color: #c8cbcf;
+            }
+            
+            .list-group-item-secondary.list-group-item-action.active {
+              color: #fff;
+              background-color: #383d41;
+              border-color: #383d41;
+            }
+            
+            .list-group-item-success {
+              color: #155724;
+              background-color: #c3e6cb;
+            }
+            
+            .list-group-item-success.list-group-item-action:hover, .list-group-item-success.list-group-item-action:focus {
+              color: #155724;
+              background-color: #b1dfbb;
+            }
+            
+            .list-group-item-success.list-group-item-action.active {
+              color: #fff;
+              background-color: #155724;
+              border-color: #155724;
+            }
+            
+            .list-group-item-info {
+              color: #0c5460;
+              background-color: #bee5eb;
+            }
+            
+            .list-group-item-info.list-group-item-action:hover, .list-group-item-info.list-group-item-action:focus {
+              color: #0c5460;
+              background-color: #abdde5;
+            }
+            
+            .list-group-item-info.list-group-item-action.active {
+              color: #fff;
+              background-color: #0c5460;
+              border-color: #0c5460;
+            }
+            
+            .list-group-item-warning {
+              color: #856404;
+              background-color: #ffeeba;
+            }
+            
+            .list-group-item-warning.list-group-item-action:hover, .list-group-item-warning.list-group-item-action:focus {
+              color: #856404;
+              background-color: #ffe8a1;
+            }
+            
+            .list-group-item-warning.list-group-item-action.active {
+              color: #fff;
+              background-color: #856404;
+              border-color: #856404;
+            }
+            
+            .list-group-item-danger {
+              color: #721c24;
+              background-color: #f5c6cb;
+            }
+            
+            .list-group-item-danger.list-group-item-action:hover, .list-group-item-danger.list-group-item-action:focus {
+              color: #721c24;
+              background-color: #f1b0b7;
+            }
+            
+            .list-group-item-danger.list-group-item-action.active {
+              color: #fff;
+              background-color: #721c24;
+              border-color: #721c24;
+            }
+            
+            .list-group-item-light {
+              color: #818182;
+              background-color: #fdfdfe;
+            }
+            
+            .list-group-item-light.list-group-item-action:hover, .list-group-item-light.list-group-item-action:focus {
+              color: #818182;
+              background-color: #ececf6;
+            }
+            
+            .list-group-item-light.list-group-item-action.active {
+              color: #fff;
+              background-color: #818182;
+              border-color: #818182;
+            }
+            
+            .list-group-item-dark {
+              color: #1b1e21;
+              background-color: #c6c8ca;
+            }
+            
+            .list-group-item-dark.list-group-item-action:hover, .list-group-item-dark.list-group-item-action:focus {
+              color: #1b1e21;
+              background-color: #b9bbbe;
+            }
+            
+            .list-group-item-dark.list-group-item-action.active {
+              color: #fff;
+              background-color: #1b1e21;
+              border-color: #1b1e21;
+            } */
+
         }
     }
 }
