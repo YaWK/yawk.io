@@ -1961,6 +1961,8 @@ CREATE TABLE `cms_widgets` (
   `date_unpublish` datetime DEFAULT NULL,
   `widgetTitle` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+INSERT INTO `cms_widgets` (`id`, `published`, `widgetType`, `pageID`, `sort`, `position`, `marginTop`, `marginBottom`, `date_publish`, `date_unpublish`, `widgetTitle`) VALUES
+(1, 1, 10, 0, 1, 'intro', 0, 0, '2019-08-13 19:00:56', NULL, 'Bootstrap Carousel (above globalmenu)');
 
 CREATE TABLE `cms_widget_defaults` (
   `property` varchar(256) NOT NULL,
