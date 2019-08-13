@@ -491,22 +491,23 @@ echo"</section><!-- Main content -->
         <div class=\"col-md-3\">
             <div class=\"box box-default\">
                 <div class=\"box-header\">
-                    <h3 class=\"box-title\">Any other thing <small>here...</small></h3>
+                    <h3 class=\"box-title\">$lang[JUMBOTRON] <small>$lang[SETTINGS]</small></h3>
                 </div>
                 <div class=\"box-body\">
-                    
-                </div>
+                    <!-- jumbotron settings -->";
+                    $template->getFormElements($db, $templateSettings, 16, $lang, $user);
+                echo"</div>
             </div>
         </div>
 
         <div class=\"col-md-3\">
             <div class=\"box box-default\">
                 <div class=\"box-header\">
-                    <h3 class=\"box-title\">Any other thing <small>here...</small></h3>
+                    <h3 class=\"box-title\">something here <small>settings</small></h3>
                 </div>
-                <div class=\"box-body\">
-                    
-                </div>
+                <div class=\"box-body\">";
+                   // $template->getFormElements($db, $templateSettings, 14, $lang, $user);
+                echo"</div>
             </div>
         </div>
     </div>

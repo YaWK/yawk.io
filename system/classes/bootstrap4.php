@@ -25,6 +25,8 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
             $this->bs4_CardsCss();
             // bootstrap 4 buttons
             $this->bs4_ButtonsCss();
+            // bootstrap 4 buttons
+            $this->bs4_JumbotronCss();
 
             // check if css code is set, not empty and correct type
             if (isset($this->cssCode) && (is_string($this->cssCode) && (!empty($this->cssCode))))
@@ -677,6 +679,65 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
               color: #".$this->tplSettings['btn-danger-background-color'].";
               background-color: #".$this->tplSettings['btn-danger-color'].";
             }";
+        }
+        /**
+         * Bootstrap 4: JUMBOTRON Component CSS Code
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @annotation add Bootstrap 4 jumbotron component to this css code string
+         */
+        public function bs4_JumbotronCss()
+        {
+            $this->cssCode .= "
+            /* JUMBOTRON */
+            .jumbotron {
+            padding-top: ".$this->tplSettings['jumbotron-paddingTop'].";
+            padding-bottom: ".$this->tplSettings['jumbotron-paddingBottom'].";
+            margin-bottom: ".$this->tplSettings['jumbotron-marginBottom'].";
+            color: #".$this->tplSettings['jumbotron-fontColor'].";
+            background-color: #".$this->tplSettings['jumbotron-backgroundColor'].";
+            padding-right: ".$this->tplSettings['jumbotron-containerPaddingRight'].";
+            padding-left: ".$this->tplSettings['jumbotron-containerPaddingLeft'].";
+            border-radius: ".$this->tplSettings['jumbotron-borderRadius'].";
+            }
+            .jumbotron h1,
+            .jumbotron .h1 {
+                color: #".$this->tplSettings['jumbotron-h1Color'].";
+            }
+            .jumbotron p {
+                margin-bottom: ".$this->tplSettings['jumbotron-pMarginBottom'].";
+                font-size: ".$this->tplSettings['jumbotron-pFontSize'].";
+                font-weight: ".$this->tplSettings['jumbotron-pFontWeight'].";
+            }
+            .jumbotron > hr {
+                border-top-color: #".$this->tplSettings['jumbotron-hrColor'].";
+            }
+            .container .jumbotron,
+            .container-fluid .jumbotron {
+                padding-right: ".$this->tplSettings['jumbotron-containerPaddingRight'].";
+                padding-left: ".$this->tplSettings['jumbotron-containerPaddingLeft'].";
+                border-radius: ".$this->tplSettings['jumbotron-borderRadius'].";
+            }
+            .jumbotron .container {
+                max-width: ".$this->tplSettings['jumbotron-containerMaxWidth'].";
+            }
+            @media screen and (min-width: 768px) {
+              .jumbotron {
+                padding-top: 48px;
+                padding-bottom: 48px;
+              }
+              .container .jumbotron,
+              .container-fluid .jumbotron {
+                padding-right: ".$this->tplSettings['jumbotron-fluidPaddingRight'].";
+                padding-left: ".$this->tplSettings['jumbotron-fluidPaddingLeft'].";
+              }
+              .jumbotron h1,
+              .jumbotron .h1 {
+                font-size: ".$this->tplSettings['jumbotron-h1FontSize'].";
+              }
+            }
+            ";
         }
     }
 }
