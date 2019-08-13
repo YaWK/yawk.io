@@ -1,3 +1,8 @@
+
+body {
+    overflow-y: scroll;
+}
+
 .bg-black
 {
     background-color: #000;
@@ -26,4 +31,3 @@ hr.fbHr
 {
   font-weight: bold;
 }
-
