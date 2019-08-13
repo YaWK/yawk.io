@@ -503,10 +503,10 @@ echo"</section><!-- Main content -->
         <div class=\"col-md-3\">
             <div class=\"box box-default\">
                 <div class=\"box-header\">
-                    <h3 class=\"box-title\">something here <small>settings</small></h3>
+                    <h3 class=\"box-title\">$lang[LIST_GROUP] <small>$lang[SETTINGS]</small></h3>
                 </div>
                 <div class=\"box-body\">";
-                   // $template->getFormElements($db, $templateSettings, 14, $lang, $user);
+                    $template->getFormElements($db, $templateSettings, 15, $lang, $user);
                 echo"</div>
             </div>
         </div>
