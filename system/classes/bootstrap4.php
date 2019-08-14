@@ -29,6 +29,9 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
             $this->bs4_JumbotronCss();
             // bootstrap 4 list groups
             $this->bs4_ListGroupCss();
+            // bootstrap 4 navbar (globalmenu)
+            $this->bs4_navbarCss();
+            // $this->bs4_globalmenu();
 
             // check if css code is set, not empty and correct type
             if (isset($this->cssCode) && (is_string($this->cssCode) && (!empty($this->cssCode))))
@@ -51,7 +54,7 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
         public function bs4_CardsCss()
         {
             // cards css code
-            $this->cssCode = "   
+            $this->cssCode .= "   
             /* CARDS */
             .card {
               position: relative;
@@ -961,6 +964,93 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
               background-color: #1b1e21;
               border-color: #1b1e21;
             } */
+
+        }
+
+        public function bs4_navbarCss()
+        {
+            $this->cssCode .= "
+
+            .navbar {
+            
+              border-style: solid;
+              border-width: 1px;
+              border-color: #".$this->tplSettings['border-menubgcolor'].";
+              }
+            .navbar-bg-custom {
+                background-color:#".$this->tplSettings['default-menubgcolor'].";
+                }
+                
+            .navbar-toggler-custom 
+            {
+                color:#".$this->tplSettings['iconbar-menubgcolor'].";
+            }    
+            
+                
+            .navbar .navbar-light {
+              
+              color:#".$this->tplSettings['font-menucolor'].";
+              border-color: #".$this->tplSettings['border-menubgcolor'].";
+              margin-bottom: ".$this->tplSettings['navbar-marginBottom'].";
+            }
+            
+            .dropdown-menu {
+            background-color: #".$this->tplSettings['background-menudropdowncolor'].";
+            }
+            
+            .navbar-brand {
+              color: #".$this->tplSettings['brand-menucolor'].";
+            }
+            
+            .navbar-brand:hover, .navbar-brand:focus {
+            text-decoration: none;
+            }
+            
+            .navbar-light .navbar-brand {
+              color: #".$this->tplSettings['brand-menucolor'].";
+            }
+            
+            .navbar-light .navbar-brand:hover, .navbar-light .navbar-brand:focus {
+              color: #".$this->tplSettings['brandhover-menucolor'].";
+            }
+            
+            .navbar-light .navbar-nav .nav-link {
+              color: #".$this->tplSettings['font-menucolor'].";
+            }
+            
+            .navbar-light .navbar-nav .nav-link:hover, .navbar-light .navbar-nav .nav-link:focus {
+              color: #".$this->tplSettings['fonthover-menucolor'].";
+            }
+            
+            .navbar-light .navbar-nav .nav-link.disabled {
+              color: #".$this->tplSettings['fontdisabled-menucolor'].";
+            }
+            
+            .navbar-light .navbar-nav .show > .nav-link,
+            .navbar-light .navbar-nav .active > .nav-link,
+            .navbar-light .navbar-nav .nav-link.show,
+            .navbar-light .navbar-nav .nav-link.active {
+              color: #".$this->tplSettings['fontactive-menucolor'].";
+            }
+            
+            .navbar-light .navbar-toggler {
+              color: rgba(0, 0, 0, 0.5);
+              border-color: rgba(0, 0, 0, 0.1);
+              color: #fff;
+            }
+            .custom-toggler.navbar-toggler {
+            border-color:#".$this->tplSettings['toggle-menubgcolor'].";
+            background-color:#".$this->tplSettings['toggle-menu-bordercolor'].";
+}";
+
+$svg = "data:image/svg+xml;charset=utf8,%3Csvg%20viewBox='0 0 30 30'%20xmlns='http://www.w3.org/2000/svg'%3E%3Cpath%20stroke='%23".$this->tplSettings['iconbar-menubgcolor']."'%20stroke-width='2'%20stroke-linecap='round'%20stroke-miterlimit='10'%20d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E";
+$this->cssCode .= "
+  .navbar-light .custom-toggler .navbar-toggler-icon {
+  background-image: url(\"".$svg."\");
+}
+            ";
+
+
 
         }
     }
