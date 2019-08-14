@@ -170,7 +170,11 @@ echo"</section><!-- Main content -->
             {
                 echo
                 "<li>
-                    <a href=\"#bs4-cards\" aria-controls=\"bs4-cards\" data-toggle=\"tab\"><i class=\"fa fa-bars\"></i>
+                    <a href=\"#bs4-navbar\" aria-controls=\"bs4-navbar\" data-toggle=\"tab\"><i class=\"fa fa-bars\"></i>
+                        &nbsp; $lang[NAVBAR]</a>
+                </li>
+                <li>
+                    <a href=\"#bs4-cards\" aria-controls=\"bs4-cards\" data-toggle=\"tab\"><i class=\"fa fa-sticky-note-o\"></i>
                         &nbsp; $lang[CARDS]</a>
                 </li>
                 <li>
@@ -470,6 +474,62 @@ echo"</section><!-- Main content -->
     }
     else if ($template->bootstrapVersion == "4")
     {
+        echo"<!-- NAVBAR -->
+<div class=\"tab-pane fade in\" id=\"bs4-navbar\">
+    <h3>$lang[NAVBAR] <small>$lang[GLOBALMENU] $lang[SETTINGS]</small></h3>
+    
+    <div class=\"row animated fadeIn\">
+    <div class=\"col-md-3\">
+        <div class=\"box box-default\">
+            <div class=\"box-header\">
+                <h3 class=\"box-title\">$lang[MENU] $lang[FONT] <small>$lang[COLORS]</small></h3>
+            </div>
+            <div class=\"box-body\">
+                <!-- menu font colors -menucolor -->";
+                $template->getFormElements($db, $templateSettings, 10, $lang, $user);
+            echo "</div>
+        </div>
+    </div>
+
+    <div class=\"col-md-3\">
+        <div class=\"box box-default\">
+            <div class=\"box-header\">
+                <h3 class=\"box-title\">$lang[MENU] $lang[BG] <small>$lang[COLORS]</small></h3>
+            </div>
+            <div class=\"box-body\">
+                <!-- menu background color -menubgcolor -->";
+                $template->getFormElements($db, $templateSettings, 11, $lang, $user);
+            echo "</div>
+        </div>
+    </div>
+
+    <div class=\"col-md-3\">
+        <div class=\"box box-default\">
+            <div class=\"box-header\">
+                <h3 class=\"box-title\">$lang[MENU] $lang[DROPDOWN] <small>$lang[COLORS]</small></h3>
+            </div>
+            <div class=\"box-body\">
+                <!-- menu background color -menudropdowncolor -->";
+                $template->getFormElements($db, $templateSettings, 12, $lang, $user);
+                echo "
+            </div>
+        </div>
+    </div>
+
+    <div class=\"col-md-3\">
+        <div class=\"box box-default\">
+            <div class=\"box-header\">
+                <h3 class=\"box-title\">$lang[MENU] $lang[NAVBAR] <small>$lang[POSITIONING]</small></h3>
+            </div>
+            <div class=\"box-body\">
+                <!-- menu navbar margin top -navbar-marginTop -->";
+                $template->getFormElements($db, $templateSettings, 13, $lang, $user);
+                echo "
+            </div>
+        </div>
+    </div>
+    </div>
+</div>";
 
         echo"<!-- IMAGES -->
 <div class=\"tab-pane fade in\" id=\"images\">
