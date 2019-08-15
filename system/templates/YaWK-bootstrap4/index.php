@@ -30,7 +30,7 @@
 // \YAWK\sys::outputObjects($template, $controller, $page, $user, $stats);
 ?>
  <!-- To ensure proper rendering and touch zooming on phones and tablets -->
- <meta name="viewport" content="width=device-width, initial-scale=, shrink-to-fit=no">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
  <!-- import meta tags -->
  <meta name="author" content="<?php echo YAWK\settings::getSetting($db, "siteauthor"); ?>">
  <meta name="keywords" content="<?php echo YAWK\settings::getSetting($db, "globalmetakeywords"); ?>">
@@ -200,11 +200,11 @@ $col = '';
                           if ($positions['pos-mainLeft-enabled'] === "1" && ($positions['pos-main-enabled'] === "1") && ($positions['pos-mainRight-enabled'] === "1"))
                           {
                               // POSITION: mainLeft
-                              \YAWK\template::getPositionDivBox($db, $lang, "mainLeft", 0, "col-md-4", $positions, $indicators, $template);
+                              \YAWK\template::getPositionDivBox($db, $lang, "mainLeft", 0, "col-md-1", $positions, $indicators, $template);
                               // POSITION: main
-                              \YAWK\template::getPositionDivBox($db, $lang, "main", 0, "col-md-4", $positions, $indicators, $template);
+                              \YAWK\template::getPositionDivBox($db, $lang, "main", 0, "col-md-10", $positions, $indicators, $template);
                               // POSITION: mainRight
-                              \YAWK\template::getPositionDivBox($db, $lang, "mainRight", 0, "col-md-4", $positions, $indicators, $template);
+                              \YAWK\template::getPositionDivBox($db, $lang, "mainRight", 0, "col-md-1", $positions, $indicators, $template);
                           }
                           else if ($positions['pos-mainLeft-enabled'] === "1" && ($positions['pos-main-enabled'] === "0") && ($positions['pos-mainRight-enabled'] === "0"))
                           {
