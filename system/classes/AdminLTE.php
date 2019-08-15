@@ -140,6 +140,77 @@ namespace YAWK {
     <meta name=\"msapplication-TileColor\" content=\"#000000\">
     <meta name=\"theme-color\" content=\"#ffffff\">
 
+    <!-- inject bootstrap 4 light + dark buttons -->
+    <style>
+        .btn-light {
+          color: #212529;
+          background-color: #f8f9fa;
+          border-color: #f8f9fa;
+        }
+        
+        .btn-light:hover {
+          color: #212529;
+          background-color: #e2e6ea;
+          border-color: #dae0e5;
+        }
+        
+        .btn-light:focus, .btn-light.focus {
+          box-shadow: 0 0 0 0.2rem rgba(248, 249, 250, 0.5);
+        }
+        
+        .btn-light.disabled, .btn-light:disabled {
+          color: #212529;
+          background-color: #f8f9fa;
+          border-color: #f8f9fa;
+        }
+        
+        .btn-light:not(:disabled):not(.disabled):active, .btn-light:not(:disabled):not(.disabled).active,
+        .show > .btn-light.dropdown-toggle {
+          color: #212529;
+          background-color: #dae0e5;
+          border-color: #d3d9df;
+        }
+        
+        .btn-light:not(:disabled):not(.disabled):active:focus, .btn-light:not(:disabled):not(.disabled).active:focus,
+        .show > .btn-light.dropdown-toggle:focus {
+          box-shadow: 0 0 0 0.2rem rgba(248, 249, 250, 0.5);
+        }
+        
+        .btn-dark {
+          color: #fff;
+          background-color: #343a40;
+          border-color: #343a40;
+        }
+        
+        .btn-dark:hover {
+          color: #fff;
+          background-color: #23272b;
+          border-color: #1d2124;
+        }
+        
+        .btn-dark:focus, .btn-dark.focus {
+          box-shadow: 0 0 0 0.2rem rgba(52, 58, 64, 0.5);
+        }
+        
+        .btn-dark.disabled, .btn-dark:disabled {
+          color: #fff;
+          background-color: #343a40;
+          border-color: #343a40;
+        }
+        
+        .btn-dark:not(:disabled):not(.disabled):active, .btn-dark:not(:disabled):not(.disabled).active,
+        .show > .btn-dark.dropdown-toggle {
+          color: #fff;
+          background-color: #1d2124;
+          border-color: #171a1d;
+        }
+        
+        .btn-dark:not(:disabled):not(.disabled):active:focus, .btn-dark:not(:disabled):not(.disabled).active:focus,
+        .show > .btn-dark.dropdown-toggle:focus {
+          box-shadow: 0 0 0 0.2rem rgba(52, 58, 64, 0.5);
+        }
+    </style>
+    
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
