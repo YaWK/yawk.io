@@ -189,6 +189,7 @@ namespace YAWK {
         }
         
         .btn-dark:focus, .btn-dark.focus {
+          color:#fff;
           box-shadow: 0 0 0 0.2rem rgba(52, 58, 64, 0.5);
         }
         
