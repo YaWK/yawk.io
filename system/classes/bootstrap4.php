@@ -758,67 +758,67 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
             $this->cssCode .= "
             /* LIST GROUP */
             .list-group {
-              display: -ms-flexbox;
-              display: flex;
-              -ms-flex-direction: column;
-              flex-direction: column;
-              padding-left: ".$this->tplSettings['listgroup-paddingLeft'].";
-              margin-bottom: ".$this->tplSettings['listgroup-marginBottom'].";
-              color: #".$this->tplSettings['listgroup-fontColor'].";
+                display: -ms-flexbox;
+                display: flex;
+                -ms-flex-direction: column;
+                flex-direction: column;
+                padding-left: ".$this->tplSettings['listgroup-paddingLeft'].";
+                margin-bottom: ".$this->tplSettings['listgroup-marginBottom'].";
+                color: #".$this->tplSettings['listgroup-fontColor'].";
             }
             
             .list-group-item-action {
-              width: 100%;
-              color: #".$this->tplSettings['listgroup-fontColor'].";
-              text-align: inherit;
+                width: 100%;
+                color: #".$this->tplSettings['listgroup-fontColor'].";
+                text-align: inherit;
             }
             
             .list-group-item-action:hover, .list-group-item-action:focus {
-              color: #".$this->tplSettings['listgroup-fontColor'].";
-              text-decoration: none;
-              background-color: #f8f9fa;
+                color: #".$this->tplSettings['listgroup-fontColor'].";
+                text-decoration: none;
+                background-color: #f8f9fa;
             }
             
             .list-group-item-action:active {
-              color: #212529;
-              background-color: #e9ecef;
+                color: #212529;
+                background-color: #e9ecef;
             }
             
             .list-group-item {
-              position: ".$this->tplSettings['listgroup-itemPosition'].";
-              display: ".$this->tplSettings['listgroup-itemDisplay'].";
-              padding: ".$this->tplSettings['listgroup-itemPadding'].";
-              margin-bottom: -1px;
-              background-color: #".$this->tplSettings['background-listgroup'].";
-              border: ".$this->tplSettings['listgroup-itemBorder'].";
+                position: ".$this->tplSettings['listgroup-itemPosition'].";
+                display: ".$this->tplSettings['listgroup-itemDisplay'].";
+                padding: ".$this->tplSettings['listgroup-itemPadding'].";
+                margin-bottom: -1px;
+                background-color: #".$this->tplSettings['background-listgroup'].";
+                border: ".$this->tplSettings['listgroup-itemBorder'].";
             }
             
             .list-group-item:first-child {
-              border-top-left-radius: ".$this->tplSettings['listgroup-firstChild-topLeft-radius'].";
-              border-top-right-radius: ".$this->tplSettings['listgroup-firstChild-topRight-radius'].";
+                border-top-left-radius: ".$this->tplSettings['listgroup-firstChild-topLeft-radius'].";
+                border-top-right-radius: ".$this->tplSettings['listgroup-firstChild-topRight-radius'].";
             }
             
             .list-group-item:last-child {
-              margin-bottom: 0;
-              border-bottom-right-radius: ".$this->tplSettings['listgroup-lastChild-bottomRight-radius'].";
-              border-bottom-left-radius: ".$this->tplSettings['listgroup-lastChild-bottomLeft-radius'].";
+                margin-bottom: 0;
+                border-bottom-right-radius: ".$this->tplSettings['listgroup-lastChild-bottomRight-radius'].";
+                border-bottom-left-radius: ".$this->tplSettings['listgroup-lastChild-bottomLeft-radius'].";
             }
             
             .list-group-item:hover, .list-group-item:focus {
-              z-index: 1;
-              text-decoration: none;
+                z-index: 1;
+                text-decoration: none;
             }
             
             .list-group-item.disabled, .list-group-item:disabled {
-              color: #6c757d;
-              background-color: #fff;
+                color: #6c757d;
+                background-color: #fff;
             }
             
             .list-group-item.active {
-              z-index: 2;
-              color: #".$this->tplSettings['listgroup-itemActiveColor'].";
-              background-color: #".$this->tplSettings['listgroup-itemActiveBackgroundColor'].";
-              border-color: #".$this->tplSettings['listgroup-itemActiveBorderColor'].";
+                z-index: 2;
+                color: #".$this->tplSettings['listgroup-itemActiveColor'].";
+                background-color: #".$this->tplSettings['listgroup-itemActiveBackgroundColor'].";
+                border-color: #".$this->tplSettings['listgroup-itemActiveBorderColor'].";
             }";
 
             /*
@@ -972,85 +972,106 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
             $this->cssCode .= "
 
             .navbar {
+                border-style: ".$this->tplSettings['navbar-borderstyle'].";
+                border-width: ".$this->tplSettings['navbar-bordersize'].";
+                border-color: #".$this->tplSettings['border-menubgcolor'].";
+            }
             
-              border-style: solid;
-              border-width: 1px;
-              border-color: #".$this->tplSettings['border-menubgcolor'].";
-              }
             .navbar-bg-custom {
                 background-color:#".$this->tplSettings['default-menubgcolor'].";
-                }
+            }
                 
-            .navbar-toggler-custom 
-            {
+            .navbar-toggler-custom {
                 color:#".$this->tplSettings['iconbar-menubgcolor'].";
             }    
             
-                
             .navbar .navbar-light {
-              
-              color:#".$this->tplSettings['font-menucolor'].";
-              border-color: #".$this->tplSettings['border-menubgcolor'].";
-              margin-bottom: ".$this->tplSettings['navbar-marginBottom'].";
+                color:#".$this->tplSettings['font-menucolor'].";
+                border-color: #".$this->tplSettings['border-menubgcolor'].";
+                margin-bottom: ".$this->tplSettings['navbar-marginBottom'].";
             }
             
             .dropdown-menu {
-            background-color: #".$this->tplSettings['background-menudropdowncolor'].";
+                background-color: #".$this->tplSettings['background-menudropdowncolor'].";
             }
             
             .navbar-brand {
-              color: #".$this->tplSettings['brand-menucolor'].";
+                color: #".$this->tplSettings['brand-menucolor'].";
             }
             
             .navbar-brand:hover, .navbar-brand:focus {
-            text-decoration: none;
+                text-decoration: none;
             }
             
             .navbar-light .navbar-brand {
-              color: #".$this->tplSettings['brand-menucolor'].";
+                color: #".$this->tplSettings['brand-menucolor'].";
             }
             
             .navbar-light .navbar-brand:hover, .navbar-light .navbar-brand:focus {
-              color: #".$this->tplSettings['brandhover-menucolor'].";
+                color: #".$this->tplSettings['brandhover-menucolor'].";
             }
             
             .navbar-light .navbar-nav .nav-link {
-              color: #".$this->tplSettings['font-menucolor'].";
+                color: #".$this->tplSettings['font-menucolor'].";
             }
             
             .navbar-light .navbar-nav .nav-link:hover, .navbar-light .navbar-nav .nav-link:focus {
-              color: #".$this->tplSettings['fonthover-menucolor'].";
+                color: #".$this->tplSettings['fonthover-menucolor'].";
             }
             
             .navbar-light .navbar-nav .nav-link.disabled {
-              color: #".$this->tplSettings['fontdisabled-menucolor'].";
+                color: #".$this->tplSettings['fontdisabled-menucolor'].";
             }
             
             .navbar-light .navbar-nav .show > .nav-link,
             .navbar-light .navbar-nav .active > .nav-link,
             .navbar-light .navbar-nav .nav-link.show,
             .navbar-light .navbar-nav .nav-link.active {
-              color: #".$this->tplSettings['fontactive-menucolor'].";
+                color: #".$this->tplSettings['fontactive-menucolor'].";
             }
             
-            .navbar-light .navbar-toggler {
-              color: rgba(0, 0, 0, 0.5);
-              border-color: rgba(0, 0, 0, 0.1);
-              color: #fff;
-            }
             .custom-toggler.navbar-toggler {
-            border-color:#".$this->tplSettings['toggle-menubgcolor'].";
-            background-color:#".$this->tplSettings['toggle-menu-bordercolor'].";
-}";
+                border-color:#".$this->tplSettings['toggle-menubgcolor'].";
+                background-color:#".$this->tplSettings['toggle-menu-bordercolor'].";
+            }";
 
+// to avoid encoding errors, the icon bars will be held in this variable:
 $svg = "data:image/svg+xml;charset=utf8,%3Csvg%20viewBox='0 0 30 30'%20xmlns='http://www.w3.org/2000/svg'%3E%3Cpath%20stroke='%23".$this->tplSettings['iconbar-menubgcolor']."'%20stroke-width='2'%20stroke-linecap='round'%20stroke-miterlimit='10'%20d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E";
+
+// css goes on with custom toggle icon
 $this->cssCode .= "
-  .navbar-light .custom-toggler .navbar-toggler-icon {
-  background-image: url(\"".$svg."\");
+            .navbar-light .custom-toggler .navbar-toggler-icon {
+            background-image: url(\"".$svg."\");
+            }";
+
+// check, if navbar brand should be shown
+if ($this->tplSettings['navbar-brand'] == "0")
+{   // if not, set display to none
+    $this->cssCode .= ".navbar-brand { display:none; }";
 }
-            ";
 
+// check, if vertical divider should be shown
+if ($this->tplSettings['navbar-vertical-divider'] == 1)
+{   // css markup for v divider
+    $this->cssCode .= ".navbar-nav > li {border-right: 1px solid #ebebeb;}
+                       .navbar-nav {border-left: 1px solid #ebebeb;}";
+}
 
+// check, if navbar should be sticky
+if ($this->tplSettings['navbar-sticky'] == "1")
+{   // set sticky css tags
+    $this->cssCode .="
+    .sticky {
+      position: fixed;
+      top: 0;
+      width: 100%;
+    }
+    
+    .sticky + .main {
+      padding-top: 120px;
+    }
+    ";
+}
 
         }
     }
