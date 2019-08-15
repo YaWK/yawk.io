@@ -2,6 +2,10 @@
 <script type="text/javascript" src="../system/engines/jquery/jscolor/jscolor.js"></script>
 <!-- TAB collapse -->
 <script type="text/javascript" src="../system/engines/jquery/bootstrap-tabcollapse.js"></script>
+<!-- Bootstrap toggle css -->
+<link rel="stylesheet" href="../system/engines/bootstrap-toggle/css/bootstrap-toggle.css">
+<!-- Bootstrap toggle js -->
+<script type="text/javascript" src="../system/engines/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
 <!-- Javascript for positions tab -->
 <script type="text/javascript">
     /* reminder: check if form has changed and warns the user that he needs to save. */
@@ -75,7 +79,185 @@
             accordionClass: 'visible-sm visible-xs'
         });
 
+        // fire bootstrap tooltip
         $('[data-toggle="tooltip"]').tooltip();
+
+        // JS that controlls the btn-light + btn-dark navbar switches
+        // this makes it easier to switch between light + dark navbar colors
+        $('#btn-navbar-light, #btn-navbar-dark').click(function (event) {
+            // no default action
+            event.preventDefault();
+
+            // set vars of col 1
+            var font_menucolor = $('#font-menucolor');
+            var brand_menucolor = $('#brand-menucolor');
+            var brandhover_menucolor = $('#brandhover-menucolor');
+            var fonthover_menucolor = $('#fonthover-menucolor');
+            var fontactive_menucolor = $('#fontactive-menucolor');
+            var fontdisabled_menucolor = $('#fontdisabled-menucolor');
+            var fontshadow_menucolor = $('#fontshadow-menucolor');
+
+            // set vars of col 2
+            var default_menubgcolor = $('#default-menubgcolor');
+            var active_menubgcolor = $('#active-menubgcolor');
+            var toggle_menu_bgcolor = $('#toggle-menu-bgcolor');
+            var toggle_menu_bordercolor = $('#toggle-menu-bordercolor');
+            var iconbar_menubgcolor = $('#iconbar-menubgcolor');
+            var border_menubgcolor = $('#border-menubgcolor');
+
+            // set vars of col 3
+            var background_menudropdowncolor = $('#background-menudropdowncolor');
+            var hoverbg_menudropdowncolor = $('#hoverbg-menudropdowncolor');
+            var activebg_menudropdowncolor = $('#activebg-menudropdowncolor');
+            var border_menudropdowncolor = $('#border-menudropdowncolor');
+            var font_menudropdowncolor = $('#font-menudropdowncolor');
+            var fonthover_menudropdowncolor = $('#fonthover-menudropdowncolor');
+            var fontactive_menudropdowncolor = $('#fontactive-menudropdowncolor');
+            var disabled_menudropdowncolor = $('#disabled-menudropdowncolor');
+
+            // check if btn-light is clicked
+            if (this.id === 'btn-navbar-light') {
+                /* change colors of fields to navbar-light values */
+                // navbar text color
+                (font_menucolor).val("777777");
+                (font_menucolor).css('background-color', '#777777').css('color', '#FFF');
+                // brand color
+                (brand_menucolor).val("777777"); // set value
+                (brand_menucolor).css('background-color', '#777777').css('color', '#FFF'); // set color
+                // brand hover color
+                (brandhover_menucolor).val("5E5E5E"); // set value
+                (brandhover_menucolor).css('background-color', '#5E5E5E').css('color', '#FFF'); // set color
+                // font hover color
+                (fonthover_menucolor).val("333333"); // set value
+                (fonthover_menucolor).css('background-color', '#333333').css('color', '#FFF'); // set color
+                // font active color
+                (fontactive_menucolor).val("555555"); // set value
+                (fontactive_menucolor).css('background-color', '#555555').css('color', '#FFF'); // set color
+                // font disabled color
+                (fontdisabled_menucolor).val("CCCCCC"); // set value
+                (fontdisabled_menucolor).css('background-color', '#CCCCCC').css('color', '#333'); // set color
+                // font shadow color
+                (fontshadow_menucolor).val("CCCCCC"); // set value
+                (fontshadow_menucolor).css('background-color', '#CCCCCC').css('color', '#333'); // set color
+
+                /* COL 2 */
+                // navbar bg color
+                (default_menubgcolor).val("F8F8F8"); // set value
+                (default_menubgcolor).css('background-color', '#F8F8F8').css('color', '#333'); // set color
+                // active bg color
+                (active_menubgcolor).val("E7E7E7"); // set value
+                (active_menubgcolor).css('background-color', '#E7E7E7').css('color', '#333'); // set color
+                // menu toggle bg color
+                (toggle_menu_bgcolor).val("DDDDDD"); // set value
+                (toggle_menu_bgcolor).css('background-color', '#DDDDDD').css('color', '#333'); // set color
+                // menu toggle border color
+                (toggle_menu_bordercolor).val("CCCCCC"); // set value
+                (toggle_menu_bordercolor).css('background-color', '#CCCCCC').css('color', '#FFF'); // set color
+                // toggle iconbar color
+                (iconbar_menubgcolor).val("888888"); // set value
+                (iconbar_menubgcolor).css('background-color', '#888888').css('color', '#FFF'); // set color
+                // menu border color
+                (border_menubgcolor).val("E7E7E7"); // set value
+                (border_menubgcolor).css('background-color', '#E7E7E7').css('color', '#333'); // set color
+
+                /* COL 3 */
+                // dropdown bg color
+                (background_menudropdowncolor).val("FFFFFF"); // set value
+                (background_menudropdowncolor).css('background-color', '#FFFFFF').css('color', '#333'); // set color
+                // dropdown hover bg color
+                (hoverbg_menudropdowncolor).val("F5F5F5"); // set value
+                (hoverbg_menudropdowncolor).css('background-color', '#F5F5F5').css('color', '#333'); // set color
+                // dropdown active color
+                (activebg_menudropdowncolor).val("337AB7"); // set value
+                (activebg_menudropdowncolor).css('background-color', '#337AB7').css('color', '#333'); // set color
+                // dropdown border color
+                (border_menudropdowncolor).val("CCCCCC"); // set value
+                (border_menudropdowncolor).css('background-color', '#CCCCCC').css('color', '#333'); // set color
+                // dropdown font color
+                (font_menudropdowncolor).val("333333"); // set value
+                (font_menudropdowncolor).css('background-color', '#333333').css('color', '#FFF'); // set color
+                // dropdown font hover color
+                (fonthover_menudropdowncolor).val("262626"); // set value
+                (fonthover_menudropdowncolor).css('background-color', '#262626').css('color', '#FFF'); // set color
+                // dropdown font active color
+                (fontactive_menudropdowncolor).val("FFFFFF"); // set value
+                (fontactive_menudropdowncolor).css('background-color', '#FFFFFF').css('color', '#333'); // set color
+                // dropdown font disabled color
+                (disabled_menudropdowncolor).val("777777"); // set value
+                (disabled_menudropdowncolor).css('background-color', '#777777').css('color', '#333'); // set color
+
+            }
+            // check if btn-dark is clicked
+            else if (this.id === 'btn-navbar-dark') {
+                /* change colors of fields to navbar-dark values */
+                // navbar text color
+                (font_menucolor).val("F8F8F8");
+                (font_menucolor).css('background-color', '#F8F8F8').css('color', '#333');
+                // brand color
+                (brand_menucolor).val("F8F8F8"); // set value
+                (brand_menucolor).css('background-color', '#F8F8F8').css('color', '#333'); // set color
+                // brand hover color
+                (brandhover_menucolor).val("F8F8F8"); // set value
+                (brandhover_menucolor).css('background-color', '#F8F8F8').css('color', '#333'); // set color
+                // font hover color
+                (fonthover_menucolor).val("FFFFFF"); // set value
+                (fonthover_menucolor).css('background-color', '#FFFFFF').css('color', '#333'); // set color
+                // font disabled color
+                (fontdisabled_menucolor).val("333333"); // set value
+                (fontdisabled_menucolor).css('background-color', '#333333').css('color', '#FFF'); // set color
+                // font shadow color
+                (fontshadow_menucolor).val("CCCCCC"); // set value
+                (fontshadow_menucolor).css('background-color', '#CCC').css('color', '#333'); // set color
+
+                /* COL 2 */
+                // navbar bg color
+                (default_menubgcolor).val("343A40"); // set value
+                (default_menubgcolor).css('background-color', '#343A40').css('color', '#FFF'); // set color
+                // active bg color
+                (active_menubgcolor).val("424A52"); // set value
+                (active_menubgcolor).css('background-color', '#424A52').css('color', '#FFF'); // set color
+                // menu toggle bg color
+                (toggle_menu_bgcolor).val("3E454D"); // set value
+                (toggle_menu_bgcolor).css('background-color', '#3E454D').css('color', '#FFF'); // set color
+                // menu toggle border color
+                (toggle_menu_bordercolor).val("CCC"); // set value
+                (toggle_menu_bordercolor).css('background-color', '#CCC').css('color', '#333'); // set color
+                // toggle iconbar color
+                (iconbar_menubgcolor).val("CCC"); // set value
+                (iconbar_menubgcolor).css('background-color', '#CCC').css('color', '#333'); // set color
+                // menu border color
+                (border_menubgcolor).val("2B3036"); // set value
+                (border_menubgcolor).css('background-color', '#2B3036').css('color', '#FFF'); // set color
+
+                /* COL 3 */
+                // dropdown bg color
+                (background_menudropdowncolor).val("343A40"); // set value
+                (background_menudropdowncolor).css('background-color', '#343A40').css('color', '#FFF'); // set color
+                // dropdown hover bg color
+                (hoverbg_menudropdowncolor).val("424A52"); // set value
+                (hoverbg_menudropdowncolor).css('background-color', '#424A52').css('color', '#FFF'); // set color
+                // dropdown active color
+                (activebg_menudropdowncolor).val("3E454D"); // set value
+                (activebg_menudropdowncolor).css('background-color', '#3E454D').css('color', '#FFF'); // set color
+                // dropdown border color
+                (border_menudropdowncolor).val("2B3036"); // set value
+                (border_menudropdowncolor).css('background-color', '#2B3036').css('color', '#FFF'); // set color
+                // dropdown font color
+                (font_menudropdowncolor).val("F8F8F8"); // set value
+                (font_menudropdowncolor).css('background-color', '#F8F8F8').css('color', '#333'); // set color
+                // dropdown font hover color
+                (fonthover_menudropdowncolor).val("FFFFFF"); // set value
+                (fonthover_menudropdowncolor).css('background-color', '#FFFFFF').css('color', '#333'); // set color
+                // dropdown font active color
+                (fontactive_menudropdowncolor).val("555555"); // set value
+                (fontactive_menudropdowncolor).css('background-color', '#555555').css('color', '#FFF'); // set color
+                // dropdown font disabled color
+                (disabled_menudropdowncolor).val("333333"); // set value
+                (disabled_menudropdowncolor).css('background-color', '#333333').css('color', '#FFF'); // set color
+
+            }
+        });
+
 
     });
 </script>
@@ -477,12 +659,15 @@ echo"</section><!-- Main content -->
         echo"<!-- NAVBAR -->
 <div class=\"tab-pane fade in\" id=\"bs4-navbar\">
     <h3>$lang[NAVBAR] <small>$lang[GLOBALMENU] $lang[SETTINGS]</small></h3>
-    
     <div class=\"row animated fadeIn\">
     <div class=\"col-md-3\">
         <div class=\"box box-default\">
             <div class=\"box-header\">
                 <h3 class=\"box-title\">$lang[MENU] $lang[FONT] <small>$lang[COLORS]</small></h3>
+                <div class=\"text-center\">
+                    <button id=\"btn-navbar-light\" class=\"btn btn-light\">Navbar Light</button>&nbsp;&nbsp;
+                    <button id=\"btn-navbar-dark\" class=\"btn btn-dark\">Navbar Dark</button>
+                </div>
             </div>
             <div class=\"box-body\">
                 <!-- menu font colors -menucolor -->";
@@ -494,7 +679,7 @@ echo"</section><!-- Main content -->
     <div class=\"col-md-3\">
         <div class=\"box box-default\">
             <div class=\"box-header\">
-                <h3 class=\"box-title\">$lang[MENU] $lang[BG] <small>$lang[COLORS]</small></h3>
+                <h3 class=\"box-title\">$lang[MENU] $lang[BG] <small>$lang[AND_BORDER]</small></h3>
             </div>
             <div class=\"box-body\">
                 <!-- menu background color -menubgcolor -->";
