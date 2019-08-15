@@ -703,6 +703,10 @@ namespace YAWK {
                 // echo "<pre>";print_r($menu);echo"</pre>"; exit;
                 $navBarBrand = '';
                 $title_status = template::getTemplateSetting($db, "value", "globalmenu-title");
+                $navbar_center = template::getTemplateSetting($db, "value", "navbar-center");
+                if ($navbar_center == "1") { $navbar_center = " w-100 justify-content-center"; }
+                else { $navbar_center = ""; }
+
                 if ($title_status != '0')
                 {
                     // get menu title
@@ -711,7 +715,7 @@ namespace YAWK {
                     $menuName = $row[0];
                     if (!empty($menuName))
                     {
-                        $navBarBrand = "<a class=\"navbar-brand\" href=\"index.html\">" . $menuName . "</a>";
+                        $navBarBrand = "<a class=\"navbar-brand\" id=\"navbar-brand\" href=\"index.html\">" . $menuName . "</a>";
                     }
                     else
                         {
@@ -719,22 +723,24 @@ namespace YAWK {
                         }
                 }
 
+            // DRAW BOOTSTRAP 4 MENU
             if ($bootstrapVersion == "4")
             {
                 $html = "";
                 $html .= "
 
-<nav class=\"navbar navbar-expand-lg navbar-light navbar-bg-custom\">
-  <a class=\"navbar-brand\" href=\"#\">".$navBarBrand."</a>
+<nav id=\"navbar\" class=\"navbar navbar-expand-lg navbar-light navbar-bg-custom\">
+".$navBarBrand."
+
   <button class=\"navbar-toggler custom-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarSupportedContent\" aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">
-    <span class=\"navbar-toggler-icon\"><!-- <i class=\"fa fa-bars navbar-toggler-custom fa-2x\"></i>--> </span>
+    <span class=\"navbar-toggler-icon\"></span>
   </button>
 
   <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">";
                 // echo "<pre>"; print_r($menu); echo "</pre>";
-
+                // todo center:  w-100 justify-content-center
                 $html .="
-    <ul class=\"navbar-nav mr-auto\">";
+    <ul class=\"navbar-nav ".$navbar_center."\">";
                 foreach ($menu['parents'][$parent] as $itemId) {
                     // set parent w/o child items
                     if (!isset($menu['parents'][$itemId])) {
@@ -762,7 +768,7 @@ namespace YAWK {
                     // set parents w child items (dropdown lists)
                     if (isset($menu['parents'][$itemId])) {
                         $html .= "
-            <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\">";
+              <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\">";
 
                         // select child items from db
                         foreach ($menu['parents'][$itemId] as $child) {
@@ -787,16 +793,31 @@ namespace YAWK {
                 $html.="
     </ul>
   </div>
-</nav>";
+</nav>
 
-            return $html;
+<script>
+window.onscroll = function() {myFunction()};
+var navbar = document.getElementById('navbar');
+var sticky = navbar.offsetTop;
+console.log(sticky);
+function myFunction() {
+  if (window.pageYOffset >= sticky) {
+    navbar.classList.add('sticky')
+  } else {
+    navbar.classList.remove('sticky');
+  }
+}
+</script>";
+
+                return $html;
             }
 
+            // DRAW BOOTSTRAP 3 MENU
             else if ($bootstrapVersion == "3")
             {
                 $html = "";
                 $html .= "
-             <nav class=\"navbar navbar-default navbar-fixed-top\" role=\"navigation\" id=\"topnavbar\">
+             <nav class=\"navbar navbar-default\" role=\"navigation\" id=\"topnavbar\">
              <!-- <nav class=\"navbar navbar-default\" role=\"navigation\" id=\"topnavbar\"> -->
              <div class=\"container\">
              <div class=\"navbar-header\">
@@ -877,7 +898,8 @@ namespace YAWK {
                     $html .= "<!-- /.nav-collapse -->
   </div><!-- /navbar-inn -->
  </div> <!-- /container -->
-</nav><!-- navbar -->";
+</nav><!-- navbar -->
+";
 
             }
                 return $html;
