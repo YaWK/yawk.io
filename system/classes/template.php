@@ -1203,8 +1203,7 @@ namespace YAWK {
             if (isset($row) && (!empty($row))) {
                 if ($row === "1") {
                     $startRow = "<div class=\"row\">";
-                    $endRow = "
-                                 </div>";
+                    $endRow = "</div>";
                 } else {
                     $startRow = '';
                     $endRow = '';
@@ -1416,7 +1415,7 @@ namespace YAWK {
                                     }
                                     echo "<input type=\"hidden\" name=\"$setting[property]\" value=\"0\">
                               <input type=\"checkbox\" data-on=\"$lang[ON_]\" data-off=\"$lang[OFF_]\" data-toggle=\"toggle\" data-onstyle=\"success\" data-offstyle=\"danger\" id=\"$setting[property]\" name=\"$setting[property]\" value=\"1\" $checked>
-                              <label for=\"$setting[property]\">&nbsp; $setting[label]&nbsp;$setting[description]&nbsp;</label>";
+                              <label for=\"$setting[property]\">&nbsp; $setting[label]&nbsp;$setting[description]&nbsp;</label><hr>";
                                 }
 
                                 /* TEXTAREA */
@@ -1496,10 +1495,11 @@ namespace YAWK {
                                     {
                                         echo "<br><h4 class=\"box-title\">$setting[icon]&nbsp;$setting[heading]&nbsp;<small>$setting[subtext]</small></h4>";
                                     }
+                                    if (!isset($lang[$placeholder]) ||(empty($lang[$placeholder]))){ $phMarkup = ""; } else { $phMarkup = " placeholder=\"$lang[$placeholder]\""; }
                                     echo "<label for=\"$setting[property]\">$setting[label]&nbsp;$setting[description]&nbsp;
                                       <small><i class=\"small\" style=\"font-weight:normal\">$lang[DEFAULT]: $setting[valueDefault]</i></small></label>
                                       <input type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
-                                             value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\">";
+                                             value=\"$setting[value]\"$phMarkup\">";
                                 }
                             }
                         }
