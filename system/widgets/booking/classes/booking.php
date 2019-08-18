@@ -322,7 +322,6 @@ namespace YAWK\WIDGETS\BOOKING\FORM
             // embed required javascripts
             echo "
             <!-- bootstrap date-timepicker -->
-            
             <link type=\"text/css\" href=\"system/engines/datetimepicker/css/bootstrap-datetimepicker.min.css\" rel=\"stylesheet\">
             <script src=\"https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js\"></script>
             <script src=\"https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/de.js\"></script>
@@ -363,7 +362,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                                 // hide form
                                 $(bookingForm).hide();
                                 // display thank you message
-                                thankYouMessage.removeClass('hidden').addClass('animated fadeIn speed6');
+                                thankYouMessage.removeClass('hidden d-none').addClass('animated fadeIn speed6');
                             },
                             error: function (request, status, error)
                             {
@@ -413,7 +412,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
         {
             $html = "";
             $html .= "
-            <div class=\"hidden\" id=\"thankYouMessage\">
+            <div class=\"hidden d-none\" id=\"thankYouMessage\">
             <div class=\"col-md-2\">&nbsp;</div>
             <div class=\"col-md-8 text-center\"><h2>Danke f&uuml;r Ihre Buchungsanfrage!<br>
             <small>Ihre Anfrage wird so schnell als m&ouml;glich bearbeitet.</small><br><br>
@@ -504,7 +503,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
             }
             $html .= "
 <br><br>
-            </div>
+     </div>
             <div class=\"col-md-8 animated fadeIn speed4 delay-6s\">
             <div class=\"row\">
             <div class=\"col-md-5\">
@@ -781,7 +780,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
             $html .="
                 <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Auf Wunsch erhalten Sie eine Kopie dieser Nachricht an Ihre Emailadresse zugestellt.\"></i>
                 <label for=\"mailCopy\">Kopie dieser Nachricht an mich senden. &nbsp;
-                <input type=\"checkbox\" name=\"mailCopy\" value=\"true\" id=\"mailCopy\"></label>
+                <input type=\"checkbox\" name=\"mailCopy\" value=\"true\" id=\"mailCopy\" aria-checked=\"true\" checked></label>
                 <button type=\"submit\" id=\"submitbutton\" class=\"btn btn-success pull-right hvr-grow\" style=\"margin-top:1%;\" contenteditable=\"false\"><i class=\"fa fa-paper-plane-o\"></i> &nbsp;Jetzt unverbindlich anfragen</button>
                 <input type=\"hidden\" name=\"sent\" value=\"1\">";
 
