@@ -182,25 +182,6 @@ namespace YAWK {
                 $settings = self::getAllSettingsIntoArray($db, $widgetID);
             }
 
-            if (is_array($settings))
-            {
-                // echo "<pre>";
-                // print_r($settings);
-                // echo "</pre>";
-                /*
-                foreach ($settings as $type => $setting)
-                {
-                    if (!isset($setting['fieldType']) || (empty($setting['fieldType'])))
-                    {
-                        $setting['fieldType'] = "input";
-                    }
-
-                    echo $setting['fieldType']."<br>";
-
-                }
-                */
-            }
-
             // check if language is set
             if (!isset($language) || (!isset($lang)))
             {   // inject (add) language tags to core $lang array
@@ -488,28 +469,6 @@ namespace YAWK {
                             if (isset($appId) && (is_string($appId) && (!empty($appId)
                             && (isset($token) && (is_string($token) && (!empty($token)))))))
                             {
-                                /*
-                                // include facebook SDK JS
-                                echo "<script>
-                                window.fbAsyncInit = function() {
-                                    FB.init({
-                                    appId      : '" . $appId . "',
-                                    xfbml      : true,
-                                    version    : 'v3.3'
-                                    });
-                                FB.AppEvents.logPageView();
-                                };
-                                
-                                (function(d, s, id){
-                                    var js, fjs = d.getElementsByTagName(s)[0];
-                                    if (d.getElementById(id)) {return;}
-                                    js = d.createElement(s); js.id = id;
-                                    js.src = \"https://connect.facebook.net/en_US/sdk.js\";
-                                    fjs.parentNode.insertBefore(js, fjs);
-                                }(document, 'script', 'facebook-jssdk'));
-                                </script>";
-                                */
-
                                 // facebook data is set - try to get album list
                                 // prepare API call - get albums for this app id and token
                                 $json_link = "https://graph.facebook.com/v3.3/me/albums?access_token={$token}";
