@@ -468,6 +468,17 @@ namespace YAWK {
                     }
                 }
 
+            // BUG: in some cases, the language tag will not be set correctly
+            // HOTFIX: check language tags
+            if ($currentLanguage == "de")
+            {   // set correct de tag
+                $currentLanguage = "de-DE";
+            }
+            elseif ($currentLanguage = "en")
+            {   // set correct en tag
+                $currentLanguage = "en-EN";
+            }
+
             // get injectable tags from additional language file
             $additionalTags = parse_ini_file("$pathToFile"."$currentLanguage".".ini");
             // add every tag, once per row
