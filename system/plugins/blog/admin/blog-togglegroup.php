@@ -15,28 +15,31 @@ $item->gid = $_GET['itemgid'];
 $item->blogid = $_GET['blogid'];
 $item->id = $_GET['itemid'];
 
+if ($item->gid == "1")
+{
+    $rcolor = "success";
+    $item->gid = 5;
+}
+
 // logic role badge
 switch ($item->gid) {
-    case 1:
+    case "1":
         $rcolor = "success";
         $item->gid = 5;
         break;
-    case 2:
+    case "2":
         $rcolor = "warning";
         $item->gid--;
         break;
-    default:
-    case 3:
+    case "3":
         $rcolor = "danger";
         $item->gid--;
         break;
-    default:
-    case 4:
+    case "4":
         $rcolor = "danger";
         $item->gid--;
         break;
-    default:
-    case 5:
+    case "5":
         $rcolor = "danger";
         $item->gid--;
         break;
