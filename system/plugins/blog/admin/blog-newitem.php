@@ -50,11 +50,11 @@ if (isset($_POST['create']) && isset($_POST['blogid']))
     $(document).ready(function () {
 
         $('#datetimepicker1').datetimepicker({
-            format: 'yyyy-mm-dd hh:ii'
+            format: 'YYYY-MM-DD HH:mm:ss'
         });
 
         $('#datetimepicker2').datetimepicker({
-            format: 'yyyy-mm-dd hh:ii'
+            format: 'YYYY-MM-DD HH:mm:ss'
         });
 
     });//]]>  /* END document.ready */
@@ -386,7 +386,6 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
                         <input
                             class="form-control"
                             id="datetimepicker1"
-                            data-date-format="yyyy-mm-dd hh:mm:ss"
                             type="text"
                             name="date_publish"
                             maxlength="19"
@@ -399,7 +398,6 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
                             class="form-control"
                             id="datetimepicker2"
                             name="date_unpublish"
-                            data-date-format="yyyy-MM-dd hh:mm:ss"
                             maxlength="19"
                             value="">
 
