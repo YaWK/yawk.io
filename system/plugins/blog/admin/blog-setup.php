@@ -206,9 +206,9 @@ if ($blog->sortation === '1') {
 
 // comments radio buttons
 if ($blog->comments === '0') {
-    $commentsOffChecked = "checked";
-} else {
     $commentsOffChecked = "";
+} else {
+    $commentsOffChecked = "checked";
 }
 if ($blog->comments === '1') {
     $commentsOnChecked = "checked";
@@ -510,13 +510,13 @@ echo "
                     <h3><i class="fa fa-comment-o"></i> <?php echo $lang['COMMENTS']; ?></h3>
 
                     <div class="radio">
-                        <label for="comment_off">
-                            <input type="radio" name="comments" id="comment_off" value="0" <?php echo $commentsOffChecked; ?>>
-                            <?php echo $lang['COMMENTS']."&nbsp;".$lang['ALLOWED']; ?>
-                        </label><br><br>
                         <label for="comment_on">
-                            <input type="radio" name="comments" id="comment_on" value="1" <?php echo $commentsOnChecked; ?>>
+                            <input type="radio" name="comments" id="comment_on" value="0"<?php echo $commentsOnChecked; ?>>
                             <?php echo $lang['COMMENTS']."&nbsp;".$lang['FORBIDDEN']; ?>
+                        </label><br><br>
+                        <label for="comment_off">
+                            <input type="radio" name="comments" id="comment_off" value="1"<?php echo $commentsOffChecked; ?>>
+                            <?php echo $lang['COMMENTS']."&nbsp;".$lang['ALLOWED']; ?>
                         </label>
                     </div>
 

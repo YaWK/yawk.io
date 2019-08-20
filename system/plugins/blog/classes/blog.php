@@ -931,7 +931,7 @@ namespace YAWK\PLUGINS\BLOG {
     {
         /** @var $db \YAWK\db */
         $date_changed = date("Y-m-d G:i:s");
-        $this->teasertext = stripslashes(str_replace('\r\n', '', $this->teasertext));
+        // $this->teasertext = stripslashes(str_replace('\r\n', '', $this->teasertext));
         /* alias string manipulation to generate a valid filename */
         $this->filename = mb_strtolower($this->filename); // lowercase
         $this->filename = str_replace(" ", "-", $this->filename); // replace all ' ' with -
@@ -972,17 +972,12 @@ namespace YAWK\PLUGINS\BLOG {
                 }
             }
         // convert html special chars
-
-        $this->blogtext = utf8_encode($this->blogtext);
-        $this->blogtext = utf8_decode($this->blogtext);
-        $this->teasertext = utf8_encode($this->teasertext);
-        $this->teasertext = utf8_decode($this->teasertext);
-        $this->blogtext = stripslashes(str_replace('\r\n','', ($this->blogtext)));
-        $this->teasertext = stripslashes(str_replace('\r\n','', ($this->teasertext)));
-        $this->teasertext = \YAWK\sys::encodeChars($this->teasertext);
-        $this->blogtext = \YAWK\sys::encodeChars($this->blogtext);
+        
+        
         $this->title = htmlentities($this->title);
         $this->subtitle = htmlentities($this->subtitle);
+
+        // $this->blogtext = nl2br(htmlentities($this->blogtext, ENT_QUOTES, 'UTF-8'));
 
         // UPDATE PAGES TABLE
         if ($res = $db->query("UPDATE {pages} SET

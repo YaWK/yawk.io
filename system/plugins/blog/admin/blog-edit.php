@@ -9,9 +9,6 @@ if (!isset($language) || (!isset($lang)))
 {   // inject (add) language tags to core $lang array
     $lang = \YAWK\language::inject(@$lang, "../system/plugins/blog/language/");
 }
-// load blog properties
-$blog->loadItemProperties($db, $_GET['blogid'], $_GET['itemid']);
-
 // SAVE BLOG ENTRY
 if (isset($_POST['save'])) {
     // check if blogtitle is set
@@ -62,6 +59,10 @@ if (isset($_POST['save'])) {
     $blog->itemcomments = $db->quote($_POST['itemcomments']);
 
     // Summernote Editor \r\n removal
+
+        // $blog->blogtext = stripslashes(str_replace('\r\n','&#x000D;', ($blog->blogtext)));
+        // $blog->teasertext = stripslashes(str_replace('\r\n','&#x000D;', ($blog->teasertext)));
+    
     if ($blog->save($db))
     {   // throw success notify
         YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[ENTRY] $lang[SAVED]", "", "800");
@@ -71,6 +72,11 @@ if (isset($_POST['save'])) {
         YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[BLOG] " . $_GET['blogid'] . " " . $_POST['title'] . " - " . $_POST['subtitle'] . " $lang[NOT] $lang[SAVED]","","3800");
     }
 }
+
+
+// load blog properties
+$blog->loadItemProperties($db, $_GET['blogid'], $_GET['itemid']);
+
 // path to cms
 $dirprefix = YAWK\sys::getDirPrefix($db);
 // get host URL
@@ -199,6 +205,7 @@ $(editor2).summernote('codeview.deactivate');
         var backend2 = text2.replace(/<img src=\"media/g, "<img src=\"../media");
         // put the new string back into <textarea>
         $(editor2).val(backend2); // set new value into textarea
+
     }
         <?php
         // check if codeview is enabled on default
@@ -379,11 +386,12 @@ $blog->layout = $blog->getBlogProperty($db, $blog->blogid, "layout");
             id=\"summernote\"
             class=\"form-control\"
             style=\"margin-top:10px;\"
-            name=\"teasertext\">$blog->teasertext</textarea>";
+            name=\"teasertext\">".$blog->teasertext."</textarea>";
     }
         ?>
     <!-- EDITOR -->
     <label for="summernote2"><?php echo $lang['BLOG_TEXT']; ?></label>
+
     <textarea
         id="summernote2"
         class="form-control"

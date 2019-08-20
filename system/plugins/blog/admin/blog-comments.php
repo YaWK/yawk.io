@@ -198,7 +198,7 @@ echo"<ol class=\"breadcrumb\">
 
                 <td class=\"text-center\"> 
 
-                  <a class=\"icon icon-trash\" data-confirm=\"$lang[DEL_COMMENT] &laquo;" . $comment_user . " - " . $row['comment'] . "&raquo;\" title=\"DELETE " . $row['id'] . "\" href=\"index.php?plugin=blog&pluginpage=blog-deletecomment&item=kill&commentid=" . $row['id'] . "&blogid=" . $blog->id . "&itemid=" . $row['itemid'] . "&delete=true\">
+                  <a class=\"icon icon-trash\" data-confirm=\"$lang[DEL_COMMENT] &laquo;" . $comment_user . " - " . $row['comment'] . "&raquo;\" title=\"DELETE " . $row['id'] . "\" href=\"index.php?plugin=blog&pluginpage=blog-deletecomment&item=kill&commentid=".$row['id']."&blogid=".$blog->id."&itemid=".$row['itemid']."&delete=true\">
                   </a>
 
                   <a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"$lang[DEL_ENTRY] &laquo;" . $row['id'] . " / " . $row['comment'] . "&raquo;\"
