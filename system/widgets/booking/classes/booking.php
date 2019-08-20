@@ -437,6 +437,10 @@ namespace YAWK\WIDGETS\BOOKING\FORM
 
             $html .= "
 <form class=\"form\" id=\"bookingForm\" method=\"post\" action=\"\">
+
+<div class=\"container-fluid\">
+<div class=\"row\">
+
     <div class=\"col-md-4 animated fadeIn speed3\">
     <input type=\"hidden\" name=\"bookingAdminEmail\" id=\"bookingAdminEmail\" value=\"".$this->bookingAdminEmail."\">
     <input type=\"hidden\" name=\"bookingHtmlEmail\" id=\"bookingHtmlEmail\" value=\"".$this->bookingHtmlEmail."\">";
@@ -785,7 +789,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                 <input type=\"hidden\" name=\"sent\" value=\"1\">";
 
 
-            $html .= "</div>
+            $html .= "</div></div></div>
     </form>";
             return $html;
         } /* EOFunction getTable */
