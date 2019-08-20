@@ -98,14 +98,14 @@ echo"<ol class=\"breadcrumb\">
         function saveHotkey() {
             // simply disables save event for chrome
             $(window).keypress(function (event) {
-                if (!(event.which == 115 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) && !(event.which == 19)) return true;
+                if (!(event.which === 115 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) && !(event.which == 19)) return true;
                 event.preventDefault();
                 formmodified=0; // do not warn user, just save.
                 return false;
             });
             // used to process the cmd+s and ctrl+s events
             $(document).keydown(function (event) {
-                if (event.which == 83 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) {
+                if (event.which === 83 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) {
                     event.preventDefault();
                     $('#savebutton').click(); // SAVE FORM AFTER PRESSING STRG-S hotkey
                     formmodified=0; // do not warn user, just save.
@@ -338,10 +338,10 @@ $(editor2).summernote('codeview.deactivate');
      ...on document ready... letsego! */
     $(document).ready(function () {
         $('#datetimepicker1').datetimepicker({
-            format: 'yyyy-mm-dd hh:ii'
+            format: 'YYYY-MM-DD HH:mm:ss'
         });
         $('#datetimepicker2').datetimepicker({
-            format: 'yyyy-mm-dd hh:ii'
+            format: 'YYYY-MM-DD HH:mm:ss'
         });
     });//]]>  /* END document.ready */
     /* ...end admin jQ controlls  */
@@ -453,7 +453,6 @@ $blog->layout = $blog->getBlogProperty($db, $blog->blogid, "layout");
                     <input
                         class="form-control"
                         id="datetimepicker1"
-                        data-date-format="yyyy-mm-dd hh:mm:ss"
                         type="text"
                         name="date_publish"
                         maxlength="19"
@@ -466,7 +465,6 @@ $blog->layout = $blog->getBlogProperty($db, $blog->blogid, "layout");
                         class="form-control"
                         id="datetimepicker2"
                         name="date_unpublish"
-                        data-date-format="yyyy-MM-dd hh:mm:ss"
                         maxlength="19"
                         value="<?php print $blog->date_unpublish; ?>">
 
