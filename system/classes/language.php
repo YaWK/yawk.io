@@ -59,6 +59,8 @@ namespace YAWK {
          * @copyright 2017 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          * @link       http://yawk.io
+         * @param object $db database object
+         * @param string $referer frontend|backend from where it the call referred?
          * @return string
          */
         public function getCurrentLanguage($db, $referer)
