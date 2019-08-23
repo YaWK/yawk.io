@@ -12,7 +12,9 @@ if (isset($_GET) && (!empty($_GET)))
             {   // allowed file extensions
                 $exts = array('ttf', 'otf', 'woff');
                 // file type seems to be ok
-                if(in_array(end(explode('.', $_FILES['fontFile']['name'])), $exts))
+                $fontFileName = $_FILES['fontFile']['name'];
+                // check if file is there, error supressor used for php 7 reasons (better solution?)
+                if(@in_array(end(explode('.', $fontFileName)), $exts))
                 {
                     // folder and file to upload
                     $uploadFile = $fontFolder . basename($_FILES['fontFile']['name']);
