@@ -28,29 +28,38 @@ $blog->icon = $blog->getBlogProperty($db, $blog->blogid, "icon");
 // if form is sent, prepare data
 if (isset($_POST['setup']))
 {
-    $blog->blogid = $_POST['blogid'];
+    $blog->blogid = $db->quote($_POST['blogid']);
     $blog->name = $db->quote($_POST['name']);
     $blog->description = $db->quote($_POST['description']);
     $blog->icon = $db->quote($_POST['icon']);
     $blog->gid = $db->quote($_POST['gid']);
 
     // set frontend settings
-    $blog->showTitle = $_POST['showTitle'];
-    $blog->showDesc = $_POST['showDesc'];
-    $blog->showDate = $_POST['showDate'];
-    $blog->showAuthor = $_POST['showAuthor'];
-    $blog->permaLink = $_POST['permaLink'];
-    $blog->preview = $_POST['preview'];
-    $blog->voting = $_POST['voting'];
-    $blog->spacer = $_POST['spacer'];
-    $blog->frontendIcon = $_POST['frontendIcon'];
+    $blog->showTitle = $db->quote($_POST['showTitle']);
+    $blog->showDesc = $db->quote($_POST['showDesc']);
+    $blog->showDate = $db->quote($_POST['showDate']);
+    $blog->showAuthor = $db->quote($_POST['showAuthor']);
+    $blog->permaLink = $db->quote($_POST['permaLink']);
+    $blog->preview = $db->quote($_POST['preview']);
+    $blog->voting = $db->quote($_POST['voting']);
+    $blog->spacer = $db->quote($_POST['spacer']);
+    $blog->frontendIcon = $db->quote($_POST['frontendIcon']);
 
     // set layout setting
     if (!isset($_POST['layout'])) {
         $blog->layout = 0;
     } else {
-        $blog->layout = $_POST['layout'];
+        $blog->layout = $db->quote($_POST['layout']);
     }
+
+    // how many entries should be displayed?
+    if (!isset($_POST['limitEntries']))
+    {
+        $blog->limitEntries = 0;
+    } else {
+        $blog->limitEntries = $db->quote($_POST['limitEntries']);
+    }
+
 
     // sequence tells how it needs2be sorted. (by name or by date)
     if (!isset($_POST['sequence'])) {
@@ -99,6 +108,7 @@ else
         $blog->voting = $blog->getBlogProperty($db, $blog->blogid, "voting");
         $blog->spacer = $blog->getBlogProperty($db, $blog->blogid, "spacer");
         $blog->frontendIcon = $blog->getBlogProperty($db, $blog->blogid, "frontendIcon");
+        $blog->limitEntries = $blog->getBlogProperty($db, $blog->blogid, "limitEntries");
     }
 
 
@@ -498,6 +508,10 @@ echo "
                         }
                         ?>
                     </select>
+
+                    <h3><i class="fa fa-scissors"></i>&nbsp; <?php echo $lang['LIMIT']; ?></h3>
+                    <label for="limitEntries"><?PHP echo $lang['LIMIT_ENTRIES']; ?></label>
+                    <input id="limitEntries" name="limitEntries" type="text" placeholder="<?php echo $lang['LIMIT_DESC']; ?>" value="<?php echo $blog->limitEntries; ?>" class="form-control">
                 </div>
             </div>
             </div>

@@ -139,6 +139,8 @@ namespace YAWK\PLUGINS\BLOG {
         public $spacer;
         /** * @var int 0|1 display blog icon in frontend */
         public $frontendIcon;
+        /** * @var int 0|1 how many entries should be displayed */
+        public $limitEntries;
 
 
         /**
@@ -151,6 +153,7 @@ namespace YAWK\PLUGINS\BLOG {
          */
         public function injectLanguageTags($lang, $language)
         {
+            /** @var $db \YAWK\db */
             // #####################################################################################
             // prepare language tag injection
             // check if lang array is set
@@ -1108,7 +1111,8 @@ namespace YAWK\PLUGINS\BLOG {
                     voting = '" . $blog->voting . "',
                     layout = '" . $blog->layout . "',
                     gid = '" . $blog->gid . "',
-                    spacer = '" . $blog->spacer . "'
+                    spacer = '" . $blog->spacer . "',
+                    limitEntries = '" . $blog->limitEntries. "'
                     WHERE id = '" . $blog->blogid . "'"))
         {
             return true;
