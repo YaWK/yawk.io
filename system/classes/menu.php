@@ -729,7 +729,7 @@ namespace YAWK {
                 $html = "";
                 $html .= "
 
-<nav id=\"navbar\" class=\"navbar navbar-expand-lg navbar-light navbar-bg-custom\">
+<nav id=\"navbar\" class=\"navbar navbar-expand-lg navbar-light navbar-bg-custom\" style=\"z-index: 9999;\">
 ".$navBarBrand."
 
   <button class=\"navbar-toggler custom-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarSupportedContent\" aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">

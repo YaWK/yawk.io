@@ -1065,6 +1065,7 @@ if ($this->tplSettings['navbar-sticky'] == "1")
       position: fixed;
       top: 0;
       width: 100%;
+      z-index: 9998;
     }
     
     .sticky + .main {
