@@ -519,7 +519,7 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('offlineimage', 'media/images/closed-sign-tm.jpg', '', 8, 0, 1, 'OFFLINEIMAGE_LABEL', '', '', '', 'form-control', 'input', 'OFFLINEIMAGE_PH', 'OFFLINEIMAGE_DESC', ''),
 ('offlinemsg', '<h1>This page is under construction<br><small class=\"animated fadeIn delay-1s\">Please check back again later</small></h1><h2><small class=\"animated fadeIn delay-2s\">Thank you!</small></h2>', '', 8, 0, 1, 'OFFLINEMSG_LABEL', '', '', '', 'form-control', 'textarea', '', '', ''),
 ('paceLoader', 'enabled', '', 11, 1, 1, 'PACELOADER_LABEL', 'fa fa-spinner', 'PACELOADER_HEADING', 'PACELOADER_SUBTEXT', 'form-control', 'select', '', '', 'disabled,disabled:enabled,enabled'),
-('paceLoaderColor', '00ADFF', '', 11, 2, 1, 'PACELOADER_COLOR_LABEL', '', '', '', 'form-control color', 'input', '0073aa', '', ''),
+('paceLoaderColor', '00ADFF', '', 11, 2, 1, 'PACELOADER_COLOR_LABEL', '', '', '', 'form-control color', 'input', '', '', ''),
 ('paceLoaderHeight', '4px', '', 11, 3, 1, 'PACELOADER_HEIGHT_LABEL', '', '', '', 'form-control', 'input', 'PACELOADER_HEIGHT_PH', '', ''),
 ('robotsText-long', '', 'User-agent: *\r\nDisallow: /.idea/\r\nDisallow: /.git/\r\nDisallow: /admin/\r\nDisallow: /system/\r\nDisallow: /tmp/\r\nAllow: /system/engines/\r\n\r\n# uncomment following 2 lines if you NOT want your page to be tracked by waybackmachine (https://archive.org/web/)\r\n# User-agent:ia_archiver\r\n# Disallow: /', 18, 1, 1, 'ROBOTSTXT_LABEL', '', '', '', 'form-control', 'textarea', '', '', ''),
 ('selectedTemplate', '1', '', 3, 1, 1, 'SELECTEDTEMPLATE_LABEL', 'fa fa-photo', 'SELECTEDTEMPLATE_HEADING', 'SELECTEDTEMPLATE_SUBTEXT', 'form-control', 'select', '', 'SELECTEDTEMPLATE_DESC', ''),
