@@ -570,7 +570,7 @@ namespace YAWK\PLUGINS\BLOG {
                     }
                     else
                         {
-                            if ($frontendPreview === '0')
+                            if ($frontendPreview === 0)
                             {
                                 $showAllButton = "<a class=\"btn btn-default\" role=\"button\" href=\"$alias.html\"><i class=\"fa fa-bars\"></i> &nbsp;alles anzeigen</a>";
                             }
