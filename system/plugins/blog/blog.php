@@ -26,6 +26,8 @@ else { $blog->blogid = $_GET['blogid']; } // set the blog ID via $_GET param
     $published = $blog->getBlogProperty($db, $blog->blogid, "published");
     // get group id of this blog
     $gid = $blog->getBlogProperty($db, $blog->blogid, "gid");
+    // get limit entries (number of items to display)
+    $blog->limitEntries = $blog->getBlogProperty($db, $blog->blogid, "limitEntries");
 
 // if blog is not offline, get entries from db + draw it on screen.
 if ($published != 0)
@@ -38,8 +40,8 @@ if ($published != 0)
     }
     // load the blog entries into blog object
     if (!isset($full_view)) { $full_view = 0; }
-    if (!isset($limit)) { $limit = 0; }
-    $blog->getFrontendEntries($db, $blog->blogid, $item_id, $full_view, $limit);
+    if (!isset($blog->limitEntries)) { $blog->limitEntries = 0; }
+    $blog->getFrontendEntries($db, $blog->blogid, $item_id, $full_view, $blog->limitEntries);
     // check footer setting and load it on demand
     if ($blog->getBlogProperty($db, $blog->blogid, "footer")){
         $blog->getFooter($db);

@@ -2767,7 +2767,8 @@ namespace YAWK {
                     } // if a blog is requested, load blog by given id
                     elseif (isset($_GET['blogid'])) {
                         $blog = new \YAWK\PLUGINS\BLOG\blog();
-                        $blog->getFrontendEntries($db, $_GET['blogid'], '', '', '');
+                        $blog->limitEntries = $blog->getBlogProperty($db, $_GET['blogid'], "limitEntries");
+                        $blog->getFrontendEntries($db, $_GET['blogid'], '', '', $blog->limitEntries);
                         $blog->getFooter($db);
                         $blog->draw();
                         // in any other case, get content for requested static page

@@ -509,7 +509,7 @@ echo "
                         ?>
                     </select>
 
-                    <h3><i class="fa fa-scissors"></i>&nbsp; <?php echo $lang['LIMIT']; ?></h3>
+                    <h3><i class="fa fa-list-ol"></i>&nbsp; <?php echo $lang['LIMIT']; ?></h3>
                     <label for="limitEntries"><?PHP echo $lang['LIMIT_ENTRIES']; ?></label>
                     <input id="limitEntries" name="limitEntries" type="text" placeholder="<?php echo $lang['LIMIT_DESC']; ?>" value="<?php echo $blog->limitEntries; ?>" class="form-control">
                 </div>
