@@ -2349,7 +2349,10 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('bookingSetAmount', 'required', 45, 1, 1, 'LABEL_BOOKING_SET_AMOUNT', '', '', '', 'DESC_BOOKING_SET_AMOUNT', 'form-control', 'select', '', 'required,required:true,true:false,false', 364),
 ('bookingAdminEmail', '', 45, 1, 1, 'LABEL_BOOKING_ADMIN_EMAIL', '', '', '', 'DESC_BOOKING_ADMIN_EMAIL', 'form-control', '', '', '', 365),
 ('bookingHtmlEmail', 'true', 45, 1, 1, 'LABEL_BOOKING_HTML_EMAIL', '', '', '', 'DESC_BOOKING_HTML_EMAIL', 'form-control', 'select', '', 'true,true:false,false', 366),
-('bookingAdminCCEmail', '', 45, 1, 1, 'LABEL_BOOKING_ADMIN_CC_EMAIL', '', '', '', 'DESC_BOOKING_ADMIN_CC_EMAIL', 'form-control', '', '', '', 367);
+('bookingAdminCCEmail', '', 45, 1, 1, 'LABEL_BOOKING_ADMIN_CC_EMAIL', '', '', '', 'DESC_BOOKING_ADMIN_CC_EMAIL', 'form-control', '', '', '', 367),
+('blogID', '', 11, 1, 1, 'LABEL_BLOG_ID', 'fa fa-wordpress', 'BLOG_H_SELECT_GALLERY', '', 'DESC_BLOG_ID', 'form-control', '', '', '', 368),
+('blogHeading', '', 11, 1, 2, 'LABEL_BLOG_HEADING', '', '', '', 'DESC_BLOG_HEADING', 'form-control', '', 'PH_BLOG_HEADING', '', 369),
+('blogSubtext', '', 11, 1, 3, 'LABEL_BLOG_SUBTEXT', '', '', '', 'DESC_BLOG_SUBTEXT', 'form-control', '', 'PH_BLOG_SUBTEXT', '', 370);
 
 CREATE TABLE `cms_widget_settings` (
   `id` int(11) NOT NULL,
@@ -2391,7 +2394,7 @@ INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`)
 (8, 1, 'Clock', 'clock', 'A simple digital clock'),
 (9, 1, 'Signup', 'signup', 'Display a SignUp form to allow user registration on your page'),
 (10, 1, 'Custom HTML Code', 'custom_html', 'Embed any custom HTML Code Snippet'),
-(11, 1, 'News Blog Widget', 'news', 'News Blog Widget'),
+(11, 1, 'Blog Widget', 'blogWidget', 'Corresponding Widget to the Blog Plugin'),
 (12, 1, 'Newsletter', 'newsletter', 'Newsletter Widget'),
 (13, 1, 'Gallery', 'gallery', 'Display a gallery at any position'),
 (14, 1, 'Twitch Stream', 'twitch', 'Embed Twitch Stream'),
@@ -2637,7 +2640,7 @@ ALTER TABLE `cms_user_groups`
 ALTER TABLE `cms_widgets`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_defaults`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=367;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=370;
 ALTER TABLE `cms_widget_settings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 ALTER TABLE `cms_widget_types`
