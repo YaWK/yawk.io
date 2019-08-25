@@ -33,11 +33,12 @@ else { $blog->blogid = $_GET['blogid']; } // set the blog ID via $_GET param
 if ($published != 0)
 {
     if (!isset($item_id)){ $item_id = 0; }
-    // check group id, only load title if own gid is bigger
-    if (isset($_SESSION['gid']) && $_SESSION['gid'] >= $blog->gid)
-    {
+        // check group id, only load title if own gid is bigger
+        // if (isset($_SESSION['gid']) && $_SESSION['gid'] >= $blog->gid)
+
+        // load title
         $blog->getTitle($db, $blog->blogid);
-    }
+
     // load the blog entries into blog object
     if (!isset($full_view)) { $full_view = 0; }
     if (!isset($blog->limitEntries)) { $blog->limitEntries = 0; }
@@ -52,6 +53,6 @@ if ($published != 0)
 }
 else
 {   // blog is not published, draw message
-	echo YAWK\alert::draw("warning", "Entschuldigung!", "Dieser Bereich ist im Moment offline, da gerade daran gearbeitet wird. Bitte komm sp&auml;ter wieder.","","4800");
+	echo \YAWK\alert::draw("warning", "Entschuldigung!", "Dieser Bereich ist im Moment offline, da gerade daran gearbeitet wird. Bitte komm sp&auml;ter wieder.","","4800");
 }
 ?>

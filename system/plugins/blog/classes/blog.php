@@ -167,7 +167,7 @@ namespace YAWK\PLUGINS\BLOG {
                     $language = new \YAWK\language();
                 }
                 // ok...
-                $language->init($db);
+                $language->init($db, "backend");
                 // convert lang object param to array
                 $lang = (array) $language->lang;
             }
@@ -243,7 +243,7 @@ namespace YAWK\PLUGINS\BLOG {
 
 
             // if frontend icon is enabled
-            if ($frontendIcon === '1')
+            if ($frontendIcon == 1)
             {   // check if icon is set and display it
                 if (!empty($icon))
                 {   // set font awesome icon
@@ -259,17 +259,17 @@ namespace YAWK\PLUGINS\BLOG {
                     $icon = '';
                 }
 
-            if ($showTitle && $showDesc === '1') {   // show title AND description
+            if ($showTitle && $showDesc == 1) {   // show title AND description
                 print "<div class=\"container-fluid\">";
-                echo "<h1>$icon$name <small>$description</small></h1>";
+                print "<h1>$icon"."$name <small>$description</small></h1>";
             }
-            else if ($showTitle === '1' && $showDesc === '0') {   // just title
+            else if ($showTitle == 1 && $showDesc == 0) {   // just title
                 print "<div class=\"container-fluid\">";
-                echo "<h1>$icon$name</h1>";
+                print "<h1>$icon"."$name</h1>";
             }
-            else if ($showTitle === '0' && $showDesc === '1') {   // just show description
+            else if ($showTitle == 0 && $showDesc == 1) {   // just show description
                 print "<div class=\"container-fluid\">";
-                echo "<h1>$icon$description</h1>";
+                print "<h1>$icon"."$description</h1>";
             }
             else
                 {   // just open a new container for following content (body, footer...)
@@ -613,7 +613,11 @@ namespace YAWK\PLUGINS\BLOG {
                             }
                         if ($this->spacer === '1')
                         {
-                            $this->html .= "<hr>";
+                            $this->html .= "<hr><br><br>";
+                        }
+                        else
+                        {
+                            $this->html .= "<br><br>";
                         }
                     }
 
@@ -650,17 +654,17 @@ namespace YAWK\PLUGINS\BLOG {
                             $this->html .= "<hr>";
                         }
                         $this->html .= "</div>
-                        </div>";
+                        </div><br><br>";
                     }
 
                     if ($this->layout === '2')
                     {   // LAYOUT 2 = 2 cols, right thumbnail
-                        if (!empty($this->thumbnail)) $imgHtml = "<br><img src=\"" . $this->thumbnail . "\" class=\"img-thumbnail img-righty-less protected\">"; else $imgHtml = '';
+                        if (!empty($this->thumbnail)) $imgHtml = "<br><a href=\"$alias.html\"><img src=\"" . $this->thumbnail . "\" class=\"img-thumbnail img-righty-less hvr-grow\"></a>"; else $imgHtml = '';
                         $this->html .= "
                         <div class=\"row\">
-                          <div class=\"col-xs-12 col-md-8 text-right\">
+                          <div class=\"col-md-12 col-lg-8 text-right\">
                           <small class=\"pull-right\"><i>$this->permaLink$prettydate $author</i></small>
-                           <h2>$this->title&nbsp;<small>$this->subtitle</small></h2>$this->teasertext" . $blogtextHtml . "";
+                           <h2>$this->title&nbsp;<small>$this->subtitle</small></h2>$this->teasertext " . $blogtextHtml . "";
                             // are comments enabled?
                             if ($this->comments !== '0')
                             {
@@ -670,7 +674,7 @@ namespace YAWK\PLUGINS\BLOG {
                                 }
                                 else
                                     {
-                                        $this->html .= "<a class='btn btn-info' href=\"$alias.html\"><i class='fa fa-bars'></i> &nbsp;anzeigen</a><br><br>";
+                                        $this->html .= "<a class=\"btn btn-dark hvr-grow\" href=\"$alias.html\"><i class='fa fa-bars'></i> &nbsp;Show more</a><br><br>";
                                     }
                             }
                             else
@@ -683,10 +687,10 @@ namespace YAWK\PLUGINS\BLOG {
                                 $this->html .= "<hr>";
                             }
                             $this->html .= "</div>
-                          <div class=\"col-xs-6 col-md-4\">
+                          <div class=\"col-md-12 col-lg-4\">
                           <br>$imgHtml </div>
     
-                     </div>";
+                     </div><br><br>";
                     }
                     if ($this->layout === '3')
                     {   // LAYOUT 3 = 3 cols, newspaper layout
@@ -721,7 +725,7 @@ namespace YAWK\PLUGINS\BLOG {
                                 $this->html .= "</div>
                           <div class=\"col-xs-6 col-md-4\"><br>advertising space
                             </div>
-                        </div>";
+                        </div><br><br>";
                     }
                     if ($this->layout === '4') {   // LAYOUT 4 = 1 col, youtube responsive blog
                         // cut of time from prettydate
@@ -749,8 +753,12 @@ namespace YAWK\PLUGINS\BLOG {
 
                             if ($this->spacer === '1')
                             {
-                                $this->html .= "<hr>";
+                                $this->html .= "<hr><br><br>";
                             }
+                            else
+                                {
+                                    $this->html .= "<br><br>";
+                                }
                         }
                     }
                 }
@@ -1454,7 +1462,7 @@ namespace YAWK\PLUGINS\BLOG {
                 $this->html .= "<a class=\"btn btn-info\" id=\"commentsBtn\" role=\"button\" data-toggle=\"collapse\" href=\"#comments" . $this->itemid . "\" aria-expanded=\"false\" aria-controls=\"comments\">
                 <i class=\"fa fa-comments\"></i> &nbsp;Kommentare einblenden <small>(" . $i . ")</small></a>
                 <div class=\"collapse\" id=\"comments\">
-                <h4>Deine Meinung ist gefragt! <small>Gib Deinen Senf dazu :)</small></h4>
+                <h4>Comments, please! <small>Give your mustard (:</small></h4>
                 <div class=\"form-group\">
                     <input class=\"form-control\" type=\"nameplaceholder\" id=\"nameplaceholder\" disabled title=\"Du bist als $username eingeloggt.\" placeholder=\"$username &nbsp;[Du bist eingeloggt]\">
                     <textarea class=\"form-control\" id=\"comment\" placeholder=\"Deine Nachricht \" rows=\"3\"></textarea>
