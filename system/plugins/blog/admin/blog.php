@@ -7,11 +7,14 @@ if (!isset($language) || (!isset($lang)))
 {   // inject (add) language tags to core $lang array
     $lang = \YAWK\language::inject(@$lang, "../system/plugins/blog/language/");
 }
+if (!isset($db)){
+    $db = new \YAWK\db();
+}
 
 // ADD BLOG
 if (isset($_GET['addblog']))
 {   // user comes from blog-new
-    if ($_GET['addblog'] === "1")
+    if ($_GET['addblog'] == "1")
     {   // check if vars are set
         if (!empty($_POST['name']) || (!empty($_POST['description'])))
         {   // escape vars

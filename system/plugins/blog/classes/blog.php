@@ -261,15 +261,15 @@ namespace YAWK\PLUGINS\BLOG {
 
             if ($showTitle && $showDesc == 1) {   // show title AND description
                 print "<div class=\"container-fluid\">";
-                print "<h1>$icon"."$name <small>$description</small></h1>";
+                print "<h1>$icon"."$name <small>$description</small></h1><br>";
             }
             else if ($showTitle == 1 && $showDesc == 0) {   // just title
                 print "<div class=\"container-fluid\">";
-                print "<h1>$icon"."$name</h1>";
+                print "<h1>$icon"."$name</h1><br>";
             }
             else if ($showTitle == 0 && $showDesc == 1) {   // just show description
                 print "<div class=\"container-fluid\">";
-                print "<h1>$icon"."$description</h1>";
+                print "<h1>$icon"."$description</h1><br>";
             }
             else
                 {   // just open a new container for following content (body, footer...)
@@ -663,7 +663,7 @@ namespace YAWK\PLUGINS\BLOG {
                         $this->html .= "
                         <div class=\"row\">
                           <div class=\"col-md-12 col-lg-8 text-right\">
-                          <small class=\"pull-right\"><i>$this->permaLink$prettydate $author</i></small>
+                          <small class=\"pull-right\"><i>$this->permaLink$prettydate $author</i></small><br>
                            <h2>$this->title&nbsp;<small>$this->subtitle</small></h2>$this->teasertext " . $blogtextHtml . "";
                             // are comments enabled?
                             if ($this->comments !== '0')
@@ -674,7 +674,7 @@ namespace YAWK\PLUGINS\BLOG {
                                 }
                                 else
                                     {
-                                        $this->html .= "<a class=\"btn btn-dark hvr-grow\" href=\"$alias.html\"><i class='fa fa-bars'></i> &nbsp;Show more</a><br><br>";
+                                        $this->html .= "<br><a class=\"btn btn-dark hvr-grow\" href=\"$alias.html\"><i class='fa fa-bars'></i> &nbsp;Show more</a><br><br>";
                                     }
                             }
                             else
@@ -809,7 +809,8 @@ namespace YAWK\PLUGINS\BLOG {
         if ($res = $db->query("SELECT $property FROM {blog} WHERE id = '" . $blogid . "'"))
         {   // fetch data
             if ($row = mysqli_fetch_row($res))
-            {   // success
+            {
+                // success
                 return $row['0'];
             }
             else
@@ -1685,6 +1686,7 @@ namespace YAWK\PLUGINS\BLOG {
                 } else {
                     $id = $row[0]++;
                 }
+
                 $sort = $row[1]++;
                 $published = 1;
                 $name = htmlentities($name);
@@ -1692,21 +1694,21 @@ namespace YAWK\PLUGINS\BLOG {
                 $name = $db->quote($name);
                 $description = $db->quote($description);
                 $locked = 1;
-                // insert into database
-                if ($res_blog = $db->query("INSERT INTO {blog}
-                                (id,sort,published,name,description,icon)
-	                        VALUES('" . $id . "',
-	                        '" . $sort . "',
+
+                // add new blog into database
+                if ($db->query("INSERT INTO {blog} (sort, published, name, description, icon)
+	                        VALUES('" . $sort . "',
 	                        '" . $published . "',
 	                        '" . $name . "',
 	                        '" . $description . "',
 	                        '" . $icon . "')"))
-                {   // create blog page
+                {
+                    // create blog page
                     if (!isset($page))
                     {   // create new page object
                         $page = new \YAWK\page();
                     }
-                    if ($page->create($db, $name, $menuID, $locked, $id, 0))
+                    if ($page->create($db, $name, $menuID, $locked, $id, 0) === true)
                     {   // success
                         return true;
                     }
