@@ -5,7 +5,30 @@
     $(document).ready(function () {
         $('#icon').iconpicker();
     });
+
+    // TRY TO DISABLE CTRL-S browser hotkey
+    function saveHotkey() {
+        // simply disables save event for chrome
+        $(window).keypress(function (event) {
+            if (!(event.which === 115 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) && !(event.which == 19)) return true;
+            event.preventDefault();
+            formmodified=0; // do not warn user, just save.
+            return false;
+        });
+        // used to process the cmd+s and ctrl+s events
+        $(document).keydown(function (event) {
+            if (event.which === 83 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) {
+                event.preventDefault();
+                $('#savebutton').click(); // SAVE FORM AFTER PRESSING STRG-S hotkey
+                formmodified=0; // do not warn user, just save.
+                // save(event);
+                return false;
+            }
+        });
+    }
+    saveHotkey();
 </script>
+
 <?php
 include '../system/plugins/blog/classes/blog.php';
 // check if blog object is set
@@ -269,8 +292,7 @@ echo "
             </div>
             <div class="col-md-6">
                 <!-- SAVE BUTTON -->
-                <button class="btn btn-success pull-right" type="submit" name="create" id="savebutton"><i class="fa fa-save"></i> &nbsp;<?php echo $lang['SAVE_SETTINGS']; ?></button>
-                &nbsp;
+                <button class="btn btn-success pull-right" type="submit" name="create" id="savebutton"><i class="fa fa-save"></i> &nbsp;<?php echo $lang['SAVE_SETTINGS']; ?></button>&nbsp;
 
                 <!-- BACK BUTTON -->
                 <a class="btn btn-default pull-right" href="index.php?plugin=blog"><i class="glyphicon glyphicon-backward"></i> &nbsp;<?php echo $lang['BACK']; ?></a><br>
