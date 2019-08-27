@@ -1,16 +1,17 @@
 <script type="text/javascript" src="system/plugins/blog/js/comments.js"></script>
 <script type="text/javascript" src="system/plugins/blog/js/voting.js"></script>
 <?php
+// include blog class
 include 'classes/blog.php';
-/*
- * FRONTEND PAGE
- */
+// create new blog object
 $blog = new \YAWK\PLUGINS\BLOG\blog();
-/* get templateID */
+// current templateID
 $templateID = YAWK\template::getCurrentTemplateId($db);
-/* a blog can be called by GET variable or via page include */
+
+// a blog can be called by GET variable or via page include
+// set default blog (1), if no blog ID was set
 if (!isset($_GET['blogid']))
-{ // if no blog is given
+{   // if no blog ID is set
     if (!isset($blog_id))
     {   // if its not included by $_GET param
         $blog->blogid = 1;  // set default blog
@@ -20,44 +21,47 @@ if (!isset($_GET['blogid']))
         $blog->blogid = $blog_id;
     }
 }
-else { $blog->blogid = $_GET['blogid']; } // set the blog ID via $_GET param
+// set the blog ID via $_GET param
+else
+    {   // blogID was set via GET param
+        $blog->blogid = $_GET['blogid'];
+    }
 
+    // load global blog properties
     if ($blog->loadBlogProperties($db, $blog->blogid) === false)
-    {
+    {   // failed to load...
         echo "Unable to load Blog settings";
     }
-    /* debug
-    else
-        {
-            echo "<pre>";
-            print_r($blog);
-            echo "</pre>";
-        }
-    */
-
-/*
-    // get published status (is it online or offline?)
-    $published = $blog->getBlogProperty($db, $blog->blogid, "published");
-    // get group id of this blog
-    $gid = $blog->getBlogProperty($db, $blog->blogid, "gid");
-    // get limit entries (number of items to display)
-    $blog->limitEntries = $blog->getBlogProperty($db, $blog->blogid, "limitEntries");
-*/
 
 // if blog is not offline, get entries from db + draw it on screen.
 if ($blog->published != 0)
 {
-    if (!isset($item_id)){ $item_id = 0; }
+    // check, if there is an item ID set
+    if (!isset($item_id))
+    {   // zero, because no ID was set
+        $item_id = 0;
+    }
         // check group id, only load title if own gid is bigger
         // if (isset($_SESSION['gid']) && $_SESSION['gid'] >= $blog->gid)
 
-        // load title
-        $blog->getTitle($db, $blog->blogid);
+    // load blog title
+    $blog->getTitle($db, $blog->blogid);
 
     // load the blog entries into blog object
-    if (!isset($full_view)) { $full_view = 0; }
-    if (!isset($blog->limitEntries)) { $blog->limitEntries = 0; }
+    if (!isset($full_view))
+    {   //
+        $full_view = 0;
+    }
+
+    // check entries should be limited to (x)
+    if (!isset($blog->limitEntries))
+    {   // zero means no limitation wanted
+        $blog->limitEntries = 0;
+    }
+
+    // load all entries of this blog
     $blog->getFrontendEntries($db, $blog->blogid, $item_id, $full_view, $blog->limitEntries);
+
     // check footer setting and load it on demand
     //if ($blog->getBlogProperty($db, $blog->blogid, "footer")){
     //    $blog->getFooter($db);
