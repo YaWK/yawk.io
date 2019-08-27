@@ -1316,18 +1316,20 @@ namespace YAWK\PLUGINS\BLOG {
         /** @var $db \YAWK\db */
         /* ADMIN ONLY */
         // ADMIN? - SHOW ALL COMMENTS:
-                 if ($_SESSION['gid'] >=5) {
-                 // GET COMMENTS
-                 $sql = $db->query("SELECT * FROM {blog_comments} WHERE blogid = '".$blogid."'");
-                 while($row = mysqli_fetch_row($sql)) {
-
-                     $sql2 = $db->query("SELECT username FROM {users} WHERE id = '".$row[0]."'");
-                     while($row2 = mysqli_fetch_row($sql2)) {
-                         // DRAW COMMENTS
-                         $this->comments .= "<i>von: <strong>$row2[0]</i></strong><br> &nbsp;$row[1]<br><br>";
-                     }
+        if ($_SESSION['gid'] >=5)
+        {
+            // GET COMMENTS
+            $sql = $db->query("SELECT * FROM {blog_comments} WHERE blogid = '".$blogid."'");
+            while($row = mysqli_fetch_row($sql))
+            {
+                 $sql2 = $db->query("SELECT username FROM {users} WHERE id = '".$row[0]."'");
+                 while($row2 = mysqli_fetch_row($sql2))
+                 {
+                     // DRAW COMMENTS
+                     $this->comments .= "<i>von: <strong>$row2[0]</i></strong><br> &nbsp;$row[1]<br><br>";
                  }
-             } // end admin check */
+            }
+        } // end admin check */
         // GET COMMENTS
 
         // set var defaults
@@ -1340,9 +1342,10 @@ namespace YAWK\PLUGINS\BLOG {
                                    WHERE blogid = '" . $blogid . "'
                                    AND itemid = '" . $itemid . "'
                                    AND published = '1'
-                                   ORDER BY date_created DESC")
-        ) {
-            while ($row = mysqli_fetch_assoc($res)) {
+                                   ORDER BY date_created DESC"))
+        {
+            while ($row = mysqli_fetch_assoc($res))
+            {
                 $comment_id = $row['id'];
                 $comment = $row['comment'];
                 $uid = $row['uid'];
@@ -1358,43 +1361,54 @@ namespace YAWK\PLUGINS\BLOG {
                 $prettydate = "$date[day]. $date[month] $date[year] um $date[time]";
 
                 // if zero, set text link "answer..."
-                if ($isParent === '0') {
+                if ($isParent === '0')
+                {
                     //
-                    if ($isChild !== '1') {
+                    if ($isChild !== '1')
+                    {
                         $indent = "";
                         $padding = "padding-left: 0.3em;";
                         $collapse = "";
                         $collapseFooter = "";
                         // no child items available, because this is not a parent item
                         $reply_link = "<small><a href=\"#replyBox\" class=\"pull-right small\"><i>antworten... </i><i class=\"fa fa-chevron-down\"></i></a></small>";
-                    } else {
-                        $reply_link = "";
-                        $indent = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-                        $padding = "padding-left: 2.5em;";
-                        $collapse = "<div class=\"collapse\" id=\"replyBox\"><blockquote>";
-                        $collapseFooter = "</blockquote></div>";
                     }
-                } else {
-                    // get parent items from db
-                    $sql_replies = $db->query("SELECT * FROM {blog_comments} WHERE parentID = '" . $comment_id . "' AND published = '1'");
-                    while ($row = mysqli_fetch_assoc($sql_replies)) {
-                        $comment_replies++;
-                    }
+                    else
+                        {
+                            $reply_link = "";
+                            $indent = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+                            $padding = "padding-left: 2.5em;";
+                            $collapse = "<div class=\"collapse\" id=\"replyBox\"><blockquote>";
+                            $collapseFooter = "</blockquote></div>";
+                        }
+                }
+                else
+                    {
+                        // get parent items from db
+                        $sql_replies = $db->query("SELECT * FROM {blog_comments} WHERE parentID = '" . $comment_id . "' AND published = '1'");
+                        while ($row = mysqli_fetch_assoc($sql_replies))
+                        {
+                            $comment_replies++;
+                        }
                     $collapse = "<div class=\"collapse\" id=\"replyBox\"><blockquote>";
                     $collapseFooter = "</blockquote></div>";
                     // draw reply link with i comments
                     $reply_link = "<small><a href=\"#replyBox\" data-toggle=\"collapse\" aria-expanded=\"true\" aria-controls=\"replyBox\" class=\"pull-right small\"><i>Kommentare ($comment_replies) </i><i class=\"fa fa-chevron-down\"></i></a></small>";
-                }
+                    }
 
                 // if there is no user id (uid) or group id (gid)...
-                if ($uid === '0' || $gid === '0') {
+                if ($uid === '0' || $gid === '0')
+                {
                     // this is a GUEST COMMENT
                     // check if comment got an email adress and set link color
-                    if (!empty($email)) {
+                    if (!empty($email))
+                    {
                         $emailLink = "<a href=\"mailto:$email\" class=\"text-black\">$name</a>";
-                    } else {
-                        $emailLink = "<span class=\"text-grey\">$name</span>";
                     }
+                    else
+                        {
+                            $emailLink = "<span class=\"text-grey\">$name</span>";
+                        }
 
                     // draw guest comments
                     //  $this->html .= $collapse;
@@ -1403,29 +1417,32 @@ namespace YAWK\PLUGINS\BLOG {
                     // $reply_link </p><hr></div>";
                     //     $this->html .= "<p><i><h5>".$indent."<strong>".$emailLink."</strong> <small>am " . $prettydate . "</small></h5></i><div style=\"$padding\">".$comment."</div>
                     //     $this->html .= "$reply_link</p><hr>";
-                } else { // uid or gid value is not zero...
-                    // which means this is a USER COMMENT
-                    // check if comment got an email and set link color
-                    if (!empty($email)) {
-                        $emailLink = "<a href=\"mailto:$email\">$name</a>";
-                    } else {
-                        $emailLink = "<span>$name</span>";
-                    }
-                    // get username for given uid
-                    $sql2 = $db->query("SELECT username FROM {users} WHERE id = '" . $uid . "'");
-                    while ($row2 = mysqli_fetch_row($sql2)) {
-                        // draw user comments
-                        // $this->html .= $collapse;
-                        $this->html .= "<p<i><h4><strong style=\"color: #912F40;\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"VIP User\">" . $emailLink . "</strong> &nbsp;<small>am " . $prettydate . "</small></h4></i>" . $comment . "
-                    </p><hr>";
-                        //   $reply_link</p><hr>";
-                    }
                 }
-            } // end while
-        } //
-        else {   // q failed
-            $this->html = 'Failed to query comments database.';
+                else    // uid or gid value is not zero...
+                    {
+                        // which means this is a REGISTERED USER COMMENT
+                        // check if comment got an email and set link color
+                        if (!empty($email)) {
+                            $emailLink = "<a href=\"mailto:$email\">$name</a>";
+                        } else {
+                            $emailLink = "<span>$name</span>";
+                        }
+                        // get username for given uid
+                        $sql2 = $db->query("SELECT username FROM {users} WHERE id = '" . $uid . "'");
+                        while ($row2 = mysqli_fetch_row($sql2)) {
+                            // draw user comments
+                            // $this->html .= $collapse;
+                            $this->html .= "<p<i><h5><strong>" . $emailLink . "</strong> &nbsp;<small>am " . $prettydate . "</small></h5></i>" . $comment . "
+                        </p><hr>";
+                            //   $reply_link</p><hr>";
+                        }
+                    }
+            } // end while fetch comments
         }
+        else    // unable to query blog comments
+            {   // q failed
+                $this->html = 'Failed to query comments database.';
+            }
         $this->html .= "</div>";
         return null;
     }
