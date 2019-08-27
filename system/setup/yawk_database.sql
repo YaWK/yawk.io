@@ -69,7 +69,8 @@ CREATE TABLE `cms_blog` (
   `preview` int(1) NOT NULL DEFAULT '0',
   `voting` int(1) NOT NULL DEFAULT '0',
   `spacer` int(1) NOT NULL DEFAULT '0',
-  `limitEntries` int(11) NOT NULL
+  `limitEntries` int(1) NOT NULL DEFAULT '0',
+  `showTotalVotes` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `cms_blog_comments` (
