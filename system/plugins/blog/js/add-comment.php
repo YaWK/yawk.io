@@ -1,9 +1,7 @@
 <?php
 include '../../../classes/db.php';
 if (!isset($db)) { $db = new \YAWK\db(); }
-include '../../../classes/alert.php';
 include '../../../classes/sys.php';
-include '../classes/blog.php';
 	$blogid		=	$_POST['blogid'];
 	$itemid		=	$_POST['itemid'];
 	$uid		=	$_POST['uid'];
@@ -46,18 +44,18 @@ include '../classes/blog.php';
     }
 */
 
-	$db->query("INSERT INTO {blog_comments} (blogid, itemid, uid, gid, ip, date_created, name, email, comment)
-					 VALUES('$blogid', '$itemid', '$uid', '$gid', '$ip', '$now', '$name', '$email', '$comment')");
-	$html		=	'';
+	if ($db->query("INSERT INTO {blog_comments} (blogid, itemid, uid, gid, ip, date_created, name, email, comment)
+					 VALUES('$blogid', '$itemid', '$uid', '$gid', '$ip', '$now', '$name', '$email', '$comment')"))
+	{
+        $html		=	'';
 
-    $date = \YAWK\sys::splitDate($now);
-    $year = $date['year'];
-    $month = $date['month'];
-    $day = $date['day'];
-    $time = $date['time'];
-    $prettydate = "$day. $month $year $time";
+        $date = \YAWK\sys::splitDate($now);
+        $year = $date['year'];
+        $month = $date['month'];
+        $day = $date['day'];
+        $time = $date['time'];
+        $prettydate = "$day. $month $year $time";
 
-	if( mysqli_insert_id($db) ) {
         // if user is guest, show comment
         if ($uid === '0' || $gid === '0') {
             // draw guest comments
@@ -76,8 +74,10 @@ include '../classes/blog.php';
                 }
             }
         }
+        echo $html;
     }
-    else {
-        \YAWK\alert::draw("danger", "We're Sorry! ", "Your Comment could not be saved. Maybe there is a database Problem. Please try it again.","","3500");
-    }
-	echo $html;
+    else
+        {
+            echo "<p>There was an error saving your comment, we're sorry.</p>";
+        }
+

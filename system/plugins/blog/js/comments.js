@@ -3,7 +3,7 @@
         // auto-open blog comments accordeon
             $("#comments").collapse('show');
             // hide open/close comments button
-            $("#commentsBtn").hide();
+            // $("#commentsBtn").hide();
 
         $('#submit_post').click(function(){
         var	name 		=	$('#name').val();
@@ -22,19 +22,22 @@
         $.ajax({
             url:'system/plugins/blog/js/add-comment.php',
             type:'post',
-      //    data:'name='+name+'&comment='+comment+'&id='+id,
             data:'name='+name+'&email='+email+'&comment='+comment+'&blogid='+blogid+'&itemid='+itemid+'&uid='+uid+'&gid='+gid,
             success:function(data){
                 if(! data ){
                     alert('Something went wrong!');
                     return false;
                 }
-                $(data).hide().prependTo("#comment_thread").fadeIn(820);
-                //reset input boxes
-                $('#name').val('');
-                $('#email').val('');
-                $('#comment').val('');
-                $('#comments_btn').val('');
+                    $(data).hide().prependTo($("#comment_thread")).fadeIn(820);
+                    //reset input boxes
+                    $('#name').val('');
+                    $('#email').val('');
+                    $('#comment').val('');
+                    $('#comments_btn').val('');
+            },
+            error:function()
+            {
+                alert('there was an error!');
             }
         });
     });

@@ -1496,6 +1496,7 @@ namespace YAWK\PLUGINS\BLOG {
                     <input type=\"hidden\" id=\"blogid\" name=\"blogid\" value=\"" . $this->blogid . "\">
                     <input type=\"hidden\" id=\"name\" name=\"name\" value=\"$username\">
                 </div>";
+
                 $this->html .= self::getComments($db, $this->blogid, $this->itemid);
                 $this->html .= "</div>
                 <div class=\"col-md-4 mx-auto d-block\">";
