@@ -90,43 +90,47 @@ namespace YAWK\WIDGETS\BLOG\WIDGET {
         public function drawBlogWidget($db)
         {
             /** @var $db \YAWK\db * */
-            error_reporting(1);
-            if (!isset($this->blogID) || (empty($this->blogID))) {
+            error_reporting(0);
+            if (!isset($this->blogID) || (empty($this->blogID)))
+            {
                 echo "Error: unable to load blog because there was no blog ID given.";
-            } else {
-                require_once 'system/plugins/blog/classes/blog.php';
+            }
+            else
+                {   // include blog plugin base class
+                    require_once 'system/plugins/blog/classes/blog.php';
 
-
+            // include required JS files
             echo "<script type=\"text/javascript\" src=\"../../../plugins/blog/js/comments.js\"></script>
                   <script type=\"text/javascript\" src=\"../../../plugins/blog/js/voting.js\"></script>";
 
 
                 /*
-                 * FRONTEND PAGE
+                 * FRONTEND BLOG PAGE
                  */
+                // create new blog object
                 $blog = new \YAWK\PLUGINS\BLOG\blog();
+
+                /* a blog can be called by GET variable or via page include */
+                // assign blog ID
+                $blog->blogid = $this->blogID;
+
+                // load global blog settings
+                $blog->loadBlogProperties($db, $blog->blogid);
+
+                // for debug purpose
                 // print_r($blog);
+
                 /* get templateID */
                 $templateID = \YAWK\template::getCurrentTemplateId($db);
 
-                /* a blog can be called by GET variable or via page include */
-                $blog->blogid = $this->blogID;
-
-                // get published status (is it online or offline?)
-                $published = $blog->getBlogProperty($db, $blog->blogid, "published");
-                // get group id of this blog
-                $gid = $blog->getBlogProperty($db, $blog->blogid, "gid");
-                // get limit entries (number of items to display)
-                $blog->limitEntries = $blog->getBlogProperty($db, $blog->blogid, "limitEntries");
-
                 // if blog is not offline, get entries from db + draw it on screen.
-                if ($published != 0) {
+                if ($blog->published != 0) {
                     /** @var $widget \YAWK\widget */
                     // get headline
                     $this->headline = $this->getHeading($this->blogHeading, $this->blogSubtext);
 
-                    if (!isset($item_id)) {
-                        $item_id = 0;
+                    if (!isset($blog->itemid)) {
+                        $blog->itemid = 0;
                     }
 
                     // load blog title
@@ -138,11 +142,11 @@ namespace YAWK\WIDGETS\BLOG\WIDGET {
                     }
 
                     // load the blog entries into blog object
-                    $blog->getFrontendEntries($db, $blog->blogid, $item_id, $full_view, $this->blogLimitEntries);
+                    $blog->getFrontendEntries($db, $blog->blogid, $blog->itemid, $full_view, $this->blogLimitEntries);
                     // check footer setting and load it on demand
-                    if ($blog->getBlogProperty($db, $blog->blogid, "footer")) {
-                        $blog->getFooter($db);
-                    }
+                    // if ($blog->getBlogProperty($db, $blog->blogid, "footer")) {
+                    //     $blog->getFooter($db);
+                    // }
                     // finally: draw the blog
                     print $blog->draw();
                     print "</div>";
