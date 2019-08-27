@@ -402,16 +402,7 @@ namespace YAWK\PLUGINS\BLOG {
             if ($itemid != 0) $sql = "AND id = '$itemid'"; else $sql = '';
             // get settings (frontend view)
 
-            /*
-            $frontendShowDate = self::getBlogProperty($db, $blogid, "showdate");
-            $frontendShowAuthor = self::getBlogProperty($db, $blogid, "showauthor");
-            $frontendSequence = self::getBlogProperty($db, $blogid, "sequence");
-            $frontendSortation = self::getBlogProperty($db, $blogid, "sortation");
-            $frontendPreview = self::getBlogProperty($db, $blogid, "preview");
-            $frontendVoting = self::getBlogProperty($db, $blogid, "voting");
-            $this->spacer = self::getBlogProperty($db, $blogid, "spacer");
-            $frontendIcon = self::getBlogProperty($db, $blogid, "icon");
-            */
+            // get blog Group ID
             $blog_gid = self::getBlogProperty($db, $blogid, "gid");
 
 
@@ -476,14 +467,6 @@ namespace YAWK\PLUGINS\BLOG {
                 $this->itemlayout = $row['itemlayout'];
                 $this->itemcomments = $row['itemcomments'];
                 // settings for blog_item are set,
-
-                // now get properties of that BLOG (general blog settings)
-                /*
-                $this->permaLink = $this->getBlogProperty($db, $this->blogid, "permaLink");
-                $this->layout = $this->getBlogProperty($db, $this->blogid, "layout");
-                $this->comments = $this->getBlogProperty($db, $this->blogid, "comments");
-                $this->showTotalVotes = $this->getBlogProperty($db, $this->blogid, "showTotalVotes");
-                */
 
                 // override blog layout, if item layout differ from global blog settings
                 if ($this->itemlayout !== "-1")
@@ -1504,7 +1487,7 @@ namespace YAWK\PLUGINS\BLOG {
                 <div id=\"comments\" class=\"col-md-8\">
                 <h4>Comments, please! <!-- <small>Give your mustard (:</small> --></h4>
                 <div class=\"form-group\">
-                    <input class=\"form-control\" type=\"nameplaceholder\" id=\"nameplaceholder\" disabled title=\"Du bist als $username eingeloggt.\" placeholder=\"$username &nbsp;[Du bist eingeloggt]\">
+                    <input class=\"form-control\" type=\"text\" id=\"nameplaceholder\" disabled title=\"Du bist als $username eingeloggt.\" placeholder=\"$username &nbsp;[Du bist eingeloggt]\">
                     <textarea class=\"form-control\" id=\"comment\" placeholder=\"Deine Nachricht \" rows=\"3\"></textarea>
                     <input type=\"button\" class=\"btn btn-success\" id=\"submit_post\" name=\"save_comment\" value=\"absenden\" style=\"\">
                     <input type=\"hidden\" id=\"uid\" name=\"uid\" value=\"" . $hidden_uid . "\">
@@ -1534,24 +1517,28 @@ namespace YAWK\PLUGINS\BLOG {
                     $hidden_uid = 0;
                     $hidden_gid = 0;
                     $i = self::countActiveComments($db, $this->blogid, $this->itemid);
-                    $this->html .= "<a id=\"commentsBtn\" class=\"btn btn-info\" role=\"button\" data-toggle=\"collapse\" href=\"#comments" . $this->itemid . "\" aria-expanded=\"false\" aria-controls=\"comments\">
-                    <i class=\"fa fa-comments\"></i> &nbsp;Kommentare einblenden <small>(" . $i . ")</small></a>
-                    <div class=\"collapse\" id=\"comments\">
-                    <h4>Deine Meinung ist gefragt! <small>Gib Deinen Senf dazu :)</small></h4>
+                    $this->html .= "
+                    <div class=\"row\">
+                    <div id=\"comments\" class=\"col-md-8\">
+                    <h4>Comments, please! <!-- <small>Give your mustard (:</small> --></h4>
                     <div class=\"form-group\">
                         <input type=\"text\" name=\"name\" id=\"name\" class=\"form-control\" placeholder=\"Dein Name\">
                         <input type=\"text\" name=\"email\" id=\"email\" class=\"form-control\" placeholder=\"Emailadresse &nbsp;[optional]\">
-                        <textarea class=\"form-control\" id=\"comment\" placeholder=\"Deine Nachricht\" rows=\"3\"></textarea>
-                        <input type=\"submit\" class=\"btn btn-success\" id=\"submit_post\" name=\"save_comment\" value=\"absenden\" style=\"\">
+                        <textarea class=\"form-control\" id=\"comment\" placeholder=\"Deine Nachricht \" rows=\"3\"></textarea>
+                        <input type=\"button\" class=\"btn btn-success\" id=\"submit_post\" name=\"save_comment\" value=\"absenden\" style=\"\">
                         <input type=\"hidden\" id=\"uid\" name=\"uid\" value=\"" . $hidden_uid . "\">
                         <input type=\"hidden\" id=\"gid\" name=\"gid\" value=\"" . $hidden_gid . "\">
                         <input type=\"hidden\" id=\"itemid\" name=\"itemid\" value=\"" . $this->itemid . "\">
                         <input type=\"hidden\" id=\"blogid\" name=\"blogid\" value=\"" . $this->blogid . "\">
                     </div>";
+                        $this->html .= self::getComments($db, $this->blogid, $this->itemid);
+                        $this->html .= "</div>
+                    <div class=\"col-md-4 mx-auto d-block\">";
+                        $this->html .= self::drawVotingBox($db, $this->voteUp, $this->voteDown);
+                        $this->html .= "</div>
+                    </div>";
+
             }
-            $row = '';
-            // $this->html .= self::getComments($db, $this->blogid, $this->itemid);
-            // $this->html .= "</div>";
         return null;
         }
 
