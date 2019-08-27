@@ -141,6 +141,8 @@ namespace YAWK\PLUGINS\BLOG {
         public $frontendIcon;
         /** * @var int 0|1 how many entries should be displayed */
         public $limitEntries;
+        /** * @var int 0|1 if total votes should be displayed */
+        public $showTotalVotes;
 
 
         /**
@@ -400,6 +402,7 @@ namespace YAWK\PLUGINS\BLOG {
             if ($itemid != 0) $sql = "AND id = '$itemid'"; else $sql = '';
             // get settings (frontend view)
 
+            /*
             $frontendShowDate = self::getBlogProperty($db, $blogid, "showdate");
             $frontendShowAuthor = self::getBlogProperty($db, $blogid, "showauthor");
             $frontendSequence = self::getBlogProperty($db, $blogid, "sequence");
@@ -408,25 +411,26 @@ namespace YAWK\PLUGINS\BLOG {
             $frontendVoting = self::getBlogProperty($db, $blogid, "voting");
             $this->spacer = self::getBlogProperty($db, $blogid, "spacer");
             $frontendIcon = self::getBlogProperty($db, $blogid, "icon");
+            */
             $blog_gid = self::getBlogProperty($db, $blogid, "gid");
 
 
             // ORDER BY
-            if ($frontendSequence === '0')
+            if ($this->sequence === '0')
             {
-                $this->sequence = "date_publish";
+                $orderBy = "date_publish";
             }
-            else if ($frontendSequence === '1')
+            else if ($this->sequence === '1')
             {
-                $this->sequence = "title";
+                $orderBy = "title";
             }
 
             // SORT
-            if ($frontendSortation === '0')
+            if ($this->sortation === '0')
             {
                 $this->sortation = "ASC";
             }
-            else if ($frontendSortation === '1')
+            else if ($this->sortation === '1')
             {
                 $this->sortation = "DESC";
             }
@@ -444,7 +448,7 @@ namespace YAWK\PLUGINS\BLOG {
             $res = $db->query("SELECT * FROM {blog_items}
                                          WHERE blogid = '$blogid' " . $sql . "
                                          AND published = '1'
-                                         ORDER BY " . $this->sequence . " " . $this->sortation . "
+                                         ORDER BY " . $orderBy . " " . $this->sortation . "
                                          $limitSql");
             // fetch data in loop
             while ($row = mysqli_fetch_array($res))
@@ -472,10 +476,14 @@ namespace YAWK\PLUGINS\BLOG {
                 $this->itemlayout = $row['itemlayout'];
                 $this->itemcomments = $row['itemcomments'];
                 // settings for blog_item are set,
+
                 // now get properties of that BLOG (general blog settings)
+                /*
                 $this->permaLink = $this->getBlogProperty($db, $this->blogid, "permaLink");
                 $this->layout = $this->getBlogProperty($db, $this->blogid, "layout");
                 $this->comments = $this->getBlogProperty($db, $this->blogid, "comments");
+                $this->showTotalVotes = $this->getBlogProperty($db, $this->blogid, "showTotalVotes");
+                */
 
                 // override blog layout, if item layout differ from global blog settings
                 if ($this->itemlayout !== "-1")
@@ -485,7 +493,7 @@ namespace YAWK\PLUGINS\BLOG {
                 }
 
 
-                if ($frontendShowDate === '1')
+                if ($this->showDate === '1')
                 {   // show date of this entry
                     /* date string to array function */
                     $splitDate = \YAWK\sys::splitDate($this->date_publish);
@@ -521,7 +529,7 @@ namespace YAWK\PLUGINS\BLOG {
                         $this->permaLink = '';
                     }
 
-                if ($frontendShowAuthor === '1')
+                if ($this->showAuthor === '1')
                 {   //  show author of this entry
                     $author = "by <strong>$this->author</strong>";
                 }
@@ -530,7 +538,7 @@ namespace YAWK\PLUGINS\BLOG {
                         $author = '';
                     }
 
-                if ($frontendVoting === '1')
+                if ($this->voting === '1')
                 {   // show voting box
                     $voting = self::drawVotingBox($db, $this->voteUp, $this->voteDown);
                 }
@@ -573,7 +581,7 @@ namespace YAWK\PLUGINS\BLOG {
                     }
                     else
                         {
-                            if ($frontendPreview === 0)
+                            if ($this->preview === 0)
                             {
                                 $showAllButton = "<a class=\"btn btn-default\" role=\"button\" href=\"$alias.html\"><i class=\"fa fa-bars\"></i> &nbsp;alles anzeigen</a>";
                             }
@@ -659,18 +667,30 @@ namespace YAWK\PLUGINS\BLOG {
 
                     if ($this->layout === '2')
                     {   // LAYOUT 2 = 2 cols, right thumbnail
-                        if (!empty($this->thumbnail)) $imgHtml = "<br><a href=\"$alias.html\"><img src=\"" . $this->thumbnail . "\" class=\"img-thumbnail img-righty-less hvr-grow\"></a>"; else $imgHtml = '';
+                        // check if there is a thumbnail
+                        if (!empty($this->thumbnail))
+                        {   // build thumbnail markup
+                            $imgHtml = "<br><a href=\"$alias.html\"><img src=\"" . $this->thumbnail . "\" class=\"img-thumbnail img-righty-less hvr-grow\"></a><br><br>";
+                        }
+                        else
+                            {   // no thumbnail, empty markup
+                                $imgHtml = '';
+                            }
+
+                        // fill HTML code
                         $this->html .= "
                         <div class=\"row\">
-                          <div class=\"col-md-12 col-lg-8 text-right\">
+                          <div class=\"col-md-12 col-sm-12 col-lg-8 text-right\">
                           <small class=\"pull-right\"><i>$this->permaLink$prettydate $author</i></small><br>
-                           <h2>$this->title&nbsp;<small>$this->subtitle</small></h2>$this->teasertext " . $blogtextHtml . "";
+                           <h2>$this->title&nbsp;<small>$this->subtitle</small></h2>$this->teasertext ".$blogtextHtml . "";
+
                             // are comments enabled?
                             if ($this->comments !== '0')
                             {
                                 if (isset($full_view) && ($full_view === 1))
                                 {
                                     $this->html .= self::draw_commentbox($db);
+                                    // $this->html .= $voting;
                                 }
                                 else
                                     {
@@ -687,7 +707,7 @@ namespace YAWK\PLUGINS\BLOG {
                                 $this->html .= "<hr>";
                             }
                             $this->html .= "</div>
-                          <div class=\"col-md-12 col-lg-4\">
+                          <div class=\"col-md-12 col-sm-12 col-lg-4\">
                           <br>$imgHtml </div>
     
                      </div><br><br>";
@@ -777,18 +797,36 @@ namespace YAWK\PLUGINS\BLOG {
     * @return mixed Html voting box
     */
     function drawVotingBox($db, $voteUp, $voteDown)
-    {
-        /** @var $db \YAWK\db */
-        $totalVotes = $voteUp + $voteDown;
-        if ($totalVotes === 0) {
-            $totalText = "<b>Noch keine Bewertungen. Sei der erste und vote!</b>";
-        } else {
-            $totalText = "<b>Votes insgesamt:</b> $totalVotes";
+    {   /** @var $db \YAWK\db */
+        if ($this->voting === '1')
+        {
+            $totalVotes = $voteUp + $voteDown;
+            // check, if there are any votes yet
+            if ($totalVotes === 0)
+            {   // if not, set this text:
+                $totalText = "<b>Be the first to vote!</b>";
+            }
+            // check if total votes should be shown or not
+            if ($this->showTotalVotes === '1')
+            {
+                // show total votes
+                $totalText = "<b>Total Votes:</b> <span id=\"totalVotesText\">$totalVotes</span>";
+            }
+            else
+            {   // no total votes, empty markup
+                $totalText = "";
+            }
+
+            $votingBox = "<div class=\"mx-auto d-block\"><h3>Vote this</h3><br><h5><small>$totalText
+            <span id=\"voteUp\" class=\"hvr-grow\" style=\"cursor:pointer;\"><i class=\"fa fa-thumbs-o-up fa-3x\" id=\"voteUpIcon\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"LIKE this\"></i>&nbsp;(<span id=\"voteUpText\"><small>$voteUp</small></span>)</span>
+            &nbsp; 
+            <span id=\"voteDown\" class=\"hvr-grow\" style=\"cursor:pointer;\"><i class=\"fa fa-thumbs-o-down fa-3x\" id=\"voteDownIcon\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Dislike this\"></i>&nbsp;(<span id=\"voteDownText\"><small>$voteDown</small></span>)</span><br></small></h5></div>";
+            return $votingBox;
         }
-        $votingBox = "<small>$totalText&nbsp;&nbsp;&nbsp;&nbsp;</small>
-            <i class=\"fa fa-thumbs-o-up\" id=\"voteUp\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Gef&auml;llt mir\"></i>&nbsp;<small>($voteUp)</small>
-            &nbsp; <i class=\"fa fa-thumbs-o-down\" id=\"voteDown\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Gef&auml;llt mir nicht\"></i>&nbsp;<small>($voteDown)</small><br>";
-        return $votingBox;
+        else
+            {   // no voting allowed
+                return null;
+            }
     }
 
     /**
@@ -863,6 +901,7 @@ namespace YAWK\PLUGINS\BLOG {
                 $this->voting = $row['voting'];
                 $this->spacer = $row['spacer'];
                 $this->frontendIcon = $row['frontendIcon'];
+                $this->showTotalVotes = $row['showTotalVotes'];
                 return true;
             }
             else
@@ -1079,7 +1118,6 @@ namespace YAWK\PLUGINS\BLOG {
                         return false;
                     }
                 }
-
         }
         else
         {   // update pages failed, abort +
@@ -1102,27 +1140,28 @@ namespace YAWK\PLUGINS\BLOG {
     {
         /** @var $db \YAWK\db */
         // convert html special chars
-        $this->name = htmlentities($blog->name);
-        $this->description = htmlentities($blog->description);
+        // $this->name = htmlentities($blog->name);
+        // $this->description = htmlentities($blog->description);
         if ($db->query("UPDATE {blog} SET
                     name = '" . $this->name . "',
                     description = '" . $this->description . "',
-                    icon = '" . $blog->icon . "',
-                    showtitle = '" . $blog->showTitle . "',
-                    showdesc = '" . $blog->showDesc . "',
-                    showdate = '" . $blog->showDate . "',
-                    showauthor = '" . $blog->showAuthor . "',
-                    sequence = '" . $blog->sequence . "',
-                    sortation = '" . $blog->sortation . "',
-                    comments = '" . $blog->comments . "',
-                    permalink = '" . $blog->permaLink . "',
-                    preview = '" . $blog->preview . "',
-                    voting = '" . $blog->voting . "',
-                    layout = '" . $blog->layout . "',
-                    gid = '" . $blog->gid . "',
-                    spacer = '" . $blog->spacer . "',
-                    limitEntries = '" . $blog->limitEntries. "'
-                    WHERE id = '" . $blog->blogid . "'"))
+                    icon = '" . $this->icon . "',
+                    showtitle = '" . $this->showTitle . "',
+                    showdesc = '" . $this->showDesc . "',
+                    showdate = '" . $this->showDate . "',
+                    showauthor = '" . $this->showAuthor . "',
+                    sequence = '" . $this->sequence . "',
+                    sortation = '" . $this->sortation . "',
+                    comments = '" . $this->comments . "',
+                    permalink = '" . $this->permaLink . "',
+                    preview = '" . $this->preview . "',
+                    voting = '" . $this->voting . "',
+                    layout = '" . $this->layout . "',
+                    gid = '" . $this->gid . "',
+                    spacer = '" . $this->spacer . "',
+                    limitEntries = '" . $this->limitEntries. "',
+                    showTotalVotes = '" . $this->showTotalVotes. "'
+                    WHERE id = '" . $this->blogid . "'"))
         {
             return true;
         }
@@ -1460,10 +1499,10 @@ namespace YAWK\PLUGINS\BLOG {
                 $hidden_uid = $_SESSION['uid'];
                 $hidden_gid = $_SESSION['gid'];
                 $i = self::countActiveComments($db, $this->blogid, $this->itemid);
-                $this->html .= "<a class=\"btn btn-info\" id=\"commentsBtn\" role=\"button\" data-toggle=\"collapse\" href=\"#comments" . $this->itemid . "\" aria-expanded=\"false\" aria-controls=\"comments\">
-                <i class=\"fa fa-comments\"></i> &nbsp;Kommentare einblenden <small>(" . $i . ")</small></a>
-                <div class=\"collapse\" id=\"comments\">
-                <h4>Comments, please! <small>Give your mustard (:</small></h4>
+                $this->html .= "
+                <div class=\"row\">
+                <div id=\"comments\" class=\"col-md-8\">
+                <h4>Comments, please! <!-- <small>Give your mustard (:</small> --></h4>
                 <div class=\"form-group\">
                     <input class=\"form-control\" type=\"nameplaceholder\" id=\"nameplaceholder\" disabled title=\"Du bist als $username eingeloggt.\" placeholder=\"$username &nbsp;[Du bist eingeloggt]\">
                     <textarea class=\"form-control\" id=\"comment\" placeholder=\"Deine Nachricht \" rows=\"3\"></textarea>
@@ -1474,6 +1513,14 @@ namespace YAWK\PLUGINS\BLOG {
                     <input type=\"hidden\" id=\"blogid\" name=\"blogid\" value=\"" . $this->blogid . "\">
                     <input type=\"hidden\" id=\"name\" name=\"name\" value=\"$username\">
                 </div>";
+                $this->html .= self::getComments($db, $this->blogid, $this->itemid);
+                $this->html .= "</div>
+                <div class=\"col-md-4 mx-auto d-block\">";
+                    $this->html .= self::drawVotingBox($db, $this->voteUp, $this->voteDown);
+                $this->html .= "</div>
+                </div>";
+
+
             } // session uid or gid is empty, user is not logged in correctly
             else
                 {
@@ -1503,8 +1550,8 @@ namespace YAWK\PLUGINS\BLOG {
                     </div>";
             }
             $row = '';
-            $this->html .= self::getComments($db, $this->blogid, $this->itemid);
-            $this->html .= "</div>";
+            // $this->html .= self::getComments($db, $this->blogid, $this->itemid);
+            // $this->html .= "</div>";
         return null;
         }
 
@@ -2085,18 +2132,6 @@ namespace YAWK\PLUGINS\BLOG {
                             return false;
                         }
                     }
-
-                /*
-                // success: insert blog item worked
-                if ($res === true)
-                {
-
-                }
-                else
-                    {
-                        // error: insert blog item failed!
-                    }
-                */
 
             }
             else

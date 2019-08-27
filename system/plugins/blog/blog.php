@@ -22,15 +22,30 @@ if (!isset($_GET['blogid']))
 }
 else { $blog->blogid = $_GET['blogid']; } // set the blog ID via $_GET param
 
+    if ($blog->loadBlogProperties($db, $blog->blogid) === false)
+    {
+        echo "Unable to load Blog settings";
+    }
+    /* debug
+    else
+        {
+            echo "<pre>";
+            print_r($blog);
+            echo "</pre>";
+        }
+    */
+
+/*
     // get published status (is it online or offline?)
     $published = $blog->getBlogProperty($db, $blog->blogid, "published");
     // get group id of this blog
     $gid = $blog->getBlogProperty($db, $blog->blogid, "gid");
     // get limit entries (number of items to display)
     $blog->limitEntries = $blog->getBlogProperty($db, $blog->blogid, "limitEntries");
+*/
 
 // if blog is not offline, get entries from db + draw it on screen.
-if ($published != 0)
+if ($blog->published != 0)
 {
     if (!isset($item_id)){ $item_id = 0; }
         // check group id, only load title if own gid is bigger
@@ -44,9 +59,9 @@ if ($published != 0)
     if (!isset($blog->limitEntries)) { $blog->limitEntries = 0; }
     $blog->getFrontendEntries($db, $blog->blogid, $item_id, $full_view, $blog->limitEntries);
     // check footer setting and load it on demand
-    if ($blog->getBlogProperty($db, $blog->blogid, "footer")){
-        $blog->getFooter($db);
-    }
+    //if ($blog->getBlogProperty($db, $blog->blogid, "footer")){
+    //    $blog->getFooter($db);
+    //}
     // finally: draw the blog
     print $blog->draw();
     print "</div>";
