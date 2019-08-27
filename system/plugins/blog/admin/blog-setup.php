@@ -67,6 +67,7 @@ if (isset($_POST['setup']))
     $blog->voting = $db->quote($_POST['voting']);
     $blog->spacer = $db->quote($_POST['spacer']);
     $blog->frontendIcon = $db->quote($_POST['frontendIcon']);
+    $blog->showTotalVotes = $db->quote($_POST['showTotalVotes']);
 
     // set layout setting
     if (!isset($_POST['layout'])) {
@@ -74,15 +75,6 @@ if (isset($_POST['setup']))
     } else {
         $blog->layout = $db->quote($_POST['layout']);
     }
-
-    // how many entries should be displayed?
-    if (!isset($_POST['limitEntries']))
-    {
-        $blog->limitEntries = 0;
-    } else {
-        $blog->limitEntries = $db->quote($_POST['limitEntries']);
-    }
-
 
     // sequence tells how it needs2be sorted. (by name or by date)
     if (!isset($_POST['sequence'])) {
@@ -101,6 +93,24 @@ if (isset($_POST['setup']))
         $blog->comments = "0";
     } else {
         $blog->comments = $_POST['comments'];
+    }
+
+    // voting
+    if (!isset($_POST['showTotalVotes']))
+    {
+        $blog->showTotalVotes = "0";
+    }
+    else
+        {
+            $blog->showTotalVotes = $_POST['showTotalVotes'];
+        }
+
+    // how many entries should be displayed?
+    if (!isset($_POST['limitEntries']))
+    {
+        $blog->limitEntries = 0;
+    } else {
+        $blog->limitEntries = $db->quote($_POST['limitEntries']);
     }
 
     // finally: save blog settings
@@ -132,6 +142,7 @@ else
         $blog->spacer = $blog->getBlogProperty($db, $blog->blogid, "spacer");
         $blog->frontendIcon = $blog->getBlogProperty($db, $blog->blogid, "frontendIcon");
         $blog->limitEntries = $blog->getBlogProperty($db, $blog->blogid, "limitEntries");
+        $blog->showTotalVotes = $blog->getBlogProperty($db, $blog->blogid, "showTotalVotes");
     }
 
 
@@ -260,6 +271,16 @@ if ($blog->voting === '1') {
 } else {
     $votingOnChecked = "";
 }
+
+// showTotalVotes select field
+$totalVotesSelectedOn = "";
+$totalVotesSelectedOff = "";
+if ($blog->showTotalVotes == '1') {
+    $totalVotesSelectedOn = " selected";
+} else {
+    $totalVotesSelectedOff = " selected";
+}
+
 // GO ON WITH THE PLAIN HTML FORM...
 ?>
 
@@ -547,33 +568,39 @@ echo "
 
                     <div class="radio">
                         <label for="comment_on">
-                            <input type="radio" name="comments" id="comment_on" value="0"<?php echo $commentsOnChecked; ?>>
+                            <input type="radio" name="comments" id="comment_on" value="0"<?php echo " $commentsOnChecked"; ?>>
                             <?php echo $lang['COMMENTS']."&nbsp;".$lang['FORBIDDEN']; ?>
                         </label><br><br>
                         <label for="comment_off">
-                            <input type="radio" name="comments" id="comment_off" value="1"<?php echo $commentsOffChecked; ?>>
+                            <input type="radio" name="comments" id="comment_off" value="1"<?php echo " $commentsOffChecked"; ?>>
                             <?php echo $lang['COMMENTS']."&nbsp;".$lang['ALLOWED']; ?>
                         </label>
                     </div>
 
-                    <!-- VOTING -->
-                    <h3><i class="fa fa-thumbs-o-up"></i> <?php echo $lang['VOTING']; ?></h3>
-
-                    <div class="radio">
-                        <label for="voting_off">
-                            <input type="radio" name="voting" id="voting_off" value="0" <?php echo $votingOffChecked; ?>>
-                            <?php echo $lang['VOTING']."&nbsp;".$lang['ALLOWED']; ?>
-                        </label><br><br>
-                        <label for="voting_on">
-                            <input type="radio" name="voting" id="voting_on" value="1" <?php echo $votingOnChecked; ?>>
-                            <?php echo $lang['VOTING']."&nbsp;".$lang['FORBIDDEN']; ?>
-                        </label>
-                    </div>
 
                     </div>
 
                     <div class="col-md-6">
-                        ...
+                        <!-- VOTING -->
+                        <h3><i class="fa fa-thumbs-o-up"></i> <?php echo $lang['VOTING']; ?></h3>
+
+                        <div class="radio">
+                            <label for="voting_off">
+                                <input type="radio" name="voting" id="voting_off" value="0" <?php echo $votingOffChecked; ?>>
+                                <?php echo $lang['VOTING']."&nbsp;".$lang['FORBIDDEN']; ?>
+                            </label><br><br>
+                            <label for="voting_on">
+                                <input type="radio" name="voting" id="voting_on" value="1" <?php echo $votingOnChecked; ?>>
+                                <?php echo $lang['VOTING']."&nbsp;".$lang['ALLOWED']; ?>
+                            </label>
+                        </div>
+                        <br>
+                        <hr>
+                        <label for="showTotalVotes"><?php echo $lang['SHOW_TOTAL_VOTES']; ?></label>
+                        <select class="form-control" id="showTotalVotes" name="showTotalVotes">
+                            <option value="1"<?php echo $totalVotesSelectedOn; ?>><?php echo $lang['TOTAL_VOTES_ON']; ?></option>
+                            <option value="0"<?php echo $totalVotesSelectedOff; ?>><?php echo $lang['TOTAL_VOTES_OFF']; ?></option>
+                        </select>
                     </div>
                 </div>
             </div>
