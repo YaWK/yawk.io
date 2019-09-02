@@ -1412,7 +1412,7 @@ namespace YAWK {
          * @link        http://yawk.io
          * @param object $db database
          * @param string $id page ID
-         * @return bool
+         * @return mixed string|int
          */
         static function getSubMenu($db, $id)
         {
@@ -1422,11 +1422,18 @@ namespace YAWK {
 	                           JOIN {menu_names} as m on m.id = p.menu
 	                           WHERE p.id = $id")){
                 $row = mysqli_fetch_row($res);
-                return $row[0];
+                if (!isset($row[0]) ||(empty($row[0])))
+                {
+                    return "0";
+                }
+                else
+                    {
+                        return $row[0];
+                    }
             }
             else
                 {
-                    return false;
+                    return "0";
                 }
         }
 
@@ -1452,7 +1459,7 @@ namespace YAWK {
             }
             else
                 {
-                    return false;
+                    return 0;
                 }
         }
 

@@ -411,9 +411,18 @@ echo "
                       <!-- SUB MENU SELECTOR -->
                       <label for="menu"><?php echo $lang['SUBMENU']; ?></label>
                           <select name="menu" id="menu" class="form-control">
-                              <option value="<?php print \YAWK\sys::getSubMenu($db, $page->id); ?>"><?php print \YAWK\sys::getMenuItem($db, $page->id); ?></option>
-                              <option value="0">-- Kein Men&uuml; --</option>
+
                               <?php
+                                // get submenu ID
+                                $subMenuID = \YAWK\sys::getSubMenu($db, $page->id);
+                              ?>
+                              <option value="<?php print $subMenuID ?>"><?php print \YAWK\sys::getMenuItem($db, $page->id); ?></option>
+                              <?php
+                                if ($subMenuID == 0)
+                                {
+                                    print "<option value=\"0\" selected aria-selected=\"true\">-- No Menu --</option>";
+                                }
+
                               foreach(YAWK\sys::getMenus($db) as $menue){
                                   print "<option value=\"".$menue['id']."\"";
                                   if (isset($_POST['menu'])) {

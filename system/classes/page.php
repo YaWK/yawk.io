@@ -703,6 +703,9 @@ namespace YAWK {
                     \YAWK\alert::draw("warning", "Warning", "menu entry could not be stored in database.", "", 6200);
                 }
 
+                // check submenu status
+                // if (!isset($this->menu) || ($this->menu !=))
+
                 // update page db
                 // check unpublish date
                 if ($this->date_unpublish == "0000-00-00 00:00:00" || (empty($this->date_unpublish) || $this->date_unpublish == NULL))
