@@ -422,6 +422,10 @@ echo "
                                 {
                                     print "<option value=\"0\" selected aria-selected=\"true\">-- No Menu --</option>";
                                 }
+                                else
+                                    {
+                                        print "<option value=\"0\">-- No Menu --</option>";
+                                    }
 
                               foreach(YAWK\sys::getMenus($db) as $menue){
                                   print "<option value=\"".$menue['id']."\"";
