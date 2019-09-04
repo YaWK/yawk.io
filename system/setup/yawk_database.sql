@@ -588,11 +588,11 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
   ('userpage_stats', '1', '', 6, 0, 1, 'userpage stats enabled?', '', '', '', 'form-control', '', '', '', ''),
   ('webmail_active', '0', '', 23, 1, 1, 'LABEL_WEBMAIL_ACTIVE', 'fa fa-envelope-o', 'HEADING_WEBMAIL_ACTIVE', '', 'form-control', 'checkbox', '', '', ''),
   ('webmail_imap_encrypt', 'ssl', '', 22, 2, 1, 'LABEL_WEBMAIL_IMAP_ENCRYPT', '', '', '', 'form-control', 'select', '', 'DESC_WEBMAIL_IMAP_ENCRYPT', 'tls,tls:ssl,ssl:,null'),
-  ('webmail_imap_password', 'test1234', '', 23, 11, 1, 'LABEL_WEBMAIL_PWD', '', '', '', 'form-control', 'password', '', '', ''),
+  ('webmail_imap_password', '', '', 23, 11, 1, 'LABEL_WEBMAIL_PWD', '', '', '', 'form-control', 'password', '', '', ''),
   ('webmail_imap_port', '993', '', 22, 3, 1, 'LABEL_WEBMAIL_IMAP_PORT', '', '', '', 'form-control', 'input', '', 'DESC_WEBMAIL_IMAP_PORT', ''),
-  ('webmail_imap_server', 'imap.world4you.com', '', 22, 1, 1, 'LABEL_WEBMAIL_IMAP_SERVER', 'fa fa-server', 'HEADING_WEBMAIL_IMAP_SERVER', '', 'form-control', 'input', 'PH_WEBMAIL_IMAP_SERVER', 'DESC_WEBMAIL_IMAP_SERVER', ''),
-  ('webmail_imap_username', 'development@mashiko.at', '', 23, 10, 1, 'LABEL_WEBMAIL_USERNAME', 'fa fa-user-o', 'HEADING_WEBMAIL_USERNAME', '', 'form-control', 'input', 'PH_WEBMAIL_USERNAME', '', ''),
-  ('yawkversion', '1.0 build 2018.3', '', 9, 2, 0, 'YAWKVERSION_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+  ('webmail_imap_server', '', '', 22, 1, 1, 'LABEL_WEBMAIL_IMAP_SERVER', 'fa fa-server', 'HEADING_WEBMAIL_IMAP_SERVER', '', 'form-control', 'input', 'PH_WEBMAIL_IMAP_SERVER', 'DESC_WEBMAIL_IMAP_SERVER', ''),
+  ('webmail_imap_username', '', '', 23, 10, 1, 'LABEL_WEBMAIL_USERNAME', 'fa fa-user-o', 'HEADING_WEBMAIL_USERNAME', '', 'form-control', 'input', 'PH_WEBMAIL_USERNAME', '', ''),
+  ('yawkversion', '1.0 build 2019.9', '', 9, 2, 0, 'YAWKVERSION_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
   ('youtubeChannelUrl', 'http://www.youtube.com', '', 4, 0, 1, 'YouTube Channel URL', '', '', '', 'form-control', '', '', '', ''),
   ('youtubestatus', '0', '', 4, 0, 1, 'YouTube on/off', '', '', '', 'form-control', '', '', '', '');
 
