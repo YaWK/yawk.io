@@ -10,11 +10,11 @@ Order allow,deny
 Allow from all
 
 # custom error page
-# ErrorDocument 404 http://yourdomain.com/web/yawk-LTE/content/errors/404.html
+#ErrorDocument 404 http://raspi/web/clone/content/errors/404.html
 
 # SEO settings
 RewriteEngine On
-RewriteBase /web/yawk-LTE/
+RewriteBase /
 RewriteCond %{REQUEST_URI} /(.*).html
 # rewrite all .html files to index.php?include={filename}
 RewriteRule ^(.*).html$ \index.php?include=$1 [NC,L]
