@@ -94,6 +94,12 @@ if (!isset($AdminLTE))
                 echo $AdminLTE->drawHtmlNavbarMessagesMenu($db, $lang);
             }
 
+            // check if webmail is enabled
+            if (\YAWK\settings::getSetting($db, "webmail_active") == 1)
+            {   // ok, draw msg icon and message navbar in upper right corner
+                echo $AdminLTE->drawHtmlNavbarWebmailMenu($db, $lang);
+            }
+
             // check, if backend notification is enabled
             if (\YAWK\settings::getSetting($db, "backendNotificationMenu") == 1)
             {   // draw notification menu, in upper right corner
