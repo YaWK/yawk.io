@@ -16,16 +16,16 @@ require_once "../system/engines/imapClient/TypeBody.php";
 use SSilence\ImapClient\ImapClientException;
 use SSilence\ImapClient\ImapClient as Imap;
 
-// mailbox user data
-$mailbox = 'imap.world4you.com';
-$username = 'development@mashiko.at';
-$password = 'test1234';
+// get mailbox login data
+$mailbox = \YAWK\settings::getSetting($db, "webmail_imap_server");
+$username = \YAWK\settings::getSetting($db, "webmail_imap_username");
+$password = \YAWK\settings::getSetting($db, "webmail_imap_password");
+$encryption = \YAWK\settings::getSetting($db, "webmail_imap_encrypt");
 
-$encryption = Imap::ENCRYPT_SSL; // TLS OR NULL accepted
-
+// include webmail class
 require_once "../system/classes/webmail.php";
+// create new webmail object
 $webmail = new \YAWK\webmail();
-
 
 // Open connection
 try
@@ -37,18 +37,6 @@ try
         $imap->currentFolder = $_GET['folder'];
         $imap->selectFolder($imap->currentFolder);
     }
-
-
-    // $body = imap_body($imap->getImap(), $_GET['msgno']);
-    // $body = imap_fetchstructure($imap->getImap(), $_GET['msgno']);
-
-    // $header = imap_header($imap->connection, $_GET['msgno']);
-   // $body = imap_fetchbody($imap->connection, $_GET['msgno'], 2);
-
-    // Setting flag from un-seen email to seen on emails ID.
-   // imap_setflag_full($imap->connection, $_GET['msgno'], "\\Seen \\Flagged"); //IMPORTANT
-
-
 }
 catch (ImapClientException $error){
     // You know the rule, no errors in production ...

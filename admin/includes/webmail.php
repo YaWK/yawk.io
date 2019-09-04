@@ -26,10 +26,6 @@ use SSilence\ImapClient\SubtypeBody;
 use SSilence\ImapClient\TypeAttachments;
 use SSilence\ImapClient\ImapClient as Imap;
 
-// $mailbox = 'imap.world4you.com';
-// $username = 'management@mashiko.at';
-// $password = 'austriamagna123';
-// $encryption = Imap::ENCRYPT_SSL; // TLS OR NULL accepted
 
 // get mailbox login data
 $mailbox = \YAWK\settings::getSetting($db, "webmail_imap_server");
