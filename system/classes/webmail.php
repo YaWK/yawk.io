@@ -34,6 +34,12 @@ namespace YAWK {
                 // sort folder array to bring inbox more upwards
                 ksort($folders);
 
+                // count unread messages in current folder
+                $unreadMessages = $imap->countUnreadMessages();
+
+                // count total messages in current folder
+                $totalMessages = $imap->countMessages();
+
                 // init default active folder markup
                 $activeMarkupDefault = '';
 
@@ -43,51 +49,68 @@ namespace YAWK {
                     if (isset($_GET['folder']) && (!empty($_GET['folder'])))
                     {   // check, if folder is active (current equals request)
                         if ($folder === $_GET['folder'])
-                        {   // set markup to view as active
+                        {
+
+                            // set markup to view as active
                             $activeMarkup = " class=\"active\"";
+                            $activeLabelNew = "<span class=\"label label-success pull-right\">+ ".$unreadMessages."</span>";
+                            $activeLabelInbox = '';
+                            $activeLabelTotal = " <small>(".$totalMessages.")</small>";
                         }
                         // not active, no markup
-                        else { $activeMarkup = ''; }
+                        else {
+                                $activeMarkup = '';
+                                $activeLabelNew= '';
+                                $activeLabelInbox = '';
+                                $activeLabelTotal = '';
+                            }
                     }
                     else
                         {   // page called w/o requested folder, set default (inbox) as active
                             $activeMarkup = "";
+                            $activeLabelNew = "";
+                            $activeLabelTotal = "";
+                            $activeLabelInbox = "<span class=\"label label-success pull-right\">+ ".$unreadMessages."</span>";
+
                             $activeMarkupDefault = " class=\"active\"";
                         }
 
-                    // count unread messages in current folder
-                    $unreadMessages = $imap->countUnreadMessages();
 
                     // check folder value and set markup to display icons corresponding to the folder
                     if ($folder == "INBOX")
                     {   // set inbox icon
                         echo "<li".$activeMarkup.$activeMarkupDefault."><a href=\"index.php?page=webmail&folder=$folder\"><i class=\"fa fa-inbox\"></i> $folder
-                              <span class=\"label label-primary pull-right\">".$unreadMessages."</span></a></li>";
+                              ".$activeLabelNew." ".$activeLabelInbox." ".$activeLabelTotal." </a></li>";
                     }
 
                     else if ($folder == "Sent")
                     {   // set sent icon
-                        echo "<li".$activeMarkup."><a href=\"index.php?page=webmail&folder=$folder\"><i class=\"fa fa-envelope-o\"></i> $folder</a></li>";
+                        echo "<li".$activeMarkup."><a href=\"index.php?page=webmail&folder=$folder\"><i class=\"fa fa-envelope-o\"></i> $folder 
+                             ".$activeLabelNew." ".$activeLabelTotal." </a></li>";
                     }
 
                     else if ($folder == "Drafts")
                     {   // set draft icon
-                        echo "<li".$activeMarkup."><a href=\"index.php?page=webmail&folder=$folder\"><i class=\"fa fa-file-text-o\"></i> ".$folder."</a></li>";
+                        echo "<li".$activeMarkup."><a href=\"index.php?page=webmail&folder=$folder\"><i class=\"fa fa-file-text-o\"></i> ".$folder."
+                             ".$activeLabelNew." ".$activeLabelTotal." </a></li>";
                     }
 
                     else if ($folder == "Junk")
                     {   // set junk icon
-                        echo "<li".$activeMarkup."><a href=\"index.php?page=webmail&folder=$folder\"><i class=\"fa fa-filter\"></i> ".$folder."</a></li>";
+                        echo "<li".$activeMarkup."><a href=\"index.php?page=webmail&folder=$folder\"><i class=\"fa fa-filter\"></i> ".$folder."
+                             ".$activeLabelNew." ".$activeLabelTotal." </a></li>";
                     }
 
                     else if ($folder == "Trash")
                     {   // set trash icon
-                        echo "<li".$activeMarkup."><a href=\"index.php?page=webmail&folder=$folder\"><i class=\"fa fa-trash-o\"></i> ".$folder."</a></li>";
+                        echo "<li".$activeMarkup."><a href=\"index.php?page=webmail&folder=$folder\"><i class=\"fa fa-trash-o\"></i> ".$folder."
+                             ".$activeLabelNew." ".$activeLabelTotal." </a></li>";
                     }
 
                     else
                         {   // any other folder: default folder icon
-                            echo "<li".$activeMarkup."><a href=\"index.php?page=webmail&folder=$folder\"><i class=\"fa fa-folder-o\"></i> ".$folder."</a></li>";
+                            echo "<li".$activeMarkup."><a href=\"index.php?page=webmail&folder=$folder\"><i class=\"fa fa-folder-o\"></i> ".$folder."
+                                 ".$activeLabelNew." ".$activeLabelTotal." </a></li>";
                         }
                 }
             }
