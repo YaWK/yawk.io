@@ -85,6 +85,7 @@ namespace YAWK {
 <html>
   <head>
     <meta charset=\"utf-8\">
+    <meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\" />
     <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">
     <title>YaWK CMS AdminLTE 2 | Startseite</title>
     <!-- Tell the browser to be responsive to screen width -->
@@ -430,14 +431,14 @@ namespace YAWK {
             $i = \YAWK\user::countNewMessages($db, $_SESSION['uid']);
             if ($i === 1)
             {   // set singular
-                $msg = $lang['MESSAGE'];
+                $msg = $lang['CHAT'];
                 $unread = $lang['UNREAD_SINGULAR'];
                 $label = "<span id=\"envelope-label\" class=\"label label-success animated swing\">$i</span>";
                 $animated = "animated tada";
             }
             else
             {   // set plural correctly
-                $msg = $lang['MESSAGES'];
+                $msg = $lang['CHATS'];
                 $unread = $lang['UNREAD_PLURAL'];
                 $label = "<span id=\"envelope-label\" class=\"label label-success animated swing\">$i</span>";
                 $animated = "animated tada";
@@ -457,7 +458,7 @@ namespace YAWK {
               <li class=\"dropdown messages-menu\">
                 <!-- Menu toggle button -->
                 <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">
-                  <i class=\"fa fa-envelope-o $animated\"></i>
+                  <i class=\"fa fa-comment-o $animated\"></i>
                   $label
                 </a>
                 <ul class=\"dropdown-menu\">
@@ -502,6 +503,116 @@ namespace YAWK {
                     echo "</ul><!-- /.menu -->
                   </li>
                   <li class=\"footer\"><a href=\"index.php?plugin=messages&pluginpage=mailbox\">See All Messages</a></li>
+                </ul>
+              </li><!-- /.messages-menu -->";
+            return null;
+        }
+
+
+        /**
+         * Webmail Menu: small envelope icon in the right corner of top navigation
+         * This is a preview of your emails (if you use webmail)
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database object
+         * @param array $lang Language array
+         * @return null
+         */
+        function drawHtmlNavbarWebmailMenu($db, $lang)
+        {
+            // count + return unread messages
+            // connect to mailbox:
+            $mailbox = '{imap.world4you.com:993/imap/ssl/novalidate-cert}INBOX';
+            $username = 'development@mashiko.at';
+            $password = 'test1234';
+
+            // open new imap connection
+            $imap = imap_open($mailbox, $username, $password);
+            // get all unseen messages
+            $emails = imap_search($imap, 'UNSEEN');
+            // count emails
+            $i = count ($emails);
+
+            // one email only
+            if ($i === 1)
+            {   // set singular
+                $msg = $lang['EMAIL'];
+                $unread = $lang['UNREAD_SINGULAR'];
+                $label = "<span id=\"envelope-label\" class=\"label label-success animated swing\">$i</span>";
+                $animated = "animated tada";
+            }
+            else
+            {   // set plural correctly
+                $msg = $lang['EMAILS'];
+                $unread = $lang['UNREAD_PLURAL'];
+                $label = "<span id=\"envelope-label\" class=\"label label-success animated swing\">$i</span>";
+                $animated = "animated tada";
+            }
+            // no email available...
+            if ($i === 0)
+            {
+                // if notification available, ring bell and show label...
+                $envelope = "tada";
+                $label = '';
+                $animated = '';
+            }
+
+            // get all unread message data
+           //  $newMessages = \YAWK\user::getNewMessages($db, $_SESSION['uid']);
+
+            echo "
+              <!-- Messages: style can be found in dropdown.less-->
+              <li class=\"dropdown messages-menu\">
+                <!-- Menu toggle button -->
+                <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">
+                  <i class=\"fa fa-envelope-o $animated\"></i>
+                  $label
+                </a>
+                <ul class=\"dropdown-menu\">
+                  <li class=\"header\">$lang[SYSLOG_YOU_HAVE] <span id=\"messagesCounterMenu\">$i</span> $unread $msg</li>
+                  <li>
+                    <!-- inner menu: contains the messages -->
+                    <ul class=\"menu\">";
+            if($emails)
+            {
+                // newest first
+                rsort($emails);
+
+                // for every email...
+                foreach($emails as $email_number) {
+                    /* get information specific to this email */
+                    $overview = imap_fetch_overview($imap,$email_number,0);
+                    // $message = utf8_decode(imap_fetchbody($imap,$email_number, 1));
+
+                    // current email number
+                    $email_number;
+                    // get email header params
+                    $overview[0]->subject;
+                    $overview[0]->from;
+                    $overview[0]->date;
+                    $overview[0]->size;
+                    $overview[0]->uid;
+
+                    // calculate huma-friendly time
+                    $timeAgo = \YAWK\sys::time_ago($overview[0]->date, $lang);
+
+                    // output every email as single line
+                    echo "<li>
+                        <a href=\"index.php?page=webmail-message&folder=inbox&msgno=".$email_number."\">
+                        <b><small>".utf8_decode(imap_utf8($overview[0]->from))."</small></b><br>
+                        ".$overview[0]->subject."<br>";
+                        // <small>".substr($message, 0, 64)."</small><br>
+                        echo"<small><i class=\"fa fa-clock-o\"></i> ".$timeAgo."</small>
+                        </a>    
+                    </li>";
+                }
+            }
+            // ./ end foreach new messages
+
+            echo "</ul><!-- /.menu -->
+                  </li>
+                  <li class=\"footer\"><a href=\"index.php?page=webmail\">$lang[WEBMAIL_SHOW]</a></li>
                 </ul>
               </li><!-- /.messages-menu -->";
             return null;
@@ -1028,6 +1139,7 @@ namespace YAWK {
                         </li>
                       </ul>";
 
+            // SETTINGS TREEVIEW MENU
             if (isset($_GET['page']) && (strpos($_GET['page'], 'settings') !== false))
             { $activeClass = " class=\"active\""; }
             else { $activeClass = ''; }
@@ -1050,6 +1162,9 @@ namespace YAWK {
             </li>
             <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-system') ? "class=\"active\"" : ""; echo">
                 <a href=\"index.php?page=settings-system\"><i class=\"fa fa-gears\"></i> $lang[SYSTEM]</a>
+            </li>
+            <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-webmail') ? "class=\"active\"" : ""; echo">
+                <a href=\"index.php?page=settings-webmail\"><i class=\"fa fa-envelope-o\"></i> $lang[WEBMAIL]</a>
             </li>
             <li ";echo (isset($_GET['page']) && $_GET['page'] == 'settings-robots') ? "class=\"active\"" : ""; echo">
                 <a href=\"index.php?page=settings-robots\"><i class=\"fa fa-android\"></i> $lang[ROBOTS_TXT]</a></li>
