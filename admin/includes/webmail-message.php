@@ -1,5 +1,4 @@
 <?php
-
 require_once "../system/engines/imapClient/AdapterForOutgoingMessage.php";
 require_once "../system/engines/imapClient/Helper.php";
 require_once "../system/engines/imapClient/ImapClient.php";
@@ -14,22 +13,14 @@ require_once "../system/engines/imapClient/TypeAttachments.php";
 require_once "../system/engines/imapClient/TypeBody.php";
 
 // After this, we need to let php we need these classes:
-use SSilence\ImapClient\AdapterForOutgoingMessage;
-use SSilence\ImapClient\Helper;
 use SSilence\ImapClient\ImapClientException;
-use SSilence\ImapClient\ImapConnect;
-use SSilence\ImapClient\IncomingMessage;
-use SSilence\ImapClient\IncomingMessageAttachment;
-use SSilence\ImapClient\OutgoingMessage;
-use SSilence\ImapClient\Section;
-use SSilence\ImapClient\SubtypeBody;
-use SSilence\ImapClient\TypeAttachments;
 use SSilence\ImapClient\ImapClient as Imap;
 
-// Next, we need to declare out variables:
+// mailbox user data
 $mailbox = 'imap.world4you.com';
-$username = 'management@mashiko.at';
-$password = 'austriamagna123';
+$username = 'development@mashiko.at';
+$password = 'test1234';
+
 $encryption = Imap::ENCRYPT_SSL; // TLS OR NULL accepted
 
 require_once "../system/classes/webmail.php";
@@ -45,16 +36,17 @@ try
     {
         $imap->currentFolder = $_GET['folder'];
         $imap->selectFolder($imap->currentFolder);
-
     }
+
 
     // $body = imap_body($imap->getImap(), $_GET['msgno']);
     // $body = imap_fetchstructure($imap->getImap(), $_GET['msgno']);
-    $header = imap_header($imap->connection, $_GET['msgno']);
-    $body = imap_fetchbody($imap->connection, $_GET['msgno'], 2);
+
+    // $header = imap_header($imap->connection, $_GET['msgno']);
+   // $body = imap_fetchbody($imap->connection, $_GET['msgno'], 2);
 
     // Setting flag from un-seen email to seen on emails ID.
-    imap_setflag_full($imap->connection, $_GET['msgno'], "\\Seen \\Flagged"); //IMPORTANT
+   // imap_setflag_full($imap->connection, $_GET['msgno'], "\\Seen \\Flagged"); //IMPORTANT
 
 
 }
@@ -62,9 +54,30 @@ catch (ImapClientException $error){
     // You know the rule, no errors in production ...
     $webmail->connectionInfo = $error->getMessage().PHP_EOL;
     // Oh no :( we failed
-    die('oh no! verbindung mit $mailbox als $username nicht moeglich!');
+    die('oh no! verbindung mit '.$mailbox.' als '.$username.' nicht moeglich!');
 }
 
+// check user actions
+// move to trash
+if (isset($_GET['action']) && ($_GET['action'] === "move"))
+{
+    if (isset($_GET['msgno']) && (!empty($_GET['msgno'])))
+    {
+        $imap->moveMessage((int)$_GET['msgno'], "Trash");
+        $imap->selectFolder("Trash");
+    }
+}
+else
+    {
+        $msgno = (int)$_GET['msgno'];
+        // retrieve message
+        $email = $imap->getMessage($msgno);
+    }
+
+
+
+// check out with if....
+// $imap->setSeenMessage($msgno);
 
 ?>
 <script type="text/javascript">
@@ -100,7 +113,7 @@ echo"<ol class=\"breadcrumb\">
     <div class="row">
         <div class="col-md-3">
             <!-- left col -->
-            <a href="webmail-compose" class="btn btn-success btn-large" style="width: 100%;">Write a message</a><br><br>
+            <a href="index.php?page=webmail" class="btn btn-success btn-large" style="width: 100%;">Back to Inbox</a><br><br>
             <div class="box box-default">
                 <div class="box-header with-border">
                     <h3 class="box-title">Folders</h3>
@@ -121,18 +134,6 @@ echo"<ol class=\"breadcrumb\">
                 <!-- /.box-body -->
             </div>
 
-            <?php
-            if (isset($_GET['msgno']) && (!empty($_GET['msgno'])))
-            {
-                // $msgno = (int)$_GET['msgno'];
-                // $message = $imap->getMessage($msgno);
-                $message = $body;
-            }
-            else
-                {
-                    $message = "";
-                }
-            ?>
         </div>
         <div class="col-md-9">
             <!-- right col -->
@@ -148,15 +149,15 @@ echo"<ol class=\"breadcrumb\">
                 <!-- /.box-header -->
                 <div class="box-body no-padding">
                     <div class="mailbox-read-info">
-                        <h3><?php echo $header->subject; ?></h3>
-                        <h5>From: <?php echo $header->from[0]->mailbox."@".$header->from[0]->host ?>
-                            <span class="mailbox-read-time pull-right"><?php echo $header->date; ?></span></h5>
+                        <h3><?php echo $imap->incomingMessage->header->subject; ?></h3>
+                        <h5>From: <?php echo $imap->incomingMessage->header->details->from[0]->mailbox."@".$imap->incomingMessage->header->details->from[0]->host ?>
+                            <span class="mailbox-read-time pull-right"><?php echo $imap->incomingMessage->header->date; ?></span></h5>
                     </div>
                     <!-- /.mailbox-read-info -->
                     <div class="mailbox-controls with-border text-center">
                         <div class="btn-group">
                             <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="" data-original-title="Delete">
-                                <i class="fa fa-trash-o"></i></button>
+                                <a href="index.php?page=webmail-message&folder=<?php echo $imap->currentFolder; ?>&action=move&msgno=<?php echo $imap->incomingMessage->header->uid; ?>"><i class="fa fa-trash-o"></i></a></button>
                             <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="" data-original-title="Reply">
                                 <i class="fa fa-reply"></i></button>
                             <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="" data-original-title="Forward">
@@ -168,14 +169,58 @@ echo"<ol class=\"breadcrumb\">
                     </div>
                     <!-- /.mailbox-controls -->
                     <div class="mailbox-read-message">
+
+                        <?php
+
+                        echo $imap->incomingMessage->message->html;
+
+                        foreach ($imap->incomingMessage->attachments as $key => $attachment)
+                        {
+                            echo "<a href=\"#\">".$attachment->name."</a><br>";
+                            // base64_decode($attachment->body);
+                            // echo "<img src=\"$attachment->body\">";
+                        }
+
+                        if (isset($email->attachments[0]))
+                        {
+                            foreach ($email->attachments as $attachment => $value)
+                            {
+                                echo "<pre>";
+                                echo "<img src=\"".$value->body."\">";
+                                echo "</pre>";
+                            }
+                        }
+
+                        //////////////////// cut -- here
+/*
+                        $email = $imap->getMessage($msgno);
+
+                        echo $email->message->text."<br>";
+
+
+                        foreach ($imap->incomingMessage->attachments as $key => $attachment)
+                        {
+                            echo $attachment->name."<br>";
+                            // echo "<img src=\"$attachment->body\">";
+                            // echo base64_decode($attachment->body);
+                        }
+
+                        echo "<pre>";
+                        print_r($email);
+                        echo "</pre>";
+
+*/
+                        //////////////////////////////// cut-- here
+                        ?>
                         <p>
-                        <?php echo $message; ?>
+                        <?php // echo $message; ?>
                         </p>
                     </div>
                     <!-- /.mailbox-read-message -->
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">
+                    <!--
                     <ul class="mailbox-attachments clearfix">
                         <li>
                             <span class="mailbox-attachment-icon"><i class="fa fa-file-pdf-o"></i></span>
@@ -222,6 +267,7 @@ echo"<ol class=\"breadcrumb\">
                             </div>
                         </li>
                     </ul>
+                    -->
                 </div>
                 <!-- /.box-footer -->
                 <div class="box-footer">
@@ -239,12 +285,12 @@ echo"<ol class=\"breadcrumb\">
             <?php
             echo "<pre>";
             echo "<h2>info messages";
-            print_r($imap->getMessageOverview($_GET['msgno']));
+            // print_r($imap->getMessageOverview($_GET['msgno']));
             echo "</pre>";
 
 
             echo "<pre>";
-            print_r($header);
+            // print_r($header);
             echo "</pre>";
             ?>
 

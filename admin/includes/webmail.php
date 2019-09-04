@@ -26,19 +26,21 @@ use SSilence\ImapClient\SubtypeBody;
 use SSilence\ImapClient\TypeAttachments;
 use SSilence\ImapClient\ImapClient as Imap;
 
-// Next, we need to declare out variables:
 // $mailbox = 'imap.world4you.com';
 // $username = 'management@mashiko.at';
 // $password = 'austriamagna123';
+// $encryption = Imap::ENCRYPT_SSL; // TLS OR NULL accepted
 
-$mailbox = 'imap.world4you.com';
-$username = 'development@mashiko.at';
-$password = 'test1234';
-$encryption = Imap::ENCRYPT_SSL; // TLS OR NULL accepted
+// get mailbox login data
+$mailbox = \YAWK\settings::getSetting($db, "webmail_imap_server");
+$username = \YAWK\settings::getSetting($db, "webmail_imap_username");
+$password = \YAWK\settings::getSetting($db, "webmail_imap_password");
+$encryption = \YAWK\settings::getSetting($db, "webmail_imap_encrypt");
 
+// include webmail class
 require_once "../system/classes/webmail.php";
+// create new webmail object
 $webmail = new \YAWK\webmail();
-
 
 // Open connection
 try
@@ -154,14 +156,23 @@ echo"<ol class=\"breadcrumb\">
                     <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
                     </button>
                     <div class="btn-group">
-                        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
+                        <?php
+                        if (isset($_GET['folder']) && ($_GET['folder']) === "Trash")
+                        {
+                            echo "<button type=\"button\" class=\"btn btn-default btn-sm\"><a href=\"index.php?page=webmail-emptyBin\" title=\"Empty Trash\"><i class=\"fa fa-trash-o\"></a></i></button>";
+                        }
+                        else
+                            {
+                                echo "<button type=\"button\" class=\"btn btn-default btn-sm\"><a href=\"index.php?page=webmail&folder=Trash\" title=\"Trash\"><i class=\"fa fa-trash-o\"></a></i></button>";
+                            }
+                        ?>
                         <button type="button" class="btn btn-default btn-sm"><i class="fa fa-reply"></i></button>
                         <button type="button" class="btn btn-default btn-sm"><i class="fa fa-share"></i></button>
                     </div>
                     <!-- /.btn-group -->
                     <button type="button" class="btn btn-default btn-sm"><a href="index.php?page=webmail&folder=<?php echo $imap->currentFolder; ?>"><i class="fa fa-refresh"></i></a></button>
                     <div class="pull-right">
-                        <button type="button" class="btn btn-default btn-sm" title="Webmail Settings"><i class="fa fa-gear"></i></button>
+                        <button type="button" class="btn btn-default btn-sm" title="Webmail Settings"><a href="index.php?page=settings-webmail"><i class="fa fa-gear"></i></a></button>
                         <button type="button" class="btn btn-default btn-sm"><i class="fa fa-plus"></i></button>
                         <!-- /.btn-group -->
                     </div>
@@ -183,7 +194,9 @@ echo"<ol class=\"breadcrumb\">
                         <?php
                             $emails = array();
                             $imap->selectFolder($imap->currentFolder);
-                            $emails = $imap->getMessages();
+                            $emails = $imap->getMessages('html');
+                            // $header = $imap->getBriefInfoMessages();
+                            // $header = $imap->getMailboxStatistics();
                             $webmail->drawHeaders($emails, $imap->currentFolder, $lang);
                         ?>
                         </tbody>
@@ -220,7 +233,8 @@ echo"<ol class=\"breadcrumb\">
 
         <?php
             echo "<pre>";
-            print_r($emails);
+            // print_r($emails);
+            // print_r($header);
             echo "</pre>";
         ?>
 
