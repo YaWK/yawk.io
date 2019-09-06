@@ -22,6 +22,54 @@ namespace YAWK {
         /** @var string information about the connection */
         public $connectionInfo = '';
 
+        /**
+         * Draw buttons to control the mailbox with icons (trash, reply, forward...)
+         * @param $type string inbox|message|
+         * @param $lang array language array
+         */
+        public function drawMailboxControls($type, $lang)
+        {
+            // check if type is set
+            if (isset($type) && (is_string($type)))
+            {
+                switch ($type)
+                {
+                    case "inbox":
+                        echo "
+                    <div class=\"mailbox-controls\">
+                        <!-- Check all button -->
+                        <button type=\"button\" class=\"btn btn-default btn-sm checkbox-toggle\" data-toggle=\"tooltip\" data-container=\"body\" title=\"$lang[MARK_ALL_AS_READ]\" data-original-title=\"$lang[MARK_ALL_AS_READ]\"><i class=\"fa fa-square-o\"></i>
+                        </button>
+                        <div class=\"btn-group\">
+                            <a href=\"index.php?page=webmail\" id=\"icon-trash\" class=\"btn btn-default btn-sm\" data-toggle=\"tooltip\" data-container=\"body\" title=\"$lang[DELETE_ALL]\" data-original-title=\"$lang[DELETE_ALL]\"><i class=\"fa fa-trash-o\"></i></a>
+                            <a href=\"index.php?page=webmail\" id=\"icon-refresh\" class=\"btn btn-default btn-sm\" data-toggle=\"tooltip\" data-container=\"body\" title=\"$lang[REFRESH]\" data-original-title=\"$lang[REFRESH]\"><i class=\"fa fa-refresh\"></i></a>
+                        </div>
+                        <!-- /.btn-group -->
+                        <!-- additional buttons: settings + new mail -->
+                        <div class=\"pull-right\">
+                            <a href=\"index.php?page=settings-webmail\" id=\"icon-settings\" class=\"btn btn-default btn-sm\" data-toggle=\"tooltip\" data-container=\"body\" title=\"$lang[SETTINGS]\" data-original-title=\"$lang[SETTINGS]\"><i class=\"fa fa-gear\"></i></a>
+                            <a href=\"index.php?page=webmail-compose\" id=\"icon-compose\" class=\"btn btn-default btn-sm\" data-toggle=\"tooltip\" data-container=\"body\" title=\"$lang[EMAIL_COMPOSE]\" data-original-title=\"$lang[EMAIL_COMPOSE]\"><i class=\"fa fa-plus\"></i></a>
+                            <!-- /.btn-group -->
+                        </div>    
+                    </div>";
+                    break;
+
+                    case "message":
+                        echo "
+                    <div class=\"mailbox-controls\">
+                        <div class=\"btn-group\">
+                            <a href=\"index.php?page=webmail\" id=\"icon-markAsRead\" class=\"btn btn-default btn-sm\" data-toggle=\"tooltip\" data-container=\"body\" title=\"$lang[MARK_AS_READ]\" data-original-title=\"$lang[MARK_AS_READ]\"><i class=\"fa fa-square-o\"></i></a>
+                            <a href=\"index.php?page=webmail\" id=\"icon-delete\" class=\"btn btn-default btn-sm\" data-toggle=\"tooltip\" data-container=\"body\" title=\"$lang[DELETE]\" data-original-title=\"$lang[DELETE]\"><i class=\"fa fa-trash-o\"></i></a>
+                            <a href=\"index.php?page=webmail\" id=\"icon-reply\" class=\"btn btn-default btn-sm\" data-toggle=\"tooltip\" data-container=\"body\" title=\"$lang[REPLY]\" data-original-title=\"$lang[REPLY]\"><i class=\"fa fa-reply\"></i></a>
+                            <a href=\"index.php?page=webmail\" id=\"icon-forward\" class=\"btn btn-default btn-sm\" data-toggle=\"tooltip\" data-container=\"body\" title=\"$lang[FORWARD]\" data-original-title=\"$lang[FORWARD]\"><i class=\"fa fa-mail-forward\"></i></a>
+                            <a href=\"#\" id=\"icon-print\" class=\"btn btn-default btn-sm\" data-toggle=\"tooltip\" data-container=\"body\" title=\"$lang[PRINT]\" data-original-title=\"$lang[PRINT]\"><i class=\"fa fa-print\"></i></a>
+                        </div>
+                        <!-- /.btn-group -->
+                    </div>";
+                    break;
+                }
+            }
+        }
 
         /**
          * @param $imap resource The current imap handle
@@ -29,6 +77,8 @@ namespace YAWK {
          */
         public function drawFolders($imap, $folders)
         {   // check if folder array is set
+            /* @var $imap \SSilence\ImapClient\Imapclient  */
+
             if (is_array($folders) || (!empty($folders)))
             {
                 // sort folder array to bring inbox more upwards
@@ -128,6 +178,7 @@ namespace YAWK {
         {   // check, if email array is set and not empty
             if (is_array($emails) && (!empty($emails)))
             {
+                $emails = array_reverse($emails);
                 // walk through every email...
                 foreach ($emails as $item => $email)
                 {
