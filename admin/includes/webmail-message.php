@@ -1,68 +1,66 @@
 <?php
-require_once "../system/engines/imapClient/AdapterForOutgoingMessage.php";
-require_once "../system/engines/imapClient/Helper.php";
-require_once "../system/engines/imapClient/ImapClient.php";
-require_once "../system/engines/imapClient/ImapClientException.php";
-require_once "../system/engines/imapClient/ImapConnect.php";
-require_once "../system/engines/imapClient/IncomingMessage.php";
-require_once "../system/engines/imapClient/IncomingMessageAttachment.php";
-require_once "../system/engines/imapClient/OutgoingMessage.php";
-require_once "../system/engines/imapClient/Section.php";
-require_once "../system/engines/imapClient/SubtypeBody.php";
-require_once "../system/engines/imapClient/TypeAttachments.php";
-require_once "../system/engines/imapClient/TypeBody.php";
+    require_once "../system/engines/imapClient/AdapterForOutgoingMessage.php";
+    require_once "../system/engines/imapClient/Helper.php";
+    require_once "../system/engines/imapClient/ImapClient.php";
+    require_once "../system/engines/imapClient/ImapClientException.php";
+    require_once "../system/engines/imapClient/ImapConnect.php";
+    require_once "../system/engines/imapClient/IncomingMessage.php";
+    require_once "../system/engines/imapClient/IncomingMessageAttachment.php";
+    require_once "../system/engines/imapClient/OutgoingMessage.php";
+    require_once "../system/engines/imapClient/Section.php";
+    require_once "../system/engines/imapClient/SubtypeBody.php";
+    require_once "../system/engines/imapClient/TypeAttachments.php";
+    require_once "../system/engines/imapClient/TypeBody.php";
 
-// After this, we need to let php we need these classes:
-use SSilence\ImapClient\ImapClientException;
-use SSilence\ImapClient\ImapClient as Imap;
+    // After this, we need to let php we need these classes:
+    use SSilence\ImapClient\ImapClientException;
+    use SSilence\ImapClient\ImapClient as Imap;
 
+// load webmail only if its enabled
+$webmail_active = \YAWK\settings::getSetting($db, "webmail_active");
+if ($webmail_active == true)
+{
 // get mailbox login data
-$mailbox = \YAWK\settings::getSetting($db, "webmail_imap_server");
-$username = \YAWK\settings::getSetting($db, "webmail_imap_username");
-$password = \YAWK\settings::getSetting($db, "webmail_imap_password");
-$encryption = \YAWK\settings::getSetting($db, "webmail_imap_encrypt");
+    $mailbox = \YAWK\settings::getSetting($db, "webmail_imap_server");
+    $username = \YAWK\settings::getSetting($db, "webmail_imap_username");
+    $password = \YAWK\settings::getSetting($db, "webmail_imap_password");
+    $encryption = "/" . \YAWK\settings::getSetting($db, "webmail_imap_encrypt");
+    $port = ":" . \YAWK\settings::getSetting($db, "webmail_imap_port") . "";
 
 // include webmail class
-require_once "../system/classes/webmail.php";
+    require_once "../system/classes/webmail.php";
 // create new webmail object
-$webmail = new \YAWK\webmail();
+    $webmail = new \YAWK\webmail();
 
 // Open connection
-try
-{
-    $imap = new Imap($mailbox, $username, $password, $encryption);
-    $imap->connection = $imap->getImapConnection();
-    if (isset($_GET['folder']))
-    {
-        $imap->currentFolder = $_GET['folder'];
-        $imap->selectFolder($imap->currentFolder);
+    try {
+        $imap = new Imap($mailbox.$port.$encryption, $username, $password, $encryption);
+        $imap->connection = $imap->getImapConnection();
+        if (isset($_GET['folder'])) {
+            $imap->currentFolder = $_GET['folder'];
+            $imap->selectFolder($imap->currentFolder);
+        }
+    } catch (ImapClientException $error) {
+        // You know the rule, no errors in production ...
+        $webmail->connectionInfo = $error->getMessage() . PHP_EOL;
+        // Oh no :( we failed
+        die('oh no! verbindung mit ' . $mailbox . ' als ' . $username . ' nicht moeglich!');
     }
-}
-catch (ImapClientException $error){
-    // You know the rule, no errors in production ...
-    $webmail->connectionInfo = $error->getMessage().PHP_EOL;
-    // Oh no :( we failed
-    die('oh no! verbindung mit '.$mailbox.' als '.$username.' nicht moeglich!');
-}
 
 // check user actions
 // move to trash
-if (isset($_GET['action']) && ($_GET['action'] === "move"))
-{
-    if (isset($_GET['msgno']) && (!empty($_GET['msgno'])))
-    {
-        $imap->moveMessage((int)$_GET['msgno'], "Trash");
-        $imap->selectFolder("Trash");
-    }
-}
-else
-    {
+    if (isset($_GET['action']) && ($_GET['action'] === "move")) {
+        if (isset($_GET['msgno']) && (!empty($_GET['msgno']))) {
+            $imap->moveMessage((int)$_GET['msgno'], "Trash");
+            $imap->selectFolder("Trash");
+        }
+    } else {
         $msgno = (int)$_GET['msgno'];
         // retrieve message
         $email = $imap->getMessage($msgno);
     }
 
-
+}
 
 // check out with if....
 // $imap->setSeenMessage($msgno);
@@ -97,17 +95,22 @@ echo"<ol class=\"breadcrumb\">
     <!-- Main content -->
     <section class=\"content\">";
 /* page content start here */
-?>
+
+// check if webmail is enabled
+if ($webmail_active == true) {
+    ?>
     <div class="row">
         <div class="col-md-3">
             <!-- left col -->
-            <a href="index.php?page=webmail" class="btn btn-success btn-large" style="width: 100%;">Back to Inbox</a><br><br>
+            <a href="index.php?page=webmail" class="btn btn-success btn-large" style="width: 100%;">Back to
+                Inbox</a><br><br>
             <div class="box box-default">
                 <div class="box-header with-border">
                     <h3 class="box-title">Folders</h3>
 
                     <div class="box-tools">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                    class="fa fa-minus"></i>
                         </button>
                     </div>
                 </div>
@@ -130,78 +133,69 @@ echo"<ol class=\"breadcrumb\">
                     <h3 class="box-title">Read Mail</h3>
 
                     <div class="box-tools pull-right">
-                        <a href="#" class="btn btn-box-tool" data-toggle="tooltip" title="" data-original-title="Previous"><i class="fa fa-chevron-left"></i></a>
-                        <a href="#" class="btn btn-box-tool" data-toggle="tooltip" title="" data-original-title="Next"><i class="fa fa-chevron-right"></i></a>
+                        <a href="#" class="btn btn-box-tool" data-toggle="tooltip" title=""
+                           data-original-title="Previous"><i class="fa fa-chevron-left"></i></a>
+                        <a href="#" class="btn btn-box-tool" data-toggle="tooltip" title=""
+                           data-original-title="Next"><i class="fa fa-chevron-right"></i></a>
                     </div>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body no-padding">
                     <div class="mailbox-read-info">
                         <h3><?php echo $imap->incomingMessage->header->subject; ?></h3>
-                        <h5>From: <?php echo $imap->incomingMessage->header->details->from[0]->mailbox."@".$imap->incomingMessage->header->details->from[0]->host ?>
-                            <span class="mailbox-read-time pull-right"><?php echo $imap->incomingMessage->header->date; ?></span></h5>
+                        <h5>
+                            From: <?php echo $imap->incomingMessage->header->details->from[0]->mailbox . "@" . $imap->incomingMessage->header->details->from[0]->host ?>
+                            <span class="mailbox-read-time pull-right"><?php echo $imap->incomingMessage->header->date; ?></span>
+                        </h5>
                     </div>
                     <!-- /.mailbox-read-info -->
                     <div class="mailbox-controls with-border text-center">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="" data-original-title="Delete">
-                                <a href="index.php?page=webmail-message&folder=<?php echo $imap->currentFolder; ?>&action=move&msgno=<?php echo $imap->incomingMessage->header->uid; ?>"><i class="fa fa-trash-o"></i></a></button>
-                            <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="" data-original-title="Reply">
-                                <i class="fa fa-reply"></i></button>
-                            <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="" data-original-title="Forward">
-                                <i class="fa fa-share"></i></button>
-                        </div>
-                        <!-- /.btn-group -->
-                        <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Print">
-                            <i class="fa fa-print"></i></button>
+                        <?php $webmail->drawMailboxControls("message", $lang); ?>
                     </div>
                     <!-- /.mailbox-controls -->
                     <div class="mailbox-read-message">
 
                         <?php
 
-                        echo $imap->incomingMessage->message->html;
+                        echo  $imap->incomingMessage->message->html;
 
-                        foreach ($imap->incomingMessage->attachments as $key => $attachment)
-                        {
-                            echo "<a href=\"#\">".$attachment->name."</a><br>";
+                        foreach ($imap->incomingMessage->attachments as $key => $attachment) {
+                            echo "<a href=\"#\">" . $attachment->name . "</a><br>";
                             // base64_decode($attachment->body);
                             // echo "<img src=\"$attachment->body\">";
                         }
 
-                        if (isset($email->attachments[0]))
-                        {
-                            foreach ($email->attachments as $attachment => $value)
-                            {
+                        if (isset($email->attachments[0])) {
+                            foreach ($email->attachments as $attachment => $value) {
                                 echo "<pre>";
-                                echo "<img src=\"".$value->body."\">";
+                                echo "<img src=\"" . $value->body . "\">";
                                 echo "</pre>";
                             }
                         }
 
                         //////////////////// cut -- here
-/*
-                        $email = $imap->getMessage($msgno);
+                        /*
+                                                $email = $imap->getMessage($msgno);
 
-                        echo $email->message->text."<br>";
+                                                echo $email->message->text."<br>";
 
 
-                        foreach ($imap->incomingMessage->attachments as $key => $attachment)
-                        {
-                            echo $attachment->name."<br>";
-                            // echo "<img src=\"$attachment->body\">";
-                            // echo base64_decode($attachment->body);
-                        }
+                                                foreach ($imap->incomingMessage->attachments as $key => $attachment)
+                                                {
+                                                    echo $attachment->name."<br>";
+                                                    // echo "<img src=\"$attachment->body\">";
+                                                    // echo base64_decode($attachment->body);
+                                                }
 
-                        echo "<pre>";
-                        print_r($email);
-                        echo "</pre>";
+                                                echo "<pre>";
+                                                print_r($email);
+                                                echo "</pre>";
 
-*/
+                        */
                         //////////////////////////////// cut-- here
                         ?>
                         <p>
-                        <?php // echo $message; ?>
+                            <?php // echo $message; ?>
                         </p>
                     </div>
                     <!-- /.mailbox-read-message -->
@@ -261,7 +255,7 @@ echo"<ol class=\"breadcrumb\">
                 <div class="box-footer">
                     <div class="pull-right">
                         <button type="button" class="btn btn-default"><i class="fa fa-reply"></i> Reply</button>
-                        <button type="button" class="btn btn-default"><i class="fa fa-share"></i> Forward</button>
+                        <button type="button" class="btn btn-default"><i class="fa fa-mail-forward"></i> Forward</button>
                     </div>
                     <button type="button" class="btn btn-default"><i class="fa fa-trash-o"></i> Delete</button>
                     <button type="button" class="btn btn-default"><i class="fa fa-print"></i> Print</button>
@@ -284,6 +278,11 @@ echo"<ol class=\"breadcrumb\">
 
         </div>
     </div>
-<?php
-$imap->close();
+    <?php
+    $imap->close();
+}
+else
+{
+    echo "<h4>Webmail is not enabled! Go to <a href=\"index.php?page=settings-webmail\">Settings / Webmail</a> and enable it.</a></h4>";
+}
 ?>

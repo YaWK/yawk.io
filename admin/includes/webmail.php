@@ -1,5 +1,5 @@
 <?php
-
+// include imap client classes
 require_once "../system/engines/imapClient/AdapterForOutgoingMessage.php";
 require_once "../system/engines/imapClient/Helper.php";
 require_once "../system/engines/imapClient/ImapClient.php";
@@ -13,62 +13,67 @@ require_once "../system/engines/imapClient/SubtypeBody.php";
 require_once "../system/engines/imapClient/TypeAttachments.php";
 require_once "../system/engines/imapClient/TypeBody.php";
 
-// After this, we need to let php we need these classes:
-use SSilence\ImapClient\AdapterForOutgoingMessage;
-use SSilence\ImapClient\Helper;
+// let php know we need these classes:
 use SSilence\ImapClient\ImapClientException;
-use SSilence\ImapClient\ImapConnect;
-use SSilence\ImapClient\IncomingMessage;
-use SSilence\ImapClient\IncomingMessageAttachment;
-use SSilence\ImapClient\OutgoingMessage;
-use SSilence\ImapClient\Section;
-use SSilence\ImapClient\SubtypeBody;
-use SSilence\ImapClient\TypeAttachments;
 use SSilence\ImapClient\ImapClient as Imap;
 
+// imap connection only made be made if webmail is set to active
+// get + store webmail_active setting
+$webmail_active = \YAWK\settings::getSetting($db, "webmail_active");
+// check if webmail is activated
+if ($webmail_active == true)
+{   // webmail enabled, get mailbox settings
 
-// get mailbox login data
-$mailbox = \YAWK\settings::getSetting($db, "webmail_imap_server");
-$username = \YAWK\settings::getSetting($db, "webmail_imap_username");
-$password = \YAWK\settings::getSetting($db, "webmail_imap_password");
-$encryption = \YAWK\settings::getSetting($db, "webmail_imap_encrypt");
+    // mailbox server (imap.server.com)
+    $server = \YAWK\settings::getSetting($db, "webmail_imap_server");
+    // mailbox user (email@server.com)
+    $username = \YAWK\settings::getSetting($db, "webmail_imap_username");
+    // mailbox password
+    $password = \YAWK\settings::getSetting($db, "webmail_imap_password");
+    // encryption type (ssl, tsl, null)
+    $encryption = "/" . \YAWK\settings::getSetting($db, "webmail_imap_encrypt");
+    // port (default: 993)
+    $port = ":" . \YAWK\settings::getSetting($db, "webmail_imap_port") . "";
 
-// include webmail class
-require_once "../system/classes/webmail.php";
-// create new webmail object
-$webmail = new \YAWK\webmail();
 
-// Open connection
-try
-{
-    // create new imap handle
-    $imap = new Imap($mailbox, $username, $password, $encryption);
-    // set connection info var
-    $webmail->connectionInfo = "<i>$username</i>";
+    try // open connection to imap server
+    {
+        // create new imap handle
+        $imap = new Imap($server.$port.$encryption, $username, $password, $encryption);
 
-    // check if user requested a different folder
-    if (isset($_GET['folder']) && (!empty($_GET['folder']) && (is_string($_GET['folder']))))
-    {	// select requested folder
-        $imap->selectFolder($_GET['folder']);
-        // set current folder string
-        $imap->currentFolder = $_GET['folder'];
-    }
-    else    // page webmail called w/o any parameters
+        // page webmail called with parameter - user requested a folder
+        if (isset($_GET['folder']) && (!empty($_GET['folder']) && (is_string($_GET['folder']))))
+        {    // select requested folder
+            $imap->selectFolder($_GET['folder']);
+            // set current folder string
+            $imap->currentFolder = $_GET['folder'];
+        }
+        else
+            // page webmail called w/o any parameters
         {   // select default folder
             $imap->selectFolder('INBOX');
             $imap->currentFolder = "INBOX";
         }
-}
-// on error...
-catch (ImapClientException $error)
-{   // No errors in production...
-    $webmail->connectionInfo = $error->getMessage().PHP_EOL;
-    // Oh no :( we failed
-    die('oh no! verbindung mit $mailbox als $username nicht moeglich!');
-}
+    }
+    // open imap connection failed...
+    catch (ImapClientException $error)
+    {   // no errors in production...
+        $webmail->connectionInfo = $error->getMessage() . PHP_EOL;
+        // exit with error
+        die('Oh no! Verbindung mit $mailbox als $username nicht moeglich!');
+    }
 
+    // include webmail class
+    require_once "../system/classes/webmail.php";
 
+    // create new webmail object
+    $webmail = new \YAWK\webmail();
+
+    // set connection info var
+    $webmail->connectionInfo = "<i>$username</i>";
+}
 ?>
+<!-- JS: load data tables -->
 <script type="text/javascript">
     $(document).ready(function() {
         $('#table-sort').dataTable( {
@@ -81,6 +86,7 @@ catch (ImapClientException $error)
         } );
     } );
 </script>
+
 <?php
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
@@ -98,6 +104,9 @@ echo"<ol class=\"breadcrumb\">
     <!-- Main content -->
     <section class=\"content\">";
 /* page content start here */
+
+if ($webmail_active == true)
+{
 ?>
 <div class="row">
     <div class="col-md-3">
@@ -115,7 +124,7 @@ echo"<ol class=\"breadcrumb\">
             <div class="box-body no-padding" style="">
                 <ul class="nav nav-pills nav-stacked">
                     <?php
-                    $webmail->drawFolders($imap, $imap->getFolders());
+                        $webmail->drawFolders($imap, $imap->getFolders());
                     ?>
                 </ul>
             </div>
@@ -148,31 +157,7 @@ echo"<ol class=\"breadcrumb\">
             <!-- /.box-header -->
             <div class="box-body no-padding">
                 <div class="mailbox-controls">
-                    <!-- Check all button -->
-                    <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
-                    </button>
-                    <div class="btn-group">
-                        <?php
-                        if (isset($_GET['folder']) && ($_GET['folder']) === "Trash")
-                        {
-                            echo "<button type=\"button\" class=\"btn btn-default btn-sm\"><a href=\"index.php?page=webmail-emptyBin\" title=\"Empty Trash\"><i class=\"fa fa-trash-o\"></a></i></button>";
-                        }
-                        else
-                            {
-                                echo "<button type=\"button\" class=\"btn btn-default btn-sm\"><a href=\"index.php?page=webmail&folder=Trash\" title=\"Trash\"><i class=\"fa fa-trash-o\"></a></i></button>";
-                            }
-                        ?>
-                        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-reply"></i></button>
-                        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-share"></i></button>
-                    </div>
-                    <!-- /.btn-group -->
-                    <button type="button" class="btn btn-default btn-sm"><a href="index.php?page=webmail&folder=<?php echo $imap->currentFolder; ?>"><i class="fa fa-refresh"></i></a></button>
-                    <div class="pull-right">
-                        <button type="button" class="btn btn-default btn-sm" title="Webmail Settings"><a href="index.php?page=settings-webmail"><i class="fa fa-gear"></i></a></button>
-                        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-plus"></i></button>
-                        <!-- /.btn-group -->
-                    </div>
-                    <!-- /.pull-right -->
+                        <?php $webmail->drawMailboxControls("inbox", $lang); ?>
                 </div>
                 <div class="table-responsive mailbox-messages">
                     <table cellpadding="0" cellspacing="0" class="table table-striped table-hover table-responsive" id="table-sort">
@@ -190,9 +175,10 @@ echo"<ol class=\"breadcrumb\">
                         <?php
                             $emails = array();
                             $imap->selectFolder($imap->currentFolder);
-                            $emails = $imap->getMessages('html');
-                            // $header = $imap->getBriefInfoMessages();
-                            // $header = $imap->getMailboxStatistics();
+                            $emails = $imap->getMessages(5, $start = 0, 'DESC', 'ALL');
+                                // $header = $imap->getBriefInfoMessages();
+                                // print_r($header);
+                                // $header = $imap->getMailboxStatistics();
                             $webmail->drawHeaders($emails, $imap->currentFolder, $lang);
                         ?>
                         </tbody>
@@ -203,27 +189,7 @@ echo"<ol class=\"breadcrumb\">
             </div>
             <!-- /.box-body -->
             <div class="box-footer no-padding">
-                <div class="mailbox-controls">
-                    <!-- Check all button -->
-                    <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
-                    </button>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
-                        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-reply"></i></button>
-                        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-share"></i></button>
-                    </div>
-                    <!-- /.btn-group -->
-                    <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
-                    <div class="pull-right">
-                        1-50/200
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
-                            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></button>
-                        </div>
-                        <!-- /.btn-group -->
-                    </div>
-                    <!-- /.pull-right -->
-                </div>
+                <?php $webmail->drawMailboxControls("inbox", $lang); ?>
             </div>
         </div>
 
@@ -237,5 +203,11 @@ echo"<ol class=\"breadcrumb\">
     </div>
 </div>
 <?php
-$imap->close();
+
+    $imap->close();
+}
+else
+    {
+        echo "<h4>Webmail is not enabled! Go to <a href=\"index.php?page=settings-webmail\">Settings / Webmail</a> and enable it.</a></h4>";
+    }
 ?>
