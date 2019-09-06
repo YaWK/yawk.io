@@ -85,7 +85,7 @@ namespace YAWK {
 <html>
   <head>
     <meta charset=\"utf-8\">
-    <meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\" />
+    <meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">
     <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">
     <title>YaWK CMS AdminLTE 2 | Startseite</title>
     <!-- Tell the browser to be responsive to screen width -->
