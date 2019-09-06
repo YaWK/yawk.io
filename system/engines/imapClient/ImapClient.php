@@ -573,6 +573,10 @@ class ImapClient
         {
             $number = $this->countMessages();
         }
+        if (!isset($start) || (empty($start)))
+        {
+            $start = 0;
+        }
         $emails = array();
         $result = imap_search($this->imap, $filter);
         if ($result)
@@ -591,6 +595,7 @@ class ImapClient
             if (count($ids) > $number) {
                 $ids = array_chunk($ids, $number);
                 $ids = $ids[$start];
+
             }
 
             if (isset($ids)) {
