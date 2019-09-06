@@ -17,11 +17,6 @@ if(isset($_POST['save']))
             }
             else
             {
-                if ($property === "selectedTemplate")
-                {
-                    \YAWK\template::setTemplateActive($db, $value);
-                }
-
                 // save value of property to database
                 \YAWK\settings::setSetting($db, $property, $value, $lang);
             }
@@ -48,7 +43,7 @@ echo"</section><!-- Main content -->
     <section class=\"content\">";
 /* page content start here */
 ?>
-<form id="backend-edit-form" action="index.php?page=settings-webmail" method="POST">
+<form id="settings-webmail" action="index.php?page=settings-webmail" method="POST">
     <div class="box">
         <div class="box-body">
             <div class="col-md-10">
@@ -60,80 +55,107 @@ echo"</section><!-- Main content -->
         </div>
     </div>
     <div class="row">
-        <!-- backend settings -->
+        <!-- email account and imap server settings -->
         <div class="col-md-4">
             <div class="box">
                 <div class="box-body">
-                    <?php // \YAWK\settings::getFormElements($db, $settings, 19, $lang); ?>
+                    <!-- email account settings -->
                     <?php \YAWK\settings::getFormElements($db, $settings, 23, $lang); ?>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="box">
-                <div class="box-body">
-                    <!-- footer settings -->
-                    <?php \YAWK\settings::getFormElements($db, $settings, 22, $lang); ?>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="box">
-                <div class="box-body">
 
+                </div>
+            </div>
+            <div class="box">
+                <div class="box-body">
+                    <!-- email server seettings -->
+                    <?php \YAWK\settings::getFormElements($db, $settings, 22, $lang); ?>
+
+                </div>
+            </div>
+        </div>
+        <!-- webmail / mailbox settings box -->
+        <div class="col-md-4">
+            <div class="box">
+                <div class="box-body">
+                    <!-- webmail settings -->
+                    <?php \YAWK\settings::getFormElements($db, $settings, 24, $lang); ?>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- mailbox status box -->
+        <div class="col-md-4">
+            <div class="box">
+                <div class="box-body">
                     <h3><i class="fa fa-inbox"></i> <?php echo $lang['MAILBOX_STATUS']; ?></h3>
                     <hr>
                     <?php
+                    // connect to mailserver only if webmail is set to active
                     if (\YAWK\settings::getSetting($db, "webmail_active") == true)
-                    {
-                        $mailbox = \YAWK\settings::getSetting($db, "webmail_imap_server");
+                    {   // get mailbox settings
+                        $server = \YAWK\settings::getSetting($db, "webmail_imap_server");
                         $username = \YAWK\settings::getSetting($db, "webmail_imap_username");
                         $password = \YAWK\settings::getSetting($db, "webmail_imap_password");
                         $encryption = "/".\YAWK\settings::getSetting($db, "webmail_imap_encrypt");
                         $port = ":".\YAWK\settings::getSetting($db, "webmail_imap_port")."";
 
-                        if ($imap = @imap_open("{".$mailbox."".$port."".$encryption."}", $username, $password, OP_HALFOPEN))
+                        // open connection to mailserver
+                        if ($imap = @imap_open("{".$server."".$port."".$encryption."}", $username, $password, OP_HALFOPEN))
                         {
+                            // draw connection status
                             echo "<h4 class=\"text-success\"><b>".$lang["CONNECTION_SUCCESSFUL"]."</b><br>
-                                  <small><i><b>Server: </b></i>".$mailbox."".$port."".$encryption."<br><i><b>Mailbox: </b></i>".$username."</small></h4>";
+                                  <small><i><b>Server: </b></i>".$server."".$port."".$encryption."<br><i><b>Mailbox: </b></i>".$username."</small></h4>";
 
+                            // draw webmail button
                             echo "<br><a href=\"index.php?page=webmail\" class=\"btn btn-success\" target=\"_self\" style=\"color:#fff; width: 100%;\">
                                   <i class=\"fa fa-envelope-o\"></i>&nbsp; ".$lang["WEBMAIL_SHOW"]."</a><br><br><hr>";
 
+                            // mailbox details
                             echo "<h4>".$lang["MAILBOX_DETAILS"]."</h4>";
 
-                            $status = imap_status($imap, "{".$mailbox."}INBOX", SA_ALL);
-                            if ($status) {
+                            // get status of this inbox
+                            $status = imap_status($imap, "{".$server."}INBOX", SA_ALL);
+                            // if status could be detected...
+                            if ($status)
+                            {   // output data
                                 echo "Messages:   " . $status->messages    . "<br />\n";
                                 echo "Unseen:     " . $status->unseen      . "<br />\n";
                                 echo "Recent:     " . $status->recent      . "<br />\n";
                                 echo "UIDnext:    " . $status->uidnext     . "<br />\n";
                                 echo "UIDvalidity:" . $status->uidvalidity . "<br />\n";
-                            } else {
-                                echo "".$lang["IMAP_STATUS_FAILED"]." : " . imap_last_error() . "\n";
                             }
+                            else
+                                {   // no status information - draw error
+                                    echo "".$lang["IMAP_STATUS_FAILED"]." : " . imap_last_error() . "\n";
+                                }
 
+                            // get more mailbox information
                             $check = imap_mailboxmsginfo($imap);
 
-                            if ($check) {
+                            // if msginfo was successful
+                            if ($check)
+                            {   // show more information
                                 echo "Date: "     . $check->Date    . "<br />\n" ;
                                 echo "Driver: "   . $check->Driver  . "<br />\n" ;
                                 echo "Mailbox: "  . $check->Mailbox . "<br />\n" ;
-                            } else {
-                                echo "".$lang["IMAP_STATUS_FAILED"]." :  " . imap_last_error() . "<br />\n";
                             }
+                            else
+                                {   // no mailbox message info - draw error
+                                    echo "".$lang["IMAP_STATUS_FAILED"]." :  " . imap_last_error() . "<br />\n";
+                                }
 
+                            // close imap connection
                             imap_close($imap);
                         }
                         else
-                            {
+                            {   // error: imap: unable to connect
                                 echo "<h4 class=\"text-danger\"><b>".$lang["CONNECTION_FAILED"]."</b><br>
                                 <br><small>".$lang["IMAP_DEBUG"]."</small><br>
                                 ".imap_last_error()."";
                             }
                     }
                     else
-                        {
+                        {   // webmail not active: set info text
                             echo "<div id=\"mailboxStatusInfo\">".$lang["WEBMAIL_NOT_ACTIVATED"]."</div>";
                         }
                     ?>
@@ -142,9 +164,11 @@ echo"</section><!-- Main content -->
         </div>
     </div>
 </form>
+
+<!-- include JS -->
 <script type="text/javascript">
     $(document).ready(function()
-    {
+    {   // set hotkey (STRG-S) function
         function saveHotkey() {
             // simply disables save event for chrome
             $(window).keypress(function (event) {
@@ -164,20 +188,18 @@ echo"</section><!-- Main content -->
                 }
             });
         }
+        // call hotkey function
         saveHotkey();
 
-
+        // set savebutton vars
         var savebutton = ('#savebutton');
         var savebuttonIcon = ('#savebuttonIcon');
-        // ok, lets go...
-        // we need to check if user clicked on save button
-        $(savebutton).click(function() {
+
+        // check if user clicked on save button
+        $(savebutton).click(function()
+        {   // add loading info
             $(savebutton).removeClass('btn btn-success').addClass('btn btn-warning disabled');
             $(savebuttonIcon).removeClass('fa fa-check').addClass('fa fa-spinner fa-spin fa-fw');
         });
-
-
-        /* END CHECKBOX backend footer */
     });
-    /* END CHECKBOX backend fx */
 </script>
