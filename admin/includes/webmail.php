@@ -63,8 +63,7 @@ if ($webmailSettings['webmail_active'] == true)
             // set current folder string
             $imap->currentFolder = $_GET['folder'];
         }
-        else
-            // page webmail called w/o any parameters
+        else // page webmail called w/o any parameters
         {   // select default folder
             $imap->selectFolder('INBOX');
             $imap->currentFolder = "INBOX";
@@ -78,9 +77,9 @@ if ($webmailSettings['webmail_active'] == true)
         die('Oh no! Verbindung mit $mailbox als $username nicht moeglich!');
     }
 }
-// if webmail is not defined: leave vars empty
+// webmail is not defined...
 else
-    {
+    {   // leave vars empty
         $webmail = "";
         $imap = "";
         $imapStart = "";
@@ -121,6 +120,7 @@ echo"<ol class=\"breadcrumb\">
     <section class=\"content\">";
 /* page content start here */
 
+// draw webmail only, of webmal is set to active...
 if ($webmailSettings['webmail_active'] == true)
 {
 ?>
@@ -147,11 +147,10 @@ if ($webmailSettings['webmail_active'] == true)
             </div>
             <!-- /.box-body -->
         </div>
+    </div> <!-- /. left col -->
 
-    </div>
     <div class="col-md-9">
         <!-- right col -->
-
         <div class="box box-secondary">
             <div class="box-header with-border">
                 <h3 class="box-title"><?php echo $imap->currentFolder; ?> </h3>
@@ -187,9 +186,8 @@ if ($webmailSettings['webmail_active'] == true)
                             $emails = array();
                             $imap->selectFolder($imap->currentFolder);
                             $emails = $imap->getMessages($imapAmount, $imapStart, $imapSortation, $imapMsgTypes);
-                                // $header = $imap->getBriefInfoMessages();
-                                // print_r($header);
-                                // $header = $imap->getMailboxStatistics();
+                            // $header = $imap->getBriefInfoMessages();
+                            // print_r($header);
                             $webmail->drawHeaders($emails, $imap->currentFolder, $lang);
                         ?>
                         </tbody>
@@ -214,11 +212,11 @@ if ($webmailSettings['webmail_active'] == true)
     </div>
 </div>
 <?php
-
+    // close current imap connection
     $imap->close();
 }
 else
-    {
+    {   // webmail not enabled
         echo "<h4>".$lang['WEBMAIL_NOT_ENABLED']."</h4>";
     }
 ?>

@@ -1,13 +1,11 @@
 <?php
 // SAVE tpl settings
 if(isset($_POST['save']))
-{
-    // loop through $_POST items
+{   // loop through all $_POST items
     foreach ($_POST as $property => $value)
-    {
+    {   // ignore property: savebutton
         if ($property != "save")
-        {
-            // check setting and call corresponding function
+        {   // check setting and call corresponding function
             if (substr($property, -5, 5) == '-long')
             {   // LONG VALUE SETTINGS
                 if (!\YAWK\settings::setLongSetting($db, $property, $value))
@@ -16,8 +14,7 @@ if(isset($_POST['save']))
                 }
             }
             else
-            {
-                // save value of property to database
+            {   // save value of property to database
                 \YAWK\settings::setSetting($db, $property, $value, $lang);
             }
         }
@@ -25,8 +22,6 @@ if(isset($_POST['save']))
     // load page again to show changes immediately
     \YAWK\sys::setTimeout("index.php?page=settings-webmail", 0);
 }
-?>
-<?php
 // get all template settings into array
 $settings = \YAWK\settings::getAllSettingsIntoArray($db);
 
@@ -61,14 +56,12 @@ echo"</section><!-- Main content -->
                 <div class="box-body">
                     <!-- email account settings -->
                     <?php \YAWK\settings::getFormElements($db, $settings, 23, $lang); ?>
-
                 </div>
             </div>
             <div class="box">
                 <div class="box-body">
                     <!-- email server seettings -->
                     <?php \YAWK\settings::getFormElements($db, $settings, 22, $lang); ?>
-
                 </div>
             </div>
         </div>
@@ -78,7 +71,6 @@ echo"</section><!-- Main content -->
                 <div class="box-body">
                     <!-- webmail settings -->
                     <?php \YAWK\settings::getFormElements($db, $settings, 24, $lang); ?>
-
                 </div>
             </div>
         </div>
