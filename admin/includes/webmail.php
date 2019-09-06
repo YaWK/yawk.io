@@ -78,6 +78,16 @@ if ($webmailSettings['webmail_active'] == true)
         die('Oh no! Verbindung mit $mailbox als $username nicht moeglich!');
     }
 }
+// if webmail is not defined: leave vars empty
+else
+    {
+        $webmail = "";
+        $imap = "";
+        $imapStart = "";
+        $imapSortation = "";
+        $imapAmount = "";
+        $imapMsgTypes = "";
+    }
 ?>
 <!-- JS: load data tables -->
 <script type="text/javascript">
@@ -130,6 +140,7 @@ if ($webmailSettings['webmail_active'] == true)
             <div class="box-body no-padding" style="">
                 <ul class="nav nav-pills nav-stacked">
                     <?php
+                        /** @var $imap \SSilence\ImapClient\ImapClient */
                         $webmail->drawFolders($imap, $imap->getFolders());
                     ?>
                 </ul>
@@ -144,14 +155,8 @@ if ($webmailSettings['webmail_active'] == true)
         <div class="box box-secondary">
             <div class="box-header with-border">
                 <h3 class="box-title"><?php echo $imap->currentFolder; ?> </h3>
-                <?php
-                // if ($imap->currentFolder === "INBOX")
-                // {
-                    echo "<small>".$webmail->connectionInfo."</small>";
-                // }
-
-                ?>
-
+                <?php echo "<small>".$webmail->connectionInfo."</small>"; ?>
+                <!-- search box -->
                 <div class="box-tools pull-right">
                     <div class="has-feedback">
                         <input type="text" class="form-control input-sm" placeholder="Search Mail">
@@ -214,6 +219,6 @@ if ($webmailSettings['webmail_active'] == true)
 }
 else
     {
-        echo "<h4>Webmail is not enabled! Go to <a href=\"index.php?page=settings-webmail\">Settings / Webmail</a> and enable it.</a></h4>";
+        echo "<h4>".$lang['WEBMAIL_NOT_ENABLED']."</h4>";
     }
 ?>
