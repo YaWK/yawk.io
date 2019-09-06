@@ -17,31 +17,32 @@ require_once "../system/engines/imapClient/TypeBody.php";
 use SSilence\ImapClient\ImapClientException;
 use SSilence\ImapClient\ImapClient as Imap;
 
+// get all webmail setting values into an array
+$webmailSettings = \YAWK\settings::getValueSettingsArray($db, "webmail_");
+
 // imap connection only made be made if webmail is set to active
-// get + store webmail_active setting
-$webmail_active = \YAWK\settings::getSetting($db, "webmail_active");
 // check if webmail is activated
-if ($webmail_active == true)
+if ($webmailSettings['webmail_active'] == true)
 {   // webmail enabled, get mailbox settings
 
     // mailbox server (imap.server.com)
-    $server = \YAWK\settings::getSetting($db, "webmail_imap_server");
+    $server = $webmailSettings['webmail_imap_server'];
     // mailbox user (email@server.com)
-    $username = \YAWK\settings::getSetting($db, "webmail_imap_username");
+    $username = $webmailSettings['webmail_imap_username'];
     // mailbox password
-    $password = \YAWK\settings::getSetting($db, "webmail_imap_password");
+    $password = $webmailSettings['webmail_imap_password'];
     // encryption type (ssl, tsl, null)
-    $encryption = "/" . \YAWK\settings::getSetting($db, "webmail_imap_encrypt");
+    $encryption = "/" . $webmailSettings['webmail_imap_encrypt'];
     // port (default: 993)
-    $port = ":" . \YAWK\settings::getSetting($db, "webmail_imap_port") . "";
+    $port = ":" . $webmailSettings['webmail_imap_port'];
     // start at email no
-    $imapStart = \YAWK\settings::getSetting($db, "webmail_imap_start") . "";
+    $imapStart = $webmailSettings['webmail_imap_start'];
     // amount of emails to be retrieved
-    $imapAmount = \YAWK\settings::getSetting($db, "webmail_imap_amount") . "";
+    $imapAmount = $webmailSettings['webmail_imap_amount'];
     // amount of emails to be retrieved
-    $imapMsgTypes = \YAWK\settings::getSetting($db, "webmail_imap_msgtypes") . "";
+    $imapMsgTypes = $webmailSettings['webmail_imap_msgtypes'];
     // sortation asc | desc
-    $imapSortation = \YAWK\settings::getSetting($db, "webmail_imap_sortation") . "";
+    $imapSortation = $webmailSettings['webmail_imap_sortation'];
 
     // include webmail class
     require_once "../system/classes/webmail.php";
@@ -110,7 +111,7 @@ echo"<ol class=\"breadcrumb\">
     <section class=\"content\">";
 /* page content start here */
 
-if ($webmail_active == true)
+if ($webmailSettings['webmail_active'] == true)
 {
 ?>
 <div class="row">
