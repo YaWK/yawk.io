@@ -17,14 +17,42 @@ namespace YAWK {
          * @param string $property
          * @return mixed
          */
-        public static function getSettingsArray($db, $property) // get all settings from db like property
+        public static function getAllSettingsArray($db, $property) // get all settings from db like property
         {
             /* @var $db \YAWK\db */
-            if ($res= $db->query("SELECT * FROM {settings} WHERE property LIKE '".$property."'")) {
+            if ($res= $db->query("SELECT * FROM {settings} WHERE property LIKE '".$property."%'")) {
                 $settingsArray = array();
                 while ($row = $res->fetch_assoc())
                 {   // fill array
-                    $settingsArray[] = $row;
+                    $settingsArray[$row['property']] = $row;
+                }
+            }
+            else
+            {   // q failed, throw error
+                \YAWK\sys::setSyslog($db, 35, 1, "failed to get settings from database ", 0, 0, 0, 0);
+                \YAWK\alert::draw("warning", "Warning!", "Fetch database error: getSettingsArray failed.","","4800");
+                return false;
+            }
+            return $settingsArray;
+        }
+
+        /**
+         * Returns an array containing property as key and values corresponding to this property where p like $property%.
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param string $property
+         * @return mixed
+         */
+        public static function getValueSettingsArray($db, $property) // get all settings from db like property
+        {
+            /* @var $db \YAWK\db */
+            if ($res= $db->query("SELECT property, value FROM {settings} WHERE property LIKE '".$property."%'")) {
+                $settingsArray = array();
+                while ($row = $res->fetch_assoc())
+                {   // fill array
+                    $settingsArray[$row['property']] = $row['value'];
                 }
             }
             else
