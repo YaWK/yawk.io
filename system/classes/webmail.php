@@ -178,7 +178,6 @@ namespace YAWK {
         {   // check, if email array is set and not empty
             if (is_array($emails) && (!empty($emails)))
             {
-                $emails = array_reverse($emails);
                 // walk through every email...
                 foreach ($emails as $item => $email)
                 {
