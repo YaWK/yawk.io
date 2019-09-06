@@ -564,16 +564,17 @@ class ImapClient
      * @param int    $number       Number of messages. 0 to get all
      * @param int    $start        Starting message number
      * @param string $order        ASC or DESC
+     * @param string $filter       ALL, SEEN, UNSEEN....
      * @return array IncomingMessage of objects
      */
-    public function getMessages($number = 0, $start = 0, $order = 'DESC')
+    public function getMessages($number = 0, $start = 0, $order = 'DESC', $filter = 'ALL')
     {
         if ($number == 0)
         {
             $number = $this->countMessages();
         }
         $emails = array();
-        $result = imap_search($this->imap, 'ALL');
+        $result = imap_search($this->imap, $filter);
         if ($result)
         {
             $ids = array();
