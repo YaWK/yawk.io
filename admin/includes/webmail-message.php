@@ -12,58 +12,93 @@
     require_once "../system/engines/imapClient/TypeAttachments.php";
     require_once "../system/engines/imapClient/TypeBody.php";
 
-    // After this, we need to let php we need these classes:
+    // let php know we need these classes:
     use SSilence\ImapClient\ImapClientException;
     use SSilence\ImapClient\ImapClient as Imap;
 
-// load webmail only if its enabled
-$webmail_active = \YAWK\settings::getSetting($db, "webmail_active");
-if ($webmail_active == true)
-{
-// get mailbox login data
-    $mailbox = \YAWK\settings::getSetting($db, "webmail_imap_server");
-    $username = \YAWK\settings::getSetting($db, "webmail_imap_username");
-    $password = \YAWK\settings::getSetting($db, "webmail_imap_password");
-    $encryption = "/" . \YAWK\settings::getSetting($db, "webmail_imap_encrypt");
-    $port = ":" . \YAWK\settings::getSetting($db, "webmail_imap_port") . "";
+    // get all webmail setting values into an array
+    $webmailSettings = \YAWK\settings::getValueSettingsArray($db, "webmail_");
 
-// include webmail class
+if ($webmailSettings['webmail_active'] == true)
+{
+    // mailbox server (imap.server.com)
+    $server = $webmailSettings['webmail_imap_server'];
+    // mailbox user (email@server.com)
+    $username = $webmailSettings['webmail_imap_username'];
+    // mailbox password
+    $password = $webmailSettings['webmail_imap_password'];
+    // encryption type (ssl, tsl, null)
+    $encryption = "/" . $webmailSettings['webmail_imap_encrypt'];
+    // port (default: 993)
+    $port = ":" . $webmailSettings['webmail_imap_port'];
+
+    // include webmail class
     require_once "../system/classes/webmail.php";
-// create new webmail object
+    // create new webmail object
     $webmail = new \YAWK\webmail();
 
-// Open connection
-    try {
-        $imap = new Imap($mailbox.$port.$encryption, $username, $password, $encryption);
+    try // open connection to imap server
+    {   // create new imap object
+        $imap = new Imap($server.$port.$encryption, $username, $password, $encryption);
+        // store the connection
         $imap->connection = $imap->getImapConnection();
-        if (isset($_GET['folder'])) {
+
+        // webmail page called with parameter - user requested a folder
+        if (isset($_GET['folder']) && (!empty($_GET['folder']) && (is_string($_GET['folder']))))
+        {    // select requested folder
+            $imap->selectFolder($_GET['folder']);
+            // set current folder string
             $imap->currentFolder = $_GET['folder'];
-            $imap->selectFolder($imap->currentFolder);
         }
-    } catch (ImapClientException $error) {
-        // You know the rule, no errors in production ...
+        else // webmail page called w/o any parameters
+        {   // select default folder
+            $imap->selectFolder('INBOX');
+            $imap->currentFolder = "INBOX";
+        }
+    }
+
+    // open imap connection failed...
+    catch (ImapClientException $error)
+    {   // no errors in production
         $webmail->connectionInfo = $error->getMessage() . PHP_EOL;
-        // Oh no :( we failed
-        die('oh no! verbindung mit ' . $mailbox . ' als ' . $username . ' nicht moeglich!');
+        // exit with error
+        die('oh no! verbindung mit ' . $server . ' als ' . $username . ' nicht moeglich!');
     }
 
-// check user actions
-// move to trash
-    if (isset($_GET['action']) && ($_GET['action'] === "move")) {
-        if (isset($_GET['msgno']) && (!empty($_GET['msgno']))) {
-            $imap->moveMessage((int)$_GET['msgno'], "Trash");
-            $imap->selectFolder("Trash");
+    $msgno = (int)$_GET['msgno'];
+    // retrieve message
+    $email = $imap->getMessage($msgno);
+
+    // MARK AS UNREAD: set unseen message
+    if (isset($_GET['markAsUnread']) && ($_GET['markAsUnread'] == true))
+    {
+        // mark as unseen
+        if ($imap->setUnseenMessage($msgno) == true)
+        {   // email marked as unseen
+            \YAWK\alert::draw("success", "Marked as unread", "The email was marked as unseen", "", 1200);
         }
-    } else {
-        $msgno = (int)$_GET['msgno'];
-        // retrieve message
-        $email = $imap->getMessage($msgno);
+        else
+        {   // set unseen failed
+            \YAWK\alert::draw("warning", "ERROR:", "Unable to mark email as read", "", 2800);
+        }
     }
-
+    else    // mark email as seen
+    {   // check if mail has been seen
+        if ($imap->incomingMessage->header->seen == 0)
+        {   // if not, set seen (mark as read)
+            $imap->setSeenMessage($msgno);
+        }
+    }
 }
-
-// check out with if....
-// $imap->setSeenMessage($msgno);
+else    // webmail is not activated...
+{   // leave vars empty
+    $webmail = "";
+    $imap = "";
+    $imapStart = "";
+    $imapSortation = "";
+    $imapAmount = "";
+    $imapMsgTypes = "";
+}
 
 ?>
 <script type="text/javascript">
@@ -97,7 +132,7 @@ echo"<ol class=\"breadcrumb\">
 /* page content start here */
 
 // check if webmail is enabled
-if ($webmail_active == true) {
+if ($webmailSettings['webmail_active'] == true) {
     ?>
     <div class="row">
         <div class="col-md-3">
@@ -130,7 +165,16 @@ if ($webmail_active == true) {
             <!-- right col -->
             <div class="box box-secondary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Read Mail</h3>
+                    <h3><?php echo $imap->incomingMessage->header->subject; ?></h3>
+
+                    <h4>From: <?php echo $imap->incomingMessage->header->details->from[0]->mailbox . "@" . $imap->incomingMessage->header->details->from[0]->host ?>
+                    <span class="mailbox-read-time pull-right"><?php echo $imap->incomingMessage->header->date; ?>
+                    <br>
+                    <span class="pull-right">
+                        <?php echo \YAWK\sys::time_ago($imap->incomingMessage->header->date, $lang); ?></span>
+                    </span></h4>
+                    <h4></h4>
+                    <?php $webmail->drawMailboxControls("message", $imap->incomingMessage->header->uid, $imap->currentFolder, $lang); ?>
 
                     <div class="box-tools pull-right">
                         <a href="#" class="btn btn-box-tool" data-toggle="tooltip" title=""
@@ -141,22 +185,17 @@ if ($webmail_active == true) {
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body no-padding">
+                    <!--
                     <div class="mailbox-read-info">
-                        <h3><?php echo $imap->incomingMessage->header->subject; ?></h3>
-                        <h5>
-                            From: <?php echo $imap->incomingMessage->header->details->from[0]->mailbox . "@" . $imap->incomingMessage->header->details->from[0]->host ?>
-                            <span class="mailbox-read-time pull-right"><?php echo $imap->incomingMessage->header->date; ?></span>
-                        </h5>
-                    </div>
+                        ...
+                    </div> -->
                     <!-- /.mailbox-read-info -->
-                    <div class="mailbox-controls with-border text-center">
-                        <?php $webmail->drawMailboxControls("message", $lang); ?>
-                    </div>
+                    <!-- <div class="mailbox-controls with-border text-center"> -->
+                    <!-- </div> -->
                     <!-- /.mailbox-controls -->
                     <div class="mailbox-read-message">
 
                         <?php
-
                         echo  $imap->incomingMessage->message->html;
 
                         foreach ($imap->incomingMessage->attachments as $key => $attachment) {
@@ -262,18 +301,16 @@ if ($webmail_active == true) {
                 </div>
                 <!-- /.box-footer -->
             </div>
-
-
             <?php
-            echo "<pre>";
-            echo "<h2>info messages";
-            // print_r($imap->getMessageOverview($_GET['msgno']));
-            echo "</pre>";
+                echo "<pre>";
+                echo "<h2>info messages";
+                // print_r($imap->incomingMessage);
+                echo "</pre>";
 
 
-            echo "<pre>";
-            // print_r($header);
-            echo "</pre>";
+                echo "<pre>";
+                // print_r($header);
+                echo "</pre>";
             ?>
 
         </div>

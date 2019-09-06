@@ -56,14 +56,14 @@ if ($webmailSettings['webmail_active'] == true)
         // create new imap handle
         $imap = new Imap($server.$port.$encryption, $username, $password, $encryption);
 
-        // page webmail called with parameter - user requested a folder
+        // webmail page called with parameter - user requested a folder
         if (isset($_GET['folder']) && (!empty($_GET['folder']) && (is_string($_GET['folder']))))
         {    // select requested folder
             $imap->selectFolder($_GET['folder']);
             // set current folder string
             $imap->currentFolder = $_GET['folder'];
         }
-        else // page webmail called w/o any parameters
+        else // webmail page called w/o any parameters
         {   // select default folder
             $imap->selectFolder('INBOX');
             $imap->currentFolder = "INBOX";
@@ -76,9 +76,35 @@ if ($webmailSettings['webmail_active'] == true)
         // exit with error
         die('Oh no! Verbindung mit $mailbox als $username nicht moeglich!');
     }
+
+    // MOVE ACTION: move message to specified target folder
+    if (isset($_GET['moveMessage']) && ($_GET['moveMessage'] == true))
+    {
+        // pastebin call
+        if ($webmail->moveMessage($imap, $_GET['folder'], $_GET['targetFolder'], $_GET['uid']) == true)
+        {   // email moved to trash
+            \YAWK\alert::draw("success", "Email deleted", "The email was recycled", "", 1200);
+        }
+        else
+            {   // recycling failed
+                \YAWK\alert::draw("danger", "ERROR:", "Unable to recycle email", "", 2800);
+            }
+    }
+
+    // DELETE ACTION: delete single message
+    if (isset($_GET['deleteMessage']) && ($_GET['deleteMessage'] == true))
+    {   // delete message
+        if ($webmail->deleteMessage($imap, $_GET['folder'], $_GET['uid']))
+        {   // email deleted
+            \YAWK\alert::draw("success", "Email deleted", "The email was deleted", "", 1200);
+        }
+        else
+            {   // failed to delete email
+                \YAWK\alert::draw("danger", "ERROR:", "Unable to delete email", "", 2800);
+            }
+    }
 }
-// webmail is not defined...
-else
+else    // webmail is not activated...
     {   // leave vars empty
         $webmail = "";
         $imap = "";
@@ -167,7 +193,7 @@ if ($webmailSettings['webmail_active'] == true)
             <!-- /.box-header -->
             <div class="box-body no-padding">
                 <div class="mailbox-controls">
-                        <?php $webmail->drawMailboxControls("inbox", $lang); ?>
+                        <?php $webmail->drawMailboxControls("inbox", 0, $imap->currentFolder, $lang); ?>
                 </div>
                 <div class="table-responsive mailbox-messages">
                     <table cellpadding="0" cellspacing="0" class="table table-striped table-hover table-responsive" id="table-sort">
@@ -175,10 +201,10 @@ if ($webmailSettings['webmail_active'] == true)
                         <tr>
                             <td><div class="icheckbox_flat-blue" aria-checked="false" aria-disabled="false" style="position: relative;"><input type="checkbox" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div></td>
                             <td class="mailbox-star"></td>
-                            <td class="mailbox-name">from</td>
-                            <td class="mailbox-subject">subject</td>
+                            <td class="mailbox-name"><?php echo $lang['SENDER_FROM']; ?></td>
+                            <td class="mailbox-subject"><?php echo $lang['SUBJECT']; ?></td>
                             <td class="mailbox-attachment"></td>
-                            <td class="mailbox-date"></td>
+                            <td class="mailbox-date"><?php echo $lang['DATE']; ?></td>
                         </tr>
                         </thead>
                         <tbody>
@@ -198,15 +224,15 @@ if ($webmailSettings['webmail_active'] == true)
             </div>
             <!-- /.box-body -->
             <div class="box-footer no-padding">
-                <?php $webmail->drawMailboxControls("inbox", $lang); ?>
+                <?php $webmail->drawMailboxControls("inbox", 0, $imap->currentFolder, $lang); ?>
             </div>
         </div>
 
         <?php
-            echo "<pre>";
+            // echo "<pre>";
             // print_r($emails);
             // print_r($header);
-            echo "</pre>";
+            // echo "</pre>";
         ?>
 
     </div>
