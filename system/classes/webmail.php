@@ -23,17 +23,116 @@ namespace YAWK {
         public $connectionInfo = '';
 
         /**
+         * @param $imap object imap connection resource
+         * @param $folder string the source folder from which to move the uid
+         * @param $targetFolder string the target folder where to move the uid
+         * @param $uid int|string the mail UID
+         */
+        public function moveMessage($imap, $folder, $targetFolder, $uid)
+        {   /** @var $imap \SSilence\ImapClient\ImapClient */
+
+            // folder is not set or empty
+            if (!isset($folder) || (empty($folder)))
+            {   // todo: add syslog call
+                // \YAWK\alert::draw("warning", "Warning", "Failed to delete email because there is no source folder set!", "", 0);
+            }
+            else
+            {   // select current source folder
+                $imap->selectFolder($folder);
+            }
+
+            // target folder not set or empty
+            if (!isset($targetFolder) || (empty($targetFolder)))
+            {   // todo: add syslog call
+                // \YAWK\alert::draw("warning", "Warning", "Failed to delete email because there is no target folder set!", "", 0);
+            }
+
+            if (!isset($uid) || (empty($uid)))
+            {   // todo: add syslog call
+                // \YAWK\alert::draw("warning", "Warning", "Failed to delete email because there is no uid set!", "", 0);
+            }
+
+            // move email to target folder
+            if ($imap->moveMessage($uid, $targetFolder))
+            {   // move email successful
+                return true;
+            }
+            else
+            {   // move email failed
+                return false;
+            }
+        }
+
+        /**
+         * @param $imap object imap connection resource
+         * @param $folder string the source folder from which to move the uid
+         * @param $uid int|string the mail UID
+         */
+        public function deleteMessage($imap, $folder, $uid)
+        {   /** @var $imap \SSilence\ImapClient\ImapClient */
+
+            // folder is not set or empty
+            if (!isset($folder) || (empty($folder)))
+            {   // todo: add syslog call
+                // \YAWK\alert::draw("warning", "Warning", "Failed to delete email because there is no source folder set!", "", 0);
+            }
+            else
+            {   // select current source folder
+                $imap->selectFolder($folder);
+            }
+
+            // mail uid is not set
+            if (!isset($uid) || (empty($uid)))
+            {   // todo: add syslog call
+                // \YAWK\alert::draw("warning", "Warning", "Failed to delete email because there is no uid set!", "", 0);
+            }
+
+            // move email to target folder
+            if ($imap->deleteMessage($uid))
+            {   // move email successful
+                return true;
+            }
+            else
+            {   // move email failed
+                return false;
+            }
+        }
+
+        /**
          * Draw buttons to control the mailbox with icons (trash, reply, forward...)
          * @param $type string inbox|message|
          * @param $lang array language array
          */
-        public function drawMailboxControls($type, $lang)
+        public function drawMailboxControls($type, $uid, $folder, $lang)
         {
+            // check if uid is set
+            if (!isset($uid) || (empty($uid)))
+            {   // set uid to zero
+                $uid = 0;
+            }
+            // check if folder is set (required for correct delete action)
+            if (!isset($folder) || (empty($folder)))
+            {   // set folder to inbox
+                $folder = "INBOX";
+            }
+            else
+                {
+                    // if current folder is trash...
+                    if ($folder == "trash" || ($folder == "Trash"))
+                    {   // set delete button to final
+                        $deleteLink = "index.php?page=webmail&deleteMessage=true&folder=".$folder."&targetFolder=Trash&uid=".$uid."";
+                    }
+                    else
+                        {
+                            $deleteLink = "index.php?page=webmail&moveMessage=true&folder=".$folder."&targetFolder=Trash&uid=".$uid."";
+                        }
+                }
+
             // check if type is set
             if (isset($type) && (is_string($type)))
-            {
+            {   // check, which type of button set is wanted
                 switch ($type)
-                {
+                {   // button iconset for inbox
                     case "inbox":
                         echo "
                     <div class=\"mailbox-controls\">
@@ -54,12 +153,13 @@ namespace YAWK {
                     </div>";
                     break;
 
+                    // button iconset for message page
                     case "message":
                         echo "
                     <div class=\"mailbox-controls\">
                         <div class=\"btn-group\">
-                            <a href=\"index.php?page=webmail\" id=\"icon-markAsRead\" class=\"btn btn-default btn-sm\" data-toggle=\"tooltip\" data-container=\"body\" title=\"$lang[MARK_AS_READ]\" data-original-title=\"$lang[MARK_AS_READ]\"><i class=\"fa fa-square-o\"></i></a>
-                            <a href=\"index.php?page=webmail\" id=\"icon-delete\" class=\"btn btn-default btn-sm\" data-toggle=\"tooltip\" data-container=\"body\" title=\"$lang[DELETE]\" data-original-title=\"$lang[DELETE]\"><i class=\"fa fa-trash-o\"></i></a>
+                            <a href=\"index.php?page=webmail-message&markAsUnread=true&folder=".$_GET['folder']."&msgno=".$_GET['msgno']."\" id=\"icon-markAsUnseen\" class=\"btn btn-default btn-sm\" data-toggle=\"tooltip\" data-container=\"body\" title=\"$lang[MARK_AS_UNSEEN]\" data-original-title=\"$lang[MARK_AS_UNSEEN]\"><i class=\"fa fa-square-o\"></i></a>
+                            <a href=\"".$deleteLink."\" id=\"icon-delete\" class=\"btn btn-default btn-sm\" data-toggle=\"tooltip\" data-container=\"body\" title=\"$lang[DELETE]\" data-original-title=\"$lang[DELETE]\"><i class=\"fa fa-trash-o\"></i></a>
                             <a href=\"index.php?page=webmail\" id=\"icon-reply\" class=\"btn btn-default btn-sm\" data-toggle=\"tooltip\" data-container=\"body\" title=\"$lang[REPLY]\" data-original-title=\"$lang[REPLY]\"><i class=\"fa fa-reply\"></i></a>
                             <a href=\"index.php?page=webmail\" id=\"icon-forward\" class=\"btn btn-default btn-sm\" data-toggle=\"tooltip\" data-container=\"body\" title=\"$lang[FORWARD]\" data-original-title=\"$lang[FORWARD]\"><i class=\"fa fa-mail-forward\"></i></a>
                             <a href=\"#\" id=\"icon-print\" class=\"btn btn-default btn-sm\" data-toggle=\"tooltip\" data-container=\"body\" title=\"$lang[PRINT]\" data-original-title=\"$lang[PRINT]\"><i class=\"fa fa-print\"></i></a>
@@ -72,7 +172,7 @@ namespace YAWK {
         }
 
         /**
-         * @param $imap resource The current imap handle
+         * @param $imap object The current imap handle
          * @param $folders array The mailbox folders as array
          */
         public function drawFolders($imap, $folders)
