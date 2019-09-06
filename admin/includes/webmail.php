@@ -34,7 +34,21 @@ if ($webmail_active == true)
     $encryption = "/" . \YAWK\settings::getSetting($db, "webmail_imap_encrypt");
     // port (default: 993)
     $port = ":" . \YAWK\settings::getSetting($db, "webmail_imap_port") . "";
+    // start at email no
+    $imapStart = \YAWK\settings::getSetting($db, "webmail_imap_start") . "";
+    // amount of emails to be retrieved
+    $imapAmount = \YAWK\settings::getSetting($db, "webmail_imap_amount") . "";
+    // amount of emails to be retrieved
+    $imapMsgTypes = \YAWK\settings::getSetting($db, "webmail_imap_msgtypes") . "";
+    // sortation asc | desc
+    $imapSortation = \YAWK\settings::getSetting($db, "webmail_imap_sortation") . "";
 
+    // include webmail class
+    require_once "../system/classes/webmail.php";
+    // create new webmail object
+    $webmail = new \YAWK\webmail();
+    // set connection info var
+    $webmail->connectionInfo = "<i>$username</i>";
 
     try // open connection to imap server
     {
@@ -62,15 +76,6 @@ if ($webmail_active == true)
         // exit with error
         die('Oh no! Verbindung mit $mailbox als $username nicht moeglich!');
     }
-
-    // include webmail class
-    require_once "../system/classes/webmail.php";
-
-    // create new webmail object
-    $webmail = new \YAWK\webmail();
-
-    // set connection info var
-    $webmail->connectionInfo = "<i>$username</i>";
 }
 ?>
 <!-- JS: load data tables -->
@@ -98,7 +103,7 @@ echo "
 echo \YAWK\backend::getTitle($lang['WEBMAIL'], $lang['WEBMAIL_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
-            <li class=\"active\"><a href=\"index.php?page=widgets\" title=\"$lang[WEBMAIL]\"> $lang[WEBMAIL]</a></li>
+            <li class=\"active\"><a href=\"index.php?page=webmail\" title=\"$lang[WEBMAIL]\"> $lang[WEBMAIL]</a></li>
          </ol>
     </section>
     <!-- Main content -->
@@ -175,7 +180,7 @@ if ($webmail_active == true)
                         <?php
                             $emails = array();
                             $imap->selectFolder($imap->currentFolder);
-                            $emails = $imap->getMessages(5, $start = 0, 'DESC', 'ALL');
+                            $emails = $imap->getMessages($imapAmount, $imapStart, $imapSortation, $imapMsgTypes);
                                 // $header = $imap->getBriefInfoMessages();
                                 // print_r($header);
                                 // $header = $imap->getMailboxStatistics();
