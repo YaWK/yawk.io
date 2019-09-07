@@ -586,7 +586,7 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('userpage_profile', '1', '', 6, 0, 1, 'userpage profile enabled?', '', '', '', 'form-control', '', '', '', ''),
 ('userpage_settings', '1', '', 6, 0, 1, 'userpage`settings', '', '', '', 'form-control', '', '', '', ''),
 ('userpage_stats', '1', '', 6, 0, 1, 'userpage stats enabled?', '', '', '', 'form-control', '', '', '', ''),
-('webmail_active', '1', '', 23, 1, 1, 'LABEL_WEBMAIL_ACTIVE', 'fa fa-envelope-o', 'HEADING_WEBMAIL_ACTIVE', '', 'form-control', 'checkbox', '', '', ''),
+('webmail_active', '0', '', 23, 1, 1, 'LABEL_WEBMAIL_ACTIVE', 'fa fa-envelope-o', 'HEADING_WEBMAIL_ACTIVE', '', 'form-control', 'checkbox', '', '', ''),
 ('webmail_imap_amount', '50', '', 24, 10, 1, 'LABEL_WEBMAIL_AMOUNT', '', '', '', 'form-control', 'input', 'PH_WEBMAIL_AMOUNT', '', ''),
 ('webmail_imap_encrypt', 'ssl', '', 22, 2, 1, 'LABEL_WEBMAIL_IMAP_ENCRYPT', '', '', '', 'form-control', 'select', '', 'DESC_WEBMAIL_IMAP_ENCRYPT', 'tls,tls:ssl,ssl:,null'),
 ('webmail_imap_msgtypes', 'ALL', '', 24, 10, 1, 'LABEL_WEBMAIL_MSGTYPES', '', '', '', 'form-control', 'select', '', 'DESC_WEBMAIL_MSGTYPES', 'ALL,ALL:ANSWERED,ANSWERED:DELETED,DELETED:FLAGGED,FLAGGED:NEW,NEW:OLD,OLD:RECENT,RECENT:SEEN,SEEN:UNANSWERED,UNANSWERED:UNDELETED,UNDELETED:UNFLAGGED,UNFLAGGED:UNSEEN,UNSEEN'),
