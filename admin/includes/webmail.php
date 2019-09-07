@@ -55,6 +55,9 @@ if ($webmailSettings['webmail_active'] == true)
     {
         // create new imap handle
         $imap = new Imap($server.$port.$encryption, $username, $password, $encryption);
+        // connection successful, error = false
+        $error = false;
+        $errorMsg = '';
 
         // webmail page called with parameter - user requested a folder
         if (isset($_GET['folder']) && (!empty($_GET['folder']) && (is_string($_GET['folder']))))
@@ -74,7 +77,8 @@ if ($webmailSettings['webmail_active'] == true)
     {   // no errors in production...
         $webmail->connectionInfo = $error->getMessage() . PHP_EOL;
         // exit with error
-        die('Oh no! Verbindung mit $mailbox als $username nicht moeglich!');
+        $error = true;
+        $errorMsg = 'Oh no! Verbindung mit server: '.$server.' als user: '.$username.' nicht moeglich!';
     }
 
     // MOVE ACTION: move message to specified target folder
@@ -112,6 +116,8 @@ else    // webmail is not activated...
         $imapSortation = "";
         $imapAmount = "";
         $imapMsgTypes = "";
+        $error = "";
+        $errorMsg = "";
     }
 ?>
 <!-- JS: load data tables -->
@@ -145,9 +151,13 @@ echo"<ol class=\"breadcrumb\">
     <!-- Main content -->
     <section class=\"content\">";
 /* page content start here */
-
+// check if there was a connection error
+if (isset($error) && ($error == true))
+{   // output error message
+    echo $errorMsg;
+}
 // draw webmail only, of webmal is set to active...
-if ($webmailSettings['webmail_active'] == true)
+if ($webmailSettings['webmail_active'] == true && ($error == false))
 {
 ?>
 <div class="row">
