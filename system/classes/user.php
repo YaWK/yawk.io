@@ -1387,11 +1387,12 @@ namespace YAWK {
             // lowercase username
             $username = mb_strtolower($username);
 
-            if ($username === "administrator" xor $username === "admin" or $username === "root" && ($id !== 1))
+            if ($username === "administrator" xor $username === "admin" or $username === "root")
             {   // forbidden username, throw error
-                \YAWK\sys::setSyslog($db, 11, 2,"somebody tried to register as <b>$username</b>", 0, 0, 0, 0);
-                // \YAWK\alert::draw("danger","Warning!","This username is not allowed!","page=user-new","4800");
-                // exit;
+                if ($id > 1)
+                {
+                    \YAWK\sys::setSyslog($db, 11, 2,"somebody tried to register as <b>$username</b>", 0, 0, 0, 0);
+                }
             }
 
             // prepare password
