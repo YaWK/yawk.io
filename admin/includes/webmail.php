@@ -81,6 +81,38 @@ if ($webmailSettings['webmail_active'] == true)
         $errorMsg = 'Oh no! Verbindung mit server: '.$server.' als user: '.$username.' nicht moeglich!';
     }
 
+    // MARK AS READ: set seen message
+    if (isset($_GET['markAsRead']) && ($_GET['markAsRead'] == true))
+    {
+        $msgno = (int)$_GET['msgno'];
+        $imap->selectFolder($_GET['folder']);
+        // mark as unseen
+        if ($imap->setSeenMessage($msgno) == true)
+        {   // email marked as unseen
+            // \YAWK\alert::draw("success", "Marked as read", "The email was marked as seen", "", 1200);
+        }
+        else
+        {   // set unseen failed
+            \YAWK\alert::draw("warning", "ERROR:", "Unable to mark email as read", "", 2800);
+        }
+    }
+
+    // MARK AS UNREAD: set unseen message
+    if (isset($_GET['markAsUnread']) && ($_GET['markAsUnread'] == true))
+    {
+        $msgno = (int)$_GET['msgno'];
+        $imap->selectFolder($_GET['folder']);
+        // mark as unseen
+        if ($imap->setUnseenMessage($msgno) == true)
+        {   // email marked as unseen
+            // \YAWK\alert::draw("success", "Marked as read", "The email was marked as seen", "", 1200);
+        }
+        else
+        {   // set unseen failed
+            \YAWK\alert::draw("warning", "ERROR:", "Unable to mark email as read", "", 2800);
+        }
+    }
+
     // MOVE ACTION: move message to specified target folder
     if (isset($_GET['moveMessage']) && ($_GET['moveMessage'] == true))
     {
@@ -194,7 +226,7 @@ if ($webmailSettings['webmail_active'] == true && ($error == false))
                 <!-- search box -->
                 <div class="box-tools pull-right">
                     <div class="has-feedback">
-                        <input type="text" class="form-control input-sm" placeholder="Search Mail">
+                        <input type="text" class="form-control input-sm" placeholder="Deep Search">
                         <span class="glyphicon glyphicon-search form-control-feedback"></span>
                     </div>
                 </div>
@@ -203,7 +235,7 @@ if ($webmailSettings['webmail_active'] == true && ($error == false))
             <!-- /.box-header -->
             <div class="box-body no-padding">
                 <div class="mailbox-controls">
-                        <?php $webmail->drawMailboxControls("inbox", 0, $imap->currentFolder, $lang); ?>
+                        <?php $webmail->drawMailboxControls($imap, "inbox", 0, $imap->currentFolder, $lang); ?>
                 </div>
                 <div class="table-responsive mailbox-messages">
                     <table cellpadding="0" cellspacing="0" class="table table-striped table-hover table-responsive" id="table-sort">
@@ -234,7 +266,7 @@ if ($webmailSettings['webmail_active'] == true && ($error == false))
             </div>
             <!-- /.box-body -->
             <div class="box-footer no-padding">
-                <?php $webmail->drawMailboxControls("inbox", 0, $imap->currentFolder, $lang); ?>
+                <?php $webmail->drawMailboxControls($imap, "inbox", 0, $imap->currentFolder, $lang); ?>
             </div>
         </div>
 

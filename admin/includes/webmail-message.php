@@ -103,15 +103,28 @@ else    // webmail is not activated...
 ?>
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#table-sort').dataTable( {
+        $('#table-sort').dataTable({
             "bPaginate": true,
             "bLengthChange": false,
             "bFilter": true,
             "bSort": true,
             "bInfo": true,
             "bAutoWidth": false
-        } );
-    } );
+        });
+
+        // fa fa-envelope-open-o
+        // $('#icon-markAsUnseen').hover.removeClass().addClass('fa fa-envelope-open-o');
+
+        $("#btn-markAsUnseen").hover(
+            function() {
+                $( "#icon-markAsUnseen" ).removeClass("fa fa-envelope-open-o");
+                $( "#icon-markAsUnseen" ).addClass("fa fa-envelope");
+            }, function() {
+                $("#icon-markAsUnseen").removeClass("fa fa-envelope");
+                $("#icon-markAsUnseen").addClass("fa fa-envelope-open-o");
+            }
+        );
+    });
 </script>
 <?php
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
@@ -174,7 +187,7 @@ if ($webmailSettings['webmail_active'] == true) {
                         <?php echo \YAWK\sys::time_ago($imap->incomingMessage->header->date, $lang); ?></span>
                     </span></h4>
                     <h4></h4>
-                    <?php $webmail->drawMailboxControls("message", $imap->incomingMessage->header->uid, $imap->currentFolder, $lang); ?>
+                    <?php $webmail->drawMailboxControls($imap, "message", $imap->incomingMessage->header->uid, $imap->currentFolder, $lang); ?>
 
                     <div class="box-tools pull-right">
                         <a href="#" class="btn btn-box-tool" data-toggle="tooltip" title=""
@@ -293,11 +306,11 @@ if ($webmailSettings['webmail_active'] == true) {
                 <!-- /.box-footer -->
                 <div class="box-footer">
                     <div class="pull-right">
-                        <button type="button" class="btn btn-default"><i class="fa fa-reply"></i> Reply</button>
-                        <button type="button" class="btn btn-default"><i class="fa fa-mail-forward"></i> Forward</button>
+                        <a href="#" class="btn btn-default"><i class="fa fa-reply"></i> <?php echo $lang['REPLY']; ?></a>
+                        <a href="#" class="btn btn-default"><i class="fa fa-mail-forward"></i> <?php echo $lang['FORWARD']; ?></a>
                     </div>
-                    <button type="button" class="btn btn-default"><i class="fa fa-trash-o"></i> Delete</button>
-                    <button type="button" class="btn btn-default"><i class="fa fa-print"></i> Print</button>
+                    <a href="http://raspi/web/clone/admin/index.php?page=webmail&moveMessage=true&folder=INBOX&targetFolder=Trash&uid=<?php echo $imap->incomingMessage->header->uid; ?>" class="btn btn-default"><i class="fa fa-trash-o"></i> <?php echo $lang['DELETE']; ?></a>
+                    <a href="#" class="btn btn-default"><i class="fa fa-print"></i> <?php echo $lang['PRINT']; ?></a>
                 </div>
                 <!-- /.box-footer -->
             </div>
