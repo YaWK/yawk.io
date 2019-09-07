@@ -520,6 +520,13 @@ else
     <li <?php echo $disabledStatus; ?>><a href="#downloads" onclick="flipTheSwitch('downloads');"<?php echo $dataToggle; ?>><i class="fa fa-download"></i> &nbsp;<?php echo $lang['FILEMAN_DOWNLOADS']; ?></a></li>
     <li <?php echo $disabledStatus; ?>><a href="#uploads" onclick="flipTheSwitch('uploads');"<?php echo $dataToggle; ?>><i class="fa fa-upload"></i> &nbsp;<?php echo $lang['FILEMAN_UPLOADS']; ?></a></li>
     <li <?php echo $disabledStatus; ?>><a href="#backup" onclick="flipTheSwitch('backup');"<?php echo $dataToggle; ?>><i class="fa fa-file-zip-o"></i> &nbsp;<?php echo $lang['FILEMAN_BACKUP']; ?></a></li>
+   <?php
+        $webmail_active = \YAWK\settings::getSetting($db, "webmail_active");
+        if ($webmail_active == true)
+        {
+            echo '<li '.$disabledStatus.'><a href="#mailbox" '.$dataToggle.'><i class="fa fa-envelope-o"></i> &nbsp;'.$lang["WEBMAIL"].'</a></li>';
+        }
+    ?>
 </ul>
 
 <!-- content start -->
@@ -573,6 +580,19 @@ else
         <?php YAWK\filemanager::getFilesFromFolder("../media/backup", $lang); ?>
         <?php YAWK\filemanager::drawTableFooter(); ?>
     </div>
+    <!-- webmail folder (mailbox attachments) -->
+    <?php
+        if ($webmail_active == true)
+        {
+            echo "
+            <div class=\"tab-pane fade in\" id=\"mailbox\">
+            <br>";
+                YAWK\filemanager::drawTableHeader($lang, 2);
+                YAWK\filemanager::getFilesFromFolder("../media/mailbox", $lang);
+                YAWK\filemanager::drawTableFooter();
+            echo"</div>";
+        }
+    ?>
 </div>
 
     </div>

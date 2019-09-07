@@ -82,6 +82,7 @@ namespace YAWK {
                     if($dir->getFilename() === "documents") continue;
                     if($dir->getFilename() === "downloads") continue;
                     if($dir->getFilename() === "images") continue;
+                    if($dir->getFilename() === "mailbox") continue;
                     if($dir->getFilename() === "uploads") continue;
                     if($dir->getFilename() === "video") continue;
                     if ($dir->isDir())
