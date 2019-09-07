@@ -124,8 +124,17 @@ else    // webmail is not activated...
                 $("#icon-markAsUnseen").addClass("fa fa-envelope-open-o");
             }
         );
+        $("#printButton").click(
+            function () {
+                $("#emailMessageContent").printThis();
+        });
+        $("#icon-print").click(
+            function () {
+                $("#emailMessageContent").printThis();
+            });
     });
 </script>
+<script src="../system/engines/jquery/printThis/printThis.js" type="text/javascript"></script>
 <?php
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
@@ -176,7 +185,7 @@ if ($webmailSettings['webmail_active'] == true) {
         </div>
         <div class="col-md-9">
             <!-- right col -->
-            <div class="box box-secondary">
+            <div class="box box-secondary" id="emailMessageContent">
                 <div class="box-header with-border">
                     <h3><?php echo $imap->incomingMessage->header->subject; ?></h3>
 
@@ -186,7 +195,7 @@ if ($webmailSettings['webmail_active'] == true) {
                     <span class="pull-right">
                         <?php echo \YAWK\sys::time_ago($imap->incomingMessage->header->date, $lang); ?></span>
                     </span></h4>
-                    <h4></h4>
+                    
                     <?php $webmail->drawMailboxControls($imap, "message", $imap->incomingMessage->header->uid, $imap->currentFolder, $lang); ?>
 
                     <div class="box-tools pull-right">
@@ -303,27 +312,22 @@ if ($webmailSettings['webmail_active'] == true) {
                     </ul>
                     -->
                 </div>
+            </div>
                 <!-- /.box-footer -->
-                <div class="box-footer">
-                    <div class="pull-right">
-                        <a href="#" class="btn btn-default"><i class="fa fa-reply"></i> <?php echo $lang['REPLY']; ?></a>
-                        <a href="#" class="btn btn-default"><i class="fa fa-mail-forward"></i> <?php echo $lang['FORWARD']; ?></a>
+                <div class="box-footer hidden-print">
+                    <div class="pull-right hidden-print">
+                        <a href="#" class="btn btn-default hidden-print"><i class="fa fa-reply"></i> <?php echo $lang['REPLY']; ?></a>
+                        <a href="#" class="btn btn-default hidden-print"><i class="fa fa-mail-forward"></i> <?php echo $lang['FORWARD']; ?></a>
                     </div>
-                    <a href="http://raspi/web/clone/admin/index.php?page=webmail&moveMessage=true&folder=INBOX&targetFolder=Trash&uid=<?php echo $imap->incomingMessage->header->uid; ?>" class="btn btn-default"><i class="fa fa-trash-o"></i> <?php echo $lang['DELETE']; ?></a>
-                    <a href="#" class="btn btn-default"><i class="fa fa-print"></i> <?php echo $lang['PRINT']; ?></a>
+                    <a href="http://raspi/web/clone/admin/index.php?page=webmail&moveMessage=true&folder=INBOX&targetFolder=Trash&uid=<?php echo $imap->incomingMessage->header->uid; ?>" class="btn btn-default hidden-print"><i class="fa fa-trash-o"></i> <?php echo $lang['DELETE']; ?></a>
+                    <button type="button" id="printButton" class="btn btn-default hidden-print"><i class="fa fa-print"></i> <?php echo $lang['PRINT']; ?></button>
                 </div>
                 <!-- /.box-footer -->
-            </div>
+
             <?php
-                echo "<pre>";
-                echo "<h2>info messages";
-                // print_r($imap->incomingMessage);
-                echo "</pre>";
-
-
-                echo "<pre>";
+                // echo "<pre>";
                 // print_r($header);
-                echo "</pre>";
+                // echo "</pre>";
             ?>
 
         </div>
