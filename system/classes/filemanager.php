@@ -19,7 +19,36 @@ namespace YAWK {
     {
 
         /**
-         * draws the table header with labeling
+         * filemanager constructor.
+         * check if all media subfolder exists, if not, try to create them
+         */
+        function __construct()
+        {
+            $folders = array('../media/images',
+                            '../media/audio',
+                            '../media/backup',
+                            '../media/documents',
+                            '../media/downloads',
+                            '../media/mailbox',
+                            '../media/uploads',
+                            '../media/video');
+
+            foreach ($folders as $folder)
+            {
+                if (!is_dir($folder))
+                {
+                    if (!mkdir($folder))
+                    {
+                        // todo: syslog: unable to create $folder
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        /**
+         * draw the table header with labeling
          * @param array $lang language array
          * @param integer $i
          */
@@ -98,8 +127,8 @@ namespace YAWK {
                     $subpath = ltrim($subpath, "media");    // remove not needed path
                     $subpath = ltrim($subpath, "/");        // remove trailing slash
                     $subpath = strtr($subpath,"\\","/");    // if run on win: backslashes2slashes
-                    $label = ltrim($subpath, "/");        // remove trailing slash
-                    $label = ucfirst($label);             // uppercase first char of label
+                    $label = ltrim($subpath, "/");          // remove trailing slash
+                    $label = ucfirst($label);               // uppercase first char of label
                     echo "<option value=\"$subpath\">&nbsp;$label</option>";
                     }
                 }
