@@ -356,12 +356,12 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
                 }
 
                 // draw heading + subtext
-                echo "<div class=\"col-md-12\"><h1>$this->fbGalleryHeading&nbsp;$this->fbGallerySubtext</h1></div>";
+                echo "<div class=\"row padding\"><div class=\"col-md-12\"><h1>$this->fbGalleryHeading&nbsp;$this->fbGallerySubtext</h1></div></div>";
 
 
                 $i = 0; // loop indicator
                 // walk through data array to help animation (first items fadeIn on load)
-                // echo "<div class=\"row\">";
+                echo "<div class=\"row padding\">";
                 foreach ($this->apiObject['data'] as $property => $value)
                 {
                     // if loop runs for the first time
@@ -388,7 +388,7 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
                         }
 
                     // random align images
-                    $randomInt = rand(1,5);
+                    $randomInt = rand(1,4);
                     if ($randomInt == 1)
                     {
                         $imgClass = "img-lefty";
@@ -405,6 +405,7 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
                     {
                         $imgClass = "img-righty-less";
                     }
+                    /*
                     elseif ($randomInt == 5)
                     {
                         $imgClass = "img-thumbnail";
@@ -413,16 +414,17 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
                         {   // default value:
                             $imgClass = "img-thumbnail";
                         }
+                    */
 
                     // set filename to biggest image source
                     $fn = $value['images'][0]['source'];
                     // set layout div box, containing every single image
                     echo "<div class=\"col-md-$this->fbGalleryLayout text-center $animateMarkup\">
                           <a href=\"$fn\" data-lightbox=\"example-set\" data-title=\"$value[name]\">
-                          <img src=\"$fn\" alt=\"$value[name]\" style=\"width:auto; height:$this->fbGalleryFixedImageHeight;\" class=\"img-responsive ".$imgClass." hvr-grow\">
-                          </a><br><small>$this->fbGalleryImageInfo</small><br><br></div>";
+                          <img src=\"$fn\" alt=\"$value[name]\" style=\"width:auto; height:$this->fbGalleryFixedImageHeight;\" class=\"img-thumbnail img-fluid ".$imgClass." hvr-grow\">
+                          </a><br><br><small>$this->fbGalleryImageInfo</small><br><br><hr></div>";
                 } // end foreach
-                // echo "</div>";
+                 echo "</div>";
             }
             else
                 {   // api object not set or empty - abort with error
