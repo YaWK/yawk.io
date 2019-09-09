@@ -32,6 +32,8 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
             // bootstrap 4 navbar (globalmenu)
             $this->bs4_navbarCss();
             // $this->bs4_globalmenu();
+            // bootstrap 4 form settings
+            $this->bs4_FormsCss();
 
             // check if css code is set, not empty and correct type
             if (isset($this->cssCode) && (is_string($this->cssCode) && (!empty($this->cssCode))))
@@ -1044,36 +1046,84 @@ $this->cssCode .= "
             background-image: url(\"".$svg."\");
             }";
 
-// check, if navbar brand should be shown
-if ($this->tplSettings['navbar-brand'] == "0")
-{   // if not, set display to none
-    $this->cssCode .= ".navbar-brand { display:none; }";
-}
-
-// check, if vertical divider should be shown
-if ($this->tplSettings['navbar-vertical-divider'] == 1)
-{   // css markup for v divider
-    $this->cssCode .= ".navbar-nav > li {border-right: 1px solid #ebebeb;}
-                       .navbar-nav {border-left: 1px solid #ebebeb;}";
-}
-
-// check, if navbar should be sticky
-if ($this->tplSettings['navbar-sticky'] == "1")
-{   // set sticky css tags
-    $this->cssCode .="
-    .sticky {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 9998;
+    // check, if navbar brand should be shown
+    if ($this->tplSettings['navbar-brand'] == "0")
+    {   // if not, set display to none
+        $this->cssCode .= ".navbar-brand { display:none; }";
     }
-    
-    .sticky + .main {
-      padding-top: 120px;
-    }
-    ";
-}
 
+    // check, if vertical divider should be shown
+    if ($this->tplSettings['navbar-vertical-divider'] == 1)
+    {   // css markup for v divider
+        $this->cssCode .= ".navbar-nav > li {border-right: 1px solid #ebebeb;}
+                           .navbar-nav {border-left: 1px solid #ebebeb;}";
+    }
+
+    // check, if navbar should be sticky
+    if ($this->tplSettings['navbar-sticky'] == "1")
+    {   // set sticky css tags
+        $this->cssCode .="
+        .sticky {
+          position: fixed;
+          top: 0;
+          width: 100%;
+          z-index: 9998;
+        }
+        
+        .sticky + .main {
+          padding-top: 120px;
+        }
+        ";
+    }
+
+        }
+
+        /**
+         * Bootstrap 4: FORMS Component CSS Code
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @annotation add Bootstrap 4 forms component to this css code string
+         */
+        public function bs4_FormsCss()
+        {
+            $this->cssCode .= "
+            /* FORMS */
+            .form-control {
+              display: ".$this->tplSettings['form-display'].";
+              width: ".$this->tplSettings['form-width'].";
+              height: ".$this->tplSettings['form-height'].";
+              padding: ".$this->tplSettings['form-padding'].";
+              font-size: ".$this->tplSettings['form-textSize'].";
+              line-height: ".$this->tplSettings['form-lineHeight'].";
+              color: #".$this->tplSettings['form-textColor'].";
+              background-color: #".$this->tplSettings['form-bgcolor'].";
+              background-image: none;
+              border: ".$this->tplSettings['form-border'].";
+              border-radius: ".$this->tplSettings['form-border-radius'].";
+              -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+                      box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+              -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+                   -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+                      transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+            }
+            .form-control:focus {
+              border-color: #".$this->tplSettings['form-activeBorderColor'].";
+              outline: 0;
+              -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+                      box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+            }
+            .form-control::-moz-placeholder {
+              color: #".$this->tplSettings['form-placeholderColor'].";
+              opacity: 1;
+            }
+            .form-control:-ms-input-placeholder {
+              color: #999;
+            }
+            .form-control::-webkit-input-placeholder {
+              color: #999;
+            }
+            ";
         }
     }
 }
