@@ -410,6 +410,11 @@ namespace YAWK\WIDGETS\BOOKING\FORM
          */
         public function drawThankYouMessage()
         {
+            if (!isset($db))
+            {
+                $db = new \YAWK\db();
+            }
+            $hostname = \YAWK\settings::getSetting($db, "host");
             $html = "";
             $html .= "
             <div class=\"hidden d-none\" id=\"thankYouMessage\">
@@ -417,7 +422,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
             <div class=\"col-md-8 text-center\"><h2>Danke f&uuml;r Ihre Buchungsanfrage!<br>
             <small>Ihre Anfrage wird so schnell als m&ouml;glich bearbeitet.</small><br><br>
             <i class=\"fa fa-handshake-o text-muted\"></i></h2>
-            <br><hr><a href=\"http://www.funkyfingers.at/\" target=\"_self\">Zur Startseite</a> 
+            <br><hr><a href=\"".$hostname."\" target=\"_self\">Zur Startseite</a> 
             | <a href=\"booking.html\" target=\"_self\">Weitere Buchung</a></div>
             <div class=\"col-md-2\">&nbsp;</div>
             </div>
@@ -438,7 +443,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
             $html .= "
 <form class=\"form\" id=\"bookingForm\" method=\"post\" action=\"\">
 
-<div class=\"container-fluid\">
+<!-- <div class=\"container-fluid\"> -->
 <div class=\"row\">
 
     <div class=\"col-md-4 animated fadeIn speed3\">
@@ -789,7 +794,8 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                 <input type=\"hidden\" name=\"sent\" value=\"1\">";
 
 
-            $html .= "</div></div></div>
+            $html .= "</div></div>
+    <!-- </div> -->
     </form>";
             return $html;
         } /* EOFunction getTable */
