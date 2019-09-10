@@ -19,7 +19,7 @@ class TypeAttachments
      *
      * @var array
      */
-    private static $types = array('JPEG', 'PNG', 'GIF', 'PDF', 'X-MPEG', 'MSWORD', 'OCTET-STREAM', 'TXT', 'TEXT', 'MWORD', 'ZIP', 'MPEG', 'DBASE', 'ACROBAT', 'POWERPOINT', 'BMP', 'BITMAP');
+    private static $types = array('JPEG', 'JPG', 'PNG', 'PSD', 'GIF', 'PDF', 'X-MPEG', 'MSWORD', 'OCTET-STREAM', 'TXT', 'TEXT', 'MWORD', 'ZIP', 'WAV', 'MP3', 'MP4', 'DOC', 'MPG', 'MPEG', 'DBASE', 'ACROBAT', 'POWERPOINT', 'BMP', 'BITMAP', 'PDF', 'XLS', 'PPT');
 
     /**
      * Get the allowed types.
