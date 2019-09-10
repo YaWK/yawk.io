@@ -252,10 +252,14 @@ if ($webmailSettings['webmail_active'] == true && ($error == false))
                         <tbody>
                         <?php
                             $emails = array();
+                            /*
+                            $allowedAttachments = \SSilence\ImapClient\TypeAttachments::get();
+                            echo "<pre>";
+                            print_r($allowedAttachments);
+                            echo "<pre>";
+                            */
                             $imap->selectFolder($imap->currentFolder);
                             $emails = $imap->getMessages($imapAmount, $imapStart, $imapSortation, $imapMsgTypes);
-                            // $header = $imap->getBriefInfoMessages();
-                            // print_r($header);
                             $webmail->drawHeaders($emails, $imap->currentFolder, $lang);
                         ?>
                         </tbody>

@@ -218,14 +218,18 @@ if ($webmailSettings['webmail_active'] == true) {
                     <div class="mailbox-read-message">
 
                         <?php
+                        // output message
                         echo  $imap->incomingMessage->message->html;
 
-                        foreach ($imap->incomingMessage->attachments as $key => $attachment) {
-                            echo "<a href=\"#\">" . $attachment->name . "</a><br>";
+                        // draw attachment name
+                        foreach ($imap->incomingMessage->attachments as $key => $attachment)
+                        {
+                            echo "<br><p><b><i class=\"fa fa-paperclip\"></i>&nbsp;<a href=\"#\">" . $attachment->name . "</a></b></p>";
                             // base64_decode($attachment->body);
                             // echo "<img src=\"$attachment->body\">";
                         }
 
+                        /*
                         if (isset($email->attachments[0])) {
                             foreach ($email->attachments as $attachment => $value) {
                                 echo "<pre>";
@@ -233,6 +237,7 @@ if ($webmailSettings['webmail_active'] == true) {
                                 echo "</pre>";
                             }
                         }
+                        */
 
                         //////////////////// cut -- here
                         /*
