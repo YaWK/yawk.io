@@ -221,48 +221,37 @@ if ($webmailSettings['webmail_active'] == true) {
                         // output message
                         echo  $imap->incomingMessage->message->html;
 
+                        $downloadPath = "../media/mailbox";
+
+                        // set attachment options
+                        $attachmentOptions = array('dir' => $downloadPath, 'incomingMessage' => $imap->incomingMessage);
+
                         // draw attachment name
                         foreach ($imap->incomingMessage->attachments as $key => $attachment)
                         {
-                            echo "<br><p><b><i class=\"fa fa-paperclip\"></i>&nbsp;<a href=\"#\">" . $attachment->name . "</a></b></p>";
-                            // base64_decode($attachment->body);
-                            // echo "<img src=\"$attachment->body\">";
-                        }
+                            // save attachments to media/mailbox folder
+                            $imap->saveAttachments($attachmentOptions);
 
-                        /*
-                        if (isset($email->attachments[0])) {
-                            foreach ($email->attachments as $attachment => $value) {
-                                echo "<pre>";
-                                echo "<img src=\"" . $value->body . "\">";
-                                echo "</pre>";
+
+                            $downloadPath = \YAWK\sys::addTrailingSlash($downloadPath);
+
+                            if (is_file("".$downloadPath."".$attachment->name.""))
+                            {
+                                if (pathinfo($downloadPath.$attachment->name, PATHINFO_EXTENSION) == "jpg")
+                                {
+                                    echo "<img src=\"".$downloadPath."".$attachment->name."\" class=\"img-thumbnail\">";
+                                }
+                                else
+                                    {
+                                        echo "<br><p><b><i class=\"fa fa-paperclip\"></i>&nbsp;&nbsp;<a href=\"../media/mailbox/".$attachment->name."\">" . $attachment->name . "</a></b></p>";
+                                    }
                             }
+                            else
+                                {
+                                    echo "The email got attachments, but no files were found. <a href=\"#\">Try to download</a>";
+                                }
                         }
-                        */
-
-                        //////////////////// cut -- here
-                        /*
-                                                $email = $imap->getMessage($msgno);
-
-                                                echo $email->message->text."<br>";
-
-
-                                                foreach ($imap->incomingMessage->attachments as $key => $attachment)
-                                                {
-                                                    echo $attachment->name."<br>";
-                                                    // echo "<img src=\"$attachment->body\">";
-                                                    // echo base64_decode($attachment->body);
-                                                }
-
-                                                echo "<pre>";
-                                                print_r($email);
-                                                echo "</pre>";
-
-                        */
-                        //////////////////////////////// cut-- here
                         ?>
-                        <p>
-                            <?php // echo $message; ?>
-                        </p>
                     </div>
                     <!-- /.mailbox-read-message -->
                 </div>
