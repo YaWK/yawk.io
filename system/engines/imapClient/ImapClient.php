@@ -723,8 +723,17 @@ class ImapClient
         };
         foreach ($incomingMessage->attachments as $key => $attachment) {
             $newFileName = $attachment->name;
-            file_put_contents($dir.DIRECTORY_SEPARATOR.$newFileName, $attachment->body);
-        };
+
+            if (file_put_contents($dir.DIRECTORY_SEPARATOR.$newFileName, base64_decode($attachment->body)) == false)
+            {
+                // return false;
+            }
+            else
+                {
+                    // return true;
+                }
+
+        }
     }
 
     /**
