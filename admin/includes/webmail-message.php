@@ -222,11 +222,12 @@ if ($webmailSettings['webmail_active'] == true) {
                     <div class="mailbox-read-message">
 
                         <?php
-                        // output messageo
+                        // output message body
                         echo  $imap->incomingMessage->message->html;
 
                         // TODO: BETTER ATTACHMENT HANDLING
 
+                        // set download path
                         $downloadPath = "../media/mailbox";
 
                         // set attachment options
@@ -235,8 +236,7 @@ if ($webmailSettings['webmail_active'] == true) {
                         // if there are any attachments...
                         if (count($imap->incomingMessage->attachments) > 0)
                         {
-                            // set markup for attachments
-
+                            // set markup for attachments - start list
                             echo "<ul class=\"mailbox-attachments clearfix\">";
 
                             // walk through each attachment
@@ -244,23 +244,98 @@ if ($webmailSettings['webmail_active'] == true) {
                             {
                                 // save attachments to media/mailbox folder
                                 $imap->saveAttachments($attachmentOptions);
-
+                                // set download path
                                 $downloadPath = \YAWK\sys::addTrailingSlash($downloadPath);
+                                // set current file
+                                $attachment->currentFile = $downloadPath.$attachment->name;
 
-                                if (is_file("".$downloadPath."".$attachment->name.""))
-                                {
-                                    $attachment->size = filesize($downloadPath.$attachment->name);
+                                // check if attachment of this email was saved and is there
+                                if (is_file($attachment->currentFile))
+                                {   // get filesize of current attachment
+                                    $attachment->size = filesize($attachment->currentFile);
+                                    // round filesize to make it more human-friendly readable
                                     $attachment->size = \YAWK\filemanager::sizeFilter($attachment->size, 0);
+
+                                    // check if attachment filename is too long for the box
                                     if (strlen($attachment->name) >= 20)
-                                    {
+                                    {   // limit preview filename to 20 chars
                                         $attachment->namePreview = substr($attachment->name, 0, 20);
+                                        // add dots to improve visibility that filename was cutted
                                         $attachment->namePreview = $attachment->namePreview."...";
                                     }
                                     else
-                                        {
+                                        {   // filename is short enough - display full filename
                                             $attachment->namePreview = $attachment->name;
                                         }
 
+                                    // set current attachment mime type
+                                    $attachment->currentMimeType = mime_content_type($attachment->currentFile);
+
+                                    // CHECK MIME TYPES AND SET MARKUP
+                                    // :IMAGE
+                                    if(strpos($attachment->currentMimeType, "image") !== false)
+                                    {   // image markup
+                                        // echo "Attachment must be an image";
+                                    }
+
+                                    // :ZIP
+                                    else if(strpos($attachment->currentMimeType, "zip") !== false)
+                                    {   // seems to be a zip file";
+                                        $attachmentIcon = "fa fa-file-archive-o";
+                                    }
+
+                                    // :PDF
+                                    else if(strpos($attachment->currentMimeType, "pdf") !== false)
+                                    {   // seems to be a pdf file";
+                                        $attachmentIcon = "fa fa-file-pdf-o";
+                                    }
+
+                                    // :TEXT
+                                    else if(strpos($attachment->currentMimeType, "text") !== false)
+                                    {   // seems to be an text file";
+                                        $attachmentIcon = "fa fa-file-text-o";
+                                    }
+
+                                    // :AUDIO
+                                    else if(strpos($attachment->currentMimeType, "audio") !== false)
+                                    {   // seems to be a audio file";
+                                        $attachmentIcon = "fa fa-file-audio-o";
+                                    }
+
+                                    // :VIDEO
+                                    else if(strpos($attachment->currentMimeType, "video") !== false)
+                                    {   // seems to be a video file
+                                        echo "Attachment must be a video";
+                                        $attachmentIcon = "fa fa-file-video-o";
+                                    }
+
+                                    // :WORD
+                                    else if(strpos($attachment->currentMimeType, "word") !== false)
+                                    {   // seems to be a word file
+                                        $attachmentIcon = "fa fa-file-word-o";
+                                    }
+
+                                    // :EXCEL
+                                    else if(strpos($attachment->currentMimeType, "excel") !== false)
+                                    {   // seems to be a excel file
+                                        $attachmentIcon = "fa fa-file-excel-o";
+                                    }
+
+                                    // :EXCEL
+                                    else if(strpos($attachment->currentMimeType, "powerpoint") !== false)
+                                    {   // seems to be a powerpoint file
+                                        $attachmentIcon = "fa fa-file-powerpoint-o";
+                                    }
+
+                                    // unknown mime type
+                                    else
+                                        {   // cannot determine mime type
+                                            // block? or set default icon!
+                                            $attachmentIcon = "fa fa-file-o";
+                                        }
+
+                                    // check file extension to create proper markup
+                                    // $attachment->ext = pathinfo($downloadPath.$attachment->name, PATHINFO_EXTENSION);
                                     if (pathinfo($downloadPath.$attachment->name, PATHINFO_EXTENSION) == "jpg")
                                     {
                                         // attachment is an image
@@ -282,7 +357,7 @@ if ($webmailSettings['webmail_active'] == true) {
                                     {   // attachment is not an image
                                         echo "
                                         <li>
-                                            <span class=\"mailbox-attachment-icon\"><i class=\"fa fa-file\"></i></span>
+                                            <span class=\"mailbox-attachment-icon\"><a href=\"".$attachment->currentFile."\" target=\"_blank\"><i class=\"".$attachmentIcon."\"></i></a></span>
                 
                                             <div class=\"mailbox-attachment-info\">
                                                 <i class=\"fa fa-paperclip\"></i>&nbsp;&nbsp;<a href=\"".$downloadPath.$attachment->name."\">".$attachment->namePreview."</a>
