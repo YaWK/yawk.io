@@ -293,6 +293,7 @@ namespace YAWK {
                         $seenLink = 'index.php?page=webmail&markAsRead=true&folder='.$currentFolder.'&msgno='.$email->header->msgno.'';
                         // $seenTooltip = 'data-toggle="tooltip" data-container="body" title="'.$lang['MARK_AS_READ'].'" data-original-title="'.$lang['MARK_AS_READ'].'"';
                         $seenTooltip = '';
+                        $messageLink = 'index.php?page=webmail-message&folder='.$currentFolder.'&msgno='.$email->header->msgno.'';
                     }
                     else
                         {   // no markup required
@@ -303,6 +304,23 @@ namespace YAWK {
                             $seenLink = 'index.php?page=webmail&markAsUnread=true&folder='.$currentFolder.'&msgno='.$email->header->msgno.'';
                             // $seenTooltip = 'data-toggle="tooltip" data-container="body" title="'.$lang['MARK_AS_UNSEEN'].'" data-original-title="'.$lang['MARK_AS_UNSEEN'].'"';
                             $seenTooltip = '';
+                            $messageLink = 'index.php?page=webmail-message&folder='.$currentFolder.'&msgno='.$email->header->msgno.'';
+                        }
+
+                    // get mail size
+                    $size = \YAWK\filemanager::sizeFilter($email->header->size, 0);
+
+                    // count attachments
+                    $attachment = count ($email->attachments);
+
+                    // check if attachment is set
+                    if ($attachment >= 1)
+                    {   // set paperclip icon
+                        $attachClip = '<b><i class="fa fa-paperclip"></i></b><br><small>'.$size.'</small>';
+                    }
+                    else
+                        {   // no paperclip
+                            $attachClip = "";
                         }
 
                     // calculate human friendly time info
@@ -313,9 +331,10 @@ namespace YAWK {
                         <tr id="emailRow">
                             <td><div class="icheckbox_flat-blue" aria-checked="false" aria-disabled="false" style="position: relative;"><input type="checkbox" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div></td>
                             <td class="mailbox-star"><a href="'.$seenLink.'"'.$seenTooltip.'><i class="'.$seenIcon.'"></i></a></td>
-                            <td class="mailbox-name">'.$boldMarkupStart.'<a href="index.php?page=webmail-message&folder='.$currentFolder.'&msgno='.$email->header->msgno.'">'.$email->header->from.'</a>'.$boldMarkupEnd.'</td>
-                            <td class="mailbox-subject">'.$boldMarkupStart.$email->header->subject.$boldMarkupEnd.'</td>
-                            <td class="mailbox-attachment"></td>
+                            <td class="mailbox-name" style="cursor:pointer;" onclick="window.location=\''.$messageLink.'\';"><a href="#">'.$boldMarkupStart.$email->header->from.$boldMarkupEnd.'</a>
+                            <br><small>'.$email->header->details->from[0]->mailbox.'@'.$email->header->details->from[0]->host.'</small></td>
+                            <td class="mailbox-subject" style="cursor:pointer;" onclick="window.location=\''.$messageLink.'\';">'.$boldMarkupStart.$email->header->subject.$boldMarkupEnd.'</td>
+                            <td class="mailbox-attachment text-center">'.$attachClip.'</td>
                             <td class="mailbox-date">'.$email->header->date.'<br><small>'.$timeAgo.'</small></td>
                         </tr>';
                 }
