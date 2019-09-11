@@ -164,6 +164,14 @@ else    // webmail is not activated...
             "bAutoWidth": false
         } );
     } );
+
+    $('#table-sort tr').click(function() {
+        var href = $(this).find("a").attr("href");
+        if(href) {
+            window.location = href;
+        }
+    });
+
 </script>
 
 <?php
@@ -255,9 +263,12 @@ if ($webmailSettings['webmail_active'] == true && ($error == false))
                             /*
                             $allowedAttachments = \SSilence\ImapClient\TypeAttachments::get();
                             echo "<pre>";
-                            print_r($allowedAttachments);
+                            //print_r($allowedAttachments);
                             echo "<pre>";
                             */
+
+
+                        // CURRENT:
                             $imap->selectFolder($imap->currentFolder);
                             $emails = $imap->getMessages($imapAmount, $imapStart, $imapSortation, $imapMsgTypes);
                             $webmail->drawHeaders($emails, $imap->currentFolder, $lang);
