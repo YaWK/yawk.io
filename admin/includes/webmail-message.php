@@ -1,3 +1,7 @@
+<!-- load JS: Lightbox 2 JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/js/lightbox.min.js"></script>
+<!-- load CSS: Lightbox 2 CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/css/lightbox.min.css" type="text/css" media="all">
 <?php
     require_once "../system/engines/imapClient/AdapterForOutgoingMessage.php";
     require_once "../system/engines/imapClient/Helper.php";
@@ -218,93 +222,91 @@ if ($webmailSettings['webmail_active'] == true) {
                     <div class="mailbox-read-message">
 
                         <?php
-                        // output message
+                        // output messageo
                         echo  $imap->incomingMessage->message->html;
+
+                        // TODO: BETTER ATTACHMENT HANDLING
 
                         $downloadPath = "../media/mailbox";
 
                         // set attachment options
                         $attachmentOptions = array('dir' => $downloadPath, 'incomingMessage' => $imap->incomingMessage);
 
-                        // draw attachment name
-                        foreach ($imap->incomingMessage->attachments as $key => $attachment)
+                        // if there are any attachments...
+                        if (count($imap->incomingMessage->attachments) > 0)
                         {
-                            // save attachments to media/mailbox folder
-                            $imap->saveAttachments($attachmentOptions);
+                            // set markup for attachments
 
+                            echo "<ul class=\"mailbox-attachments clearfix\">";
 
-                            $downloadPath = \YAWK\sys::addTrailingSlash($downloadPath);
-
-                            if (is_file("".$downloadPath."".$attachment->name.""))
+                            // walk through each attachment
+                            foreach ($imap->incomingMessage->attachments as $key => $attachment)
                             {
-                                if (pathinfo($downloadPath.$attachment->name, PATHINFO_EXTENSION) == "jpg")
+                                // save attachments to media/mailbox folder
+                                $imap->saveAttachments($attachmentOptions);
+
+                                $downloadPath = \YAWK\sys::addTrailingSlash($downloadPath);
+
+                                if (is_file("".$downloadPath."".$attachment->name.""))
                                 {
-                                    echo "<img src=\"".$downloadPath."".$attachment->name."\" class=\"img-thumbnail\">";
+                                    $attachment->size = filesize($downloadPath.$attachment->name);
+                                    $attachment->size = \YAWK\filemanager::sizeFilter($attachment->size, 0);
+                                    if (strlen($attachment->name) >= 20)
+                                    {
+                                        $attachment->namePreview = substr($attachment->name, 0, 20);
+                                        $attachment->namePreview = $attachment->namePreview."...";
+                                    }
+                                    else
+                                        {
+                                            $attachment->namePreview = $attachment->name;
+                                        }
+
+                                    if (pathinfo($downloadPath.$attachment->name, PATHINFO_EXTENSION) == "jpg")
+                                    {
+                                        // attachment is an image
+                                        echo "
+                                
+                                        <li>
+                                           <!-- <span class=\"mailbox-attachment-icon\"><i class=\"fa fa-file-image-o\"></i></span> -->
+                
+                                            <div class=\"mailbox-attachment-info\" style=\"min-height:180px; overflow: hidden;\">
+                                                <a href=\"".$downloadPath.$attachment->name."\" data-lightbox=\"attachment-set\" data-title=\"".$attachment->name."\" class=\"mailbox-attachment-name\"><img src=\"".$downloadPath.$attachment->name."\" class=\"img-responsive\"> ".$attachment->namePreview."</a>
+                                                <span class=\"mailbox-attachment-size\">
+                                          ".$attachment->size."
+                                          <a href=\"".$downloadPath.$attachment->name."\" class=\"btn btn-default btn-xs pull-right\"><i class=\"fa fa-cloud-download\"></i></a>
+                                        </span>
+                                            </div>
+                                        </li>";
+                                    }
+                                    else
+                                    {   // attachment is not an image
+                                        echo "
+                                        <li>
+                                            <span class=\"mailbox-attachment-icon\"><i class=\"fa fa-file\"></i></span>
+                
+                                            <div class=\"mailbox-attachment-info\">
+                                                <i class=\"fa fa-paperclip\"></i>&nbsp;&nbsp;<a href=\"".$downloadPath.$attachment->name."\">".$attachment->namePreview."</a>
+                                                <span class=\"mailbox-attachment-size\">
+                                                ".$attachment->size."
+                                          <a href=\"".$downloadPath.$attachment->name."\" class=\"btn btn-default btn-xs pull-right\"><i class=\"fa fa-cloud-download\"></i></a>
+                                        </span>
+                                            </div>
+                                        </li>";
+                                        // echo "<br><p><b><i class=\"fa fa-paperclip\"></i>&nbsp;&nbsp;<a href=\"../media/mailbox/".$attachment->name."\">" . $attachment->name . "</a></b></p>";
+                                    }
                                 }
                                 else
-                                    {
-                                        echo "<br><p><b><i class=\"fa fa-paperclip\"></i>&nbsp;&nbsp;<a href=\"../media/mailbox/".$attachment->name."\">" . $attachment->name . "</a></b></p>";
-                                    }
-                            }
-                            else
                                 {
                                     echo "The email got attachments, but no files were found. <a href=\"#\">Try to download</a>";
                                 }
+                            }
+                            echo "</ul>";
                         }
+
                         ?>
-                    </div>
                     <!-- /.mailbox-read-message -->
                 </div>
-                <!-- /.box-body -->
-                <div class="box-footer">
-                    <!--
-                    <ul class="mailbox-attachments clearfix">
-                        <li>
-                            <span class="mailbox-attachment-icon"><i class="fa fa-file-pdf-o"></i></span>
 
-                            <div class="mailbox-attachment-info">
-                                <a href="#" class="mailbox-attachment-name"><i class="fa fa-paperclip"></i> Sep2014-report.pdf</a>
-                                <span class="mailbox-attachment-size">
-                          1,245 KB
-                          <a href="#" class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i></a>
-                        </span>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="mailbox-attachment-icon"><i class="fa fa-file-word-o"></i></span>
-
-                            <div class="mailbox-attachment-info">
-                                <a href="#" class="mailbox-attachment-name"><i class="fa fa-paperclip"></i> App Description.docx</a>
-                                <span class="mailbox-attachment-size">
-                          1,245 KB
-                          <a href="#" class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i></a>
-                        </span>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="mailbox-attachment-icon has-img"><img src="../../dist/img/photo1.png" alt="Attachment"></span>
-
-                            <div class="mailbox-attachment-info">
-                                <a href="#" class="mailbox-attachment-name"><i class="fa fa-camera"></i> photo1.png</a>
-                                <span class="mailbox-attachment-size">
-                          2.67 MB
-                          <a href="#" class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i></a>
-                        </span>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="mailbox-attachment-icon has-img"><img src="../../dist/img/photo2.png" alt="Attachment"></span>
-
-                            <div class="mailbox-attachment-info">
-                                <a href="#" class="mailbox-attachment-name"><i class="fa fa-camera"></i> photo2.png</a>
-                                <span class="mailbox-attachment-size">
-                          1.9 MB
-                          <a href="#" class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i></a>
-                        </span>
-                            </div>
-                        </li>
-                    </ul>
-                    -->
                 </div>
             </div>
                 <!-- /.box-footer -->
