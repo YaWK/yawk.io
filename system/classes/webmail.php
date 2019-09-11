@@ -23,6 +23,7 @@ namespace YAWK {
         public $connectionInfo = '';
 
         /**
+         * Move a message from source to target folder. Requires imap handle, source folder, target folder and the mail UID to move.
          * @param $imap object imap connection resource
          * @param $folder string the source folder from which to move the uid
          * @param $targetFolder string the target folder where to move the uid
@@ -64,6 +65,7 @@ namespace YAWK {
         }
 
         /**
+         * Delete a message. Requires imap handle, folder and uid of the mail to delete
          * @param $imap object imap connection resource
          * @param $folder string the source folder from which to move the uid
          * @param $uid int|string the mail UID
@@ -99,9 +101,11 @@ namespace YAWK {
         }
 
         /**
-         * Draw buttons to control the mailbox with icons (trash, reply, forward...)
+         * Draw mailbox control buttons (trash, reply, forward...)
          * @param $imap object imap object
-         * @param $type string inbox|message|
+         * @param $type string inbox|message| select proper button set which to display
+         * @param $uid int the current email uid to work with
+         * @param $folder string the current folder (to detect if folder is trash)
          * @param $lang array language array
          */
         public function drawMailboxControls($imap, $type, $uid, $folder, $lang)
@@ -118,14 +122,13 @@ namespace YAWK {
                 $folder = "INBOX";
             }
             else
-                {
-                    // if current folder is trash...
+                {   // if current folder is trash...
                     if ($folder == "trash" || ($folder == "Trash"))
-                    {   // set delete button to final
+                    {   // link: do not move to trash, DELETE finally
                         $deleteLink = "index.php?page=webmail&deleteMessage=true&folder=".$folder."&targetFolder=Trash&uid=".$uid."";
                     }
                     else
-                        {
+                        {   // move to trash link
                             $deleteLink = "index.php?page=webmail&moveMessage=true&folder=".$folder."&targetFolder=Trash&uid=".$uid."";
                         }
                 }
@@ -174,6 +177,7 @@ namespace YAWK {
         }
 
         /**
+         * Draw a list with all folders of this mailbox
          * @param $imap object The current imap handle
          * @param $folders array The mailbox folders as array
          */
@@ -274,7 +278,10 @@ namespace YAWK {
 
 
         /**
+         * Draw email headers (will be used to overview the email list)
          * @param $emails array email headers
+         * @param $currentFolder string the current folder from where to get the emails
+         * @param $lang array language array
          */
         public function drawHeaders($emails, $currentFolder, $lang)
         {   // check, if email array is set and not empty
