@@ -1,7 +1,9 @@
 User-agent: *
 Disallow: /.idea/
 Disallow: /.git/
+Disallow: /.github/
 Disallow: /admin/
+Disallow: /media/mailbox/
 Disallow: /system/
 Disallow: /tmp/
 Allow: /system/engines/
