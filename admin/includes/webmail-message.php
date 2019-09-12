@@ -248,6 +248,8 @@ if ($webmailSettings['webmail_active'] == true) {
                                 $downloadPath = \YAWK\sys::addTrailingSlash($downloadPath);
                                 // set current file
                                 $attachment->currentFile = $downloadPath.$attachment->name;
+                                // will be set to true, if attachment is an image (used by attachment preview)
+                                $attachment->isImage = '';
 
                                 // check if attachment of this email was saved and is there
                                 if (is_file($attachment->currentFile))
@@ -275,6 +277,7 @@ if ($webmailSettings['webmail_active'] == true) {
                                     // :IMAGE
                                     if(strpos($attachment->currentMimeType, "image") !== false)
                                     {   // image markup
+                                        $attachment->isImage = true;
                                         // echo "Attachment must be an image";
                                     }
 
@@ -336,7 +339,7 @@ if ($webmailSettings['webmail_active'] == true) {
 
                                     // check file extension to create proper markup
                                     // $attachment->ext = pathinfo($downloadPath.$attachment->name, PATHINFO_EXTENSION);
-                                    if (pathinfo($downloadPath.$attachment->name, PATHINFO_EXTENSION) == "jpg")
+                                    if ($attachment->isImage === true)
                                     {
                                         // attachment is an image
                                         echo "
@@ -345,7 +348,9 @@ if ($webmailSettings['webmail_active'] == true) {
                                            <!-- <span class=\"mailbox-attachment-icon\"><i class=\"fa fa-file-image-o\"></i></span> -->
                 
                                             <div class=\"mailbox-attachment-info\" style=\"min-height:180px; overflow: hidden;\">
-                                                <a href=\"".$downloadPath.$attachment->name."\" data-lightbox=\"attachment-set\" data-title=\"".$attachment->name."\" class=\"mailbox-attachment-name\"><img src=\"".$downloadPath.$attachment->name."\" class=\"img-responsive\"> ".$attachment->namePreview."</a>
+                                                <a href=\"".$downloadPath.$attachment->name."\" data-lightbox=\"attachment-set\" data-title=\"".$attachment->name."\" class=\"mailbox-attachment-name\">
+                                                    <img src=\"".$downloadPath.$attachment->name."\" class=\"img-responsive\"> ".$attachment->namePreview."
+                                                </a>
                                                 <span class=\"mailbox-attachment-size\">
                                           ".$attachment->size."
                                           <a href=\"".$downloadPath.$attachment->name."\" class=\"btn btn-default btn-xs pull-right\"><i class=\"fa fa-cloud-download\"></i></a>
