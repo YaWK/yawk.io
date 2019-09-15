@@ -230,7 +230,12 @@ namespace YAWK {
             { // print folders
                 $i = 0;
                 $deleteIcon = "<i class=\"fa fa-trash-o\"></i>";
-                foreach ($folders as $dir_value) {
+                foreach ($folders as $dir_value)
+                {
+                    // avoid warnings if no files or directories are found
+                    if (!isset($file_perms[$i])){ $file_perms[$i] = ''; }
+                    if (!isset($dir_perms[$i])){ $dir_perms[$i] = ''; }
+
                     // LIST FOLDERS
                     //    print "<strong>$dir_perms $dir_value</strong><br>";
                     echo "<tr>
