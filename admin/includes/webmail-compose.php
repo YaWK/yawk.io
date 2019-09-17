@@ -1,56 +1,6 @@
 <script src="../system/engines/jquery/dropzone/dropzone.js"></script>
 <link href="../system/engines/jquery/dropzone/dropzone.css" rel="stylesheet">
-<style>
-    #actions {
-        margin: 2em 0;
-    }
 
-    /* Mimic table appearance */
-    div.table {
-        display: table;
-    }
-    div.table .file-row {
-        display: table-row;
-    }
-    div.table .file-row > div {
-        display: table-cell;
-        vertical-align: top;
-        border-top: 1px solid #ddd;
-        padding: 8px;
-    }
-    div.table .file-row:nth-child(odd) {
-        background: #f9f9f9;
-    }
-
-    /* The total progress gets shown by event listeners */
-    #total-progress {
-        opacity: 0;
-        transition: opacity 0.3s linear;
-    }
-
-    /* Hide the progress bar when finished */
-    #previews .file-row.dz-success .progress {
-        opacity: 0;
-        transition: opacity 0.3s linear;
-    }
-
-    /* Hide the delete button initially */
-    #previews .file-row .delete {
-        display: none;
-    }
-
-    /* Hide the start and cancel buttons and show the delete button */
-
-    #previews .file-row.dz-success .start,
-    #previews .file-row.dz-success .cancel {
-        display: none;
-    }
-    #previews .file-row.dz-success .delete {
-        display: block;
-    }
-
-
-</style>
 <?php
 require_once '../system/classes/editor.php';
 $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
@@ -143,22 +93,6 @@ if ($webmailSettings['webmail_active'] == true)
     // SEND ACTION: email is requested to be sent
     if (isset($_POST['sendEmail']) && ($_POST['sendEmail'] == true))
     {   // send email
-
-        if (isset($_POST))
-        {
-            echo "<div class=\"row\"><div class=\"col-md-3\">left</div>
-<div class=\"col-md-6\">";
-            echo "<pre><h1>";
-
-            print_r($_FILES);
-
-            print_r($_POST);
-            echo "</pre></h1>";
-            echo "<hr></div>";
-            echo "<div class=\"col-md-3\">right</div></div>";
-
-        }
-
         /*
         if ($webmail->deleteMessage($imap, $_GET['folder'], $_GET['uid']))
         {   // email deleted
@@ -213,7 +147,7 @@ if ($webmailSettings['webmail_active'] == true && ($error == false))
     <div class="row">
         <div class="col-md-3">
             <!-- left col -->
-            <a href="webmail-compose" class="btn btn-success btn-large" style="width: 100%;">Write a message</a><br><br>
+            <a href="#" onclick="window.history.back();"  class="btn btn-success btn-large" style="width: 100%;"><i class="fa fa-reply-all"></i>&nbsp;&nbsp; Back to inbox</a><br><br>
             <div class="box box-default">
                 <div class="box-header with-border">
                     <h3 class="box-title">Folders</h3>
@@ -236,8 +170,8 @@ if ($webmailSettings['webmail_active'] == true && ($error == false))
         </div> <!-- /. left col -->
 
         <div class="col-md-9">
-            <form enctype="multipart/form-data" class="dropzone" action="index.php?page=webmail-compose" method="POST">
-            <!-- <form enctype="multipart/form-data" method="POST"> -->
+           <!-- <form enctype="multipart/form-data" class="dropzone" action="index.php?page=webmail-compose" method="POST"> -->
+           <form id="my-dropzone" class="dropzone" enctype="multipart/form-data">
             <!-- right col -->
             <div class="box box-secondary">
                 <div class="box-header with-border">
@@ -262,85 +196,43 @@ if ($webmailSettings['webmail_active'] == true && ($error == false))
                         <!-- HTML heavily inspired by http://blueimp.github.io/jQuery-File-Upload/ -->
                         <!-- The fileinput-button span is used to style the file input field as button -->
                         <div id="actions">
-                        <input style="width: 100%;" type="file" name="files[]" class="btn btn-success start" multiple>
+                            <div class="dropzone-previews"></div> <!-- this is were the previews should be shown. -->
+
+                            <!-- <input type="file" name="files[]" class="btn btn-success dropzone" multiple> -->
+                           <!-- <input style="width: 100%;" type="file" name="files" class="dropzone start" multiple> -->
+
+                            <span class="btn btn-success fileinput-button">
                             <i class="fa fa-plus"></i>
                             <span>Add files...</span>
                          </span>
+                            <button type="reset" class="btn btn-warning cancel">
+                                <i class="fa fa-ban"></i>&nbsp;
+                                <span>Cancel upload</span>
+                            </button>
 
-                            <span class="btn btn-success fileinput-button start">
-                            <i class="fa fa-plus"></i>
-                            <span>Add files...</span>
-                         </span> 
 
-                                <button type="reset" class="btn btn-warning cancel">
-                                    <i class="fa fa-ban"></i>&nbsp;
-                                    <span>Cancel upload</span>
-                                </button>
+                            <div class="pull-right">
+                                <a href="index.php?page=webmail-compose&draft=1" type="button" class="btn btn-default"><i class="fa fa-pencil"></i>&nbsp; Draft</a>
+                                &nbsp;
+                                <button id="submitBtn" type="submit" class="btn btn-success pull-right"><i id="submitIcon" class="fa fa-paper-plane-o"></i> &nbsp;&nbsp;Send Email</button>
+                                <!-- <button type="submit" id="submitBtn" class="btn btn-success start"><i class="fa fa-paper-plane-o"></i>&nbsp; Send</button> -->
+                                <input type="hidden" name="sendEmail" value="true">
+                            </div>
 
-                                        <!-- The global file processing state -->
-                              <span class="fileupload-process">
-                              <div id="total-progress" class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                                <div class="progress-bar progress-bar-default" style="width:0%;" data-dz-uploadprogress></div>
-                              </div>
-                            </span>
 
                             <p class="help-block">Max. <?php echo \YAWK\filemanager::getPostMaxSize(); ?></p>
                         </div>
                         <!-- /. bootstrap dropzone -->
 
-                        <!-- dropzone preview -->
-                        <!-- HTML heavily inspired by http://blueimp.github.io/jQuery-File-Upload/ -->
-                        <div class="table table-striped files" id="previews">
-
-                            <div id="template" class="file-row">
-                                <!-- This is used as the file preview template -->
-                                <div>
-                                    <span class="preview"><img data-dz-thumbnail /></span>
-                                </div>
-                                <div>
-                                    <p class="name" data-dz-name></p>
-                                    <strong class="error text-danger" data-dz-errormessage></strong>
-                                </div>
-                                <div>
-                                    <p class="size" data-dz-size></p>
-                                    <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                                        <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <button class="btn btn-primary start">
-                                        <i class="glyphicon glyphicon-upload"></i>
-                                        <span>Start</span>
-                                    </button>
-                                    <button data-dz-remove class="btn btn-warning cancel">
-                                        <i class="glyphicon glyphicon-ban-circle"></i>
-                                        <span>Cancel</span>
-                                    </button>
-                                    <button data-dz-remove class="btn btn-danger delete">
-                                        <i class="glyphicon glyphicon-trash"></i>
-                                        <span>Delete</span>
-                                    </button>
-                                </div>
-                            </div>
-
-                        </div>
-
                         <!-- end dropzone preview -->
-
                     </div>
             </div>
                 <!-- /.box-body -->
-                <div class="box-footer">
-                    <div class="pull-right">
-                        <a href="index.php?page=webmail-compose&draft=1" type="button" class="btn btn-default"><i class="fa fa-pencil"></i>&nbsp; Draft</a>
-                        <button type="submit" id="submitBtn" class="btn btn-success"><i class="fa fa-paper-plane-o"></i>&nbsp; Send</button>
-                        <input type="hidden" name="sendEmail" value="true">
-                    </div>
-                    <a href="#" onclick="window.history.back();" title="discard and go back" type="button" class="btn btn-default"><i class="fa fa-times"></i> Discard</a>
-                </div>
+               <br><br>
+
                 <!-- /.box-footer -->
 
-            </form>
+       </form>
         </div>
     </div>
     <?php
@@ -355,72 +247,72 @@ else
 
 <script type="text/javascript">
 
-    $(document).ready(function() {
-        Dropzone.autoDiscover = false;
-// Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
-        var previewNode = document.querySelector("#template");
-        previewNode.id = "";
-        var previewTemplate = previewNode.parentNode.innerHTML;
-        previewNode.parentNode.removeChild(previewNode);
+    /*
+     */
+    Dropzone.options.myDropzone = { // The camelized version of the ID of the form element
 
-        var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
-            url: "index.php?page=webmail-compose", // Set the url
-            paramName: 'files',
-            uploadMultiple: true,
-            thumbnailWidth: 180,
-            thumbnailHeight: 180,
-            parallelUploads: 20,
-            acceptedFiles: ".jpg, .jpeg, .png, .gif, .pdf",
-            previewTemplate: previewTemplate,
-            autoProcessQueue: false,
-            autoQueue: true, // Make sure the files aren't queued until manually added
-            previewsContainer: "#previews", // Define the container to display the previews
-            clickable: ".fileinput-button", // Define the element that should be used as click trigger to select files.
+        url: "js/email-send.php",
+        // The configuration we've talked about above
+        autoProcessQueue: false,
+        uploadMultiple: true,
+        parallelUploads: 100,
+        maxFilesize: 64, // MB
+        maxFiles: 100,
+        addRemoveLinks: true,
+        paramName: "files",
+        acceptedFiles: ".jpg, .jpeg, .png, .gif, .pdf, .doc, .xls, .wav, .mp3, .mp4, .mpg",
+        clickable: ".fileinput-button", // Define the element that should be used as click trigger to select files.
 
-            // Language Strings
-            dictFileTooBig: "File is to big ({{filesize}}mb). Max allowed file size is {{maxFilesize}}mb",
-            dictInvalidFileType: "Invalid File Type",
-            dictCancelUpload: "Cancel",
-            dictRemoveFile: "Remove",
-            dictMaxFilesExceeded: "Only {{maxFiles}} files are allowed",
-            dictDefaultMessage: "Drop files here to upload"
-        });
+        // Language Strings
+        dictFileTooBig: "File is to big ({{filesize}}mb). Max allowed file size is {{maxFilesize}}mb",
+        dictInvalidFileType: "Invalid File Type",
+        dictCancelUpload: "Cancel",
+        dictRemoveFile: "Remove",
+        dictMaxFilesExceeded: "Only {{maxFiles}} files are allowed",
+        dictDefaultMessage: "Drop files here to upload",
 
-            myDropzone.on("addedfile", function(file) {
-            // Hookup the start button
-            file.previewElement.querySelector(".start").onclick = function() { myDropzone.enqueueFile(file); };
-        });
+        // The setting up of the dropzone
+        init: function() {
+            var myDropzone = this;
 
-            // Update the total progress bar
-            myDropzone.on("totaluploadprogress", function(progress) {
-            document.querySelector("#total-progress .progress-bar").style.width = progress + "%";
-        });
+            $(".dz-message").hide();
+            // First change the button to actually tell Dropzone to process the queue.
 
-            myDropzone.on("sending", function(file) {
-            // Show the total progress bar when upload starts
-            document.querySelector("#total-progress").style.opacity = "1";
-            // And disable the start button
-            file.previewElement.querySelector(".start").setAttribute("disabled", "disabled");
-        });
+            this.element.querySelector("button[type=submit]").addEventListener("click", function(e) {
+                // Make sure that the form isn't actually being sent.
+                e.preventDefault();
+                e.stopPropagation();
+                // myDropzone.processQueue();
+                if (myDropzone.getQueuedFiles().length > 0) {
+                    myDropzone.processQueue();
+                } else {
 
-            // Hide the total progress bar when nothing's uploading anymore
-            myDropzone.on("queuecomplete", function(progress) {
-            document.querySelector("#total-progress").style.opacity = "0";
-        });
+                    $('#my-dropzone').attr('action', 'js/email-send.php');
+                    $('#my-dropzone').attr('method', 'post');
+                    $("#my-dropzone").submit();
+                }
+            });
 
-            // Setup the buttons for all transfers
-            // The "add files" button doesn't need to be setup because the config
-            // `clickable` has already been specified.
-            document.querySelector("#actions .start").onclick = function() {
-            myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED));
-        };
-            document.querySelector("#actions .cancel").onclick = function() {
-            myDropzone.removeAllFiles(true);
-        };
+            // Listen to the sendingmultiple event. In this case, it's the sendingmultiple event instead
+            // of the sending event because uploadMultiple is set to true.
+            this.on("sendingmultiple", function(file) {
+                // Gets triggered when the form is actually being sent.
+                // Indicate loading button
+                $("#submitIcon").removeClass().addClass("fa fa-spinner fa-spin");
+                $("#submitBtn").removeClass().addClass("btn btn-danger disabled pull-right");
+            });
 
-        $('#submitBtn').click(function() {
-            myDropzone.processQueue();
-        });
-    });
+            this.on("successmultiple", function(files, response) {
+                // Gets triggered when files + form have successfully been sent.
+                // redirect to webmail start page
+                window.location.replace("index.php?page=webmail");
+            });
+            this.on("errormultiple", function(files, response) {
+                // Gets triggered when there was an error sending the files.
+                // Maybe show form again, and notify user of error
+            });
+        }
+
+    }
 
 </script>
