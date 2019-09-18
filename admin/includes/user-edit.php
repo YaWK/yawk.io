@@ -1,4 +1,6 @@
 <?php
+/** @var $user \YAWK\user */
+/** @var $lang \YAWK\language*/
     if (!isset($user))
     {   // no username obj is set
         if (isset($_GET['user']))
@@ -19,7 +21,8 @@
     // if SAVE is clicked
     if(isset($_POST['save']))
     {   // prepare username
-        $user->username = htmlentities($_POST['username']);
+        $user->username = trim($user->username);
+        $user->username = strip_tags($_POST['username']);
         if (isset($_FILES['userpicture']) && (!empty($_FILES['userpicture']['name'])))
         {   // if a user image is set,
             // check file extension...
@@ -71,7 +74,6 @@
               }
 
             // Allow certain file formats
-
             $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
                if($imageFileType != "jpg" && $imageFileType != "jpeg" && $imageFileType != "png" && $imageFileType != "gif") {
                   echo \YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[UPLOAD_ONLY_IMG_ALLOWED]","page=users","4800");
@@ -79,15 +81,19 @@
               }
 
           // Check if $uploadOk is set to 0 by an error
-              if ($uploadOk == 0) {
+              if ($uploadOk == 0)
+              {
                   echo \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[FILE_UPLOAD_FAILED]","page=users","4800");
-            // if everything is ok, try to upload file
-              } else {
-                  if (!move_uploaded_file($_FILES["userpicture"]["tmp_name"], $target_file)) {
-                      echo \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[FILE_UPLOAD_ERROR_CHMOD]","page=users","4800");
-                  }
+                // if everything is ok, try to upload file
               }
-      }
+              else
+                  {
+                    if (!move_uploaded_file($_FILES["userpicture"]["tmp_name"], $target_file))
+                    {
+                      echo \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[FILE_UPLOAD_ERROR_CHMOD]","page=users","4800");
+                    }
+                }
+        }
       // prepare password
       $password1 = htmlentities($_POST['password1']);
       $password2 = htmlentities($_POST['password2']);
