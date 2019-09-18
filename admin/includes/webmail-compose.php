@@ -201,18 +201,14 @@ if ($webmailSettings['webmail_active'] == true && ($error == false))
                             <!-- <input type="file" name="files[]" class="btn btn-success dropzone" multiple> -->
                            <!-- <input style="width: 100%;" type="file" name="files" class="dropzone start" multiple> -->
 
-                            <span class="btn btn-success fileinput-button">
+                            <span id="addBtn" class="btn btn-success fileinput-button">
                             <i class="fa fa-plus"></i>
                             <span>Add files...</span>
                          </span>
-                            <button type="reset" class="btn btn-warning cancel">
-                                <i class="fa fa-ban"></i>&nbsp;
-                                <span>Cancel upload</span>
-                            </button>
 
 
                             <div class="pull-right">
-                                <a href="index.php?page=webmail-compose&draft=1" type="button" class="btn btn-default"><i class="fa fa-pencil"></i>&nbsp; Draft</a>
+                                <a id="draftBtn" href="index.php?page=webmail-compose&draft=1" type="button" class="btn btn-default"><i class="fa fa-pencil"></i>&nbsp; Draft</a>
                                 &nbsp;
                                 <button id="submitBtn" type="submit" class="btn btn-success pull-right"><i id="submitIcon" class="fa fa-paper-plane-o"></i> &nbsp;&nbsp;Send Email</button>
                                 <!-- <button type="submit" id="submitBtn" class="btn btn-success start"><i class="fa fa-paper-plane-o"></i>&nbsp; Send</button> -->
@@ -300,6 +296,8 @@ else
                 // Indicate loading button
                 $("#submitIcon").removeClass().addClass("fa fa-spinner fa-spin");
                 $("#submitBtn").removeClass().addClass("btn btn-danger disabled pull-right");
+                $("#draftBtn").removeClass().addClass("btn btn-default disabled");
+                $("#addBtn").removeClass().addClass("btn btn-success disabled");
             });
 
             this.on("successmultiple", function(files, response) {
