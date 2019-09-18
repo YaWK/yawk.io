@@ -203,7 +203,7 @@ if ($webmailSettings['webmail_active'] == true && ($error == false))
 <div class="row">
     <div class="col-md-3">
         <!-- left col -->
-        <a href="webmail-compose" class="btn btn-success btn-large" style="width: 100%;">Write a message</a><br><br>
+        <a href="index.php?page=webmail-compose" class="btn btn-success btn-large" style="width: 100%;">Write a message</a><br><br>
         <div class="box box-default">
             <div class="box-header with-border">
                 <h3 class="box-title">Folders</h3>
@@ -260,15 +260,7 @@ if ($webmailSettings['webmail_active'] == true && ($error == false))
                         <tbody>
                         <?php
                             $emails = array();
-                            /*
-                            $allowedAttachments = \SSilence\ImapClient\TypeAttachments::get();
-                            echo "<pre>";
-                            //print_r($allowedAttachments);
-                            echo "<pre>";
-                            */
-
-
-                        // CURRENT:
+                            // CURRENT:
                             $imap->selectFolder($imap->currentFolder);
                             $emails = $imap->getMessages($imapAmount, $imapStart, $imapSortation, $imapMsgTypes);
                             $webmail->drawHeaders($emails, $imap->currentFolder, $lang);

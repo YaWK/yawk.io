@@ -60,8 +60,14 @@ echo"</section><!-- Main content -->
             </div>
             <div class="box">
                 <div class="box-body">
-                    <!-- email server seettings -->
+                    <!-- imap server seettings -->
                     <?php \YAWK\settings::getFormElements($db, $settings, 22, $lang); ?>
+                </div>
+            </div>
+            <div class="box">
+                <div class="box-body">
+                    <!-- imap server seettings -->
+                    <?php \YAWK\settings::getFormElements($db, $settings, 25, $lang); ?>
                 </div>
             </div>
         </div>
