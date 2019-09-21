@@ -72,18 +72,18 @@ echo"</section><!-- Main content -->
                 <div class="col-md-4">
                     <div class="box">
                         <div class="box-body">
-                    <!-- publish settings -->
-                    <?php \YAWK\settings::getFormElements($db, $settings, 7, $lang); ?>
-                    <!-- user login settings -->
-                    <?php \YAWK\settings::getFormElements($db, $settings, 17, $lang); ?>
+                            <!-- publish settings -->
+                            <?php \YAWK\settings::getFormElements($db, $settings, 7, $lang); ?>
+                            <!-- user login settings -->
+                            <?php \YAWK\settings::getFormElements($db, $settings, 17, $lang); ?>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="box">
                         <div class="box-body">
-                    <!-- maintenance mode -->
-                    <?php \YAWK\settings::getFormElements($db, $settings, 8, $lang); ?>
+                            <!-- maintenance mode -->
+                            <?php \YAWK\settings::getFormElements($db, $settings, 8, $lang); ?>
                         </div>
                     </div>
                 </div>
