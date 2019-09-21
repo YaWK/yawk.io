@@ -529,14 +529,17 @@ namespace YAWK {
             $encrypt = $webmailSettings['webmail_imap_encrypt'];
             $username = $webmailSettings['webmail_imap_username'];
             $password = $webmailSettings['webmail_imap_password'];
+            $novalidate = $webmailSettings['webmail_imap_novalidate'];
+            $novalidate = \YAWK\settings::getSetting($db, "webmail_imap_novalidate");
+            if (!empty($novalidate)){ $novalidate = "/".$novalidate; } else { $novalidate = ''; }
 
             // connect to mailbox:
             // prepare imap mailbox string
-            $mailbox = '{'.$server.':'.$port.'/imap/'.$encrypt.'/novalidate-cert}INBOX';
+            $mailbox = '{'.$server.':'.$port.'/imap/'.$encrypt.''.$novalidate.'}INBOX';
             // open new imap connection
-            $imap = imap_open($mailbox, $username, $password);
+            $imap = @imap_open($mailbox, $username, $password);
             // get all unseen messages
-            $emails = imap_search($imap, 'UNSEEN');
+            $emails = @imap_search($imap, 'UNSEEN');
 
             // check, if any unseen emails are there
             if (empty($emails))
@@ -573,7 +576,6 @@ namespace YAWK {
             }
 
             // get all unread message data
-           //  $newMessages = \YAWK\user::getNewMessages($db, $_SESSION['uid']);
 
             echo "
               <!-- Messages: style can be found in dropdown.less-->
@@ -584,7 +586,7 @@ namespace YAWK {
                   $label
                 </a>
                 <ul class=\"dropdown-menu\">
-                  <li class=\"header\">$lang[SYSLOG_YOU_HAVE] <span id=\"messagesCounterMenu\">$i</span> $unread $msg</li>
+                  <li class=\"header\">$lang[SYSLOG_YOU_HAVE] <span id=\"emailCounterMenu\">$i</span> $unread $msg</li>
                   <li>
                     <!-- inner menu: contains the messages -->
                     <ul class=\"menu\">";
@@ -596,7 +598,7 @@ namespace YAWK {
                 // for every email...
                 foreach($emails as $email_number) {
                     /* get information specific to this email */
-                    $overview = imap_fetch_overview($imap,$email_number,0);
+                    $overview = @imap_fetch_overview($imap,$email_number,0);
                     // $message = utf8_decode(imap_fetchbody($imap,$email_number, 1));
 
                     // current email number
