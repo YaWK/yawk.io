@@ -25,9 +25,9 @@ $webmailSettings = \YAWK\settings::getValueSettingsArray($db, "webmail_");
 if ($webmailSettings['webmail_active'] == true)
 {   // webmail enabled, get mailbox settings
 
-    // mailbox server (imap.server.com)
+    // mailbox server (imap.server.tld)
     $server = $webmailSettings['webmail_imap_server'];
-    // mailbox user (email@server.com)
+    // mailbox user (email@server.tld)
     $username = $webmailSettings['webmail_imap_username'];
     // mailbox password
     $password = $webmailSettings['webmail_imap_password'];
@@ -131,6 +131,34 @@ if ($webmailSettings['webmail_active'] == true)
             }
     }
 
+    // STAR ACTION: mark a message as important
+    if (isset($_GET['markAsFlagged']) && ($_GET['markAsFlagged'] == true))
+    {
+        // mark as important
+        if ($webmail->markAsFlagged($imap->getImap(), $_GET['uid']) === true)
+        {   // email marked with star
+            \YAWK\alert::draw("success", "Email marked as important", "The email was marked as important", "", 1200);
+        }
+        else
+        {   // mark failed
+            \YAWK\alert::draw("danger", "ERROR:", "Unable to mark this email as important", "", 2800);
+        }
+    }
+
+    // REMOVE FLAGS: remove any flags as important
+    if (isset($_GET['removeFlags']) && ($_GET['removeFlags'] == true))
+    {
+        // remove all flags for this email
+        if ($webmail->removeFlags($imap->getImap(), $_GET['uid']) === true)
+        {   // remove flags successful
+            \YAWK\alert::draw("success", "Email flags removed", "The email is no longer marked as important", "", 1200);
+        }
+        else
+        {   // remove flags failed
+            \YAWK\alert::draw("danger", "ERROR:", "Unable to remove flags from this email", "", 2800);
+        }
+    }
+
     // DELETE ACTION: delete single message
     if (isset($_GET['deleteMessage']) && ($_GET['deleteMessage'] == true))
     {   // delete message
@@ -173,16 +201,18 @@ else    // webmail is not activated...
 <!-- JS: load data tables -->
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#table-sort').dataTable( {
+        $('#table-sort').dataTable({
             "bPaginate": true,
             "bLengthChange": false,
             "bFilter": true,
             "bSort": true,
             "bInfo": true,
             "bAutoWidth": false
-        } );
-    } );
+        });
 
+    });
+
+    // make whole table row clickable
     $('#table-sort tr').click(function() {
         var href = $(this).find("a").attr("href");
         if(href) {
@@ -269,10 +299,12 @@ if ($webmailSettings['webmail_active'] == true && ($error == false))
                         <tr>
                             <td><div class="icheckbox_flat-blue" aria-checked="false" aria-disabled="false" style="position: relative;"><input type="checkbox" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div></td>
                             <td class="mailbox-star"></td>
+                            <td class="mailbox-star"></td>
                             <td class="mailbox-name"><?php echo $lang['SENDER_FROM']; ?></td>
                             <td class="mailbox-subject"><?php echo $lang['SUBJECT']; ?></td>
                             <td class="mailbox-attachment"></td>
                             <td class="mailbox-date"><?php echo $lang['DATE']; ?></td>
+                            <td class="mailbox-star"></td>
                         </tr>
                         </thead>
                         <tbody>
@@ -293,17 +325,9 @@ if ($webmailSettings['webmail_active'] == true && ($error == false))
             <div class="box-footer no-padding">
                 <?php $webmail->drawMailboxControls($imap, "inbox", 0, $imap->currentFolder, $lang); ?>
             </div>
-        </div>
-
-        <?php
-            // echo "<pre>";
-            // print_r($emails);
-            // print_r($header);
-            // echo "</pre>";
-        ?>
-
-    </div>
-</div>
+        </div> <!-- /. box secondary -->
+    </div> <!-- /. right col -->
+</div> <!-- /. row -->
 <?php
     // close current imap connection
     $imap->close();

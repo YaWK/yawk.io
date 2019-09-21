@@ -387,6 +387,7 @@ namespace YAWK {
                     {
                         // set action icon to "RESTORE"
                         $actionIcon = '<a href="index.php?page=webmail&moveMessage=true&folder='.$currentFolder.'&targetFolder=Inbox&uid='.$email->header->uid.'"><i class="fa fa-repeat text-dark"></i></a>';
+                        $starIcon = '';
                     }
                     else
                         {
@@ -395,23 +396,50 @@ namespace YAWK {
                             $actionIcon = '<a href="'.$seenLink.'" '.$seenTooltip.'><i class="'.$seenIcon.'"></i></a>';
                         }
 
+                    if ($email->header->flagged === 0)
+                    {
+                        $starIcon = '<a href="index.php?page=webmail&markAsFlagged=true&uid='.$email->header->uid.'" class="fa fa-star-o text-orange"></a>';
+                    }
+                    else
+                        {
+                            $starIcon = '<a href="index.php?page=webmail&removeFlags=true&uid='.$email->header->uid.'" class="fa fa-star text-orange"></a>';
+                        }
+
+                    // echo "<pre>";
+                    // print_r($email);
+                    // echo "</pre>";
                     // display every email as single table row
                     echo '
                         <tr id="emailRow">
                             <td><div class="icheckbox_flat-blue" aria-checked="false" aria-disabled="false" style="position: relative;"><input type="checkbox" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div></td>
                             <td class="mailbox-star">'.$actionIcon.'</td>
+                            <td class="mailbox-star">'.$starIcon.'</td>
                             <td class="mailbox-name" style="cursor:pointer;" onclick="window.location=\''.$messageLink.'\';"><a href="#">'.$boldMarkupStart.$email->header->from.$boldMarkupEnd.'</a>
                             <br><small>'.$email->header->details->from[0]->mailbox.'@'.$email->header->details->from[0]->host.'</small></td>
                             <td class="mailbox-subject" style="cursor:pointer;" onclick="window.location=\''.$messageLink.'\';">'.$boldMarkupStart.$email->header->subject.$boldMarkupEnd.'</td>
                             <td class="mailbox-attachment text-center">'.$attachClip.'</td>
                             <td class="mailbox-date">'.$email->header->date.'<br><small>'.$timeAgo.'</small></td>
+                            <td class="mailbox-star"><a href="index.php?page=webmail&moveMessage=true&folder='.$currentFolder.'&targetFolder=Trash&uid='.$email->header->uid.'" class="fa fa-trash-o text-gray" id="recycleBtn"></a></td>
                         </tr>';
+
                 }
             }
             else
             {
                 // echo "<b>This folder is empty.</b>";
             }
+        }
+
+
+        public function markAsFlagged($imap, $uid)
+        {
+            // /** @var $imap \SSilence\ImapClient\ImapClient */
+            return imap_setflag_full($imap, $uid, "\\Flagged", ST_UID);
+        }
+
+        public function removeFlags($imap, $uid)
+        {
+            return imap_clearflag_full($imap, $uid, "\\Flagged", ST_UID);
         }
     } // ./class webmail
 } // ./namespace
