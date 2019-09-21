@@ -228,32 +228,45 @@ namespace YAWK {
                 // count unread messages in current folder
                 $unreadMessages = $imap->countUnreadMessages();
 
-                // count total messages in current folder
-                $totalMessages = $imap->countMessages();
-
                 // init default active folder markup
                 $activeMarkupDefault = '';
 
+                // if all mails in this folder are seen
+                if ($unreadMessages > 0)
+                {   // hide new mail label
+                    $newMessages = "<span class=\"label label-success pull-right\">+ ".$unreadMessages."</span>";
+                }
+                else
+                    {
+                        $newMessages = "";
+                    }
+
                 // walk through folders and display them
                 foreach ($folders as $folder => $item)
-                {   // check if folder is requested via get param
+                {
+
+                    // select current folder
+                    $imap->selectFolder($folder);
+                    // and count messages within
+                    $messageCount = $imap->countMessages();
+
+                    // check if folder is requested via get param
                     if (isset($_GET['folder']) && (!empty($_GET['folder'])))
                     {   // check, if folder is active (current equals request)
                         if ($folder === $_GET['folder'])
                         {
-
                             // set markup to view as active
                             $activeMarkup = " class=\"active\"";
-                            $activeLabelNew = "<span class=\"label label-success pull-right\">+ ".$unreadMessages."</span>";
+                            $activeLabelNew = $newMessages;
                             $activeLabelInbox = '';
-                            $activeLabelTotal = " <small>(".$totalMessages.")</small>";
+                            $activeLabelTotal = " <small>(".$messageCount.")</small>";
                         }
-                        // not active, no markup
-                        else {
+                        else
+                            {   // folder not active - no markup needed
                                 $activeMarkup = '';
-                                $activeLabelNew= '';
+                                $activeLabelNew = '';
                                 $activeLabelInbox = '';
-                                $activeLabelTotal = '';
+                                $activeLabelTotal = " <small>(".$messageCount.")</small>";
                             }
                     }
                     else
@@ -261,7 +274,7 @@ namespace YAWK {
                             $activeMarkup = "";
                             $activeLabelNew = "";
                             $activeLabelTotal = "";
-                            $activeLabelInbox = "<span class=\"label label-success pull-right\">+ ".$unreadMessages."</span>";
+                            $activeLabelInbox = "<span class=\"label label-success pull-right".$labelClass."\">+ ".$unreadMessages."</span>";
 
                             $activeMarkupDefault = " class=\"active\"";
                         }
