@@ -49,7 +49,7 @@ echo"</section><!-- Main content -->
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row animated fadeIn">
         <!-- email account and imap server settings -->
         <div class="col-md-4">
             <div class="box">
@@ -94,11 +94,13 @@ echo"</section><!-- Main content -->
                         $server = \YAWK\settings::getSetting($db, "webmail_imap_server");
                         $username = \YAWK\settings::getSetting($db, "webmail_imap_username");
                         $password = \YAWK\settings::getSetting($db, "webmail_imap_password");
-                        $encryption = "/".\YAWK\settings::getSetting($db, "webmail_imap_encrypt");
+                        $encryption = \YAWK\settings::getSetting($db, "webmail_imap_encrypt");
                         $port = ":".\YAWK\settings::getSetting($db, "webmail_imap_port")."";
+                        $novalidate = \YAWK\settings::getSetting($db, "webmail_imap_novalidate");
+                        if (!empty($novalidate)){ $novalidate = "/".$novalidate; } else { $novalidate = ''; }
 
                         // open connection to mailserver
-                        if ($imap = @imap_open("{".$server."".$port."".$encryption."}", $username, $password, OP_HALFOPEN))
+                        if ($imap = @imap_open("{".$server."".$port."/imap/".$encryption."".$novalidate."}INBOX", $username, $password, OP_HALFOPEN))
                         {
                             // draw connection status
                             echo "<h4 class=\"text-success\"><b>".$lang["CONNECTION_SUCCESSFUL"]."</b><br>
