@@ -2,6 +2,7 @@
 <link href="../system/engines/jquery/dropzone/dropzone.css" rel="stylesheet">
 
 <?php
+// import editor class + load editor settings
 require_once '../system/classes/editor.php';
 $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
 $editorSettings['editorHeight'] = "360";
@@ -52,6 +53,8 @@ if ($webmailSettings['webmail_active'] == true)
     $imapMsgTypes = $webmailSettings['webmail_imap_msgtypes'];
     // sortation asc | desc
     $imapSortation = $webmailSettings['webmail_imap_sortation'];
+    // novalidate-cert
+    $novalidate = $webmailSettings['webmail_imap_novalidate'];
 
     // include webmail class
     require_once "../system/classes/webmail.php";
@@ -59,11 +62,13 @@ if ($webmailSettings['webmail_active'] == true)
     $webmail = new \YAWK\webmail();
     // set connection info var
     $webmail->connectionInfo = "<i>$username</i>";
+    // options (novalidate-cert)
+    $options = array($novalidate);
 
     try // open connection to imap server
     {
         // create new imap handle
-        $imap = new Imap($server.$port.$encryption, $username, $password, $encryption);
+        $imap = new Imap($server.$port.$encryption, $username, $password, $encryption, 0, 0, $options);
         // connection successful, error = false
         $error = false;
         $errorMsg = '';
@@ -81,28 +86,13 @@ if ($webmailSettings['webmail_active'] == true)
             $imap->currentFolder = "INBOX";
         }
     }
-        // open imap connection failed...
+    // open imap connection failed...
     catch (ImapClientException $error)
     {   // no errors in production...
         $webmail->connectionInfo = $error->getMessage() . PHP_EOL;
         // exit with error
         $error = true;
         $errorMsg = 'Oh no! Verbindung mit server: '.$server.' als user: '.$username.' nicht moeglich!';
-    }
-
-    // SEND ACTION: email is requested to be sent
-    if (isset($_POST['sendEmail']) && ($_POST['sendEmail'] == true))
-    {   // send email
-        /*
-        if ($webmail->deleteMessage($imap, $_GET['folder'], $_GET['uid']))
-        {   // email deleted
-            \YAWK\alert::draw("success", "Email deleted", "The email was deleted", "", 1200);
-        }
-        else
-        {   // failed to delete email
-            \YAWK\alert::draw("danger", "ERROR:", "Unable to delete email", "", 2800);
-        }
-        */
     }
 }
 else    // webmail is not activated...
@@ -116,9 +106,7 @@ else    // webmail is not activated...
     $error = "";
     $errorMsg = "";
 }
-?>
 
-<?php
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
     <!-- Content Wrapper. Contains page content -->
@@ -191,21 +179,15 @@ if ($webmailSettings['webmail_active'] == true && ($error == false))
                             <textarea id="summernote" name="body" class="form-control"></textarea>
                         </div>
 
-
-                        <!-- bootstrap dropzone -->
-                        <!-- HTML heavily inspired by http://blueimp.github.io/jQuery-File-Upload/ -->
-                        <!-- The fileinput-button span is used to style the file input field as button -->
+                        <!-- start dropzone -->
                         <div id="actions">
-                            <div class="dropzone-previews"></div> <!-- this is were the previews should be shown. -->
-
-                            <!-- <input type="file" name="files[]" class="btn btn-success dropzone" multiple> -->
-                           <!-- <input style="width: 100%;" type="file" name="files" class="dropzone start" multiple> -->
-
+                            <!-- this is were the previews should be shown. -->
+                            <div class="dropzone-previews"></div>
+                            <!-- The fileinput-button span is used to style the file input field as button -->
                             <span id="addBtn" class="btn btn-success fileinput-button">
                             <i class="fa fa-plus"></i>
                             <span>Add files...</span>
-                         </span>
-
+                        </span>
 
                             <div class="pull-right">
                                 <a id="draftBtn" href="index.php?page=webmail-compose&draft=1" type="button" class="btn btn-default"><i class="fa fa-pencil"></i>&nbsp; Draft</a>
@@ -215,19 +197,14 @@ if ($webmailSettings['webmail_active'] == true && ($error == false))
                                 <input type="hidden" name="sendEmail" value="true">
                             </div>
 
-
                             <p class="help-block">Max. <?php echo \YAWK\filemanager::getPostMaxSize(); ?></p>
                         </div>
                         <!-- /. bootstrap dropzone -->
 
-                        <!-- end dropzone preview -->
                     </div>
             </div>
                 <!-- /.box-body -->
-               <br><br>
-
-                <!-- /.box-footer -->
-
+            <br><br>
        </form>
         </div>
     </div>
@@ -243,9 +220,9 @@ else
 
 <script type="text/javascript">
     Dropzone.options.myDropzone = { // The camelized version of the ID of the form element
-
+        // ajax form action
         url: "js/email-send.php",
-        // The configuration we've talked about above
+        // dropzone options
         autoProcessQueue: false,
         uploadMultiple: true,
         parallelUploads: 100,
@@ -267,23 +244,26 @@ else
         // The setting up of the dropzone
         init: function() {
             var myDropzone = this;
+            var dropzoneFormElement = $('#my-dropzone');
 
             $(".dz-message").hide();
             // First change the button to actually tell Dropzone to process the queue.
-
             this.element.querySelector("button[type=submit]").addEventListener("click", function(e) {
                 // Make sure that the form isn't actually being sent.
                 e.preventDefault();
                 e.stopPropagation();
-                // myDropzone.processQueue();
+
+                // process only, if there are any attachments
                 if (myDropzone.getQueuedFiles().length > 0) {
                     myDropzone.processQueue();
-                } else {
-
-                    $('#my-dropzone').attr('action', 'js/email-send.php');
-                    $('#my-dropzone').attr('method', 'post');
-                    $("#my-dropzone").submit();
                 }
+                else
+                    {   // process w/o attachments
+                        // add form action & methods, call submit event
+                        $(dropzoneFormElement).attr('action', 'js/email-send.php');
+                        $(dropzoneFormElement).attr('method', 'post');
+                        $(dropzoneFormElement).submit();
+                    }
             });
 
             // Listen to the sendingmultiple event. In this case, it's the sendingmultiple event instead
@@ -307,7 +287,5 @@ else
                 // Maybe show form again, and notify user of error
             });
         }
-
     }
-
 </script>
