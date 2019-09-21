@@ -274,8 +274,10 @@ namespace YAWK {
                             $activeMarkup = "";
                             $activeLabelNew = "";
                             $activeLabelTotal = "";
-                            $activeLabelInbox = "<span class=\"label label-success pull-right".$labelClass."\">+ ".$unreadMessages."</span>";
+                            $activeLabelInbox = $newMessages;
+                            // $activeLabelInbox = "<span class=\"label label-success pull-right".$labelClass."\">+ ".$unreadMessages."</span>";
 
+                            $activeLabelTotal = " <small>(".$messageCount.")</small>";
                             $activeMarkupDefault = " class=\"active\"";
                         }
 
