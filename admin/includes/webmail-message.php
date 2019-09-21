@@ -175,7 +175,7 @@ if ($webmailSettings['webmail_active'] == true) {
                         </button>
                     </div>
                 </div>
-                <div class="box-body no-padding" style="">
+                <div class="box-body no-padding animated fadeIn" style="">
                     <ul class="nav nav-pills nav-stacked">
                         <?php
                         $webmail->drawFolders($imap, $imap->getFolders());
@@ -187,7 +187,7 @@ if ($webmailSettings['webmail_active'] == true) {
             </div>
 
         </div>
-        <div class="col-md-9">
+        <div class="col-md-9 animated fadeIn">
             <!-- right col -->
             <div class="box box-secondary" id="emailMessageContent">
                 <div class="box-header with-border">

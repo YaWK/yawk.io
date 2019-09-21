@@ -157,7 +157,7 @@ if ($webmailSettings['webmail_active'] == true && ($error == false))
                         </button>
                     </div>
                 </div>
-                <div class="box-body no-padding" style="">
+                <div class="box-body no-padding animated fadeIn">
                     <ul class="nav nav-pills nav-stacked">
                         <?php
                         /** @var $imap \SSilence\ImapClient\ImapClient */
@@ -169,7 +169,7 @@ if ($webmailSettings['webmail_active'] == true && ($error == false))
             </div>
         </div> <!-- /. left col -->
 
-        <div class="col-md-9">
+        <div class="col-md-9 animated fadeIn">
            <!-- <form enctype="multipart/form-data" class="dropzone" action="index.php?page=webmail-compose" method="POST"> -->
            <form id="my-dropzone" class="dropzone" enctype="multipart/form-data">
             <!-- right col -->
@@ -242,9 +242,6 @@ else
 ?>
 
 <script type="text/javascript">
-
-    /*
-     */
     Dropzone.options.myDropzone = { // The camelized version of the ID of the form element
 
         url: "js/email-send.php",

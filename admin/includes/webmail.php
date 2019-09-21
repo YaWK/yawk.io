@@ -43,6 +43,8 @@ if ($webmailSettings['webmail_active'] == true)
     $imapMsgTypes = $webmailSettings['webmail_imap_msgtypes'];
     // sortation asc | desc
     $imapSortation = $webmailSettings['webmail_imap_sortation'];
+    // novalidate-cert
+    $novalidate = $webmailSettings['webmail_imap_novalidate'];
 
     // include webmail class
     require_once "../system/classes/webmail.php";
@@ -51,10 +53,12 @@ if ($webmailSettings['webmail_active'] == true)
     // set connection info var
     $webmail->connectionInfo = "<i>$username</i>";
 
+    $options = array($novalidate);
+
     try // open connection to imap server
     {
         // create new imap handle
-        $imap = new Imap($server.$port.$encryption, $username, $password, $encryption);
+        $imap = new Imap($server.$port.$encryption, $username, $password, $encryption, 0, 0, $options);
         // connection successful, error = false
         $error = false;
         $errorMsg = '';
@@ -218,7 +222,7 @@ if ($webmailSettings['webmail_active'] == true && ($error == false))
     <div class="col-md-3">
         <!-- left col -->
         <a href="index.php?page=webmail-compose" class="btn btn-success btn-large" style="width: 100%;">Write a message</a><br><br>
-        <div class="box box-default">
+        <div class="box box-default animated fadeIn">
             <div class="box-header with-border">
                 <h3 class="box-title">Folders</h3>
 
@@ -239,7 +243,7 @@ if ($webmailSettings['webmail_active'] == true && ($error == false))
         </div>
     </div> <!-- /. left col -->
 
-    <div class="col-md-9">
+    <div class="col-md-9 animated fadeIn">
         <!-- right col -->
         <div class="box box-secondary">
             <div class="box-header with-border">
