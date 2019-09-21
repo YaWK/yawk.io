@@ -522,20 +522,34 @@ namespace YAWK {
         function drawHtmlNavbarWebmailMenu($db, $lang)
         {
             // count + return unread messages
-            // connect to mailbox:
-            $mailbox = '{imap.world4you.com:993/imap/ssl/novalidate-cert}INBOX';
-            $username = 'development@mashiko.at';
-            $password = 'test1234';
+            // get imap settings
+            $webmailSettings = \YAWK\settings::getValueSettingsArray($db, "webmail_imap_");
+            $server = $webmailSettings['webmail_imap_server'];
+            $port = $webmailSettings['webmail_imap_port'];
+            $encrypt = $webmailSettings['webmail_imap_encrypt'];
+            $username = $webmailSettings['webmail_imap_username'];
+            $password = $webmailSettings['webmail_imap_password'];
 
+            // connect to mailbox:
+            // prepare imap mailbox string
+            $mailbox = '{'.$server.':'.$port.'/imap/'.$encrypt.'/novalidate-cert}INBOX';
             // open new imap connection
             $imap = imap_open($mailbox, $username, $password);
             // get all unseen messages
             $emails = imap_search($imap, 'UNSEEN');
-            // count emails
-            $i = count ($emails);
+
+            // check, if any unseen emails are there
+            if (empty($emails))
+            {   // nope, no unseen emails
+                $i = 0;
+            }
+            else
+                {   // yep: count emails
+                    $i = count ($emails);
+                }
 
             // one email only
-            if ($i === 1)
+            if ($i == 1)
             {   // set singular
                 $msg = $lang['EMAIL'];
                 $unread = $lang['UNREAD_SINGULAR'];
