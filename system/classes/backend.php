@@ -201,11 +201,12 @@ namespace YAWK {
          * @website http://yawk.website
          * @param object $db Database object
          */
-        public static function drawTemplateSelectField($db)
+        public static function drawTemplateSelectField($db, $description)
         {
             /* TEMPLATE SELECTOR */
             echo "<!-- TEMPLATE SELECT -->
-                               <select class=\"form-control\" name=\"selectedTemplate\">
+                               <select class=\"form-control\" id=\"selectedTemplate\" name=\"selectedTemplate\">
+                               <label for id=\"selectedTemplate\">$description</label>
                                  <option value=\""; echo \YAWK\template::getCurrentTemplateId($db); echo "\">";
             echo \YAWK\template::getCurrentTemplateName($db, "backend", "");
             echo"</option>";
