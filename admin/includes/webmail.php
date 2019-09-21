@@ -139,6 +139,20 @@ if ($webmailSettings['webmail_active'] == true)
                 \YAWK\alert::draw("danger", "ERROR:", "Unable to delete email", "", 2800);
             }
     }
+
+    // PURGE FOLDER: delete all messages in this folder
+    if (isset($_GET['purgeTrash']) && ($_GET['purgeTrash'] == true))
+    {   // purge folder
+        $imap->selectFolder("Trash");
+        if ($webmail->purgeTrash($imap))
+        {   // email deleted
+            \YAWK\alert::draw("success", "Mailbox cleaned", "The trash and spam folders were cleaned up", "", 1200);
+        }
+        else
+        {   // failed to delete email
+            \YAWK\alert::draw("danger", "ERROR:", "Unable to purge trash and spam folder", "", 2800);
+        }
+    }
 }
 else    // webmail is not activated...
     {   // leave vars empty
@@ -243,7 +257,7 @@ if ($webmailSettings['webmail_active'] == true && ($error == false))
             <!-- /.box-header -->
             <div class="box-body no-padding">
                 <div class="mailbox-controls">
-                        <?php $webmail->drawMailboxControls($imap, "inbox", 0, $imap->currentFolder, $lang); ?>
+                    <?php $webmail->drawMailboxControls($imap, "inbox", 0, $imap->currentFolder, $lang); ?>
                 </div>
                 <div class="table-responsive mailbox-messages">
                     <table cellpadding="0" cellspacing="0" class="table table-striped table-hover table-responsive" id="table-sort">
