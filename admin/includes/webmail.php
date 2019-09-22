@@ -188,8 +188,13 @@ else    // webmail is not activated...
         }
     });
 
+
+    /**
+     * Mark specific email as seen / unseen.
+     * @param msgno the affected message number
+     * @param state setSeen|setUnseen
+     */
     function markAsSeen(msgno, state){
-       // alert('mark as unread clicked for uid '+uid+'');
         $.ajax({
             type: "POST",
             url: 'js/webmail-markAsSeen.php',
@@ -212,13 +217,13 @@ else    // webmail is not activated...
                 // remove icon class
                 $(seenIcon).removeClass();
 
-                // add class: seen envelope
+                // state setSeen requested
                 if (state === 'setSeen')
                 {   // set html markup for seen message (light text)
                     $(seenIcon).addClass('fa fa-envelope-open-o text-muted');
                     $(mailboxName).removeClass().addClass('mailbox-name');
                     $(mailboxSubject).removeClass().addClass('mailbox-subject');
-                    // change function call to make it work correctly
+                    // change function call to make it toggle correctly
                     $(seenIconLink).attr("onclick",'markAsSeen('+msgno+', \'setUnseen\')');
 
                     // update new messages label value
@@ -245,7 +250,7 @@ else    // webmail is not activated...
                         $(seenIcon).addClass('fa fa-envelope text-muted');
                         $(mailboxName).removeClass().addClass('mailbox-name text-bold');
                         $(mailboxSubject).removeClass().addClass('mailbox-subject text-bold');
-                        // change function call to make it work correctly
+                        // change function call to make it toggle correctly
                         $(seenIconLink).attr("onclick",'markAsSeen('+msgno+', \'setSeen\')');
 
                         // if there are more mails than 0
@@ -268,6 +273,45 @@ else    // webmail is not activated...
         });
     }
 
+    /**
+     * Mark specific email as flagged (mark as important with star)
+     * @param uid the affected mail uid
+     * @param state setSeen|setUnseen
+     */
+    function markAsFlagged(uid, state){
+        // alert('mark as unread clicked for uid '+uid+'');
+        $.ajax({
+            type: "POST",
+            url: 'js/webmail-setFlagged.php',
+            data: {uid: uid, state:state},
+            success: function(data){
+                // alert(data);
+
+                // envelope icon element
+                var starIcon = $('#starIcon_'+uid);
+                var starIconLink = $('#starIconLink_'+uid);
+
+                // remove icon class
+                $(starIcon).removeClass();
+
+                // state setFlagged
+                if (state === 'setFlagged')
+                {   // set html markup for flagged message (light text)
+                    $(starIcon).addClass('fa fa-star text-orange');
+                    // change function call to make it toggle correctly
+                    $(starIconLink).attr("onclick",'markAsFlagged('+uid+', \'setUnFlagged\')');
+                }
+
+                // state setFlagged
+                else if (state === 'setUnFlagged')
+                {   // set html markup for flagged message (light text)
+                    $(starIcon).addClass('fa fa-star-o text-orange');
+                    // change function call to make it toggle correctly
+                    $(starIconLink).attr("onclick",'markAsFlagged('+uid+', \'setFlagged\')');
+                }
+            }
+        });
+    }
 </script>
 
 <?php

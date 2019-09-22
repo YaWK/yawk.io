@@ -397,13 +397,14 @@ namespace YAWK {
                             // set envelope icon (seen)
                         }
 
+                    // check if email is flagged
                     if ($email->header->flagged === 0)
-                    {
-                        $starIcon = '<a href="index.php?page=webmail&markAsFlagged=true&uid='.$email->header->uid.'" class="fa fa-star-o text-orange"></a>';
+                    {   // if not, draw open star
+                        $starIcon = '<a id="starIconLink_'.$email->header->uid.'" onclick="markAsFlagged('.$email->header->uid.', \'setFlagged\');return false;" href="#"><i id="starIcon_'.$email->header->uid.'" class="fa fa-star-o text-orange"></i></a>';
                     }
                     else
-                        {
-                            $starIcon = '<a href="index.php?page=webmail&removeFlags=true&uid='.$email->header->uid.'" class="fa fa-star text-orange"></a>';
+                        {   // if mail is flagged, draw full star
+                            $starIcon = '<a id="starIconLink_'.$email->header->uid.'" onclick="markAsFlagged('.$email->header->uid.', \'setUnFlagged\');return false;" href="#"><i id="starIcon_'.$email->header->uid.'" class="fa fa-star text-orange"></i></a>';
                         }
 
                     // echo "<pre>";
