@@ -234,11 +234,11 @@ namespace YAWK {
                 // if all mails in this folder are seen
                 if ($unreadMessages > 0)
                 {   // hide new mail label
-                    $newMessages = "<span class=\"label label-success pull-right\">+ ".$unreadMessages."</span>";
+                    $newMessagesLabel = "<span id=\"newMessagesLabel\" class=\"label label-success pull-right\">+ ".$unreadMessages."</span>";
                 }
                 else
                     {
-                        $newMessages = "";
+                        $newMessagesLabel = "";
                     }
 
                 // walk through folders and display them
@@ -257,7 +257,7 @@ namespace YAWK {
                         {
                             // set markup to view as active
                             $activeMarkup = " class=\"active\"";
-                            $activeLabelNew = $newMessages;
+                            $activeLabelNew = $newMessagesLabel;
                             $activeLabelInbox = '';
                             $activeLabelTotal = " <small>(".$messageCount.")</small>";
                         }
@@ -274,7 +274,7 @@ namespace YAWK {
                             $activeMarkup = "";
                             $activeLabelNew = "";
                             $activeLabelTotal = "";
-                            $activeLabelInbox = $newMessages;
+                            $activeLabelInbox = $newMessagesLabel;
                             // $activeLabelInbox = "<span class=\"label label-success pull-right".$labelClass."\">+ ".$unreadMessages."</span>";
 
                             $activeLabelTotal = " <small>(".$messageCount.")</small>";
@@ -285,7 +285,7 @@ namespace YAWK {
                     // check folder value and set markup to display icons corresponding to the folder
                     if ($folder == "INBOX" || $folder == "inbox" || $folder == "Inbox")
                     {   // set inbox icon
-                        echo "<li".$activeMarkup.$activeMarkupDefault."><a href=\"index.php?page=webmail&folder=$folder\"><i class=\"fa fa-inbox\"></i> $folder
+                        echo "<li '".$activeMarkup.$activeMarkupDefault."><a href=\"index.php?page=webmail&folder=$folder\"><i class=\"fa fa-inbox\"></i> $folder
                               ".$activeLabelNew." ".$activeLabelInbox." ".$activeLabelTotal." </a></li>";
                     }
 
@@ -343,25 +343,27 @@ namespace YAWK {
                     // mail is new (not seen)
                     if ($email->header->seen === 0)
                     {   // display it bold
-                        $boldMarkupStart = "<b>";
-                        $boldMarkupEnd = "</b>";
+                        $state = "setSeen";
+                        $boldRow = "text-bold";
                         // $starIcon = "fa fa-star text-yellow";
                         $seenIcon = "fa fa-envelope text-muted";
                         $seenLink = 'index.php?page=webmail&markAsRead=true&folder='.$currentFolder.'&msgno='.$email->header->msgno.'';
                         // $seenTooltip = 'data-toggle="tooltip" data-container="body" title="'.$lang['MARK_AS_READ'].'" data-original-title="'.$lang['MARK_AS_READ'].'"';
                         $seenTooltip = '';
                         $messageLink = 'index.php?page=webmail-message&folder='.$currentFolder.'&msgno='.$email->header->msgno.'';
+                        $markAsReadIcon = '<a id="seenIconLink_'.$email->header->msgno.'" onclick="markAsSeen('.$email->header->msgno.', \''.$state.'\');return false;" href="#" '.$seenTooltip.'><i id="seenIcon_'.$email->header->msgno.'" class="'.$seenIcon.'"></i></a>';
                     }
                     else
-                        {   // no markup required
-                            $boldMarkupStart = "";
-                            $boldMarkupEnd = "";
+                        {   // message already seen
+                            $state = "setUnseen";
+                            $boldRow = "";
                             // $starIcon = "fa fa-star-o text-yellow";
                             $seenIcon = "fa fa-envelope-open-o text-muted";
                             $seenLink = 'index.php?page=webmail&markAsUnread=true&folder='.$currentFolder.'&msgno='.$email->header->msgno.'';
                             // $seenTooltip = 'data-toggle="tooltip" data-container="body" title="'.$lang['MARK_AS_UNSEEN'].'" data-original-title="'.$lang['MARK_AS_UNSEEN'].'"';
                             $seenTooltip = '';
                             $messageLink = 'index.php?page=webmail-message&folder='.$currentFolder.'&msgno='.$email->header->msgno.'';
+                            $markAsReadIcon = '<a id="seenIconLink_'.$email->header->msgno.'" onclick="markAsSeen('.$email->header->msgno.', \''.$state.'\');return false;" href="#" '.$seenTooltip.'><i id="seenIcon_'.$email->header->msgno.'" class="'.$seenIcon.'"></i></a>';
                         }
 
                     // get mail size
@@ -386,14 +388,13 @@ namespace YAWK {
                     if ($currentFolder == "trash" || $currentFolder == "Trash" || $currentFolder == "TRASH")
                     {
                         // set action icon to "RESTORE"
-                        $actionIcon = '<a href="index.php?page=webmail&moveMessage=true&folder='.$currentFolder.'&targetFolder=Inbox&uid='.$email->header->uid.'"><i class="fa fa-repeat text-dark"></i></a>';
+                        $markAsReadIcon = '<a href="index.php?page=webmail&moveMessage=true&folder='.$currentFolder.'&targetFolder=Inbox&uid='.$email->header->uid.'"><i class="fa fa-repeat text-dark"></i></a>';
                         $starIcon = '';
                     }
                     else
                         {
                             // in any other case:
                             // set envelope icon (seen)
-                            $actionIcon = '<a href="'.$seenLink.'" '.$seenTooltip.'><i class="'.$seenIcon.'"></i></a>';
                         }
 
                     if ($email->header->flagged === 0)
@@ -412,11 +413,11 @@ namespace YAWK {
                     echo '
                         <tr id="emailRow">
                             <td><div class="icheckbox_flat-blue" aria-checked="false" aria-disabled="false" style="position: relative;"><input type="checkbox" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div></td>
-                            <td class="mailbox-star">'.$actionIcon.'</td>
+                            <td class="mailbox-star">'.$markAsReadIcon.'</td>
                             <td class="mailbox-star">'.$starIcon.'</td>
-                            <td class="mailbox-name" style="cursor:pointer;" onclick="window.location=\''.$messageLink.'\';"><a href="#">'.$boldMarkupStart.$email->header->from.$boldMarkupEnd.'</a>
+                            <td id="mailboxName_'.$email->header->msgno.'" class="mailbox-name '.$boldRow.'" style="cursor:pointer;" onclick="window.location=\''.$messageLink.'\';"><a href="#">'.$email->header->from.'</a>
                             <br><small>'.$email->header->details->from[0]->mailbox.'@'.$email->header->details->from[0]->host.'</small></td>
-                            <td class="mailbox-subject" style="cursor:pointer;" onclick="window.location=\''.$messageLink.'\';">'.$boldMarkupStart.$email->header->subject.$boldMarkupEnd.'</td>
+                            <td id="mailboxSubject_'.$email->header->msgno.'" class="mailbox-subject '.$boldRow.'" style="cursor:pointer;" onclick="window.location=\''.$messageLink.'\';">'.$email->header->subject.'</td>
                             <td class="mailbox-attachment text-center">'.$attachClip.'</td>
                             <td class="mailbox-date">'.$email->header->date.'<br><small>'.$timeAgo.'</small></td>
                             <td class="mailbox-star"><a href="index.php?page=webmail&moveMessage=true&folder='.$currentFolder.'&targetFolder=Trash&uid='.$email->header->uid.'" class="fa fa-trash-o text-gray" id="recycleBtn"></a></td>

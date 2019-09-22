@@ -85,38 +85,6 @@ if ($webmailSettings['webmail_active'] == true)
         $errorMsg = 'Oh no! Verbindung mit server: '.$server.' als user: '.$username.' nicht moeglich!';
     }
 
-    // MARK AS READ: set seen message
-    if (isset($_GET['markAsRead']) && ($_GET['markAsRead'] == true))
-    {
-        $msgno = (int)$_GET['msgno'];
-        $imap->selectFolder($_GET['folder']);
-        // mark as unseen
-        if ($imap->setSeenMessage($msgno) == true)
-        {   // email marked as unseen
-            // \YAWK\alert::draw("success", "Marked as read", "The email was marked as seen", "", 1200);
-        }
-        else
-        {   // set unseen failed
-            \YAWK\alert::draw("warning", "ERROR:", "Unable to mark email as read", "", 2800);
-        }
-    }
-
-    // MARK AS UNREAD: set unseen message
-    if (isset($_GET['markAsUnread']) && ($_GET['markAsUnread'] == true))
-    {
-        $msgno = (int)$_GET['msgno'];
-        $imap->selectFolder($_GET['folder']);
-        // mark as unseen
-        if ($imap->setUnseenMessage($msgno) == true)
-        {   // email marked as unseen
-            // \YAWK\alert::draw("success", "Marked as read", "The email was marked as seen", "", 1200);
-        }
-        else
-        {   // set unseen failed
-            \YAWK\alert::draw("warning", "ERROR:", "Unable to mark email as read", "", 2800);
-        }
-    }
-
     // MOVE ACTION: move message to specified target folder
     if (isset($_GET['moveMessage']) && ($_GET['moveMessage'] == true))
     {
@@ -219,6 +187,86 @@ else    // webmail is not activated...
             window.location = href;
         }
     });
+
+    function markAsSeen(msgno, state){
+       // alert('mark as unread clicked for uid '+uid+'');
+        $.ajax({
+            type: "POST",
+            url: 'js/webmail-markAsSeen.php',
+            data: {msgno: msgno, state:state},
+            success: function(data){
+                // alert(data);
+
+                // envelope icon element
+                var seenIcon = $('#seenIcon_'+msgno);
+                var seenIconLink = $('#seenIconLink_'+msgno);
+                var mailboxName = $('#mailboxName_'+msgno);
+                var mailboxSubject = $('#mailboxSubject_'+msgno);
+                var newMessagesLabel = $('#newMessagesLabel');
+                // get value from new message label, remove first 2 chars (+&nbsp;)
+                var labelCount = $(newMessagesLabel).text().slice(2);
+
+                // the email icon in the top navbar
+                var envelopeLabel = $('#envelope-label');
+
+                // remove icon class
+                $(seenIcon).removeClass();
+
+                // add class: seen envelope
+                if (state === 'setSeen')
+                {   // set html markup for seen message (light text)
+                    $(seenIcon).addClass('fa fa-envelope-open-o text-muted');
+                    $(mailboxName).removeClass().addClass('mailbox-name');
+                    $(mailboxSubject).removeClass().addClass('mailbox-subject');
+                    // change function call to make it work correctly
+                    $(seenIconLink).attr("onclick",'markAsSeen('+msgno+', \'setUnseen\')');
+
+                    // update new messages label value
+                    // if there are more mails than 0
+                    if (labelCount > 1)
+                    {
+                        // subtract 1 from label counter
+                        labelCount--;
+                        // update new mails label counter
+                        $(newMessagesLabel).text('+ '+labelCount);
+                        // set navbar icon
+                        $(envelopeLabel).text(labelCount);
+                    }
+                    else
+                        {   // no more new mails - fade out label
+                            $(newMessagesLabel).text('+ 0');
+                            $(newMessagesLabel).fadeOut();
+                            $(envelopeLabel).fadeOut();
+                        }
+                }
+                else
+                    {   // set html markup for unseen message (bold text)
+
+                        $(seenIcon).addClass('fa fa-envelope text-muted');
+                        $(mailboxName).removeClass().addClass('mailbox-name text-bold');
+                        $(mailboxSubject).removeClass().addClass('mailbox-subject text-bold');
+                        // change function call to make it work correctly
+                        $(seenIconLink).attr("onclick",'markAsSeen('+msgno+', \'setSeen\')');
+
+                        // if there are more mails than 0
+                        if (labelCount > 0)
+                        {   // subtract 1 from label counter
+                            labelCount++;
+                            // update new mails label counter
+                            $(newMessagesLabel).text('+ '+labelCount);
+                            $(envelopeLabel).text(labelCount);
+                            console.log('LABEL COUNTER:' +labelCount);
+                        }
+                        else
+                        {   // no more new mails - fade out label
+                            $(newMessagesLabel).text('+ 1');
+                            $(envelopeLabel).fadeIn();
+                            $(newMessagesLabel).fadeIn();
+                        }
+                    }
+            }
+        });
+    }
 
 </script>
 
