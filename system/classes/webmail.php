@@ -32,25 +32,33 @@ namespace YAWK {
         public function moveMessage($imap, $folder, $targetFolder, $uid)
         {   /** @var $imap \SSilence\ImapClient\ImapClient */
 
-            // folder is not set or empty
+            // check email uid
+            if (!isset($uid) || (empty($uid)))
+            {   // no uid set
+                return false;
+                // todo: add syslog call
+                // \YAWK\alert::draw("warning", "Warning", "Failed to delete email because there is no uid set!", "", 0);
+            }
+
+            // check target folder
+            if (!isset($targetFolder) || (empty($targetFolder)))
+            {   // target folder not set or empty
+                return false;
+                // todo: add syslog call
+                // \YAWK\alert::draw("warning", "Warning", "Failed to delete email because there is no target folder set!", "", 0);
+            }
+
+            // check source folder
             if (!isset($folder) || (empty($folder)))
-            {   // todo: add syslog call
+            {
+                // folder is not set or empty
+                return false;
+                // todo: add syslog call
                 // \YAWK\alert::draw("warning", "Warning", "Failed to delete email because there is no source folder set!", "", 0);
             }
             else
             {   // select current source folder
                 $imap->selectFolder($folder);
-            }
-
-            // target folder not set or empty
-            if (!isset($targetFolder) || (empty($targetFolder)))
-            {   // todo: add syslog call
-                // \YAWK\alert::draw("warning", "Warning", "Failed to delete email because there is no target folder set!", "", 0);
-            }
-
-            if (!isset($uid) || (empty($uid)))
-            {   // todo: add syslog call
-                // \YAWK\alert::draw("warning", "Warning", "Failed to delete email because there is no uid set!", "", 0);
             }
 
             // move email to target folder
