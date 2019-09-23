@@ -1,6 +1,12 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+<!-- Bootstrap 3.3.5 -->
+<link rel="stylesheet" href="../../system/engines/bootstrap3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="../../system/engines/font-awesome/css/font-awesome.min.css">
+<!-- Animate CSS -->
+<link rel="stylesheet" href="../../system/engines/animateCSS/animate.min.css">
+<!-- jQuery 2.1.4 -->
+<script type="text/javascript" src="../../system/engines/jquery/jquery-2.2.3.min.js"></script>
+<script src="../../system/engines/bootstrap3/dist/js/bootstrap.min.js"></script>
+
 <?php
 // include smtp mailer classes
 require_once('../../system/engines/phpMailer/class.phpmailer.php');
@@ -93,6 +99,15 @@ try
             }
         }
     }
+    else
+        {
+            // no files attached...
+            echo "<div class=\"row\">";
+            echo "<div class=\"col-md-2\"></div>";
+            echo "<div class=\"col-md-8 text-center\"><br><br><br><h2><i>...sending...</i><br><br><br><i class=\"fa fa-spinner fa-spin\"></i></h2></div>";
+            echo "<div class=\"col-md-2\"></div>";
+            echo "</div>";
+        }
 
     // Content
     // Set email format to HTML
