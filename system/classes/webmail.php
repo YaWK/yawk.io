@@ -287,14 +287,14 @@ namespace YAWK {
                             $activeMarkup = " class=\"active\"";
                             $activeLabelNew = $newMessagesLabel;
                             $activeLabelInbox = '';
-                            $activeLabelTotal = " <small>(".$messageCount.")</small>";
+                            $activeLabelTotal = " <span id=\"messageCount_".$folder."\"><small>(".$messageCount.")</small></span>";
                         }
                         else
                             {   // folder not active - no markup needed
                                 $activeMarkup = '';
                                 $activeLabelNew = '';
                                 $activeLabelInbox = '';
-                                $activeLabelTotal = " <small>(".$messageCount.")</small>";
+                                $activeLabelTotal = " <span id=\"messageCount_".$folder."\"><small>(".$messageCount.")</small></span>";
                             }
                     }
                     else
@@ -305,7 +305,7 @@ namespace YAWK {
                             $activeLabelInbox = $newMessagesLabel;
                             // $activeLabelInbox = "<span class=\"label label-success pull-right".$labelClass."\">+ ".$unreadMessages."</span>";
 
-                            $activeLabelTotal = " <small>(".$messageCount.")</small>";
+                            $activeLabelTotal = " <span id=\"messageCount_".$folder."\"><small>(".$messageCount.")</small></span>";
                             $activeMarkupDefault = " class=\"active\"";
                         }
 

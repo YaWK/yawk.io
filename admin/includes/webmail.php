@@ -288,6 +288,13 @@ else    // webmail is not activated...
 
                 // set html element vars
                 var emailRow = $('#emailRow_'+uid);
+                // update message count (beside folder overview)
+                var messageCountElement = $('#messageCount_'+folder+' small');
+                var messageCount = $(messageCountElement).text().slice(1,-1);
+                // subtract -1 from message count
+                messageCount--;
+                // re-write message count to element
+                $(messageCountElement).text('('+messageCount+')');
 
                 // fadeOut table row that contains moved email
                 $(emailRow).removeClass().addClass('animated fadeOutRight');
@@ -316,6 +323,14 @@ else    // webmail is not activated...
                 var envelopeLabel = $('#envelope-label');
                 // the current email row
                 var emailRow = $('#emailRow_'+uid);
+
+                // update message count (beside folder overview)
+                var messageCountElement = $('#messageCount_'+folder+' small');
+                var messageCount = $(messageCountElement).text().slice(1,-1);
+                // subtract -1 from message count
+                messageCount--;
+                // re-write message count to element
+                $(messageCountElement).text('('+messageCount+')');
 
                 // slide + fadeOut affected email table row
                 $(emailRow).removeClass().addClass('animated fadeOutRight');
