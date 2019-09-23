@@ -164,11 +164,17 @@ if ($webmailSettings['webmail_active'] == true && ($error == false))
             <div class="box box-secondary">
                 <div class="box-header with-border">
                     <h3 class="box-title">Compose New Message</h3>
+                    <div class="pull-right">
+                        <i id="addCCBtn" class="btn btn-default btn-sm">CC</i>&nbsp;&nbsp;
+                        <i id="addBCCBtn" class="btn btn-default btn-sm">BCC</i>
+                    </div>
                 </div>
                 <!-- /.box-header -->
                     <div class="box-body">
                         <div class="form-group">
                             <input class="form-control" name="to" placeholder="To:">
+                            <input id="ccField" class="form-control hidden" name="ccField" placeholder="CC:">
+                            <input id="bccField" class="form-control hidden" name="bccField" placeholder="BCC:">
                         </div>
                         <div class="form-group">
                             <input class="form-control" name="subject" placeholder="Subject:">
@@ -219,6 +225,7 @@ else
 ?>
 
 <script type="text/javascript">
+    // DROPZONE
     Dropzone.options.myDropzone = { // The camelized version of the ID of the form element
         // ajax form action
         url: "js/email-send.php",
@@ -288,5 +295,43 @@ else
             });
         }
     };
+
+    // CC button handling (toggle fadeIn/out on demand)
+    $( "#addCCBtn" ).click(function() {
+        // alert( "Add CC Field Btn clicked!" );
+        var ccField = $('#ccField');
+        var ccFieldClass = $(ccField).attr('class');
+        if (ccFieldClass === 'form-control hidden')
+        {
+            $(ccField).removeClass().addClass('form-control animated fadeIn');
+        }
+        else if (ccFieldClass === 'form-control animated fadeIn')
+        {
+            $(ccField).removeClass().addClass('form-control animated fadeOut hidden');
+        }
+        else if (ccFieldClass === 'form-control animated fadeOut hidden')
+        {
+            $(ccField).removeClass().addClass('form-control animated fadeIn');
+        }
+    });
+
+    // BCC button handling (toggle fadeIn/out on demand)
+    $( "#addBCCBtn" ).click(function() {
+        // alert( "Add BCC Field Btn clicked!" );
+        var bccField = $('#bccField');
+        var bccFieldClass = $(bccField).attr('class');
+        if (bccFieldClass === 'form-control hidden')
+        {
+            $(bccField).removeClass().addClass('form-control animated fadeIn');
+        }
+        else if (bccFieldClass === 'form-control animated fadeIn')
+        {
+            $(bccField).removeClass().addClass('form-control animated fadeOut hidden');
+        }
+        else if (bccFieldClass === 'form-control animated fadeOut hidden')
+        {
+            $(bccField).removeClass().addClass('form-control animated fadeIn');
+        }
+    });
 
 </script>

@@ -49,9 +49,22 @@ try
         $webmailSettings['webmail_smtp_sender'] = $webmailSettings['webmail_smtp_username'];
     }
 
-    // from
+    // from address
     $mail->SetFrom($webmailSettings['webmail_smtp_username'], $webmailSettings['webmail_smtp_sender']);
-    // to
+
+    // check, if CC is set
+    if (isset($_POST['ccField']) && (!empty($_POST['ccField'])))
+    {   // add CC recipients to email
+        $mail->addCC($_POST['ccField']);
+    }
+
+    // check, if BCC is set
+    if (isset($_POST['bccField']) && (!empty($_POST['bccField'])))
+    {   // add BCC recipients to email
+        $mail->addBCC($_POST['bccField']);
+    }
+
+    // to address
     $mail->addAddress($_POST['to'], $_POST['to']);     // Add a recipient
 
     // Attachments
@@ -85,17 +98,6 @@ try
                     // add attachment
                     $mail->addAttachment($tmp_name, $newName);
 
-                    /*
-                    if (move_uploaded_file(, "$uploadDir/$name") == true)
-                    {
-                        // echo "YEP!";
-                    }
-                    else
-                    {
-                        // "NOPE";
-                    }
-                    // echo "processed: ".$_FILES["files"]["name"]["$key"]."<br>";
-                    */
                 }
                 else
                 {
