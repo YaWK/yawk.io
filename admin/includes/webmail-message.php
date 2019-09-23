@@ -137,6 +137,27 @@ else    // webmail is not activated...
                 $("#emailMessageContent").printThis();
             });
     });
+    /**
+     * Move a specific email (uid) from folder to targetFolder
+     * @param uid the affected mail uid
+     * @param folder source folder
+     * @param targetFolder target folder
+     */
+        function moveMessage(uid, folder, targetFolder){
+        $.ajax({
+            type: "POST",
+            url: 'js/webmail-moveMessage.php',
+            data: {uid: uid, folder:folder, targetFolder:targetFolder},
+            success: function(data){
+                // alert(data);
+                // var messageBox = $('#messageBox');
+                // fadeOut message box
+                // $(messageBox).removeClass().addClass('animated fadeOut');
+                window.location.replace('index.php?page=webmail');
+
+            }
+        });
+    }
 </script>
 <script src="../system/engines/jquery/printThis/printThis.js" type="text/javascript"></script>
 <?php
@@ -187,7 +208,7 @@ if ($webmailSettings['webmail_active'] == true) {
             </div>
 
         </div>
-        <div class="col-md-9 animated fadeIn">
+        <div id="messageBox" class="col-md-9 animated fadeIn">
             <!-- right col -->
             <div class="box box-secondary" id="emailMessageContent">
                 <div class="box-header with-border">

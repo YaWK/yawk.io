@@ -150,14 +150,17 @@ namespace YAWK {
                         // if current folder is trash...
                         if ($folder == "trash" || ($folder == "Trash"))
                         {   // link: do not move to trash, DELETE finally
-                            $deleteLink = "index.php?page=webmail&purgeTrash=true";
+                            $deleteClassicLink = "index.php?page=webmail&purgeTrash=true";
+                            $deleteLink = '<a id="moveIconLink_'.$uid.'" onclick="moveMessage('.$uid.', \''.$_GET['folder'].'\', \''.$folder.'\');return false;" href="#"><i class="fa fa-trash-o" id="moveIcon_'.$uid.'"></i></a>';
                             $deleteClass = "btn btn-default btn-sm";
                             $refreshClass = "btn btn-default btn-sm hidden";
                             $markAsReadClass = "btn btn-default btn-sm checkbox-toggle hidden";
                         }
                         else
                         {   // move to trash link
-                            $deleteLink = "index.php?page=webmail&moveMessage=true&folder=".$folder."&targetFolder=Trash&uid=".$uid."";
+                            $deleteClassicLink = "index.php?page=webmail&moveMessage=true&folder=".$folder."&targetFolder=Trash&uid=".$uid."";
+                            if (!isset($_GET['folder']) || (empty($_GET['folder']))) { ($folder = 'Inbox'); } else { ($folder = $_GET['folder']); }
+                            $deleteLink = '<a id="moveIconLink_'.$uid.'" onclick="moveMessage('.$uid.', \''.$folder.'\', \'Trash\');return false;" href="#"><i class="fa fa-trash-o" id="moveIcon_'.$uid.'"></i></a>';
                             $deleteClass = "btn btn-default btn-sm hidden";
                             $refreshClass = "btn btn-default btn-sm";
                             $markAsReadClass = "btn btn-default btn-sm checkbox-toggle";
@@ -168,9 +171,11 @@ namespace YAWK {
                         <!-- Check all button -->
                         <button type=\"button\" class=\"".$markAsReadClass."\" data-toggle=\"tooltip\" data-container=\"body\" title=\"$lang[MARK_ALL_AS_READ]\" data-original-title=\"$lang[MARK_ALL_AS_READ]\"><i class=\"fa fa-square-o\"></i>
                         </button>
-                        <div class=\"btn-group\">
-                            <a href=\"".$deleteLink."\" id=\"icon-trash\" class=\"".$deleteClass."\" data-toggle=\"tooltip\" data-container=\"body\" title=\"$lang[DELETE_ALL]\" data-original-title=\"$lang[DELETE_ALL]\"><i class=\"fa fa-trash-o\"></i> &nbsp;Empty Trash</a>
-                            <a href=\"index.php?page=webmail\" id=\"icon-refresh\" class=\"".$refreshClass."\" data-toggle=\"tooltip\" data-container=\"body\" title=\"$lang[REFRESH]\" data-original-title=\"$lang[REFRESH]\"><i class=\"fa fa-refresh\"></i></a>
+                        <div class=\"btn-group\">";
+                        // echo $deleteLink;
+                        // classic link
+                         echo "<a href=\"".$deleteClassicLink."\" id=\"icon-trash\" class=\"".$deleteClass."\" data-toggle=\"tooltip\" data-container=\"body\" title=\"$lang[DELETE_ALL]\" data-original-title=\"$lang[DELETE_ALL]\"><i class=\"fa fa-trash-o\"></i> &nbsp;Empty Trash</a>
+                               <a href=\"index.php?page=webmail\" id=\"icon-refresh\" class=\"".$refreshClass."\" data-toggle=\"tooltip\" data-container=\"body\" title=\"$lang[REFRESH]\" data-original-title=\"$lang[REFRESH]\"><i class=\"fa fa-refresh\"></i></a>
                         </div>
                         <!-- /.btn-group -->
                         <!-- additional buttons: settings + new mail -->
@@ -192,15 +197,20 @@ namespace YAWK {
                         }
                         else
                         {   // move to trash link
-                            $deleteLink = "index.php?page=webmail&moveMessage=true&folder=".$folder."&targetFolder=Trash&uid=".$uid."";
+                            // $deleteLink = "index.php?page=webmail&moveMessage=true&folder=".$folder."&targetFolder=Trash&uid=".$uid."";
                             $deleteClass = "btn btn-default btn-sm";
+                            if (!isset($_GET['folder']) || (empty($_GET['folder']))) { ($folder = 'Inbox'); } else { ($folder = $_GET['folder']); }
+                            $deleteLink = '<a id="moveIconLink_'.$uid.'" class="btn btn-default btn-sm" onclick="moveMessage('.$uid.', \''.$folder.'\', \'Trash\');return false;" href="#" title="'.$lang['DELETE'].'" data-toggle="tooltip" data-container="body" data-original-title="'.$lang['DELETE'].'"><i class="fa fa-trash-o" id="moveIcon_'.$uid.'"></i></a>';
                         }
                         echo "
                     <div class=\"mailbox-controls\">
                         <div class=\"btn-group\">
                             <a id=\"btn-markAsUnseen\" href=\"index.php?page=webmail-message&markAsUnread=true&folder=".$_GET['folder']."&msgno=".$_GET['msgno']."\" class=\"btn btn-default btn-sm\" data-toggle=\"tooltip\" data-container=\"body\" title=\"$lang[MARK_AS_UNSEEN]\" data-original-title=\"$lang[MARK_AS_UNSEEN]\"><i class=\"fa fa-envelope\" id=\"icon-markAsUnseen\"></i></a>
-                            <a href=\"".$deleteLink."\" id=\"icon-delete\" class=\"".$deleteClass."\" data-toggle=\"tooltip\" data-container=\"body\" title=\"$lang[DELETE]\" data-original-title=\"$lang[DELETE]\"><i class=\"fa fa-trash-o\"></i></a>
-                            <a href=\"index.php?page=webmail\" id=\"icon-reply\" class=\"btn btn-default btn-sm\" data-toggle=\"tooltip\" data-container=\"body\" title=\"$lang[REPLY]\" data-original-title=\"$lang[REPLY]\"><i class=\"fa fa-reply\"></i></a>
+                            ";
+                            echo $deleteLink;
+
+                            // <a href=\"".$deleteLink."\" id=\"icon-delete\" class=\"".$deleteClass."\" data-toggle=\"tooltip\" data-container=\"body\" title=\"$lang[DELETE]\" data-original-title=\"$lang[DELETE]\"><i class=\"fa fa-trash-o\"></i></a>
+                            echo "<a href=\"index.php?page=webmail\" id=\"icon-reply\" class=\"btn btn-default btn-sm\" data-toggle=\"tooltip\" data-container=\"body\" title=\"$lang[REPLY]\" data-original-title=\"$lang[REPLY]\"><i class=\"fa fa-reply\"></i></a>
                             <a href=\"index.php?page=webmail\" id=\"icon-forward\" class=\"btn btn-default btn-sm\" data-toggle=\"tooltip\" data-container=\"body\" title=\"$lang[FORWARD]\" data-original-title=\"$lang[FORWARD]\"><i class=\"fa fa-mail-forward\"></i></a>
                             <a href=\"#\" id=\"icon-print\" class=\"btn btn-default btn-sm\" data-toggle=\"tooltip\" data-container=\"body\" title=\"$lang[PRINT]\" data-original-title=\"$lang[PRINT]\"><i class=\"fa fa-print\"></i></a>
                         </div>
@@ -387,14 +397,17 @@ namespace YAWK {
 
                     if ($currentFolder == "trash" || $currentFolder == "Trash" || $currentFolder == "TRASH")
                     {
-                        // set action icon to "RESTORE"
-                        $markAsReadIcon = '<a href="index.php?page=webmail&moveMessage=true&folder='.$currentFolder.'&targetFolder=Inbox&uid='.$email->header->uid.'"><i class="fa fa-repeat text-dark"></i></a>';
                         $starIcon = '';
+                        // set action icon to "RESTORE"
+                        $markAsReadIcon = '<a id="moveIconLink_'.$email->header->uid.'" onclick="moveMessage('.$email->header->uid.', \''.$currentFolder.'\', \'Inbox\', );return false;" href="#"><i class="fa fa-undo text-dark" id="moveIcon_'.$email->header->uid.'"></i></a>';
+                        // delete icon
+                        $moveIcon = '<a id="moveIconLink_'.$email->header->uid.'"  data-toggle="tooltip" data-container="body" title="'.$lang['DELETE_FINALLY'].'" data-original-title="'.$lang['DELETE_FINALLY'].'" onclick="deleteMessage('.$email->header->uid.', \''.$currentFolder.'\');return false;" href="#"><i class="fa fa-trash-o text-gray" id="moveIcon_'.$email->header->uid.'"></i></a>';
+
                     }
                     else
                         {
                             // in any other case:
-                            // set envelope icon (seen)
+                            $moveIcon = '<a id="moveIconLink_'.$email->header->uid.'" onclick="moveMessage('.$email->header->uid.', \''.$currentFolder.'\', \'Trash\', );return false;" href="#"><i class="fa fa-trash-o text-gray" id="moveIcon_'.$email->header->uid.'"></i></a>';
                         }
 
                     // check if email is flagged
@@ -412,7 +425,7 @@ namespace YAWK {
                     // echo "</pre>";
                     // display every email as single table row
                     echo '
-                        <tr id="emailRow">
+                        <tr id="emailRow_'.$email->header->uid.'">
                             <td><div class="icheckbox_flat-blue" aria-checked="false" aria-disabled="false" style="position: relative;"><input type="checkbox" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div></td>
                             <td class="mailbox-star">'.$markAsReadIcon.'</td>
                             <td class="mailbox-star">'.$starIcon.'</td>
@@ -421,7 +434,7 @@ namespace YAWK {
                             <td id="mailboxSubject_'.$email->header->msgno.'" class="mailbox-subject '.$boldRow.'" style="cursor:pointer;" onclick="window.location=\''.$messageLink.'\';">'.$email->header->subject.'</td>
                             <td class="mailbox-attachment text-center">'.$attachClip.'</td>
                             <td class="mailbox-date">'.$email->header->date.'<br><small>'.$timeAgo.'</small></td>
-                            <td class="mailbox-star"><a href="index.php?page=webmail&moveMessage=true&folder='.$currentFolder.'&targetFolder=Trash&uid='.$email->header->uid.'" class="fa fa-trash-o text-gray" id="recycleBtn"></a></td>
+                            <td class="mailbox-star">'.$moveIcon.'</td>
                         </tr>';
 
                 }

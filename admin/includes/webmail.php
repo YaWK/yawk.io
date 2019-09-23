@@ -85,47 +85,6 @@ if ($webmailSettings['webmail_active'] == true)
         $errorMsg = 'Oh no! Verbindung mit server: '.$server.' als user: '.$username.' nicht moeglich!';
     }
 
-    // MOVE ACTION: move message to specified target folder
-    if (isset($_GET['moveMessage']) && ($_GET['moveMessage'] == true))
-    {
-        // pastebin call
-        if ($webmail->moveMessage($imap, $_GET['folder'], $_GET['targetFolder'], $_GET['uid']) == true)
-        {   // email moved to trash
-            \YAWK\alert::draw("success", "Email deleted", "The email was recycled", "", 1200);
-        }
-        else
-            {   // recycling failed
-                \YAWK\alert::draw("danger", "ERROR:", "Unable to recycle email", "", 2800);
-            }
-    }
-
-    // STAR ACTION: mark a message as important
-    if (isset($_GET['markAsFlagged']) && ($_GET['markAsFlagged'] == true))
-    {
-        // mark as important
-        if ($webmail->markAsFlagged($imap->getImap(), $_GET['uid']) === true)
-        {   // email marked with star
-            \YAWK\alert::draw("success", "Email marked as important", "The email was marked as important", "", 1200);
-        }
-        else
-        {   // mark failed
-            \YAWK\alert::draw("danger", "ERROR:", "Unable to mark this email as important", "", 2800);
-        }
-    }
-
-    // REMOVE FLAGS: remove any flags as important
-    if (isset($_GET['removeFlags']) && ($_GET['removeFlags'] == true))
-    {
-        // remove all flags for this email
-        if ($webmail->removeFlags($imap->getImap(), $_GET['uid']) === true)
-        {   // remove flags successful
-            \YAWK\alert::draw("success", "Email flags removed", "The email is no longer marked as important", "", 1200);
-        }
-        else
-        {   // remove flags failed
-            \YAWK\alert::draw("danger", "ERROR:", "Unable to remove flags from this email", "", 2800);
-        }
-    }
 
     // DELETE ACTION: delete single message
     if (isset($_GET['deleteMessage']) && ($_GET['deleteMessage'] == true))
@@ -308,6 +267,76 @@ else    // webmail is not activated...
                     $(starIcon).addClass('fa fa-star-o text-orange');
                     // change function call to make it toggle correctly
                     $(starIconLink).attr("onclick",'markAsFlagged('+uid+', \'setFlagged\')');
+                }
+            }
+        });
+    }
+
+    /**
+     * Move a specific email (uid) from folder to targetFolder
+     * @param uid the affected mail uid
+     * @param folder source folder
+     * @param targetFolder target folder
+     */
+    function moveMessage(uid, folder, targetFolder){
+        $.ajax({
+            type: "POST",
+            url: 'js/webmail-moveMessage.php',
+            data: {uid: uid, folder:folder, targetFolder:targetFolder},
+            success: function(data){
+                // alert(data);
+
+                // set html element vars
+                var emailRow = $('#emailRow_'+uid);
+
+                // fadeOut table row that contains moved email
+                $(emailRow).removeClass().addClass('animated fadeOutRight');
+                $(emailRow).fadeOut();
+            }
+        });
+    }
+
+    /**
+     * Delete a specific message (finally)
+     * @param uid the affected message uid number
+     * @param folder the current folder
+     */
+    function deleteMessage(uid, folder){
+        $.ajax({
+            type: "POST",
+            url: 'js/webmail-deleteMessage.php',
+            data: {uid:uid, folder:folder},
+            success: function(data){
+               // alert(data);
+                // envelope icon element
+                var newMessagesLabel = $('#newMessagesLabel');
+                // get value from new message label, remove first 2 chars (+&nbsp;)
+                var labelCount = $(newMessagesLabel).text().slice(2);
+                // the email icon in the top navbar
+                var envelopeLabel = $('#envelope-label');
+                // the current email row
+                var emailRow = $('#emailRow_'+uid);
+
+                // slide + fadeOut affected email table row
+                $(emailRow).removeClass().addClass('animated fadeOutRight');
+                $(emailRow).fadeOut();
+
+                // update new messages label value
+                // if there are more mails than 0
+                if (labelCount > 1)
+                {
+                    // subtract 1 from label counter
+                    labelCount--;
+                    // update new mails label counter
+                    $(newMessagesLabel).text('+ '+labelCount);
+                    // set navbar icon
+                    $(envelopeLabel).text(labelCount);
+                }
+                else
+                {   // no more new mails - fade out label
+                    $(newMessagesLabel).text('+ 0');
+                    $(newMessagesLabel).fadeOut();
+                    $(envelopeLabel).fadeOut();
                 }
             }
         });

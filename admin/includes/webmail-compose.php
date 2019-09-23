@@ -287,5 +287,6 @@ else
                 // Maybe show form again, and notify user of error
             });
         }
-    }
+    };
+
 </script>
