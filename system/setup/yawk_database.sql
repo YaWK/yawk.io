@@ -600,6 +600,7 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('webmail_smtp_novalidate', 'novalidate-cert', '', 22, 4, 1, 'LABEL_WEBMAIL_IMAP_NOVALIDATE', '', '', '', 'form-control', 'select', '', 'DESC_WEBMAIL_IMAP_NOVALIDATE', 'novalidate-cert,novalidate-cert:,'),
 ('webmail_smtp_port', '587', '', 25, 3, 1, 'LABEL_WEBMAIL_SMTP_PORT', '', '', '', 'form-control', 'input', '', 'DESC_WEBMAIL_SMTP_PORT', ''),
 ('webmail_smtp_pwd', '', '', 25, 11, 1, 'LABEL_WEBMAIL_SMTP_PWD', '', '', '', 'form-control', 'password', '', '', ''),
+('webmail_smtp_sender', '', '', 25, 12, 1, 'LABEL_WEBMAIL_SMTP_SENDER', '', '', '', 'form-control', 'input', '', '', 'DESC_WEBMAIL_SMTP_SENDER'),
 ('webmail_smtp_server', '', '', 25, 1, 1, 'LABEL_WEBMAIL_SMTP_SERVER', 'fa fa-server', 'HEADING_WEBMAIL_SMTP_SERVER', '', 'form-control', 'input', 'PH_WEBMAIL_SMTP_SERVER', 'DESC_WEBMAIL_SMTP_SERVER', ''),
 ('webmail_smtp_username', '', '', 25, 10, 1, 'LABEL_WEBMAIL_SMTP_USERNAME', 'fa fa-user-o', 'HEADING_WEBMAIL_SMTP_USERNAME', '', 'form-control', 'input', 'PH_WEBMAIL_SMTP_USERNAME', '', ''),
 ('yawkversion', '1.0 build 2019.9', '', 9, 2, 0, 'YAWKVERSION_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
