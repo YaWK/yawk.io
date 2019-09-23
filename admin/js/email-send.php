@@ -43,8 +43,14 @@ try
     // TCP port to connect to
     $mail->Port       = $webmailSettings['webmail_smtp_port'];
 
+    // check, if sender name is set
+    if (!isset($webmailSettings['webmail_smtp_sender']) || (empty($webmailSettings['webmail_smtp_sender'])))
+    {   // no sender name, set smtp username (email) as sender instead
+        $webmailSettings['webmail_smtp_sender'] = $webmailSettings['webmail_smtp_username'];
+    }
+
     // from
-    $mail->SetFrom($webmailSettings['webmail_smtp_username'], $webmailSettings['webmail_smtp_username']);
+    $mail->SetFrom($webmailSettings['webmail_smtp_username'], $webmailSettings['webmail_smtp_sender']);
     // to
     $mail->addAddress($_POST['to'], $_POST['to']);     // Add a recipient
 
