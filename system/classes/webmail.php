@@ -3,14 +3,21 @@ namespace YAWK {
     /**
      * <b>Integrated Webmail</b>
      *
-     * This class features all webmail functions to fetch and send messages and build required views.
+     * YaWK includes a <i>seamless integrated</i> webmail. This means you can handle all emails of your website
+     * without leaving the backend. The seamless integration into the backend will help you with your daily work.
+     *
+     * This class features all the basic webmail functions that are required
+     * to build the desired views. It also acts as wrapper for the imap client and serve some low-level API
+     * methods to move, purge, delete emails and more.
+     *
+     * Beside this, this class serves methods to list folders and email headers / messages
      *
      * @category   CMS
      * @package    System
      * @author     Daniel Retzl <danielretzl@gmail.com>
-     * @copyright  2009-2015 Daniel Retzl yawk.goodconnect.net
+     * @copyright  2019 Daniel Retzl http://www.yawk.io
      * @license    https://opensource.org/licenses/MIT
-     * @version    1.2.0
+     * @version    1.0.0
      * @link       http://yawk.io/
      * @since      File available since Release 1.0.0
      * @annotation Integrated IMAP Webmail
