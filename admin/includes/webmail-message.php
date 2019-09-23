@@ -184,7 +184,7 @@ if ($webmailSettings['webmail_active'] == true) {
     <div class="row">
         <div class="col-md-3">
             <!-- left col -->
-            <a href="index.php?page=webmail" class="btn btn-success btn-large" style="width: 100%;">Back to
+            <a href="index.php?page=webmail" class="btn btn-success btn-large" style="width: 100%;"><i class="fa fa-reply-all"></i>Back to
                 Inbox</a><br><br>
             <div class="box box-default">
                 <div class="box-header with-border">
@@ -245,8 +245,6 @@ if ($webmailSettings['webmail_active'] == true) {
                         <?php
                         // output message body
                         echo  $imap->incomingMessage->message->html;
-
-                        // TODO: BETTER ATTACHMENT HANDLING
 
                         // set download path
                         $downloadPath = "../media/mailbox";
