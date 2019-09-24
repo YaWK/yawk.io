@@ -433,14 +433,14 @@ namespace YAWK {
             {   // set singular
                 $msg = $lang['CHAT'];
                 $unread = $lang['UNREAD_SINGULAR'];
-                $label = "<span id=\"envelope-label\" class=\"label label-success animated swing\">$i</span>";
+                $label = "<span id=\"envelope-label\" class=\"label label-primary animated swing\">$i</span>";
                 $animated = "animated tada";
             }
             else
             {   // set plural correctly
                 $msg = $lang['CHATS'];
                 $unread = $lang['UNREAD_PLURAL'];
-                $label = "<span id=\"envelope-label\" class=\"label label-success animated swing\">$i</span>";
+                $label = "<span id=\"envelope-label\" class=\"label label-primary animated swing\">$i</span>";
                 $animated = "animated tada";
             }
             if ($i === 0)
