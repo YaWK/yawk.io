@@ -373,7 +373,6 @@ namespace YAWK {
                     {   // display it bold
                         $state = "setSeen";
                         $boldRow = "text-bold";
-                        // $starIcon = "fa fa-star text-yellow";
                         $seenIcon = "fa fa-envelope text-muted";
                         $seenLink = 'index.php?page=webmail&markAsRead=true&folder='.$currentFolder.'&msgno='.$email->header->msgno.'';
                         // $seenTooltip = 'data-toggle="tooltip" data-container="body" title="'.$lang['MARK_AS_READ'].'" data-original-title="'.$lang['MARK_AS_READ'].'"';
@@ -385,7 +384,6 @@ namespace YAWK {
                         {   // message already seen
                             $state = "setUnseen";
                             $boldRow = "";
-                            // $starIcon = "fa fa-star-o text-yellow";
                             $seenIcon = "fa fa-envelope-open-o text-muted";
                             $seenLink = 'index.php?page=webmail&markAsUnread=true&folder='.$currentFolder.'&msgno='.$email->header->msgno.'';
                             // $seenTooltip = 'data-toggle="tooltip" data-container="body" title="'.$lang['MARK_AS_UNSEEN'].'" data-original-title="'.$lang['MARK_AS_UNSEEN'].'"';
@@ -419,13 +417,23 @@ namespace YAWK {
                         // set action icon to "RESTORE"
                         $markAsReadIcon = '<a id="moveIconLink_'.$email->header->uid.'" onclick="moveMessage('.$email->header->uid.', \''.$currentFolder.'\', \'Inbox\', );return false;" href="#"><i class="fa fa-undo text-dark" id="moveIcon_'.$email->header->uid.'"></i></a>';
                         // delete icon
-                        $moveIcon = '<a id="moveIconLink_'.$email->header->uid.'"  data-toggle="tooltip" data-container="body" title="'.$lang['DELETE_FINALLY'].'" data-original-title="'.$lang['DELETE_FINALLY'].'" onclick="deleteMessage('.$email->header->uid.', \''.$currentFolder.'\');return false;" href="#"><i class="fa fa-trash-o text-gray" id="moveIcon_'.$email->header->uid.'"></i></a>';
-
+                        $deleteIcon = '<a id="moveIconLink_'.$email->header->uid.'" data-toggle="tooltip" data-container="body" title="'.$lang['DELETE_FINALLY'].'" data-original-title="'.$lang['DELETE_FINALLY'].'" onclick="deleteMessage('.$email->header->uid.', \''.$currentFolder.'\');return false;" href="#"><i class="fa fa-trash-o" id="moveIcon_'.$email->header->uid.'"></i></a>';
+                        // spam icon
+                        $spamIcon = '<a id="spamIconLink_'.$email->header->uid.'" data-toggle="tooltip" data-container="body" title="'.$lang['SPAM'].'" data-original-title="'.$lang['SPAM'].'" onclick="moveMessage('.$email->header->uid.', \''.$currentFolder.'\', \'Junk\');return false;" href="#"><i class="fa fa-filter" id="spamIcon_'.$email->header->uid.'"></i></a>';
+                    }
+                    elseif ($currentFolder == "junk" || $currentFolder == "Junk" || $currentFolder == "JUNK"
+                    || $currentFolder == "spam" || $currentFolder == "Spam" || $currentFolder == "SPAM")
+                    {
+                        $deleteIcon = '<a id="moveIconLink_'.$email->header->uid.'" data-toggle="tooltip" data-container="body" title="'.$lang['RECYCLE_BIN'].'" data-original-title="'.$lang['RECYCLE_BIN'].'" onclick="moveMessage('.$email->header->uid.', \''.$currentFolder.'\', \'Trash\');return false;" href="#"><i class="fa fa-trash-o" id="moveIcon_'.$email->header->uid.'"></i></a>';
+                        // spam icon (move back to inbox)
+                        $spamIcon = '<a id="spamIconLink_'.$email->header->uid.'" data-toggle="tooltip" data-container="body" title="'.$lang['MOVE_INBOX'].'" data-original-title="'.$lang['MOVE_INBOX'].'" onclick="moveMessage('.$email->header->uid.', \''.$currentFolder.'\', \'INBOX\');return false;" href="#"><i class="fa fa-inbox" id="spamIcon_'.$email->header->uid.'"></i></a>';
                     }
                     else
                         {
                             // in any other case:
-                            $moveIcon = '<a id="moveIconLink_'.$email->header->uid.'" onclick="moveMessage('.$email->header->uid.', \''.$currentFolder.'\', \'Trash\', );return false;" href="#"><i class="fa fa-trash-o text-gray" id="moveIcon_'.$email->header->uid.'"></i></a>';
+                            $deleteIcon = '<a id="moveIconLink_'.$email->header->uid.'" data-toggle="tooltip" data-container="body" title="'.$lang['RECYCLE_BIN'].'" data-original-title="'.$lang['RECYCLE_BIN'].'" onclick="moveMessage('.$email->header->uid.', \''.$currentFolder.'\', \'Trash\');return false;" href="#"><i class="fa fa-trash-o" id="moveIcon_'.$email->header->uid.'"></i></a>';
+                            // spam icon
+                            $spamIcon = '<a id="spamIconLink_'.$email->header->uid.'" data-toggle="tooltip" data-container="body" title="'.$lang['SPAM'].'" data-original-title="'.$lang['SPAM'].'" onclick="moveMessage('.$email->header->uid.', \''.$currentFolder.'\', \'Junk\');return false;" href="#"><i class="fa fa-filter" id="spamIcon_'.$email->header->uid.'"></i></a>';
                         }
 
                     // check if email is flagged
@@ -452,7 +460,7 @@ namespace YAWK {
                             <td id="mailboxSubject_'.$email->header->msgno.'" class="mailbox-subject '.$boldRow.'" style="cursor:pointer;" onclick="window.location=\''.$messageLink.'\';">'.$email->header->subject.'</td>
                             <td class="mailbox-attachment text-center">'.$attachClip.'</td>
                             <td class="mailbox-date">'.$email->header->date.'<br><small>'.$timeAgo.'</small></td>
-                            <td class="mailbox-star">'.$moveIcon.'</td>
+                            <td class="mailbox-star">'.$spamIcon.'&nbsp;&nbsp;&nbsp;&nbsp;'.$deleteIcon.'</td>
                         </tr>';
 
                 }

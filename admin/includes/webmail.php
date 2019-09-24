@@ -289,12 +289,18 @@ else    // webmail is not activated...
                 // set html element vars
                 var emailRow = $('#emailRow_'+uid);
                 // update message count (beside folder overview)
-                var messageCountElement = $('#messageCount_'+folder+' small');
-                var messageCount = $(messageCountElement).text().slice(1,-1);
-                // subtract -1 from message count
-                messageCount--;
-                // re-write message count to element
-                $(messageCountElement).text('('+messageCount+')');
+                var messageCountSourceElement = $('#messageCount_'+folder+' small');
+                var messageCountSource = $(messageCountSourceElement).text().slice(1,-1);
+                var messageCountTargetElement = $('#messageCount_'+targetFolder+' small');
+                var messageCountTarget = $(messageCountTargetElement).text().slice(1,-1);
+                // subtract -1 from message count source folder
+                messageCountSource--;
+                // add +1 to message count target folder
+                messageCountTarget++;
+                // re-write message source count to element
+                $(messageCountSourceElement).text('('+messageCountSource+')');
+                // re-write message target count to element
+                $(messageCountTargetElement).text('('+messageCountTarget+')');
 
                 // fadeOut table row that contains moved email
                 $(emailRow).removeClass().addClass('animated fadeOutRight');
