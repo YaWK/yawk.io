@@ -1,7 +1,7 @@
-<!-- load JS: Lightbox 2 JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/js/lightbox.min.js"></script>
-<!-- load CSS: Lightbox 2 CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/css/lightbox.min.css" type="text/css" media="all">
+<script src="../system/engines/jquery/dropzone/dropzone.js"></script>
+<link href="../system/engines/jquery/dropzone/dropzone.css" rel="stylesheet">
+<script src="../system/engines/jquery/lightbox2/js/lightbox.min.js"></script>
+<link rel="stylesheet" href="../system/engines/jquery/lightbox2/css/lightbox.min.css" type="text/css" media="all">
 <?php
     require_once "../system/engines/imapClient/AdapterForOutgoingMessage.php";
     require_once "../system/engines/imapClient/Helper.php";
@@ -116,6 +116,23 @@ else    // webmail is not activated...
             "bAutoWidth": false
         });
 
+        var replyBox = $('#replyBox');
+        var sendBtn = $('#sendBtn');
+        var replyBtn = $('#replyBtn');
+        var deleteBtn = $('#deleteBtn');
+        var printBtn = $('#printBtn');
+        var forwardBtn = $('#forwardBtn');
+
+        $(replyBtn).click(function() {
+            $(replyBox).removeClass().addClass('box-footer hidden-print animated fadeIn');
+            $(replyBtn).hide();
+            $(forwardBtn).hide();
+            $(deleteBtn).hide();
+            $(printBtn).hide();
+            $(sendBtn).removeClass().addClass('btn btn-success hidden-print animated flipInX');
+            // $(replyBox).toggle();
+        });
+
         // fa fa-envelope-open-o
         // $('#icon-markAsUnseen').hover.removeClass().addClass('fa fa-envelope-open-o');
 
@@ -184,7 +201,7 @@ if ($webmailSettings['webmail_active'] == true) {
     <div class="row">
         <div class="col-md-3">
             <!-- left col -->
-            <a href="index.php?page=webmail" class="btn btn-success btn-large" style="width: 100%;"><i class="fa fa-reply-all"></i>Back to
+            <a href="index.php?page=webmail" class="btn btn-success btn-large" style="width: 100%;"><i class="fa fa-reply-all"></i> &nbsp;Back to
                 Inbox</a><br><br>
             <div class="box box-default">
                 <div class="box-header with-border">
@@ -408,14 +425,23 @@ if ($webmailSettings['webmail_active'] == true) {
 
                 </div>
             </div>
+            <div id="replyBox" class="box-footer hidden-print hidden">
+                <label for="replyTextArea"><?php echo $lang['REPLY']." ".$lang['TO'].": ".$imap->incomingMessage->header->details->from[0]->mailbox . "@" . $imap->incomingMessage->header->details->from[0]->host; ?></label>
+                <textarea class="form-control" rows="6" id="replyTextArea" style="-webkit-border-radius: 8px; -moz-border-radius: 8px; border-radius: 8px;"></textarea>
+
+            </div>
                 <!-- /.box-footer -->
                 <div class="box-footer hidden-print">
                     <div class="pull-right hidden-print">
-                        <a href="#" class="btn btn-default hidden-print"><i class="fa fa-reply"></i> <?php echo $lang['REPLY']; ?></a>
-                        <a href="#" class="btn btn-default hidden-print"><i class="fa fa-mail-forward"></i> <?php echo $lang['FORWARD']; ?></a>
+                        <!-- <a href="http://raspi/web/clone/admin/index.php?page=webmail&moveMessage=true&folder=INBOX&targetFolder=Trash&uid=<?php echo $imap->incomingMessage->header->uid; ?>" class="btn btn-default hidden-print"><i class="fa fa-trash-o"></i> <?php // echo $lang['DELETE']; ?></a> -->
+                        <button type="button" id="deleteBtn" class="btn btn-default hidden-print"><i class="fa fa-trash-o"></i> <?php echo $lang['DELETE']; ?></button>
+                        <button type="button" id="printBtn" class="btn btn-default hidden-print"><i class="fa fa-print"></i> <?php echo $lang['PRINT']; ?></button>
                     </div>
-                    <a href="http://raspi/web/clone/admin/index.php?page=webmail&moveMessage=true&folder=INBOX&targetFolder=Trash&uid=<?php echo $imap->incomingMessage->header->uid; ?>" class="btn btn-default hidden-print"><i class="fa fa-trash-o"></i> <?php echo $lang['DELETE']; ?></a>
-                    <button type="button" id="printButton" class="btn btn-default hidden-print"><i class="fa fa-print"></i> <?php echo $lang['PRINT']; ?></button>
+
+                    <button id="sendBtn" class="btn btn-default hidden-print hidden"><i class="fa fa-send"></i> &nbsp;<?php echo $lang['SUBMIT']; ?></button>
+                    <button id="replyBtn" class="btn btn-default hidden-print"><i class="fa fa-reply"></i> &nbsp;<?php echo $lang['REPLY']; ?></button>
+                    <button id="forwardBtn" class="btn btn-default hidden-print"><i class="fa fa-mail-forward"></i> &nbsp;<?php echo $lang['FORWARD']; ?></button>
+
                 </div>
                 <!-- /.box-footer -->
 

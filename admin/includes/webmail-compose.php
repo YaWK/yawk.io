@@ -1,6 +1,5 @@
 <script src="../system/engines/jquery/dropzone/dropzone.js"></script>
 <link href="../system/engines/jquery/dropzone/dropzone.css" rel="stylesheet">
-
 <?php
 // import editor class + load editor settings
 require_once '../system/classes/editor.php';
