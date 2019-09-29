@@ -1742,7 +1742,7 @@ namespace YAWK {
          * @version     1.0.0
          * @link        http://yawk.io
          * @param string $userdate date to calculate
-         * @param object $lang language array
+         * @param array $lang language array
          * @return string return how many time has gone since $userdate
          */
         static function time_ago($userdate, $lang)
