@@ -11,14 +11,14 @@ $editorSettings['editorHeight'] = "180";
 \YAWK\editor::loadJavascript($editorSettings);
 \YAWK\editor::setEditorSettings($editorSettings);
 
-    require_once "../system/engines/imapClient/AdapterForOutgoingMessage.php";
-    require_once "../system/engines/imapClient/Helper.php";
+    // require_once "../system/engines/imapClient/AdapterForOutgoingMessage.php";
+    // require_once "../system/engines/imapClient/Helper.php";
     require_once "../system/engines/imapClient/ImapClient.php";
     require_once "../system/engines/imapClient/ImapClientException.php";
     require_once "../system/engines/imapClient/ImapConnect.php";
     require_once "../system/engines/imapClient/IncomingMessage.php";
     require_once "../system/engines/imapClient/IncomingMessageAttachment.php";
-    require_once "../system/engines/imapClient/OutgoingMessage.php";
+    // require_once "../system/engines/imapClient/OutgoingMessage.php";
     require_once "../system/engines/imapClient/Section.php";
     require_once "../system/engines/imapClient/SubtypeBody.php";
     require_once "../system/engines/imapClient/TypeAttachments.php";
@@ -200,6 +200,7 @@ else    // webmail is not activated...
         var replyIcon = $('#icon-reply');
         var replyTextArea = $('#summernote');
         var form = $('#my-dropzone');
+        var toFormGroup = $('#toFormGroup');
         var boxFooter = $('#box-footer');
         var replyTo = $('#replyTo');
 
@@ -207,6 +208,7 @@ else    // webmail is not activated...
         $(replyBtn).click(function() {
             openReplyBox();
             boxFooter.hide();
+            toFormGroup.removeClass();
             $('.note-editable').focus();
         });
 
@@ -214,6 +216,7 @@ else    // webmail is not activated...
         $(replyIcon).click(function() {
             openReplyBox();
             boxFooter.hide();
+            toFormGroup.removeClass();
             $('.note-editable').focus();
         });
 
@@ -239,6 +242,44 @@ else    // webmail is not activated...
             function () {
                 $("#emailMessageContent").printThis();
             });
+
+        // CC button handling (toggle fadeIn/out on demand)
+        $( "#addCCBtn" ).click(function() {
+            // alert( "Add CC Field Btn clicked!" );
+            var ccField = $('#ccField');
+            var ccFieldClass = $(ccField).attr('class');
+            if (ccFieldClass === 'form-control hidden')
+            {
+                $(ccField).removeClass().addClass('form-control animated fadeIn');
+            }
+            else if (ccFieldClass === 'form-control animated fadeIn')
+            {
+                $(ccField).removeClass().addClass('form-control animated fadeOut hidden');
+            }
+            else if (ccFieldClass === 'form-control animated fadeOut hidden')
+            {
+                $(ccField).removeClass().addClass('form-control animated fadeIn');
+            }
+        });
+
+        // BCC button handling (toggle fadeIn/out on demand)
+        $( "#addBCCBtn" ).click(function() {
+            // alert( "Add BCC Field Btn clicked!" );
+            var bccField = $('#bccField');
+            var bccFieldClass = $(bccField).attr('class');
+            if (bccFieldClass === 'form-control hidden')
+            {
+                $(bccField).removeClass().addClass('form-control animated fadeIn');
+            }
+            else if (bccFieldClass === 'form-control animated fadeIn')
+            {
+                $(bccField).removeClass().addClass('form-control animated fadeOut hidden');
+            }
+            else if (bccFieldClass === 'form-control animated fadeOut hidden')
+            {
+                $(bccField).removeClass().addClass('form-control animated fadeIn');
+            }
+        });
     });
 
     /**
@@ -320,15 +361,15 @@ if ($webmailSettings['webmail_active'] == true) {
                     <h3 class="box-title">Folders</h3>
 
                     <div class="box-tools">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                    class="fa fa-minus"></i>
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
                         </button>
                     </div>
                 </div>
                 <div class="box-body no-padding animated fadeIn" style="">
                     <ul class="nav nav-pills nav-stacked">
                         <?php
-                        $webmail->drawFolders($imap, $imap->getFolders());
+                            $webmail->drawFolders($imap, $imap->getFolders());
                         ?>
 
                     </ul>
@@ -539,8 +580,9 @@ if ($webmailSettings['webmail_active'] == true) {
                 </div>
 
                 </div>
+
                 <div id="toFormGroup" class="form-group hidden">
-                    <input class="form-control" name="to" placeholder="<?php echo $imap->incomingMessage->header->details->from[0]->mailbox . "@" . $imap->incomingMessage->header->details->from[0]->host ?>" value="<?php echo $imap->incomingMessage->header->details->from[0]->mailbox . "@" . $imap->incomingMessage->header->details->from[0]->host ?>">
+                    <input class="form-control hidden" name="to" placeholder="<?php echo $imap->incomingMessage->header->details->from[0]->mailbox . "@" . $imap->incomingMessage->header->details->from[0]->host ?>" value="<?php echo $imap->incomingMessage->header->details->from[0]->mailbox . "@" . $imap->incomingMessage->header->details->from[0]->host ?>">
                     <input id="ccField" class="form-control hidden" name="ccField" placeholder="CC:">
                     <input id="bccField" class="form-control hidden" name="bccField" placeholder="BCC:">
                 </div>
@@ -548,14 +590,17 @@ if ($webmailSettings['webmail_active'] == true) {
                     <input class="form-control" name="subject" placeholder="Subject:" value="<?php "Re: ".$imap->incomingMessage->header->subject; ?>">
                 </div>
                 <div id="replyBox" class="form-group hidden">
-                    <small class="text-muted"><?php echo $lang['REPLY']." ".$lang['TO'].": ".$imap->incomingMessage->header->details->from[0]->mailbox . "@" . $imap->incomingMessage->header->details->from[0]->host; ?></small>
+                    <small class="text-muted"><?php echo $lang['REPLY']." ".$lang['TO'].": ".$imap->incomingMessage->header->details->from[0]->mailbox . "@" . $imap->incomingMessage->header->details->from[0]->host; ?>
+                        <span id="addBCCBtn" class="pull-right" style="cursor:pointer;">&nbsp;BCC</span>
+                        <span id="addCCBtn" class="pull-right" style="cursor: pointer;">CC&nbsp;</span>
+                    </small>
                     <label for="summernote" class="hidden"></label>
                     <!-- summernote editor -->
                     <textarea id="summernote" name="body" class="form-control">
                         <?php echo "
                         <br><br>
-                        ".$lang['SENT']." ".$imap->incomingMessage->header->date." ".$lang['FROM']." ".$imap->incomingMessage->header->details->from[0]->mailbox . "@" . $imap->incomingMessage->header->details->from[0]->host;
-                              echo $imap->incomingMessage->message->html; ?>
+                        <h4>".$lang['SENT'].": ".substr($imap->incomingMessage->header->date, 0, -6)." ".$lang['FROM']." ".$imap->incomingMessage->header->details->from[0]->mailbox . "@" . $imap->incomingMessage->header->details->from[0]->host."</h4>";
+                        echo "<br>".$imap->incomingMessage->message->html; ?>
                     </textarea>
                 </div>
 

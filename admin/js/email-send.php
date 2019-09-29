@@ -64,6 +64,7 @@ try
         $mail->addBCC($_POST['bccField']);
     }
 
+
     // to address
     $mail->addAddress($_POST['to'], $_POST['to']);     // Add a recipient
 
