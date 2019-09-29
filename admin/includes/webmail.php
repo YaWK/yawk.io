@@ -129,7 +129,7 @@ else    // webmail is not activated...
 <script type="text/javascript">
     $(document).ready(function() {
         $('#table-sort').dataTable({
-            "bPaginate": true,
+            "bPaginate": false,
             "bLengthChange": false,
             "bFilter": true,
             "bSort": true,
@@ -205,7 +205,6 @@ else    // webmail is not activated...
                 }
                 else
                     {   // set html markup for unseen message (bold text)
-
                         $(seenIcon).addClass('fa fa-envelope text-muted');
                         $(mailboxName).removeClass().addClass('mailbox-name text-bold');
                         $(mailboxSubject).removeClass().addClass('mailbox-subject text-bold');

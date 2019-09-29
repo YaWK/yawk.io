@@ -128,7 +128,6 @@ else    // webmail is not activated...
         paramName: "files",
         acceptedFiles: ".jpg, .jpeg, .png, .gif, .pdf, .doc, .xls, .wav, .mp3, .mp4, .mpg",
         clickable: ".fileinput-button", // Define the element that should be used as click trigger to select files.
-
         // Language Strings
         dictFileTooBig: "File is to big ({{filesize}}mb). Max allowed file size is {{maxFilesize}}mb",
         dictInvalidFileType: "Invalid File Type",
@@ -202,24 +201,20 @@ else    // webmail is not activated...
         var replyTextArea = $('#summernote');
         var form = $('#my-dropzone');
         var boxFooter = $('#box-footer');
-
-        // prevent form submit
-        $(form).submit(function(e){
-            e.preventDefault();
-        });
+        var replyTo = $('#replyTo');
 
         // OPEN REPLY BOX toggled by footer button
         $(replyBtn).click(function() {
-            boxFooter.hide();
             openReplyBox();
-            $(replyTextArea).focus();
+            boxFooter.hide();
+            $('.note-editable').focus();
         });
 
         // OPEN REPLY BOX toggled by reply icon
         $(replyIcon).click(function() {
-            boxFooter.hide();
             openReplyBox();
-            $(replyTextArea).focus();
+            boxFooter.hide();
+            $('.note-editable').focus();
         });
 
         // SEEN / UNSEEN icon
@@ -305,7 +300,7 @@ echo "
 echo \YAWK\backend::getTitle($lang['WEBMAIL'], $lang['WEBMAIL_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
-            <li class=\"active\"><a href=\"index.php?page=widgets\" title=\"$lang[WEBMAIL]\"> $lang[WEBMAIL]</a></li>
+            <li class=\"active\"><a href=\"index.php?page=webmail\" title=\"$lang[WEBMAIL]\"> $lang[WEBMAIL]</a></li>
          </ol>
     </section>
     <!-- Main content -->
@@ -351,7 +346,8 @@ if ($webmailSettings['webmail_active'] == true) {
                 <div class="box-header with-border">
                     <h3><?php echo $imap->incomingMessage->header->subject; ?></h3>
 
-                    <h4>From: <?php echo $imap->incomingMessage->header->details->from[0]->mailbox . "@" . $imap->incomingMessage->header->details->from[0]->host ?>
+                    <h4>From: <?php echo $imap->incomingMessage->header->details->from[0]->mailbox . "@" . $imap->incomingMessage->header->details->from[0]->host ?></h4>
+                    <h4 style="margin-top:-10px;"><small>To: <?php echo $imap->incomingMessage->header->details->to[0]->mailbox . "@" . $imap->incomingMessage->header->details->to[0]->host ?></small>
                     <span class="mailbox-read-time pull-right"><?php echo $imap->incomingMessage->header->date; ?>
                     <br>
                     <span class="pull-right">
@@ -538,24 +534,29 @@ if ($webmailSettings['webmail_active'] == true) {
                             }
                             echo "</ul>";
                         }
-
                         ?>
                     <!-- /.mailbox-read-message -->
                 </div>
 
                 </div>
                 <div id="toFormGroup" class="form-group hidden">
-                    <input class="form-control" name="to" placeholder="To:">
+                    <input class="form-control" name="to" placeholder="<?php echo $imap->incomingMessage->header->details->from[0]->mailbox . "@" . $imap->incomingMessage->header->details->from[0]->host ?>" value="<?php echo $imap->incomingMessage->header->details->from[0]->mailbox . "@" . $imap->incomingMessage->header->details->from[0]->host ?>">
                     <input id="ccField" class="form-control hidden" name="ccField" placeholder="CC:">
                     <input id="bccField" class="form-control hidden" name="bccField" placeholder="BCC:">
                 </div>
                 <div id="subjectFormGroup" class="form-group hidden">
-                    <input class="form-control" name="subject" placeholder="Subject:">
+                    <input class="form-control" name="subject" placeholder="Subject:" value="<?php "Re: ".$imap->incomingMessage->header->subject; ?>">
                 </div>
                 <div id="replyBox" class="form-group hidden">
+                    <small class="text-muted"><?php echo $lang['REPLY']." ".$lang['TO'].": ".$imap->incomingMessage->header->details->from[0]->mailbox . "@" . $imap->incomingMessage->header->details->from[0]->host; ?></small>
                     <label for="summernote" class="hidden"></label>
                     <!-- summernote editor -->
-                    <textarea id="summernote" name="body" class="form-control"></textarea>
+                    <textarea id="summernote" name="body" class="form-control">
+                        <?php echo "
+                        <br><br>
+                        ".$lang['SENT']." ".$imap->incomingMessage->header->date." ".$lang['FROM']." ".$imap->incomingMessage->header->details->from[0]->mailbox . "@" . $imap->incomingMessage->header->details->from[0]->host;
+                              echo $imap->incomingMessage->message->html; ?>
+                    </textarea>
                 </div>
 
                 <!-- start dropzone -->
@@ -574,21 +575,13 @@ if ($webmailSettings['webmail_active'] == true) {
                         <button id="submitBtn" type="submit" class="btn btn-success pull-right"><i id="submitIcon" class="fa fa-paper-plane-o"></i> &nbsp;&nbsp;Send Email</button>
                         <!-- <button type="submit" id="submitBtn" class="btn btn-success start"><i class="fa fa-paper-plane-o"></i>&nbsp; Send</button> -->
                         <input type="hidden" name="sendEmail" value="true">
+                        <input type="hidden" name="subject" value="<?php echo "Re: ".$imap->incomingMessage->header->subject;?>">
                     </div>
 
                     <p class="help-block">Max. <?php echo \YAWK\filemanager::getPostMaxSize(); ?></p>
                 </div>
                 <!-- /. bootstrap dropzone -->
-
             </div>
-
-
-            <!--
-            <div id="replyBox" class="box-footer hidden-print hidden">
-                <label for="replyTextArea"><?php // echo $lang['REPLY']." ".$lang['TO'].": ".$imap->incomingMessage->header->details->from[0]->mailbox . "@" . $imap->incomingMessage->header->details->from[0]->host; ?></label>
-                <textarea class="form-control" rows="6" id="summernote" style="-webkit-border-radius: 8px; -moz-border-radius: 8px; border-radius: 8px;"></textarea>
-            </div>
-            -->
 
                 <!-- /.box-footer -->
                 <div id="box-footer" class="box-footer hidden-print">
@@ -599,18 +592,17 @@ if ($webmailSettings['webmail_active'] == true) {
                     </div>
 
                     <button id="sendBtn" class="btn btn-default hidden-print hidden"><i class="fa fa-send"></i> &nbsp;<?php echo $lang['SUBMIT']; ?></button>
-                    <button id="replyBtn" class="btn btn-default hidden-print"><i class="fa fa-reply"></i> &nbsp;<?php echo $lang['REPLY']; ?></button>
+                    <a id="replyBtn" href="#summernote" class="btn btn-default hidden-print"><i class="fa fa-reply"></i> &nbsp;<?php echo $lang['REPLY']; ?></a>
                     <!-- <button id="forwardBtn" class="btn btn-default hidden-print"><i class="fa fa-mail-forward"></i> &nbsp;<?php // echo $lang['FORWARD']; ?></button> -->
 
                 </div>
 
             </form>
                 <!-- /.box-footer -->
-
             <?php
-                // echo "<pre>";
-                // print_r($header);
-                // echo "</pre>";
+              //  echo "<pre>";
+              //  print_r($imap->incomingMessage);
+              //  echo "</pre>";
             ?>
 
         </div>
