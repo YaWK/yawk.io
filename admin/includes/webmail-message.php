@@ -3,6 +3,14 @@
 <script src="../system/engines/jquery/lightbox2/js/lightbox.min.js"></script>
 <link rel="stylesheet" href="../system/engines/jquery/lightbox2/css/lightbox.min.css" type="text/css" media="all">
 <?php
+
+// import editor class + load editor settings
+require_once '../system/classes/editor.php';
+$editorSettings = \YAWK\settings::getEditorSettings($db, 14);
+$editorSettings['editorHeight'] = "180";
+\YAWK\editor::loadJavascript($editorSettings);
+\YAWK\editor::setEditorSettings($editorSettings);
+
     require_once "../system/engines/imapClient/AdapterForOutgoingMessage.php";
     require_once "../system/engines/imapClient/Helper.php";
     require_once "../system/engines/imapClient/ImapClient.php";
@@ -106,6 +114,77 @@ else    // webmail is not activated...
 
 ?>
 <script type="text/javascript">
+    // DROPZONE
+    Dropzone.options.myDropzone = { // The camelized version of the ID of the form element
+        // ajax form action
+        url: "js/email-send.php",
+        // dropzone options
+        autoProcessQueue: false,
+        uploadMultiple: true,
+        parallelUploads: 100,
+        maxFilesize: 64, // MB
+        maxFiles: 100,
+        addRemoveLinks: true,
+        paramName: "files",
+        acceptedFiles: ".jpg, .jpeg, .png, .gif, .pdf, .doc, .xls, .wav, .mp3, .mp4, .mpg",
+        clickable: ".fileinput-button", // Define the element that should be used as click trigger to select files.
+
+        // Language Strings
+        dictFileTooBig: "File is to big ({{filesize}}mb). Max allowed file size is {{maxFilesize}}mb",
+        dictInvalidFileType: "Invalid File Type",
+        dictCancelUpload: "Cancel",
+        dictRemoveFile: "Remove",
+        dictMaxFilesExceeded: "Only {{maxFiles}} files are allowed",
+        dictDefaultMessage: "Drop files here to upload",
+
+        // The setting up of the dropzone
+        init: function() {
+            var myDropzone = this;
+            var dropzoneFormElement = $('#my-dropzone');
+
+            $(".dz-message").hide();
+            // First change the button to actually tell Dropzone to process the queue.
+            this.element.querySelector("button[type=submit]").addEventListener("click", function(e) {
+                // Make sure that the form isn't actually being sent.
+                e.preventDefault();
+                e.stopPropagation();
+
+                // process only, if there are any attachments
+                if (myDropzone.getQueuedFiles().length > 0) {
+                    myDropzone.processQueue();
+                }
+                else
+                {   // process w/o attachments
+                    // add form action & methods, call submit event
+                    $(dropzoneFormElement).attr('action', 'js/email-send.php');
+                    $(dropzoneFormElement).attr('method', 'post');
+                    $(dropzoneFormElement).submit();
+                }
+            });
+
+            // Listen to the sendingmultiple event. In this case, it's the sendingmultiple event instead
+            // of the sending event because uploadMultiple is set to true.
+            this.on("sendingmultiple", function(file) {
+                // Gets triggered when the form is actually being sent.
+                // Indicate loading button
+                $("#submitIcon").removeClass().addClass("fa fa-spinner fa-spin");
+                $("#submitBtn").removeClass().addClass("btn btn-danger disabled pull-right");
+                $("#draftBtn").removeClass().addClass("btn btn-default disabled");
+                $("#addBtn").removeClass().addClass("btn btn-success disabled");
+            });
+
+            this.on("successmultiple", function(files, response) {
+                // Gets triggered when files + form have successfully been sent.
+                // redirect to webmail start page
+                window.location.replace("index.php?page=webmail");
+            });
+            this.on("errormultiple", function(files, response) {
+                // Gets triggered when there was an error sending the files.
+                // Maybe show form again, and notify user of error
+            });
+        }
+    };
+
     $(document).ready(function() {
         $('#table-sort').dataTable({
             "bPaginate": true,
@@ -116,44 +195,82 @@ else    // webmail is not activated...
             "bAutoWidth": false
         });
 
-        var replyBox = $('#replyBox');
-        var sendBtn = $('#sendBtn');
+        // vars that will be used outside of functions
+        var markAsUnseenIcon = $('#icon-markAsUnseen');
         var replyBtn = $('#replyBtn');
-        var deleteBtn = $('#deleteBtn');
-        var printBtn = $('#printBtn');
-        var forwardBtn = $('#forwardBtn');
+        var replyIcon = $('#icon-reply');
+        var replyTextArea = $('#summernote');
+        var form = $('#my-dropzone');
+        var boxFooter = $('#box-footer');
 
-        $(replyBtn).click(function() {
-            $(replyBox).removeClass().addClass('box-footer hidden-print animated fadeIn');
-            $(replyBtn).hide();
-            $(forwardBtn).hide();
-            $(deleteBtn).hide();
-            $(printBtn).hide();
-            $(sendBtn).removeClass().addClass('btn btn-success hidden-print animated flipInX');
-            // $(replyBox).toggle();
+        // prevent form submit
+        $(form).submit(function(e){
+            e.preventDefault();
         });
 
-        // fa fa-envelope-open-o
-        // $('#icon-markAsUnseen').hover.removeClass().addClass('fa fa-envelope-open-o');
+        // OPEN REPLY BOX toggled by footer button
+        $(replyBtn).click(function() {
+            boxFooter.hide();
+            openReplyBox();
+            $(replyTextArea).focus();
+        });
 
+        // OPEN REPLY BOX toggled by reply icon
+        $(replyIcon).click(function() {
+            boxFooter.hide();
+            openReplyBox();
+            $(replyTextArea).focus();
+        });
+
+        // SEEN / UNSEEN icon
         $("#btn-markAsUnseen").hover(
             function() {
-                $( "#icon-markAsUnseen" ).removeClass("fa fa-envelope-open-o");
-                $( "#icon-markAsUnseen" ).addClass("fa fa-envelope");
+                $(markAsUnseenIcon).removeClass("fa fa-envelope-open-o");
+                $(markAsUnseenIcon).addClass("fa fa-envelope");
             }, function() {
-                $("#icon-markAsUnseen").removeClass("fa fa-envelope");
-                $("#icon-markAsUnseen").addClass("fa fa-envelope-open-o");
+                $(markAsUnseenIcon).removeClass("fa fa-envelope");
+                $(markAsUnseenIcon).addClass("fa fa-envelope-open-o");
             }
         );
+
+        // PRINT BUTTON
         $("#printButton").click(
             function () {
                 $("#emailMessageContent").printThis();
         });
+
+        // PRINT ICON
         $("#icon-print").click(
             function () {
                 $("#emailMessageContent").printThis();
             });
     });
+
+    /**
+     *  Reaction to click on reply button: add html markup to open the reply box
+     *
+     */
+        function openReplyBox()
+        {
+            // html elements
+            var replyBox = $('#replyBox');
+            var sendBtn = $('#sendBtn');
+            var submitBtn = $('#submitBtn');
+            var replyBtn = $('#replyBtn');
+            var deleteBtn = $('#deleteBtn');
+            var printBtn = $('#printBtn');
+            var forwardBtn = $('#forwardBtn');
+            var actions = $('#actions');
+            // open reply box
+            $(actions).removeClass().addClass('animated fadeIn');
+            $(replyBox).removeClass().addClass('box-footer hidden-print animated fadeIn');
+            $(replyBtn).hide();
+            $(forwardBtn).hide();
+            $(deleteBtn).hide();
+            $(printBtn).hide();
+            $(submitBtn).removeClass().addClass('btn btn-success hidden-print animated flipInX');
+        }
+
     /**
      * Move a specific email (uid) from folder to targetFolder
      * @param uid the affected mail uid
@@ -225,7 +342,10 @@ if ($webmailSettings['webmail_active'] == true) {
             </div>
 
         </div>
+
         <div id="messageBox" class="col-md-9 animated fadeIn">
+
+            <form id="my-dropzone" class="dropzone" enctype="multipart/form-data">
             <!-- right col -->
             <div class="box box-secondary" id="emailMessageContent">
                 <div class="box-header with-border">
@@ -424,14 +544,54 @@ if ($webmailSettings['webmail_active'] == true) {
                 </div>
 
                 </div>
-            </div>
-            <div id="replyBox" class="box-footer hidden-print hidden">
-                <label for="replyTextArea"><?php echo $lang['REPLY']." ".$lang['TO'].": ".$imap->incomingMessage->header->details->from[0]->mailbox . "@" . $imap->incomingMessage->header->details->from[0]->host; ?></label>
-                <textarea class="form-control" rows="6" id="replyTextArea" style="-webkit-border-radius: 8px; -moz-border-radius: 8px; border-radius: 8px;"></textarea>
+                <div id="toFormGroup" class="form-group hidden">
+                    <input class="form-control" name="to" placeholder="To:">
+                    <input id="ccField" class="form-control hidden" name="ccField" placeholder="CC:">
+                    <input id="bccField" class="form-control hidden" name="bccField" placeholder="BCC:">
+                </div>
+                <div id="subjectFormGroup" class="form-group hidden">
+                    <input class="form-control" name="subject" placeholder="Subject:">
+                </div>
+                <div id="replyBox" class="form-group hidden">
+                    <label for="summernote" class="hidden"></label>
+                    <!-- summernote editor -->
+                    <textarea id="summernote" name="body" class="form-control"></textarea>
+                </div>
+
+                <!-- start dropzone -->
+                <div id="actions" class="hidden">
+                    <!-- this is were the previews should be shown. -->
+                    <div class="dropzone-previews"></div>
+                    <!-- The fileinput-button span is used to style the file input field as button -->
+                    <span id="addBtn" class="btn btn-success fileinput-button">
+                            <i class="fa fa-plus"></i>
+                            <span>Add files...</span>
+                        </span>
+
+                    <div class="pull-right">
+                        <a id="draftBtn" href="index.php?page=webmail-compose&draft=1" type="button" class="btn btn-default"><i class="fa fa-pencil"></i>&nbsp; Draft</a>
+                        &nbsp;
+                        <button id="submitBtn" type="submit" class="btn btn-success pull-right"><i id="submitIcon" class="fa fa-paper-plane-o"></i> &nbsp;&nbsp;Send Email</button>
+                        <!-- <button type="submit" id="submitBtn" class="btn btn-success start"><i class="fa fa-paper-plane-o"></i>&nbsp; Send</button> -->
+                        <input type="hidden" name="sendEmail" value="true">
+                    </div>
+
+                    <p class="help-block">Max. <?php echo \YAWK\filemanager::getPostMaxSize(); ?></p>
+                </div>
+                <!-- /. bootstrap dropzone -->
 
             </div>
+
+
+            <!--
+            <div id="replyBox" class="box-footer hidden-print hidden">
+                <label for="replyTextArea"><?php // echo $lang['REPLY']." ".$lang['TO'].": ".$imap->incomingMessage->header->details->from[0]->mailbox . "@" . $imap->incomingMessage->header->details->from[0]->host; ?></label>
+                <textarea class="form-control" rows="6" id="summernote" style="-webkit-border-radius: 8px; -moz-border-radius: 8px; border-radius: 8px;"></textarea>
+            </div>
+            -->
+
                 <!-- /.box-footer -->
-                <div class="box-footer hidden-print">
+                <div id="box-footer" class="box-footer hidden-print">
                     <div class="pull-right hidden-print">
                         <!-- <a href="http://raspi/web/clone/admin/index.php?page=webmail&moveMessage=true&folder=INBOX&targetFolder=Trash&uid=<?php echo $imap->incomingMessage->header->uid; ?>" class="btn btn-default hidden-print"><i class="fa fa-trash-o"></i> <?php // echo $lang['DELETE']; ?></a> -->
                         <button type="button" id="deleteBtn" class="btn btn-default hidden-print"><i class="fa fa-trash-o"></i> <?php echo $lang['DELETE']; ?></button>
@@ -440,9 +600,11 @@ if ($webmailSettings['webmail_active'] == true) {
 
                     <button id="sendBtn" class="btn btn-default hidden-print hidden"><i class="fa fa-send"></i> &nbsp;<?php echo $lang['SUBMIT']; ?></button>
                     <button id="replyBtn" class="btn btn-default hidden-print"><i class="fa fa-reply"></i> &nbsp;<?php echo $lang['REPLY']; ?></button>
-                    <button id="forwardBtn" class="btn btn-default hidden-print"><i class="fa fa-mail-forward"></i> &nbsp;<?php echo $lang['FORWARD']; ?></button>
+                    <!-- <button id="forwardBtn" class="btn btn-default hidden-print"><i class="fa fa-mail-forward"></i> &nbsp;<?php // echo $lang['FORWARD']; ?></button> -->
 
                 </div>
+
+            </form>
                 <!-- /.box-footer -->
 
             <?php
