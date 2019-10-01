@@ -131,8 +131,7 @@ try
     $mail->send();
 
     $server = "{".$webmailSettings['webmail_imap_server'].":".$webmailSettings['webmail_imap_port']."/imap/".$webmailSettings['webmail_imap_encrypt']."}";
-    // $server = "{imap.world4you.com:993/imap/ssl}";
-    //Tell your server to open an IMAP connection using the same username and password as you used for SMTP
+    // open imap connection
     $imapStream = imap_open($server, $mail->Username, $mail->Password);
     // store email in folder + mark as seen
     $result = imap_append($imapStream, $server.'Sent', $mail->getSentMIMEMessage(), "\\Seen");
