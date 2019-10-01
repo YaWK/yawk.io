@@ -1,3 +1,5 @@
+<script src="../system/engines/jquery/dropzone/dropzone.js"></script>
+<link href="../system/engines/jquery/dropzone/dropzone.css" rel="stylesheet">
 <?php
 // user clicked on save
 if (isset($_POST['save']))
@@ -65,6 +67,65 @@ if (isset($_POST['editLanguageBtn']))
             }
     }
 }
+
+// UPLOAD FRONTEND OR BACKEND LANGUAGE FILE
+if (isset($_POST['upload']) && ($_POST['upload'] == 1) && ($_POST['action'] == true))
+{   // backend language file upload requested
+    if ($_POST['uploadFolder'] === 'frontend')
+    {   // frontend settings
+        $targetPath = '../system/language/';
+        $totalLines = count(file('../system/language/lang-en-EN.ini'));
+    }
+    // backend language file upload requested
+    else if ($_POST['uploadFolder'] === 'backend')
+    {   // backend settings
+        $targetPath = 'language/';
+        $totalLines = count(file('language/lang-en-EN.ini'));
+    }
+    else { $targetPath = 'language/'; $totalLines = 0; }
+
+    // check if file array is set and not empty
+    if (isset($_FILES['file']) && (!empty($_FILES['file'])))
+    {   // check file extension
+        if (substr($_FILES['file']['name'], -4) === '.ini')
+        {
+            // move file to proper target folder
+            move_uploaded_file($_FILES['file']['tmp_name'], $targetPath.$_FILES['file']['name']);
+            // check if uploaded file is there
+            if (is_file($targetPath.$_FILES['file']['name']))
+            {   // uploaded file: count number of lines
+                $i = count(file($targetPath.$_FILES['file']['name']));
+                // if number of lines does not match with lang-en-EN.ini
+                if ($i !== $totalLines)
+                {
+                    // throw warning
+                    \YAWK\alert::draw("warning", "$lang[LANGUAGE] $lang[UPLOADED]", "$lang[LANGUAGE_UPLOAD_DIFFER]", "", 2400);
+                }
+                else
+                    {
+                        // upload complete, number of lines are consistent, all good.
+                        \YAWK\alert::draw("success", "$lang[LANGUAGE] $lang[UPLOADED]", "$lang[LANGUAGE_UPLOAD_OK]", "", 2400);
+                    }
+            }
+            else
+                {
+                    // uploaded file is not here - throw error message
+                    \YAWK\alert::draw("danger", "$lang[LANGUAGE] $lang[ERROR]", "$lang[LANGUAGE_UPLOAD_FAILED]", "", 2400);
+                }
+        }
+        else
+            {
+                // uploaded file got the wrong file extension (not an ini file)
+                \YAWK\alert::draw("danger", "$lang[LANGUAGE] $lang[ERROR]", "$lang[LANGUAGE_UPLOAD_EXT_ERROR]", "", 2400);
+            }
+    }
+    else
+        {
+            // no files sent - array not set or empty
+            \YAWK\alert::draw("danger", "$lang[LANGUAGE] $lang[ERROR]", "$lang[LANGUAGE_UPLOAD_ERROR]", "", 2400);
+        }
+}
+
 // user requested to restore the language files from backup folder
 if (isset($_GET['restore']) && ($_GET['restore'] == 1) && ($_GET['action'] == true))
 {
@@ -269,9 +330,31 @@ echo"</section>
                     <a class="btn btn-default pull-right" id="resetLanguageBtn" name="resetLanguageBtn" role="dialog" data-confirm="<?php echo $lang['ARE_YOU_SURE'];?>" title="<?php echo $lang['RESTORE_LANGUAGE']; ?>" href="index.php?page=settings-language&restore=1&action=true"><i class="fa fa-language text-danger"></i>&nbsp;&nbsp;Backup laden</a>
                 </div>
             </div>
+</form>
+
+                <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><?php echo $lang['LANGUAGES']; ?> <small><?php echo $lang['UPLOAD']; ?></small></h3>
+                </div>
+                <div class="box-body">
+                    <form id="template-edit-form" enctype= "multipart/form-data" action="index.php?page=settings-language" method="POST">
+                    <label for="folder"><?php echo $lang['SELECT_FOLDER']; ?></label>
+                        <select name="uploadFolder" class="form-control" id="folder">
+                            <option value=""><?php echo $lang['PLEASE_SELECT']; ?></option>
+                            <option value="frontend">FrontEnd (system/language)</option>
+                            <option value="backend">BackEnd (admin/language)</option>
+                        </select>
+                        <label for="file"><?php echo $lang['SELECT_FILE']; ?></label>
+                        <input id="file" name="file" type="file" class="form-control">
+                        <small><?php echo $lang['LANGUAGE_UPLOAD_INFO']; ?></small>
+                        <button type="submit" style="margin-top:10px;" class="btn btn-default pull-right" id="uploadLanguageBtn" name="uploadLanguageBtn" role="dialog" data-confirm="<?php echo $lang['ARE_YOU_SURE'];?>" title="<?php echo $lang['LANGUAGE_UPLOAD']; ?>"><i class="fa fa-upload"></i>&nbsp;&nbsp;<?php echo $lang['LANGUAGE_UPLOAD']; ?></button>
+                        <input type="hidden" name="upload" value="1">
+                        <input type="hidden" name="action" value="true">
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
-</form>
 <style type="text/css">
     html, body {height: 100%;}
     .CodeMirror {height:50em;}
@@ -279,6 +362,8 @@ echo"</section>
 </style>
 
 <script type="text/javascript" language="javascript">
+
+
     $(document).ready(function() {
         function saveHotkey() {
                 // simply disables save event for chrome
