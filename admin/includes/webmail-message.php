@@ -371,7 +371,6 @@ if ($webmailSettings['webmail_active'] == true) {
                         <?php
                             $webmail->drawFolders($imap, $imap->getFolders());
                         ?>
-
                     </ul>
                 </div>
                 <!-- /.box-body -->
@@ -385,11 +384,27 @@ if ($webmailSettings['webmail_active'] == true) {
             <!-- right col -->
             <div class="box box-secondary" id="emailMessageContent">
                 <div class="box-header with-border">
-                    <h3><?php echo $imap->incomingMessage->header->subject; ?></h3>
+
+                    <?php
+                        // check if this message is a reply and adapt subject
+                        // count replies
+                        $replies = substr_count($imap->incomingMessage->header->subject , 'Re:');
+                        // message must got a reply
+                        if ($replies > 0)
+                        {   // adapt subject for better readability
+                            $subject = str_replace("Re:","",$imap->incomingMessage->header->subject);
+                            $subject = "Re:(".$replies.") ".$subject;
+                        }
+                        else
+                            {   // no reply, leave subject as it is
+                                $subject = $imap->incomingMessage->header->subject;
+                            }
+                    ?>
+                    <h3><?php echo $subject; ?></h3>
 
                     <h4>From: <?php echo $imap->incomingMessage->header->details->from[0]->mailbox . "@" . $imap->incomingMessage->header->details->from[0]->host ?></h4>
                     <h4 style="margin-top:-10px;"><small>To: <?php echo $imap->incomingMessage->header->details->to[0]->mailbox . "@" . $imap->incomingMessage->header->details->to[0]->host ?></small>
-                    <span class="mailbox-read-time pull-right"><?php echo $imap->incomingMessage->header->date; ?>
+                    <span style="margin-top:-15px;" class="mailbox-read-time pull-right"><?php echo substr($imap->incomingMessage->header->date, 0, -6); ?>
                     <br>
                     <span class="pull-right">
                         <?php echo \YAWK\sys::time_ago($imap->incomingMessage->header->date, $lang); ?></span>
@@ -398,10 +413,9 @@ if ($webmailSettings['webmail_active'] == true) {
                     <?php $webmail->drawMailboxControls($imap, "message", $imap->incomingMessage->header->uid, $imap->currentFolder, $lang); ?>
 
                     <div class="box-tools pull-right">
-                        <a href="#" class="btn btn-box-tool" data-toggle="tooltip" title=""
-                           data-original-title="Previous"><i class="fa fa-chevron-left"></i></a>
-                        <a href="#" class="btn btn-box-tool" data-toggle="tooltip" title=""
-                           data-original-title="Next"><i class="fa fa-chevron-right"></i></a>
+                        <a href="index.php?page=webmail&folder=INBOX" class="btn btn-box-tool" data-toggle="tooltip" title="<?php echo $lang['CLOSE'];?>"
+                           data-original-title="<?php echo $lang['CLOSE'];?>"><i class="fa fa-close text-light"></i>
+                        </a>
                     </div>
                 </div>
                 <!-- /.box-header -->
@@ -417,8 +431,7 @@ if ($webmailSettings['webmail_active'] == true) {
                     <div class="mailbox-read-message">
 
                         <?php
-                        // output message body
-                        echo  $imap->incomingMessage->message->html;
+                            echo $imap->incomingMessage->message->html;
 
                         // set download path
                         $downloadPath = "../media/mailbox";

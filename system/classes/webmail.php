@@ -458,7 +458,7 @@ namespace YAWK {
                             <br><small>'.$email->header->details->from[0]->mailbox.'@'.$email->header->details->from[0]->host.'</small></td>
                             <td id="mailboxSubject_'.$email->header->msgno.'" class="mailbox-subject '.$boldRow.'" style="cursor:pointer;" onclick="window.location=\''.$messageLink.'\';">'.$email->header->subject.'</td>
                             <td class="mailbox-attachment text-center">'.$attachClip.'</td>
-                            <td class="mailbox-date">'.$email->header->date.'<br><small>'.$timeAgo.'</small></td>
+                            <td class="mailbox-date">'.substr($email->header->date, 0, -6).'<br><small>'.$timeAgo.'</small></td>
                             <td class="mailbox-star">'.$spamIcon.'&nbsp;&nbsp;&nbsp;&nbsp;'.$deleteIcon.'</td>
                         </tr>';
 
