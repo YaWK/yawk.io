@@ -171,7 +171,6 @@ namespace YAWK {
         {	// loop trough array
             $i_settings = 0;
 
-
             if(!isset($widgetID) && (empty($widgetID)))
             {	// if param 'type' is missing, show all settings
                 die ("Could not get widget settings because widget ID is missing.");
