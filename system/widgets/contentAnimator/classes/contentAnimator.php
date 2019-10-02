@@ -107,18 +107,49 @@ namespace YAWK\WIDGETS\CONTENTANIMATOR\ANIMATE
             // echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"system/engines/animateCSS/animate.min.css\">";
             // echo "<style type=\"text/css\">.animate {visibility:hidden;}</style>";
 
-            // output javsscript
+            // output JS
             echo"<script>
             $(document).ready(function(){
-        
             // Slide in elements on scroll
             $(window).scroll(function() {
-                $(\".animate\").each(function(){
+                // on each element that go animate class
+                $('.animate').each(function()
+                {
+                    // get position
                     var pos = $(this).offset().top;
+                    // get window top position
                     var winTop = $(window).scrollTop();
-                    if (pos < winTop + $this->contentAnimatorScrollValue) {
+                    
+                    // user-defined params for every element
+                    // if they are not filled, default widget settings will be used
+                    var fx = $(this).attr(\"data-fx\");     // animation fx for this element
+                    var px = $(this).attr(\"data-px\");     // px value from top for this element
+
+                    // check if custom px value is defined
+                    if (px !== undefined) {
+                        // set custom px value
+                        contentAnimatorScrollValue = px;
+                    }
+                    else {
+                        // set default px value from widget settings
+                        contentAnimatorScrollValue = $this->contentAnimatorScrollValue;
+                    }
+               
+                    // animate when position is in visible area
+                    if (pos < winTop + contentAnimatorScrollValue) {
                         // $(this).velocity(\"transition.fadeIn\", {duration:1000, loop:false});
-                        $(this).addClass(\"$this->contentAnimatorClass\");
+                    
+                    // element got custom FX values
+                    if (fx !== undefined) {
+                        // set animated custom fx
+                        $(this).addClass('animated '+fx);
+                        // remove animate class to avoid hide after animation
+                        $(this).removeClass('animate');
+                    }
+                    else
+                        {   // add default fx from widget settings
+                            $(this).addClass(\"$this->contentAnimatorClass\");
+                        }
                     }
                 });
             });
