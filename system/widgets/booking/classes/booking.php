@@ -33,6 +33,8 @@ namespace YAWK\WIDGETS\BOOKING\FORM
         public $bookingSubtext = '';
         /** @var string Headline Prepend Icon */
         public $bookingIcon = '';
+        /** @var string Email address that will be used as sender */
+        public $bookingFromEmail = '';
 
         // FORM FIELDS (required[visible, mandatory] | true[visible, not mandatory] | false[invisible, not mandatory])
         /** @var string Booking Band Select Field required|true|false */
@@ -91,6 +93,21 @@ namespace YAWK\WIDGETS\BOOKING\FORM
             foreach ($settings as $property => $value) {
                 $this->$property = $value;
             }
+            require_once 'system/classes/language.php';          // language class
+
+            /* language object */
+            if (!isset($lang) || (empty($lang)))
+            {   // create new language obj if none exists
+                $language = new \YAWK\language();
+                // init language
+                $language->init($db, "frontend");
+                // convert object param to array !important
+                $lang = (array) $language->lang;
+            }
+
+            echo "<pre>";
+            print_r($lang);
+            echo "</pre>";
         }
 
         /**
