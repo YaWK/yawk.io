@@ -214,7 +214,8 @@ echo"<ol class=\"breadcrumb\">
   <!-- MORE WIDGET SETTINGS -->
   <?php
     // draw settings (form elements) for this widget
-    $widget->getWidgetFormElements($db, "", $widget->id, $widget->folder, $lang);
+    $settings = \YAWK\widget::getAllSettingsIntoArray($db, $widget->id);
+    $widget->getWidgetFormElements($db, $settings, $widget->id, $widget->folder, $lang);
   ?>
   <br><input type="hidden" name="widgetID" value="<?php echo $widget->id; ?>">
   <br>
