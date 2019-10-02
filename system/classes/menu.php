@@ -53,15 +53,13 @@ namespace YAWK {
                                WHERE published = 1 
                                AND menuID = '".$menuID."' 
                                ORDER by sort, title");
-                echo "<nav class=\"navbar navbar-inverse\">
-                    <ul class=\"nav navbar-nav\">";
+                echo "
+                    <ul class=\"list-group\">";
                 while ($row = mysqli_fetch_assoc($res))
                 {
-                    echo "<li><a href=\"".$row['href']."\" target=\"".$row['target']."\">".$row['text']."</a></li>";
+                    echo "<li class=\"list-group-item\"><a href=\"".$row['href']."\" target=\"".$row['target']."\">".$row['text']."</a></li>";
                 }
-                echo "    </ul>
-                    <button class=\"btn btn-danger navbar-btn\">Button</button>
-                </nav>";
+                echo "    </ul>";
         }
 
 
