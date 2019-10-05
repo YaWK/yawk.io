@@ -93,21 +93,6 @@ namespace YAWK\WIDGETS\BOOKING\FORM
             foreach ($settings as $property => $value) {
                 $this->$property = $value;
             }
-            require_once 'system/classes/language.php';          // language class
-
-            /* language object */
-            if (!isset($lang) || (empty($lang)))
-            {   // create new language obj if none exists
-                $language = new \YAWK\language();
-                // init language
-                $language->init($db, "frontend");
-                // convert object param to array !important
-                $lang = (array) $language->lang;
-            }
-
-            echo "<pre>";
-            print_r($lang);
-            echo "</pre>";
         }
 
         /**
@@ -125,49 +110,15 @@ namespace YAWK\WIDGETS\BOOKING\FORM
         }
 
         /**
-         * Set widget properties from database and fill object params
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
-         * @annotation Load all widget settings.
-         */
-        public function setProperties()
-        {
-            // if a heading is set and not empty
-            if (isset($this->bookingHeading) && (!empty($this->bookingHeading)))
-            {
-                // check if booking icon is set
-                if (isset($this->bookingIcon) && (!empty($this->bookingIcon)))
-                {   // add booking icon markup
-                    $this->bookingIcon = "<i class=\"".$this->bookingIcon."\"></i>&nbsp;";
-                }
-
-                // if subtext is set, add <small> subtext to string
-                if (isset($this->bookingSubtext) && (!empty($this->bookingSubtext)))
-                {   // build a headline with heading and subtext
-                    $this->bookingSubtext = "<small>$this->bookingSubtext</small>";
-                    $this->bookingHeadline = "<div id=\"bookingHeading\" class=\"animated fadeIn speed2\"><h1>&nbsp;$this->bookingIcon"."$this->bookingHeading&nbsp;"."$this->bookingSubtext</h1></div>";
-                }
-                else
-                {   // headline only - without subtext
-                    $this->bookingHeadline = "<h1 class=\"animated fadeIn speed2\">$this->bookingHeading</h1>";    // draw just the heading
-                }
-            }
-            else
-            {   // leave empty if it's not set
-                $this->bookingHeadline = '';
-            }
-        }
-
-        /**
-         * Embed any BubblUs mindmaps
+         * Init Booking Widget
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
          * @annotation This method does the setup and embed job
          * @param object $db db object
+         * @param array $lang language array
          */
-        public function init($db)
+        public function init($db, $lang)
         {   /** @var \YAWK\db */
 
             // set widget obj properties
@@ -187,13 +138,13 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                             },";
             }
             else
-                {
-                    $validateJsCode .= "
+            {
+                $validateJsCode .= "
                             name: {
                             required: false,
                             minlength: 3
                             },";
-                }
+            }
 
             // email field
             if ($this->bookingEmail === "required")
@@ -206,14 +157,14 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                             },";
             }
             else
-                {
-                    $validateJsCode .= "
+            {
+                $validateJsCode .= "
                             email: {
                             required: false,
                             email: true,
                             maxlength: 128
                             },";
-                }
+            }
 
             // phone field
             if ($this->bookingPhone === "required")
@@ -340,17 +291,20 @@ namespace YAWK\WIDGETS\BOOKING\FORM
             echo "
             <!-- bootstrap date-timepicker -->
             <link type=\"text/css\" href=\"system/engines/datetimepicker/css/bootstrap-datetimepicker.min.css\" rel=\"stylesheet\">
-            <script src=\"https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js\"></script>
-            <script src=\"https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/de.js\"></script>
-            <script type=\"text/javascript\" src=\"system/engines/datetimepicker/js/bootstrap-datetimepicker.min.js\"></script>
+            <script src=\"https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js\"></script>";
 
+            echo "<script type=\"text/javascript\" src=\"system/engines/datetimepicker/js/bootstrap-datetimepicker.min.js\"></script>
             <script type=\"text/javascript\" src=\"system/engines/jquery/jquery.validate.min.js\"></script>
-            <script type=\"text/javascript\" src=\"system/engines/jquery/messages_de.min.js\"></script>";
+            <script type=\"text/javascript\" src=\"system/widgets/booking/js/booking.js\"></script>
+            <link rel=\"stylesheet\" href=\"system/engines/jquery/timepicker/jquery.timepicker.css\">
+            <script src=\"//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js\"></script>";
 
-            // echo "<script type=\"text/javascript\" src=\"system/widgets/booking/js/booking.js\"></script>";
-            echo "
-<link rel=\"stylesheet\" href=\"system/engines/jquery/timepicker/jquery.timepicker.css\">
-<script src=\"//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js\"></script>";
+            if (\YAWK\settings::getSetting($db, "frontendLanguage") === "de-DE")
+            {
+                echo "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/de.js\"></script>
+                      <script type=\"text/javascript\" src=\"system/engines/jquery/messages_de.min.js\"></script>";
+            }
+
 
             echo "            
             <script type=\"text/javascript\">
@@ -414,10 +368,45 @@ namespace YAWK\WIDGETS\BOOKING\FORM
             echo "$this->bookingHeadline<hr>";
 
             // draw booking form
-            echo $this->drawFrontendForm();
+            echo $this->drawFrontendForm($lang);
 
             // draw thank you message div (hidden until submit)
-            echo $this->drawThankYouMessage();
+            echo $this->drawThankYouMessage($lang);
+        }
+
+        /**
+         * Set widget properties from database and fill object params
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @annotation Load all widget settings.
+         */
+        public function setProperties()
+        {
+            // if a heading is set and not empty
+            if (isset($this->bookingHeading) && (!empty($this->bookingHeading)))
+            {
+                // check if booking icon is set
+                if (isset($this->bookingIcon) && (!empty($this->bookingIcon)))
+                {   // add booking icon markup
+                    $this->bookingIcon = "<i class=\"".$this->bookingIcon."\"></i>&nbsp;";
+                }
+
+                // if subtext is set, add <small> subtext to string
+                if (isset($this->bookingSubtext) && (!empty($this->bookingSubtext)))
+                {   // build a headline with heading and subtext
+                    $this->bookingSubtext = "<small>$this->bookingSubtext</small>";
+                    $this->bookingHeadline = "<div id=\"bookingHeading\" class=\"animated fadeIn speed2\"><h1>&nbsp;$this->bookingIcon"."$this->bookingHeading&nbsp;"."$this->bookingSubtext</h1></div>";
+                }
+                else
+                {   // headline only - without subtext
+                    $this->bookingHeadline = "<h1 class=\"animated fadeIn speed2\">$this->bookingHeading</h1>";    // draw just the heading
+                }
+            }
+            else
+            {   // leave empty if it's not set
+                $this->bookingHeadline = '';
+            }
         }
 
         /**
@@ -425,7 +414,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
          * (will be displayed after successful submit)
          * @return string html code
          */
-        public function drawThankYouMessage()
+        public function drawThankYouMessage($lang)
         {
             if (!isset($db))
             {
@@ -436,11 +425,11 @@ namespace YAWK\WIDGETS\BOOKING\FORM
             $html .= "
             <div class=\"hidden d-none\" id=\"thankYouMessage\">
             <div class=\"col-md-2\">&nbsp;</div>
-            <div class=\"col-md-8 text-center\"><h2>Danke f&uuml;r Ihre Buchungsanfrage!<br>
-            <small>Ihre Anfrage wird so schnell als m&ouml;glich bearbeitet.</small><br><br>
+            <div class=\"col-md-8 text-center\"><h2>".$lang['BOOKING_THANK_YOU_HEADING']."<br>
+            <small>".$lang['BOOKING_THANK_YOU_SUBLINE']."</small><br><br>
             <i class=\"fa fa-handshake-o text-muted\"></i></h2>
-            <br><hr><a href=\"".$hostname."\" target=\"_self\">Zur Startseite</a> 
-            | <a href=\"booking.html\" target=\"_self\">Weitere Buchung</a></div>
+            <br><hr><a href=\"".$hostname."\" target=\"_self\">".$lang['BOOKING_BACK']."</a> 
+            | <a href=\"booking.html\" target=\"_self\">".$lang['BOOKING_AGAIN']."</a></div>
             <div class=\"col-md-2\">&nbsp;</div>
             </div>
             ";
@@ -452,7 +441,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
          * draw (output) html of the frontend form. This is displayed to the user. He will use to place a booking
          * @return string
          */
-        public function drawFrontendForm()
+        public function drawFrontendForm($lang)
         {
             // init form html code markup variable
             $html = "";
@@ -460,9 +449,8 @@ namespace YAWK\WIDGETS\BOOKING\FORM
             $html .= "
 <form class=\"form\" id=\"bookingForm\" method=\"post\" action=\"\">
 
-<!-- <div class=\"container-fluid\"> -->
+<div class=\"container-fluid\">
 <div class=\"row\">
-
     <div class=\"col-md-4 animated fadeIn speed3\">
     <input type=\"hidden\" name=\"bookingAdminEmail\" id=\"bookingAdminEmail\" value=\"".$this->bookingAdminEmail."\">
     <input type=\"hidden\" name=\"bookingHtmlEmail\" id=\"bookingHtmlEmail\" value=\"".$this->bookingHtmlEmail."\">";
@@ -475,8 +463,8 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                 else { $requiredMarkup = ""; }
 
                 $html .= "
-                <label for=\"name\">Name".$requiredMarkup."
-                    <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Ihr Name (bzw. der Veranstalter)\"></i>
+                <label for=\"name\">".$lang['BOOKING_NAME'].$requiredMarkup."
+                    <i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" title=\"".$lang['BOOKING_HELP_NAME']."\"></i>
                 </label>
                 <input type=\"text\" name=\"name\" id=\"name\" class=\"form-control\" placeholder=\"Name / Veranstalter\" autocomplete=\"off\">
                 <br>";
@@ -490,10 +478,10 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                 else { $requiredMarkup = ""; }
 
                 $html .= "
-            <label for=\"email\">Email".$requiredMarkup."
-                <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Bitte geben Sie hier Ihre Emailadresse ein. Sie wird nicht weitergegeben und nur f&uuml;r Fragen zu Ihrer Buchung verwendet.\"></i>
+            <label for=\"email\">".$lang['LABEL_BOOKING_EMAIL'].$requiredMarkup."
+                <i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" title=\"".$lang['BOOKING_HELP_EMAIL']."\"></i>
             </label>
-            <input type=\"text\" name=\"email\" id=\"email\" class=\"form-control\" placeholder=\"you@email.com\" autocomplete=\"off\">
+            <input type=\"text\" name=\"email\" id=\"email\" class=\"form-control\" placeholder=\"you@email.tld\" autocomplete=\"off\">
             <br>";
             }
 
@@ -505,25 +493,13 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                 else { $requiredMarkup = ""; }
 
                 $html .= "
-        <label for=\"phone\">Phone".$requiredMarkup."
-            <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Durchs reden kommen die Leut' zam - ein kurzes Telefonat ist oft effizienter als zahllose Emails zu senden. F&uuml;r R&uuml;ckfragen und Absprachen im Vorfeld ben&ouml;tigen wir Ihre Telefonnumer.\"></i>
+        <label for=\"phone\">".$lang['LABEL_BOOKING_PHONE'].$requiredMarkup."
+            <i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" title=\"".$lang['BOOKING_HELP_PHONE']."\"></i>
         </label>
-        <input type=\"text\" name=\"phone\" id=\"phone\" class=\"form-control\" placeholder=\"+43 123 1234567\" autocomplete=\"off\">
+        <input type=\"text\" name=\"phone\" id=\"phone\" class=\"form-control\" placeholder=\"+43 1234 12345678\" autocomplete=\"off\">
         <br>
         <div class=\"animated fadeIn speed4 delay-10s\">
-            <h3>Booking - Ablauf<br></h3>
-            <h4>1. Formular ausf&uuml;llen</h4>
-                <p>Bitte f&uuml;llen Sie das Formular so umfangreich als m&ouml;glich aus.
-                Je mehr Daten Sie bereits im Vorfeld &uuml;bermitteln, umso konkreter kann 
-                auf Ihre Anfrage reagiert werden.</p>
-            <h4>2. Emailbest&auml;tigung</h4>
-                <p>Nach dem Absenden erhalten Sie eine automatische Best&uml;tigung,
-                falls Sie das entsprechende H&auml;kchen nicht entfernt haben.</p>
-            <h4>3. Wir melden uns bei Ihnen</h4>
-                <p>Jede Booking Anfrage wird so schnell als m&ouml;glich bearbeitet.
-                Wir checken unsere Terminkalender und pr&uuml;fen, ob ein Konzert an
-                dem von Ihnen gew&uuml;nschten Zeitraum m&ouml;glich ist. Sie erhalten 
-                innerhalb von 3 Tagen R&uuml;ckmeldung. Ihre Anfrage ist unverbindlich!</p>
+            ".$lang['BOOKING_HELP_TEXT']."
         </div>";
 
             }
@@ -543,10 +519,10 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                 else { $requiredMarkup = ""; }
 
                 $html .= "
-                    <label for=\"eventDateTime\">Veranstaltungszeitpunkt".$requiredMarkup."
-                        <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Bitte geben Sie hier das Datum und die Uhrzeit der Veranstaltung ein.\"></i>
+                    <label for=\"eventDateTime\">".$lang['LABEL_BOOKING_EVENTDATETIME'].$requiredMarkup."
+                        <i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" title=\"".$lang['BOOKING_HELP_DATETIME']."\"></i>
                     </label>
-                    <input type=\"text\" name=\"eventDateTime\" autocomplete=\"off\" id=\"eventDateTime\" class=\"form-control\" placeholder=\"Datum und Uhrzeit\">
+                    <input type=\"text\" name=\"eventDateTime\" autocomplete=\"off\" id=\"eventDateTime\" class=\"form-control\" placeholder=\"".$lang['BOOKING_HELP_DATE_AND_TIME']."\">
                     <br>";
             }
 
@@ -558,19 +534,18 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                 else { $requiredMarkup = ""; }
 
                 $html .= "
-                    <label for=\"showtimeDuration\">Showtime Zeitrahmen".$requiredMarkup."
-                        <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Bitte geben Sie hier an, welcher Zeitrahmen (Gesamtspieldauer) f&uuml;r das Konzert vorgesehen ist.\"></i>
+                    <label for=\"showtimeDuration\">".$lang['LABEL_BOOKING_SHOWTIME_DURATION'].$requiredMarkup."
+                        <i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" title=\"".$lang['BOOKING_HELP_SHOWTIME_DURATION']."\"></i>
                     </label>
                     <select name=\"showtimeDuration\" id=\"showtimeDuration\" class=\"form-control\">
-                    <option value=\"\">bitte ausw&auml;hlen</option>
-                    <option value=\"30 Minuten\">30 Minuten</option>
-                    <option value=\"45 Minuten\">45 Minuten</option>
-                    <option value=\"1 Stunde \">1 Stunde</option>
-                    <option value=\"1,5 Stunden\">1,5 Stunden</option>
-                    <option value=\"2 Stunden\">2 Stunden</option>
-                    <option value=\"3 Stunden\">3 Stunden</option>
-                    <option value=\"4 Stunden\">4 Stunden</option>
-                    <option value=\"keine Angabe - nach Vereinbarung\">keine Angabe / nach Vereinbarung</option>
+                    <option value=\"\">".$lang['BOOKING_PLEASE_SELECT']."</option>
+                    <option value=\"".$lang['BOOKING_30MIN']."\">".$lang['BOOKING_30MIN']."</option>
+                    <option value=\"".$lang['BOOKING_45MIN']."\">".$lang['BOOKING_45MIN']."</option>
+                    <option value=\"".$lang['BOOKING_1H']."\">".$lang['BOOKING_1H']."</option>
+                    <option value=\"".$lang['BOOKING_2H']."\">".$lang['BOOKING_2H']."</option>
+                    <option value=\"".$lang['BOOKING_3H']."\">".$lang['BOOKING_3H']."</option>
+                    <option value=\"".$lang['BOOKING_4H']."\">".$lang['BOOKING_4H']."</option>
+                    <option value=\"".$lang['BOOKING_NOT_SPECIFIED']."\">".$lang['BOOKING_NOT_SPECIFIED']."</option>
                     </select><br>";
             }
 
@@ -582,10 +557,10 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                 else { $requiredMarkup = ""; }
 
                 $html .= "
-                    <label for=\"eventSoundcheck\">Soundcheck Uhrzeit".$requiredMarkup."
-                        <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Bitte geben Sie hier an, zu welcher Uhrzeit der Soundcheck durchgef&uuml;hrt werden kann.\"></i>
+                    <label for=\"eventSoundcheck\">".$lang['LABEL_BOOKING_SOUNDCHECK'].$requiredMarkup."
+                        <i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" title=\"".$lang['BOOKING_HELP_SOUNDCHECK']."\"></i>
                     </label>
-                    <input type=\"text\" name=\"eventSoundcheck\" autocomplete=\"off\" id=\"eventSoundcheck\" class=\"form-control timepicker\" placeholder=\"Uhrzeit ausw&auml;hlen\">
+                    <input type=\"text\" name=\"eventSoundcheck\" autocomplete=\"off\" id=\"eventSoundcheck\" class=\"form-control timepicker\" placeholder=\"".$lang['BOOKING_HELP_SELECT_TIME']."\">
                     <br>";
             }
 
@@ -597,15 +572,15 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                 else { $requiredMarkup = ""; }
 
                 $html .= "
-                    <label for=\"soundcheckDuration\">Soundcheck Zeitrahmen".$requiredMarkup."
-                        <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Bitte geben Sie hier an, welcher Zeitrahmen f&uuml;r den Soundcheck vorgesehen ist.\"></i>
+                    <label for=\"soundcheckDuration\">".$lang['LABEL_BOOKING_SOUNDCHECK_DURATION'].$requiredMarkup."
+                        <i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" title=\"".$lang['BOOKING_HELP_SOUNDCHECK_DURATION']."\"></i>
                     </label>
                     <select name=\"soundcheckDuration\" id=\"soundcheckDuration\" class=\"form-control\">
-                    <option value=\"\">bitte ausw&auml;hlen</option>
-                    <option value=\"30 Minuten\">30 Minuten</option>
-                    <option value=\"45 Minuten\">45 Minuten</option>
-                    <option value=\"60 Minuten\">60 Minuten</option>
-                    <option value=\"keine Angabe - nach Vereinbarung\">keine Angabe / nach Vereinbarung</option>
+                    <option value=\"\">".$lang['BOOKING_PLEASE_SELECT']."</option>
+                    <option value=\"".$lang['BOOKING_30MIN']."\">".$lang['BOOKING_30MIN']."</option>
+                    <option value=\"".$lang['BOOKING_45MIN']."\">".$lang['BOOKING_45MIN']."</option>
+                    <option value=\"".$lang['BOOKING_60MIN']."\">".$lang['BOOKING_60MIN']."</option>
+                    <option value=\"".$lang['BOOKING_NOT_SPECIFIED']."\">".$lang['BOOKING_NOT_SPECIFIED']."</option>
                     </select>
                     <br>";
             }
@@ -618,10 +593,10 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                 else { $requiredMarkup = ""; }
 
                 $html .= "
-                    <label for=\"eventShowtime\">Showtime Uhrzeit".$requiredMarkup."
-                        <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Bitte geben Sie hier an, f&uuml;r welche Uhrzeit die Show (Beginn) angesetzt ist.\"></i>
+                    <label for=\"eventShowtime\">".$lang['LABEL_BOOKING_SHOWTIME'].$requiredMarkup."
+                        <i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" title=\"".$lang['BOOKING_HELP_SHOWTIME']."\"></i>
                     </label>
-                    <input type=\"text\" name=\"eventShowtime\" autocomplete=\"off\" id=\"eventShowtime\" class=\"form-control timepicker\" placeholder=\"Uhrzeit ausw&auml;hlen\">
+                    <input type=\"text\" name=\"eventShowtime\" autocomplete=\"off\" id=\"eventShowtime\" class=\"form-control timepicker\" placeholder=\"".$lang['BOOKING_HELP_SELECT_TIME']."\">
                     <br>";
             }
 
@@ -633,16 +608,16 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                 else { $requiredMarkup = ""; }
 
                 $html .= "
-                    <label for=\"setAmount\">Anzahl Sets".$requiredMarkup."
-                        <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Bitte geben Sie hier an, wie viele Sets gespielt werden sollen.\"></i>
+                    <label for=\"setAmount\">".$lang['LABEL_BOOKING_SET_AMOUNT'].$requiredMarkup."
+                        <i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" title=\"".$lang['BOOKING_HELP_SET_AMOUNT']."\"></i>
                     </label>
                     <select name=\"setAmount\" id=\"setAmount\" class=\"form-control\">
-                    <option value=\"\">bitte ausw&auml;hlen</option>
+                    <option value=\"\">".$lang['BOOKING_PLEASE_SELECT']."</option>
                     <option value=\"1\">1</option>
                     <option value=\"2\">2</option>
                     <option value=\"3\">3</option>
                     <option value=\"4\">4</option>
-                    <option value=\"keine Angabe - nach Vereinbarung\">keine Angabe / Nach Vereinbarung</option>
+                    <option value=\"".$lang['BOOKING_NOT_SPECIFIED']."\">".$lang['BOOKING_NOT_SPECIFIED']."</option>
                     </select>";
             }
 
@@ -651,6 +626,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                 <!-- right -->";
 
             // BAND SELECT FIELD
+            /*
             if ($this->bookingBand !== "false")
             {
                 if ($this->bookingBand === "required")
@@ -658,19 +634,17 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                 else { $requiredMarkup = ""; }
 
                 $html .= "
-                        <label for=\"band\">Band".$requiredMarkup."
+                        <label for=\"band\">".$lang['LABEL_BOOKING_BAND'].$requiredMarkup."
                             <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Bitte geben Sie hier an, welche Band sie buchen m&ouml;chten.\"></i>
                         </label>
                         <select name=\"band\" id=\"band\" class=\"form-control\">
-                        <option value=\"\">bitte ausw&auml;hlen</option>
-                        <option value=\"Duo: Stephan Heiner &amp; B&ouml;rns Funkyfingers\">Duo: Stephan Heiner &amp; B&ouml;rns Funkyfingers</option>
-                        <option value=\"Trio: BSB (B&ouml;rns, Stephan, Bertl)\">Trio: BSB (B&ouml;rns, Stephan, Bertl)</option>
-                        <option value=\"Tommy Lee &amp; Glacestrizzis\">Tommy Lee &amp; Glacestrizzis</option>
-                        <option value=\"WiR &amp; Jetzt\">WiR &amp; Jetzt</option>
-                        <option value=\"keine Angabe / nach Vereinbarung\">keine Angabe / nach Vereinbarung</option>
+                        <option value=\"\">".$lang['BOOKING_PLEASE_SELECT']."</option>
+                        <option value=\"Your Band here\">Your Band here</option>
+                        <option value=\"".$lang['BOOKING_NOT_SPECIFIED']."\">".$lang['BOOKING_NOT_SPECIFIED']."</option>
                         </select>
                         <br>";
             }
+            */
 
             // EVENT TYPE
             if ($this->bookingLocationType !== "false")
@@ -680,16 +654,18 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                 else { $requiredMarkup = ""; }
 
                 $html .= "
-                        <label for=\"locationType\">Art der Veranstaltung".$requiredMarkup."
-                            <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Bitte w&auml;hlen Sie, um welche Art von Veranstaltung es sich handelt.\"></i>
+                        <label for=\"locationType\">".$lang['LABEL_BOOKING_LOCATION_TYPE'].$requiredMarkup."
+                            <i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" title=\"".$lang['BOOKING_HELP_LOCATION_TYPE']."\"></i>
                         </label>
                         <select name=\"locationType\" id=\"locationType\" class=\"form-control\">
-                        <option value=\"\">bitte ausw&auml;hlen</option>
-                        <option value=\"Private Veranstaltung\">Private Veranstaltung</option>
-                        <option value=\"Firmen Veranstaltung\">Firmen Event</option>
-                        <option value=\"Hochzeit\">Hochzeit</option>
-                        <option value=\"Gro&szlig;veranstaltung\">Gro&szlig;veranstaltung</option>
-                        <option value=\"keine Angabe / nach Vereinbarung\">keine Angabe / nach Vereinbarung</option>
+                        <option value=\"\">".$lang['BOOKING_PLEASE_SELECT']."</option>
+                        <option value=\"".$lang['BOOKING_PRIVATE_EVENT']."\">".$lang['BOOKING_PRIVATE_EVENT']."</option>
+                        <option value=\"".$lang['BOOKING_COMPANY_EVENT']."\">".$lang['BOOKING_COMPANY_EVENT']."</option>
+                        <option value=\"".$lang['BOOKING_MARRIAGE_EVENT']."\">".$lang['BOOKING_MARRIAGE_EVENT']."</option>
+                        <option value=\"".$lang['BOOKING_BIG_EVENT']."\">".$lang['BOOKING_BIG_EVENT']."</option>
+                        <option value=\"".$lang['BOOKING_FESTIVAL_EVENT']."\">".$lang['BOOKING_FESTIVAL_EVENT']."</option>
+                        <option value=\"".$lang['BOOKING_BENEFIT_EVENT']."\">".$lang['BOOKING_BENEFIT_EVENT']."</option>
+                        <option value=\"".$lang['BOOKING_NOT_SPECIFIED']."\">".$lang['BOOKING_NOT_SPECIFIED']."</option>
                         </select>
                         <br>";
             }
@@ -702,14 +678,14 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                 else { $requiredMarkup = ""; }
 
                 $html .= "
-                        <label for=\"location\">Location".$requiredMarkup."
-                            <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Bitte w&auml;hlen Sie, ob die Veranstaltung drinnen (Indoor) oder draussen (Outdoor) stattfindet.\"></i>
+                        <label for=\"location\">".$lang['LABEL_BOOKING_LOCATION'].$requiredMarkup."
+                            <i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" title=\"".$lang['BOOKING_HELP_LOCATION']."\"></i>
                         </label>
                         <select name=\"location\" id=\"location\" class=\"form-control\">
-                        <option value=\"\">bitte ausw&auml;hlen</option>
-                        <option value=\"Indoor\">Indoor</option>
-                        <option value=\"Outdoor\">Outdoor</option>
-                        <option value=\"keine Angabe / nach Vereinbarung\">keine Angabe / nach Vereinbarung</option>
+                            <option value=\"\">".$lang['BOOKING_PLEASE_SELECT']."</option>
+                            <option value=\"".$lang['BOOKING_INDOOR']."\">".$lang['BOOKING_INDOOR']."</option>
+                            <option value=\"".$lang['BOOKING_OUTDOOR']."\">".$lang['BOOKING_OUTDOOR']."</option>
+                            <option value=\"".$lang['BOOKING_NOT_SPECIFIED']."\">".$lang['BOOKING_NOT_SPECIFIED']."</option>
                         </select>
                         <br>";
             }
@@ -722,17 +698,18 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                 else { $requiredMarkup = ""; }
 
                 $html .= "
-                        <label for=\"crowdAmount\">Gr&ouml;&szlig;e".$requiredMarkup."
-                            <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Wie gro&szlig; ist Ihre Veranstaltung? (Wie viele Menschen werden sch&auml;tzungsweise erwartet?) Diese Information ist wichtig f&uuml;r uns, um unser Equipment entsprechend abzustimmen.\"></i>
+                        <label for=\"crowdAmount\">".$lang['LABEL_BOOKING_CROWD_AMOUNT'].$requiredMarkup."
+                            <i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" title=\"".$lang['BOOKING_HELP_CROWD_AMOUNT']."\"></i>
                         </label>
                         <select name=\"crowdAmount\" id=\"crowdAmount\" class=\"form-control\">
-                        <option value=\"\">bitte ausw&auml;hlen</option>
-                        <option value=\"0 - 50\">0 - 50 Personen</option>
-                        <option value=\"50 - 100\">50 - 100 Personen</option>
-                        <option value=\"100 - 200\">100 - 200 Personen</option>
-                        <option value=\"300 - 500\">300 - 500 Personen</option>
-                        <option value=\"500 - 1000\">500 - 1000 Personen</option>
-                        <option value=\"> 1000\">> 1000 Personen</option>
+                            <option value=\"\">".$lang['BOOKING_PLEASE_SELECT']."</option>
+                            <option value=\"".$lang['BOOKING_50']."\">".$lang['BOOKING_50']."</option>
+                            <option value=\"".$lang['BOOKING_100']."\">".$lang['BOOKING_100']."</option>
+                            <option value=\"".$lang['BOOKING_200']."\">".$lang['BOOKING_200']."</option>
+                            <option value=\"".$lang['BOOKING_500']."\">".$lang['BOOKING_500']."</option>
+                            <option value=\"".$lang['BOOKING_1000']."\">".$lang['BOOKING_1000']."</option>
+                            <option value=\"".$lang['BOOKING_BIGGER_1000']."\">".$lang['BOOKING_BIGGER_1000']."</option>
+                            <option value=\"".$lang['BOOKING_NOT_SPECIFIED']."\">".$lang['BOOKING_NOT_SPECIFIED']."</option>
                         </select>
                         <br>";
             }
@@ -746,10 +723,10 @@ namespace YAWK\WIDGETS\BOOKING\FORM
 
                 $html .= "
                         <div class=\"text-right\">
-                        &nbsp;&nbsp;<i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Bitte geben Sie an, ob eine entsprechende Ton- und Lichtanlage (PA / Beschallung, B&uuml;hnenmonitoring, Mischpult, Verkabelung) vorhanden ist, oder von uns mitgebracht werden soll.\"></i>
-                        <label for=\"paAvailable\">Anlage vorhanden".$requiredMarkup."&nbsp;&nbsp;</label>
-                        <input type=\"radio\" name=\"paAvailable\" value=\"Ja\"> Ja
-                        &nbsp;&nbsp;<input type=\"radio\" name=\"paAvailable\" value=\"Nein\"> Nein
+                        &nbsp;&nbsp;<i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" title=\"".$lang['BOOKING_HELP_PA']."\"></i>
+                        <label for=\"paAvailable\">".$lang['LABEL_BOOKING_PA_AVAILABLE'].$requiredMarkup."&nbsp;&nbsp;</label>
+                        <input type=\"radio\" name=\"paAvailable\" value=\"".$lang['BOOKING_YES']."\"> ".$lang['BOOKING_YES']."
+                        &nbsp;&nbsp;<input type=\"radio\" name=\"paAvailable\" value=\"".$lang['BOOKING_NO']."\"> ".$lang['BOOKING_NO']."
                         </div><hr>";
             }
 
@@ -762,10 +739,10 @@ namespace YAWK\WIDGETS\BOOKING\FORM
 
                 $html .= "                        
                         <div class=\"text-right\">
-                        &nbsp;&nbsp;<i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Bitte geben Sie an, ob eine fachlich kompetenter Tontechniker vor Ort ist, der die Veranstaltung (inkl. Soundcheck) tontechnisch betreut oder ob ein Tontechniker von uns eingesetzt werden soll.\"></i>
-                        <label for=\"techAvailable\">Techniker vor Ort".$requiredMarkup."&nbsp;&nbsp;</label>
-                        <input type=\"radio\" name=\"techAvailable\" value=\"Ja\"> Ja
-                        &nbsp;&nbsp;<input type=\"radio\" name=\"techAvailable\" value=\"Nein\"> Nein
+                        &nbsp;&nbsp;<i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" title=\"".$lang['BOOKING_HELP_TECH']."\"></i>
+                        <label for=\"techAvailable\">".$lang['LABEL_BOOKING_TECH_AVAILABLE'].$requiredMarkup."&nbsp;&nbsp;</label>
+                        <input type=\"radio\" name=\"techAvailable\" value=\"".$lang['BOOKING_YES']."\"> ".$lang['BOOKING_YES']."
+                        &nbsp;&nbsp;<input type=\"radio\" name=\"techAvailable\" value=\"".$lang['BOOKING_NO']."\"> ".$lang['BOOKING_NO']."
                         </div><hr>";
             }
 
@@ -778,10 +755,10 @@ namespace YAWK\WIDGETS\BOOKING\FORM
 
                 $html .= "
                         <div class=\"text-right\">
-                        &nbsp;&nbsp;<i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Bitte geben Sie an, ob eine &Uuml;bernachtung m&ouml;glich ist (bei Veranstaltungen die sich &uuml;ber mehrere Tage erstrecken)\"></i>
-                        <label for=\"hotelAvailable\">&Uuml;bernachtung".$requiredMarkup."&nbsp;&nbsp;</label>
-                        <input type=\"radio\" name=\"hotelAvailable\" value=\"Ja\"> Ja
-                        &nbsp;&nbsp;<input type=\"radio\" name=\"hotelAvailable\" value=\"Nein\"> Nein
+                        &nbsp;&nbsp;<i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" title=\"".$lang['BOOKING_HELP_HOTEL']."\"></i>
+                        <label for=\"hotelAvailable\">".$lang['LABEL_BOOKING_HOTEL_AVAILABLE'].$requiredMarkup."&nbsp;&nbsp;</label>
+                        <input type=\"radio\" name=\"hotelAvailable\" value=\"".$lang['BOOKING_YES']."\"> ".$lang['BOOKING_YES']."
+                        &nbsp;&nbsp;<input type=\"radio\" name=\"hotelAvailable\" value=\"".$lang['BOOKING_NO']."\"> ".$lang['BOOKING_NO']."
                         </div>";
             }
 
@@ -796,22 +773,22 @@ namespace YAWK\WIDGETS\BOOKING\FORM
                 else { $requiredMarkup = ""; }
 
                 $html .= "
-                    <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Bitte schreiben Sie weitere Informationen und die Adresse zu Ihrer Veranstaltung in dieses Textfeld. ACHTUNG: Bitte beachten Sie, dass f&uuml;r eine erfolgreiche Buchung die &Uuml;bermittlung der Adresse der Veranstaltung unbedingt n&ouml;tig ist.\"></i>
-                    <label for=\"message\">Anmerkungen / Adresse".$requiredMarkup."
+                    <i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" title=\"".$lang['BOOKING_HELP_MSG']."\"></i>
+                    <label for=\"message\">".$lang['LABEL_BOOKING_MESSAGE'].$requiredMarkup."
                     </label>
                     <textarea name=\"message\" id=\"message\" class=\"form-control\" rows=\"4\" autocomplete=\"off\"></textarea>
                     <br>";
             }
 
             $html .="
-                <i class=\"fa fa-question-circle-o text-info\" data-placement=\"auto right\" data-toggle=\"tooltip\" title=\"Auf Wunsch erhalten Sie eine Kopie dieser Nachricht an Ihre Emailadresse zugestellt.\"></i>
-                <label for=\"mailCopy\">Kopie dieser Nachricht an mich senden. &nbsp;
+                <i class=\"fa fa-question-circle-o text-info\" data-toggle=\"tooltip\" title=\"".$lang['BOOKING_HELP_MAILCOPY']."\"></i>
+                <label for=\"mailCopy\">".$lang['BOOKING_COPY']." &nbsp;
                 <input type=\"checkbox\" name=\"mailCopy\" value=\"true\" id=\"mailCopy\" aria-checked=\"true\" checked></label>
-                <button type=\"submit\" id=\"submitbutton\" class=\"btn btn-success pull-right hvr-grow\" style=\"margin-top:1%;\" contenteditable=\"false\"><i class=\"fa fa-paper-plane-o\"></i> &nbsp;Jetzt unverbindlich anfragen</button>
+                <button type=\"submit\" id=\"submitbutton\" class=\"btn btn-success pull-right hvr-grow\" style=\"margin-top:1%;\" contenteditable=\"false\"><i class=\"fa fa-paper-plane-o\"></i> &nbsp;".$lang['BOOKING_SUBMIT_BTN']."</button>
                 <input type=\"hidden\" name=\"sent\" value=\"1\">";
 
 
-            $html .= "</div></div>
+            $html .= "</div></div></div>
     <!-- </div> -->
     </form>";
             return $html;

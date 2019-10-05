@@ -22,6 +22,8 @@ namespace YAWK {
         public $defaultLanguage;
         /** * @var string $currentLanguage current setted language in format: en-EN */
         public $currentLanguage;
+        /** * @var string $currentLanguage current setted language in format: en-EN */
+        public $currentFrontendLanguage;
         /** * @var string $currentLanguageGlobal current setted language in format: en */
         public $currentLanguageGlobal;
         /** * @var string $detectedLanguage current detected language in format: en-EN */
@@ -49,6 +51,7 @@ namespace YAWK {
         {
             // set current language
             $this->httpAcceptedLanguage = $this->getClientLanguage();
+            $this->currentFrontendLanguage = \YAWK\settings::getSetting($db, "frontendLanguage");
             $this->currentLanguage = $this->getCurrentLanguage($db, $referer);
             return $this->setLanguage($this->currentLanguage);
         }
@@ -65,23 +68,23 @@ namespace YAWK {
          */
         public function getCurrentLanguage($db, $referer)
         {
-            $currentLanguage = '';
+            /**
             // check if a GET param is set
             if (isset($_GET['lang']) && (!empty($_GET['lang'])))
             {
-                $currentLanguage = $_GET['lang'];     // sst GET param as current language
+                $this->currentLanguage = $_GET['lang'];     // sst GET param as current language
                 // register and overwrite session var
-                $_SESSION['lang'] = $currentLanguage;
+                $_SESSION['lang'] = $this->currentLanguage;
                 // and check if cookie is set
                 if (!isset($_COOKIE['lang']) || (empty($_COOKIE['lang'])))
                 {   // if session is set, but cookie is not
                     // try to set it via PHP (will not work, because output started before...)
-                    // @setcookie("lang", $currentLanguage, time() + (60 * 60 * 24 * 1460));
+                    // @setcookie("lang", $this->currentLanguage, time() + (60 * 60 * 24 * 1460));
                     // instead: set the cookie via JS
-                    echo "<script>document.cookie = 'lang=$currentLanguage';</script>";
+                    echo "<script>document.cookie = 'lang=$this->currentLanguage';</script>";
                 }
-                /* language set, cookie set */
-                return $currentLanguage;
+                // language set, cookie set
+                return $this->currentLanguage;
             }
             else
             {
@@ -89,52 +92,93 @@ namespace YAWK {
                 if (isset($_SESSION['lang']) || (!empty($_SESSION['lang'])))
                 {
                     // session var is set
-                    $currentLanguage = $_SESSION['lang'];
-                    return $currentLanguage;
+                    $this->currentLanguage = $_SESSION['lang'];
+                    return $this->currentLanguage;
                 }
                 // SESSION param not set, check if there is a $_COOKIE[lang]
                 elseif (isset($_COOKIE['lang']) || (!empty($_COOKIE['lang'])))
                 {
                     // cookie var is set
-                    $currentLanguage = $_COOKIE['lang'];
-                    return $currentLanguage;
+                    $this->currentLanguage = $_COOKIE['lang'];
+                    return $this->currentLanguage;
                 }
                 else
                 {
-                    if (isset($referer) && (is_string($referer)))
-                    {
-                        if ($referer == "frontend")
-                        {
-                            $languageProperty = "frontendLanguage";
-                        }
-                        else if ($referer == "backend")
-                        {
-                            $languageProperty = "backendLanguage";
-                        }
-                        else
-                            {
-                                $languageProperty = "backendLanguage";
-                            }
-                    }
-                    else
-                        {
-                            $languageProperty = "backendLanguage";
-                        }
 
-                    if ($currentLanguage = \YAWK\settings::getSetting($db, $languageProperty))
+                }
+            }
+            */
+
+            if (isset($referer) && (is_string($referer)))
+            {
+                if ($referer == "frontend")
+                {
+                    if ($this->currentLanguage = \YAWK\settings::getSetting($db, "frontendLanguage"))
                     {
-                        $_SESSION['lang'] = $currentLanguage;
+                        $_SESSION['lang'] = $this->currentLanguage;
                         // return current language from db-settings// if not, try to set it - with error supressor to avoid notices if output started before
-                        @setcookie('lang', $currentLanguage, time() + (60 * 60 * 24 * 1460));
-                        return $currentLanguage;
+                        @setcookie('lang', $this->currentLanguage, time() + (60 * 60 * 24 * 1460));
+                        return $this->currentLanguage;
                     }
                     else
-                    {   // failed to get backend language
-                        $currentLanguage = "en-EN";   // default: en-EN
-                        $_SESSION['lang'] = $currentLanguage;
+                    {   // failed to get language
+                        $this->currentLanguage = "en-EN";   // default: en-EN
+                        $_SESSION['lang'] = $this->currentLanguage;
                         // return default value (en-EN)
-                        return $currentLanguage;
+                        return $this->currentLanguage;
                     }
+                }
+                else if ($referer == "backend")
+                {
+
+                    if ($this->currentLanguage = \YAWK\settings::getSetting($db, "backendLanguage"))
+                    {
+                        $_SESSION['lang'] = $this->currentLanguage;
+                        // return current language from db-settings// if not, try to set it - with error supressor to avoid notices if output started before
+                        @setcookie('lang', $this->currentLanguage, time() + (60 * 60 * 24 * 1460));
+                        return $this->currentLanguage;
+                    }
+                    else
+                    {   // failed to get language
+                        $this->currentLanguage = "en-EN";   // default: en-EN
+                        $_SESSION['lang'] = $this->currentLanguage;
+                        // return default value (en-EN)
+                        return $this->currentLanguage;
+                    }
+                }
+                else
+                {
+                    if ($this->currentLanguage = \YAWK\settings::getSetting($db, "backendLanguage"))
+                    {
+                        $_SESSION['lang'] = $this->currentLanguage;
+                        // return current language from db-settings// if not, try to set it - with error supressor to avoid notices if output started before
+                        @setcookie('lang', $this->currentLanguage, time() + (60 * 60 * 24 * 1460));
+                        return $this->currentLanguage;
+                    }
+                    else
+                    {   // failed to get language
+                        $this->currentLanguage = "en-EN";   // default: en-EN
+                        $_SESSION['lang'] = $this->currentLanguage;
+                        // return default value (en-EN)
+                        return $this->currentLanguage;
+                    }
+                }
+            }
+            else
+            {
+                if ($this->currentLanguage = \YAWK\settings::getSetting($db, "backendLanguage"))
+                {
+                    $_SESSION['lang'] = $this->currentLanguage;
+                    // return current language from db-settings// if not, try to set it - with error supressor to avoid notices if output started before
+                    @setcookie('lang', $this->currentLanguage, time() + (60 * 60 * 24 * 1460));
+                    return $this->currentLanguage;
+                }
+                else
+                {   // failed to get language
+                    $this->currentLanguage = "en-EN";   // default: en-EN
+                    $_SESSION['lang'] = $this->currentLanguage;
+                    // return default value (en-EN)
+                    return $this->currentLanguage;
                 }
             }
         }
@@ -153,7 +197,7 @@ namespace YAWK {
             // check if a GET param is set
             if (isset($_GET['lang']) && (!empty($_GET['lang'])))
             {
-                $currentLanguage = $_GET['lang'];     // sst GET param as current language
+                $currentLanguage = $_GET['lang'];     // set GET param as current language
                 // register and overwrite session var
                 $_SESSION['lang'] = $currentLanguage;
                 // and check if cookie is set
@@ -204,6 +248,7 @@ namespace YAWK {
                 }
             }
         }
+
 
         /**
          * get and return client language

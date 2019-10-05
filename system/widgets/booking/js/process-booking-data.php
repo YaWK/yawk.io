@@ -5,6 +5,19 @@ require_once '../../../classes/settings.php';
 require_once '../../../classes/email.php';
 $db = new \YAWK\db();
 
+// language object
+if (!isset($lang) || (empty($lang)))
+{   // load required language class
+    require_once '../../../classes/language.php';
+    // create new language obj
+    $language = new \YAWK\language();
+    // init language
+    $language->init($db, "frontend");
+    // convert object param to array !important
+    $lang = (array) $language->lang;
+    // inject widget language tags
+    $lang = \YAWK\language::inject($lang, '../../../widgets/booking/language/');
+}
 //
 if (isset($_POST))
 {
@@ -29,7 +42,7 @@ if (isset($_POST))
         }
     }
 
-    $subject = "Booking Anfrage von ".$_POST['name']."";
+    $subject = "".$lang['BOOKING_MAIL_BOOKING_REQUEST']." ".$lang['BOOKING_MAIL_FROM']." ".$_POST['name']."";
 
     $message = "
     <html>
@@ -68,26 +81,26 @@ if (isset($_POST))
         </style>
     </head>
     <body>
-    <h2>Booking Anfrage <small>funkyfingers.at</small></h2>
+    <h2>".$lang['BOOKING_MAIL_BOOKING_REQUEST']." <small>".\YAWK\settings::getSetting($db, 'host')."</small></h2>
         <table width=\"100%\" cellspacing=\"2\" cellpadding=\"2\" border=\"1\" id=\"bookingTable\">
             <tr>
-                <th>Abfrage</th>
-                <th>Eingabe</th>
+                <th>".$lang['BOOKING_MAIL_QUERY']."</th>
+                <th>".$lang['BOOKING_MAIL_INPUT']."</th>
             </tr>
             <tr>
-                <td width=\"25%\" align=\"right\" class=\"bold\">Name</td>
+                <td width=\"25%\" align=\"right\" class=\"bold\">".$lang['LABEL_BOOKING_CONTACT_NAME']."</td>
                 <td width=\"75%\">&nbsp;&nbsp;".$_POST['name']."</td>
             </tr>
             <tr>
-                <td width=\"25%\" align=\"right\" class=\"bold\">Telefon</td>
+                <td width=\"25%\" align=\"right\" class=\"bold\">".$lang['LABEL_BOOKING_PHONE']."</td>
                 <td width=\"75%\">&nbsp;&nbsp;<a href=\"tel:".$_POST['phone']."\">".$_POST['phone']."</a></td>
             </tr>
             <tr>
-                <td width=\"25%\" align=\"right\" class=\"bold\">Email</td>
+                <td width=\"25%\" align=\"right\" class=\"bold\">".$lang['LABEL_BOOKING_EMAIL']."</td>
                 <td width=\"75%\">&nbsp;&nbsp;".$_POST['email']."</td>
             </tr>
             <tr>
-                <td width=\"25%\" align=\"right\" class=\"bold\">Anmerkungen</td>
+                <td width=\"25%\" align=\"right\" class=\"bold\">".$lang['BOOKING_MAIL_REMARKS']."</td>
                 <td width=\"75%\">&nbsp;&nbsp;".$_POST['message']."</td>
             </tr>
             <tr>
@@ -95,55 +108,55 @@ if (isset($_POST))
                 <td width=\"75%\">&nbsp;</td>
             </tr>
             <tr>
-                <td width=\"25%\" align=\"right\" class=\"bold\">Band</td>
+                <td width=\"25%\" align=\"right\" class=\"bold\">".$lang['LABEL_BOOKING_BAND']."</td>
                 <td width=\"75%\">&nbsp;&nbsp;".$_POST['band']."</td>
             </tr>
             <tr>
-                <td width=\"25%\" align=\"right\" class=\"bold\">Veranstaltungsdatum</td>
+                <td width=\"25%\" align=\"right\" class=\"bold\">".$lang['LABEL_BOOKING_EVENTDATETIME']."</td>
                 <td width=\"75%\">&nbsp;&nbsp;".$_POST['eventDateTime']."</td>
             </tr>
             <tr>
-                <td width=\"25%\" align=\"right\" class=\"bold\">Art der Veranstaltung</td>
+                <td width=\"25%\" align=\"right\" class=\"bold\">".$lang['LABEL_BOOKING_LOCATION_TYPE']."</td>
                 <td width=\"75%\">&nbsp;&nbsp;".$_POST['locationType']."</td>
             </tr>
             <tr>
-                <td width=\"25%\" align=\"right\">Location</td>
+                <td width=\"25%\" align=\"right\">".$lang['LABEL_BOOKING_LOCATION']."</td>
                 <td width=\"75%\">&nbsp;&nbsp;".$_POST['location']."</td>
             </tr>
             <tr>
-                <td width=\"25%\" align=\"right\">Gr&ouml;&szlig;e</td>
+                <td width=\"25%\" align=\"right\">".$lang['LABEL_BOOKING_CROWD_AMOUNT']."</td>
                 <td width=\"75%\">&nbsp;&nbsp;".$_POST['crowdAmount']."</td>
             </tr>
             <tr>
-                <td width=\"25%\" align=\"right\">Soundcheck Uhrzeit</td>
+                <td width=\"25%\" align=\"right\">".$lang['LABEL_BOOKING_SOUNDCHECK']."</td>
                 <td width=\"75%\">&nbsp;&nbsp;".$_POST['eventSoundcheck']."</td>
             </tr>
             <tr>
-                <td width=\"25%\" align=\"right\">Soundcheck Dauer</td>
+                <td width=\"25%\" align=\"right\">".$lang['LABEL_BOOKING_SOUNDCHECK_DURATION']."</td>
                 <td width=\"75%\">&nbsp;&nbsp;".$_POST['soundcheckDuration']."</td>
             </tr>
             <tr>
-                <td width=\"25%\" align=\"right\">Showtime</td>
+                <td width=\"25%\" align=\"right\">".$lang['LABEL_BOOKING_SHOWTIME']."</td>
                 <td width=\"75%\">&nbsp;&nbsp;".$_POST['eventShowtime']."</td>
             </tr>
             <tr>
-                <td width=\"25%\" align=\"right\">Showtime Dauer</td>
+                <td width=\"25%\" align=\"right\">".$lang['LABEL_BOOKING_SHOWTIME_DURATION']."</td>
                 <td width=\"75%\">&nbsp;&nbsp;".$_POST['showtimeDuration']."</td>
             </tr>
             <tr>
-                <td width=\"25%\" align=\"right\">Anzahl Sets</td>
+                <td width=\"25%\" align=\"right\">".$lang['LABEL_BOOKING_SET_AMOUNT']."</td>
                 <td width=\"75%\">&nbsp;&nbsp;".$_POST['setAmount']."</td>
             </tr>
             <tr>
-                <td width=\"25%\" align=\"right\">PA / Anlage</td>
+                <td width=\"25%\" align=\"right\">".$lang['LABEL_BOOKING_PA_AVAILABLE']."</td>
                 <td width=\"75%\">&nbsp;&nbsp;".$_POST['paAvailable']."</td>
             </tr>
             <tr>
-                <td width=\"25%\" align=\"right\">Techniker vor Ort</td>
+                <td width=\"25%\" align=\"right\">".$lang['LABEL_BOOKING_TECH_AVAILABLE']."</td>
                 <td width=\"75%\">&nbsp;&nbsp;".$_POST['techAvailable']."</td>
             </tr>
             <tr>
-                <td width=\"25%\" align=\"right\">Overnight / Hotel</td>
+                <td width=\"25%\" align=\"right\">".$lang['LABEL_BOOKING_HOTEL_AVAILABLE']."</td>
                 <td width=\"75%\">&nbsp;&nbsp;".$_POST['hotelAvailable']."</td>
             </tr>
         </table>
@@ -174,11 +187,10 @@ if (isset($_POST))
         ====================================================
     ";
 */
-    $emailFrom = "assistant@funkyfingers.at";
 
     // build email header
     $header = "";
-    $header .= "From: ".$emailFrom."\r\n";
+    $header .= "From: ".$_POST['adminEmail']."\r\n";
     $header .= "'Reply-To: ".$_POST['email']."\r\n";
     $header  = "MIME-Version: 1.0\r\n";
     $header .= "Content-type: text/html; charset=utf-8\r\n";
