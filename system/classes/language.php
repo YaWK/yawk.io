@@ -426,7 +426,12 @@ namespace YAWK {
                 // if frontend language files are not reachable, check if backend language files exist
                 else if (is_dir("admin/language"))
                 {   // load backend files instead
-                    $this->pathToFile = "admin/language";
+                    $this->pathToFile = "admin/language/";
+                }
+                // if frontend language files are not reachable, check if backend language files exist
+                else if (is_dir("../../../language"))
+                {   // load backend files instead
+                    $this->pathToFile = "../../../language/";
                 }
                 else
                     {   // no language files found (even no backend files)

@@ -4,7 +4,6 @@ if (!isset($db) || (empty($db)))
 {   // if not, create new db obj
     $db = new \YAWK\db();
 }
-
 // language object
 if (!isset($lang) || (empty($lang)))
 {   // load required language class
@@ -18,11 +17,7 @@ if (!isset($lang) || (empty($lang)))
     // inject widget language tags
     $lang = \YAWK\language::inject($lang, 'system/widgets/booking/language/');
 
-    /*
-    echo "<pre>";
-    print_r($lang);
-    echo "</pre>";
-    */
+
 }
 
 // check if booking obj is loaded

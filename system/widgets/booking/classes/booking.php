@@ -452,7 +452,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
 <div class=\"container-fluid\">
 <div class=\"row\">
     <div class=\"col-md-4 animated fadeIn speed3\">
-    <input type=\"hidden\" name=\"bookingAdminEmail\" id=\"bookingAdminEmail\" value=\"".$this->bookingAdminEmail."\">
+    <input type=\"hidden\" name=\"adminEmail\" id=\"adminEmail\" value=\"".$this->bookingAdminEmail."\">
     <input type=\"hidden\" name=\"bookingHtmlEmail\" id=\"bookingHtmlEmail\" value=\"".$this->bookingHtmlEmail."\">";
 
             // NAME
