@@ -252,10 +252,21 @@ namespace YAWK {
                 {   // password not wrong - no button needed
                     $resetBtn = "&nbsp;";
                 }
-            $form = "<form role=\"form\" class=\"form-horizontal\" action=\"index.php\" method=\"post\">
+
+            // check if any page is requested
+            if (isset($_GET['page']) && (!empty($_GET['page'])))
+            {   // set redirect
+                $redirect = "?page=".$_GET['page']."";
+            }
+            else
+                {   // redirect requested
+                    $redirect = '';
+                }
+
+            $form = "<form role=\"form\" class=\"form-horizontal\" action=\"index.php".$redirect."\" method=\"post\">
             <input type=\"text\" class=\"form-control\" maxlength=\"128\" id=\"user\" value=\"".$username."\" name=\"user\" style=\"margin-bottom:4px;\" placeholder=\"Username\">
             <input type=\"password\" class=\"form-control\" id=\"password\" value=\"".$password."\" name=\"password\" placeholder=\"Password\"><br>
-            <button type=\"submit\" class=\"btn btn-success\"><i class=\"fa fa-lock\"></i> &nbsp;Login</button>
+            <button type=\"submit\" class=\"btn btn-success\"><i class=\"fa fa-lock\"></i> &nbsp;".$lang['LOGIN']."</button>
             &nbsp;&nbsp;".$resetBtn."
             </form>";
             return $form;
