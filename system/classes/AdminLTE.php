@@ -530,7 +530,6 @@ namespace YAWK {
             $username = $webmailSettings['webmail_imap_username'];
             $password = $webmailSettings['webmail_imap_password'];
             $novalidate = $webmailSettings['webmail_imap_novalidate'];
-            $novalidate = \YAWK\settings::getSetting($db, "webmail_imap_novalidate");
             if (!empty($novalidate)){ $novalidate = "/".$novalidate; } else { $novalidate = ''; }
 
             // connect to mailbox:
