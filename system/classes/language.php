@@ -456,6 +456,7 @@ namespace YAWK {
                 $global = $currentLanguage;
                 $local = strtoupper($currentLanguage);
                 $currentLanguage = "$global-$local";
+                $this->currentLanguage = $currentLanguage;
             }
             // if language file exists...
             if (is_file("$this->pathToFile"."lang-"."$currentLanguage".".ini"))
