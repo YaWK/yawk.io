@@ -113,7 +113,7 @@ try
             // no files attached...
             echo "<div class=\"row\">";
             echo "<div class=\"col-md-2\"></div>";
-            echo "<div class=\"col-md-8 text-center\"><br><br><br><h2><i>...sending...</i><br><br><br><i class=\"fa fa-spinner fa-spin\"></i></h2></div>";
+            echo "<div class=\"col-md-8 text-center\"><br><br><br><h2><i class=\"fa fa-spinner fa-spin text-muted\"></i><br><br><br><small>...sending...</small><br><br><br></h2></div>";
             echo "<div class=\"col-md-2\"></div>";
             echo "</div>";
         }
