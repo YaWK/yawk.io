@@ -183,8 +183,12 @@ namespace YAWK {
 
             // check if language is set
             if (!isset($language) || (!isset($lang)))
-            {   // inject (add) language tags to core $lang array
-                $lang = \YAWK\language::inject($lang, "../system/widgets/$widgetFolder/language/");
+            {
+                // check widget contains language files
+                if (is_dir('../system/widgets/'.$widgetFolder.'/language/'))
+                {   // inject (add) language tags to core $lang array
+                    $lang = \YAWK\language::inject($lang, "../system/widgets/$widgetFolder/language/");
+                }
             }
 
             foreach ($settings as $type => $setting)
