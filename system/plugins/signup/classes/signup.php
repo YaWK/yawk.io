@@ -42,7 +42,7 @@ namespace YAWK\PLUGINS\SIGNUP {
          * @param object $db database
          * @return bool|null|string
          */
-        public function sayHello($db)
+        public function sayHello($db, $lang)
         {   /** @var $db \YAWK\db */
             // greets user and load welcome page for given role(gid)
             if (\YAWK\user::isAnybodyThere($db))
@@ -64,7 +64,7 @@ namespace YAWK\PLUGINS\SIGNUP {
                         $userpage = new \YAWK\PLUGINS\USERPAGE\userpage($db, $user);
                     }
                     // load userpage for given user
-                    return $userpage->init($db, $user);
+                    return $userpage->init($db, $user, $lang);
                 }
                 else
                 {   // user is not logged in
