@@ -139,7 +139,7 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
                 {   // append px to value
                     $this->loginboxLoginBtnMarginTop = $this->loginboxLoginBtnMarginTop."px";
                 }
-                // generate css style markup
+                // generate css style markupd
                 $this->loginboxLoginBtnMarginMarkup = " style=\"margin-top:$this->loginboxLoginBtnMarginTop;\"";
             }
             else
@@ -233,11 +233,11 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
                 // prepare redirect url
                 $this->loginboxRedirect = rawurlencode($this->loginboxRedirect);
                 // logout button with redirect url
-                $this->loginboxLogoutBtnMarkup = '<a href="logout" id="logoutBtn" class="'.$this->loginboxLogoutBtnClass.'" target="_self">'.$this->loginboxLogoutBtnText.'</a>';
+                $this->loginboxLogoutBtnMarkup = '<a href="logout" id="logoutBtn" style="margin-top:'.$this->loginboxLoginBtnMarginTop.'" class="'.$this->loginboxLogoutBtnClass.'" target="_self">'.$this->loginboxLogoutBtnText.'</a>';
             }
             else
                 {   // logout button without redirect url
-                    $this->loginboxLogoutBtnMarkup = '<a href="logout" id="logoutBtn" class="'.$this->loginboxLogoutBtnClass.'" target="_self">'.$this->loginboxLogoutBtnText.'</a>';
+                    $this->loginboxLogoutBtnMarkup = '<a href="logout" id="logoutBtn" style="margin-top:'.$this->loginboxLoginBtnMarginTop.'" class="'.$this->loginboxLogoutBtnClass.'" target="_self">'.$this->loginboxLogoutBtnText.'</a>';
                 }
 
             /** SET GREETING AND LOGOUT BUTTON */
@@ -304,10 +304,7 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
             $this->setLoginProperties();
 
             // bootstrap layout markup
-            echo "
-                <div class=\"container-fluid\">
-                <div class=\"row\">
-                <div class=\"col-md-12\">";
+            echo "<div class=\"col-md-12\"".$this->loginboxLoginBtnMarginMarkup.">";
 
             // draw heading above loginbox
             echo "<div id=\"heading\">";
@@ -315,7 +312,7 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
             echo "</div>";
 
             // draw loginbox
-            echo"<form name=\"login\"$this->loginboxProcessingModeFormMarkup$this->loginboxFormClassMarkup id=\"loginForm\" role=\"form\" method=\"POST\"$this->loginboxWidthMarkup>
+            echo"<form name=\"login\" ".$this->loginboxProcessingModeFormMarkup.$this->loginboxFormClassMarkup." id=\"loginForm\" role=\"form\" method=\"POST\"".$this->loginboxWidthMarkup.">
                     <input type=\"text\" id=\"user\" name=\"user\" value=\"".$username."\" class=\"form-control\" placeholder=\"Benutzername\">
                     <input type=\"password\" id=\"password\" name=\"password\" value=\"".$password."\" class=\"form-control\" placeholder=\"Passwort\">
                     <input type=\"hidden\" name=\"login\" value=\"login\">
@@ -329,11 +326,9 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
                     <input type=\"hidden\" id=\"loginboxGreetingTextClass\" name=\"loginboxGreetingTextClass\" value=\"".$this->loginboxGreetingTextClass."\">
                     <input type=\"hidden\" id=\"loginboxGreetingSubtext\" name=\"loginboxGreetingSubtext\" value=\"".$this->loginboxGreetingSubtext."\">
                     <input type=\"hidden\" id=\"loginboxGreetingShowName\" name=\"loginboxGreetingShowName\" value=\"".$this->loginboxGreetingShowName."\">
-                    <input type=\"$this->loginboxProcessingModeSubmitBtnType\" name=\"submit\" id=\"submit\" class=\"$this->loginboxLoginBtnClass\" value=\"$this->loginboxLoginBtnText\"$this->loginboxLoginBtnMarginMarkup> 
+                    <input type=\"".$this->loginboxProcessingModeSubmitBtnType."\" name=\"submit\" id=\"submit\" class=\"$this->loginboxLoginBtnClass\" value=\"$this->loginboxLoginBtnText\"".$this->loginboxLoginBtnMarginMarkup."> 
                 </form>
                 <div id=\"thankYouMessage\"></div>
-            </div>
-            </div>
             </div>";
         }
 
@@ -349,12 +344,8 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
             $this->setLogoutProperties();
 
             echo "
-            <div class=\"container-fluid\">
-            <div class=\"row\">
             <div class=\"col-md-12\">
                 ".$this->loginboxGreetingMarkup."
-            </div>
-            </div>
             </div>";
         }
     }
