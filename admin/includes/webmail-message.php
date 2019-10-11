@@ -198,6 +198,7 @@ else    // webmail is not activated...
         var markAsUnseenIcon = $('#icon-markAsUnseen');
         var replyBtn = $('#replyBtn');
         var replyIcon = $('#icon-reply');
+        var forwardIcon = $('#icon-forward');
         var replyTextArea = $('#summernote');
         var form = $('#my-dropzone');
         var toFormGroup = $('#toFormGroup');
@@ -218,6 +219,16 @@ else    // webmail is not activated...
             boxFooter.hide();
             toFormGroup.removeClass();
             $('.note-editable').focus();
+        });
+
+        // forward: OPEN REPLY BOX and add forward email
+        $(forwardIcon).click(function() {
+            var toField = $('#toField');
+            openReplyBox();
+            boxFooter.hide();
+            toFormGroup.removeClass();
+            $('.note-editable').focus();
+            // $(toField).fadeIn();
         });
 
         // SEEN / UNSEEN icon
@@ -431,17 +442,24 @@ if ($webmailSettings['webmail_active'] == true) {
                     <div class="mailbox-read-message">
 
                         <?php
-                            echo $imap->incomingMessage->message->html;
-
-                        // set download path
-                        $downloadPath = "../media/mailbox";
-
-                        // set attachment options
-                        $attachmentOptions = array('dir' => $downloadPath, 'incomingMessage' => $imap->incomingMessage);
+                        // set message body
+                        echo $imap->incomingMessage->message->html;
 
                         // if there are any attachments...
                         if (count($imap->incomingMessage->attachments) > 0)
                         {
+                            // set download path
+                            $downloadPath = "../media/mailbox";
+
+                            // check if download path is writeable
+                            if (is_writeable($downloadPath) === false)
+                            {   // it is not - throw error msg
+                                \YAWK\alert::draw("warning", $lang['ERROR'], $lang['ATTACH_DIR_NOT_WRITEABLE'], "", 3800);
+                            }
+
+                            // set attachment options
+                            $attachmentOptions = array('dir' => $downloadPath, 'incomingMessage' => $imap->incomingMessage);
+
                             // set markup for attachments - start list
                             echo "<ul class=\"mailbox-attachments clearfix\">";
 
@@ -595,7 +613,7 @@ if ($webmailSettings['webmail_active'] == true) {
                 </div>
 
                 <div id="toFormGroup" class="form-group hidden">
-                    <input class="form-control hidden" name="to" placeholder="<?php echo $imap->incomingMessage->header->details->from[0]->mailbox . "@" . $imap->incomingMessage->header->details->from[0]->host ?>" value="<?php echo $imap->incomingMessage->header->details->from[0]->mailbox . "@" . $imap->incomingMessage->header->details->from[0]->host ?>">
+                    <input id="toField" class="form-control hidden" name="to" placeholder="<?php echo $imap->incomingMessage->header->details->from[0]->mailbox . "@" . $imap->incomingMessage->header->details->from[0]->host ?>" value="<?php echo $imap->incomingMessage->header->details->from[0]->mailbox . "@" . $imap->incomingMessage->header->details->from[0]->host ?>">
                     <input id="ccField" class="form-control hidden" name="ccField" placeholder="CC:">
                     <input id="bccField" class="form-control hidden" name="bccField" placeholder="BCC:">
                 </div>
