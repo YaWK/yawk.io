@@ -37,19 +37,27 @@ namespace YAWK\PLUGINS\USERPAGE {
         public function init($db)
         {
             global $user;
+
+            // profile obj username property
             $this->username = $_SESSION['username'];
+
+            // create new user object
             $user = new \YAWK\user($db);
+
+            // load user properties
             $user->loadProperties($db, $this->username);
-            if ($user->isLoggedIn($db, $user->username)) {
-                // user is logged in, draw profile page
+
+            // check if user is logged in
+            if ($user->isLoggedIn($db, $user->username))
+            {   // user is logged in, draw profile page
                 $this->html .= self::drawProfile($db, $user);
                 return $this->html;
-              //  $this->html .= self::drawForm();
-              //  return $this->html;
-            } else {
-                echo \YAWK\alert::draw("danger", "Error!", "Obviously you are not correctly logged in. Please re-login!","",6800);
-                return \YAWK\user::drawLoginBox("", "");
             }
+            else
+                {   // user is not logged in
+                    echo \YAWK\alert::draw("danger", "Error!", "Obviously you are not correctly logged in. Please re-login!","",6800);
+                    return \YAWK\user::drawLoginBox("", "");
+                }
         }
 
         /**
@@ -80,15 +88,18 @@ namespace YAWK\PLUGINS\USERPAGE {
             $this->html .= "<form id=\"form\" class=\"form-inline\" action=\"welcome.html\" method=\"POST\">";
             $this->html .= "
                     <fieldset>
-                    <legend><i class=\"fa fa-user\"></i> &nbsp;Profile Settings <small>Change your personal data.</small></legend>
-                    <dl class=\"dl-horizontal\">";
+                    <legend><i class=\"fa fa-user\"></i> &nbsp;Profile Settings <small>Change your personal data.</small></legend>";
+
+            /* div row
+            $this->html .="<div class=\"container-fluid\"><div class=\"row\">
+                            <div class=\"col-md-12\">";
+            */
+
             /* USERNAME */
             if ($changeUsername === '1'){
-                $this->html .= "<dt><small><i class=\"fa fa-user\"></i></small> Username</dt>
-                    <dd>
+                $this->html .= "<small><i class=\"fa fa-user\"></i></small> Username<br>
                         <input type=\"text\" class=\"form-control\" id=\"newUsername\" name=\"newUsername\" value=\"$user->username\" placeholder=\"set new username\">
-                        <label for=\"newUsername\" class=\"small\"> &nbsp;change your username</label> &nbsp;<br>
-                    </dd>";
+                        <label for=\"newUsername\" class=\"small\"> &nbsp;change your username</label> &nbsp;<br>";
             }
             /* EMAIL */
             if ($changeEmail === '0') {
@@ -98,111 +109,84 @@ namespace YAWK\PLUGINS\USERPAGE {
             else {
                 $disabled = '';
                 $disabledLabel = "change email address";
-                $this->html .= "<dt><small><i class=\"fa fa-envelope-o\"></i></small> Email</dt>
-                    <dd>
+                $this->html .= "<small><i class=\"fa fa-envelope-o\"></i></small> Email<br>
                         <input type=\"text\" class=\"form-control\" value=\"$user->email\" id=\"newEmail\" name=\"newEmail\" $disabled placeholder=\"$user->email\">
-                        <label for=\"newEmail\" class=\"small\"> &nbsp;$disabledLabel</label><br><br>
-                    </dd>";
+                        <label for=\"newEmail\" class=\"small\"> &nbsp;$disabledLabel</label><br><br>";
             }
             /* PASSWORD */
             if ($changePassword === '1'){
-                $this->html .= "<dt><small><i class=\"fa fa-lock\"></i></small> Password</dt>
-                    <dd>
+                $this->html .= "<small><i class=\"fa fa-lock\"></i></small> Password<br>
                         <input type=\"password\" class=\"form-control\" id=\"newPassword1\" name=\"newPassword1\" placeholder=\"****\">
                         <label for=\"newPassword1\" class=\"small\"> &nbsp;new password</label> &nbsp;<br>
                         <input type=\"password\" class=\"form-control\" id=\"newPassword2\" name=\"newPassword2\" placeholder=\"****\">
-                        <label for=\"newPassword2\" class=\"small\"> &nbsp;new password <small>(again)</small></label> <br><br>
-                    </dd>";
+                        <label for=\"newPassword2\" class=\"small\"> &nbsp;new password <small>(again)</small></label> <br><br>";
             }
             /* FIRST NAME */
             if ($changeFirstname === '1'){
-                $this->html .= "<dt><small><i class=\"fa fa-user\"></i></small> First Name</dt>
-                    <dd>
+                $this->html .= "<small><i class=\"fa fa-user\"></i></small> First Name<br>
                         <input type=\"text\" class=\"form-control\" id=\"newFirstname\" name=\"firstname\" value=\"$user->firstname\" placeholder=\"set new firstname\">
-                        <label for=\"newFirstname\" class=\"small\"> &nbsp;change your first name</label> &nbsp;<br>
-                    </dd>";
+                        <label for=\"newFirstname\" class=\"small\"> &nbsp;change your first name</label> &nbsp;<br>";
             }
             /* LAST NAME */
             if ($changeLastname === '1'){
-                $this->html .= "<dt><small><i class=\"fa fa-user\"></i></small> Last Name</dt>
-                    <dd>
+                $this->html .= "<small><i class=\"fa fa-user\"></i></small> Last Name<br>
                         <input type=\"text\" class=\"form-control\" id=\"newLastname\" name=\"lastname\" value=\"$user->lastname\" placeholder=\"set new lastname\">
-                        <label for=\"newLastname\" class=\"small\"> &nbsp;change your last name</label> &nbsp;<br><br>
-                    </dd>";
+                        <label for=\"newLastname\" class=\"small\"> &nbsp;change your last name</label> &nbsp;<br><br>";
             }
             /* STREET */
             if ($changeStreet === '1'){
-                $this->html .= "<dt><small><i class=\"fa fa-home\"></i></small> Street</dt>
-                    <dd>
+                $this->html .= "<small><i class=\"fa fa-home\"></i></small> Street<br>
                         <input type=\"text\" class=\"form-control\" id=\"newStreet\" name=\"street\" value=\"$user->street\" placeholder=\"set new street\">
-                        <label for=\"newStreet\" class=\"small\"> &nbsp;change your street</label> &nbsp;<br>
-                    </dd>";
+                        <label for=\"newStreet\" class=\"small\"> &nbsp;change your street</label> &nbsp;<br>";
             }
             /* ZIPCODE */
             if ($changeZipcode === '1'){
-                $this->html .= "<dt><small><i class=\"fa fa-home\"></i></small> Zipcode</dt>
-                    <dd>
+                $this->html .= "<small><i class=\"fa fa-home\"></i></small> Zipcode<br>
                         <input type=\"text\" class=\"form-control\" id=\"newZipcode\" name=\"zipcode\" value=\"$user->zipcode\" placeholder=\"set new zipcode\">
-                        <label for=\"newZipcode\" class=\"small\"> &nbsp;change your zipcode</label> &nbsp;<br>
-                    </dd>";
+                        <label for=\"newZipcode\" class=\"small\"> &nbsp;change your zipcode</label> &nbsp;<br>";
             }
             /* CITY */
             if ($changeCity === '1'){
-                $this->html .= "<dt><small><i class=\"fa fa-home\"></i></small> City</dt>
-                    <dd>
+                $this->html .= "<small><i class=\"fa fa-home\"></i></small> City<br>
                         <input type=\"text\" class=\"form-control\" id=\"newCity\" name=\"city\" value=\"$user->city\" placeholder=\"set new city\">
-                        <label for=\"newCity\" class=\"small\"> &nbsp;change your city</label> &nbsp;<br>
-                    </dd>";
+                        <label for=\"newCity\" class=\"small\"> &nbsp;change your city</label> &nbsp;<br>";
             }
             /* STATE */
             if ($changeState === '1'){
-                $this->html .= "<dt><small><i class=\"fa fa-home\"></i></small> State</dt>
-                    <dd>
+                $this->html .= "<small><i class=\"fa fa-home\"></i></small> State<br>
                         <input type=\"text\" class=\"form-control\" id=\"newState\" name=\"state\" value=\"$user->country\" placeholder=\"set new state\">
-                        <label for=\"newState\" class=\"small\"> &nbsp;change your state</label> &nbsp;
-                    </dd>";
+                        <label for=\"newState\" class=\"small\"> &nbsp;change your state</label> &nbsp;";
             }
             /* COUNTRY */
             if ($changeCountry === '1'){
-                $this->html .= "<dt><small><i class=\"fa fa-home\"></i></small> Country</dt>
-                    <dd>
+                $this->html .= "<small><i class=\"fa fa-home\"></i></small> Country<br>
                         <input type=\"text\" class=\"form-control\" id=\"newCountry\" name=\"country\" value=\"$user->country\" placeholder=\"set new country\">
-                        <label for=\"newCountry\" class=\"small\"> &nbsp;change your country</label> &nbsp;
-                    </dd>";
+                        <label for=\"newCountry\" class=\"small\"> &nbsp;change your country</label> &nbsp;";
             }
             /* URL */
             if ($changeUrl === '1'){
-                $this->html .= "<br><dt><small><i class=\"fa fa-external-link\"></i></small> Website URL*</dt>
-                    <dd>
+                $this->html .= "<br><small><i class=\"fa fa-external-link\"></i></small> Website URL*<br>
                         <input type=\"text\" class=\"form-control\" id=\"newUrl\" name=\"url\" size=\"42\" value=\"$user->url\" placeholder=\"set new website url\">
-                        <label for=\"newUrl\" class=\"small\"> &nbsp;*optional</label> &nbsp;<br>
-                    </dd>";
+                        <label for=\"newUrl\" class=\"small\"> &nbsp;*optional</label> &nbsp;<br>";
             }
             /* FACEBOOK */
             if ($changeFacebook === '1'){
-                $this->html .= "<dt><small><i class=\"fa fa-facebook-official\"></i></small> Facebook URL*</dt>
-                    <dd>
+                $this->html .= "<small><i class=\"fa fa-facebook-official\"></i></small> Facebook URL*<br>
                         <input type=\"text\" class=\"form-control\" id=\"newFacebook\" size=\"42\" value=\"$user->facebook\" name=\"facebook\" placeholder=\"set new facebook url\">
-                        <label for=\"newFacebook\" class=\"small\"> &nbsp;*optional</label> &nbsp;<br>
-                    </dd>";
+                        <label for=\"newFacebook\" class=\"small\"> &nbsp;*optional</label> &nbsp;<br>";
             }
             /* TWITTER */
             if ($changeTwitter === '1'){
-                $this->html .= "<dt><small><i class=\"fa fa-twitter\"></i></small> Twitter URL*</dt>
-                    <dd>
+                $this->html .= "<small><i class=\"fa fa-twitter\"></i></small> Twitter URL*<br>
                         <input type=\"text\" class=\"form-control\" id=\"newTwitter\" size=\"42\" value=\"$user->twitter\" name=\"twitter\" placeholder=\"set new twitter url\">
-                        <label for=\"newTwitter\" class=\"small\"> &nbsp;*optional</label> &nbsp;<br><br>
-                    </dd>";
+                        <label for=\"newTwitter\" class=\"small\"> &nbsp;*optional</label> &nbsp;<br><br>";
             }
-                $this->html .= "
-                    <dt>&nbsp;</dt>
-                    <dd>&nbsp;</dd>
-                    </dl>
-                    </fieldset>";
+                $this->html .= "";
             $this->html .= "<input type=\"submit\" name=\"submit\" value=\"Speichern\" class=\"btn btn-success\">";
             $this->html .= "<input type=\"hidden\" name=\"profile-update\" value=\"1\">";
             $this->html .= "<input type=\"hidden\" name=\"uid\" value=\"$user->id\">";
-            $this->html .= "<br><br><br>";
+            $this->html .= "</fieldset><br><br><br>";
+            // </div></div></div>
         return null;
         }
     }

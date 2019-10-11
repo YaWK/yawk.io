@@ -102,7 +102,7 @@ namespace YAWK\PLUGINS\USERPAGE {
                 $this->dashboard .= "Hello $user->username! You are logged in with root access.";
 
                 // append admin panel + tab
-                $this->appendTab = "<li role=\"admin\"><a href=\"#admin\" aria-controls=\"admin\" role=\"tab\" data-toggle=\"tab\">
+                $this->appendTab = "<li class=\"nav-item\" role=\"admin\"><a href=\"#admin\" class=\"nav-link\" aria-controls=\"admin\" role=\"tab\" data-toggle=\"tab\">
                                 <i class=\"fa fa-wrench\"></i>&nbsp; Admin</a></li>";
                 $this->appendPanel = "<div role=\"tabpanel\" class=\"tab-pane animated fadeIn\" id=\"admin\"><h4>
                                       <i class=\"fa fa-lock fa-2x\"></i> &nbsp;Admin Stuff...</h4></div>";
@@ -193,14 +193,12 @@ namespace YAWK\PLUGINS\USERPAGE {
             }
 
                 $dashboard .= "
-                    <div class=\"row text-justify\">
                       <div class=\"col-md-4\">
                       col 1
                       </div>
                       <div class=\"col-md-8\">
                       col 2
-                      </div>
-                    </div>";
+                      </div>";
 
             $html = "";
             $signup_hellotextsub = \YAWK\settings::getSetting($db, "userpage_hellotextsub");
