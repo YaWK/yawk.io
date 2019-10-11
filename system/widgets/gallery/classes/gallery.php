@@ -270,7 +270,7 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
                                 // $rnd = uniqid();
 
                                 echo "
-                                <div class=\"$col animate text-center\" id=\"imgCol-".$this->itemID."\">
+                                <div class=\"$col text-center\" id=\"imgCol-".$this->itemID."\">
                                     <a href=\"$row[folder]/$this->filename\" data-lightbox=\"$this->galleryID\" data-title=\"$this->itemTitle\"><img ".$this->galleryWidthMarkup."class=\"$this->galleryImageClass\" id=\"img-$this->itemID\" title=\"$this->itemTitle\" src=\"$row[folder]/$this->filename\"></a><br><br>
                                 </div>
                                       ";
