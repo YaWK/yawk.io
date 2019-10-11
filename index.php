@@ -96,7 +96,7 @@ if (\YAWK\sys::isOffline($db)) {   // backend-users (admins) can see the fronten
 if (isset($_GET['signup']) && ($_GET['signup']) == 1) {
     include('system/plugins/signup/classes/signup.php');
     $signup = new \YAWK\PLUGINS\SIGNUP\signup();
-    echo $signup->sayHello($db);
+    echo $signup->sayHello($db, $lang);
 }
 
 // URL controller - this loads the properties of each page */
@@ -164,16 +164,16 @@ if (\YAWK\user::isAnybodyThere($db))
         // get template by user templateID
         $template->name = \YAWK\template::getTemplateNameById($db, $user->templateID);
         // include page, based on user templateID
-        if(!include("system/templates/$template->name/index.php"))
+        if(!include("system/templates/".$template->name."/index.php"))
         {   // if template not exists, show selectedTemplate
             $templateName = \YAWK\template::getTemplateNameById($db, $template->selectedTemplate);
-            include("system/templates/$template->name/index.php");
+            include("system/templates/".$template->name."/index.php");
         }
     }
     else
         {   // user is not allowed to overrule template, show global default (selectedTemplate) instead.
             $template->name = \YAWK\template::getTemplateNameById($db, $user->templateID);
-            if(!include("system/templates/$template->name/index.php"))
+            if(!include("system/templates/".$template->name."/index.php"))
             {
                 die("Unable to include template. Either database config is faulty or YaWK is not correctly installed.");
             }
@@ -182,7 +182,7 @@ if (\YAWK\user::isAnybodyThere($db))
 else
     {   // user is NOT logged in, load default template (selectedTemplate) from settings db
         $template->name = \YAWK\template::getTemplateNameById($db, $user->templateID);
-        if(!include("system/templates/$template->name/index.php"))
+        if(!include("system/templates/".$template->name."/index.php"))
         {
             die("Unable to include template. Either database config is faulty or YaWK is not correctly installed.");
         }

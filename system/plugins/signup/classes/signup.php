@@ -40,6 +40,7 @@ namespace YAWK\PLUGINS\SIGNUP {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db database
+         * @param array $lang language array
          * @return bool|null|string
          */
         public function sayHello($db, $lang)
