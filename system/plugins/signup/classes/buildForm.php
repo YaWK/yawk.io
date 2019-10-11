@@ -131,7 +131,6 @@ namespace YAWK\PLUGINS\SIGNUP {
             // get selected form layout (left, right, 1,2, or 3 cols...)
             $layout = \YAWK\settings::getSetting($db, "signup_layout");
             // layout row
-            $this->html .= "<div class=\"row\">";
             // switch case layout and load corresponding htmlcode
             switch ($layout) {
                 case "left":
@@ -167,7 +166,6 @@ namespace YAWK\PLUGINS\SIGNUP {
                     $this->html .= "<div class=\"col-md-4\">&nbsp;</div>";
                     break;
             }
-            $this->html .= "</div>";
         }
 
         /**
