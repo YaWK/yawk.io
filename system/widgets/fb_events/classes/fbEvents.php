@@ -150,6 +150,10 @@ class fbEvents
     public $fbEventsFbLink = 'true';
     /** @var string display google map? true|false */
     public $fbEventsGoogleMap = 'true';
+    /** @var int limit event to (x) */
+    public $fbEventsLimit = 0;
+    /** @var string limit markup */
+    public $limit = '';
 
     public function __construct($db)
     {
@@ -161,7 +165,7 @@ class fbEvents
             $this->$property = $value;
         }
     }
-    
+
     public function display()
     {
         if (isset($this->fbEventsAppId) && (!empty($this->fbEventsAppId)
@@ -179,7 +183,7 @@ class fbEvents
                 });
                 FB.AppEvents.logPageView();
             };
-        
+
             (function(d, s, id){
                 var js, fjs = d.getElementsByTagName(s)[0];
                 if (d.getElementById(id)) {return;}
@@ -280,6 +284,12 @@ class fbEvents
             if ($this->fbEventsSortation === "asc")
             {   // reverse array data to display upcoming event first
                 $obj['data'] = array_reverse($obj['data']);
+            }
+
+            // CHECK, if a limit should be set
+            if (isset($this->fbEventsLimit) && (!empty($this->fbEventsLimit)))
+            {
+                $obj['data'] = array_slice($obj['data'], 0 -$this->fbEventsLimit);
             }
 
             // $i will be used for counting elements and to help animate content
@@ -992,7 +1002,7 @@ class fbEvents
                         }
                         else
                             {   // default: img-thumbnail responsive
-                                $coverImage = "<br><img src=\"" . $this->event['cover']['source'] . "\" title=\"" . $this->event['name'] . "\" class=\"img-thumbnail responsive\">";
+                                $coverImage = "<br><img src=\"" . $this->event['cover']['source'] . "\" title=\"" . $this->event['name'] . "\" class=\"img-thumbnail img-fluid\">";
                             }
                     }
                     else

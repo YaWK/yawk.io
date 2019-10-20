@@ -2373,7 +2373,14 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('bookingAdminCCEmail', '', 45, 1, 1, 'LABEL_BOOKING_ADMIN_CC_EMAIL', '', '', '', 'DESC_BOOKING_ADMIN_CC_EMAIL', 'form-control', '', '', '', 367),
 ('blogID', '', 11, 1, 1, 'LABEL_BLOG_ID', 'fa fa-wordpress', 'BLOG_H_SELECT_GALLERY', '', 'DESC_BLOG_ID', 'form-control', '', '', '', 368),
 ('blogHeading', '', 11, 1, 2, 'LABEL_BLOG_HEADING', '', '', '', 'DESC_BLOG_HEADING', 'form-control', '', 'PH_BLOG_HEADING', '', 369),
-('blogSubtext', '', 11, 1, 3, 'LABEL_BLOG_SUBTEXT', '', '', '', 'DESC_BLOG_SUBTEXT', 'form-control', '', 'PH_BLOG_SUBTEXT', '', 370);
+('blogSubtext', '', 11, 1, 3, 'LABEL_BLOG_SUBTEXT', '', '', '', 'DESC_BLOG_SUBTEXT', 'form-control', '', 'PH_BLOG_SUBTEXT', '', 370),
+('fbFeedAppId', '', 46, 1, 1, 'LABEL_FB_FEED_APPID', '', 'FB_FEED_HEADING_GLOBAL', '', 'DESC_FB_FEED_APPID', 'form-control', '', 'PH_FB_FEED_APPID', '', 371),
+('fbFeedPageId', '', 46, 1, 3, 'LABEL_FB_FEED_PAGEID', '', '', '', 'DESC_FB_FEED_PAGEID', 'form-control', '', 'PH_FB_FEED_PAGEID', '', 372),
+('fbFeedAccessToken', '', 46, 1, 2, 'LABEL_FB_FEED_ACCESS_TOKEN', '', '', '', 'DESC_FB_FEED_ACCESS_TOKEN', 'form-control', '', 'PH_FB_FEED_ACCESS_TOKEN', '', 373),
+('fbFeedGraphRequest', '/me/feed/', 46, 1, 4, 'LABEL_FB_FEED_REQUEST', '', '', '', 'DESC_FB_FEED_REQUEST', 'form-control', '', 'PH_FB_FEED_REQUEST', '', 374),
+('fbFeedFields', 'picture,message,place,created_time,full_picture,permalink_url,from', 46, 1, 5, 'LABEL_FB_FEED_FIELDS', '', '', '', 'DESC_FB_FEED_FIELDS', 'form-control', '', 'PH_FB_FEED_FIELDS', '', 375),
+('fbFeedLimit', '5', 46, 1, 8, 'LABEL_FB_FEED_LIMIT', '', '', '', 'DESC_FB_FEED_LIMIT', 'form-control', '', '', '', 376),
+('fbEventsLimit', '5', 39, 1, 21, 'LABEL_FB_EVENTS_LIMIT', '', '', '', 'DESC_FB_EVENTS_LIMIT', 'form-control', '', '', '', 376);
 
 CREATE TABLE `cms_widget_settings` (
   `id` int(11) NOT NULL,
@@ -2443,13 +2450,14 @@ INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`)
 (36, 1, 'AdBlock Blocker', 'fuckadblock', 'Detect and block AdBlocker'),
 (37, 1, 'Content Animator', 'contentAnimator', 'Enable Slide Animations for your content'),
 (38, 1, 'Embed Page', 'embed_page', 'Embed any of your static pages'),
-(39, 1, 'Facebook Events', 'fb_events', 'Embed Facebook Events from your Facebook Page'),
+(39, 1, 'Facebook Events', 'fb_events', 'Embed Facebook Events from your Facebook page'),
 (40, 1, 'Facebook Graph Explorer', 'fb_example', 'Use the Facebook Graph API to get data - this is for demo and development purpose only!'),
 (41, 1, 'Facebook Gallery', 'fb_gallery', 'Embed photo albums from your Facebook page'),
 (42, 1, 'Facebook Cover', 'fb_cover', 'Embed current cover image from your Facebook page'),
 (43, 1, 'SoundCloud', 'soundcloud', 'Embed any soundcloud song or playlist'),
 (44, 1, 'Example Widget', 'example', 'Empty widget (for DEMO and development purpose)'),
-(45, 1, 'Booking Widget', 'booking', 'Booking widget (corresponding to the booking plugin)');
+(45, 1, 'Booking Widget', 'booking', 'Booking widget (corresponding to the booking plugin)'),
+(46, 1, 'Facebook Feed', 'fb_feed', 'Embed the feed (latest x postings) of your Facebook page');
 
 ALTER TABLE `cms_assets`
   ADD PRIMARY KEY (`id`);
@@ -2661,8 +2669,8 @@ ALTER TABLE `cms_user_groups`
 ALTER TABLE `cms_widgets`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_defaults`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=370;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=376;
 ALTER TABLE `cms_widget_settings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 ALTER TABLE `cms_widget_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
