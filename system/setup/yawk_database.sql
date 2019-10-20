@@ -2380,7 +2380,7 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('fbFeedGraphRequest', '/me/feed/', 46, 1, 4, 'LABEL_FB_FEED_REQUEST', '', '', '', 'DESC_FB_FEED_REQUEST', 'form-control', '', 'PH_FB_FEED_REQUEST', '', 374),
 ('fbFeedFields', 'picture,message,place,created_time,full_picture,permalink_url,from', 46, 1, 5, 'LABEL_FB_FEED_FIELDS', '', '', '', 'DESC_FB_FEED_FIELDS', 'form-control', '', 'PH_FB_FEED_FIELDS', '', 375),
 ('fbFeedLimit', '5', 46, 1, 8, 'LABEL_FB_FEED_LIMIT', '', '', '', 'DESC_FB_FEED_LIMIT', 'form-control', '', '', '', 376),
-('fbEventsLimit', '5', 39, 1, 21, 'LABEL_FB_EVENTS_LIMIT', '', '', '', 'DESC_FB_EVENTS_LIMIT', 'form-control', '', '', '', 376);
+('fbEventsLimit', '5', 39, 1, 21, 'LABEL_FB_EVENTS_LIMIT', '', '', '', 'DESC_FB_EVENTS_LIMIT', 'form-control', '', '', '', 377);
 
 CREATE TABLE `cms_widget_settings` (
   `id` int(11) NOT NULL,
@@ -2669,7 +2669,7 @@ ALTER TABLE `cms_user_groups`
 ALTER TABLE `cms_widgets`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_widget_defaults`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=376;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=377;
 ALTER TABLE `cms_widget_settings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 ALTER TABLE `cms_widget_types`
