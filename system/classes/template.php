@@ -3207,10 +3207,12 @@ namespace YAWK {
             }
 
             // check if there is more than 1 entry
+            /*
             if (isset($asset[1]) && (!empty($asset[1]))) {   // bootstrap seem to be loaded twice
                 \YAWK\sys::setSyslog($db, 48, 2, "bootstrap loaded multiple times - template <b>$this->name</b> requires only <b>$this->framework</b>", $_SESSION['uid'], 0, 0, 0);
                 return "X";
             }
+            */
 
             // check if asset array is set and not empty
             if (isset($asset) && (is_array($asset) && (!empty($asset[0][0]))))

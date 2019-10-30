@@ -191,13 +191,19 @@ if (isset($_POST))
     // build email header
     $header = "";
     $header .= "From: ".$_POST['adminEmail']."\r\n";
-    $header .= "'Reply-To: ".$_POST['email']."\r\n";
+    $header .= "'Reply-To: ".$_POST['adminEmail']."\r\n";
     $header  = "MIME-Version: 1.0\r\n";
     $header .= "Content-type: text/html; charset=utf-8\r\n";
     // $header .= "X-Mailer: PHP ".phpversion()."";
 
     // send booking email to recipient
-    $sent = mail($_POST['adminEmail'], $subject, $message, $header);
+    $sent = mail($_POST['bookingAdminEmail'], $subject, $message, $header);
+
+    // check if CC should be sent
+    if (isset($_POST['adminCCEmail']) && (!empty($_POST['adminCCEmail'])))
+    {   //
+        $sent = mail($_POST['adminCCEmail'], $subject, $message, $header);
+    }
 
     // check if copy should be sent
     if (isset($_POST['mailCopy']) && (!empty($_POST['mailCopy'])) && ($_POST['mailCopy'] == "true"))

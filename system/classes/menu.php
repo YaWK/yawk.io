@@ -788,9 +788,31 @@ namespace YAWK {
 
                     }
                 }
+
                 $html.="
-    </ul>
-  </div>
+    </ul>";
+
+                // logout menu link - display only if user is logged in
+                if (isset($_SESSION['username']) && isset($_SESSION['logged_in'])){
+                    if ($_SESSION['logged_in'] == true){
+                        // display only if logoutmenu is enabled
+                        if (\YAWK\settings::getSetting($db, 'userpage_logoutmenu') === '1'){
+                            $html .= \YAWK\menu::drawLogoutMenu($db);
+                        }
+                    }
+                }
+                else {$html .= "</ul>
+                            <ul class=\"nav navbar-nav navbar-collapse navbar-right\">
+                             <li>";
+                    // check if userlogin is allowed
+                    if (\YAWK\settings::getSetting($db, 'userlogin') === '1')
+                    {   // load loginbox into navbar
+                        $html .= \YAWK\user::drawMenuLoginBox("","", "light");
+                    }
+                    $html .= "</li></ul>";
+                }
+
+  $html .= "</div>
 </nav>
 
 <script>

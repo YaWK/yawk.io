@@ -16,8 +16,6 @@ if (!isset($lang) || (empty($lang)))
     $lang = (array) $language->lang;
     // inject widget language tags
     $lang = \YAWK\language::inject($lang, 'system/widgets/booking/language/');
-
-
 }
 
 // check if booking obj is loaded
