@@ -3082,25 +3082,28 @@ namespace YAWK {
                         // make sure, host will only be added for relative url assets
                         if(stristr($row['link'], 'http://') || (stristr($row['link'], 'https://')) === FALSE)
                         {
+                            // echo "".$row['link']." internal:";
+                            $url = $host.$row['link'];
                             // do nothing
                         }
                         else
                             {   // external URL, do not prepend host string to link
-                                $host = '';
+                                // echo "".$row['link']." ext:";
+                                $url = $row['link'];
                             }
 
                         // JS
                         if ($row['type'] === "js") {   // load js asset
                             echo "
  <!-- load JS: $row[asset] -->
- <script src=\"".$host.$row['link']."\"></script>";
+ <script src=\"".$url."\"></script>";
                         }
 
                         // CSS
                         if ($row['type'] === "css") {   // load css asset
                             echo "
  <!-- load CSS: $row[asset] -->
- <link rel=\"stylesheet\" href=\"".$host.$row['link']."\" type=\"text/css\" media=\"all\">";
+ <link rel=\"stylesheet\" href=\"".$url."\" type=\"text/css\" media=\"all\">";
                         }
                     }
                 }
