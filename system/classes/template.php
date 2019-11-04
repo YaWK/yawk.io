@@ -3057,28 +3057,39 @@ namespace YAWK {
             return null;
         }
 
-        public function loadActiveAssets($db, $templateID)
+        public function loadActiveAssets($db, $templateID, $host)
         {
             /* @var \YAWK\db $db */
 
             if (isset($templateID) && (!empty($templateID))) {
                 echo "
 <!-- ASSETS -->";
-                if ($res = $db->query("SELECT type, asset, link FROM {assets} WHERE templateID = '" . $templateID . "' ORDER BY sortation ASC")) {
+                if ($res = $db->query("SELECT type, asset, link FROM {assets} WHERE templateID = '" . $templateID . "' ORDER BY sortation ASC"))
+                {
                     while ($row = mysqli_fetch_assoc($res))
                     {
+                        // make sure, host will only be added for relative url assets
+                        if(stristr($row['link'], 'http://') || (stristr($row['link'], 'https://')) === FALSE)
+                        {
+                            // do nothing
+                        }
+                        else
+                            {   // external URL, do not prepend host string to link
+                                $host = '';
+                            }
+
                         // JS
                         if ($row['type'] === "js") {   // load js asset
                             echo "
  <!-- load JS: $row[asset] -->
- <script src=\"" . $row['link'] . "\"></script>";
+ <script src=\"".$host.$row['link']."\"></script>";
                         }
 
                         // CSS
                         if ($row['type'] === "css") {   // load css asset
                             echo "
  <!-- load CSS: $row[asset] -->
- <link rel=\"stylesheet\" href=\"" . $row['link'] . "\" type=\"text/css\" media=\"all\">";
+ <link rel=\"stylesheet\" href=\"".$host.$row['link']."\" type=\"text/css\" media=\"all\">";
                         }
                     }
                 }

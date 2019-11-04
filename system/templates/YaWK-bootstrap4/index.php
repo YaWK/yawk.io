@@ -51,7 +51,7 @@ $positions = \YAWK\template::getPositionStatesArray($db, $template->id);
 // load position indicators
 $indicators = \YAWK\template::getPositionIndicatorStatusArray($db, $template->id);
 // load active assets for this template
-$template->loadActiveAssets($db, $template->id);
+$template->loadActiveAssets($db, $template->id, $host);
 ?>
 
 <!-- SETTINGS.MIN.CSS YaWK template settings: Bootstrap core CSS override -->

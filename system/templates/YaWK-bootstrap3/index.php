@@ -45,8 +45,10 @@
  <meta name="msapplication-TileColor" content="#ffffff">
  <meta name="theme-color" content="#ffffff">
 <?php
+// get current host
+$host = \YAWK\sys::addTrailingSlash(\YAWK\settings::getSetting($db, "host"));
 // include additional html header stuff & local meta tags
-\YAWK\sys::includeHeader($db);
+\YAWK\sys::includeHeader($db, $host);
 // load active google font code
 \YAWK\template::loadGoogleFonts($db);
 // load position stats (0|1)
@@ -54,7 +56,7 @@ $positions = \YAWK\template::getPositionStatesArray($db, $template->id);
 // load position indicators
 $indicators = \YAWK\template::getPositionIndicatorStatusArray($db, $template->id);
 // load active assets for this template
-$template->loadActiveAssets($db, $template->id);
+$template->loadActiveAssets($db, $template->id, $host);
 ?>
 
 <!-- SETTINGS.MIN.CSS YaWK template settings: Bootstrap core CSS override -->
