@@ -1359,16 +1359,16 @@ namespace YAWK {
          * @version     1.0.0
          * @link        http://yawk.io
          * @param object $db database
+         * @param string $host host URL
          */
-        static function includeHeader($db)
+        static function includeHeader($db, $host)
         {   /** @var $db \YAWK\db */
             global $currentpage;
             $i = 1;
-            $host = \YAWK\settings::getSetting($db, "host");
             echo "<title>" . $currentpage->title . "</title>
+<base href=\"".$host."\">
 <meta http-equiv=\"Content-Type\" content=\"text/html\">
-<link rel=\"shortcut icon\" href=\"favicon.ico\" type=\"image/x-icon\">
-<base href=\"".$host."/\">";
+<link rel=\"shortcut icon\" href=\"favicon.ico\" type=\"image/x-icon\">";
             $get_localtags = $db->query("SELECT name, content
                     FROM {meta_local}
                     WHERE page = '" . $currentpage->id . "'");
