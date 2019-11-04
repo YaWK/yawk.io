@@ -3057,6 +3057,17 @@ namespace YAWK {
             return null;
         }
 
+        /**
+         * Load Active Assets
+         * Load HTML markup for each active asset of current template
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param $db object db connection
+         * @param $templateID int the current template ID
+         * @param $host string host URL will be used by internal assets to avoid relative paths
+         * @return null
+         */
         public function loadActiveAssets($db, $templateID, $host)
         {
             /* @var \YAWK\db $db */
@@ -3094,6 +3105,7 @@ namespace YAWK {
                     }
                 }
             }
+            return null;
         }
 
         public function loadActiveAssetsIntoArray($db, $templateID)
