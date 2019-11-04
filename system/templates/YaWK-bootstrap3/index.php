@@ -70,7 +70,7 @@ $template->loadActiveAssets($db, $template->id, $host);
 <![endif]-->
 
 <!-- import yawk app: custom js -->
-<script src="system/templates/<?php echo $template->name; ?>/js/custom.min.js" type="text/javascript"></script>
+<script src="system/templates/<?php echo $template->name; ?>/js/custom.min.js"></script>
 </head>
 
 <body style="<?php echo YAWK\template::getActiveBodyFont($db); ?>" ondragstart="return false" id="home">
