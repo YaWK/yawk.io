@@ -40,8 +40,10 @@
  <link rel="apple-touch-icon" sizes="120x120" href="media/images/apple-touch-icon-120x120-precomposed.png">
  <link rel="apple-touch-icon" sizes="152x152" href="media/images/apple-touch-icon-152x152-precomposed.png">
 <?php
+// get current host
+$host = \YAWK\sys::addTrailingSlash(\YAWK\settings::getSetting($db, "host"));
 // include additional html header stuff & local meta tags
-\YAWK\sys::includeHeader($db);
+\YAWK\sys::includeHeader($db, $host);
 // load active google font code
 \YAWK\template::loadGoogleFonts($db);
 // load position stats (0|1)
@@ -53,17 +55,17 @@ $template->loadActiveAssets($db, $template->id);
 ?>
 
 <!-- SETTINGS.MIN.CSS YaWK template settings: Bootstrap core CSS override -->
-<link rel="stylesheet" type="text/css" href="system/templates/<?php echo $template->name; ?>/css/settings.min.css">
+<link rel="stylesheet" type="text/css" href="<?php echo $host; ?>system/templates/<?php echo $template->name; ?>/css/settings.min.css">
 <!-- CUSTOM.MIN.CSS User defined CSS Rules -->
-<link rel="stylesheet" type="text/css" href="system/templates/<?php echo $template->name; ?>/css/custom.min.css">
+<link rel="stylesheet" type="text/css" href="<?php echo $host; ?>system/templates/<?php echo $template->name; ?>/css/custom.min.css">
 
 <!--[if lt IE 9]>
-<script src="system/engines/jquery/html5shiv.min.js"></script>
-<script src="system/engines/jquery/1.3.0-respond.min.js"></script>
+<script src="<?php echo $host; ?>system/engines/jquery/html5shiv.min.js"></script>
+<script src="<?php echo $host; ?>system/engines/jquery/1.3.0-respond.min.js"></script>
 <![endif]-->
 
 <!-- import yawk app: custom js -->
-<script src="system/templates/<?php echo $template->name; ?>/js/custom.min.js" type="text/javascript"></script>
+<script src="<?php echo $host; ?>system/templates/<?php echo $template->name; ?>/js/custom.min.js" type="text/javascript"></script>
 </head>
 
 <body style="<?php echo YAWK\template::getActiveBodyFont($db); ?>" ondragstart="return false">
