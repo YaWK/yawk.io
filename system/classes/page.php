@@ -983,7 +983,8 @@ namespace YAWK {
             {
                 die("CRITICAL ERROR: unable to display content - currentpage var is not set.");
             }
-            if (isset($currentpage->date_publish)) {
+            if (isset($currentpage->date_publish))
+            {
                 // ROLE CHECK
                 if (isset($_SESSION['gid'])) {
                     // if SESSION ROLE is bigger or equal than current PAGE ROLE
@@ -1004,12 +1005,15 @@ namespace YAWK {
                 }
             }
             // GET STATUS
-            $future = (isset($currentpage->date_publish));        // publish date + time
-            if (isset($currentpage->date_publish_end)) {        // end publish date + time
+            $future = (isset($currentpage->date_publish));
+            // publish date + time
+            if (isset($currentpage->date_publish_end))
+            {   // end publish date + time
                 $publish_end = $currentpage->date_publish_end;
             }
 
-            $now = date("Y-m-d G:i:s");                  // current date + time
+            // current date + time
+            $now = date("Y-m-d G:i:s");
             // trim vars
             $date_published = trim($future);
             $publish_end = trim(isset($publish_end));
@@ -1041,7 +1045,6 @@ namespace YAWK {
             {
                 // show error
                 return include(\YAWK\controller::filterfilename($db, $lang, "content/errors/404.html"));
-
             }
             else {
 

@@ -164,6 +164,7 @@ class controller
             // remove prefix slash
             $filename = substr($filename, 1);
         }
+
         // append file extension
         $filename .= ".php";
 

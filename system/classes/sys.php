@@ -1853,32 +1853,38 @@ namespace YAWK {
          * @param string $date the date to calculate
          * @return bool|false|string
          */
-        static function getWeekday($date, $lang){
+        static function getWeekday($date, $lang)
+        {
+            global $lang;
             if (isset($date)){
                 // get weekday
                 $weekday = date("l",strtotime($date));
-                switch($weekday){
-                    case "$lang[MONDAY]":
-                        $weekday = "$lang[MONDAY]";
-                        break;
-                    case "$lang[TUESDAY]":
-                        $weekday = "$lang[TUESDAY]";
-                        break;
-                    case "$lang[WEDNESDAY]":
-                        $weekday = "$lang[WEDNESDAY]";
-                        break;
-                    case "$lang[THURSDAY]":
-                        $weekday = "$lang[THURSDAY]";
-                        break;
-                    case "$lang[FRIDAY]":
-                        $weekday = "$lang[FRIDAY]";
-                        break;
-                    case "$lang[SATURDAY]":
-                        $weekday = "$lang[SATURDAY]";
-                        break;
-                    case "$lang[SUNDAY]":
-                        $weekday = "$lang[SUNDAY]";
-                        break;
+                if (isset($lang) && (!empty($lang) && (is_array($lang))))
+                {
+                    // translate, if language is set
+                    switch($weekday){
+                        case "$lang[MONDAY]":
+                            $weekday = "$lang[MONDAY]";
+                            break;
+                        case "$lang[TUESDAY]":
+                            $weekday = "$lang[TUESDAY]";
+                            break;
+                        case "$lang[WEDNESDAY]":
+                            $weekday = "$lang[WEDNESDAY]";
+                            break;
+                        case "$lang[THURSDAY]":
+                            $weekday = "$lang[THURSDAY]";
+                            break;
+                        case "$lang[FRIDAY]":
+                            $weekday = "$lang[FRIDAY]";
+                            break;
+                        case "$lang[SATURDAY]":
+                            $weekday = "$lang[SATURDAY]";
+                            break;
+                        case "$lang[SUNDAY]":
+                            $weekday = "$lang[SUNDAY]";
+                            break;
+                    }
                 }
                 return $weekday;
             }
