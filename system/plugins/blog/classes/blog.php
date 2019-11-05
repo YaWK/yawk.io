@@ -397,6 +397,7 @@ namespace YAWK\PLUGINS\BLOG {
          */
         function getFrontendEntries($db, $blogid, $itemid, $full_view, $limit)
         {
+            global $lang;
             /** @var $db \YAWK\db */
             // if no itemid is set, set the sql code for all items, vice versa.
             if ($itemid != 0) $sql = "AND id = '$itemid'"; else $sql = '';
@@ -876,7 +877,7 @@ namespace YAWK\PLUGINS\BLOG {
                 $this->sequence = $row['sequence'];
                 $this->sortation = $row['sortation'];
                 $this->footer = $row['footer'];
-                $this->comments = $row['commenta'];
+                $this->comments = $row['comments'];
                 $this->gid = $row['gid'];
                 $this->permaLink = $row['permalink'];
                 $this->layout = $row['layout'];

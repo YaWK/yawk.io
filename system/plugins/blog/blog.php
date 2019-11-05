@@ -1,5 +1,5 @@
-<script type="text/javascript" src="system/plugins/blog/js/comments.js"></script>
-<script type="text/javascript" src="system/plugins/blog/js/voting.js"></script>
+<script src="system/plugins/blog/js/comments.js"></script>
+<script src="system/plugins/blog/js/voting.js"></script>
 <?php
 // include blog class
 include 'classes/blog.php';

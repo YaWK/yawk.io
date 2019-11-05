@@ -36,9 +36,10 @@
  <meta name="keywords" content="<?php echo YAWK\settings::getSetting($db, "globalmetakeywords"); ?>">
  <meta name="description" content="<?php echo YAWK\settings::getSetting($db, "globalmetatext"); ?>">
  <meta charset="utf-8">
- <!-- apple touch icons -->
+ <!-- apple touch icons
  <link rel="apple-touch-icon" sizes="120x120" href="media/images/apple-touch-icon-120x120-precomposed.png">
  <link rel="apple-touch-icon" sizes="152x152" href="media/images/apple-touch-icon-152x152-precomposed.png">
+ -->
 <?php
 // get current host
 $host = \YAWK\sys::addTrailingSlash(\YAWK\settings::getSetting($db, "host"));

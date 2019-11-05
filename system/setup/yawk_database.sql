@@ -70,6 +70,7 @@ CREATE TABLE `cms_blog` (
   `voting` int(1) NOT NULL DEFAULT '0',
   `spacer` int(1) NOT NULL DEFAULT '0',
   `limitEntries` int(1) NOT NULL DEFAULT '0',
+  `frontendIcon` int(1) NOT NULL DEFAULT '0',
   `showTotalVotes` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

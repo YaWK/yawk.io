@@ -90,7 +90,7 @@ namespace YAWK\WIDGETS\BLOG\WIDGET {
         public function drawBlogWidget($db)
         {
             /** @var $db \YAWK\db * */
-            error_reporting(0);
+            error_reporting(1);
             if (!isset($this->blogID) || (empty($this->blogID)))
             {
                 echo "Error: unable to load blog because there was no blog ID given.";
@@ -100,8 +100,9 @@ namespace YAWK\WIDGETS\BLOG\WIDGET {
                     require_once 'system/plugins/blog/classes/blog.php';
 
             // include required JS files
-            echo "<script type=\"text/javascript\" src=\"../../../plugins/blog/js/comments.js\"></script>
+            /* echo "<script type=\"text/javascript\" src=\"../../../plugins/blog/js/comments.js\"></script>
                   <script type=\"text/javascript\" src=\"../../../plugins/blog/js/voting.js\"></script>";
+            */
 
 
                 /*
