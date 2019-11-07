@@ -267,16 +267,16 @@ class fbEvents
             {   // no upcoming data found
                 if (isset($this->fbEventsType) && (!empty($this->fbEventsType) && $this->fbEventsType == "future"))
                 {
-                    die ("Sorry, no upcoming events were found.");
+                    echo "Sorry, no upcoming events were found.";
                 }
                 // no past data found
                 else if (isset($this->fbEventsType) && (!empty($this->fbEventsType) && $this->fbEventsType == "past"))
                 {
-                    die ("Sorry, no past events were found.");
+                    echo "Sorry, no past events were found.";
                 }
                 else
                     {   // in any other empty array case
-                        die ("Sorry, no events were found.");
+                        echo "Sorry, no events were found.";
                     }
             }
 
