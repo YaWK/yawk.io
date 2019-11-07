@@ -14,7 +14,8 @@ CREATE TABLE `cms_assets` (
 INSERT INTO `cms_assets` (`id`, `templateID`, `type`, `sortation`, `asset`, `link`) VALUES
 (1, 1, 'js', 1, 'jQuery 1.x', 'system/engines/jquery/jquery-1.12.4.min.js'),
 (2, 1, 'css', 5, 'Bootstrap 4 CSS', 'system/engines/bootstrap4/css/bootstrap.min.css'),
-(3, 1, 'js', 6, 'Bootstrap 4 JS', 'system/engines/bootstrap4/js/bootstrap.min.js');
+(3, 1, 'js', 6, 'Bootstrap 4 JS', 'system/engines/bootstrap4/js/bootstrap.min.js'),
+(4, 1, 'css', 6, 'Animate CSS', 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css');
 
 CREATE TABLE `cms_assets_types` (
   `id` int(11) NOT NULL,
@@ -43,7 +44,7 @@ INSERT INTO `cms_assets_types` (`id`, `published`, `type`, `sortation`, `asset`,
 (11, 1, 2, 12, 'Ekko Lightbox CSS', 'ekko-lightbox-css', 'system/engines/jquery/lightbox/ekko-lightbox.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css', 'system/engines/jquery/lightbox/dark.min.css', ''),
 (12, 1, 2, 13, 'Bootstrap Notify JS', 'bootstrap-notify-js', 'system/engines/jquery/notify/bootstrap-notify.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/js/bootstrap-notify.min.js', '', ''),
 (13, 1, 2, 14, 'Bootstrap Notify CSS', 'bootstrap-notify-css', 'system/engines/jquery/notify/bootstrap-notify.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/css/bootstrap-notify.min.css', '', ''),
-(14, 1, 2, 7, 'Animate.css', 'Animate.css', 'system/engines/animateCSS/animate.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css', 'https://fastcdn.org/Animate.css/3.4.0/animate.min.css', ''),
+(14, 1, 2, 7, 'Animate.css', 'Animate.css', 'system/engines/animateCSS/animate.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css', 'https://fastcdn.org/Animate.css/3.7.2/animate.min.css', ''),
 (15, 1, 2, 15, 'Hover.css', 'Hover.css', '', 'https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.1.1/css/hover-min.css', '', ''),
 (16, 1, 1, 7, 'Bootstrap 4 CSS', 'bootstrap4-css', 'system/engines/bootstrap4/css/bootstrap.min.css', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css', ''),
 (17, 1, 1, 8, 'Bootstrap 4 JS', 'bootstrap4-js', 'system/engines/bootstrap4/js/bootstrap.min.js', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js', '');
