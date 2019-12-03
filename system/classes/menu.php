@@ -951,13 +951,10 @@ function myFunction() {
                             <ul id=\"logoutMenu\" class=\"nav navbar-nav navbar-collapse navbar-right\">
                              <li class=\"dropdown\">
                                 <a id=\"logoutLink\" href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">";
-                    $html .= "<i id=\"trophy\" class=\"fa fa-trophy\"></i></small>&nbsp;";
                     $html .= "<i id=\"cog\" class=\"fa fa-cog\"></i></small>&nbsp;";
                     $html .= \YAWK\user::getUserImage($db, "frontend", \YAWK\sys::getCurrentUserName(), 22, 22);
                     $html .= "</a>
                                 <ul id=\"dropdown-menu\" class=\"dropdown-menu\">
-                                    <li><a href=\"welcome.html\" title=\"VIP Club Startseite\"><i class=\"fa fa-trophy\"></i> &nbsp;VIP Club</a></li>
-                                    <li class=\"divider\"></li>
                                     <li><a href=\"logout.html\"><i class=\"glyphicon glyphicon-log-out\"></i> &nbsp;Logout</a></li></li>
                             </ul>";
                     return $html;
