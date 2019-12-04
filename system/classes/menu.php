@@ -948,12 +948,11 @@ function myFunction() {
             if (isset($_SESSION['username']) && $_SESSION['logged_in']) {
                 if ($_SESSION['logged_in'] == true) {
                     $html = "</ul>
-                            <ul id=\"logoutMenu\" class=\"nav navbar-nav navbar-collapse navbar-right\">
-                             <li class=\"dropdown\">
+                            <ul id=\"logoutMenu\" class=\"nav navbar-nav navbar-collapse navbar-expand float-right pull-right\">
+                             <li class=\"dropdown\">&nbsp;&nbsp;
                                 <a id=\"logoutLink\" href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">";
-                    $html .= "<i id=\"cog\" class=\"fa fa-cog\"></i></small>&nbsp;";
                     $html .= \YAWK\user::getUserImage($db, "frontend", \YAWK\sys::getCurrentUserName(), 22, 22);
-                    $html .= "</a>
+                    $html .= "</a>&nbsp;&nbsp;
                                 <ul id=\"dropdown-menu\" class=\"dropdown-menu\">
                                     <li><a href=\"logout.html\"><i class=\"glyphicon glyphicon-log-out\"></i> &nbsp;Logout</a></li></li>
                             </ul>";
