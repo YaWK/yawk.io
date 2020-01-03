@@ -65,7 +65,7 @@ There are two ways to load YaWK on your webserver:<br><br>
 </ul>
 
 <h3>Installation / Setup HowTo</h3>
-When YaWK is uploaded to your webserver, simply call www.yourwebsite.tld in your browser. If the server is correctly configured, you will see step 1/5 of the setup process. Altough the installation is self-explanatory, this help will guide you through each steps.<br>
+When YaWK is uploaded to your webserver, simply call www.yourwebsite.tld in your browser. If the server is correctly configured, you will see step 1/5 of the setup process. The installation guide you through 5 steps and is pretty self-explanatory.<br>
 
 <h3>Why all this? - there are so many CMS around...</h3>
 YaWK is an open source project, <b>built for everyone.</b> Actually there is <i>no big business company or foundation behind it - (yet!)</i> At the moment it is still <i>(mainly)</i> a one man show, - exclusively developed for my own, personal purpose. I started this project because I was not satisfied with all other solutions. So I took the challenge and started developing an overall tool that fits my personal needs. Originally it was not meant to public. But the bigger the project growed, the more people told me to make it accessable to the public crowd.
