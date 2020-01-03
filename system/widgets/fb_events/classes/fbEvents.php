@@ -154,6 +154,10 @@ class fbEvents
     public $fbEventsLimit = 0;
     /** @var string limit markup */
     public $limit = '';
+    /** @var string info, if no event was found */
+    public $noEventInfo = '';
+    /** @var bool true if no events were found */
+    public $noEvents = '';
 
     public function __construct($db)
     {
@@ -172,28 +176,6 @@ class fbEvents
         && (isset($this->fbEventsAccessToken) && (!empty($this->fbEventsAccessToken)
         && (isset($this->fbEventsPageId) && (!empty($this->fbEventsPageId)))))))
         {
-            /*
-            // include facebook SDK JS
-            echo "<script>
-            window.fbAsyncInit = function() {
-                FB.init({
-                    appId      : '" . $this->fbEventsAppId . "',
-                    xfbml      : true,
-                    version    : 'v3.1'
-                });
-                FB.AppEvents.logPageView();
-            };
-
-            (function(d, s, id){
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id)) {return;}
-                js = d.createElement(s); js.id = id;
-                js.src = \"https://connect.facebook.net/en_US/sdk.js\";
-                fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));
-            </script>";
-            */
-
             // WHICH EVENTS TO DISPLAY?
             // evaluation of event type select field
             if ($this->fbEventsType === "all")
@@ -241,10 +223,6 @@ class fbEvents
             // $json_link = "https://graph.facebook.com/v2.7/{$this->fbEventsPageId}/events/attending/?fields={$this->fields}&access_token={$this->fbEventsAccessToken}&since={$since_unix_timestamp}&until={$until_unix_timestamp}";
             // $json_link = "https://graph.facebook.com/v3.1/me/events/?fields={$this->fields}&access_token={$this->fbEventsAccessToken}&since={$since_unix_timestamp}&until={$until_unix_timestamp}";
             $json_link = "https://graph.facebook.com/v3.3/me/events/?fields={$this->fields}&access_token={$this->fbEventsAccessToken}&since={$since_unix_timestamp}&until={$until_unix_timestamp}";
-            // get json string
-            // $json = file_get_contents($json_link);
-            // convert json to object
-            // $obj = json_decode($json, true, 512, JSON_BIGINT_AS_STRING);
 
             $curl = curl_init();
             curl_setopt($curl, CURLOPT_URL, $json_link);
@@ -267,16 +245,19 @@ class fbEvents
             {   // no upcoming data found
                 if (isset($this->fbEventsType) && (!empty($this->fbEventsType) && $this->fbEventsType == "future"))
                 {
-                    echo "Sorry, no upcoming events were found.";
+                    $this->noEventInfo = "Sorry, no upcoming events were found.";
+                    $this->noEvents = true;
                 }
                 // no past data found
                 else if (isset($this->fbEventsType) && (!empty($this->fbEventsType) && $this->fbEventsType == "past"))
                 {
-                    echo "Sorry, no past events were found.";
+                    $this->noEventInfo = "Sorry, no past events were found.";
+                    $this->noEvents = true;
                 }
                 else
                     {   // in any other empty array case
-                        echo "Sorry, no events were found.";
+                        $this->noEventInfo = "Sorry, no events were found.";
+                        $this->noEvents = true;
                     }
             }
 
@@ -306,18 +287,33 @@ class fbEvents
                 {   // build a headline with heading and subtext
                     $this->fbEventsSubtext = "<small>$this->fbEventsSubtext</small>";
                     $this->headline = "<h1>$this->fbEventsHeading&nbsp;"."$this->fbEventsSubtext</h1>";
+                    // check if no event info is set
+                    if (!empty($this->noEventInfo))
+                    {   // append to headline
+                        $this->headline .= "<h2>&nbsp;&nbsp;".$this->noEventInfo."</h2><br><br>";
+                    }
                 }
                 else
                 {   // build just a headline - without subtext
                     $this->headline = "<h1>$this->fbEventsHeading</h1>";    // draw just the heading
+                    // check if no event info is set
+                    if (!empty($this->noEventInfo))
+                    {   // append to headline
+                        $this->headline .= "<h2>&nbsp;&nbsp;".$this->noEventInfo."</h2><br><br>";
+                    }
                 }
             }
             else
             {   // leave empty if it's not set
                 $this->headline = '';
             }
-            // OUTPUT HEADING (title)
-            echo $this->headline;
+
+            // HEADING (title)
+            // display heading only, if events were found
+            if ($this->noEvents === false)
+            {   // output heading
+                echo $this->headline;
+            }
 
             // DATA PROCESSING START HERE
             // walk through object data
