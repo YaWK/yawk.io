@@ -15,17 +15,15 @@ and <a href="https://github.com/YaWK/yawk.io/projects" target="_blank">current o
 to 
 see what's going on and what has been done over the past few days, weeks, months and years.
 <hr>
-<h3><u>R O A D M A P: <small>2019 final goals before release</small></u></h3>
+<h3><u>R O A D M A P for 2020: <small></small></u></h3>
 <b>Currently in development:</b>
 <ul>
-<li>Update FrontEnd to Bootstrap 4 / add Bootstrap 4 template settings to backend <i><small>(scheduled until end of 2019)</small></i></li>
-<li>Add seamless integrated webmail <i><small>(scheduled until end of 2019)</small></i></li>
-<li>Add templates and demo pages <i><small>(scheduled until end of 2019)</small></i></li>
+<li>Add templates and demo pages <i><small>(scheduled for 1st quarter 2020)</small></i></li>
 <li><i><small>and of course: check and fix language errors, major and minor bugs</small></i></li>
 </ul>
 <b>Update official website</b>
 <ul>
-<li>Update yawk.io to current version</li>
+<li>Update http://www.yawk.io to current version</li>
 <li>Add feature showcase</li>
 <li>Add support page <small><i>(and ticket system)</i></small></li>
 <li>Add admin handbook <small><i>(pdf and / or html)</i></small></li>
@@ -45,6 +43,30 @@ But please consider - YaWK is is in constant development and underlies <i>nearly
 <br><br>
 Before YaWK will be officially released, you will always get the current development version. After the first version is officially released, there will be a seperate development branch. You should wait for the official first release before you use YaWK in productive environment. I'm happy about comments, stars, followers and / or code contributions. Thank You!
 <hr>
+<h3>Setup / Installation</h3>
+There are two ways to load YaWK on your webserver:<br><br>
+<ol>
+<li><u>If you have root/shell access:</u> <b>git clone https://github.com/YaWK/yawk.io</b>
+    <br><br>
+    or
+    <br><br>
+</li>
+<li>
+    <u>If you're using a webhost:</u> Download the .zip package, extract it on your computer and upload the extracted files to your webserver. Use any FTP client and upload the files to the root directory of your webserver.
+</li>
+</ol>
+
+<h4>Server / Webhosting Requirements:</h4>
+<ul>
+<li>PHP 5.6+ (PHP 7 recommended)</li>
+<li>MySQL 5.x</li>
+<li>Apache 2.x Webserver</li>
+<li>MOD_REWRITE enabled</li>
+</ul>
+
+<h3>Installation / Setup HowTo</h3>
+When YaWK is uploaded to your webserver, simply call www.yourwebsite.tld in your browser. If the server is correctly configured, you will see step 1/5 of the setup process. Altough the installation is self-explanatory, this help will guide you through each steps.<br>
+
 <h3>Why all this? - there are so many CMS around...</h3>
 YaWK is an open source project, <b>built for everyone.</b> Actually there is <i>no big business company or foundation behind it - (yet!)</i> At the moment it is still <i>(mainly)</i> a one man show, - exclusively developed for my own, personal purpose. I started this project because I was not satisfied with all other solutions. So I took the challenge and started developing an overall tool that fits my personal needs. Originally it was not meant to public. But the bigger the project growed, the more people told me to make it accessable to the public crowd.
 After spending a lot of my lifetime on this project, I decided to follow my friends - I've uploaded it to GitHub and kept the repository private until the status of the project has got to a level where others can make use out of it. Though all efforts of "getting it to the point", this project is not finished yet - and never will be. It will stay in development, as long as I or somebody else take care about it.
