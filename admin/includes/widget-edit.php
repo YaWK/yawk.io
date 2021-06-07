@@ -159,8 +159,8 @@ echo"<ol class=\"breadcrumb\">
 
     <?php /* get tpl positions */
       $i = 0;
-      $position = array();
-      foreach(\YAWK\template::getTemplatePositions($db) as $position[]){
+    $position[$i] = array();
+    foreach(\YAWK\template::getTemplatePositions($db) as $position[$i]){
         echo "<option value=\"".$position[$i]."\">".$position[$i]."</option>";
         $i++;
       }
