@@ -1123,6 +1123,9 @@ namespace YAWK {
         {
             /** @var $db \YAWK\db */
             $this->position = mb_strtolower($this->position);
+            // if widget should be displayed on all pages, pageID should be zero
+            if (empty($this->pageID || (!isset($this->pageID)))) { $this->pageID = 0; }
+
             if ($this->date_unpublish === "0000-00-00 00:00:00" || (empty($this->date_unpublish)))
             {
                 // sql code when date_unpublish is a zero date (NULL)
