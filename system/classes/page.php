@@ -149,9 +149,9 @@ namespace YAWK {
                     print alert::draw("danger", "Error", "Site Status could not be toggled.", "", 4200);
                 }
                 else
-                    {   // ok, set syslog entry
-                        \YAWK\sys::setSyslog($db, 5, 0, "toggled page $id to $status", 0, 0, 0, 0);
-                    }
+                {   // ok, set syslog entry
+                    \YAWK\sys::setSyslog($db, 5, 0, "toggled page $id to $status", 0, 0, 0, 0);
+                }
 
                 // TOGLE MENU STATUS
                 if (!$res = $db->query("UPDATE {menu}
@@ -333,7 +333,7 @@ namespace YAWK {
                           VALUES('" . $id . "','" . $sort . "', '" . $menuID . "', '" . $title_new . "', '" . $link . "')"))
                     {
                         \YAWK\sys::setSyslog($db, 21, 0, "menu entry $title_new added", 0, 0, 0, 0);
-                       return true;
+                        return true;
                     }
                     else
                     {
@@ -375,18 +375,18 @@ namespace YAWK {
                 \YAWK\alert::draw("danger", "Error:", "could not delete page from database", "pages", "4300");
             }
             else
-                {   // page deleted
-                    \YAWK\sys::setSyslog($db, 5, 0, "deleted page $this->alias from database", 0, 0, 0, 0);
-                }
+            {   // page deleted
+                \YAWK\sys::setSyslog($db, 5, 0, "deleted page $this->alias from database", 0, 0, 0, 0);
+            }
             // delete item from menu db
             if (!$res_menu = $db->query("DELETE FROM {menu} WHERE href = '" . $this->alias . ".html'")) {
                 \YAWK\sys::setSyslog($db, 23, 1, "failed to delete menu entry of page $this->alias from database", 0, 0, 0, 0);
                 \YAWK\alert::draw("danger", "Error:", "could not delete menu entry from database", "pages", "4300");
             }
             else
-                {   // deleted menu syslog entry
-                    \YAWK\sys::setSyslog($db, 21, 0, "deleted menu of ../content/pages/$this->alias.php", 0, 0, 0, 0);
-                }
+            {   // deleted menu syslog entry
+                \YAWK\sys::setSyslog($db, 21, 0, "deleted menu of ../content/pages/$this->alias.php", 0, 0, 0, 0);
+            }
             // delete item from meta_local db
             if (!$res_menu = $db->query("DELETE FROM {meta_local} WHERE page = '" . $this->id. "'")) {
                 \YAWK\sys::setSyslog($db, 7, 1, "failed to delete local meta tags of $this->alias from database", 0, 0, 0, 0);
@@ -494,9 +494,9 @@ namespace YAWK {
                         $sort = 1;
                     }
                     else
-                        {   // if entry exists, add +1 to sort #
-                            $sort = $row[0] + 1;
-                        }
+                    {   // if entry exists, add +1 to sort #
+                        $sort = $row[0] + 1;
+                    }
                 }
                 else
                 {   // throw error
@@ -507,22 +507,26 @@ namespace YAWK {
 
                 if ($plugin) {
                     if (strlen($plugin) >= 1) {
-                    $menu_published = 1;
+                        $menu_published = 1;
                     }
                     else {
-                    $menu_published = 0;
+                        $menu_published = 0;
                     }
                 }
                 else {
                     $menu_published = 0;
                 }
                 $title = htmlentities($title);
+                $tmpID = 0;
+                $titleText = '';
                 // insert menu data
-                if (!$res = $db->query("INSERT INTO {menu} (id,sort,menuID,published,text,href,blogid)
-	                                   VALUES('" . $id . "',
+                if (!$res = $db->query("INSERT INTO {menu} (TMPID, id,sort,menuID,published,title,text,href,blogid)
+	                                   VALUES('" . $tmpID . "',
+                                            '" . $id . "',
 	                                          '" . $sort . "',
 	                                          '" . $menuID . "',
 	                                          '" . $menu_published . "',
+                                            '" . $titleText . "',
 	                                          '" . $title . "',
 	                                          '" . $link . "',
 	                                          '" . $blogid . "')"))
@@ -531,9 +535,9 @@ namespace YAWK {
                     \YAWK\alert::draw("danger", "Error:", "could not insert menu data", "page=page-new", "4300");
                 }
                 else
-                    {   // success syslog entry
-                        \YAWK\sys::setSyslog($db, 21, 0, "added new menu: $title (id: $id)", 0, 0, 0, 0);
-                    }
+                {   // success syslog entry
+                    \YAWK\sys::setSyslog($db, 21, 0, "added new menu: $title (id: $id)", 0, 0, 0, 0);
+                }
             } // ./ if menu != empty
 
             // if the method is called from the blog, set settings
@@ -575,10 +579,10 @@ namespace YAWK {
                 $id = $row[0] + 1;
             }
             else
-                {
-                    $id = 1;
-                    \YAWK\sys::setSyslog($db, 7, 1, "failed to select MAX(id) from pages db", 0, 0, 0, 0);
-                }
+            {
+                $id = 1;
+                \YAWK\sys::setSyslog($db, 7, 1, "failed to select MAX(id) from pages db", 0, 0, 0, 0);
+            }
 
             $alias = htmlentities($alias);
             // ## add new page to db pages
@@ -737,9 +741,9 @@ namespace YAWK {
                     }
                 }
                 else
-                    {
-                        // sql code with correct, user-selected unpublish date
-                        if ($res = !$db->query("UPDATE {pages} 
+                {
+                    // sql code with correct, user-selected unpublish date
+                    if ($res = !$db->query("UPDATE {pages} 
                     SET published = '" . $this->published . "',
                         gid = '" . $this->gid . "',
                         date_changed = '" . $date_changed . "',
@@ -750,25 +754,25 @@ namespace YAWK {
                         menu = '" . $this->menu . "',
                         bgimage = '" . $this->bgimage . "'
                     WHERE id = '" . $this->id . "'"))
-                        {
-                            // throw error
-                            \YAWK\sys::setSyslog($db, 23, 1, "failed to update page $this->title", 0, 0, 0, 0);
-                            \YAWK\alert::draw("warning", "Warning", "failed to store data of $this->alias in database.", "", 6200);
-                            return false;
-                        }
-                        else
-                        {
-                            // update pages db worked, all fin
-                            \YAWK\sys::setSyslog($db, 5, 0, "updated $this->alias", 0, 0, 0, 0);
-                            return true;
-                        }
+                    {
+                        // throw error
+                        \YAWK\sys::setSyslog($db, 23, 1, "failed to update page $this->title", 0, 0, 0, 0);
+                        \YAWK\alert::draw("warning", "Warning", "failed to store data of $this->alias in database.", "", 6200);
+                        return false;
                     }
+                    else
+                    {
+                        // update pages db worked, all fin
+                        \YAWK\sys::setSyslog($db, 5, 0, "updated $this->alias", 0, 0, 0, 0);
+                        return true;
+                    }
+                }
             }
             else
-                {
-                    // something went wrong...
-                    \YAWK\sys::setSyslog($db, 7, 2, "unable to update file - $oldFilename does not exist", 0, 0, 0, 0);
-                }
+            {
+                // something went wrong...
+                \YAWK\sys::setSyslog($db, 7, 2, "unable to update file - $oldFilename does not exist", 0, 0, 0, 0);
+            }
             return true;
         } // ./ save function
 
@@ -791,9 +795,9 @@ namespace YAWK {
                     return true;
                 }
                 else
-                    {
-                        return false;
-                    }
+                {
+                    return false;
+                }
             }
             return true;
         }
@@ -828,10 +832,10 @@ namespace YAWK {
                 return true;
             }
             else
-                {
-                    \YAWK\sys::setSyslog($db, 7, 2, "unable to write content to file $filename", 0, 0, 0, 0);
-                    return false;
-                }
+            {
+                \YAWK\sys::setSyslog($db, 7, 2, "unable to write content to file $filename", 0, 0, 0, 0);
+                return false;
+            }
         }
 
         /**
@@ -883,24 +887,24 @@ namespace YAWK {
                     $this->alias = $alias;
                 }
                 else
-                    {   // 404 error handling
-                        if ($this->alias == "content/errors/404")
-                        {   // check if user is logged in (session uid is set in that case)
-                            if (isset($_SESSION['uid']) && (!empty($_SESSION['uid'])))
-                            {   // logged in user created a 404 error
-                                \YAWK\sys::setSyslog($db, 7, 2, "404: file not found - displayed $alias instead", $_SESSION['uid'], 0, 0, 0);
-                            }
-                            else
-                                {   // user is not logged in - unknown user created a 404 error
-                                    \YAWK\sys::setSyslog($db, 7, 2, "404: file not found - displayed $alias instead", 0, 0, 0, 0);
-                                }
+                {   // 404 error handling
+                    if ($this->alias == "content/errors/404")
+                    {   // check if user is logged in (session uid is set in that case)
+                        if (isset($_SESSION['uid']) && (!empty($_SESSION['uid'])))
+                        {   // logged in user created a 404 error
+                            \YAWK\sys::setSyslog($db, 7, 2, "404: file not found - displayed $alias instead", $_SESSION['uid'], 0, 0, 0);
+                        }
+                        else
+                        {   // user is not logged in - unknown user created a 404 error
+                            \YAWK\sys::setSyslog($db, 7, 2, "404: file not found - displayed $alias instead", 0, 0, 0, 0);
                         }
                     }
+                }
             }
             else
-                {   // page not set - nunable to load page properties
-                    \YAWK\sys::setSyslog($db, 7, 2, "failed to load properties because page alias was not set", 0, 0, 0, 0);
-                }
+            {   // page not set - nunable to load page properties
+                \YAWK\sys::setSyslog($db, 7, 2, "failed to load properties because page alias was not set", 0, 0, 0, 0);
+            }
         }
 
         /**
@@ -932,9 +936,9 @@ namespace YAWK {
                 return $latestPages;
             }
             else
-                {
-                    return "no pages found.";
-                }
+            {
+                return "no pages found.";
+            }
         }
 
         /**
