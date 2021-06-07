@@ -8,7 +8,7 @@ namespace YAWK {
      * See Methods Summary for Details!</i></p>
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
-     * @copyright  2009-2016 Daniel Retzl
+     * @copyright  2009-2021 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
@@ -48,18 +48,18 @@ namespace YAWK {
          */
         public function displaySubMenu($db, $menuID)
         {   /** @var \YAWK\db  $db */
-                // get menu entries and draw navbar
-                $res = $db->query("SELECT * FROM {menu}
+            // get menu entries and draw navbar
+            $res = $db->query("SELECT * FROM {menu}
                                WHERE published = 1 
                                AND menuID = '".$menuID."' 
                                ORDER by sort, title");
-                echo "
+            echo "
                     <ul class=\"list-group\">";
-                while ($row = mysqli_fetch_assoc($res))
-                {
-                    echo "<li class=\"list-group-item\"><a href=\"".$row['href']."\" target=\"".$row['target']."\">".$row['text']."</a></li>";
-                }
-                echo "    </ul>";
+            while ($row = mysqli_fetch_assoc($res))
+            {
+                echo "<li class=\"list-group-item\"><a href=\"".$row['href']."\" target=\"".$row['target']."\">".$row['text']."</a></li>";
+            }
+            echo "    </ul>";
         }
 
 
@@ -83,9 +83,9 @@ namespace YAWK {
                 return true;
             }
             else
-                {   // menu ID is not published
-                    return false;
-                }
+            {   // menu ID is not published
+                return false;
+            }
         }
 
 
@@ -208,20 +208,25 @@ namespace YAWK {
                 $sort = $row[0] + 1;
             }
             else
-                {   // sortation
-                    $sort = 1;
-                }
+            {   // sortation
+                $sort = 1;
+            }
 
             // make sure that sort var is set
             if (!isset($sort)) {
                 $sort = 1;
             }
 
+            $tmpID = 0;
+            $title = '';
+
             // add menu entry
             if ($res = $db->query("INSERT INTO {menu} 
-                                        (sort, menuID, text, href)
-                                        VALUES ('" . $sort . "',
+                                        (TMPID, sort, menuID, title, text, href)
+                                        VALUES ('" . $tmpID . "',
+                                        '" . $sort . "',
                                         '" . $menu . "',
+                                        '" . $title . "',
                                         '" . $text . "',
                                         '" . $href . "')"))
             {   // menu entry added
@@ -229,11 +234,11 @@ namespace YAWK {
                 return true;
             }
             else
-                {
-                    // add menu entry failed
-                    \YAWK\sys::setSyslog($db, 23, 1, "failed to add menu entry <b>$text</b> to <b>$menuName</b>", 0, 0, 0, 0);
-                    return false;
-                }
+            {
+                // add menu entry failed
+                \YAWK\sys::setSyslog($db, 23, 1, "failed to add menu entry <b>$text</b> to <b>$menuName</b>", 0, 0, 0, 0);
+                return false;
+            }
         }
 
         /**
@@ -402,7 +407,7 @@ namespace YAWK {
                 \YAWK\sys::setSyslog($db, 23, 1, "failed to edit <b>$title</b> in <b>$menuName</b>", 0, 0, 0, 0);
                 return false;
             }
-       }
+        }
 
         /**
          * delete a single menu entry
@@ -545,33 +550,33 @@ namespace YAWK {
 
                     // prepare parentID select field
                     // get menu entry name for <option....> from menuID
-                        if($entries_res = $db->query("SELECT id, text, title, parentID FROM {menu} WHERE menuID = $id ORDER BY sort, parentID, title"))
-                        {
-                            $menuSelect = '';
-                            $menuSelected = '';
-                            $menuSelectAddon = '';
-                            while ($entries_row = mysqli_fetch_assoc($entries_res))
-                            {   // only show data for
-                                if ($row['id'] !== $entries_row['id']){
-                                    $menuSelect .= "
+                    if($entries_res = $db->query("SELECT id, text, title, parentID FROM {menu} WHERE menuID = $id ORDER BY sort, parentID, title"))
+                    {
+                        $menuSelect = '';
+                        $menuSelected = '';
+                        $menuSelectAddon = '';
+                        while ($entries_row = mysqli_fetch_assoc($entries_res))
+                        {   // only show data for
+                            if ($row['id'] !== $entries_row['id']){
+                                $menuSelect .= "
                                     <option value=\"" . $entries_row['id'] . "\">" . $entries_row['text'] . "</option>";
-                                    $menuSelectAddon = "<option value=\"0\">$lang[NO_PARENT]</option>";
+                                $menuSelectAddon = "<option value=\"0\">$lang[NO_PARENT]</option>";
 
-                                    if ($row['parentID'] === '0')
-                                    {
-                                        $menuSelected = "<option value=\"0\" selected>$lang[NO_PARENT]</option>";
-                                    }
-                                    else {
-                                        $parentID2name = $db->query("SELECT text FROM {menu} WHERE menuID = $id AND id=$row[parentID]");
-                                        $parentName = mysqli_fetch_row($parentID2name);
-                                        $menuSelected = "<option value=\"" . $row['parentID'] . "\" selected>" . $parentName[0] . "</option>";
-                                    }
+                                if ($row['parentID'] === '0')
+                                {
+                                    $menuSelected = "<option value=\"0\" selected>$lang[NO_PARENT]</option>";
+                                }
+                                else {
+                                    $parentID2name = $db->query("SELECT text FROM {menu} WHERE menuID = $id AND id=$row[parentID]");
+                                    $parentName = mysqli_fetch_row($parentID2name);
+                                    $menuSelected = "<option value=\"" . $row['parentID'] . "\" selected>" . $parentName[0] . "</option>";
                                 }
                             }
                         }
+                    }
 
 
-                echo "
+                    echo "
     <tr>
       <td><a href=\"index.php?page=menu-edit&toggleItem=1&menu=$id&id=$row[id]&published=$row[published]\">
           <span class=\"label label-$pub\">$pubtext</span></a></td>
@@ -628,8 +633,8 @@ namespace YAWK {
         <input type=\"hidden\" name=\"" . $row['id'] ."_published\" value=\"".$row['published']."\">
       </td>
     </tr>";
-            }
-            echo "</tbody>
+                }
+                echo "</tbody>
 </table>";
             }
         }
@@ -687,16 +692,16 @@ namespace YAWK {
                         $bootstrapVersion = \YAWK\template::returnCurrentBootstrapVersion($db, $template->id);
                     }
                     else
-                        {   // get tpl ID
-                            $template->id = \YAWK\template::getCurrentTemplateId($db);
-                            $bootstrapVersion = \YAWK\template::returnCurrentBootstrapVersion($db, $template->id);
-                        }
+                    {   // get tpl ID
+                        $template->id = \YAWK\template::getCurrentTemplateId($db);
+                        $bootstrapVersion = \YAWK\template::returnCurrentBootstrapVersion($db, $template->id);
+                    }
                 }
                 else
-                    {
-                        $templateID = \YAWK\template::getCurrentTemplateId($db);
-                        $bootstrapVersion = \YAWK\template::returnCurrentBootstrapVersion($db, $templateID);
-                    }
+                {
+                    $templateID = \YAWK\template::getCurrentTemplateId($db);
+                    $bootstrapVersion = \YAWK\template::returnCurrentBootstrapVersion($db, $templateID);
+                }
 
                 // echo "<pre>";print_r($menu);echo"</pre>"; exit;
                 $navBarBrand = '';
@@ -716,16 +721,16 @@ namespace YAWK {
                         $navBarBrand = "<a class=\"navbar-brand\" id=\"navbar-brand\" href=\"index.html\">" . $menuName . "</a>";
                     }
                     else
-                        {
-                            $navBarBrand = "";
-                        }
+                    {
+                        $navBarBrand = "";
+                    }
                 }
 
-            // DRAW BOOTSTRAP 4 MENU
-            if ($bootstrapVersion == "4")
-            {
-                $html = "";
-                $html .= "
+                // DRAW BOOTSTRAP 4 MENU
+                if ($bootstrapVersion == "4")
+                {
+                    $html = "";
+                    $html .= "
 
 <nav id=\"navbar\" class=\"navbar navbar-expand-lg navbar-light navbar-bg-custom\" style=\"z-index: 9999;\">
 ".$navBarBrand."
@@ -735,27 +740,27 @@ namespace YAWK {
   </button>
 
   <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">";
-                // echo "<pre>"; print_r($menu); echo "</pre>";
-                // todo center:  w-100 justify-content-center
-                $html .="
+                    // echo "<pre>"; print_r($menu); echo "</pre>";
+                    // todo center:  w-100 justify-content-center
+                    $html .="
     <ul class=\"navbar-nav ".$navbar_center."\">";
-                foreach ($menu['parents'][$parent] as $itemId) {
-                    // set parent w/o child items
-                    if (!isset($menu['parents'][$itemId])) {
+                    foreach ($menu['parents'][$parent] as $itemId) {
+                        // set parent w/o child items
+                        if (!isset($menu['parents'][$itemId])) {
 
-                        if (!isset($menu['items'][$itemId]['title']) || (empty($menu['items'][$itemId]['title']))) {
-                            $title = "";
-                        } else {
-                            $title = "title=\"" . $menu['items'][$itemId]['title'] . "\"";
-                        }
-                        $html .= "
+                            if (!isset($menu['items'][$itemId]['title']) || (empty($menu['items'][$itemId]['title']))) {
+                                $title = "";
+                            } else {
+                                $title = "title=\"" . $menu['items'][$itemId]['title'] . "\"";
+                            }
+                            $html .= "
         <li class=\"nav-item\">
             <a class=\"nav-link\" href=\"" . $menu['items'][$itemId]['href'] . "\" target=\"" . $menu['items'][$itemId]['target'] . "\" $title>" . $menu['items'][$itemId]['text'] . "</a>
         </li>";
-                    }
+                        }
 
-                    // menu item got at least 1 child item and should react as dropdown toggle
-                    else
+                        // menu item got at least 1 child item and should react as dropdown toggle
+                        else
                         {
                             $html .= "
         <li class=\"nav-item dropdown\">
@@ -763,120 +768,10 @@ namespace YAWK {
 ";
                         }
 
-                    // set parents w child items (dropdown lists)
-                    if (isset($menu['parents'][$itemId])) {
-                        $html .= "
-              <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\">";
-
-                        // select child items from db
-                        foreach ($menu['parents'][$itemId] as $child) {
-                            if (!isset($menu['items'][$itemId]['title']) || (empty($menu['items'][$itemId]['title'])))
-                            {
-                                $title = "";
-                            }
-                            else
-                            {
-                                $title = "title=\"$menu[items][$itemId][title]\"";
-                            }
-                            $html .= "
-                <a class=\"dropdown-item\" href=\"" . $menu['items'][$child]['href']."\" target=\"".$menu['items'][$itemId]['target']."\" $title>".$menu['items'][$child]['text']."</a>";
-                        }
-                        // dropdown navi ends here
-                        $html .= "
-            </div>
-        </li>";
-
-                    }
-                }
-
-                $html.="
-    </ul>";
-
-                // logout menu link - display only if user is logged in
-                if (isset($_SESSION['username']) && isset($_SESSION['logged_in'])){
-                    if ($_SESSION['logged_in'] == true){
-                        // display only if logoutmenu is enabled
-                        if (\YAWK\settings::getSetting($db, 'userpage_logoutmenu') === '1'){
-                            $html .= \YAWK\menu::drawLogoutMenu($db);
-                        }
-                    }
-                }
-                else {$html .= "</ul>
-                            <ul class=\"nav navbar-nav navbar-collapse navbar-right\">
-                             <li>";
-                    // check if userlogin is allowed
-                    if (\YAWK\settings::getSetting($db, 'userlogin') === '1')
-                    {   // load loginbox into navbar
-                        $html .= \YAWK\user::drawMenuLoginBox("","", "light");
-                    }
-                    $html .= "</li></ul>";
-                }
-
-  $html .= "</div>
-</nav>
-
-<script>
-window.onscroll = function() {myFunction()};
-var navbar = document.getElementById('navbar');
-var sticky = navbar.offsetTop;
-console.log(sticky);
-function myFunction() {
-  if (window.pageYOffset >= sticky) {
-    navbar.classList.add('sticky')
-  } else {
-    navbar.classList.remove('sticky');
-  }
-}
-</script>";
-
-                return $html;
-            }
-
-            // DRAW BOOTSTRAP 3 MENU
-            else if ($bootstrapVersion == "3")
-            {
-                $html = "";
-                $html .= "
-             <nav class=\"navbar navbar-default\" role=\"navigation\" id=\"topnavbar\">
-             <!-- <nav class=\"navbar navbar-default\" role=\"navigation\" id=\"topnavbar\"> -->
-             <div class=\"container\">
-             <div class=\"navbar-header\">
-             <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\".navbar-collapse\">
-                <span class=\"sr-only\">Toggle navigation</span>
-                <span class=\"icon-bar\"></span>
-                <span class=\"icon-bar\"></span>
-                <span class=\"icon-bar\"></span>
-              </button>
-              $navBarBrand
-              </div> <!-- end nav header -->
-            <div id=\"navbar\" class=\"navbar-collapse collapse\">";
-                if (isset($menu['parents'][$parent])) {
-                    // Start Bootstrap menu markup
-                    $html .= "<ul class=\"nav navbar-nav\">";
-                    // repeat foreach menu entry
-                    foreach ($menu['parents'][$parent] as $itemId)
-                    {
-                        // set parent w/o child items
-                        if (!isset($menu['parents'][$itemId])) {
-                            if (!isset($menu['items'][$itemId]['title']) || (empty($menu['items'][$itemId]['title'])))
-                            {
-                                $title = "";
-                            }
-                            else
-                            {
-                                $title = "title=\"".$menu['items'][$itemId]['title']."\"";
-                            }
-                            $html .= "<li><a href=\"".$menu['items'][$itemId]['href']."\" target=\"".$menu['items'][$itemId]['target']."\" $title>" . $menu['items'][$itemId]['text'] . "</a></li>";
-                            // vertical spacer
-                            // $html .= "".$divider_html."";
-
-                        }
-
                         // set parents w child items (dropdown lists)
                         if (isset($menu['parents'][$itemId])) {
-                            $html .= "<li class=\"dropdown\">
-            				<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">" . $menu['items'][$itemId]['text'] . " <b class=\"caret\"></b></a>
-            				<ul class=\"dropdown-menu\">";
+                            $html .= "
+              <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\">";
 
                             // select child items from db
                             foreach ($menu['parents'][$itemId] as $child) {
@@ -888,14 +783,20 @@ function myFunction() {
                                 {
                                     $title = "title=\"$menu[items][$itemId][title]\"";
                                 }
-                                $html .= "<li><a href=\"" . $menu['items'][$child]['href']."\" target=\"".$menu['items'][$itemId]['target']."\" $title>".$menu['items'][$child]['text']."</a></li>\n";
+                                $html .= "
+                <a class=\"dropdown-item\" href=\"" . $menu['items'][$child]['href']."\" target=\"".$menu['items'][$itemId]['target']."\" $title>".$menu['items'][$child]['text']."</a>";
                             }
-                            // boostrap navi ends here
-                            $html .= "</ul>
-	              </li>";
+                            // dropdown navi ends here
+                            $html .= "
+            </div>
+        </li>";
 
                         }
-                    } // end html markup of nav area
+                    }
+
+                    $html.="
+    </ul>";
+
                     // logout menu link - display only if user is logged in
                     if (isset($_SESSION['username']) && isset($_SESSION['logged_in'])){
                         if ($_SESSION['logged_in'] == true){
@@ -915,20 +816,124 @@ function myFunction() {
                         }
                         $html .= "</li></ul>";
                     }
-                    $html .= "<!-- /.nav-collapse -->
+
+                    $html .= "</div>
+</nav>
+
+<script>
+window.onscroll = function() {myFunction()};
+var navbar = document.getElementById('navbar');
+var sticky = navbar.offsetTop;
+console.log(sticky);
+function myFunction() {
+  if (window.pageYOffset >= sticky) {
+    navbar.classList.add('sticky')
+  } else {
+    navbar.classList.remove('sticky');
+  }
+}
+</script>";
+
+                    return $html;
+                }
+
+                // DRAW BOOTSTRAP 3 MENU
+                else if ($bootstrapVersion == "3")
+                {
+                    $html = "";
+                    $html .= "
+             <nav class=\"navbar navbar-default\" role=\"navigation\" id=\"topnavbar\">
+             <!-- <nav class=\"navbar navbar-default\" role=\"navigation\" id=\"topnavbar\"> -->
+             <div class=\"container\">
+             <div class=\"navbar-header\">
+             <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\".navbar-collapse\">
+                <span class=\"sr-only\">Toggle navigation</span>
+                <span class=\"icon-bar\"></span>
+                <span class=\"icon-bar\"></span>
+                <span class=\"icon-bar\"></span>
+              </button>
+              $navBarBrand
+              </div> <!-- end nav header -->
+            <div id=\"navbar\" class=\"navbar-collapse collapse\">";
+                    if (isset($menu['parents'][$parent])) {
+                        // Start Bootstrap menu markup
+                        $html .= "<ul class=\"nav navbar-nav\">";
+                        // repeat foreach menu entry
+                        foreach ($menu['parents'][$parent] as $itemId)
+                        {
+                            // set parent w/o child items
+                            if (!isset($menu['parents'][$itemId])) {
+                                if (!isset($menu['items'][$itemId]['title']) || (empty($menu['items'][$itemId]['title'])))
+                                {
+                                    $title = "";
+                                }
+                                else
+                                {
+                                    $title = "title=\"".$menu['items'][$itemId]['title']."\"";
+                                }
+                                $html .= "<li><a href=\"".$menu['items'][$itemId]['href']."\" target=\"".$menu['items'][$itemId]['target']."\" $title>" . $menu['items'][$itemId]['text'] . "</a></li>";
+                                // vertical spacer
+                                // $html .= "".$divider_html."";
+
+                            }
+
+                            // set parents w child items (dropdown lists)
+                            if (isset($menu['parents'][$itemId])) {
+                                $html .= "<li class=\"dropdown\">
+            				<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">" . $menu['items'][$itemId]['text'] . " <b class=\"caret\"></b></a>
+            				<ul class=\"dropdown-menu\">";
+
+                                // select child items from db
+                                foreach ($menu['parents'][$itemId] as $child) {
+                                    if (!isset($menu['items'][$itemId]['title']) || (empty($menu['items'][$itemId]['title'])))
+                                    {
+                                        $title = "";
+                                    }
+                                    else
+                                    {
+                                        $title = "title=\"$menu[items][$itemId][title]\"";
+                                    }
+                                    $html .= "<li><a href=\"" . $menu['items'][$child]['href']."\" target=\"".$menu['items'][$itemId]['target']."\" $title>".$menu['items'][$child]['text']."</a></li>\n";
+                                }
+                                // boostrap navi ends here
+                                $html .= "</ul>
+	              </li>";
+
+                            }
+                        } // end html markup of nav area
+                        // logout menu link - display only if user is logged in
+                        if (isset($_SESSION['username']) && isset($_SESSION['logged_in'])){
+                            if ($_SESSION['logged_in'] == true){
+                                // display only if logoutmenu is enabled
+                                if (\YAWK\settings::getSetting($db, 'userpage_logoutmenu') === '1'){
+                                    $html .= \YAWK\menu::drawLogoutMenu($db);
+                                }
+                            }
+                        }
+                        else {$html .= "</ul>
+                            <ul class=\"nav navbar-nav navbar-collapse navbar-right\">
+                             <li>";
+                            // check if userlogin is allowed
+                            if (\YAWK\settings::getSetting($db, 'userlogin') === '1')
+                            {   // load loginbox into navbar
+                                $html .= \YAWK\user::drawMenuLoginBox("","", "light");
+                            }
+                            $html .= "</li></ul>";
+                        }
+                        $html .= "<!-- /.nav-collapse -->
   </div><!-- /navbar-inn -->
  </div> <!-- /container -->
 </nav><!-- navbar -->
 ";
 
-            }
-                return $html;
+                    }
+                    return $html;
                 }
                 else
-                    {
-                        "Unable to load Bootstrap Menu";
-                    }
-            return null;
+                {
+                    "Unable to load Bootstrap Menu";
+                }
+                return null;
             }
 
             echo buildMenu($db, 0, $menu, $id, $currentRole, $divider, $template);
@@ -978,16 +983,16 @@ function myFunction() {
             $menu = '';
             if ($res = $db->query("SELECT name from {menu_names} WHERE id = $id"))
             {
-               if ($row = mysqli_fetch_row($res))
-               {
-                   $menu = $row[0];
-               }
+                if ($row = mysqli_fetch_row($res))
+                {
+                    $menu = $row[0];
+                }
             }
             else
-                {
-                   $menu = "MENU SELECT ID: $id failed";
-                }
-                return $menu;
+            {
+                $menu = "MENU SELECT ID: $id failed";
+            }
+            return $menu;
         }
 
         /**
