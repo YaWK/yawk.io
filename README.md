@@ -58,7 +58,7 @@ There are two ways to load YaWK on your webserver:<br><br>
 </li>
 </ol>
 
-<h4>Server / Webhosting Requirements:</h4>
+<h4>Minimum Server / Webhosting Requirements:</h4>
 <ul>
 <li>PHP 5.6+ (PHP 7 recommended)</li>
 <li>MySQL 5.x</li>
