@@ -33,6 +33,8 @@
 </script>
 <script type="text/javascript" src="../system/engines/jquery/jscolor/jscolor.js"></script>
 <?php
+/** @var $lang \YAWK\language */
+/** @var $db \YAWK\db */
 /* page content start here */
 // check if widget obj is set
 if (!isset($widget))
