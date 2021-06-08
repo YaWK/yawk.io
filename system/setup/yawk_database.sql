@@ -33,10 +33,10 @@ CREATE TABLE `cms_assets_types` (
 INSERT INTO `cms_assets_types` (`id`, `published`, `type`, `sortation`, `asset`, `property`, `internal`, `url1`, `url2`, `url3`) VALUES
 (1, 1, 1, 6, 'Bootstrap 3 JS', 'bootstrap3-js', 'system/engines/bootstrap3/dist/js/bootstrap.min.js', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js', ''),
 (2, 1, 1, 5, 'Bootstrap 3 CSS', 'bootstrap3-css', 'system/engines/bootstrap3/dist/css/bootstrap.min.css', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css', ''),
-(3, 1, 1, 1, 'jQuery 1.x', 'jquery-1', 'system/engines/jquery/jquery-1.12.4.min.js', 'http://code.jquery.com/jquery-1.12.4.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js', ''),
-(4, 1, 1, 2, 'jQuery 2.x', 'jquery-2', 'system/engines/jquery/jquery-2.2.4.min.js', 'http://code.jquery.com/jquery-2.2.4.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js', ''),
-(5, 1, 1, 3, 'jQuery 3.x', 'jquery-3', 'system/engines/jquery/jquery-3.2.1.min.js', 'http://code.jquery.com/jquery-3.2.1.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js', ''),
-(6, 1, 1, 4, 'jQuery UI 1.12 JS', 'jqueryUI', 'system/engines/jquery/jquery-ui.min.js', 'http://code.jquery.com/ui/1.12.1/jquery-ui.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js', ''),
+(3, 1, 1, 1, 'jQuery 1.x', 'jquery-1', 'system/engines/jquery/jquery-1.12.4.min.js', 'https://code.jquery.com/jquery-1.12.4.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js', ''),
+(4, 1, 1, 2, 'jQuery 2.x', 'jquery-2', 'system/engines/jquery/jquery-2.2.4.min.js', 'https://code.jquery.com/jquery-2.2.4.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js', ''),
+(5, 1, 1, 3, 'jQuery 3.x', 'jquery-3', 'system/engines/jquery/jquery-3.2.1.min.js', 'https://code.jquery.com/jquery-3.2.1.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js', ''),
+(6, 1, 1, 4, 'jQuery UI 1.12 JS', 'jqueryUI', 'system/engines/jquery/jquery-ui.min.js', 'https://code.jquery.com/ui/1.12.1/jquery-ui.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js', ''),
 (7, 1, 2, 8, 'Font Awesome Icons', 'font-awesome', 'system/engines/font-awesome/css/font-awesome.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css', '', ''),
 (8, 1, 2, 9, 'Lightbox 2 JS', 'lightbox2-js', 'system/engines/jquery/lightbox2/js/lightbox.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/js/lightbox.min.js', '', ''),
 (9, 1, 2, 10, 'Lightbox 2 CSS', 'lightbox2-css', 'system/engines/jquery/lightbox2/css/lightbox.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/css/lightbox.min.css', '', ''),
@@ -471,7 +471,7 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('admin_email', '', '', 9, 5, 1, 'ADMIN_EMAIL_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('backendFooter', '0', '', 11, 5, 1, 'BACKENDFOOTER_LABEL', 'fa fa-chevron-down', 'BACKENDFOOTER_HEADING', 'BACKENDFOOTER_SUBTEXT', 'form-control', 'checkbox', '', '', ''),
 ('backendFooterCopyright', '0', '', 11, 6, 1, 'BACKENDFOOTERCOPYRIGHT_LABEL', '', '', '', 'form-control', 'checkbox', '', '', ''),
-('backendFooterValueLeft', 'http://yawk.io', '', 11, 7, 1, 'BACKENDFOOTERVALUE_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
+('backendFooterValueLeft', 'https://yawk.io', '', 11, 7, 1, 'BACKENDFOOTERVALUE_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('backendFooterValueRight', '<b>YaWK :: <small> Yet another Web Kit</b></small>', '', 11, 8, 1, 'BACKENDFOOTERVALUERIGHT_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('backendFX', '0', '', 20, 5, 1, 'BACKENDFX_LABEL', 'fa fa-paper-plane-o', 'BACKENDFX_HEADING', 'BACKENDFX_SUBTEXT', 'form-control', 'checkbox', '', '', ''),
 ('backendFXtime', '820', '', 20, 7, 1, 'BACKENDFXTIME_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
@@ -510,7 +510,7 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('editorUndoDepth', '200', '', 14, 6, 1, 'EDITOR_UNDO_DEPTH_LABEL', '', '', '', 'form-control', 'select', '', 'EDITOR_UNDO_DEPTH_DESC', '50,50:100,100:150,150:200,200:250,250:300,300:400,400:500,500:1000,1000'),
 ('embedPageName', 'yourpage.php', '38', 1, 1, 0, '', '', '', 'DESC_EMBEDPAGE_NAME', 'form-control', '', '', '', ''),
 ('facebookstatus', '0', '', 4, 0, 1, 'Facebook on/off', '', '', '', 'form-control', '', '', '', ''),
-('facebookurl', 'http://www.facebook.com', '', 4, 0, 1, 'URL zu Facebook Seite / Profil ', '', '', '', 'form-control', '', '', '', ''),
+('facebookurl', 'https://www.facebook.com', '', 4, 0, 1, 'URL zu Facebook Seite / Profil ', '', '', '', 'form-control', '', '', '', ''),
 ('frontendFX', '0', '', 3, 3, 1, 'FRONTENDFX_LABEL', '', '', '', 'form-control', '', '', '', ''),
 ('frontendLanguage', 'de-DE', '', 19, 4, 1, 'FRONTENDLANGUAGE_LABEL', '', '', '', 'form-control', '', '', '', ''),
 ('globalmenuid', '1', '', 3, 2, 1, 'GLOBALMENUID_LABEL', 'fa fa-bars', 'GLOBALMENUID_HEADING', 'GLOBALMENUID_SUBTEXT', 'form-control', 'select', '', 'GLOBALMENUID_DESC', ''),
@@ -559,7 +559,7 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('timedifftext', 'This page is not online yet. Please come back in ', '', 7, 2, 1, 'TIMEDIFFTEXT_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('title', 'YaWK GitHub [clone]', '', 9, 1, 1, 'TITLE_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('twitterstatus', '0', '', 4, 0, 1, 'Twitter on/off', '', '', '', 'form-control', '', '', '', ''),
-('twitterurl', 'http://www.twitter.com', '', 4, 0, 1, 'URL zu Twitter Profil', '', '', '', 'form-control', '', '', '', ''),
+('twitterurl', 'https://www.twitter.com', '', 4, 0, 1, 'URL zu Twitter Profil', '', '', '', 'form-control', '', '', '', ''),
 ('userlogin', '0', '', 17, 1, 1, 'USERLOGIN_LABEL', 'fa fa-lock', 'USERLOGIN_HEADING', 'USERLOGIN_SUBTEXT', 'form-control', 'checkbox', '', 'USERLOGIN_DESC', ''),
 ('userpage_activeTab', 'Dashboard', '', 6, 0, 1, 'Userpage Active Tab', '', '', '', 'form-control', '', '', '', ''),
 ('userpage_admin', '1', '', 6, 0, 1, 'userpage admin tab enabled?', '', '', '', 'form-control', '', '', '', ''),
@@ -606,7 +606,7 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('webmail_smtp_server', '', '', 25, 1, 1, 'LABEL_WEBMAIL_SMTP_SERVER', 'fa fa-server', 'HEADING_WEBMAIL_SMTP_SERVER', '', 'form-control', 'input', 'PH_WEBMAIL_SMTP_SERVER', 'DESC_WEBMAIL_SMTP_SERVER', ''),
 ('webmail_smtp_username', '', '', 25, 10, 1, 'LABEL_WEBMAIL_SMTP_USERNAME', 'fa fa-user-o', 'HEADING_WEBMAIL_SMTP_USERNAME', '', 'form-control', 'input', 'PH_WEBMAIL_SMTP_USERNAME', '', ''),
 ('yawkversion', '1.0 build 2019.11', '', 9, 2, 0, 'YAWKVERSION_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
-('youtubeChannelUrl', 'http://www.youtube.com', '', 4, 0, 1, 'YouTube Channel URL', '', '', '', 'form-control', '', '', '', ''),
+('youtubeChannelUrl', 'https://www.youtube.com', '', 4, 0, 1, 'YouTube Channel URL', '', '', '', 'form-control', '', '', '', ''),
 ('youtubestatus', '0', '', 4, 0, 1, 'YouTube on/off', '', '', '', 'form-control', '', '', '', '');
 
 CREATE TABLE `cms_settings_types` (
@@ -753,8 +753,8 @@ CREATE TABLE `cms_templates` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `cms_templates` (`id`, `active`, `name`, `positions`, `description`, `releaseDate`, `author`, `authorUrl`, `weblink`, `subAuthor`, `subAuthorUrl`, `modifyDate`, `version`, `framework`, `license`) VALUES
-(1, 1, 'YaWK-bootstrap4', 'outerTop:outerLeft:outerRight:intro:globalmenu:top:leftMenu:mainTop:mainTopLeft:mainTopCenter:mainTopRight:main:mainBottom:mainBottomLeft:mainBottomCenter:mainBottomRight:mainFooter:mainFooterLeft:mainFooterCenter:mainFooterRight:rightMenu:bottom:footer:hiddentoolbar:debug:outerBottom', 'Bootstrap 4 Default Theme.', '2019-01-13 00:15:00', 'Daniel Retzl ', 'https://github.com/YaWK', 'http://www.yawk.io', 'Daniel Retzl', '', '2019-01-13 00:15:00', '1.0.0', 'bootstrap4', 'MIT'),
-(2, 0, 'YaWK-bootstrap3', 'outerTop:outerLeft:outerRight:intro:globalmenu:top:leftMenu:mainTop:mainTopLeft:mainTopCenter:mainTopRight:main:mainBottom:mainBottomLeft:mainBottomCenter:mainBottomRight:mainFooter:mainFooterLeft:mainFooterCenter:mainFooterRight:rightMenu:bottom:footer:hiddentoolbar:debug:outerBottom', 'Bootstrap 3 Default Theme.', '2019-01-13 02:00:00', 'Daniel Retzl ', 'https://github.com/YaWK', 'http://www.yawk.io', 'Daniel Retzl', '', '2019-01-13 02:00:00', '1.0.0', 'bootstrap3', 'MIT');
+(1, 1, 'YaWK-bootstrap4', 'outerTop:outerLeft:outerRight:intro:globalmenu:top:leftMenu:mainTop:mainTopLeft:mainTopCenter:mainTopRight:main:mainBottom:mainBottomLeft:mainBottomCenter:mainBottomRight:mainFooter:mainFooterLeft:mainFooterCenter:mainFooterRight:rightMenu:bottom:footer:hiddentoolbar:debug:outerBottom', 'Bootstrap 4 Default Theme.', '2019-01-13 00:15:00', 'Daniel Retzl ', 'https://github.com/YaWK', 'https://www.yawk.io', 'Daniel Retzl', '', '2019-01-13 00:15:00', '1.0.0', 'bootstrap4', 'MIT'),
+(2, 0, 'YaWK-bootstrap3', 'outerTop:outerLeft:outerRight:intro:globalmenu:top:leftMenu:mainTop:mainTopLeft:mainTopCenter:mainTopRight:main:mainBottom:mainBottomLeft:mainBottomCenter:mainBottomRight:mainFooter:mainFooterLeft:mainFooterCenter:mainFooterRight:rightMenu:bottom:footer:hiddentoolbar:debug:outerBottom', 'Bootstrap 3 Default Theme.', '2019-01-13 02:00:00', 'Daniel Retzl ', 'https://github.com/YaWK', 'https://www.yawk.io', 'Daniel Retzl', '', '2019-01-13 02:00:00', '1.0.0', 'bootstrap3', 'MIT');
 
 CREATE TABLE `cms_template_settings` (
   `id` int(11) NOT NULL,
@@ -2019,11 +2019,11 @@ INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated
 ('loginboxLoginBtnText', 'Login', 1, 1, 10, 'LABEL_LOGINBOX_LOGIN_BTNTEXT', 'fa fa-toggle-on', 'TITLE_LOGINBOX_BUTTONS', '', 'DESC_LOGINBOX_LOGIN_BTNTEXT', 'form-control', '', 'PH_LOGINBOX_LOGIN_BTNTEXT', '', 1),
 ('fbPageWidth', '450', 4, 1, 10, 'LABEL_FBPAGE_WIDTH', '', '', '', 'DESC_FBPAGE_WIDTH', 'form-control', '', 'PH_FBPAGE_WIDTH', '', 2),
 ('fbPageHeight', '265', 4, 1, 11, 'LABEL_FBPAGE_HEIGHT', '', '', '', 'DESC_FBPAGE_HEIGHT', 'form-control', '', 'PH_FBPAGE_HEIGHT', '', 3),
-('fbPageUrl', 'http://www.facebook.com/platform', 4, 1, 1, 'LABEL_FBPAGE_URL', '', '', '', 'DESC_FBPAGE_URL', 'form-control', '', 'PH_FBPAGE_URL', '', 4),
+('fbPageUrl', 'https://www.facebook.com/platform', 4, 1, 1, 'LABEL_FBPAGE_URL', '', '', '', 'DESC_FBPAGE_URL', 'form-control', '', 'PH_FBPAGE_URL', '', 4),
 ('fbPageAppID', '', 4, 1, 2, 'LABEL_FBPAGE_APPID', '', '', '', 'DESC_FBPAGE_APPID', 'form-control', '', 'PH_FBPAGE_APPID', '', 5),
 ('fbLikeButtonWidth', '450', 5, 1, 8, 'LABEL_FBLIKE_BUTTON_WIDTH', '', '', '', 'DESC_FBLIKE_BUTTON_WIDTH', 'form-control', '', 'PH_FBLIKE_BUTTON_WIDTH', '', 6),
 ('fbLikeButtonHeight', '35', 5, 1, 9, 'LABEL_FBLIKE_BUTTON_HEIGHT', '', '', '', 'DESC_FBLIKE_BUTTON_HEIGHT', 'form-control', '', 'PH_FBLIKE_BUTTON_HEIGHT', '', 7),
-('fbLikeButtonUrl', 'http://www.facebook.com/platform', 5, 1, 1, 'LABEL_FBLIKE_BUTTON_URL', '', '', '', 'DESC_FBLIKE_BUTTON_URL', 'form-control', '', 'PH_FBLIKE_BUTTON_URL', '', 8),
+('fbLikeButtonUrl', 'https://www.facebook.com/platform', 5, 1, 1, 'LABEL_FBLIKE_BUTTON_URL', '', '', '', 'DESC_FBLIKE_BUTTON_URL', 'form-control', '', 'PH_FBLIKE_BUTTON_URL', '', 8),
 ('fbLikeButtonAppID', '', 5, 1, 2, 'LABEL_FBLIKE_BUTTON_APPID', '', '', '', 'DESC_FBLIKE_BUTTON_APPID', 'form-control', '', 'PH_FBLIKE_BUTTON_APPID', '', 9),
 ('fbLikeButtonColorscheme', 'light', 5, 0, 5, 'LABEL_FBLIKE_BUTTON_COLORSCHEME', '', '', '', 'DESC_FBLIKE_BUTTON_COLORSCHEME', 'form-control', 'select', '', 'light,Light:dark,Dark', 10),
 ('gaTrackingCode', '', 6, 1, 1, 'LABEL_GA_TRACKING_ID', '', '', '', 'DESC_GA_TRACKING_ID', 'form-control', '', 'PH_GA_TRACKING_ID', '', 18),
@@ -2403,7 +2403,7 @@ CREATE TABLE `cms_widget_settings` (
   `description` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 INSERT INTO `cms_widget_settings` (`id`, `widgetID`, `property`, `value`, `widgetType`, `activated`, `sortation`, `label`, `icon`, `heading`, `subtext`, `fieldClass`, `fieldType`, `placeholder`, `options`, `description`) VALUES
-(1, 1, 'customHtmlCode', '<div id=\"carouselExampleIndicators\" class=\"carousel slide\" data-ride=\"carousel\">\r\n  <ol class=\"carousel-indicators\">\r\n    <li data-target=\"#carouselExampleIndicators\" data-slide-to=\"0\" class=\"active\"></li>\r\n    <li data-target=\"#carouselExampleIndicators\" data-slide-to=\"1\"></li>\r\n    <li data-target=\"#carouselExampleIndicators\" data-slide-to=\"2\"></li>\r\n  </ol>\r\n  <div class=\"carousel-inner\">\r\n    <div class=\"carousel-item active\">\r\n      <img class=\"d-block w-100\" src=\"http://placehold.it/1920x600\" alt=\"First slide\">\r\n    </div>\r\n    <div class=\"carousel-item\">\r\n      <img class=\"d-block w-100\" src=\"http://placehold.it/1920x600\" alt=\"Second slide\">\r\n    </div>\r\n    <div class=\"carousel-item\">\r\n      <img class=\"d-block w-100\" src=\"http://placehold.it/1920x600\" alt=\"Third slide\">\r\n    </div>\r\n  </div>\r\n  <a class=\"carousel-control-prev\" href=\"#carouselExampleIndicators\" role=\"button\" data-slide=\"prev\">\r\n    <span class=\"carousel-control-prev-icon\" aria-hidden=\"true\"></span>\r\n    <span class=\"sr-only\">Previous</span>\r\n  </a>\r\n  <a class=\"carousel-control-next\" href=\"#carouselExampleIndicators\" role=\"button\" data-slide=\"next\">\r\n    <span class=\"carousel-control-next-icon\" aria-hidden=\"true\"></span>\r\n    <span class=\"sr-only\">Next</span>\r\n  </a>\r\n</div>', 10, 1, 0, 'LABEL_CUSTOM_HTML_CODE_CONTENT', '', '', '', 'form-control', 'editor', 'PH_CUSTOM_HTML_CODE_CONTENT', '', 'DESC_CUSTOM_HTML_CODE_CONTENT');
+(1, 1, 'customHtmlCode', '<div id=\"carouselExampleIndicators\" class=\"carousel slide\" data-ride=\"carousel\">\r\n  <ol class=\"carousel-indicators\">\r\n    <li data-target=\"#carouselExampleIndicators\" data-slide-to=\"0\" class=\"active\"></li>\r\n    <li data-target=\"#carouselExampleIndicators\" data-slide-to=\"1\"></li>\r\n    <li data-target=\"#carouselExampleIndicators\" data-slide-to=\"2\"></li>\r\n  </ol>\r\n  <div class=\"carousel-inner\">\r\n    <div class=\"carousel-item active\">\r\n      <img class=\"d-block w-100\" src=\"https://placehold.it/1920x600\" alt=\"First slide\">\r\n    </div>\r\n    <div class=\"carousel-item\">\r\n      <img class=\"d-block w-100\" src=\"https://placehold.it/1920x600\" alt=\"Second slide\">\r\n    </div>\r\n    <div class=\"carousel-item\">\r\n      <img class=\"d-block w-100\" src=\"https://placehold.it/1920x600\" alt=\"Third slide\">\r\n    </div>\r\n  </div>\r\n  <a class=\"carousel-control-prev\" href=\"#carouselExampleIndicators\" role=\"button\" data-slide=\"prev\">\r\n    <span class=\"carousel-control-prev-icon\" aria-hidden=\"true\"></span>\r\n    <span class=\"sr-only\">Previous</span>\r\n  </a>\r\n  <a class=\"carousel-control-next\" href=\"#carouselExampleIndicators\" role=\"button\" data-slide=\"next\">\r\n    <span class=\"carousel-control-next-icon\" aria-hidden=\"true\"></span>\r\n    <span class=\"sr-only\">Next</span>\r\n  </a>\r\n</div>', 10, 1, 0, 'LABEL_CUSTOM_HTML_CODE_CONTENT', '', '', '', 'form-control', 'editor', 'PH_CUSTOM_HTML_CODE_CONTENT', '', 'DESC_CUSTOM_HTML_CODE_CONTENT');
 
 CREATE TABLE `cms_widget_types` (
   `id` int(11) NOT NULL,
