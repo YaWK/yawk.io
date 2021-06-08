@@ -1069,7 +1069,7 @@ namespace YAWK {
                     exit;
                 }
                 if ($currentpage->date_unpublish < $now XOR $currentpage->date_unpublish === NULL) {
-                    echo "<br>Dieser Inhalt ist leider nicht mehr verf&uuml;gbar. <br><br>";
+                    echo "<br>Sadly, this content is not available anymore. <br><br>";
                     $start = strtotime($now);
                     $end = strtotime($currentpage->date_publish);
                     $timediff = settings::getSetting($db, "timediff");
