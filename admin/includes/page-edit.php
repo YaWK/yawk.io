@@ -1,7 +1,11 @@
 <?php
 // IMPORT REQUIRED CLASSES
+use YAWK\backend;
 use YAWK\db;
 use YAWK\language;
+use YAWK\settings;
+use YAWK\sys;
+use YAWK\user;
 
 // CHECK REQUIRED OBJECTS
 if (!isset($page)) // if no page object is set
@@ -80,7 +84,7 @@ $page->alias = preg_replace("/[^a-z0-9\-\/]/i", "", $page->alias); // final chec
 
 <?php
 // get settings for editor
-$editorSettings = \YAWK\settings::getEditorSettings($db, 14);
+$editorSettings = settings::getEditorSettings($db, 14);
 ?>
 <!-- include summernote css/js-->
 <!-- include codemirror (codemirror.css, codemirror.js, xml.js) -->
@@ -101,14 +105,14 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
     function saveHotkey() {
         // simply disables save event for chrome
         $(window).keypress(function (event) {
-            if (!(event.which == 115 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) && !(event.which == 19)) return true;
+            if (!(event.which === 115 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) && !(event.which === 19)) return true;
             event.preventDefault();
             formmodified=0; // do not warn user, just save.
             return false;
         });
         // used to process the cmd+s and ctrl+s events
         $(document).keydown(function (event) {
-            if (event.which == 83 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) {
+            if (event.which === 83 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) {
                 event.preventDefault();
                 $('#savebutton').click(); // SAVE FORM AFTER PRESSING STRG-S hotkey
                 formmodified=0; // do not warn user, just save.
@@ -254,7 +258,7 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
         /* draw Title on top */
-        echo \YAWK\backend::getTitle($page->title, $lang['PAGE_EDIT']);
+        echo backend::getTitle($page->title, $lang['PAGE_EDIT']);
         echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
             <li><a href=\"index.php?page=pages\" title=\"$lang[PAGES]\"> $lang[PAGES]</a></li>
@@ -271,7 +275,7 @@ echo "
           <div class="col-md-8">
     <!-- EDITOR -->
     <label for="summernote"></label>
-  	<textarea id="summernote" name="content"><?php print $page->readContent("../", $page->language); ?> </textarea>
+  	<textarea id="summernote" name="content"><?php print $page->readContent("../"); ?> </textarea>
 
     <!-- SAVE BUTTON -->
     <div class="text-right">
@@ -307,11 +311,7 @@ echo "
                       <input id="alias" class="form-control" name="alias" maxlength="255"
                       <?php if (isset($readonly)) { print $readonly; } ?> value="<?php print $page->alias; ?>">
 
-                      <label for="title"><?php print $lang['LANGUAGE']; ?></label>
-
-                      <!-- <input id="title" class="form-control" name="title" maxlength="255" value="<?php // print $page->language; ?>"> -->
-
-
+                      <label for="language"><?php print $lang['LANGUAGE']; ?></label>
                       <select id="language" name="language" class="form-control">
                           <?php
                           if (isset($page->language) && (!empty($page->language)))
@@ -463,7 +463,6 @@ echo "
                           <option value="yo">Yoruba - Èdè Yorùbá</option>
                           <option value="zu">Zulu - isiZulu</option>
                       </select>
-
                   </div>
               </div>
 
@@ -488,7 +487,7 @@ echo "
 
                       <label for="gidselect"> <?php print $lang['PAGE_VISIBLE']; ?></label>
                       <select id="gidselect" name="gid" class="form-control">
-                                  <option value="<?php print \YAWK\sys::getGroupId($db, $page->id, "pages"); ?>" selected><?php print \YAWK\user::getGroupNameFromID($db, $page->gid); ?></option>
+                                  <option value="<?php print sys::getGroupId($db, $page->id, "pages"); ?>" selected><?php print user::getGroupNameFromID($db, $page->gid); ?></option>
                                   <?php
                                   foreach(YAWK\sys::getGroups($db, "pages") as $role) {
                                       print "<option value=\"".$role['id']."\"";
@@ -558,8 +557,8 @@ echo "
                   </div>
                   <div class="box-body" style="display: block;">
                       <!-- PAGE BG IMAGE -->
-                      <?php echo $lang['BG_IMAGE']; ?>
-                      <input type="text" size="64" class="form-control" placeholder="media/images/background.jpg" name="bgimage" value="<?php print $page->bgimage;  ?>">
+                      <label for="bgimage"><?php echo $lang['BG_IMAGE']; ?></label>
+                      <input id="bgimage" type="text" size="64" class="form-control" placeholder="media/images/background.jpg" name="bgimage" value="<?php print $page->bgimage;  ?>">
                   </div>
               </div>
 
@@ -581,9 +580,9 @@ echo "
 
                               <?php
                                 // get submenu ID
-                                $subMenuID = \YAWK\sys::getSubMenu($db, $page->id);
+                                $subMenuID = sys::getSubMenu($db, $page->id);
                               ?>
-                              <option value="<?php print $subMenuID ?>"><?php print \YAWK\sys::getMenuItem($db, $page->id); ?></option>
+                              <option value="<?php print $subMenuID ?>"><?php print sys::getMenuItem($db, $page->id); ?></option>
                               <?php
                                 if ($subMenuID == 0)
                                 {
