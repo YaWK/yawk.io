@@ -256,7 +256,8 @@ CREATE TABLE `cms_menu` (
   `href` varchar(255) NOT NULL,
   `target` varchar(64) NOT NULL DEFAULT '_self',
   `divider` int(11) NOT NULL DEFAULT '0',
-  `blogid` int(11) NOT NULL DEFAULT '0'
+  `blogid` int(11) NOT NULL DEFAULT '0',
+  `menuLanguage` varchar(7) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `cms_menu` (`TMPID`, `id`, `sort`, `gid`, `menuID`, `parentID`, `published`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `title`, `text`, `href`, `target`, `divider`, `blogid`) VALUES
@@ -265,7 +266,8 @@ INSERT INTO `cms_menu` (`TMPID`, `id`, `sort`, `gid`, `menuID`, `parentID`, `pub
 CREATE TABLE `cms_menu_names` (
   `id` int(11) NOT NULL,
   `name` varchar(30) NOT NULL,
-  `published` int(1) NOT NULL DEFAULT '1'
+  `published` int(1) NOT NULL DEFAULT '1',
+  `menuLanguage` varchar(7) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `cms_menu_names` (`id`, `name`, `published`) VALUES
@@ -330,7 +332,8 @@ CREATE TABLE `cms_pages` (
   `menu` int(11) DEFAULT '0',
   `locked` int(1) DEFAULT '0',
   `blogid` int(11) DEFAULT '0',
-  `plugin` varchar(255) NOT NULL DEFAULT '0'
+  `plugin` varchar(255) NOT NULL DEFAULT '0',
+  `lang` varchar(7) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `cms_pages` (`id`, `published`, `gid`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `alias`, `title`, `bgimage`, `owner`, `menu`, `locked`, `blogid`, `plugin`) VALUES
