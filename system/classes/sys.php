@@ -1518,6 +1518,30 @@ namespace YAWK {
         }
 
         /**
+         * returns menu language for given menu ID
+         * @author      Daniel Retzl <danielretzl@gmail.com>
+         * @version     1.0.0
+         * @link        http://yawk.io
+         * @param object $db database
+         * @param int $id menu ID
+         * @return bool
+         */
+        static function getMenuLanguage($db, $id)
+        {   /** @var $db \YAWK\db $res */
+            if ($res = $db->query("SELECT menuLanguage
+	                              FROM {menu_names}
+	                              WHERE id = $id"))
+            {   // return menu name
+                $row = mysqli_fetch_row($res);
+                return $row[0];
+            }
+            else
+            {   // q failed
+                return false;
+            }
+        }
+
+        /**
          * get pages from database
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0

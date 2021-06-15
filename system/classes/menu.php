@@ -47,7 +47,7 @@ namespace YAWK {
          * @param int $menuID the menuID to get data
          */
         public function displaySubMenu($db, $menuID)
-        {   /** @var \YAWK\db  $db */
+        {   /** @var db $db */
             // get menu entries and draw navbar
             $res = $db->query("SELECT * FROM {menu}
                                WHERE published = 1 
@@ -73,7 +73,7 @@ namespace YAWK {
          * @param int $menuID the menuID to get data
          */
         public function isPublished($db, $menuID)
-        {   /** @var \YAWK\db  $db */
+        {   /** @var db $db */
             $res = $db->query("SELECT published FROM {menu_names}
                                WHERE published = 1 
                                AND id = '".$menuID."'");
@@ -99,7 +99,7 @@ namespace YAWK {
          * @param object $template template object
          */
         static function displayGlobalMenu($db, $template)
-        {   /** @var \YAWK\db  $db */
+        {   /** @var db $db */
             $res = $db->query("SELECT value FROM {settings}
                                WHERE property = 'globalmenuid'");
             if ($row = mysqli_fetch_row($res)) {
@@ -121,7 +121,7 @@ namespace YAWK {
          * @return bool
          */
         static function createMenu($db, $name, $lang)
-        {   /** @var $db \YAWK\db */
+        {   /** @var $db db */
             // menu name not given
             if (!$name) {
                 return false;
@@ -165,7 +165,7 @@ namespace YAWK {
          */
         static function changeTitle($db, $menu, $menutitle)
         {
-            /** @var $db \YAWK\db $res */
+            /** @var $db db $res */
             if ($res = $db->query("UPDATE {menu_names} SET
     							  		name = '" . $menutitle . "'
     							        WHERE id = '" . $menu . "'"))
@@ -176,6 +176,70 @@ namespace YAWK {
             else
             {
                 \YAWK\sys::setSyslog($db, 24, 1,"failed to update menu title <b>$menutitle</b>", 0, 0, 0, 0);
+                return false;
+            }
+        }
+
+        /**
+         * Change the menu language
+         * @copyright  2009-2021 Daniel Retzl
+         * @license    https://opensource.org/licenses/MIT
+         * @version    1.0.0
+         * @link       http://yawk.io
+         * @param object $db the database oject
+         * @param int $menu affected menu ID
+         * @param string $menuLanguage new menu language
+         * @return bool
+         */
+        static function changeLanguage($db, $menu, $menuLanguage)
+        {
+            $menuLanguage = mb_substr($menuLanguage, 0, 2);
+            /** @var $db db $res */
+            if ($res = $db->query("UPDATE {menu_names} SET
+    							  		menuLanguage = '" . $menuLanguage . "'
+    							        WHERE id = '" . $menu . "'") &&
+                ($res = $db->query("UPDATE {menu} SET
+    							  		menuLanguage = '" . $menuLanguage . "'
+    							        WHERE menuID = '" . $menu . "'")))
+
+            {
+                \YAWK\sys::setSyslog($db, 21, 0,"updated menu language of menu ID $menu to <b>$menuLanguage</b>", 0, 0, 0, 0);
+                return true;
+            }
+            else
+            {
+                \YAWK\sys::setSyslog($db, 24, 1,"failed to update menu language of menu ID $menu to <b>$menuLanguage</b>", 0, 0, 0, 0);
+                return false;
+            }
+        }
+
+        /**
+         * Get menu ID by language
+         * @copyright  2009-2021 Daniel Retzl
+         * @license    https://opensource.org/licenses/MIT
+         * @version    1.0.0
+         * @link       http://yawk.io
+         * @param object $db the database object
+         * @param string $menuLanguage menu language
+         * @return int|false $id return ID of the menu with given language or false if no ID was found
+         */
+        static function getMenuIdFromLanguage ($db, $menuLanguage)
+        {
+            /** @var $db db $res */
+            if ($res = $db->query("SELECT id FROM {menu} WHERE menuLanguage='".$menuLanguage."'"))
+            {
+                $id = mysqli_fetch_row($res);
+                if (isset($id[0]) && (!empty($id[0])))
+                {
+                    return $id[0];
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
                 return false;
             }
         }
@@ -193,7 +257,7 @@ namespace YAWK {
          * @return bool
          */
         static function addEntry($db, $menu, $text, $href)
-        {   /** @var $db \YAWK\db */
+        {   /** @var $db db */
 
             // get menu name
             $menuName = \YAWK\menu::getMenuNameByID($db, $menu);
@@ -204,11 +268,11 @@ namespace YAWK {
 
             $row = mysqli_fetch_row($res);
             if (isset($row[0]))
-            {   // add sortation
+            {   // add sort
                 $sort = $row[0] + 1;
             }
             else
-            {   // sortation
+            {   // sort
                 $sort = 1;
             }
 
@@ -217,16 +281,11 @@ namespace YAWK {
                 $sort = 1;
             }
 
-            $tmpID = 0;
-            $title = '';
-
             // add menu entry
             if ($res = $db->query("INSERT INTO {menu} 
-                                        (TMPID, sort, menuID, title, text, href)
-                                        VALUES ('" . $tmpID . "',
+                                        (sort, text, href)
+                                        VALUES (
                                         '" . $sort . "',
-                                        '" . $menu . "',
-                                        '" . $title . "',
                                         '" . $text . "',
                                         '" . $href . "')"))
             {   // menu entry added
@@ -254,7 +313,7 @@ namespace YAWK {
          */
         public static function getMenuStatus($db, $menuid)
         {
-            /** @var $db \YAWK\db */
+            /** @var $db db */
             // get status from menu db
             if ($res = $db->query("SELECT published FROM {menu_names} WHERE id = '" . $menuid . "'"))
             {   // fetch data
@@ -280,7 +339,7 @@ namespace YAWK {
          */
         public static function getMenuEntryStatus($db, $menuid)
         {
-            /** @var $db \YAWK\db */
+            /** @var $db db */
             if ($res = $db->query("SELECT published FROM {menu} WHERE id = '" . $menuid . "'"))
             {
                 $row = mysqli_fetch_row($res);
@@ -307,7 +366,7 @@ namespace YAWK {
          */
         function toggleOffline($db, $id, $published, $lang)
         {
-            /** @var $db \YAWK\db */
+            /** @var $db db */
 
             // get name and status string
             $menuName = \YAWK\menu::getMenuNameByID($db, $id);
@@ -342,7 +401,7 @@ namespace YAWK {
          */
         function toggleItemOffline($db, $id, $published, $menuID)
         {
-            /** @var $db \YAWK\db */
+            /** @var $db db */
 
             // get name and status string
             $menuItem = \YAWK\menu::getMenuItemTitleByID($db, $id, $menuID);
@@ -383,7 +442,7 @@ namespace YAWK {
          * @return bool
          */
         static function editEntry($db, $menu, $id, $text, $title, $href, $sort, $gid, $published, $parentID, $target)
-        {   /** @var $db \YAWK\db */
+        {   /** @var $db db */
             $menuName = \YAWK\menu::getMenuNameByID($db, $menu);
             $date_changed = date("Y-m-d G:i:s");
             if ($res = $db->query("UPDATE {menu} SET
@@ -421,7 +480,7 @@ namespace YAWK {
          * @return bool
          */
         static function deleteEntry($db, $menu, $id)
-        {   /** @var $db \YAWK\db */
+        {   /** @var $db db */
             $menuName = \YAWK\menu::getMenuNameByID($db, $menu);
             $menuItem = \YAWK\menu::getMenuItemTitleByID($db, $id, $menu);
             if (!$res = $db->query("DELETE FROM {menu} WHERE menuID = '" . $menu . "' AND id = '" . $id . "'"))
@@ -457,7 +516,7 @@ namespace YAWK {
          */
         static function delete($db, $id, $lang)
         {
-            /** @var $db \YAWK\db */
+            /** @var $db db */
             $menuName = \YAWK\menu::getMenuNameByID($db, $id);
             // delete menu itself
             if ($res = $db->query("DELETE FROM {menu_names} WHERE id = '" . $id . "'"))
@@ -494,7 +553,7 @@ namespace YAWK {
             /** UPDATE: OPTIMIZATION NEEDED
              *  HERE SHOULD BE A SELECT JOIN user_groups + parent items
              *  instead of 3 different SELECTs - can anybody help here? */
-            /** @var $db \YAWK\db */
+            /** @var $db db */
             echo "
 <table class=\"table table-striped table-hover table-responsive\" id=\"table-sort\">
   <thead>
@@ -650,16 +709,27 @@ namespace YAWK {
          * @param object $template template obj
          */
         static function display($db, $id, $template)
-        {   /** @var \YAWK\db $db */
+        {   /** @var db $db */
             $divider = '';
             if (isset($_SESSION['gid'])) {
                 $currentRole = $_SESSION['gid'];
             } else $currentRole = 2;
 
+            // Language Stuff
+            // Check, if user has selected a language
+            if (isset($_COOKIE['userSelectedLanguage']) && (!empty($_COOKIE['userSelectedLanguage'])))
+            {   // get this language from menu db - TODO: language need to be checked - what happens, if lang is not there?
+                $searchstring = "WHERE menuLanguage = '".$_COOKIE['userSelectedLanguage']."'";
+            }
+            else
+            {   // if no cookie was set (no language selected) load the defined global menu
+                $searchstring = "WHERE menuID = '" . $id . "'";
+            }
+
             // Select entries from the menu table
             $res = $db->query("SELECT id, text, title, href, target, parentID, divider
                             FROM {menu}
-                            WHERE menuID = '" . $id . "'
+                            ".$searchstring."
                             and gid <= '" . $currentRole . "'
                             AND published = 1
                             AND (date_publish <= NOW() or date_publish <=> NULL)
@@ -682,7 +752,7 @@ namespace YAWK {
             // Menu builder function, parentId 0 is the root
 
             function buildMenu($db, $parent, $menu, $id, $currentRole, $divider, $template)
-            {   /** @var \YAWK\db $db */
+            {   /** @var db $db */
 
                 // check if template ID is set
                 if (isset($template) && (!empty($template)))
@@ -979,7 +1049,7 @@ function myFunction() {
          * @return string
          */
         static function getMenuNameByID($db, $id)
-        {   /* @var $db \YAWK\db */
+        {   /* @var $db db */
             $menu = '';
             if ($res = $db->query("SELECT name from {menu_names} WHERE id = $id"))
             {
@@ -1003,7 +1073,7 @@ function myFunction() {
          * @return string title of the menu entry
          */
         static function getMenuItemTitleByID($db, $itemID, $menuID)
-        {   /* @var $db \YAWK\db */
+        {   /* @var $db db */
             $menu = '';
             if ($res = $db->query("SELECT title from {menu} WHERE id = $itemID AND menuID = $menuID"))
             {

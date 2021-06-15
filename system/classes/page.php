@@ -1,5 +1,8 @@
 <?php
 namespace YAWK {
+
+    use DirectoryIterator;
+
     /**
      * <b>The default pages class. Provide all functions to handle static html pages.</b>
      *
@@ -20,14 +23,16 @@ namespace YAWK {
         public $id = -1;
         /** * @var string page filename */
         public $alias = '';
+        /** * @var string new page filename (used by copy function) */
+        public $alias_new = '';
         /** * @var string page title */
         public $title = '';
+        /** * @var string new page title (used by copy function) */
+        public $title_new = '';
         /** * @var int 0|1 published status */
         public $published = 0;
         /** * @var int uid (user id) of the page owner */
         public $ownerid = -1;
-        /** * @var string should the page owner be public */
-        public $owner = false;
         /** * @var int menu id according to this page */
         public $menu = -1;
         /** * @var int group id for this page */
@@ -52,7 +57,12 @@ namespace YAWK {
         public $searchstring;
         /** * @var string bg image */
         public $bgimage;
-
+        /** * @var string page language */
+        public $language;
+        /** * @var bool copy page into new language indicator  */
+        public $newLanguage;
+        /** * @var string the root path where pages are physically stored  */
+        public $path = "../content/pages/";
 
         /**
          * count and return the pages in database
@@ -60,11 +70,11 @@ namespace YAWK {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db database
-         * @return bool
+         * @return int|bool
          */
         static function countPages($db)
-        {   /** @var $db \YAWK\db */
-            if ($result = $db->query("SELECT count(id) FROM {pages}"))
+        {   /** @var $db db */
+            if ($result = $db->query('SELECT count(id) FROM {pages}'))
             {
                 $i = mysqli_fetch_row($result);
                 return $i[0];
@@ -86,7 +96,7 @@ namespace YAWK {
          * @return string|bool meta tags as string
          */
         function getMetaTags($db, $id, $type)
-        {   /** @var $db \YAWK\db $res */
+        {   /** @var $db db $res */
             if (!isset($type) or (empty($type))) {
                 // set default type description | keywords
                 $type = "description";
@@ -101,8 +111,8 @@ namespace YAWK {
             }
             else {
                 // throw alert
-                \YAWK\sys::setSyslog($db, 7, 1, "failed to fetch meta $type for page ID $id", 0, 0, 0, 0);
-                \YAWK\alert::draw("warning", "Warning", "Could not fetch meta $type for page ID $id", "",4200);
+                sys::setSyslog($db, 7, 1, "failed to fetch meta $type for page ID $id", 0, 0, 0, 0);
+                alert::draw("warning", "Warning", "Could not fetch meta $type for page ID $id", "",4200);
             }
             // q failed
             return false;
@@ -118,10 +128,10 @@ namespace YAWK {
          * @param int $id affected page ID
          * @param int $published 0|1 page publish status
          * @param string $title page title
-         * @return string|bool meta tags as string
+         * @return bool page toggle on/offline status
          */
         function toggleOffline($db, $id, $published, $title)
-        {   /* @var $db \YAWK\db */
+        {   /* @var $db db */
             // check data types
             if (is_numeric($id) && (is_numeric($published) && is_string($title)))
             {
@@ -135,26 +145,24 @@ namespace YAWK {
                 $published = $db->quote($published);
                 $title = $db->quote($title);
 
-                $status = \YAWK\sys::iStatusToString($published, "online", "offline");
-
                 if ($published === "0") { $status = "offline"; } else { $status = "online"; }
 
                 // TOGGLE PAGES
-                if (!$res = $db->query("UPDATE {pages}
+                if (!$db->query("UPDATE {pages}
                                         SET published = '" . $published . "'
                                         WHERE id = '" . $id . "'"))
                 {   // could not update pages db table
-                    $status = \YAWK\sys::iStatusToString($published, "online", "offline");
-                    \YAWK\sys::setSyslog($db, 7, 1, "failed to toggle $title status to $status", 0, 0, 0, 0);
+                    $status = sys::iStatusToString($published, "online", "offline");
+                    sys::setSyslog($db, 7, 1, "failed to toggle $title status to $status", 0, 0, 0, 0);
                     print alert::draw("danger", "Error", "Site Status could not be toggled.", "", 4200);
                 }
                 else
                 {   // ok, set syslog entry
-                    \YAWK\sys::setSyslog($db, 5, 0, "toggled page $id to $status", 0, 0, 0, 0);
+                    sys::setSyslog($db, 5, 0, "toggled page $id to $status", 0, 0, 0, 0);
                 }
 
-                // TOGLE MENU STATUS
-                if (!$res = $db->query("UPDATE {menu}
+                // TOGGLE MENU STATUS
+                if (!$db->query("UPDATE {menu}
                                         SET published = '" . $published . "'
                                         WHERE title = '" . $title . "'")) {
                     // could not update pages db table
@@ -162,12 +170,12 @@ namespace YAWK {
                 }
                 else
                 {   // ok, set syslog entry
-                    \YAWK\sys::setSyslog($db, 21, 0, "toggled menu $id to $status", 0, 0, 0, 0);
+                    sys::setSyslog($db, 21, 0, "toggled menu $id to $status", 0, 0, 0, 0);
                 }
             }
             else
             {   // data type is incorrect, throw yoda's hint
-                print \YAWK\alert::draw("danger", "Error", "YaWK said: variable manipulate you shall not do!", "", 4200);
+                print alert::draw("danger", "Error", "YaWK said: variable manipulate you shall not do!", "", 4200);
             }
             return true;
         }
@@ -180,23 +188,23 @@ namespace YAWK {
          * @param object $db database
          * @param int $id affected page id
          * @param int $locked 0|1 lock status
-         * @return bool
+         * @return bool page toggle lock status
          */
         function toggleLock($db, $id, $locked)
         {
-            /* @var $db \YAWK\db */
+            /* @var $db db */
             $id = $db->quote($id);
             $locked = $db->quote($locked);
-            if ($res = $db->query("UPDATE {pages} SET locked = ".$locked." WHERE id = ".$id."")) {
+            if ($db->query("UPDATE {pages} SET locked = '".$locked."' WHERE id = '".$id."'")) {
                 /* free result set */
                 // $res->close();
                 return true;
             }
             else
             {   //
-                print \YAWK\alert::draw("danger", "Error", "Site Lock could not be toggled.","page=pages",4200);
+                print alert::draw("danger", "Error", "Site Lock could not be toggled.","page=pages",4200);
                 if ($locked === "0") { $status = "unlocked"; } else { $status = "locked"; }
-                \YAWK\sys::setSyslog($db, 5,0,  "set status $status page id #$id", 0, 0, 0, 0);
+                sys::setSyslog($db, 5,0,  "set status $status page id #$id", 0, 0, 0, 0);
                 return false;
             }
         }
@@ -211,54 +219,50 @@ namespace YAWK {
          */
         function copy($db)
         {
-            /** @var $db \YAWK\db */
-            // group id
-            $gid = "$this->gid";
-            // old page alias (filename)
-            $alias_old = "$this->alias";
-            // copied alias (new filename)
-            $alias = "$this->alias-copy";
-            // copied title (new title)
-            $title_new = "$this->title-copy";
-            // title
-            $title = "$this->title";
+            /** @var $db db */
             // creation date
-            $date_created = date("Y-m-d G:i:s");
-            // plugin
-            $plugin = "$this->plugin";
-            // blog id
-            $blogid = "$this->blogid";
-            // locked
-            $locked = "$this->locked";
+            $currentDateTime = date("Y-m-d G:i:s");
+
+
+            // init helper vars for copy processing
+            $page = '';
+            $newPage = '';
 
             // if page name is not given
-            if (!$alias) {
+            if (!$this->alias) {
                 return false;
             }
             // ## select max id from pages
             if ($res = $db->query("SELECT MAX(id) FROM {pages}"))
             {
                 $row = mysqli_fetch_row($res);
-                $id = $row[0] + 1;
+                $this->id = $row[0] + 1;
             }
             else
             {
-                \YAWK\sys::setSyslog($db, 7, 1, "could not fetch MAX(id) of pages database", 0, 0, 0, 0);
+                sys::setSyslog($db, 7, 1, "could not fetch MAX(id) of pages database", 0, 0, 0, 0);
                 die ("Sorry, database error: could not fetch MAX(id).");
             }
-            // ## add new page to db pages
-            if ($db->query("INSERT INTO {pages} (id,gid,date_created,date_publish,alias,title,blogid,locked,plugin)
-                                   VALUES ('" . $id . "',
-                                           '" . $gid . "',
-                                           '" . $date_created . "',
-                                           '" . $date_created . "',
-                                           '" . $alias . "',
-                                           '" . $title_new . "',
-                                           '" . $blogid . "',
-                                           '" . $locked . "',
-                                           '" . $plugin . "')"))
-            {
 
+            $this->id++;
+            echo "<pre>";
+            print_r($this);
+            echo "</pre>";
+
+            // ## add new page to db pages
+            if ($result = $db->query("INSERT INTO {pages} (id,gid,date_created,date_publish,alias,title,blogid,locked,lang,plugin)
+                                   VALUES ('" . $this->id . "',
+                                           '" . $this->gid . "',
+                                           '" . $currentDateTime . "',
+                                           '" . $currentDateTime . "',
+                                           '" . $this->alias . "',
+                                           '" . $this->title . "',
+                                           '" . $this->blogid . "',
+                                           '" . $this->locked . "',
+                                           '" . $this->language . "',
+                                           '" . $this->plugin . "')"))
+            {
+                /* TODO: COPY META TAGS when COPY PAGE
                 // generate local meta tags
                 $desc = "description";
                 $keyw = "keywords";
@@ -278,83 +282,106 @@ namespace YAWK {
                     \YAWK\sys::setSyslog($db, 8, 1, "failed to store local meta tags", 0, 0, 0, 0);
                     echo \YAWK\alert::draw("warning","Warning", "Could not store local meta tags", "", "");
                 }
+                */
 
-                // prepare files
-                $file = "../content/pages/" . $alias_old . ".php";
-                $newfile = "../content/pages/" . $alias . ".php";
+                // copy page as new language requested
+                if ($this->newLanguage === true)
+                {   // check, if requested language dir exists
+                    if (!is_dir($this->path.$this->language))
+                    {   // if not, try to create it
+                        mkdir($this->path.$this->language);
+
+                        // prepare files to get copied into new language sub folder
+                        $page = $this->path.$this->alias.".php";
+                        $newPage = $this->path.$this->language."/".$this->alias.".php";
+                    }
+                }
+                else
+                {   // prepare files to get copied into content/pages/ root folder
+                    $page = $this->path.$this->alias.".php";
+                    $newPage = $this->path.$this->alias."_copy.php";
+                }
+
                 // copy file
-                if (!copy($file, $newfile) && !chmod($newfile, 0777))
+                if (!copy($page, $newPage) && !chmod($newPage, 0777))
                 {
-                    \YAWK\sys::setSyslog($db, 8, 1, "copy failed: $file to $newfile", 0, 0, 0, 0);
-                    print \YAWK\alert::draw("danger", "Error!", "File could not be copied. permissions of /content/pages !", "", "");
+                    sys::setSyslog($db, 8, 1, "copy failed: $page to $newPage", 0, 0, 0, 0);
+                    print alert::draw("danger", "Error!", "File could not be copied. permissions of /content/pages !", "", "");
                 }
 
                 // ## selectmenuID from menu db
-                if ($db->query("SELECT menuID FROM {menu} WHERE title LIKE '" . $title . "'"))
+                if ($db->query("SELECT menuID FROM {menu} WHERE title LIKE '" . $this->title . "'"))
                 {
                     $row = mysqli_fetch_row($res);
                     $menuID = $row[0];
                 }
                 else
                 {   // select failed, throw error
-                    \YAWK\sys::setSyslog($db, 23, 1, "failed to select menu entry for $title", 0, 0, 0, 0);
-                    echo \YAWK\alert::draw("warning","Warning", "Could not select menu entry for: $title", "", "");
+                    sys::setSyslog($db, 23, 1, "failed to select menu entry for $this->title", 0, 0, 0, 0);
+                    echo alert::draw("warning","Warning", "Could not select menu entry for: $this->title", "", "");
+                    $menuID = '0';
                 }
 
                 // ## select max ID from menu
                 if ($res = $db->query("SELECT MAX(id) FROM {menu}"))
                 {
                     $row = mysqli_fetch_row($res);
-                    if (!isset($row[0])) { // if not, give it a ID of 1
-                        $id = 1;
-                    } else {
-                        $id = $row[0] + 1; // if entry exists, add +1 to ID #
+                    if (!isset($row[0]))
+                    { // if not, give it a ID of 1
+                        $newMenuID = 1;
+                    }
+                    else
+                    {   // if entry exists, add +1 to ID #
+                        $newMenuID = $row[0]++;
                     }
                 }
                 else
                 {
+                    $newMenuID = '';
                     // select MAX(id) from menu failed, throw error
-                    \YAWK\sys::setSyslog($db, 23, 1, "failed to fetch MAX(id) from menu", 0, 0, 0, 0);
-                    echo \YAWK\alert::draw("warning","Warning", "Could not fetch MAX(id) from menu", "", "");
+                    sys::setSyslog($db, 23, 1, "failed to fetch MAX(id) from menu", 0, 0, 0, 0);
+                    echo alert::draw("warning","Warning", "Could not fetch MAX(id) from menu", "", "");
                 }
 
                 // to increment sort var correctly, check if there is an entry in the menu
                 if ($res = $db->query("SELECT MAX(sort) FROM {menu} WHERE menuID = '" . $menuID . "'"))
                 {
                     $row = mysqli_fetch_row($res);
-                    if (!isset($row[0])) { // if not, give it a sort ID of 1
+                    if (!isset($row[0]))
+                    {   // if not, give it a sort ID of 1
                         $sort = 1;
-                    } else {
-                        $sort = $row[0] + 1; // if entry exists, add +1 to sort #
+                    }
+                    else
+                    {   // if entry exists, add +1 to sort #
+                        $sort = $row[0]++;
                     }
 
-                    $link = "$alias" . ".html";
+                    $link = "$this->alias" . ".html";
                     if ($db->query("INSERT INTO {menu} (id,sort,menuID,text,href)
-                          VALUES('" . $id . "','" . $sort . "', '" . $menuID . "', '" . $title_new . "', '" . $link . "')"))
+                          VALUES('" . $newMenuID . "','" . $sort . "', '" . $menuID . "', '" . $this->title_new . "', '" . $link . "')"))
                     {
-                        \YAWK\sys::setSyslog($db, 21, 0, "menu entry $title_new added", 0, 0, 0, 0);
+                        sys::setSyslog($db, 21, 0, "menu entry $this->title_new added", 0, 0, 0, 0);
                         return true;
                     }
                     else
                     {
                         // insert failed, throw error
-                        \YAWK\sys::setSyslog($db, 23, 1, "failed to insert menu entry for: $title_new", 0, 0, 0, 0);
-                        echo \YAWK\alert::draw("warning","Warning", "Could not insert menu entry for: $title_new", "", "");
+                        sys::setSyslog($db, 23, 1, "failed to insert menu entry for: $this->title_new", 0, 0, 0, 0);
+                        echo alert::draw("warning","Warning", "Could not insert menu entry for: $this->title_new", "", "");
                     }
                 }
                 else
                 {
                     // select failed, throw error
-                    \YAWK\sys::setSyslog($db, 23, 1, "failed to select menu entry for: $menuID", 0, 0, 0, 0);
-                    echo \YAWK\alert::draw("warning","Warning", "Could not select menu entry for: $menuID", "", "");
+                    sys::setSyslog($db, 23, 1, "failed to select menu entry for: $menuID", 0, 0, 0, 0);
+                    echo alert::draw("warning","Warning", "Could not select menu entry for: $menuID", "", "");
                 }
             }
             else
             {
-                \YAWK\sys::setSyslog($db, 7, 1, "could not insert data into pages table", 0, 0, 0, 0);
-                die ("Sorry, database error: could not insert data into pages table.");
+                sys::setSyslog($db, 7, 1, "could not insert data into pages table", 0, 0, 0, 0);
             }
-            \YAWK\sys::setSyslog($db, 8, 1, "copy $newfile failed.", 0, 0, 0, 0);
+            sys::setSyslog($db, 8, 1, "copy $this->path.$this->alias failed.", 0, 0, 0, 0);
             return false;
         }
 
@@ -368,43 +395,58 @@ namespace YAWK {
          */
         function delete($db)
         {
-            /** @var $db \YAWK\db */
+            /** @var $db db */
             // delete item from pages db
-            if (!$res_pages = $db->query("DELETE FROM {pages} WHERE alias = '" . $this->alias . "'")) {
-                \YAWK\sys::setSyslog($db, 7, 1, "failed to delete page $this->alias from database", 0, 0, 0, 0);
-                \YAWK\alert::draw("danger", "Error:", "could not delete page from database", "pages", "4300");
+            if (!$db->query("DELETE FROM {pages} WHERE id = '" . $this->id . "'")) {
+                sys::setSyslog($db, 7, 1, "failed to delete page $this->alias from database", 0, 0, 0, 0);
+                alert::draw("danger", "Error:", "could not delete page from database", "pages", "4300");
             }
             else
             {   // page deleted
-                \YAWK\sys::setSyslog($db, 5, 0, "deleted page $this->alias from database", 0, 0, 0, 0);
+                sys::setSyslog($db, 5, 0, "deleted page $this->alias from database", 0, 0, 0, 0);
             }
             // delete item from menu db
-            if (!$res_menu = $db->query("DELETE FROM {menu} WHERE href = '" . $this->alias . ".html'")) {
-                \YAWK\sys::setSyslog($db, 23, 1, "failed to delete menu entry of page $this->alias from database", 0, 0, 0, 0);
-                \YAWK\alert::draw("danger", "Error:", "could not delete menu entry from database", "pages", "4300");
+            if (!$db->query("DELETE FROM {menu} WHERE href = '" . $this->alias . ".html'")) {
+                sys::setSyslog($db, 23, 1, "failed to delete menu entry of page $this->alias from database", 0, 0, 0, 0);
+                alert::draw("danger", "Error:", "could not delete menu entry from database", "pages", "4300");
             }
             else
             {   // deleted menu syslog entry
-                \YAWK\sys::setSyslog($db, 21, 0, "deleted menu of ../content/pages/$this->alias.php", 0, 0, 0, 0);
+                sys::setSyslog($db, 21, 0, "deleted menu of ../content/pages/$this->alias.php", 0, 0, 0, 0);
             }
             // delete item from meta_local db
-            if (!$res_menu = $db->query("DELETE FROM {meta_local} WHERE page = '" . $this->id. "'")) {
-                \YAWK\sys::setSyslog($db, 7, 1, "failed to delete local meta tags of $this->alias from database", 0, 0, 0, 0);
-                \YAWK\alert::draw("warning", "Warning:", "could not delete local meta tags from database", "pages", "4300");
+            if (!$db->query("DELETE FROM {meta_local} WHERE page = '" . $this->id. "'")) {
+                sys::setSyslog($db, 7, 1, "failed to delete local meta tags of $this->alias from database", 0, 0, 0, 0);
+                alert::draw("warning", "Warning:", "could not delete local meta tags from database", "pages", "4300");
             }
-            // build path + filename
-            $filename = "../content/pages/" . $this->alias . ".php";
-            if (file_exists($filename)) {
-                if (!unlink($filename)) {
-                    \YAWK\sys::setSyslog($db, 8, 2, "unable to delete $filename", 0, 0, 0, 0);
-                    \YAWK\alert::draw("danger", "Error:", "could not delete file from /content/ folder", "pages", "4300");
+
+            // check, if language is set and build path + filename
+            if (isset($this->language) && (!empty($this->language)))
+            {   // file should be in corresponding language folder
+                $filename = $this->path.$this->language."/".$this->alias.".php";
+            }
+            else
+            {   // file should be in pages root folder
+                $filename = $this->path.$this->alias.".php";
+            }
+
+            // check if file exists
+            if (file_exists($filename))
+            {   // delete file
+                if (!unlink($filename))
+                {   // delete failed
+                    sys::setSyslog($db, 8, 2, "unable to delete $filename", 0, 0, 0, 0);
+                    alert::draw("danger", "Error:", "could not delete file from /content/ folder", "pages", "4300");
                     return false;
-                } else {
-                    \YAWK\sys::setSyslog($db, 5, 0, "deleted $filename", 0, 0, 0, 0);
+                }
+                else
+                {   // delete successful
+                    sys::setSyslog($db, 5, 0, "deleted $filename", 0, 0, 0, 0);
                     return true;
                 }
             }
-            \YAWK\sys::setSyslog($db, 7, 1, "file $filename does not exist. page->delete() failed", 0, 0, 0, 0);
+            // file does not exist.
+            sys::setSyslog($db, 7, 1, "file $filename does not exist. page->delete() failed", 0, 0, 0, 0);
             return false;
         }
 
@@ -423,7 +465,14 @@ namespace YAWK {
          */
         function create($db, $alias, $menuID, $locked, $blogid, $plugin)
         {
-            /** @var $db \YAWK\db */
+            // TODO: refactor this method to oop code
+            $this->alias = $alias;
+            $this->menu = $menuID;
+            $this->locked = $locked;
+            $this->blogid = $blogid;
+            $this->plugin = $plugin;
+
+            /** @var $db db */
             // init variables
             // if page name is not given
             if (!$alias) {
@@ -433,19 +482,18 @@ namespace YAWK {
             // creation date
             $date_created = date("Y-m-d G:i:s");
 //            $date_unpublish = date('Y-m-d', strtotime('+25 year', strtotime($date_created)) );
-            $date_unpublish = NULL;
+//            $date_unpublish = NULL;
             $title = $alias;
             /* alias string manipulation */
             $alias = mb_strtolower($alias); // lowercase
             $alias = str_replace(" ", "-", $alias); // replace all ' ' with -
             // special chars
-
             $ersetze = array("/ä/", "/ü/", "/ö/", "/Ä/", "/Ü/", "/Ö/", "/ß/"); // array of special chars
             $umlaute = array("ae", "ue", "oe", "Ae", "Ue", "Oe", "ss"); // array of replacement chars
             $alias = preg_replace($ersetze, $umlaute, $alias);      // replace with preg
 
             // convert special chars
-            $alias = \YAWK\sys::encodeChars($alias);
+            $alias = sys::encodeChars($alias);
             // final check: just numbers and chars are allowed
             $alias = preg_replace("/[^a-z0-9\-\/]/i", "", $alias);
             // final filename
@@ -462,8 +510,8 @@ namespace YAWK {
                 }
                 else
                 {   // throw error
-                    \YAWK\sys::setSyslog($db, 7, 1, "failed to fetch MAX(id) FROM {blog}", 0, 0, 0, 0);
-                    \YAWK\alert::draw("danger","Error:", "Could not fetch MAX(id) FROM {blog}", "page=page-new", "4300");
+                    sys::setSyslog($db, 7, 1, "failed to fetch MAX(id) FROM {blog}", 0, 0, 0, 0);
+                    alert::draw("danger","Error:", "Could not fetch MAX(id) FROM {blog}", "page=page-new", "4300");
                 }
             }
 
@@ -482,8 +530,8 @@ namespace YAWK {
                 else
                 {   // throw error
                     $id = 1;
-                    \YAWK\sys::setSyslog($db, 7, 1, "failed to fetch MAX(id) FROM {menu}", 0, 0, 0, 0);
-                    \YAWK\alert::draw("danger","Error:", "Could not fetch MAX(id) FROM {menu}", "page=page-new", "4300");
+                    sys::setSyslog($db, 7, 1, "failed to fetch MAX(id) FROM {menu}", 0, 0, 0, 0);
+                    alert::draw("danger","Error:", "Could not fetch MAX(id) FROM {menu}", "page=page-new", "4300");
                 }
                 // to increment sort var correctly, check if there is an entry in the menu
                 if ($res = $db->query("SELECT MAX(sort) FROM {menu} WHERE menuID = '" . $menuID . "'"))
@@ -501,8 +549,8 @@ namespace YAWK {
                 else
                 {   // throw error
                     $sort = 1;
-                    \YAWK\sys::setSyslog($db, 7, 1, "failed to fetch MAX(id) FROM {menu} WHERE menuID = $menuID", 0, 0, 0, 0);
-                    \YAWK\alert::draw("danger","Error:", "Could not fetch MAX(id) FROM {menu} WHERE menuID = $menuID", "page=page-new", "4300");
+                    sys::setSyslog($db, 7, 1, "failed to fetch MAX(id) FROM {menu} WHERE menuID = $menuID", 0, 0, 0, 0);
+                    alert::draw("danger","Error:", "Could not fetch MAX(id) FROM {menu} WHERE menuID = $menuID", "page=page-new", "4300");
                 }
 
                 if ($plugin) {
@@ -520,23 +568,23 @@ namespace YAWK {
                 $tmpID = 0;
                 $titleText = '';
                 // insert menu data
-                if (!$res = $db->query("INSERT INTO {menu} (TMPID, id,sort,menuID,published,title,text,href,blogid)
-	                                   VALUES('" . $tmpID . "',
-                                            '" . $id . "',
+                if (!$res = $db->query("INSERT INTO {menu} (id,sort,menuID,published,title,text,href,blogid, menuLanguage)
+	                                   VALUES('" . $id . "',
 	                                          '" . $sort . "',
 	                                          '" . $menuID . "',
 	                                          '" . $menu_published . "',
                                             '" . $titleText . "',
 	                                          '" . $title . "',
 	                                          '" . $link . "',
-	                                          '" . $blogid . "')"))
+	                                          '" . $blogid . "',
+	                                          '" . $this->language . "')"))
                 {   // throw error
-                    \YAWK\sys::setSyslog($db, 23, 1, "failed to insert data into {menu}", 0, 0, 0, 0);
-                    \YAWK\alert::draw("danger", "Error:", "could not insert menu data", "page=page-new", "4300");
+                    sys::setSyslog($db, 23, 1, "failed to insert data into {menu}", 0, 0, 0, 0);
+                    alert::draw("danger", "Error:", "could not insert menu data", "page=page-new", "4300");
                 }
                 else
                 {   // success syslog entry
-                    \YAWK\sys::setSyslog($db, 21, 0, "added new menu: $title (id: $id)", 0, 0, 0, 0);
+                    sys::setSyslog($db, 21, 0, "added new menu: $title (id: $id)", 0, 0, 0, 0);
                 }
             } // ./ if menu != empty
 
@@ -581,12 +629,12 @@ namespace YAWK {
             else
             {
                 $id = 1;
-                \YAWK\sys::setSyslog($db, 7, 1, "failed to select MAX(id) from pages db", 0, 0, 0, 0);
+                sys::setSyslog($db, 7, 1, "failed to select MAX(id) from pages db", 0, 0, 0, 0);
             }
 
             $alias = htmlentities($alias);
             // ## add new page to db pages
-            if ($res = $db->query("INSERT INTO {pages} (id,published,date_created,date_changed,date_publish,date_unpublish,alias,title,locked,blogid,plugin)
+            if ($db->query("INSERT INTO {pages} (id,published,date_created,date_changed,date_publish,date_unpublish,alias,title,locked,blogid,plugin,lang)
                                    VALUES ('" . $id . "',
                                            '" . $published . "',
                                            '" . $date_created . "',
@@ -597,38 +645,49 @@ namespace YAWK {
                                            '" . $title . "',
                                            '" . $locked . "',
                                            '" . $blogid . "',
-                                           '".$plugin."')"))
+                                           '".$plugin."',
+                                           '".$this->language."')"))
             {
                 // insert page successful, now generate some local meta tags
                 $desc = "description";
-                $keyw = "keywords";
-                $words = "keyword1, keyword2, keyword3, keyword4";
+               // $keyw = "keywords";
+               // $words = "keyword1, keyword2, keyword3, keyword4";
                 $desc = htmlentities($desc);
-                $keyw = htmlentities($keyw);
+               // $keyw = htmlentities($keyw);
                 // add local metatags
                 if (!$db->query("INSERT INTO {meta_local} (name, page, content)
                         VALUES ($desc, $id, $title)"))
                 {   // error inserting page into database - throw error
-                    \YAWK\sys::setSyslog($db, 7, 2, "failed to store local meta tags $title", 0, 0, 0, 0);
+                    sys::setSyslog($db, 7, 2, "failed to store local meta tags $title", 0, 0, 0, 0);
                     // \YAWK\alert::draw("warning", "Error!", "Failed to insert meta description.", "", 4300);
                 }
             }
             else
             {   // error inserting page into database - throw error
-                \YAWK\sys::setSyslog($db, 7, 2, "unable to add page $alias into database.", 0, 0, 0, 0);
-                \YAWK\alert::draw("danger", "Error!", "unable to add new page ($alias) id: $id into pages database.", "", 4300);
+                sys::setSyslog($db, 7, 2, "unable to add page $alias into database.", 0, 0, 0, 0);
+                alert::draw("danger", "Error!", "unable to add new page ($alias) id: $id into pages database.", "", 4300);
+            }
+
+            // check if language is set
+            if (isset($this->language) && (!empty($this->language)))
+            {   // set path for new language page
+                $filename = $this->path.$this->language."/".$alias.".php";
+            }
+            else
+            {   // set path for root dir
+                $filename = $this->path.$alias.".php";
             }
 
             // create file
-            $filename = "../content/pages/" . $alias . ".php";
             if (!file_exists($filename)) {
                 $handle = fopen($filename, "wr");
-                $res = fwrite($handle, $content);
+                fwrite($handle, $content);
                 fclose($handle);
                 chmod($filename, 0777);
             }
-            //
-            \YAWK\sys::setSyslog($db, 5, 0, "created $filename", 0, 0, 0, 0);
+
+            // page created successfully
+            sys::setSyslog($db, 5, 0, "created $filename", 0, 0, 0, 0);
             return true;
         }
 
@@ -642,7 +701,7 @@ namespace YAWK {
          */
         public function save($db)
         {
-            /** @var $db \YAWK\db */
+            /** @var $db db */
             $date_changed = date("Y-m-d G:i:s");
 
             /* alias string manipulation */
@@ -654,22 +713,63 @@ namespace YAWK {
             $this->alias = preg_replace($umlaute, $ersetze, $this->alias);        // replace with preg
             $this->alias = preg_replace("/[^a-z0-9\-\/]/i", "", $this->alias); // final check: just numbers and chars are allowed
 
-            // rename file
+            // old alias string
             $oldAlias = substr($this->searchstring, 0, -5);  // remove last 5 chars (.html) to get the plain filename
-            $oldFilename = "../content/pages/" . $oldAlias . ".php";
-            $newFilename = "../content/pages/" . $this->alias . ".php";
-            if (file_exists($oldFilename)) {
-                // try to rename the new file
-                if (!rename($oldFilename, $newFilename))
+            $oldFile = '';
+            $newFile = '';
+
+            if (!empty($this->language))
+            {
+                // prepare var: only first 2 chars will be used
+                $this->language = mb_substr($this->language, 0, 2);
+
+                // get language of current page id
+                $currentLanguage = $this->getCurrentLanguageByID($db, $this->id);
+
+
+                // check, if a page language is currently set in db
+                if (isset($currentLanguage) && (!empty($currentLanguage)))
+                {   // check, if selected language differs from db
+                    if (!$this->language == $currentLanguage)
+                    {
+                        // yes, so check if requested language directory exists
+                        if (!is_dir($this->path.$this->language))
+                        {   // if not, create it
+                            mkdir ($this->path.$this->language);
+                        }
+                        // $removeOldFile = false;
+                        $oldFile = $this->path.$this->language."/".$oldAlias.".php";
+                        $newFile = $this->path.$this->language."/".$this->alias.".php";
+                    }
+                    else
+                    {
+                        // $removeOldFile = true;
+                        // set file path to corresponding language folder
+                        $oldFile = $this->path.$currentLanguage."/".$oldAlias.".php";
+                        $newFile = $this->path.$this->language."/".$this->alias.".php";
+                    }
+                }
+            }
+            else
+            {   // store file to content/pages root folder
+                $oldFile = $this->path.$oldAlias.".php";
+                $newFile = $this->path.$this->alias.".php";
+                // $removeOldFile = false;
+            }
+
+            if (file_exists($oldFile))
+            {
+                // try to rename (move) the file
+                if (!rename($oldFile, $newFile))
                 { // throw error msg
-                    \YAWK\sys::setSyslog($db, 7, 2, "unable to rename $oldFilename to new file: $newFilename", 0, 0, 0, 0);
-                    \YAWK\alert::draw("warning","Warning!","unable to rename $oldFilename to new file: $newFilename","","");
+                    sys::setSyslog($db, 7, 2, "unable to rename $oldFile to new file: $newFile", 0, 0, 0, 0);
+                    alert::draw("warning","Warning!","unable to rename $oldFile to new file: $newFile","","");
                 }
                 else
                 {
                     // new file was stored, now do all the database stuff
                     // update meta tags, menu entries and finally the pages db itself
-                    \YAWK\sys::setSyslog($db, 5, 0, "updated file $oldFilename to new file $newFilename", 0, 0, 0, 0);
+                    sys::setSyslog($db, 5, 0, "updated file $oldFile to new file $newFile", 0, 0, 0, 0);
                 }
 
                 // update local meta description
@@ -679,8 +779,8 @@ namespace YAWK {
                     AND page = '" . $this->id . "'"))
                 {
                     // throw error msg
-                    \YAWK\sys::setSyslog($db, 7, 2, "failed to update local meta description of page ID $this->id.", 0, 0, 0, 0);
-                    \YAWK\alert::draw("warning", "Warning", "local meta description could not be stored in database.", "", 4200);
+                    sys::setSyslog($db, 7, 2, "failed to update local meta description of page ID $this->id.", 0, 0, 0, 0);
+                    alert::draw("warning", "Warning", "local meta description could not be stored in database.", "", 4200);
                 }
 
                 // update local meta tag keywords
@@ -690,11 +790,12 @@ namespace YAWK {
                     AND page = '" . $this->id . "'"))
                 {
                     // throw error msg
-                    \YAWK\sys::setSyslog($db, 7, 2, "failed to update local meta keywords of page ID $this->id.", 0, 0, 0, 0);
-                    \YAWK\alert::draw("warning", "Warning", "local meta keywords could not be stored in database.", "", 4200);
+                    sys::setSyslog($db, 7, 2, "failed to update local meta keywords of page ID $this->id.", 0, 0, 0, 0);
+                    alert::draw("warning", "Warning", "local meta keywords could not be stored in database.", "", 4200);
                 }
 
                 // update menu entry
+                /*
                 if (!$db->query("UPDATE {menu}
   				    SET text = '" . $this->title ."',
   				        href = '" . $this->alias . ".html',
@@ -706,6 +807,7 @@ namespace YAWK {
                     \YAWK\sys::setSyslog($db, 23, 1, "failed to update menu entry $this->title.", 0, 0, 0, 0);
                     \YAWK\alert::draw("warning", "Warning", "menu entry could not be stored in database.", "", 6200);
                 }
+                */
 
                 // check submenu status
                 // if (!isset($this->menu) || ($this->menu !=))
@@ -724,11 +826,12 @@ namespace YAWK {
                         title = '" . $this->title . "',
                         alias = '" . $this->alias . "',
                         menu = '" . $this->menu . "',
-                        bgimage = '" . $this->bgimage . "'
+                        bgimage = '" . $this->bgimage . "',
+                        lang = '" . $this->language . "'
                     WHERE id = '" . $this->id . "'"))
                     {
                         // throw error
-                        \YAWK\sys::setSyslog($db, 23, 1, "failed to update database of page $this->title", 0, 0, 0, 0);
+                        sys::setSyslog($db, 23, 1, "failed to update database of page $this->title", 0, 0, 0, 0);
                         // \YAWK\alert::draw("warning", "Warning", "page data could not be stored in database.", "", 6200);
                         // \YAWK\alert::draw("danger", 'MySQL Error: ('.mysqli_errno().')', 'Database error: '.mysqli_error($db).'', "", 0);
                         return false;
@@ -736,14 +839,14 @@ namespace YAWK {
                     else
                     {
                         // update pages db worked, all fin
-                        \YAWK\sys::setSyslog($db, 5, 0, "updated $this->alias", 0, 0, 0, 0);
+                        sys::setSyslog($db, 5, 0, "updated $this->alias", 0, 0, 0, 0);
                         return true;
                     }
                 }
                 else
                 {
                     // sql code with correct, user-selected unpublish date
-                    if ($res = !$db->query("UPDATE {pages} 
+                    if (!$db->query("UPDATE {pages} 
                     SET published = '" . $this->published . "',
                         gid = '" . $this->gid . "',
                         date_changed = '" . $date_changed . "',
@@ -752,18 +855,19 @@ namespace YAWK {
                         title = '" . $this->title . "',
                         alias = '" . $this->alias . "',
                         menu = '" . $this->menu . "',
-                        bgimage = '" . $this->bgimage . "'
+                        bgimage = '" . $this->bgimage . "',
+                        lang = '" . $this->language . "'
                     WHERE id = '" . $this->id . "'"))
                     {
                         // throw error
-                        \YAWK\sys::setSyslog($db, 23, 1, "failed to update page $this->title", 0, 0, 0, 0);
-                        \YAWK\alert::draw("warning", "Warning", "failed to store data of $this->alias in database.", "", 6200);
+                        sys::setSyslog($db, 23, 1, "failed to update page $this->title", 0, 0, 0, 0);
+                        alert::draw("warning", "Warning", "failed to store data of $this->alias in database.", "", 6200);
                         return false;
                     }
                     else
                     {
                         // update pages db worked, all fin
-                        \YAWK\sys::setSyslog($db, 5, 0, "updated $this->alias", 0, 0, 0, 0);
+                        sys::setSyslog($db, 5, 0, "updated $this->alias", 0, 0, 0, 0);
                         return true;
                     }
                 }
@@ -771,7 +875,7 @@ namespace YAWK {
             else
             {
                 // something went wrong...
-                \YAWK\sys::setSyslog($db, 7, 2, "unable to update file - $oldFilename does not exist", 0, 0, 0, 0);
+                sys::setSyslog($db, 7, 2, "unable to update file - $oldFile does not exist", 0, 0, 0, 0);
             }
             return true;
         } // ./ save function
@@ -787,7 +891,15 @@ namespace YAWK {
         function deleteContent($dirprefix)
         {
             global $dirprefix;
-            $filename = $dirprefix . "../content/pages/" . $this->alias . ".php";
+            if (isset($this->language) && (!empty($this->language)))
+            {
+                $filename = $dirprefix.$this->path.$this->language."/".$this->alias.".php";
+            }
+            else
+            {
+                $filename = $dirprefix.$this->path.$this->alias."php";
+            }
+
             if (file_exists($filename))
             {
                 if (unlink($filename))
@@ -799,7 +911,10 @@ namespace YAWK {
                     return false;
                 }
             }
-            return true;
+            else
+            {
+                return true;
+            }
         }
 
         /**
@@ -807,52 +922,97 @@ namespace YAWK {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @param string $dirprefix directory prefix
          * @param string $content the content to write
          * @return bool true|false
          */
-        function writeContent($dirprefix, $content)
+        function writeContent($content)
         {
-            /** @var $db \YAWK\db $alias */
-            $alias = $this->alias;
+            /** @var $db db $alias */
             /* alias string manipulation */
-            $alias = mb_strtolower($alias); // lowercase
-            $alias = str_replace(" ", "-", $alias); // replace all ' ' with -
+            $this->alias = mb_strtolower($this->alias); // lowercase
+            $this->alias = str_replace(" ", "-", $this->alias); // replace all ' ' with -
             // special chars
-            $umlaute = array("/ä/", "/ü/", "/ö/", "/Ä/", "/Ü/", "/Ö/", "/ß/"); // array of special chars
-            $ersetze = array("ae", "ue", "oe", "ae", "ue", "oe", "ss"); // array of replacement chars
-            $alias = preg_replace($umlaute, $ersetze, $alias);        // replace with preg
-            $alias = preg_replace("/[^a-z0-9\-\/]/i", "", $alias); // final check: just numbers and chars are allowed
-            $filename = $dirprefix . "content/pages/" . $alias . ".php";
-            $handle = fopen($filename, "w+");
-            if ($res = fwrite($handle, $content))
+            $specialChars = array("/ä/", "/ü/", "/ö/", "/Ä/", "/Ü/", "/Ö/", "/ß/"); // array of special chars
+            $replacementChars = array("ae", "ue", "oe", "ae", "ue", "oe", "ss"); // array of replacement chars
+            $this->alias = preg_replace($specialChars, $replacementChars, $this->alias);        // replace with preg
+            $this->alias = preg_replace("/[^a-z0-9\-\/]/i", "", $this->alias); // final check: just numbers and chars are allowed
+            if (!empty($this->language))
             {
+                $this->language = mb_substr($this->language, 0, 2);
+                // check if requested language directory exists
+                if (!is_dir($this->path.$this->language))
+                {   // if not, create it
+                    mkdir ($this->path.$this->language);
+                }
+                // store file to corresponding language folder
+                $filename = $this->path.$this->language."/".$this->alias.".php";
+            }
+            else
+            {   // store file to content/pages root folder
+                $filename = $this->path.$this->alias.".php";
+            }
+
+            // open file
+            $handle = fopen($filename, "w+");
+            if (fwrite($handle, $content))
+            {   // write content + close
                 fclose($handle);
+                // set file perms
                 chmod($filename, 0777);
                 return true;
             }
             else
-            {
-                \YAWK\sys::setSyslog($db, 7, 2, "unable to write content to file $filename", 0, 0, 0, 0);
+            {   // writeContent failed
+                sys::setSyslog($db, 7, 2, "unable to write content to file $filename", 0, 0, 0, 0);
                 return false;
             }
         }
 
         /**
          * read content from static page
+         * @param string $dirPrefix directory prefix
+         * @return string html content
+         * @link http://yawk.io
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
-         * @link http://yawk.io
-         * @param string $dirprefix directory prefix
-         * @return string html content
          */
-        function readContent($dirprefix)
+        function readContent($dirPrefix)
         {
-            $filename = $dirprefix . "content/pages/" . $this->alias . ".php";
+            // check, if language is set
+            if (isset($this->language) && (!empty($this->language)))
+            {   // if so, build path including language folder
+                $filename = $this->path.$this->language."/".$this->alias.".php";
+            }
+            else
+            {   // no language set, build path for content/pages root folder
+                $filename = $this->path.$this->alias.".php";
+            }
+            // open page file
             $handle = @fopen($filename, "rw");
+            // read content into var
             $content = @fread($handle, filesize($filename));
+            // close resource
             fclose($handle);
+            // and return page content
             return $content;
+        }
+
+        function getCurrentLanguageByID($db, $id){
+            /** @var $db db $res */
+            if (isset($id) && (!empty($id)))
+            {   // query db for given page ID
+                $res = $db->query("SELECT lang FROM {pages} WHERE id ='".$id."'");
+                $currentLanguage = mysqli_fetch_row($res);
+            }
+            // check, if page got a language set
+            if (isset($currentLanguage[0]) && (!empty($currentLanguage[0])))
+            {   // return page language
+                return $currentLanguage[0];
+            }
+            else
+            {   // no language set, return empty string
+                return "";
+            }
         }
 
         /**
@@ -865,7 +1025,7 @@ namespace YAWK {
          */
         function loadProperties($db, $alias)
         {
-            /** @var $db \YAWK\db $res */
+            /** @var $db db $res */
             if (isset($alias) && (!empty($alias)))
             {
                 $res = $db->query("SELECT * FROM {pages} WHERE alias = '".$alias."'");
@@ -884,6 +1044,7 @@ namespace YAWK {
                     $this->locked = $row['locked'];
                     $this->blogid = $row['blogid'];
                     $this->plugin = $row['plugin'];
+                    $this->language = $row['lang'];
                     $this->alias = $alias;
                 }
                 else
@@ -892,20 +1053,74 @@ namespace YAWK {
                     {   // check if user is logged in (session uid is set in that case)
                         if (isset($_SESSION['uid']) && (!empty($_SESSION['uid'])))
                         {   // logged in user created a 404 error
-                            \YAWK\sys::setSyslog($db, 7, 2, "404: file not found - displayed $alias instead", $_SESSION['uid'], 0, 0, 0);
+                            sys::setSyslog($db, 7, 2, "404: file not found - displayed $alias instead", $_SESSION['uid'], 0, 0, 0);
                         }
                         else
                         {   // user is not logged in - unknown user created a 404 error
-                            \YAWK\sys::setSyslog($db, 7, 2, "404: file not found - displayed $alias instead", 0, 0, 0, 0);
+                            sys::setSyslog($db, 7, 2, "404: file not found - displayed $alias instead", 0, 0, 0, 0);
                         }
                     }
                 }
             }
             else
-            {   // page not set - nunable to load page properties
-                \YAWK\sys::setSyslog($db, 7, 2, "failed to load properties because page alias was not set", 0, 0, 0, 0);
+            {   // page not set - unable to load page properties
+                sys::setSyslog($db, 7, 2, "failed to load properties because page alias was not set", 0, 0, 0, 0);
             }
         }
+
+        /**
+         * load page properties and store as object properties
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @link http://yawk.io
+         * @param object $db database
+         * @param string $id page id
+         */
+        function loadPropertiesByID($db, $id)
+        {
+            /** @var $db db $res */
+            if (isset($id) && (!empty($id)))
+            {
+                $res = $db->query("SELECT * FROM {pages} WHERE id = '".$id."'");
+                if ($row = mysqli_fetch_assoc($res))
+                {
+                    $this->id = $row['id'];
+                    $this->date_created = $row['date_created'];
+                    $this->date_publish = $row['date_publish'];
+                    $this->date_unpublish = $row['date_unpublish'];
+                    $this->published = $row['published'];
+                    $this->gid = $row['gid'];
+                    $this->alias = $row['alias'];
+                    $this->title = $row['title'];
+                    $this->ownerid = $row['owner'];
+                    $this->menu = $row['menu'];
+                    $this->bgimage = $row['bgimage'];
+                    $this->locked = $row['locked'];
+                    $this->blogid = $row['blogid'];
+                    $this->plugin = $row['plugin'];
+                    $this->language = $row['lang'];
+                }
+                else
+                {   // 404 error handling
+                    if ($this->alias == "content/errors/404")
+                    {   // check if user is logged in (session uid is set in that case)
+                        if (isset($_SESSION['uid']) && (!empty($_SESSION['uid'])))
+                        {   // logged in user created a 404 error
+                            sys::setSyslog($db, 7, 2, "404: file not found - displayed $this->alias instead", $_SESSION['uid'], 0, 0, 0);
+                        }
+                        else
+                        {   // user is not logged in - unknown user created a 404 error
+                            sys::setSyslog($db, 7, 2, "404: file not found - displayed $this->alias instead", 0, 0, 0, 0);
+                        }
+                    }
+                }
+            }
+            else
+            {   // page ID not set - unable to load page properties
+                sys::setSyslog($db, 7, 2, "failed to load properties because page ID was not set", 0, 0, 0, 0);
+            }
+        }
+
 
         /**
          * get latest pages
@@ -917,7 +1132,7 @@ namespace YAWK {
          * @return array|string
          */
         static function getLatest($db, $limit)
-        {   /** @var $db \YAWK\db */
+        {   /** @var $db db */
             // check and set default value
             if (!isset($limit) && (empty($limit))) { $limit = 4; }
             // select latest n page titles
@@ -952,7 +1167,7 @@ namespace YAWK {
          * @return string|bool the selected property or false
          */
         function getProperty($db, $id, $property)
-        {   /** @var $db \YAWK\db $res */
+        {   /** @var $db db $res */
             // select property from pages db
             if ($res = $db->query("SELECT $property FROM {pages}
                         WHERE id = '" . $id . "'"))
@@ -963,8 +1178,8 @@ namespace YAWK {
             }
             else
             {   // throw error
-                \YAWK\sys::setSyslog($db, 7, 1, "unable to get property: $property from pages database.", 0, 0, 0, 0);
-                \YAWK\alert::draw("warning", "Warning", "unable to get property: $property from Paged Database.", "", "4200");
+                sys::setSyslog($db, 7, 1, "unable to get property: $property from pages database.", 0, 0, 0, 0);
+                alert::draw("warning", "Warning", "unable to get property: $property from Paged Database.", "", "4200");
                 return false;
             }
             // q failed
@@ -992,19 +1207,15 @@ namespace YAWK {
                 // ROLE CHECK
                 if (isset($_SESSION['gid'])) {
                     // if SESSION ROLE is bigger or equal than current PAGE ROLE
-                    if ($_SESSION['gid'] >= $currentpage->gid)
-                    {
-
-                    }
-                    else
+                    if ($_SESSION['gid'] <= $currentpage->gid)
                     {   // user is not allowed to view this content
-                        \YAWK\sys::setSyslog($db, 11, 1, "user with group ID $_SESSION[gid] is not allowed to view $currentpage->alias (required GID: $currentpage->gid)", 0, 0, 0, 0);
+                        sys::setSyslog($db, 11, 1, "user with group ID $_SESSION[gid] is not allowed to view $currentpage->alias (required GID: $currentpage->gid)", 0, 0, 0, 0);
                         return false;
                     }
                 }
                 else if ($currentpage->gid > 1)
                 {   // public user not allowed here, so....
-                    \YAWK\sys::setSyslog($db, 11, 1, "public user tried to get content of $currentpage->alias (required GID: $currentpage->gid)", 0, 0, 0, 0);
+                    sys::setSyslog($db, 11, 1, "public user tried to get content of $currentpage->alias (required GID: $currentpage->gid)", 0, 0, 0, 0);
                     return false;
                 }
             }
@@ -1048,10 +1259,10 @@ namespace YAWK {
             )
             {
                 // show error
-                return include(\YAWK\controller::filterfilename($db, $lang, "content/errors/404.html"));
+                return include(controller::filterfilename($db, $lang, "content/errors/404.html"));
             }
-            else {
-
+            else
+            {
                 if ($currentpage->date_publish > $now) {
                     $timediff = settings::getSetting($db, "timediff");
                     if ($timediff === '1') {
@@ -1064,14 +1275,13 @@ namespace YAWK {
                     $end = strtotime($currentpage->date_publish);
                     $timediff = settings::getSetting($db, "timediff");
                     if ($timediff === '1') {
-                        sys::showTimeDiff($start, $end);
+                        echo "time diff here";
+                        // TODO: search for sys::showTimeDiff($start, $end);
                     }
                     exit;
                 }
                 if ($currentpage->date_unpublish < $now XOR $currentpage->date_unpublish === NULL) {
                     echo "<br>Sadly, this content is not available anymore. <br><br>";
-                    $start = strtotime($now);
-                    $end = strtotime($currentpage->date_publish);
                     $timediff = settings::getSetting($db, "timediff");
                     if ($timediff === '1') {
                         echo "Publishing has ended on $currentpage->date_unpublish.<br><br>";
@@ -1079,9 +1289,110 @@ namespace YAWK {
                     }
                     exit;
                 }
-                return include(\YAWK\controller::filterfilename($db, $lang, "content/pages/" . $this->alias));
-            }
-        }
 
+                // create language obj
+                $language = new language();
+
+                // $language->httpAcceptedLanguage = substr($language->getClientLanguage(), 0, 2);
+                $language->httpAcceptedLanguage = $language->getClientLanguage();
+
+                // set path to content folder (where pages are stored)
+                $path = "content/pages/";
+
+                // the file extension of files used in path to store pages (typically .php)
+                $fileExt = ".php";
+
+                // check users browser language, store first 2 chars as $tag
+                $language->httpAcceptedLanguage = mb_substr($language->httpAcceptedLanguage, 0,2);
+
+
+                // init language folder var
+                $languageFolder = '';
+                $trailingSlash = '';
+
+                    // build array containing all content sub folders
+                    $contentLanguageFolders = array();
+                    foreach (new DirectoryIterator($path) as $fileInfo) {
+                        if($fileInfo->isDot()) continue;
+                        if($fileInfo->isFile()) continue;
+                        if($fileInfo->isDir())
+                            $contentLanguageFolders[] = $fileInfo->getFilename();
+
+                        // check if user's language is available in content folder
+                        if ($language->httpAcceptedLanguage == $fileInfo->getFilename())
+                        {   // this is the language we have detected from the user - you want it, we got it
+                            $languageFolder = $fileInfo->getFilename();
+                            $trailingSlash = "/";
+                            // echo "<script>document.cookie = \"userSelectedLanguage=$languageFolder; expires=Thu, 04 Nov 2021 12:00:00 UTC\"; </script>";
+                        }
+                        else
+                        {   // leave empty, take from root dir
+                            $languageFolder = '';
+                        }
+                    }
+
+                if (isset($_GET['language']) && (!empty($_GET['language'])))
+                {
+                    $languageFolder = mb_substr($_GET['language'], 0,2);
+                    $trailingSlash = "/";
+                    // outdated: this has moved to template index page
+                    // echo "<script>document.cookie = \"userSelectedLanguage=$languageFolder; expires=Thu, 04 Nov 2021 12:00:00 UTC\"; </script>";
+                    // $_COOKIE['userSelectedLanguage'] = $languageFolder;
+                }
+                // print_r($_COOKIE);
+
+                if (isset($_COOKIE['userSelectedLanguage']) && (!empty($_COOKIE['userSelectedLanguage']))){
+                    $languageFolder = $_COOKIE['userSelectedLanguage'];
+                    $trailingSlash = "/";
+                }
+            /*
+                echo "<pre>";
+                print_r($contentLanguageFolders);
+                echo "lang folder: ".$languageFolder;
+                echo "</pre>";
+
+                echo "<br>";
+                echo $path.$languageFolder.$trailingSlash.$this->alias.$fileExt."<br>";
+            */
+
+                if (in_array("$languageFolder", $contentLanguageFolders)) {
+                    // check if folder for this language is available
+                    if (is_dir($path.$languageFolder))
+                    {
+                        // echo "yes, $languageFolder is supported!";
+                        if (is_file($path.$languageFolder.$trailingSlash.$this->alias.$fileExt))
+                        {
+                            // include content page from language folder
+                            /** @noinspection PhpIncludeInspection */
+                            return include(controller::filterfilename($db, $lang, $path.$languageFolder.$trailingSlash.$this->alias));
+                        }
+                        else
+                        {   // file not found in this language folder - check if file is found in root directory
+                            if (is_file($path.$this->alias))
+                            {   // include content page from root folder
+                                /** @noinspection PhpIncludeInspection */
+                                return include(controller::filterfilename($db, $lang, $path.$this->alias));
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // echo "no, $languageFolder is not supported yet.";
+                        // language folder not found - check if file is found in root directory
+                        if (is_file($path.$this->alias))
+                        {   // include content page from root folder
+                            /** @noinspection PhpIncludeInspection */
+                            return include(controller::filterfilename($db, $lang, $path.$this->alias));
+                        }
+                    }
+                }
+                else
+                {       // echo "desired language $languageFolder not in array, loading file from root folder";
+                        /** @noinspection PhpIncludeInspection */
+                        return include(controller::filterfilename($db, $lang, $path.$this->alias));
+                }
+            }
+            return true;
+        }
     } // ./ class page
 } // ./ namespace
