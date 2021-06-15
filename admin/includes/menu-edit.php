@@ -97,8 +97,8 @@ if(isset($_POST['changeLanguage'])) {
 }
 /* ADD MENU ENTRY */
 if(isset($_POST['add'])) {
-  trim($_POST['newtitle']);
-  trim($_POST['newurl']);
+  $_POST['newtitle'] = trim($_POST['newtitle']);
+  $_POST['newurl'] = trim($_POST['newurl']);
   if (!$res = YAWK\menu::addEntry($db, $db->quote($_GET['menu']),$db->quote($_POST['newtitle']),$db->quote($_POST['newurl'])))
   {
       \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[MENU_ADD_FAILED].","page=menu-edit&menu=$_GET[menu]","2200");
@@ -315,6 +315,7 @@ if(isset($_POST['add'])) {
                             echo "<option value=".$menuLanguage." selected>$menuLanguage</option>";
                         }
                         ?>
+                        <option value=""></option>
                         <option value="af">Afrikaans</option>
                         <option value="sq">Albanian - shqip</option>
                         <option value="am">Amharic - አማርኛ</option>
