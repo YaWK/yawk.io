@@ -242,28 +242,27 @@ CREATE TABLE `cms_logins` (
 
 
 CREATE TABLE `cms_menu` (
-  `TMPID` int(11) NOT NULL,
-  `id` int(11) NOT NULL,
-  `sort` int(11) DEFAULT '0',
-  `gid` int(11) DEFAULT '1',
-  `menuID` int(11) DEFAULT '1',
-  `parentID` int(11) DEFAULT '0',
-  `published` int(1) DEFAULT '1',
-  `date_created` datetime DEFAULT NULL,
-  `date_changed` datetime DEFAULT NULL,
-  `date_publish` datetime DEFAULT NULL,
-  `date_unpublish` datetime DEFAULT NULL,
-  `title` varchar(255) NOT NULL,
-  `text` varchar(100) NOT NULL,
-  `href` varchar(255) NOT NULL,
-  `target` varchar(64) NOT NULL DEFAULT '_self',
-  `divider` int(11) NOT NULL DEFAULT '0',
-  `blogid` int(11) NOT NULL DEFAULT '0',
-  `menuLanguage` varchar(7) DEFAULT NULL
+`id` int(11) NOT NULL,
+`sort` int(11) DEFAULT 0,
+`gid` int(11) DEFAULT 1,
+`menuID` int(11) DEFAULT 1,
+`parentID` int(11) DEFAULT 0,
+`published` int(1) DEFAULT 1,
+`date_created` datetime DEFAULT NULL,
+`date_changed` datetime DEFAULT NULL,
+`date_publish` datetime DEFAULT NULL,
+`date_unpublish` datetime DEFAULT NULL,
+`title` varchar(255) DEFAULT NULL,
+`text` varchar(100) NOT NULL,
+`href` varchar(255) NOT NULL,
+`target` varchar(64) NOT NULL DEFAULT '_self',
+`divider` int(11) NOT NULL DEFAULT 0,
+`blogid` int(11) NOT NULL DEFAULT 0,
+`menuLanguage` varchar(7) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `cms_menu` (`TMPID`, `id`, `sort`, `gid`, `menuID`, `parentID`, `published`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `title`, `text`, `href`, `target`, `divider`, `blogid`, `menuLanguage`) VALUES
-(1, 1, 1, 1, 1, 0, 1, '2018-03-01 00:00:00', '2018-03-04 19:12:11', '2018-03-04 19:12:11', NULL, '', 'Welcome!', 'index.html', '_self', 0, 0, '');
+INSERT INTO `cms_menu` (`id`, `sort`, `gid`, `menuID`, `parentID`, `published`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `title`, `text`, `href`, `target`, `divider`, `blogid`, `menuLanguage`) VALUES
+(1, 1, 1, 1, 0, 1, '2018-03-01 00:00:00', '2018-03-04 19:12:11', '2018-03-04 19:12:11', NULL, '', 'Welcome!', 'index.html', '_self', 0, 0, '');
 
 CREATE TABLE `cms_menu_names` (
   `id` int(11) NOT NULL,
