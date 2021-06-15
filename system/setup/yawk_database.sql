@@ -260,8 +260,8 @@ CREATE TABLE `cms_menu` (
   `menuLanguage` varchar(7) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `cms_menu` (`TMPID`, `id`, `sort`, `gid`, `menuID`, `parentID`, `published`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `title`, `text`, `href`, `target`, `divider`, `blogid`) VALUES
-(1, 1, 1, 1, 1, 0, 1, '2018-03-01 00:00:00', '2018-03-04 19:12:11', '2018-03-04 19:12:11', NULL, '', 'Welcome!', 'index.html', '_self', 0, 0);
+INSERT INTO `cms_menu` (`TMPID`, `id`, `sort`, `gid`, `menuID`, `parentID`, `published`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `title`, `text`, `href`, `target`, `divider`, `blogid`, `menuLanguage`) VALUES
+(1, 1, 1, 1, 1, 0, 1, '2018-03-01 00:00:00', '2018-03-04 19:12:11', '2018-03-04 19:12:11', NULL, '', 'Welcome!', 'index.html', '_self', 0, 0, '');
 
 CREATE TABLE `cms_menu_names` (
   `id` int(11) NOT NULL,
@@ -270,8 +270,8 @@ CREATE TABLE `cms_menu_names` (
   `menuLanguage` varchar(7) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `cms_menu_names` (`id`, `name`, `published`) VALUES
-(1, 'MainMenu', 1);
+INSERT INTO `cms_menu_names` (`id`, `name`, `published`, `menuLanguage`) VALUES
+(1, 'MainMenu', 1, '');
 
 CREATE TABLE `cms_meta_global` (
   `name` varchar(255) NOT NULL,
@@ -336,8 +336,8 @@ CREATE TABLE `cms_pages` (
   `lang` varchar(7) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `cms_pages` (`id`, `published`, `gid`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `alias`, `title`, `bgimage`, `owner`, `menu`, `locked`, `blogid`, `plugin`) VALUES
-(1, 1, 1, '2018-03-08 00:00:00', '2018-03-08 00:00:00', '2018-03-08 00:00:00', NULL, 'index', 'Welcome to Yet another Web Kit!', '', -1, 0, 0, 0, '0');
+INSERT INTO `cms_pages` (`id`, `published`, `gid`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `alias`, `title`, `bgimage`, `owner`, `menu`, `locked`, `blogid`, `plugin`, 'lang') VALUES
+(1, 1, 1, '2018-03-08 00:00:00', '2018-03-08 00:00:00', '2018-03-08 00:00:00', NULL, 'index', 'Welcome to Yet another Web Kit!', '', -1, 0, 0, 0, '0', '');
 
 CREATE TABLE `cms_plugins` (
   `id` int(11) NOT NULL,
