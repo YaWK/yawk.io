@@ -4,6 +4,8 @@ use YAWK\alert;
 use YAWK\backend;
 use YAWK\db;
 use YAWK\language;
+use YAWK\menu;
+use YAWK\sys;
 
 // CHECK REQUIRED OBJECTS
 if (!isset($page)) // if no page object is set
@@ -50,11 +52,11 @@ if (isset($_GET['toggleItem']))
             // all ok, now toggle that menu entry
             if($menu->toggleItemOffline($db, $menu->id, $menu->published, $menu->parent))
             {   // throw notification
-                \YAWK\alert::draw("$color", "$lang[MENU_ITEM] $lang[IS_NOW] $status", "$lang[MENU_ITEM] $lang[TOGGLED_TO] $status.", "", 800);
+                alert::draw("$color", "$lang[MENU_ITEM] $lang[IS_NOW] $status", "$lang[MENU_ITEM] $lang[TOGGLED_TO] $status.", "", 800);
             }
             else
             {   // throw error
-                \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[FAILED] $lang[TOGGLE] $lang[MENU_ITEM] $status.", "",5800);
+                alert::draw("danger", "$lang[ERROR]", "$lang[FAILED] $lang[TOGGLE] $lang[MENU_ITEM] $status.", "",5800);
             }
 
         }
@@ -70,28 +72,28 @@ if (isset($_GET['del']) && ($_GET['del'] === "1")) {
             $entry = $_GET['entry'];
             if (YAWK\menu::deleteEntry($db, $menuID, $entry) === true)
             {   // delete successful
-                \YAWK\alert::draw("success", "$lang[ITEM] $lang[DELETED].", "$lang[MENU_ITEM] $lang[DELETED]", "", 800);
+                alert::draw("success", "$lang[ITEM] $lang[DELETED].", "$lang[MENU_ITEM] $lang[DELETED]", "", 800);
             }
             else
                 {   // could not delete - throw error
-                    \YAWK\alert::draw("danger", "$lang[MENU_ITEM] $lang[DELETE] $lang[FAILED].", "$lang[DATABASE] $lang[ERROR].", "", 5800);
+                    alert::draw("danger", "$lang[MENU_ITEM] $lang[DELETE] $lang[FAILED].", "$lang[DATABASE] $lang[ERROR].", "", 5800);
                 }
          break;
     }
 }
 /* CHANGE MENU TITLE */
 if(isset($_POST['changetitle'])) {
-    if (!$res = \YAWK\menu::changeTitle($db, $db->quote($_GET['menu']),$db->quote($_POST['menutitle'])))
+    if (!$res = menu::changeTitle($db, $db->quote($_GET['menu']),$db->quote($_POST['menutitle'])))
     {   // throw error
-        \YAWK\alert::draw("warning", "$lang[WARNING]!", "$lang[MENU_CHANGE_FAILED]", "page=menu-edit&menu=$_GET[menu]","4200");
+        alert::draw("warning", "$lang[WARNING]!", "$lang[MENU_CHANGE_FAILED]", "page=menu-edit&menu=$_GET[menu]","4200");
         exit;
     }
 }
 /* CHANGE MENU LANGUAGE */
 if(isset($_POST['changeLanguage'])) {
-    if (!$res = \YAWK\menu::changeLanguage($db, $db->quote($_GET['menu']),$db->quote($_POST['menuLanguage'])))
+    if (!$res = menu::changeLanguage($db, $db->quote($_GET['menu']),$db->quote($_POST['menuLanguage'])))
     {   // throw error
-        \YAWK\alert::draw("warning", "$lang[WARNING]!", "$lang[MENU_CHANGE_FAILED]", "page=menu-edit&menu=$_GET[menu]","4200");
+        alert::draw("warning", "$lang[WARNING]!", "$lang[MENU_CHANGE_FAILED]", "page=menu-edit&menu=$_GET[menu]","4200");
         exit;
     }
 }
@@ -101,7 +103,7 @@ if(isset($_POST['add'])) {
   $_POST['newurl'] = trim($_POST['newurl']);
   if (!$res = YAWK\menu::addEntry($db, $db->quote($_GET['menu']),$db->quote($_POST['newtitle']),$db->quote($_POST['newurl'])))
   {
-      \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[MENU_ADD_FAILED].","page=menu-edit&menu=$_GET[menu]","2200");
+      alert::draw("danger", "$lang[ERROR]", "$lang[MENU_ADD_FAILED].","page=menu-edit&menu=$_GET[menu]","2200");
       exit;
   }
 }
@@ -193,14 +195,14 @@ if(isset($_POST['add'])) {
         function saveHotkey() {
             // simply disables save event for chrome
             $(window).keypress(function (event) {
-                if (!(event.which == 115 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) && !(event.which == 19)) return true;
+                if (!(event.which === 115 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) && !(event.which === 19)) return true;
                 event.preventDefault();
                 formmodified=0; // do not warn user, just save.
                 return false;
             });
             // used to process the cmd+s and ctrl+s events
             $(document).keydown(function (event) {
-                if (event.which == 83 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) {
+                if (event.which === 83 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) {
                     event.preventDefault();
                     $('#savebutton').click(); // SAVE FORM AFTER PRESSING STRG-S hotkey
                     formmodified=0; // do not warn user, just save.
@@ -220,7 +222,7 @@ if(isset($_POST['add'])) {
         <?php
             /* MENU Title */
             $menuName = YAWK\sys::getMenuName($db, $_GET['menu']);
-            echo \YAWK\backend::getTitle($menuName, $lang['EDIT']);
+            echo backend::getTitle($menuName, $lang['EDIT']);
         ?>
         <ol class="breadcrumb">
             <li><a href="./" title="<?php echo $lang['DASHBOARD']; ?>"><i class="fa fa-dashboard"></i> <?php echo $lang['DASHBOARD']; ?></a></li>
@@ -245,7 +247,7 @@ if(isset($_POST['add'])) {
         <i class="glyphicon glyphicon-backward"></i> &nbsp;<?php print $lang['BACK']; ?></a>
       <?php
       // DISPLAY EDITABLE MENU ENTRIES
-      \YAWK\menu::displayEditable($db, $db->quote($_GET['menu']), $lang);
+      menu::displayEditable($db, $db->quote($_GET['menu']), $lang);
       ?>
 
     <br><br>
@@ -260,18 +262,18 @@ if(isset($_POST['add'])) {
                     <h3 class="box-title"><?php echo $lang['ENTRY_ADD']; ?></h3>
                 </div>
                 <div class="box-body">
-                    <input type="text"
-                           id="newtitle"
-                           class="form-control"
-                           name="newtitle"
-                           maxlength="128"
-                           placeholder="<?php echo $lang['TITLE']; ?>">
-                    <input type="text"
-                           id="newurl"
-                           class="form-control"
-                           name="newurl"
-                           maxlength="128"
-                           placeholder="<?php echo $lang['LINK_OR_FILENAME']; ?>">
+                    <label for="newtitle"><?php echo $lang['TITLE']; ?></label><input type="text"
+                                                         id="newtitle"
+                                                         class="form-control"
+                                                         name="newtitle"
+                                                         maxlength="128"
+                                                         placeholder="<?php echo $lang['TITLE']; ?>">
+                    <label for="newurl"><?php echo $lang['LINK_OR_FILENAME']; ?></label><input type="text"
+                                                       id="newurl"
+                                                       class="form-control"
+                                                       name="newurl"
+                                                       maxlength="128"
+                                                       placeholder="<?php echo $lang['LINK_OR_FILENAME']; ?>">
                     <input name="add"
                            id="savebutton3"
                            style="margin-top:5px;"
@@ -288,11 +290,14 @@ if(isset($_POST['add'])) {
                     <h3 class="box-title"><?php echo $lang['MENU_TITLE_CHANGE']; ?></h3>
                 </div>
                 <div class="box-body">
-                    <input type="text"
-                           class="form-control"
-                           name="menutitle"
-                           maxlength="128"
-                           value="<?php print \YAWK\sys::getMenuName($db, $_GET['menu']); ?>">
+                    <label for="menutitle"><?php echo $lang['TITLE']; ?></label>
+                        <input type="text"
+                               id = "menutitle"
+                               class="form-control"
+                               name="menutitle"
+                               maxlength="128"
+                               value="<?php $menuName = sys::getMenuName($db, $_GET['menu']); ?>">
+
                     <input name="changetitle"
                            style="margin-top:5px;"
                            id="savebutton2"
@@ -306,8 +311,9 @@ if(isset($_POST['add'])) {
                     <h3 class="box-title"><?php echo $lang['MENU_LANGUAGE_CHANGE']; ?></h3>
                 </div>
                 <div class="box-body">
+                    <label for="menuLanguage"><?php echo $lang['LANGUAGE']; ?></label>
                     <select id="menuLanguage" name="menuLanguage" class="form-control">
-                        <?php $menuLanguage = \YAWK\sys::getMenuLanguage($db, $_GET['menu']); ?>
+                        <?php $menuLanguage = sys::getMenuLanguage($db, $_GET['menu']); ?>
 
                         <?php
                         if (isset($menuLanguage) && (!empty($menuLanguage)))
