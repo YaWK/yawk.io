@@ -53,6 +53,15 @@ $positions = \YAWK\template::getPositionStatesArray($db, $template->id);
 $indicators = \YAWK\template::getPositionIndicatorStatusArray($db, $template->id);
 // load active assets for this template
 $template->loadActiveAssets($db, $template->id, $host);
+// check if language is set
+if (isset($_GET['language']) && (!empty($_GET['language'])))
+{   // take just the first 2 chars (use global language tag)
+    $languageFolder = mb_substr($_GET['language'], 0,2);
+    // set language cookie via JS
+    echo "<script>document.cookie = \"userSelectedLanguage=$languageFolder; expires=Thu, 04 Nov 2021 12:00:00 UTC\"; </script>";
+    // set PHP cookie var
+    $_COOKIE['userSelectedLanguage'] = $languageFolder;
+}
 ?>
 
 <!-- SETTINGS.MIN.CSS YaWK template settings: Bootstrap core CSS override -->
