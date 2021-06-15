@@ -336,7 +336,7 @@ CREATE TABLE `cms_pages` (
   `lang` varchar(7) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `cms_pages` (`id`, `published`, `gid`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `alias`, `title`, `bgimage`, `owner`, `menu`, `locked`, `blogid`, `plugin`, 'lang') VALUES
+INSERT INTO `cms_pages` (`id`, `published`, `gid`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `alias`, `title`, `bgimage`, `owner`, `menu`, `locked`, `blogid`, `plugin`, `lang`) VALUES
 (1, 1, 1, '2018-03-08 00:00:00', '2018-03-08 00:00:00', '2018-03-08 00:00:00', NULL, 'index', 'Welcome to Yet another Web Kit!', '', -1, 0, 0, 0, '0', '');
 
 CREATE TABLE `cms_plugins` (
