@@ -713,111 +713,53 @@ namespace YAWK {
             $this->alias = preg_replace($umlaute, $ersetze, $this->alias);        // replace with preg
             $this->alias = preg_replace("/[^a-z0-9\-\/]/i", "", $this->alias); // final check: just numbers and chars are allowed
 
+
             // old alias string
             $oldAlias = substr($this->searchstring, 0, -5);  // remove last 5 chars (.html) to get the plain filename
-            $oldFile = '';
-            $newFile = '';
 
-            if (!empty($this->language))
-            {
-                // prepare var: only first 2 chars will be used
-                $this->language = mb_substr($this->language, 0, 2);
-
-                // get language of current page id
-                $currentLanguage = $this->getCurrentLanguageByID($db, $this->id);
-
-
-                // check, if a page language is currently set in db
-                if (isset($currentLanguage) && (!empty($currentLanguage)))
-                {   // check, if selected language differs from db
-                    if (!$this->language == $currentLanguage)
-                    {
-                        // yes, so check if requested language directory exists
-                        if (!is_dir($this->path.$this->language))
-                        {   // if not, create it
-                            mkdir ($this->path.$this->language);
-                        }
-                        // $removeOldFile = false;
-                        $oldFile = $this->path.$this->language."/".$oldAlias.".php";
-                        $newFile = $this->path.$this->language."/".$this->alias.".php";
-                    }
-                    else
-                    {
-                        // $removeOldFile = true;
-                        // set file path to corresponding language folder
-                        $oldFile = $this->path.$currentLanguage."/".$oldAlias.".php";
-                        $newFile = $this->path.$this->language."/".$this->alias.".php";
-                    }
-                }
-            }
-            else
-            {   // store file to content/pages root folder
-                $oldFile = $this->path.$oldAlias.".php";
-                $newFile = $this->path.$this->alias.".php";
-                // $removeOldFile = false;
-            }
-
-            if (file_exists($oldFile))
-            {
-                // try to rename (move) the file
-                if (!rename($oldFile, $newFile))
-                { // throw error msg
-                    sys::setSyslog($db, 7, 2, "unable to rename $oldFile to new file: $newFile", 0, 0, 0, 0);
-                    alert::draw("warning","Warning!","unable to rename $oldFile to new file: $newFile","","");
-                }
-                else
-                {
-                    // new file was stored, now do all the database stuff
-                    // update meta tags, menu entries and finally the pages db itself
-                    sys::setSyslog($db, 5, 0, "updated file $oldFile to new file $newFile", 0, 0, 0, 0);
-                }
-
-                // update local meta description
-                if (!$db->query("UPDATE {meta_local}
+            // update local meta description
+            if (!$db->query("UPDATE {meta_local}
   					SET content = '" . $this->metadescription . "'
                     WHERE name = 'description'
                     AND page = '" . $this->id . "'"))
-                {
-                    // throw error msg
-                    sys::setSyslog($db, 7, 2, "failed to update local meta description of page ID $this->id.", 0, 0, 0, 0);
-                    alert::draw("warning", "Warning", "local meta description could not be stored in database.", "", 4200);
-                }
+            {
+                // throw error msg
+                sys::setSyslog($db, 7, 2, "failed to update local meta description of page ID $this->id.", 0, 0, 0, 0);
+                alert::draw("warning", "Warning", "local meta description could not be stored in database.", "", 4200);
+            }
 
-                // update local meta tag keywords
-                if (!$db->query("UPDATE {meta_local}
+            // update local meta tag keywords
+            if (!$db->query("UPDATE {meta_local}
   					SET content = '" . $this->metakeywords . "'
                     WHERE name = 'keywords'
                     AND page = '" . $this->id . "'"))
-                {
-                    // throw error msg
-                    sys::setSyslog($db, 7, 2, "failed to update local meta keywords of page ID $this->id.", 0, 0, 0, 0);
-                    alert::draw("warning", "Warning", "local meta keywords could not be stored in database.", "", 4200);
-                }
+            {
+                // throw error msg
+                sys::setSyslog($db, 7, 2, "failed to update local meta keywords of page ID $this->id.", 0, 0, 0, 0);
+                alert::draw("warning", "Warning", "local meta keywords could not be stored in database.", "", 4200);
+            }
 
-                // update menu entry
-                /*
-                if (!$db->query("UPDATE {menu}
-  				    SET text = '" . $this->title ."',
-  				        href = '" . $this->alias . ".html',
-  					 	gid = '" . $this->gid . "',
-  						published = '" . $this->published . "'
-                    WHERE href = '" . $this->searchstring . "'"))
-                {
-                    // throw error
-                    \YAWK\sys::setSyslog($db, 23, 1, "failed to update menu entry $this->title.", 0, 0, 0, 0);
-                    \YAWK\alert::draw("warning", "Warning", "menu entry could not be stored in database.", "", 6200);
-                }
-                */
+            // update menu entry
+            /*
+            if (!$db->query("UPDATE {menu}
+                  SET text = '" . $this->title ."',
+                      href = '" . $this->alias . ".html',
+                       gid = '" . $this->gid . "',
+                      published = '" . $this->published . "'
+                WHERE href = '" . $this->searchstring . "'"))
+            {
+                // throw error
+                \YAWK\sys::setSyslog($db, 23, 1, "failed to update menu entry $this->title.", 0, 0, 0, 0);
+                \YAWK\alert::draw("warning", "Warning", "menu entry could not be stored in database.", "", 6200);
+            }
+            */
 
-                // check submenu status
-                // if (!isset($this->menu) || ($this->menu !=))
-
-                // update page db
-                // check unpublish date
-                if ($this->date_unpublish == "0000-00-00 00:00:00" || (empty($this->date_unpublish) || $this->date_unpublish == NULL))
-                {
-                    // sql code with NULL unpublish date
-                    if (!$db->query("UPDATE {pages} 
+            // update page db
+            // check unpublish date
+            if ($this->date_unpublish == "0000-00-00 00:00:00" || (empty($this->date_unpublish) || $this->date_unpublish == NULL))
+            {
+                // sql code with NULL unpublish date
+                if (!$db->query("UPDATE {pages} 
                     SET published = '" . $this->published . "',
                         gid = '" . $this->gid . "',
                         date_changed = '" . $date_changed . "',
@@ -829,24 +771,24 @@ namespace YAWK {
                         bgimage = '" . $this->bgimage . "',
                         lang = '" . $this->language . "'
                     WHERE id = '" . $this->id . "'"))
-                    {
-                        // throw error
-                        sys::setSyslog($db, 23, 1, "failed to update database of page $this->title", 0, 0, 0, 0);
-                        // \YAWK\alert::draw("warning", "Warning", "page data could not be stored in database.", "", 6200);
-                        // \YAWK\alert::draw("danger", 'MySQL Error: ('.mysqli_errno().')', 'Database error: '.mysqli_error($db).'', "", 0);
-                        return false;
-                    }
-                    else
-                    {
-                        // update pages db worked, all fin
-                        sys::setSyslog($db, 5, 0, "updated $this->alias", 0, 0, 0, 0);
-                        return true;
-                    }
+                {
+                    // throw error
+                    sys::setSyslog($db, 23, 1, "failed to update database of page $this->title", 0, 0, 0, 0);
+                    // \YAWK\alert::draw("warning", "Warning", "page data could not be stored in database.", "", 6200);
+                    // \YAWK\alert::draw("danger", 'MySQL Error: ('.mysqli_errno().')', 'Database error: '.mysqli_error($db).'', "", 0);
+                    return false;
                 }
                 else
                 {
-                    // sql code with correct, user-selected unpublish date
-                    if (!$db->query("UPDATE {pages} 
+                    // update pages db worked, all fin
+                    sys::setSyslog($db, 5, 0, "updated $this->alias", 0, 0, 0, 0);
+                    return true;
+                }
+            }
+            else
+            {
+                // sql code with correct, user-selected unpublish date
+                if (!$db->query("UPDATE {pages} 
                     SET published = '" . $this->published . "',
                         gid = '" . $this->gid . "',
                         date_changed = '" . $date_changed . "',
@@ -858,26 +800,19 @@ namespace YAWK {
                         bgimage = '" . $this->bgimage . "',
                         lang = '" . $this->language . "'
                     WHERE id = '" . $this->id . "'"))
-                    {
-                        // throw error
-                        sys::setSyslog($db, 23, 1, "failed to update page $this->title", 0, 0, 0, 0);
-                        alert::draw("warning", "Warning", "failed to store data of $this->alias in database.", "", 6200);
-                        return false;
-                    }
-                    else
-                    {
-                        // update pages db worked, all fin
-                        sys::setSyslog($db, 5, 0, "updated $this->alias", 0, 0, 0, 0);
-                        return true;
-                    }
+                {
+                    // throw error
+                    sys::setSyslog($db, 23, 1, "failed to update page $this->title", 0, 0, 0, 0);
+                    alert::draw("warning", "Warning", "failed to store data of $this->alias in database.", "", 6200);
+                    return false;
+                }
+                else
+                {
+                    // update pages db worked, all fin
+                    sys::setSyslog($db, 5, 0, "updated $this->alias", 0, 0, 0, 0);
+                    return true;
                 }
             }
-            else
-            {
-                // something went wrong...
-                sys::setSyslog($db, 7, 2, "unable to update file - $oldFile does not exist", 0, 0, 0, 0);
-            }
-            return true;
         } // ./ save function
 
 

@@ -194,6 +194,10 @@ namespace YAWK {
         static function changeLanguage($db, $menu, $menuLanguage)
         {
             $menuLanguage = mb_substr($menuLanguage, 0, 2);
+            if (empty($menuLanguage))
+            {
+                $menuLanguage = NULL;
+            }
             /** @var $db db $res */
             if ($res = $db->query("UPDATE {menu_names} SET
     							  		menuLanguage = '" . $menuLanguage . "'
