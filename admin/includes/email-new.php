@@ -1,4 +1,19 @@
 <?php
+
+use YAWK\backend;
+use YAWK\db;
+use YAWK\email;
+use YAWK\language;
+
+if (!isset($db))
+{   // create database object
+    $db = new db();
+}
+if (!isset($lang))
+{   // create language object
+    $lang = new language();
+}
+
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
 <!-- Content Wrapper. Contains page content -->
@@ -6,7 +21,7 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 /* draw Title on top */
-echo \YAWK\backend::getTitle($lang['EMAIL'], $lang['EMAILNEW_SUBTEXT']);
+echo backend::getTitle($lang['EMAIL'], $lang['EMAILNEW_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
             <li class=\"active\"><a href=\"index.php?page=users\" title=\"Users\"> $lang[USERS]</a></li>
@@ -23,7 +38,7 @@ echo"<ol class=\"breadcrumb\">
 	$email_cc = $db->quote($_POST['email_cc']);
 	$email_subject = $db->quote($_POST['email_subject']);
     $email_message = $db->quote($_POST['email_message']);
-    \YAWK\email::sendEmail($email_from, $email_to, $email_cc, $email_subject, $email_message);
+    email::sendEmail($email_from, $email_to, $email_cc, $email_subject, $email_message);
   }
   else
   {   // prepare vars + draw input form...

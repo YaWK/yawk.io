@@ -1,4 +1,19 @@
 <?php
+
+use YAWK\dashboard;
+use YAWK\db;
+use YAWK\language;
+use YAWK\page;
+use YAWK\settings;
+use YAWK\stats;
+use YAWK\tipOfDay;
+use YAWK\user;
+
+if (!isset($lang))
+{   // create language object
+    $lang = new language();
+}
+
 echo "<!-- Optionally, you can add Slimscroll and FastClick plugins.
 Both of these plugins are recommended to enhance the
              user experience. Slimscroll is required when using the
@@ -14,11 +29,11 @@ Both of these plugins are recommended to enhance the
 // check if stats object is here...
 if (!isset($stats) || (empty($stats)))
 {
-    /* @var $db \YAWK\db */
+    /* @var $db db */
     // include stats class
     @require_once '../system/classes/stats.php';
     // and create new stats object
-    $stats = new \YAWK\stats();
+    $stats = new stats();
     $defaultInterval = 10;
     $defaultPeriod = "MINUTE";
     $data = $stats->getStatsArray($db, $defaultInterval, $defaultPeriod);
@@ -30,11 +45,11 @@ else
     }
 
 // check if tip of day is enabled
-if (\YAWK\settings::getSetting($db, "backendTipOfDay") == true)
+if (settings::getSetting($db, "backendTipOfDay") == true)
 {   // include tip of day class
     @require_once '../system/classes/tipOfDay.php';
     // create new tip of day object
-    $tipOfDay = new \YAWK\tipOfDay();
+    $tipOfDay = new tipOfDay();
     $tipOfDay->drawTip($db, $lang);
 }
 ?>
@@ -80,7 +95,7 @@ if (\YAWK\settings::getSetting($db, "backendTipOfDay") == true)
 
             <div class="info-box-content">
                 <span class="info-box-text"><?php echo $lang['PAGES']; ?></span>
-                <span class="info-box-number"><?php echo \YAWK\page::countPages($db); ?></span>
+                <span class="info-box-number"><?php echo page::countPages($db); ?></span>
             </div>
             <!-- /.info-box-content -->
         </div>
@@ -93,7 +108,7 @@ if (\YAWK\settings::getSetting($db, "backendTipOfDay") == true)
 
             <div class="info-box-content">
                 <span class="info-box-text"><?php echo $lang['USERS']; ?></span>
-                <span class="info-box-number"><?php echo \YAWK\user::countUsers($db); ?></span>
+                <span class="info-box-number"><?php echo user::countUsers($db); ?></span>
             </div>
             <!-- /.info-box-content -->
         </div>
@@ -123,11 +138,11 @@ if (\YAWK\settings::getSetting($db, "backendTipOfDay") == true)
         <!-- weekday stats -->
         <?php $stats->drawWeekdayBox($db, $data, $lang, 0); ?>
         <!-- latest users -->
-        <?php \YAWK\dashboard::drawLatestUsers($db, 8, $lang); ?>
+        <?php dashboard::drawLatestUsers($db, 8, $lang); ?>
         <!-- daytime stats -->
         <?php $stats->drawDaytimeBox($db, $data, $lang); ?>
         <!-- latest pages stats-->
-        <?php \YAWK\dashboard::drawLatestPagesBox($db, 5, $lang); ?>
+        <?php dashboard::drawLatestPagesBox($db, 5, $lang); ?>
     </div>
     <!-- /.col -->
 </div>
