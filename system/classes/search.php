@@ -7,7 +7,7 @@ namespace YAWK {
      * See Methods Summary for Details!</i></p>
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
-     * @copyright  2017 Daniel Retzl yawk.io
+     * @copyright  2017-2021 Daniel Retzl yawk.io
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
@@ -16,25 +16,25 @@ namespace YAWK {
     class search
     {
         /** * @searchString string contains the search term */
-        public $string;
+        public $searchString;
 
         /**
          * search pages and draw box
          * @param string $searchString
          * @param object $db database object
          */
-        public function searchPages($db, $string, $lang)
+        public function searchPages($db, $searchString, $lang)
         {
             $i = 0;
             $pagesResult = '';
-            if (isset($string) && (!empty($string)))
+            if (isset($searchString) && (!empty($searchString)))
             {
-                if ($res = $db->query("SELECT id, alias, title FROM {pages} WHERE alias OR title LIKE '%".$string."%'"))
+                if ($res = $db->query("SELECT id, alias, title FROM {pages} WHERE alias OR title LIKE '%".$searchString."%'"))
                 {
                     while ($row = mysqli_fetch_assoc($res))
                     {
                         $i++;
-                        $pagesResult .= "<a href=\"index.php?page=page-edit&alias=$row[alias]&id=$row[id]\" target=\"_self\"><i class=\"fa fa-edit\"></i> $row[alias].html</a><br>";
+                        $pagesResult .= "<a href=\"index.php?page=page-edit&id=$row[id]\" target=\"_self\"><i class=\"fa fa-edit\"></i> $row[alias].html</a><br>";
                     }
                 }
             }
@@ -47,7 +47,7 @@ namespace YAWK {
                     <h3 class=\"box-title\">$lang[PAGES] <small>$lang[ALL_ELEMENTS]</small></h3>
                 </div>
                 <div class=\"box-body\">
-                    <h4>$pagesResult</h4><b>$i</b> $lang[PAGE_ENTRIES_WITH_TAG] <i><b>&laquo;$string&raquo;</b></i>
+                    <h4>$pagesResult</h4><b>$i</b> $lang[PAGE_ENTRIES_WITH_TAG] <i><b>&laquo;$searchString&raquo;</b></i>
                 </div>
             </div>";
             }
@@ -59,13 +59,13 @@ namespace YAWK {
          * @param string $searchString
          * @param object $db database object
          */
-        public function searchMenus($db, $string, $lang)
+        public function searchMenus($db, $searchString, $lang)
         {
             $i = 0;
             $menuResult = '';
-            if (isset($string) && (!empty($string)))
+            if (isset($searchString) && (!empty($searchString)))
             {
-                if ($res = $db->query("SELECT menuID, text FROM {menu} WHERE text LIKE '%".$string."%'"))
+                if ($res = $db->query("SELECT menuID, text FROM {menu} WHERE text LIKE '%".$searchString."%'"))
                 {
                     while ($row = mysqli_fetch_assoc($res))
                     {
@@ -82,7 +82,7 @@ namespace YAWK {
                     <h3 class=\"box-title\">$lang[MENUS] <small>$lang[ALL_ELEMENTS]</small></h3>
                 </div>
                 <div class=\"box-body\">
-                    <h4>$menuResult</h4><b>$i</b> $lang[MENU_ENTRIES_WITH_TAG] <i><b>&laquo;$string&raquo;</b></i>
+                    <h4>$menuResult</h4><b>$i</b> $lang[MENU_ENTRIES_WITH_TAG] <i><b>&laquo;$searchString&raquo;</b></i>
                 </div>
             </div>";
             }
@@ -94,13 +94,13 @@ namespace YAWK {
          * @param string $searchString
          * @param object $db database object
          */
-        public function searchUsers($db, $string, $lang)
+        public function searchUsers($db, $searchString, $lang)
         {
             $i = 0;
             $userResult = '';
-            if (isset($string) && (!empty($string)))
+            if (isset($searchString) && (!empty($searchString)))
             {
-                if ($res = $db->query("SELECT id, username FROM {users} WHERE username LIKE '%".$string."%'"))
+                if ($res = $db->query("SELECT id, username FROM {users} WHERE username LIKE '%".$searchString."%'"))
                 {
                     while ($row = mysqli_fetch_assoc($res))
                     {
@@ -117,7 +117,7 @@ namespace YAWK {
                     <h3 class=\"box-title\">$lang[USERS] <small>$lang[ALL_ELEMENTS]</small></h3>
                 </div>
                 <div class=\"box-body\">
-                    <h4>$userResult</h4><b>$i</b> $lang[USER_ENTRIES_WITH_TAG] <i><b>&laquo;$string&raquo;</b></i>
+                    <h4>$userResult</h4><b>$i</b> $lang[USER_ENTRIES_WITH_TAG] <i><b>&laquo;$searchString&raquo;</b></i>
                 </div>
             </div>";
             }
@@ -130,13 +130,13 @@ namespace YAWK {
          * @param string $searchString
          * @param object $db database object
          */
-        public function searchWidgets($db, $string, $lang)
+        public function searchWidgets($db, $searchString, $lang)
         {
             $i = 0;
             $widgetResult = '';
-            if (isset($string) && (!empty($string)))
+            if (isset($searchString) && (!empty($searchString)))
             {
-                if ($res = $db->query("SELECT id, widgetTitle FROM {widgets} WHERE widgetTitle LIKE '%".$string."%'"))
+                if ($res = $db->query("SELECT id, widgetTitle FROM {widgets} WHERE widgetTitle LIKE '%".$searchString."%'"))
                 {
                     while ($row = mysqli_fetch_assoc($res))
                     {
@@ -153,7 +153,7 @@ namespace YAWK {
                     <h3 class=\"box-title\">$lang[WIDGETS] <small>$lang[ALL_ELEMENTS]</small></h3>
                 </div>
                 <div class=\"box-body\">
-                    <h4>$widgetResult</h4><b>$i</b> $lang[WIDGETS_ENTRIES_WITH_TAG] <i><b>&laquo;$string&raquo;</b></i>
+                    <h4>$widgetResult</h4><b>$i</b> $lang[WIDGETS_ENTRIES_WITH_TAG] <i><b>&laquo;$searchString&raquo;</b></i>
                 </div>
             </div>";
             }
@@ -165,16 +165,16 @@ namespace YAWK {
          * @param string $searchString
          * @param object $db database object
          */
-        public function searchBlogs($db, $string, $lang)
+        public function searchBlogs($db, $searchString, $lang)
         {
             $i = 0;
             $blogResults = '';
-            if (isset($string) && (!empty($string)))
+            if (isset($searchString) && (!empty($searchString)))
             {
                 if ($res = $db->query("SELECT blogid, title, subtitle, teasertext FROM {blog_items} 
-                                       WHERE title LIKE '%".$string."%' OR
-                                       subtitle LIKE '%".$string."%' OR
-                                       teasertext LIKE '%".$string."%'"))
+                                       WHERE title LIKE '%".$searchString."%' OR
+                                       subtitle LIKE '%".$searchString."%' OR
+                                       teasertext LIKE '%".$searchString."%'"))
                 {
                     while ($row = mysqli_fetch_assoc($res))
                     {
@@ -191,7 +191,7 @@ namespace YAWK {
                     <h3 class=\"box-title\">$lang[BLOG] <small>$lang[ALL_ELEMENTS]</small></h3>
                 </div>
                 <div class=\"box-body\">
-                    <h4>$blogResults</h4><b>$i</b> $lang[BLOG_ENTRIES_WITH_TAG] <i><b>&laquo;$string&raquo;</b></i>
+                    <h4>$blogResults</h4><b>$i</b> $lang[BLOG_ENTRIES_WITH_TAG] <i><b>&laquo;$searchString&raquo;</b></i>
                 </div>
             </div>";
             }

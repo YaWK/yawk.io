@@ -33,23 +33,16 @@ if (!isset($search) || (empty($search)))
 {   // create search object
     $search = new search();
 }
-// check if db is set
-if (!isset($db) || (empty($db)))
-{   // if not, include class
-    require_once '../system/classes/db.php';
-    // and create database object
-    $db = new db();
-}
 // check if search string is sent
 if (isset($_POST['searchString']) && (!empty($_POST['searchString'])))
 {   // strip html tags and assign obj property
-    $search->string = strip_tags($_POST['searchString']);
+    $search->searchString = strip_tags($_POST['searchString']);
 }
 else
 {   // user sent form, but entered no search string
     // set focus on search field
     backend::setFocus("searchString");
-    $search->string = '';
+    $search->searchString = '';
 }
 ?>
 <form method="post" action="index.php?page=search">
@@ -62,7 +55,7 @@ else
             </div>
             <div class="box-body">
                 <label for="searchString"><?php echo $lang['SEARCH_STRING'] ?></label>
-                <input id="searchString" name="searchString" type="text" value="<?php echo $search->string; ?>" class="form-control h3" placeholder="<?php echo $search->string; ?>">
+                <input id="searchString" name="searchString" type="text" value="<?php echo $search->searchString; ?>" class="form-control h3" placeholder="<?php echo $search->searchString; ?>">
             </div>
         </div>
         <!-- / search box -->
@@ -70,11 +63,11 @@ else
         if (isset($_POST['all']) && ($_POST['all'] === "true"))
         {
             // display all search results
-            echo $search->searchPages($db, $search->string, $lang);
-            echo $search->searchBlogs($db, $search->string, $lang);
-            echo $search->searchMenus($db, $search->string, $lang);
-            echo $search->searchUsers($db, $search->string, $lang);
-            echo $search->searchWidgets($db, $search->string, $lang);
+            echo $search->searchPages($db, $search->searchString, $lang);
+            echo $search->searchBlogs($db, $search->searchString, $lang);
+            echo $search->searchMenus($db, $search->searchString, $lang);
+            echo $search->searchUsers($db, $search->searchString, $lang);
+            echo $search->searchWidgets($db, $search->searchString, $lang);
 
             $pagesChecked = "checked";
             $blogsChecked = "checked";
@@ -86,7 +79,7 @@ else
             {   // display results of selected categories only
                 if (isset($_POST['pages']))
                 {
-                    echo $search->searchPages($db, $search->string, $lang);
+                    echo $search->searchPages($db, $search->searchString, $lang);
                     $pagesChecked = "checked";
                 }
                 else
@@ -94,7 +87,7 @@ else
 
                 if (isset($_POST['blogs']))
                 {
-                    echo $search->searchBlogs($db, $search->string, $lang);
+                    echo $search->searchBlogs($db, $search->searchString, $lang);
                     $blogsChecked = "checked";
                 }
                 else
@@ -102,7 +95,7 @@ else
 
                 if (isset($_POST['menus']))
                 {
-                    echo $search->searchMenus($db, $search->string, $lang);
+                    echo $search->searchMenus($db, $search->searchString, $lang);
                     $menusChecked = "checked";
                 }
                 else
@@ -110,7 +103,7 @@ else
 
                 if (isset($_POST['users']))
                 {
-                    echo $search->searchUsers($db, $search->string, $lang);
+                    echo $search->searchUsers($db, $search->searchString, $lang);
                     $usersChecked = "checked";
                 }
                 else
@@ -118,7 +111,7 @@ else
 
                 if (isset($_POST['widgets']))
                 {
-                    echo $search->searchWidgets($db, $search->string, $lang);
+                    echo $search->searchWidgets($db, $search->searchString, $lang);
                     $widgetsChecked = "checked";
                 }
                 else
