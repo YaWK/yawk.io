@@ -442,7 +442,7 @@ $i_pages_unpublished = 0;
             $lockIcon = '';
             $lockHover = '';
             $lockLink = "href=\"index.php?page=pages&lock=1&id=".$row['id']."&locked=".$row['locked']."\"";
-            $lockHref = "href=\"index.php?page=page-edit&alias=".$row['alias']."&id=".$row['id']."\"";
+            $lockHref = "href=\"index.php?page=page-edit&id=".$row['id']."\"";
             $lockTitle = "title=\"".$lang['PAGE_LOCK']."\"";
             $lockLinkTitle = "title=\"".$lang['EDIT']."\"";
             $lockLanguageCopyTitle = "title=\"".$lang['ASSIGN_NEW_LANGUAGE']."\"";
