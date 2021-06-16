@@ -1,9 +1,18 @@
 <?php
-/** @var $lang \YAWK\language */
+use YAWK\alert;
+use YAWK\backend;
+use YAWK\db;
+use YAWK\language;
+use YAWK\menu;
+use YAWK\settings;
+
+/** @var $lang language */
+/** @var $db db */
+
 // CHECK MENU OBJECT
 if (!isset($menu))
 {   // create new menu object if its not set
-    $menu = new \YAWK\menu();
+    $menu = new menu();
 }
 // TOGGLE MENU
 if (isset($_GET['toggle']) && ($_GET['toggle'] === "1"))
@@ -27,11 +36,11 @@ if (isset($_GET['toggle']) && ($_GET['toggle'] === "1"))
 
     if($menu->toggleOffline($db, $menu->id, $menu->published, $lang))
     {
-        \YAWK\alert::draw("$color", "$lang[MENU_IS_NOW] $status", "$lang[MENU_STATUS_TOGGLE_OK] $status.", "", 800);
+        alert::draw("$color", "$lang[MENU_IS_NOW] $status", "$lang[MENU_STATUS_TOGGLE_OK] $status.", "", 800);
     }
     else
     {
-        print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[MENU_STATUS_TOGGLE_FAILED] $status.","page=menus","5800");
+        print alert::draw("danger", "$lang[ERROR]", "$lang[MENU_STATUS_TOGGLE_FAILED] $status.","page=menus","5800");
     }
 }
 
@@ -41,11 +50,11 @@ if(isset($_GET['add']) && ($_GET['add'] === "1"))
 {
     if (YAWK\menu::createMenu($db, $db->quote($_POST['name']), $lang))
     {   // menu created, do syslog + draw notify
-        print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[THE_MENU] <strong>".$_POST['name']."</strong> $lang[WAS_CREATED]!", "","2000");
+        print alert::draw("success", "$lang[SUCCESS]", "$lang[THE_MENU] <strong>".$_POST['name']."</strong> $lang[WAS_CREATED]!", "","2000");
     }
     else
     {   // throw error
-        print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[THE_MENU] <strong>".$_POST['name']."</strong> $lang[WAS_NOT_CREATED]!", "","5800");
+        print alert::draw("danger", "$lang[ERROR]", "$lang[THE_MENU] <strong>".$_POST['name']."</strong> $lang[WAS_NOT_CREATED]!", "","5800");
     }
 }
 
@@ -54,14 +63,14 @@ if (isset($_GET['del']) && ($_GET['del'] === "1"))
 {   // check if delete is true
     if (isset($_GET['delete']) && ($_GET['delete'] == 'true'))
     {   // delete whole menu
-        $menuName = \YAWK\menu::getMenuNameByID($db, $_GET['menu'], $lang);
-        if(\YAWK\menu::delete($db, $db->quote($_GET['menu']), $lang))
+        $menuName = menu::getMenuNameByID($db, $_GET['menu']);
+        if(menu::delete($db, $db->quote($_GET['menu']), $lang))
         {   // all good...
-            print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[MENU_DEL_OK]","","800");
+            print alert::draw("success", "$lang[SUCCESS]", "$lang[MENU_DEL_OK]","","800");
         }
         else
         {   // throw error
-            print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[MENU_DEL_FAILED]","","5800");
+            print alert::draw("danger", "$lang[ERROR]", "$lang[MENU_DEL_FAILED]","","5800");
         }
     }
 }
@@ -84,7 +93,7 @@ if (isset($_GET['del']) && ($_GET['del'] === "1"))
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <!-- draw title on top-->
-        <?php echo \YAWK\backend::getTitle($lang['MENUS'], $lang['MENUS_SUBTEXT']); ?>
+        <?php echo backend::getTitle($lang['MENUS'], $lang['MENUS_SUBTEXT']); ?>
         <ol class="breadcrumb">
             <li><a href="./" title="<?php echo $lang['DASHBOARD']; ?>"><i class="fa fa-dashboard"></i> <?php echo $lang['DASHBOARD']; ?></a></li>
             <li class="active"><a href="index.php?page=menus" title="<?php echo $lang['MENUS']; ?>"> <?php echo $lang['MENUS']; ?></a></li>
@@ -100,21 +109,21 @@ if (isset($_GET['del']) && ($_GET['del'] === "1"))
 <table class="table table-striped table-hover table-responsive" id="table-sort">
   <thead>
     <tr>
-      <td width="5%">&nbsp;</td>
-      <td width="5%"><strong><?php echo $lang['ID']; ?></strong></td>
-      <td width="10%"><strong><?php echo $lang['STATUS']; ?></strong></td>
-      <td width="30%"><strong><?php echo $lang['NAME']; ?></strong></td>
-      <td width="30%"><strong><?php echo $lang['ENTRIES']; ?></strong></td>
-      <td width="20%" class="text-center"><strong><?php echo $lang['ACTIONS']; ?></strong></td>
+      <td style="5%;">&nbsp;</td>
+      <td style="5%;"><strong><?php echo $lang['ID']; ?></strong></td>
+      <td style="10%;"><strong><?php echo $lang['STATUS']; ?></strong></td>
+      <td style="30%;"><strong><?php echo $lang['NAME']; ?></strong></td>
+      <td style="30%;"><strong><?php echo $lang['ENTRIES']; ?></strong></td>
+      <td style="20%;" class="text-center"><strong><?php echo $lang['ACTIONS']; ?></strong></td>
     </tr>
   </thead>
   <tbody>
 
     <?php
     /* get all menus */
-    $globalMenuID = \YAWK\settings::getSetting($db, "globalmenuid");
+    $globalMenuID = settings::getSetting($db, "globalmenuid");
 
-    $rows = \YAWK\backend::getMenusArray($db);
+    $rows = backend::getMenusArray($db);
         foreach ($rows AS $row) {
             $res[] = $row;
             $pageName = '';

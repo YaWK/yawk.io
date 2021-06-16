@@ -1,4 +1,13 @@
 <?php
+
+use YAWK\backend;
+use YAWK\db;
+use YAWK\language;
+use YAWK\search;
+
+/** @var $db db */
+/** @var $lang language */
+
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
     <!-- Content Wrapper. Contains page content -->
@@ -6,7 +15,7 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 /* draw Title on top */
-echo \YAWK\backend::getTitle($lang['SEARCH_RESULT'], $lang['SEARCH_SUBTEXT']);
+echo backend::getTitle($lang['SEARCH_RESULT'], $lang['SEARCH_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
             <li class=\"active\"><a href=\"index.php?page=search\" title=\"$lang[SEARCH]\"> $lang[SEARCH]</a></li>
@@ -22,14 +31,14 @@ echo"<ol class=\"breadcrumb\">
 require_once '../system/classes/search.php';
 if (!isset($search) || (empty($search)))
 {   // create search object
-    $search = new \YAWK\search();
+    $search = new search();
 }
 // check if db is set
 if (!isset($db) || (empty($db)))
 {   // if not, include class
     require_once '../system/classes/db.php';
     // and create database object
-    $db = new \YAWK\db();
+    $db = new db();
 }
 // check if search string is sent
 if (isset($_POST['searchString']) && (!empty($_POST['searchString'])))
@@ -39,7 +48,7 @@ if (isset($_POST['searchString']) && (!empty($_POST['searchString'])))
 else
 {   // user sent form, but entered no search string
     // set focus on search field
-    \YAWK\backend::setFocus("searchString");
+    backend::setFocus("searchString");
     $search->string = '';
 }
 ?>
@@ -52,6 +61,7 @@ else
                 <h3 class="box-title"><?php echo $lang['SEARCH_STRING'] ?> <small><?php echo $lang['NEW_SEARCH']; ?></small></h3>
             </div>
             <div class="box-body">
+                <label for="searchString"><?php echo $lang['SEARCH_STRING'] ?></label>
                 <input id="searchString" name="searchString" type="text" value="<?php echo $search->string; ?>" class="form-control h3" placeholder="<?php echo $search->string; ?>">
             </div>
         </div>

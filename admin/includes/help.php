@@ -1,12 +1,18 @@
 <?php
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
+use YAWK\backend;
+use YAWK\language;
+use YAWK\db;
+/* @var $db db */
+/* @var $lang language */
+
 echo "
     <!-- Content Wrapper. Contains page content -->
     <div class=\"content-wrapper\" id=\"content-FX\">
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 /* draw Title on top */
-echo \YAWK\backend::getTitle($lang['HELP'], $lang['HELP_SUBTEXT']);
+echo backend::getTitle($lang['HELP'], $lang['HELP_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
             <li class=\"active\"><a href=\"index.php?page=help\" title=\"$lang[HELP]\"> $lang[HELP]</a></li>

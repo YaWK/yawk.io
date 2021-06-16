@@ -1,20 +1,17 @@
 <?php
 // IMPORT REQUIRED CLASSES
+use YAWK\alert;
+use YAWK\backend;
 use YAWK\db;
 use YAWK\language;
+
+/** @var $db db  */
+/** @var $lang language  */
 
 // CHECK REQUIRED OBJECTS
 if (!isset($page)) // if no page object is set
 {   // create new page object
     $page = new YAWK\page();
-}
-if (!isset($db))
-{   // create database object
-    $db = new db();
-}
-if (!isset($lang))
-{   // create language object
-    $lang = new language();
 }
 
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
@@ -24,7 +21,7 @@ if (!isset($lang))
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 /* draw Title on top */
-echo \YAWK\backend::getTitle($lang['PAGE'], $lang['PAGE_ADD_SMALL']);
+echo backend::getTitle($lang['PAGE'], $lang['PAGE_ADD_SMALL']);
 echo"<ol class=\"breadcrumb\">
         <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
         <li><a href=\"index.php?page=pages\" title=\"$lang[PAGES]\"> $lang[PAGES]</a></li>
@@ -36,7 +33,7 @@ echo"<ol class=\"breadcrumb\">
 /* page content start here */
 
 /* focus input text field on page load */
-\YAWK\backend::setFocus("alias");
+backend::setFocus("alias");
 if(isset($_POST['alias']) && (!empty($_POST['alias'])))
   {
       $page->alias = $db->quote($_POST['alias']);
@@ -49,12 +46,12 @@ if(isset($_POST['alias']) && (!empty($_POST['alias'])))
       if($page->create($db, $page->alias, $page->menu, $page->locked, $page->blogid, $page->plugin))
       {
           // YAWK\sys::setNotification($db, 1, "$lang[PAGE] $alias.html $lang[CREATED].", $user->id, 0, 0, 0);
-          \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[PAGE] $lang[CREATED]","","420");
-          \YAWK\backend::setTimeout("index.php?page=pages",1260);
+          alert::draw("success", "$lang[SUCCESS]", "$lang[PAGE] $lang[CREATED]","","420");
+          backend::setTimeout("index.php?page=pages",1260);
       }
       else
       {   // create new page failed
-          print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[SAVE] $lang[OF] $lang[PAGE] <strong>".$alias."</strong> $lang[FAILED]","page=page-new","4800");
+          print alert::draw("danger", "$lang[ERROR]", "$lang[SAVE] $lang[OF] $lang[PAGE] <strong>".$this->alias."</strong> $lang[FAILED]","page=page-new","4800");
       }
 
   }
@@ -64,7 +61,7 @@ if(isset($_POST['alias']) && (!empty($_POST['alias'])))
     <div class="box-body">
 <br>
 <form role="form" class="form-inline" action="index.php?page=page-new" method="post">
-  <label for "alias"><?php print $lang['PAGE_ADD_SUBTEXT']; ?>  </label><br>
+  <label for="alias"><?php print $lang['PAGE_ADD_SUBTEXT']; ?>  </label><br>
   <!-- TEXT FIELD -->
   <input type="text" id="alias" size="84" name="alias" class="form-control" maxlength="255" 
   placeholder="<?php print $lang['PAGE_ADD_PLACEHOLDER']; ?>" /> .html
@@ -219,10 +216,9 @@ if(isset($_POST['alias']) && (!empty($_POST['alias'])))
 
     <br><br>
     <!-- MENU SELECTOR -->
-    &nbsp;&nbsp;<?php print $lang['IN_MENU']; ?>&nbsp; <select name="menuID" class="btn btn-default">
+    &nbsp;&nbsp;<label for="menuID"><?php print $lang['IN_MENU']; ?></label> <select id="menuID" name="menuID" class="btn btn-default">
         <?php
         foreach (YAWK\backend::getMenusArray($db) AS $menue){
-//    foreach(YAWK\sys::getMenus() as $menue){
             echo "<option value=\"".$menue['id']."\"";
             if (isset($_POST['menu'])) {
                 if($_POST['menu'] === $menue['id']){

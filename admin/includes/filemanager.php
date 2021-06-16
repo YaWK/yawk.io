@@ -123,6 +123,18 @@
  */
 
 /* UPLOAD FILE PROCESSING */
+
+use YAWK\alert;
+use YAWK\backend;
+use YAWK\db;
+use YAWK\filemanager;
+use YAWK\language;
+use YAWK\settings;
+use YAWK\sys;
+
+/** @var $db db */
+/** @var $lang language */
+
 if (isset($_POST['upload']))
 {   // folder was selected
     if (isset($_POST['folderselect']))
@@ -145,17 +157,17 @@ if (isset($_POST['upload']))
             {   // store uploaded file
                 $file = basename( $_FILES['file']['name']);
                 // ok, set syslog entry
-                \YAWK\sys::setSyslog($db, 25, 0, "uploaded <b>$file</b>", 0, 0, 0, 0);
+                sys::setSyslog($db, 25, 0, "uploaded <b>$file</b>", 0, 0, 0, 0);
                 // upload OK, throw alert msg
-                print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[UPLOAD_SUCCESSFUL]: $lang[FILE] <strong>".$file."</strong>", "", 800);
+                print alert::draw("success", "$lang[SUCCESS]", "$lang[UPLOAD_SUCCESSFUL]: $lang[FILE] <strong>".$file."</strong>", "", 800);
             }
             else
             {   // could not upload file, throw error
                 $file = basename( $_FILES['file']['name']);
                 // failed - set syslog entry
-                \YAWK\sys::setSyslog($db, 28, 1, "failed to upload <b>$file</b>", 0, 0, 0, 0);
+                sys::setSyslog($db, 28, 1, "failed to upload <b>$file</b>", 0, 0, 0, 0);
                 // throw error msg
-                echo YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[UPLOAD_FAILED]: ".$_FILES['file']['name']."", "", 5800);
+                print alert::draw("danger", "$lang[ERROR]", "$lang[UPLOAD_FAILED]: ".$_FILES['file']['name']."", "", 5800);
             }
             break;
     }
@@ -180,15 +192,15 @@ if (isset($_GET['delete']))
         // execute delete command
         if (YAWK\filemanager::deleteItem($file) === true)
         {   // DELETE SUCCESSFUL, set syslog entry
-            \YAWK\sys::setSyslog($db, 25, 0, "deleted $file", 0, 0, 0, 0);
+            sys::setSyslog($db, 25, 0, "deleted $file", 0, 0, 0, 0);
             // throw success msg
-            print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[FILE] $file $lang[DELETE_SUCCESSFUL]","","1200");
+            print alert::draw("success", "$lang[SUCCESS]", "$lang[FILE] $file $lang[DELETE_SUCCESSFUL]","","1200");
         }
         else
         {   // DELETE FAILED, set syslog entry
-            \YAWK\sys::setSyslog($db, 28, 1, "failed to delete $file", 0, 0, 0, 0);
+            sys::setSyslog($db, 28, 1, "failed to delete $file", 0, 0, 0, 0);
             // throw error msg
-            print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[FILE] $file $lang[DELETE_FAILED]","","2400");
+            print alert::draw("danger", "$lang[ERROR]", "$lang[FILE] $file $lang[DELETE_FAILED]","","2400");
         }
     }
 }
@@ -202,7 +214,7 @@ if (isset($_POST['renameItem']) && ($_POST['renameItem'] === "true"))
         if (isset($_POST['path']) && (!empty($_POST['path'])))
         {
             // remove special chars from folder name
-            $newItemName = \YAWK\filemanager::removeSpecialChars($_POST['newItemName']);
+            $newItemName = filemanager::removeSpecialChars($_POST['newItemName']);
             // rename from
             $from = "$_POST[path]/$_POST[oldItemName]";
             // rename to
@@ -221,14 +233,14 @@ if (isset($_POST['renameItem']) && ($_POST['renameItem'] === "true"))
         // rename folder
         if (rename($from, $to))
         {
-            \YAWK\sys::setSyslog($db, 25, 0,"folder renamed: $_POST[oldItemName] file to $_POST[newItemName]", 0, 0, 0, 0);
-            echo \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[$itemType] $lang[RENAMED]: <i>$_POST[oldItemName]</i> $lang[FILEMAN_TO] <b>$_POST[newItemName]</b>","","1200");
+            sys::setSyslog($db, 25, 0,"folder renamed: $_POST[oldItemName] file to $_POST[newItemName]", 0, 0, 0, 0);
+            echo alert::draw("success", "$lang[SUCCESS]", "$lang[$itemType] $lang[RENAMED]: <i>$_POST[oldItemName]</i> $lang[FILEMAN_TO] <b>$_POST[newItemName]</b>","","1200");
 
         }
         else
             {
-                \YAWK\sys::setSyslog($db, 28, 0, "failed to rename $_POST[oldItemName] file to $_POST[newItemName]", 0, 0, 0, 0);
-                echo \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[$itemType] $lang[RENAMED] $_POST[oldFolderName] $lang[FILEMAN_TO] $_POST[newFolderName] $lang[FAILED]","","4800");
+                sys::setSyslog($db, 28, 0, "failed to rename $_POST[oldItemName] file to $_POST[newItemName]", 0, 0, 0, 0);
+                echo alert::draw("danger", "$lang[ERROR]", "$lang[$itemType] $lang[RENAMED] $_POST[oldFolderName] $lang[FILEMAN_TO] $_POST[newFolderName] $lang[FAILED]","","4800");
             }
     }
 }
@@ -250,11 +262,11 @@ if (isset($_POST['chmod']) && ($_POST['chmod'] === "true"))
             // do chmod on item...
             if (chmod($_POST['item'], octdec($_POST['chmodCode'])))
             {   // chmod successful
-                print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[FILEMAN_CHANGED_CHMOD] $lang[TO] $_POST[chmodCode]","","1200");
+                print alert::draw("success", "$lang[SUCCESS]", "$lang[FILEMAN_CHANGED_CHMOD] $lang[TO] $_POST[chmodCode]","","1200");
             }
             else
                 {   // chmod failed, throw error
-                    print \YAWK\alert::draw("success", "$lang[DANGER]", "$lang[FILEMAN_CHANGED_CHMOD] $_POST[item] $lang[TO] $_POST[chmodCode] $_POST[FAILED]","","1200");
+                    print alert::draw("success", "$lang[DANGER]", "$lang[FILEMAN_CHANGED_CHMOD] $_POST[item] $lang[TO] $_POST[chmodCode] $_POST[FAILED]","","1200");
                 }
         }
     }
@@ -266,7 +278,7 @@ if (isset($_POST['addFolder']) && ($_POST['addFolder'] === "true"))
     // check if new folder is set
     if (isset($_POST['newFolder']) && (!empty($_POST['newFolder'])))
     {   // remove special chars from new folder
-        $newFolder = \YAWK\filemanager::removeSpecialChars($_POST['newFolder']);
+        $newFolder = filemanager::removeSpecialChars($_POST['newFolder']);
     }
     else
         {
@@ -289,15 +301,15 @@ if (isset($_POST['addFolder']) && ($_POST['addFolder'] === "true"))
     // create new folder...
     if (mkdir($newDirectory))
     {   // CREATE DIR SUCCESSFUL, set syslog entry
-        \YAWK\sys::setSyslog($db, 25, 0, "created new folder: $newDirectory", 0, 0, 0, 0);
+        sys::setSyslog($db, 25, 0, "created new folder: $newDirectory", 0, 0, 0, 0);
         // throw success msg
-        print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[FOLDER] $newDirectory $lang[CREATED]","","1200");
+        print alert::draw("success", "$lang[SUCCESS]", "$lang[FOLDER] $newDirectory $lang[CREATED]","","1200");
     }
     else
         {   // failed to create directory, set syslog entry
-            \YAWK\sys::setSyslog($db, 28, 1,"failed to create new folder: $newDirectory", 0, 0, 0, 0);
+            sys::setSyslog($db, 28, 1,"failed to create new folder: $newDirectory", 0, 0, 0, 0);
             // throw success msg
-            print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[FOLDER] $newDirectory $lang[CREATED]","","1200");
+            print alert::draw("success", "$lang[SUCCESS]", "$lang[FOLDER] $newDirectory $lang[CREATED]","","1200");
         }
 }
 
@@ -314,7 +326,7 @@ if (isset($_GET['path']) && (!empty($_GET['path'])))
     }
     else
         {   // if not - user maybe manipulated $path variable, to see files above ../media - throw error
-            \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[ACTION_FORBIDDEN]", 0, 6000);
+            alert::draw("danger", "$lang[ERROR]", "$lang[ACTION_FORBIDDEN]", 0, 6000);
         }
 }
 else
@@ -331,7 +343,7 @@ else
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <!-- draw title on top-->
-        <?php echo \YAWK\backend::getTitle($lang['FILEMAN_TITLE'], $lang['FILEMAN_SUBTEXT']); ?>
+        <?php echo backend::getTitle($lang['FILEMAN_TITLE'], $lang['FILEMAN_SUBTEXT']); ?>
         <ol class="breadcrumb">
             <li><a href="index.php?page=dashboard" title="<?php echo $lang['DASHBOARD']; ?>"><i class="fa fa-dashboard"></i> <?php echo $lang['DASHBOARD']; ?></a></li>
             <li class="active"><a href="index.php?page=filemanager" title="<?php echo $lang['FILEMANAGER']; ?>"> <?php echo $lang['FILEMANAGER']; ?></a></li>
@@ -345,7 +357,7 @@ else
 <div class="box box-default">
     <div class="box-body">
 
-<?php $maxFileSize = \YAWK\filemanager::getPhpMaxUploadSize(); ?>
+<?php $maxFileSize = filemanager::getPhpMaxUploadSize(); ?>
 <!-- FILE UPLOAD MODAL DIALOG -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -410,7 +422,7 @@ else
                         <option value="video"><?php echo $lang['FILEMAN_VIDEOS']; ?></option>
                         <?php
                             // if all subdirectories should be drawn, uncomment the following line
-                            \YAWK\filemanager::subdirToOptions("../media/");
+                            filemanager::subdirToOptions("../media/");
                         ?>
                 </select>
                 <!-- new folder -->
@@ -521,7 +533,7 @@ else
     <li <?php echo $disabledStatus; ?>><a href="#uploads" onclick="flipTheSwitch('uploads');"<?php echo $dataToggle; ?>><i class="fa fa-upload"></i> &nbsp;<?php echo $lang['FILEMAN_UPLOADS']; ?></a></li>
     <li <?php echo $disabledStatus; ?>><a href="#backup" onclick="flipTheSwitch('backup');"<?php echo $dataToggle; ?>><i class="fa fa-file-zip-o"></i> &nbsp;<?php echo $lang['FILEMAN_BACKUP']; ?></a></li>
    <?php
-        $webmail_active = \YAWK\settings::getSetting($db, "webmail_active");
+        $webmail_active = settings::getSetting($db, "webmail_active");
         if ($webmail_active == true)
         {
             echo '<li '.$disabledStatus.'><a href="#mailbox" '.$dataToggle.'><i class="fa fa-envelope-o"></i> &nbsp;'.$lang["WEBMAIL"].'</a></li>';
@@ -624,7 +636,7 @@ else
                             <option value="uploads"><?php echo $lang['FILEMAN_UPLOADS']; ?></option>
                             <option value="video"><?php echo $lang['FILEMAN_VIDEOS']; ?></option>
                             <?php
-                            \YAWK\filemanager::subdirToOptions("../media/");
+                            filemanager::subdirToOptions("../media/");
                             ?>
                         </select>
                     </form>

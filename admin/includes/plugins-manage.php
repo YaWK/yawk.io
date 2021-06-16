@@ -11,6 +11,13 @@
     } );
 </script>
 <?php
+use YAWK\backend;
+use YAWK\db;
+use YAWK\language;
+use YAWK\plugin;
+/** @var $db db */
+/** @var $lang language */
+
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
     <!-- Content Wrapper. Contains page content -->
@@ -18,7 +25,7 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 /* draw Title on top */
-echo \YAWK\backend::getTitle($lang['PLUGINS_MANAGE'], $lang['PLUGINS_MANAGE_SUBTEXT']);
+echo backend::getTitle($lang['PLUGINS_MANAGE'], $lang['PLUGINS_MANAGE_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
             <li><a href=\"index.php?page=plugins\" title=\"$lang[PLUGINS]\"> $lang[PLUGINS]</a></li>
@@ -33,23 +40,18 @@ echo"<ol class=\"breadcrumb\">
 <a class="btn btn-success pull-right" href="index.php?plugins-manage">
     <i class="glyphicon glyphicon-cog"></i> &nbsp;<?php print $lang['PLUGIN_MANAGE']; ?></a>
 
-<table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-striped table-hover table-responsive" id="table-sort">
+<table style="100%;" class="table table-striped table-hover table-responsive" id="table-sort">
     <thead>
     <tr>
-        <td width="10%">&nbsp;</td>
-        <td width="20%"><strong><i class="fa fa-caret-down"></i> <?php print $lang['PLUGIN']; ?></strong></td>
-        <td width="60%"><strong><?php print $lang['DESCRIPTION']; ?></strong></td>
-        <td width="10%" class="text-center"><strong><?php print $lang['ACTIONS']; ?></strong></td>
+        <td style="10%;">&nbsp;</td>
+        <td style="20%;"><strong><i class="fa fa-caret-down"></i> <?php print $lang['PLUGIN']; ?></strong></td>
+        <td style="60%;"><strong><?php print $lang['DESCRIPTION']; ?></strong></td>
+        <td style="10%;" class="text-center"><strong><?php print $lang['ACTIONS']; ?></strong></td>
     </tr>
     </thead>
     <tbody>
     <?php
-    $plugin = new \YAWK\plugin();
-    if (!isset($db))
-    {
-        include '../system/classes/db.php';
-        $db = new \YAWK\db();
-    }
+    $plugin = new plugin();
     print $plugin->getPlugins($db, $lang, 0);
     ?>
     </tbody>

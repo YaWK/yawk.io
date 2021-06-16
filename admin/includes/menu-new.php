@@ -1,10 +1,19 @@
+<?php
+
+use YAWK\backend;
+use YAWK\db;
+use YAWK\language;
+
+/** @var $db db */
+/** @var $lang language */
+?>
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper" id="content-FX">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <!-- draw title on top-->
-        <?php echo \YAWK\backend::getTitle($lang['MENU'], $lang['MENU_CREATE']); ?>
+        <?php echo backend::getTitle($lang['MENU'], $lang['MENU_CREATE']); ?>
 <ol class="breadcrumb">
   <li><a href="./" title="Dashboard"><i class="fa fa-dashboard"></i> <?php echo $lang['DASHBOARD']; ?></a></li>
   <li><a href="index.php?page=menus" title="<?php echo $lang['MENUS']; ?>"> <?php echo $lang['MENUS']; ?></a></li>
@@ -22,7 +31,7 @@
     <form action="index.php?page=menus&add=1" role="form" method="POST">
         <input name="menu"
                class="form-control"
-               value="<?php print $id; ?>"
+               value="<?php // print $id; ?>"
                type="hidden">
         <input name="page"
                class="form-control"

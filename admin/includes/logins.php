@@ -1,6 +1,14 @@
 <?php
-/* draw Title on top */
-YAWK\backend::getTitle($lang['LOGINS'], $lang['LOGINS_SUBTEXT']);
+
+use YAWK\backend;
+use YAWK\db;
+use YAWK\language;
+use YAWK\sys;
+use YAWK\user;
+
+/** @var $db db */
+/** @var $lang language */
+
 ?>
 <script type="text/javascript">
     $(document).ready(function() {
@@ -22,7 +30,7 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 /* draw Title on top */
-echo \YAWK\backend::getTitle($lang['LOGINS'], $lang['LOGINS_SUBTEXT']);
+echo backend::getTitle($lang['LOGINS'], $lang['LOGINS_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
             <li class=\"active\"><a href=\"index.php?page=logins\" title=\"$lang[LOGINS]\"> $lang[LOGINS]</a></li>
@@ -33,18 +41,18 @@ echo"<ol class=\"breadcrumb\">
 /* page content start here */
 ?>
 
-<table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-striped table-hover table-responsive" id="table-sort">
+<table style="100%;" class="table table-striped table-hover table-responsive" id="table-sort">
     <thead>
     <tr>
-        <td width="3%"><strong>&nbsp;</strong></td>
-        <td width="3%" class="text-center"><strong><?php echo $lang['ID']; ?></strong></td>
-        <td width="15%" class="text-center"><strong><?php echo $lang['DATE']; ?></strong></td>
-        <td width="14%" class="text-center"><strong><?php echo $lang['IP']; ?></strong></td>
-        <td width="15%" class="text-center"><strong><?php echo $lang['USERNAME']; ?></strong></td>
-        <td width="10%" class="text-center"><strong><?php echo $lang['PASSWORD']; ?></strong></td>
-        <td width="10%" class="text-center"><strong><?php echo $lang['LOGIN_FROM']; ?></strong></td>
-        <td width="2%" class="text-center"><strong><?php echo $lang['FAILED']; ?></strong></td>
-        <td width="28%" class="text-center"><strong><?php echo $lang['BROWSER']; ?></strong></td>
+        <td style="3%;"><strong>&nbsp;</strong></td>
+        <td style="3%;" class="text-center"><strong><?php echo $lang['ID']; ?></strong></td>
+        <td style="15%;" class="text-center"><strong><?php echo $lang['DATE']; ?></strong></td>
+        <td style="14%;" class="text-center"><strong><?php echo $lang['IP']; ?></strong></td>
+        <td style="15%;" class="text-center"><strong><?php echo $lang['USERNAME']; ?></strong></td>
+        <td style="10%;" class="text-center"><strong><?php echo $lang['PASSWORD']; ?></strong></td>
+        <td style="10%;" class="text-center"><strong><?php echo $lang['LOGIN_FROM']; ?></strong></td>
+        <td style="2%;" class="text-center"><strong><?php echo $lang['FAILED']; ?></strong></td>
+        <td style="28%;" class="text-center"><strong><?php echo $lang['BROWSER']; ?></strong></td>
     </tr>
     </thead>
     <tbody>
@@ -53,7 +61,7 @@ echo"<ol class=\"breadcrumb\">
     if (isset($_GET['user']) && (!empty($_GET['user'])))
     { $user = $_GET['user']; } else { $user = ''; } // if not, show all logins
 
-    $loginData = \YAWK\user::getLoginData($db, $user);
+    $loginData = user::getLoginData($db, $user);
     if (is_array($loginData) && (!empty($loginData)))
     {
         foreach ($loginData as $row)
@@ -73,7 +81,7 @@ echo"<ol class=\"breadcrumb\">
             }
             if (isset($row['useragent']) && (!empty($row{'useragent'})))
             {
-                $row['useragent'] = \YAWK\sys::getBrowser($row['useragent']);
+                $row['useragent'] = sys::getBrowser($row['useragent']);
             }
 
             echo "<tr class=\"".$text."\" >

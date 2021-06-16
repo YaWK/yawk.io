@@ -12,6 +12,14 @@
     } );
 </script>
 <?php
+use YAWK\backend;
+use YAWK\sys;
+use YAWK\user;
+use YAWK\db;
+use YAWK\language;
+
+/** @var $db db */
+/** @var $lang language */
 
 echo "<script type=\"text/javascript\">
 
@@ -98,7 +106,7 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 /* draw Title on top */
-echo \YAWK\backend::getTitle($lang['FRIENDS'], $lang['FRIENDS_SUBTEXT']);
+echo backend::getTitle($lang['FRIENDS'], $lang['FRIENDS_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
             <li><a href=\"index.php?page=users\" title=\"$lang[USERS]\"> $lang[USERS]</a></li>
@@ -112,14 +120,14 @@ echo"<ol class=\"breadcrumb\">
 // check if parameter UID is set
 if (isset($_GET['uid']))
 {   // if it's set load friends for given user id
-    $my_friends = \YAWK\user::getMyFriends($db, $_GET['uid'], 1, $lang);
+    $my_friends = user::getMyFriends($db, $_GET['uid'], 1, $lang);
     $param_uid = 1;
-    $user = \YAWK\user::getUserNameFromID($db, $_GET['uid']);
+    $user = user::getUserNameFromID($db, $_GET['uid']);
     $friends_title = "$lang[FRIENDS_OF] $user";
 }
 else
 {   // otherwise, load friendlist for logged-in user
-    $my_friends = \YAWK\user::getMyFriends($db, $_SESSION['uid'], 1, $lang);
+    $my_friends = user::getMyFriends($db, $_SESSION['uid'], 1, $lang);
     $param_uid = 0;
     $friends_title = $lang['FRIENDS_YOURS'];
 }
@@ -133,20 +141,20 @@ else
         <h3 class="box-title"><?php echo $friends_title; ?></h3>
     </div>
     <div class="box-body">
-        <table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-striped table-hover table-responsive" id="table-sort">
+        <table style="width=100%;" class="table table-striped table-hover table-responsive" id="table-sort">
             <thead>
             <tr>
-                <td width="5%" class="text-right">&nbsp;</td>
-                <td width="20%"><strong><?php echo $lang['MY_FRIEND']; ?></strong></td>
-                <td width="5%" class="text-center"><strong><?php echo $lang['FRIENDSHIP']; ?></strong></td>
-                <td id="since" width="10%" class="text-center"><strong><?php echo $lang['SINCE']; ?></strong></td>
+                <td style="width=5%;" class="text-right">&nbsp;</td>
+                <td style="width=20%;"><strong><?php echo $lang['MY_FRIEND']; ?></strong></td>
+                <td style="width=5%;" class="text-center"><strong><?php echo $lang['FRIENDSHIP']; ?></strong></td>
+                <td style="width=10%;" id="since" class="text-center"><strong><?php echo $lang['SINCE']; ?></strong></td>
             </tr>
             </thead>
             <tbody>
             <?php
 
             // select friend requests
-            $request_friends = \YAWK\user::getMyFriends($db, $_SESSION['uid'], 0, $lang);
+            $request_friends = user::getMyFriends($db, $_SESSION['uid'], 0, $lang);
             // prepare vars
             $friend = '';
             $friendB = '';
@@ -156,7 +164,7 @@ else
             // loop through friendship requests array
             foreach ($request_friends AS $request)
             {   // format datetime
-                $time_ago = \YAWK\sys::time_ago($request['requestDate'], $lang);
+                $time_ago = sys::time_ago($request['requestDate'], $lang);
                 if ($request['friendA'] !== $_SESSION['uid'])
                 {
                     $friendUID = $request['friendA'];
@@ -165,7 +173,7 @@ else
                 {
                     $friendUID = $request['friendB'];
                 }
-                $friend_username = \YAWK\user::getUserNameFromID($db, $friendUID);
+                $friend_username = user::getUserNameFromID($db, $friendUID);
 
                 // prepare social buttons (accept, decline, disconnect)
                 if ($request['confirmed'] === '0')
@@ -188,7 +196,7 @@ else
                 if ($request['aborted'] != '1')
                 {
                     echo "<tr id=\"requestRow$request[id]\">
-                    <td style=\"display:block; text-align: right\"><a href=\"index.php?page=user-edit&user=$friend_username\">"; echo \YAWK\user::getUserImage("backend", $friend_username, "img-circle", 50, 50); echo "</a></td>
+                    <td style=\"display:block; text-align: right\"><a href=\"index.php?page=user-edit&user=$friend_username\">"; echo user::getUserImage("backend", $friend_username, "img-circle", 50, 50); echo "</a></td>
                     <td style=\"display:block;\"><b><a href=\"index.php?page=user-edit&user=$friend_username\">".$friend_username."</a></b></td>
                     <td id=\"btnRow\" class=\"text-center\">".$acceptBtn."&nbsp;".$disconnectBtn."&nbsp;".$declineBtn."</td>
                     <td id=\"since\" class=\"text-center\">".$time_ago."</td>
@@ -200,7 +208,7 @@ else
             // loop through friends array
             foreach ($my_friends AS $friend)
             {   // calculate time ago view
-                $time_ago = \YAWK\sys::time_ago($friend['confirmDate'], $lang);
+                $time_ago = sys::time_ago($friend['confirmDate'], $lang);
                 // PREPARE FRIENDS FOR LIST
                 if (isset($param_uid) && $param_uid === 1)
                 {   // prepare friendslist for given UID
@@ -225,7 +233,7 @@ else
                     }
                 }
 
-                $friend_username = \YAWK\user::getUserNameFromID($db, $friendUID);
+                $friend_username = user::getUserNameFromID($db, $friendUID);
 
                 if ($friend['confirmed'] === '1')
                 {   // check if this is YOUR friendslist (logged in user)
@@ -249,7 +257,7 @@ else
                 }
 
                 echo "<tr id=\"friendsRow$friendUID\">
-                <td class=\"text-right\"><a href=\"index.php?page=user-edit&user=$friend_username\"><div style=\"width:100%\"> "; echo \YAWK\user::getUserImage("backend", $friend_username, "img-circle", 50, 50); echo "</a></div></td>
+                <td class=\"text-right\"><a href=\"index.php?page=user-edit&user=$friend_username\"><div style=\"width:100%\"> "; echo user::getUserImage("backend", $friend_username, "img-circle", 50, 50); echo "</a></div></td>
                 <td><b><a href=\"index.php?page=user-edit&user=$friend_username\"><div style=\"width:100%\">".$friend_username."</div></a></b></td>
                 <td class=\"text-center\">".$disconnectBtn."</td>
                 <td id=\"since\" class=\"text-center\">".$time_ago."</td>

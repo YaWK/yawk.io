@@ -10,17 +10,18 @@ echo"</section><!-- Main content -->
     <section class=\"content\">";
 /* page content start here */
 
-// TODO: COMMENT
+// check if alias is set via get param
 if (isset($_GET['alias']) && (!empty($_GET['alias'])))
-{
+{   // set alias string
     $alias = "?include=$_GET[alias]";
 }
+// it's not a static page, get plugin param
 else if (isset($_GET['plugin']) && (!empty($_GET['plugin'])))
-{
+{   // set plugin string
     $alias = "?include=$_GET[plugin]";
 }
 else
-{
+{   // alias not set, leave empty
     $alias = '';
 }
 ?>
