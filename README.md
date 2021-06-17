@@ -19,8 +19,9 @@ see what's going on and what has been done over the past few days, weeks, months
 <b>Currently in development:</b>
 <ul>
 <li>Codebase update to ensure PHP 8 compatibility</li>
-<li>Major Update of all Assets and Social Widgets </li>
-<li>Add templates and demo pages <i><small>(scheduled for 1st quarter 2021)</small></i></li>
+<li>Add support for multilingual FrontEnd (Content) Pages and Menus</li>
+<li>Major Updates of all Assets and Social Widgets </li>
+<li>Add templates and demo pages <i><small>(scheduled until end of 2021)</small></i></li>
 <li><i><small>and of course: check and fix language errors, major and minor bugs</small></i></li>
 </ul>
 <b>Update official website</b>
