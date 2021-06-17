@@ -17,8 +17,18 @@ require_once "../system/engines/imapClient/TypeBody.php";
 use SSilence\ImapClient\ImapClientException;
 use SSilence\ImapClient\ImapClient as Imap;
 
+use YAWK\alert;
+use YAWK\backend;
+use YAWK\db;
+use YAWK\language;
+use YAWK\settings;
+use YAWK\webmail;
+
+/** @var $db db */
+/** @var $lang language */
+
 // get all webmail setting values into an array
-$webmailSettings = \YAWK\settings::getValueSettingsArray($db, "webmail_");
+$webmailSettings = settings::getValueSettingsArray($db, "webmail_");
 
 // imap connection only made be made if webmail is set to active
 // check if webmail is activated
@@ -49,7 +59,7 @@ if ($webmailSettings['webmail_active'] == true)
     // include webmail class
     require_once "../system/classes/webmail.php";
     // create new webmail object
-    $webmail = new \YAWK\webmail();
+    $webmail = new webmail();
     // set connection info var
     $webmail->connectionInfo = "<i>$username</i>";
 
@@ -83,6 +93,7 @@ if ($webmailSettings['webmail_active'] == true)
         // exit with error
         $error = true;
         $errorMsg = 'Oh no! Verbindung mit server: '.$server.' als user: '.$username.' nicht moeglich!';
+        $imap = NULL;
     }
 
 
@@ -91,11 +102,11 @@ if ($webmailSettings['webmail_active'] == true)
     {   // delete message
         if ($webmail->deleteMessage($imap, $_GET['folder'], $_GET['uid']))
         {   // email deleted
-            \YAWK\alert::draw("success", "Email deleted", "The email was deleted", "", 1200);
+            alert::draw("success", "Email deleted", "The email was deleted", "", 1200);
         }
         else
             {   // failed to delete email
-                \YAWK\alert::draw("danger", "ERROR:", "Unable to delete email", "", 2800);
+                alert::draw("danger", "ERROR:", "Unable to delete email", "", 2800);
             }
     }
 
@@ -105,11 +116,11 @@ if ($webmailSettings['webmail_active'] == true)
         $imap->selectFolder("Trash");
         if ($webmail->purgeTrash($imap))
         {   // email deleted
-            \YAWK\alert::draw("success", "Mailbox cleaned", "The trash and spam folders were cleaned up", "", 1200);
+            alert::draw("success", "Mailbox cleaned", "The trash and spam folders were cleaned up", "", 1200);
         }
         else
         {   // failed to delete email
-            \YAWK\alert::draw("danger", "ERROR:", "Unable to purge trash and spam folder", "", 2800);
+            alert::draw("danger", "ERROR:", "Unable to purge trash and spam folder", "", 2800);
         }
     }
 }
@@ -162,16 +173,16 @@ else    // webmail is not activated...
                 // alert(data);
 
                 // envelope icon element
-                var seenIcon = $('#seenIcon_'+msgno);
-                var seenIconLink = $('#seenIconLink_'+msgno);
-                var mailboxName = $('#mailboxName_'+msgno);
-                var mailboxSubject = $('#mailboxSubject_'+msgno);
-                var newMessagesLabel = $('#newMessagesLabel');
+                let seenIcon = $('#seenIcon_'+msgno);
+                let seenIconLink = $('#seenIconLink_'+msgno);
+                let mailboxName = $('#mailboxName_'+msgno);
+                let mailboxSubject = $('#mailboxSubject_'+msgno);
+                let newMessagesLabel = $('#newMessagesLabel');
                 // get value from new message label, remove first 2 chars (+&nbsp;)
-                var labelCount = $(newMessagesLabel).text().slice(2);
+                let labelCount = $(newMessagesLabel).text().slice(2);
 
                 // the email icon in the top navbar
-                var envelopeLabel = $('#envelope-label');
+                let envelopeLabel = $('#envelope-label');
 
                 // remove icon class
                 $(seenIcon).removeClass();
@@ -246,8 +257,8 @@ else    // webmail is not activated...
                 // alert(data);
 
                 // envelope icon element
-                var starIcon = $('#starIcon_'+uid);
-                var starIconLink = $('#starIconLink_'+uid);
+                let starIcon = $('#starIcon_'+uid);
+                let starIconLink = $('#starIconLink_'+uid);
 
                 // remove icon class
                 $(starIcon).removeClass();
@@ -286,12 +297,12 @@ else    // webmail is not activated...
                 // alert(data);
 
                 // set html element vars
-                var emailRow = $('#emailRow_'+uid);
+                let emailRow = $('#emailRow_'+uid);
                 // update message count (beside folder overview)
-                var messageCountSourceElement = $('#messageCount_'+folder+' small');
-                var messageCountSource = $(messageCountSourceElement).text().slice(1,-1);
-                var messageCountTargetElement = $('#messageCount_'+targetFolder+' small');
-                var messageCountTarget = $(messageCountTargetElement).text().slice(1,-1);
+                let messageCountSourceElement = $('#messageCount_'+folder+' small');
+                let messageCountSource = $(messageCountSourceElement).text().slice(1,-1);
+                let messageCountTargetElement = $('#messageCount_'+targetFolder+' small');
+                let messageCountTarget = $(messageCountTargetElement).text().slice(1,-1);
                 // subtract -1 from message count source folder
                 messageCountSource--;
                 // add +1 to message count target folder
@@ -371,7 +382,7 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 /* draw Title on top */
-echo \YAWK\backend::getTitle($lang['WEBMAIL'], $lang['WEBMAIL_SUBTEXT']);
+echo backend::getTitle($lang['WEBMAIL'], $lang['WEBMAIL_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
             <li class=\"active\"><a href=\"index.php?page=webmail\" title=\"$lang[WEBMAIL]\"> $lang[WEBMAIL]</a></li>
@@ -435,10 +446,10 @@ if ($webmailSettings['webmail_active'] == true && ($error == false))
                     <?php $webmail->drawMailboxControls($imap, "inbox", 0, $imap->currentFolder, $lang); ?>
                 </div>
                 <div class="table-responsive mailbox-messages">
-                    <table cellpadding="0" cellspacing="0" class="table table-striped table-hover table-responsive" id="table-sort">
+                    <table class="table table-striped table-hover table-responsive" id="table-sort">
                         <thead>
                         <tr>
-                            <td><div class="icheckbox_flat-blue" aria-checked="false" aria-disabled="false" style="position: relative;"><input type="checkbox" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div></td>
+                            <td><div class="icheckbox_flat-blue" aria-checked="false" aria-disabled="false" style="position: relative; width: 100%"><input type="checkbox" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div></td>
                             <td class="mailbox-star"></td>
                             <td class="mailbox-star"></td>
                             <td class="mailbox-name"><?php echo $lang['SENDER_FROM']; ?></td>

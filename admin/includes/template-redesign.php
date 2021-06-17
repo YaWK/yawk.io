@@ -1,3 +1,16 @@
+<?php
+
+use YAWK\alert;
+use YAWK\backend;
+use YAWK\db;
+use YAWK\language;
+use YAWK\settings;
+use YAWK\template;
+use YAWK\user;
+
+/** @var $db db */
+/** @var $lang language */
+?>
 <!-- color picker -->
 <script type="text/javascript" src="../system/engines/jquery/jscolor/jscolor.js"></script>
 <!-- TAB collapse -->
@@ -18,7 +31,7 @@
         function saveHotkey() {
             // simply disables save event for chrome
             $(window).keypress(function (event) {
-                if (!(event.which === 115 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) && !(event.which == 19)) return true;
+                if (!(event.which === 115 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) && !(event.which === 19)) return true;
                 event.preventDefault();
                 formmodified=0; // do not warn user, just save.
                 return false;
@@ -56,18 +69,18 @@
         }
         $(function() {
             // for bootstrap 3 use 'shown.bs.tab', for bootstrap 2 use 'shown' in the next line
-            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function () {
                 // save the latest tab; use cookies if you like 'em better:
                 localStorage.setItem('lastTab', $(this).attr('href'));
             });
             // go to the latest tab, if it exists:
-            var lastTab = localStorage.getItem('lastTab');
+            const lastTab = localStorage.getItem('lastTab');
             if (lastTab) {
                 $('[href="' + lastTab + '"]').tab('show');
                 // to work correctly, we need to lowercase
-                var activeTab = lastTab.toLowerCase();
+                const activeTab = lastTab.toLowerCase();
                 // and remove the first char (#)
-                var activeFolder = activeTab.slice(1);
+                const activeFolder = activeTab.slice(1);
                 // all done: set select default selected option
                 $('select option[value="'+activeFolder+'"]').prop('selected', true);
             }
@@ -89,31 +102,31 @@
             event.preventDefault();
 
             // set vars of col 1
-            var font_menucolor = $('#font-menucolor');
-            var brand_menucolor = $('#brand-menucolor');
-            var brandhover_menucolor = $('#brandhover-menucolor');
-            var fonthover_menucolor = $('#fonthover-menucolor');
-            var fontactive_menucolor = $('#fontactive-menucolor');
-            var fontdisabled_menucolor = $('#fontdisabled-menucolor');
-            var fontshadow_menucolor = $('#fontshadow-menucolor');
+            const font_menucolor = $('#font-menucolor');
+            const brand_menucolor = $('#brand-menucolor');
+            const brandhover_menucolor = $('#brandhover-menucolor');
+            const fonthover_menucolor = $('#fonthover-menucolor');
+            const fontactive_menucolor = $('#fontactive-menucolor');
+            const fontdisabled_menucolor = $('#fontdisabled-menucolor');
+            const fontshadow_menucolor = $('#fontshadow-menucolor');
 
-            // set vars of col 2
-            var default_menubgcolor = $('#default-menubgcolor');
-            var active_menubgcolor = $('#active-menubgcolor');
-            var toggle_menu_bgcolor = $('#toggle-menu-bgcolor');
-            var toggle_menu_bordercolor = $('#toggle-menu-bordercolor');
-            var iconbar_menubgcolor = $('#iconbar-menubgcolor');
-            var border_menubgcolor = $('#border-menubgcolor');
+            // set consts of col 2
+            const default_menubgcolor = $('#default-menubgcolor');
+            const active_menubgcolor = $('#active-menubgcolor');
+            const toggle_menu_bgcolor = $('#toggle-menu-bgcolor');
+            const toggle_menu_bordercolor = $('#toggle-menu-bordercolor');
+            const iconbar_menubgcolor = $('#iconbar-menubgcolor');
+            const border_menubgcolor = $('#border-menubgcolor');
 
-            // set vars of col 3
-            var background_menudropdowncolor = $('#background-menudropdowncolor');
-            var hoverbg_menudropdowncolor = $('#hoverbg-menudropdowncolor');
-            var activebg_menudropdowncolor = $('#activebg-menudropdowncolor');
-            var border_menudropdowncolor = $('#border-menudropdowncolor');
-            var font_menudropdowncolor = $('#font-menudropdowncolor');
-            var fonthover_menudropdowncolor = $('#fonthover-menudropdowncolor');
-            var fontactive_menudropdowncolor = $('#fontactive-menudropdowncolor');
-            var disabled_menudropdowncolor = $('#disabled-menudropdowncolor');
+            // set consts of col 3
+            const background_menudropdowncolor = $('#background-menudropdowncolor');
+            const hoverbg_menudropdowncolor = $('#hoverbg-menudropdowncolor');
+            const activebg_menudropdowncolor = $('#activebg-menudropdowncolor');
+            const border_menudropdowncolor = $('#border-menudropdowncolor');
+            const font_menudropdowncolor = $('#font-menudropdowncolor');
+            const fonthover_menudropdowncolor = $('#fonthover-menudropdowncolor');
+            const fontactive_menudropdowncolor = $('#fontactive-menudropdowncolor');
+            const disabled_menudropdowncolor = $('#disabled-menudropdowncolor');
 
             // check if btn-light is clicked
             if (this.id === 'btn-navbar-light') {
@@ -264,9 +277,9 @@
 
 <?php
 // new template object if not exists
-if (!isset($template)) { $template = new \YAWK\template(); }
+if (!isset($template)) { $template = new template(); }
 // new user object if not exists
-if (!isset($user)) { $user = new \YAWK\user($db); }
+if (!isset($user)) { $user = new user($db); }
 
 // check, if a session is already running
 if (!isset($_SESSION) || (empty($_SESSION)))
@@ -276,21 +289,21 @@ if (!isset($_SESSION) || (empty($_SESSION)))
 }
 
 // get ID of current active template
-$selectedTemplateID = \YAWK\settings::getSetting($db, "selectedTemplate");
+$selectedTemplateID = settings::getSetting($db, "selectedTemplate");
 // load properties of current active template
 $template->loadProperties($db, $selectedTemplateID);
 // previewButton is an empty string - why? this should be checked
 $previewButton = "";
 // load all template settings into array
-$templateSettings = \YAWK\template::getAllSettingsIntoArray($db, $user);
+$templateSettings = template::getAllSettingsIntoArray($db, $user);
 // get current bootstrap version
 if (!$template->bootstrapVersion = $template->checkBootstrapVersion($db, $template->id, $lang))
 {
-    \YAWK\alert::draw("danger", $lang['ERROR'], $lang['FRAMEWORK_FALSE'], "", 0);
+    alert::draw("danger", $lang['ERROR'], $lang['FRAMEWORK_FALSE'], "", 0);
 }
 else if($template->bootstrapVersion == "X")
 {
-    \YAWK\alert::draw("danger", $lang['ERROR'], $lang['FRAMEWORK_MULTIPLE_FALSE'], "", 0);
+    alert::draw("danger", $lang['ERROR'], $lang['FRAMEWORK_MULTIPLE_FALSE'], "", 0);
 }
 ?>
 <?php
@@ -301,8 +314,8 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 // draw Title on top
-echo \YAWK\backend::getTitle($lang['TPL'], $lang['DESIGN']);
-echo \YAWK\backend::getTemplateBreadcrumbs($lang);
+echo backend::getTitle($lang['TPL'], $lang['DESIGN']);
+echo backend::getTemplateBreadcrumbs($lang);
 echo"</section><!-- Main content -->
     <section class=\"content\">";
 /* page content start here */

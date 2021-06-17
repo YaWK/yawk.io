@@ -11,13 +11,24 @@
     } );
 </script>
 <?php
+
+use YAWK\alert;
+use YAWK\backend;
+use YAWK\db;
+use YAWK\language;
+use YAWK\settings;
+use YAWK\template;
+use YAWK\user;
+/** @var $db db */
+/** @var $lang language */
+
 // check user obj
 if (!isset($user))
 {   // create new user obj
-    $user = new \YAWK\user($db);
+    $user = new user($db);
 }
 // disable preview (overrideTemplate)
-$user->setUserTemplate($db, 0, \YAWK\settings::getSetting($db, "selectedTemplate"), $user->id);
+$user->setUserTemplate($db, 0, settings::getSetting($db, "selectedTemplate"), $user->id);
 $user->overrideTemplate = 0;
 
 if (isset($_GET['toggle']) && ($_GET['toggle'] === "1"))
@@ -25,15 +36,15 @@ if (isset($_GET['toggle']) && ($_GET['toggle'] === "1"))
     if (isset($_GET['templateID']) && (is_numeric($_GET['templateID'])))
     {   // escape chars
         $_GET['templateID'] = $db->quote($_GET['templateID']);
-        if (\YAWK\settings::setSetting($db, "selectedTemplate", $_GET['templateID'], $lang))
+        if (settings::setSetting($db, "selectedTemplate", $_GET['templateID'], $lang))
         {   // additional: set this template as active in template database
-            \YAWK\template::setTemplateActive($db, $_GET['templateID']);
+            template::setTemplateActive($db, $_GET['templateID']);
             $user->setUserTemplate($db, 0, $_GET['templateID'], $user->id);
             $user->overrideTemplate = 0;
         }
         else
         {
-            \YAWK\alert::draw("warning", "$lang[TPL_SWITCH_FAILED]", "$lang[TPL_SWITCH_FAILED_SUBTEXT]", "page=template-manage", 3000);
+            alert::draw("warning", "$lang[TPL_SWITCH_FAILED]", "$lang[TPL_SWITCH_FAILED_SUBTEXT]", "page=template-manage", 3000);
         }
     }
 }
@@ -44,13 +55,13 @@ if (isset($_GET['delete']) && ($_GET['delete'] === "1"))
     if (isset($_GET['templateID']) && (is_numeric($_GET['templateID'])))
     {   // escape chars
         $_GET['templateID'] = $db->quote($_GET['templateID']);
-        if (\YAWK\template::deleteTemplate($db, $_GET['templateID']))
+        if (template::deleteTemplate($db, $_GET['templateID']))
         {   // throw success msg
-            \YAWK\alert::draw("success", "<i class=\"fa fa-trash-o\"></i> $lang[TPL] $lang[DELETED]", "$lang[SUCCESS]", "", 3000);
+            alert::draw("success", "<i class=\"fa fa-trash-o\"></i> $lang[TPL] $lang[DELETED]", "$lang[SUCCESS]", "", 3000);
         }
         else
         {
-            \YAWK\alert::draw("danger", "$lang[TPL_FAILED_TO_DELETE] $_GET[templateID]", "$lang[PLEASE_TRY_AGAIN]", "", 3000);
+            alert::draw("danger", "$lang[TPL_FAILED_TO_DELETE] $_GET[templateID]", "$lang[PLEASE_TRY_AGAIN]", "", 3000);
         }
     }
 }
@@ -64,7 +75,7 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 /* draw Title on top */
-echo \YAWK\backend::getTitle($lang['TPL_MANAGER'], $lang['TEMPLATES_SUBTEXT']);
+echo backend::getTitle($lang['TPL_MANAGER'], $lang['TEMPLATES_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
             <li><a href=\"index.php?page=template-manage\" class=\"active\" title=\"$lang[TPL_MANAGER]\"> $lang[TPL_MANAGER]</a></li>
@@ -80,15 +91,15 @@ echo"<ol class=\"breadcrumb\">
 <a class="btn btn-success" href="#" style="float:right;">
 <i class="glyphicon glyphicon-plus"></i> &nbsp;<?php print $lang['TEMPLATE']; ?></a>
 
-<table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-striped table-hover table-responsive" id="table-sort">
+<table style="width:100%;" class="table table-striped table-hover table-responsive" id="table-sort">
     <thead>
     <tr>
-        <td width="3%"><strong>&nbsp;</strong></td>
-        <td width="3%"><strong><?php echo $lang['ID']; ?></strong></td>
-        <td width="20%"><strong><i class="fa fa-caret-down"></i> <?php print $lang['TEMPLATE']; ?></strong></td>
-        <td width="40%"><strong><i class="fa fa-caret-down"></i> <?php print $lang['DESCRIPTION']; ?></strong></td>
-        <td width="24%"><strong><?php print $lang['SCREENSHOT']; ?></strong></td>
-        <td width="10%" class="text-center"><strong><?php print $lang['ACTIONS']; ?></strong></td>
+        <td style="width:3%;"><strong>&nbsp;</strong></td>
+        <td style="width:3%;"><strong><?php echo $lang['ID']; ?></strong></td>
+        <td style="width:20%;"><strong><i class="fa fa-caret-down"></i> <?php print $lang['TEMPLATE']; ?></strong></td>
+        <td style="width:40%;"><strong><i class="fa fa-caret-down"></i> <?php print $lang['DESCRIPTION']; ?></strong></td>
+        <td style="width:24%;"><strong><?php print $lang['SCREENSHOT']; ?></strong></td>
+        <td style="width: 10%;" class="text-center"><strong><?php print $lang['ACTIONS']; ?></strong></td>
     </tr>
     </thead>
     <tbody>
@@ -98,13 +109,13 @@ echo"<ol class=\"breadcrumb\">
     $i_pages_published = 0;
     $i_pages_unpublished = 0;
     // get active tpl name
-    $activeTemplate = \YAWK\template::getCurrentTemplateName($db, "backend", "");
+    $activeTemplate = template::getCurrentTemplateName($db, "backend", "");
     if ($res = $db->query("SELECT * FROM {templates} ORDER BY active DESC"))
     {
         // fetch templates and draw a tbl row in a while loop
         while($row = mysqli_fetch_assoc($res))
         {   // get active template id
-            $activeTemplateId = \YAWK\settings::getSetting($db, "selectedTemplate");
+            $activeTemplateId = settings::getSetting($db, "selectedTemplate");
 
             if ($row['id'] === $activeTemplateId)
             {   // set published online

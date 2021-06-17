@@ -1,4 +1,15 @@
 <?php
+
+use YAWK\alert;
+use YAWK\backend;
+use YAWK\db;
+use YAWK\language;
+use YAWK\settings;
+use YAWK\sys;
+
+/** @var $db db */
+/** @var $lang language */
+
 if(isset($_POST))
 {   // log checkboxes
     if (isset($_POST['active']))
@@ -16,7 +27,7 @@ if(isset($_POST))
             // update syslog_categories log (active) values
             if (!$db->query("UPDATE {syslog_categories} SET active = '".$value."' WHERE id = '".$property."' "))
             {   // make syslog entry on error
-                \YAWK\sys::setSyslog($db, 3, 1, "Unable to update syslog configuration - unable to set state of field: $property to value: $value", "", 0, 0, 0);
+                sys::setSyslog($db, 3, 1, "Unable to update syslog configuration - unable to set state of field: $property to value: $value", "", 0, 0, 0);
             }
         }
     }
@@ -36,7 +47,7 @@ if(isset($_POST))
             // update syslog_categories notify values
             if (!$db->query("UPDATE {syslog_categories} SET notify = '".$value."' WHERE id = '".$property."' "))
             {   // make syslog entry on error
-                \YAWK\sys::setSyslog($db, 3, 1, "Unable to update syslog configuration - unable to set state of field: $property to value: $value", "", 0, 0, 0);
+                sys::setSyslog($db, 3, 1, "Unable to update syslog configuration - unable to set state of field: $property to value: $value", "", 0, 0, 0);
             }
         }
     }
@@ -150,10 +161,10 @@ if(isset($_POST))
 <script type="text/javascript" src="../system/engines/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
 <?php
 // check if syslog is enabled
-$syslogEnabled = \YAWK\settings::getSetting($db, "syslogEnable");
+$syslogEnabled = settings::getSetting($db, "syslogEnable");
 if ($syslogEnabled == false)
 {   // if not, throw a warning message
-    echo \YAWK\alert::draw("danger", $lang['SYSLOG_DISABLED'], $lang['SYSLOG_DISABLED_MSG'], "", 0);
+    echo alert::draw("danger", $lang['SYSLOG_DISABLED'], $lang['SYSLOG_DISABLED_MSG'], "", 0);
 }
 
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
@@ -163,7 +174,7 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 /* draw Title on top */
-echo \YAWK\backend::getTitle($lang['SYSLOG'], $lang['SYSLOG_CONFIG']);
+echo backend::getTitle($lang['SYSLOG'], $lang['SYSLOG_CONFIG']);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
             <li><a href=\"index.php?page=syslog\" class=\"active\" title=\"$lang[SYSLOG]\"> $lang[SYSLOG]</a></li>
@@ -180,12 +191,12 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
     {   // delete all user notifications
         if ($db->query("TRUNCATE TABLE {notifications}"))
         {   // success, reload page
-            \YAWK\alert::draw("success", "$lang[SYSLOG_DATA_DEL]", "$lang[SYSLOG_DATA_DEL_SUBTEXT]","",3600);
+            alert::draw("success", "$lang[SYSLOG_DATA_DEL]", "$lang[SYSLOG_DATA_DEL_SUBTEXT]","",3600);
         }
     }
     else
     {   // q failed...
-        \YAWK\alert::draw("warning", "$lang[WARNING]", "$lang[SYSLOG_DATA_DEL_SUBTEXT]", "",4200);
+        alert::draw("warning", "$lang[WARNING]", "$lang[SYSLOG_DATA_DEL_SUBTEXT]", "",4200);
     }
 }
 ?>
@@ -213,19 +224,19 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
             <i class="fa fa-toggle-on"></i>
         </button>
 
-        <table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-striped table-hover table-responsive" id="table-sort">
+        <table style="width:100%;" class="table table-striped table-hover table-responsive" id="table-sort">
             <thead>
             <tr>
-                <td width="35%" class="text-left"><strong><?php echo $lang['CATEGORY']; ?></strong></td>
-                <td width="20%" class="text-center"><i class="fa fa-code"></i> &nbsp;<strong><?php echo $lang['LOG']; ?></strong></td>
-                <td width="25%" class="text-center"><i class="fa fa-bell-o"></i> &nbsp;<strong><?php echo $lang['NOTIFY']; ?></strong></td>
-                <td width="10%" class="text-center">&nbsp;</td>
+                <td style="width:35%;" class="text-left"><strong><?php echo $lang['CATEGORY']; ?></strong></td>
+                <td style="width:20%;" class="text-center"><i class="fa fa-code"></i> &nbsp;<strong><?php echo $lang['LOG']; ?></strong></td>
+                <td style="width:25%;" class="text-center"><i class="fa fa-bell-o"></i> &nbsp;<strong><?php echo $lang['NOTIFY']; ?></strong></td>
+                <td style="width:10%;" class="text-center">&nbsp;</td>
             </tr>
             </thead>
             <tbody>
             <?php
             /* load complete syslog, get all notifications */
-            $syslogCategories = \YAWK\sys::getSyslogCategories($db);
+            $syslogCategories = sys::getSyslogCategories($db);
             if (is_array($syslogCategories))
             {
                 foreach ($syslogCategories AS $category)

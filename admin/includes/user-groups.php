@@ -1,13 +1,21 @@
-
 <?php
+
+use YAWK\alert;
+use YAWK\backend;
+use YAWK\db;
+use YAWK\language;
+
+/** @var $db db */
+/** @var $lang language */
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
+
 echo "
     <!-- Content Wrapper. Contains page content -->
     <div class=\"content-wrapper\" id=\"content-FX\">
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 /* draw Title on top */
-echo \YAWK\backend::getTitle($lang['GROUPS'], $lang['GROUPS_SETUP']);
+echo backend::getTitle($lang['GROUPS'], $lang['GROUPS_SETUP']);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
             <li><a href=\"index.php?page=users\" title=\"$lang[USERS]\"> $lang[USERS]</a></li>
@@ -28,7 +36,7 @@ if(isset($_POST['update']))
             {   // update user groups
                 if (!$db->query("UPDATE {user_groups} SET value='".$group."' WHERE id = '".$gid."'"))
                 {   // q failed, throw error
-                    echo \YAWK\alert::draw("danger", "$lang[ERROR]", " $lang[GROUP_NAMES_SAVE_FAILED]","page=user-groups","4800");
+                    echo alert::draw("danger", "$lang[ERROR]", " $lang[GROUP_NAMES_SAVE_FAILED]","page=user-groups","4800");
                     exit;
                 }
             }
@@ -41,7 +49,7 @@ if(isset($_GET['signup']) && (isset($_GET['gid'])))
         $gid = $_GET['gid'];
         if (!$db->query("UPDATE {user_groups} SET signup_allowed='0' WHERE id = '".$gid."'"))
         {
-            echo \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[GID_SET_FAILED] $gid","page=user-groups","4800");
+            echo alert::draw("danger", "$lang[ERROR]", "$lang[GID_SET_FAILED] $gid","page=user-groups","4800");
             exit;
         }
     }
@@ -50,7 +58,7 @@ if(isset($_GET['signup']) && (isset($_GET['gid'])))
         $gid = $_GET['gid'];
         if (!$db->query("UPDATE {user_groups} SET signup_allowed='1' WHERE id = '".$gid."'"))
         {
-            echo \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[GID_SET_FAILED] $gid","page=user-groups","4800");
+            echo alert::draw("danger", "$lang[ERROR]", "$lang[GID_SET_FAILED] $gid","page=user-groups","4800");
             exit;
         }
     }
@@ -62,7 +70,7 @@ if(isset($_GET['backend']) && (isset($_GET['gid'])))
         $gid = $_GET['gid'];
         if (!$db->query("UPDATE {user_groups} SET backend_allowed='0' WHERE id = '".$gid."'"))
         {
-            echo \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[GID_SET_FAILED] $gid","page=user-groups","4800");
+            echo alert::draw("danger", "$lang[ERROR]", "$lang[GID_SET_FAILED] $gid","page=user-groups","4800");
             exit;
         }
     }
@@ -71,7 +79,7 @@ if(isset($_GET['backend']) && (isset($_GET['gid'])))
         $gid = $_GET['gid'];
         if (!$db->query("UPDATE {user_groups} SET backend_allowed='1' WHERE id = '".$gid."'"))
         {
-            echo \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[GID_SET_FAILED] $gid", "page=user-groups","4800");
+            echo alert::draw("danger", "$lang[ERROR]", "$lang[GID_SET_FAILED] $gid", "page=user-groups","4800");
             exit;
         }
     }
@@ -103,14 +111,14 @@ if(isset($_GET['backend']) && (isset($_GET['gid'])))
 <!-- signup plg btn -->
 <a class="btn btn-default pull-right" href="index.php?plugin=signup">
 <i class="fa fa-plug"></i> &nbsp;<?php print $lang['SIGNUP_PLUGIN']; ?></a>
-<table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-striped table-hover table-responsive" id="table-sort">
+<table style="width:100%;" class="table table-striped table-hover table-responsive" id="table-sort">
     <thead>
     <tr>
-        <td width="5%"><strong><?php echo $lang['ID']; ?></strong></td>
-        <td width="20%"><strong><?php echo $lang['GROUP_RENAME']; ?></strong></td>
-        <td width="30%"><strong><?php echo $lang['ADMIN_ACCESS']; ?></strong> <small><?php echo $lang['BE_CAREFUL']; ?></small></td>
-        <td width="30%"><strong><?php echo $lang['FRONTEND_SIGNUP_ALLOWED']; ?></strong> <small><?php echo $lang['THIS_GROUP']; ?></small></td>
-        <td width="15%" class="text-center"><strong><?php echo $lang['COLOR']; ?></strong></td>
+        <td style="width: 5%;"><strong><?php echo $lang['ID']; ?></strong></td>
+        <td style="width: 20%;"><strong><?php echo $lang['GROUP_RENAME']; ?></strong></td>
+        <td style="width: 30%;"><strong><?php echo $lang['ADMIN_ACCESS']; ?></strong> <small><?php echo $lang['BE_CAREFUL']; ?></small></td>
+        <td style="width: 30%;"><strong><?php echo $lang['FRONTEND_SIGNUP_ALLOWED']; ?></strong> <small><?php echo $lang['THIS_GROUP']; ?></small></td>
+        <td style="width: 15%;" class="text-center"><strong><?php echo $lang['COLOR']; ?></strong></td>
     </tr>
     </thead>
     <tbody>

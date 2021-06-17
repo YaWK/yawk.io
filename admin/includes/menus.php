@@ -109,12 +109,12 @@ if (isset($_GET['del']) && ($_GET['del'] === "1"))
 <table class="table table-striped table-hover table-responsive" id="table-sort">
   <thead>
     <tr>
-      <td style="5%;">&nbsp;</td>
-      <td style="5%;"><strong><?php echo $lang['ID']; ?></strong></td>
-      <td style="10%;"><strong><?php echo $lang['STATUS']; ?></strong></td>
-      <td style="30%;"><strong><?php echo $lang['NAME']; ?></strong></td>
-      <td style="30%;"><strong><?php echo $lang['ENTRIES']; ?></strong></td>
-      <td style="20%;" class="text-center"><strong><?php echo $lang['ACTIONS']; ?></strong></td>
+      <td style="width:5%;">&nbsp;</td>
+      <td style="width:5%;"><strong><?php echo $lang['ID']; ?></strong></td>
+      <td style="width:10%;"><strong><?php echo $lang['STATUS']; ?></strong></td>
+      <td style="width:30%;"><strong><?php echo $lang['NAME']; ?></strong></td>
+      <td style="width:30%;"><strong><?php echo $lang['ENTRIES']; ?></strong></td>
+      <td style="width:20%;" class="text-center"><strong><?php echo $lang['ACTIONS']; ?></strong></td>
     </tr>
   </thead>
   <tbody>

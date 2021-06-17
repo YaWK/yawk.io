@@ -8,7 +8,7 @@
             "bInfo": true,
             "bAutoWidth": true
         } );
-    } );
+    });
 
     // dismiss a single notification
     // this function will be called by click on the envelope icon in the syslog table
@@ -114,10 +114,23 @@
     }
 </script>
 <?php
+
+use YAWK\alert;
+use YAWK\backend;
+use YAWK\db;
+use YAWK\language;
+use YAWK\settings;
+use YAWK\sys;
+use YAWK\user;
+
+/** @var $db db */
+/** @var $lang language */
+
+
 // check if syslog is enabled
-if (\YAWK\settings::getSetting($db, "syslogEnable") == false)
+if (settings::getSetting($db, "syslogEnable") == false)
 {   // if not, throw a warning message
-    echo \YAWK\alert::draw("danger", $lang['SYSLOG_DISABLED'], $lang['SYSLOG_DISABLED_MSG'], "", 0);
+    echo alert::draw("danger", $lang['SYSLOG_DISABLED'], $lang['SYSLOG_DISABLED_MSG'], "", 0);
 }
 
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
@@ -127,7 +140,7 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 /* draw Title on top */
-echo \YAWK\backend::getTitle($lang['SYSLOG'], $lang['SYSLOG_SUBTEXT']);
+echo backend::getTitle($lang['SYSLOG'], $lang['SYSLOG_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
             <li><a href=\"index.php?page=syslog\" class=\"active\" title=\"$lang[SYSLOG]\"> $lang[SYSLOG]</a></li>
@@ -143,12 +156,12 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
         {   // delete all user notifications
             if ($db->query("TRUNCATE TABLE {notifications}"))
             {   // success, reload page
-                \YAWK\alert::draw("success", "$lang[SYSLOG_DATA_DEL]", "$lang[SYSLOG_DATA_DEL_SUBTEXT]","",3600);
+                alert::draw("success", "$lang[SYSLOG_DATA_DEL]", "$lang[SYSLOG_DATA_DEL_SUBTEXT]","",3600);
             }
         }
         else
         {   // q failed...
-            \YAWK\alert::draw("warning", "$lang[WARNING]", "$lang[SYSLOG_DATA_DEL_SUBTEXT]", "",4200);
+            alert::draw("warning", "$lang[WARNING]", "$lang[SYSLOG_DATA_DEL_SUBTEXT]", "",4200);
         }
     }
 ?>
@@ -168,30 +181,30 @@ if (isset($_GET['clear']) && $_GET['clear'] === '1')
                 <i class="fa fa-cog"></i> &nbsp;<?php print $lang['SETTINGS']; ?>
             </a>
 
-<table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-striped table-hover table-responsive" id="table-sort">
+<table style="width:100%;" class="table table-striped table-hover table-responsive" id="table-sort">
     <thead>
     <tr>
-        <td width="3%" class="text-center"><strong><small><i class="fa fa-bell-o"></i></small></strong></td>
-        <td width="8%" class="text-center"><strong><?php echo $lang['TYPE']; ?></strong></td>
-        <td width="10%" class="text-center"><strong><?php echo $lang['TIMESTAMP']; ?></strong></td>
-        <td width="12%" class="text-center"><strong><?php echo $lang['USER']; ?></strong></td>
-        <td width="61%"><strong><?php echo $lang['ENTRY']; ?></strong></td>
-        <td width="10%" class="text-center"><strong><?php // echo $lang['AFFECTED']; ?></strong></td>
+        <td style="width:3%;" class="text-center"><strong><small><i class="fa fa-bell-o"></i></small></strong></td>
+        <td style="width:8%;" class="text-center"><strong><?php echo $lang['TYPE']; ?></strong></td>
+        <td style="width:10%;" class="text-center"><strong><?php echo $lang['TIMESTAMP']; ?></strong></td>
+        <td style="width:8%;" class="text-center"><strong><?php echo $lang['USER']; ?></strong></td>
+        <td style="width:61%;"><strong><?php echo $lang['ENTRY']; ?></strong></td>
+        <td style="width:10%;" class="text-center"><strong><?php // echo $lang['AFFECTED']; ?></strong></td>
     </tr>
     </thead>
     <tbody>
     <?php
     /* load complete syslog, get all notifications */
-    $syslog = \YAWK\sys::getSyslog($db);
+    $syslog = sys::getSyslog($db);
     if (is_array($syslog))
     {
         foreach ($syslog AS $log)
         {   // get username for affected uid
-            $affected_user = \YAWK\user::getUserNameFromID($db, $log['toUID']);
+            $affected_user = user::getUserNameFromID($db, $log['toUID']);
             // improve view of category title (cpt. caps + remove post tags -warning -success and -error)
             $log['property'] = strtoupper(substr($log['property'], 0, strpos($log['property'], '-')));
             // calculate time ago view
-            $time_ago = \YAWK\sys::time_ago($log['log_date'], $lang);
+            $time_ago = sys::time_ago($log['log_date'], $lang);
             // 1 tbl row per syslog line
             if ($log['log_type'] == 0)
             {

@@ -1,9 +1,17 @@
 <?php
 
+use YAWK\db;
+use YAWK\language;
+use YAWK\template;
+use YAWK\user;
+
+/** @var $db db */
+/** @var $lang language */
+
 // new template object if not exists
-if (!isset($template)) { $template = new \YAWK\template(); }
+if (!isset($template)) { $template = new template(); }
 // new user object if not exists
-if (!isset($user)) { $user = new \YAWK\user($db); }
+if (!isset($user)) { $user = new user($db); }
 // $_GET['id'] or $_POST['id'] holds the template ID to edit.
 // If any one of these two is set, we're in "preview mode" - this means:
 // The user database holds two extra cols: overrideTemplate(int|0,1) and templateID
@@ -31,7 +39,7 @@ if (!isset($user)) { $user = new \YAWK\user($db); }
         hex = hex.replace(/^\s*#|\s*$/g, '');
 
         // convert 3 char codes --> 6, e.g. `E0F` --> `EE00FF`
-        if(hex.length == 3){
+        if(hex.length === 3){
             hex = hex.replace(/(.)/g, '$1$1');
         }
         // set rgb values
@@ -54,7 +62,7 @@ if (!isset($user)) { $user = new \YAWK\user($db); }
          var ratio = 0.5;
          var hex = function(x) {
          x = x.toString(16);
-         return (x.length == 1) ? '0' + x : x;
+         return (x.length === 1) ? '0' + x : x;
          };
 
          var r = Math.ceil(parseInt(color1.substring(0,2), 16) * ratio + parseInt(color2.substring(0,2), 16) * (1-ratio));

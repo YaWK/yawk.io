@@ -1,11 +1,18 @@
 <?php
-/** @var $user \YAWK\user */
-/** @var $lang \YAWK\language*/
+
+use YAWK\alert;
+use YAWK\backend;
+use YAWK\db;
+use YAWK\language;
+use YAWK\user;
+
+/** @var $db db */
+/** @var $lang language */
     if (!isset($user))
     {   // no username obj is set
         if (isset($_GET['user']))
         {   // create new user obj
-            $user = new \YAWK\user($db);
+            $user = new user($db);
             // load properties for given user
             $user->loadProperties($db, $_GET['user']);
         }
@@ -69,28 +76,28 @@
           */
           // Check file size
               if ($_FILES["userpicture"]["size"] > 2560000) {
-                  echo \YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[FILE_UPLOAD_TOO_LARGE]","page=users","4800");
+                  echo alert::draw("warning", "$lang[ERROR]", "$lang[FILE_UPLOAD_TOO_LARGE]","page=users","4800");
                   $uploadOk = 0;
               }
 
             // Allow certain file formats
             $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
                if($imageFileType != "jpg" && $imageFileType != "jpeg" && $imageFileType != "png" && $imageFileType != "gif") {
-                  echo \YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[UPLOAD_ONLY_IMG_ALLOWED]","page=users","4800");
+                  echo alert::draw("warning", "$lang[ERROR]", "$lang[UPLOAD_ONLY_IMG_ALLOWED]","page=users","4800");
                   $uploadOk = 0;
               }
 
           // Check if $uploadOk is set to 0 by an error
               if ($uploadOk == 0)
               {
-                  echo \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[FILE_UPLOAD_FAILED]","page=users","4800");
+                  echo alert::draw("danger", "$lang[ERROR]", "$lang[FILE_UPLOAD_FAILED]","page=users","4800");
                 // if everything is ok, try to upload file
               }
               else
                   {
                     if (!move_uploaded_file($_FILES["userpicture"]["tmp_name"], $target_file))
                     {
-                      echo \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[FILE_UPLOAD_ERROR_CHMOD]","page=users","4800");
+                      echo alert::draw("danger", "$lang[ERROR]", "$lang[FILE_UPLOAD_ERROR_CHMOD]","page=users","4800");
                     }
                 }
         }
@@ -150,7 +157,7 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
         /* draw Title on top */
-        echo \YAWK\backend::getTitle($lang['USER_PROFILE_EDIT'], $_GET['user']);
+        echo backend::getTitle($lang['USER_PROFILE_EDIT'], $_GET['user']);
         echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
             <li><a href=\"index.php?page=users\" title=\"$lang[USERS]\"> $lang[USERS]</a></li>
@@ -261,19 +268,19 @@ echo "<script type='text/javascript'>
             <!-- Profile Image -->
             <div class="box box-default">
                 <div class="box-body box-profile">
-                    <?php echo YAWK\user::getUserImage("backend","$user->username", "profile-user-img img-responsive img-circle", '140', '140'); ?>
+                    <?php echo user::getUserImage("backend","$user->username", "profile-user-img img-responsive img-circle", '140', '140'); ?>
                     <!-- <img class="profile-user-img img-responsive img-circle" src="../../dist/img/user4-128x128.jpg" alt="User profile picture"> -->
 
-                    <h3 class="profile-username text-center"><?php echo \YAWK\backend::getFullUsername($user); ?></h3>
+                    <h3 class="profile-username text-center"><?php echo backend::getFullUsername($user); ?></h3>
 
-                    <p class="text-muted text-center"><?php echo \YAWK\user::getGroupNameFromID($db, $user->gid); if (!empty($user->job)) echo " & $user->job"; ?><br>Member since <?php $date = \YAWK\sys::splitDateShort($user->date_created);
+                    <p class="text-muted text-center"><?php echo user::getGroupNameFromID($db, $user->gid); if (!empty($user->job)) echo " & $user->job"; ?><br>Member since <?php $date = \YAWK\sys::splitDateShort($user->date_created);
                         echo "<small>($date[month], $date[day] $date[year], $date[time])</small>"; ?></p>
 
                     <ul class="list-group list-group-unbordered">
                         <li class="list-group-item">
                                 <?php
                                 // count user friends
-                                $i_followers = \YAWK\user::countMyFollowers($db, $user->id);
+                                $i_followers = user::countMyFollowers($db, $user->id);
                                 if ($i_followers > 0)
                                 {
                                     $followersLink = "<a href=\"index.php?page=list-follower&uid=$user->id\">$lang[FOLLOWERS]</a>";
@@ -292,7 +299,7 @@ echo "<script type='text/javascript'>
                             <b>
                                 <?php
                                 // count user friends
-                                $i_friends = \YAWK\user::countMyFriends($db, $user->id);
+                                $i_friends = user::countMyFriends($db, $user->id);
                                 if ($i_friends > 0)
                                 {
                                     $friendlistLink = "<a href=\"index.php?page=friendslist&uid=$user->id\">$lang[FRIENDS]</a>";
@@ -310,9 +317,9 @@ echo "<script type='text/javascript'>
                     // to display the follow/like/friendship buttons correctly,
                     // we need to detect, if the current profile's user is equal
                     // to the current, logged in user (admin) uid
-                    $follow_status = \YAWK\user::checkFollowStatus($db, $_SESSION['uid'], $user->id);
-                    $isFriend = \YAWK\user::isFriend($db, $_SESSION['uid'], $user->id);
-                    $friends = \YAWK\user::isFriendRequested($db, $_SESSION['uid'], $user->id);
+                    $follow_status = user::checkFollowStatus($db, $_SESSION['uid'], $user->id);
+                    $isFriend = user::isFriend($db, $_SESSION['uid'], $user->id);
+                    $friends = user::isFriendRequested($db, $_SESSION['uid'], $user->id);
 
                     if ($follow_status === true)
                     {

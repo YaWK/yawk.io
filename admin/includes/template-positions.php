@@ -1,28 +1,40 @@
 <?php
+
+use YAWK\alert;
+use YAWK\backend;
+use YAWK\db;
+use YAWK\language;
+use YAWK\settings;
+use YAWK\template;
+use YAWK\user;
+
+/** @var $db db */
+/** @var $lang language */
+
 // new database object if not exists
-if (!isset($db)) { $db = new \YAWK\db(); }
+if (!isset($db)) { $db = new db(); }
 // new template object if not exists
-if (!isset($template)) { $template = new \YAWK\template(); }
+if (!isset($template)) { $template = new template(); }
 // new user object if not exists
-if (!isset($user)) { $user = new \YAWK\user($db); }
+if (!isset($user)) { $user = new user($db); }
 
 // get ID of current active template
-$getID = \YAWK\settings::getSetting($db, "selectedTemplate");
+$getID = settings::getSetting($db, "selectedTemplate");
 
 // switch postion borders
 if (isset($_GET['positionIndicatorStatus']))
 {
     if ($template->switchPositionIndicators($db, $getID, $_GET['positionIndicatorStatus']))
     {
-        \YAWK\alert::draw("success", $lang['OK'], $lang['SWITCHED_POS_INDICATOR_SUCCESS'], '', 1800);
+        alert::draw("success", $lang['OK'], $lang['SWITCHED_POS_INDICATOR_SUCCESS'], '', 1800);
     }
     else
         {
-            \YAWK\alert::draw("danger", $lang['ERROR'], $lang['SWITCHED_POS_INDICATOR_FAILED'], '', 5000);
+            alert::draw("danger", $lang['ERROR'], $lang['SWITCHED_POS_INDICATOR_FAILED'], '', 5000);
         }
 }
 // get current template settings as array
-$templateSettings = \YAWK\template::getAllSettingsIntoArray($db, $user);
+$templateSettings = template::getAllSettingsIntoArray($db, $user);
 
 ?>
 
@@ -154,8 +166,8 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 // draw Title on top
-echo \YAWK\backend::getTitle($lang['TPL'], $lang['POSITIONS']);
-echo \YAWK\backend::getTemplateBreadcrumbs($lang);
+echo backend::getTitle($lang['TPL'], $lang['POSITIONS']);
+echo backend::getTemplateBreadcrumbs($lang);
 echo"</section><!-- Main content -->
     <section class=\"content\">";
 /* page content start here */

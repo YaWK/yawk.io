@@ -1,4 +1,14 @@
 <?php
+
+use YAWK\alert;
+use YAWK\backend;
+use YAWK\db;
+use YAWK\language;
+use YAWK\user;
+
+/** @var $db db */
+/** @var $lang language */
+
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
 <!-- Content Wrapper. Contains page content -->
@@ -6,7 +16,7 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 /* draw Title on top */
-echo \YAWK\backend::getTitle($lang['USER'], $lang['USER_ADD_SUBTEXT']);
+echo backend::getTitle($lang['USER'], $lang['USER_ADD_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
             <li><a href=\"index.php?page=users\" title=\"$lang[USERS]\"> $lang[USERS]</a></li>
@@ -121,15 +131,15 @@ echo"<ol class=\"breadcrumb\">
       }
       $gid = $db->quote($_POST['gid']);
 
-   if (\YAWK\user::create($db, $username, $password1, $password2, $email,
+   if (user::create($db, $username, $password1, $password2, $email,
    $url, $twitter, $facebook, $firstname, $lastname, $street, 
    $zipcode, $city, $country, $blocked, $privacy, $job, $gid))
     {
-        print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[USER] <strong>".$username."</strong> $lang[ADDED]","page=users","1200");
+        print alert::draw("success", "$lang[SUCCESS]", "$lang[USER] <strong>".$username."</strong> $lang[ADDED]","page=users","1200");
     }
     else 
     {
-        print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[USER] <strong>".$username."</strong> $lang[NOT] $lang[ADDED]","page=users","4800");
+        print alert::draw("danger", "$lang[ERROR]", "$lang[USER] <strong>".$username."</strong> $lang[NOT] $lang[ADDED]","page=users","4800");
     }
    
   }

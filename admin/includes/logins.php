@@ -41,18 +41,18 @@ echo"<ol class=\"breadcrumb\">
 /* page content start here */
 ?>
 
-<table style="100%;" class="table table-striped table-hover table-responsive" id="table-sort">
+<table style="width:100%;" class="table table-striped table-hover table-responsive" id="table-sort">
     <thead>
     <tr>
-        <td style="3%;"><strong>&nbsp;</strong></td>
-        <td style="3%;" class="text-center"><strong><?php echo $lang['ID']; ?></strong></td>
-        <td style="15%;" class="text-center"><strong><?php echo $lang['DATE']; ?></strong></td>
-        <td style="14%;" class="text-center"><strong><?php echo $lang['IP']; ?></strong></td>
-        <td style="15%;" class="text-center"><strong><?php echo $lang['USERNAME']; ?></strong></td>
-        <td style="10%;" class="text-center"><strong><?php echo $lang['PASSWORD']; ?></strong></td>
-        <td style="10%;" class="text-center"><strong><?php echo $lang['LOGIN_FROM']; ?></strong></td>
-        <td style="2%;" class="text-center"><strong><?php echo $lang['FAILED']; ?></strong></td>
-        <td style="28%;" class="text-center"><strong><?php echo $lang['BROWSER']; ?></strong></td>
+        <td style="width:3%;"><strong>&nbsp;</strong></td>
+        <td style="width:3%;" class="text-center"><strong><?php echo $lang['ID']; ?></strong></td>
+        <td style="width:15%;" class="text-center"><strong><?php echo $lang['DATE']; ?></strong></td>
+        <td style="width:14%;" class="text-center"><strong><?php echo $lang['IP']; ?></strong></td>
+        <td style="width:15%;" class="text-center"><strong><?php echo $lang['USERNAME']; ?></strong></td>
+        <td style="width:10%;" class="text-center"><strong><?php echo $lang['PASSWORD']; ?></strong></td>
+        <td style="width:10%;" class="text-center"><strong><?php echo $lang['LOGIN_FROM']; ?></strong></td>
+        <td style="width:2%;" class="text-center"><strong><?php echo $lang['FAILED']; ?></strong></td>
+        <td style="width:28%;" class="text-center"><strong><?php echo $lang['BROWSER']; ?></strong></td>
     </tr>
     </thead>
     <tbody>

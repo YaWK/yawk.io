@@ -465,7 +465,7 @@ echo"</section><!-- Main content -->
             <div class="box-body">
 
                 <a href="#" data-toggle="modal" data-target="#uploadModal" class="btn btn-success pull-right"><?php echo $lang['TPL_UPLOAD']; ?></a>
-                <table width="100%" cellpadding="0" cellspacing="0" border="0" id="table-sort" class="table table-striped table-hover table-responsive">
+                <table style="width:100%;" id="table-sort" class="table table-striped table-hover table-responsive">
                     <thead>
                     <tr>
                         <td class="text-center"><strong><?php echo $lang['STATUS']; ?></strong></td>

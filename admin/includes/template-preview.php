@@ -1,14 +1,22 @@
 <?php
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
+use YAWK\backend;
+use YAWK\db;
+use YAWK\language;
+use YAWK\sys;
+
+/** @var $db db */
+/** @var $lang language */
+
 echo "
     <!-- Content Wrapper. Contains page content -->
     <div class=\"content-wrapper\" id=\"content-FX\">
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 // draw Title on top
-$host = \YAWK\sys::getHost($db);
-echo \YAWK\backend::getTitle($lang['TPL'], $lang['PREVIEW']);
-echo \YAWK\backend::getTemplateBreadcrumbs($lang);
+$host = sys::getHost($db);
+echo backend::getTitle($lang['TPL'], $lang['PREVIEW']);
+echo backend::getTemplateBreadcrumbs($lang);
 echo"</section><!-- Main content -->
     <section class=\"content\">";
 /* page content start here */

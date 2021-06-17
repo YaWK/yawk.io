@@ -62,12 +62,12 @@ else
         <h3 class="box-title"><?php echo $follower_title; ?></h3>
     </div>
     <div class="box-body">
-        <table style="100%;" class="table table-striped table-hover table-responsive" id="table-sort">
+        <table style="width:100%;" class="table table-striped table-hover table-responsive" id="table-sort">
             <thead>
             <tr>
-                <td style="15%;">&nbsp;</td>
-                <td style="65%;"><strong><?php echo $lang['MY_FOLLOWERS']; ?></strong></td>
-                <td style="20%;" id="since" class="text-center"><strong><?php echo $lang['SINCE']; ?></strong></td>
+                <td style="width:15%;">&nbsp;</td>
+                <td style="width:65%;"><strong><?php echo $lang['MY_FOLLOWERS']; ?></strong></td>
+                <td style="width:20%;" id="since" class="text-center"><strong><?php echo $lang['SINCE']; ?></strong></td>
             </tr>
             </thead>
             <tbody>

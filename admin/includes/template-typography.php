@@ -1,3 +1,15 @@
+<?php
+
+use YAWK\backend;
+use YAWK\db;
+use YAWK\language;
+use YAWK\settings;
+use YAWK\template;
+use YAWK\user;
+
+/** @var $db db */
+/** @var $lang language */
+?>
 <!-- color picker -->
 <script type="text/javascript" src="../system/engines/jquery/jscolor/jscolor.js"></script>
 <!-- TAB collapse -->
@@ -14,7 +26,7 @@
         function saveHotkey() {
             // simply disables save event for chrome
             $(window).keypress(function (event) {
-                if (!(event.which === 115 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) && !(event.which == 19)) return true;
+                if (!(event.which === 115 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) && !(event.which === 19)) return true;
                 event.preventDefault();
                 formmodified=0; // do not warn user, just save.
                 return false;
@@ -57,13 +69,13 @@
                 localStorage.setItem('lastTab', $(this).attr('href'));
             });
             // go to the latest tab, if it exists:
-            var lastTab = localStorage.getItem('lastTab');
+            const lastTab = localStorage.getItem('lastTab');
             if (lastTab) {
                 $('[href="' + lastTab + '"]').tab('show');
                 // to work correctly, we need to lowercase
-                var activeTab = lastTab.toLowerCase();
+                const activeTab = lastTab.toLowerCase();
                 // and remove the first char (#)
-                var activeFolder = activeTab.slice(1);
+                const activeFolder = activeTab.slice(1);
                 // all done: set select default selected option
                 $('select option[value="'+activeFolder+'"]').prop('selected', true);
             }
@@ -82,9 +94,9 @@
 
 <?php
 // new template object if not exists
-if (!isset($template)) { $template = new \YAWK\template(); }
+if (!isset($template)) { $template = new template(); }
 // new user object if not exists
-if (!isset($user)) { $user = new \YAWK\user($db); }
+if (!isset($user)) { $user = new user($db); }
 
 // check, if a session is already running
 if (!isset($_SESSION) || (empty($_SESSION)))
@@ -94,13 +106,13 @@ if (!isset($_SESSION) || (empty($_SESSION)))
 }
 
 // get ID of current active template
-$selectedTemplateID = \YAWK\settings::getSetting($db, "selectedTemplate");
+$selectedTemplateID = settings::getSetting($db, "selectedTemplate");
 // load properties of current active template
 $template->loadProperties($db, $selectedTemplateID);
 // previewButton is an empty string - why? this should be checked
 $previewButton = "";
 // load all template settings into array
-$templateSettings = \YAWK\template::getAllSettingsIntoArray($db, $user);
+$templateSettings = template::getAllSettingsIntoArray($db, $user);
 
 ?>
 <?php
@@ -111,8 +123,8 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 // draw Title on top
-echo \YAWK\backend::getTitle($lang['TPL'], $lang['DESIGN']);
-echo \YAWK\backend::getTemplateBreadcrumbs($lang);
+echo backend::getTitle($lang['TPL'], $lang['DESIGN']);
+echo backend::getTemplateBreadcrumbs($lang);
 echo"</section><!-- Main content -->
     <section class=\"content\">";
 /* page content start here */
@@ -219,20 +231,20 @@ echo"</section><!-- Main content -->
 
                                 // LOAD DEFAULT (CURRENT) PREVIEW
                                 // SET DEFAULT VALUES
-                                var selectedFont = $(font).val();
-                                var pathAndFont = '../system/fonts/'+selectedFont;
+                                const selectedFont = $(font).val();
+                                const pathAndFont = '../system/fonts/' + selectedFont;
 
                                 // check if font is a custom font (from system/fonts)
                                 // check if fontfamily contains the string ttf
                                 if ($(font).val().toLowerCase().indexOf("-ttf") >= 0)
                                 {
                                     // workaround: remove the last 4 chars (-ttf)
-                                    var fn = pathAndFont.slice(0,-4);
+                                    let fn = pathAndFont.slice(0,-4);
                                     // workaround: add file extension
                                     fn += '.ttf';
 
                                     // append external font to head
-                                    $("head").append("<style type=\"text/css\">" +
+                                    $("head").append("<style>" +
                                         "@font-face {\n" +
                                         "\tfont-family: '"+selectedFont+"';\n" +
                                         "\tsrc: url("+fn+");\n" +
@@ -248,12 +260,12 @@ echo"</section><!-- Main content -->
                                 else if ($(font).val().toLowerCase().indexOf("-otf") >= 0)
                                 {
                                     // workaround: remove the last 4 chars (-otf)
-                                    fn = pathAndFont.slice(0,-4);
+                                    let fn = pathAndFont.slice(0,-4);
                                     // workaround: add file extension
                                     fn += '.otf';
 
                                     // append external font to head
-                                    $("head").append("<style type=\"text/css\">" +
+                                    $("head").append("<style>" +
                                         "@font-face {\n" +
                                         "\tfont-family: '"+selectedFont+"';\n" +
                                         "\tsrc: url("+fn+");\n" +
@@ -269,12 +281,12 @@ echo"</section><!-- Main content -->
                                 else if ($(font).val().toLowerCase().indexOf("-woff") >= 0)
                                 {
                                     // workaround: remove the last 5 chars (-woff)
-                                    fn = pathAndFont.slice(0,-5);
+                                    let fn = pathAndFont.slice(0,-5);
                                     // workaround: add file extension
                                     fn += '.woff';
 
                                     // append external font to head
-                                    $("head").append("<style type=\"text/css\">" +
+                                    $("head").append("<style>" +
                                         "@font-face {\n" +
                                         "\tfont-family: '"+selectedFont+"';\n" +
                                         "\tsrc: url("+fn+");\n" +
@@ -296,7 +308,7 @@ echo"</section><!-- Main content -->
                                     // append google font include to head
                                     HtmlDocumentHead.append("<link href=\"https://fonts.googleapis.com/css?family="+fn+"\" rel=\"stylesheet\">");
                                     // append external font to head
-                                    HtmlDocumentHead.append("<style type=\"text/css\">" +
+                                    HtmlDocumentHead.append("<style>" +
                                         "\t."+previewString+" {\n" +
                                         "\tfont-family: '"+fn+"';\n" +
                                         "}\n" +
@@ -333,7 +345,7 @@ echo"</section><!-- Main content -->
                                         fn += '.ttf';
 
                                         // append external font to head
-                                        $("head").append("<style type=\"text/css\">" +
+                                        $("head").append("<style>" +
                                             "@font-face {\n" +
                                             "\tfont-family: '"+selectedFont+"';\n" +
                                             "\tsrc: url("+fn+");\n" +
@@ -354,7 +366,7 @@ echo"</section><!-- Main content -->
                                         fn += '.otf';
 
                                         // append external font to head
-                                        $("head").append("<style type=\"text/css\">" +
+                                        $("head").append("<style>" +
                                             "@font-face {\n" +
                                             "\tfont-family: '"+selectedFont+"';\n" +
                                             "\tsrc: url("+fn+");\n" +
@@ -375,7 +387,7 @@ echo"</section><!-- Main content -->
                                         fn += '.woff';
 
                                         // append external font to head
-                                        $("head").append("<style type=\"text/css\">" +
+                                        $("head").append("<style>" +
                                             "@font-face {\n" +
                                             "\tfont-family: '"+selectedFont+"';\n" +
                                             "\tsrc: url("+fn+");\n" +
@@ -398,7 +410,7 @@ echo"</section><!-- Main content -->
                                         // append google font include to head
                                         HtmlDocumentHead.append("<link href=\"https://fonts.googleapis.com/css?family="+fn+"\" rel=\"stylesheet\">");
                                         // append external font to head
-                                        HtmlDocumentHead.append("<style type=\"text/css\">" +
+                                        HtmlDocumentHead.append("<style>" +
                                             "\t."+previewString+" {\n" +
                                             "\tfont-family: '"+fn+"';\n" +
                                             "}\n" +
@@ -436,7 +448,6 @@ echo"</section><!-- Main content -->
                                 // switch font style
                                 $(fontstyle).change(function() {
                                     $(previewField).css("font-style", $(fontstyle).val());
-
                                 });
                                 // switch text decoration
                                 $(textdecoration).change(function() {
@@ -444,7 +455,6 @@ echo"</section><!-- Main content -->
 
                                 });
                             }
-
                         });
                     </script>
                 </div>

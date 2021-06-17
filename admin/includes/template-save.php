@@ -1,25 +1,39 @@
 <?php
+
+use YAWK\alert;
+use YAWK\db;
+use YAWK\FRAMEWORK\cssFramework;
+use YAWK\language;
+use YAWK\settings;
+use YAWK\sys;
+use YAWK\template;
+use YAWK\user;
+
+/** @var $db db */
+/** @var $lang language */
+
 require_once '../system/classes/cssFramework.php';
 // check if template obj is set and create if not exists
-if (!isset($template)) { $template = new \YAWK\template(); }
+if (!isset($template)) { $template = new template(); }
 // new user obj if not exists
-if (!isset($user)) { $user = new \YAWK\user($db); }
+if (!isset($user)) { $user = new user($db); }
 // get ID of current active template
-$getID = \YAWK\settings::getSetting($db, "selectedTemplate");
+$getID = settings::getSetting($db, "selectedTemplate");
 // load properties of current active template
 $template->loadProperties($db, $getID);
-$oldTplSettings = \YAWK\template::getTemplateSettingsArray($db, $template->id);
+// load current template settings into array (will be used to compare with new settings, ensure only different settings will get saved
+$oldTplSettings = template::getTemplateSettingsArray($db, $template->id);
+// will be used to redirect the user to given settings page
+$redirect = '';
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 
 // check if any action is requested
-
 if (isset($_POST['save']) && (isset($_GET['action']) && (isset($_GET['id']))))
-{
+{   // request comes from POST data
     if (isset($_POST) && (!empty($_POST)))
-    {
+    {   // get param will be received to check, what the user wants to do
         if (isset($_GET['action']))
-        {
-            // process only if $_POST data is set and not empty
+        {   // process only if $_POST data is set and not empty
             // walk through save requests
             // position properties
             if ($_GET['action'] === "template-positions")
@@ -28,13 +42,12 @@ if (isset($_POST['save']) && (isset($_GET['action']) && (isset($_GET['id']))))
                 // check if value has changed...
                 if ($template->saveProperties($db, $_GET['id'], $_POST, $oldTplSettings))
                 {
-                    \YAWK\alert::draw("success", $lang['SUCCESS'], $lang['POSITIONS'] . "&nbsp;" . $lang['SAVED'], "", 6400);
+                    alert::draw("success", $lang['SUCCESS'], $lang['POSITIONS'] . "&nbsp;" . $lang['SAVED'], "", 6400);
                 }
                 else
                 {
-                    \YAWK\alert::draw("danger", $lang['ERROR'], $lang['POSITIONS'] . "&nbsp;" . $lang['NOT_SAVED'], "", 5000);
+                    alert::draw("danger", $lang['ERROR'], $lang['POSITIONS'] . "&nbsp;" . $lang['NOT_SAVED'], "", 5000);
                 }
-
             }
             // redesign properties
             if ($_GET['action'] === "template-redesign")
@@ -42,11 +55,11 @@ if (isset($_POST['save']) && (isset($_GET['action']) && (isset($_GET['id']))))
                 $redirect = "template-redesign";
                 if ($template->saveProperties($db, $_GET['id'], $_POST, $oldTplSettings))
                 {
-                    \YAWK\alert::draw("success", $lang['SUCCESS'], $lang['DESIGN_DETAILS'] . "&nbsp;" . $lang['SAVED'], "", 2400);
+                    alert::draw("success", $lang['SUCCESS'], $lang['DESIGN_DETAILS'] . "&nbsp;" . $lang['SAVED'], "", 2400);
                 }
                 else
                 {
-                    \YAWK\alert::draw("danger", $lang['ERROR'], $lang['DESIGN_DETAILS'] . "&nbsp;" . $lang['NOT_SAVED'], "", 5000);
+                    alert::draw("danger", $lang['ERROR'], $lang['DESIGN_DETAILS'] . "&nbsp;" . $lang['NOT_SAVED'], "", 5000);
                 }
             }
             // typography properties
@@ -55,11 +68,11 @@ if (isset($_POST['save']) && (isset($_GET['action']) && (isset($_GET['id']))))
                 $redirect = "template-typography";
                 if ($template->saveProperties($db, $_GET['id'], $_POST, $oldTplSettings))
                 {
-                    // \YAWK\alert::draw("success", $lang['SUCCESS'], $lang['TYPO_DETAILS'] . "&nbsp;" . $lang['SAVED'], "", 2400);
+                    alert::draw("success", $lang['SUCCESS'], $lang['TYPO_DETAILS'] . "&nbsp;" . $lang['SAVED'], "", 2400);
                 }
                 else
                 {
-                    // \YAWK\alert::draw("danger", $lang['ERROR'], $lang['TYPO_DETAILS'] . "&nbsp;" . $lang['NOT_SAVED'], "", 5000);
+                    alert::draw("danger", $lang['ERROR'], $lang['TYPO_DETAILS'] . "&nbsp;" . $lang['NOT_SAVED'], "", 5000);
                 }
             }
             // if save property is customCSS
@@ -82,20 +95,20 @@ if (isset($_POST['save']) && (isset($_GET['action']) && (isset($_GET['id']))))
 
         // get fonts from database
         // $headingFont = YAWK\template::getActivegfont($db, "", "heading-gfont");
-        $h1Font = \YAWK\template::setCssFontSettings("h1", $tplSettings);
-        $h2Font = \YAWK\template::setCssFontSettings("h2", $tplSettings);
-        $h3Font = \YAWK\template::setCssFontSettings("h3", $tplSettings);
-        $h4Font = \YAWK\template::setCssFontSettings("h4", $tplSettings);
-        $h5Font = \YAWK\template::setCssFontSettings("h5", $tplSettings);
-        $h6Font = \YAWK\template::setCssFontSettings("h6", $tplSettings);
-        $bodyFontFaceSettings = \YAWK\template::setCssBodyFontFace("globaltext", $tplSettings);
-        $bodyLinkSettings = \YAWK\template::setCssBodyLinkTags("globaltext", $tplSettings);
-        $bodyFontSettings = \YAWK\template::setCssBodyFontSettings("globaltext", $tplSettings);
-        $bodySmallFontSettings = \YAWK\template::setCssBodySmallFontSettings("globaltext", $tplSettings);
+        $h1Font = template::setCssFontSettings("h1", $tplSettings);
+        $h2Font = template::setCssFontSettings("h2", $tplSettings);
+        $h3Font = template::setCssFontSettings("h3", $tplSettings);
+        $h4Font = template::setCssFontSettings("h4", $tplSettings);
+        $h5Font = template::setCssFontSettings("h5", $tplSettings);
+        $h6Font = template::setCssFontSettings("h6", $tplSettings);
+        $bodyFontFaceSettings = template::setCssBodyFontFace("globaltext", $tplSettings);
+        $bodyLinkSettings = template::setCssBodyLinkTags("globaltext", $tplSettings);
+        $bodyFontSettings = template::setCssBodyFontSettings("globaltext", $tplSettings);
+        $bodySmallFontSettings = template::setCssBodySmallFontSettings("globaltext", $tplSettings);
 
 
         $bootstrapVersion = $template->checkBootstrapVersion($db, $template->id, $lang);
-        $bootstrap = new \YAWK\FRAMEWORK\cssFramework($bootstrapVersion, $tplSettings, $lang);
+        $bootstrap = new cssFramework($bootstrapVersion, $tplSettings);
 
 
         // PREPARE SETTINGS.CSS
@@ -1054,7 +1067,7 @@ if (isset($_POST['save']) && (isset($_GET['action']) && (isset($_GET['id']))))
         $template->writeTemplateCssFile($db, $template->id, $content, 1); // 1 = minify
 
         //////////////////////////////////////////////////////////////////////////////////////
-        \YAWK\sys::setTimeout("index.php?page=$redirect", 0);
+        sys::setTimeout("index.php?page=$redirect", 0);
     }
 }
 

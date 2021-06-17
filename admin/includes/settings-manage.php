@@ -67,14 +67,14 @@ echo"<ol class=\"breadcrumb\">
 <form name="settings" action="index.php?page=settings-manage&save=true" method="post">
 <input type="submit" name="save" class="btn btn-success pull-right" value="<?php print $lang['SETTINGS_SAVE'];?>">
 
-<table style="100%;" class="table table-striped table-hover table-responsive" id="table-sort">
+<table style="width:100%;" class="table table-striped table-hover table-responsive" id="table-sort">
   <thead>
     <tr>
-      <td style="3%;"><strong>&nbsp;</strong></td>
-      <td style="20%;"><strong><i class="fa fa-caret-down"></i> <?php print $lang['SETTING']; ?></strong></td>
-      <td style="27%;"><strong><i class="fa fa-caret-down"></i> <?php print $lang['SETTING_VALUE']; ?></strong></td>
-      <td style="25%;"><strong><?php print $lang['LABEL']; ?></strong></td>
-      <td style="25%;"><strong><?php print $lang['DESCRIPTION']; ?></strong></td>
+      <td style="width:3%;"><strong>&nbsp;</strong></td>
+      <td style="width:20%;"><strong><i class="fa fa-caret-down"></i> <?php print $lang['SETTING']; ?></strong></td>
+      <td style="width:27%;"><strong><i class="fa fa-caret-down"></i> <?php print $lang['SETTING_VALUE']; ?></strong></td>
+      <td style="width:25%;"><strong><?php print $lang['LABEL']; ?></strong></td>
+      <td style="width:25%;"><strong><?php print $lang['DESCRIPTION']; ?></strong></td>
     </tr>
   </thead>
   <tbody>

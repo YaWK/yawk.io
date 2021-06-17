@@ -1,6 +1,17 @@
 <?php
+
+use YAWK\backend;
+use YAWK\db;
+use YAWK\language;
+use YAWK\settings;
+use YAWK\template;
+use YAWK\user;
+
+/** @var $db db */
+/** @var $lang language */
+
 // new template object if not exists
-if (!isset($template)) { $template = new \YAWK\template(); }
+if (!isset($template)) { $template = new template(); }
 
 // check if any action is requested
 if (isset($_POST['save']) && (isset($_GET['action']) && (isset($_GET['id']))))
@@ -28,7 +39,7 @@ if (isset($_POST['save']) && (isset($_GET['action']) && (isset($_GET['id']))))
 ?>
 <?php
 // get settings for editor
-$editorSettings = \YAWK\settings::getEditorSettings($db, 14);
+$editorSettings = settings::getEditorSettings($db, 14);
 ?>
 <!-- include summernote css/js-->
 <!-- include codemirror (codemirror.css, codemirror.js, xml.js) -->
@@ -51,14 +62,14 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
         function saveHotkey() {
             // simply disables save event for chrome
             $(window).keypress(function (event) {
-                if (!(event.which == 115 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) && !(event.which == 19)) return true;
+                if (!(event.which === 115 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) && !(event.which === 19)) return true;
                 event.preventDefault();
                 formmodified=0; // do not warn user, just save.
                 return false;
             });
             // used to process the cmd+s and ctrl+s events
             $(document).keydown(function (event) {
-                if (event.which == 83 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) {
+                if (event.which === 83 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) {
                     event.preventDefault();
                     $('#savebutton').click(); // SAVE FORM AFTER PRESSING STRG-S hotkey
                     formmodified=0; // do not warn user, just save.
@@ -70,9 +81,9 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
         saveHotkey();
 
         // textarea that will be transformed into editor
-        var editor = ('textarea#summernote');
-        var savebutton = ('#savebutton');
-        var savebuttonIcon = ('#savebuttonIcon');
+        const editor = ('textarea#summernote');
+        const savebutton = ('#savebutton');
+        const savebuttonIcon = ('#savebuttonIcon');
         // ok, lets go...
         // we need to check if user clicked on save button
         $(savebutton).click(function() {
@@ -88,9 +99,9 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
             // to do that, the current value of textarea will be read into var text and search/replaced
             // and written back into the textarea. utf-8 encoding/decoding happens in php, before saving into db.
             // get the value of summernote textarea
-            var text = $(editor).val();
+            const text = $(editor).val();
             // search for <img> tags and revert src ../ to set correct path for frontend
-            var frontend = text.replace(/<img src=\"..\/media/g,"<img src=\"media");
+            const frontend = text.replace(/<img src=\"..\/media/g,"<img src=\"media");
             // put the new string back into <textarea>
             $(editor).val(frontend); // to make sure that saving works
         });
@@ -99,9 +110,9 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
         // to display images in backend correctly, we need to change the path of every image.
         // procedure is the same as above (see #savebutton.click)
         // get the value of summernote textarea
-        var text = $(editor).val();
+        const text = $(editor).val();
         // search for <img> tags and update src ../ to get images viewed in summernote
-        var backend = text.replace(/<img src=\"media/g,"<img src=\"../media");
+        const backend = text.replace(/<img src=\"media/g,"<img src=\"../media");
         // put the new string back into <textarea>
         $(editor).val(backend); // set new value into textarea
 
@@ -177,9 +188,9 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
 </script>
 <?php
 // new template object if not exists
-if (!isset($template)) { $template = new \YAWK\template(); }
+if (!isset($template)) { $template = new template(); }
 // new user object if not exists
-if (!isset($user)) { $user = new \YAWK\user($db); }
+if (!isset($user)) { $user = new user($db); }
 // $_GET['id'] or $_POST['id'] holds the template ID to edit.
 // If any one of these two is set, we're in "preview mode" - this means:
 // The user database holds two extra cols: overrideTemplate(int|0,1) and templateID
@@ -190,7 +201,7 @@ if (!isset($user)) { $user = new \YAWK\user($db); }
 
 // load properties of current active template
 // get ID of current active template
-$getID = \YAWK\settings::getSetting($db, "selectedTemplate");
+$getID = settings::getSetting($db, "selectedTemplate");
 // load properties of current active template
 $template->loadProperties($db, $getID);
 ?>
@@ -203,8 +214,8 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 // draw Title on top
-echo \YAWK\backend::getTitle($lang['TPL'], "custom.css");
-echo \YAWK\backend::getTemplateBreadcrumbs($lang);
+echo backend::getTitle($lang['TPL'], "custom.css");
+echo backend::getTemplateBreadcrumbs($lang);
 echo"</section><!-- Main content -->
     <section class=\"content\">";
 /* page content start here */

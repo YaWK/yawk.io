@@ -1,8 +1,18 @@
 <?php
+
+use YAWK\backend;
+use YAWK\db;
+use YAWK\language;
+use YAWK\settings;
+use YAWK\template;
+use YAWK\user;
+
+/** @var $db db */
+/** @var $lang language */
 // new template object if not exists
-if (!isset($template)) { $template = new \YAWK\template(); }
+if (!isset($template)) { $template = new template(); }
 // new user object if not exists
-if (!isset($user)) { $user = new \YAWK\user($db); }
+if (!isset($user)) { $user = new user($db); }
 // $_GET['id'] or $_POST['id'] holds the template ID to edit.
 // If any one of these two is set, we're in "preview mode" - this means:
 // The user database holds two extra cols: overrideTemplate(int|0,1) and templateID
@@ -12,8 +22,8 @@ if (!isset($user)) { $user = new \YAWK\user($db); }
 // In theory, thereby every user can have a different frontend template activated.
 
 // get ID of current active template
-$template->id = \YAWK\settings::getSetting($db, "selectedTemplate");
-$template->name = \YAWK\template::getTemplateNameById($db, $template->id);
+$template->id = settings::getSetting($db, "selectedTemplate");
+$template->name = template::getTemplateNameById($db, $template->id);
 ?>
 
 <?php
@@ -28,7 +38,7 @@ if (isset($_GET['id']) && (is_numeric($_GET['id']) || (isset($_POST['id']) && (i
 {
     if (empty($_GET['id']) || (!empty($_POST['id']))) { $getID = $_POST['id']; }
     else if (!empty($_GET['id']) || (empty($_POST['id']))) { $getID = $_GET['id']; }
-    else { $getID = \YAWK\settings::getSetting($db, "selectedTemplate");  }
+    else { $getID = settings::getSetting($db, "selectedTemplate");  }
 
     if ($user->isTemplateEqual($db, $getID))
     {   // user template equals selectedTemplate
@@ -174,8 +184,8 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 // draw Title on top
-echo \YAWK\backend::getTitle($lang['TPL'], $lang['TPL_ASSETS_SETTINGS']);
-echo \YAWK\backend::getTemplateBreadcrumbs($lang);
+echo backend::getTitle($lang['TPL'], $lang['TPL_ASSETS_SETTINGS']);
+echo backend::getTemplateBreadcrumbs($lang);
 echo"</section><!-- Main content -->
     <section class=\"content\">";
 /* page content start here */
@@ -202,7 +212,7 @@ echo"</section><!-- Main content -->
                 <h3 class="box-title"><?php echo $lang['SYSTEM_ASSETS']; ?></h3>
             </div>
             <div class="box-body">
-                <?php \YAWK\template::drawAssetsSelectFields($db, 1, $template->id, $lang); ?>
+                <?php template::drawAssetsSelectFields($db, 1, $template->id, $lang); ?>
             </div>
         </div>
     </div>
@@ -213,7 +223,7 @@ echo"</section><!-- Main content -->
                 <h3 class="box-title"><?php echo $lang['OPTIONAL_ASSETS']; ?></h3>
             </div>
             <div class="box-body">
-                <?php \YAWK\template::drawAssetsSelectFields($db, 2, $template->id, $lang); ?>
+                <?php template::drawAssetsSelectFields($db, 2, $template->id, $lang); ?>
             </div>
         </div>
     </div>
@@ -223,7 +233,7 @@ echo"</section><!-- Main content -->
                 <h3 class="box-title"><?php echo $lang['USER_DEFINED_ASSETS']; ?></h3>
             </div>
             <div class="box-body">
-                <?php \YAWK\template::drawAssetsSelectFields($db, 3, $template->id, $lang); ?>
+                <?php template::drawAssetsSelectFields($db, 3, $template->id, $lang); ?>
             </div>
         </div>
     </div>

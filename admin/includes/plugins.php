@@ -43,13 +43,13 @@ echo"<ol class=\"breadcrumb\">
         <a class="btn btn-success pull-right" href="index.php?page=plugins-manage">
             <i class="glyphicon glyphicon-cog"></i> &nbsp;<?php print $lang['PLUGIN_MANAGE']; ?></a>
 
-<table style="100%;" class="table table-striped table-hover table-responsive" id="table-sort">
+<table style="width:100%;" class="table table-striped table-hover table-responsive" id="table-sort">
     <thead>
     <tr>
-        <td style="10%;">&nbsp;</td>
-        <td style="20%;"><strong><i class="fa fa-caret-down"></i> <?php print $lang['PLUGIN']; ?></strong></td>
-        <td style="60%;"><strong><?php print $lang['DESCRIPTION']; ?></strong></td>
-        <td style="10%;"><strong><?php print $lang['ACTIONS']; ?></strong></td>
+        <td style="width:10%;">&nbsp;</td>
+        <td style="width:20%;"><strong><i class="fa fa-caret-down"></i> <?php print $lang['PLUGIN']; ?></strong></td>
+        <td style="width:60%;"><strong><?php print $lang['DESCRIPTION']; ?></strong></td>
+        <td style="width:10%;"><strong><?php print $lang['ACTIONS']; ?></strong></td>
     </tr>
     </thead>
     <tbody>
