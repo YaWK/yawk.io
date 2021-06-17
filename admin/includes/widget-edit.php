@@ -2,7 +2,7 @@
     function saveHotkey() {
         // simply disables save event for chrome
         $(window).keypress(function (event) {
-            if (!(event.which === 115 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) && !(event.which == 19)) return true;
+            if (!(event.which === 115 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) && !(event.which === 19)) return true;
             event.preventDefault();
             formmodified=0; // do not warn user, just save.
             return false;
@@ -21,8 +21,8 @@
     saveHotkey();
     $(document).ready(function() {
         // textarea that will be transformed into editor
-        var savebutton = ('#savebutton');
-        var savebuttonIcon = ('#savebuttonIcon');
+        const savebutton = ('#savebutton');
+        const savebuttonIcon = ('#savebuttonIcon');
         // ok, lets go...
         // we need to check if user clicked on save button
         $(savebutton).click(function() {
@@ -33,13 +33,21 @@
 </script>
 <script type="text/javascript" src="../system/engines/jquery/jscolor/jscolor.js"></script>
 <?php
-/** @var $lang \YAWK\language */
-/** @var $db \YAWK\db */
+
+use YAWK\alert;
+use YAWK\backend;
+use YAWK\db;
+use YAWK\language;
+use YAWK\template;
+use YAWK\widget;
+
+/** @var $db db */
+/** @var $lang language */
 /* page content start here */
 // check if widget obj is set
 if (!isset($widget))
 {   // create new widget object
-    $widget = new \YAWK\widget();
+    $widget = new widget();
 }
 // check given widget var...
 if (isset($_GET['widget']) && is_numeric($_GET['widget']))
@@ -48,7 +56,7 @@ if (isset($_GET['widget']) && is_numeric($_GET['widget']))
 }
 else
 {   // var not set or manipulated...
-    \YAWK\alert::draw("danger","$lang[ERROR]", "$lang[VARS_MANIPULATED]","page=widgets","5000");
+    alert::draw("danger","$lang[ERROR]", "$lang[VARS_MANIPULATED]","page=widgets","5000");
 }
 
 // USER CLICKED ON SAVE
@@ -69,11 +77,11 @@ else
       // save widget state
   	    if ($widget->save($db) === true)
   	    {
-            \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[WIDGET] $lang[SETTINGS] $lang[SAVED]", "","1200");
+            alert::draw("success", "$lang[SUCCESS]", "$lang[WIDGET] $lang[SETTINGS] $lang[SAVED]", "","1200");
         }
         else
             {
-                \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[WIDGET] $lang[SETTINGS] $lang[NOT_SAVED]", "","2400");
+                alert::draw("danger", "$lang[ERROR]", "$lang[WIDGET] $lang[SETTINGS] $lang[NOT_SAVED]", "","2400");
             }
 
    	  foreach($_POST as $property=>$value)
@@ -95,7 +103,7 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 /* draw Title on top */
-echo \YAWK\backend::getTitle($widget->name, $lang['WIDGET']);
+echo backend::getTitle($widget->name, $lang['WIDGET']);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
             <li><a href=\"index.php?page=widgets\" title=\"$lang[WIDGETS]\"> $lang[WIDGETS]</a></li>
@@ -162,7 +170,7 @@ echo"<ol class=\"breadcrumb\">
     <?php /* get tpl positions */
       $i = 0;
     $position[$i] = array();
-    foreach(\YAWK\template::getTemplatePositions($db) as $position[$i]){
+    foreach(template::getTemplatePositions($db) as $position[$i]){
         echo "<option value=\"".$position[$i]."\">".$position[$i]."</option>";
         $i++;
       }
@@ -179,11 +187,11 @@ echo"<ol class=\"breadcrumb\">
     <input id="datetimepicker2" name="date_unpublish" autocomplete="off" class="form-control" value="<?php echo $widget->date_unpublish; ?>">
   <br>
       <!-- MARGIN TOP -->
-      <label><?php echo "$lang[MARGIN_TOP] <i><small>$lang[LEAVE_BLANK_FOR_NO_MARGIN]</small></i>"; ?></label>
-          <input type="text" class="form-control" placeholder="" name="marginTop" id="marginTop" maxlength="11" value="<?php echo $widget->marginTop; ?>">
+      <label for="marginTop"><?php echo "$lang[MARGIN_TOP] <i><small>$lang[LEAVE_BLANK_FOR_NO_MARGIN]</small></i>"; ?></label>
+          <input type="text" id="marginTop" class="form-control" placeholder="" name="marginTop" maxlength="11" value="<?php echo $widget->marginTop; ?>">
       <!-- MARGIN BOTTOM -->
-      <label><?php echo "$lang[MARGIN_BOTTOM] <i><small>$lang[LEAVE_BLANK_FOR_NO_MARGIN]</small></i>"; ?></label>
-          <input type="text" class="form-control" name="marginBottom" placeholder="" id="marginBottom" maxlength="11" value="<?php echo $widget->marginBottom; ?>">
+      <label for="marginBottom"><?php echo "$lang[MARGIN_BOTTOM] <i><small>$lang[LEAVE_BLANK_FOR_NO_MARGIN]</small></i>"; ?></label>
+          <input type="text" id="marginBottom" class="form-control" name="marginBottom" placeholder="" maxlength="11" value="<?php echo $widget->marginBottom; ?>">
       <br>
   <!-- SORTATION -->
   <label for="sort"><?php echo $lang['SORTATION_ORDER']; ?></label>
@@ -216,7 +224,7 @@ echo"<ol class=\"breadcrumb\">
   <!-- MORE WIDGET SETTINGS -->
   <?php
     // draw settings (form elements) for this widget
-    $settings = \YAWK\widget::getAllSettingsIntoArray($db, $widget->id);
+    $settings = widget::getAllSettingsIntoArray($db, $widget->id);
     $widget->getWidgetFormElements($db, $settings, $widget->id, $widget->folder, $lang);
   ?>
   <br><input type="hidden" name="widgetID" value="<?php echo $widget->id; ?>">

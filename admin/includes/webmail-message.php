@@ -4,12 +4,23 @@
 <link rel="stylesheet" href="../system/engines/jquery/lightbox2/css/lightbox.min.css" type="text/css" media="all">
 <?php
 
+use YAWK\alert;
+use YAWK\backend;
+use YAWK\db;
+use YAWK\editor;
+use YAWK\filemanager;
+use YAWK\language;
+use YAWK\settings;
+
+/** @var $db db */
+/** @var $lang language */
+
 // import editor class + load editor settings
 require_once '../system/classes/editor.php';
-$editorSettings = \YAWK\settings::getEditorSettings($db, 14);
+$editorSettings = settings::getEditorSettings($db, 14);
 $editorSettings['editorHeight'] = "180";
-\YAWK\editor::loadJavascript($editorSettings);
-\YAWK\editor::setEditorSettings($editorSettings);
+editor::loadJavascript($editorSettings);
+editor::setEditorSettings($editorSettings);
 
     // require_once "../system/engines/imapClient/AdapterForOutgoingMessage.php";
     // require_once "../system/engines/imapClient/Helper.php";
@@ -27,9 +38,11 @@ $editorSettings['editorHeight'] = "180";
     // let php know we need these classes:
     use SSilence\ImapClient\ImapClientException;
     use SSilence\ImapClient\ImapClient as Imap;
+use YAWK\sys;
+use YAWK\webmail;
 
-    // get all webmail setting values into an array
-    $webmailSettings = \YAWK\settings::getValueSettingsArray($db, "webmail_");
+// get all webmail setting values into an array
+    $webmailSettings = settings::getValueSettingsArray($db, "webmail_");
 
 if ($webmailSettings['webmail_active'] == true)
 {
@@ -47,7 +60,7 @@ if ($webmailSettings['webmail_active'] == true)
     // include webmail class
     require_once "../system/classes/webmail.php";
     // create new webmail object
-    $webmail = new \YAWK\webmail();
+    $webmail = new webmail();
 
     try // open connection to imap server
     {   // create new imap object
@@ -87,11 +100,11 @@ if ($webmailSettings['webmail_active'] == true)
         // mark as unseen
         if ($imap->setUnseenMessage($msgno) == true)
         {   // email marked as unseen
-            \YAWK\alert::draw("success", "Marked as unread", "The email was marked as unseen", "", 1200);
+            alert::draw("success", "Marked as unread", "The email was marked as unseen", "", 1200);
         }
         else
         {   // set unseen failed
-            \YAWK\alert::draw("warning", "ERROR:", "Unable to mark email as read", "", 2800);
+            alert::draw("warning", "ERROR:", "Unable to mark email as read", "", 2800);
         }
     }
     else    // mark email as seen
@@ -195,15 +208,15 @@ else    // webmail is not activated...
         });
 
         // vars that will be used outside of functions
-        var markAsUnseenIcon = $('#icon-markAsUnseen');
-        var replyBtn = $('#replyBtn');
-        var replyIcon = $('#icon-reply');
-        var forwardIcon = $('#icon-forward');
-        var replyTextArea = $('#summernote');
-        var form = $('#my-dropzone');
-        var toFormGroup = $('#toFormGroup');
-        var boxFooter = $('#box-footer');
-        var replyTo = $('#replyTo');
+        let markAsUnseenIcon = $('#icon-markAsUnseen');
+        let replyBtn = $('#replyBtn');
+        let replyIcon = $('#icon-reply');
+        let forwardIcon = $('#icon-forward');
+        let replyTextArea = $('#summernote');
+        let form = $('#my-dropzone');
+        let toFormGroup = $('#toFormGroup');
+        let boxFooter = $('#box-footer');
+        let replyTo = $('#replyTo');
 
         // OPEN REPLY BOX toggled by footer button
         $(replyBtn).click(function() {
@@ -223,7 +236,7 @@ else    // webmail is not activated...
 
         // forward: OPEN REPLY BOX and add forward email
         $(forwardIcon).click(function() {
-            var toField = $('#toField');
+            let toField = $('#toField');
             openReplyBox();
             boxFooter.hide();
             toFormGroup.removeClass();
@@ -300,14 +313,14 @@ else    // webmail is not activated...
         function openReplyBox()
         {
             // html elements
-            var replyBox = $('#replyBox');
-            var sendBtn = $('#sendBtn');
-            var submitBtn = $('#submitBtn');
-            var replyBtn = $('#replyBtn');
-            var deleteBtn = $('#deleteBtn');
-            var printBtn = $('#printBtn');
-            var forwardBtn = $('#forwardBtn');
-            var actions = $('#actions');
+            let replyBox = $('#replyBox');
+            let sendBtn = $('#sendBtn');
+            let submitBtn = $('#submitBtn');
+            let replyBtn = $('#replyBtn');
+            let deleteBtn = $('#deleteBtn');
+            let printBtn = $('#printBtn');
+            let forwardBtn = $('#forwardBtn');
+            let actions = $('#actions');
             // open reply box
             $(actions).removeClass().addClass('animated fadeIn');
             $(replyBox).removeClass().addClass('box-footer hidden-print animated fadeIn');
@@ -349,7 +362,7 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 /* draw Title on top */
-echo \YAWK\backend::getTitle($lang['WEBMAIL'], $lang['WEBMAIL_SUBTEXT']);
+echo backend::getTitle($lang['WEBMAIL'], $lang['WEBMAIL_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
             <li class=\"active\"><a href=\"index.php?page=webmail\" title=\"$lang[WEBMAIL]\"> $lang[WEBMAIL]</a></li>
@@ -418,7 +431,7 @@ if ($webmailSettings['webmail_active'] == true) {
                     <span style="margin-top:-15px;" class="mailbox-read-time pull-right"><?php echo substr($imap->incomingMessage->header->date, 0, -6); ?>
                     <br>
                     <span class="pull-right">
-                        <?php echo \YAWK\sys::time_ago($imap->incomingMessage->header->date, $lang); ?></span>
+                        <?php echo sys::time_ago($imap->incomingMessage->header->date, $lang); ?></span>
                     </span></h4>
                     
                     <?php $webmail->drawMailboxControls($imap, "message", $imap->incomingMessage->header->uid, $imap->currentFolder, $lang); ?>
@@ -454,7 +467,7 @@ if ($webmailSettings['webmail_active'] == true) {
                             // check if download path is writeable
                             if (is_writeable($downloadPath) === false)
                             {   // it is not - throw error msg
-                                \YAWK\alert::draw("warning", $lang['ERROR'], $lang['ATTACH_DIR_NOT_WRITEABLE'], "", 3800);
+                                alert::draw("warning", $lang['ERROR'], $lang['ATTACH_DIR_NOT_WRITEABLE'], "", 3800);
                             }
 
                             // set attachment options
@@ -469,7 +482,7 @@ if ($webmailSettings['webmail_active'] == true) {
                                 // save attachments to media/mailbox folder
                                 $imap->saveAttachments($attachmentOptions);
                                 // set download path
-                                $downloadPath = \YAWK\sys::addTrailingSlash($downloadPath);
+                                $downloadPath = sys::addTrailingSlash($downloadPath);
                                 // set current file
                                 $attachment->currentFile = $downloadPath.$attachment->name;
                                 // will be set to true, if attachment is an image (used by attachment preview)
@@ -480,7 +493,7 @@ if ($webmailSettings['webmail_active'] == true) {
                                 {   // get filesize of current attachment
                                     $attachment->size = filesize($attachment->currentFile);
                                     // round filesize to make it more human-friendly readable
-                                    $attachment->size = \YAWK\filemanager::sizeFilter($attachment->size, 0);
+                                    $attachment->size = filemanager::sizeFilter($attachment->size, 0);
 
                                     // check if attachment filename is too long for the box
                                     if (strlen($attachment->name) >= 20)
@@ -573,7 +586,7 @@ if ($webmailSettings['webmail_active'] == true) {
                 
                                             <div class=\"mailbox-attachment-info\" style=\"min-height:180px; overflow: hidden;\">
                                                 <a href=\"".$downloadPath.$attachment->name."\" data-lightbox=\"attachment-set\" data-title=\"".$attachment->name."\" class=\"mailbox-attachment-name\">
-                                                    <img src=\"".$downloadPath.$attachment->name."\" class=\"img-responsive\"> ".$attachment->namePreview."
+                                                    <img src=\"".$downloadPath.$attachment->name."\" class=\"img-responsive\" alt=\"attachment\"> ".$attachment->namePreview."
                                                 </a>
                                                 <span class=\"mailbox-attachment-size\">
                                           ".$attachment->size."
@@ -654,7 +667,7 @@ if ($webmailSettings['webmail_active'] == true) {
                         <input type="hidden" name="subject" value="<?php echo "Re: ".$imap->incomingMessage->header->subject;?>">
                     </div>
 
-                    <p class="help-block">Max. <?php echo \YAWK\filemanager::getPostMaxSize(); ?></p>
+                    <p class="help-block">Max. <?php echo filemanager::getPostMaxSize(); ?></p>
                 </div>
                 <!-- /. bootstrap dropzone -->
             </div>

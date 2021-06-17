@@ -1,12 +1,23 @@
 <script src="../system/engines/jquery/dropzone/dropzone.js"></script>
 <link href="../system/engines/jquery/dropzone/dropzone.css" rel="stylesheet">
 <?php
+
+use YAWK\backend;
+use YAWK\db;
+use YAWK\editor;
+use YAWK\filemanager;
+use YAWK\language;
+use YAWK\settings;
+
+/** @var $db db */
+/** @var $lang language */
+
 // import editor class + load editor settings
 require_once '../system/classes/editor.php';
-$editorSettings = \YAWK\settings::getEditorSettings($db, 14);
+$editorSettings = settings::getEditorSettings($db, 14);
 $editorSettings['editorHeight'] = "360";
-\YAWK\editor::loadJavascript($editorSettings);
-\YAWK\editor::setEditorSettings($editorSettings);
+editor::loadJavascript($editorSettings);
+editor::setEditorSettings($editorSettings);
 
 // include imap client classes
 require_once "../system/engines/imapClient/AdapterForOutgoingMessage.php";
@@ -25,9 +36,10 @@ require_once "../system/engines/imapClient/TypeBody.php";
 // let php know we need these classes:
 use SSilence\ImapClient\ImapClientException;
 use SSilence\ImapClient\ImapClient as Imap;
+use YAWK\webmail;
 
 // get all webmail setting values into an array
-$webmailSettings = \YAWK\settings::getValueSettingsArray($db, "webmail_");
+$webmailSettings = settings::getValueSettingsArray($db, "webmail_");
 
 // imap connection only made be made if webmail is set to active
 // check if webmail is activated
@@ -58,7 +70,7 @@ if ($webmailSettings['webmail_active'] == true)
     // include webmail class
     require_once "../system/classes/webmail.php";
     // create new webmail object
-    $webmail = new \YAWK\webmail();
+    $webmail = new webmail();
     // set connection info var
     $webmail->connectionInfo = "<i>$username</i>";
     // options (novalidate-cert)
@@ -113,7 +125,7 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 /* draw Title on top */
-echo \YAWK\backend::getTitle($lang['WEBMAIL'], $lang['WEBMAIL_SUBTEXT']);
+echo backend::getTitle($lang['WEBMAIL'], $lang['WEBMAIL_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
             <li class=\"active\"><a href=\"index.php?page=webmail\" title=\"$lang[WEBMAIL]\"> $lang[WEBMAIL]</a></li>
@@ -202,7 +214,7 @@ if ($webmailSettings['webmail_active'] == true && ($error == false))
                                 <input type="hidden" name="sendEmail" value="true">
                             </div>
 
-                            <p class="help-block">Max. <?php echo \YAWK\filemanager::getPostMaxSize(); ?></p>
+                            <p class="help-block">Max. <?php echo filemanager::getPostMaxSize(); ?></p>
                         </div>
                         <!-- /. bootstrap dropzone -->
 

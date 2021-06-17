@@ -1,7 +1,16 @@
 <?php
+use YAWK\alert;
+use YAWK\backend;
+use YAWK\db;
+use YAWK\language;
+use YAWK\widget;
+
+/** @var $db db */
+/** @var $lang language */
+
 if (!isset($widget))
 {   // create new widget object
-    $widget = new \YAWK\widget();
+    $widget = new widget();
 }
 // load properties for given widget
 if (isset($_GET['widget']) && (!empty($_GET['widget'])) && (isset($_GET['published']) && (!empty($_GET['published']))))
@@ -24,9 +33,9 @@ else
 // now toggle it
 if($widget->toggleOffline($db, $_GET['widget'], $widget->published))
   {   // all good, redirect to widget overview
-      \YAWK\backend::setTimeout("index.php?page=widgets",0);
+      backend::setTimeout("index.php?page=widgets",0);
   }
   else
   {   // q failed, throw error
-      print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[WIDGET_TOGGLE_FAILED]", "page=widgets","4800");
+      print alert::draw("danger", "$lang[ERROR]", "$lang[WIDGET_TOGGLE_FAILED]", "page=widgets","4800");
   }

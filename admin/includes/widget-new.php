@@ -1,4 +1,12 @@
 <?php
+
+use YAWK\backend;
+use YAWK\db;
+use YAWK\language;
+
+/** @var $db db */
+/** @var $lang language */
+
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
     <!-- Content Wrapper. Contains page content -->
@@ -6,7 +14,7 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 /* draw Title on top */
-echo \YAWK\backend::getTitle($lang['WIDGET+'], $lang['WIDGETS+_SUBTEXT']);
+echo backend::getTitle($lang['WIDGET+'], $lang['WIDGETS+_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
             <li><a href=\"index.php?page=widgets\" title=\"$lang[WIDGETS]\"> $lang[WIDGETS]</a></li>

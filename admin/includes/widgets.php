@@ -1,20 +1,31 @@
  <?php
+
+ use YAWK\alert;
+ use YAWK\backend;
+ use YAWK\db;
+ use YAWK\language;
+ use YAWK\sys;
+ use YAWK\widget;
+
+ /** @var $db db */
+ /** @var $lang language */
+
 // ADD WIDGET
 if (isset($_GET['add']) && ($_GET['add'] === "1"))
 {   // prepare vars
     $pageID = $db->quote($_POST['pageID']);
     $widgetType = $db->quote($_POST['widgetType']);
     $positions = $db->quote($_POST['positions']);
-    $date_publish = \YAWK\sys::now();
+    $date_publish = sys::now();
 
-    $newWidgetID = YAWK\widget::create($db, $widgetType, $pageID, $positions);
+    $newWidgetID = widget::create($db, $widgetType, $pageID, $positions);
     if (is_int($newWidgetID) || (is_numeric($newWidgetID)))
     {    // success
-        print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[WIDGET_CREATE_OK]", "page=widget-edit&widget=$newWidgetID", 800);
+        print alert::draw("success", "$lang[SUCCESS]", "$lang[WIDGET_CREATE_OK]", "page=widget-edit&widget=$newWidgetID", 800);
     }
     else
     {   // throw error
-        print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[WIDGET_CREATE_FAILED]<br>Widget ID: $newWidgetID", "", 5800);
+        print alert::draw("danger", "$lang[ERROR]", "$lang[WIDGET_CREATE_FAILED]<br>Widget ID: $newWidgetID", "", 5800);
     }
 }
 
@@ -26,11 +37,11 @@ if (isset($_GET['add']) && ($_GET['add'] === "1"))
 if(isset($_GET['copy']) && ($_GET['copy'] === "true")) {
      if ($widget->copy($db, $_GET['widget']))
      {   // widget copied
-         print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[WIDGET] $lang[ID]: ".$_GET['widget']." $lang[COPIED]","page=widgets","1800");
+         print alert::draw("success", "$lang[SUCCESS]", "$lang[WIDGET] $lang[ID]: ".$_GET['widget']." $lang[COPIED]","page=widgets","1800");
      }
      else
      {   // throw error
-         print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[WIDGET] ".$_GET['widget']." $lang[ID] <b>$lang[NOT] $lang[COPIED]</b>","page=widgets","4800");
+         print alert::draw("danger", "$lang[ERROR]", "$lang[WIDGET] ".$_GET['widget']." $lang[ID] <b>$lang[NOT] $lang[COPIED]</b>","page=widgets","4800");
      }
  }
 
@@ -45,7 +56,7 @@ if (isset($_GET['del']) && ($_GET['del'] === "1"))
     }
     else
     {   // q failed, throw error
-      \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[WIDGET_DEL_FAILED] $lang[WIDGET] $lang[ID]: ".$_GET['widget']."","","5800");
+      alert::draw("danger", "$lang[ERROR]", "$lang[WIDGET_DEL_FAILED] $lang[WIDGET] $lang[ID]: ".$_GET['widget']."","","5800");
     }
   }
 }
@@ -70,7 +81,7 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 /* draw Title on top */
-echo \YAWK\backend::getTitle($lang['WIDGETS'], $lang['WIDGETS_SUBTEXT']);
+echo backend::getTitle($lang['WIDGETS'], $lang['WIDGETS_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
             <li class=\"active\"><a href=\"index.php?page=widgets\" title=\"$lang[WIDGETS]\"> $lang[WIDGETS]</a></li>
@@ -83,21 +94,21 @@ echo"<ol class=\"breadcrumb\">
 
 <div class="box box-default">
     <div class="box-body">
-<a class="btn btn-success pull-right" title="<?php $lang['WIDGET+']; ?>" href="index.php?page=widget-new">
+<a class="btn btn-success pull-right" title="<?php echo $lang['WIDGET+']; ?>" href="index.php?page=widget-new">
 <i class="glyphicon glyphicon-plus"></i> &nbsp;<?php print $lang['WIDGET']; ?></a>
-<a class="btn btn-success pull-right" title="<?php $lang['WIDGET_MANAGER']; ?>" href="index.php?page=widgets-manage">
+<a class="btn btn-success pull-right" title="<?php echo $lang['WIDGET_MANAGER']; ?>" href="index.php?page=widgets-manage">
 <i class="glyphicon glyphicon-folder-open"></i> &nbsp;&nbsp;<?php print $lang['WIDGET_MANAGER']; ?></a>
 
-<table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-striped table-hover table-responsive" id="table-sort">
+<table style="width: 100%;" class="table table-striped table-hover table-responsive" id="table-sort">
   <thead>
     <tr>
-      <td width="3%"><strong>&nbsp;</strong></td>
-      <td width="5%" class="text-center"><strong><?php echo "$lang[ID]"; ?></strong></td>
-      <td width="25%"><strong><?php echo "$lang[WIDGET]"; ?></strong></td>
-      <td width="30%"><strong><?php echo "$lang[PAGE]"; ?></strong></td>
-      <td width="7%" class="text-center"><strong><?php echo "$lang[SORTATION]"; ?></strong></td>
-      <td width="20%" class="text-center"><strong><?php echo "$lang[POSITION]"; ?></strong></td>
-      <td width="10%" class="text-center"><strong><?php echo "$lang[ACTIONS]"; ?></strong></td>
+      <td style="width: 3%;"><strong>&nbsp;</strong></td>
+      <td style="width: 5%;" class="text-center"><strong><?php echo "$lang[ID]"; ?></strong></td>
+      <td style="width: 25%;"><strong><?php echo "$lang[WIDGET]"; ?></strong></td>
+      <td style="width: 30%;"><strong><?php echo "$lang[PAGE]"; ?></strong></td>
+      <td style="width: 7%;" class="text-center"><strong><?php echo "$lang[SORTATION]"; ?></strong></td>
+      <td style="width: 20%;" class="text-center"><strong><?php echo "$lang[POSITION]"; ?></strong></td>
+      <td style="width: 10%;" class="text-center"><strong><?php echo "$lang[ACTIONS]"; ?></strong></td>
     </tr>
   </thead>
   <tbody>

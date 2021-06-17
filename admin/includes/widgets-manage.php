@@ -1,7 +1,14 @@
 <?php
-/**
- * Copyright (C) Daniel Retzl
- */
+
+use YAWK\alert;
+use YAWK\backend;
+use YAWK\db;
+use YAWK\language;
+use YAWK\sys;
+use YAWK\widget;
+
+/** @var $db db */
+/** @var $lang language */
 
 // ADD WIDGET
 if (isset($_GET['add']) && ($_GET['add'] === "1"))
@@ -9,16 +16,16 @@ if (isset($_GET['add']) && ($_GET['add'] === "1"))
     $pageID = $db->quote($_POST['pageID']);
     $widgetType = $db->quote($_POST['widgetType']);
     $positions = $db->quote($_POST['positions']);
-    $date_publish = \YAWK\sys::now();
+    $date_publish = sys::now();
 
-    $newWidgetID = YAWK\widget::create($db, $widgetType, $pageID, $positions);
+    $newWidgetID = widget::create($db, $widgetType, $pageID, $positions);
     if (is_int($newWidgetID) || (is_numeric($newWidgetID)))
     {    // success
-        print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[WIDGET_CREATE_OK]", "page=widget-edit&widget=$newWidgetID", 800);
+        print alert::draw("success", "$lang[SUCCESS]", "$lang[WIDGET_CREATE_OK]", "page=widget-edit&widget=$newWidgetID", 800);
     }
     else
     {   // throw error
-        print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[WIDGET_CREATE_FAILED]", "", 5800);
+        print alert::draw("danger", "$lang[ERROR]", "$lang[WIDGET_CREATE_FAILED]", "", 5800);
     }
 }
 
@@ -27,17 +34,17 @@ if (isset($_GET['del']) && ($_GET['del'] === "1"))
 {
     if (!isset($widget))
     {   // create new widget obj
-        $widget = new YAWK\widget();
+        $widget = new widget();
     }
     if (isset($_GET['widget']) && (isset($_GET['delete']) && ($_GET['delete'] == "true")))
     {   // delete widget
         if($widget->delete($db, $_GET['widget']))
         {   // delete successful
-            YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[WIDGET] $lang[ID]: ".$_GET['widget']." $lang[DELETED]","","800");
+            alert::draw("success", "$lang[SUCCESS]", "$lang[WIDGET] $lang[ID]: ".$_GET['widget']." $lang[DELETED]","","800");
         }
         else
         {   // q failed, throw error
-            \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[WIDGET_DEL_FAILED] $lang[WIDGET] $lang[ID]: ".$_GET['widget']."","","5800");
+            alert::draw("danger", "$lang[ERROR]", "$lang[WIDGET_DEL_FAILED] $lang[WIDGET] $lang[ID]: ".$_GET['widget']."","","5800");
         }
     }
 }
@@ -62,7 +69,7 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 /* draw Title on top */
-echo \YAWK\backend::getTitle($lang['WIDGET_MANAGER'], $lang['WIDGET_MANAGER_SUBTEXT']);
+echo backend::getTitle($lang['WIDGET_MANAGER'], $lang['WIDGET_MANAGER_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
             <li><a href=\"index.php?page=widgets\" title=\"$lang[WIDGETS]\"> $lang[WIDGETS]</a></li>
@@ -76,17 +83,17 @@ echo"<ol class=\"breadcrumb\">
 
 <div class="box box-default">
     <div class="box-body">
-        <a class="btn btn-success pull-right" title="<?php $lang['WIDGET+']; ?>" href="index.php?page=widget-new">
-            <i class="glyphicon glyphicon-download-alt"></i> &nbsp;&nbsp;<?php print $lang['WIDGET_INSTALL']; ?></a>
+        <a class="btn btn-success pull-right" title="<?php echo $lang['WIDGET+']; ?>" href="index.php?page=widget-new">
+            <i class="glyphicon glyphicon-download-alt"></i> &nbsp;&nbsp;<?php echo $lang['WIDGET_INSTALL']; ?></a>
 
-        <table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-striped table-hover table-responsive" id="table-sort">
+        <table style="width: 100%" class="table table-striped table-hover table-responsive" id="table-sort">
             <thead>
             <tr>
-                <td width="5%" class="text-center"><strong><?php echo "$lang[STATUS]"; ?></strong></td>
-                <td width="5%" class="text-center"><strong><?php echo "$lang[ID]"; ?></strong></td>
-                <td width="20%"><strong><?php echo "$lang[WIDGET]"; ?></strong></td>
-                <td width="60%"><strong><?php echo "$lang[DESCRIPTION]"; ?></strong></td>
-                <td width="10%" class="text-center"><strong><?php echo "$lang[ACTIONS]"; ?></strong></td>
+                <td style="width: 5%;" class="text-center"><strong><?php echo "$lang[STATUS]"; ?></strong></td>
+                <td style="width: 5%;" class="text-center"><strong><?php echo "$lang[ID]"; ?></strong></td>
+                <td style="width: 20%;"><strong><?php echo "$lang[WIDGET]"; ?></strong></td>
+                <td style="width: 60%;"><strong><?php echo "$lang[DESCRIPTION]"; ?></strong></td>
+                <td style="width: 10%;" class="text-center"><strong><?php echo "$lang[ACTIONS]"; ?></strong></td>
             </tr>
             </thead>
             <tbody>
@@ -107,7 +114,7 @@ echo"<ol class=\"breadcrumb\">
                     echo "<tr>
                 <td class=\"text-center\"><i class=\"label label-$pub\">$pubtext</i></td>
                 <td class=\"text-center\">".$row['id']."</td>
-                <td><a href=\"index.php?page=widget-edit&widget=".$row['id']."\"><div style=\"width:100%\">".$row['name']."<br></div></a>
+                <td><a href=\"index.php?page=widget-edit&widget=".$row['id']."\"><div style=\"width:100%;\">".$row['name']."<br></div></a>
                 <small>system/widgets/<b>".$row['folder']."</b></small>
                 </td>
                 

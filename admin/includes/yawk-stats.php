@@ -1,5 +1,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <?php
+
+use YAWK\backend;
+use YAWK\db;
+use YAWK\language;
+use YAWK\sys;
+
+/** @var $db db */
+/** @var $lang language */
+
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
     <!-- Content Wrapper. Contains page content -->
@@ -7,7 +16,7 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 /* draw Title on top */
-echo \YAWK\backend::getTitle($lang['STATS'], $lang['STATS_SUBTEXT']);
+echo backend::getTitle($lang['STATS'], $lang['STATS_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
             <li class=\"active\"><a href=\"index.php?page=yawk-stats\" title=\"Pages\"> Statistics</a></li>
@@ -28,13 +37,11 @@ echo"<ol class=\"breadcrumb\">
 </div>
 <div class="col-md-4">
     <?php
-    /*
-    if (\YAWK\sys::isBrowscapSet($_SERVER['HTTP_USER_AGENT']) === false)
+    if (sys::isBrowscapSet($_SERVER['HTTP_USER_AGENT']) === false)
     {
-      echo "Your Browser: <b>".\YAWK\sys::getBrowserName($_SERVER['HTTP_USER_AGENT'])."</b>";
+      echo "Your Browser: <b>". sys::getBrowserName($_SERVER['HTTP_USER_AGENT'])."</b>";
     }
-    */
-    $useragent = \YAWK\sys::getBrowser('');
+    $useragent = sys::getBrowser('');
     echo "<h4>Browser Statistik </h4>Your browser: "."<b>". $useragent['name'] . " " . $useragent['version'] . " on " .$useragent['platform'] ."</b><br><br>";
 
     echo "<h4>User Statistik</h4>Referer: ".$_SERVER['HTTP_REFERER']."<br>";
@@ -47,12 +54,12 @@ echo"<ol class=\"breadcrumb\">
 
     // SET VARS
     $FILE_PATH = "../"; // full path
-    $data = \YAWK\sys::countCodeLines($FILE_PATH, '.php');
+    $data = sys::countCodeLines($FILE_PATH, '.php');
 
     echo"<br>YaWK ($FILE_PATH) umfasst insgesamt <b>$data[files]</b> $data[type] files mit exakt <b>$data[lines]</b> Zeilen $data[type] Code</p><br>";
 
     echo "<h4>Server Statistik</h4>";
-    if (\YAWK\sys::checkZlib() === true)
+    if (sys::checkZlib() === true)
     {   // output
         echo "<p>...zlib found!</p>";
     }
