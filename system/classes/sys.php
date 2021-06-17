@@ -1997,7 +1997,7 @@ namespace YAWK {
             $log_date = sys::now();
 
             // check if syslog is enabled
-            if (\YAWK\settings::getSetting($db, "syslogEnable") === "1")
+            if (\YAWK\settings::getSetting($db, "syslogEnable") == "1")
             {
                 // check if log_category is empty
                 if (!isset($log_category) || (empty($log_category) || ($log_category === "0")))

@@ -1,5 +1,7 @@
 <?php
 namespace YAWK\FRAMEWORK {
+use YAWK\language;
+
     /**
      * <b>Bootstrap CSS check version + return corresponding css</b>
      * <p>This is a helper function, used by admin/includes/template-save.php.
@@ -25,6 +27,7 @@ namespace YAWK\FRAMEWORK {
         // call constructor on object creation
         public function __construct($version, $tplSettings)
         {
+            /** @var $lang language */
             // check if bootstrap version is set
             if (isset($version) && (is_string($version) && (!empty($version))))
             {

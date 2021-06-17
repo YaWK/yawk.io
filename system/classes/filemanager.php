@@ -65,13 +65,13 @@ namespace YAWK {
             }
 
             print $backBtn;
-            print "<table width=\"100%\" cellpadding=\"4\" cellspacing=\"0\" border=\"0\" class=\"table table-responsive table-hover\" id=\"table-sort$i\">
+            print "<table style=\"width:100%;\" class=\"table table-responsive table-hover\" id=\"table-sort$i\">
   <thead>
     <tr>
-      <td width=\"10%\" class=\"text-right\"><b>$lang[FILEMAN_SIZE]</b></td>
-      <td width=\"70%\" class=\"text-left\"><b>$lang[FILEMAN_FILENAME]</b></td>
-      <td width=\"10%\" class=\"text-center\"><b>$lang[FILEMAN_RIGHTS]</b></td>
-      <td width=\"10%\" class=\"text-center\"><b>$lang[ACTIONS]</b></td>
+      <td style=\"width:10%;\" class=\"text-right\"><b>$lang[FILEMAN_SIZE]</b></td>
+      <td style=\"width:70%;\" class=\"text-left\"><b>$lang[FILEMAN_FILENAME]</b></td>
+      <td style=\"width:10%;\" class=\"text-center\"><b>$lang[FILEMAN_RIGHTS]</b></td>
+      <td style=\"width:10%;\" class=\"text-center\"><b>$lang[ACTIONS]</b></td>
     </tr>
   </thead>
   <tbody>";

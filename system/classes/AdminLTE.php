@@ -31,17 +31,17 @@ namespace YAWK {
          */
         public function __construct($db){
             // get skin setting
-            $this->backendSkin = \YAWK\settings::getSetting($db, "backendSkin");
+            $this->backendSkin = settings::getSetting($db, "backendSkin");
             if (empty($this->backendSkin)){
                 $this->backendSkin = "skin-blue"; // default
             }
             // get layout setting
-            $this->backendLayout = \YAWK\settings::getSetting($db, "backendLayout");
+            $this->backendLayout = settings::getSetting($db, "backendLayout");
             if (empty($this->backendLayout)){
                 $this->backendSkin = "sidebar-mini"; // default
             }
             // get pace loading setting
-            if (\YAWK\settings::getSetting($db, "paceLoader") == "enabled")
+            if (settings::getSetting($db, "paceLoader") == "enabled")
             {
                 $this->paceLoader = "
                     <!-- PACE JS -->
@@ -49,8 +49,8 @@ namespace YAWK {
                     <!-- PACE.css-->
                     <link rel=\"stylesheet\" href=\"../system/engines/pace/pace-minimal.css\">";
 
-                $paceLoaderColor = "background: #".\YAWK\settings::getSetting($db, "paceLoaderColor").";";
-                $paceLoaderHeight = "height: ".\YAWK\settings::getSetting($db, "paceLoaderHeight");
+                $paceLoaderColor = "background: #". settings::getSetting($db, "paceLoaderColor").";";
+                $paceLoaderHeight = "height: ". settings::getSetting($db, "paceLoaderHeight");
                 if (isset($paceLoaderColor) || (!empty($paceLoaderColor)))
                 {
                     $this->paceLoader .= "
@@ -273,9 +273,9 @@ namespace YAWK {
             if ($this->backendLayout === "layout-top-nav"){
                 return null;
             }
-            if (\YAWK\settings::getSetting($db, "backendLogoUrl") === "1")
+            if (settings::getSetting($db, "backendLogoUrl") === "1")
             {   // URL is requested, -> get hostname (project URL)
-                $host = \YAWK\settings::getSetting($db, "host");
+                $host = settings::getSetting($db, "host");
                 $chars = (strlen($host));
                 if ($chars <= 24)
                 {
@@ -288,8 +288,8 @@ namespace YAWK {
             }
             else
                 {   // personal text requestet, -> get logo text + subtext
-                    $logoText = "<b>".\YAWK\settings::getSetting($db, "backendLogoText")."</b>";
-                    $logoText .= \YAWK\settings::getSetting($db, "backendLogoSubText");
+                    $logoText = "<b>". settings::getSetting($db, "backendLogoText")."</b>";
+                    $logoText .= settings::getSetting($db, "backendLogoSubText");
                 }
             echo "<!-- Logo -->
             <a href=\"../index.html\" class=\"logo\" title=\"$lang[GOTO_WEBSITE]\" target=\"_blank\">
@@ -523,7 +523,7 @@ namespace YAWK {
         {
             // count + return unread messages
             // get imap settings
-            $webmailSettings = \YAWK\settings::getValueSettingsArray($db, "webmail_imap_");
+            $webmailSettings = settings::getValueSettingsArray($db, "webmail_imap_");
             $server = $webmailSettings['webmail_imap_server'];
             $port = $webmailSettings['webmail_imap_port'];
             $encrypt = $webmailSettings['webmail_imap_encrypt'];
@@ -1331,9 +1331,9 @@ namespace YAWK {
          */
         function drawHtmlFooter($db)
         {   /* @var $db \YAWK\db */
-            $copyright = \YAWK\settings::getSetting($db, "backendFooterCopyright");
-            $valueLeft = \YAWK\settings::getSetting($db, "backendFooterValueLeft");
-            $valueRight = \YAWK\settings::getSetting($db, "backendFooterValueRight");
+            $copyright = settings::getSetting($db, "backendFooterCopyright");
+            $valueLeft = settings::getSetting($db, "backendFooterValueLeft");
+            $valueRight = settings::getSetting($db, "backendFooterValueRight");
 
             if (isset($valueLeft) && (!empty($valueLeft)))
             {   // left value
@@ -1350,9 +1350,9 @@ namespace YAWK {
             // check if copyright is enabled
             if ($copyright === "1")
             {   // get host and display copyright information
-                $host = \YAWK\settings::getSetting($db, "host");
+                $host = settings::getSetting($db, "host");
                 $leftValue = "<strong>Copyright &copy; ".date("Y")." <a href=\"https://github.com/YaWK/yawk-cms\" target=\"_blank\">YaWK CMS</a> </strong><small> All rights reserved. </small>";
-                $rightValue = "Yet another Web Kit v".\YAWK\settings::getSetting($db, "yawkversion")."";
+                $rightValue = "Yet another Web Kit v". settings::getSetting($db, "yawkversion")."";
             }
 
             // output footer data
@@ -1490,11 +1490,11 @@ namespace YAWK {
         function drawHtmlEnd($db){
             global $loadingTime;
             /* SetUp backend effects */
-            if(\YAWK\settings::getSetting($db, "backendFX") >= 1) { /* set time & type */
-                \YAWK\backend::getFX($db, \YAWK\settings::getSetting($db, "backendFXtime"), \YAWK\settings::getSetting($db, "backendFXtype"));
+            if(settings::getSetting($db, "backendFX") >= 1) { /* set time & type */
+                \YAWK\backend::getFX($db, settings::getSetting($db, "backendFXtime"), settings::getSetting($db, "backendFXtype"));
             }
             /* display script running time */
-            if (\YAWK\settings::getSetting($db, "loadingTime") === '1') {
+            if (settings::getSetting($db, "loadingTime") === '1') {
                 echo \YAWK\sys::getLoadingTime($loadingTime);
             }
 
