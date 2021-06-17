@@ -81,7 +81,8 @@ if(!isset($_POST['widgetType'])){
                   <option value=""></option>
                   <?php
                   $i = 0;
-                  foreach(YAWK\template::getTemplatePositions($db) as $position[]){
+                  foreach(YAWK\template::getTemplatePositions($db) as $positions){
+                      $position[] = $positions;
                       echo "<option value=\"".$position[$i]."\"";
 
                       if (isset($_POST['positions'])) {
