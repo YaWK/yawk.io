@@ -1,6 +1,12 @@
-
 <?php
 
+use YAWK\backend;
+use YAWK\db;
+use YAWK\language;
+use YAWK\sys;
+
+/** @var $db db */
+/** @var $lang language */
 
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
@@ -9,8 +15,8 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 // draw Title on top
-echo \YAWK\backend::getTitle($lang['SETTINGS'], $lang['INFO']);
-echo \YAWK\backend::getSettingsBreadcrumbs($lang);
+echo backend::getTitle($lang['SETTINGS'], $lang['INFO']);
+echo backend::getSettingsBreadcrumbs($lang);
 echo"</section><!-- Main content -->
     <section class=\"content\">";
 /* page content start here */
@@ -40,7 +46,7 @@ echo"</section><!-- Main content -->
                 </div>
                 <div class="box-body">
                 <?php
-                    \YAWK\sys::drawPhpInfo($lang);
+                    sys::drawPhpInfo($lang);
                 ?>
                 </div>
             </div>

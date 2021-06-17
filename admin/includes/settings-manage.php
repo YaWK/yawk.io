@@ -1,9 +1,17 @@
 <?php
+use YAWK\alert;
+use YAWK\backend;
+use YAWK\db;
+use YAWK\language;
+use YAWK\settings;
+/** @var $db db */
+/** @var $lang language */
+
 if (isset($_GET['save']) AND $_GET['save'] === 'true') {
 
     foreach ($_POST as $property => $value) {
         if ($property != "save") {
-            \YAWK\settings::setSetting($db, $property, $value, $lang);
+            settings::setSetting($db, $property, $value, $lang);
         }
     }
 }
@@ -20,7 +28,7 @@ if (isset($_GET['toggle']) AND $_GET['toggle'] === 'true')
         }
     if(!YAWK\settings::toggleOffline($db, $_GET['property'], $activated, $lang))
     {
-        \YAWK\alert::draw("danger", "$lang[ERROR]", "Could not toggle page $_GET[property]", "", 2000);
+        alert::draw("danger", "$lang[ERROR]", "Could not toggle page $_GET[property]", "", 2000);
     }
 }
 
@@ -45,7 +53,7 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 /* draw Title on top */
-echo \YAWK\backend::getTitle($lang['SETTINGS_EXPERT'], $lang['SETTINGS_EXPERT_SUBTEXT']);
+echo backend::getTitle($lang['SETTINGS_EXPERT'], $lang['SETTINGS_EXPERT_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
             <li><a href=\"index.php?page=settings-backend\" class=\"active\" title=\"$lang[BACKEND_SETTINGS] $lang[BACKEND_SETTINGS_SUBTEXT]\"> $lang[BACKEND_SETTINGS] $lang[BACKEND_SETTINGS_SUBTEXT]</a></li>
@@ -59,14 +67,14 @@ echo"<ol class=\"breadcrumb\">
 <form name="settings" action="index.php?page=settings-manage&save=true" method="post">
 <input type="submit" name="save" class="btn btn-success pull-right" value="<?php print $lang['SETTINGS_SAVE'];?>">
 
-<table width="100%" cellpadding="4" cellspacing="0" border="0" class="table table-striped table-hover table-responsive" id="table-sort">
+<table style="100%;" class="table table-striped table-hover table-responsive" id="table-sort">
   <thead>
     <tr>
-      <td width="3%"><strong>&nbsp;</strong></td>
-      <td width="20%"><strong><i class="fa fa-caret-down"></i> <?php print $lang['SETTING']; ?></strong></td>
-      <td width="27%"><strong><i class="fa fa-caret-down"></i> <?php print $lang['SETTING_VALUE']; ?></strong></td>
-      <td width="25%"><strong><?php print $lang['LABEL']; ?></strong></td>
-      <td width="25%"><strong><?php print $lang['DESCRIPTION']; ?></strong></td>
+      <td style="3%;"><strong>&nbsp;</strong></td>
+      <td style="20%;"><strong><i class="fa fa-caret-down"></i> <?php print $lang['SETTING']; ?></strong></td>
+      <td style="27%;"><strong><i class="fa fa-caret-down"></i> <?php print $lang['SETTING_VALUE']; ?></strong></td>
+      <td style="25%;"><strong><?php print $lang['LABEL']; ?></strong></td>
+      <td style="25%;"><strong><?php print $lang['DESCRIPTION']; ?></strong></td>
     </tr>
   </thead>
   <tbody>
@@ -74,10 +82,6 @@ echo"<ol class=\"breadcrumb\">
 if (isset($_GET['type']) && (is_numeric($_GET['type'])))
 {
     $type = $_GET['type'];
-}
-else
-{
-
 }
   /* query database and select settings */
     if ($res = $db->query("SELECT * FROM {settings}"))

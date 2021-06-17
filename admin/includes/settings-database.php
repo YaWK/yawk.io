@@ -1,6 +1,14 @@
 <?php
+
+use YAWK\backend;
+use YAWK\db;
+use YAWK\language;
+use YAWK\settings;
+
+/** @var $db db */
+/** @var $lang language */
 // get all template settings into array
-$settings = \YAWK\settings::getAllSettingsIntoArray($db);
+$settings = settings::getAllSettingsIntoArray($db);
 
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
@@ -9,8 +17,8 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 // draw Title on top
-echo \YAWK\backend::getTitle($lang['DATABASE'], $lang['SETTINGS']);
-echo \YAWK\backend::getSettingsBreadcrumbs($lang);
+echo backend::getTitle($lang['DATABASE'], $lang['SETTINGS']);
+echo backend::getSettingsBreadcrumbs($lang);
 echo"</section><!-- Main content -->
     <section class=\"content\">";
 /* page content start here */
@@ -70,7 +78,7 @@ echo"</section><!-- Main content -->
             <!-- database settings -->
             <div class="box">
                 <div class="box-body">
-                    <?php \YAWK\settings::getFormElements($db, $settings, 21, $lang); ?>
+                    <?php settings::getFormElements($db, $settings, 21, $lang); ?>
                 </div>
             </div>
         </div>

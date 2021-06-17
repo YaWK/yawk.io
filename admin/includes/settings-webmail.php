@@ -1,5 +1,15 @@
 <script type="text/javascript" src="../system/engines/jquery/bootstrap-tabcollapse.js"></script>
 <?php
+
+use YAWK\alert;
+use YAWK\backend;
+use YAWK\db;
+use YAWK\language;
+use YAWK\settings;
+use YAWK\sys;
+/** @var $db db */
+/** @var $lang language */
+
 // SAVE tpl settings
 if(isset($_POST['save']))
 {   // loop through all $_POST items
@@ -9,22 +19,22 @@ if(isset($_POST['save']))
         {   // check setting and call corresponding function
             if (substr($property, -5, 5) == '-long')
             {   // LONG VALUE SETTINGS
-                if (!\YAWK\settings::setLongSetting($db, $property, $value))
+                if (!settings::setLongSetting($db, $property, $value))
                 {   // throw error
-                    \YAWK\alert::draw("warning", "Error", "Long Settings: Could not set long value <b>$value</b> of property <b>$property</b>","plugin=signup","4800");
+                    alert::draw("warning", "Error", "Long Settings: Could not set long value <b>$value</b> of property <b>$property</b>","plugin=signup","4800");
                 }
             }
             else
             {   // save value of property to database
-                \YAWK\settings::setSetting($db, $property, $value, $lang);
+                settings::setSetting($db, $property, $value, $lang);
             }
         }
     }
     // load page again to show changes immediately
-    \YAWK\sys::setTimeout("index.php?page=settings-webmail", 0);
+    sys::setTimeout("index.php?page=settings-webmail", 0);
 }
 // get all template settings into array
-$settings = \YAWK\settings::getAllSettingsIntoArray($db);
+$settings = settings::getAllSettingsIntoArray($db);
 
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
@@ -33,8 +43,8 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 // draw Title on top
-echo \YAWK\backend::getTitle($lang['SETTINGS'], $lang['WEBMAIL']);
-echo \YAWK\backend::getSettingsBreadcrumbs($lang);
+echo backend::getTitle($lang['SETTINGS'], $lang['WEBMAIL']);
+echo backend::getSettingsBreadcrumbs($lang);
 echo"</section><!-- Main content -->
     <section class=\"content\">";
 /* page content start here */
@@ -69,7 +79,7 @@ echo"</section><!-- Main content -->
                     <div class="box">
                         <div class="box-body">
                             <!-- email account settings -->
-                            <?php \YAWK\settings::getFormElements($db, $settings, 23, $lang); ?>
+                            <?php settings::getFormElements($db, $settings, 23, $lang); ?>
                         </div>
                     </div>
                 </div>
@@ -78,7 +88,7 @@ echo"</section><!-- Main content -->
                     <div class="box">
                         <div class="box-body">
                             <!-- webmail settings -->
-                            <?php \YAWK\settings::getFormElements($db, $settings, 24, $lang); ?>
+                            <?php settings::getFormElements($db, $settings, 24, $lang); ?>
                         </div>
                     </div>
                 </div>
@@ -90,14 +100,14 @@ echo"</section><!-- Main content -->
                             <hr>
                             <?php
                             // connect to mailserver only if webmail is set to active
-                            if (\YAWK\settings::getSetting($db, "webmail_active") == true)
+                            if (settings::getSetting($db, "webmail_active") == true)
                             {   // get mailbox settings
-                                $server = \YAWK\settings::getSetting($db, "webmail_imap_server");
-                                $username = \YAWK\settings::getSetting($db, "webmail_imap_username");
-                                $password = \YAWK\settings::getSetting($db, "webmail_imap_password");
-                                $encryption = \YAWK\settings::getSetting($db, "webmail_imap_encrypt");
-                                $port = ":".\YAWK\settings::getSetting($db, "webmail_imap_port")."";
-                                $novalidate = \YAWK\settings::getSetting($db, "webmail_imap_novalidate");
+                                $server = settings::getSetting($db, "webmail_imap_server");
+                                $username = settings::getSetting($db, "webmail_imap_username");
+                                $password = settings::getSetting($db, "webmail_imap_password");
+                                $encryption = settings::getSetting($db, "webmail_imap_encrypt");
+                                $port = ":". settings::getSetting($db, "webmail_imap_port")."";
+                                $novalidate = settings::getSetting($db, "webmail_imap_novalidate");
                                 if (!empty($novalidate)){ $novalidate = "/".$novalidate; } else { $novalidate = ''; }
 
                                 // open connection to mailserver
@@ -171,7 +181,7 @@ echo"</section><!-- Main content -->
             <div class="box">
                 <div class="box-body">
                     <!-- imap server seettings -->
-                    <?php \YAWK\settings::getFormElements($db, $settings, 22, $lang); ?>
+                    <?php settings::getFormElements($db, $settings, 22, $lang); ?>
                 </div>
             </div>
         </div>
@@ -180,7 +190,7 @@ echo"</section><!-- Main content -->
             <div class="box">
                 <div class="box-body">
                     <!-- smtp server seettings -->
-                    <?php \YAWK\settings::getFormElements($db, $settings, 25, $lang); ?>
+                    <?php settings::getFormElements($db, $settings, 25, $lang); ?>
                 </div>
             </div>
         </div>

@@ -1,25 +1,34 @@
 <?php
+use YAWK\alert;
+use YAWK\backend;
+use YAWK\db;
+use YAWK\language;
+use YAWK\settings;
+use YAWK\sys;
+/** @var $db db */
+/** @var $lang language */
+
 // SAVE tpl settings
 if(isset($_POST['save']))
 {
     if (isset($_POST['robotsText-long']) && (!empty($_POST['robotsText-long'])))
     {
-        if (\YAWK\settings::setLongSetting($db, "robotsText-long", $_POST['robotsText-long']))
+        if (settings::setLongSetting($db, "robotsText-long", $_POST['robotsText-long']))
         {
           //  \YAWK\alert::draw("success", $lang['SUCCESS'], "$lang[ROBOTS_TXT] $lang[DATABASE] $lang[SAVED]", "", 2400);
         }
         else
             {
-                \YAWK\alert::draw("danger", $lang['ERROR'], "$lang[ROBOTS_TXT] $lang[DATABASE] $lang[NOT_SAVED]", "", 2400);
+                alert::draw("danger", $lang['ERROR'], "$lang[ROBOTS_TXT] $lang[DATABASE] $lang[NOT_SAVED]", "", 2400);
             }
 
-        if (\YAWK\sys::setRobotsText("../", $_POST['robotsText-long']))
+        if (sys::setRobotsText("../", $_POST['robotsText-long']))
         {
-            \YAWK\alert::draw("success", $lang['SUCCESS'], "$lang[ROBOTS_TXT] $lang[SAVED]", "", 2400);
+            alert::draw("success", $lang['SUCCESS'], "$lang[ROBOTS_TXT] $lang[SAVED]", "", 2400);
         }
         else
         {
-            \YAWK\alert::draw("danger", $lang['ERROR'], "$lang[ROBOTS_TXT] $lang[NOT_SAVED]", "", 3400);
+            alert::draw("danger", $lang['ERROR'], "$lang[ROBOTS_TXT] $lang[NOT_SAVED]", "", 3400);
         }
     }
 
@@ -28,7 +37,7 @@ if(isset($_POST['save']))
 }
 
 // get settings for editor
-$editorSettings = \YAWK\settings::getEditorSettings($db, 14);
+$editorSettings = settings::getEditorSettings($db, 14);
 ?>
 <!-- include summernote css/js-->
 <!-- include codemirror (codemirror.css, codemirror.js, xml.js) -->
@@ -99,8 +108,8 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 // draw Title on top
-echo \YAWK\backend::getTitle($lang['SETTINGS'], $lang['ROBOTS_TXT']);
-echo \YAWK\backend::getSettingsBreadcrumbs($lang);
+echo backend::getTitle($lang['SETTINGS'], $lang['ROBOTS_TXT']);
+echo backend::getSettingsBreadcrumbs($lang);
 echo"</section><!-- Main content -->
     <section class=\"content\">";
 /* page content start here */
@@ -123,7 +132,7 @@ echo"</section><!-- Main content -->
                 <div class="box">
                     <div class="box-body">
                         <label for="summernote"><?php echo $lang['DATA_PRIVACY']."&nbsp;&amp;&nbsp;".$lang['PRIVACY']; ?>  - <small><?php echo $lang['ROBOTS_SUBTEXT']; ?> </small></label>
-                        <?php $content = \YAWK\sys::getRobotsText($db, "../"); ?>
+                        <?php $content = sys::getRobotsText($db, "../"); ?>
                         <textarea name="robotsText-long" cols="64" rows="28" id="summernote"><?php echo $content; ?></textarea>
                     </div>
                 </div>

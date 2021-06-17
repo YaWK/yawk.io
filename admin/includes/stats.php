@@ -15,12 +15,22 @@
     }
 </style>
 <?php
+
+use YAWK\backend;
+use YAWK\dashboard;
+use YAWK\db;
+use YAWK\language;
+use YAWK\stats;
+
+/** @var $db db */
+/** @var $lang language */
+
 // check if stats object is here...
 if (!isset($stats) || (empty($stats)))
 {   // include stats class
     @require_once '../system/classes/stats.php';
     // and create new stats object
-    $stats = new \YAWK\stats();
+    $stats = new stats();
 }
 // check if GET param interval is set
 if (isset($_GET['interval']))
@@ -52,7 +62,7 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 /* draw Title on top */
-echo \YAWK\backend::getTitle($lang['STATS'], $lang['STATS_SUBTEXT']);
+echo backend::getTitle($lang['STATS'], $lang['STATS_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
             <li class=\"active\"><a href=\"index.php?page=yawk-stats\" title=\"$lang[STATS]\"> $lang[STATS]</a></li>
@@ -221,7 +231,7 @@ echo"<ol class=\"breadcrumb\">
             </div>
             <div class="col-md-6">
                 <!-- latest users box -->
-                <?php \YAWK\dashboard::drawLatestUsers($db, 8, $lang); ?>
+                <?php dashboard::drawLatestUsers($db, 8, $lang); ?>
                 <!-- / latest users box -->
             </div>
         </div>
@@ -245,8 +255,8 @@ echo"<ol class=\"breadcrumb\">
 <script type="text/javascript">
     // some jquery magic to remember select option status
     $(document).ready(function() {
-        var getUrlParameter = function getUrlParameter(sParam) {
-            var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        let getUrlParameter = function getUrlParameter(sParam) {
+            let sPageURL = decodeURIComponent(window.location.search.substring(1)),
                 sURLVariables = sPageURL.split('&'),
                 sParameterName,
                 i;
@@ -261,11 +271,11 @@ echo"<ol class=\"breadcrumb\">
         };
 
         // period select field
-        var periodSelect = $( "#period" );
+        let periodSelect = $( "#period" );
         // interval select field
-        var intervalSelect = $( "#interval" );
+        let intervalSelect = $( "#interval" );
         // submit btn
-        var submitBtn = $( "#refresh" );
+        let submitBtn = $( "#refresh" );
 /*
         // on change of interval select option
         $(intervalSelect).on('change', function() {
@@ -302,8 +312,8 @@ echo"<ol class=\"breadcrumb\">
         $(intervalSelect).val(lastIntervalSelectValue); // change value
 
         // check if there are GET params...
-        var getPeriod = getUrlParameter('period');
-        var getInterval = getUrlParameter('interval');
+        // let getPeriod = getUrlParameter('period');
+        // let getInterval = getUrlParameter('interval');
 
         // $( submitBtn ).trigger( "click" );
         /*

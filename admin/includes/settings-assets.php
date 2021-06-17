@@ -1,4 +1,11 @@
 <?php
+use YAWK\alert;
+use YAWK\backend;
+use YAWK\db;
+use YAWK\language;
+/** @var $db db */
+/** @var $lang language */
+
 // DELETE ASSET
 if (isset($_GET['delete']) && ($_GET['delete'] == 1))
 {   // check if ID is set
@@ -6,11 +13,11 @@ if (isset($_GET['delete']) && ($_GET['delete'] == 1))
     {   // delte asset from db
         if ($db->query("DELETE from {assets_types} WHERE id = $_GET[id]"))
         {   // success, throw msg
-            \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[ASSET_DEL_OK]", "", "800");
+            alert::draw("success", "$lang[SUCCESS]", "$lang[ASSET_DEL_OK]", "", "800");
         }
         else
             {   // failed to delete, throw error msg
-                \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[ASSET_DEL_FAILED]", "", "2600");
+                alert::draw("danger", "$lang[ERROR]", "$lang[ASSET_DEL_FAILED]", "", "2600");
             }
     }
 }
@@ -32,11 +39,11 @@ if (isset($_GET['toggle']) && $_GET['toggle'] == 1)
                             SET published = '" . $published . "'
                             WHERE id = '" . $id . "'")))
     {   // all good, throw success msg
-        \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[ASSET_TOGGLE_OK]", "", "800");
+        alert::draw("success", "$lang[SUCCESS]", "$lang[ASSET_TOGGLE_OK]", "", "800");
     }
     else
     {   // failed to add new asset - throw error msg
-        \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[ASSET_TOGGLE_FAILED]", "", "2600");
+        alert::draw("danger", "$lang[ERROR]", "$lang[ASSET_TOGGLE_FAILED]", "", "2600");
     }
 }
 
@@ -60,11 +67,11 @@ if (isset($_POST) && (!empty($_POST)))
                         VALUES ('".$assetType."', '".$assetName."', '".$property."', '".$internal."', 
                         '".$url1."', '".$url2."', '".$url3."')"))
         {   // all good, throw success msg
-            \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[ASSET_ADD_OK]", "", "1800");
+            alert::draw("success", "$lang[SUCCESS]", "$lang[ASSET_ADD_OK]", "", "1800");
         }
         else
             {   // failed to add new asset - throw error msg
-                \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[ASSET_ADD_FAILED]", "", "2600");
+                alert::draw("danger", "$lang[ERROR]", "$lang[ASSET_ADD_FAILED]", "", "2600");
             }
     }
 
@@ -94,11 +101,11 @@ if (isset($_POST) && (!empty($_POST)))
                                 sortation = '" . $sortation . "'
                             WHERE id = '" . $id . "'")))
         {   // all good, throw success msg
-            \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[ASSET_UPDATE_OK]", "", "800");
+            alert::draw("success", "$lang[SUCCESS]", "$lang[ASSET_UPDATE_OK]", "", "800");
         }
         else
         {   // failed to add new asset - throw error msg
-            \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[ASSET_UPDATE_FAILED]", "", "2600");
+            alert::draw("danger", "$lang[ERROR]", "$lang[ASSET_UPDATE_FAILED]", "", "2600");
         }
     }
 }
@@ -113,8 +120,8 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 // draw Title on top
-echo \YAWK\backend::getTitle($lang['ASSETS'], $lang['SETTINGS']);
-echo \YAWK\backend::getSettingsBreadcrumbs($lang);
+echo backend::getTitle($lang['ASSETS'], $lang['SETTINGS']);
+echo backend::getSettingsBreadcrumbs($lang);
 echo"</section><!-- Main content -->
     <section class=\"content\">";
 /* page content start here */
@@ -129,44 +136,44 @@ echo"</section><!-- Main content -->
 </div>
 <div class="row animated fadeIn">
     <div class="col-md-8">
-                    <?php
-                    $res = $db->query("SELECT * FROM {assets_types} ORDER BY asset");
-                    while ($row = mysqli_fetch_assoc($res))
-                    {
-                        if ($row['published'] == 1)
-                        {
-                            $assetStatus = "<i class=\"label label-success\">$lang[ONLINE]</i>";
-                        }
-                        else
-                            {
-                                $assetStatus = "<i class=\"label label-danger\">$lang[OFFLINE]</i>";
-                            }
+        <?php
+        $res = $db->query("SELECT * FROM {assets_types} ORDER BY asset");
+        while ($row = mysqli_fetch_assoc($res))
+        {
+            if ($row['published'] == 1)
+            {
+                $assetStatus = "<i class=\"label label-success\">$lang[ONLINE]</i>";
+            }
+            else
+                {
+                    $assetStatus = "<i class=\"label label-danger\">$lang[OFFLINE]</i>";
+                }
 
-                        if ($row['type'] == 1)
-                        {
-                            $assetType1Selected = "selected";
-                        }
-                        else
-                            {
-                                $assetType1Selected = '';
-                            }
-                        if ($row['type'] == 2)
-                        {
-                            $assetType2Selected = "selected";
-                        }
-                        else
-                        {
-                            $assetType2Selected = '';
-                        }
-                        if ($row['type'] == 3)
-                        {
-                            $assetType3Selected = "selected";
-                        }
-                        else
-                        {
-                            $assetType3Selected = '';
-                        }
-                        echo "              
+            if ($row['type'] == 1)
+            {
+                $assetType1Selected = "selected";
+            }
+            else
+                {
+                    $assetType1Selected = '';
+                }
+            if ($row['type'] == 2)
+            {
+                $assetType2Selected = "selected";
+            }
+            else
+            {
+                $assetType2Selected = '';
+            }
+            if ($row['type'] == 3)
+            {
+                $assetType3Selected = "selected";
+            }
+            else
+            {
+                $assetType3Selected = '';
+            }
+            echo "              
               <!-- BOX -->
               <div class=\"box box-default collapsed-box\">
                   <div class=\"box-header with-border\">

@@ -1,4 +1,15 @@
 <?php
+
+use YAWK\alert;
+use YAWK\backend;
+use YAWK\db;
+use YAWK\language;
+use YAWK\settings;
+use YAWK\template;
+
+/** @var $db db */
+/** @var $lang language */
+
 // SAVE tpl settings
 if(isset($_POST['save']))
 {
@@ -10,20 +21,20 @@ if(isset($_POST['save']))
             // check setting and call corresponding function
             if (substr($property, -5, 5) == '-long')
             {   // LONG VALUE SETTINGS
-                if (!\YAWK\settings::setLongSetting($db, $property, $value))
+                if (!settings::setLongSetting($db, $property, $value))
                 {   // throw error
-                    \YAWK\alert::draw("warning", "Error", "Long Settings: Could not set long value <b>$value</b> of property <b>$property</b>","plugin=signup","4800");
+                    alert::draw("warning", "Error", "Long Settings: Could not set long value <b>$value</b> of property <b>$property</b>","plugin=signup","4800");
                 }
             }
             else
             {
                 if ($property === "selectedTemplate")
                 {
-                    \YAWK\template::setTemplateActive($db, $value);
+                    template::setTemplateActive($db, $value);
                 }
 
                 // save value of property to database
-                \YAWK\settings::setSetting($db, $property, $value, $lang);
+                settings::setSetting($db, $property, $value, $lang);
             }
         }
     }
@@ -33,7 +44,7 @@ if(isset($_POST['save']))
 ?>
 <?php
 // get all template settings into array
-$settings = \YAWK\settings::getAllSettingsIntoArray($db);
+$settings = settings::getAllSettingsIntoArray($db);
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
     <!-- Content Wrapper. Contains page content -->
@@ -41,8 +52,8 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 // draw Title on top
-echo \YAWK\backend::getTitle($lang['SETTINGS'], $lang['SYSTEM']);
-echo \YAWK\backend::getSettingsBreadcrumbs($lang);
+echo backend::getTitle($lang['SETTINGS'], $lang['SYSTEM']);
+echo backend::getSettingsBreadcrumbs($lang);
 echo"</section><!-- Main content -->
     <section class=\"content\">";
 /* page content start here */
@@ -66,8 +77,8 @@ echo"</section><!-- Main content -->
             <div class="box">
                 <div class="box-body">
                     <h3><?php echo $lang['SERVER']; ?> <small> <?php echo $lang['SERVER_SUBTEXT']; ?></small></h3>
-                    <?php \YAWK\settings::getFormElements($db, $settings, 9, $lang); ?>
-                    <?php \YAWK\settings::getFormElements($db, $settings, 16, $lang); ?>
+                    <?php settings::getFormElements($db, $settings, 9, $lang); ?>
+                    <?php settings::getFormElements($db, $settings, 16, $lang); ?>
                 </div>
             </div>
         </div>
@@ -75,7 +86,7 @@ echo"</section><!-- Main content -->
             <!-- database settings -->
             <div class="box">
                 <div class="box-body">
-                    <?php \YAWK\settings::getFormElements($db, $settings, 13, $lang); ?>
+                    <?php settings::getFormElements($db, $settings, 13, $lang); ?>
                 </div>
             </div>
         </div>
@@ -84,7 +95,7 @@ echo"</section><!-- Main content -->
             <div class="box">
                 <div class="box-body">
                     <h3><i class="fa fa-code"></i> <?php echo $lang['EDITOR']; ?> <small> <?php echo $lang['EDITOR_SUBTEXT']; ?></small></h3>
-                    <?php \YAWK\settings::getFormElements($db, $settings, 14, $lang); ?>
+                    <?php settings::getFormElements($db, $settings, 14, $lang); ?>
                 </div>
             </div>
         </div>

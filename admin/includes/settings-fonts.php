@@ -1,4 +1,12 @@
 <?php
+use YAWK\alert;
+use YAWK\backend;
+use YAWK\db;
+use YAWK\language;
+use YAWK\template;
+/** @var $db db */
+/** @var $lang language */
+
 // FONT ACTIONS.....
 // upload folder
 $fontFolder = "../system/fonts/";
@@ -25,21 +33,21 @@ if (isset($_GET) && (!empty($_GET)))
                         // copy file to font folder
                         if (move_uploaded_file($_FILES['fontFile']['tmp_name'], $uploadFile))
                         {   // upload ok, throw success msg
-                            \YAWK\alert::draw("success", $lang['SUCCESS'], "$lang[UPLOAD_SUCCESSFUL]: $uploadFile", "", 1800);
+                            alert::draw("success", $lang['SUCCESS'], "$lang[UPLOAD_SUCCESSFUL]: $uploadFile", "", 1800);
                         }
                         else
                         {   // file upload failed - throw msg with error code
-                            \YAWK\alert::draw("danger", $lang['ERROR'], "$lang[UPLOAD_FAILED]: $uploadFile $lang[ERROR]: ".$_FILES['fontFile']['error']."", "", 2600);
+                            alert::draw("danger", $lang['ERROR'], "$lang[UPLOAD_FAILED]: $uploadFile $lang[ERROR]: ".$_FILES['fontFile']['error']."", "", 2600);
                         }
                     }
                     else
                         {   // folder does not exist or is not writeable
-                            \YAWK\alert::draw("danger", $lang['ERROR'], "$lang[FILE_UPLOAD_ERROR] $lang[FOLDER]: $uploadFile", "", 4800);
+                            alert::draw("danger", $lang['ERROR'], "$lang[FILE_UPLOAD_ERROR] $lang[FOLDER]: $uploadFile", "", 4800);
                         }
                 }
                 else
                     {   // wrong file type
-                        \YAWK\alert::draw("danger", $lang['ERROR'], "$lang[FONT_WRONG_TYPE]", "", 4600);
+                        alert::draw("danger", $lang['ERROR'], "$lang[FONT_WRONG_TYPE]", "", 4600);
                     }
             }
 
@@ -49,13 +57,13 @@ if (isset($_GET) && (!empty($_GET)))
                 $description = $_POST['gfontDescription'];
                 $gfont = $_POST['gfont'];
                 // add google font
-                if (\YAWK\template::addgfont($db, $gfont,$description) === true)
+                if (template::addgfont($db, $gfont,$description) === true)
                 {   // successful, throw info
-                    \YAWK\alert::draw("success", "$lang[TPL_ADD_GFONT]", "$lang[ADD_SUCCESSFUL]: $_POST[gfont]", '', 1800);
+                    alert::draw("success", "$lang[TPL_ADD_GFONT]", "$lang[ADD_SUCCESSFUL]: $_POST[gfont]", '', 1800);
                 }
                 else
                 {   // add gfont failed - throw error
-                    \YAWK\alert::draw("danger", "$lang[TPL_ADD_GFONT]", "$lang[ADD_FAILED]: $_POST[gfont]", '', 4600);
+                    alert::draw("danger", "$lang[TPL_ADD_GFONT]", "$lang[ADD_FAILED]: $_POST[gfont]", '', 4600);
                 }
             }
         }
@@ -74,46 +82,46 @@ if (isset($_GET) && (!empty($_GET)))
                     {   // try to delete file
                         if (unlink($fontFolder.$_GET['font']))
                         {   // all good, throw success msg
-                            \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[FONT_DEL_OK]: $_GET[font]", "", 1200);
+                            alert::draw("success", "$lang[SUCCESS]", "$lang[FONT_DEL_OK]: $_GET[font]", "", 1200);
                         }
                         else
                             {   // failed to delete file
-                                \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[FONT_DEL_FAILED]", "", 2600);
+                                alert::draw("danger", "$lang[ERROR]", "$lang[FONT_DEL_FAILED]", "", 2600);
                             }
                     }
                     else
                         {   // file does not exist
-                            \YAWK\alert::draw("success", "$lang[ERROR]", "$lang[FILEMAN_FILE_DOES_NOT_EXIST] $fontFolder$_GET[font]", "", 4600);
+                            alert::draw("success", "$lang[ERROR]", "$lang[FILEMAN_FILE_DOES_NOT_EXIST] $fontFolder$_GET[font]", "", 4600);
                         }
                 }
                 else
                     {   // no font was sent - manipulated get vars?!
-                        \YAWK\alert::draw("success", "$lang[ERROR]", "$lang[VARS_MANIPULATED]", "", 4600);
+                        alert::draw("success", "$lang[ERROR]", "$lang[VARS_MANIPULATED]", "", 4600);
                     }
             }
             else
                 {   // it must be a google font...
-                    if (\YAWK\template::deleteGfont($db, '', $_GET['font']) === true)
+                    if (template::deleteGfont($db, '', $_GET['font']) === true)
                     {
-                        \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[FONT_DEL_OK]: $_GET[font]", "", 1200);
+                        alert::draw("success", "$lang[SUCCESS]", "$lang[FONT_DEL_OK]: $_GET[font]", "", 1200);
                     }
                     else
                     {   // failed to delete file
-                        \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[FONT_DEL_FAILED]", "", 2600);
+                        alert::draw("danger", "$lang[ERROR]", "$lang[FONT_DEL_FAILED]", "", 2600);
                     }
                 }
         }
         else
         {   // no type was sent - manipulated get vars?!
-            \YAWK\alert::draw("success", "$lang[ERROR]", "$lang[VARS_MANIPULATED]", "", 4600);
+            alert::draw("success", "$lang[ERROR]", "$lang[VARS_MANIPULATED]", "", 4600);
         }
     }
 }
 
 // load google fonts from database into array
-$googleFonts = \YAWK\template::getGoogleFontsArray($db);
+$googleFonts = template::getGoogleFontsArray($db);
 // load font files from folder to array
-$fontArray = \YAWK\template::getFontsFromFolder($fontFolder);
+$fontArray = template::getFontsFromFolder($fontFolder);
 
 $cssTTF = '';
 $cssOTF = '';
@@ -189,8 +197,8 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 // draw Title on top
-echo \YAWK\backend::getTitle($lang['SETTINGS'], $lang['FONTS']);
-echo \YAWK\backend::getSettingsBreadcrumbs($lang);
+echo backend::getTitle($lang['SETTINGS'], $lang['FONTS']);
+echo backend::getSettingsBreadcrumbs($lang);
 echo"</section><!-- Main content -->
     <section class=\"content\">";
 /* page content start here */
@@ -219,7 +227,7 @@ echo"</section><!-- Main content -->
                     // check if google fonts are set
                     if (isset($googleFonts) && (!empty($googleFonts)))
                     {   // draw google fonts list
-                        \YAWK\backend::drawFontList($googleFonts, $fontFolder, 'Google', $lang);
+                        backend::drawFontList($googleFonts, $fontFolder, 'Google', $lang);
                     }
                     ?>
                 </div>
@@ -236,7 +244,7 @@ echo"</section><!-- Main content -->
                     // check if true type fonts are set
                     if (isset($fontArray['ttf']) && (!empty($fontArray['ttf'])))
                     {   // draw TTF font list
-                        \YAWK\backend::drawFontList($fontArray['ttf'], $fontFolder, '.ttf', $lang);
+                        backend::drawFontList($fontArray['ttf'], $fontFolder, '.ttf', $lang);
                     }
                     ?>
                 </div>
@@ -253,7 +261,7 @@ echo"</section><!-- Main content -->
                     // check if otf fonts are set
                     if (isset($fontArray['otf']) && (!empty($fontArray['otf'])))
                     {   // draw OTF font list
-                        \YAWK\backend::drawFontList($fontArray['otf'], $fontFolder, '.otf', $lang);
+                        backend::drawFontList($fontArray['otf'], $fontFolder, '.otf', $lang);
                     }
                     ?>
                 </div>
@@ -270,7 +278,7 @@ echo"</section><!-- Main content -->
                     // check if woff fonts are set
                     if (isset($fontArray['woff']) && (!empty($fontArray['woff'])))
                     {   // draw WOFF fonts list
-                        \YAWK\backend::drawFontList($fontArray['woff'], $fontFolder, '.woff', $lang);
+                        backend::drawFontList($fontArray['woff'], $fontFolder, '.woff', $lang);
                     }
                     ?>
                 </div>

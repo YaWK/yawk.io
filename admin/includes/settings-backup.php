@@ -1,11 +1,20 @@
 <?php
-/** @var $db \YAWK\db */
+use YAWK\alert;
+use YAWK\backend;
+use YAWK\BACKUP\backup;
+use YAWK\db;
+use YAWK\filemanager;
+use YAWK\language;
+use YAWK\sys;
+/** @var $db db */
+/** @var $lang language */
+
 // include backup class - main methods and helpers
 require_once '../system/classes/backup.php';
 // check if backup object is set
 if (!isset($backup) || (empty($backup)))
 {   // create new backup object
-    $backup = new \YAWK\BACKUP\backup($db);
+    $backup = new backup($db);
 }
 // check if GET data is set
 if (isset($_GET))
@@ -24,31 +33,31 @@ if (isset($_GET))
                 {   // delete file
                     if (unlink($file))
                     {   // file deleted
-                        \YAWK\sys::setSyslog($db, 50, 3, "deleted backup: $file", 0, 0, 0, 0);
-                        \YAWK\alert::draw("success", "$lang[BACKUP_DEL_SUCCESS]", "$lang[DELETED]: $_GET[backupFile]", "", 2600);
+                        sys::setSyslog($db, 50, 3, "deleted backup: $file", 0, 0, 0, 0);
+                        alert::draw("success", "$lang[BACKUP_DEL_SUCCESS]", "$lang[DELETED]: $_GET[backupFile]", "", 2600);
                     }
                     else
                         {   // failed to delete file
-                            \YAWK\sys::setSyslog($db, 52, 2, "failed to delete backup: $file", 0, 0, 0, 0);
-                            \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[BACKUP_DEL_FAILED] $_GET[backupFile]", "", 4200);
+                            sys::setSyslog($db, 52, 2, "failed to delete backup: $file", 0, 0, 0, 0);
+                            alert::draw("danger", "$lang[ERROR]", "$lang[BACKUP_DEL_FAILED] $_GET[backupFile]", "", 4200);
                         }
                 }
                 else
                     {   // file not found - unable to delete
-                        \YAWK\sys::setSyslog($db, 51, 1, "unable to delete backup: $file - file not found", 0, 0, 0, 0);
-                        \YAWK\alert::draw("warning", "$lang[FILE_NOT_FOUND]", "$_GET[backupFolder]$_GET[backupFile] $lang[NOT_FOUND] $lang[FILEMAN_FILE_DOES_NOT_EXIST]", "", 6200);
+                        sys::setSyslog($db, 51, 1, "unable to delete backup: $file - file not found", 0, 0, 0, 0);
+                        alert::draw("warning", "$lang[FILE_NOT_FOUND]", "$_GET[backupFolder]$_GET[backupFile] $lang[NOT_FOUND] $lang[FILEMAN_FILE_DOES_NOT_EXIST]", "", 6200);
                     }
             }
             else
                 {   // backup folder not found
-                    \YAWK\sys::setSyslog($db, 51, 1, "unable to delete backup: $_GET[backupFolder] - folder not found", 0, 0, 0, 0);
-                    \YAWK\alert::draw("warning", "$lang[DIR_NOT_FOUND]", "$_GET[backupFolder] $lang[NOT_FOUND]", "", 6200);
+                    sys::setSyslog($db, 51, 1, "unable to delete backup: $_GET[backupFolder] - folder not found", 0, 0, 0, 0);
+                    alert::draw("warning", "$lang[DIR_NOT_FOUND]", "$_GET[backupFolder] $lang[NOT_FOUND]", "", 6200);
                 }
         }
         else
             {   // backup folder or file not set
-                \YAWK\sys::setSyslog($db, 51, 1, "failed to delete backup: file or folder not set or not valid", 0, 0, 0, 0);
-                \YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[FILE_FOLDER_NOT_SET]", "", 6200);
+                sys::setSyslog($db, 51, 1, "failed to delete backup: file or folder not set or not valid", 0, 0, 0, 0);
+                alert::draw("warning", "$lang[ERROR]", "$lang[FILE_FOLDER_NOT_SET]", "", 6200);
             }
     }
     // check if delete archive folder is requested
@@ -60,22 +69,22 @@ if (isset($_GET))
             // delete this backup file
             if (is_dir($backup->archiveBackupSubFolder))
             {   // path (backup folder and file)
-                if (\YAWK\filemanager::recursiveRemoveDirectory($backup->archiveBackupSubFolder) === true)
+                if (filemanager::recursiveRemoveDirectory($backup->archiveBackupSubFolder) === true)
                 {
-                    \YAWK\sys::setSyslog($db, 50, 3, "deleted complete archive: $backup->archiveBackupSubFolder", 0, 0, 0, 0);
-                    \YAWK\alert::draw("success", "$lang[DELETED]", "$backup->archiveBackupSubFolder", "", 3200);
+                    sys::setSyslog($db, 50, 3, "deleted complete archive: $backup->archiveBackupSubFolder", 0, 0, 0, 0);
+                    alert::draw("success", "$lang[DELETED]", "$backup->archiveBackupSubFolder", "", 3200);
                 }
             }
             else
             {   // archive sub folder not found
-                \YAWK\sys::setSyslog($db, 52, 2, "failed to delete archive: $backup->archiveBackupSubFolder", 0, 0, 0, 0);
-                \YAWK\alert::draw("warning", "$lang[FOLDER_NOT_FOUND]", "$_GET[backupFolder] $lang[NOT_FOUND]", "", 6200);
+                sys::setSyslog($db, 52, 2, "failed to delete archive: $backup->archiveBackupSubFolder", 0, 0, 0, 0);
+                alert::draw("warning", "$lang[FOLDER_NOT_FOUND]", "$_GET[backupFolder] $lang[NOT_FOUND]", "", 6200);
             }
         }
         else
         {   // backup folder or file not set
-            \YAWK\sys::setSyslog($db, 51, 1, "unable to delete archive - archive subfolder not set.", 0, 0, 0, 0);
-            \YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[FILE_FOLDER_NOT_SET]", "", 6200);
+            sys::setSyslog($db, 51, 1, "unable to delete archive - archive subfolder not set.", 0, 0, 0, 0);
+            alert::draw("warning", "$lang[ERROR]", "$lang[FILE_FOLDER_NOT_SET]", "", 6200);
         }
     }
     // check if complete archive folder should be downloaded
@@ -91,25 +100,25 @@ if (isset($_GET))
             {   // zip (backup folder and file)
                 if ($backup->zipFolder($db, $backup->archiveBackupSubFolder, $backup->downloadFolder."$_GET[folder].zip") == true)
                 {   // zipped file / download requested
-                    \YAWK\sys::setSyslog($db, 50, 0, "downloaded: $backup->downloadFolder$_GET[folder].zip", 0, 0, 0, 0);
-                    \YAWK\alert::draw("success", $lang['BACKUP_ZIP_CREATED'], $lang['BACKUP_ZIP_CREATED_MSG'], "", 6200);
+                    sys::setSyslog($db, 50, 0, "downloaded: $backup->downloadFolder$_GET[folder].zip", 0, 0, 0, 0);
+                    alert::draw("success", $lang['BACKUP_ZIP_CREATED'], $lang['BACKUP_ZIP_CREATED_MSG'], "", 6200);
                 }
                 else
                     {   // failed to zip for download
-                        \YAWK\sys::setSyslog($db, 51, 1, "failed to zip $backup->downloadFolder$_GET[folder].zip for downloading", 0, 0, 0, 0);
-                        \YAWK\alert::draw("danger", "$lang[ERROR]", "$_GET[folder] $lang[BACKUP_ZIP_CREATED_FAILED]", "", 6200);
+                        sys::setSyslog($db, 51, 1, "failed to zip $backup->downloadFolder$_GET[folder].zip for downloading", 0, 0, 0, 0);
+                        alert::draw("danger", "$lang[ERROR]", "$_GET[folder] $lang[BACKUP_ZIP_CREATED_FAILED]", "", 6200);
                     }
             }
             else
             {   // archive sub folder not found
-                \YAWK\sys::setSyslog($db, 51, 0, "failed to download: $backup->downloadFolder$_GET[folder].zip - $backup->archiveBackupSubFolder not found.", 0, 0, 0, 0);
-                \YAWK\alert::draw("warning", "$lang[ERROR]", "$_GET[backupFolder] $lang[NOT_FOUND]", "", 6200);
+                sys::setSyslog($db, 51, 0, "failed to download: $backup->downloadFolder$_GET[folder].zip - $backup->archiveBackupSubFolder not found.", 0, 0, 0, 0);
+                alert::draw("warning", "$lang[ERROR]", "$_GET[backupFolder] $lang[NOT_FOUND]", "", 6200);
             }
         }
         else
         {   // backup folder or file not set
-            \YAWK\sys::setSyslog($db, 51, 0, "failed to zip download: folder or file not set", 0, 0, 0, 0);
-            \YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[FILE_FOLDER_NOT_SET]", "", 6200);
+            sys::setSyslog($db, 51, 0, "failed to zip download: folder or file not set", 0, 0, 0, 0);
+            alert::draw("warning", "$lang[ERROR]", "$lang[FILE_FOLDER_NOT_SET]", "", 6200);
         }
     }
 
@@ -174,13 +183,13 @@ if (isset($_GET))
             // all elements processed successful
             if ($totalElements == $successElements)
             {   // restore successful
-                \YAWK\sys::setSyslog($db, 50, 3, "successfully restored $successElements of $totalElements from $_GET[folder]$file", 0, 0, 0, 0);
-                \YAWK\alert::draw("$alertClass", "$lang[SUCCESS]", "$file $alertText $status", "", 6400);
+                sys::setSyslog($db, 50, 3, "successfully restored $successElements of $totalElements from $_GET[folder]$file", 0, 0, 0, 0);
+                alert::draw("$alertClass", "$lang[SUCCESS]", "$file $alertText $status", "", 6400);
             }
             else
             {   // restore failed
-                \YAWK\sys::setSyslog($db, 50, 3, "failed to restore $failedElements of $totalElements from $_GET[folder]$file", 0, 0, 0, 0);
-                \YAWK\alert::draw("$alertClass", "$lang[ERROR]", "$file $alertText $status", "", 6400);
+                sys::setSyslog($db, 50, 3, "failed to restore $failedElements of $totalElements from $_GET[folder]$file", 0, 0, 0, 0);
+                alert::draw("$alertClass", "$lang[ERROR]", "$file $alertText $status", "", 6400);
             }
         }
     }
@@ -243,11 +252,11 @@ if (isset($_POST))
                 // initialize backup
                 if ($backup->init($db) === true)
                 {   // ok, backup successful
-                    \YAWK\alert::draw("success", $lang['BACKUP_SUCCESSFUL'], $lang['BACKUP_SUCCESSFUL_TEXT'], "", 2600);
+                    alert::draw("success", $lang['BACKUP_SUCCESSFUL'], $lang['BACKUP_SUCCESSFUL_TEXT'], "", 2600);
                 }
                 else
                     {   // backup failed
-                        \YAWK\alert::draw("danger", $lang['BACKUP_FAILED'], $lang['BACKUP_FAILED_TEXT'], "", 6400);
+                        alert::draw("danger", $lang['BACKUP_FAILED'], $lang['BACKUP_FAILED_TEXT'], "", 6400);
                     }
             }
             break;
@@ -265,8 +274,8 @@ if (isset($_POST))
                     // try to create new directory
                     if (!mkdir($backup->restoreFolder))
                     {   // failed to create archive sub folder
-                        \YAWK\sys::setSyslog($db, 51, 1, "failed to upload - unable to create $backup->restoreFolder", 0, 0, 0, 0);
-                        \YAWK\alert::draw("success", $_lang['ERROR'], "$backup->restoreFolder $lang[WAS_NOT_CREATED]", "", 2600);
+                        sys::setSyslog($db, 51, 1, "failed to upload - unable to create $backup->restoreFolder", 0, 0, 0, 0);
+                        alert::draw("success", $lang['ERROR'], "$backup->restoreFolder $lang[WAS_NOT_CREATED]", "", 2600);
                     }
                 }
 
@@ -277,59 +286,59 @@ if (isset($_POST))
                 }
                 else
                 {   // no folder was selected - throw error msg
-                    \YAWK\sys::setSyslog($db, 51, 1, "failed to upload - no folder was set", 0, 0, 0, 0);
-                    \YAWK\alert::draw("danger", $_POST['file'], $lang['BACKUP_NO_FOLDER_SELECTED'], "", 6400);
+                    sys::setSyslog($db, 51, 1, "failed to upload - no folder was set", 0, 0, 0, 0);
+                    alert::draw("danger", $_POST['file'], $lang['BACKUP_NO_FOLDER_SELECTED'], "", 6400);
                 }
 
                 // check if restore folder is writeable
                 if (!is_writeable(dirname($backup->restoreFolder)))
                 {   // if not, throw alert message
-                    \YAWK\sys::setSyslog($db, 51, 1, "failed to upload - restore folder $backup->restoreFolder is not writeable. Please check folder permissions", 0, 0, 0, 0);
-                    \YAWK\alert::draw("danger", $lang['BACKUP_FAILED'], $lang['BACKUP_FAILED_WRITE_FOLDER'], "", 6400);
+                    sys::setSyslog($db, 51, 1, "failed to upload - restore folder $backup->restoreFolder is not writeable. Please check folder permissions", 0, 0, 0, 0);
+                    alert::draw("danger", $lang['BACKUP_FAILED'], $lang['BACKUP_FAILED_WRITE_FOLDER'], "", 6400);
                 }
 
                 // set target file name
                 $backup->restoreFile = $backup->restoreFolder . basename($_FILES['backupFile']['name']);
-                $maxFileSize = \YAWK\filemanager::getUploadMaxFilesize();
-                $postMaxSize = \YAWK\filemanager::getPostMaxSize();
+                $maxFileSize = filemanager::getUploadMaxFilesize();
+                $postMaxSize = filemanager::getPostMaxSize();
 
                 // check file size
                 if ($_FILES["backupFile"]["size"] > $maxFileSize || $postMaxSize)
                 {
                     // calculate and filter current filesize
-                    $currentFileSize = \YAWK\filemanager::sizeFilter($_FILES["backupFile"]["size"], 2);
+                    $currentFileSize = filemanager::sizeFilter($_FILES["backupFile"]["size"], 2);
                     // file is too large
-                    \YAWK\sys::setSyslog($db, 51, 1, "failed to upload - $backup->restoreFile ($currentFileSize) exceeeds post_max_size: $postMaxSize upload_max_filesize: $maxFileSize", 0, 0, 0, 0);
-                    echo \YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[FILE_UPLOAD_TOO_LARGE]","","4800");
+                    sys::setSyslog($db, 51, 1, "failed to upload - $backup->restoreFile ($currentFileSize) exceeeds post_max_size: $postMaxSize upload_max_filesize: $maxFileSize", 0, 0, 0, 0);
+                    echo alert::draw("warning", "$lang[ERROR]", "$lang[FILE_UPLOAD_TOO_LARGE]","","4800");
                 }
 
                 // check if file type is ZIP
                 if ($_FILES['backupFile']['type'] !== 'application/x-zip-compressed')
                 {   // if not, throw alert
-                    \YAWK\sys::setSyslog($db, 51, 1, "failed to upload - $backup->restoreFile is not a zip - uploaded filetype: $_FILES[backupFile][type]", 0, 0, 0, 0);
-                    \YAWK\alert::draw("danger", $lang['BACKUP_FAILED'], $lang['BACKUP_NOT_A_ZIP_FILE'], "", 6400);
+                    sys::setSyslog($db, 51, 1, "failed to upload - $backup->restoreFile is not a zip - uploaded filetype: $_FILES[backupFile][type]", 0, 0, 0, 0);
+                    alert::draw("danger", $lang['BACKUP_FAILED'], $lang['BACKUP_NOT_A_ZIP_FILE'], "", 6400);
                 }
 
                 // check if file extension is zip (or similar)
                 $fileType = pathinfo($backup->restoreFile,PATHINFO_EXTENSION);
                 if($fileType != "zip" && $fileType != "ZIP" && $fileType != "7z" && $fileType != "gzip")
                 {
-                    \YAWK\sys::setSyslog($db, 51, 1, "failed to upload file - extension $fileType seems not to be a zip file", 0, 0, 0, 0);
-                    echo \YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[UPLOAD_ONLY_ZIP_ALLOWED]","","4800");
+                    sys::setSyslog($db, 51, 1, "failed to upload file - extension $fileType seems not to be a zip file", 0, 0, 0, 0);
+                    echo alert::draw("warning", "$lang[ERROR]", "$lang[UPLOAD_ONLY_ZIP_ALLOWED]","","4800");
                 }
 
                 // check for errors
                 if ($_FILES['backupFile']['error'] !== 0)
                 {   // unknown error - upload failed
-                    \YAWK\sys::setSyslog($db, 52, 2, "failed to upload file - unknown error ($_FILES[backupFile][error]) processing file $_FILES[backupFile][name]", 0, 0, 0, 0);
-                    echo \YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[FILE_UPLOAD_FAILED]","","4800");
+                    sys::setSyslog($db, 52, 2, "failed to upload file - unknown error ($_FILES[backupFile][error]) processing file $_FILES[backupFile][name]", 0, 0, 0, 0);
+                    echo alert::draw("warning", "$lang[ERROR]", "$lang[FILE_UPLOAD_FAILED]","","4800");
                 }
                 else
                 {   // try to move uploaded file
                     if (!move_uploaded_file($_FILES["backupFile"]["tmp_name"], $backup->restoreFile))
                     {   // throw error msg
-                        \YAWK\sys::setSyslog($db, 52, 2, "failed to move upload file $backup->restoreFile to folder $_FILES[backupFile][tmp_name]", 0, 0, 0, 0);
-                        echo \YAWK\alert::draw("danger", "$lang[ERROR]", "$backup->restoreFile - $lang[FILE_UPLOAD_ERROR]","","4800");
+                        sys::setSyslog($db, 52, 2, "failed to move upload file $backup->restoreFile to folder $_FILES[backupFile][tmp_name]", 0, 0, 0, 0);
+                        echo alert::draw("danger", "$lang[ERROR]", "$backup->restoreFile - $lang[FILE_UPLOAD_ERROR]","","4800");
                     }
                     else
                     {   // file upload seem to be successful...
@@ -338,13 +347,13 @@ if (isset($_POST))
                         {
                             // here we could check more things - eg latest file timestamp
                             // throw success message
-                            \YAWK\sys::setSyslog($db, 50, 3, "uploaded backup package $backup->restoreFile successfully", 0, 0, 0, 0);
-                            echo \YAWK\alert::draw("success", "$lang[UPLOAD_SUCCESSFUL]", "$backup->restoreFile $lang[BACKUP_UPLOAD_SUCCESS]","","4800");
+                            sys::setSyslog($db, 50, 3, "uploaded backup package $backup->restoreFile successfully", 0, 0, 0, 0);
+                            echo alert::draw("success", "$lang[UPLOAD_SUCCESSFUL]", "$backup->restoreFile $lang[BACKUP_UPLOAD_SUCCESS]","","4800");
                         }
                         else
                             {   // failed to check uploaded file - file not found
-                                \YAWK\sys::setSyslog($db, 51, 2, "failed to check uploaded file - $backup->restoreFile not found.", 0, 0, 0, 0);
-                                echo \YAWK\alert::draw("danger", "$lang[ERROR]", "$backup->restoreFile - $lang[FILE_UPLOAD_ERROR]","","4800");
+                                sys::setSyslog($db, 51, 2, "failed to check uploaded file - $backup->restoreFile not found.", 0, 0, 0, 0);
+                                echo alert::draw("danger", "$lang[ERROR]", "$backup->restoreFile - $lang[FILE_UPLOAD_ERROR]","","4800");
                             }
                     }
                 }
@@ -370,12 +379,12 @@ if (isset($_POST))
                         }
                         if (mkdir($backup->archiveBackupSubFolder))
                         {   // all good, new archive subfolder created
-                            \YAWK\alert::draw("success", $_POST['file'], "$backup->archiveBackupSubFolder $lang[CREATED]", "", 2600);
+                            alert::draw("success", $_POST['file'], "$backup->archiveBackupSubFolder $lang[CREATED]", "", 2600);
                         }
                         else
                         {   // failed to create new archive subfolder
-                            \YAWK\sys::setSyslog($db, 51, 2, "failed to create new archive subfolder $backup->archiveBackupSubFolder", 0, 0, 0, 0);
-                            \YAWK\alert::draw("danger", $_POST['file'], "$backup->archiveBackupSubFolder $lang[WAS_NOT_CREATED]", "", 6400);
+                            sys::setSyslog($db, 51, 2, "failed to create new archive subfolder $backup->archiveBackupSubFolder", 0, 0, 0, 0);
+                            alert::draw("danger", $_POST['file'], "$backup->archiveBackupSubFolder $lang[WAS_NOT_CREATED]", "", 6400);
                         }
                     }
                     // check if existing folder was selected by user
@@ -385,8 +394,8 @@ if (isset($_POST))
                     }
                     else
                         {   // no folder was selected - throw error msg
-                            \YAWK\sys::setSyslog($db, 50, 0, "failed to move backup to archive folder: $backup->archiveBackupSubFolder - no folder was selected", 0, 0, 0, 0);
-                            \YAWK\alert::draw("danger", $_POST['file'], $lang['BACKUP_NO_FOLDER_SELECTED'], "", 6400);
+                            sys::setSyslog($db, 50, 0, "failed to move backup to archive folder: $backup->archiveBackupSubFolder - no folder was selected", 0, 0, 0, 0);
+                            alert::draw("danger", $_POST['file'], $lang['BACKUP_NO_FOLDER_SELECTED'], "", 6400);
                         }
 
                     // prepare backup move to archive...
@@ -400,26 +409,26 @@ if (isset($_POST))
                     {
                         if (rename($backup->archiveBackupFile, $backup->archiveBackupNewFile))
                         {   // success
-                            \YAWK\sys::setSyslog($db, 50, 0, "archive backup: $backup->archiveBackupFile to $backup->archiveBackupNewFile successful", 0, 0, 0, 0);
-                            \YAWK\alert::draw("success", $_POST['file'], $backup->archiveBackupNewFile, "", 2600);
+                            sys::setSyslog($db, 50, 0, "archive backup: $backup->archiveBackupFile to $backup->archiveBackupNewFile successful", 0, 0, 0, 0);
+                            alert::draw("success", $_POST['file'], $backup->archiveBackupNewFile, "", 2600);
                         }
                         else
                         {   // error: throw msg
-                            \YAWK\sys::setSyslog($db, 52, 2, "failed to move backup to archive: $backup->archiveBackupFile to $backup->archiveBackupNewFile", 0, 0, 0, 0);
-                            \YAWK\alert::draw("danger", $_POST['file'], "$lang[BACKUP_FAILED_TO_MOVE] $backup->archiveBackupFile $lang[MOVE_TO] $backup->archiveBackupNewFile", "", 6400);
+                            sys::setSyslog($db, 52, 2, "failed to move backup to archive: $backup->archiveBackupFile to $backup->archiveBackupNewFile", 0, 0, 0, 0);
+                            alert::draw("danger", $_POST['file'], "$lang[BACKUP_FAILED_TO_MOVE] $backup->archiveBackupFile $lang[MOVE_TO] $backup->archiveBackupNewFile", "", 6400);
                         }
                     }
                     else
                         {
-                            \YAWK\sys::setSyslog($db, 52, 2, "failed to move backup to archive because backup file is missing or not writeable $backup->archiveBackupNewFile", 0, 0, 0, 0);
-                            \YAWK\alert::draw("warning", $_POST['file'], "$lang[BACKUP_FAILED_TO_MOVE] $backup->archiveBackupNewFile $lang[BACKUP_FAILED_TO_MOVE_CHMOD]", "", 6400);
+                            sys::setSyslog($db, 52, 2, "failed to move backup to archive because backup file is missing or not writeable $backup->archiveBackupNewFile", 0, 0, 0, 0);
+                            alert::draw("warning", $_POST['file'], "$lang[BACKUP_FAILED_TO_MOVE] $backup->archiveBackupNewFile $lang[BACKUP_FAILED_TO_MOVE_CHMOD]", "", 6400);
                         }
                 }
                 else
                     {
                         // no file was clicked - failed to select any file
-                        \YAWK\sys::setSyslog($db, 52, 2, "failed to move backup to archive: no file selected - this should not be possible.", 0, 0, 0, 0);
-                        \YAWK\alert::draw("danger", "$lang[BACKUP_NO_FILE_SELECTED]", "$lang[BACKUP_NO_FILE_SELECTED]", "", 6400);
+                        sys::setSyslog($db, 52, 2, "failed to move backup to archive: no file selected - this should not be possible.", 0, 0, 0, 0);
+                        alert::draw("danger", "$lang[BACKUP_NO_FILE_SELECTED]", "$lang[BACKUP_NO_FILE_SELECTED]", "", 6400);
                     }
             }
             break;
@@ -437,7 +446,7 @@ if (isset($_POST))
         function saveHotkey() {
             // simply disables save event for chrome
             $(window).keypress(function (event) {
-                if (!(event.which === 115 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) && !(event.which == 19)) return true;
+                if (!(event.which === 115 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) && !(event.which === 19)) return true;
                 event.preventDefault();
                 formmodified=0; // do not warn user, just save.
                 return false;
@@ -717,7 +726,7 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 /* draw Title on top */
-echo \YAWK\backend::getTitle($lang['BACKUP'], $lang['BACKUP_SUBTEXT']);
+echo backend::getTitle($lang['BACKUP'], $lang['BACKUP_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
             <li class=\"active\"><a href=\"index.php?page=settings-backup\" title=\"$lang[BACKUP]\"> $lang[BACKUP]</a></li>
@@ -769,7 +778,7 @@ echo"<ol class=\"breadcrumb\">
                     <div id="archiveGroup" class="hidden">
                         <?php
                         // archive backup folders
-                        $backup->archiveBackupSubFolders = \YAWK\filemanager::getSubfoldersToArray($backup->archiveBackupFolder);
+                        $backup->archiveBackupSubFolders = filemanager::getSubfoldersToArray($backup->archiveBackupFolder);
                         // if any folder is there, draw a select field to choose from
                         if (count($backup->archiveBackupSubFolders) > 0)
                         {
@@ -824,7 +833,7 @@ echo"<ol class=\"breadcrumb\">
                         <div class="checkbox-group-content">
                             <?php
                             // get content folder + subfolders into array
-                            $contentFolderArray = \YAWK\filemanager::getSubfoldersToArray('../content/');
+                            $contentFolderArray = filemanager::getSubfoldersToArray('../content/');
                             // walk through folders and draw checkboxes
                             foreach ($contentFolderArray as $folder)
                             {
@@ -843,7 +852,7 @@ echo"<ol class=\"breadcrumb\">
                         <div class="checkbox-group-media">
                         <?php
                             // get media folder + subfolders into array
-                            $mediaFolderArray = \YAWK\filemanager::getSubfoldersToArray('../media/');
+                            $mediaFolderArray = filemanager::getSubfoldersToArray('../media/');
                             // walk through folders and draw checkboxes
                             foreach ($mediaFolderArray as $folder)
                             {
@@ -923,19 +932,19 @@ echo"<ol class=\"breadcrumb\">
                     // get year of current file
                     $year = date("Y", filemtime($currentFile));
                     // get file size of current backup file
-                    $currentFileSize = \YAWK\filemanager::sizeFilter(filesize($currentFile), 0);
+                    $currentFileSize = filemanager::sizeFilter(filesize($currentFile), 0);
 
                     // calculate how long it is ago...
-                    $ago = \YAWK\sys::time_ago($currentFileDate, $lang);
+                    $ago = sys::time_ago($currentFileDate, $lang);
 
                     $currentRestoreID++;
 
                     echo "
                     <tr>
-                        <td width=\"10%\" class=\"text-center\"><h4><i id=\"zipIcon$currentRestoreID\" class=\"fa fa-file-zip-o\"></i><br><small>$month<br>$year</small></h4></td>
-                        <td width=\"51%\" class=\"text-left\"><h4><a href=\"$backup->currentBackupFolder$file\">$file</a><br><small><b>$currentFileDate</b><br><i>($ago)</i></small></h4></td>
-                        <td width=\"12%\" class=\"text-right\"><br><small><b>$currentFileSize</b></small></td>
-                        <td width=\"27%\" class=\"text-right\">
+                        <td style=\"10%;\" class=\"text-center\"><h4><i id=\"zipIcon$currentRestoreID\" class=\"fa fa-file-zip-o\"></i><br><small>$month<br>$year</small></h4></td>
+                        <td style=\"51%;\" class=\"text-left\"><h4><a href=\"$backup->currentBackupFolder$file\">$file</a><br><small><b>$currentFileDate</b><br><i>($ago)</i></small></h4></td>
+                        <td style=\"12%;\" class=\"text-right\"><br><small><b>$currentFileSize</b></small></td>
+                        <td style=\"27%;\" class=\"text-right\">
                           <br>
                           
                             <a href=\"$backup->currentBackupFolder$file\" title=\"$lang[TO_DOWNLOAD]\"><i class=\"fa fa-download\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -1007,7 +1016,7 @@ echo"<ol class=\"breadcrumb\">
             <table class="table table-responsive">
                 <?php
                 // get all archive backup files into array
-                $backup->archiveBackupFiles = \YAWK\filemanager::ritit($backup->archiveBackupFolder);
+                $backup->archiveBackupFiles = filemanager::ritit($backup->archiveBackupFolder);
                 // set ID for link: download whole archive
                 $archiveID = 0;
                 // set ID for spinning restore Icon
@@ -1023,14 +1032,14 @@ echo"<ol class=\"breadcrumb\">
                     $year = date("Y", @filemtime($backup->archiveBackupSubFolder));
 
                     $archiveFolderDate = date("F d Y H:i", @filemtime($backup->archiveBackupSubFolder));
-                    $lastUpdate = \YAWK\sys::time_ago($archiveFolderDate, $lang);
+                    $lastUpdate = sys::time_ago($archiveFolderDate, $lang);
 
                     $archiveID++;
 
                     echo "
                     <tr>
-                    <td width=\"10%\" class=\"text-center\"><h4><i id=\"archiveIcon$archiveID\"  class=\"fa fa-archive\"></i><br><small>$month<br>$year</small></h4></td>
-                    <td width=\"90%\">
+                    <td style=\"10%;\" class=\"text-center\"><h4><i id=\"archiveIcon$archiveID\"  class=\"fa fa-archive\"></i><br><small>$month<br>$year</small></h4></td>
+                    <td style=\"90%;\">
                     
                         <table class=\"table table-striped table-hover table-responsive\">
                         <thead>
@@ -1050,25 +1059,25 @@ echo"<ol class=\"breadcrumb\">
                         // get date of current archive file
                         $archiveFileDate = date("F d Y H:i", filemtime($archiveFile));
                         // get archive file size
-                        $archiveFileSize = \YAWK\filemanager::sizeFilter(filesize($archiveFile), 0);
+                        $archiveFileSize = filemanager::sizeFilter(filesize($archiveFile), 0);
                         // calculate how long it is ago...
-                        $ago = \YAWK\sys::time_ago($archiveFileDate, $lang);
+                        $ago = sys::time_ago($archiveFileDate, $lang);
 
                         $archiveRestoreID++;
 
                         echo "
                         <tr>
-                            <td width=\"62%\">
+                            <td style=\"62%;\">
                                 &nbsp;&nbsp;&nbsp;&nbsp;<small><b><a href=\"$archiveFile\">$value</a><br>&nbsp;&nbsp;&nbsp;&nbsp;
                                 <small>$archiveFileDate</small></b><small>&nbsp;&nbsp;<i>($ago)</i></small>
                             </td>
-                            <td width=\"18%\">
+                            <td style=\"18%;\">
                                 <div style=\"margin-top:-10px;\" class=\"text-right\">
                                     <br><small><b>$archiveFileSize</b></small>
                                 </div>
                             </td>
     
-                            <td width=\"20%\" class=\"text-right\">
+                            <td style=\"20%;\" class=\"text-right\">
                                 <div style=\"margin-top:-10px;\"><br>
                                     <a href=\"$archiveFile\" title=\"$lang[TO_DOWNLOAD]\"><i class=\"fa fa-download\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
                                     <a id=\"restoreArchive$archiveRestoreID\" data-restoreID=\"$archiveRestoreID\" href=\"index.php?page=settings-backup&restore=true&folder=$backup->archiveBackupSubFolder&file=$value&archiveRestoreID=$archiveRestoreID\" title=\"$lang[BACKUP_RESTORE]\"><i id=\"restoreArchiveIcon$archiveRestoreID\" class=\"fa fa-history\"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -1167,7 +1176,7 @@ echo"<ol class=\"breadcrumb\">
                     <?php if (isset($_GET['file'])) { echo $_GET['file']; } ?>
                     <h4><b><?php echo $lang['BACKUP_ADD_ARCHIVE_SUBFOLDER']; ?></b></h4>
                     <?php
-                            $backup->archiveBackupSubFolders = \YAWK\filemanager::getSubfoldersToArray($backup->archiveBackupFolder);
+                            $backup->archiveBackupSubFolders = filemanager::getSubfoldersToArray($backup->archiveBackupFolder);
                             if (count($backup->archiveBackupSubFolders) > 0)
                             {
                                 echo "
@@ -1183,7 +1192,7 @@ echo"<ol class=\"breadcrumb\">
                                 <div class=\"text-center\"><br><i>$lang[OR]</i></div>";
                             }
                     ?>
-                    <label for="newFolder"><?php echo $lang['BACKUP_FOLDER_NAME']; ?></label>
+                    <label for="newFolderModal"><?php echo $lang['BACKUP_FOLDER_NAME']; ?></label>
                     <input type="text" class="form-control" id="newFolderModal" name="newFolder" placeholder="<?php echo $lang['BACKUP_FOLDER_NAME_PH']; ?>">
                     <input type="hidden" name="file" id="file" value=""> <!-- gets filled via JS -->
                     <input type="hidden" name="action" id="action" value="moveToArchive"> <!-- gets filled via JS -->
@@ -1221,8 +1230,8 @@ echo"<ol class=\"breadcrumb\">
                     <?php if (isset($_GET['file'])) { echo $_GET['file']; } ?>
                     <h4><b><?php echo $lang['SELECT_FILE']; ?>:</b></h4>
                     <input type="file" name="backupFile" id="backupFile" class="form-control">
-                    <label for="backupFile"><?php echo $lang['POST_MAX_SIZE']; echo \YAWK\filemanager::getPostMaxSize();
-                        echo " &nbsp; / &nbsp; ".$lang['UPLOAD_MAX_SIZE']; echo \YAWK\filemanager::getUploadMaxFilesize(); ?>
+                    <label for="backupFile"><?php echo $lang['POST_MAX_SIZE']; echo filemanager::getPostMaxSize();
+                        echo " &nbsp; / &nbsp; ".$lang['UPLOAD_MAX_SIZE']; echo filemanager::getUploadMaxFilesize(); ?>
                         <i class="fa fa-question-circle-o text-info" data-placement="auto right" data-toggle="tooltip" title="" data-original-title="<?php echo $lang['UPLOAD_MAX_PHP']; ?>"></i>
 
                     </label>
@@ -1234,7 +1243,7 @@ echo"<ol class=\"breadcrumb\">
 
                     <h4><b><?php echo $lang['BACKUP_ADD_ARCHIVE_SUBFOLDER']; ?></b></h4>
                     <?php
-                    $backup->archiveBackupSubFolders = \YAWK\filemanager::getSubfoldersToArray($backup->archiveBackupFolder);
+                    $backup->archiveBackupSubFolders = filemanager::getSubfoldersToArray($backup->archiveBackupFolder);
 
                     echo"<label for=\"selectFolder\">$lang[BACKUP_FOLDER_SELECT]</label>
                                   <select class=\"form-control\" name=\"selectFolder\" id=\"selectFolderModal2\">
@@ -1255,7 +1264,7 @@ echo"<ol class=\"breadcrumb\">
                     echo"</select>
                                 <div class=\"text-center\"><br><i>$lang[OR]</i></div>";
                     ?>
-                    <label for="newFolder"><?php echo $lang['BACKUP_FOLDER_NAME']; ?></label>
+                    <label for="newFolderModal2"><?php echo $lang['BACKUP_FOLDER_NAME']; ?></label>
                     <input type="text" class="form-control" id="newFolderModal2" name="newFolder" placeholder="<?php echo $lang['BACKUP_FOLDER_NAME_PH']; ?>">
                     <input type="hidden" name="action" id="action" value="upload"> <!-- gets filled via JS -->
 

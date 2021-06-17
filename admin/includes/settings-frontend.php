@@ -1,4 +1,15 @@
 <?php
+
+use YAWK\alert;
+use YAWK\backend;
+use YAWK\db;
+use YAWK\language;
+use YAWK\settings;
+use YAWK\template;
+
+/** @var $db db */
+/** @var $lang language */
+
 // SAVE tpl settings
 if(isset($_POST['save']))
 {
@@ -10,20 +21,20 @@ if(isset($_POST['save']))
             // check setting and call corresponding function
             if (substr($property, -5, 5) == '-long')
             {   // LONG VALUE SETTINGS
-                if (!\YAWK\settings::setLongSetting($db, $property, $value))
+                if (!settings::setLongSetting($db, $property, $value))
                 {   // throw error
-                    \YAWK\alert::draw("warning", "Error", "Long Settings: Could not set long value <b>$value</b> of property <b>$property</b>","plugin=signup","4800");
+                    alert::draw("warning", "Error", "Long Settings: Could not set long value <b>$value</b> of property <b>$property</b>","plugin=signup","4800");
                 }
             }
             else
             {
                 if ($property === "selectedTemplate")
                 {
-                    \YAWK\template::setTemplateActive($db, $value);
+                    template::setTemplateActive($db, $value);
                 }
 
             // save value of property to database
-            \YAWK\settings::setSetting($db, $property, $value, $lang);
+            settings::setSetting($db, $property, $value, $lang);
             }
         }
     }
@@ -33,7 +44,7 @@ if(isset($_POST['save']))
 ?>
 <?php
 // get all template settings into array
-$settings = \YAWK\settings::getAllSettingsIntoArray($db);
+$settings = settings::getAllSettingsIntoArray($db);
 
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
@@ -42,8 +53,8 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 // draw Title on top
-echo \YAWK\backend::getTitle($lang['SETTINGS'], $lang['FRONTEND']);
-echo \YAWK\backend::getSettingsBreadcrumbs($lang);
+echo backend::getTitle($lang['SETTINGS'], $lang['FRONTEND']);
+echo backend::getSettingsBreadcrumbs($lang);
 echo"</section><!-- Main content -->
     <section class=\"content\">";
 /* page content start here */
@@ -65,7 +76,7 @@ echo"</section><!-- Main content -->
                     <!-- theme selector -->
                     <div class="box">
                         <div class="box-body">
-                            <?php \YAWK\settings::getFormElements($db, $settings, 3, $lang); ?>
+                            <?php settings::getFormElements($db, $settings, 3, $lang); ?>
                         </div>
                     </div>
                 </div>
@@ -73,9 +84,9 @@ echo"</section><!-- Main content -->
                     <div class="box">
                         <div class="box-body">
                             <!-- publish settings -->
-                            <?php \YAWK\settings::getFormElements($db, $settings, 7, $lang); ?>
+                            <?php settings::getFormElements($db, $settings, 7, $lang); ?>
                             <!-- user login settings -->
-                            <?php \YAWK\settings::getFormElements($db, $settings, 17, $lang); ?>
+                            <?php settings::getFormElements($db, $settings, 17, $lang); ?>
                         </div>
                     </div>
                 </div>
@@ -83,7 +94,7 @@ echo"</section><!-- Main content -->
                     <div class="box">
                         <div class="box-body">
                             <!-- maintenance mode -->
-                            <?php \YAWK\settings::getFormElements($db, $settings, 8, $lang); ?>
+                            <?php settings::getFormElements($db, $settings, 8, $lang); ?>
                         </div>
                     </div>
                 </div>
@@ -122,54 +133,61 @@ echo"</section><!-- Main content -->
             $(savebuttonIcon).removeClass('fa fa-check').addClass('fa fa-spinner fa-spin fa-fw');
         });
 
-        /* START CHECKBOX timediff */
-    // check backend footer checkbox onload
-    if( $('#timediff').prop('checked')){
-        // box is checked, set input field to NOT disabled
-        $("#timedifftext").prop('disabled', false);
-    }
-    else {
-        // box is not checked, set field to disabled
-        $("#timedifftext").prop('disabled', true);
-    }
-    // check wheter the checkbox is clicked
-    $('#timediff').click(function(){ // if user clicked save
-        if( $('#timediff').prop('checked')){
-            // box is checked, set input field to NOT disabled
-            $("#timedifftext").prop('disabled', false);
-        }
-        else {
-            // set footer value input field to disabled
-            $("#timedifftext").prop('disabled', true);
-        }
-    });
-    /* END CHECKBOX backend footer */
+        const timediff = $('#timediff');
+        const timedifftext = $('#timedifftext');
+        const offline = $('#offline');
+        const offlinemsg = $('#offlinemsg');
+        const offlineimage = $('#offlineimage');
 
-    /* START CHECKBOX offline mode */
-    // check backend footer checkbox onload
-    if( $('#offline').prop('checked')){
-        // box is checked, set input field to NOT disabled
-        $("#offlinemsg").prop('disabled', false);
-        $("#offlineimage").prop('disabled', false);
-    }
-    else {
-        // box is not checked, set field to disabled
-        $("#offlinemsg").prop('disabled', true);
-        $("#offlineimage").prop('disabled', true);
-    }
-    // check wheter the checkbox is clicked
-    $('#offline').click(function(){ // if user clicked save
-        if( $('#offline').prop('checked')){
+        /* START CHECKBOX timediff */
+        // check backend footer checkbox onload
+        if( $(timediff).prop('checked')){
             // box is checked, set input field to NOT disabled
-            $("#offlinemsg").prop('disabled', false);
-            $("#offlineimage").prop('disabled', false);
+            $(timedifftext).prop('disabled', false);
         }
         else {
-            // set footer value input field to disabled
-            $("#offlinemsg").prop('disabled', true);
-            $("#offlineimage").prop('disabled', true);
+            // box is not checked, set field to disabled
+            $(timedifftext).prop('disabled', true);
         }
-    });
+        // check wheter the checkbox is clicked
+        $(timediff).click(function(){ // if user clicked save
+            if( $(timediff).prop('checked')){
+                // box is checked, set input field to NOT disabled
+                $(timedifftext).prop('disabled', false);
+            }
+            else {
+                // set footer value input field to disabled
+                $(timedifftext).prop('disabled', true);
+            }
+        });
+        /* END CHECKBOX backend footer */
+
+        /* START CHECKBOX offline mode */
+        // check backend footer checkbox onload
+        if( $(offline).prop('checked')){
+            // box is checked, set input field to NOT disabled
+            $(offlinemsg).prop('disabled', false);
+            $(offlineimage).prop('disabled', false);
+        }
+        else {
+            // box is not checked, set field to disabled
+            $(offlinemsg).prop('disabled', true);
+            $(offlineimage).prop('disabled', true);
+        }
+        // check wheter the checkbox is clicked
+        $(offline).click(function(){ // if user clicked save
+            if( $(offline).prop('checked')){
+                // box is checked, set input field to NOT disabled
+                $(offlinemsg).prop('disabled', false);
+                $(offlineimage).prop('disabled', false);
+            }
+            else {
+                // set footer value input field to disabled
+                $(offlinemsg).prop('disabled', true);
+                $(offlineimage).prop('disabled', true);
+            }
+        });
+        /* END CHECKBOX backend fx */
 });
     /* END CHECKBOX backend fx */
 </script>

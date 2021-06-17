@@ -7,14 +7,14 @@
 	function saveHotkey() {
 		// simply disables save event for chrome
 		$(window).keypress(function (event) {
-			if (!(event.which == 115 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) && !(event.which == 19)) return true;
+			if (!(event.which === 115 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) && !(event.which === 19)) return true;
 			event.preventDefault();
 			formmodified=0; // do not warn user, just save.
 			return false;
 		});
 		// used to process the cmd+s and ctrl+s events
 		$(document).keydown(function (event) {
-			if (event.which == 83 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) {
+			if (event.which === 83 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) {
 				event.preventDefault();
 				$('#savebutton').click(); // SAVE FORM AFTER PRESSING STRG-S hotkey
 				formmodified=0; // do not warn user, just save.
@@ -27,11 +27,11 @@
 	$(document).ready(function()
 	{
 		// textarea that will be transformed into editor
-		var savebutton = ('#savebutton');
-		var savebuttonIcon = ('#savebuttonIcon');
-		// textarea that will be transformed into editor
-		var editor = ('textarea#summernote');
-		// ok, lets go...
+        const savebutton = ('#savebutton');
+        const savebuttonIcon = ('#savebuttonIcon');
+        // textarea that will be transformed into editor
+        const editor = ('textarea#summernote');
+        // ok, lets go...
 		// we need to check if user clicked on save button
 		$(savebutton).click(function() {
 			$(savebutton).removeClass('btn btn-success').addClass('btn btn-warning disabled');
@@ -42,152 +42,166 @@
 				$(editor).summernote('codeview.deactivate');
 			}
 		});
-		var backendFooter = $('#backendFooter');
+		const backendFooter = $('#backendFooter');
+		const backendFooterValueLeft = $('#backendFooterValueLeft');
+		const backendFooterValueRight = $('#backendFooterValueRight');
+		const backendFooterCopyright = $('#backendFooterCopyright');
+		const backendLogoUrl = $('#backendLogoUrl');
+		const backendLogoText = $('#backendLogoText');
+		const backendLogoSubText = $('#backendLogoSubText');
+		const backendFX = $('#backendFX');
+		const backendFXtype = $('#backendFXtype');
+		const backendFXtime = $('#backendFXtime');
+		const timediff = $('#timediff');
+		const timedifftext = $('#timedifftext');
+		const offline = $('#offline');
+		const offlinemsg = $('#offlinemsg');
+		const offlineimage = $('#offlineimage');
 
 		/* START CHECKBOX backend footer */
 		// check backend footer checkbox STATUS ONLOAD
 		if( $(backendFooter).prop('checked')){
 			// box is checked, set input field to NOT disabled
-			$("#backendFooterValueLeft").prop('disabled', false);
-			$("#backendFooterValueRight").prop('disabled', false);
-			$("#backendFooterCopyright").prop('disabled', false);
+			$(backendFooterValueLeft).prop('disabled', false);
+			$(backendFooterValueRight).prop('disabled', false);
+			$(backendFooterCopyright).prop('disabled', false);
 		}
 		else {
 			// box is not checked, set field to disabled
-			$("#backendFooterValueLeft").prop('disabled', true);
-			$("#backendFooterValueRight").prop('disabled', true);
-			$("#backendFooterCopyright").prop('disabled', true);
+			$(backendFooterValueLeft).prop('disabled', true);
+			$(backendFooterValueRight).prop('disabled', true);
+			$(backendFooterCopyright).prop('disabled', true);
 		}
 		// check wheter the footer checkbox IS CLICKED
 		$(backendFooter).click(function(){ // if user clicked save
 			if( $('#backendFooter').prop('checked')){
 				// box is checked, set input field to NOT disabled
-				$("#backendFooterValueLeft").prop('disabled', false);
-				$("#backendFooterValueRight").prop('disabled', false);
-				$("#backendFooterCopyright").prop('disabled', false);
+				$(backendFooterValueLeft).prop('disabled', false);
+				$(backendFooterValueRight).prop('disabled', false);
+				$(backendFooterCopyright).prop('disabled', false);
 			}
 			else {
 				// set footer value input field to disabled
-				$("#backendFooterValueLeft").prop('disabled', true);
-				$("#backendFooterValueRight").prop('disabled', true);
-				$("#backendFooterCopyright").prop('disabled', true);
+				$(backendFooterValueLeft).prop('disabled', true);
+				$(backendFooterValueRight).prop('disabled', true);
+				$(backendFooterCopyright).prop('disabled', true);
 			}
 		});
-        // check wheter the footer copyright checkbox is clicked
-        $('#backendFooterCopyright').click(function(){ // if user clicked save
-            if( $('#backendFooterCopyright').prop('checked')){
+        // check whether the footer copyright checkbox is clicked
+        $(backendFooterCopyright).click(function(){ // if user clicked save
+            if( $(backendFooterCopyright).prop('checked')){
                 // box is checked, set input field to NOT disabled
-                $("#backendFooterValueLeft").prop('disabled', true);
-                $("#backendFooterValueRight").prop('disabled', true);
+                $(backendFooterValueLeft).prop('disabled', true);
+                $(backendFooterValueRight).prop('disabled', true);
             }
             else {
                 // set footer value input field to disabled
-                $("#backendFooterValueLeft").prop('disabled', false);
-                $("#backendFooterValueRight").prop('disabled', false);
+                $(backendFooterValueLeft).prop('disabled', false);
+                $(backendFooterValueRight).prop('disabled', false);
             }
         });
 		/* END CHECKBOX backend footer */
 
 		/* START CHECKBOX backend logo */
 		// check backend footer checkbox onload
-		if( $('#backendLogoUrl').prop('checked')){
+		if( $(backendLogoUrl).prop('checked')){
 			// box is checked, set input field to NOT disabled
-			$("#backendLogoText").prop('disabled', true);
-			$("#backendLogoSubText").prop('disabled', true);
+			$(backendLogoText).prop('disabled', true);
+			$(backendLogoSubText).prop('disabled', true);
 		}
 		else {
 			// box is not checked, set field to disabled
-			$("#backendLogoText").prop('disabled', false);
-			$("#backendLogoSubText").prop('disabled', false);
+			$(backendLogoText).prop('disabled', false);
+			$(backendLogoSubText).prop('disabled', false);
 		}
-		// check wheter the checkbox is clicked
-		$('#backendLogoUrl').click(function(){ // if user clicked save
-			if( $('#backendLogoUrl').prop('checked')){
+		// check whether the checkbox is clicked
+		$(backendLogoUrl).click(function(){ // if user clicked save
+			if( $(backendLogoUrl).prop('checked')){
 				// box is checked, set input field to NOT disabled
-				$("#backendLogoText").prop('disabled', true);
-				$("#backendLogoSubText").prop('disabled', true);
+				$(backendLogoText).prop('disabled', true);
+				$(backendLogoSubText).prop('disabled', true);
 			}
 			else {
 				// set footer value input field to disabled
-				$("#backendLogoText").prop('disabled', false);
-				$("#backendLogoSubText").prop('disabled', false);
+				$(backendLogoText.prop('disabled', false);
+				$(backendLogoSubText).prop('disabled', false);
 			}
 		});
 		/* END CHECKBOX backend logo */
 
 		/* START CHECKBOX backend fx */
 		// check backend footer checkbox onload
-		if( $('#backendFX').prop('checked')){
+		if( $(backendFX).prop('checked')){
 			// box is checked, set input field to NOT disabled
-			$("#backendFXtype").prop('disabled', false);
-			$("#backendFXtime").prop('disabled', false);
+			$(backendFXtype).prop('disabled', false);
+			$(backendFXtime).prop('disabled', false);
 		}
 		else {
 			// box is not checked, set field to disabled
-			$("#backendFXtype").prop('disabled', true);
-			$("#backendFXtime").prop('disabled', true);
+			$(backendFXtype).prop('disabled', true);
+			$(backendFXtime).prop('disabled', true);
 		}
 		// check wheter the checkbox is clicked
-		$('#backendFX').click(function(){ // if user clicked save
-			if( $('#backendFX').prop('checked')){
+		$(backendFX).click(function(){ // if user clicked save
+			if( $(backendFX).prop('checked')){
 				// box is checked, set input field to NOT disabled
-				$("#backendFXtype").prop('disabled', false);
-				$("#backendFXtime").prop('disabled', false);
+				$(backendFXtype).prop('disabled', false);
+				$(backendFXtime).prop('disabled', false);
 			}
 			else {
 				// set footer value input field to disabled
-				$("#backendFXtype").prop('disabled', true);
-				$("#backendFXtime").prop('disabled', true);
+				$(backendFXtype).prop('disabled', true);
+				$(backendFXtime).prop('disabled', true);
 			}
 		});
 		/* END CHECKBOX backend fx */
 
 		/* START CHECKBOX timediff */
 		// check backend footer checkbox onload
-		if( $('#timediff').prop('checked')){
+		if( $(timediff).prop('checked')){
 			// box is checked, set input field to NOT disabled
-			$("#timedifftext").prop('disabled', false);
+			$(timedifftext).prop('disabled', false);
 		}
 		else {
 			// box is not checked, set field to disabled
-			$("#timedifftext").prop('disabled', true);
+			$(timedifftext).prop('disabled', true);
 		}
 		// check wheter the checkbox is clicked
-		$('#timediff').click(function(){ // if user clicked save
-			if( $('#timediff').prop('checked')){
+		$(timediff).click(function(){ // if user clicked save
+			if( $(timediff).prop('checked')){
 				// box is checked, set input field to NOT disabled
-				$("#timedifftext").prop('disabled', false);
+				$(timedifftext).prop('disabled', false);
 			}
 			else {
 				// set footer value input field to disabled
-				$("#timedifftext").prop('disabled', true);
+				$(timedifftext).prop('disabled', true);
 			}
 		});
 		/* END CHECKBOX backend footer */
 
 		/* START CHECKBOX offline mode */
 		// check backend footer checkbox onload
-		if( $('#offline').prop('checked')){
+		if( $(offline).prop('checked')){
 			// box is checked, set input field to NOT disabled
-			$("#offlinemsg").prop('disabled', false);
-			$("#offlineimage").prop('disabled', false);
+			$(offlinemsg).prop('disabled', false);
+			$(offlineimage).prop('disabled', false);
 		}
 		else {
 			// box is not checked, set field to disabled
-			$("#offlinemsg").prop('disabled', true);
-			$("#offlineimage").prop('disabled', true);
+			$(offlinemsg).prop('disabled', true);
+			$(offlineimage).prop('disabled', true);
 		}
 		// check wheter the checkbox is clicked
-		$('#offline').click(function(){ // if user clicked save
-			if( $('#offline').prop('checked')){
+		$(offline).click(function(){ // if user clicked save
+			if( $(offline).prop('checked')){
 				// box is checked, set input field to NOT disabled
-				$("#offlinemsg").prop('disabled', false);
-				$("#offlineimage").prop('disabled', false);
+				$(offlinemsg).prop('disabled', false);
+				$(offlineimage).prop('disabled', false);
 			}
 			else {
 				// set footer value input field to disabled
-				$("#offlinemsg").prop('disabled', true);
-				$("#offlineimage").prop('disabled', true);
+				$(offlinemsg).prop('disabled', true);
+				$(offlineimage).prop('disabled', true);
 			}
 		});
 		/* END CHECKBOX backend fx */
@@ -202,7 +216,7 @@
 		// now the function:
 		window.onbeforeunload = confirmExit; // before close
 		function confirmExit() {             // dialog
-			if (formmodified == 1) {         // if form has changed
+			if (formmodified === 1) {         // if form has changed
 				return "Your changes may not be saved. Do you wish to leave the page?";
 			}
 		}
@@ -215,6 +229,16 @@
 </script>
 <?php
 
+use YAWK\alert;
+use YAWK\backend;
+use YAWK\db;
+use YAWK\language;
+use YAWK\settings;
+use YAWK\sys;
+use YAWK\template;
+
+/** @var $db db */
+/** @var $lang language */
 
 // SAVE tpl settings
 if(isset($_POST['save']))
@@ -224,16 +248,16 @@ if(isset($_POST['save']))
 			// check setting and call corresponding function
 			if (substr($property, -5, 5) == '-long')
 			{   // LONG VALUE SETTINGS
-				if (!\YAWK\settings::setLongSetting($db, $property, $value))
+				if (!settings::setLongSetting($db, $property, $value))
 				{   // throw error
-					\YAWK\alert::draw("warning", "Error", "Long Settings: Could not set long value <b>$value</b> of property <b>$property</b>","plugin=signup","4800");
+					alert::draw("warning", "Error", "Long Settings: Could not set long value <b>$value</b> of property <b>$property</b>","plugin=signup","4800");
 				}
 			}
 			else
 			{
 				if ($property === "selectedTemplate")
 				{
-					\YAWK\template::setTemplateActive($db, $value);
+					template::setTemplateActive($db, $value);
 				}
 
 				// ensure, that new backend language gets stored as cookie
@@ -243,24 +267,24 @@ if(isset($_POST['save']))
                 }
 
 				// save value of property to database
-				\YAWK\settings::setSetting($db, $property, $value, $lang);
+				settings::setSetting($db, $property, $value, $lang);
 			}
 
 			if ($property === "robotsText-long")
 			{
-				\YAWK\sys::setRobotsText("../", $value);
+				sys::setRobotsText("../", $value);
 			}
         }
 
     }
     // to ensure that language switching works correctly, reload page with given POST language
-    \YAWK\sys::setTimeout("index.php?page=settings-system&lang=$_POST[backendLanguage]", 0);
+    sys::setTimeout("index.php?page=settings-system&lang=$_POST[backendLanguage]", 0);
 }
 ?>
 
 <?php
 // get settings for editor
-$editorSettings = \YAWK\settings::getEditorSettings($db, 14);
+$editorSettings = settings::getEditorSettings($db, 14);
 ?>
 <!-- include summernote css/js-->
 <!-- include codemirror (codemirror.css, codemirror.js, xml.js) -->
@@ -342,7 +366,7 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 // draw Title on top
-echo \YAWK\backend::getTitle($lang['SETTINGS'], $lang['SETTINGS_SYSTEM_SUBTEXT']);
+echo backend::getTitle($lang['SETTINGS'], $lang['SETTINGS_SYSTEM_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
             <li><a href=\"index.php?page=settings-system\" class=\"active\" title=\"$lang[SETTINGS_EDIT]\"> $lang[SETTINGS_EDIT]</a></li>
@@ -356,7 +380,7 @@ echo"<ol class=\"breadcrumb\">
 	<div class="box-body">
 
 <form id="template-edit-form" action="index.php?page=settings-system" method="POST">
-	<!-- <div class="nav-tabs-custom"> <!-- admin LTE tab style -->
+	<!-- <div class="nav-tabs-custom"> --> <!-- admin LTE tab style -->
 	<div id="btn-wrapper" class="text-right">
 		<button type="submit" id="savebutton" name="save" class="btn btn-success">
 			<i id="savebuttonIcon" class="fa fa-check"></i> &nbsp;<?php print $lang['SAVE_SETTINGS']; ?>
@@ -389,7 +413,7 @@ echo"<ol class=\"breadcrumb\">
 						<div class="box-body">
 							<?php // print_r($settings);
 							$i_settings = 0;
-							$settings = \YAWK\settings::getAllSettingsIntoArray($db);
+							$settings = settings::getAllSettingsIntoArray($db);
 							// echo "<pre>"; echo print_r($lang); echo "</pre>";
 
 							?>
@@ -397,7 +421,7 @@ echo"<ol class=\"breadcrumb\">
 					</div>
 				</div>
 				<div class="col-md-4">
-                    <?php \YAWK\settings::getFormElements($db, $settings, 1, $lang); ?>
+                    <?php settings::getFormElements($db, $settings, 1, $lang); ?>
 				</div>
 			</div>
 		</div>
@@ -409,17 +433,17 @@ echo"<ol class=\"breadcrumb\">
 			<div class="row animated fadeIn">
 				<div class="col-md-4">
                     <!-- theme selector -->
-					<?php \YAWK\settings::getFormElements($db, $settings, 3, $lang); ?>
+					<?php settings::getFormElements($db, $settings, 3, $lang); ?>
 				</div>
 				<div class="col-md-4">
 					<!-- publish settings -->
-                    <?php \YAWK\settings::getFormElements($db, $settings, 7, $lang); ?>
+                    <?php settings::getFormElements($db, $settings, 7, $lang); ?>
 					<!-- user login settings -->
-					<?php \YAWK\settings::getFormElements($db, $settings, 17, $lang); ?>
+					<?php settings::getFormElements($db, $settings, 17, $lang); ?>
 				</div>
 				<div class="col-md-4">
 					<!-- maintenance mode -->
-                    <?php \YAWK\settings::getFormElements($db, $settings, 8, $lang); ?>
+                    <?php settings::getFormElements($db, $settings, 8, $lang); ?>
 				</div>
 			</div>
 		</div>
@@ -431,16 +455,16 @@ echo"<ol class=\"breadcrumb\">
 			<div class="row animated fadeIn">
 				<div class="col-md-4">
                     <!-- backend settings -->
-                    <?php \YAWK\settings::getFormElements($db, $settings, 2, $lang); ?>
+                    <?php settings::getFormElements($db, $settings, 2, $lang); ?>
                     <?php // \YAWK\settings::getFormElements($db, $settings, 19, $lang); ?>
-                    <?php \YAWK\settings::getFormElements($db, $settings, 20, $lang); ?>
+                    <?php settings::getFormElements($db, $settings, 20, $lang); ?>
 				</div>
 				<div class="col-md-4">
                     <!-- footer settings -->
-                    <?php \YAWK\settings::getFormElements($db, $settings, 11, $lang); ?>
+                    <?php settings::getFormElements($db, $settings, 11, $lang); ?>
 				</div>
 				<div class="col-md-4">
-					<?php \YAWK\settings::getFormElements($db, $settings, 12, $lang); ?>
+					<?php settings::getFormElements($db, $settings, 12, $lang); ?>
 				</div>
 			</div>
 		</div>
@@ -452,17 +476,17 @@ echo"<ol class=\"breadcrumb\">
 				<div class="col-md-4">
                     <!-- server seettings -->
 					<h3><?php echo $lang['SERVER']; ?> <small> <?php echo $lang['SERVER_SUBTEXT']; ?></small></h3>
-					<?php \YAWK\settings::getFormElements($db, $settings, 9, $lang); ?>
-					<?php \YAWK\settings::getFormElements($db, $settings, 16, $lang); ?>
+					<?php settings::getFormElements($db, $settings, 9, $lang); ?>
+					<?php settings::getFormElements($db, $settings, 16, $lang); ?>
 				</div>
 				<div class="col-md-4">
                     <!-- database settings -->
-                    <?php \YAWK\settings::getFormElements($db, $settings, 13, $lang); ?>
+                    <?php settings::getFormElements($db, $settings, 13, $lang); ?>
 				</div>
 				<div class="col-md-4">
                     <!-- syslog settings -->
                     <h3><i class="fa fa-code"></i> <?php echo $lang['EDITOR']; ?> <small> <?php echo $lang['EDITOR_SUBTEXT']; ?></small></h3>
-                    <?php \YAWK\settings::getFormElements($db, $settings, 14, $lang); ?>
+                    <?php settings::getFormElements($db, $settings, 14, $lang); ?>
 				</div>
 			</div>
 		</div>
@@ -513,7 +537,7 @@ echo"<ol class=\"breadcrumb\">
 						</div>
 						<div class="box-body">
 							<label for="summernote"></label>
-							<?php $content = \YAWK\sys::getRobotsText($db, "../"); ?>
+							<?php $content = sys::getRobotsText($db, "../"); ?>
 							<textarea name="robotsText-long" cols="64" rows="28" id="summernote"><?php echo $content; ?></textarea>
 						</div>
 					</div>
@@ -555,7 +579,7 @@ echo"<ol class=\"breadcrumb\">
                             <h3 class="box-title">Sprache <small>festlegen</small></h3>
                         </div>
                         <div class="box-body">
-                            <?php \YAWK\settings::getFormElements($db, $settings, 19, $lang) ?>
+                            <?php settings::getFormElements($db, $settings, 19, $lang) ?>
                         </div>
                     </div>
                     <div class="box">
@@ -605,7 +629,7 @@ echo"<ol class=\"breadcrumb\">
 				<div class="col-md-4">
 					<!-- syslog settings -->
 					<h3><?php echo $lang['SYSLOG']; ?> <small> <?php echo $lang['SETTINGS']; ?></small></h3>
-					<?php \YAWK\settings::getFormElements($db, $settings, 0, $lang); ?>
+					<?php settings::getFormElements($db, $settings, 0, $lang); ?>
 				</div>
 			</div>
 		</div>
