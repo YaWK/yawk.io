@@ -4,6 +4,7 @@
 use YAWK\backend;
 use YAWK\db;
 use YAWK\language;
+use YAWK\settings;
 use YAWK\sys;
 
 /** @var $db db */
@@ -26,31 +27,59 @@ echo"<ol class=\"breadcrumb\">
     <section class=\"content\">";
 /* page content start here */
 ?>
+
+
+
 <h3>Seitenaufrufe</h3>
+<div class="row">
 <div class="col-md-8">
     <div class="box">
         <div class="box-header"><h3 class="box-title">Month</h3></div>
         <div class="box-body">
-            <canvas id="myChart"></canvas>
+
+            <h4>Server Variablen</h4>
+            <pre>
+            <?php print_r($_SERVER); ?>
+            </pre>
+            <br><br>
+
+            <h4>Session Variablen</h4>
+            <pre>
+            <?php print_r($_SESSION); ?>
+            </pre>
+            <br><br>
+
+            <h4>Gesetzte Cookies</h4>
+            <pre>
+            <?php print_r($_COOKIE); ?>
+            </pre>
+            <br><br>
+
+            <!-- <canvas id="myChart"></canvas> -->
         </div>
     </div>
 </div>
 <div class="col-md-4">
+    <div class="box">
+        <div class="box-header"><h3 class="box-title">Month</h3></div>
+        <div class="box-body">
     <?php
+    /*
     if (sys::isBrowscapSet($_SERVER['HTTP_USER_AGENT']) === false)
     {
       echo "Your Browser: <b>". sys::getBrowserName($_SERVER['HTTP_USER_AGENT'])."</b>";
     }
+    */
     $useragent = sys::getBrowser('');
     echo "<h4>Browser Statistik </h4>Your browser: "."<b>". $useragent['name'] . " " . $useragent['version'] . " on " .$useragent['platform'] ."</b><br><br>";
 
-    echo "<h4>User Statistik</h4>Referer: ".$_SERVER['HTTP_REFERER']."<br>";
+    echo "<h4>User Statistik</h4>";
     echo "Current: ".$_SERVER['REQUEST_URI']."<br>";
     echo "accept language: ".$_SERVER['HTTP_ACCEPT_LANGUAGE']."<br><br>";
 
     echo "<h4>Quellcode Statistik</h4>";
-    echo "YaWK Version: ".\YAWK\settings::getSetting($db, "yawkversion");
-    echo " <small>";echo \YAWK\settings::getSettingDescription($db, "yawkversion");echo"</small>";
+    echo "YaWK Version: ". settings::getSetting($db, "yawkversion");
+    echo " <small>";echo settings::getSettingDescription($db, "yawkversion");echo"</small>";
 
     // SET VARS
     $FILE_PATH = "../"; // full path
@@ -69,14 +98,35 @@ echo"<ol class=\"breadcrumb\">
     }
 
 
-    /*
-     $total=$anz_lines + $anz_lines1;
-     $total = number_format($total);
-     echo "und <b>$anz_lines</b> Zeilen .html-Code.</b><br> Insgesamt z&auml;hlt das Projekt: <b>$total</b> Zeilen Quellcode.";
-     */
-    ?>
-</div>
+     $FILE_PATH = "../"; // full path
+     $phpFiles = sys::countCodeLines($FILE_PATH, '.php');
+     $cssFiles = sys::countCodeLines($FILE_PATH, '.css');
+     $jsFiles = sys::countCodeLines($FILE_PATH, '.js');
+     $total = $phpFiles['lines'] + $cssFiles['lines'] + $jsFiles['lines'];
 
+     echo "<h3>Project Summary</h3>";
+     echo "<h4>PHP Files: </h4>";
+     foreach ($phpFiles as $key => $value){
+        if ($value !== '.php')
+        echo $key." : ".$value."<br>";
+     }
+     echo "<h4>CSS Files: </h4>";
+     foreach ($cssFiles as $key => $value){
+        if ($value !== '.css')
+        echo $key." : ".$value."<br>";
+     }
+    echo "<h4>JS Files: </h4>";
+    foreach ($jsFiles as $key => $value){
+        if ($value !== '.js')
+            echo $key." : ".$value."<br>";
+    }
+     echo "Insgesamt z&auml;hlt das Projekt: <b>$total</b> Zeilen Quellcode.";
+
+    ?>
+        </div>
+    </div>
+</div>
+</div>
 
 
 
