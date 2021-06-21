@@ -17,7 +17,7 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 /* draw Title on top */
-echo backend::getTitle($lang['STATS'], $lang['STATS_SUBTEXT']);
+echo backend::getTitle("YaWK", $lang['SYSTEM'].$lang['INFO']);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"Dashboard\"><i class=\"fa fa-dashboard\"></i> Dashboard</a></li>
             <li class=\"active\"><a href=\"index.php?page=yawk-stats\" title=\"Pages\"> Statistics</a></li>
@@ -28,9 +28,6 @@ echo"<ol class=\"breadcrumb\">
 /* page content start here */
 ?>
 
-
-
-<h3>Seitenaufrufe</h3>
 <div class="row">
 <div class="col-md-8">
     <div class="box">
