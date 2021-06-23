@@ -1218,7 +1218,7 @@ namespace YAWK {
             {   // check if position indicator is enabled
                 if ($indicators["pos-$position-indicator"] === "1")
                 {   // display position indicator
-                    $indicatorStyle = "style=\"border: 2px solid red;\"";
+                    $indicatorStyle = "style=\"border: 1px solid red;\"";
                     $indicatorText = "<i><b>$position</b></i>";
                 }
                 else
@@ -2715,7 +2715,7 @@ namespace YAWK {
          */
         static function getPositionIndicatorStatusArray($db, $templateID)
         {
-            $array = '';
+            $markedPositions = array();
             $sql = $db->query("SELECT property, value 
                                FROM {template_settings} 
                                WHERE property 
@@ -2723,10 +2723,10 @@ namespace YAWK {
                                AND templateID = '" . $templateID . "'");
             while ($row = mysqli_fetch_assoc($sql)) {
                 $prop = $row['property'];
-                $array[$prop] = $row['value'];
+                $markedPositions[$prop] = $row['value'];
             }
-            if (is_array($array)) {
-                return $array;
+            if (!empty($markedPositions)) {
+                return $markedPositions;
             } else {
                 return false;
             }
