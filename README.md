@@ -15,18 +15,18 @@ and <a href="https://github.com/YaWK/yawk.io/projects" target="_blank">current o
 to 
 see what's going on and what has been done over the past few days, weeks, months and years.
 <hr>
-<h3><u>R O A D M A P for 2021: <small></small></u></h3>
+<h3><u>R O A D M A P for 2022: <small></small></u></h3>
 <b>Currently in development:</b>
 <ul>
 <li>Codebase update to ensure PHP 8 compatibility</li>
 <li>Add support for multilingual FrontEnd (Content) Pages and Menus</li>
 <li>Major Updates of all Assets and Social Widgets </li>
-<li>Add templates and demo pages <i><small>(scheduled until end of 2021)</small></i></li>
+<li>Add templates and demo pages <i><small>(scheduled until end of 2022)</small></i></li>
 <li><i><small>and of course: check and fix language errors, major and minor bugs</small></i></li>
 </ul>
 <b>Update official website</b>
 <ul>
-<li>Update http://www.yawk.io to current version</li>
+<li>Update http://test.yawk.io to current version</li>
 <li>Add feature showcase</li>
 <li>Add support page <small><i>(and ticket system)</i></small></li>
 <li>Add admin handbook <small><i>(pdf and / or html)</i></small></li>
@@ -61,7 +61,7 @@ There are two ways to load YaWK on your webserver:<br><br>
 
 <h4>Minimum Server / Webhosting Requirements:</h4>
 <ul>
-<li>PHP 5.6+ (PHP 7 recommended)</li>
+<li>PHP 5.6+ (PHP 7+ recommended)</li>
 <li>MySQL 5.x</li>
 <li>Apache 2.x Webserver</li>
 <li>MOD_REWRITE enabled</li>
