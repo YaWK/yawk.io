@@ -13,7 +13,6 @@ namespace YAWK {
      * See Methods Summary for Details!</i></p>
      *
      * @category   CMS
-     * @package    System
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2009-2015 Daniel Retzl yawk.goodconnect.net
      * @license    https://opensource.org/licenses/MIT
@@ -122,9 +121,6 @@ namespace YAWK {
                     break;
                 case "success":
                     $icon = "fa fa-check-circle-o";
-                    break;
-                case "default":
-                    $icon = "fa fa-info-circle";
                     break;
                 case "tipofday":
                     $icon = "fa fa-lightbulb-o";
