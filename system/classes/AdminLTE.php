@@ -535,10 +535,18 @@ namespace YAWK {
             // connect to mailbox:
             // prepare imap mailbox string
             $mailbox = '{'.$server.':'.$port.'/imap/'.$encrypt.''.$novalidate.'}INBOX';
-            // open new imap connection
-            $imap = @imap_open($mailbox, $username, $password);
-            // get all unseen messages
-            $emails = @imap_search($imap, 'UNSEEN');
+
+            // check if imap extension is available
+            if (function_exists('imap_open'))
+            {   // open new imap connection
+                $imap = @imap_open($mailbox, $username, $password);
+                // get all unseen messages
+                $emails = @imap_search($imap, 'UNSEEN');
+            }
+            else
+            {   //($db, $log_category, $log_type, $message, $fromUID, $toUID, $toGID, $seen)
+                \YAWK\sys::setSyslog($db, 4, 2, "Imap Extension not activated. Try apt-get install php[x]-imap or ask your server admin.", 0, 0, 0, 0);
+            }
 
             // check, if any unseen emails are there
             if (empty($emails))
