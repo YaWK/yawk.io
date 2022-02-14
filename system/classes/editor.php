@@ -4,7 +4,6 @@ namespace YAWK {
      * <b>Load editor settings, required javascript and html markup</b>
 
      * @category   CMS
-     * @package    System
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2019 Daniel Retzl http://www.yawk.io
      * @license    https://opensource.org/licenses/MIT

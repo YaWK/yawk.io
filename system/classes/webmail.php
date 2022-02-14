@@ -13,7 +13,6 @@ namespace YAWK {
      * Beside this, this class serves methods to list folders and email headers / messages
      *
      * @category   CMS
-     * @package    System
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2019 Daniel Retzl http://www.yawk.io
      * @license    https://opensource.org/licenses/MIT
