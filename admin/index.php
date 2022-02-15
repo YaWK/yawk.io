@@ -1,10 +1,10 @@
 <?php
 session_start();
-header('Cache-control: private');               // IE 6 FIX
-error_reporting(E_ALL ^ E_STRICT);              // just for development purpose!!!
-ini_set('display_errors', 1);                   // DISPLAY ALL ERRORS - DEVELOPMENT ONLY!!!
-// error_reporting(0);                             // no error reporting
-$loadingTime = microtime(true);                 // scripting start time (var gets used for benchmark, if enabled)
+header('Cache-control: private');             // OLD IE (6+) FIX
+error_reporting(E_ALL ^ E_STRICT);         // just for development purpose!!!
+ini_set('display_errors', 1);           // DISPLAY ALL ERRORS - DEVELOPMENT ONLY!!!
+// error_reporting(0);                              // no error reporting
+$loadingTime = microtime(true);              // scripting start time (var gets used for benchmark, if enabled)
 
 /* include controller classes */
 require_once '../system/classes/db.php';            // database
@@ -19,7 +19,7 @@ require_once '../system/classes/page.php';          // pages class: methods to a
 require_once '../system/classes/menu.php';          // menu class: methods to add, edit, display menus
 require_once '../system/classes/email.php';         // simple email helper class
 require_once '../system/classes/plugin.php';        // plugin class: methods to handle and interact w plugins
-require_once '../system/classes/widget.php';        // widget class: methos to handle and interact w widgets
+require_once '../system/classes/widget.php';        // widget class: methods to handle and interact w widgets
 require_once '../system/classes/template.php';      // template class: methods to add, edit and handle templates
 require_once '../system/classes/controller.php';    // basic controller class
 require_once '../system/classes/filemanager.php';   // filemanager class: methods to add, edit, upload and handle files
