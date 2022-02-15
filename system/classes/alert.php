@@ -8,14 +8,13 @@ namespace YAWK {
      * @version    1.2.0
      * @link       http://yawk.website/
      * @since      File available since Release 1.0.0
-     * @brief Throws a fancy Bootstrap Alert (success, info, warning or danger)
-     * @details
-     * <b>Throw default bootstrap-powered alerts. (warning, succes etc...)</b>
+     * @brief      Throws a fancy Bootstrap Alert (success, info, warning or danger)
+     * @details    Throw default bootstrap-powered alerts. (warning, succes etc...)
      *
      * This lets you throw a fancy designed alert message box at any
      * time, anywhere in your script. Alert uses 5 Arguments, as shown below.
-     * <i>Example:</i>
-     * <code><?php YAWK\alert::draw("success", "Yey!", "Test Alert thrown! It worked!", "index.html", 5000); ?></code> at
+     * Example:
+     * @example <?php YAWK\alert::draw("success", "Yey!", "Test Alert thrown! It worked!", "index.html", 5000); ?> at
      * any place of your script where an error, info, success or danger Message
      * needs to be thrown.
      * <p><i>Class covers both, backend & frontend functionality.
