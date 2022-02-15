@@ -1,5 +1,6 @@
 <?php
-namespace YAWK {
+namespace YAWK\BACKEND {
+    use YAWK\settings;
     /**
      * @details <b>Admin LTE Template Class</b>
      *

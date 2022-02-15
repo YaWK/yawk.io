@@ -1,6 +1,6 @@
 <?php
 
-use YAWK\dashboard;
+use YAWK\BACKEND\dashboard;
 use YAWK\db;
 use YAWK\language;
 use YAWK\page;

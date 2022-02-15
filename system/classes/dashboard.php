@@ -1,5 +1,5 @@
 <?php
-namespace YAWK
+namespace YAWK\BACKEND
 {
     /**
      * <b>Admin LTE Dashboard Class</b>
@@ -10,7 +10,6 @@ namespace YAWK
      * <p><i>Class covers backend template functionality.
      * See Methods Summary for Details!</i></p>
      *
-     * @package    YAWK
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2009-2016 Daniel Retzl http://yawk.io
      * @license    https://opensource.org/licenses/MIT

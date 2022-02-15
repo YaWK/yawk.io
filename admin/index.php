@@ -56,7 +56,7 @@ if (!isset($page))
 if (!isset($AdminLTE))
 {
     // create AdminLTE object
-    $AdminLTE = new \YAWK\AdminLTE($db);
+    $AdminLTE = new \YAWK\BACKEND\AdminLTE($db);
     // html head (html start, js includes asf...)
     echo $AdminLTE->drawHtmlHead();
 
