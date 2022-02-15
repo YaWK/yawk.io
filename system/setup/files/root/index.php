@@ -17,7 +17,6 @@
  * you can use any of that many static methods from other classes. See class
  * overview for details about how YaWK is organized.</p>
  *
- * @category   CMS
  * @author     Daniel Retzl <danielretzl@gmail.com>
  * @copyright  2016 Daniel Retzl http://yawk.website
  * @license    http://www.gnu.org/licenses/gpl-3.0  GNU/GPL 3.0
