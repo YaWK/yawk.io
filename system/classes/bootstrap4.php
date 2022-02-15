@@ -2,7 +2,7 @@
 namespace YAWK\FRAMEWORK\BOOTSTRAP4
 {
     /**
-     * TODO: add all bootstrap 4 methods
+     * @details TODO: add all bootstrap 4 methods
      * <b>Bootstrap 4 CSS methods</b>
      * <p>Extends \YAWK\bootstrap - this class serves all bootstrap 4 component methods
      * and set this->cssCode variable that will be used by \YAWK\FRAMEWORK\cssFramework() </p>
@@ -12,13 +12,17 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @brief Helper function to output custom (overriden) bootstrap 4 css (settings.css)
+     * @brief  Helper function to output custom (overriden) bootstrap 4 css (settings.css)
      */
     class bootstrap4 extends \YAWK\FRAMEWORK\cssFramework
     {
         /** @param string all the css as string */
         public $cssCode = '';
 
+        /**
+         * @brief  Call all the methods to set bootstrap 4 custom css and return it as string.
+         * @return string|null
+         */
         public function init()
         {
             // set css tags for Bootstrap 4
@@ -47,11 +51,11 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
         }
 
         /**
-         * Bootstrap 4: CARDS Component CSS Code
+         * @brief  Bootstrap 4: CARDS Component CSS Code
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @brief add bootstrap 4 cards component to this css code string
+         * @details add bootstrap 4 cards component to this css code string
          */
         public function bs4_CardsCss()
         {
@@ -305,11 +309,11 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
         }
 
         /**
-         * Bootstrap 4: BUTTONS Component CSS Code
+         * @brief  Bootstrap 4: BUTTONS Component CSS Code
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @brief add Bootstrap 3 buttons component to this css code string
+         * @details add Bootstrap 3 buttons component to this css code string
          */
         public function bs4_ButtonsCss()
         {
@@ -688,11 +692,11 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
             }";
         }
         /**
-         * Bootstrap 4: JUMBOTRON Component CSS Code
+         * @brief Bootstrap 4: JUMBOTRON Component CSS Code
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @brief add Bootstrap 4 jumbotron component to this css code string
+         * @details add Bootstrap 4 jumbotron component to this css code string
          */
         public function bs4_JumbotronCss()
         {
@@ -748,11 +752,11 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
         }
 
         /**
-         * Bootstrap 4: LIST GROUP Component CSS Code
+         * @brief Bootstrap 4: LIST GROUP Component CSS Code
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @brief add Bootstrap 4 list group component to this css code string
+         * @details add Bootstrap 4 list group component to this css code string
          */
         public function bs4_ListGroupCss()
         {
@@ -969,6 +973,10 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
 
         }
 
+        /**
+         * @brief Bootstrap 4 Navbar CSS Code
+         * @details add Bootstrap 4 navbar component to this css code string
+         */
         public function bs4_navbarCss()
         {
             $this->cssCode .= "
@@ -1079,11 +1087,11 @@ $this->cssCode .= "
         }
 
         /**
-         * Bootstrap 4: FORMS Component CSS Code
+         * @brief Bootstrap 4: FORMS Component CSS Code
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @brief add Bootstrap 4 forms component to this css code string
+         * @details add Bootstrap 4 forms component to this css code string
          */
         public function bs4_FormsCss()
         {

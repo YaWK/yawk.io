@@ -38,33 +38,33 @@ namespace YAWK {
         static function draw($type, $title, $text, $redirect, $delay)
         {
 
-            /** default animation when alert pops in */
+            /** @param string $animatedEnter default animation when alert pops in */
             $animatedEnter = "animated fadeInDown";
-            /** default animation when alert pops out */
+            /** @param string $animatedExit default animation when alert pops out */
             $animatedExit = "animated fadeOutUp";
-            /** default placementFrom (top, bottom) */
+            /** @param string $placementFrom default placementFrom (top, bottom) */
             $placementFrom = "top";
-            /** default placementFrom (left, center, right) */
+            /** @param string $placementAlign default placementFrom (left, center, right) */
             $placementAlign = "center";
-            /** any URL to link to */
+            /** @param string $url any URL to link to */
             $url = "";
-            /** URL target */
+            /** @param string $urlTarget URL target */
             $urlTarget = "_blank";
-            /** should it be allowed to dismiss this alert? */
+            /** @param string $allowDismiss should it be allowed to dismiss this alert? */
             $allowDismiss = "true";
-            /** display newest on top if there are more simultaneous alerts? */
+            /** @param string $newestOnTop display newest on top if there are more simultaneous alerts? */
             $newestOnTop = "false";
-            /** display a progressbar to show how long the alert will stay */
+            /** @param string $progressBar display a progressbar to show how long the alert will stay */
             $progressBar = "false";
-            /** offest X axis */
+            /** @param string $offsetX offest X axis */
             $offsetX = "10";
-            /** offest Y axis */
+            /** @param string $offsetY offest Y axis */
             $offsetY = "62";
-            /** spacing */
+            /** @param string $spacing spacing */
             $spacing = "10";
-            /** z-index */
+            /** @param string $zIndex z-index */
             $zIndex = "9999";
-            /** icon */
+            /** @param string $icon icon */
             $icon = "fa fa-info-circle";
             
             if (!isset($type) || (empty($type)))

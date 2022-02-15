@@ -1,13 +1,12 @@
 <?php
 namespace YAWK {
     /**
-     * <b>Template controller - get and set template settings.</b>
+     * @details Template controller - get and set template settings.
      *
      * Templates itself are located in /system/templates/ - if you want to modify them, start there.
      * <p><i>Class covers both, backend & frontend functionality.
      * See Methods Summary for Details!</i></p>
      *
-     * @package    YAWK
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2009-2015 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT
@@ -69,7 +68,7 @@ namespace YAWK {
 
 
         /**
-         * return ID of current (active) template
+         * @brief return ID of current (active) template
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -82,7 +81,7 @@ namespace YAWK {
         }
 
         /**
-         * Check if a template with given name already exists, return true or false
+         * @brief Check if a template with given name already exists, return true or false
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -120,7 +119,7 @@ namespace YAWK {
         }
 
         /**
-         * switch all positions indicators on or off
+         * @brief switch all positions indicators on or off
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -155,7 +154,7 @@ namespace YAWK {
         }
 
         /**
-         * fetch positions of current (active) template, explode string and return positions array
+         * @brief fetch positions of current (active) template, explode string and return positions array
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -190,7 +189,7 @@ namespace YAWK {
         }
 
         /**
-         * save a template as new. It copies the tpl folder and all settings into a new one.
+         * @brief save a template as new. It copies the tpl folder and all settings into a new one.
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -261,7 +260,7 @@ namespace YAWK {
         }
 
         /**
-         * load properties into template object
+         * @brief load properties into template object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -300,7 +299,7 @@ namespace YAWK {
 
 
         /**
-         * load template properties and return as array
+         * @brief load template properties and return as array
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -331,7 +330,7 @@ namespace YAWK {
         }
 
         /**
-         * load template settings of ID and return as array
+         * @brief load template settings of ID and return as array
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -360,7 +359,7 @@ namespace YAWK {
         }
 
         /**
-         * save new template properties into database
+         * @brief save new template properties into database
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -411,7 +410,7 @@ namespace YAWK {
 
 
         /**
-         * load template_settings_types and return as array
+         * @brief load template_settings_types and return as array
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -440,7 +439,7 @@ namespace YAWK {
 
 
         /**
-         * return array with all template id's + names.
+         * @brief return array with all template id's + names.
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -466,7 +465,7 @@ namespace YAWK {
         }
 
         /**
-         * count and return how many settings got this: template ID
+         * @brief count and return how many settings got this: template ID
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -485,7 +484,7 @@ namespace YAWK {
         }
 
         /**
-         * return template name for given ID
+         * @brief return template name for given ID
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -513,7 +512,7 @@ namespace YAWK {
 
 
         /**
-         * return template ID for given name
+         * @brief return template ID for given name
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -547,7 +546,7 @@ namespace YAWK {
         }
 
         /**
-         * return current active template name
+         * @brief return current active template name
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -599,7 +598,7 @@ namespace YAWK {
         }
 
         /**
-         * get, set and minify template css file
+         * @brief get, set and minify template css file
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -648,7 +647,7 @@ namespace YAWK {
         }
 
         /**
-         * get, set and minify custom.css file
+         * @brief get, set and minify custom.css file
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -692,7 +691,7 @@ namespace YAWK {
         }
 
         /**
-         * get, set and minify custom.js file
+         * @brief get, set and minify custom.js file
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -736,7 +735,7 @@ namespace YAWK {
         }
 
         /**
-         * return the content of custom.css
+         * @brief return the content of custom.css
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -752,7 +751,7 @@ namespace YAWK {
         }
 
         /**
-         * return the content of custom.js
+         * @brief return the content of custom.js
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -768,7 +767,7 @@ namespace YAWK {
         }
 
         /**
-         * return filename of template css file
+         * @brief return filename of template css file
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -794,7 +793,7 @@ namespace YAWK {
         }
 
         /**
-         * return filename of custom css file
+         * @brief return filename of custom css file
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -814,7 +813,7 @@ namespace YAWK {
         }
 
         /**
-         * return filename of custom js file
+         * @brief return filename of custom js file
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -835,7 +834,7 @@ namespace YAWK {
 
 
         /**
-         * return biggest ID from template database
+         * @brief return biggest ID from template database
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -886,7 +885,7 @@ namespace YAWK {
         }
 
         /**
-         * update (save) template settings
+         * @brief update (save) template settings
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -924,7 +923,7 @@ namespace YAWK {
 
 
         /**
-         * set template active
+         * @brief set template active
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -955,7 +954,7 @@ namespace YAWK {
         }
 
         /**
-         * copy template settings into a new template
+         * @brief copy template settings into a new template
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -992,7 +991,7 @@ namespace YAWK {
         }
 
         /**
-         * Add a new template setting to the database.
+         * @brief Add a new template setting to the database.
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1006,6 +1005,16 @@ namespace YAWK {
          * @return bool
          */
         // alter IDs
+        /**
+         * @param object $db
+         * @param string $property
+         * @param string $value
+         * @param string $valueDefault
+         * @param string $label
+         * @param string $fieldclass
+         * @param string $placeholder
+         * @return bool
+         */
         function addTemplateSetting($db, $property, $value, $valueDefault, $label, $fieldclass, $placeholder)
         {
             /** @param $db \YAWK\db */
@@ -1030,7 +1039,7 @@ namespace YAWK {
         }
 
         /**
-         * set template details
+         * @brief set template details
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1053,7 +1062,7 @@ namespace YAWK {
         }
 
         /**
-         * delete template
+         * @brief delete template
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1130,7 +1139,7 @@ namespace YAWK {
 
 
         /**
-         * Returns an array with all template settings.
+         * @brief Returns an array with all template settings.
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1187,7 +1196,7 @@ namespace YAWK {
         }
 
         /**
-         * return div box with postition settings
+         * @brief return div box with postition settings
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1239,7 +1248,7 @@ namespace YAWK {
 
 
         /**
-         * return html form field, depending on fieldClass
+         * @brief return html form field, depending on fieldClass
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1509,9 +1518,7 @@ namespace YAWK {
 
 
         /**
-         * return font edit row including preview
-         *
-         * @param string $fontRow name and id properties of the font row eg. h1
+         * @brief return font edit row including preview
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1732,12 +1739,12 @@ namespace YAWK {
         }
 
         /**
-         * get fonts from folder and return as array
+         * @brief get fonts from folder and return as array
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
          * @param string $folder folder that helds all fonts (usually ../system/fonts/)
-         * @return array | bool | mixed
+         * @return string | array
          */
         static public function getFontsFromFolder($folder)
         {
@@ -1787,7 +1794,7 @@ namespace YAWK {
         }
 
         /**
-         * get setting from database and draw input field
+         * @brief get setting from database and draw input field
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1899,8 +1906,8 @@ namespace YAWK {
         /* END FUNCTION YAWK\settings::getSetting */
 
         /**
-         * return a select option list with all fonts:
-         * <ul>
+         * @brief return a select option list with all fonts:
+         * @details <ul>
          * <li>system default fonts</li>
          * <li>own true type fonts from system/fonts</li>
          * <li>google fonts from database: gfonts</li>
@@ -2012,12 +2019,12 @@ namespace YAWK {
         }
 
         /**
-         * get all google fonts into an array and return array
+         * @brief get all google fonts into an array and return array
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db database
-         * @return mixed
+         * @return array | null
          *
          */
         public static function getGoogleFontsArray($db)
@@ -2039,7 +2046,7 @@ namespace YAWK {
         }
 
         /**
-         * return a radio list of all registered google fonts
+         * @brief return a radio list of all registered google fonts
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2123,7 +2130,7 @@ namespace YAWK {
 
 
         /**
-         * delete google font with requested ID
+         * @brief delete google font with requested ID
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2163,7 +2170,7 @@ namespace YAWK {
         }
 
         /**
-         * add google font to database
+         * @brief add google font to database
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2201,6 +2208,12 @@ namespace YAWK {
             }
         }
 
+        /**
+         * @brief set css code for custom fonts (ttf / otf / woff)
+         * @param $cssTagName
+         * @param $tplSettings
+         * @return string
+         */
         static function setCssBodyFontFace($cssTagName, $tplSettings)
         {
             $bodyFontFaceCSS = '';
@@ -2230,6 +2243,12 @@ namespace YAWK {
             return $bodyFontFaceCSS;
         }
 
+        /**
+         * @brief  set css code for body link styling
+         * @param $cssTagName
+         * @param $tplSettings
+         * @return string
+         */
         static function setCssBodyLinkTags($cssTagName, $tplSettings)
         {
             $aLink = $tplSettings["$cssTagName-alink"];
@@ -2258,6 +2277,12 @@ namespace YAWK {
             return $bodyLinkTags;
         }
 
+        /**
+         * @brief set small font settings css code
+         * @param $cssTagName
+         * @param $tplSettings
+         * @return string
+         */
         static function setCssBodySmallFontSettings($cssTagName, $tplSettings)
         {
             $smallColor = $tplSettings["$cssTagName-smallcolor"];
@@ -2276,6 +2301,12 @@ namespace YAWK {
             return $bodySmallTags;
         }
 
+        /**
+         * @brief set body font settings css code
+         * @param $cssTagName
+         * @param $tplSettings
+         * @return string
+         */
         static function setCssBodyFontSettings($cssTagName, $tplSettings)
         {
             $fontFamily = $tplSettings["$cssTagName-fontfamily"];
@@ -2312,6 +2343,12 @@ namespace YAWK {
             return $bodyFontCSS;
         }
 
+        /**
+         * @brief set font settings css code
+         * @param $cssTagName
+         * @param $tplSettings
+         * @return string
+         */
         static function setCssFontSettings($cssTagName, $tplSettings)
         {
             $fontFamily = $tplSettings["$cssTagName-fontfamily"];
@@ -2526,16 +2563,21 @@ namespace YAWK {
             return $fontCSS;
         }
 
+        /**
+         * @brief Get and return current active google font
+         * @param $db
+         * @return string
+         */
         static function getActiveBodyFont($db)
         {
-            /* @param \YAWK\db $db */
+            /* @var \YAWK\db $db */
             $bodyFont = \YAWK\template::getTemplateSetting($db, "value", "globaltext-fontfamily");
             $bodyFontFamily = "font-family: $bodyFont";
             return $bodyFontFamily;
         }
 
         /**
-         * return currently active google font
+         * @brief return currently active google font
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2546,7 +2588,7 @@ namespace YAWK {
          */
         static function getActivegfont($db, $status, $property)
         {
-            /* @param \YAWK\db $db */
+            /* @var \YAWK\db $db */
             if ($res = $db->query("SELECT id, font, setting
                      FROM {gfonts}
                      WHERE activated = 1
@@ -2580,7 +2622,7 @@ namespace YAWK {
         }
 
         /**
-         * get settings for heading, menu and text font and output html to load font
+         * @brief get settings for heading, menu and text font and output html to load font
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2616,7 +2658,7 @@ namespace YAWK {
         }
 
         /**
-         * get any template setting from database
+         * @brief get any template setting from database
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2642,7 +2684,7 @@ namespace YAWK {
         }
 
         /**
-         * include header for html page *outdated? *moved to sys?
+         * @brief include header for html page *outdated? *moved to sys?
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2678,7 +2720,7 @@ namespace YAWK {
         }
 
         /**
-         * get the position states of all templates. This is used on index.php to render only templates that are enabled (1)
+         * @brief get the position states of all templates. This is used on index.php to render only templates that are enabled (1)
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2705,7 +2747,7 @@ namespace YAWK {
         }
 
         /**
-         * get the position indicators. This is used on index.php to mark indicated positions
+         * @brief get the position indicators. This is used on index.php to mark indicated positions
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2733,7 +2775,7 @@ namespace YAWK {
         }
 
         /**
-         * set template position and output the correct data depending on position
+         * @brief set template position and output the correct data depending on position
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2795,7 +2837,7 @@ namespace YAWK {
         }
 
         /**
-         * get all template settings into an array and return it
+         * @brief get all template settings into an array and return it
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2805,7 +2847,7 @@ namespace YAWK {
          */
         static function getTemplateSettingsArray($db, $templateID)
         {
-            /* @param \YAWK\db $db */
+            /* @var \YAWK\db $db */
             if (!isset($templateID) || (empty($templateID))) {   // if no templateID is set, take current template ID from settings db
                 $templateID = settings::getSetting($db, "selectedTemplate");
             }
@@ -2823,17 +2865,17 @@ namespace YAWK {
         }
 
         /**
-         * check if an admin LTE wrapper should be loaded around the backend content.
+         * @brief check if an admin LTE wrapper should be loaded around the backend content.
          * This function must be called at the top of every backend page (admin/includes/xyz.php)
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
          * @param array $lang language array
-         * @return array
+         * @return null
          */
         static function checkWrapper($lang, $title, $subtitle)
         {
-            /* @param \YAWK\db $db */
+            /* @var \YAWK\db $db */
             if (!isset($_GET['hideWrapper'])) {
                 // draw the admin lte wrapper around content to include breadcrumbs and start content section
                 // TEMPLATE WRAPPER - HEADER & breadcrumbs
@@ -2863,8 +2905,8 @@ namespace YAWK {
         }
 
         /**
-         * Return a multidimensional array with all assets by requested type.
-         * If no type is set, or type == 0, all assets will be returned.
+         * @brief Return a multidimensional array with all assets by requested type.
+         * @details If no type is set, or type == 0, all assets will be returned.
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2874,7 +2916,7 @@ namespace YAWK {
          */
         public static function getAssetsByType($db, $type)
         {
-            /* @param \YAWK\db $db */
+            /* @var \YAWK\db $db */
             // check if type is set
             if (!isset($type) || (empty($type))) {   // if its not set, get all assets from db, no matter which type they are
                 $typeSQLCode = ''; // terminate db query
@@ -2918,7 +2960,7 @@ namespace YAWK {
         }
 
         /**
-         * Draw a list with all assets that are used in this template
+         * @brief Draw a list with all assets that are used in this template
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2929,7 +2971,7 @@ namespace YAWK {
          */
         public static function drawAssetsTitles($db, $templateID, $lang)
         {
-            /* @param \YAWK\db $db */
+            /* @var \YAWK\db $db */
             // if no template ID is set
             if (!isset($templateID) || (empty($templateID))) {   // get current ID from database
                 $templateID = \YAWK\settings::getSetting($db, "selectedTemplate");
@@ -2957,8 +2999,8 @@ namespace YAWK {
 
 
         /**
-         * Draw asset select fields
-         * This method is used in the backend to generate asset select fields in template-assets view
+         * @brief Draw asset select fields
+         * @details This method is used in the backend to generate asset select fields in template-assets view
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2970,7 +3012,7 @@ namespace YAWK {
          */
         public static function drawAssetsSelectFields($db, $type, $templateID, $lang)
         {
-            /* @param \YAWK\db $db */
+            /* @var \YAWK\db $db */
 
             // check type and load assets data
             // if type is not set
@@ -3058,8 +3100,8 @@ namespace YAWK {
         }
 
         /**
-         * Load Active Assets
-         * Load HTML markup for each active asset of current template
+         * @brief Load Active Assets
+         * @details Load HTML markup for each active asset of current template
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -3070,7 +3112,7 @@ namespace YAWK {
          */
         public function loadActiveAssets($db, $templateID, $host)
         {
-            /* @param \YAWK\db $db */
+            /* @var \YAWK\db $db */
 
             if (isset($templateID) && (!empty($templateID))) {
                 echo "
@@ -3113,7 +3155,7 @@ namespace YAWK {
 
         public function loadActiveAssetsIntoArray($db, $templateID)
         {
-            /* @param \YAWK\db $db */
+            /* @var \YAWK\db $db */
 
             if (isset($templateID) && (!empty($templateID)))
             {
@@ -3140,7 +3182,7 @@ namespace YAWK {
 
 
         /**
-         * copy template settings into a new template
+         * @brief copy template settings into a new template
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -3176,7 +3218,7 @@ namespace YAWK {
         }
 
         /**
-         * Return which Bootstrap version is currently loaded in given template
+         * @brief Return which Bootstrap version is currently loaded in given template
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -3213,13 +3255,13 @@ namespace YAWK {
         }
 
         /**
-         * Check which Bootstrap version is currently loaded in active template
+         * @brief Check which Bootstrap version is currently loaded in active template
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db database
          * @return string 0|3|4|X
-         * @brief return values: 0 = not loaded, 3 = bootstrap 3, 4 = bootstrap 4, X = multiple (false!)
+         * @details  return values: 0 = not loaded, 3 = bootstrap 3, 4 = bootstrap 4, X = multiple (false!)
          */
         public function checkBootstrapVersion($db, $templateID, $lang)
         {
@@ -3289,7 +3331,7 @@ namespace YAWK {
         }
 
         /**
-         * Upload a template (install / update)
+         * @brief Upload a template (install / update)
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -3297,7 +3339,7 @@ namespace YAWK {
          * @param array $postData data that has been sent by upload form
          * @param array $postFiles uploaded file that has been sent by upload form
          * @return bool true|false
-         * @brief upload .zip file, unpack to tmp folder,
+         * @details  upload .zip file, unpack to tmp folder,
          */
         public function uploadTemplate($db, $postData, $postFiles, $lang)
         {
@@ -3733,7 +3775,7 @@ namespace YAWK {
         }
 
         /**
-         * Create a zip file from template and force direct download
+         * @brief Create a zip file from template and force direct download
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -3742,7 +3784,7 @@ namespace YAWK {
          * @param int $templateID ID of the template to process
          * @param object $user user object
          * @return bool true|false
-         * @brief dump database settings into .json files, write template.ini and license file, zip the whole template folder and serve .zip for direct download
+         * @details  dump database settings into .json files, write template.ini and license file, zip the whole template folder and serve .zip for direct download
          */
         public function downloadTemplate($db, $templateFolder, $templateID, $user)
         {

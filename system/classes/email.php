@@ -1,7 +1,7 @@
 <?php
 namespace YAWK {
     /**
-     * <b>send an email.</b>
+     * @details <b>send an email.</b>
      *
      * handles the email functions. main method is<br>
      * <i>Example:</i>
@@ -21,7 +21,7 @@ namespace YAWK {
     {
 
         /**
-         * send an email
+         * @brief send an email
          * @param string $email_from
          * @param string $email_to
          * @param string $email_cc

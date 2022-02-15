@@ -1,7 +1,7 @@
 <?php
 namespace YAWK {
     /**
-     * <b>Backend Search</b>
+     * @details <b>Backend Search</b>
      *
      * handles the backend's core search functions. <br>
      * See Methods Summary for Details!</i></p>
@@ -15,11 +15,11 @@ namespace YAWK {
      */
     class search
     {
-        /** * @searchString string contains the search term */
+        /** searchString string contains the search term */
         public $searchString;
 
         /**
-         * search pages and draw box
+         * @brief search pages and draw box
          * @param string $searchString
          * @param object $db database object
          */
@@ -55,7 +55,7 @@ namespace YAWK {
 
 
         /**
-         * search menus
+         * @brief search menus
          * @param string $searchString
          * @param object $db database object
          */
@@ -90,7 +90,7 @@ namespace YAWK {
 
 
         /**
-         * search users
+         * @brief search users
          * @param string $searchString
          * @param object $db database object
          */
@@ -126,7 +126,7 @@ namespace YAWK {
 
 
         /**
-         * search users
+         * @brief search widgets
          * @param string $searchString
          * @param object $db database object
          */
@@ -161,7 +161,7 @@ namespace YAWK {
 
 
         /**
-         * search blogs
+         * @brief search blogs
          * @param string $searchString
          * @param object $db database object
          */

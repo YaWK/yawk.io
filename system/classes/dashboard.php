@@ -2,7 +2,7 @@
 namespace YAWK\BACKEND
 {
     /**
-     * <b>Admin LTE Dashboard Class</b>
+     * @details <b>Admin LTE Dashboard Class</b>
      *
      * This class serves a few methods that build the Admin LTE Dashboard view in the backend.<br>
      * <p>Methods are mostly draw functions that output html.</p>
@@ -21,7 +21,7 @@ namespace YAWK\BACKEND
     {
 
         /**
-         * Draws a box containing the recently added static pages
+         * @brief Draws a box containing the recently added static pages
          * @param object $db the database object
          * @param object $lang language object
          * @param int $limit number for sql limitation
@@ -87,7 +87,7 @@ namespace YAWK\BACKEND
         }
 
         /**
-         * Draws a box containing the recently added users
+         * @brief Draws a box containing the recently added users
          * @param object $db database
          * @param int $limit number for sql limitation
          * @param object $lang language object

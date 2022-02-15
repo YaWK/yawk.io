@@ -2,8 +2,8 @@
 namespace YAWK {
 
     /**
-     * <b>Class installer</b>
-     * @package YAWK
+     * @details <b>installer Class</b>
+     * @brief This class handles the setup / installation process
      */
     class installer
     {
@@ -47,7 +47,7 @@ namespace YAWK {
         public $serverRequirements;
 
         /**
-         * installer constructor.
+         * @brief installer constructor.
          * build and return the html head
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @copyright 2017 Daniel Retzl
@@ -96,8 +96,8 @@ namespace YAWK {
         }
 
         /**
-         * Initialize the installer.
-         * check and set the current / supported language, check if install.ini exists and start setup process
+         * @brief Initialize the installer.
+         * @details check and set the current / supported language, check if install.ini exists and start setup process
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @copyright 2017 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
@@ -171,8 +171,8 @@ namespace YAWK {
 
 
         /**
-         * Start the setup process.
-         * include core functions and check server requirements. handles the installation steps
+         * @brief Start the setup process.
+         * @details include core functions and check server requirements. handles the installation steps
          * @param object $language language object
          * @param array $lang language data array
          * @author Daniel Retzl <danielretzl@gmail.com>
@@ -246,7 +246,7 @@ namespace YAWK {
         }
 
 
-        /** step 1 - SELECT LANGUAGE
+        /** @brief step 1 - SELECT LANGUAGE
          * @param object $language language object
          * @param array $lang language data array
          * @author Daniel Retzl <danielretzl@gmail.com>
@@ -280,7 +280,7 @@ namespace YAWK {
                   </div>";
         }
 
-        /** step 2 - DB DATA + SERVER REQUIREMENTS
+        /** @brief step 2 - DB DATA + SERVER REQUIREMENTS
          * @param array $setup installation settings
          * @param object $language language object
          * @param array $lang language data array
@@ -385,7 +385,7 @@ namespace YAWK {
                           ";
         }
 
-        /** step 3 - write db-config, check + import db connection If all went good, a form with project settings gets drawn.
+        /** @brief step 3 - write db-config, check + import db connection If all went good, a form with project settings gets drawn.
          * @param array $setup installation settings
          * @param object $language language object
          * @param array $lang language data array
@@ -499,7 +499,7 @@ namespace YAWK {
                 }
         }
 
-        /** step 4 - save project settings and draw a form to enter user data (email, name, password...)
+        /** @brief step 4 - save project settings and draw a form to enter user data (email, name, password...)
          * @param array $setup installation settings
          * @param object $language language object
          * @param array $lang language data array
@@ -603,7 +603,7 @@ namespace YAWK {
                           </div>";
         }
 
-        /** step 5 - save data, write .htaccess files and redirect to backend login - FIN
+        /** @brief step 5 - save data, write .htaccess files and redirect to backend login - FIN
          * @param array $setup installation settings
          * @param object $language language object
          * @param array $lang array language data array
@@ -699,7 +699,7 @@ namespace YAWK {
 
         /* GET + CHECK functions */
 
-        /** this function writes the .htaccess file to the admin/ folder
+        /** @brief this function writes the .htaccess file to the admin/ folder
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @license    https://opensource.org/licenses/MIT
          * @link       http://yawk.io
@@ -901,7 +901,7 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
         }
 
 
-        /** check server requirements and set object params
+        /** @brief check server requirements and set object params
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @license    https://opensource.org/licenses/MIT
          * @link       http://yawk.io
@@ -996,7 +996,7 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
                 return $selectOptions;
         }
 
-        /** Check if php version is bigger than required
+        /** @brief Check if php version is bigger than required
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @license    https://opensource.org/licenses/MIT
          * @link       http://yawk.io
@@ -1016,7 +1016,7 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
             }
         }
 
-        /** Check if the weberver is running on apache
+        /** @brief Check if the weberver is running on apache
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @license    https://opensource.org/licenses/MIT
          * @link       http://yawk.io
@@ -1063,7 +1063,7 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
         }
 
         /**
-         * Check if zlib is available
+         * @brief Check if zlib is available
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
@@ -1084,7 +1084,7 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
         }
 
         /**
-         * Check if mod_rewrite is available
+         * @brief Check if mod_rewrite is available
          * <p>Note: this does not work on some restricted configured shared hosting providers.</p>
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
@@ -1122,7 +1122,7 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
         }
 
         /**
-         * Draw the installer's footer with links to yawk.io and github
+         * @brief Draw the installer's footer with links to yawk.io and github
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
@@ -1144,7 +1144,7 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
         }
 
         /**
-         * Call the footer and end the html body and file
+         * @brief Call the footer and end the html body and file
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io

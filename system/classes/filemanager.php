@@ -1,7 +1,7 @@
 <?php
 namespace YAWK {
     /**
-     * <b>Basic File Manager (Backend)</b>
+     * @details <b>Basic File Manager (Backend)</b>
      *
      * This basic file manager class provides simple view, delete and upload methods.
      * <p><i>Class covers backend functionality.
@@ -19,7 +19,7 @@ namespace YAWK {
     {
 
         /**
-         * filemanager constructor.
+         * @brief filemanager constructor.
          * check if all media subfolder exists, if not, try to create them
          */
         function __construct()
@@ -48,7 +48,7 @@ namespace YAWK {
         }
 
         /**
-         * draw the table header with labeling
+         * @brief draw the table header with labeling
          * @param array $lang language array
          * @param integer $i
          */
@@ -78,7 +78,7 @@ namespace YAWK {
         }
 
         /**
-         * draw: output html end table body, end table
+         * @brief draw: output html end table body, end table
          */
         static function drawTableFooter()
         {
@@ -87,7 +87,7 @@ namespace YAWK {
 
 
         /**
-         * all folders in $path as select <option>...</option>
+         * @brief all folders in $path as select <option>...</option>
          * @param string $path rootpath that should be scanned and returned
          */
         static function subdirToOptions($path)
@@ -148,7 +148,7 @@ namespace YAWK {
         }
 
         /**
-         * returns a list of all files in given folder. expect $folder as string
+         * @brief returns a list of all files in given folder. expect $folder as string
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2015 Daniel Retzl yawk.goodconnect.net
          * @license    https://opensource.org/licenses/MIT
@@ -290,7 +290,7 @@ namespace YAWK {
         }
 
         /**
-         * Delete a directory recursive
+         * @brief Delete a directory recursive
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2017 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
@@ -322,7 +322,7 @@ namespace YAWK {
         }
 
         /**
-         * delete file from folder
+         * @brief delete file from folder
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2015 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
@@ -368,7 +368,7 @@ namespace YAWK {
         }
 
         /**
-         * get and return post_max_size value from phpinfo()
+         * @brief get and return post_max_size value from phpinfo()
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
@@ -392,7 +392,7 @@ namespace YAWK {
         }
 
         /**
-         * get and return upload max filesize value from phpinfo()
+         * @brief get and return upload max filesize value from phpinfo()
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
@@ -415,7 +415,7 @@ namespace YAWK {
         }
 
         /**
-         * get and return PHP max file size setting
+         * @brief get and return PHP max file size setting
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
@@ -446,7 +446,7 @@ namespace YAWK {
 
 
         /**
-         * count files from folder
+         * @brief count files from folder
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
@@ -466,7 +466,7 @@ namespace YAWK {
         }
 
         /**
-         * output a list showing only files from folder (no subfolders)
+         * @brief output a list showing only files from folder (no subfolders)
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
@@ -483,7 +483,7 @@ namespace YAWK {
         }
 
         /**
-         * remove special chars as well as leading and trailing slashes from string
+         * @brief remove special chars as well as leading and trailing slashes from string
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2017 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
@@ -514,7 +514,7 @@ namespace YAWK {
         }
 
         /**
-         * returns an array containing only files from folder (no subfolders)
+         * @brief returns an array containing only files from folder (no subfolders)
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
@@ -533,7 +533,7 @@ namespace YAWK {
         }
 
         /**
-         * returns an array containing only files from folder (no subfolders)
+         * @brief returns an array containing only files from folder (no subfolders)
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
@@ -553,7 +553,7 @@ namespace YAWK {
         }
 
         /**
-         * returns an multidimensional array containing subfolders + files of given folder
+         * @brief returns an multidimensional array containing subfolders + files of given folder
          * @param string $folder to get files from
          * @return array|null
          */
@@ -591,7 +591,7 @@ namespace YAWK {
         }
 
         /**
-         * calculate filesize from bytes
+         * @brief calculate filesize from bytes
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
@@ -617,7 +617,7 @@ namespace YAWK {
 
 
         /**
-         * Fast generation of a complete uptodate mime types list
+         * @brief Fast generation of a complete uptodate mime types list
          * @return bool|string
          */
         static function getCurrentMimeTypes()

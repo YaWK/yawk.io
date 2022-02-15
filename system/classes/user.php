@@ -1,12 +1,12 @@
 <?php
 namespace YAWK {
     /**
-     * <b>The default user class. Provide all functions to handle the user object.</b>
+     * @details The default user class. Provide all functions to handle the user object.
      *
      * All functions that are required to handle a user. Methods are: add, edit, delete, checklogin and many more.
      * <p><i>Class covers both, backend & frontend functionality.
      * See Methods Summary for Details!</i></p>
-     * @package    YAWK
+     *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2009-2015 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT
@@ -80,7 +80,7 @@ namespace YAWK {
         public $templateID;
 
         /**
-         * user constructor.
+         * @brief user constructor.
          */
         function __construct($db)
         {
@@ -93,7 +93,7 @@ namespace YAWK {
 
 
         /**
-         * Generate a safe token for password reset
+         * @brief Generate a safe token for password reset
          * @param string $length the length of your token
          * @return string $token function returns the token
          */
@@ -122,7 +122,7 @@ namespace YAWK {
 
 
         /**
-         * Check if password reset token matches and return uid
+         * @brief Check if password reset token matches and return uid
          * @param object $db database obj
          * @param string $token token that was generated for this user
          * @return mixed returns the affected user id (or false)
@@ -161,8 +161,8 @@ namespace YAWK {
         }
 
         /**
-         * Draw the form where users can reset their password.
-         * The password reset email leads to this form.
+         * @brief Draw the form where users can reset their password.
+         * @details The password reset email leads to this form.
          * @param object $db database obj
          * @param array $lang language array
          * @param int $uid user ID
@@ -180,7 +180,7 @@ namespace YAWK {
         }
 
         /**
-         * Set a new user password
+         * @brief Set a new user password
          * @param string $newPassword The new password that will be stored in the database
          * @param int $uid The affected user id
          * @param object $db database obj
@@ -221,7 +221,7 @@ namespace YAWK {
         }
 
         /**
-         * Send password change request email
+         * @brief Send password change request email
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -347,7 +347,7 @@ namespace YAWK {
         }
 
         /**
-         * return current username
+         * @brief return current username
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -367,7 +367,7 @@ namespace YAWK {
         }
 
         /**
-         * check, if a session username is set and if user is logged in
+         * @brief check, if a session username is set and if user is logged in
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -429,7 +429,7 @@ namespace YAWK {
         }
 
         /**
-         * template ID for given user ID
+         * @brief template ID for given user ID
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -463,7 +463,7 @@ namespace YAWK {
         }
 
         /**
-         * check if user ID is allowed to override template
+         * @brief check if user ID is allowed to override template
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -499,7 +499,7 @@ namespace YAWK {
         }
 
         /**
-         * set status and override template for this user ID
+         * @brief set status and override template for this user ID
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -536,7 +536,7 @@ namespace YAWK {
         }
 
         /**
-         * check if user template equals selected (active) template
+         * @brief check if user template equals selected (active) template
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -560,7 +560,7 @@ namespace YAWK {
         }
 
         /**
-         * return an array with all login data
+         * @brief return an array with all login data
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -610,7 +610,7 @@ namespace YAWK {
         }
 
         /**
-         * check if username is already registered
+         * @brief check if username is already registered
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -638,7 +638,7 @@ namespace YAWK {
         }
 
         /**
-         * check if user already has logged in
+         * @brief check if user already has logged in
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -667,7 +667,7 @@ namespace YAWK {
 
 
         /**
-         * check if backend is allowed for current session user group
+         * @brief check if backend is allowed for current session user group
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -723,7 +723,7 @@ namespace YAWK {
         }
 
         /**
-         * return user data as an array
+         * @brief return user data as an array
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -753,7 +753,7 @@ namespace YAWK {
         }
 
         /**
-         * get latest users and return as array
+         * @brief get latest users and return as array
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -793,7 +793,7 @@ namespace YAWK {
         }
 
         /**
-         * count and return all users
+         * @brief count and return all users
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -817,7 +817,7 @@ namespace YAWK {
 
 
         /**
-         * load user properties into object
+         * @brief load user properties into object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -879,7 +879,7 @@ namespace YAWK {
         }
 
         /**
-         * get any user property
+         * @brief get any user property
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -905,7 +905,7 @@ namespace YAWK {
         }
 
         /**
-         * set any user property
+         * @brief set any user property
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -944,7 +944,7 @@ namespace YAWK {
         }
 
         /**
-         * get group name for given $gid (group ID)
+         * @brief get group name for given $gid (group ID)
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -967,7 +967,7 @@ namespace YAWK {
         }
 
         /**
-         * get username from given $uid (user ID)
+         * @brief get username from given $uid (user ID)
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -990,7 +990,7 @@ namespace YAWK {
         }
 
         /**
-         * get ID for given user
+         * @brief get ID for given user
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1013,7 +1013,7 @@ namespace YAWK {
         }
 
         /**
-         * get ID for given email address
+         * @brief get ID for given email address
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1036,7 +1036,7 @@ namespace YAWK {
         }
 
         /**
-         * return all group IDs as an array
+         * @brief return all group IDs as an array
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1071,7 +1071,7 @@ namespace YAWK {
         }
 
         /**
-         * check if a username is logged in
+         * @brief check if a username is logged in
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1115,7 +1115,7 @@ namespace YAWK {
         }
 
         /**
-         * get group data for given group ID
+         * @brief get group data for given group ID
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1137,7 +1137,7 @@ namespace YAWK {
         }
 
         /**
-         * return and output user image
+         * @brief return and output user image
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1246,7 +1246,7 @@ namespace YAWK {
         }
 
         /**
-         * save object properties
+         * @brief save object properties
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1291,7 +1291,7 @@ namespace YAWK {
         }
 
         /**
-         * block or unblock a user
+         * @brief block or unblock a user
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1322,7 +1322,7 @@ namespace YAWK {
         }
 
         /**
-         * return email address of $user
+         * @brief return email address of $user
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1347,7 +1347,7 @@ namespace YAWK {
         }
 
         /**
-         * create a new user
+         * @brief create a new user
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1480,7 +1480,7 @@ namespace YAWK {
         }
 
         /**
-         * create a user from frontend
+         * @brief create a user from frontend
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1582,7 +1582,7 @@ namespace YAWK {
         }
 
         /**
-         * delete a user from database
+         * @brief delete a user from database
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1604,7 +1604,7 @@ namespace YAWK {
         }
 
         /**
-         * check if password is correct; check also if user is blocked or terminated.
+         * @brief check if password is correct; check also if user is blocked or terminated.
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1664,7 +1664,7 @@ namespace YAWK {
         }
 
         /**
-         * check if group ID is allowed to login to backend
+         * @brief check if group ID is allowed to login to backend
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1689,7 +1689,7 @@ namespace YAWK {
         }
 
         /**
-         * check if user is allowed to login
+         * @brief check if user is allowed to login
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1758,7 +1758,7 @@ namespace YAWK {
         }
 
         /**
-         * login user
+         * @brief login user
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1906,7 +1906,7 @@ namespace YAWK {
         }
 
         /**
-         * login user to backend
+         * @brief login user to backend
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2054,12 +2054,11 @@ namespace YAWK {
         }
 
         /**
-         * store user login in database
+         * @brief store user login in database
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db database
-         * @param string $state login or logout information as string: login|logout
          * @param int $failed 0|1 failed status: 1 means login failed, 0 means NOT failed
          * @param string $location frontend or backend
          * @param string $username username
@@ -2093,7 +2092,7 @@ namespace YAWK {
 
 
         /**
-         * return the html for a default login box
+         * @brief return the html for a default login box
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2114,7 +2113,7 @@ namespace YAWK {
         }
 
         /**
-         * return the html for a menu login box
+         * @brief return the html for a menu login box
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2160,7 +2159,7 @@ namespace YAWK {
         }
 
         /**
-         * logout user
+         * @brief logout user
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2231,7 +2230,7 @@ namespace YAWK {
 
 
         /**
-         * output a list of all users (who have not activated privacy switch)
+         * @brief output a list of all users (who have not activated privacy switch)
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2266,7 +2265,7 @@ namespace YAWK {
 
 
         /**
-         * check if a user follows another
+         * @brief check if a user follows another
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2296,7 +2295,7 @@ namespace YAWK {
         }
 
         /**
-         * check if two users are friends
+         * @brief check if two users are friends
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2328,7 +2327,7 @@ namespace YAWK {
         }
 
         /**
-         * check if a friendship request was sent from a user to another
+         * @brief check if a friendship request was sent from a user to another
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2358,7 +2357,7 @@ namespace YAWK {
         }
 
         /**
-         * count and return how many notifications are unseen
+         * @brief count and return how many notifications are unseen
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2381,7 +2380,7 @@ namespace YAWK {
         }
 
         /**
-         * count and return notifications for user ID
+         * @brief count and return notifications for user ID
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2405,7 +2404,7 @@ namespace YAWK {
         }
 
         /**
-         * return an array with all notifications
+         * @brief return an array with all notifications
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2437,7 +2436,7 @@ namespace YAWK {
         }
 
         /**
-         * get all personal notifications for given user ID
+         * @brief get all personal notifications for given user ID
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2471,7 +2470,7 @@ namespace YAWK {
         }
 
         /**
-         * count followers of given user ID
+         * @brief count followers of given user ID
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2494,7 +2493,7 @@ namespace YAWK {
         }
 
         /**
-         * count friends of given user ID
+         * @brief count friends of given user ID
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2520,7 +2519,7 @@ namespace YAWK {
         }
 
         /**
-         * return an array with all confirmed friends for given user ID
+         * @brief return an array with all confirmed friends for given user ID
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2561,7 +2560,7 @@ namespace YAWK {
         }
 
         /**
-         * get an array with all followers for given user ID
+         * @brief get an array with all followers for given user ID
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2606,7 +2605,7 @@ namespace YAWK {
         }
 
         /**
-         * count and return number of messages for given user ID
+         * @brief count and return number of messages for given user ID
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2633,7 +2632,7 @@ namespace YAWK {
         }
 
         /**
-         * return array with all messages for given user ID
+         * @brief return array with all messages for given user ID
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

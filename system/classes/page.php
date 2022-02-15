@@ -4,7 +4,7 @@ namespace YAWK {
     use DirectoryIterator;
 
     /**
-     * <b>The default pages class. Provide all functions to handle static html pages.</b>
+     * @details <b>The default pages class. Provide all functions to handle static html pages.</b>
      *
      * All functions that are required to handle a page. Methods are: create, save, edit, delete and many more.
      * <p><i>Class covers both, backend & frontend functionality.
@@ -65,7 +65,7 @@ namespace YAWK {
         public $path = "../content/pages/";
 
         /**
-         * count and return the pages in database
+         * @brief count and return the pages in database
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -86,7 +86,7 @@ namespace YAWK {
         }
 
         /**
-         * get and return meta tags for requested page
+         * @brief get and return meta tags for requested page
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -120,7 +120,7 @@ namespace YAWK {
 
 
         /**
-         * toggle page status online or offline (plus corresponding menu entries)
+         * @brief toggle page status online or offline (plus corresponding menu entries)
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -181,7 +181,7 @@ namespace YAWK {
         }
 
         /**
-         * toggle page lock to avoid unintended changes
+         * @brief toggle page lock to avoid unintended changes
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -210,7 +210,7 @@ namespace YAWK {
         }
 
         /**
-         * make a copy of a page
+         * @brief make a copy of a page
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -386,7 +386,7 @@ namespace YAWK {
         }
 
         /**
-         * delete a page
+         * @brief delete a page
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -451,7 +451,7 @@ namespace YAWK {
         }
 
         /**
-         * create a new page
+         * @brief create a new page
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -692,7 +692,7 @@ namespace YAWK {
         }
 
         /**
-         * save a static page including all settings
+         * @brief save a static page including all settings
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -817,7 +817,7 @@ namespace YAWK {
 
 
         /**
-         * delete a static content page
+         * @brief delete a static content page
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -853,7 +853,7 @@ namespace YAWK {
         }
 
         /**
-         * write content to static page
+         * @brief write content to static page
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -904,7 +904,7 @@ namespace YAWK {
         }
 
         /**
-         * read content from static page
+         * @brief read content from static page
          * @param string $dirPrefix directory prefix
          * @return string html content
          * @link http://yawk.io
@@ -951,7 +951,7 @@ namespace YAWK {
         }
 
         /**
-         * load page properties and store as object properties
+         * @brief load page properties and store as object properties
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1004,7 +1004,7 @@ namespace YAWK {
         }
 
         /**
-         * load page properties and store as object properties
+         * @brief load page properties and store as object properties
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1058,7 +1058,7 @@ namespace YAWK {
 
 
         /**
-         * get latest pages
+         * @brief get latest pages
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1092,7 +1092,7 @@ namespace YAWK {
         }
 
         /**
-         * get any requested page property
+         * @brief get any requested page property
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1122,7 +1122,7 @@ namespace YAWK {
         }
 
         /**
-         * get and include static page content
+         * @brief get and include static page content
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

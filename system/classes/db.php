@@ -2,7 +2,7 @@
 namespace YAWK
 {
     /**
-     * <b>Database class - connect to mysqli and return connection object</b>
+     * @details <b>Database class - connect to mysqli and return connection object</b>
      * <p>This class establish the database connection if none already exists.
      * It serves some handy methods as well, like quote data, get and delete tables,
      * import .sql files, as well as typical select and query methods. </p>
@@ -12,7 +12,7 @@ namespace YAWK
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @brief Mysqli database class
+     * @brief Mysqli database class; returns db connection object
      */
     class db {
 
@@ -30,8 +30,7 @@ namespace YAWK
         }
 
         /**
-         * Connect to the database
-         *
+         * @brief Connect to the database
          * @return object|bool false on failure / mysqli MySQLi object instance on success
          */
         public function connect()
@@ -63,7 +62,7 @@ namespace YAWK
         }
 
         /**
-         * Execute any sql query
+         * @brief Execute any sql query
          * @param string $query the sql query string
          * @return mixed The mysqli result
          */
@@ -88,7 +87,7 @@ namespace YAWK
         }
 
         /**
-         * Fetch rows from database (SELECT query)
+         * @brief Fetch rows from database (SELECT query)
          * @param string $query the sql query string
          * @return array|bool on failure
          */
@@ -124,7 +123,7 @@ namespace YAWK
         }
 
         /**
-         * Fetch last error from the database
+         * @brief Fetch last error from the database
          * @return string database error
          */
         public function error()
@@ -136,7 +135,7 @@ namespace YAWK
         }
 
         /**
-         * Quote and escape value for use in a database query         *
+         * @brief Quote and escape value for use in a database query         *
          * @param string $value the value to be quoted and escaped
          * @return string the quoted and escaped string
          */
@@ -149,7 +148,7 @@ namespace YAWK
         }
 
         /**
-         * Import data from .sql file into database
+         * @brief Import data from .sql file into database
          * @param $sqlfile
          * @param $lang
          * @return bool
@@ -226,7 +225,7 @@ namespace YAWK
 
 
         /**
-         * Delete a whole database (including all tables)
+         * @brief Delete a whole database (including all tables)
          * @param $database
          */
         public function deleteDatabase($database)
@@ -254,7 +253,7 @@ namespace YAWK
         }
 
         /**
-         * Get all tables from a database and return as array
+         * @brief Get all tables from a database and return as array
          * @return array tableList
          */
         public function get_tables()
@@ -272,7 +271,7 @@ namespace YAWK
         }
 
         /**
-         * Drop table from a database
+         * @brief Drop table from a database
          * @param array $tables the tables to drop
          * @return bool
          */

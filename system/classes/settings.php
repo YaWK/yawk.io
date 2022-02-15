@@ -1,7 +1,7 @@
 <?php
 namespace YAWK {
     /**
-     * @brief <b>Settings class: get and set YaWK system settings</b>
+     * @brief Settings class: get and set YaWK system settings
      * @author Daniel Retzl <danielretzl@gmail.com>
      * @version 1.0.0
      * @link http://yawk.io

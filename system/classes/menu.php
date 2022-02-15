@@ -1,7 +1,7 @@
 <?php
 namespace YAWK {
     /**
-     * <b>The default menu class. Serves all the menu functions.</b>
+     * @details <b>The default menu class. Serves all the menu functions.</b>
      *
      * This class serves all functions to create, edit, delete and modify menus and menu entries.
      * <p><i>Class covers both, backend & frontend functionality.
@@ -38,7 +38,7 @@ namespace YAWK {
         public $parent;
 
         /**
-         * display any subMenu (used by widgets to get any menu in any position)
+         * @brief display any subMenu (used by widgets to get any menu in any position)
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
@@ -64,7 +64,7 @@ namespace YAWK {
 
 
         /**
-         * return true if menu is published, false if not. expects db object and menu ID to get the status from
+         * @brief return true if menu is published, false if not. expects db object and menu ID to get the status from
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
@@ -90,7 +90,7 @@ namespace YAWK {
 
 
         /**
-         * display the global menu
+         * @brief display the global menu
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
@@ -110,7 +110,7 @@ namespace YAWK {
         }
 
         /**
-         * create a new menu
+         * @brief create a new menu
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
@@ -153,7 +153,7 @@ namespace YAWK {
         }
 
         /**
-         * Change the menu title
+         * @brief Change the menu title
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
@@ -181,7 +181,7 @@ namespace YAWK {
         }
 
         /**
-         * Change the menu language
+         * @brief Change the menu language
          * @copyright  2009-2021 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
@@ -218,7 +218,7 @@ namespace YAWK {
         }
 
         /**
-         * Get menu ID by language
+         * @brief Get menu ID by language
          * @copyright  2009-2021 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
@@ -249,7 +249,7 @@ namespace YAWK {
         }
 
         /**
-         * add new entry to an existing menu
+         * @brief add new entry to an existing menu
          * @param $db object database object
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
@@ -305,7 +305,7 @@ namespace YAWK {
         }
 
         /**
-         * check if a whole menu is published or not
+         * @brief check if a whole menu is published or not
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
@@ -332,7 +332,7 @@ namespace YAWK {
         }
 
         /**
-         * check if a single menu entry is published or not
+         * @brief check if a single menu entry is published or not
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
@@ -357,7 +357,7 @@ namespace YAWK {
         }
 
         /**
-         * toggle a whole menu offline
+         * @brief toggle a whole menu offline
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
@@ -392,7 +392,7 @@ namespace YAWK {
         }
 
         /**
-         * toggle a menu entry offline
+         * @brief toggle a menu entry offline
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
@@ -428,7 +428,7 @@ namespace YAWK {
         }
 
         /**
-         * edit a single menu entry
+         * @brief edit a single menu entry
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
@@ -473,7 +473,7 @@ namespace YAWK {
         }
 
         /**
-         * delete a single menu entry
+         * @brief delete a single menu entry
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
@@ -508,7 +508,7 @@ namespace YAWK {
         }
 
         /**
-         * delete a whole menu
+         * @brief delete a whole menu
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
@@ -547,7 +547,7 @@ namespace YAWK {
 
 
         /**
-         * display menu entries for editing in backend
+         * @brief display menu entries for editing in backend
          * @param object $db database
          * @param int $id affected menuID
          * @param array $lang language array
@@ -703,7 +703,7 @@ namespace YAWK {
         }
 
         /**
-         * get menu from database, build and draw it
+         * @brief get menu from database, build and draw it
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
@@ -1015,7 +1015,7 @@ function myFunction() {
         }
 
         /**
-         * draw the logout menu (if user is logged in...)
+         * @brief draw the logout menu (if user is logged in...)
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
@@ -1042,7 +1042,7 @@ function myFunction() {
         }
 
         /**
-         * get menu name for given id
+         * @brief get menu name for given id
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
@@ -1070,7 +1070,7 @@ function myFunction() {
         }
 
         /**
-         * returns the item title for given item and menu ID
+         * @brief returns the item title for given item and menu ID
          * @param object $db database
          * @param int $itemID the menu entry ID
          * @param int $menuID the menu ID

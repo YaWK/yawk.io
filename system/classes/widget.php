@@ -1,7 +1,7 @@
 <?php
 namespace YAWK {
     /**
-     * <b>Widgets are small, useful tools that you can include everywhere on your website.</b>
+     * @details <b>Widgets are small, useful tools that you can include everywhere on your website.</b>
      *
      * YaWK comes with a lot of widgets for different purposes. As an example, you can add SocialMedia buttons, Facebook
      * Boxes, Likebuttons or other things like a simple contant and many other small utilities for typical daily needs
@@ -12,7 +12,6 @@ namespace YAWK {
      * <p><i>Class covers both, backend & frontend functionality.
      * See Methods Summary for Details!</i></p>
      *
-     * @package    YAWK
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2009-2016 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT
@@ -53,11 +52,11 @@ namespace YAWK {
 
 
         /**
-         * Print all object data
+         * @brief Print all object data
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @brief (for development and testing purpose)
+         * @details  (for development and testing purpose)
          */
         public function printObject()
         {   // output data to screen
@@ -67,7 +66,7 @@ namespace YAWK {
         }
 
         /**
-         * Get widget settings and return it as array
+         * @brief Get widget settings and return it as array
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -116,7 +115,7 @@ namespace YAWK {
 
 
         /**
-         * return current widget path
+         * @brief return current widget path
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -129,14 +128,14 @@ namespace YAWK {
         }
 
 
-        // TODO: IMPLEMENT GET WIDGET SETTINGS ARRRAY for issue #61
         /**
-         * Returns an array with all widget settings data.
+         * @brief Returns an array with all widget settings data.
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
          * @return array|bool
+         * @details TODO: IMPLEMENT GET WIDGET SETTINGS ARRRAY for issue #61
          */
         public static function getAllSettingsIntoArray($db, $widgetID) // get all settings from db like property
         {
@@ -159,7 +158,7 @@ namespace YAWK {
         }
 
         /**
-         * Return settings as form elements corresponding to given widget ID.
+         * @brief Return settings as form elements corresponding to given widget ID.
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -534,7 +533,7 @@ namespace YAWK {
 
 
         /**
-         * create new widget
+         * @brief create new widget
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -646,7 +645,7 @@ namespace YAWK {
         }
 
         /**
-         * Get widget heading and subtext, return headline
+         * @brief Get widget heading and subtext, return headline
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -678,7 +677,7 @@ namespace YAWK {
 
 
         /**
-         * load a widget into given position
+         * @brief load a widget into given position
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -729,7 +728,7 @@ namespace YAWK {
         }
 
         /**
-         * return widget ID
+         * @brief return widget ID
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -760,7 +759,7 @@ namespace YAWK {
         }
 
         /**
-         * get widget title and page ID and output select option
+         * @brief get widget title and page ID and output select option
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -800,7 +799,7 @@ namespace YAWK {
         }
 
         /**
-         * get widgets into array
+         * @brief get widgets into array
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -832,11 +831,11 @@ namespace YAWK {
         }
 
         /**
-         * TODO: OUTDATED??
+         * @brief TODO: OUTDATED??
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * load content widget
+         * @details load content widget
          * @param object $db database
          * @param int $id widget ID
          * @return bool|mixed
@@ -865,11 +864,11 @@ namespace YAWK {
         }
 
         /**
-         * TODO: OUTDATED??
+         * @brief TODO: OUTDATED??
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * load widget
+         * @details load widget
          * @param object $db database
          * @param int $id widget ID
          * @return bool|mixed
@@ -897,7 +896,7 @@ namespace YAWK {
         }
 
         /**
-         * return the user login box widget
+         * @brief return the user login box widget
          */
         static function getLoginBox()
         {
@@ -905,7 +904,7 @@ namespace YAWK {
         }
 
         /**
-         * return the facebook likebox widget
+         * @brief return the facebook likebox widget
          */
         static function getFacebookLikeBox()
         {
@@ -913,7 +912,7 @@ namespace YAWK {
         }
 
         /**
-         * toggle widget online / offline
+         * @brief toggle widget online / offline
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -943,7 +942,7 @@ namespace YAWK {
         }
 
         /**
-         * copy a widget
+         * @brief copy a widget
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1035,7 +1034,7 @@ namespace YAWK {
         }
 
         /**
-         * delete a widget
+         * @brief delete a widget
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1061,7 +1060,7 @@ namespace YAWK {
         }
 
         /**
-         * load widget properties into widget object
+         * @brief load widget properties into widget object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1112,7 +1111,7 @@ namespace YAWK {
         }
 
         /**
-         * save (update) widget settings
+         * @brief save (update) widget settings
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

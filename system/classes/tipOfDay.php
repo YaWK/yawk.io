@@ -1,7 +1,7 @@
 <?php
 namespace YAWK {
     /**
-     * <b>Display the tip of the day. <i>(if enabled)</i></b>
+     * @details <b>Display the tip of the day. <i>(if enabled)</i></b>
      *
      * This class handles all tip of the day functions.
      * Tips are stored in cms_tips database.
@@ -29,12 +29,12 @@ namespace YAWK {
         public $tipLink = "";
 
         /**
-         * Draw a tip of the day
+         * @brief Draw a tip of the day
          * @return bool
          */
         public function setPublished($db, $id, $published)
         {
-            /** @param $db \YAWK\db */
+            /** @var $db \YAWK\db */
             // update database
             if ($db->query("UPDATE {tips} SET published = '".$published."' WHERE id = '".$id."'"))
             {   // all good
@@ -48,7 +48,7 @@ namespace YAWK {
         }
 
         /**
-         * Store a new tip to database
+         * @brief Store a new tip to database
          * @param object $db Database Object
          * @param int $published 1 = Tip is published (unseen) 0 = Tip is not published (already seen)
          * @param string $tipHeading Heading of the tip, up to 255 chars
@@ -58,7 +58,7 @@ namespace YAWK {
          */
         public function setTip($db, $published, $tipHeading, $tipText, $tipLink)
         {
-            /** @param $db \YAWK\db */
+            /** @var $db \YAWK\db */
             // preprate data
             if (isset($published) && (!empty($published)))
             { $db->quote($published); }
@@ -85,13 +85,13 @@ namespace YAWK {
         }
 
         /**
-         * Get a random tip from database that is still unseen.
+         * @brief Get a random tip from database that is still unseen.
          * @param $db
          * return bool
          */
         public function getRandomTipData($db)
         {
-            /** @param $db \YAWK\db */
+            /** @var $db \YAWK\db */
             if (\YAWK\settings::getSetting($db, "backendTipOfDayRepeat") == true)
             {
                 $sql = "";
@@ -128,10 +128,10 @@ namespace YAWK {
         }
 
         /**
-         * Get a the next single tip which is not already seen (still published)
-         * To get the order, ID and published fields will be used in the query.
+         * @brief Get a the next single tip which is not already seen (still published)
+         * @details To get the order, ID and published fields will be used in the query.
          * @param object $db database object
-         * return bool
+         * @return bool
          */
         public function getNextTipData($db)
         {
@@ -173,7 +173,7 @@ namespace YAWK {
         }
 
         /**
-         * Draw tip of the day.
+         * @brief Draw tip of the day.
          * @param object $db database object
          * @param array $lang language array
          * @return string

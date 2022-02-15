@@ -1,7 +1,7 @@
 <?php
 namespace YAWK {
     /**
-     * <b>Integrated Webmail</b>
+     * @details <b>Integrated Webmail</b>
      *
      * YaWK includes a <i>seamless integrated</i> webmail. This means you can handle all emails of your website
      * without leaving the backend. The seamless integration into the backend will help you with your daily work.
@@ -12,7 +12,6 @@ namespace YAWK {
      *
      * Beside this, this class serves methods to list folders and email headers / messages
      *
-     * @category   CMS
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2019 Daniel Retzl http://www.yawk.io
      * @license    https://opensource.org/licenses/MIT
@@ -29,7 +28,7 @@ namespace YAWK {
         public $connectionInfo = '';
 
         /**
-         * Move a message from source to target folder. Requires imap handle, source folder, target folder and the mail UID to move.
+         * @brief Move a message from source to target folder. Requires imap handle, source folder, target folder and the mail UID to move.
          * @param $imap object imap connection resource
          * @param $folder string the source folder from which to move the uid
          * @param $targetFolder string the target folder where to move the uid
@@ -79,7 +78,7 @@ namespace YAWK {
         }
 
         /**
-         * Delete a message. Requires imap handle, folder and uid of the mail to delete
+         * @brief Delete a message. Requires imap handle, folder and uid of the mail to delete
          * @param $imap object imap connection resource
          * @param $folder string the source folder from which to move the uid
          * @param $uid int|string the mail UID
@@ -116,7 +115,7 @@ namespace YAWK {
 
 
         /**
-         * Cleanup trash and spam folder (delete all messages in requested folder)
+         * @brief Cleanup trash and spam folder (delete all messages in requested folder)
          * @param $imap object imap connection resource
          */
         public function purgeTrash($imap)
@@ -133,7 +132,7 @@ namespace YAWK {
         }
 
         /**
-         * Draw mailbox control buttons (trash, reply, forward...)
+         * @brief Draw mailbox control buttons (trash, reply, forward...)
          * @param $imap object imap object
          * @param $type string inbox|message| select proper button set which to display
          * @param $uid int the current email uid to work with
@@ -238,7 +237,7 @@ namespace YAWK {
         }
 
         /**
-         * Draw a list with all folders of this mailbox
+         * @brief Draw a list with all folders of this mailbox
          * @param $imap object The current imap handle
          * @param $folders array The mailbox folders as array
          */
@@ -354,7 +353,7 @@ namespace YAWK {
 
 
         /**
-         * Draw email headers (will be used to overview the email list)
+         * @brief Draw email headers (will be used to overview the email list)
          * @param $emails array email headers
          * @param $currentFolder string the current folder from where to get the emails
          * @param $lang array language array
@@ -470,12 +469,24 @@ namespace YAWK {
         }
 
 
+        /**
+         * Mark email as flagged
+         * @param $imap
+         * @param $uid
+         * @return bool
+         */
         public function markAsFlagged($imap, $uid)
         {
             // /** @param $imap \SSilence\ImapClient\ImapClient */
             return imap_setflag_full($imap, $uid, "\\Flagged", ST_UID);
         }
 
+        /**
+         * Clear flags from email
+         * @param $imap
+         * @param $uid
+         * @return bool
+         */
         public function removeFlags($imap, $uid)
         {
             return imap_clearflag_full($imap, $uid, "\\Flagged", ST_UID);

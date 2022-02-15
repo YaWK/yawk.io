@@ -1,7 +1,7 @@
 <?php
 namespace YAWK {
     /**
-     * <b>Plugin class: handles some basic plugin functions</b>
+     * @details <b>Plugin class: handles some basic plugin functions</b>
      *
      * Handles plugin functions of YaWK. Plugins are bigger extensions than widgets.
      * A plugin can handle any data from a mysql database. This is useful if your project
@@ -23,7 +23,6 @@ namespace YAWK {
      * <p><i>This class covers backend functionality.
      * See Methods Summary for Details!</i></p>
      *
-     * @package    YAWK
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2009-2016 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT
@@ -45,7 +44,7 @@ namespace YAWK {
         public $activated;
 
         /**
-         * plugin constructor.
+         * @brief plugin constructor.
          */
         function __construct()
         {
@@ -53,7 +52,7 @@ namespace YAWK {
         }
 
         /**
-         * get and draw a list of all active plugins
+         * @brief get and draw a list of all active plugins
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
@@ -120,7 +119,7 @@ namespace YAWK {
         }
 
         /**
-         * get requested plugin name for given plugin ID
+         * @brief get requested plugin name for given plugin ID
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
@@ -148,7 +147,7 @@ namespace YAWK {
         }
 
         /**
-         * get requested plugin ID by given name
+         * @brief get requested plugin ID by given name
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
@@ -175,7 +174,7 @@ namespace YAWK {
         }
 
         /**
-         * create a static page wich includes the according plugin content
+         * @brief create a static page wich includes the according plugin content
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT

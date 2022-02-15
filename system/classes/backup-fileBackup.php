@@ -2,7 +2,7 @@
 namespace YAWK\BACKUP\FILES
 {
     /**
-     * <b>YaWK Backup Component: File Backup Class</b>
+     * @details <b>YaWK Backup Component: File Backup Class</b>
      * <p>Methods to backup folders and files</p>
      *
      * @package    YAWK
@@ -38,18 +38,18 @@ namespace YAWK\BACKUP\FILES
 
 
         /**
-         * Initialize and start file backup
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
+         * @brief Initialize and start file backup
          * @param       object $db database object
          * @param       string $overwriteBackup if overwrite backup is allowed or not "true" | "false"
          * @param       string $zipBackup if backup should be zipped or not "true" | "false"
          * @return      bool
+         * @version     1.0.0
+         * @link        http://yawk.io
+         * @author      Daniel Retzl <danielretzl@gmail.com>
          */
-        public function initFolderBackup($db, $overwriteBackup, $zipBackup)
+        public function initFolderBackup(object $db, string $overwriteBackup, string $zipBackup): bool
         {
-            // start filebackup
+            // start file backup
             $this->overwriteBackup = $overwriteBackup;
             $this->zipBackup = $zipBackup;
 
@@ -65,14 +65,14 @@ namespace YAWK\BACKUP\FILES
 
 
         /**
-         * Check if .zip backup file exists
+         * @brief Check if .zip backup file exists
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
          * @brief  return bool if $this->backupZipFile exists
          * @return      bool true|false
          */
-        public function zipFileExists()
+        public function zipFileExists(): bool
         {
             // set path + filename (store as string in $this->backupZipFile)
             $this->backupZipFile = $this->targetFolder.$this->backupZipFile;// .sql backup file exists
@@ -90,11 +90,11 @@ namespace YAWK\BACKUP\FILES
         }
 
         /**
-         * Write backup.ini file (used by backup restore methods)
+         * @brief Write backup.ini file (used by backup restore methods)
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @brief  write all relevant backup information into this file
+         * @brief       write all relevant backup information into this file
          * @return      array $this->backupSettings
          */
         public function setBackupSettings()
@@ -109,7 +109,7 @@ namespace YAWK\BACKUP\FILES
         }
 
         /**
-         * Get and return hash value of $file
+         * @brief Get and return hash value of $file
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
@@ -137,7 +137,7 @@ namespace YAWK\BACKUP\FILES
         }
 
         /**
-         * Copy files to tmp folder, zip it and move it to the place
+         * @brief Copy files to tmp folder, zip it and move it to the place
          * where this backup should be stored (current or archive...)
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
@@ -430,7 +430,7 @@ namespace YAWK\BACKUP\FILES
 
 
         /**
-         * Copy a folder from source to target, including all subdirectories
+         * @brief Copy a folder from source to target, including all subdirectories
          * @param $db
          * @param $folder
          * @param $targetFolder
@@ -456,11 +456,11 @@ namespace YAWK\BACKUP\FILES
         }
 
         /**
-         * Check settings and start file backup
+         * @brief Check settings and start file backup
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @brief  return bool if zip archive exists
+         * @brief       return bool if zip archive exists
          * @return      bool true|false
          */
         public function startFileBackup($db)

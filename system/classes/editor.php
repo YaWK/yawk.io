@@ -1,21 +1,18 @@
 <?php
 namespace YAWK {
     /**
-     * <b>Load editor settings, required javascript and html markup</b>
-
-     * @category   CMS
+     * @brief  Load editor settings, required javascript and html markup
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2019 Daniel Retzl http://www.yawk.io
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io/
-     * @since      File available since Release 1.0.0
-     * @brief Load editor + settings
+     * @details  Load summernote editor + codemirror + settings
      */
     class editor
     {
         /**
-         * load the editor and set it's settings
+         * @brief load the editor and set it's settings
          * @param object $db Database object
          * @return array|bool
          */
@@ -28,7 +25,7 @@ namespace YAWK {
         }
 
         /**
-         * load all required javascript and css files
+         * @brief load all required javascript and css files
          * @param array $editorSettings the editor theme
          */
         static function loadJavascript($editorSettings)
@@ -48,8 +45,7 @@ namespace YAWK {
         }
 
         /**
-         *
-         * output a html script area with all editor options
+         * @brief output a html script area with all editor options
          * @param $editorSettings
          */
         static function setEditorSettings($editorSettings)
@@ -176,7 +172,7 @@ $(document).ready(function() {
 
         /**
          *
-         * output a html script area with all editor options
+         * @brief output a html script area with all editor options
          * @param $editorSettings
          */
         static function setEditorSettingsForCustomHtmlWidget($editorSettings)
@@ -274,7 +270,7 @@ $(document).ready(function() {
 
         /**
          *
-         * outputs a html script area with all editor options
+         * @brief outputs a html script area with all editor options
          * @param $editorSettings
          */
         static function setEditorSettingsForReplyBox($editorSettings)

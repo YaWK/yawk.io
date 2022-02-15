@@ -1,7 +1,7 @@
 <?php
 namespace YAWK {
     /**
-     * <b>Get and set the backend language.</b>
+     * @details <b>Get and set the backend language.</b>
      *
      * <p>Language Support for Backend</i></p>
      * The language files are located in<br>
@@ -40,7 +40,7 @@ namespace YAWK {
         public $supportedLanguages;
 
         /**
-         * initialize and return current language
+         * @brief initialize and return current language
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
@@ -57,7 +57,7 @@ namespace YAWK {
         }
 
         /**
-         * returns the currently set language
+         * @brief returns the currently set language
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @copyright 2017 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
@@ -184,7 +184,7 @@ namespace YAWK {
         }
 
         /**
-         * returns the currently set backend language, but is static callable
+         * @brief returns the currently set backend language, but is static callable
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @copyright 2017 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
@@ -251,7 +251,7 @@ namespace YAWK {
 
 
         /**
-         * get and return client language
+         * @brief get and return client language
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
@@ -274,7 +274,7 @@ namespace YAWK {
         }
 
         /**
-         * sets object supportedLanguages as array including all supported languages
+         * @brief sets object supportedLanguages as array including all supported languages
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
@@ -312,7 +312,7 @@ namespace YAWK {
         }
 
         /**
-         * Check if a language is supported. This functions expect currentLanguage string in format "en-EN" or "en"
+         * @brief Check if a language is supported. This functions expect currentLanguage string in format "en-EN" or "en"
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @copyright 2017 Daniel Retzl
          * @param string $currentLanguage language in format: en-EN or en
@@ -363,7 +363,7 @@ namespace YAWK {
         }
 
         /**
-         * Set a language as default and load (set) it current language
+         * @brief Set a language as default and load (set) it current language
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @copyright 2017 Daniel Retzl
          * @param string $defaultLanguage language in format: en-EN or en
@@ -381,7 +381,7 @@ namespace YAWK {
         }
 
         /**
-         * Returns the path to the language file
+         * @brief Returns the path to the language file
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @copyright 2017 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
@@ -442,7 +442,7 @@ namespace YAWK {
         }
 
         /**
-         * set client language and parse corresponding ini file to an array called $lang
+         * @brief set client language and parse corresponding ini file to an array called $lang
          * @param string $currentLanguage the current language as string (eg en-US)
          * @return array|bool $lang returns a language array
          */
@@ -492,7 +492,7 @@ namespace YAWK {
 
 
         /**
-         * allow plugins to inject language tags to $lang array
+         * @brief allow plugins to inject language tags to $lang array
          * @param array $lang the language data array
          * @param string $pathToFile absolute path to the injectable language file
          * @return array $lang returns pushed language array

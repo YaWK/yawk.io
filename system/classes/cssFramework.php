@@ -3,7 +3,7 @@ namespace YAWK\FRAMEWORK {
 use YAWK\language;
 
     /**
-     * <b>Bootstrap CSS check version + return corresponding css</b>
+     * @details <b>Bootstrap CSS check version + return corresponding css</b>
      * <p>This is a helper function, used by admin/includes/template-save.php.
      * It generates the custom css code for the current loaded bootstrap version,
      * depending on the selection of the fields within the backend.</p>
@@ -25,9 +25,15 @@ use YAWK\language;
         public $cssCode = '';
 
         // call constructor on object creation
+
+        /**
+         * cssFramework constructor.
+         * @param $version string the current bootstrap version to work with
+         * @param $tplSettings array the template settings array
+         */
         public function __construct($version, $tplSettings)
         {
-            /** @param $lang language */
+            /** @var $lang language */
             // check if bootstrap version is set
             if (isset($version) && (is_string($version) && (!empty($version))))
             {
@@ -71,7 +77,7 @@ use YAWK\language;
 
 
         /**
-         * Initialize and start check function
+         * @details Initialize and start check function
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -93,12 +99,12 @@ use YAWK\language;
         }
 
         /**
-         * Check and return generated CSS Code as string
+         * @details Check and return generated CSS Code as string
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
          * @return string|null the generated css code as (big) string
-         * @brief Check CSS code and return it on success, otherwise return null
+         * @brief Check CSS code and return it on success as string, otherwise return null
          */
         public function outputCssCode()
         {   // check if css code string is set and not empty
@@ -113,12 +119,12 @@ use YAWK\language;
         }
 
         /**
-         * Check if Bootstrap is version 3 or 4 and load the required component methods
+         * @brief  Check if Bootstrap is version 3 or 4 and load the required component methods
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
          * @return true|null the generated css code as (big) string
-         * @brief Return true after executing component methods or false if Bootstrap version is unknown
+         * @details  Return true after executing component methods or false if Bootstrap version is unknown
          */
         public function setBootstrapComponents()
         {

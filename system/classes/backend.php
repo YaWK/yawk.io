@@ -427,6 +427,11 @@ namespace YAWK {
             return $menusArray;
         }
 
+        /**
+         * @brief return all menu ids and names as array
+         * @param $db
+         * @return array
+         */
         static function getMenuNamesArray($db)
         {
             /* @param $db \YAWK\db */

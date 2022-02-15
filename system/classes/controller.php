@@ -2,21 +2,33 @@
 namespace YAWK
 {
     /**
-     * <b>The Controller Class.</b>
+     * @details The Controller Class.
      *
      * <p>Controller filter and return filename</p>
      *
-     * @package    YAWK
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2009-2016 Daniel Retzl yawk.io
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @brief The controller function filterfilename returns string.
+     * @brief The controller function returns filtered filename as string (or null).
      */
-
 class controller
 {
+    /**
+     * @details  TODO: outdated try to outsource the frontend init from admin/index.php (failed)
+     * @details this could be deleted.
+     * @param $db db
+     * @param $currentpage \YAWK\page
+     * @brief INIT FRONTEND STARTS HERE
+     */
+    public static function frontEndInit($db, $currentpage, $user, $template)
+    {
+
+        // check whether the system is actually in maintenance mode
+
+    }
+
     /** * @param string the filename to filter */
     public $filename;
 
@@ -25,18 +37,14 @@ class controller
     }
 
 
-    public static function frontEndInit($db, $currentpage, $user, $template)
-    {
-        /** @param $db \YAWK\db
-         * @param $currentpage \YAWK\page
-         *
-         *  INIT FRONTEND STARTS HERE
-         */
-        // check whether the system is actually in maintenance mode
-
-    }
-
-
+    /**
+     * @brief Main filter controller: checks GET params and lead to corresponding actions
+     * @param $db
+     * @param $lang
+     * @param $filename
+     * @return false|string
+     * @details This is used whether to detect that users wants to reset password, load a page or delegate any other action
+     */
     public static function filterfilename($db, $lang, $filename)
     {
         // check if user wants to reset password
@@ -45,7 +53,7 @@ class controller
             if (isset($_GET['token']) && (is_string($_GET['token'])))
             {
                 // check if tokens match and returns the uid
-                $uid = \YAWK\user::checkResetToken($db, $_GET['token']);
+                $uid = user::checkResetToken($db, $_GET['token']);
                 // no uid
                 if ($uid == false)
                 {
@@ -65,7 +73,7 @@ class controller
                     <div class=\"col-md-4\">&nbsp;</div>
                     <div class=\"col-md-4\"><br><br><h3>$lang[PASSWORD_RESET]<br>
                     <p class=\"small text-gray\">$lang[PASSWORD_REQUIREMENTS]</small></h3><hr>";
-                    \YAWK\user::drawPasswordResetForm($db, $lang, $uid);
+                    user::drawPasswordResetForm($db, $lang, $uid);
                     echo "<hr><br><br></div>
                     <div class=\"col-md-4\">&nbsp;</div></div>";
                     exit;
@@ -96,10 +104,10 @@ class controller
                 if (isset($_POST['uid']) && (!empty($_POST['uid']) && (is_numeric($_POST['uid']))))
                 {
                     // set new password
-                    if (\YAWK\user::setNewPassword($db, $_POST['newPassword1'], $_POST['uid']) == true)
+                    if (user::setNewPassword($db, $_POST['newPassword1'], $_POST['uid']) == true)
                     {   // password change successful...
                         // get username to pre-fill out the login form
-                        $user = \YAWK\user::getUserNameFromID($db, $_POST['uid']);
+                        $user = user::getUserNameFromID($db, $_POST['uid']);
                         // if username is NOT set correctly
                         if (!isset($user) || (empty($user)) || (!is_string($user)))
                         {   // no form pre-fill out
@@ -112,7 +120,7 @@ class controller
                         <div class=\"col-md-4\">&nbsp;</div>
                         <div class=\"col-md-4\"><br><br><h3>$lang[PASSWORD_CHANGED]<br>
                         <p class=\"small text-gray\">$lang[PASSWORD_CHANGED_LOGIN]</small></h3><hr></div></div>";
-                        echo \YAWK\user::drawLoginBox("$user", $_POST['newPassword1']);
+                        echo user::drawLoginBox("$user", $_POST['newPassword1']);
                         echo "<hr><br><br><br><br>";
                         exit;
                     }
@@ -125,7 +133,7 @@ class controller
                             <div class=\"col-md-4\"><br><br><h3>$lang[PASSWORD_CHANGED_ERROR]<br>
                             <p class=\"small text-gray\">$lang[PLEASE_TRY_AGAIN]</small></h3><hr>";
                             // draw reset form again
-                            \YAWK\user::drawPasswordResetForm($db, $lang, $_POST['uid']);
+                            user::drawPasswordResetForm($db, $lang, $_POST['uid']);
                             echo "<br><br></div>
                             <div class=\"col-md-4\">&nbsp;</div></div>";
                             exit;
@@ -177,7 +185,7 @@ class controller
         if (!file_exists($filename))
         {
             // file does not exist, load 404 page
-            $notfound = $filename;
+            $notfound = $filename."not found!";
             $filename = "content/errors/404.php";
             // check if call comes from frontend or backend
             if (file_exists($filename))
@@ -187,9 +195,8 @@ class controller
             else
             {
                 // call from backend, set path correctly
-                if (!isset($db)) { $db = new \YAWK\db(); }
-                \YAWK\sys::setSyslog($db, 4, 1, "404 ERROR $notfound", 0, 0, 0, 0);
-                $filename = "../content/errors/404.php";
+                if (!isset($db)) { $db = new db(); }
+                sys::setSyslog($db, 4, 1, "404 ERROR $notfound", 0, 0, 0, 0);
                 return $filename;
             }
         }

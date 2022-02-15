@@ -2,7 +2,7 @@
 namespace YAWK
 {
     /**
-     * Class licenses
+     * @details Class licenses
      * This class serves methods to get any license returned as text
      * or write it as LICENSE to given target folder. This is mainly
      * used by the template system to add the correct license file
@@ -34,7 +34,7 @@ namespace YAWK
         public $licenseFilename = 'LICENSE';
 
         /**
-         * Licenses constructor create requested license for holder
+         * @brief Licenses constructor create requested license for holder
          * @param $license string the license that should be generated
          * @param $description string one line to give the program's name and a brief idea of what it does.
          * @param $year string year when it was licensed
@@ -75,7 +75,7 @@ namespace YAWK
         }
 
         /**
-         * Create license text and return it as string (or false)
+         * @brief Create license text and return it as string (or false)
          * @return string|false
          */
         public function getLicenseText()
@@ -98,7 +98,7 @@ namespace YAWK
         }
 
         /**
-         * Create license text and write it as LICENSE file to $this->target folder
+         * @brief Create license text and write it as LICENSE file to $this->target folder
          * @return bool
          */
         public function writeLicenseFile()
@@ -128,7 +128,7 @@ namespace YAWK
         }
 
         /**
-         * Create license text and save string as obj property
+         * @brief Create license text and save string as obj property
          * @return bool
          */
         public function createLicenseText()
@@ -324,7 +324,7 @@ namespace YAWK
         }
 
         /**
-         * Check if target folder exists and is writeable
+         * @brief Check if target folder exists and is writeable
          * @return bool true|false
          */
         public function checkFolder()

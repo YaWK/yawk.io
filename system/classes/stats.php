@@ -1,11 +1,8 @@
 <?php
-
 namespace YAWK
 {
-
     /**
-     * <b>Statistics - get and set user and page stats</b>
-     * @package YAWK
+     * @brief Statistics - get and set user and page stats
      * @author Daniel Retzl <danielretzl@gmail.com>
      * @version 1.0.0
      * @link http://yawk.io
@@ -228,7 +225,7 @@ namespace YAWK
 
 
         /**
-         * Return the number of all currently online users
+         * @brief Return the number of all currently online users
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -258,7 +255,7 @@ namespace YAWK
         }
 
         /**
-         * Check and delete outdated sessions if they are expired
+         * @brief Check and delete outdated sessions if they are expired
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -284,7 +281,7 @@ namespace YAWK
         }
 
         /**
-         * Set users online in database (stores and check sessions and timestamps)
+         * @brief Set users online in database (stores and check sessions and timestamps)
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -371,7 +368,7 @@ namespace YAWK
         }
 
         /**
-         * Insert statistics data into database
+         * @brief Insert statistics data into database
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -397,7 +394,7 @@ namespace YAWK
 
 
         /**
-         * Prepare data: get and collect, detect OS and device type
+         * @brief Prepare data: get and collect, detect OS and device type
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -528,7 +525,7 @@ namespace YAWK
 
 
         /**
-         * Count all messages that are stored in the database
+         * @brief Count all messages that are stored in the database
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -550,7 +547,7 @@ namespace YAWK
         }
 
         /**
-         * Count and set user stats like, how many users are registered, currently online or blocked
+         * @brief Count and set user stats like, how many users are registered, currently online or blocked
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -589,7 +586,7 @@ namespace YAWK
 
 
         /**
-         * Count system logins
+         * @brief Count system logins
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -690,7 +687,7 @@ namespace YAWK
 
 
         /**
-         * Output JS: PIE CHART login data
+         * @brief Output JS: PIE CHART login data
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -735,7 +732,7 @@ namespace YAWK
 
 
         /**
-         * Output JS: PIE CHART daytime data
+         * @brief Output JS: PIE CHART daytime data
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -785,7 +782,7 @@ namespace YAWK
 
 
         /**
-         * Output JS: LINE CHART daytime data
+         * @brief Output JS: LINE CHART daytime data
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -820,7 +817,7 @@ namespace YAWK
 
 
         /**
-         * Output JS: BAR CHART daytime data
+         * @brief Output JS: BAR CHART daytime data
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -854,7 +851,7 @@ namespace YAWK
 
 
         /**
-         * Output JS: WEEKDAY BAR CHART
+         * @brief Output JS: WEEKDAY BAR CHART
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -880,7 +877,7 @@ namespace YAWK
 
 
         /**
-         * Output JS: PIE CHART browser data
+         * @brief Output JS: PIE CHART browser data
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -930,7 +927,7 @@ namespace YAWK
 
 
         /**
-         * Output JS: PIE CHART OS data
+         * @brief Output JS: PIE CHART OS data
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -977,7 +974,7 @@ namespace YAWK
 
 
         /**
-         * Output JS: BAR CHART OS versions
+         * @brief Output JS: BAR CHART OS versions
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1040,7 +1037,7 @@ namespace YAWK
 
 
         /**
-         * Output JS: BAR CHART device types
+         * @brief Output JS: BAR CHART device types
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1075,7 +1072,7 @@ namespace YAWK
 
 
         /**
-         * Set and return the legend textcolor for each browser
+         * @brief Set and return the legend textcolor for each browser
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1127,7 +1124,7 @@ namespace YAWK
 
 
         /**
-         * Set and return the legend textcolor for each operating system
+         * @brief Set and return the legend textcolor for each operating system
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1160,7 +1157,7 @@ namespace YAWK
 
 
         /**
-         * Set and return the legend textcolor for each device type
+         * @brief Set and return the legend textcolor for each device type
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1186,7 +1183,7 @@ namespace YAWK
         }
 
         /**
-         * Set and return the legend textcolor for each daytime
+         * @brief Set and return the legend textcolor for each daytime
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1215,7 +1212,7 @@ namespace YAWK
         }
 
         /**
-         * Set and return the legend textcolor for logins (failed | success)
+         * @brief Set and return the legend textcolor for logins (failed | success)
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1251,7 +1248,7 @@ namespace YAWK
 
 
         /**
-         * Set and return the legend textcolor for each OS Version
+         * @brief Set and return the legend textcolor for each OS Version
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1338,7 +1335,7 @@ namespace YAWK
 
 
         /**
-         * Count and set the number of hits for each weekday
+         * @brief Count and set the number of hits for each weekday
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1455,7 +1452,7 @@ namespace YAWK
 
 
         /**
-         * Calculate hits in percent for each weekday
+         * @brief Calculate hits in percent for each weekday
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1496,7 +1493,7 @@ namespace YAWK
 
 
         /**
-         * Count and set the number of hits for each daytime
+         * @brief Count and set the number of hits for each daytime
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1605,7 +1602,7 @@ namespace YAWK
 
 
         /**
-         * Calculate hits per daytime and return data in percent
+         * @brief Calculate hits per daytime and return data in percent
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1645,7 +1642,7 @@ namespace YAWK
 
 
         /**
-         * Count and return browsers
+         * @brief Count and return browsers
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1748,7 +1745,7 @@ namespace YAWK
 
 
         /**
-         * Count device types (desktop, phone or tablet)
+         * @brief Count device types (desktop, phone or tablet)
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1837,7 +1834,7 @@ namespace YAWK
 
 
         /**
-         * Count operating systems
+         * @brief Count operating systems
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1924,13 +1921,12 @@ namespace YAWK
 
 
         /**
-         * Count operating systems versions
+         * @brief Count operating systems versions
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db the database object
          * @param string $data array containing all the stats data
-         * @param string $limit contains i number for sql limitation
          * @return array|bool returning array containing all detected OS versions and their hits
          */
         public function countOSVersions($db, $data)
@@ -2099,7 +2095,7 @@ namespace YAWK
 
 
         /**
-         * Returns an array with all stats, ordered by date_created.
+         * @brief Returns an array with all stats, ordered by date_created.
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2176,7 +2172,7 @@ namespace YAWK
 
 
         /**
-         * Calculate some basic stats (almost outdated)
+         * @brief Calculate some basic stats (almost outdated)
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2230,7 +2226,7 @@ namespace YAWK
 
 
         /**
-         * Insert data into database
+         * @brief Insert data into database
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2281,7 +2277,7 @@ namespace YAWK
 
 
         /**
-         * Draw a default box containing user statistics
+         * @brief Draw a default box containing user statistics
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2310,7 +2306,7 @@ namespace YAWK
 
 
         /**
-         * Draw default box containing OS Statistics
+         * @brief Draw default box containing OS Statistics
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2441,7 +2437,7 @@ namespace YAWK
 
 
         /**
-         * Draw default box containing browser statistics
+         * @brief Draw default box containing browser statistics
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2571,7 +2567,7 @@ namespace YAWK
 
 
         /**
-         * Draw default box containing OS versions statistics
+         * @brief Draw default box containing OS versions statistics
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2700,7 +2696,7 @@ namespace YAWK
         }
 
         /**
-         * Draw default box containing device types
+         * @brief Draw default box containing device types
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2835,7 +2831,7 @@ namespace YAWK
 
 
         /**
-         * Draw default box containing login statistics
+         * @brief Draw default box containing login statistics
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -2983,7 +2979,7 @@ namespace YAWK
 
 
         /**
-         * Draw default box containing daytime statistics
+         * @brief Draw default box containing daytime statistics
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -3236,7 +3232,7 @@ namespace YAWK
 
 
         /**
-         * Draw default box containing weekday statistics
+         * @brief Draw default box containing weekday statistics
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -3357,7 +3353,7 @@ namespace YAWK
         }
 
         /**
-         * Draw default box containing overview statistics
+         * @brief Draw default box containing overview statistics
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -3388,7 +3384,7 @@ namespace YAWK
         }
 
         /**
-         * Draw default box containing pages statistics
+         * @brief Draw default box containing pages statistics
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -3432,7 +3428,7 @@ namespace YAWK
         }
 
         /**
-         * Draw default box containing days of month statistics
+         * @brief Draw default box containing days of month statistics
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

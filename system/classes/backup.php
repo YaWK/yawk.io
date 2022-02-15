@@ -1,6 +1,9 @@
 <?php
 namespace YAWK\BACKUP
 {
+
+    use YAWK\db;
+
     /**
      * @details <b>Backup Class</b>
      * <p>Methods to backup and restore complete or partial project data including:
@@ -141,7 +144,7 @@ namespace YAWK\BACKUP
          * @return      bool true: backup successful | false: backup failed
          */
         public function run($db)
-        {   /** @param $db \YAWK\db */
+        {   /** @param $db db */
             // check if backup method is set
             if (isset($this->backupMethod) && (!empty($this->backupMethod)))
             {   // which backup method should be executed?
@@ -249,14 +252,14 @@ namespace YAWK\BACKUP
 
         /**
          * @brief Set backup information file (backup.ini)
-         * @param string $targetFolder folder where the ini file should be stored
-         * @author      Daniel Retzl <danielretzl@gmail.com>
+         * @param object $db database handle
+         * @return bool
+         * @details   will be added to every .zip file to identify what to do during restore process
          * @version     1.0.0
          * @link        http://yawk.io
-         * @return bool
-         * @brief  will be added to every .zip file to identify what to do during restore process
+         * @author      Daniel Retzl <danielretzl@gmail.com>
          */
-        public function setIniFile($db)
+        public function setIniFile(object $db): bool
         {   // check if target folder is set
 
             // check if target folder is writeable
@@ -302,11 +305,12 @@ namespace YAWK\BACKUP
 
         /**
          * @brief Parse backup ini file
+         * @param $db
+         * @param $iniFile
+         * @return array|false
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @param $iniFile
-         * @return array|false
          */
         public function parseIniFile($db, $iniFile)
         {   // set config file property
@@ -358,7 +362,7 @@ namespace YAWK\BACKUP
         }
 
         /**
-         * get all files from archive backup folder into array
+         * @brief get all files from archive backup folder into array
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
@@ -380,7 +384,7 @@ namespace YAWK\BACKUP
         }
 
         /**
-         * Include mysql backup class and run mysqldump backup
+         * @brief Include mysql backup class and run mysqldump backup
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
@@ -410,7 +414,7 @@ namespace YAWK\BACKUP
 
 
         /**
-         * Run File Backup from $sourceFolder
+         * @brief Run File Backup from $sourceFolder
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
@@ -436,7 +440,7 @@ namespace YAWK\BACKUP
 
 
         /**
-         * Check if ZipArchive function exists
+         * @brief Check if ZipArchive function exists
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
@@ -456,7 +460,7 @@ namespace YAWK\BACKUP
         }
 
         /**
-         * Zip a whole folder from $source to $destination.zip
+         * @brief Zip a whole folder from $source to $destination.zip
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
@@ -567,6 +571,13 @@ namespace YAWK\BACKUP
                 }
         }
 
+        /**
+         * @brief Manage how a backup will be restored from backup folder
+         * @param $db
+         * @param $file
+         * @param $folder
+         * @return array|false
+         */
         public function restore($db, $file, $folder)
         {
             if (isset($file) && (!empty($file)
@@ -704,9 +715,15 @@ namespace YAWK\BACKUP
                 }
         }
 
+        /**
+         * @brief Restore Data physically to folder, restore .sql file to database if needed.
+         * @param $db
+         * @param $restoreFolders
+         * @return array
+         */
         public function doRestore($db, $restoreFolders)
         {
-            /** @param \YAWK\db $db */
+            /** @param db $db */
             // check if restore folders are set
             if (isset($restoreFolders) && (!empty($restoreFolders)))
             {   // restore folders not set or empty
@@ -825,6 +842,11 @@ namespace YAWK\BACKUP
             return $this->restoreStatus;
         }
 
+        /**
+         * @brief check restore folders, check + set permissions of restore folders
+         * @param $restoreFolders
+         * @return bool
+         */
         public function checkFolders($restoreFolders)
         {
             if (!isset($restoreFolders) || (empty($restoreFolders)))
@@ -859,7 +881,13 @@ namespace YAWK\BACKUP
             return true;
         }
 
-        public function setPermissions($folder, $filemode)
+        /**
+         * @brief set folder permissions and do some chmod stuff to with given $filemode to $folder
+         * @param $folder
+         * @param $filemode
+         * @return bool
+         */
+        public function setPermissions($folder, $filemode): bool
         {   // check if filemode is set
             if (!isset($filemode) || (empty($filemode)))
             {   // nope -
@@ -898,6 +926,11 @@ namespace YAWK\BACKUP
         }
 
 
+        /**
+         * @brief check folder permissions and return permissions as string (eg 0755)
+         * @param $folder
+         * @return false|string|null
+         */
         public function checkPermissions($folder)
         {
             // check if folder is set, not empty and correct type
