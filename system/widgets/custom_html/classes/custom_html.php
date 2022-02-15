@@ -2,7 +2,7 @@
 namespace YAWK\WIDGETS\CUSTOM_HTML\CODE
 {
     /**
-     * <b>Embed a custom html code snippet.</b>
+     * @details<b>Embed a custom html code snippet.</b>
      *
      * <p>Sometimes you would like to embed (more or less) small piece of code in any position.
      * This widget helps you to achieve this. You can enter any valid html code. Even if it is not
@@ -25,7 +25,7 @@ namespace YAWK\WIDGETS\CUSTOM_HTML\CODE
         public $customHtmlCode = '';
 
         /**
-         * Load all widget settings from database and fill object
+         * @brief Load all widget settings from database and fill object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -43,7 +43,7 @@ namespace YAWK\WIDGETS\CUSTOM_HTML\CODE
         }
 
         /**
-         * Init and load custom html code
+         * @brief Init and load custom html code
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

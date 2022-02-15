@@ -2,7 +2,7 @@
 namespace YAWK\WIDGETS\SPOTIFY\EMBED
 {
     /**
-     * <b>Empty spotify Widget - for development and demo purpose</b>
+     * @details<b>Empty spotify Widget - for development and demo purpose</b>
      *
      * <p>This widget is (nearly) empty. It can be used to understand the logic behind YaWK's
      * widget system and/or is a great base to start and create your very own widget! Simply
@@ -33,7 +33,7 @@ namespace YAWK\WIDGETS\SPOTIFY\EMBED
         public $spotifyHeight='';
 
         /**
-         * Load all widget settings from database and fill object
+         * @brief Load all widget settings from database and fill object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -51,7 +51,7 @@ namespace YAWK\WIDGETS\SPOTIFY\EMBED
         }
 
         /**
-         * Init spotify widget
+         * @brief Init spotify widget
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

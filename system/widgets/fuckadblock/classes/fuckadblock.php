@@ -2,7 +2,7 @@
 namespace YAWK\WIDGETS\FUCKADBLOCK\BLOCK
 {
     /**
-     * <b>AdBlock Blocker Widget</b>
+     * @details<b>AdBlock Blocker Widget</b>
      *
      * <p>If your website relay on advertising, this widget may be helpful. It can detect, if
      * user has an AdBlocker installed. You can set different levels (low or high) - which means
@@ -43,7 +43,7 @@ namespace YAWK\WIDGETS\FUCKADBLOCK\BLOCK
         public $adBlockJS = '';
 
         /**
-         * Load all widget settings from database and fill object
+         * @brief Load all widget settings from database and fill object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -62,7 +62,7 @@ namespace YAWK\WIDGETS\FUCKADBLOCK\BLOCK
         }
 
         /**
-         * The main function to init fuckAdBlock
+         * @brief The main function to init fuckAdBlock
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

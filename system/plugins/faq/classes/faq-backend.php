@@ -1,7 +1,7 @@
 <?php
 namespace YAWK\PLUGINS\FAQ {
     /**
-     * <b>Build FAQ's for your users.</b>
+     * @details <b>Build FAQ's for your users.</b>
      * <p>FAQs are useful. Beware to underrate this. You can answer the most interesting questions
      * before your user even ask. This saves time - your website should be informative. If you answer
      * a question on your website, users may not need to ask your email or phone support. If you do
@@ -12,24 +12,24 @@ namespace YAWK\PLUGINS\FAQ {
      * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
      * @version    1.0.0
      * @link       http://yawk.io
-     * @brief Handles the Blog System.
+     * @brief Handles the FAQ backend methods.
      */
     class faq {
-        /** * @var int faq ID */
+        /** * @param int faq ID */
         public $id;
-        /** * @var int order sortation number */
+        /** * @param int order sortation number */
         public $sort;
-        /** * @var int category ID */
+        /** * @param int category ID */
         public $cat;
-        /** * @var string question */
+        /** * @param string question */
         public $question;
-        /** * @var string answer */
+        /** * @param string answer */
         public $answer;
-        /** * @var int 0|1 published or not */
+        /** * @param int 0|1 published or not */
         public $published;
 
         /**
-         * get all FAQ data and draw (output) as html table
+         * @brief get all FAQ data and draw (output) as html table
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -79,7 +79,7 @@ namespace YAWK\PLUGINS\FAQ {
         }
 
         /**
-         * create a new question
+         * @brief create a new question
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -106,7 +106,7 @@ namespace YAWK\PLUGINS\FAQ {
         }
 
         /**
-         * delete an FAQ entry
+         * @brief delete an FAQ entry
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -128,7 +128,7 @@ namespace YAWK\PLUGINS\FAQ {
         }
 
         /**
-         * save (update) an faq entry
+         * @brief save (update) an faq entry
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -152,7 +152,7 @@ namespace YAWK\PLUGINS\FAQ {
         }
 
         /**
-         * load faq item properties into faq object
+         * @brief load faq item properties into faq object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

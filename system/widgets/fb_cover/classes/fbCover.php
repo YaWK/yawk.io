@@ -2,7 +2,7 @@
 namespace YAWK\WIDGETS\FACEBOOK\FBCOVER
 {
     /**
-     * <b>Use Facebook Graph API to get you latest cover image of your Facebook Page.
+     * @details<b>Use Facebook Graph API to get you latest cover image of your Facebook Page.
      * Require an App ID and a valid Access Token.</b>
      *
      * <p>This widget shows always your current (newest / latest) cover image of your Facebook page.

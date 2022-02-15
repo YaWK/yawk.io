@@ -15,19 +15,19 @@ namespace YAWK\PLUGINS\SIGNUP {
      */
     class signup
     {
-        /** * @var string username */
+        /** * @param string username */
         protected $username;
-        /** * @var string userpage */
+        /** * @param string userpage */
         public $userpage;
-        /** * @var string form */
+        /** * @param string form */
         protected $form;
-        /** * @var string html */
+        /** * @param string html */
         protected $html;
-        /** * @var string signup */
+        /** * @param string signup */
         protected $signup;
 
         /**
-         * signup constructor.
+         * @brief signup constructor.
          */
         function __construct() {
             $this->html = "";
@@ -35,7 +35,7 @@ namespace YAWK\PLUGINS\SIGNUP {
         }
 
         /**
-         * check if the user is logged in and load userpage on demand
+         * @brief check if the user is logged in and load userpage on demand
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -81,7 +81,7 @@ namespace YAWK\PLUGINS\SIGNUP {
         }
 
         /**
-         * draw html output adultcheck or form on demand
+         * @brief draw html output adultcheck or form on demand
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

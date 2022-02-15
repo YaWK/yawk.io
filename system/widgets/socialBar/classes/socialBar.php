@@ -2,7 +2,7 @@
 namespace YAWK\WIDGETS\SOCIALBAR\DISPLAY
 {
     /**
-     * <b>Social Bar - display icons with links to your social network accounts</b>
+     * @details<b>Social Bar - display icons with links to your social network accounts</b>
      *
      * <p>Embed Links to Twitter, Facebook, Instagram, Pinterest, YouTube and more.
      * You can set any font awesome icon (or any other icon set that you have loaded
@@ -79,7 +79,7 @@ namespace YAWK\WIDGETS\SOCIALBAR\DISPLAY
         public $socialBarClass = '';
 
         /**
-         * Load all widget settings from database and fill object
+         * @brief Load all widget settings from database and fill object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -97,7 +97,7 @@ namespace YAWK\WIDGETS\SOCIALBAR\DISPLAY
         }
 
         /**
-         * Init example widget and call a function for demo purpose
+         * @brief Init example widget and call a function for demo purpose
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -112,7 +112,7 @@ namespace YAWK\WIDGETS\SOCIALBAR\DISPLAY
         }
 
         /**
-         * Set an array with all social button elements
+         * @brief Set an array with all social button elements
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -158,7 +158,7 @@ namespace YAWK\WIDGETS\SOCIALBAR\DISPLAY
         }
 
         /**
-         * Filter and sanitize any socialBar URL
+         * @brief Filter and sanitize any socialBar URL
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -181,7 +181,7 @@ namespace YAWK\WIDGETS\SOCIALBAR\DISPLAY
         }
 
         /**
-         * Draw social bar
+         * @brief Draw social bar
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

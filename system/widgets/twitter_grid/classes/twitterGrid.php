@@ -2,7 +2,7 @@
 namespace YAWK\WIDGETS\TWITTER\GRID
 {
     /**
-     * <b>Twitter Widget - embed Twitter Timeline as grid</b>
+     * @details<b>Twitter Widget - embed Twitter Timeline as grid</b>
      *
      * <p>Twitter Timelines can be embeded as grid view. All you need is
      * the URL of your twitter timeline and the amount of items you wish
@@ -30,7 +30,7 @@ namespace YAWK\WIDGETS\TWITTER\GRID
         public $twitterGridTweetLimit = "5";
 
         /**
-         * Load all widget settings from database and fill object
+         * @brief Load all widget settings from database and fill object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -48,7 +48,7 @@ namespace YAWK\WIDGETS\TWITTER\GRID
         }
 
         /**
-         * Init Twitter widget
+         * @brief Init Twitter widget
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

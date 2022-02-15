@@ -1,7 +1,7 @@
 <?php
 namespace YAWK\WIDGETS\INSTAGRAM\POSTING {
     /**
-     * <b>Instagram Widget - embed any single instagram posting</b>
+     * @details<b>Instagram Widget - embed any single instagram posting</b>
      *
      * <p>If you want to embed instagram on your page, this is the widget to do it.
      * All you need is a valid instagram url and (optional) some settings, like width
@@ -31,7 +31,7 @@ namespace YAWK\WIDGETS\INSTAGRAM\POSTING {
         public $instagramSubtext = '';
 
         /**
-         * Load all widget settings from database and fill object
+         * @brief Load all widget settings from database and fill object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -49,7 +49,7 @@ namespace YAWK\WIDGETS\INSTAGRAM\POSTING {
         }
 
         /**
-         * Print all object data
+         * @brief Print all object data
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -63,7 +63,7 @@ namespace YAWK\WIDGETS\INSTAGRAM\POSTING {
         }
 
         /**
-         * Init and embed Instagram
+         * @brief Init and embed Instagram
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

@@ -17,17 +17,17 @@ namespace YAWK\PLUGINS\USERPAGE {
      */
     class settings
     {
-        /** * @var string html output data */
+        /** * @param string html output data */
         protected $html;
-        /** * @var object settings object */
+        /** * @param object settings object */
         protected $settings;
-        /** * @var string username */
+        /** * @param string username */
         protected $username;
-        /** * @var object user object */
+        /** * @param object user object */
         protected $user;
 
         /**
-         * init check if user is logged in - otherwise draw loginbox
+         * @brief init check if user is logged in - otherwise draw loginbox
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -50,7 +50,7 @@ namespace YAWK\PLUGINS\USERPAGE {
         }
 
         /**
-         * draw user settings page
+         * @brief draw user settings page
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

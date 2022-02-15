@@ -25,83 +25,83 @@ namespace YAWK\PLUGINS\BOOKING {
     {
         /** @var string language */
         public $lang;
-        /** * @var string booking day */
+        /** * @param string booking day */
         public $day;
-        /** * @var string booking month */
+        /** * @param string booking month */
         public $month;
-        /** * @var string booking time */
+        /** * @param string booking time */
         public $time;
-        /** * @var string booking ID */
+        /** * @param string booking ID */
         public $id;
-        /** * @var string user ID who booked */
+        /** * @param string user ID who booked */
         public $uid;
-        /** * @var string group ID */
+        /** * @param string group ID */
         public $gid;
-        /** * @var string date when the booking was created */
+        /** * @param string date when the booking was created */
         public $date_created;
-        /** * @var int 0|1 is this a confirmed booking? */
+        /** * @param int 0|1 is this a confirmed booking? */
         public $date_confirmed;
-        /** * @var string booking name */
+        /** * @param string booking name */
         public $name;
-        /** * @var string booking email address */
+        /** * @param string booking email address */
         public $email;
-        /** * @var string booking phone number */
+        /** * @param string booking phone number */
         public $phone;
-        /** * @var string booking text */
+        /** * @param string booking text */
         public $text;
-        /** * @var int 0|1 was the booking successful? */
+        /** * @param int 0|1 was the booking successful? */
         public $success;
-        /** * @var int internal voting for this booking (school grades) */
+        /** * @param int internal voting for this booking (school grades) */
         public $grade;
-        /** * @var int how often has this client (email adress) successful booked? */
+        /** * @param int how often has this client (email adress) successful booked? */
         public $visits;
-        /** * @var string internal comment for this booking (max 255 chars) */
+        /** * @param string internal comment for this booking (max 255 chars) */
         public $comment;
-        /** * @var string IP Address of the user who booked */
+        /** * @param string IP Address of the user who booked */
         public $ip;
-        /** * @var string users hostname  */
+        /** * @param string users hostname  */
         public $hostname;
-        /** * @var int how much is this booking worth? */
+        /** * @param int how much is this booking worth? */
         public $income;
-        /** * @var int 0|1 is this booking confirmed? */
+        /** * @param int 0|1 is this booking confirmed? */
         public $confirmed;
-        /** * @var string user booking time */
+        /** * @param string user booking time */
         public $datewish_time;
-        /** * @var string user booking month */
+        /** * @param string user booking month */
         public $datewish_month;
-        /** * @var string user booking day */
+        /** * @param string user booking day */
         public $datewish_day;
-        /** * @var string user booking year */
+        /** * @param string user booking year */
         public $datewish_year;
-        /** * @var string user booking date wish (full) */
+        /** * @param string user booking date wish (full) */
         public $date_wish;
-        /** * @var string alternative user booking time */
+        /** * @param string alternative user booking time */
         public $alternative_time;
-        /** * @var string alternative user booking month */
+        /** * @param string alternative user booking month */
         public $alternative_month;
-        /** * @var string alternative user booking day */
+        /** * @param string alternative user booking day */
         public $alternative_day;
-        /** * @var string alternative user booking year */
+        /** * @param string alternative user booking year */
         public $alternative_year;
-        /** * @var string alternative user booking date (full) */
+        /** * @param string alternative user booking date (full) */
         public $date_alternative;
-        /** * @var string user booking message */
+        /** * @param string user booking message */
         public $message;
-        /** * @var string the complete useragent */
+        /** * @param string the complete useragent */
         public $useragent;
-        /** * @var string referer: where did the user came from? (last url) */
+        /** * @param string referer: where did the user came from? (last url) */
         public $referer;
-        /** * @var int expected money from outstanding bookings */
+        /** * @param int expected money from outstanding bookings */
         public $outstanding_sum;
-        /** * @var int 0|1 is this booking set to outdated? */
+        /** * @param int 0|1 is this booking set to outdated? */
         public $outdated;
-        /** * @var int 0|1 is this user (email adress) banned? */
+        /** * @param int 0|1 is this user (email adress) banned? */
         public $ban;
-        /** * @var int 0|1 is this user invited? */
+        /** * @param int 0|1 is this user invited? */
         public $invited;
 
         /**
-         * count and return how many successful booking an email adress made
+         * @brief count and return how many successful booking an email adress made
          * @param object $db database
          * @param string $email email adress you wish to check
          * @return int|bool
@@ -122,7 +122,7 @@ namespace YAWK\PLUGINS\BOOKING {
         }
 
         /**
-         * get statistics from all bookings
+         * @brief get statistics from all bookings
          * @param array $lang language array
          * @param object $db database
          */
@@ -197,7 +197,7 @@ namespace YAWK\PLUGINS\BOOKING {
         }
 
         /**
-         * set a booking to banned (to see clearly: nope, we dont want this)
+         * @brief set a booking to banned (to see clearly: nope, we dont want this)
          * this is useful to detect and handle fake bookings, fun bookings, nonsense entries...
          * @param object $db database
          * @param int $id the booking ID to ban
@@ -224,7 +224,7 @@ namespace YAWK\PLUGINS\BOOKING {
         }
 
         /**
-         * toggle a booking to outdated.
+         * @brief toggle a booking to outdated.
          * @param object $db database
          * @param int $id the booking id to toggle
          * @return bool
@@ -249,7 +249,7 @@ namespace YAWK\PLUGINS\BOOKING {
         }
 
         /**
-         * if you like, you can invite users to a private member area. allow users to register and become members
+         * @brief if you like, you can invite users to a private member area. allow users to register and become members
          * after they did a successful booking. Whatever you put in your members area (eg. vip club) is on your own.
          * @param object $db database
          * @param int $id booking ID (unused, yet)
@@ -290,7 +290,7 @@ namespace YAWK\PLUGINS\BOOKING {
         }
 
         /**
-         * draw (output) html of the frontend form. This is displayed to the user. He will use to place a booking
+         * @brief draw (output) html of the frontend form. This is displayed to the user. He will use to place a booking
          * @return string
          */
         public function getFrontendForm($config, $lang)
@@ -484,7 +484,7 @@ namespace YAWK\PLUGINS\BOOKING {
             } /* EOFunction getTable */
 
         /**
-         * get data and draw (output) html backend table of all bookings
+         * @brief get data and draw (output) html backend table of all bookings
          * @param object $db database
          * @param int $i sql limitation number
          * @param string $field database field
@@ -629,7 +629,7 @@ namespace YAWK\PLUGINS\BOOKING {
         } /* EOFunction getAdminTable */
 
         /**
-         * save (update) booking data
+         * @brief save (update) booking data
          * @param object $db database
          * @return bool
          */
@@ -651,7 +651,7 @@ namespace YAWK\PLUGINS\BOOKING {
         }
 
         /**
-         * toggle a booking online or offline
+         * @brief toggle a booking online or offline
          * @param object $db database
          * @param int $id booking ID to toggle
          * @param int $confirmed 0|1 confirmed status
@@ -673,7 +673,7 @@ namespace YAWK\PLUGINS\BOOKING {
 
 
         /**
-         * load booking data into object properties
+         * @brief load booking data into object properties
          * @param object $db database
          * @param string $id the booking id to load
          */
@@ -709,7 +709,7 @@ namespace YAWK\PLUGINS\BOOKING {
         } /* EOFunction loadProperties */
 
         /**
-         * get highest ID from booking table
+         * @brief get highest ID from booking table
          * @param object $db database
          * @return string|bool the max ID or false
          */
@@ -727,7 +727,7 @@ namespace YAWK\PLUGINS\BOOKING {
         }
 
         /**
-         * return any booking property
+         * @brief return any booking property
          * @param object $db database
          * @param int $id affected booking ID
          * @param string $property the property to get
@@ -748,7 +748,7 @@ namespace YAWK\PLUGINS\BOOKING {
 
 
         /**
-         * delete a single booking
+         * @brief delete a single booking
          * @param object $db database
          * @param int $id the booking ID to delete
          * @return bool
@@ -763,7 +763,7 @@ namespace YAWK\PLUGINS\BOOKING {
 
 
         /**
-         * create a new booking
+         * @brief create a new booking
          * @param object $db database
          */
         function create($db)

@@ -2,7 +2,7 @@
 namespace YAWK\WIDGETS\TWITCH\EMBED
 {
     /**
-     * <b>Twitch Widget - embed any twitch channel</b>
+     * @details<b>Twitch Widget - embed any twitch channel</b>
      *
      * <p>Twitch is a gaming streaming platform. Use this widget to embed any
      * twitch channel. You can set your channel, width, height, either if the
@@ -40,7 +40,7 @@ namespace YAWK\WIDGETS\TWITCH\EMBED
         public $twitchChatWidth = "100%";
 
         /**
-         * Load all widget settings from database and fill object
+         * @brief Load all widget settings from database and fill object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -58,7 +58,7 @@ namespace YAWK\WIDGETS\TWITCH\EMBED
         }
 
         /**
-         * Init twitch widget
+         * @brief Init twitch widget
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

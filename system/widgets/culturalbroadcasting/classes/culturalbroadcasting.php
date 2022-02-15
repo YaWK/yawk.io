@@ -2,7 +2,7 @@
 namespace YAWK\WIDGETS\CULTURALBROADCASTING\STREAM
 {
     /**
-     * <b>Embed audio player from cultural broadcasting archive.</b>
+     * @details<b>Embed audio player from cultural broadcasting archive.</b>
      *
      * <p>Cultural Broadcasting Archive is an austrian podcast archive.
      * You can embed any public broadcast and set a few settings like
@@ -53,7 +53,7 @@ namespace YAWK\WIDGETS\CULTURALBROADCASTING\STREAM
         public $cbaSource = '';
 
         /**
-         * Load all widget settings from database and fill object
+         * @brief Load all widget settings from database and fill object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -71,7 +71,7 @@ namespace YAWK\WIDGETS\CULTURALBROADCASTING\STREAM
         }
 
         /**
-         * Print all object data
+         * @brief Print all object data
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -85,7 +85,7 @@ namespace YAWK\WIDGETS\CULTURALBROADCASTING\STREAM
         }
 
         /**
-         * Initialize: prepare proerties and load javascript
+         * @brief Initialize: prepare proerties and load javascript
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

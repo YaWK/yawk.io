@@ -2,7 +2,7 @@
 namespace YAWK\WIDGETS\GALLERY\IMAGES
 {
     /**
-     * <b>Embed plugin: photo gallery</b>
+     * @details<b>Embed plugin: photo gallery</b>
      *
      * <p>This is the widget to the gallery plugin. With this widget you can embed image galleries
      * that you've created before using the gallery plugin. Simply set the ID of the photo gallery you
@@ -81,7 +81,7 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
 
 
         /**
-         * Load all widget settings from database and fill object
+         * @brief Load all widget settings from database and fill object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -99,7 +99,7 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
         }
 
         /**
-         * Print all object data
+         * @brief Print all object data
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -113,7 +113,7 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
         }
 
         /**
-         * Init Gallery and load methods
+         * @brief Init Gallery and load methods
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -126,7 +126,7 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
         }
 
         /**
-         * Check if lightbox asset is loaded and set lightbox options
+         * @brief Check if lightbox asset is loaded and set lightbox options
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -163,7 +163,7 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
 
 
         /**
-         * Draw the gallery
+         * @brief Draw the gallery
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

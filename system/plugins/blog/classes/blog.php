@@ -1,7 +1,7 @@
 <?php
 namespace YAWK\PLUGINS\BLOG {
     /**
-     * <b>Start blogging today! Very powerful app to create and manage any kind of blog.</b>
+     * @brief <b>Start blogging today! Very powerful app to create and manage any kind of blog.</b>
      * <p>The Blog Plugin is very useful if you want to build anything that is or acts actually like
      * blog. A bunch of pre-defined layouts are there to help you building a clean view to make
      * your pages good looking. A Blog got a title, subtitle, teaser text, longer text, an image
@@ -33,120 +33,119 @@ namespace YAWK\PLUGINS\BLOG {
      */
     class blog
     {
-        /** * @var int ID */
+        /** * @param int $id ID */
         public $id;
-        /** * @var string html */
+        /** * @param string $html html */
         public $html;
-        /** * @var string html ext */
+        /** * @param string $html_ext html ext */
         public $html_ext;
-        /** * @var int blog ID */
+        /** * @param int $blogid blog ID */
         public $blogid;
-        /** * @var int item ID */
+        /** * @param int $itemid item ID */
         public $itemid;
-        /** * @var int item group ID */
+        /** * @param int $itemgid item group ID */
         public $itemgid;
-        /** * @var int 0|1 teaser yes/no */
+        /** * @param int $teaser 0|1 teaser yes/no */
         public $teaser;
-        /** * @var string blog title */
+        /** * @param string $title blog title */
         public $title;
-        /** * @var string blog filename */
+        /** * @param string $filename blog filename */
         public $filename;
-        /** * @var string blog title */
+        /** * @param string $blogtitle blog title */
         public $blogtitle;
-        /** * @var string blog name */
+        /** * @param string $name blog name */
         public $name;
-        /** * @var int 0|1 published, 1 = published, 0 = not published */
+        /** * @param int $published 0|1 published, 1 = published, 0 = not published */
         public $published;
-        /** * @var string blog content */
+        /** * @param string $content blog content */
         public $content;
-        /** * @var string datetime when blog was published */
+        /** * @param string $date_publish datetime when blog was published */
         public $date_publish;
-        /** * @var string datetime when blog was changed */
+        /** * @param string $date_changed datetime when blog was changed */
         public $date_changed;
-        /** * @var string datetime when blog is about to un-publish  */
+        /** * @param string $date_unpublish datetime when blog is about to un-publish  */
         public $date_unpublish;
-        /** * @var string blog description  */
+        /** * @param string $description blog description  */
         public $description;
-        /** * @var string blog subtitle */
+        /** * @param string $subtitle blog subtitle */
         public $subtitle;
-        /** * @var string datetime when blog was created */
+        /** * @param string $date_created datetime when blog was created */
         public $date_created;
-        /** * @var string year */
+        /** * @param string $year_created year */
         public $year_created;
-        /** * @var string teaser text */
+        /** * @param string $teasertext teaser text */
         public $teasertext;
-        /** * @var string blog text */
+        /** * @param string $blogtext blog text */
         public $blogtext;
-        /** * @var string blog author  */
+        /** * @param string $author blog author  */
         public $author;
-        /** * @var string ? blog vis */
+        /** * @param string $author_vis ? blog vis */
         public $author_vis;
-        /** * @var string comment date */
+        /** * @param string $comment_date comment date */
         public $comment_date;
-        /** * @var string comment author */
+        /** * @param string $comment_author comment author */
         public $comment_author;
-        /** * @var string comment email */
+        /** * @param string $comment_email comment email */
         public $comment_email;
-        /** * @var string comment text */
+        /** * @param string $comment_text comment text */
         public $comment_text;
-        /** * @var int 0|1 show title, yes or no */
+        /** * @param int $showTitle 0|1 show title, yes or no */
         public $showTitle;
-        /** * @var int 0|1 show description, yes or no */
+        /** * @param int $showDesc 0|1 show description, yes or no */
         public $showDesc;
-        /** * @var int 0|1 show date, yes or no */
+        /** * @param int $showDate 0|1 show date, yes or no */
         public $showDate;
-        /** * @var int 0|1 show author, yes or no */
+        /** * @param int $showAuthor 0|1 show author, yes or no */
         public $showAuthor;
-        /** * @var int|string ? */
+        /** * @param int|string $sequence ? */
         public $sequence;
-        /** * @var int order sortation var */
+        /** * @param int $sortation order sortation var */
         public $sortation;
-        /** * @var string blog icon (eg. fa fa-anyicon */
+        /** * @param string $icon blog icon (eg. fa fa-anyicon */
         public $icon;
-        /** * @var string permalink url */
+        /** * @param string $permaLink permalink url */
         public $permaLink;
-        /** * @var int|string blog layout */
+        /** * @param int|string $layout blog layout */
         public $layout;
-        /** * @var int 0|1 show comments, yes or no */
+        /** * @param int $comments 0|1 show comments, yes or no */
         public $comments;
-        /** * @var string any thumbnail beneath the blog item */
+        /** * @param string $thumbnail any thumbnail beneath the blog item */
         public $thumbnail;
-        /** * @var string blog alias (filename) */
+        /** * @param string $alias blog alias (filename) */
         public $alias;
-        /** * @var int order sortation number */
+        /** * @param int $sort order sortation number */
         public $sort;
-        /** * @var int group ID */
+        /** * @param int $gid group ID */
         public $gid;
-        /** * @var int page ID */
+        /** * @param int $pageid page ID */
         public $pageid;
-        /** * @var int|string ?blog preview */
+        /** * @param int|string $preview ?blog preview */
         public $preview;
-        /** * @var int|string 0|1 show voting, yes or no */
+        /** * @param int|string $voting 0|1 show voting, yes or no */
         public $voting;
-        /** * @var string youtube video link */
+        /** * @param string $youtubeUrl youtube video link */
         public $youtubeUrl;
-        /** * @var string any external weblink */
+        /** * @param string $weblink any external weblink */
         public $weblink;
-        /** * @var string meta keywords */
+        /** * @param string $metakeywords meta keywords */
         public $metakeywords;
-        /** * @var string meta description */
+        /** * @param string $metadescription meta description */
         public $metadescription;
-        /** * @var int|string blog item layout */
+        /** * @param int|string $itemlayout blog item layout */
         public $itemlayout;
-        /** * @var int|string show blog item comments, yes or no */
+        /** * @param int|string $itemcomments show blog item comments, yes or no */
         public $itemcomments;
-        /** * @var int 0|1 show a <hr> line between every item (article), yes or no */
+        /** * @param int $spacer 0|1 show a <hr> line between every item (article), yes or no */
         public $spacer;
-        /** * @var int 0|1 display blog icon in frontend */
+        /** * @param int $frontendIcon 0|1 display blog icon in frontend */
         public $frontendIcon;
-        /** * @var int 0|1 how many entries should be displayed */
+        /** * @param int $limitEntries 0|1 how many entries should be displayed */
         public $limitEntries;
-        /** * @var int 0|1 if total votes should be displayed */
+        /** * @param int $showTotalVotes 0|1 if total votes should be displayed */
         public $showTotalVotes;
 
-
         /**
-         * Inject Language Tags
+         * @brief @brief Inject Language Tags
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @link http://yawk.io
          * @param array $lang language data array
@@ -179,7 +178,7 @@ namespace YAWK\PLUGINS\BLOG {
 
 
         /**
-         * Print blog title
+         * @brief @brief Print blog title
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -203,7 +202,7 @@ namespace YAWK\PLUGINS\BLOG {
 
 
         /**
-         * Print the latest blog subtitle from
+         * @brief @brief Print the latest blog subtitle from
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -225,7 +224,7 @@ namespace YAWK\PLUGINS\BLOG {
         }
 
         /**
-         * Get the blog title
+         * @brief @brief Get the blog title
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -281,7 +280,7 @@ namespace YAWK\PLUGINS\BLOG {
         }
 
         /**
-         * Toggle a whole blog on/offline
+         * @brief @brief Toggle a whole blog on/offline
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -305,7 +304,7 @@ namespace YAWK\PLUGINS\BLOG {
         }
 
         /**
-         * Toggle a single blog item (entry) on/offline
+         * @brief @brief Toggle a single blog item (entry) on/offline
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -333,7 +332,7 @@ namespace YAWK\PLUGINS\BLOG {
         }
 
         /**
-         * Toggle a blog comment on/offline
+         * @brief @brief Toggle a blog comment on/offline
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -357,7 +356,7 @@ namespace YAWK\PLUGINS\BLOG {
         }
 
         /**
-         * Toggle a the group id (role) of blog item
+         * @brief @brief Toggle a the group id (role) of blog item
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -384,7 +383,7 @@ namespace YAWK\PLUGINS\BLOG {
         }
 
         /**
-         * This get all blog entries from database, prepare layout and draw them onscreen (frontend).
+         * @brief @brief This get all blog entries from database, prepare layout and draw them onscreen (frontend).
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -771,7 +770,7 @@ namespace YAWK\PLUGINS\BLOG {
         }
 
     /**
-    * +++ still in development +++ not for production use! - Draw a voting box (thumbs up/down)
+    * @details +++ still in development +++ not for production use! - Draw a voting box (thumbs up/down)
     * @author Daniel Retzl <danielretzl@gmail.com>
     * @version 0.0.0
     * @link http://yawk.io
@@ -814,9 +813,8 @@ namespace YAWK\PLUGINS\BLOG {
     }
 
     /**
-     * Get any blog property you want from given blogid.
-     * Selection goes like this: "SELECT $property FROM {blog} WHERE id = $blogid
-     *
+     * @brief @brief Get any blog property you want from given blogid.
+     * @details Selection goes like this: "SELECT $property FROM {blog} WHERE id = $blogid
      * @author Daniel Retzl <danielretzl@gmail.com>
      * @version 1.0.0
      * @link http://yawk.io
@@ -847,8 +845,7 @@ namespace YAWK\PLUGINS\BLOG {
     }
 
     /**
-     * Load properties for given blog id and store $this -> $blog properties
-     *
+     * @brief @brief Load properties for given blog id and store $this -> $blog properties
      * @author Daniel Retzl <danielretzl@gmail.com>
      * @version 1.0.0
      * @link http://yawk.io
@@ -900,8 +897,7 @@ namespace YAWK\PLUGINS\BLOG {
     }
 
     /**
-     * Load properties for given blog item (entry) and store $this -> $blog properties
-     *
+     * @brief @brief Load properties for given blog item (entry) and store $this -> $blog properties
      * @author Daniel Retzl <danielretzl@gmail.com>
      * @version 1.0.0
      * @link http://yawk.io
@@ -954,8 +950,7 @@ namespace YAWK\PLUGINS\BLOG {
     }
 
     /**
-     * Save blog blog entry data. (See blog properties)
-     *
+     * @brief Save blog blog entry data. (See blog properties)
      * @author Daniel Retzl <danielretzl@gmail.com>
      * @version 1.0.0
      * @link http://yawk.io
@@ -1110,8 +1105,7 @@ namespace YAWK\PLUGINS\BLOG {
     }
 
     /**
-     * Save blog settings data. (layout, general ettings, comment settings etc...)
-     *
+     * @brief Save blog settings data. (layout, general settings, comment settings etc...)
      * @author Daniel Retzl <danielretzl@gmail.com>
      * @version 1.0.0
      * @link http://yawk.io
@@ -1156,8 +1150,7 @@ namespace YAWK\PLUGINS\BLOG {
     }
 
     /**
-     * Return a copyright footer
-     *
+     * @brief Return a copyright footer
      * @author Daniel Retzl <danielretzl@gmail.com>
      * @version 1.0.0
      * @link http://yawk.io
@@ -1174,8 +1167,7 @@ namespace YAWK\PLUGINS\BLOG {
 
 
     /**
-     * Return the HTML code. To render the view, call this function with echo or print
-     *
+     * @brief Return the HTML code. To render the view, call this function with echo or print
      * @author Daniel Retzl <danielretzl@gmail.com>
      * @version 1.0.0
      * @link http://yawk.io
@@ -1187,8 +1179,7 @@ namespace YAWK\PLUGINS\BLOG {
     }
 
     /**
-     * Get all comments for given blog + item id and stores it in $this->html
-     *
+     * @brief Get all comments for given blog + item id and stores it in $this->html
      * @author Daniel Retzl <danielretzl@gmail.com>
      * @version 1.0.0
      * @link http://yawk.io
@@ -1274,8 +1265,7 @@ namespace YAWK\PLUGINS\BLOG {
     }
 
     /**
-     * Get all comments for given blog + item id and stores it in $this->html
-     *
+     * @brief Get all comments for given blog + item id and stores it in $this->html
      * @author Daniel Retzl <danielretzl@gmail.com>
      * @version 1.0.0
      * @link http://yawk.io
@@ -1302,8 +1292,7 @@ namespace YAWK\PLUGINS\BLOG {
 
 
     /**
-     * Get all comments for given blog + item id and stores it in $this->html
-     *
+     * @brief Get all comments for given blog + item id and stores it in $this->html
      * @author Daniel Retzl <danielretzl@gmail.com>
      * @version 1.0.0
      * @link http://yawk.io
@@ -1450,8 +1439,7 @@ namespace YAWK\PLUGINS\BLOG {
 
 
     /**
-     * Count and returns all active comments. If no result is found, false will be returned.
-     *
+     * @brief Count and returns all active comments. If no result is found, false will be returned.
      * @author Daniel Retzl <danielretzl@gmail.com>
      * @version 1.0.0
      * @link http://yawk.io
@@ -1476,8 +1464,7 @@ namespace YAWK\PLUGINS\BLOG {
 
 
     /**
-     * Draw comments box
-     *
+     * @brief Draw comments box
      * @author Daniel Retzl <danielretzl@gmail.com>
      * @version 1.0.0
      * @link http://yawk.io
@@ -1562,8 +1549,7 @@ namespace YAWK\PLUGINS\BLOG {
         }
 
         /**
-         * Get Property of any blog item
-         *
+         * @brief @brief Get Property of any blog item
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1588,8 +1574,7 @@ namespace YAWK\PLUGINS\BLOG {
 
 
         /**
-         * Delete a whole blog, including its contents, all entries, comments and pages.
-         *
+         * @brief @brief Delete a whole blog, including its contents, all entries, comments and pages.
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1645,8 +1630,7 @@ namespace YAWK\PLUGINS\BLOG {
         }
 
         /**
-         * Delete any blog item
-         *
+         * @brief @brief Delete any blog item
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1693,8 +1677,7 @@ namespace YAWK\PLUGINS\BLOG {
         }
 
         /**
-         * Delete any blog comment
-         *
+         * @brief @brief Delete any blog comment
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1716,8 +1699,7 @@ namespace YAWK\PLUGINS\BLOG {
         }
 
         /**
-         * Create a new blog
-         *
+         * @brief @brief Create a new blog
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1785,8 +1767,7 @@ namespace YAWK\PLUGINS\BLOG {
 
 
         /**
-         * Create a new blog item
-         *
+         * @brief @brief Create a new blog item
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1965,8 +1946,7 @@ namespace YAWK\PLUGINS\BLOG {
         }
 
         /**
-         * Copy a single blog entry
-         *
+         * @brief @brief Copy a single blog entry
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

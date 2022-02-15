@@ -2,7 +2,7 @@
 namespace YAWK\WIDGETS\PREZI\EMBED
 {
     /**
-     * <b>Prezi Widget - embed a prezi presentation on your page.</b>
+     * @details<b>Prezi Widget - embed a prezi presentation on your page.</b>
      *
      * <p>Prezi is a modern presentation tool. With this widget, you can
      * embed any prezi on your page. </p>
@@ -27,7 +27,7 @@ namespace YAWK\WIDGETS\PREZI\EMBED
         public $preziSubtext = '';
 
         /**
-         * Load all widget settings from database and fill object
+         * @brief Load all widget settings from database and fill object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -45,7 +45,7 @@ namespace YAWK\WIDGETS\PREZI\EMBED
         }
 
         /**
-         * Init and embed prezi widget
+         * @brief Init and embed prezi widget
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -59,7 +59,7 @@ namespace YAWK\WIDGETS\PREZI\EMBED
         }
 
         /**
-         * embed prezi
+         * @brief embed prezi
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

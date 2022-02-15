@@ -2,7 +2,7 @@
 namespace YAWK\WIDGETS\BOOKING\FORM
 {
     /**
-     * <b>Booking Widget of Booking Plugin.</b>
+     * @details<b>Booking Widget of Booking Plugin.</b>
      *
      * <p>The widget allows you to embed a booking form onto any page and position you need.
      * It is useful to collect bookings from your users. For further information see description
@@ -78,7 +78,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
 
 
         /**
-         * Load all widget settings from database and fill object
+         * @brief Load all widget settings from database and fill object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -96,7 +96,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
         }
 
         /**
-         * Print all object data
+         * @brief Print all object data
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -110,7 +110,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
         }
 
         /**
-         * Init Booking Widget
+         * @brief Init Booking Widget
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -375,7 +375,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
         }
 
         /**
-         * Set widget properties from database and fill object params
+         * @brief Set widget properties from database and fill object params
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -410,7 +410,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
         }
 
         /**
-         * draw (output) thank you message
+         * @brief draw (output) thank you message
          * (will be displayed after successful submit)
          * @return string html code
          */
@@ -438,7 +438,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
         }
 
         /**
-         * draw (output) html of the frontend form. This is displayed to the user. He will use to place a booking
+         * @brief draw (output) html of the frontend form. This is displayed to the user. He will use to place a booking
          * @return string
          */
         public function drawFrontendForm($lang)

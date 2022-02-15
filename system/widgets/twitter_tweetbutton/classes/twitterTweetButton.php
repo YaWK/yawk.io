@@ -2,7 +2,7 @@
 namespace YAWK\WIDGETS\TWITTER\BUTTON
 {
     /**
-     * <b>Twitter TweetButton Widget - embed Twitter TweetButton</b>
+     * @details<b>Twitter TweetButton Widget - embed Twitter TweetButton</b>
      *
      * <p>Embed Twitter TweetButton. All you need is the URL of your TweetButton
      * and the amount of items you wish to embed. You will get
@@ -28,7 +28,7 @@ namespace YAWK\WIDGETS\TWITTER\BUTTON
         public $twitterTweetButtonText = "";
 
         /**
-         * Load all widget settings from database and fill object
+         * @brief Load all widget settings from database and fill object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -46,7 +46,7 @@ namespace YAWK\WIDGETS\TWITTER\BUTTON
         }
 
         /**
-         * Init Twitter TweetButton Widget
+         * @brief Init Twitter TweetButton Widget
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

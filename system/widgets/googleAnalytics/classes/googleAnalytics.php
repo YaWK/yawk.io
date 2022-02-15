@@ -2,7 +2,7 @@
 namespace YAWK\WIDGETS\GOOGLE\ANALYTICS
 {
     /**
-     * <b>Google Analytics Widget - Embed Google Analytics on your page</b>
+     * @details<b>Google Analytics Widget - Embed Google Analytics on your page</b>
      *
      * <p>If you need to track your users with google analytics, you can use this widget.
      * It requires a tracking ID and allows a few settings. In order to work properly, it
@@ -27,7 +27,7 @@ namespace YAWK\WIDGETS\GOOGLE\ANALYTICS
         public $gaTrackingCode = '';
 
         /**
-         * Load all widget settings from database and fill object
+         * @brief Load all widget settings from database and fill object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -46,7 +46,7 @@ namespace YAWK\WIDGETS\GOOGLE\ANALYTICS
         }
 
         /**
-         * Print all object data
+         * @brief Print all object data
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -60,7 +60,7 @@ namespace YAWK\WIDGETS\GOOGLE\ANALYTICS
         }
 
         /**
-         * Init and embed Google Analytics
+         * @brief Init and embed Google Analytics
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

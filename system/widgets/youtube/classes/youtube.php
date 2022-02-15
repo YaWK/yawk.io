@@ -2,7 +2,7 @@
 namespace YAWK\WIDGETS\YOUTUBE\VIDEO
 {
     /**
-     * <b>Embed any Facebook Video on your page.</b>
+     * @details<b>Embed any Facebook Video on your page.</b>
      *
      * <p>With this widget, you are able to embed any public YouTube Video that you like. Simply enter the
      * Video URL, set a few settings and you're good to go. You do not need to play around with html or
@@ -50,7 +50,7 @@ namespace YAWK\WIDGETS\YOUTUBE\VIDEO
         public $cssMarkup = '';
 
         /**
-         * Load all widget settings from database and fill object params
+         * @brief Load all widget settings from database and fill object params
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -68,7 +68,7 @@ namespace YAWK\WIDGETS\YOUTUBE\VIDEO
         }
 
         /**
-         * Print all object data
+         * @brief Print all object data
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -82,7 +82,7 @@ namespace YAWK\WIDGETS\YOUTUBE\VIDEO
         }
 
         /**
-         * Check settings and embed the YouTube Video
+         * @brief Check settings and embed the YouTube Video
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

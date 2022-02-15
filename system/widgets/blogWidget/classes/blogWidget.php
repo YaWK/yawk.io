@@ -1,7 +1,7 @@
 <?php
 namespace YAWK\WIDGETS\BLOG\WIDGET {
     /**
-     * <b>Embed plugin: blog</b>
+     * @details<b>Embed plugin: blog</b>
      *
      * <p>This is the widget to the blog plugin. With this widget you can embed any blog that you
      * you've created before using the blog plugin. Simply set the ID of the blog you would like
@@ -34,7 +34,7 @@ namespace YAWK\WIDGETS\BLOG\WIDGET {
         // for more specific settings take a look at the blog plugin
 
         /**
-         * Load all widget settings from database and fill object
+         * @brief Load all widget settings from database and fill object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -52,7 +52,7 @@ namespace YAWK\WIDGETS\BLOG\WIDGET {
         }
 
         /**
-         * Print all object data
+         * @brief Print all object data
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -66,7 +66,7 @@ namespace YAWK\WIDGETS\BLOG\WIDGET {
         }
 
         /**
-         * Init Gallery and load methods
+         * @brief Init Gallery and load methods
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -80,7 +80,7 @@ namespace YAWK\WIDGETS\BLOG\WIDGET {
 
 
         /**
-         * Draw the blog
+         * @brief Draw the blog
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

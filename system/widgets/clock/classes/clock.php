@@ -2,7 +2,7 @@
 namespace YAWK\WIDGETS\CLOCK\CURRENT
 {
     /**
-     * <b>Embed a digital clock on your website.</b>
+     * @details<b>Embed a digital clock on your website.</b>
      *
      * <p>The clock shows the current time. (wonder, oh wonder...) You can set the clock's font color,
      * alignment (left, center or right) as well as a custom css class to design it and put some FX on
@@ -28,7 +28,7 @@ namespace YAWK\WIDGETS\CLOCK\CURRENT
         public $clockClass = 'h1';
 
         /**
-         * Load all widget settings from database and fill object
+         * @brief Load all widget settings from database and fill object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -46,7 +46,7 @@ namespace YAWK\WIDGETS\CLOCK\CURRENT
         }
 
         /**
-         * Print all object data
+         * @brief Print all object data
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -60,7 +60,7 @@ namespace YAWK\WIDGETS\CLOCK\CURRENT
         }
 
         /**
-         * Initialize: prepare JS and start the clock
+         * @brief Initialize: prepare JS and start the clock
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -73,7 +73,7 @@ namespace YAWK\WIDGETS\CLOCK\CURRENT
         }
 
         /**
-         * Load required javascript
+         * @brief Load required javascript
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -102,7 +102,7 @@ namespace YAWK\WIDGETS\CLOCK\CURRENT
         }
 
         /**
-         * Draw the clock on screen
+         * @brief Draw the clock on screen
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

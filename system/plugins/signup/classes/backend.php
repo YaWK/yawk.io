@@ -14,7 +14,7 @@ namespace YAWK\PLUGINS\SIGNUP {
     class backend
     {
         /**
-         * allow user group to signup
+         * @brief allow user group to signup
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -42,7 +42,7 @@ namespace YAWK\PLUGINS\SIGNUP {
         }
 
         /**
-         * get user groups and draw select option value
+         * @brief get user groups and draw select option value
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -70,7 +70,7 @@ namespace YAWK\PLUGINS\SIGNUP {
         }
 
         /**
-         * frontend? group selector
+         * @brief frontend? group selector
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

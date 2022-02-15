@@ -2,7 +2,7 @@
 namespace YAWK\WIDGETS\CHATURBATE\STREAM
 {
     /**
-     * <b>Embed any chaturbate channel or stream on your page.</b>
+     * @details<b>Embed any chaturbate channel or stream on your page.</b>
      *
      * <p>Chaturbate.com is an adult webcam streaming service. With this widget, you can embed any public
      * channel or stream from chaturbate onto your website. All you need is any chaturbate username you
@@ -41,7 +41,7 @@ namespace YAWK\WIDGETS\CHATURBATE\STREAM
         public $chaturbateHeadline = '';
 
         /**
-         * Load all widget settings from database and fill object
+         * @brief Load all widget settings from database and fill object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -59,7 +59,7 @@ namespace YAWK\WIDGETS\CHATURBATE\STREAM
         }
 
         /**
-         * Print all object data
+         * @brief Print all object data
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -79,7 +79,7 @@ namespace YAWK\WIDGETS\CHATURBATE\STREAM
         }
 
         /**
-         * Set widget properties from database and fill object params
+         * @brief Set widget properties from database and fill object params
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -118,7 +118,7 @@ namespace YAWK\WIDGETS\CHATURBATE\STREAM
         }
 
         /**
-         * Embed any chaturbate room on your website
+         * @brief Embed any chaturbate room on your website
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

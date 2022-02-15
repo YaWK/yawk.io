@@ -17,17 +17,17 @@ namespace YAWK\PLUGINS\USERPAGE {
      */
     class profile
     {
-        /** * @var string html content */
+        /** * @param string html content */
         protected $html = '';
-        /** * @var object settings object */
+        /** * @param object settings object */
         protected $settings;
-        /** * @var string username */
+        /** * @param string username */
         protected $username;
-        /** * @var object user object*/
+        /** * @param object user object*/
         protected $user;
 
         /**
-         * init: check if user is logged in and draw profile or show login box
+         * @brief init: check if user is logged in and draw profile or show login box
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -61,7 +61,7 @@ namespace YAWK\PLUGINS\USERPAGE {
         }
 
         /**
-         * draw user profile for frontend editing
+         * @brief draw user profile for frontend editing
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

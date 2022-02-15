@@ -2,7 +2,7 @@
 namespace YAWK\WIDGETS\FACEBOOK\POSTING
 {
     /**
-     * <b>Facebook Posting - embed any public facebook posting on your page</b>
+     * @details<b>Facebook Posting - embed any public facebook posting on your page</b>
      *
      * <p>Use this widget if you want to embed a facebook posting on your page.
      * You can embed any posting, as long as it is public. </p>
@@ -31,7 +31,7 @@ namespace YAWK\WIDGETS\FACEBOOK\POSTING
         public $fbPostSubtext = "";
 
         /**
-         * Load all widget settings from database and fill object
+         * @brief Load all widget settings from database and fill object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -49,7 +49,7 @@ namespace YAWK\WIDGETS\FACEBOOK\POSTING
         }
 
         /**
-         * Init facebook posting
+         * @brief Init facebook posting
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -64,7 +64,7 @@ namespace YAWK\WIDGETS\FACEBOOK\POSTING
         }
 
         /**
-         * Embed any public facebook posting on your page
+         * @brief Embed any public facebook posting on your page
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

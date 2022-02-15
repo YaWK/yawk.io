@@ -2,7 +2,7 @@
 namespace YAWK\WIDGETS\FACEBOOK\LIKEBUTTON
 {
     /**
-     * <b>Facebook Like Button - embed a like button on your page</b>
+     * @details<b>Facebook Like Button - embed a like button on your page</b>
      *
      * <p>If you want to bring attention to your facebook page, you might want to add
      * a 'like me on facebook' button to your page. With this widget, you can do that
@@ -33,7 +33,7 @@ namespace YAWK\WIDGETS\FACEBOOK\LIKEBUTTON
         public $fbLikeButtonShare = "false";
 
         /**
-         * Load all widget settings from database and fill object
+         * @brief Load all widget settings from database and fill object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -51,7 +51,7 @@ namespace YAWK\WIDGETS\FACEBOOK\LIKEBUTTON
         }
 
         /**
-         * Init facebook like button
+         * @brief Init facebook like button
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

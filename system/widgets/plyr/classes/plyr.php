@@ -2,7 +2,7 @@
 namespace YAWK\WIDGETS\PLYR\PLAYER
 {
     /**
-     * <b>Plyr Widget - html5 based video player</b>
+     * @details<b>Plyr Widget - html5 based video player</b>
      *
      * <p>Plyr is a a simple, accessible and customisable and wide-known media player for
      * HTML 5 Video, Audio, YouTube, and Vimeo. All you need is the url to your media file.
@@ -55,7 +55,7 @@ namespace YAWK\WIDGETS\PLYR\PLAYER
         public $plyrShowPosterOnEnd = false;
 
         /**
-         * Load all widget settings from database and fill object
+         * @brief Load all widget settings from database and fill object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -73,7 +73,7 @@ namespace YAWK\WIDGETS\PLYR\PLAYER
         }
 
         /**
-         * Init example widget and call a function for demo purpose
+         * @brief Init example widget and call a function for demo purpose
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -93,7 +93,7 @@ namespace YAWK\WIDGETS\PLYR\PLAYER
         }
 
         /**
-         * Check and set media file type
+         * @brief Check and set media file type
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

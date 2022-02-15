@@ -2,7 +2,7 @@
 namespace YAWK\WIDGETS\EXAMPLE\DEMO
 {
     /**
-     * <b>Empty Example Widget - for development and demo purpose</b>
+     * @details<b>Empty Example Widget - for development and demo purpose</b>
      *
      * <p>This widget is (nearly) empty. It can be used to understand the logic behind YaWK's
      * widget system and/or is a great base to start and create your very own widget! Simply
@@ -27,7 +27,7 @@ namespace YAWK\WIDGETS\EXAMPLE\DEMO
         public $exampleSubtext = '';
 
         /**
-         * Load all widget settings from database and fill object
+         * @brief Load all widget settings from database and fill object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -45,7 +45,7 @@ namespace YAWK\WIDGETS\EXAMPLE\DEMO
         }
 
         /**
-         * Print all object data
+         * @brief Print all object data
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -59,7 +59,7 @@ namespace YAWK\WIDGETS\EXAMPLE\DEMO
         }
 
         /**
-         * Init example widget and call a function for demo purpose
+         * @brief Init example widget and call a function for demo purpose
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

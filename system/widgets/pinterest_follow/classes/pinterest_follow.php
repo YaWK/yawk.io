@@ -2,7 +2,7 @@
 namespace YAWK\WIDGETS\PINTEREST\FOLLOW
 {
     /**
-     * <b>Pinterest Follow Widget - add a follow me on pinterest button to your page.</b>
+     * @details<b>Pinterest Follow Widget - add a follow me on pinterest button to your page.</b>
      *
      * <p>If you want to pay attention to your pinterest channel, embed this widget.
      * All you need to enter is any pinterest url to follow. Like any other widget,
@@ -28,7 +28,7 @@ namespace YAWK\WIDGETS\PINTEREST\FOLLOW
         public $pinterestFollowUrl = '';
 
         /**
-         * Load all widget settings from database and fill object
+         * @brief Load all widget settings from database and fill object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -46,7 +46,7 @@ namespace YAWK\WIDGETS\PINTEREST\FOLLOW
         }
 
         /**
-         * Init example widget and call a function for demo purpose
+         * @brief Init example widget and call a function for demo purpose
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -59,7 +59,7 @@ namespace YAWK\WIDGETS\PINTEREST\FOLLOW
         }
 
         /**
-         * Embed Pinterest Follow Button
+         * @brief Embed Pinterest Follow Button
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

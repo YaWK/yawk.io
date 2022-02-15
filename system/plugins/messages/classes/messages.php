@@ -22,7 +22,7 @@ namespace YAWK\PLUGINS\MESSAGES {
      */
     class messages {
         /**
-         * messages constructor - check if class is called from frontend or backend
+         * @brief messages constructor - check if class is called from frontend or backend
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -222,7 +222,7 @@ namespace YAWK\PLUGINS\MESSAGES {
         }
 
         /**
-         * init the messaging page - check if user is logged in, else draw a login box
+         * @brief init the messaging page - check if user is logged in, else draw a login box
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -254,7 +254,7 @@ namespace YAWK\PLUGINS\MESSAGES {
         }
 
         /**
-         * get inbox and draw menu
+         * @brief get inbox and draw menu
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -268,7 +268,7 @@ namespace YAWK\PLUGINS\MESSAGES {
         }
 
         /**
-         * fetch messages into array
+         * @brief fetch messages into array
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -317,7 +317,7 @@ namespace YAWK\PLUGINS\MESSAGES {
         }
 
         /**
-         * fetch a single message from database
+         * @brief fetch a single message from database
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -334,7 +334,7 @@ namespace YAWK\PLUGINS\MESSAGES {
 
 
         /**
-         * fetch related messages into array
+         * @brief fetch related messages into array
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -367,7 +367,7 @@ namespace YAWK\PLUGINS\MESSAGES {
         }
 
         /**
-         * draw html (output) related messages from array, each message as own box
+         * @brief draw html (output) related messages from array, each message as own box
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -408,7 +408,7 @@ namespace YAWK\PLUGINS\MESSAGES {
         }
 
         /**
-         * view messages
+         * @brief view messages
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -451,7 +451,7 @@ namespace YAWK\PLUGINS\MESSAGES {
         }
 
         /**
-         * draw the complete Inbox
+         * @brief draw the complete Inbox
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -537,7 +537,7 @@ namespace YAWK\PLUGINS\MESSAGES {
         }
 
         /**
-         * draw html (output) messages menu
+         * @brief draw html (output) messages menu
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -622,7 +622,7 @@ namespace YAWK\PLUGINS\MESSAGES {
         }
 
         /**
-         * draw a new message
+         * @brief draw a new message
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -658,7 +658,7 @@ namespace YAWK\PLUGINS\MESSAGES {
         }
 
         /**
-         * mark a message as read
+         * @brief mark a message as read
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

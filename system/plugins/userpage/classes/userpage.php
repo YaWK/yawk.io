@@ -15,15 +15,15 @@ namespace YAWK\PLUGINS\USERPAGE {
      */
     class userpage
     {
-        /** * @var string dashboard */
+        /** * @param string dashboard */
         protected $dashboard;
-        /** * @var string append tab */
+        /** * @param string append tab */
         protected $appendTab;
-        /** * @var string append panel */
+        /** * @param string append panel */
         protected $appendPanel;
 
         /**
-         * userpage constructor.
+         * @brief userpage constructor.
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -40,7 +40,7 @@ namespace YAWK\PLUGINS\USERPAGE {
         }
 
         /**
-         * init function check if backend is allowed and load userpage
+         * @brief init function check if backend is allowed and load userpage
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -71,7 +71,7 @@ namespace YAWK\PLUGINS\USERPAGE {
         }
 
         /**
-         * getUserPage is a wrapper for buildPage
+         * @brief getUserPage is a wrapper for buildPage
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -85,7 +85,7 @@ namespace YAWK\PLUGINS\USERPAGE {
         }
 
         /**
-         * detect admin and build a special 'ROOT' page with admin functions... TODO: in development
+         * @brief detect admin and build a special 'ROOT' page with admin functions... TODO: in development
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -115,7 +115,7 @@ namespace YAWK\PLUGINS\USERPAGE {
         }
 
         /**
-         * build the user page and draw html output
+         * @brief build the user page and draw html output
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

@@ -2,7 +2,7 @@
 namespace YAWK\WIDGETS\SUBMENU\EMBED
 {
     /**
-     * <b>Empty submenu Widget - for development and demo purpose</b>
+     * @details<b>Empty submenu Widget - for development and demo purpose</b>
      *
      * <p>If you want to embed any menu on any page in any position, this should be
      * the widget of your choice! It can handle every menu that you have created
@@ -28,7 +28,7 @@ namespace YAWK\WIDGETS\SUBMENU\EMBED
         public $menuID = '';
 
         /**
-         * Load all widget settings from database and fill object
+         * @brief Load all widget settings from database and fill object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -46,7 +46,7 @@ namespace YAWK\WIDGETS\SUBMENU\EMBED
         }
 
         /**
-         * Init submenu widget and call a function for demo purpose
+         * @brief Init submenu widget and call a function for demo purpose
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

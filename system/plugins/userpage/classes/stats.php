@@ -16,13 +16,13 @@ namespace YAWK\PLUGINS\USERPAGE {
      */
     class stats
     {
-        /** * @var string html output */
+        /** * @param string html output */
         protected $html;
-        /** * @var object user object */
+        /** * @param object user object */
         protected $user;
 
         /**
-         * stats constructor. load properties for username
+         * @brief stats constructor. load properties for username
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -36,7 +36,7 @@ namespace YAWK\PLUGINS\USERPAGE {
         }
 
         /**
-         * draw account stats.
+         * @brief draw account stats.
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

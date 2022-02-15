@@ -2,7 +2,7 @@
 namespace YAWK\WIDGETS\FACEBOOK\VIDEO
 {
     /**
-     * <b>Facebook video - embed any public facebook video on your page</b>
+     * @details<b>Facebook video - embed any public facebook video on your page</b>
      *
      * <p>Use this widget if you want to embed a facebook video on your page.
      * You can embed any video, as long as it is public. </p>
@@ -31,7 +31,7 @@ namespace YAWK\WIDGETS\FACEBOOK\VIDEO
         public $fbVideoSubtext = "";
 
         /**
-         * Load all widget settings from database and fill object
+         * @brief Load all widget settings from database and fill object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -49,7 +49,7 @@ namespace YAWK\WIDGETS\FACEBOOK\VIDEO
         }
 
         /**
-         * Init facebook video
+         * @brief Init facebook video
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -64,7 +64,7 @@ namespace YAWK\WIDGETS\FACEBOOK\VIDEO
         }
 
         /**
-         * Embed any public facebook video on your page
+         * @brief Embed any public facebook video on your page
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

@@ -2,7 +2,7 @@
 namespace YAWK\WIDGETS\CONTENTANIMATOR\ANIMATE
 {
     /**
-     * <b>Add modern fx and motion to any elements of your website.</b>
+     * @details<b>Add modern fx and motion to any elements of your website.</b>
      *
      * <p>The content animator widget lets you animate any kind of content. Simply add class="animate" to
      * any html object in your DOM and the effect will be applied to the affected element. You can setup,
@@ -32,7 +32,7 @@ namespace YAWK\WIDGETS\CONTENTANIMATOR\ANIMATE
         public $contentAnimatorClass = 'slideUp';
 
         /**
-         * Load all widget settings from database and fill object
+         * @brief Load all widget settings from database and fill object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -50,7 +50,7 @@ namespace YAWK\WIDGETS\CONTENTANIMATOR\ANIMATE
         }
 
         /**
-         * Print all object data
+         * @brief Print all object data
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -64,7 +64,7 @@ namespace YAWK\WIDGETS\CONTENTANIMATOR\ANIMATE
         }
 
         /**
-         * Initialize: prepare proerties and load javascript
+         * @brief Initialize: prepare proerties and load javascript
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

@@ -2,7 +2,7 @@
 namespace YAWK\WIDGETS\FACEBOOK\GALLERY
 {
     /**
-     * <b>Use Facebook Graph API to get album photos from a Facebook Page. Requires an App ID and a valid access token.</b>
+     * @details<b>Use Facebook Graph API to get album photos from a Facebook Page. Requires an App ID and a valid access token.</b>
      *
      * <p>With this widget, you are able to embed photos from your facebook page onto your website.
      * It helps you to keep your website up to date. Have you ever been bored of adding the same content twice?
@@ -72,7 +72,7 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
 
 
         /**
-         * fbGallery constructor.
+         * @brief fbGallery constructor.
          * Get widget settings into this->settings array and call checkRequirements
          * @param $db
          */
@@ -90,7 +90,7 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
         }
 
         /**
-         * Check if all requirements are fulfilled to perform api call.
+         * @brief Check if all requirements are fulfilled to perform api call.
          */
         public function checkRequirements()
         {
@@ -100,7 +100,7 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
         }
 
         /**
-         * Check if App ID is set, not empty and numeric. Returns true if app ID is ok or abort with an error message.
+         * @brief Check if App ID is set, not empty and numeric. Returns true if app ID is ok or abort with an error message.
          * @return bool
          */
         public function checkAppId()
@@ -123,7 +123,7 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
         }
 
         /**
-         * Check if access token is correctly set. Returns true or abort with an error message
+         * @brief Check if access token is correctly set. Returns true or abort with an error message
          * @return bool
          */
         public function checkAccessToken()
@@ -146,7 +146,7 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
         }
 
         /**
-         * Check if album id is correctly set. Returns true or abort with an error message
+         * @brief Check if album id is correctly set. Returns true or abort with an error message
          * @return bool
          */
         public function checkAlbumId()
@@ -169,7 +169,7 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
         }
 
         /**
-         * Load Facebook JS Code.
+         * @brief Load Facebook JS Code.
          */
         public function loadJSSDK()
         {   // check if fb JS SDK was loaded before
@@ -210,7 +210,7 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
         }
 
         /**
-         * Prepare object data, set json link, make API call and return apiObject
+         * @brief Prepare object data, set json link, make API call and return apiObject
          * @return object
          */
         public function makeApiCall()
@@ -280,7 +280,7 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
         }
 
         /**
-         * Check if api object is set and not empty
+         * @brief Check if api object is set and not empty
          * @return bool returns true or false
          */
         public function checkApiObjectData()
@@ -296,7 +296,7 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
         }
 
         /**
-         * The heart of this widget: this method draws the gallery.
+         * @brief The heart of this widget: this method draws the gallery.
          */
         public function drawGallery()
         {

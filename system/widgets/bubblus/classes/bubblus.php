@@ -2,7 +2,7 @@
 namespace YAWK\WIDGETS\BUBBLUS\MINDMAP
 {
     /**
-     * <b>Embed any bubbl.us mindmap on your page.</b>
+     * @details<b>Embed any bubbl.us mindmap on your page.</b>
      *
      * <p>Bubbl.us is a service, where you can create mindmaps and share them with your friends and the web.
      * With this widget, you are able to embed any public Bubbl.us mindmaps. Simply enter the URL of your
@@ -34,7 +34,7 @@ namespace YAWK\WIDGETS\BUBBLUS\MINDMAP
         public $bubblusHeadline = '';
 
         /**
-         * Load all widget settings from database and fill object
+         * @brief Load all widget settings from database and fill object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -52,7 +52,7 @@ namespace YAWK\WIDGETS\BUBBLUS\MINDMAP
         }
 
         /**
-         * Print all object data
+         * @brief Print all object data
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -66,7 +66,7 @@ namespace YAWK\WIDGETS\BUBBLUS\MINDMAP
         }
 
         /**
-         * Set widget properties from database and fill object params
+         * @brief Set widget properties from database and fill object params
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -101,7 +101,7 @@ namespace YAWK\WIDGETS\BUBBLUS\MINDMAP
         }
 
         /**
-         * Embed any BubblUs mindmaps
+         * @brief Embed any BubblUs mindmaps
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

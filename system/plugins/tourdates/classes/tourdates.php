@@ -22,29 +22,29 @@ namespace YAWK\PLUGINS\TOURDATES {
      */
     class tourdates
     {
-        /** * @var int tourdate/event ID  */
+        /** * @param int tourdate/event ID  */
         public $id;
-        /** * @var string event day */
+        /** * @param string event day */
         public $day;
-        /** * @var string event month */
+        /** * @param string event month */
         public $month;
-        /** * @var string event time */
+        /** * @param string event time */
         public $time;
-        /** * @var string event date */
+        /** * @param string event date */
         public $date;
-        /** * @var string event band name */
+        /** * @param string event band name */
         public $band;
-        /** * @var string event venue name */
+        /** * @param string event venue name */
         public $venue;
-        /** * @var string facebook icon */
+        /** * @param string facebook icon */
         public $fbicon;
-        /** * @var string facebook event url */
+        /** * @param string facebook event url */
         public $fburl;
-        /** * @var int 0|1 1 means published, zero is not published */
+        /** * @param int 0|1 1 means published, zero is not published */
         public $published;
 
         /**
-         * Inject Language Tags
+         * @brief Inject Language Tags
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @link http://yawk.io
          * @param array $lang language data array
@@ -75,7 +75,7 @@ namespace YAWK\PLUGINS\TOURDATES {
         }
 
         /**
-         * get data and draw html return table for frontend
+         * @brief get data and draw html return table for frontend
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -140,7 +140,7 @@ namespace YAWK\PLUGINS\TOURDATES {
         } /* EOFunction getTable */
 
         /**
-         * get data and draw html return table for backend
+         * @brief get data and draw html return table for backend
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -213,7 +213,7 @@ namespace YAWK\PLUGINS\TOURDATES {
 
 
         /**
-         * toggle an entry online/offline, depending on published status
+         * @brief toggle an entry online/offline, depending on published status
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -240,7 +240,7 @@ namespace YAWK\PLUGINS\TOURDATES {
 
 
         /**
-         * load settings into object properties
+         * @brief load settings into object properties
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -262,7 +262,7 @@ namespace YAWK\PLUGINS\TOURDATES {
         } /* EOFunction loadProperties */
 
         /**
-         * get highest ID from events (tourdates) database
+         * @brief get highest ID from events (tourdates) database
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -289,7 +289,7 @@ namespace YAWK\PLUGINS\TOURDATES {
         }
 
         /**
-         * delete an entry
+         * @brief delete an entry
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -311,7 +311,7 @@ namespace YAWK\PLUGINS\TOURDATES {
 
 
         /**
-         * copy an entry
+         * @brief copy an entry
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -349,7 +349,7 @@ namespace YAWK\PLUGINS\TOURDATES {
 
 
         /**
-         * create a new event (tourdate)
+         * @brief create a new event (tourdate)
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -393,7 +393,7 @@ namespace YAWK\PLUGINS\TOURDATES {
 
 
         /**
-         * edit an entry
+         * @brief edit an entry
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

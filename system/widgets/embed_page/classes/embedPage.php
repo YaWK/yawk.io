@@ -1,7 +1,7 @@
 <?php
 namespace YAWK\WIDGETS\EMBED_PAGE\PAGE {
     /**
-     * <b>Embed any static page in any widget position.</b>
+     * @details<b>Embed any static page in any widget position.</b>
      *
      * <p>Simply set the page you want to embed.</p>
      *
@@ -23,7 +23,7 @@ namespace YAWK\WIDGETS\EMBED_PAGE\PAGE {
         public $file = '';
 
         /**
-         * Load all widget settings from database and fill object
+         * @brief Load all widget settings from database and fill object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -41,7 +41,7 @@ namespace YAWK\WIDGETS\EMBED_PAGE\PAGE {
         }
 
         /**
-         * Init and embed static page
+         * @brief Init and embed static page
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

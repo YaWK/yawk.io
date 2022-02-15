@@ -2,7 +2,7 @@
 namespace YAWK\WIDGETS\PINTEREST\PIN
 {
     /**
-     * <b>Pinterest Pin - embed a single pin on your page</b>
+     * @details<b>Pinterest Pin - embed a single pin on your page</b>
      *
      * <p>Use this widget to embed any single pin on your page. To get this widget to work,
      * enter any public pin url. Description can be shown or hidden, the size of your pin can
@@ -32,7 +32,7 @@ namespace YAWK\WIDGETS\PINTEREST\PIN
         public $pinterestPinHideDescription = 'data-pin-terse="true"';
 
         /**
-         * Load all widget settings from database and fill object
+         * @brief Load all widget settings from database and fill object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -50,7 +50,7 @@ namespace YAWK\WIDGETS\PINTEREST\PIN
         }
 
         /**
-         * Init pinterest pin widget and call embed method
+         * @brief Init pinterest pin widget and call embed method
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -63,7 +63,7 @@ namespace YAWK\WIDGETS\PINTEREST\PIN
         }
 
         /**
-         * Embed Pinterest Pin
+         * @brief Embed Pinterest Pin
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

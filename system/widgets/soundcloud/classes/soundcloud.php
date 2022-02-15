@@ -2,7 +2,7 @@
 namespace YAWK\WIDGETS\SOUNDCLOUD\PLAYER
 {
     /**
-     * <b>Embed any soundcloud track or playlist.</b>
+     * @details<b>Embed any soundcloud track or playlist.</b>
      *
      * <p>If you want to embed a SoundCloud player on your website, this is the widget to do it.
      * All you need is any public SoundCloud URL. The Widget comes with a few settings like: autoplay
@@ -50,7 +50,7 @@ namespace YAWK\WIDGETS\SOUNDCLOUD\PLAYER
         public $errorMsg = '';
 
         /**
-         * Load all widget settings from database and fill object
+         * @brief Load all widget settings from database and fill object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -68,7 +68,7 @@ namespace YAWK\WIDGETS\SOUNDCLOUD\PLAYER
         }
 
         /**
-         * Print all object data
+         * @brief Print all object data
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -84,7 +84,7 @@ namespace YAWK\WIDGETS\SOUNDCLOUD\PLAYER
         }
 
         /**
-         * Initialize: Set properties and embed SoundCloud player
+         * @brief Initialize: Set properties and embed SoundCloud player
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -100,7 +100,7 @@ namespace YAWK\WIDGETS\SOUNDCLOUD\PLAYER
         }
 
         /**
-         * Prepare SoundCloud Player Properties
+         * @brief Prepare SoundCloud Player Properties
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -141,7 +141,7 @@ namespace YAWK\WIDGETS\SOUNDCLOUD\PLAYER
         }
 
         /**
-         * Embed SoundCloud Player
+         * @brief Embed SoundCloud Player
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

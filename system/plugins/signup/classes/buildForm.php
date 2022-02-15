@@ -9,13 +9,13 @@ namespace YAWK\PLUGINS\SIGNUP {
      */
     class buildForm extends \YAWK\PLUGINS\SIGNUP\signup
     {
-        /** * @var string html output */
+        /** * @param string html output */
         public $html = '';
-        /** * @var string html form */
+        /** * @param string html form */
         public $form = '';
 
         /**
-         * initialize form (build it)
+         * @brief initialize form (build it)
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -28,7 +28,7 @@ namespace YAWK\PLUGINS\SIGNUP {
         }
 
         /**
-         * loads the header, layout and footer of the form
+         * @brief loads the header, layout and footer of the form
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -43,7 +43,7 @@ namespace YAWK\PLUGINS\SIGNUP {
         }
 
         /**
-         * build the form
+         * @brief build the form
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -60,7 +60,7 @@ namespace YAWK\PLUGINS\SIGNUP {
         }
 
         /**
-         * get form header
+         * @brief get form header
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -72,7 +72,7 @@ namespace YAWK\PLUGINS\SIGNUP {
         }
 
         /**
-         * get form title
+         * @brief get form title
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -85,7 +85,7 @@ namespace YAWK\PLUGINS\SIGNUP {
         }
 
         /**
-         * get form legend
+         * @brief get form legend
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -120,7 +120,7 @@ namespace YAWK\PLUGINS\SIGNUP {
         }
 
         /**
-         * build form on depending layout
+         * @brief build form on depending layout
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -169,7 +169,7 @@ namespace YAWK\PLUGINS\SIGNUP {
         }
 
         /**
-         * html form footer (closing tag)
+         * @brief html form footer (closing tag)
          */
         public function getFooter(){
             // form end
@@ -177,7 +177,7 @@ namespace YAWK\PLUGINS\SIGNUP {
         }
 
         /**
-         * get and return a select field with all groups as option values
+         * @brief get and return a select field with all groups as option values
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -206,7 +206,7 @@ namespace YAWK\PLUGINS\SIGNUP {
         }
 
         /**
-         * draw html output: all mandatory fields
+         * @brief draw html output: all mandatory fields
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -227,7 +227,7 @@ namespace YAWK\PLUGINS\SIGNUP {
         }
 
         /**
-         * draw html output: checkbox for terms of service
+         * @brief draw html output: checkbox for terms of service
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -242,7 +242,7 @@ namespace YAWK\PLUGINS\SIGNUP {
         }
 
         /**
-         * draw html output of all additional fields
+         * @brief draw html output of all additional fields
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -284,7 +284,7 @@ namespace YAWK\PLUGINS\SIGNUP {
         }
 
         /**
-         * draw the submit button
+         * @brief draw the submit button
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

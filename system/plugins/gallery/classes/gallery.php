@@ -1,7 +1,7 @@
 <?php
 namespace YAWK\PLUGINS\GALLERY {
     /**
-     * <b>Gallery Plugin</b>
+     * @details <b>Gallery Plugin</b>
      * <p>Whenever you build a website, sooner or later you will get to the point where you need to put
      * a few photos within a lightbox on your page.
      * YaWK's gallery plugin help you out! It can build image galleries automatically. It does a perfect batch
@@ -50,73 +50,73 @@ namespace YAWK\PLUGINS\GALLERY {
      */
     class gallery
     {
-        /** * @var int gallery ID */
+        /** * @param int gallery ID */
         public $id;
-        /** * @var int item ID */
+        /** * @param int item ID */
         public $itemID;
-        /** * @var int order sortation number */
+        /** * @param int order sortation number */
         public $sort;
-        /** * @var string image manipulation action (eg. flip-horizontal) */
+        /** * @param string image manipulation action (eg. flip-horizontal) */
         public $action;
-        /** * @var string images folder */
+        /** * @param string images folder */
         public $folder;
-        /** * @var string gallery title  */
+        /** * @param string gallery title  */
         public $title;
-        /** * @var string item title */
+        /** * @param string item title */
         public $itemTitle;
-        /** * @var string gallery description  */
+        /** * @param string gallery description  */
         public $description;
-        /** * @var string images author (originator, photographer) */
+        /** * @param string images author (originator, photographer) */
         public $author;
-        /** * @var string images author's url (originator, photographer) */
+        /** * @param string images author's url (originator, photographer) */
         public $authorUrl;
-        /** * @var string single image author (originator, photographer) */
+        /** * @param string single image author (originator, photographer) */
         public $itemAuthor;
-        /** * @var string single image author's url (originator, photographer) */
+        /** * @param string single image author's url (originator, photographer) */
         public $itemAuthorUrl;
-        /** * @var string image filename */
+        /** * @param string image filename */
         public $filename;
-        /** * @var int 0|1 switch: 1 if thumbnails should be created, zero if not. */
+        /** * @param int 0|1 switch: 1 if thumbnails should be created, zero if not. */
         public $createThumbnails;
-        /** * @var int image width in px */
+        /** * @param int image width in px */
         public $imageWidth;
-        /** * @var int image height in px */
+        /** * @param int image height in px */
         public $imageHeight;
-        /** * @var int 0|1 switch: 1 if images should be resized, zero if not */
+        /** * @param int 0|1 switch: 1 if images should be resized, zero if not */
         public $resizeImages;
-        /** * @var string type of resizing (eg. thumbnail or fit to width...) */
+        /** * @param string type of resizing (eg. thumbnail or fit to width...) */
         public $resizeType;
-        /** * @var int thumbnail width in px */
+        /** * @param int thumbnail width in px */
         public $thumbnailWidth;
-        /** * @var string watermark text */
+        /** * @param string watermark text */
         public $watermark;
-        /** * @var int 0|1 switch: 1 if watermark is enabled, zero if not */
+        /** * @param int 0|1 switch: 1 if watermark is enabled, zero if not */
         public $watermarkEnabled;
-        /** * @var string the image which should be overlayed for watermarking */
+        /** * @param string the image which should be overlayed for watermarking */
         public $watermarkImage;
-        /** * @var string watermark position */
+        /** * @param string watermark position */
         public $watermarkPosition;
-        /** * @var int offset Y in px */
+        /** * @param int offset Y in px */
         public $offsetY;
-        /** * @var int offset X in px */
+        /** * @param int offset X in px */
         public $offsetX;
-        /** * @var string path and filename of the .ttf font to use for text watermarking */
+        /** * @param string path and filename of the .ttf font to use for text watermarking */
         public $watermarkFont;
-        /** * @var int watermark text size in pt */
+        /** * @param int watermark text size in pt */
         public $watermarkTextSize;
-        /** * @var int watermark opacity */
+        /** * @param int watermark opacity */
         public $watermarkOpacity;
-        /** * @var string watermark text color */
+        /** * @param string watermark text color */
         public $watermarkColor;
-        /** * @var string watermark text border color */
+        /** * @param string watermark text border color */
         public $watermarkBorderColor;
-        /** * @var string watermark border thickness in px */
+        /** * @param string watermark border thickness in px */
         public $watermarkBorder;
-        /** * @var string headline */
+        /** * @param string headline */
         public $headline;
 
         /**
-         * define JS function doImageAction
+         * @brief define JS function doImageAction
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -168,7 +168,7 @@ namespace YAWK\PLUGINS\GALLERY {
         }
 
         /**
-         * draw (output) html folder select field, containing the sub folders of /media/images as value
+         * @brief draw (output) html folder select field, containing the sub folders of /media/images as value
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -184,7 +184,7 @@ namespace YAWK\PLUGINS\GALLERY {
         }
 
         /**
-         * draw (output) html folder select field, containing the current folder of /media/images as value
+         * @brief draw (output) html folder select field, containing the current folder of /media/images as value
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -200,7 +200,7 @@ namespace YAWK\PLUGINS\GALLERY {
         }
 
         /**
-         * check if folder exists and create it on demand
+         * @brief check if folder exists and create it on demand
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -228,7 +228,7 @@ namespace YAWK\PLUGINS\GALLERY {
 
 
         /**
-         * scan system font directory for fonts and return fonts as select field option value
+         * @brief scan system font directory for fonts and return fonts as select field option value
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -256,7 +256,7 @@ namespace YAWK\PLUGINS\GALLERY {
         }
 
         /**
-         * scan image directory and return images as select field option value
+         * @brief scan image directory and return images as select field option value
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -281,7 +281,7 @@ namespace YAWK\PLUGINS\GALLERY {
         }
 
         /**
-         * delete a gallery
+         * @brief delete a gallery
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -414,7 +414,7 @@ namespace YAWK\PLUGINS\GALLERY {
         }
 
         /**
-         * return gallery folder by given gallery ID
+         * @brief return gallery folder by given gallery ID
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -436,7 +436,7 @@ namespace YAWK\PLUGINS\GALLERY {
         }
 
         /**
-         * re-scan a folder to check if there a new images added TODO: STILL BUGGY - needs to be fixed + finished
+         * @brief re-scan a folder to check if there a new images added TODO: STILL BUGGY - needs to be fixed + finished
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -503,7 +503,7 @@ namespace YAWK\PLUGINS\GALLERY {
         }
 
         /**
-         * add a new gallery
+         * @brief add a new gallery
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -852,7 +852,7 @@ namespace YAWK\PLUGINS\GALLERY {
         }
 
         /**
-         * load gallery settings into object properties
+         * @brief load gallery settings into object properties
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -895,7 +895,7 @@ namespace YAWK\PLUGINS\GALLERY {
         }
 
         /**
-         * edit (update) a gallery
+         * @brief edit (update) a gallery
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1411,7 +1411,7 @@ namespace YAWK\PLUGINS\GALLERY {
         }
 
         /**
-         * count and return the number of gallery entries
+         * @brief count and return the number of gallery entries
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1438,7 +1438,7 @@ namespace YAWK\PLUGINS\GALLERY {
         }
 
         /**
-         * get and draw (output) html gallery preview
+         * @brief get and draw (output) html gallery preview
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1487,7 +1487,7 @@ namespace YAWK\PLUGINS\GALLERY {
         }
 
         /**
-         * @param object $db database
+         * @brief @param object $db database
          * @param array $lang language array
          * @param int $galleryID gallery ID to load
          */
@@ -1552,7 +1552,7 @@ namespace YAWK\PLUGINS\GALLERY {
 
 
         /**
-         * get and draw all editable images + edit controls
+         * @brief get and draw all editable images + edit controls
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

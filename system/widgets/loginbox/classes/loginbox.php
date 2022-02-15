@@ -2,7 +2,7 @@
 namespace YAWK\WIDGETS\LOGINBOX\LOGIN
 {
     /**
-     * <b>Loginbox - draw a loginbox (or logout button)</b>
+     * @details<b>Loginbox - draw a loginbox (or logout button)</b>
      *
      * <p>In case you need a user login form, use this widget. If the user is not logged in,
      * a form will be displayed, requesting username and password where users can login. In
@@ -77,7 +77,7 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
         public $loginboxRedirectTime = 0;
 
         /**
-         * Load all widget settings from database and fill object
+         * @brief Load all widget settings from database and fill object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -95,7 +95,7 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
         }
 
         /**
-         * Init loginbox widget and call a function for demo purpose
+         * @brief Init loginbox widget and call a function for demo purpose
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -123,7 +123,7 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
         }
 
         /**
-         * Prepare Loginbox form settings
+         * @brief Prepare Loginbox form settings
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -203,7 +203,7 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
         }
 
         /**
-         * Set properties of greeting and logout button
+         * @brief Set properties of greeting and logout button
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -267,7 +267,7 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
         }
 
         /**
-         * Load required javascript file
+         * @brief Load required javascript file
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -290,7 +290,7 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
         }
 
         /**
-         * returns the login box html markup
+         * @brief returns the login box html markup
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -333,7 +333,7 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
         }
 
         /**
-         * returns the logout btn html markup
+         * @brief returns the logout btn html markup
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

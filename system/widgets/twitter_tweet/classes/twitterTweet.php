@@ -2,7 +2,7 @@
 namespace YAWK\WIDGETS\TWITTER\TWEET
 {
     /**
-     * <b>Twitter Tweet Widget - embed Twitter Tweet</b>
+     * @details<b>Twitter Tweet Widget - embed Twitter Tweet</b>
      *
      * <p>Embed Twitter Tweet. All you need is the URL of your tweet
      * and the amount of items you wish to embed. You will get
@@ -34,7 +34,7 @@ namespace YAWK\WIDGETS\TWITTER\TWEET
         public $twitterSingleTweetDataConversation = "0";
 
         /**
-         * Load all widget settings from database and fill object
+         * @brief Load all widget settings from database and fill object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -52,7 +52,7 @@ namespace YAWK\WIDGETS\TWITTER\TWEET
         }
 
         /**
-         * Init Twitter Tweet Widget
+         * @brief Init Twitter Tweet Widget
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

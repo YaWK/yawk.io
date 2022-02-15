@@ -1,7 +1,7 @@
 <?php
 namespace YAWK\WIDGETS\GOOGLE\MAPS {
     /**
-     * <b>Google Maps Widget - Embed a Google Map on your page</b>
+     * @details<b>Google Maps Widget - Embed a Google Map on your page</b>
      *
      * <p>This Widget serves all methods to draw any Google Map on your website.
      * To do this: go to Google Maps, click on embed and you will get a piece of html code.
@@ -28,7 +28,7 @@ namespace YAWK\WIDGETS\GOOGLE\MAPS {
         public $googleMapsSubtext = '';
 
         /**
-         * Load all widget settings from database and fill object
+         * @brief Load all widget settings from database and fill object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -46,7 +46,7 @@ namespace YAWK\WIDGETS\GOOGLE\MAPS {
         }
 
         /**
-         * Print all object data
+         * @brief Print all object data
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -60,7 +60,7 @@ namespace YAWK\WIDGETS\GOOGLE\MAPS {
         }
 
         /**
-         * Init and embed Google Maps
+         * @brief Init and embed Google Maps
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

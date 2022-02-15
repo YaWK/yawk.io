@@ -1,27 +1,27 @@
 <?php
 namespace YAWK\PLUGINS\FAQ {
     /**
-     * <b>Frontend FAQ Class</b>
+     * @details <b>Frontend FAQ Class</b>
      * <p>This class extends \YAWK\PLUGINS\FAQ\faq.</p>
      * <p><i>This class covers frontend functionality. See Methods Summary for Details!</i></p>
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
      * @version    1.0.0
      * @link       http://yawk.io
-     * @brief Handles the Blog System.
+     * @brief Handles the FAQ Frontend methods.
      */
     class frontend extends \YAWK\PLUGINS\FAQ\faq {
-        /** * @var int faq ID */
+        /** * @param int faq ID */
         public $id;
-        /** * @var int category ID */
+        /** * @param int category ID */
         public $cat;
-        /** * @var string question */
+        /** * @param string question */
         public $question;
-        /** * @var string answer */
+        /** * @param string answer */
         public $answer;
 
         /**
-         * get all data from faq database and draw (output) a html list with all FAQ's
+         * @brief get all data from faq database and draw (output) a html list with all FAQ's
          * @param object $db database
          */
         function draw_faq($db) {

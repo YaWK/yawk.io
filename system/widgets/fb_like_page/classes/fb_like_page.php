@@ -2,7 +2,7 @@
 namespace YAWK\WIDGETS\FACEBOOK\LIKEPAGE
 {
     /**
-     * <b>Facebook Like Page - embed a like my facebook page button</b>
+     * @details<b>Facebook Like Page - embed a like my facebook page button</b>
      *
      * <p>If you want to bring attention to your facebook page, you might want to add
      * a 'like my facebook page' button to your page. With this widget, you can do that
@@ -34,7 +34,7 @@ namespace YAWK\WIDGETS\FACEBOOK\LIKEPAGE
         public $fbPageSubtext = "";
 
         /**
-         * Load all widget settings from database and fill object
+         * @brief Load all widget settings from database and fill object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -52,7 +52,7 @@ namespace YAWK\WIDGETS\FACEBOOK\LIKEPAGE
         }
 
         /**
-         * Init facebook like page
+         * @brief Init facebook like page
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

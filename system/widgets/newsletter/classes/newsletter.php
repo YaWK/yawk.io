@@ -2,7 +2,7 @@
 namespace YAWK\WIDGETS\NEWSLETTER\SUBSCRIBE
 {
     /**
-     * <b>Let your users subscribe to a newsletter database.</b>
+     * @details<b>Let your users subscribe to a newsletter database.</b>
      *
      * <p>With this widget, you are able to collect email addresses to build up your newsletter database.
      * The user can enter his email address and (or) his/hers name. The form will be processed via ajax
@@ -70,7 +70,7 @@ namespace YAWK\WIDGETS\NEWSLETTER\SUBSCRIBE
         public $markupFormWidth = '';
 
         /**
-         * Load all widget settings from database and fill object params
+         * @brief Load all widget settings from database and fill object params
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -88,7 +88,7 @@ namespace YAWK\WIDGETS\NEWSLETTER\SUBSCRIBE
         }
 
         /**
-         * Print all object data
+         * @brief Print all object data
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -102,7 +102,7 @@ namespace YAWK\WIDGETS\NEWSLETTER\SUBSCRIBE
         }
 
         /**
-         * Init Function: Loads the required JS, set properties and draw the form
+         * @brief Init Function: Loads the required JS, set properties and draw the form
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -119,7 +119,7 @@ namespace YAWK\WIDGETS\NEWSLETTER\SUBSCRIBE
         }
 
         /**
-         * Load all required javascript files
+         * @brief Load all required javascript files
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -139,7 +139,7 @@ namespace YAWK\WIDGETS\NEWSLETTER\SUBSCRIBE
         }
 
         /**
-         * Set all object properties and html markup codes depending on current widget settings
+         * @brief Set all object properties and html markup codes depending on current widget settings
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -228,7 +228,7 @@ namespace YAWK\WIDGETS\NEWSLETTER\SUBSCRIBE
         }
 
         /**
-         * Draw the newsletter html form
+         * @brief Draw the newsletter html form
          *
          */
         public function drawForm()

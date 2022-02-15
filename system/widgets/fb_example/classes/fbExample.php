@@ -2,7 +2,7 @@
 namespace YAWK\WIDGETS\FACEBOOK\EXAMPLE
 {
     /**
-     * <b>Use Facebook Graph API to get any data from a Facebook Page. Require App ID and Access Token.</b>
+     * @details<b>Use Facebook Graph API to get any data from a Facebook Page. Require App ID and Access Token.</b>
      * <p>This is just an empty example widget for development and demo purpose!</p>
      *
      * <p>It is recommended to play around with the facebook graph explorer.
