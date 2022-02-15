@@ -8,7 +8,7 @@ namespace YAWK\WIDGETS\SOUNDCLOUD\PLAYER
      * All you need is any public SoundCloud URL. The Widget comes with a few settings like: autoplay
      * on or off, show comments, related music, and much more is customizable within the backend. </p>
      *
-     * @package    YAWK
+     *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT

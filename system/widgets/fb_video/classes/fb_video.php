@@ -7,7 +7,7 @@ namespace YAWK\WIDGETS\FACEBOOK\VIDEO
      * <p>Use this widget if you want to embed a facebook video on your page.
      * You can embed any video, as long as it is public. </p>
      *
-     * @package    YAWK
+     *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT

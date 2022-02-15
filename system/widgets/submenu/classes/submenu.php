@@ -8,7 +8,7 @@ namespace YAWK\WIDGETS\SUBMENU\EMBED
      * the widget of your choice! It can handle every menu that you have created
      * before within YaWK's menu system.</p>
      *
-     * @package    YAWK
+     *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT

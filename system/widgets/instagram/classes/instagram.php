@@ -7,7 +7,7 @@ namespace YAWK\WIDGETS\INSTAGRAM\POSTING {
      * All you need is a valid instagram url and (optional) some settings, like width
      * or link target. Of course you can set a custom heading and subtext above posting.</p>
      *
-     * @package    YAWK
+     *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT

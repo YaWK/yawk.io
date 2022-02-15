@@ -8,7 +8,7 @@ namespace YAWK\WIDGETS\CLOCK\CURRENT
      * alignment (left, center or right) as well as a custom css class to design it and put some FX on
      * if you need to. If you need an analog clock anywhere on your website, this widget does the job.</p>
      *
-     * @package    YAWK
+     *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT

@@ -9,7 +9,7 @@ namespace YAWK\WIDGETS\FACEBOOK\LIKEPAGE
      * very easily. You can configure some settings, like width, height, layout, and
      * much more.</p>
      *
-     * @package    YAWK
+     *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT

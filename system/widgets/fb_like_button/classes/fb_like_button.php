@@ -9,7 +9,7 @@ namespace YAWK\WIDGETS\FACEBOOK\LIKEBUTTON
      * very easily. You can configure some settings, like width, height, layout, color
      * scheme and much more.</p>
      *
-     * @package    YAWK
+     *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT

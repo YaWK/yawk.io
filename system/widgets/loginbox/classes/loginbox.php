@@ -9,7 +9,7 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
      * case the user is already logged in, a hello {user}! message will be displayed, followed
      * by a logout button </p>
      *
-     * @package    YAWK
+     *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT

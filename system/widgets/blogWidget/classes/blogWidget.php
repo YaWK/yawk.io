@@ -8,7 +8,7 @@ namespace YAWK\WIDGETS\BLOG\WIDGET {
      * to embed, setup your settings, choose the position and page where you like to display your
      * blog and you're good to go. </p>
      *
-     * @package    YAWK
+     *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2019 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT
@@ -34,7 +34,7 @@ namespace YAWK\WIDGETS\BLOG\WIDGET {
         // for more specific settings take a look at the blog plugin
 
         /**
-         * @brief Load all widget settings from database and fill object
+         * @details  Load all widget settings from database and fill object
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -56,7 +56,7 @@ namespace YAWK\WIDGETS\BLOG\WIDGET {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @brief (for development and testing purpose)
+         * @details  (for development and testing purpose)
          */
         public function printObject()
         {
@@ -70,7 +70,7 @@ namespace YAWK\WIDGETS\BLOG\WIDGET {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @brief load Javascript and draw image gallery
+         * @details  load Javascript and draw image gallery
          */
         public function init($db)
         {
@@ -85,7 +85,7 @@ namespace YAWK\WIDGETS\BLOG\WIDGET {
          * @version 1.0.0
          * @link http://yawk.io
          * @param db object Database object
-         * @brief (for development and testing purpose)
+         * @details  (for development and testing purpose)
          */
         public function drawBlogWidget($db)
         {

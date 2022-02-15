@@ -9,7 +9,7 @@ namespace YAWK\WIDGETS\CHATURBATE\STREAM
      * wish to embed. But there are a few things to setup. If you like to, you are able to set width,
      * height sound settings and more. By using this widget, embedding a stream from chaturbate is very easy.</p>
      *
-     * @package    YAWK
+     *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT

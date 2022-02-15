@@ -7,7 +7,7 @@ namespace YAWK\WIDGETS\PREZI\EMBED
      * <p>Prezi is a modern presentation tool. With this widget, you can
      * embed any prezi on your page. </p>
      *
-     * @package    YAWK
+     *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT

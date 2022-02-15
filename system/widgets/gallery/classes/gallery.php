@@ -8,7 +8,7 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
      * that you've created before using the gallery plugin. Simply set the ID of the photo gallery you
      * would like to embed. </p>
      *
-     * @package    YAWK
+     *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT

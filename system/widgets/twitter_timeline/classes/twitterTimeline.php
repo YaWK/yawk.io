@@ -8,7 +8,7 @@ namespace YAWK\WIDGETS\TWITTER\TIMELINE
      * timeline and the amount of items you wish to embed. You will get
      * the latest tweets.</p>
      *
-     * @package    YAWK
+     *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT

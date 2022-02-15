@@ -2,12 +2,11 @@
 namespace YAWK\WIDGETS\FACEBOOK\FEED
 {
     /**
-     * @details<b>Use Facebook Graph API to get feed data from a Facebook Page. Require App ID and Access Token.</b>
+     * @details <b>Use Facebook Graph API to get feed data from a Facebook Page. Require App ID and Access Token.</b>
      * <p>This is just an empty example widget for development and demo purpose!</p>
      *
      * <p>This Widget gets the latest (limit) posts of your facebook page feed.</p>
      *
-     * @package    YAWK
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2019 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT

@@ -9,7 +9,7 @@ namespace YAWK\WIDGETS\PLYR\PLAYER
      * As you wish, you can set some settings like width, height, poster image, media control
      * functions, autoplay and much more. </p>
      *
-     * @package    YAWK
+     *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT

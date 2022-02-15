@@ -10,7 +10,7 @@ namespace YAWK\WIDGETS\NEWSLETTER\SUBSCRIBE
      * database, which other plugins and widgets can access easily. In future releases, it is planned to
      * implement a newsletter plugin, where admins can manage and send newsletters within the backend.</p>
      *
-     * @package    YAWK
+     *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT

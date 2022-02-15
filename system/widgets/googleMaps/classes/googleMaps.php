@@ -8,7 +8,7 @@ namespace YAWK\WIDGETS\GOOGLE\MAPS {
      * Simply copy/paste the code into the textarea, click save and your google map
      * will be displayed in your chosen widget position.</p>
      *
-     * @package    YAWK
+     *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT

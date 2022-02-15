@@ -8,7 +8,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
      * It is useful to collect bookings from your users. For further information see description
      * of the booking plugin.</p>
      *
-     * @package    YAWK
+     *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2019 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT

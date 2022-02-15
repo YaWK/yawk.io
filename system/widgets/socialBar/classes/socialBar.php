@@ -9,7 +9,7 @@ namespace YAWK\WIDGETS\SOCIALBAR\DISPLAY
      * in the assets section before). If a link is set, the corresponding icon will
      * be drawn.</p>
      *
-     * @package    YAWK
+     *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT

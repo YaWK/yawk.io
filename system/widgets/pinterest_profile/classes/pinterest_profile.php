@@ -8,7 +8,7 @@ namespace YAWK\WIDGETS\PINTEREST\PROFILE
      * enter any public pin url. Description can be shown or hidden, the size of your pin can
      * be changed and heading and subtext could be added as well. </p>
      *
-     * @package    YAWK
+     *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT

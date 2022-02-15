@@ -8,7 +8,7 @@ namespace YAWK\WIDGETS\TWITCH\EMBED
      * twitch channel. You can set your channel, width, height, either if the
      * chat should be displayed or not, allow fullscreen and more.</p>
      *
-     * @package    YAWK
+     *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT

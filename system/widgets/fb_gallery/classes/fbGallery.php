@@ -15,7 +15,7 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
      *
      * </p>
      *
-     * @package    YAWK
+     *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT

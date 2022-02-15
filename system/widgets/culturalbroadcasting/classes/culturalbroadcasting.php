@@ -9,7 +9,7 @@ namespace YAWK\WIDGETS\CULTURALBROADCASTING\STREAM
      * player details, waveform display, social media links and much more.
      * All you need to embed a player, is the URL to the cba podcast.</p>
      *
-     * @package    YAWK
+     *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT

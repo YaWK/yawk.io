@@ -9,7 +9,7 @@ namespace YAWK\WIDGETS\FACEBOOK\EXAMPLE
      * You can set any api call and fields you like to play around and explore the resulting array.
      * You can use this widget as base for your own facebook api projects.</p>
      *
-     * @package    YAWK
+     *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT

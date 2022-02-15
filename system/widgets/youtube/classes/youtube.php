@@ -8,7 +8,7 @@ namespace YAWK\WIDGETS\YOUTUBE\VIDEO
      * Video URL, set a few settings and you're good to go. You do not need to play around with html or
      * any YouTube embed code. This widget does all the work for you!</p>
      *
-     * @package    YAWK
+     *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT

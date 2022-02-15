@@ -9,7 +9,7 @@ namespace YAWK\WIDGETS\SPOTIFY\EMBED
      * add the properties your application needs, add the database, build your own functions
      * and your widget is ready to run the code as you need it.</p>
      *
-     * @package    YAWK
+     *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT

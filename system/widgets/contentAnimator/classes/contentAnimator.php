@@ -10,7 +10,7 @@ namespace YAWK\WIDGETS\CONTENTANIMATOR\ANIMATE
      * a not too big value, otherwise your users will think, that there is no more content before it got
      * faded in. (or whichever effect you have activated)</p>
      *
-     * @package    YAWK
+     *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT

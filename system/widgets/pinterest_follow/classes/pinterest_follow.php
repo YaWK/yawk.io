@@ -8,7 +8,7 @@ namespace YAWK\WIDGETS\PINTEREST\FOLLOW
      * All you need to enter is any pinterest url to follow. Like any other widget,
      * you can add a heading and a subtext that will be displayed above this widget.</p>
      *
-     * @package    YAWK
+     *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT

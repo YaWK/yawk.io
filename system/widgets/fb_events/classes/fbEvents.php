@@ -22,7 +22,7 @@ namespace YAWK\WIDGETS\FACEBOOK\EVENTS
      * and abstraction will implemented due future updates on this class. A pragmatical approach - for now.
      * </p>
      *
-     * @package    YAWK
+     *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT

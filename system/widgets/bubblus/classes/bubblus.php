@@ -8,7 +8,7 @@ namespace YAWK\WIDGETS\BUBBLUS\MINDMAP
      * With this widget, you are able to embed any public Bubbl.us mindmaps. Simply enter the URL of your
      * mindmap and a view settings. Embedding and sharing mindmaps has never been easier.</p>
      *
-     * @package    YAWK
+     *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT

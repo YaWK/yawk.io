@@ -9,7 +9,7 @@ namespace YAWK\WIDGETS\FUCKADBLOCK\BLOCK
      * that you can say please disable your adblocker or force the user to disable, otherwise he
      * dont see any content. Messages, title and buttons can get customized.</p>
      *
-     * @package    YAWK
+     *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT

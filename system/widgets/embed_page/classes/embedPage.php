@@ -5,7 +5,7 @@ namespace YAWK\WIDGETS\EMBED_PAGE\PAGE {
      *
      * <p>Simply set the page you want to embed.</p>
      *
-     * @package    YAWK
+     *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT

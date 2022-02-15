@@ -9,7 +9,7 @@ namespace YAWK\WIDGETS\CUSTOM_HTML\CODE
      * recommended, you are able to add a piece of javascript here too. This Widget features the
      * combination of summernote and codemirror to give you the best code editing experience.</p>
      *
-     * @package    YAWK
+     *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT

@@ -9,7 +9,7 @@ namespace YAWK\WIDGETS\FACEBOOK\FBCOVER
      * It is meant to be used as header on top of your template design - or wherever it makes sense.
      * </p>
      *
-     * @package    YAWK
+     *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT
