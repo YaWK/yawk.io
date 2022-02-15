@@ -1,6 +1,6 @@
 <?php
 /**
- * <b>Index.php - the main entry point (controller) of the website's frontend</b>
+ * @details <b>Index.php - the main entry point (controller) of the website's frontend</b>
  *
  * First of all, the session gets started, error reporting is set, followed by
  * including all required classes (because its faster than SPLautoload).
@@ -18,14 +18,13 @@
  * overview for details about how YaWK is organized.</p>
  *
  * @category   CMS
- * @package    System
  * @author     Daniel Retzl <danielretzl@gmail.com>
  * @copyright  2016 Daniel Retzl http://yawk.website
  * @license    http://www.gnu.org/licenses/gpl-3.0  GNU/GPL 3.0
  * @version    1.0.0
  * @link       http://yawk.website
  * @since      File available since Release 1.0.0
- * @annotation Index.php - the main entry point (controller) of the website's frontend
+ * @brief  Index.php - the main entry point (controller) of the website's frontend
  *
  */
 session_start();
