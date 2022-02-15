@@ -7,7 +7,6 @@ namespace YAWK {
      * <p><i>Class covers backend functionality.
      * See Methods Summary for details!</i></p>
      *
-     * @package    YAWK
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2009-2015 Daniel Retzl yawk.goodconnect.net
      * @license    https://opensource.org/licenses/MIT
