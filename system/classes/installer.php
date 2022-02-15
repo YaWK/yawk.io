@@ -7,43 +7,43 @@ namespace YAWK {
      */
     class installer
     {
-        /** * @var int $step holds the installation step variable */
+        /** * @param int $step holds the installation step variable */
         public $step;
-        /** * @var string $url URL of that website */
+        /** * @param string $url URL of that website */
         public $url;
-        /** * @var string $rootPath the root path where yawk is installed*/
+        /** * @param string $rootPath the root path where yawk is installed*/
         public $rootPath;
-        /** * @var string $configFile the path and filename to install.ini which helds the setup configuration */
+        /** * @param string $configFile the path and filename to install.ini which helds the setup configuration */
         public $configFile = "system/setup/install.ini";
-        /** * @var string $dbConfigPhp the path and filename to dbconfig.php which helds the mysql configuration */
+        /** * @param string $dbConfigPhp the path and filename to dbconfig.php which helds the mysql configuration */
         public $dbConfigPhp = "system/classes/dbconfig.php";
-        /** * @var string $sqlFile the path and filename to yawk's core sql database file */
+        /** * @param string $sqlFile the path and filename to yawk's core sql database file */
         public $sqlFile = "system/setup/yawk_database.sql";
-        /** * @var string $filePointer the path and filename to the sql file's filepointer */
+        /** * @param string $filePointer the path and filename to the sql file's filepointer */
         public $filePointer = "system/setup/yawk_database.sql_filepointer";
-        /** * @var string $yawkVersion detected from install.ini */
+        /** * @param string $yawkVersion detected from install.ini */
         public $yawkVersion;
-        /** * @var string $version Installer version */
+        /** * @param string $version Installer version */
         public $version = "1.0";
-        /** * @var bool $phpVersionStatus PHP Version */
+        /** * @param bool $phpVersionStatus PHP Version */
         public $phpVersionStatus;
-        /** * @var string $phpVersionRequired required PHP version */
+        /** * @param string $phpVersionRequired required PHP version */
         public $phpVersionRequired = "5.1.0";
-        /** * @var string $phpCheckIcon php version icon: depending on true or false, check or times */
+        /** * @param string $phpCheckIcon php version icon: depending on true or false, check or times */
         public $phpCheckIcon;
-        /** * @var string $apacheStatus Apache Version */
+        /** * @param string $apacheStatus Apache Version */
         public $apacheStatus;
-        /** * @var string $apacheCheckIcon apache version icon: depending on true or false, check or times */
+        /** * @param string $apacheCheckIcon apache version icon: depending on true or false, check or times */
         public $apacheCheckIcon;
-        /** * @var string $zlib zlib enalbed? string: true or false */
+        /** * @param string $zlib zlib enalbed? string: true or false */
         public $zlib;
-        /** * @var string $zlibCheckIcon zlib icon: depending on true or false, check or times */
+        /** * @param string $zlibCheckIcon zlib icon: depending on true or false, check or times */
         public $zlibCheckIcon;
-        /** * @var string $modRewriteStatus is mod_rewrite available? */
+        /** * @param string $modRewriteStatus is mod_rewrite available? */
         public $modRewriteStatus;
-        /** * @var string $modRewriteCheckIcon mod_rewrite icon depending on true or false, check or times */
+        /** * @param string $modRewriteCheckIcon mod_rewrite icon depending on true or false, check or times */
         public $modRewriteCheckIcon;
-        /** * @var string $serverRequirements does the server fulfil requirements? true or false */
+        /** * @param string $serverRequirements does the server fulfil requirements? true or false */
         public $serverRequirements;
 
         /**

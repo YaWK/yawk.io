@@ -14,23 +14,23 @@ namespace YAWK
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation License Generator Class
+     * @brief License Generator Class
      */
     class licenses
     {
-        /** @var string current license to work with */
+        /** @param string current license to work with */
         public $license = '';
-        /** @var string package description */
+        /** @param string package description */
         public $description = '';
-        /** @var string copyright year */
+        /** @param string copyright year */
         public $year = '';
-        /** @var string license holder (name) */
+        /** @param string license holder (name) */
         public $holder = '';
-        /** @var string target folder to write the LICENSE file */
+        /** @param string target folder to write the LICENSE file */
         public $target = '';
-        /** @var string current license text */
+        /** @param string current license text */
         public $licenseText = '';
-        /** @var string LICENSE filename (used by $this->writeLicenseFile) */
+        /** @param string LICENSE filename (used by $this->writeLicenseFile) */
         public $licenseFilename = 'LICENSE';
 
         /**

@@ -14,19 +14,19 @@ namespace YAWK\WIDGETS\TWITTER\TIMELINE
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Embed Twitter Timeline
+     * @brief Embed Twitter Timeline
      */
     class twitterTimeline extends \YAWK\widget
     {
-        /** @var object global widget object data */
+        /** @param object global widget object data */
         public $widget = '';
-        /** @var string Title that will be shown above widget */
+        /** @param string Title that will be shown above widget */
         public $twitterTimelineHeading = '';
-        /** @var string Subtext will be displayed beside title */
+        /** @param string Subtext will be displayed beside title */
         public $twitterTimelineSubtext = '';
-        /** @var string URL of your twitter timeline */
+        /** @param string URL of your twitter timeline */
         public $twitterTimelineUrl = "https://twitter.com/danielretzl";
-        /** @var string How many tweets (latest n) */
+        /** @param string How many tweets (latest n) */
         public $twitterTimelineTweetLimit = "5";
 
         /**
@@ -35,7 +35,7 @@ namespace YAWK\WIDGETS\TWITTER\TIMELINE
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
-         * @annotation Load all widget settings on object init.
+         * @brief Load all widget settings on object init.
          */
         public function __construct($db)
         {
@@ -52,7 +52,7 @@ namespace YAWK\WIDGETS\TWITTER\TIMELINE
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation Twitter Timeline Widget Init
+         * @brief Twitter Timeline Widget Init
          */
         public function init()
         {   // display heading

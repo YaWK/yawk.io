@@ -2,7 +2,7 @@
 namespace YAWK\WIDGETS\JPLAYER\AUDIO {
     class jPlayer
     {
-        /** * @var string current user name */
+        /** * @param string current user name */
         public $mediaFolder;        // path to media root folder usually media/audio
         public $folder;             // media subfolder where the files are stored
         public $playerSettings;     // player settings array

@@ -14,21 +14,21 @@ namespace YAWK\WIDGETS\PINTEREST\PROFILE
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Pinterest Pin Widget
+     * @brief Pinterest Pin Widget
      */
     class pinterestProfile extends \YAWK\widget
     {
-        /** @var object global widget object data */
+        /** @param object global widget object data */
         public $widget = '';
-        /** @var string Title that will be shown above widget */
+        /** @param string Title that will be shown above widget */
         public $pinterestProfileHeading = '';
-        /** @var string Subtext will be displayed beside title */
+        /** @param string Subtext will be displayed beside title */
         public $pinterestProfileSubtext = '';
-        /** @var string The URL of your pinterest channel */
+        /** @param string The URL of your pinterest channel */
         public $pinterestProfileUrl="https://www.pinterest.com/pin/99360735500167749/";
-        /** @var int Profile Width in pixels */
+        /** @param int Profile Width in pixels */
         public $pinterestProfileWidth = 900;
-        /** @var int Profile Heightin pixels */
+        /** @param int Profile Heightin pixels */
         public $pinterestProfileHeight = 500;
 
         /**
@@ -37,7 +37,7 @@ namespace YAWK\WIDGETS\PINTEREST\PROFILE
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
-         * @annotation Load all widget settings on object init.
+         * @brief Load all widget settings on object init.
          */
         public function __construct($db)
         {
@@ -54,7 +54,7 @@ namespace YAWK\WIDGETS\PINTEREST\PROFILE
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation Embed any public Pinterest Profile
+         * @brief Embed any public Pinterest Profile
          */
         public function init()
         {   // draw headline on screen
@@ -67,7 +67,7 @@ namespace YAWK\WIDGETS\PINTEREST\PROFILE
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation Embed Pinterest Profile
+         * @brief Embed Pinterest Profile
          */
         public function embedPinterestProfile()
         {   // check if url is set

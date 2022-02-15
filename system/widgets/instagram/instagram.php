@@ -1,5 +1,5 @@
 <?php
-/** @var $db \YAWK\db */
+/** @param $db \YAWK\db */
 // check if Instagram object is set
 if (!isset($instagram))
 {   // load instagram widget class

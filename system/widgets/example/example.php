@@ -1,5 +1,5 @@
 <?php
-/** @var $db \YAWK\db */
+/** @param $db \YAWK\db */
 if (!isset($example))
 {   // load example widget class
     require_once 'classes/example.php';

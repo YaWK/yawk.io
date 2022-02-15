@@ -14,66 +14,66 @@ namespace YAWK\WIDGETS\BOOKING\FORM
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Embed booking plugin on your pages.
+     * @brief Embed booking plugin on your pages.
      */
     class bookingWidget
     {
         // BASIC WIDGET SETTINGS
-        /** @var object global widget object data */
+        /** @param object global widget object data */
         public $widget = '';
-        /** @var array Form Settings */
+        /** @param array Form Settings */
         public $formSettings = '';
-        /** @var string Headline HTML Markup */
+        /** @param string Headline HTML Markup */
         public $bookingHeadline = '';
 
         // FORM SETTINGS
-        /** @var string Heading */
+        /** @param string Heading */
         public $bookingHeading = '';
-        /** @var string Subtext */
+        /** @param string Subtext */
         public $bookingSubtext = '';
-        /** @var string Headline Prepend Icon */
+        /** @param string Headline Prepend Icon */
         public $bookingIcon = '';
-        /** @var string Email address that will be used as sender */
+        /** @param string Email address that will be used as sender */
         public $bookingFromEmail = '';
 
         // FORM FIELDS (required[visible, mandatory] | true[visible, not mandatory] | false[invisible, not mandatory])
-        /** @var string Booking Band Select Field required|true|false */
+        /** @param string Booking Band Select Field required|true|false */
         public $bookingBand = '';
-        /** @var string Event Date + Time required|true|false */
+        /** @param string Event Date + Time required|true|false */
         public $bookingEventDatetime = '';
-        /** @var string Soundcheck Time required|true|false*/
+        /** @param string Soundcheck Time required|true|false*/
         public $bookingEventSoundcheck = '';
-        /** @var string Showtime required|true|false*/
+        /** @param string Showtime required|true|false*/
         public $bookingEventShowtime = '';
-        /** @var string How long is the soundcheck time? required|true|false */
+        /** @param string How long is the soundcheck time? required|true|false */
         public $bookingSoundcheckDuration = '';
-        /** @var string How long is the showtime? required|true|false */
+        /** @param string How long is the showtime? required|true|false */
         public $bookingShowtimeDuration = '';
-        /** @var string Booking Location (indoor / outdoor) required|true|false */
+        /** @param string Booking Location (indoor / outdoor) required|true|false */
         public $bookingLocation = '';
-        /** @var string Booking Location Type (party / wedding / private society) required|true|false */
+        /** @param string Booking Location Type (party / wedding / private society) required|true|false */
         public $bookingLocationType = '';
-        /** @var string How many people are invited? required|true|false */
+        /** @param string How many people are invited? required|true|false */
         public $bookingCrowdAmount = '';
-        /** @var string PA available? required|true|false */
+        /** @param string PA available? required|true|false */
         public $bookingPaAvailable = '';
-        /** @var string Tech guy available? required|true|false */
+        /** @param string Tech guy available? required|true|false */
         public $bookingTechAvailable = '';
-        /** @var string Overnight possible? required|true|false */
+        /** @param string Overnight possible? required|true|false */
         public $bookingHotelAvailable = '';
-        /** @var string message / note required|true|false */
+        /** @param string message / note required|true|false */
         public $bookingMessage = '';
-        /** @var string email required|true|false */
+        /** @param string email required|true|false */
         public $bookingEmail = '';
-        /** @var string contact name required|true|false */
+        /** @param string contact name required|true|false */
         public $bookingContactName = '';
-        /** @var string contact phone number required|true|false */
+        /** @param string contact phone number required|true|false */
         public $bookingPhone = '';
-        /** @var string how many sets should be played? required|true|false */
+        /** @param string how many sets should be played? required|true|false */
         public $bookingSetAmount = '';
-        /** @var string admin email address where booking will be sent to */
+        /** @param string admin email address where booking will be sent to */
         public $bookingAdminEmail = '';
-        /** @var string html email true|false */
+        /** @param string html email true|false */
         public $bookingHtmlEmail = '';
 
 
@@ -83,7 +83,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
-         * @annotation Load all widget settings on object init.
+         * @brief Load all widget settings on object init.
          */
         public function __construct($db)
         {
@@ -100,7 +100,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation (for development and testing purpose)
+         * @brief (for development and testing purpose)
          */
         public function printObject()
         {
@@ -114,12 +114,12 @@ namespace YAWK\WIDGETS\BOOKING\FORM
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation This method does the setup and embed job
+         * @brief This method does the setup and embed job
          * @param object $db db object
          * @param array $lang language array
          */
         public function init($db, $lang)
-        {   /** @var \YAWK\db */
+        {   /** @param \YAWK\db */
 
             // set widget obj properties
             $this->setProperties();
@@ -379,7 +379,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation Load all widget settings.
+         * @brief Load all widget settings.
          */
         public function setProperties()
         {

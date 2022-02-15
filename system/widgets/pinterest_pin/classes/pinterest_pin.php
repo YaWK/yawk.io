@@ -14,21 +14,21 @@ namespace YAWK\WIDGETS\PINTEREST\PIN
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Pinterest Pin Widget
+     * @brief Pinterest Pin Widget
      */
     class pinterestPin extends \YAWK\widget
     {
-        /** @var object global widget object data */
+        /** @param object global widget object data */
         public $widget = '';
-        /** @var string Title that will be shown above widget */
+        /** @param string Title that will be shown above widget */
         public $pinterestPinHeading = '';
-        /** @var string Subtext will be displayed beside title */
+        /** @param string Subtext will be displayed beside title */
         public $pinterestPinSubtext = '';
-        /** @var string The URL of your pinterest channel */
+        /** @param string The URL of your pinterest channel */
         public $pinterestPinUrl="https://www.pinterest.com/pin/99360735500167749/";
-        /** @var string The URL of your pinterest channel */
+        /** @param string The URL of your pinterest channel */
         public $pinterestPinSize="large";
-        /** @var string The URL of your pinterest channel */
+        /** @param string The URL of your pinterest channel */
         public $pinterestPinHideDescription = 'data-pin-terse="true"';
 
         /**
@@ -37,7 +37,7 @@ namespace YAWK\WIDGETS\PINTEREST\PIN
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
-         * @annotation Load all widget settings on object init.
+         * @brief Load all widget settings on object init.
          */
         public function __construct($db)
         {
@@ -54,7 +54,7 @@ namespace YAWK\WIDGETS\PINTEREST\PIN
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation Embed any public Pinterest Pin
+         * @brief Embed any public Pinterest Pin
          */
         public function init()
         {   // draw headline on screen
@@ -67,7 +67,7 @@ namespace YAWK\WIDGETS\PINTEREST\PIN
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation Embed Pinterest Pin
+         * @brief Embed Pinterest Pin
          */
         public function embedPinterestPin()
         {   // check if url is set

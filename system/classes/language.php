@@ -12,31 +12,31 @@ namespace YAWK {
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation The language class - support multilingual backend
+     * @brief The language class - support multilingual backend
      */
     class language
     {
-        /** * @var array $lang language array */
+        /** * @param array $lang language array */
         public $lang;
-        /** * @var string $defaultLanguage default language if no supported language can be detected */
+        /** * @param string $defaultLanguage default language if no supported language can be detected */
         public $defaultLanguage;
-        /** * @var string $currentLanguage current setted language in format: en-EN */
+        /** * @param string $currentLanguage current setted language in format: en-EN */
         public $currentLanguage;
-        /** * @var string $currentLanguage current setted language in format: en-EN */
+        /** * @param string $currentLanguage current setted language in format: en-EN */
         public $currentFrontendLanguage;
-        /** * @var string $currentLanguageGlobal current setted language in format: en */
+        /** * @param string $currentLanguageGlobal current setted language in format: en */
         public $currentLanguageGlobal;
-        /** * @var string $detectedLanguage current detected language in format: en-EN */
+        /** * @param string $detectedLanguage current detected language in format: en-EN */
         public $detectedLanguage;
-        /** * @var string $detectedLanguageGlobal current detected language in format: en */
+        /** * @param string $detectedLanguageGlobal current detected language in format: en */
         public $detectedLanguageGlobal;
-        /** * @var string $httpAcceptedLanguage current $_SERVER['HTTP_ACCEPTED_LANGUAGE'] in format: en-EN */
+        /** * @param string $httpAcceptedLanguage current $_SERVER['HTTP_ACCEPTED_LANGUAGE'] in format: en-EN */
         public $httpAcceptedLanguage;
-        /** * @var string $pathToFile the path to the language file */
+        /** * @param string $pathToFile the path to the language file */
         public $pathToFile;
-        /** * @var array $supportedLanguagesGlobal array that contains all supported languages, shortened to the first 2 chars eg. (en) */
+        /** * @param array $supportedLanguagesGlobal array that contains all supported languages, shortened to the first 2 chars eg. (en) */
         public $supportedLanguagesGlobal;
-        /** * @var array $supportedLanguages array that contains all supported languages, but the full tag eg. (en-EN) */
+        /** * @param array $supportedLanguages array that contains all supported languages, but the full tag eg. (en-EN) */
         public $supportedLanguages;
 
         /**

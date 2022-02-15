@@ -15,11 +15,11 @@ namespace YAWK\WIDGETS\FACEBOOK\LIKEPAGE
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Facebook Like Page - embed like my facebook page
+     * @brief Facebook Like Page - embed like my facebook page
      */
     class fbLikePage extends \YAWK\widget
     {
-        /** @var object global widget object data */
+        /** @param object global widget object data */
         public $widget = '';
         public $fbPageWidth = "450";
         public $fbPageHeight = "265";
@@ -39,7 +39,7 @@ namespace YAWK\WIDGETS\FACEBOOK\LIKEPAGE
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
-         * @annotation Load all widget settings on object init.
+         * @brief Load all widget settings on object init.
          */
         public function __construct($db)
         {
@@ -56,7 +56,7 @@ namespace YAWK\WIDGETS\FACEBOOK\LIKEPAGE
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation Facebook Like Page
+         * @brief Facebook Like Page
          */
         public function init()
         {

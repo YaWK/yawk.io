@@ -16,57 +16,57 @@ namespace YAWK\WIDGETS\NEWSLETTER\SUBSCRIBE
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Embed any YouTube Video on your pages.
+     * @brief Embed any YouTube Video on your pages.
      */
     class newsletter
     {
-        /** @var object global widget object data */
+        /** @param object global widget object data */
         public $widget = '';
-        /** @var string Title Text */
+        /** @param string Title Text */
         public $newsletterTitle = 'Newsletter';
-        /** @var string Thank You Subtext */
+        /** @param string Thank You Subtext */
         public $newsletterSubtext = 'subscribe';
-        /** @var string Thank You Title Text */
+        /** @param string Thank You Title Text */
         public $newsletterThankYouTitle = 'Thank You';
-        /** @var string Thank You SubText */
+        /** @param string Thank You SubText */
         public $newsletterThankYouSubtext = 'for subscribing to our newsletter!';
-        /** @var string Button Text */
+        /** @param string Button Text */
         public $newsletterBtnText = 'Subscribe Newsletter';
-        /** @var string Button CSS Class */
+        /** @param string Button CSS Class */
         public $newsletterBtnClass = 'btn btn-success';
-        /** @var string Name Field Placeholder */
+        /** @param string Name Field Placeholder */
         public $newsletterNamePlaceholder = 'Name';
-        /** @var string Email Field Placeholder */
+        /** @param string Email Field Placeholder */
         public $newsletterEmailPlaceholder = 'Email';
-        /** @var string Button Button Margin Top */
+        /** @param string Button Button Margin Top */
         public $newsletterBtnMarginTop = '5px';
-        /** @var string Button Button Alignment */
+        /** @param string Button Button Alignment */
         public $newsletterBtnAlign = 'text-center';
-        /** @var string Hide Form Labels? */
+        /** @param string Hide Form Labels? */
         public $newsletterHideLabels = 'false';
-        /** @var string Newsletter Icon (eg. font awesome or glyphicons) */
+        /** @param string Newsletter Icon (eg. font awesome or glyphicons) */
         public $newsletterIcon = 'fa fa-envelope-o';
-        /** @var string Font size of icon, heading and subtext */
+        /** @param string Font size of icon, heading and subtext */
         public $newsletterFontSize = 'h2';
-        /** @var string Width of the form elements */
+        /** @param string Width of the form elements */
         public $newsletterWidth = '';
-        /** @var string Btn Margin HTML Markup */
+        /** @param string Btn Margin HTML Markup */
         public $markupBtnMarginTop = '';
-        /** @var string Btn Class HTML Markup */
+        /** @param string Btn Class HTML Markup */
         public $markupBtnClass = '';
-        /** @var string Btn Alignment HTML Markup */
+        /** @param string Btn Alignment HTML Markup */
         public $markupBtnAlign = '';
-        /** @var string Name Label HTML Markup */
+        /** @param string Name Label HTML Markup */
         public $markupNameLabel = '';
-        /** @var string Email Label HTML Markup */
+        /** @param string Email Label HTML Markup */
         public $markupEmailLabel = '';
-        /** @var string Icon HTML Markup */
+        /** @param string Icon HTML Markup */
         public $markupIcon = '';
-        /** @var string Font Size (H1-H6) HTML Markup Start */
+        /** @param string Font Size (H1-H6) HTML Markup Start */
         public $markupFontSizeStart = '<H2>';
-        /** @var string Font Size (H1-H6) HTML Markup End */
+        /** @param string Font Size (H1-H6) HTML Markup End */
         public $markupFontSizeEnd = '</H2>';
-        /** @var string Form width HTML Markup */
+        /** @param string Form width HTML Markup */
         public $markupFormWidth = '';
 
         /**
@@ -75,7 +75,7 @@ namespace YAWK\WIDGETS\NEWSLETTER\SUBSCRIBE
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
-         * @annotation Load all widget settings on object init.
+         * @brief Load all widget settings on object init.
          */
         public function __construct($db)
         {
@@ -92,7 +92,7 @@ namespace YAWK\WIDGETS\NEWSLETTER\SUBSCRIBE
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation (for development and testing purpose)
+         * @brief (for development and testing purpose)
          */
         public function printObject()
         {
@@ -106,7 +106,7 @@ namespace YAWK\WIDGETS\NEWSLETTER\SUBSCRIBE
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation This method does the setup and embed job
+         * @brief This method does the setup and embed job
          */
         public function init()
         {
@@ -123,7 +123,7 @@ namespace YAWK\WIDGETS\NEWSLETTER\SUBSCRIBE
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation include required javascript assets (validade, messages and ajax js file)
+         * @brief include required javascript assets (validade, messages and ajax js file)
          */
         public function includeJS()
         {
@@ -143,7 +143,7 @@ namespace YAWK\WIDGETS\NEWSLETTER\SUBSCRIBE
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation Set object properties and html markup
+         * @brief Set object properties and html markup
          */
         public function setProperties()
         {

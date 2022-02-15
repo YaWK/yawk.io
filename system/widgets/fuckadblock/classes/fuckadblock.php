@@ -15,31 +15,31 @@ namespace YAWK\WIDGETS\FUCKADBLOCK\BLOCK
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Detect and react to user's installed AdBlocker.
+     * @brief Detect and react to user's installed AdBlocker.
      */
     class fuckadblock
     {
-        /** @var object global widget object data */
+        /** @param object global widget object data */
         public $widget = '';
-        /** @var string Text that will be shown as title */
+        /** @param string Text that will be shown as title */
         public $fuckAdBlockTitle = '';
-        /** @var string AdBlock custom text */
+        /** @param string AdBlock custom text */
         public $fuckAdBlockText = '';
-        /** @var string Level of strongness */
+        /** @param string Level of strongness */
         public $fuckAdBlockLevel = '';
-        /** @var string Low level  button text */
+        /** @param string Low level  button text */
         public $fuckAdBlockLowBtnText = '';
-        /** @var string High level  button text */
+        /** @param string High level  button text */
         public $fuckAdBlockHighBtnText = '';
-        /** @var string Button class */
+        /** @param string Button class */
         public $fuckAdBlockBtnClass = '';
-        /** @var string Loading Type (on page load or every x seconds) */
+        /** @param string Loading Type (on page load or every x seconds) */
         public $fuckAdBlockLoadingType = '';
-        /** @var string footer html markup */
+        /** @param string footer html markup */
         public $footerBtnCode = '';
-        /** @var string header html markup */
+        /** @param string header html markup */
         public $headerBtnCode = '';
-        /** @var string Ablock JavaScript */
+        /** @param string Ablock JavaScript */
         public $adBlockJS = '';
 
         /**
@@ -48,7 +48,7 @@ namespace YAWK\WIDGETS\FUCKADBLOCK\BLOCK
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
-         * @annotation Load all widget settings on object init.
+         * @brief Load all widget settings on object init.
          */
         public function __construct($db)
         {
@@ -66,7 +66,7 @@ namespace YAWK\WIDGETS\FUCKADBLOCK\BLOCK
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation Prepare properties and init fuckAdBlock
+         * @brief Prepare properties and init fuckAdBlock
          */
         public function init()
         {

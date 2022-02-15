@@ -1,5 +1,5 @@
 <?php
-/** @var $db \YAWK\db */
+/** @param $db \YAWK\db */
 if (!isset($spotify))
 {   // load spotify widget class
     require_once 'classes/spotify.php';

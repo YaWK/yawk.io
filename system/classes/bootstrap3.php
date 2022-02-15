@@ -11,11 +11,11 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP3
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Helper function to output custom (overriden) bootstrap 3 css (settings.css)
+     * @brief Helper function to output custom (overriden) bootstrap 3 css (settings.css)
      */
     class bootstrap3 extends \YAWK\FRAMEWORK\cssFramework
     {
-        /** @var string all the css as string */
+        /** @param string all the css as string */
         public $cssCode = '';
 
         /**
@@ -24,7 +24,7 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP3
          * @version 1.0.0
          * @link http://yawk.io
          * @return string|null the generated css code as (big) string
-         * @annotation Init calls setBootstrapComponents and return all css code as string on success or null on error
+         * @brief Init calls setBootstrapComponents and return all css code as string on success or null on error
          */
         public function init()
         {
@@ -52,7 +52,7 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP3
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation add Bootstrap 3 well component to this css code string
+         * @brief add Bootstrap 3 well component to this css code string
          */
         public function bs3_WellCss()
         {
@@ -78,7 +78,7 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP3
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation add Bootstrap 3 list group component to this css code string
+         * @brief add Bootstrap 3 list group component to this css code string
          */
         public function bs3_ListGroupCss()
         {
@@ -126,7 +126,7 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP3
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation add Bootstrap 3 buttons component to this css code string
+         * @brief add Bootstrap 3 buttons component to this css code string
          */
         public function bs3_ButtonsCss()
         {
@@ -510,7 +510,7 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP3
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation add Bootstrap 3 forms component to this css code string
+         * @brief add Bootstrap 3 forms component to this css code string
          */
         public function bs3_FormsCss()
         {
@@ -558,7 +558,7 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP3
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation add Bootstrap 3 navbar component to this css code string
+         * @brief add Bootstrap 3 navbar component to this css code string
          */
         public function bs3_NavbarCss()
         {
@@ -729,7 +729,7 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP3
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation add Bootstrap 3 jumbotron component to this css code string
+         * @brief add Bootstrap 3 jumbotron component to this css code string
          */
         public function bs3_JumbotronCss()
         {

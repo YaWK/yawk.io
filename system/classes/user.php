@@ -11,72 +11,72 @@ namespace YAWK {
      * @copyright  2009-2015 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT
      * @link       http://yawk.io
-     * @annotation The default user class. Provide all functions to handle the user object.
+     * @brief The default user class. Provide all functions to handle the user object.
      */
 
     class user
     {
-        /** * @var string current user name */
+        /** * @param string current user name */
         public $currentuser;
-        /** * @var string username */
+        /** * @param string username */
         public $username;
-        /** * @var int 0|1 if 1, user is blocked and cannot login anymore */
+        /** * @param int 0|1 if 1, user is blocked and cannot login anymore */
         public $blocked;
-        /** * @var int user ID */
+        /** * @param int user ID */
         public $id;
-        /** * @var int 0|1 if 1, user is published (active) */
+        /** * @param int 0|1 if 1, user is published (active) */
         public $published;
-        /** * @var int 0|1 if 1, user privacy needs to be respected */
+        /** * @param int 0|1 if 1, user privacy needs to be respected */
         public $privacy;
-        /** * @var int 0|1 if 1, user is currently online (or at least: not logged out) */
+        /** * @param int 0|1 if 1, user is currently online (or at least: not logged out) */
         public $online;
-        /** * @var int group ID */
+        /** * @param int group ID */
         public $gid;
-        /** * @var string user password */
+        /** * @param string user password */
         public $password;
-        /** * @var string datetime when user was created */
+        /** * @param string datetime when user was created */
         public $date_created;
-        /** * @var string datetime when user has changed */
+        /** * @param string datetime when user has changed */
         public $date_changed;
-        /** * @var string datetime when user has last logged in */
+        /** * @param string datetime when user has last logged in */
         public $date_lastlogin;
-        /** * @var string datetime when user account is about to expire */
+        /** * @param string datetime when user account is about to expire */
         public $date_expired;
-        /** * @var int how many times the user have logged in */
+        /** * @param int how many times the user have logged in */
         public $login_count;
-        /** * @var string user email address*/
+        /** * @param string user email address*/
         public $email;
-        /** * @var string user URL */
+        /** * @param string user URL */
         public $url;
-        /** * @var string user twitter url */
+        /** * @param string user twitter url */
         public $twitter;
-        /** * @var string user facebook url */
+        /** * @param string user facebook url */
         public $facebook;
-        /** * @var string user firstname */
+        /** * @param string user firstname */
         public $firstname;
-        /** * @var string user lastname */
+        /** * @param string user lastname */
         public $lastname;
-        /** * @var string street */
+        /** * @param string street */
         public $street;
-        /** * @var string zip code */
+        /** * @param string zip code */
         public $zipcode;
-        /** * @var string city */
+        /** * @param string city */
         public $city;
-        /** * @var string country */
+        /** * @param string country */
         public $country;
-        /** * @var string job description - can held any string */
+        /** * @param string job description - can held any string */
         public $job;
-        /** * @var string datetime when user has last logged in */
+        /** * @param string datetime when user has last logged in */
         public $lastlogin;
-        /** * @var int 0|1 1 means the email is public and can be shown on the website */
+        /** * @param int 0|1 1 means the email is public and can be shown on the website */
         public $public_email;
-        /** * @var int 0|1 user is currently logged in - or at least: not logged out */
+        /** * @param int 0|1 user is currently logged in - or at least: not logged out */
         public $logged_in;
-        /** * @var int how many likes the user has achieved */
+        /** * @param int how many likes the user has achieved */
         public $likes;
-        /** * @var int override the current template ID */
+        /** * @param int override the current template ID */
         public $overrideTemplate;
-        /** * @var int current template ID */
+        /** * @param int current template ID */
         public $templateID;
 
         /**
@@ -438,7 +438,7 @@ namespace YAWK {
          * @return string|bool return template ID to corresponding user ID
          */
         static function getUserTemplateID($db, $uid)
-        {   /* @var $db \YAWK\db */
+        {   /* @param $db \YAWK\db */
             if (!isset($uid) && (empty($uid)))
             {   // uid is missing
                 return false;
@@ -472,7 +472,7 @@ namespace YAWK {
          * @return bool
          */
         public function isAllowedToOverrideTemplate($db, $uid)
-        {   /* @var $db \YAWK\db */
+        {   /* @param $db \YAWK\db */
             if ($res = $db->query("SELECT overrideTemplate FROM {users} WHERE id = $uid"))
             {
                 if ($row = mysqli_fetch_row($res))
@@ -510,7 +510,7 @@ namespace YAWK {
          * @return bool
          */
         public function setUserTemplate($db, $overrideTemplate, $userTemplateID, $uid)
-        {   /* @var $db \YAWK\db */
+        {   /* @param $db \YAWK\db */
         if (!isset($overrideTemplate) && (!is_numeric($overrideTemplate)))
         {   // wrong param
             return false;
@@ -546,7 +546,7 @@ namespace YAWK {
          */
         public function isTemplateEqual($db, $userTemplateID)
         {
-            /* @var $db \YAWK\db */
+            /* @param $db \YAWK\db */
             // check if userTemplateID param is set
             if (!isset($userTemplateID) && (empty($userTemplateID))) {   // missing templateID - cannot compare,
                 return false;
@@ -569,7 +569,7 @@ namespace YAWK {
          * @return array|bool
          */
         static function getLoginData($db, $user)
-        {   /* @var $db \YAWK\db */
+        {   /* @param $db \YAWK\db */
             if (isset($user) && (!empty($user)))
             {   // check if user is registered
                 if (self::hasLoggedIn($db, $user))
@@ -619,7 +619,7 @@ namespace YAWK {
          * @return bool
          */
         static function isRegistered($db, $user)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             if ($res = $db->query("SELECT username FROM {users} WHERE username='$user'"))
             {
                 if ($row = $res->fetch_assoc())
@@ -647,7 +647,7 @@ namespace YAWK {
          * @return bool
          */
         static function hasLoggedIn($db, $user)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             if ($res = $db->query("SELECT username FROM {logins} WHERE username='$user'"))
             {
                 if ($row = $res->fetch_assoc())
@@ -675,7 +675,7 @@ namespace YAWK {
          * @return bool
          */
         static function isAdmin($db)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             // checks if backend login is allowed for this (logged in) Group ID
             if (isset($_SESSION))
             {   // check if there is a gid set
@@ -732,7 +732,7 @@ namespace YAWK {
          */
         function getUserArray($db)
         {
-            /* @var $db \YAWK\db */
+            /* @param $db \YAWK\db */
             if ($result = $db->query("SELECT cu.*, cg.value as gid FROM {users} as cu
                                       JOIN {user_groups} as cg on cu.gid = cg.id ORDER BY id"))
             {
@@ -771,7 +771,7 @@ namespace YAWK {
             {   // default value
                 $limit = 8;
             }
-            /* @var $db \YAWK\db */
+            /* @param $db \YAWK\db */
             if ($result = $db->query("SELECT cu.*, cg.value as gid FROM {users} as cu
                                       JOIN {user_groups} as cg on cu.gid = cg.id ORDER BY id LIMIT $limit"))
             {
@@ -802,7 +802,7 @@ namespace YAWK {
          */
         static function countUsers($db)
         {
-            /* @var $db \YAWK\db */
+            /* @param $db \YAWK\db */
             if ($result = $db->query("SELECT count(id) FROM {users}"))
             {
                 $i = mysqli_fetch_row($result);
@@ -826,7 +826,7 @@ namespace YAWK {
          * @return bool
          */
         function loadProperties($db, $username)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             if ($res = $db->query("SELECT * FROM {users}
                                    WHERE username = '" . $username . "'"))
             {   // fetch user properties
@@ -889,7 +889,7 @@ namespace YAWK {
          * @return string|bool
          */
         function getProperty($db, $property, $uid)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             if ($res = $db->query("SELECT $property FROM {users}
                                    WHERE id = '" . $uid . "'"))
             {
@@ -916,7 +916,7 @@ namespace YAWK {
          * @return bool
          */
         static function setProperty($db, $id, $property, $value)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             if (isset($property) && isset($value) && isset($id) && is_numeric($id))
             {   // params are set, now escape strings
                 $property = $db->quote($property);
@@ -954,7 +954,7 @@ namespace YAWK {
          */
         static function getGroupNameFromID($db, $gid)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             if ($res = $db->query("SELECT value
 	                                FROM {user_groups}
 	                                WHERE id = $gid"))
@@ -977,7 +977,7 @@ namespace YAWK {
          */
         static function getUserNameFromID($db, $uid)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             if ($res = $db->query("SELECT username
 	                                FROM {users}
 	                                WHERE id = $uid"))
@@ -1000,7 +1000,7 @@ namespace YAWK {
          */
         static function getUserIdFromName($db, $user)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             if ($res = $db->query("SELECT id
 	                                FROM {users}
 	                                WHERE username = '".$user."'"))
@@ -1023,7 +1023,7 @@ namespace YAWK {
          */
         static function getUserIdFromEmail($db, $email)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             if ($res = $db->query("SELECT id
 	                                FROM {users}
 	                                WHERE email = '".$email."'"))
@@ -1044,7 +1044,7 @@ namespace YAWK {
          * @return array|bool
          */
         static function getAllGroupIDs($db)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             if ($res = $db->query("SELECT id, value FROM {user_groups}"))
             {   // fetch data in loop
                 while ($row = mysqli_fetch_row($res))
@@ -1080,7 +1080,7 @@ namespace YAWK {
          * @return bool
          */
         static function isLoggedIn($db, $username)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             if ($res = $db->query("SELECT id, logged_in FROM {users} WHERE username = '" . $username . "'"))
             {   // fetch data
                 $row = mysqli_fetch_row($res);
@@ -1123,7 +1123,7 @@ namespace YAWK {
          * @return array|null|string
          */
         static function getGroup($db)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             if (isset($_SESSION['gid']))
             {   // prepare vars
                 $gid = $_SESSION['gid'];
@@ -1254,7 +1254,7 @@ namespace YAWK {
          * @return bool
          */
         function save($db)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             $date_changed = date("Y-m-d G:i:s");
             // lowercase username
             $this->username = mb_strtolower($this->username);
@@ -1301,7 +1301,7 @@ namespace YAWK {
          * @return bool
          */
         function toggleOffline($db, $id, $blocked)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             // TOGGLE PAGE STATUS
             if (isset($blocked)) {
                 $status = \YAWK\sys::iStatusToString($blocked, "blocked", "unblocked");
@@ -1331,7 +1331,7 @@ namespace YAWK {
          * @return bool the emailadress of this $user
          */
         static function getUserEmail($db, $user)
-        {   /** @var $db \YAWK\db $res */
+        {   /** @param $db \YAWK\db $res */
             if ($res = $db->query("SELECT email
                               FROM {users}
                               WHERE username = '" . $user. "'"))
@@ -1372,7 +1372,7 @@ namespace YAWK {
          * @return bool
          */
         static function create($db, $username, $password1, $password2, $email, $url, $twitter, $facebook, $firstname, $lastname, $street, $zipcode, $city, $country, $blocked, $privacy, $job, $gid)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             $date_created = date("Y-m-d G:i:s");
             // select maxID
             if ($res = $db->query("SELECT MAX(id) FROM {users}"))
@@ -1493,7 +1493,7 @@ namespace YAWK {
          * @return bool
          */
         static function createFromFrontend($db, $username, $password1, $password2, $email, $gid)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             if (empty($username) || (empty($password1) || (empty($password2) || (empty($email) || (empty($gid))))))
             {
                 echo \YAWK\alert::draw("danger", "Error!", "Missing Data. Please fill out the complete form.","",4200);
@@ -1591,7 +1591,7 @@ namespace YAWK {
          * @return bool
          */
         static function delete($db, $user)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             if ($res = $db->query("DELETE FROM {users} WHERE username = '" . $user . "'"))
             {
                 return true;
@@ -1614,7 +1614,7 @@ namespace YAWK {
          * @return bool
          */
         static function checkPassword($db, $username, $password)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             $adminEmail = \YAWK\settings::getSetting($db, "admin_email");
             $host = \YAWK\settings::getSetting($db, "host");
             $password = $db->quote(trim($password));
@@ -1673,7 +1673,7 @@ namespace YAWK {
          * @return bool
          */
         function checkGroupId($db, $gid)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             // query data
             $sql = $db->query("SELECT backend_allowed FROM {user_groups} WHERE id='".$gid."'");
             $res = mysqli_fetch_row($sql);
@@ -1697,7 +1697,7 @@ namespace YAWK {
          * @return bool
          */
         static function checkLogin($db)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             /* check user login */
             $user = new \YAWK\user($db);
             if(isset($_POST['user']) && isset($_POST['password'])) {
@@ -1769,7 +1769,7 @@ namespace YAWK {
          */
         static function login($db, $username, $password)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             if (empty($username && $password)){
                 return false;
             }
@@ -1916,7 +1916,7 @@ namespace YAWK {
          * @return bool
          */
         function loginBackEnd($db, $username, $password)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             $password = $db->quote(trim($password));
             $this->username = $db->quote(trim($username));
             // datum + login count aktualisieren
@@ -2067,7 +2067,7 @@ namespace YAWK {
          * @return bool
          */
         static function storeLogin($db, $failed, $location, $username, $password)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             if (!isset($location)){
                 $location = '';
             }
@@ -2168,7 +2168,7 @@ namespace YAWK {
          * @return bool
          */
         public function logout($db)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             // set user offline in db
             if (isset($_SESSION['username']))
             {   // if username is set in session var, logout
@@ -2238,7 +2238,7 @@ namespace YAWK {
          * @param object $db database
          */
         static function getUserList($db)
-        {   /* @var \YAWK\db $db */
+        {   /* @param \YAWK\db $db */
             // show ALL users
             // get all users from db where privacy is set to zero
             // & just pick users who are set to online in database
@@ -2276,7 +2276,7 @@ namespace YAWK {
          * @return bool true, if they follow each other, false if not
          */
         static function checkFollowStatus($db, $uid, $hunted)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             if ($sql = $db->query("SELECT id FROM {follower} WHERE follower='$uid' AND hunted = '".$hunted."'"))
             {
                 if (mysqli_fetch_row($sql))
@@ -2306,7 +2306,7 @@ namespace YAWK {
          * @return bool
          */
         static function isFriend($db, $uid, $hunted)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             if ($sql = $db->query("SELECT id FROM {friends}
                                    WHERE confirmed='1' AND friendA='$uid' AND friendB = '".$hunted."'
                                    OR confirmed='1' AND friendA='$hunted' AND friendB = '$uid'"))
@@ -2338,7 +2338,7 @@ namespace YAWK {
          * @return array|bool
          */
         static function isFriendRequested($db, $uid, $hunted)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             if ($sql = $db->query("SELECT id, friendA, friendB, confirmed, aborted FROM {friends}
                                    WHERE confirmed='0' AND friendA='$uid' AND friendB = '".$hunted."'
                                    OR confirmed='0' AND friendA='$hunted' AND friendB = '$uid'"))
@@ -2366,7 +2366,7 @@ namespace YAWK {
          * @return int|bool the number of notifications or false
          */
         static function countNotifications($db)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             if ($sql = $db->query("SELECT count(log_id) FROM {syslog}
                                    WHERE seen = '0'"))
             {   // count + return syslog entries
@@ -2390,7 +2390,7 @@ namespace YAWK {
          * @return int|bool the number of personal notifications for user ID, or false
          */
         static function countMyNotifications($db, $uid)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             if ($sql = $db->query("SELECT count(toUID) FROM {notifications}
                                    WHERE toUID = '".$uid."' AND seen = '0'"))
             {   // count + return syslog entries
@@ -2413,7 +2413,7 @@ namespace YAWK {
          * @return array|bool
          */
         static function getAllNotifications($db)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
 
             if ($sql = $db->query("SELECT * FROM {syslog} AS log
                                        LEFT JOIN {syslog_categories} AS category ON log.log_category=category.id
@@ -2446,7 +2446,7 @@ namespace YAWK {
          * @return array|bool returns an array with all entries or false
          */
         static function getMyNotifications($db, $uid)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             if ($sql = $db->query("SELECT * FROM {notifications} AS log
                                        LEFT JOIN {syslog_categories} AS category ON log.log_category=category.id
                                        LEFT JOIN {notifications_msg} AS msg ON log.msg_id=msg.id
@@ -2480,7 +2480,7 @@ namespace YAWK {
          * @return int|bool the number of followers for that user ID or false
          */
         static function countMyFollowers($db, $uid)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             if ($sql = $db->query("SELECT count(id) FROM {follower} WHERE hunted = '".$uid."'"))
             {   // count + return data
                 $row = mysqli_fetch_row($sql);
@@ -2503,7 +2503,7 @@ namespace YAWK {
          * @return int|bool the number of friends for that user ID or false
          */
         static function countMyFriends($db, $uid)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             if ($sql = $db->query("SELECT count(id) FROM {friends}
                                    WHERE confirmed = '1' AND friendA = '".$uid."'
                                    OR friendB = '".$uid."' AND confirmed = '1'
@@ -2531,7 +2531,7 @@ namespace YAWK {
          * @return array|bool
          */
         static function getMyFriends($db, $uid, $confirmed, $lang)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             // to just friend requests
             if (isset($confirmed) && $confirmed === 0)
             {   // param outstanding
@@ -2570,7 +2570,7 @@ namespace YAWK {
          * @return array|bool
          */
         static function getMyFollower($db, $uid)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             // param UID is set
             if (isset($uid))
             {   //
@@ -2615,7 +2615,7 @@ namespace YAWK {
          * @return int|bool number of messages or false
          */
         static function countNewMessages($db, $uid)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             $i = 0;
             if ($sql = $db->query("SELECT msg_id FROM {plugin_msg} WHERE msg_read ='0' AND spam IS NOT NULL AND trash IS NOT NULL AND toUID = '".$uid."'"))
             {   // fetch data in loop
@@ -2642,7 +2642,7 @@ namespace YAWK {
          * @return array|bool
          */
         static function getNewMessages($db, $uid)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
 
             if ($sql = $db->query("SELECT * FROM {plugin_msg} WHERE msg_read ='0' AND toUID = '".$uid."' ORDER by msg_date DESC"))
             {   // create array

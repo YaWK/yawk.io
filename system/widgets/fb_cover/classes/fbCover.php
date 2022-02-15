@@ -15,31 +15,31 @@ namespace YAWK\WIDGETS\FACEBOOK\FBCOVER
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Facebook Cover widget - Embed current cover image from your Facebook page.
+     * @brief Facebook Cover widget - Embed current cover image from your Facebook page.
      */
 class fbCover
 {
-    /** @var string your app ID (from developers.facebook.com) */
+    /** @param string your app ID (from developers.facebook.com) */
     public $fbCoverAppId = '';
-    /** @var string your access token (secret word from developers.facebook.com) */
+    /** @param string your access token (secret word from developers.facebook.com) */
     public $fbCoverAccessToken = '';
-    /** @var string css class to be set on the cover image */
+    /** @param string css class to be set on the cover image */
     public $fbCoverImageClass = '';
-    /** @var string image width in px or % */
+    /** @param string image width in px or % */
     public $fbCoverImageWidth = '';
-    /** @var string image height in px or % */
+    /** @param string image height in px or % */
     public $fbCoverImageHeight = '';
-    /** @var string any title you like (important for SEO) */
+    /** @param string any title you like (important for SEO) */
     public $fbCoverImageTitle = '';
-    /** @var string any image alt tag you like (for screenreaders) */
+    /** @param string any image alt tag you like (for screenreaders) */
     public $fbCoverImageAlt = '';
-    /** @var string custom css style attributes */
+    /** @param string custom css style attributes */
     public $fbCoverImageStyle = '';
-    /** @var string true|false was the js SDK loaded? */
+    /** @param string true|false was the js SDK loaded? */
     public $jsSDKLoaded = 'false';
-    /** @var array array: holds the current widget settings */
+    /** @param array array: holds the current widget settings */
     public $settings;
-    /** @var object api result (as object) */
+    /** @param object api result (as object) */
     public $apiObject;
 
     /**

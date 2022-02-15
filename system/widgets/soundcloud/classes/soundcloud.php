@@ -14,39 +14,39 @@ namespace YAWK\WIDGETS\SOUNDCLOUD\PLAYER
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Embed a SoundCloud audio player.
+     * @brief Embed a SoundCloud audio player.
      */
     class soundcloud
     {
-        /** @var object global widget object data */
+        /** @param object global widget object data */
         public $widget = '';
-        /** @var string The URL of your soundcloud track or playlist */
+        /** @param string The URL of your soundcloud track or playlist */
         public $soundcloudUrl = '';
-        /** @var string Title above the player */
+        /** @param string Title above the player */
         public $soundcloudTitle = '';
-        /** @var string Subtext gets drawn as small tag beside the title */
+        /** @param string Subtext gets drawn as small tag beside the title */
         public $soundcloudSubtext = '';
-        /** @var bool true|false - Autoplay enabled? */
+        /** @param bool true|false - Autoplay enabled? */
         public $soundcloudAutoplay = false;
-        /** @var bool true|false - Hide related? */
+        /** @param bool true|false - Hide related? */
         public $soundcloudHideRelated = false;
-        /** @var bool true|false - Show Comments? */
+        /** @param bool true|false - Show Comments? */
         public $soundcloudShowComments = false;
-        /** @var bool true|false - Show User? */
+        /** @param bool true|false - Show User? */
         public $soundcloudShowUser = false;
-        /** @var bool true|false - Show Reposts? */
+        /** @param bool true|false - Show Reposts? */
         public $soundcloudShowReposts = false;
-        /** @var bool true|false - Show Teaser? */
+        /** @param bool true|false - Show Teaser? */
         public $soundcloudShowTeaser = false;
-        /** @var bool true|false - Visual? */
+        /** @param bool true|false - Visual? */
         public $soundcloudVisual = false;
-        /** @var string Player Width (100%) */
+        /** @param string Player Width (100%) */
         public $soundcloudWidth = '100%';
-        /** @var string Player Height (300) */
+        /** @param string Player Height (300) */
         public $soundcloudHeight = '300';
-        /** @var string Headline HTML Markup */
+        /** @param string Headline HTML Markup */
         public $headline = '';
-        /** @var string Store an error msg, if one occurs */
+        /** @param string Store an error msg, if one occurs */
         public $errorMsg = '';
 
         /**
@@ -55,7 +55,7 @@ namespace YAWK\WIDGETS\SOUNDCLOUD\PLAYER
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
-         * @annotation Load all widget settings on object init.
+         * @brief Load all widget settings on object init.
          */
         public function __construct($db)
         {
@@ -72,7 +72,7 @@ namespace YAWK\WIDGETS\SOUNDCLOUD\PLAYER
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation (for development and testing purpose)
+         * @brief (for development and testing purpose)
          */
         public function printObject()
         {
@@ -88,7 +88,7 @@ namespace YAWK\WIDGETS\SOUNDCLOUD\PLAYER
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation use this method to run the clock
+         * @brief use this method to run the clock
          */
         public function init()
         {
@@ -104,7 +104,7 @@ namespace YAWK\WIDGETS\SOUNDCLOUD\PLAYER
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation Set Player Properties and HTML Markup Code
+         * @brief Set Player Properties and HTML Markup Code
          */
         public function setProperties()
         {
@@ -145,7 +145,7 @@ namespace YAWK\WIDGETS\SOUNDCLOUD\PLAYER
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation Load SoundCloud Iframe
+         * @brief Load SoundCloud Iframe
          */
         public function embedPlayer()
         {

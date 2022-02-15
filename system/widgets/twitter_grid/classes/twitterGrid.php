@@ -14,19 +14,19 @@ namespace YAWK\WIDGETS\TWITTER\GRID
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Embed Twitter Timeline as grid
+     * @brief Embed Twitter Timeline as grid
      */
     class twitterGrid extends \YAWK\widget
     {
-        /** @var object global widget object data */
+        /** @param object global widget object data */
         public $widget = '';
-        /** @var string Title that will be shown above widget */
+        /** @param string Title that will be shown above widget */
         public $twitterGridHeading = '';
-        /** @var string Subtext will be displayed beside title */
+        /** @param string Subtext will be displayed beside title */
         public $twitterGridSubtext = '';
-        /** @var string URL of your twitter timeline */
+        /** @param string URL of your twitter timeline */
         public $twitterGridUrl = "https://twitter.com/TwitterDev/timelines/539487832448843776";
-        /** @var string How many tweets (latest n) */
+        /** @param string How many tweets (latest n) */
         public $twitterGridTweetLimit = "5";
 
         /**
@@ -35,7 +35,7 @@ namespace YAWK\WIDGETS\TWITTER\GRID
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
-         * @annotation Load all widget settings on object init.
+         * @brief Load all widget settings on object init.
          */
         public function __construct($db)
         {
@@ -52,7 +52,7 @@ namespace YAWK\WIDGETS\TWITTER\GRID
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation Twitter Widget Init
+         * @brief Twitter Widget Init
          */
         public function init()
         {   // display heading

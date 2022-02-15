@@ -14,39 +14,39 @@ namespace YAWK\WIDGETS\YOUTUBE\VIDEO
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Embed any YouTube Video on your pages.
+     * @brief Embed any YouTube Video on your pages.
      */
     class youtube
     {
-        /** @var object global widget object data */
+        /** @param object global widget object data */
         public $widget = '';
-        /** @var string YouTube Video URL */
+        /** @param string YouTube Video URL */
         public $youtubeVideoUrl = '';
-        /** @var bool true|false Allow embeded full screen mode? */
+        /** @param bool true|false Allow embeded full screen mode? */
         public $youtubeFullscreen = true;
-        /** @var bool string html markup for fullscreen mode */
+        /** @param bool string html markup for fullscreen mode */
         public $youtubeFullscreenMarkup = '';
-        /** @var bool true|false Should the video automatically start on page load? */
+        /** @param bool true|false Should the video automatically start on page load? */
         public $youtubeAutoplay = true;
-        /** @var bool string autoplay html markup */
+        /** @param bool string autoplay html markup */
         public $youtubeAutoplayMarkup = '';
-        /** @var string Video Height */
+        /** @param string Video Height */
         public $youtubeHeight = '720';
-        /** @var string Video Width */
+        /** @param string Video Width */
         public $youtubeWidth = '100%';
-        /** @var string Heading above video */
+        /** @param string Heading above video */
         public $youtubeHeading = '';
-        /** @var string Subtext beside heading */
+        /** @param string Subtext beside heading */
         public $youtubeSubtext = '';
-        /** @var string Description below heading */
+        /** @param string Description below heading */
         public $youtubeDescription = '';
-        /** @var string CSS Class */
+        /** @param string CSS Class */
         public $youtubeCssClass = '';
-        /** @var string heading markup above video */
+        /** @param string heading markup above video */
         public $headlineMarkup = '';
-        /** @var string description markup below video */
+        /** @param string description markup below video */
         public $descriptionMarkup = '';
-        /** @var string css markup */
+        /** @param string css markup */
         public $cssMarkup = '';
 
         /**
@@ -55,7 +55,7 @@ namespace YAWK\WIDGETS\YOUTUBE\VIDEO
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
-         * @annotation Load all widget settings on object init.
+         * @brief Load all widget settings on object init.
          */
         public function __construct($db)
         {
@@ -72,7 +72,7 @@ namespace YAWK\WIDGETS\YOUTUBE\VIDEO
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation (for development and testing purpose)
+         * @brief (for development and testing purpose)
          */
         public function printObject()
         {
@@ -86,7 +86,7 @@ namespace YAWK\WIDGETS\YOUTUBE\VIDEO
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation This method does the setup and embed job
+         * @brief This method does the setup and embed job
          */
         public function embedVideo()
         {

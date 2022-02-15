@@ -17,43 +17,43 @@ namespace YAWK\BACKUP\DATABASE
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation This class serves methods to store and retrieve mysql database.
+     * @brief This class serves methods to store and retrieve mysql database.
      */
     class mysqlBackup extends \YAWK\BACKUP\backup
     {
-        /** @var object mysqldump object */
+        /** @param object mysqldump object */
         public $mysqldump;
-        /** @var object zip object */
+        /** @param object zip object */
         public $zip;
-        /** @var array mysql config array */
+        /** @param array mysql config array */
         private $config;
-        /** @var string mysql server hostname */
+        /** @param string mysql server hostname */
         private $host;
-        /** @var string mysql database name */
+        /** @param string mysql database name */
         private $dbname;
-        /** @var string mysql user */
+        /** @param string mysql user */
         private $user;
-        /** @var string mysql pass */
+        /** @param string mysql pass */
         private $pass;
-        /** @var string mysql prefix */
+        /** @param string mysql prefix */
         private $prefix;
-        /** @var string mysql port */
+        /** @param string mysql port */
         private $port;
-        /** @var string backup mode (include|exclude|all) */
+        /** @param string backup mode (include|exclude|all) */
         public $backupMode = 'include';
-        /** @var array exclude tables */
+        /** @param array exclude tables */
         public $excludeTablesArray = array();
-        /** @var array include tables */
+        /** @param array include tables */
         public $includeTablesArray = array();
-        /** @var array mysqldump settings */
+        /** @param array mysqldump settings */
         public $dumpSettings = array();
-        /** @var string path, where the backup will be stored */
+        /** @param string path, where the backup will be stored */
         public $sqlPath = '../system/backup/current/';
-        /** @var string default filename of mysqldump .sql file */
+        /** @param string default filename of mysqldump .sql file */
         public $backupSqlFile = 'database-backup.sql';
-        /** @var string name of the backup .sql file */
+        /** @param string name of the backup .sql file */
         public $sqlBackup = '';
-        /** @var string hash value of .sql file */
+        /** @param string hash value of .sql file */
         public $hashValue = '';
 
 
@@ -100,7 +100,7 @@ namespace YAWK\BACKUP\DATABASE
          * @version     1.0.0
          * @link        http://yawk.io
          * @return      array $this->dumpSettings
-         * @annotation mysqldump settings eg. include or exclude tables from database
+         * @brief mysqldump settings eg. include or exclude tables from database
          */
         public function setDumpSettings()
         {
@@ -120,7 +120,7 @@ namespace YAWK\BACKUP\DATABASE
          * @link        http://yawk.io
          * @param       array $excludeTables array
          * @return      array $this->dumpSettings
-         * @annotation  awaits an array with all tables that should be excluded
+         * @brief  awaits an array with all tables that should be excluded
          */
         public function excludeTables($excludeTables)
         {   // check if exclude tables are set
@@ -154,7 +154,7 @@ namespace YAWK\BACKUP\DATABASE
          * @link        http://yawk.io
          * @param       array $includeTables array
          * @return      array $this->dumpSettings
-         * @annotation  awaits an array with all tables that should be included
+         * @brief  awaits an array with all tables that should be included
          */
         public function includeTables($includeTables)
         {   // check if include tables are set
@@ -186,7 +186,7 @@ namespace YAWK\BACKUP\DATABASE
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @annotation Get mysql configuration and set settings as private properties
+         * @brief Get mysql configuration and set settings as private properties
          */
         public function getDatabaseConfig()
         {
@@ -206,7 +206,7 @@ namespace YAWK\BACKUP\DATABASE
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @annotation  create new $this->mysqldump object
+         * @brief  create new $this->mysqldump object
          * @return      bool true|false
          */
         public function includeMysqldumpClass($db)
@@ -254,7 +254,7 @@ namespace YAWK\BACKUP\DATABASE
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @annotation  return bool if $this->sqlBackup exists
+         * @brief  return bool if $this->sqlBackup exists
          * @return      bool true|false
          */
         public function sqlFileExists()
@@ -279,12 +279,12 @@ namespace YAWK\BACKUP\DATABASE
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @annotation  write all relevant backup information into this file
+         * @brief  write all relevant backup information into this file
          * @return      array $this->backupSettings
          */
         public function setBackupSettings($db)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             // set some backup info variables
             $this->backupSettings['DATE'] = \YAWK\sys::now();
             $this->backupSettings['METHOD'] = $this->backupMethod;
@@ -327,7 +327,7 @@ namespace YAWK\BACKUP\DATABASE
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @annotation  return bool if $this->sqlBackup exists
+         * @brief  return bool if $this->sqlBackup exists
          * @return      bool true|false
          */
         public function doSqlBackup($db)
@@ -425,7 +425,7 @@ namespace YAWK\BACKUP\DATABASE
          * @version     1.0.0
          * @link        http://yawk.io
          * @param       string $sqlBackup relative path + filename to the .sql backup file
-         * @annotation  zip the .sql file and return bool if zip archive exists
+         * @brief  zip the .sql file and return bool if zip archive exists
          * @return      bool true|false
          */
         public function generateZipArchive($db, $sqlBackup)
@@ -515,7 +515,7 @@ namespace YAWK\BACKUP\DATABASE
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @annotation  return bool if zip archive exists
+         * @brief  return bool if zip archive exists
          * @return      bool true|false
          */
         public function startMysqlBackup($db)

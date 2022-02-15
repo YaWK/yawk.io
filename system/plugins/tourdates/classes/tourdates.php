@@ -16,7 +16,7 @@ namespace YAWK\PLUGINS\TOURDATES {
      * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Tour Dates Plugin hands you a simple but nice, clean
+     * @brief Tour Dates Plugin hands you a simple but nice, clean
      * bootstraped & sortable Data Table. You can use it to present Tour
      * Dates. (Or any other different kind of Events...) Perfect for a Band Website.
      */

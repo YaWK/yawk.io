@@ -29,19 +29,19 @@ namespace YAWK {
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Handles the Plugin System.
+     * @brief Handles the Plugin System.
      */
     class plugin
     {
-        /** * @var int plugin ID */
+        /** * @param int plugin ID */
         public $id;
-        /** * @var string plugin name*/
+        /** * @param string plugin name*/
         public $name;
-        /** * @var string plugin description */
+        /** * @param string plugin description */
         public $description;
-        /** * @var string plugin font awesome or glyph icon */
+        /** * @param string plugin font awesome or glyph icon */
         public $icon;
-        /** * @var int plugin status ID */
+        /** * @param int plugin status ID */
         public $activated;
 
         /**
@@ -64,7 +64,7 @@ namespace YAWK {
          * @return null|string html output
          */
         function getPlugins($db, $lang, $manage)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             if (isset($manage) && ($manage == 1))
             {
                 $sqlcode = "WHERE activated='1'";
@@ -130,7 +130,7 @@ namespace YAWK {
          * @return string|bool returns the name or false
          */
         static function getNameById($db, $pluginId)
-        {   /** @var $db \YAWK\db $res */
+        {   /** @param $db \YAWK\db $res */
             if ($res = $db->query("SELECT name FROM {plugins} WHERE id = '" . $pluginId . "'"))
             {   // fetch data from db
                 while ($row = mysqli_fetch_row($res))
@@ -158,7 +158,7 @@ namespace YAWK {
          * @return string|bool returns the plugin ID or false
          */
         static function getIdByName($db, $plugin)
-        {   /** @var $db \YAWK\db $res */
+        {   /** @param $db \YAWK\db $res */
             if ($res = $db->query("SELECT id FROM {plugins} WHERE name ='".$plugin."'"))
             {   // fetch data from db
                 while ($row = mysqli_fetch_row($res))
@@ -186,7 +186,7 @@ namespace YAWK {
          * @return bool
          */
         static function createPluginPage($db, $alias, $plugin)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
         if (!isset($alias)){ $alias = ''; }
         if (!isset($plugin)){ $alias = ''; }
             if (!file_exists("../content/pages/$alias.php"))

@@ -15,13 +15,13 @@ namespace YAWK\WIDGETS\CUSTOM_HTML\CODE
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Embed a html/javascript code snippet.
+     * @brief Embed a html/javascript code snippet.
     */
     class customHtml
     {
-        /** @var object global widget object data */
+        /** @param object global widget object data */
         public $widget = '';
-        /** @var string Custom HTML Code */
+        /** @param string Custom HTML Code */
         public $customHtmlCode = '';
 
         /**
@@ -30,7 +30,7 @@ namespace YAWK\WIDGETS\CUSTOM_HTML\CODE
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
-         * @annotation Load all widget settings on object init.
+         * @brief Load all widget settings on object init.
         */
         public function __construct($db)
         {
@@ -47,7 +47,7 @@ namespace YAWK\WIDGETS\CUSTOM_HTML\CODE
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation use this method to run the clock
+         * @brief use this method to run the clock
         */
         public function init()
         {

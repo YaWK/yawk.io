@@ -1,5 +1,5 @@
 <?php
-/** @var $db \YAWK\db */
+/** @param $db \YAWK\db */
 if (!isset($twitch))
 {   // load twitch widget class
     require_once 'classes/twitch.php';

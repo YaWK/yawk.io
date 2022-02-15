@@ -2,7 +2,7 @@
 namespace YAWK\BACKUP
 {
     /**
-     * <b>Backup Class</b>
+     * @details <b>Backup Class</b>
      * <p>Methods to backup and restore complete or partial project data including:
      * pages folder, media folder, system folder and database. The Backup can be
      * stored and overwritten in current Folder. Otherwise it is possible to archive
@@ -14,71 +14,74 @@ namespace YAWK\BACKUP
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Backup Main Class
+     * @brief Backup Main Class
      */
     class backup
     {
-        /** @var object mysql backup object */
+        /** @param object mysql backup object */
         public $mysqlBackup;
-        /** @var object files backup object */
+        /** @param object files backup object */
         public $fileBackup;
-        /** @var string path, where the backup will be stored */
+        /** @param string path, where the backup will be stored */
         public $targetFolder = '../system/backup/current/';
-        /** @var string source folder to backup */
+        /** @param string source folder to backup */
         public $sourceFolder = '';
-        /** @var string current backup folder path */
+        /** @param string current backup folder path */
         public $currentBackupFolder = '../system/backup/current/';
-        /** @var array files in current backup folder */
+        /** @param array files in current backup folder */
         public $currentBackupFiles = array();
-        /** @var string archive backup folder path */
+        /** @param string archive backup folder path */
         public $archiveBackupFolder = '../system/backup/archive/';
-        /** @var array all sub folders in archiveBackupFolder */
+        /** @param array all sub folders in archiveBackupFolder */
         public $archiveBackupSubFolders = array();
-        /** @var string archive working subfolder */
+        /** @param string archive working subfolder */
         public $archiveBackupSubFolder = '';
-        /** @var array files in archive backup folder */
+        /** @param array files in archive backup folder */
         public $archiveBackupFiles = array();
-        /** @var string archive backup file */
+        /** @param string archive backup file */
         public $archiveBackupFile = '';
-        /** @var string new archive file */
+        /** @param string new archive file */
         public $archiveBackupNewFile = '';
-        /** @var string upload folder */
+        /** @param string upload folder */
         public $downloadFolder = '../system/backup/download/';
-        /** @var string tmp folder */
+        /** @param string tmp folder */
         public $tmpFolder = '../system/backup/tmp/';
-        /** @var string files|database|complete */
+        /** @param string files|database|complete */
         public $backupMethod = "database";
-        /** @var string filename of the config file (default: backup.ini) */
+        /** @param string filename of the config file (default: backup.ini) */
         public $configFilename = "backup.ini";
-        /** @var string config file, including path */
+        /** @param string config file, including path */
         public $configFile = '';
-        /** @var array backup settings */
+        /** @param array backup settings */
         public $backupSettings = array();
-        /** @var string overwrite backup files? */
+        /** @param string overwrite backup files? */
         public $overwriteBackup = "true";
-        /** @var string zip backup if possible */
+        /** @param string zip backup if possible */
         public $zipBackup = "true";
-        /** @var string remove files after zip is complete */
+        /** @param string remove files after zip is complete */
         public $removeAfterZip = "true";
-        /** @var string should .sql backup be stored in tmp folder? */
+        /** @param string should .sql backup be stored in tmp folder? */
         public $storeSqlTmp = "false";
-        /** @var string restore file (zip file) */
+        /** @param string restore file (zip file) */
         public $restoreFile = '';
-        /** @var array restorable files (files from tmp folder) */
+        /** @param array restorable files (files from tmp folder) */
         public $restoreFiles = array();
-        /** @var array restore folders (content, media, system) */
+        /** @param array restore folders (content, media, system) */
         public $restoreFolders = array();
-        /** @var string restore from folder */
+        /** @param string restore from folder */
         public $restoreFolder = '';
-        /** @var string restore mode (database, mediafolder, complete, custom) */
+        /** @param string restore mode (database, mediafolder, complete, custom) */
         public $restoreMode = '';
-        /** @var array holds information about the restore process states */
+        /** @param array holds information about the restore process states */
         public $restoreStatus = array();
 
 
-        // prepare temp folder on class instantiation
+        /**
+         * @brief backup constructor. prepare temp folder on class instantiation
+         * @param $db
+         */
         public function __construct($db)
-        {
+        {   // prepare temp folder on class instantiation
             // check and create required folders
             $requiredFolders = array($this->tmpFolder, $this->currentBackupFolder, $this->archiveBackupFolder);
 
@@ -109,7 +112,7 @@ namespace YAWK\BACKUP
         }
 
         /**
-         * Init Backup Class (run backup)
+         * @brief Init Backup Class (run backup)
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
@@ -130,7 +133,7 @@ namespace YAWK\BACKUP
         }
 
         /**
-         * Run a new backup, depending on chosen backup method
+         * @brief Run a new backup, depending on chosen backup method
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
@@ -138,7 +141,7 @@ namespace YAWK\BACKUP
          * @return      bool true: backup successful | false: backup failed
          */
         public function run($db)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             // check if backup method is set
             if (isset($this->backupMethod) && (!empty($this->backupMethod)))
             {   // which backup method should be executed?
@@ -245,13 +248,13 @@ namespace YAWK\BACKUP
         }
 
         /**
-         * Set backup information file (backup.ini)
+         * @brief Set backup information file (backup.ini)
          * @param string $targetFolder folder where the ini file should be stored
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
          * @return bool
-         * @annotation  will be added to every .zip file to identify what to do during restore process
+         * @brief  will be added to every .zip file to identify what to do during restore process
          */
         public function setIniFile($db)
         {   // check if target folder is set
@@ -298,7 +301,7 @@ namespace YAWK\BACKUP
         }
 
         /**
-         * Parse backup ini file
+         * @brief Parse backup ini file
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
@@ -333,7 +336,7 @@ namespace YAWK\BACKUP
         }
 
         /**
-         * get all files from current backup folder into array
+         * @brief get all files from current backup folder into array
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
@@ -703,7 +706,7 @@ namespace YAWK\BACKUP
 
         public function doRestore($db, $restoreFolders)
         {
-            /** @var \YAWK\db $db */
+            /** @param \YAWK\db $db */
             // check if restore folders are set
             if (isset($restoreFolders) && (!empty($restoreFolders)))
             {   // restore folders not set or empty

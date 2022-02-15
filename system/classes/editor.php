@@ -10,7 +10,7 @@ namespace YAWK {
      * @version    1.0.0
      * @link       http://yawk.io/
      * @since      File available since Release 1.0.0
-     * @annotation Load editor + settings
+     * @brief Load editor + settings
      */
     class editor
     {

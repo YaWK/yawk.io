@@ -15,67 +15,67 @@ namespace YAWK\WIDGETS\SOCIALBAR\DISPLAY
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Social Bar display icons with links to your social network accounts
+     * @brief Social Bar display icons with links to your social network accounts
      */
     class socialBar extends \YAWK\widget
     {
-        /** @var object global widget object data */
+        /** @param object global widget object data */
         public $widget = '';
-        /** @var string Title that will be shown above widget */
+        /** @param string Title that will be shown above widget */
         public $socialBarHeading = '';
-        /** @var string Subtext will be displayed beside title */
+        /** @param string Subtext will be displayed beside title */
         public $socialBarSubtext = '';
-        /** @var string Facebook URL */
+        /** @param string Facebook URL */
         public $socialBarFacebookUrl = '';
-        /** @var string YouTube URL */
+        /** @param string YouTube URL */
         public $socialBarYouTubeUrl = '';
-        /** @var string Instagram URL */
+        /** @param string Instagram URL */
         public $socialBarInstagramUrl = '';
-        /** @var string Pinterest URL */
+        /** @param string Pinterest URL */
         public $socialBarPinterestUrl = '';
-        /** @var string Twitter URL */
+        /** @param string Twitter URL */
         public $socialBarTwitterUrl = '';
-        /** @var string Tumblr URL */
+        /** @param string Tumblr URL */
         public $socialBarTumblrUrl = '';
-        /** @var string LinkedIn URL */
+        /** @param string LinkedIn URL */
         public $socialBarLinkedInUrl = '';
-        /** @var string Xing URL */
+        /** @param string Xing URL */
         public $socialBarXingUrl = '';
-        /** @var string Google Plus URL */
+        /** @param string Google Plus URL */
         public $socialBarGooglePlusUrl = '';
-        /** @var string Facebook Icon */
+        /** @param string Facebook Icon */
         public $socialBarFacebookIcon = '';
-        /** @var string YouTube Icon */
+        /** @param string YouTube Icon */
         public $socialBarYouTubeIcon = '';
-        /** @var string Instagram Icon */
+        /** @param string Instagram Icon */
         public $socialBarInstagramIcon = '';
-        /** @var string Pinterest Icon */
+        /** @param string Pinterest Icon */
         public $socialBarPinterestIcon = '';
-        /** @var string Twitter Icon */
+        /** @param string Twitter Icon */
         public $socialBarTwitterIcon = '';
-        /** @var string Tumblr Icon */
+        /** @param string Tumblr Icon */
         public $socialBarTumblrIcon = '';
-        /** @var string LinkedIn Icon */
+        /** @param string LinkedIn Icon */
         public $socialBarLinkedInIcon = '';
-        /** @var string Xing Icon */
+        /** @param string Xing Icon */
         public $socialBarXingIcon = '';
-        /** @var string Google Plus Icon */
+        /** @param string Google Plus Icon */
         public $socialBarGooglePlusIcon = '';
-        /** @var string Social Bar Html Markup */
+        /** @param string Social Bar Html Markup */
         public $socialBarMarkup = '';
-        /** @var string Social Bar Link Target */
+        /** @param string Social Bar Link Target */
         public $socialBarLinkTarget = '';
-        /** @var string Social Bar Link Target */
+        /** @param string Social Bar Link Target */
         public $socialBarLinkTitle = '';
-        /** @var string Social Bar Link Color */
+        /** @param string Social Bar Link Color */
         public $socialBarLinkColor = '';
-        /** @var array Social Bar Elements */
+        /** @param array Social Bar Elements */
         public $socialBarElements = '';
-        /** @var string Social Bar Size */
+        /** @param string Social Bar Size */
         public $socialBarSize = 'H2';
-        /** @var string Social Bar Alignment (horizontal or vertical */
+        /** @param string Social Bar Alignment (horizontal or vertical */
         public $socialBarAlign = 'horizontal';
-        /** @var string Social Bar CSS Class */
+        /** @param string Social Bar CSS Class */
         public $socialBarClass = '';
 
         /**
@@ -84,7 +84,7 @@ namespace YAWK\WIDGETS\SOCIALBAR\DISPLAY
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
-         * @annotation Load all widget settings on object init.
+         * @brief Load all widget settings on object init.
          */
         public function __construct($db)
         {
@@ -101,7 +101,7 @@ namespace YAWK\WIDGETS\SOCIALBAR\DISPLAY
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation Example Widget Init
+         * @brief Example Widget Init
          */
         public function init()
         {   // call any function or method you have previously defined in this class
@@ -116,7 +116,7 @@ namespace YAWK\WIDGETS\SOCIALBAR\DISPLAY
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation Helper function that set an array with all social elements. Need to be called before drawSocialBar();
+         * @brief Helper function that set an array with all social elements. Need to be called before drawSocialBar();
          */
         public function setSocialBarElements()
         {   // for every widget data setting create an element with data
@@ -162,7 +162,7 @@ namespace YAWK\WIDGETS\SOCIALBAR\DISPLAY
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation filter, sanitize and strip tags from URLs
+         * @brief filter, sanitize and strip tags from URLs
          */
         public function filterUrl($url)
         {   // check if url is set and not empty
@@ -185,7 +185,7 @@ namespace YAWK\WIDGETS\SOCIALBAR\DISPLAY
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation Set settings and draw social bar
+         * @brief Set settings and draw social bar
          */
         public function drawSocialBar()
         {

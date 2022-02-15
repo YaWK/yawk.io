@@ -16,17 +16,17 @@ namespace YAWK\WIDGETS\CONTENTANIMATOR\ANIMATE
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Add a pre-defined effect to any of your content elements.
+     * @brief Add a pre-defined effect to any of your content elements.
      */
     class contentAnimator
     {
-        /** @var object global widget object data */
+        /** @param object global widget object data */
         public $widget = '';
 
-        /** @var string Scroll distance to target which should be effected */
+        /** @param string Scroll distance to target which should be effected */
         public $contentAnimatorScrollValue = '620';
 
-        /** @var string Which effect should be drawn on class="animated"
+        /** @param string Which effect should be drawn on class="animated"
          * At the time of writing this, following effects were available:
            slideUp, slideDown, slideLeft, slideRight, fade, fadeMedium, fadeSlow */
         public $contentAnimatorClass = 'slideUp';
@@ -37,7 +37,7 @@ namespace YAWK\WIDGETS\CONTENTANIMATOR\ANIMATE
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
-         * @annotation Load all widget settings on object init.
+         * @brief Load all widget settings on object init.
          */
         public function __construct($db)
         {
@@ -54,7 +54,7 @@ namespace YAWK\WIDGETS\CONTENTANIMATOR\ANIMATE
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation (for development and testing purpose)
+         * @brief (for development and testing purpose)
          */
         public function printObject()
         {
@@ -68,7 +68,7 @@ namespace YAWK\WIDGETS\CONTENTANIMATOR\ANIMATE
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation use this method to run the clock
+         * @brief use this method to run the clock
          */
         public function init()
         {

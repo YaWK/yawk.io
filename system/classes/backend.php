@@ -1,7 +1,7 @@
 <?php
 namespace YAWK {
     /**
-     * <b>backend Interface Helper Functions</b>
+     * @details <b>backend Interface Helper Functions</b>
      *
      * This class serves a few useful functions for the admin backend.<br>
      *
@@ -22,13 +22,13 @@ namespace YAWK {
      * @copyright  2009-2015 Daniel Retzl yawk.io
      * @license    https://opensource.org/licenses/MIT
      * @link       http://yawk.io/
-     * @annotation Backend class serves a few useful functions for the admin backend.
+     * @brief Backend class serves a few useful functions for the admin backend.
      */
     class backend
     {
 
         /**
-         * Return breadcrumbs for settings pages
+         * @brief Return breadcrumbs for settings pages
          * @param array $lang Language Array
          * @return string html code
          */
@@ -49,7 +49,7 @@ namespace YAWK {
         }
 
         /**
-         * Return breadcrumbs for template pages
+         * @brief Return breadcrumbs for template pages
          * @param array $lang Language Array
          * @return string html code
          */
@@ -72,7 +72,7 @@ namespace YAWK {
 
 
         /**
-         * Header title on top of every page
+         * @brief Header title on top of every page
          * @param string $title Title to display
          * @param string $subtext Subtitle as small-tag beneath Title
          * @return string
@@ -88,7 +88,7 @@ namespace YAWK {
         }
 
         /**
-         * Set focus to any input field on pageload
+         * @brief Set focus to any input field on pageload
          * @param string $field Name of the html input form element who should be focused.
          */
         static function setFocus($field)
@@ -116,7 +116,7 @@ namespace YAWK {
         }
 
         /**
-         * Include Javascript FX to apply on #content-FX DOM element
+         * @brief Include Javascript FX to apply on #content-FX DOM element
          * @param object $db Database object
          * @param string $time FX time in milliseconds
          * @param string $type FX type
@@ -139,7 +139,7 @@ namespace YAWK {
         }
 
         /**
-         * Draw the AdminLTE Content Wrapper. Useful that view dont crash in situations where the DOM is not loaded or could not be loaded.
+         * @brief Draw the AdminLTE Content Wrapper. Useful that view dont crash in situations where the DOM is not loaded or could not be loaded.
          * @return null
          */
         static function drawContentWrapper(){
@@ -156,12 +156,12 @@ namespace YAWK {
 
 
         /**
-         * Checks whether a user is allowed to login to backend or not. Logins will be stored.
+         * @brief Checks whether a user is allowed to login to backend or not. Logins will be stored.
          * @param object $db Database object
          * @return bool
          */
         static function checkLogin($db)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             /* check user login */
             $user = new \YAWK\user($db);
             if(isset($_POST['user']) && isset($_POST['password'])) {
@@ -195,7 +195,7 @@ namespace YAWK {
 
 
         /**
-         * Draw a SELECT field with all templates, current active template is selected
+         * @brief Draw a SELECT field with all templates, current active template is selected
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @website http://yawk.website
@@ -226,7 +226,7 @@ namespace YAWK {
 
 
         /**
-         * Draw a login form. If username and/or password was given, the form will be pre-filled with given values.
+         * @brief Draw a login form. If username and/or password was given, the form will be pre-filled with given values.
          * @param string $username The username
          * @param string $password The password
          * @return string Returns the complete html form.
@@ -273,7 +273,7 @@ namespace YAWK {
         }
 
         /**
-         * Draw a login box. Basically it wraps the drawLoginForm function with an AdminLTE box.
+         * @brief Draw a login box. Basically it wraps the drawLoginForm function with an AdminLTE box.
          * @param object $db Database object
          * @param string $title Box title
          * @param string $username The username
@@ -340,7 +340,7 @@ namespace YAWK {
         }
 
         /**
-         * Clever function to return the username. Expects the user object as param to work correctly.
+         * @brief Clever function to return the username. Expects the user object as param to work correctly.
          * @param object $user User object is required.
          * @return null|string Return the proper string or null.
          */
@@ -378,13 +378,13 @@ namespace YAWK {
 
 
         /**
-         * Get pages and user groups into an array.
+         * @brief Get pages and user groups into an array.
          * @param object $db Database object
          * @return array|string
          */
         public static function getPagesArray($db) // get all settings from db like property
         {
-            /* @var $db \YAWK\db */
+            /* @param $db \YAWK\db */
             if ($res = $db->query("SELECT cp.*, cg.value as gid FROM {pages} as cp
             JOIN {user_groups} as cg on cp.gid = cg.id ORDER BY id DESC")) {
                 $pagesArray = array();
@@ -403,13 +403,13 @@ namespace YAWK {
         }
 
         /**
-         * Get Menu id name and published into an array.
+         * @brief Get Menu id name and published into an array.
          * @param object $db Database object
          * @return array
          */
         static function getMenusArray($db)
         {
-            /* @var $db \YAWK\db */
+            /* @param $db \YAWK\db */
             if ($res = $db->query("SELECT id, name, published, (
                              SELECT COUNT(*)
                              FROM {menu}
@@ -429,7 +429,7 @@ namespace YAWK {
 
         static function getMenuNamesArray($db)
         {
-            /* @var $db \YAWK\db */
+            /* @param $db \YAWK\db */
             if ($res = $db->query("SELECT id, name FROM {menu_names} WHERE published = '1'"))
             {
                 $menusArray = array();
@@ -445,7 +445,7 @@ namespace YAWK {
         }
 
         /**
-         * Draw a list with all fonts. Expects fonts as array
+         * @brief Draw a list with all fonts. Expects fonts as array
          * @param array $fontArray array with font names
          * @param string $folder the folder where fonts are stored
          * @param array $lang language array

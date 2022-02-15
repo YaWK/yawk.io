@@ -13,7 +13,7 @@ namespace YAWK {
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation The sys class - handles yawk's system core functions.
+     * @brief The sys class - handles yawk's system core functions.
      */
     class sys
     {
@@ -26,7 +26,7 @@ namespace YAWK {
          * @version 1.0.0
          * @link http://yawk.io
          * @return mixed
-         * @annotation This methods checks if given assets are loaded and load them on demand
+         * @brief This methods checks if given assets are loaded and load them on demand
          */
         static function checkIfAssetsAreLoaded($db, $assets, $switch)
         {
@@ -569,7 +569,7 @@ namespace YAWK {
          * @link        https://gist.github.com/Rodrigo54/93169db48194d470188f
          * @param       string $input the CSS string to minify
          * @return      mixed
-         * @annotation Based on `https://github.com/mecha-cms/mecha-cms/blob/master/system/kernel/converter.php`
+         * @brief Based on `https://github.com/mecha-cms/mecha-cms/blob/master/system/kernel/converter.php`
          */
         static function minifyHTML($input) {
             if(trim($input) === "") return $input;
@@ -634,7 +634,7 @@ namespace YAWK {
          * @link        https://gist.github.com/Rodrigo54/93169db48194d470188f
          * @param       string $input the CSS string to minify
          * @return      mixed
-         * @annotation  CSS Minifier => http://ideone.com/Q5USEF + improvement(s)
+         * @brief  CSS Minifier => http://ideone.com/Q5USEF + improvement(s)
          */
         static
         function minifyCSS($input) {
@@ -848,7 +848,7 @@ namespace YAWK {
          * @return bool
          */
         static function isOffline($db)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             /* check global site status online / offline */
             if (\YAWK\settings::getSetting($db, "offline") == 1)
             {   // website is in maintaince mode: set offline
@@ -875,7 +875,7 @@ namespace YAWK {
          * @param object $db database
          */
         static function drawOfflineMessage($db)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             /* get offline message + image */
             $offlinemsg = \YAWK\settings::getSetting($db, "offlinemsg");
             $offlineimg = \YAWK\settings::getSetting($db, "offlineimage");
@@ -1245,7 +1245,7 @@ namespace YAWK {
          * @return bool
          */
         static function getProperty($db, $property, $table, $id)
-        {   /** @var $db \YAWK\db $res */
+        {   /** @param $db \YAWK\db $res */
             if ($res = $db->query("SELECT " . $property . " FROM {$table}
                                    WHERE id = '" . $id . "'"))
             {   // fetch data
@@ -1275,7 +1275,7 @@ namespace YAWK {
          * @return string|bool return the group ID or false
          */
         static function getGroupId($db, $id, $table)
-        {   /** @var $db \YAWK\db $res */
+        {   /** @param $db \YAWK\db $res */
             if ($res = $db->query("SELECT cg.id
                               FROM {".$table."} as cp
                               JOIN {user_groups} as cg on cg.id = cp.gid
@@ -1304,7 +1304,7 @@ namespace YAWK {
          */
         static function getGroupFromId($db, $id, $table)
         {
-            /** @var $db \YAWK\db $res */
+            /** @param $db \YAWK\db $res */
             if ($res = $db->query("SELECT cp.gid, cg.value
                     FROM {".$table."} as cp
                     JOIN {user_groups} as cg on cg.id = cp.gid
@@ -1334,7 +1334,7 @@ namespace YAWK {
          */
         static function getGroups($db, $table)
         {
-            /** @var $db \YAWK\db $res */
+            /** @param $db \YAWK\db $res */
             $groupsArray = array();
             if ($res = $db->query("SELECT id, value, (
 	                              SELECT COUNT( * )
@@ -1362,7 +1362,7 @@ namespace YAWK {
          * @param string $host host URL
          */
         static function includeHeader($db, $host)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             global $currentpage;
             $i = 1;
             echo "<title>" . $currentpage->title . "</title>
@@ -1416,7 +1416,7 @@ namespace YAWK {
          */
         static function getSubMenu($db, $id)
         {
-            /** @var $db \YAWK\db $res */
+            /** @param $db \YAWK\db $res */
             if ($res = $db->query("SELECT m.id
 	                           FROM {pages} as p
 	                           JOIN {menu_names} as m on m.id = p.menu
@@ -1448,7 +1448,7 @@ namespace YAWK {
          */
         static function getMenuItem($db, $id)
         {
-            /** @var $db \YAWK\db $res */
+            /** @param $db \YAWK\db $res */
             if ($res = $db->query("SELECT p.menu, m.name
 	                              FROM {pages} as p
 	                              JOIN {menu_names} as m on m.id = p.menu
@@ -1473,7 +1473,7 @@ namespace YAWK {
          */
         static function getMenus($db)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             $menusArray = array();
             if ($res = $db->query("SELECT id, name, published, (
                              SELECT COUNT( * )
@@ -1503,7 +1503,7 @@ namespace YAWK {
          * @return bool
          */
         static function getMenuName($db, $id)
-        {   /** @var $db \YAWK\db $res */
+        {   /** @param $db \YAWK\db $res */
             if ($res = $db->query("SELECT name
 	                              FROM {menu_names}
 	                              WHERE id = $id"))
@@ -1527,7 +1527,7 @@ namespace YAWK {
          * @return bool
          */
         static function getMenuLanguage($db, $id)
-        {   /** @var $db \YAWK\db $res */
+        {   /** @param $db \YAWK\db $res */
             if ($res = $db->query("SELECT menuLanguage
 	                              FROM {menu_names}
 	                              WHERE id = $id"))
@@ -1550,7 +1550,7 @@ namespace YAWK {
          * @return bool|mixed
          */
         static function getPages($db)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             if ($res = $db->query("SELECT id, title
                                   FROM {pages} ORDER BY title"))
             {
@@ -1579,7 +1579,7 @@ namespace YAWK {
          * @return mixed
          */
         static function getRole($db, $id, $table)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             $mysqlRes = $db->query("SELECT cp.gid, cg.value
                     FROM {".$table."} as cp
                     JOIN {user_groups} as cg on cg.id = cp.gid
@@ -1602,7 +1602,7 @@ namespace YAWK {
          * @return string|bool
          */
         static function getRoleId($db, $id, $table)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             $mysqlRes = $db->query("SELECT cg.id
                               FROM {".$table."} as cp
                               JOIN {user_groups} as cg on cg.id = cp.gid
@@ -1927,7 +1927,7 @@ namespace YAWK {
          * @return array
          */
         static function isSysLogCategoryActive($db, $syslogCategoryID)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             $syslogSettings = arraY();
             if(isset($syslogCategoryID) && (!empty($syslogCategoryID)))
             {   // query db
@@ -1989,7 +1989,7 @@ namespace YAWK {
          * @return bool|null
          */
         static function setSyslog($db, $log_category, $log_type, $message, $fromUID, $toUID, $toGID, $seen)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             // THIS DB STORES ALL THE SYSLOG FOR ADMINISTRATOR REASONS
             // insert admin-friendly message of all data into syslog db
 
@@ -2084,7 +2084,7 @@ namespace YAWK {
          * @return array|bool $syslogResults
          */
         static function getSyslog($db)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             // get syslog data from db
             $syslogResults = array();
             if ($res = $db->query("SELECT * FROM {syslog} AS log
@@ -2123,7 +2123,7 @@ namespace YAWK {
          * @return array|bool $syslogResults
          */
         static function getSyslogCategories($db)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             // get syslog data from db
             $syslogCategories = array();
             if ($res = $db->query("SELECT * FROM {syslog_categories} ORDER BY property"))
@@ -2162,7 +2162,7 @@ namespace YAWK {
          * @return bool
          */
         static function setNotification($db, $log_category, $log_type, $msg_id, $fromUID, $toUID, $toGID, $seen)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             // THIS ARE THE MESSAGES FOR END-USERS
             // (a copy of syslog) DUE PERFORMANCE REASONS
             // (only user-messages, no system messages...)
@@ -2192,7 +2192,7 @@ namespace YAWK {
          * @return bool
          */
         static function markNotification($db, $id, $seen)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             if (!isset($seen))
             {   // default value
                 $seen = 0;

@@ -12,59 +12,59 @@ namespace YAWK {
      * @copyright  2009-2015 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT
      * @link       http://yawk.io
-     * @annotation The template controller - get and set template settings.
+     * @brief The template controller - get and set template settings.
      */
     class template
     {
-        /** * @var int template ID */
+        /** * @param int template ID */
         public $id;
-        /** * @var int new TPL ID (latest template) */
+        /** * @param int new TPL ID (latest template) */
         public $newId;
-        /** * @var int 0|1 is this template active? */
+        /** * @param int 0|1 is this template active? */
         public $active;
-        /** * @var string template name */
+        /** * @param string template name */
         public $name;
-        /** * @var string new template name */
+        /** * @param string new template name */
         public $newTplName;
-        /** * @var array db config array */
+        /** * @param array db config array */
         public $config;
-        /** * @var string template folder (root path of all templates) */
+        /** * @param string template folder (root path of all templates) */
         public $folder = '../system/templates/';
-        /** * @var string template tmp folder (where uploads will be unpacked) */
+        /** * @param string template tmp folder (where uploads will be unpacked) */
         public $tmpFolder = '../system/templates/tmp/';
-        /** * @var string upload file (including complete path) */
+        /** * @param string upload file (including complete path) */
         public $uploadFile = '';
-        /** * @var string template sub folder (template name, eg. ../system/templates/SUBFOLDER */
+        /** * @param string template sub folder (template name, eg. ../system/templates/SUBFOLDER */
         public $subFolder;
-        /** * @var string positions as string */
+        /** * @param string positions as string */
         public $positions;
-        /** * @var string template description */
+        /** * @param string template description */
         public $description;
-        /** * @var string datetime when this template was released */
+        /** * @param string datetime when this template was released */
         public $releaseDate;
-        /** * @var string author of this template */
+        /** * @param string author of this template */
         public $author;
-        /** * @var string author's url */
+        /** * @param string author's url */
         public $authorUrl;
-        /** * @var string weblink to this template */
+        /** * @param string weblink to this template */
         public $weblink;
-        /** * @var string sub-author who has modified the template */
+        /** * @param string sub-author who has modified the template */
         public $subAuthor;
-        /** * @var string sub-author's url */
+        /** * @param string sub-author's url */
         public $subAuthorUrl;
-        /** * @var string datetime when this template was modified */
+        /** * @param string datetime when this template was modified */
         public $modifyDate;
-        /** * @var string template's version number */
+        /** * @param string template's version number */
         public $version;
-        /** * @var string the current loaded Bootstrap version */
+        /** * @param string the current loaded Bootstrap version */
         public $bootstrapVersion;
-        /** * @var string required framework for this template */
+        /** * @param string required framework for this template */
         public $framework;
-        /** * @var string template's license */
+        /** * @param string template's license */
         public $license;
-        /** * @var int which template is currently set to active? */
+        /** * @param int which template is currently set to active? */
         public $selectedTemplate;
-        /** * @var string path to own true type fonts */
+        /** * @param string path to own true type fonts */
         public $ttfPath = "../system/fonts";
 
 
@@ -164,7 +164,7 @@ namespace YAWK {
          */
         static function getTemplatePositions($db)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             $res = '';
             // fetch template id
             $tpl_id = settings::getSetting($db, "selectedTemplate");
@@ -207,7 +207,7 @@ namespace YAWK {
          */
         public function saveAs($db)
         {
-            /** @var \YAWK\db $db */
+            /** @param \YAWK\db $db */
             // prepare vars
             $replace = array("/ä/", "/ü/", "/ö/", "/Ä/", "/Ü/", "/Ö/", "/ß/"); // array of special chars
             $chars = array("ae", "ue", "oe", "Ae", "Ue", "Oe", "ss"); // array of replacement chars
@@ -271,7 +271,7 @@ namespace YAWK {
          */
         public function loadProperties($db, $id)
         {
-            /** @var $db \YAWK\db $res */
+            /** @param $db \YAWK\db $res */
             $res = $db->query("SELECT * FROM {templates} WHERE id = '" . $id . "'");
             if ($row = mysqli_fetch_assoc($res)) {
                 $this->id = $row['id'];
@@ -310,7 +310,7 @@ namespace YAWK {
          */
         public function loadPropertiesIntoArray($db, $id)
         {
-            /** @var $db \YAWK\db $res */
+            /** @param $db \YAWK\db $res */
             $res = $db->query("SELECT * FROM {templates} WHERE id = '" . $id . "'");
             if ($row = mysqli_fetch_assoc($res))
             {
@@ -341,7 +341,7 @@ namespace YAWK {
          */
         public function loadAllSettingsIntoArray($db, $id)
         {
-            /** @var $db \YAWK\db $res */
+            /** @param $db \YAWK\db $res */
             $res = $db->query("SELECT * FROM {template_settings} WHERE templateID = '" . $id . "'");
             while ($row = mysqli_fetch_assoc($res))
             {
@@ -421,7 +421,7 @@ namespace YAWK {
          */
         public function loadSettingsTypesIntoArray($db)
         {
-            /** @var $db \YAWK\db $res */
+            /** @param $db \YAWK\db $res */
             $res = $db->query("SELECT * FROM {template_settings_types}");
             while ($row = mysqli_fetch_assoc($res))
             {
@@ -449,7 +449,7 @@ namespace YAWK {
          */
         static function getTemplateIds($db)
         {
-            /** @var \YAWK\db $db */
+            /** @param \YAWK\db $db */
             // returns an array with all template IDs
             $mysqlRes = $db->query("SELECT id, name
 	                              FROM {templates}
@@ -476,7 +476,7 @@ namespace YAWK {
          */
         static function countTemplateSettings($db, $templateID)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             // count + return settings from given tpl ID
             $res = $db->query("SELECT id FROM {template_settings}
                                         WHERE templateID = '" . $templateID . "'");
@@ -495,7 +495,7 @@ namespace YAWK {
          */
         public static function getTemplateNameById($db, $templateID)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             if (!isset($templateID) || (empty($templateID))) {   // template id is not set, try to get current template
                 $templateID = \YAWK\settings::getSetting($db, "selectedTemplate");
             }
@@ -523,7 +523,7 @@ namespace YAWK {
          */
         public static function getTemplateIdByName($db, $name)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             if (!isset($name) || (empty($name)))
             {   // template name is not set
                 return null;
@@ -558,7 +558,7 @@ namespace YAWK {
          */
         public static function getCurrentTemplateName($db, $location, $templateID)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             if (!isset($location) || (empty($location))) {   // if location is empty, set frontend as default
                 $location = "frontend";
                 $prefix = "";
@@ -611,7 +611,7 @@ namespace YAWK {
          */
         public function writeTemplateCssFile($db, $tplId, $content, $minify)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             // check whether templateID is not set or empty
             if (!isset($tplId) || (empty($tplId))) {   // set default value: template 1
                 $tplId = 1;
@@ -660,7 +660,7 @@ namespace YAWK {
          */
         public function setCustomCssFile($db, $content, $minify, $templateID)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             // create template/css/custom.css (for development purpose in backend)
             // prepare vars
             $filename = self::getCustomCSSFilename($db, "backend", $templateID);
@@ -704,7 +704,7 @@ namespace YAWK {
          */
         public function setCustomJsFile($db, $content, $minify, $templateID)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             // create template/css/custom.css (for development purpose in backend)
             // prepare vars
             $filename = self::getCustomJSFilename($db, "backend", $templateID);
@@ -779,7 +779,7 @@ namespace YAWK {
          */
         public function getSettingsCSSFilename($db, $location, $templateID)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             // prepare vars... path + filename
             if (!isset($templateID) || (empty($templateID))) {
                 $templateID = self::getCurrentTemplateId($db);
@@ -805,7 +805,7 @@ namespace YAWK {
          */
         public function getCustomCSSFilename($db, $location, $templateID)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             // prepare vars... path + filename
             $tplName = self::getCurrentTemplateName($db, $location, $templateID); // tpl name
             $alias = "custom"; // set CSS file name
@@ -825,7 +825,7 @@ namespace YAWK {
          */
         public function getCustomJSFilename($db, $location, $templateID)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             // prepare vars... path + filename
             $tplName = self::getCurrentTemplateName($db, $location, $templateID); // tpl name
             $alias = "custom"; // set JS file name
@@ -844,7 +844,7 @@ namespace YAWK {
          */
         public static function getMaxId($db)
         {
-            /* @var $db \YAWK\db */
+            /* @param $db \YAWK\db */
             if ($res = $db->query("SELECT MAX(id) from {templates}")) {   // fetch id
                 if ($row = mysqli_fetch_row($res)) {
                     return $row[0];
@@ -898,7 +898,7 @@ namespace YAWK {
          */
         function setTemplateSetting($db, $id, $property, $value, $longValue)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             $property = $db->quote($property);
             $value = $db->quote($value);
             $longValue = $db->quote($longValue);
@@ -934,7 +934,7 @@ namespace YAWK {
          */
         public static function setTemplateActive($db, $templateID)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             if (!isset($templateID) && (empty($templateID))) {   // if template id is not set, get it from database
                 $templateID = \YAWK\settings::getSetting($db, "selectedTemplate");
             }
@@ -965,7 +965,7 @@ namespace YAWK {
          */
         public static function copyTemplateSettings($db, $templateID, $newID)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
 
             $res = $db->query("INSERT INTO {template_settings} 
         (templateID, property, value, valueDefault, longValue, type, activated, sort, label, fieldClass, fieldType, 
@@ -1008,7 +1008,7 @@ namespace YAWK {
         // alter IDs
         function addTemplateSetting($db, $property, $value, $valueDefault, $label, $fieldclass, $placeholder)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             $active = 1;
             $sort = 0;
             $templateID = \YAWK\settings::getSetting($db, "selectedTemplate"); // self::getCurrentTemplateId($db);
@@ -1043,7 +1043,7 @@ namespace YAWK {
          */
         public function setTemplateDetails($db, $description, $author, $authorUrl, $id)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             if ($res = $db->query("UPDATE {templates} SET description = '" . $description . "', subAuthor = '" . $author . "', subAuthorUrl = '" . $authorUrl . "' WHERE id = '" . $id . "'")) {   // template details updated...
                 return true;
             } else {   // could not save template details
@@ -1063,7 +1063,7 @@ namespace YAWK {
          */
         static function deleteTemplate($db, $templateID)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             if (!isset($templateID) && (empty($templateID)))
             {   // no templateID is set...
                 \YAWK\sys::setSyslog($db, 47, 1, "failed to delete template because templateID was missing.", 0, 0, 0, 0);
@@ -1165,7 +1165,7 @@ namespace YAWK {
                 return false;
             }
 
-            /* @var $db \YAWK\db */
+            /* @param $db \YAWK\db */
             // if ($res= $db->query("SELECT * FROM {template_settings} ORDER by property"))
             if ($res = $db->query($sql)) {
                 $settingsArray = array();
@@ -1800,7 +1800,7 @@ namespace YAWK {
          */
         function getSetting($db, $filter, $special, $readonly, $user)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             // build sql query string
             // to build the template-settings page correct within one function
             // the query string will be manipulated like
@@ -2050,7 +2050,7 @@ namespace YAWK {
          */
         function getgFonts($db, $item, $lang)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             $nc = '';
             $gfontID = '';
             // query fonts
@@ -2134,7 +2134,7 @@ namespace YAWK {
          */
         public static function deleteGfont($db, $gfontid, $gfont)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
 
             // no google font ID was sent
             if (!isset($gfontid) || (empty($gfontid))) {   // check if google font name was sent
@@ -2174,7 +2174,7 @@ namespace YAWK {
          */
         public static function addgfont($db, $gfont, $description)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             if (empty($gfont)) {   // no font was sent
                 return false;
             }
@@ -2528,7 +2528,7 @@ namespace YAWK {
 
         static function getActiveBodyFont($db)
         {
-            /* @var \YAWK\db $db */
+            /* @param \YAWK\db $db */
             $bodyFont = \YAWK\template::getTemplateSetting($db, "value", "globaltext-fontfamily");
             $bodyFontFamily = "font-family: $bodyFont";
             return $bodyFontFamily;
@@ -2546,7 +2546,7 @@ namespace YAWK {
          */
         static function getActivegfont($db, $status, $property)
         {
-            /* @var \YAWK\db $db */
+            /* @param \YAWK\db $db */
             if ($res = $db->query("SELECT id, font, setting
                      FROM {gfonts}
                      WHERE activated = 1
@@ -2627,7 +2627,7 @@ namespace YAWK {
          */
         static function getTemplateSetting($db, $field, $property)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             $tpl_id = settings::getSetting($db, "selectedTemplate");
             if ($res = $db->query("SELECT $field
                         	FROM {template_settings}
@@ -2650,7 +2650,7 @@ namespace YAWK {
          */
         static function includeHeader($db)
         {
-            /** @var \YAWK\db $db */
+            /** @param \YAWK\db $db */
             global $currentpage;
             $i = 1;
             $host = \YAWK\settings::getSetting($db, "host");
@@ -2805,7 +2805,7 @@ namespace YAWK {
          */
         static function getTemplateSettingsArray($db, $templateID)
         {
-            /* @var \YAWK\db $db */
+            /* @param \YAWK\db $db */
             if (!isset($templateID) || (empty($templateID))) {   // if no templateID is set, take current template ID from settings db
                 $templateID = settings::getSetting($db, "selectedTemplate");
             }
@@ -2833,7 +2833,7 @@ namespace YAWK {
          */
         static function checkWrapper($lang, $title, $subtitle)
         {
-            /* @var \YAWK\db $db */
+            /* @param \YAWK\db $db */
             if (!isset($_GET['hideWrapper'])) {
                 // draw the admin lte wrapper around content to include breadcrumbs and start content section
                 // TEMPLATE WRAPPER - HEADER & breadcrumbs
@@ -2874,7 +2874,7 @@ namespace YAWK {
          */
         public static function getAssetsByType($db, $type)
         {
-            /* @var \YAWK\db $db */
+            /* @param \YAWK\db $db */
             // check if type is set
             if (!isset($type) || (empty($type))) {   // if its not set, get all assets from db, no matter which type they are
                 $typeSQLCode = ''; // terminate db query
@@ -2929,7 +2929,7 @@ namespace YAWK {
          */
         public static function drawAssetsTitles($db, $templateID, $lang)
         {
-            /* @var \YAWK\db $db */
+            /* @param \YAWK\db $db */
             // if no template ID is set
             if (!isset($templateID) || (empty($templateID))) {   // get current ID from database
                 $templateID = \YAWK\settings::getSetting($db, "selectedTemplate");
@@ -2970,7 +2970,7 @@ namespace YAWK {
          */
         public static function drawAssetsSelectFields($db, $type, $templateID, $lang)
         {
-            /* @var \YAWK\db $db */
+            /* @param \YAWK\db $db */
 
             // check type and load assets data
             // if type is not set
@@ -3070,7 +3070,7 @@ namespace YAWK {
          */
         public function loadActiveAssets($db, $templateID, $host)
         {
-            /* @var \YAWK\db $db */
+            /* @param \YAWK\db $db */
 
             if (isset($templateID) && (!empty($templateID))) {
                 echo "
@@ -3113,7 +3113,7 @@ namespace YAWK {
 
         public function loadActiveAssetsIntoArray($db, $templateID)
         {
-            /* @var \YAWK\db $db */
+            /* @param \YAWK\db $db */
 
             if (isset($templateID) && (!empty($templateID)))
             {
@@ -3150,7 +3150,7 @@ namespace YAWK {
          */
         public static function copyAssets($db, $templateID, $newID)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
 
             $res = $db->query("INSERT INTO {assets} (templateID, type, asset, link)
                                       SELECT '" . $newID . "', type, asset, link
@@ -3219,11 +3219,11 @@ namespace YAWK {
          * @link http://yawk.io
          * @param object $db database
          * @return string 0|3|4|X
-         * @annotation return values: 0 = not loaded, 3 = bootstrap 3, 4 = bootstrap 4, X = multiple (false!)
+         * @brief return values: 0 = not loaded, 3 = bootstrap 3, 4 = bootstrap 4, X = multiple (false!)
          */
         public function checkBootstrapVersion($db, $templateID, $lang)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
 
             // query database
             if ($sql = $db->query("SELECT asset FROM {assets} WHERE templateID = '" . $templateID . "' AND asset LIKE '%Bootstrap%CSS'")) {   // fetch data
@@ -3297,7 +3297,7 @@ namespace YAWK {
          * @param array $postData data that has been sent by upload form
          * @param array $postFiles uploaded file that has been sent by upload form
          * @return bool true|false
-         * @annotation upload .zip file, unpack to tmp folder,
+         * @brief upload .zip file, unpack to tmp folder,
          */
         public function uploadTemplate($db, $postData, $postFiles, $lang)
         {
@@ -3742,7 +3742,7 @@ namespace YAWK {
          * @param int $templateID ID of the template to process
          * @param object $user user object
          * @return bool true|false
-         * @annotation dump database settings into .json files, write template.ini and license file, zip the whole template folder and serve .zip for direct download
+         * @brief dump database settings into .json files, write template.ini and license file, zip the whole template folder and serve .zip for direct download
          */
         public function downloadTemplate($db, $templateFolder, $templateID, $user)
         {

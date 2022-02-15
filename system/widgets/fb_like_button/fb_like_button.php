@@ -1,5 +1,5 @@
 <?php
-/** @var $db \YAWK\db */
+/** @param $db \YAWK\db */
 if (!isset($fbLikeButton))
 {   // load facebook like button class
     require_once 'classes/fb_like_button.php';

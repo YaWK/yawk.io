@@ -12,28 +12,28 @@ namespace YAWK {
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation The default menu class. Serves all the menu functions.
+     * @brief The default menu class. Serves all the menu functions.
      */
     class menu
     {
         /**
-         * @var int the menu id
+         * @param int the menu id
          */
         public $id;
         /**
-         * @var string the menu name
+         * @param string the menu name
          */
         public $name;
         /**
-         * @var int the menu ID
+         * @param int the menu ID
          */
         public $menuID;
         /**
-         * @var int 0|1 published - yes or no
+         * @param int 0|1 published - yes or no
          */
         public $published;
         /**
-         * @var int the parent menu ID
+         * @param int the parent menu ID
          */
         public $parent;
 
@@ -47,7 +47,7 @@ namespace YAWK {
          * @param int $menuID the menuID to get data
          */
         public function displaySubMenu($db, $menuID)
-        {   /** @var db $db */
+        {   /** @param db $db */
             // get menu entries and draw navbar
             $res = $db->query("SELECT * FROM {menu}
                                WHERE published = 1 
@@ -73,7 +73,7 @@ namespace YAWK {
          * @param int $menuID the menuID to get data
          */
         public function isPublished($db, $menuID)
-        {   /** @var db $db */
+        {   /** @param db $db */
             $res = $db->query("SELECT published FROM {menu_names}
                                WHERE published = 1 
                                AND id = '".$menuID."'");
@@ -99,7 +99,7 @@ namespace YAWK {
          * @param object $template template object
          */
         static function displayGlobalMenu($db, $template)
-        {   /** @var db $db */
+        {   /** @param db $db */
             $res = $db->query("SELECT value FROM {settings}
                                WHERE property = 'globalmenuid'");
             if ($row = mysqli_fetch_row($res)) {
@@ -121,7 +121,7 @@ namespace YAWK {
          * @return bool
          */
         static function createMenu($db, $name, $lang)
-        {   /** @var $db db */
+        {   /** @param $db db */
             // menu name not given
             if (!$name) {
                 return false;
@@ -165,7 +165,7 @@ namespace YAWK {
          */
         static function changeTitle($db, $menu, $menutitle)
         {
-            /** @var $db db $res */
+            /** @param $db db $res */
             if ($res = $db->query("UPDATE {menu_names} SET
     							  		name = '" . $menutitle . "'
     							        WHERE id = '" . $menu . "'"))
@@ -198,7 +198,7 @@ namespace YAWK {
             {
                 $menuLanguage = NULL;
             }
-            /** @var $db db $res */
+            /** @param $db db $res */
             if ($res = $db->query("UPDATE {menu_names} SET
     							  		menuLanguage = '" . $menuLanguage . "'
     							        WHERE id = '" . $menu . "'") &&
@@ -229,7 +229,7 @@ namespace YAWK {
          */
         static function getMenuIdFromLanguage ($db, $menuLanguage)
         {
-            /** @var $db db $res */
+            /** @param $db db $res */
             if ($res = $db->query("SELECT id FROM {menu} WHERE menuLanguage='".$menuLanguage."'"))
             {
                 $id = mysqli_fetch_row($res);
@@ -261,7 +261,7 @@ namespace YAWK {
          * @return bool
          */
         static function addEntry($db, $menu, $text, $href)
-        {   /** @var $db db */
+        {   /** @param $db db */
 
             // get menu name
             $menuName = \YAWK\menu::getMenuNameByID($db, $menu);
@@ -317,7 +317,7 @@ namespace YAWK {
          */
         public static function getMenuStatus($db, $menuid)
         {
-            /** @var $db db */
+            /** @param $db db */
             // get status from menu db
             if ($res = $db->query("SELECT published FROM {menu_names} WHERE id = '" . $menuid . "'"))
             {   // fetch data
@@ -343,7 +343,7 @@ namespace YAWK {
          */
         public static function getMenuEntryStatus($db, $menuid)
         {
-            /** @var $db db */
+            /** @param $db db */
             if ($res = $db->query("SELECT published FROM {menu} WHERE id = '" . $menuid . "'"))
             {
                 $row = mysqli_fetch_row($res);
@@ -370,7 +370,7 @@ namespace YAWK {
          */
         function toggleOffline($db, $id, $published, $lang)
         {
-            /** @var $db db */
+            /** @param $db db */
 
             // get name and status string
             $menuName = \YAWK\menu::getMenuNameByID($db, $id);
@@ -405,7 +405,7 @@ namespace YAWK {
          */
         function toggleItemOffline($db, $id, $published, $menuID)
         {
-            /** @var $db db */
+            /** @param $db db */
 
             // get name and status string
             $menuItem = \YAWK\menu::getMenuItemTitleByID($db, $id, $menuID);
@@ -446,7 +446,7 @@ namespace YAWK {
          * @return bool
          */
         static function editEntry($db, $menu, $id, $text, $title, $href, $sort, $gid, $published, $parentID, $target)
-        {   /** @var $db db */
+        {   /** @param $db db */
             $menuName = \YAWK\menu::getMenuNameByID($db, $menu);
             $date_changed = date("Y-m-d G:i:s");
             if ($res = $db->query("UPDATE {menu} SET
@@ -484,7 +484,7 @@ namespace YAWK {
          * @return bool
          */
         static function deleteEntry($db, $menu, $id)
-        {   /** @var $db db */
+        {   /** @param $db db */
             $menuName = \YAWK\menu::getMenuNameByID($db, $menu);
             $menuItem = \YAWK\menu::getMenuItemTitleByID($db, $id, $menu);
             if (!$res = $db->query("DELETE FROM {menu} WHERE menuID = '" . $menu . "' AND id = '" . $id . "'"))
@@ -520,7 +520,7 @@ namespace YAWK {
          */
         static function delete($db, $id, $lang)
         {
-            /** @var $db db */
+            /** @param $db db */
             $menuName = \YAWK\menu::getMenuNameByID($db, $id);
             // delete menu itself
             if ($res = $db->query("DELETE FROM {menu_names} WHERE id = '" . $id . "'"))
@@ -557,7 +557,7 @@ namespace YAWK {
             /** UPDATE: OPTIMIZATION NEEDED
              *  HERE SHOULD BE A SELECT JOIN user_groups + parent items
              *  instead of 3 different SELECTs - can anybody help here? */
-            /** @var $db db */
+            /** @param $db db */
             echo "
 <table class=\"table table-striped table-hover table-responsive\" id=\"table-sort\">
   <thead>
@@ -713,7 +713,7 @@ namespace YAWK {
          * @param object $template template obj
          */
         static function display($db, $id, $template)
-        {   /** @var db $db */
+        {   /** @param db $db */
             $divider = '';
             if (isset($_SESSION['gid'])) {
                 $currentRole = $_SESSION['gid'];
@@ -756,7 +756,7 @@ namespace YAWK {
             // Menu builder function, parentId 0 is the root
 
             function buildMenu($db, $parent, $menu, $id, $currentRole, $divider, $template)
-            {   /** @var db $db */
+            {   /** @param db $db */
 
                 // check if template ID is set
                 if (isset($template) && (!empty($template)))
@@ -1053,7 +1053,7 @@ function myFunction() {
          * @return string
          */
         static function getMenuNameByID($db, $id)
-        {   /* @var $db db */
+        {   /* @param $db db */
             $menu = '';
             if ($res = $db->query("SELECT name from {menu_names} WHERE id = $id"))
             {
@@ -1077,7 +1077,7 @@ function myFunction() {
          * @return string title of the menu entry
          */
         static function getMenuItemTitleByID($db, $itemID, $menuID)
-        {   /* @var $db db */
+        {   /* @param $db db */
             $menu = '';
             if ($res = $db->query("SELECT title from {menu} WHERE id = $itemID AND menuID = $menuID"))
             {

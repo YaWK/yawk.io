@@ -15,21 +15,21 @@ namespace YAWK\WIDGETS\SPOTIFY\EMBED
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation spotify Widget (empty) for DEMO and development purpose!
+     * @brief spotify Widget (empty) for DEMO and development purpose!
      */
     class spotify extends \YAWK\widget
     {
-        /** @var object global widget object data */
+        /** @param object global widget object data */
         public $widget = '';
-        /** @var string Title that will be shown above widget */
+        /** @param string Title that will be shown above widget */
         public $spotifyHeading = '';
-        /** @var string Subtext will be displayed beside title */
+        /** @param string Subtext will be displayed beside title */
         public $spotifySubtext = '';
-        /* @var string Spotify embed code */
+        /* @param string Spotify embed code */
         public $spotifyEmbedCode='';
-        /* @var string widget width */
+        /* @param string widget width */
         public $spotifyWidth='';
-        /* @var string widget height */
+        /* @param string widget height */
         public $spotifyHeight='';
 
         /**
@@ -38,7 +38,7 @@ namespace YAWK\WIDGETS\SPOTIFY\EMBED
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
-         * @annotation Load all widget settings on object init.
+         * @brief Load all widget settings on object init.
          */
         public function __construct($db)
         {
@@ -55,7 +55,7 @@ namespace YAWK\WIDGETS\SPOTIFY\EMBED
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation spotify Widget Init
+         * @brief spotify Widget Init
          */
         public function init()
         {   // display heading

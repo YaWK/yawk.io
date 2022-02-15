@@ -19,13 +19,13 @@ namespace YAWK {
      * @version    1.0.0
      * @link       http://yawk.io/
      * @since      File available since Release 1.0.0
-     * @annotation Integrated IMAP Webmail
+     * @brief Integrated IMAP Webmail
      *
      */
 
     class webmail
     {
-        /** @var string information about the connection */
+        /** @param string information about the connection */
         public $connectionInfo = '';
 
         /**
@@ -36,7 +36,7 @@ namespace YAWK {
          * @param $uid int|string the mail UID
          */
         public function moveMessage($imap, $folder, $targetFolder, $uid)
-        {   /** @var $imap \SSilence\ImapClient\ImapClient */
+        {   /** @param $imap \SSilence\ImapClient\ImapClient */
 
             // check email uid
             if (!isset($uid) || (empty($uid)))
@@ -85,7 +85,7 @@ namespace YAWK {
          * @param $uid int|string the mail UID
          */
         public function deleteMessage($imap, $folder, $uid)
-        {   /** @var $imap \SSilence\ImapClient\ImapClient */
+        {   /** @param $imap \SSilence\ImapClient\ImapClient */
 
             // folder is not set or empty
             if (!isset($folder) || (empty($folder)))
@@ -120,7 +120,7 @@ namespace YAWK {
          * @param $imap object imap connection resource
          */
         public function purgeTrash($imap)
-        {   /** @var $imap \SSilence\ImapClient\ImapClient */
+        {   /** @param $imap \SSilence\ImapClient\ImapClient */
             // move email to target folder
             if ($imap->purge() == true)
             {   // purge successful
@@ -142,7 +142,7 @@ namespace YAWK {
          */
         public function drawMailboxControls($imap, $type, $uid, $folder, $lang)
         {
-            /** @var $imap \SSilence\ImapClient\ImapClient */
+            /** @param $imap \SSilence\ImapClient\ImapClient */
             // check if uid is set
             if (!isset($uid) || (empty($uid)))
             {   // set uid to zero
@@ -244,7 +244,7 @@ namespace YAWK {
          */
         public function drawFolders($imap, $folders)
         {   // check if folder array is set
-            /* @var $imap \SSilence\ImapClient\Imapclient  */
+            /* @param $imap \SSilence\ImapClient\Imapclient  */
 
             if (is_array($folders) || (!empty($folders)))
             {
@@ -472,7 +472,7 @@ namespace YAWK {
 
         public function markAsFlagged($imap, $uid)
         {
-            // /** @var $imap \SSilence\ImapClient\ImapClient */
+            // /** @param $imap \SSilence\ImapClient\ImapClient */
             return imap_setflag_full($imap, $uid, "\\Flagged", ST_UID);
         }
 

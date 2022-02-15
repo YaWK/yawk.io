@@ -15,65 +15,65 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Loginbox Widget
+     * @brief Loginbox Widget
      */
     class loginbox extends \YAWK\widget
     {
-        /** @var object global widget object data */
+        /** @param object global widget object data */
         public $widget = '';
-        /** @var string Title that will be shown above widget */
+        /** @param string Title that will be shown above widget */
         public $loginboxHeading = '';
-        /** @var string Subtext will be displayed beside title */
+        /** @param string Subtext will be displayed beside title */
         public $loginboxSubtext = '';
-        /** @var string Username */
+        /** @param string Username */
         public $currentUser = '';
-        /** @var string Login Button Text */
+        /** @param string Login Button Text */
         public $loginboxLoginBtnText = "Login";
-        /** @var string Logout Button Text */
+        /** @param string Logout Button Text */
         public $loginboxLogoutBtnText = "Logout";
-        /** @var string Logout Button html markup */
+        /** @param string Logout Button html markup */
         public $loginboxLogoutBtnMarkup = "";
-        /** @var string Login Button CSS Class */
+        /** @param string Login Button CSS Class */
         public $loginboxLoginBtnClass = "btn btn-success";
-        /** @var string Logout Button CSS Class */
+        /** @param string Logout Button CSS Class */
         public $loginboxLogoutBtnClass = "btn btn-danger";
-        /** @var string Login Button margin-top */
+        /** @param string Login Button margin-top */
         public $loginboxLoginBtnMarginTop = "5px";
-        /** @var string Login Button margin top css markup */
+        /** @param string Login Button margin top css markup */
         public $loginboxLoginBtnMarginMarkup = '';
-        /** @var string form width */
+        /** @param string form width */
         public $loginboxWidth = '';
-        /** @var string form width css markup */
+        /** @param string form width css markup */
         public $loginboxWidthMarkup = '';
-        /** @var string form css class */
+        /** @param string form css class */
         public $loginboxFormClass = '';
-        /** @var string form css class markup */
+        /** @param string form css class markup */
         public $loginboxFormClassMarkup = '';
-        /** @var string ajax|html form processing mode */
+        /** @param string ajax|html form processing mode */
         public $loginboxProcessingMode = 'html';
-        /** @var string markup for html/ajax processing mode */
+        /** @param string markup for html/ajax processing mode */
         public $loginboxProcessingModeFormMarkup = '';
-        /** @var string submit button type, depending on processing mode */
+        /** @param string submit button type, depending on processing mode */
         public $loginboxProcessingModeSubmitBtnType = 'submit';
-        /** @var bool true|false Turn greeting on or off */
+        /** @param bool true|false Turn greeting on or off */
         public $loginboxGreeting = '';
-        /** @var string Greeting Text */
+        /** @param string Greeting Text */
         public $loginboxGreetingText = '';
-        /** @var string Greeting html markup */
+        /** @param string Greeting html markup */
         public $loginboxGreetingMarkup = '';
-        /** @var string Greeting Subtext */
+        /** @param string Greeting Subtext */
         public $loginboxGreetingSubtext = '';
-        /** @var bool true|false Show name within greeting? */
+        /** @param bool true|false Show name within greeting? */
         public $loginboxGreetingShowName = 'true';
-        /** @var string Greeting text type */
+        /** @param string Greeting text type */
         public $loginboxGreetingTextType = 'h2';
-        /** @var string Greeting text class */
+        /** @param string Greeting text class */
         public $loginboxGreetingTextClass = '';
-        /** @var string Greeting text class html markup */
+        /** @param string Greeting text class html markup */
         public $loginboxGreetingTextClassMarkup = '';
-        /** @var string redirect to this page after successful login */
+        /** @param string redirect to this page after successful login */
         public $loginboxRedirect = '';
-        /** @var int delay before redirecting */
+        /** @param int delay before redirecting */
         public $loginboxRedirectTime = 0;
 
         /**
@@ -82,7 +82,7 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
-         * @annotation Load all widget settings on object init.
+         * @brief Load all widget settings on object init.
          */
         public function __construct($db)
         {
@@ -99,7 +99,7 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation loginbox Widget Init
+         * @brief loginbox Widget Init
          */
         public function init($db)
         {
@@ -127,7 +127,7 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation Evaluate loginbox settings and prepare html markup
+         * @brief Evaluate loginbox settings and prepare html markup
          */
         public function setLoginProperties()
         {
@@ -207,7 +207,7 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation set properties of greeting and logout button
+         * @brief set properties of greeting and logout button
          */
         public function setLogoutProperties()
         {
@@ -271,7 +271,7 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation include required ajax js file
+         * @brief include required ajax js file
          */
         public function includeJS()
         {

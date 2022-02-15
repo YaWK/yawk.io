@@ -1,5 +1,5 @@
 <?php
-/** @var $db \YAWK\db */
+/** @param $db \YAWK\db */
 if (!isset($loginbox))
 {   // load loginbox widget class
     require_once 'classes/loginbox.php';

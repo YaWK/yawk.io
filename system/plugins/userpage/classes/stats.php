@@ -12,7 +12,7 @@ namespace YAWK\PLUGINS\USERPAGE {
      * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Userpage Profile Class
+     * @brief Userpage Profile Class
      */
     class stats
     {

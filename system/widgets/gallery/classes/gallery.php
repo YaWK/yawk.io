@@ -14,69 +14,69 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Embed a photo gallery on your website.
+     * @brief Embed a photo gallery on your website.
      */
     class gallery extends \YAWK\widget
     {
-        /** @var object global widget object data */
+        /** @param object global widget object data */
         public $widget = '';
-        /** @var int Gallery ID */
+        /** @param int Gallery ID */
         public $galleryID = '';
-        /** @var string Title that will be shown above widget */
+        /** @param string Title that will be shown above widget */
         public $galleryHeading = '';
-        /** @var string Subtext will be displayed beside title */
+        /** @param string Subtext will be displayed beside title */
         public $gallerySubtext = '';
 
-        /** @var int Image Item ID */
+        /** @param int Image Item ID */
         public $itemID = '';
-        /** @var string Image filename */
+        /** @param string Image filename */
         public $filename = '';
-        /** @var string Image Description */
+        /** @param string Image Description */
         public $itemTitle = '';
-        /** @var string Image Author (Copyright Notice) */
+        /** @param string Image Author (Copyright Notice) */
         public $itemAuthor = '';
-        /** @var string Image Author URL */
+        /** @param string Image Author URL */
         public $itemAuthorUrl = '';
-        /** @var string Headline above widget */
+        /** @param string Headline above widget */
         public $headline = '';
 
-        /** @var bool galleryNavOnTouchDevices If true, the left and right navigation arrows which appear on mouse hover when viewing image sets will always be visible on devices which support touch. */
+        /** @param bool galleryNavOnTouchDevices If true, the left and right navigation arrows which appear on mouse hover when viewing image sets will always be visible on devices which support touch. */
         public $galleryNavOnTouchDevices = false;
-        /** @var string The text displayed below the caption when viewing an image set. The default text shows the current image number and the total number of images in the set. */
+        /** @param string The text displayed below the caption when viewing an image set. The default text shows the current image number and the total number of images in the set. */
         public $galleryAlbumLabel = 'Image %1 of %2';
-        /** @var bool If true, prevent the page from scrolling while Lightbox is open. This works by settings overflow hidden on the body. */
+        /** @param bool If true, prevent the page from scrolling while Lightbox is open. This works by settings overflow hidden on the body. */
         public $galleryDisableScrolling = false;
-        /** @var string The time it takes for the Lightbox container and overlay to fade in and out, in milliseconds. */
+        /** @param string The time it takes for the Lightbox container and overlay to fade in and out, in milliseconds. */
         public $galleryFadeDuration = '600';
-        /** @var bool If true, resize images that would extend outside of the viewport so they fit neatly inside of it. This saves the user from having to scroll to see the entire image. */
+        /** @param bool If true, resize images that would extend outside of the viewport so they fit neatly inside of it. This saves the user from having to scroll to see the entire image. */
         public $galleryFitImagesInViewport = true;
-        /** @var string The time it takes for the image to fade in once loaded, in milliseconds. */
+        /** @param string The time it takes for the image to fade in once loaded, in milliseconds. */
         public $galleryImageFadeDuration = '600';
-        /** @var string If set, the image width will be limited to this number, in pixels. Aspect ratio will not be maintained. */
+        /** @param string If set, the image width will be limited to this number, in pixels. Aspect ratio will not be maintained. */
         public $galleryMaxWidth = '';
-        /** @var string If set, the image height will be limited to this number, in pixels. Aspect ratio will not be maintained. */
+        /** @param string If set, the image height will be limited to this number, in pixels. Aspect ratio will not be maintained. */
         public $galleryMaxHeight = '';
-        /** @var string If set, the thumbnail image width will be limited to this number, in pixels. Aspect ratio will not be maintained. */
+        /** @param string If set, the thumbnail image width will be limited to this number, in pixels. Aspect ratio will not be maintained. */
         public $galleryTnWidth = '';
-        /** @var string If set, the thumbnail image height will be limited to this number, in pixels. Aspect ratio will not be maintained. */
+        /** @param string If set, the thumbnail image height will be limited to this number, in pixels. Aspect ratio will not be maintained. */
         public $galleryTnHeight = '';
-        /** @var string The distance from top of viewport that the Lightbox container will appear, in pixels */
+        /** @param string The distance from top of viewport that the Lightbox container will appear, in pixels */
         public $galleryPositionFromTop = '50';
-        /** @var string The time it takes for the Lightbox container to animate its width and height when transition between different size images, in milliseconds. */
+        /** @param string The time it takes for the Lightbox container to animate its width and height when transition between different size images, in milliseconds. */
         public $galleryResizeDuration = '700';
-        /** @var bool If false, the text indicating the current image number and the total number of images in set (Ex. "image 2 of 4") will be hidden. */
+        /** @param bool If false, the text indicating the current image number and the total number of images in set (Ex. "image 2 of 4") will be hidden. */
         public $galleryShowImageNumberLabel = true;
-        /** @var bool If true, when a user reaches the last image in a set, the right navigation arrow will appear and they will be to continue moving forward which will take them back to the first image in the set. */
+        /** @param bool If true, when a user reaches the last image in a set, the right navigation arrow will appear and they will be to continue moving forward which will take them back to the first image in the set. */
         public $galleryWrapAround = false;
 
-        /** @var int How many pictures should be drawn per row? */
+        /** @param int How many pictures should be drawn per row? */
         public $galleryLayoutRows = 3;
-        /** @var bool true|false Shuffle Images */
+        /** @param bool true|false Shuffle Images */
         public $galleryShuffle = false;
 
-        /** @var string <img Width HTML Markup */
+        /** @param string <img Width HTML Markup */
         public $galleryWidthMarkup = '';
-        /** @var string Image Class */
+        /** @param string Image Class */
         public $galleryImageClass = 'img-responsive img-rounded hvr-grow';
 
 
@@ -86,7 +86,7 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
-         * @annotation Load all widget settings on object init.
+         * @brief Load all widget settings on object init.
          */
         public function __construct($db)
         {
@@ -103,7 +103,7 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation (for development and testing purpose)
+         * @brief (for development and testing purpose)
          */
         public function printObject()
         {
@@ -117,7 +117,7 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation load Javascript and draw image gallery
+         * @brief load Javascript and draw image gallery
          */
         public function init($db)
         {
@@ -130,7 +130,7 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation check lightbox asset and set options
+         * @brief check lightbox asset and set options
          */
         public function loadJavascript()
         {
@@ -168,10 +168,10 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
          * @version 1.0.0
          * @link http://yawk.io
          * @param db object Database object
-         * @annotation (for development and testing purpose)
+         * @brief (for development and testing purpose)
          */
         public function drawImageGallery($db)
-        {   /** @var $db \YAWK\db **/
+        {   /** @param $db \YAWK\db **/
             if (!isset($this->galleryID) || (empty($this->galleryID)))
             {
                 echo "Error: unable to load photo gallery because there is no gallery selected.";
@@ -203,7 +203,7 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
                         // prepare loop vars
                         $count = 0;
                         $divider = 3;
-                        /** @var $widget \YAWK\widget */
+                        /** @param $widget \YAWK\widget */
                         // get headline
                         $this->headline = $this->getHeading($this->galleryHeading, $this->gallerySubtext);
                         // draw headline

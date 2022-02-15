@@ -1,7 +1,7 @@
 <?php
 namespace YAWK {
     /**
-     * <b>Settings class: get and set YaWK system settings</b>
+     * @brief <b>Settings class: get and set YaWK system settings</b>
      * @author Daniel Retzl <danielretzl@gmail.com>
      * @version 1.0.0
      * @link http://yawk.io
@@ -9,7 +9,7 @@ namespace YAWK {
     class settings
     {
         /**
-         * Returns an array with all setings where property is like $property.
+         * @brief Returns an array with all setings where property is like $property.
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -19,7 +19,7 @@ namespace YAWK {
          */
         public static function getAllSettingsArray($db, $property) // get all settings from db like property
         {
-            /* @var $db \YAWK\db */
+            /* @param $db \YAWK\db */
             if ($res= $db->query("SELECT * FROM {settings} WHERE property LIKE '".$property."%'")) {
                 $settingsArray = array();
                 while ($row = $res->fetch_assoc())
@@ -37,7 +37,7 @@ namespace YAWK {
         }
 
         /**
-         * Returns an array containing property as key and values corresponding to this property where p like $property%.
+         * @brief Returns an array containing property as key and values corresponding to this property where p like $property%.
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -47,7 +47,7 @@ namespace YAWK {
          */
         public static function getValueSettingsArray($db, $property) // get all settings from db like property
         {
-            /* @var $db \YAWK\db */
+            /* @param $db \YAWK\db */
             if ($res= $db->query("SELECT property, value FROM {settings} WHERE property LIKE '".$property."%'")) {
                 $settingsArray = array();
                 while ($row = $res->fetch_assoc())
@@ -65,7 +65,7 @@ namespace YAWK {
         }
 
         /**
-         * Return corresponding form elements for given settings.
+         * @brief Return corresponding form elements for given settings.
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -338,7 +338,7 @@ namespace YAWK {
         }
 
         /**
-         * override the current language
+         * @brief override the current language
          * @param array $lang language array
          */
         static function getCurrentLanguageFormElements($lang)
@@ -355,13 +355,13 @@ namespace YAWK {
         }
 
         /**
-         * get all settings by typeID
+         * @brief get all settings by typeID
          * @param object $db database
          * @param int $typeID settings type to get settings for
          * @return array|bool returns an array with requested settings or false
          */
         public static function getSettingsByType($db, $typeID)
-        {   /* @var $db \YAWK\db */
+        {   /* @param $db \YAWK\db */
             if ($res = $db->query("SELECT * FROM {settings} WHERE type = $typeID"))
             {
                 $settingsArray = array();
@@ -379,7 +379,7 @@ namespace YAWK {
         }
 
         /**
-         * Returns an associative array containing the editor settings
+         * @brief Returns an associative array containing the editor settings
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -388,7 +388,7 @@ namespace YAWK {
          * @return array|bool
          */
         public static function getEditorSettings($db, $typeID=0)
-        {   /* @var $db \YAWK\db */
+        {   /* @param $db \YAWK\db */
             // check if type is set, if not, try to fetch it
             if (!isset($typeID) || ($typeID == 0))
             {   // if type is not set, try to query db to get the ID of editor settings
@@ -447,7 +447,7 @@ namespace YAWK {
 
 
         /**
-         * Returns an array with all settings data.
+         * @brief Returns an array with all settings data.
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -456,7 +456,7 @@ namespace YAWK {
          */
         public static function getAllSettingsIntoArray($db) // get all settings from db like property
         {
-            /* @var $db \YAWK\db */
+            /* @param $db \YAWK\db */
             if ($res= $db->query("SELECT * FROM {settings} ORDER by sortation"))
             {
                 $settingsArray = array();
@@ -475,7 +475,7 @@ namespace YAWK {
         }
 
         /**
-         * Get and return value for property from settings database.
+         * @brief Get and return value for property from settings database.
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @link http://yawk.io
@@ -485,7 +485,7 @@ namespace YAWK {
          * @return bool
          */
         public static function getSetting($db, $property) // get a single setting from db
-        {    /* @var $db \YAWK\db */
+        {    /* @param $db \YAWK\db */
             $sql = $db->query("SELECT value FROM {settings} WHERE property = '".$property."'");
 
             // fetch data from db
@@ -507,7 +507,7 @@ namespace YAWK {
         }
 
         /**
-         * Set value for property into settings database.
+         * @brief Set value for property into settings database.
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @link http://yawk.io
@@ -518,7 +518,7 @@ namespace YAWK {
          * @return bool
          */
         public static function setSetting($db, $property, $value, $lang)
-        {   /* @var $db \YAWK\db */
+        {   /* @param $db \YAWK\db */
             $property = $db->quote($property);
             $value = $db->quote($value);
             if ($res = $db->query("UPDATE {settings} SET value = '".$value."' WHERE property = '".$property."'")) {
@@ -535,7 +535,7 @@ namespace YAWK {
         }
 
         /**
-         * Get and return longValue for property from settings database.
+         * @brief Get and return longValue for property from settings database.
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @link http://yawk.io
@@ -544,7 +544,7 @@ namespace YAWK {
          * @return mixed
          */
         public static function getLongSetting($db, $property)
-        {   /* @var $db \YAWK\db */
+        {   /* @param $db \YAWK\db */
             if ($res = $db->query("SELECT longValue FROM {settings} WHERE property = '".$property."'")) {
                 $row = mysqli_fetch_row($res);
                 $res->close();
@@ -559,7 +559,7 @@ namespace YAWK {
         }
 
         /**
-         * Set (update) template setting value for property.
+         * @brief Set (update) template setting value for property.
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @link http://yawk.io
@@ -570,7 +570,7 @@ namespace YAWK {
          */
         public static function setTemplateSetting($db, $property, $value)
         {
-            /* @var $db \YAWK\db */
+            /* @param $db \YAWK\db */
             $property = $db->quote($property);
             $value = $db->quote($value);
             if ($res = $db->query("UPDATE {template_settings} SET value = '".$value."' WHERE property = '".$property."'"))
@@ -587,7 +587,7 @@ namespace YAWK {
         }
 
         /**
-         * Set (update) long setting value for property.
+         * @brief Set (update) long setting value for property.
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @link http://yawk.io
@@ -605,7 +605,7 @@ namespace YAWK {
                 $referer = "index.php";
             }
             */
-            /* @var $db \YAWK\db */
+            /* @param $db \YAWK\db */
             $property = $db->quote($property);
             $value = $db->quote($value);
             if ($res = $db->query("UPDATE {settings} SET longValue = '".$value."' WHERE property = '".$property."'"))
@@ -623,7 +623,7 @@ namespace YAWK {
         }
 
         /**
-         * Get setting description from requested property.
+         * @brief Get setting description from requested property.
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @link http://yawk.io
@@ -632,7 +632,7 @@ namespace YAWK {
          * @return bool
          */
         public static function getSettingDescription($db, $property)
-        { /* @var $db \YAWK\db */
+        { /* @param $db \YAWK\db */
             if ($res = $db->query("SELECT description FROM {settings} WHERE property = '".$property."'")) {
                 $row = mysqli_fetch_row($res);
                 return $row[0];
@@ -646,7 +646,7 @@ namespace YAWK {
         }
 
         /**
-         * Get widget setting value from widgets_settings.
+         * @brief Get widget setting value from widgets_settings.
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @link http://yawk.io
@@ -656,7 +656,7 @@ namespace YAWK {
          */
         public static function getWidgetSetting($db, $property)
         {
-            /* @var $db \YAWK\db */
+            /* @param $db \YAWK\db */
             if ($res = $db->query("SELECT value FROM {widget_settings}
                                    WHERE property = '".$property."' AND widgetID = '".$widgetID."'")) {
                 $row = mysqli_fetch_row($res);
@@ -672,7 +672,7 @@ namespace YAWK {
         }
 
         /**
-         * Set widget setting value into widgets_settings.
+         * @brief Set widget setting value into widgets_settings.
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @link http://yawk.io
@@ -684,7 +684,7 @@ namespace YAWK {
          */
         public static function setWidgetSetting($db, $property, $value, $widgetID)
         {
-            /* @var $db \YAWK\db */
+            /* @param $db \YAWK\db */
             $property = $db->quote($property);
             $value = $db->quote($value);
             $value = nl2br($value);
@@ -707,7 +707,7 @@ namespace YAWK {
         }
 
         /**
-         * Toggle setting offline where requested property.
+         * @brief Toggle setting offline where requested property.
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @link http://yawk.io
@@ -719,7 +719,7 @@ namespace YAWK {
          */
         public static function toggleOffline($db, $property, $new_status, $lang)
         {
-            /* @var $db \YAWK\db */
+            /* @param $db \YAWK\db */
             $property = $db->quote($property);
             $new_status = $db->quote($new_status);
             if ($res = $db->query("UPDATE {settings} SET activated = '" . $new_status . "'

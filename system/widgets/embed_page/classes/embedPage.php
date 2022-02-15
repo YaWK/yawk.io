@@ -11,15 +11,15 @@ namespace YAWK\WIDGETS\EMBED_PAGE\PAGE {
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Embed any static page in any widget position.
+     * @brief Embed any static page in any widget position.
      */
     class embedPage
     {
-        /** @var object global widget object data */
+        /** @param object global widget object data */
         public $widget = '';
-        /** @var string The name of the page to embed */
+        /** @param string The name of the page to embed */
         public $embedPageName = '';
-        /** @var string File url, including path */
+        /** @param string File url, including path */
         public $file = '';
 
         /**
@@ -28,7 +28,7 @@ namespace YAWK\WIDGETS\EMBED_PAGE\PAGE {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
-         * @annotation Load all widget settings on object init.
+         * @brief Load all widget settings on object init.
          */
         public function __construct($db)
         {
@@ -46,7 +46,7 @@ namespace YAWK\WIDGETS\EMBED_PAGE\PAGE {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
-         * @annotation Init and include static page.
+         * @brief Init and include static page.
          */
         public function init()
         {   // check if embed page name is set

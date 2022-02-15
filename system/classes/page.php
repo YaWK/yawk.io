@@ -15,53 +15,53 @@ namespace YAWK {
      * @link       http://yawk.io
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @annotation The default pages class. Provide all functions to handle static pages.
+     * @brief The default pages class. Provide all functions to handle static pages.
      */
     class page
     {
-        /** * @var int every page got its own id */
+        /** * @param int every page got its own id */
         public $id = -1;
-        /** * @var string page filename */
+        /** * @param string page filename */
         public $alias = '';
-        /** * @var string new page filename (used by copy function) */
+        /** * @param string new page filename (used by copy function) */
         public $alias_new = '';
-        /** * @var string page title */
+        /** * @param string page title */
         public $title = '';
-        /** * @var string new page title (used by copy function) */
+        /** * @param string new page title (used by copy function) */
         public $title_new = '';
-        /** * @var int 0|1 published status */
+        /** * @param int 0|1 published status */
         public $published = 0;
-        /** * @var int uid (user id) of the page owner */
+        /** * @param int uid (user id) of the page owner */
         public $ownerid = -1;
-        /** * @var int menu id according to this page */
+        /** * @param int menu id according to this page */
         public $menu = -1;
-        /** * @var int group id for this page */
+        /** * @param int group id for this page */
         public $gid;
-        /** * @var string date when the site is created */
+        /** * @param string date when the site is created */
         public $date_created;
-        /** * @var string date when the site is published */
+        /** * @param string date when the site is published */
         public $date_publish;
-        /** * @var string date when the site should be unpublished */
+        /** * @param string date when the site should be unpublished */
         public $date_unpublish;
-        /** * @var int plugin ID of that page */
+        /** * @param int plugin ID of that page */
         public $plugin;
-        /** * @var int blog ID of that page*/
+        /** * @param int blog ID of that page*/
         public $blogid;
-        /** * @var int 0|1 to check if the page is locked */
+        /** * @param int 0|1 to check if the page is locked */
         public $locked;
-        /** * @var string meta description for this page */
+        /** * @param string meta description for this page */
         public $metadescription;
-        /** * @var string meta keywords for this page*/
+        /** * @param string meta keywords for this page*/
         public $metakeywords;
-        /** * @var string search string for this page */
+        /** * @param string search string for this page */
         public $searchstring;
-        /** * @var string bg image */
+        /** * @param string bg image */
         public $bgimage;
-        /** * @var string page language */
+        /** * @param string page language */
         public $language;
-        /** * @var bool copy page into new language indicator  */
+        /** * @param bool copy page into new language indicator  */
         public $newLanguage;
-        /** * @var string the root path where pages are physically stored  */
+        /** * @param string the root path where pages are physically stored  */
         public $path = "../content/pages/";
 
         /**
@@ -73,7 +73,7 @@ namespace YAWK {
          * @return int|bool
          */
         static function countPages($db)
-        {   /** @var $db db */
+        {   /** @param $db db */
             if ($result = $db->query('SELECT count(id) FROM {pages}'))
             {
                 $i = mysqli_fetch_row($result);
@@ -96,7 +96,7 @@ namespace YAWK {
          * @return string|bool meta tags as string
          */
         function getMetaTags($db, $id, $type)
-        {   /** @var $db db $res */
+        {   /** @param $db db $res */
             if (!isset($type) or (empty($type))) {
                 // set default type description | keywords
                 $type = "description";
@@ -131,7 +131,7 @@ namespace YAWK {
          * @return bool page toggle on/offline status
          */
         function toggleOffline($db, $id, $published, $title)
-        {   /* @var $db db */
+        {   /* @param $db db */
             // check data types
             if (is_numeric($id) && (is_numeric($published) && is_string($title)))
             {
@@ -192,7 +192,7 @@ namespace YAWK {
          */
         function toggleLock($db, $id, $locked)
         {
-            /* @var $db db */
+            /* @param $db db */
             $id = $db->quote($id);
             $locked = $db->quote($locked);
             if ($db->query("UPDATE {pages} SET locked = '".$locked."' WHERE id = '".$id."'")) {
@@ -219,7 +219,7 @@ namespace YAWK {
          */
         function copy($db)
         {
-            /** @var $db db */
+            /** @param $db db */
             // creation date
             $currentDateTime = date("Y-m-d G:i:s");
 
@@ -395,7 +395,7 @@ namespace YAWK {
          */
         function delete($db)
         {
-            /** @var $db db */
+            /** @param $db db */
             // delete item from pages db
             if (!$db->query("DELETE FROM {pages} WHERE id = '" . $this->id . "'")) {
                 sys::setSyslog($db, 7, 1, "failed to delete page $this->alias from database", 0, 0, 0, 0);
@@ -472,7 +472,7 @@ namespace YAWK {
             $this->blogid = $blogid;
             $this->plugin = $plugin;
 
-            /** @var $db db */
+            /** @param $db db */
             // init variables
             // if page name is not given
             if (!$alias) {
@@ -701,7 +701,7 @@ namespace YAWK {
          */
         public function save($db)
         {
-            /** @var $db db */
+            /** @param $db db */
             $date_changed = date("Y-m-d G:i:s");
 
             /* alias string manipulation */
@@ -862,7 +862,7 @@ namespace YAWK {
          */
         function writeContent($content)
         {
-            /** @var $db db $alias */
+            /** @param $db db $alias */
             /* alias string manipulation */
             $this->alias = mb_strtolower($this->alias); // lowercase
             $this->alias = str_replace(" ", "-", $this->alias); // replace all ' ' with -
@@ -933,7 +933,7 @@ namespace YAWK {
         }
 
         function getCurrentLanguageByID($db, $id){
-            /** @var $db db $res */
+            /** @param $db db $res */
             if (isset($id) && (!empty($id)))
             {   // query db for given page ID
                 $res = $db->query("SELECT lang FROM {pages} WHERE id ='".$id."'");
@@ -960,7 +960,7 @@ namespace YAWK {
          */
         function loadProperties($db, $alias)
         {
-            /** @var $db db $res */
+            /** @param $db db $res */
             if (isset($alias) && (!empty($alias)))
             {
                 $res = $db->query("SELECT * FROM {pages} WHERE alias = '".$alias."'");
@@ -1013,7 +1013,7 @@ namespace YAWK {
          */
         function loadPropertiesByID($db, $id)
         {
-            /** @var $db db $res */
+            /** @param $db db $res */
             if (isset($id) && (!empty($id)))
             {
                 $res = $db->query("SELECT * FROM {pages} WHERE id = '".$id."'");
@@ -1067,7 +1067,7 @@ namespace YAWK {
          * @return array|string
          */
         static function getLatest($db, $limit)
-        {   /** @var $db db */
+        {   /** @param $db db */
             // check and set default value
             if (!isset($limit) && (empty($limit))) { $limit = 4; }
             // select latest n page titles
@@ -1102,7 +1102,7 @@ namespace YAWK {
          * @return string|bool the selected property or false
          */
         function getProperty($db, $id, $property)
-        {   /** @var $db db $res */
+        {   /** @param $db db $res */
             // select property from pages db
             if ($res = $db->query("SELECT $property FROM {pages}
                         WHERE id = '" . $id . "'"))

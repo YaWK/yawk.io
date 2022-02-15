@@ -13,17 +13,17 @@ namespace YAWK\WIDGETS\PREZI\EMBED
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Prezi Widget - embed any prezi presentation on your page
+     * @brief Prezi Widget - embed any prezi presentation on your page
      */
     class prezi extends \YAWK\widget
     {
-        /** @var object global widget object data */
+        /** @param object global widget object data */
         public $widget = '';
-        /** @var string Prezi HTML Markup */
+        /** @param string Prezi HTML Markup */
         public $preziHtml = '';
-        /** @var string Title that will be shown above widget */
+        /** @param string Title that will be shown above widget */
         public $preziHeading = '';
-        /** @var string Subtext will be displayed beside title */
+        /** @param string Subtext will be displayed beside title */
         public $preziSubtext = '';
 
         /**
@@ -32,7 +32,7 @@ namespace YAWK\WIDGETS\PREZI\EMBED
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
-         * @annotation Load all widget settings on object init.
+         * @brief Load all widget settings on object init.
          */
         public function __construct($db)
         {
@@ -49,7 +49,7 @@ namespace YAWK\WIDGETS\PREZI\EMBED
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation Example Widget Init
+         * @brief Example Widget Init
          */
         public function init()
         {   // display heading
@@ -63,7 +63,7 @@ namespace YAWK\WIDGETS\PREZI\EMBED
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation Html Markup to embed the prezi presentation
+         * @brief Html Markup to embed the prezi presentation
          */
         public function embedPrezi()
         {   // check if html markup is set and valid

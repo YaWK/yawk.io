@@ -46,7 +46,7 @@ namespace YAWK\PLUGINS\GALLERY {
      * @version    1.0.0
      * @link       http://yawk.io/
      * @since      File available since Release 1.0.0
-     * @annotation The Gallery Plugin Class. Help you building powerful image galleries nearly automatically.
+     * @brief The Gallery Plugin Class. Help you building powerful image galleries nearly automatically.
      */
     class gallery
     {

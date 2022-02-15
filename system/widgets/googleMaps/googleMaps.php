@@ -1,5 +1,5 @@
 <?php
-/** @var $db \YAWK\db */
+/** @param $db \YAWK\db */
 // check if GoogleMaps object is set
 if (!isset($googleMaps))
 {   // load gallery widget class

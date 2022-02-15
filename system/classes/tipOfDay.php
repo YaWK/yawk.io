@@ -16,7 +16,7 @@ namespace YAWK {
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation TipOfDay class serve functions to get and draw a tip of the day
+     * @brief TipOfDay class serve functions to get and draw a tip of the day
      */
     class tipOfDay extends \YAWK\alert
     {
@@ -34,7 +34,7 @@ namespace YAWK {
          */
         public function setPublished($db, $id, $published)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             // update database
             if ($db->query("UPDATE {tips} SET published = '".$published."' WHERE id = '".$id."'"))
             {   // all good
@@ -58,7 +58,7 @@ namespace YAWK {
          */
         public function setTip($db, $published, $tipHeading, $tipText, $tipLink)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             // preprate data
             if (isset($published) && (!empty($published)))
             { $db->quote($published); }
@@ -91,7 +91,7 @@ namespace YAWK {
          */
         public function getRandomTipData($db)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             if (\YAWK\settings::getSetting($db, "backendTipOfDayRepeat") == true)
             {
                 $sql = "";
@@ -135,7 +135,7 @@ namespace YAWK {
          */
         public function getNextTipData($db)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             // query data: ordered ascending by ID, only entries that are unseen
             if ($res = $db->query("SELECT * FROM {tips} WHERE published = 1 ORDER BY id ASC LIMIT 1"))
             {

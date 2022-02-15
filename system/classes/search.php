@@ -11,7 +11,7 @@ namespace YAWK {
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Backend search class
+     * @brief Backend search class
      */
     class search
     {

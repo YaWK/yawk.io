@@ -14,23 +14,23 @@ namespace YAWK\WIDGETS\TWITTER\TWEET
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Embed Twitter Tweet
+     * @brief Embed Twitter Tweet
      */
     class twitterTweet extends \YAWK\widget
     {
-        /** @var object global widget object data */
+        /** @param object global widget object data */
         public $widget = '';
-        /** @var string Title that will be shown above widget */
+        /** @param string Title that will be shown above widget */
         public $twitterSingleTweetHeading = '';
-        /** @var string Subtext will be displayed beside title */
+        /** @param string Subtext will be displayed beside title */
         public $twitterSingleTweetSubtext = '';
-        /** @var string URL of your twitter Tweet */
+        /** @param string URL of your twitter Tweet */
         public $twitterSingleTweetUrl = "https://twitter.com/danielretzl";
-        /** @var string How many tweets (latest n) */
+        /** @param string How many tweets (latest n) */
         public $twitterSingleTweetTweetLimit = "5";
-        /** @var string Hide data cards */
+        /** @param string Hide data cards */
         public $twitterSingleTweetHideDataCards = "0";
-        /** @var string How many tweets (latest n) */
+        /** @param string How many tweets (latest n) */
         public $twitterSingleTweetDataConversation = "0";
 
         /**
@@ -39,7 +39,7 @@ namespace YAWK\WIDGETS\TWITTER\TWEET
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
-         * @annotation Load all widget settings on object init.
+         * @brief Load all widget settings on object init.
          */
         public function __construct($db)
         {
@@ -56,7 +56,7 @@ namespace YAWK\WIDGETS\TWITTER\TWEET
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation Embed a single tweet from twitter
+         * @brief Embed a single tweet from twitter
          */
         public function init()
         {   // display heading

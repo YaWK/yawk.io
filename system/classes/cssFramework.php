@@ -13,21 +13,21 @@ use YAWK\language;
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Helper function to output custom (overriden) bootstrap css (settings.css)
+     * @brief Helper function to output custom (overriden) bootstrap css (settings.css)
      */
     class cssFramework
     {
-        /** @var int current loaded bootstrap version */
+        /** @param int current loaded bootstrap version */
         public $version = '';
-        /** @var array template settings array */
+        /** @param array template settings array */
         public $tplSettings = '';
-        /** @var string all the css as string */
+        /** @param string all the css as string */
         public $cssCode = '';
 
         // call constructor on object creation
         public function __construct($version, $tplSettings)
         {
-            /** @var $lang language */
+            /** @param $lang language */
             // check if bootstrap version is set
             if (isset($version) && (is_string($version) && (!empty($version))))
             {
@@ -76,7 +76,7 @@ use YAWK\language;
          * @version 1.0.0
          * @link http://yawk.io
          * @return string|null the generated css code as (big) string
-         * @annotation Init calls setBootstrapComponents and return all css code as string on success or null on error
+         * @brief Init calls setBootstrapComponents and return all css code as string on success or null on error
          */
         public function init()
         {
@@ -98,7 +98,7 @@ use YAWK\language;
          * @version 1.0.0
          * @link http://yawk.io
          * @return string|null the generated css code as (big) string
-         * @annotation Check CSS code and return it on success, otherwise return null
+         * @brief Check CSS code and return it on success, otherwise return null
          */
         public function outputCssCode()
         {   // check if css code string is set and not empty
@@ -118,7 +118,7 @@ use YAWK\language;
          * @version 1.0.0
          * @link http://yawk.io
          * @return true|null the generated css code as (big) string
-         * @annotation Return true after executing component methods or false if Bootstrap version is unknown
+         * @brief Return true after executing component methods or false if Bootstrap version is unknown
          */
         public function setBootstrapComponents()
         {

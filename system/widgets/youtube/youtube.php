@@ -1,5 +1,5 @@
 <?php
-/** @var $db \YAWK\db */
+/** @param $db \YAWK\db */
 // check if youtube obj is loaded
 if(!isset($youtube) || (empty($youtube)))
 {   // not set, include yt widget class

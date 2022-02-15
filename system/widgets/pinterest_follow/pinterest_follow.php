@@ -1,5 +1,5 @@
 <?php
-/** @var $db \YAWK\db */
+/** @param $db \YAWK\db */
 if (!isset($pinterestFollow))
 {   // load pinterest widget class
     require_once 'classes/pinterest_follow.php';

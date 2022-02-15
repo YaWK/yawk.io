@@ -13,7 +13,7 @@ namespace YAWK {
      * @license    https://opensource.org/licenses/MIT
      * @link       http://yawk.io
      * @since      File available since Release 1.0.0
-     * @annotation Basic File Manager (Backend)
+     * @brief Basic File Manager (Backend)
      */
     class filemanager
     {

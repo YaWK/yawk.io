@@ -1,5 +1,5 @@
 <?php
-/** @var $db \YAWK\db */
+/** @param $db \YAWK\db */
 if (!isset($fbVideo))
 {   // load facebook video class
     require_once 'classes/fb_video.php';

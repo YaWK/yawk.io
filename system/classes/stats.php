@@ -13,212 +13,212 @@ namespace YAWK
      */
     class stats
     {
-         /** * @var int id for every entry */
+         /** * @param int id for every entry */
         public $id;
-        /** * @var int uid (user id) who affected this entry */
+        /** * @param int uid (user id) who affected this entry */
         public $uid = 0;
-        /** * @var int gid (group id) who affected this entry */
+        /** * @param int gid (group id) who affected this entry */
         public $gid;
-        /** * @var int phpSessionID current php session ID */
+        /** * @param int phpSessionID current php session ID */
         public $phpSessionID;
-        /** * @var string currentTimeStamp current time stamp */
+        /** * @param string currentTimeStamp current time stamp */
         public $currentTimeStamp;
-        /** * @var int currentOnline how many users are currently online */
+        /** * @param int currentOnline how many users are currently online */
         public $currentOnline = 0;
-        /** * @var int 0|1 was the user logged in? */
+        /** * @param int 0|1 was the user logged in? */
         public $logged_in;
-        /** * @var string detected user language */
+        /** * @param string detected user language */
         public $acceptLanguage;
-        /** * @var string IP address who affected this entry */
+        /** * @param string IP address who affected this entry */
         public $remoteAddr;
-        /** * @var string complete useragent info*/
+        /** * @param string complete useragent info*/
         public $userAgent;
-        /** * @var string detected device (eg. iPhone, iPad, iPod) */
+        /** * @param string detected device (eg. iPhone, iPad, iPod) */
         public $device;
-        /** * @var string detected device type (desktop, phone, tablet) */
+        /** * @param string detected device type (desktop, phone, tablet) */
         public $deviceType;
-        /** * @var string detected users operating system */
+        /** * @param string detected users operating system */
         public $os;
-        /** * @var string detected users operating system version */
+        /** * @param string detected users operating system version */
         public $osVersion;
-        /** * @var string detected users browser */
+        /** * @param string detected users browser */
         public $browser;
-        /** * @var string detected users browser version */
+        /** * @param string detected users browser version */
         public $browserVersion;
-        /** * @var string datetime when entry was created */
+        /** * @param string datetime when entry was created */
         public $date_created;
-        /** * @var string users url referer string */
+        /** * @param string users url referer string */
         public $referer;
-        /** * @var string page that the user requested */
+        /** * @param string page that the user requested */
         public $page;
-        /** * @var string the currently open sessions (active users) */
+        /** * @param string the currently open sessions (active users) */
         public $activeSessions;
 
         // stats variables
-        /** * @var int total hits overall */
+        /** * @param int total hits overall */
         public $i_hits = 0;
-        /** * @var int how many logins were successful? */
+        /** * @param int how many logins were successful? */
         public $i_loggedUsers = 0;
-        /** * @var int how many logins were successful? (in percent) */
+        /** * @param int how many logins were successful? (in percent) */
         public $i_loggedUsersPercentage = 0;
-        /** * @var int how many users did not log in and visited as public guest? */
+        /** * @param int how many users did not log in and visited as public guest? */
         public $i_publicUsers = 0;
-        /** * @var int how many users did not log in and visited as public guest? (in percent) */
+        /** * @param int how many users did not log in and visited as public guest? (in percent) */
         public $i_publicUsersPercentage = 0;
 
         // user stats
-        /** *@var int total users overall */
+        /** *@param int total users overall */
         public $i_users = 0;
-        /** *@var int total logged in users */
+        /** *@param int total logged in users */
         public $i_loggedInUsers = 0;
-        /** *@var int total blocked users */
+        /** *@param int total blocked users */
         public $i_blockedUsers = 0;
 
         // os types
-        /** * @var int how many users came with windows? */
+        /** * @param int how many users came with windows? */
         public $i_osWindows = 0;
-        /** * @var int how many users came with macOS? */
+        /** * @param int how many users came with macOS? */
         public $i_osMac = 0;
-        /** * @var int how many users came with linux? */
+        /** * @param int how many users came with linux? */
         public $i_osLinux = 0;
-        /** * @var int how many users came with android? */
+        /** * @param int how many users came with android? */
         public $i_osAndroid = 0;
-        /** * @var int how many users came with iOS? */
+        /** * @param int how many users came with iOS? */
         public $i_iOS = 0;
-        /** * @var int how many operating systems were unable to detect? */
+        /** * @param int how many operating systems were unable to detect? */
         public $i_osUnknown = 0;
 
         // os versions
-        /** * @var int how many users came with windows8? */
+        /** * @param int how many users came with windows8? */
         public $i_windows8 = 0;
-        /** * @var int how many users came with windows7? */
+        /** * @param int how many users came with windows7? */
         public $i_windows7 = 0;
-        /** * @var int how many users came with windows vista? */
+        /** * @param int how many users came with windows vista? */
         public $i_windowsVista = 0;
-        /** * @var int how many users came with windows server? */
+        /** * @param int how many users came with windows server? */
         public $i_windowsServer = 0;
-        /** * @var int how many users came with windows xp? */
+        /** * @param int how many users came with windows xp? */
         public $i_windowsXP = 0;
-        /** * @var int how many users came with windows 2000? */
+        /** * @param int how many users came with windows 2000? */
         public $i_windows2000 = 0;
-        /** * @var int how many users came with windows me? */
+        /** * @param int how many users came with windows me? */
         public $i_windowsME = 0;
-        /** * @var int how many users came with windows 98? */
+        /** * @param int how many users came with windows 98? */
         public $i_windows98 = 0;
-        /** * @var int how many users came with windows 95? */
+        /** * @param int how many users came with windows 95? */
         public $i_windows95 = 0;
-        /** * @var int how many users came with windows 3.11? */
+        /** * @param int how many users came with windows 3.11? */
         public $i_windows311 = 0;
-        /** * @var int how many users came with mac os x? */
+        /** * @param int how many users came with mac os x? */
         public $i_macosX = 0;
-        /** * @var int how many users came with mac os 9? */
+        /** * @param int how many users came with mac os 9? */
         public $i_macos9 = 0;
-        /** * @var int how many users came with linux? */
+        /** * @param int how many users came with linux? */
         public $i_linux = 0;
-        /** * @var int how many users came with ubuntu? */
+        /** * @param int how many users came with ubuntu? */
         public $i_ubuntu = 0;
-        /** * @var int how many users came with iPhone? */
+        /** * @param int how many users came with iPhone? */
         public $i_iPhone = 0;
-        /** * @var int how many users came with iPod? */
+        /** * @param int how many users came with iPod? */
         public $i_iPod = 0;
-        /** * @var int how many users came with iPad? */
+        /** * @param int how many users came with iPad? */
         public $i_iPad = 0;
-        /** * @var int how many users came with android? */
+        /** * @param int how many users came with android? */
         public $i_android = 0;
-        /** * @var int how many users came with blackberry? */
+        /** * @param int how many users came with blackberry? */
         public $i_blackberry = 0;
-        /** * @var int how many users came with unknown mobile system? */
+        /** * @param int how many users came with unknown mobile system? */
         public $i_mobile = 0;
-        /** * @var int how many users came with other systems? */
+        /** * @param int how many users came with other systems? */
         public $i_others = 0;
 
         // devices
-        /** * @var int how many users came with desktop systems? */
+        /** * @param int how many users came with desktop systems? */
         public $i_desktop = 0;
-        /** * @var int how many users came with desktopdevices (in percent) ? */
+        /** * @param int how many users came with desktopdevices (in percent) ? */
         public $i_desktopPercent = 0;
-        /** * @var int how many users came with tablet devices? */
+        /** * @param int how many users came with tablet devices? */
         public $i_tablet = 0;
-        /** * @var int how many users came with tablet devices (in percent) ? */
+        /** * @param int how many users came with tablet devices (in percent) ? */
         public $i_tabletPercent = 0;
-        /** * @var int how many users came with mobile devices? */
+        /** * @param int how many users came with mobile devices? */
         public $i_phone = 0;
-        /** * @var int how many users came with mobile devices (in percent) ? */
+        /** * @param int how many users came with mobile devices (in percent) ? */
         public $i_phonePercent = 0;
 
         // logins
-        /** * @var int how logins were totally made? */
+        /** * @param int how logins were totally made? */
         public $i_totalLogins = 0;
-        /** * @var int how many logins were successful? */
+        /** * @param int how many logins were successful? */
         public $i_loginSuccessful = 0;
-        /** * @var int how many logins failed? */
+        /** * @param int how many logins failed? */
         public $i_loginFailed = 0;
-        /** * @var int how many logins were made to frontend? */
+        /** * @param int how many logins were made to frontend? */
         public $i_loginFrontend = 0;
-        /** * @var int how many logins were made to backend? */
+        /** * @param int how many logins were made to backend? */
         public $i_loginBackend = 0;
-        /** * @var int how many backend logins were successful? */
+        /** * @param int how many backend logins were successful? */
         public $i_loginBackendSuccess = 0;
-        /** * @var int how many backend logins failed? */
+        /** * @param int how many backend logins failed? */
         public $i_loginBackendFailed = 0;
-        /** * @var int how many frontend logins were successful? */
+        /** * @param int how many frontend logins were successful? */
         public $i_loginFrontendSuccess = 0;
-        /** * @var int how many frontend logins failed? */
+        /** * @param int how many frontend logins failed? */
         public $i_loginFrontendFailed = 0;
-        /** * @var int how many logins were successful? (in percent) */
+        /** * @param int how many logins were successful? (in percent) */
         public $i_loginSuccessPercentage = 0;
-        /** * @var int how many logins failed? (in percent) */
+        /** * @param int how many logins failed? (in percent) */
         public $i_loginFailedPercentage = 0;
 
         // date + time
-        /** * @var int number of hits in the morningtime */
+        /** * @param int number of hits in the morningtime */
         public $i_morning = 0;
-        /** * @var int number of hits in the afternoon */
+        /** * @param int number of hits in the afternoon */
         public $i_afternoon = 0;
-        /** * @var int number of hits in the evening */
+        /** * @param int number of hits in the evening */
         public $i_evening = 0;
-        /** * @var int number of hits in the night */
+        /** * @param int number of hits in the night */
         public $i_night = 0;
-        /** * @var int number of hits in the morningtime (in percent) */
+        /** * @param int number of hits in the morningtime (in percent) */
         public $i_morningPercent = 0;
-        /** * @var int number of hits in the afternoon (in percent) */
+        /** * @param int number of hits in the afternoon (in percent) */
         public $i_afternoonPercent = 0;
-        /** * @var int number of hits in the evening (in percent) */
+        /** * @param int number of hits in the evening (in percent) */
         public $i_eveningPercent = 0;
-        /** * @var int number of hits in the night (in percent) */
+        /** * @param int number of hits in the night (in percent) */
         public $i_nightPercent = 0;
 
         // weekdays
-        /** * @var int number of hits on monday */
+        /** * @param int number of hits on monday */
         public $i_monday = 0;
-        /** * @var int number of hits on tuesday */
+        /** * @param int number of hits on tuesday */
         public $i_tuesday = 0;
-        /** * @var int number of hits on wednesday */
+        /** * @param int number of hits on wednesday */
         public $i_wednesday = 0;
-        /** * @var int number of hits on thursday */
+        /** * @param int number of hits on thursday */
         public $i_thursday = 0;
-        /** * @var int number of hits on friday */
+        /** * @param int number of hits on friday */
         public $i_friday = 0;
-        /** * @var int number of hits on saturday */
+        /** * @param int number of hits on saturday */
         public $i_saturday = 0;
-        /** * @var int number of hits on sunday */
+        /** * @param int number of hits on sunday */
         public $i_sunday = 0;
-        /** * @var int number of hits on all days (sum) */
+        /** * @param int number of hits on all days (sum) */
         public $i_totalDays = 0;
 
-        /** * @var int number of hits on monday (in percent) */
+        /** * @param int number of hits on monday (in percent) */
         public $i_mondayPercent = 0;
-        /** * @var int number of hits on tuesday (in percent) */
+        /** * @param int number of hits on tuesday (in percent) */
         public $i_tuesdayPercent = 0;
-        /** * @var int number of hits on wednesday (in percent) */
+        /** * @param int number of hits on wednesday (in percent) */
         public $i_wednesdayPercent = 0;
-        /** * @var int number of hits on thursday (in percent) */
+        /** * @param int number of hits on thursday (in percent) */
         public $i_thursdayPercent = 0;
-        /** * @var int number of hits on friday (in percent) */
+        /** * @param int number of hits on friday (in percent) */
         public $i_fridayPercent = 0;
-        /** * @var int number of hits on saturday (in percent) */
+        /** * @param int number of hits on saturday (in percent) */
         public $i_saturdayPercent = 0;
-        /** * @var int number of hits on sunday (in percent) */
+        /** * @param int number of hits on sunday (in percent) */
         public $i_sundayPercent = 0;
 
         public function construct()
@@ -236,7 +236,7 @@ namespace YAWK
          * @return int|null
          */
         public function getOnlineUsers($db)
-        {   /* @var $db \YAWK\db */
+        {   /* @param $db \YAWK\db */
             // first of all: delete all outdated sessions
             $this->deleteOutdatedSessions($db);
             // init count var
@@ -267,7 +267,7 @@ namespace YAWK
          * @return bool
          */
         public function deleteOutdatedSessions($db)
-        {   /* @var $db \YAWK\db */
+        {   /* @param $db \YAWK\db */
             // set default expire to 60 seconds
             $sessionExpire = time()-60;
             // DELETE OUTDATED SESSIONS
@@ -292,7 +292,7 @@ namespace YAWK
          * @return null
          */
         public function setOnlineUsers($db)
-        {   /* @var $db \YAWK\db */
+        {   /* @param $db \YAWK\db */
 
             // how long
             $this->phpSessionID = session_id();
@@ -379,7 +379,7 @@ namespace YAWK
          * @return null
          */
         public function setStats($db)
-        {   /* @var $db \YAWK\db */
+        {   /* @param $db \YAWK\db */
             // check if stats are enabled
             if (\YAWK\settings::getSetting($db, "statsEnable") === "1")
             {   // prepare user information that we can easily collect
@@ -536,7 +536,7 @@ namespace YAWK
          * @return mixed
          */
         public function countMessages($db)
-        {   /* @var $db \YAWK\db */
+        {   /* @param $db \YAWK\db */
             if ($res = $db->query("SELECT COUNT(*) FROM {plugin_msg}"))
             {   // fetch and return how many messages have been sent
                 $messageCount = mysqli_fetch_row($res);
@@ -558,7 +558,7 @@ namespace YAWK
          * @return bool
          */
         public function getUserStats($db)
-        {   /* @var $db \YAWK\db */
+        {   /* @param $db \YAWK\db */
             // count all users
             if ($res = $db->query("SELECT id, blocked, online, logged_in  FROM {users}"))
             {
@@ -598,7 +598,7 @@ namespace YAWK
          * @return array|bool
          */
         public function countLogins($db)
-        {   /* @var $db \YAWK\db */
+        {   /* @param $db \YAWK\db */
             /*
             if (!isset($limit) || (empty($limit)))
             {
@@ -700,7 +700,7 @@ namespace YAWK
          * @return string output the javascript data
          */
         public function getJsonLogins($db, $logins, $lang)
-        {   /* @var $db \YAWK\db */
+        {   /* @param $db \YAWK\db */
             // check if logins are set
             if (!isset($logins) || (empty($logins)))
             {   // nope, get them from db
@@ -745,7 +745,7 @@ namespace YAWK
          * @return string return the javascript data
          */
         public function getJsonDaytimePieChart($db, $daytimes, $lang)
-        {   /* @var $db \YAWK\db */
+        {   /* @param $db \YAWK\db */
             // check if logins are set
             if (!isset($daytimes) || (empty($daytimes)))
             {   // nope, get them from db
@@ -795,7 +795,7 @@ namespace YAWK
          * @return string output the javascript data
          */
         public function getJsonDaytimeLineChart($db, $daytimes, $lang)
-        {   /* @var $db \YAWK\db */
+        {   /* @param $db \YAWK\db */
             // check if device types are set
             if (!isset($daytimes) || (empty($daytimes)))
             {   // nope, get them from db
@@ -829,7 +829,7 @@ namespace YAWK
          * @return string output the javascript data
          */
         public function getJsonDaytimeBarChart($db, $daytimes, $lang)
-        {   /* @var $db \YAWK\db */
+        {   /* @param $db \YAWK\db */
             // check if device types are set
             if (!isset($daytimes) || (empty($daytimes)))
             {   // nope, get them from db
@@ -861,7 +861,7 @@ namespace YAWK
          * @return string output the javascript data
          */
         public function getJsonWeekdayBarChart($lang)
-        {   /* @var $db \YAWK\db */
+        {   /* @param $db \YAWK\db */
              $jsonData = "labels: ['$lang[MONDAY]', '$lang[TUESDAY]', '$lang[WEDNESDAY]', '$lang[THURSDAY]', '$lang[FRIDAY]', '$lang[SATURDAY]', '$lang[SUNDAY]'],
             datasets: [
                 {
@@ -889,7 +889,7 @@ namespace YAWK
          * @return string output the javascript data
          */
         public function getJsonBrowsers($db, $browsers)
-        {   /* @var $db \YAWK\db */
+        {   /* @param $db \YAWK\db */
             // check if browsers are set
             if (!isset($browsers) || (empty($browsers)))
             {   // nope, get them from db
@@ -939,7 +939,7 @@ namespace YAWK
          * @return string output the javascript data
          */
         public function getJsonOS($db, $oss)
-        {   /* @var $db \YAWK\db */
+        {   /* @param $db \YAWK\db */
             // check if browsers are set
             if (!isset($oss) || (empty($oss)))
             {   // nope, get them from db
@@ -986,7 +986,7 @@ namespace YAWK
          * @return string output the javascript data
          */
         public function getJsonOSVersions($db, $osVersions)
-        {   /* @var $db \YAWK\db */
+        {   /* @param $db \YAWK\db */
             // check if browsers are set
             if (!isset($osVersions) || (empty($osVersions)))
             {   // nope, get them from db
@@ -1050,7 +1050,7 @@ namespace YAWK
          * @return string output the javascript
          */
         public function getJsonDeviceTypes($db, $deviceTypes, $lang)
-        {   /* @var $db \YAWK\db */
+        {   /* @param $db \YAWK\db */
             // check if device types are set
             if (!isset($deviceTypes) || (empty($deviceTypes)))
             {   // device types are note set - get them from db
@@ -1349,7 +1349,7 @@ namespace YAWK
          * @return array|bool containing weekdays and number of hits
          */
         public function countWeekdays($db, $data, $lang, $limit)
-        {   /* @var $db \YAWK\db */
+        {   /* @param $db \YAWK\db */
 
             // check if limit (i) is set
             if (!isset($limit) || (empty($limit)))
@@ -1506,7 +1506,7 @@ namespace YAWK
          * @return array|bool containing daytimes (and number of hits
          */
         public function countDaytime($db, $data, $lang)
-        {   /* @var $db \YAWK\db */
+        {   /* @param $db \YAWK\db */
 
         /*
             // check if limit (i) is set
@@ -1655,7 +1655,7 @@ namespace YAWK
          * @return array|bool returning array containing the browsers and their hits
          */
         public function countBrowsers($db, $data)
-        {   /* @var $db \YAWK\db */
+        {   /* @param $db \YAWK\db */
 
         /*
             // check if limit (i) is set
@@ -1758,7 +1758,7 @@ namespace YAWK
          * @return array|bool returning array containing device types and their hits
          */
         public function countDeviceTypes($db, $data)
-        {   /* @var $db \YAWK\db */
+        {   /* @param $db \YAWK\db */
 
             /*
             // check if limit (i) is set
@@ -1847,7 +1847,7 @@ namespace YAWK
          * @return array|bool returning array containing all detected operating systems and their hits
          */
         public function countOS($db, $data)
-        {   /* @var $db \YAWK\db */
+        {   /* @param $db \YAWK\db */
 
         /*
             // check if limit (i) is set
@@ -1934,7 +1934,7 @@ namespace YAWK
          * @return array|bool returning array containing all detected OS versions and their hits
          */
         public function countOSVersions($db, $data)
-        {   /* @var $db \YAWK\db */
+        {   /* @param $db \YAWK\db */
 
         /*
             // check if limit (i) is set
@@ -2110,7 +2110,7 @@ namespace YAWK
          */
         public function getStatsArray($db, $interval, $period) // get all settings from db like property
         {
-            /* @var $db \YAWK\db */
+            /* @param $db \YAWK\db */
             // get online users
             $this->currentOnline = $this->getOnlineUsers($db);
 
@@ -2238,7 +2238,7 @@ namespace YAWK
          * @return bool
          */
         public function insertData($db)
-        {   /* @var $db \YAWK\db */
+        {   /* @param $db \YAWK\db */
             if ($db->query("INSERT INTO {stats} 
                                     (uid, 
                                      gid, 
@@ -2320,7 +2320,7 @@ namespace YAWK
          * @param string $limit contains i number for sql limitation
          */
         public function drawOsBox($db, $data, $lang)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             // get data for this box
             $oss = $this->countOS($db, $data);
 
@@ -2451,7 +2451,7 @@ namespace YAWK
          * @param string $limit contains i number for sql limitation
          */
         public function drawBrowserBox($db, $data, $lang)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             // get data for this box
             $browsers = $this->countBrowsers($db, $data);
 
@@ -2581,7 +2581,7 @@ namespace YAWK
          * @param string $limit contains i number for sql limitation
          */
         public function drawOsVersionBox($db, $data, $lang)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             // get data for this box
             $osVersions = $this->countOSVersions($db, $data);
 
@@ -2710,7 +2710,7 @@ namespace YAWK
          * @param string $limit contains i number for sql limitation
          */
         public function drawDeviceTypeBox($db, $data, $lang)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             // get data for this box
             $deviceTypes = $this->countDeviceTypes($db, $data);
 
@@ -2845,7 +2845,7 @@ namespace YAWK
          * @param string $limit contains i number for sql limitation
          */
         public function drawLoginBox($db, $lang)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             // get data for this box
             $logins = $this->countLogins($db);
 
@@ -2993,7 +2993,7 @@ namespace YAWK
          * @param object $lang language object
          */
         public function drawDaytimeBox($db, $data, $lang)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             // get data for this box
             $dayTimes = $this->countDaytime($db, $data, $lang);
             $dayTimesPercent = $this->getDayTimesPercent($lang);
@@ -3246,7 +3246,7 @@ namespace YAWK
          * @param object $lang language array
          */
             public function drawWeekdayBox($db, $data, $lang, $limit)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             // get data for this box
             $weekdays = $this->countWeekdays($db, $data, $lang, $limit);
             $weekdaysPercent = $this->getWeekdaysPercent($lang);

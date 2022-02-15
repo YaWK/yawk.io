@@ -14,17 +14,17 @@ namespace YAWK\WIDGETS\GOOGLE\MAPS {
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Embed Google Maps on your page.
+     * @brief Embed Google Maps on your page.
      */
     class googleMaps extends \YAWK\widget
     {
-        /** @var object global widget object data */
+        /** @param object global widget object data */
         public $widget = '';
-        /** @var string the html code you'll get from google <iframe...> */
+        /** @param string the html code you'll get from google <iframe...> */
         public $googleMapsEmbedHtmlCode = '';
-        /** @var string Heading above Google Map */
+        /** @param string Heading above Google Map */
         public $googleMapsHeading = '';
-        /** @var string Subtext beside heading */
+        /** @param string Subtext beside heading */
         public $googleMapsSubtext = '';
 
         /**
@@ -33,7 +33,7 @@ namespace YAWK\WIDGETS\GOOGLE\MAPS {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
-         * @annotation Load all widget settings on object init.
+         * @brief Load all widget settings on object init.
          */
         public function __construct($db)
         {
@@ -50,7 +50,7 @@ namespace YAWK\WIDGETS\GOOGLE\MAPS {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation (for development and testing purpose)
+         * @brief (for development and testing purpose)
          */
         public function printObject()
         {   // output data to screen
@@ -64,7 +64,7 @@ namespace YAWK\WIDGETS\GOOGLE\MAPS {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation Embed Google Maps
+         * @brief Embed Google Maps
          */
         public function init()
         {   // embed Google Maps

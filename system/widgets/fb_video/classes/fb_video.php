@@ -13,21 +13,21 @@ namespace YAWK\WIDGETS\FACEBOOK\VIDEO
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Facebook Like Page - embed like my facebook page
+     * @brief Facebook Like Page - embed like my facebook page
      */
     class fbVideo extends \YAWK\widget
     {
-        /** @var object global widget object data */
+        /** @param object global widget object data */
         public $widget = '';
-        /** @var string Html code that you get from facebook */
+        /** @param string Html code that you get from facebook */
         public $fbVideoEmbedCode = "";
-        /** @var string Width of the video in px or percent */
+        /** @param string Width of the video in px or percent */
         public $fbVideoWidth = "450";
-        /** @var string Height of the video in px or percent */
+        /** @param string Height of the video in px or percent */
         public $fbVideoHeight = "265";
-        /** @var object string Heading above the facebook video */
+        /** @param object string Heading above the facebook video */
         public $fbVideoHeading = "";
-        /** @var object string Subtext beside the heading */
+        /** @param object string Subtext beside the heading */
         public $fbVideoSubtext = "";
 
         /**
@@ -36,7 +36,7 @@ namespace YAWK\WIDGETS\FACEBOOK\VIDEO
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
-         * @annotation Load all widget settings on object init.
+         * @brief Load all widget settings on object init.
          */
         public function __construct($db)
         {
@@ -53,7 +53,7 @@ namespace YAWK\WIDGETS\FACEBOOK\VIDEO
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation Facebook video Widget
+         * @brief Facebook video Widget
          */
         public function init()
         {
@@ -68,7 +68,7 @@ namespace YAWK\WIDGETS\FACEBOOK\VIDEO
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation Embed any public facebook video on your page
+         * @brief Embed any public facebook video on your page
          */
         public function embedVideo()
         {   // check if url is set

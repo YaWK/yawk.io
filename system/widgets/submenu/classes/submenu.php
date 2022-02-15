@@ -14,17 +14,17 @@ namespace YAWK\WIDGETS\SUBMENU\EMBED
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Submenu widget - embed any menu on any page in any position
+     * @brief Submenu widget - embed any menu on any page in any position
      */
     class submenu extends \YAWK\widget
     {
-        /** @var object global widget object data */
+        /** @param object global widget object data */
         public $widget = '';
-        /** @var string Title that will be shown above widget */
+        /** @param string Title that will be shown above widget */
         public $submenuHeading = '';
-        /** @var string Subtext will be displayed beside title */
+        /** @param string Subtext will be displayed beside title */
         public $submenuSubtext = '';
-        /** @var int ID of the menu to display */
+        /** @param int ID of the menu to display */
         public $menuID = '';
 
         /**
@@ -33,7 +33,7 @@ namespace YAWK\WIDGETS\SUBMENU\EMBED
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
-         * @annotation Load all widget settings on object init.
+         * @brief Load all widget settings on object init.
          */
         public function __construct($db)
         {
@@ -50,7 +50,7 @@ namespace YAWK\WIDGETS\SUBMENU\EMBED
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation submenu Widget Init
+         * @brief submenu Widget Init
          */
         public function init($db)
         {

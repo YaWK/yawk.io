@@ -16,7 +16,7 @@ namespace YAWK
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io/
-     * @annotation Dashboard class serves a few useful functions for the admin backend.
+     * @brief Dashboard class serves a few useful functions for the admin backend.
      */
     class dashboard
     {

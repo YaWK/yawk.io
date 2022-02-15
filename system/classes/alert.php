@@ -1,6 +1,15 @@
 <?php
 namespace YAWK {
     /**
+     *
+     * @author     Daniel Retzl <danielretzl@gmail.com>
+     * @copyright  2009-2015 Daniel Retzl yawk.goodconnect.net
+     * @license    https://opensource.org/licenses/MIT
+     * @version    1.2.0
+     * @link       http://yawk.website/
+     * @since      File available since Release 1.0.0
+     * @brief Throws a fancy Bootstrap Alert (success, info, warning or danger)
+     * @details
      * <b>Throw default bootstrap-powered alerts. (warning, succes etc...)</b>
      *
      * This lets you throw a fancy designed alert message box at any
@@ -12,21 +21,12 @@ namespace YAWK {
      * <p><i>Class covers both, backend & frontend functionality.
      * See Methods Summary for Details!</i></p>
      *
-     * @category   CMS
-     * @author     Daniel Retzl <danielretzl@gmail.com>
-     * @copyright  2009-2015 Daniel Retzl yawk.goodconnect.net
-     * @license    https://opensource.org/licenses/MIT
-     * @version    1.2.0
-     * @link       http://yawk.website/
-     * @since      File available since Release 1.0.0
-     * @annotation Throws a fancy Bootstrap Alert (success, info, warning or danger)
-     *
      */
 
     class alert
     {
         /**
-         * draw a fancy alert notification
+         * @brief draw a fancy alert notification
          *
          * @param string $type Bootstrap class: success, warning, danger, info or default
          * @param string $title Title of the notification box, drawn in h4

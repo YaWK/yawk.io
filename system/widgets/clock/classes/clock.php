@@ -14,17 +14,17 @@ namespace YAWK\WIDGETS\CLOCK\CURRENT
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Embed a digital real-time clock on your website.
+     * @brief Embed a digital real-time clock on your website.
      */
     class clock
     {
-        /** @var object global widget object data */
+        /** @param object global widget object data */
         public $widget = '';
-        /** @var string Clock color */
+        /** @param string Clock color */
         public $clockColor = '#f5f5f5';
-        /** @var string Clock alignment */
+        /** @param string Clock alignment */
         public $clockAlign = 'text-center';
-        /** @var string Clock class */
+        /** @param string Clock class */
         public $clockClass = 'h1';
 
         /**
@@ -33,7 +33,7 @@ namespace YAWK\WIDGETS\CLOCK\CURRENT
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
-         * @annotation Load all widget settings on object init.
+         * @brief Load all widget settings on object init.
          */
         public function __construct($db)
         {
@@ -50,7 +50,7 @@ namespace YAWK\WIDGETS\CLOCK\CURRENT
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation (for development and testing purpose)
+         * @brief (for development and testing purpose)
          */
         public function printObject()
         {
@@ -64,7 +64,7 @@ namespace YAWK\WIDGETS\CLOCK\CURRENT
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation use this method to run the clock
+         * @brief use this method to run the clock
          */
         public function init()
         {
@@ -77,7 +77,7 @@ namespace YAWK\WIDGETS\CLOCK\CURRENT
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation The engine behind this clock
+         * @brief The engine behind this clock
          */
         public function loadJavascript()
         {
@@ -106,7 +106,7 @@ namespace YAWK\WIDGETS\CLOCK\CURRENT
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation This method draws the clock on screen
+         * @brief This method draws the clock on screen
          */
         public function drawClock()
         {

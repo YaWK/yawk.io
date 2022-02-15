@@ -15,41 +15,41 @@ namespace YAWK\WIDGETS\CULTURALBROADCASTING\STREAM
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Embed CBA (Cultural Broadcasting Archive) Podcast Player.
+     * @brief Embed CBA (Cultural Broadcasting Archive) Podcast Player.
      */
     class culturalBroadcastingArchive
     {
-        /** @var object global widget object data */
+        /** @param object global widget object data */
         public $widget = '';
-        /** @var string cba podcast URL */
+        /** @param string cba podcast URL */
         public $cbaUrl = '';
-        /** @var string Headline */
+        /** @param string Headline */
         public $cbaHeadline = '';
-        /** @var string Heading */
+        /** @param string Heading */
         public $cbaHeading = '';
-        /** @var string Subtext */
+        /** @param string Subtext */
         public $cbaSubtext = '';
-        /** @var string Height */
+        /** @param string Height */
         public $cbaHeight = '';
-        /** @var string Width */
+        /** @param string Width */
         public $cbaWidth = '';
-        /** @var string Display waveform? */
+        /** @param string Display waveform? */
         public $cbaWaveform = '';
-        /** @var string CBA Title */
+        /** @param string CBA Title */
         public $cbaTitle = '';
-        /** @var string Socialmedia Links */
+        /** @param string Socialmedia Links */
         public $cbaSocialmedia = '';
-        /** @var string Podcast */
+        /** @param string Podcast */
         public $cbaPodcast = '';
-        /** @var string Series  */
+        /** @param string Series  */
         public $cbaSeries = '';
-        /** @var string Description */
+        /** @param string Description */
         public $cbaDescription = '';
-        /** @var string Meta Tags */
+        /** @param string Meta Tags */
         public $cbaMeta = '';
-        /** @var string Embed Code */
+        /** @param string Embed Code */
         public $cbaEmbedCode = '';
-        /** @var string Source URL */
+        /** @param string Source URL */
         public $cbaSource = '';
 
         /**
@@ -58,7 +58,7 @@ namespace YAWK\WIDGETS\CULTURALBROADCASTING\STREAM
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
-         * @annotation Load all widget settings on object init.
+         * @brief Load all widget settings on object init.
          */
         public function __construct($db)
         {
@@ -75,7 +75,7 @@ namespace YAWK\WIDGETS\CULTURALBROADCASTING\STREAM
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation (for development and testing purpose)
+         * @brief (for development and testing purpose)
          */
         public function printObject()
         {
@@ -89,7 +89,7 @@ namespace YAWK\WIDGETS\CULTURALBROADCASTING\STREAM
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation use this method to run the clock
+         * @brief use this method to run the clock
          */
         public function init()
         {

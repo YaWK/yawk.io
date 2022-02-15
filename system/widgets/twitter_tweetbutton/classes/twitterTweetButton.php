@@ -14,17 +14,17 @@ namespace YAWK\WIDGETS\TWITTER\BUTTON
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Embed Twitter TweetButton
+     * @brief Embed Twitter TweetButton
      */
     class twitterTweetButton extends \YAWK\widget
     {
-        /** @var object global widget object data */
+        /** @param object global widget object data */
         public $widget = '';
-        /** @var string Title that will be shown above widget */
+        /** @param string Title that will be shown above widget */
         public $twitterTweetButtonHeading = '';
-        /** @var string Subtext will be displayed beside title */
+        /** @param string Subtext will be displayed beside title */
         public $twitterTweetButtonSubtext = '';
-        /** @var string Text */
+        /** @param string Text */
         public $twitterTweetButtonText = "";
 
         /**
@@ -33,7 +33,7 @@ namespace YAWK\WIDGETS\TWITTER\BUTTON
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
-         * @annotation Load all widget settings on object init.
+         * @brief Load all widget settings on object init.
          */
         public function __construct($db)
         {
@@ -50,7 +50,7 @@ namespace YAWK\WIDGETS\TWITTER\BUTTON
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation Embed a single TweetButton from twitter
+         * @brief Embed a single TweetButton from twitter
          */
         public function init()
         {   // display heading

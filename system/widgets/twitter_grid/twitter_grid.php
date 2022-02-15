@@ -1,5 +1,5 @@
 <?php
-/** @var $db \YAWK\db */
+/** @param $db \YAWK\db */
 if (!isset($twitterGrid))
 {   // load twitterGrid widget class
     require_once 'classes/twitterGrid.php';

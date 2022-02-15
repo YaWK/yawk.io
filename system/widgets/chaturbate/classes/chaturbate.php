@@ -15,29 +15,29 @@ namespace YAWK\WIDGETS\CHATURBATE\STREAM
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Embed chaturbate room (or stream) on your website.
+     * @brief Embed chaturbate room (or stream) on your website.
      */
     class chaturbate
     {
-        /** @var object global widget object data */
+        /** @param object global widget object data */
         public $widget = '';
-        /** @var string Chaturbate room name (username) */
+        /** @param string Chaturbate room name (username) */
         public $chaturbateRoom = '';
-        /** @var string URL of your chaturbate stream */
+        /** @param string URL of your chaturbate stream */
         public $chaturbateVideoUrl = '';
-        /** @var string Width in percent */
+        /** @param string Width in percent */
         public $chaturbateWidth = '100%';
-        /** @var string Height in px */
+        /** @param string Height in px */
         public $chaturbateHeight = '370';
-        /** @var string Disable Sound */
+        /** @param string Disable Sound */
         public $chaturbateDisableSound = '';
-        /** @var string Disable Sound */
+        /** @param string Disable Sound */
         public $chaturbateVideoOnly = '0';
-        /** @var string Heading */
+        /** @param string Heading */
         public $chaturbateHeading = '';
-        /** @var string Subtext */
+        /** @param string Subtext */
         public $chaturbateSubtext = '';
-        /** @var string Headline HTML Markup */
+        /** @param string Headline HTML Markup */
         public $chaturbateHeadline = '';
 
         /**
@@ -46,7 +46,7 @@ namespace YAWK\WIDGETS\CHATURBATE\STREAM
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
-         * @annotation Load all widget settings on object init.
+         * @brief Load all widget settings on object init.
          */
         public function __construct($db)
         {
@@ -63,7 +63,7 @@ namespace YAWK\WIDGETS\CHATURBATE\STREAM
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation (for development and testing purpose)
+         * @brief (for development and testing purpose)
          */
         public function printObject()
         {
@@ -83,7 +83,7 @@ namespace YAWK\WIDGETS\CHATURBATE\STREAM
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation Load all widget settings.
+         * @brief Load all widget settings.
          */
         public function setProperties()
         {
@@ -122,7 +122,7 @@ namespace YAWK\WIDGETS\CHATURBATE\STREAM
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation This method embeds the chaturbate stream
+         * @brief This method embeds the chaturbate stream
          */
         public function embed()
         {

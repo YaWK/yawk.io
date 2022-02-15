@@ -1,5 +1,5 @@
 <?php
-/** @var $db \YAWK\db */
+/** @param $db \YAWK\db */
 if (!isset($twitterTweet))
 {   // load twitter Tweet widget class
     require_once 'classes/twitterTweet.php';

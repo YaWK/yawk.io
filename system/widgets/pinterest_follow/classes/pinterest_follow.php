@@ -14,17 +14,17 @@ namespace YAWK\WIDGETS\PINTEREST\FOLLOW
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Pinterest Follow Widget
+     * @brief Pinterest Follow Widget
      */
     class pinterestFollow extends \YAWK\widget
     {
-        /** @var object global widget object data */
+        /** @param object global widget object data */
         public $widget = '';
-        /** @var string Title that will be shown above widget */
+        /** @param string Title that will be shown above widget */
         public $pinterestFollowHeading = '';
-        /** @var string Subtext will be displayed beside title */
+        /** @param string Subtext will be displayed beside title */
         public $pinterestFollowSubtext = '';
-        /** @var string The URL of your pinterest channel */
+        /** @param string The URL of your pinterest channel */
         public $pinterestFollowUrl = '';
 
         /**
@@ -33,7 +33,7 @@ namespace YAWK\WIDGETS\PINTEREST\FOLLOW
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
-         * @annotation Load all widget settings on object init.
+         * @brief Load all widget settings on object init.
          */
         public function __construct($db)
         {
@@ -50,7 +50,7 @@ namespace YAWK\WIDGETS\PINTEREST\FOLLOW
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation Example Widget Init
+         * @brief Example Widget Init
          */
         public function init()
         {   // draw headline on screen
@@ -63,7 +63,7 @@ namespace YAWK\WIDGETS\PINTEREST\FOLLOW
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation Embed Pinterest Follow Button
+         * @brief Embed Pinterest Follow Button
          */
         public function embedPinterestFollow()
         {   // check if url is set

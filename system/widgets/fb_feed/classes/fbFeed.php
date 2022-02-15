@@ -13,37 +13,37 @@ namespace YAWK\WIDGETS\FACEBOOK\FEED
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Facebook Page Feed
+     * @brief Facebook Page Feed
      */
 class fbFeed
 {
-    /** @var string your app ID (from developers.facebook.com) */
+    /** @param string your app ID (from developers.facebook.com) */
     public $fbFeedAppId = '';
-    /** @var string your page ID (http://facebook.com/{YOURPAGEID} */
+    /** @param string your page ID (http://facebook.com/{YOURPAGEID} */
     public $fbFeedPageId = '';
-    /** @var string your access token (secret word from developers.facebook.com) */
+    /** @param string your access token (secret word from developers.facebook.com) */
     public $fbFeedAccessToken = '';
-    /** @var string your graph request */
+    /** @param string your graph request */
     public $fbFeedGraphRequest = '/me/feed/';
-    /** @var string fields that should be selected from facebook graph */
+    /** @param string fields that should be selected from facebook graph */
     public $fbFeedFields = 'picture,message,place,created_time,full_picture,coordinates';
-    /** @var string show events of this time range */
+    /** @param string show events of this time range */
     public $fbFeedLimit = '1';
-    /** @var object api result (as object) */
+    /** @param object api result (as object) */
     public $apiObject;
-    /** @var string the json link */
+    /** @param string the json link */
     public $jsonLink;
-    /** @var string date of the posting */
+    /** @param string date of the posting */
     public $eventDate;
-    /** @var string posting date */
+    /** @param string posting date */
     public $dateString;
-    /** @var string date (time ago) helper */
+    /** @param string date (time ago) helper */
     public $fbEventsDatewordCss;
-    /** @var string posting message */
+    /** @param string posting message */
     public $message;
-    /** @var string photo src */
+    /** @param string photo src */
     public $picture;
-    /** @var string place */
+    /** @param string place */
     public $place;
 
     public function __construct($db)

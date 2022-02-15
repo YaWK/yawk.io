@@ -15,7 +15,7 @@ namespace YAWK {
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Email class serve function sendEmail() to send email
+     * @brief Email class serve function sendEmail() to send email
      */
     class email
     {

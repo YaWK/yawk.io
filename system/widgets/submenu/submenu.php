@@ -1,5 +1,5 @@
 <?php
-/** @var $db \YAWK\db */
+/** @param $db \YAWK\db */
 if (!isset($submenu))
 {   // load submenu widget class
     require_once 'classes/submenu.php';

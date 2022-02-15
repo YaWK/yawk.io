@@ -15,15 +15,15 @@ namespace YAWK\WIDGETS\EXAMPLE\DEMO
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Example Widget (empty) for DEMO and development purpose!
+     * @brief Example Widget (empty) for DEMO and development purpose!
      */
     class example extends \YAWK\widget
     {
-        /** @var object global widget object data */
+        /** @param object global widget object data */
         public $widget = '';
-        /** @var string Title that will be shown above widget */
+        /** @param string Title that will be shown above widget */
         public $exampleHeading = '';
-        /** @var string Subtext will be displayed beside title */
+        /** @param string Subtext will be displayed beside title */
         public $exampleSubtext = '';
 
         /**
@@ -32,7 +32,7 @@ namespace YAWK\WIDGETS\EXAMPLE\DEMO
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
-         * @annotation Load all widget settings on object init.
+         * @brief Load all widget settings on object init.
          */
         public function __construct($db)
         {
@@ -49,7 +49,7 @@ namespace YAWK\WIDGETS\EXAMPLE\DEMO
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation (for development and testing purpose)
+         * @brief (for development and testing purpose)
          */
         public function printObject()
         {   // output data to screen
@@ -63,7 +63,7 @@ namespace YAWK\WIDGETS\EXAMPLE\DEMO
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation Example Widget Init
+         * @brief Example Widget Init
          */
         public function init()
         {   // call any function or method you have previously defined in this class

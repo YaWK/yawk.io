@@ -1,7 +1,7 @@
 <?php
 namespace YAWK {
     /**
-     * <b>Admin LTE Template Class</b>
+     * @details <b>Admin LTE Template Class</b>
      *
      * This class serves a few methods that build the Admin LTE view in the backend.<br>
      *
@@ -14,19 +14,21 @@ namespace YAWK {
      * @version    1.0.0
      * @link       http://yawk.io/
      * @since      File available since Release 1.0.0
-     * @annotation Backend class serves a few useful functions for the admin backend.
+     * @brief Backend class serves a few useful functions for the admin backend.
      */
     class AdminLTE
     {
-        /** * @var string contains the backend skin (eg. skin-blue)*/
+        /**
+         * @brief Admin LTE Template Class
+         * @param string contains the backend skin (eg. skin-blue)*/
         public $backendSkin;
-        /** * @var string the desired layout (eg. sidebar-mini ) */
+        /** * @param string the desired layout (eg. sidebar-mini ) */
         public $backendLayout;
         /** * @paceLoader string pace loader on top of page - true or false */
         public $paceLoader;
 
         /**
-         * AdminLTE constructor.
+         * @brief AdminLTE constructor.
          * @param object $db Database object
          */
         public function __construct($db){
@@ -77,7 +79,7 @@ namespace YAWK {
         }
 
         /**
-         * Draw the HTML Header. Loads all .css and .js files
+         * @brief Draw the HTML Header. Loads all .css and .js files
          * @return null
          */
         function drawHtmlHead(){
@@ -244,7 +246,7 @@ namespace YAWK {
     } // ./ drawHtmlHeader
 
         /**
-         * Draw body and header Tag
+         * @brief Draw body and header Tag
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -260,7 +262,7 @@ namespace YAWK {
     }
 
         /**
-         * Draw logo in the top left corner
+         * @brief Draw logo in the top left corner
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -302,7 +304,7 @@ namespace YAWK {
         }
 
         /**
-         * Draw the navbar (top)
+         * @brief Draw the navbar (top)
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -333,7 +335,7 @@ namespace YAWK {
         }
 
         /**
-         * Draw right navbar
+         * @brief Draw right navbar
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -347,7 +349,7 @@ namespace YAWK {
         }
 
         /**
-         * Draw backup icon on navbar top beside preview icon
+         * @brief Draw backup icon on navbar top beside preview icon
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -372,7 +374,7 @@ namespace YAWK {
         }
 
         /**
-         * Draw preview page icon on navbar top beside other notification icons
+         * @brief Draw preview page icon on navbar top beside other notification icons
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -417,8 +419,7 @@ namespace YAWK {
         }
 
         /**
-         * Messages Menu: the small icon in the right corner of top navigation
-         * This is a facebook-ike messaging preview.
+         * @brief Messages Menu: the small icon in the right corner of top navigation. This is a facebook-like messaging preview.
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -510,8 +511,7 @@ namespace YAWK {
 
 
         /**
-         * Webmail Menu: small envelope icon in the right corner of top navigation
-         * This is a preview of your emails (if you use webmail)
+         * @brief Webmail Menu: small envelope icon in the right corner of top navigation. This is a preview of your emails (if you use webmail)
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -642,7 +642,7 @@ namespace YAWK {
         }
 
         /**
-         * Draw navbar notification. This tells you whats going on in your project.
+         * @brief Draw navbar notification. This tells you whats going on in your project.
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -794,7 +794,7 @@ namespace YAWK {
         }
 
         /**
-         * Show your user account details. Counts your friends and connections, let you log out.
+         * @brief Show your user account details. Counts your friends and connections, let you log out.
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -880,7 +880,7 @@ namespace YAWK {
         }
 
         /**
-         * End Navbar
+         * @brief End Navbar
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -900,7 +900,7 @@ namespace YAWK {
         }
 
         /**
-         * Left sidebar navigation
+         * @brief Left sidebar navigation
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1220,7 +1220,7 @@ namespace YAWK {
         }
 
         /**
-         * HTML Content Header (manually written in \includes)
+         * @brief HTML Content Header (manually written in \includes)
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1233,7 +1233,7 @@ namespace YAWK {
         }
 
         /**
-         * HTML Content Header Breadcrumbs (manually written in \includes)
+         * @brief HTML Content Header Breadcrumbs (manually written in \includes)
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1245,7 +1245,7 @@ namespace YAWK {
         }
 
         /**
-         * output the html content - depending wheter its a plugin or a static admin page
+         * @brief output the html content - depending wheter its a plugin or a static admin page
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1317,7 +1317,7 @@ namespace YAWK {
         }
 
         /**
-         * End Content
+         * @brief End Content
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1331,14 +1331,14 @@ namespace YAWK {
         }
 
         /**
-         * Draw a Footer on every backend page.
+         * @brief Draw a Footer on every backend page.
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
          * @return null
          */
         function drawHtmlFooter($db)
-        {   /* @var $db \YAWK\db */
+        {   /* @param $db \YAWK\db */
             $copyright = settings::getSetting($db, "backendFooterCopyright");
             $valueLeft = settings::getSetting($db, "backendFooterValueLeft");
             $valueRight = settings::getSetting($db, "backendFooterValueRight");
@@ -1379,7 +1379,7 @@ namespace YAWK {
 
 
         /**
-         * Draw right, collapsable sidebar
+         * @brief Draw right, collapsable sidebar
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1465,7 +1465,7 @@ namespace YAWK {
         }
 
         /**
-         * Include needed JS files
+         * @brief Include needed JS files
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1488,7 +1488,7 @@ namespace YAWK {
         }
 
         /**
-         * SetUp Backend FX and end html body
+         * @brief SetUp Backend FX and end html body
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
@@ -1513,7 +1513,7 @@ namespace YAWK {
         }
 
         /**
-         * draw a simple collapse box
+         * @brief draw a simple collapse box
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io

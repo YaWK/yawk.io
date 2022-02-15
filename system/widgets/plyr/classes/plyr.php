@@ -15,43 +15,43 @@ namespace YAWK\WIDGETS\PLYR\PLAYER
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Plyr HTML5 Media Player Widget
+     * @brief Plyr HTML5 Media Player Widget
      */
     class plyr extends \YAWK\widget
     {
-        /** @var object global widget object data */
+        /** @param object global widget object data */
         public $widget = '';
-        /** @var string Title that will be shown above widget */
+        /** @param string Title that will be shown above widget */
         public $plyrHeading = '';
-        /** @var string Subtext will be displayed beside title */
+        /** @param string Subtext will be displayed beside title */
         public $plyrSubtext = '';
-        /** @var string URL of the media file to play */
+        /** @param string URL of the media file to play */
         public $plyrMediaFile = '';
-        /** @var string The media file type */
+        /** @param string The media file type */
         public $plyrFiletype = '';
-        /** @var string Player width in pixel or % */
+        /** @param string Player width in pixel or % */
         public $plyrWidth = '100%';
-        /** @var string Poster Image */
+        /** @param string Poster Image */
         public $plyrPoster = '';
-        /** @var string Poster Html Markup */
+        /** @param string Poster Html Markup */
         public $plyrPosterHtml = '';
-        /** @var string Text Track File */
+        /** @param string Text Track File */
         public $plyrTextTrackFile = '';
-        /** @var string Text Track Html Markup */
+        /** @param string Text Track Html Markup */
         public $plyrTextTrackFileHtmlOutput = '';
-        /** @var string Text Track Label */
+        /** @param string Text Track Label */
         public $plyrTextTrackLabel = '';
-        /** @var string Text Track Src Language */
+        /** @param string Text Track Src Language */
         public $plyrTextTrackSrcLang = '';
-        /** @var bool Autoplay true|false */
+        /** @param bool Autoplay true|false */
         public $plyrAutoplay = false;
-        /** @var bool Click to play true|false */
+        /** @param bool Click to play true|false */
         public $plyrClickToPlay = true;
-        /** @var bool Context Menus enabled? */
+        /** @param bool Context Menus enabled? */
         public $plyrDisableContextMenu = true;
-        /** @var bool Hide player controls true|false */
+        /** @param bool Hide player controls true|false */
         public $plyrHideControls = true;
-        /** @var bool Display poster on video end true|false */
+        /** @param bool Display poster on video end true|false */
         public $plyrShowPosterOnEnd = false;
 
         /**
@@ -60,7 +60,7 @@ namespace YAWK\WIDGETS\PLYR\PLAYER
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
-         * @annotation Load all widget settings on object init.
+         * @brief Load all widget settings on object init.
          */
         public function __construct($db)
         {
@@ -77,7 +77,7 @@ namespace YAWK\WIDGETS\PLYR\PLAYER
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation Example Widget Init
+         * @brief Example Widget Init
          */
         public function init()
         {   // call any functions or methods you have previously defined in this class
@@ -97,7 +97,7 @@ namespace YAWK\WIDGETS\PLYR\PLAYER
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation check and set media file type
+         * @brief check and set media file type
         */
         public function checkMediaFileType()
         {

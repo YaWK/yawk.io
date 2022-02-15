@@ -11,29 +11,29 @@ namespace YAWK\BACKUP\FILES
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation This class serves methods to create backup from files.
+     * @brief This class serves methods to create backup from files.
      */
     class fileBackup extends \YAWK\BACKUP\backup
     {
-        /** @var object zip object */
+        /** @param object zip object */
         public $zip;
-        /** @var string source folder to backup */
+        /** @param string source folder to backup */
         public $sourceFolder = '';
-        /** @var string path, where the backup will be stored */
+        /** @param string path, where the backup will be stored */
         public $targetFolder = '../system/backup/current/';
-        /** @var string default filename of .zip file */
+        /** @param string default filename of .zip file */
         public $backupZipFile = 'backup-custom.zip';
-        /** @var string hash value of .zip file */
+        /** @param string hash value of .zip file */
         public $hashValue = '';
-        /** @var string content folder */
+        /** @param string content folder */
         public $contentFolder = '../content/';
-        /** @var string media folder */
+        /** @param string media folder */
         public $mediaFolder = '../media/';
-        /** @var string system folder */
+        /** @param string system folder */
         public $systemFolder = '../system/';
-        /** @var string current processing folder */
+        /** @param string current processing folder */
         public $currentFolder = '';
-        /** @var string final filename*/
+        /** @param string final filename*/
         public $finalFilename = '';
 
 
@@ -69,7 +69,7 @@ namespace YAWK\BACKUP\FILES
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @annotation  return bool if $this->backupZipFile exists
+         * @brief  return bool if $this->backupZipFile exists
          * @return      bool true|false
          */
         public function zipFileExists()
@@ -94,7 +94,7 @@ namespace YAWK\BACKUP\FILES
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @annotation  write all relevant backup information into this file
+         * @brief  write all relevant backup information into this file
          * @return      array $this->backupSettings
          */
         public function setBackupSettings()
@@ -113,7 +113,7 @@ namespace YAWK\BACKUP\FILES
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @annotation  return hashed string or false
+         * @brief  return hashed string or false
          * @return      string|bool
          */
         public function getHashValue($db, $file)
@@ -142,7 +142,7 @@ namespace YAWK\BACKUP\FILES
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @annotation  return bool if $this->backupZipFile exists
+         * @brief  return bool if $this->backupZipFile exists
          * @return      bool true|false
          */
         public function doFolderBackup($db)
@@ -460,7 +460,7 @@ namespace YAWK\BACKUP\FILES
          * @author      Daniel Retzl <danielretzl@gmail.com>
          * @version     1.0.0
          * @link        http://yawk.io
-         * @annotation  return bool if zip archive exists
+         * @brief  return bool if zip archive exists
          * @return      bool true|false
          */
         public function startFileBackup($db)

@@ -18,37 +18,37 @@ namespace YAWK {
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Widgets are small, useful tools that you can include everywhere in your website.
+     * @brief Widgets are small, useful tools that you can include everywhere in your website.
      */
     class widget
     {
-        /** * @var int 0|1 published or not */
+        /** * @param int 0|1 published or not */
         public $published;
-        /** * @var int widget ID */
+        /** * @param int widget ID */
         public $id;
-        /** * @var string widget name */
+        /** * @param string widget name */
         public $name;
-        /** * @var int order sortation number */
+        /** * @param int order sortation number */
         public $sort;
-        /** * @var string template position to appear */
+        /** * @param string template position to appear */
         public $position;
-        /** * @var int widget type number */
+        /** * @param int widget type number */
         public $widgetType;
-        /** * @var int margin from top in px */
+        /** * @param int margin from top in px */
         public $marginTop;
-        /** * @var int margin from bottom in px */
+        /** * @param int margin from bottom in px */
         public $marginBottom;
-        /** * @var int ID of the page where this widget should appear */
+        /** * @param int ID of the page where this widget should appear */
         public $pageID;
-        /** * @var string date when widget publishing starts */
+        /** * @param string date when widget publishing starts */
         public $date_publish;
-        /** * @var string date when widget publishing ends */
+        /** * @param string date when widget publishing ends */
         public $date_unpublish;
-        /** * @var string title to identify the widget */
+        /** * @param string title to identify the widget */
         public $widgetTitle;
-        /** * @var string foldername of this widget */
+        /** * @param string foldername of this widget */
         public $folder;
-        /** * @var array widget settings data array placeholder */
+        /** * @param array widget settings data array placeholder */
         public $data;
 
 
@@ -57,7 +57,7 @@ namespace YAWK {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation (for development and testing purpose)
+         * @brief (for development and testing purpose)
          */
         public function printObject()
         {   // output data to screen
@@ -140,7 +140,7 @@ namespace YAWK {
          */
         public static function getAllSettingsIntoArray($db, $widgetID) // get all settings from db like property
         {
-            /* @var $db \YAWK\db */
+            /* @param $db \YAWK\db */
             if ($res = $db->query("SELECT * FROM {widget_settings} WHERE widgetID = '".$widgetID."' ORDER by sortation"))
             {
                 $settingsArray = array();
@@ -417,7 +417,7 @@ namespace YAWK {
 
                         /* SELECT FIELD */
                         /* GALLERY SELECTOR */
-                        /** @var $db \YAWK\db */
+                        /** @param $db \YAWK\db */
                         if ($setting['fieldType'] === "selectGallery")
                         {
                             // set required assets
@@ -546,7 +546,7 @@ namespace YAWK {
          */
         static function create($db, $widgetType, $pageID, $positions)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             global $status;
             if ($res_widgets = $db->query("SELECT MAX(id), MAX(sort) FROM {widgets}")) {
                 // generate ID
@@ -691,7 +691,7 @@ namespace YAWK {
             // current date + time
             $atm = date("Y-m-d G:i:s");
 
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             global $currentpage;
             if ($res = $db->query("SELECT cw.id,cw.published,cw.widgetType,cw.pageID,cw.sort,cw.position, cw.date_publish, cw.date_unpublish, cwt.name, cwt.folder
     							FROM {widgets} as cw
@@ -739,7 +739,7 @@ namespace YAWK {
          */
         static function getWidgetId($db, $id)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             if ($res = $db->query("SELECT cp.id
                     FROM {pages} as cp
                     JOIN {widgets} as cw on cp.id = cw.pageID
@@ -770,7 +770,7 @@ namespace YAWK {
          */
         static function getWidget($db, $id)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             global $allpagescode;
             if ($res = $db->query("SELECT cw.pageID, cp.title
                     FROM {widgets} as cw
@@ -808,7 +808,7 @@ namespace YAWK {
          * @return bool|mixed
          */
         static function getWidgetsArray($db)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             if ($res = $db->query("SELECT id, name, (
                              SELECT COUNT( * )
                              FROM {widgets}
@@ -843,7 +843,7 @@ namespace YAWK {
          */
         static function getContentWidget($db, $id)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             if ($res = $db->query("SELECT cw.id,cw.published,cw.widgetType,cw.pageID,cw.sort,cw.position, cwt.name, cwt.folder
     							FROM {widgets} as cw
     							JOIN {widget_types} as cwt on cw.widgetType = cwt.id
@@ -876,7 +876,7 @@ namespace YAWK {
          */
         static function loadWidget($db, $id)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             if ($res = $db->query("SELECT cw.id,cw.published,cw.widgetType, cwt.name, cwt.folder
     							FROM {widgets} as cw
     							JOIN {widget_types} as cwt on cw.widgetType = cwt.id
@@ -924,7 +924,7 @@ namespace YAWK {
          */
         function toggleOffline($db, $id, $published)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             // TOGGLE WIDGET STATUS
             if ($res = $db->query("UPDATE {widgets}
                           SET published = '" . $published . "'
@@ -954,7 +954,7 @@ namespace YAWK {
         function copy($db, $id)
         {
             $originalWidgetID = $id;
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             if ($res_widgets = $db->query("SELECT * FROM {widgets} WHERE id = '" . $id . "'"))
             {
                 // get MAX id from widgets db
@@ -1045,7 +1045,7 @@ namespace YAWK {
          */
         function delete($db, $widget)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             if ($res = $db->query("DELETE FROM {widgets} WHERE id = '" . $widget . "'")) {
                 // delete corresponding widget settings
                 if (!$res_settings = $db->query("DELETE FROM {widget_settings} WHERE widgetID = '" . $widget . "'")) {
@@ -1070,12 +1070,12 @@ namespace YAWK {
          * @return bool
          */
         function loadProperties($db, $id)
-        {   /** @var $db \YAWK\db */
+        {   /** @param $db \YAWK\db */
             if (isset($id))
             {   // escape string
                 $id = $db->quote($id);
             }
-            /** @var $db \YAWK\db $res */
+            /** @param $db \YAWK\db $res */
             if ($res = $db->query("SELECT cw.id, cw.published,cw.widgetType,cw.pageID,cw.sort,cw.position, cw.date_publish, cw.date_unpublish, cw.widgetTitle, cwt.name, cw.marginTop, cw.marginBottom, cwt.folder
     							FROM {widgets} as cw
     							JOIN {widget_types} as cwt on cw.widgetType = cwt.id
@@ -1121,7 +1121,7 @@ namespace YAWK {
          */
         function save($db)
         {
-            /** @var $db \YAWK\db */
+            /** @param $db \YAWK\db */
             $this->position = mb_strtolower($this->position);
             // if widget should be displayed on all pages, pageID should be zero
             if (empty($this->pageID || (!isset($this->pageID)))) { $this->pageID = 0; }

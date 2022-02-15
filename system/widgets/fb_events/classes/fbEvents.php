@@ -28,135 +28,135 @@ namespace YAWK\WIDGETS\FACEBOOK\EVENTS
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Use Facebook Graph API to get Events from a facebook page and embed this data with your own design.
+     * @brief Use Facebook Graph API to get Events from a facebook page and embed this data with your own design.
      */
 class fbEvents
 {
-    /** @var object global widget object data */
+    /** @param object global widget object data */
     public $widget = '';
-    /** @var string your app ID (from developers.facebook.com) */
+    /** @param string your app ID (from developers.facebook.com) */
     public $fbEventsAppId = '';
-    /** @var string your page ID (http://facebook.com/{YOURPAGEID} */
+    /** @param string your page ID (http://facebook.com/{YOURPAGEID} */
     public $fbEventsPageId = '';
-    /** @var string your access token (secret word from developers.facebook.com) */
+    /** @param string your access token (secret word from developers.facebook.com) */
     public $fbEventsAccessToken = '';
-    /** @var string user defined layout */
+    /** @param string user defined layout */
     public $fbEventsLayout = 'left';
-    /** @var string show cover image? true|false */
+    /** @param string show cover image? true|false */
     public $fbEventsShowCover = 'true';
-    /** @var string any css class for the cover image */
+    /** @param string any css class for the cover image */
     public $fbEventsCoverClass = '';
-    /** @var string which events should be shown? future|past|all */
+    /** @param string which events should be shown? future|past|all */
     public $fbEventsType = 'future';
-    /** @var string show events of this time range */
+    /** @param string show events of this time range */
     public $fbEventsYearRange = '1';
-    /** @var string how events should be sorted: ascending|descending */
+    /** @param string how events should be sorted: ascending|descending */
     public $fbEventsSortation = 'asc';
-    /** @var string user defined start date */
+    /** @param string user defined start date */
     public $fbEventsStartDate = '';
-    /** @var string user defined end date */
+    /** @param string user defined end date */
     public $fbEventsEndDate = '';
-    /** @var string events since this date (used for calc) */
+    /** @param string events since this date (used for calc) */
     public $sinceDate = '';
-    /** @var string events until this date (used for calc) */
+    /** @param string events until this date (used for calc) */
     public $untilDate = '';
-    /** @var string headline before the widget (heading + subtext, if set) */
+    /** @param string headline before the widget (heading + subtext, if set) */
     public $headline = '';
-    /** @var string heading before widget */
+    /** @param string heading before widget */
     public $fbEventsHeading = '';
-    /** @var string subtext before widget */
+    /** @param string subtext before widget */
     public $fbEventsSubtext = '';
-    /** @var string fields that should be selected from facebook graph */
+    /** @param string fields that should be selected from facebook graph */
     public $fields = 'id,name,description,place,start_time,cover,maybe_count,attending_count,is_canceled';
-    /** @var object api result (as object) */
+    /** @param object api result (as object) */
     public $apiObject;
-    /** @var array all api result data (multidimensional array) */
+    /** @param array all api result data (multidimensional array) */
     public $data = array();
-    /** @var array current event (multidimensional array) */
+    /** @param array current event (multidimensional array) */
     public $event = array();
-    /** @var object datetime of current event */
+    /** @param object datetime of current event */
     public $eventDate;
-    /** @var string pretty formatted date - will be used in frontend view */
+    /** @param string pretty formatted date - will be used in frontend view */
     public $prettyDate = '';
-    /** @var string calculated date will be used in frontend view */
+    /** @param string calculated date will be used in frontend view */
     public $dateString = '';
-    /** @var string should interested people be shown? 0|1 */
+    /** @param string should interested people be shown? 0|1 */
     public $fbEventsShowCounter = '1';
-    /** @var int how many people are interested or attending - used for calculations */
+    /** @param int how many people are interested or attending - used for calculations */
     public $iPeopleCount = '';
-    /** @var string how many people are interested - will be used in frontend view */
+    /** @param string how many people are interested - will be used in frontend view */
     public $showPeople = '';
-    /** @var string font size of the event title */
+    /** @param string font size of the event title */
     public $fbEventsFontEventName = 'h2';
-    /** @var string internal placeholder variable */
+    /** @param string internal placeholder variable */
     public $fontEventNameH = '';
-    /** @var string custom css of the event title */
+    /** @param string custom css of the event title */
     public $fbEventsFontEventNameCss = '';
-    /** @var string font size of the event date */
+    /** @param string font size of the event date */
     public $fbEventsFontDate = 'h4';
-    /** @var string internal placeholder variable */
+    /** @param string internal placeholder variable */
     public $fontEventDateH = '';
-    /** @var string custom css of the event date */
+    /** @param string custom css of the event date */
     public $fbEventsFontDateCss = '';
-    /** @var string dateword (dateString) as small tag? true|false */
+    /** @param string dateword (dateString) as small tag? true|false */
     public $fbEventsFontDateword = 'true';
-    /** @var string custom css of the dateword (dateString) */
+    /** @param string custom css of the dateword (dateString) */
     public $fbEventsDatewordCss = '';
-    /** @var string font size of the event location */
+    /** @param string font size of the event location */
     public $fbEventsFontLocation = 'globaltext';
-    /** @var string custom css of the event location */
+    /** @param string custom css of the event location */
     public $fbEventsFontLocationCss = '';
-    /** @var string internal placeholder var */
+    /** @param string internal placeholder var */
     public $fontEventLocationH = '';
-    /** @var string font size of the event address */
+    /** @param string font size of the event address */
     public $fbEventsFontAddress = 'globaltext';
-    /** @var string internal placeholder var */
+    /** @param string internal placeholder var */
     public $fontEventAddressH = '';
-    /** @var string custom css of the event address */
+    /** @param string custom css of the event address */
     public $fbEventsFontAddressCss = '';
-    /** @var string font size of the event description */
+    /** @param string font size of the event description */
     public $fbEventsFontDescription = 'globaltext';
-    /** @var string internal placeholder var */
+    /** @param string internal placeholder var */
     public $fontEventDescriptionH = '';
-    /** @var string custom css of the event description */
+    /** @param string custom css of the event description */
     public $fbEventsFontDescriptionCss = '';
-    /** @var string font size of the event people (interested / attending) */
+    /** @param string font size of the event people (interested / attending) */
     public $fbEventsFontPeople = 'globaltext';
-    /** @var string internal placeholder var */
+    /** @param string internal placeholder var */
     public $fontEventPeopleH = '';
-    /** @var string custom css of the event people (interested / attending) */
+    /** @param string custom css of the event people (interested / attending) */
     public $fbEventsFontPeopleCss = 'text-muted';
-    /** @var string font size of canceled event */
+    /** @param string font size of canceled event */
     public $fbEventsFontCanceled = 'h3';
-    /** @var string custom css of canceled event */
+    /** @param string custom css of canceled event */
     public $fbEventsFontCanceledCss = 'text-danger';
-    /** @var string font title html markup start */
+    /** @param string font title html markup start */
     public $fontTitleStart = '';
-    /** @var string font title html markup end */
+    /** @param string font title html markup end */
     public $fontTitleEnd = '';
-    /** @var string display <hr> between address and description */
+    /** @param string display <hr> between address and description */
     public $fbEventsDisplaySpacer = 'true';
-    /** @var string background color of the event jumbotron box */
+    /** @param string background color of the event jumbotron box */
     public $fbEventsBgColor = '222222';
-    /** @var string text color of the event jumbotron box */
+    /** @param string text color of the event jumbotron box */
     public $fbEventsTextColor = 'CCCCCC';
-    /** @var string address string */
+    /** @param string address string */
     public $address = '';
-    /** @var string canceled events strike-trough? true|false */
+    /** @param string canceled events strike-trough? true|false */
     public $fbEventsCanceledOn = 'true';
-    /** @var string css class of seperator line  */
+    /** @param string css class of seperator line  */
     public $fbEventsHrClass = '';
-    /** @var string facebook link? true|false */
+    /** @param string facebook link? true|false */
     public $fbEventsFbLink = 'true';
-    /** @var string display google map? true|false */
+    /** @param string display google map? true|false */
     public $fbEventsGoogleMap = 'true';
-    /** @var int limit event to (x) */
+    /** @param int limit event to (x) */
     public $fbEventsLimit = 0;
-    /** @var string limit markup */
+    /** @param string limit markup */
     public $limit = '';
-    /** @var string info, if no event was found */
+    /** @param string info, if no event was found */
     public $noEventInfo = '';
-    /** @var bool true if no events were found */
+    /** @param bool true if no events were found */
     public $noEvents = '';
 
     public function __construct($db)

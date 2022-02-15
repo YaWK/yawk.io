@@ -12,12 +12,12 @@ namespace YAWK
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation The controller function filterfilename returns string.
+     * @brief The controller function filterfilename returns string.
      */
 
 class controller
 {
-    /** * @var string the filename to filter */
+    /** * @param string the filename to filter */
     public $filename;
 
     function __construct()
@@ -27,8 +27,8 @@ class controller
 
     public static function frontEndInit($db, $currentpage, $user, $template)
     {
-        /** @var $db \YAWK\db
-         * @var $currentpage \YAWK\page
+        /** @param $db \YAWK\db
+         * @param $currentpage \YAWK\page
          *
          *  INIT FRONTEND STARTS HERE
          */

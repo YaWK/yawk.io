@@ -12,7 +12,7 @@ namespace YAWK\PLUGINS\FAQ {
      * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Handles the Blog System.
+     * @brief Handles the Blog System.
      */
     class faq {
         /** * @var int faq ID */

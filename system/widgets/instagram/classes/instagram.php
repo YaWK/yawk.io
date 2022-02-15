@@ -13,21 +13,21 @@ namespace YAWK\WIDGETS\INSTAGRAM\POSTING {
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Embed Instagram on your page.
+     * @brief Embed Instagram on your page.
      */
     class instagram extends \YAWK\widget
     {
-        /** @var object global widget object data */
+        /** @param object global widget object data */
         public $widget = '';
-        /** @var string Any valid instagram url */
+        /** @param string Any valid instagram url */
         public $instagramUrl = '';
-        /** @var string Width of your posting */
+        /** @param string Width of your posting */
         public $instagramWidth = '';
-        /** @var string Link target (_blank, _parent, _self) */
+        /** @param string Link target (_blank, _parent, _self) */
         public $instagramTarget = '';
-        /** @var string Heading above widget */
+        /** @param string Heading above widget */
         public $instagramHeading = '';
-        /** @var string Subtext beside heading */
+        /** @param string Subtext beside heading */
         public $instagramSubtext = '';
 
         /**
@@ -36,7 +36,7 @@ namespace YAWK\WIDGETS\INSTAGRAM\POSTING {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
-         * @annotation Load all widget settings on object init.
+         * @brief Load all widget settings on object init.
          */
         public function __construct($db)
         {
@@ -53,7 +53,7 @@ namespace YAWK\WIDGETS\INSTAGRAM\POSTING {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation (for development and testing purpose)
+         * @brief (for development and testing purpose)
          */
         public function printObject()
         {   // output data to screen
@@ -67,7 +67,7 @@ namespace YAWK\WIDGETS\INSTAGRAM\POSTING {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation Embed Google Maps
+         * @brief Embed Google Maps
          */
         public function init()
         {   // embed Instagram

@@ -15,35 +15,35 @@ namespace YAWK\WIDGETS\FACEBOOK\EXAMPLE
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Facebook Graph API explorer widget - for demo and development purpose only!
+     * @brief Facebook Graph API explorer widget - for demo and development purpose only!
      */
 class fbExample
 {
-    /** @var string your app ID (from developers.facebook.com) */
+    /** @param string your app ID (from developers.facebook.com) */
     public $fbExampleAppId = '';
-    /** @var string your page ID (http://facebook.com/{YOURPAGEID} */
+    /** @param string your page ID (http://facebook.com/{YOURPAGEID} */
     public $fbExamplePageId = '';
-    /** @var string your access token (secret word from developers.facebook.com) */
+    /** @param string your access token (secret word from developers.facebook.com) */
     public $fbExampleAccessToken = '';
-    /** @var string your graph request */
+    /** @param string your graph request */
     public $fbExampleGraphRequest = '/events/';
-    /** @var string fields that should be selected from facebook graph */
+    /** @param string fields that should be selected from facebook graph */
     public $fbExampleFields = 'id,name,description,place,start_time,cover,maybe_count,attending_count,is_canceled';
-    /** @var string show events of this time range */
+    /** @param string show events of this time range */
     public $fbExampleYearRange = '1';
-    /** @var string user defined start date */
+    /** @param string user defined start date */
     public $fbExampleStartDate = '';
-    /** @var string user defined end date */
+    /** @param string user defined end date */
     public $fbExampleEndDate = '';
-    /** @var string which events should be shown? future|past|all */
+    /** @param string which events should be shown? future|past|all */
     public $fbExampleType = 'future';
-    /** @var string events since this date (used for calc) */
+    /** @param string events since this date (used for calc) */
     public $sinceDate = '';
-    /** @var string events until this date (used for calc) */
+    /** @param string events until this date (used for calc) */
     public $untilDate = '';
-    /** @var string true|false was the js SDK loaded? */
+    /** @param string true|false was the js SDK loaded? */
     public $jsSDKLoaded = 'false';
-    /** @var object api result (as object) */
+    /** @param object api result (as object) */
     public $apiObject;
 
 

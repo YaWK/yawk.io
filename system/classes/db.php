@@ -12,13 +12,13 @@ namespace YAWK
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Mysqli database class
+     * @brief Mysqli database class
      */
     class db {
 
-        /** @var array $config mysql configuration (host, username, database etc...) */
+        /** @param array $config mysql configuration (host, username, database etc...) */
         private $config;
-        /** @var object $connection holds the mysqli database connection */
+        /** @param object $connection holds the mysqli database connection */
         private $connection;
 
         /**

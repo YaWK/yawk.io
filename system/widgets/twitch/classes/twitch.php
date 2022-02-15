@@ -14,29 +14,29 @@ namespace YAWK\WIDGETS\TWITCH\EMBED
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Embed any Twitch channel
+     * @brief Embed any Twitch channel
      */
     class twitch extends \YAWK\widget
     {
-        /** @var object global widget object data */
+        /** @param object global widget object data */
         public $widget = '';
-        /** @var string Title that will be shown above widget */
+        /** @param string Title that will be shown above widget */
         public $twitchHeading = '';
-        /** @var string Subtext will be displayed beside title */
+        /** @param string Subtext will be displayed beside title */
         public $twitchSubtext = '';
-        /** @var string Channel that will be included */
+        /** @param string Channel that will be included */
         public $twitchChannel = "yourChannel";
-        /** @var string Height of your channel */
+        /** @param string Height of your channel */
         public $twitchChannelHeight = "720";
-        /** @var string Width of your channel */
+        /** @param string Width of your channel */
         public $twitchChannelWidth = "100%";
-        /** @var bool Allow fullscreen? */
+        /** @param bool Allow fullscreen? */
         public $twitchChannelFullscreen = true;
-        /** @var int Show chat window? */
+        /** @param int Show chat window? */
         public $twitchChat = "1";
-        /** @var int Chat window height */
+        /** @param int Chat window height */
         public $twitchChatHeight = "250";
-        /** @var int Chat window width */
+        /** @param int Chat window width */
         public $twitchChatWidth = "100%";
 
         /**
@@ -45,7 +45,7 @@ namespace YAWK\WIDGETS\TWITCH\EMBED
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
-         * @annotation Load all widget settings on object init.
+         * @brief Load all widget settings on object init.
          */
         public function __construct($db)
         {
@@ -62,7 +62,7 @@ namespace YAWK\WIDGETS\TWITCH\EMBED
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation Twitch Widget Init
+         * @brief Twitch Widget Init
          */
         public function init()
         {   // display heading

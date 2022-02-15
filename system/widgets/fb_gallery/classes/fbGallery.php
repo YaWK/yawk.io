@@ -21,53 +21,53 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Facebook Gallery Widget - grab photos from your Facebook albums.
+     * @brief Facebook Gallery Widget - grab photos from your Facebook albums.
      */
     class fbGallery
     {
-        /** @var string your app ID (from developers.facebook.com) */
+        /** @param string your app ID (from developers.facebook.com) */
         public $fbGalleryAppId = '';
-        /** @var string your page ID (http://facebook.com/{YOURPAGEID} */
+        /** @param string your page ID (http://facebook.com/{YOURPAGEID} */
         public $fbGalleryAlbumId = '';
-        /** @var string your access token (secret word from developers.facebook.com) */
+        /** @param string your access token (secret word from developers.facebook.com) */
         public $fbGalleryAccessToken = '';
-        /** @var string your graph request (the Album ID) */
+        /** @param string your graph request (the Album ID) */
         public $fbGalleryGraphRequest = '/albums/';
-        /** @var string fields that should be selected from facebook graph */
+        /** @param string fields that should be selected from facebook graph */
         public $fbGalleryFields = 'images,source,name,id';
-        /** @var string show ITEMS of this time range */
+        /** @param string show ITEMS of this time range */
         public $fbGalleryYearRange = '10';
-        /** @var string user defined start date */
+        /** @param string user defined start date */
         public $fbGalleryStartDate = '';
-        /** @var string user defined end date */
+        /** @param string user defined end date */
         public $fbGalleryEndDate = '';
-        /** @var string which items should be shown? future|past|all */
+        /** @param string which items should be shown? future|past|all */
         public $fbGalleryType = 'past';
-        /** @var string gallery heading */
+        /** @param string gallery heading */
         public $fbGalleryHeading = '';
-        /** @var string gallery small subtext beside heading */
+        /** @param string gallery small subtext beside heading */
         public $fbGallerySubtext = '';
-        /** @var string ITEMS since this date (used for calc) */
+        /** @param string ITEMS since this date (used for calc) */
         public $sinceDate = '';
-        /** @var int limit entries to (n) */
+        /** @param int limit entries to (n) */
         public $fbGalleryLimit = 0;
-        /** @var string sortation */
+        /** @param string sortation */
         public $fbGallerySortation = 'desc';
-        /** @var int layout */
+        /** @param int layout */
         public $fbGalleryLayout = 6;
-        /** @var int show info under the gallery? 0|1  */
+        /** @param int show info under the gallery? 0|1  */
         public $fbGalleryImageInfo = 1;
-        /** @var string fixed image height in pixels or auto (select field) */
+        /** @param string fixed image height in pixels or auto (select field) */
         public $fbGalleryFixedImageHeight = 'auto';
-        /** @var int shuffle 0|1 if true, images get shuffled on page load */
+        /** @param int shuffle 0|1 if true, images get shuffled on page load */
         public $shuffle = 0;
-        /** @var string ITEMS until this date (used for calc) */
+        /** @param string ITEMS until this date (used for calc) */
         public $untilDate = '';
-        /** @var string true|false was the js SDK loaded? */
+        /** @param string true|false was the js SDK loaded? */
         public $jsSDKLoaded = 'false';
-        /** @var object api result (as object) */
+        /** @param object api result (as object) */
         public $apiObject;
-        /** @var array temporary settings array */
+        /** @param array temporary settings array */
         public $settings;
 
 

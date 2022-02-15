@@ -14,19 +14,19 @@ namespace YAWK\WIDGETS\BLOG\WIDGET {
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Embed a blog on your website.
+     * @brief Embed a blog on your website.
      */
     class blogWidget extends \YAWK\widget
     {
-        /** @var object global widget object data */
+        /** @param object global widget object data */
         public $widget = '';
-        /** @var int Gallery ID */
+        /** @param int Gallery ID */
         public $blogID = '';
-        /** @var string Title that will be shown above widget */
+        /** @param string Title that will be shown above widget */
         public $blogHeading = '';
-        /** @var string Subtext will be displayed beside title */
+        /** @param string Subtext will be displayed beside title */
         public $blogSubtext = '';
-        /** @var int Limit Entries (if 0 all items will be displayed)
+        /** @param int Limit Entries (if 0 all items will be displayed)
          * This can overrule the global blog setting and has only impact
          * to the specific blog widget */
         public $blogLimitEntries = '';
@@ -39,7 +39,7 @@ namespace YAWK\WIDGETS\BLOG\WIDGET {
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
-         * @annotation Load all widget settings on object init.
+         * @brief Load all widget settings on object init.
          */
         public function __construct($db)
         {
@@ -56,7 +56,7 @@ namespace YAWK\WIDGETS\BLOG\WIDGET {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation (for development and testing purpose)
+         * @brief (for development and testing purpose)
          */
         public function printObject()
         {
@@ -70,7 +70,7 @@ namespace YAWK\WIDGETS\BLOG\WIDGET {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation load Javascript and draw image gallery
+         * @brief load Javascript and draw image gallery
          */
         public function init($db)
         {
@@ -85,11 +85,11 @@ namespace YAWK\WIDGETS\BLOG\WIDGET {
          * @version 1.0.0
          * @link http://yawk.io
          * @param db object Database object
-         * @annotation (for development and testing purpose)
+         * @brief (for development and testing purpose)
          */
         public function drawBlogWidget($db)
         {
-            /** @var $db \YAWK\db * */
+            /** @param $db \YAWK\db * */
             error_reporting(1);
             if (!isset($this->blogID) || (empty($this->blogID)))
             {
@@ -126,7 +126,7 @@ namespace YAWK\WIDGETS\BLOG\WIDGET {
 
                 // if blog is not offline, get entries from db + draw it on screen.
                 if ($blog->published != 0) {
-                    /** @var $widget \YAWK\widget */
+                    /** @param $widget \YAWK\widget */
                     // get headline
                     $this->headline = $this->getHeading($this->blogHeading, $this->blogSubtext);
 

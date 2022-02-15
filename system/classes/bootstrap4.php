@@ -12,11 +12,11 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Helper function to output custom (overriden) bootstrap 4 css (settings.css)
+     * @brief Helper function to output custom (overriden) bootstrap 4 css (settings.css)
      */
     class bootstrap4 extends \YAWK\FRAMEWORK\cssFramework
     {
-        /** @var string all the css as string */
+        /** @param string all the css as string */
         public $cssCode = '';
 
         public function init()
@@ -51,7 +51,7 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation add bootstrap 4 cards component to this css code string
+         * @brief add bootstrap 4 cards component to this css code string
          */
         public function bs4_CardsCss()
         {
@@ -309,7 +309,7 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation add Bootstrap 3 buttons component to this css code string
+         * @brief add Bootstrap 3 buttons component to this css code string
          */
         public function bs4_ButtonsCss()
         {
@@ -692,7 +692,7 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation add Bootstrap 4 jumbotron component to this css code string
+         * @brief add Bootstrap 4 jumbotron component to this css code string
          */
         public function bs4_JumbotronCss()
         {
@@ -752,7 +752,7 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation add Bootstrap 4 list group component to this css code string
+         * @brief add Bootstrap 4 list group component to this css code string
          */
         public function bs4_ListGroupCss()
         {
@@ -1083,7 +1083,7 @@ $this->cssCode .= "
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation add Bootstrap 4 forms component to this css code string
+         * @brief add Bootstrap 4 forms component to this css code string
          */
         public function bs4_FormsCss()
         {

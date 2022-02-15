@@ -14,23 +14,23 @@ namespace YAWK\WIDGETS\BUBBLUS\MINDMAP
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @link       http://yawk.io
-     * @annotation Embed Bubbl.us Presentations on your pages.
+     * @brief Embed Bubbl.us Presentations on your pages.
      */
     class bubblus
     {
-        /** @var object global widget object data */
+        /** @param object global widget object data */
         public $widget = '';
-        /** @var string URL of your bubblus presentation */
+        /** @param string URL of your bubblus presentation */
         public $bubblusUrl = '';
-        /** @var string Width in percent */
+        /** @param string Width in percent */
         public $bubblusWidth = '100%';
-        /** @var string Height in px */
+        /** @param string Height in px */
         public $bubblusHeight = '370';
-        /** @var string Heading */
+        /** @param string Heading */
         public $bubblusHeading = '';
-        /** @var string Subtext */
+        /** @param string Subtext */
         public $bubblusSubtext = '';
-        /** @var string Headline HTML Markup */
+        /** @param string Headline HTML Markup */
         public $bubblusHeadline = '';
 
         /**
@@ -39,7 +39,7 @@ namespace YAWK\WIDGETS\BUBBLUS\MINDMAP
          * @version 1.0.0
          * @link http://yawk.io
          * @param object $db Database Object
-         * @annotation Load all widget settings on object init.
+         * @brief Load all widget settings on object init.
          */
         public function __construct($db)
         {
@@ -56,7 +56,7 @@ namespace YAWK\WIDGETS\BUBBLUS\MINDMAP
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation (for development and testing purpose)
+         * @brief (for development and testing purpose)
          */
         public function printObject()
         {
@@ -70,7 +70,7 @@ namespace YAWK\WIDGETS\BUBBLUS\MINDMAP
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation Load all widget settings.
+         * @brief Load all widget settings.
          */
         public function setProperties()
         {
@@ -105,7 +105,7 @@ namespace YAWK\WIDGETS\BUBBLUS\MINDMAP
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @version 1.0.0
          * @link http://yawk.io
-         * @annotation This method does the setup and embed job
+         * @brief This method does the setup and embed job
          */
         public function init()
         {
