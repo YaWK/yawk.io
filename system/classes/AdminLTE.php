@@ -1,5 +1,8 @@
 <?php
 namespace YAWK\BACKEND {
+
+    use YAWK\alert;
+    use YAWK\controller;
     use YAWK\settings;
     /**
      * @details <b>Admin LTE Template Class</b>
@@ -1214,12 +1217,12 @@ namespace YAWK\BACKEND {
             /* check if a search q is set */
             if (isset($_GET['q']) && (!empty($_GET['q'])))
             {
-                \YAWK\alert::draw("success", "Suchfeld", "Begriff: $_GET[q]", "", 2000);
+                alert::draw("success", "Suchfeld", "Begriff: $_GET[q]", "", 2000);
             }
 
             if(isset($_GET['page']))
             {   // load given page
-                include(\YAWK\controller::filterfilename($db, $lang, "includes/".$_GET['page']));
+                include(controller::filterfilename($db, $lang, "includes/".$_GET['page']));
                 self::drawHtmlContentClose();
             }
 
@@ -1227,7 +1230,7 @@ namespace YAWK\BACKEND {
             {   // load given plugin
                 $plugin = $_GET['plugin'];
                 $plugin_name = "../system/plugins/$plugin/admin/$plugin";
-                include(\YAWK\controller::filterfilename($db, $lang, $plugin_name));
+                include(controller::filterfilename($db, $lang, $plugin_name));
                 self::drawHtmlContentClose();
             }
             else if (isset($_GET['plugin']) && (isset($_GET['pluginpage'])))
@@ -1235,14 +1238,14 @@ namespace YAWK\BACKEND {
                 $plugin = $_GET['plugin'];
                 $pluginPage = $_GET['pluginpage'];
                 $plugin_name = "../system/plugins/$plugin/admin/$pluginPage";
-                include(\YAWK\controller::filterfilename($db, $lang, $plugin_name));
+                include(controller::filterfilename($db, $lang, $plugin_name));
                 self::drawHtmlContentClose();
             }
             else if (isset($_GET['pluginid']))
             {   // get plugin name for given id from db
                 $plugin = \YAWK\plugin::getNameById($db, $_GET['pluginid']);
                 $plugin_name = "../system/plugins/$plugin/admin/$plugin";
-                include(\YAWK\controller::filterfilename($db, $lang, $plugin_name));
+                include(controller::filterfilename($db, $lang, $plugin_name));
                 self::drawHtmlContentClose();
             }
             else if (!isset($_GET['page']))
@@ -1264,7 +1267,7 @@ namespace YAWK\BACKEND {
                 echo"
             <!-- Main content -->
               <section class=\"content\">";
-                include(\YAWK\controller::filterfilename($db, $lang, "includes/dashboard"));
+                include(controller::filterfilename($db, $lang, "includes/dashboard"));
                 self::drawHtmlContentClose();
                 \YAWK\BACKEND\AdminLTE::drawHtmlFooter($db);
             }
