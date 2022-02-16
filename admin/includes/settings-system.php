@@ -73,7 +73,7 @@ echo"</section><!-- Main content -->
     <!-- system settings -->
     <div class="row animated fadeIn">
         <div class="col-md-4">
-            <!-- server seettings -->
+            <!-- server settings -->
             <div class="box">
                 <div class="box-body">
                     <h3><?php echo $lang['SERVER']; ?> <small> <?php echo $lang['SERVER_SUBTEXT']; ?></small></h3>
