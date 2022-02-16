@@ -1266,7 +1266,7 @@ namespace YAWK\BACKEND {
               <section class=\"content\">";
                 include(\YAWK\controller::filterfilename($db, $lang, "includes/dashboard"));
                 self::drawHtmlContentClose();
-                \YAWK\AdminLTE::drawHtmlFooter($db);
+                \YAWK\BACKEND\AdminLTE::drawHtmlFooter($db);
             }
             return null;
         }
