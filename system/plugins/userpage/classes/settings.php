@@ -10,9 +10,7 @@ namespace YAWK\PLUGINS\USERPAGE {
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2009-2015 Daniel Retzl
-     * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Userpage Profile Class
      */
     class settings
@@ -28,9 +26,6 @@ namespace YAWK\PLUGINS\USERPAGE {
 
         /**
          * @brief init check if user is logged in - otherwise draw loginbox
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @return string html output (or login box)
          */
@@ -51,9 +46,6 @@ namespace YAWK\PLUGINS\USERPAGE {
 
         /**
          * @brief draw user settings page
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          */
         public function drawForm(){
             global $user;

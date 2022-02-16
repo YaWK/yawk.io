@@ -42,9 +42,7 @@ namespace YAWK\PLUGINS\GALLERY {
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2009-2016 Daniel Retzl
-     * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
-     * @version    1.0.0
-     * @link       http://yawk.io/
+     * @version    1.0.0/
      * @since      File available since Release 1.0.0
      * @brief The Gallery Plugin Class. Help you building powerful image galleries nearly automatically.
      */
@@ -117,9 +115,6 @@ namespace YAWK\PLUGINS\GALLERY {
 
         /**
          * @brief define JS function doImageAction
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * gallery constructor.
          */
         public function __construct()
@@ -169,9 +164,6 @@ namespace YAWK\PLUGINS\GALLERY {
 
         /**
          * @brief draw (output) html folder select field, containing the sub folders of /media/images as value
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param array $lang language array
          * @param string $path usually media/images/
          */
@@ -185,9 +177,6 @@ namespace YAWK\PLUGINS\GALLERY {
 
         /**
          * @brief draw (output) html folder select field, containing the current folder of /media/images as value
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param string $path usually media/images/
          * @param string $folder the folder of this gallery
          */
@@ -201,9 +190,6 @@ namespace YAWK\PLUGINS\GALLERY {
 
         /**
          * @brief check if folder exists and create it on demand
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param string $folder affected folder
          * @return bool
          */
@@ -229,9 +215,6 @@ namespace YAWK\PLUGINS\GALLERY {
 
         /**
          * @brief scan system font directory for fonts and return fonts as select field option value
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param string $path the path to search for fonts. If its empty, the default folder will be ../system/fonts/
          * @return string oprion value containing all fonts from font directory
          */
@@ -257,9 +240,6 @@ namespace YAWK\PLUGINS\GALLERY {
 
         /**
          * @brief scan image directory and return images as select field option value
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param string $path usually media/images/
          * @return string option value containing all fonts from font directory
          */
@@ -282,9 +262,6 @@ namespace YAWK\PLUGINS\GALLERY {
 
         /**
          * @brief delete a gallery
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @return bool
          */
@@ -415,9 +392,6 @@ namespace YAWK\PLUGINS\GALLERY {
 
         /**
          * @brief return gallery folder by given gallery ID
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param int $galleryID the gallery ID to get the folder from
          * @return string|bool gallery folder or false
@@ -437,9 +411,6 @@ namespace YAWK\PLUGINS\GALLERY {
 
         /**
          * @brief re-scan a folder to check if there a new images added TODO: STILL BUGGY - needs to be fixed + finished
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param int $galleryID the gallery ID
          * @return bool
@@ -504,9 +475,6 @@ namespace YAWK\PLUGINS\GALLERY {
 
         /**
          * @brief add a new gallery
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @return bool
          * @throws \Exception
@@ -853,9 +821,6 @@ namespace YAWK\PLUGINS\GALLERY {
 
         /**
          * @brief load gallery settings into object properties
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param int $galleryID
          */
@@ -896,9 +861,6 @@ namespace YAWK\PLUGINS\GALLERY {
 
         /**
          * @brief edit (update) a gallery
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param int $galleryID gallery ID to edit
          * @return bool
@@ -1412,9 +1374,6 @@ namespace YAWK\PLUGINS\GALLERY {
 
         /**
          * @brief count and return the number of gallery entries
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param int $galleryID gallery ID to count
          * @return int|bool number of entries or false
@@ -1439,9 +1398,6 @@ namespace YAWK\PLUGINS\GALLERY {
 
         /**
          * @brief get and draw (output) html gallery preview
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param array $lang language array
          * @return null echo html output
@@ -1553,9 +1509,6 @@ namespace YAWK\PLUGINS\GALLERY {
 
         /**
          * @brief get and draw all editable images + edit controls
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param array $lang language array
          * @param int $galleryID affected gallery ID

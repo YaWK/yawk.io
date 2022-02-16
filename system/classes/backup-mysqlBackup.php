@@ -19,7 +19,6 @@ namespace YAWK\BACKUP\DATABASE
      * @copyright  2018 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief This class serves methods to store and retrieve mysql database.
      */
     class mysqlBackup extends \YAWK\BACKUP\backup
@@ -62,9 +61,6 @@ namespace YAWK\BACKUP\DATABASE
 
         /**
          * @brief Initialize this database backup class
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param       object $db database object
          * @param       string $overwriteBackup if overwrite backup is allowed or not "true" | "false"
          * @param       string $zipBackup if backup should be zipped or not "true" | "false"
@@ -99,9 +95,6 @@ namespace YAWK\BACKUP\DATABASE
 
         /**
          * @brief Set mysqldump settings
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @return      array $this->dumpSettings
          * @details  mysqldump settings eg. include or exclude tables from database
          */
@@ -118,9 +111,6 @@ namespace YAWK\BACKUP\DATABASE
 
         /**
          * @brief Exclude tables from backup
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param       array $excludeTables array
          * @return      array $this->dumpSettings
          * @details     awaits an array with all tables that should be excluded
@@ -152,9 +142,6 @@ namespace YAWK\BACKUP\DATABASE
 
         /**
          * @brief Include only this tables into backup
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param       array $includeTables array
          * @return      array $this->dumpSettings
          * @details     awaits an array with all tables that should be included
@@ -186,9 +173,6 @@ namespace YAWK\BACKUP\DATABASE
 
         /**
          * @brief Get current database config
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @details  Get mysql configuration and set settings as private properties
          */
         public function getDatabaseConfig()
@@ -255,9 +239,6 @@ namespace YAWK\BACKUP\DATABASE
 
         /**
          * @brief Check if .sql backup file exists
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @details     return bool if $this->sqlBackup exists
          * @return      bool true|false
          */
@@ -280,15 +261,12 @@ namespace YAWK\BACKUP\DATABASE
 
         /**
          * @brief Write backup.ini file (used by backup restore methods)
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @details     write all relevant backup information into this file
          * @return      array $this->backupSettings
          */
         public function setBackupSettings($db)
         {
-            /** @param $db \YAWK\db */
+            /** @var $db \YAWK\db */
             // set some backup info variables
             $this->backupSettings['DATE'] = \YAWK\sys::now();
             $this->backupSettings['METHOD'] = $this->backupMethod;
@@ -328,9 +306,6 @@ namespace YAWK\BACKUP\DATABASE
 
         /**
          * @brief Start mysqldump and check if .sql file exists. Zip it afterwards if enabled.
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @details     return bool if $this->sqlBackup exists
          * @return      bool true|false
          */
@@ -425,9 +400,6 @@ namespace YAWK\BACKUP\DATABASE
 
         /**
          * @brief ZIP Archive method generates a zip archive from .sql file
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param       string $sqlBackup relative path + filename to the .sql backup file
          * @details     zip the .sql file and return bool if zip archive exists
          * @return      bool true|false
@@ -516,9 +488,6 @@ namespace YAWK\BACKUP\DATABASE
          * <p>First of all, mysqldump class will be included. Then, a check runs if a .sql backup file exists.
          * if so, check if overwrite backup is allowed. If this is true, doSqlBackup method will be called.
          * (This function does the real job).</p>
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @details     return bool if zip archive exists
          * @return      bool true|false
          */

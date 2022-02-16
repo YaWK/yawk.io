@@ -11,7 +11,6 @@ namespace YAWK
      * @copyright  2012-2018 Daniel Retzl yawk.io
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Mysqli database class; returns db connection object
      */
     class db {

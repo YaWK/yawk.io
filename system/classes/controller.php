@@ -10,7 +10,6 @@ namespace YAWK
      * @copyright  2009-2016 Daniel Retzl yawk.io
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief The controller function returns filtered filename as string (or null).
      */
 class controller

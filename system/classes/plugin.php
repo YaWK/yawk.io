@@ -27,7 +27,6 @@ namespace YAWK {
      * @copyright  2009-2016 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Handles the Plugin System.
      */
     class plugin
@@ -63,7 +62,7 @@ namespace YAWK {
          * @return null|string html output
          */
         function getPlugins($db, $lang, $manage)
-        {   /** @param $db \YAWK\db */
+        {   /** @var $db \YAWK\db */
             if (isset($manage) && ($manage == 1))
             {
                 $sqlcode = "WHERE activated='1'";
@@ -185,7 +184,7 @@ namespace YAWK {
          * @return bool
          */
         static function createPluginPage($db, $alias, $plugin)
-        {   /** @param $db \YAWK\db */
+        {   /** @var $db \YAWK\db */
         if (!isset($alias)){ $alias = ''; }
         if (!isset($plugin)){ $alias = ''; }
             if (!file_exists("../content/pages/$alias.php"))

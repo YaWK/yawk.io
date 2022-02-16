@@ -9,9 +9,7 @@ namespace YAWK\PLUGINS\FAQ {
      * <p><i>This class covers backend functionality. See Methods Summary for Details!</i></p>
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
-     * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Handles the FAQ backend methods.
      */
     class faq {
@@ -30,9 +28,6 @@ namespace YAWK\PLUGINS\FAQ {
 
         /**
          * @brief get all FAQ data and draw (output) as html table
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          */
         function drawBackEndTableBody($db)
@@ -80,9 +75,6 @@ namespace YAWK\PLUGINS\FAQ {
 
         /**
          * @brief create a new question
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param string $question question
          * @param string $answer answer
@@ -107,9 +99,6 @@ namespace YAWK\PLUGINS\FAQ {
 
         /**
          * @brief delete an FAQ entry
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param int $id faq ID to delete
          * @return bool|mixed
@@ -129,9 +118,6 @@ namespace YAWK\PLUGINS\FAQ {
 
         /**
          * @brief save (update) an faq entry
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @return bool
          */
@@ -153,9 +139,6 @@ namespace YAWK\PLUGINS\FAQ {
 
         /**
          * @brief load faq item properties into faq object
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param int $id affected faq ID
          * @return bool

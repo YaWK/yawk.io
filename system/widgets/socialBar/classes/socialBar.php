@@ -12,9 +12,7 @@ namespace YAWK\WIDGETS\SOCIALBAR\DISPLAY
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
-     * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Social Bar display icons with links to your social network accounts
      */
     class socialBar extends \YAWK\widget
@@ -80,9 +78,6 @@ namespace YAWK\WIDGETS\SOCIALBAR\DISPLAY
 
         /**
          * @brief Load all widget settings from database and fill object
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @brief Load all widget settings on object init.
          */
@@ -98,9 +93,6 @@ namespace YAWK\WIDGETS\SOCIALBAR\DISPLAY
 
         /**
          * @brief Init example widget and call a function for demo purpose
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief Example Widget Init
          */
         public function init()
@@ -113,9 +105,6 @@ namespace YAWK\WIDGETS\SOCIALBAR\DISPLAY
 
         /**
          * @brief Set an array with all social button elements
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief Helper function that set an array with all social elements. Need to be called before drawSocialBar();
          */
         public function setSocialBarElements()
@@ -159,9 +148,6 @@ namespace YAWK\WIDGETS\SOCIALBAR\DISPLAY
 
         /**
          * @brief Filter and sanitize any socialBar URL
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief filter, sanitize and strip tags from URLs
          */
         public function filterUrl($url)
@@ -182,9 +168,6 @@ namespace YAWK\WIDGETS\SOCIALBAR\DISPLAY
 
         /**
          * @brief Draw social bar
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief Set settings and draw social bar
          */
         public function drawSocialBar()

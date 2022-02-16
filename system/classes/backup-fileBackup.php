@@ -10,7 +10,6 @@ namespace YAWK\BACKUP\FILES
      * @copyright  2018 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief This class serves methods to create backup from files.
      */
     class fileBackup extends \YAWK\BACKUP\backup
@@ -66,9 +65,6 @@ namespace YAWK\BACKUP\FILES
 
         /**
          * @brief Check if .zip backup file exists
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @brief  return bool if $this->backupZipFile exists
          * @return      bool true|false
          */
@@ -91,9 +87,6 @@ namespace YAWK\BACKUP\FILES
 
         /**
          * @brief Write backup.ini file (used by backup restore methods)
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @brief       write all relevant backup information into this file
          * @return      array $this->backupSettings
          */
@@ -110,9 +103,6 @@ namespace YAWK\BACKUP\FILES
 
         /**
          * @brief Get and return hash value of $file
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @brief  return hashed string or false
          * @return      string|bool
          */
@@ -139,9 +129,6 @@ namespace YAWK\BACKUP\FILES
         /**
          * @brief Copy files to tmp folder, zip it and move it to the place
          * where this backup should be stored (current or archive...)
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @brief  return bool if $this->backupZipFile exists
          * @return      bool true|false
          */
@@ -457,9 +444,6 @@ namespace YAWK\BACKUP\FILES
 
         /**
          * @brief Check settings and start file backup
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @brief       return bool if zip archive exists
          * @return      bool true|false
          */

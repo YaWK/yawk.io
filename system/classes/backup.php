@@ -16,7 +16,6 @@ namespace YAWK\BACKUP
      * @copyright  2018 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Backup Main Class
      */
     class backup
@@ -116,9 +115,6 @@ namespace YAWK\BACKUP
 
         /**
          * @brief Init Backup Class (run backup)
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param       object $db database object
          * @return      bool true: backup init success | false: backup init failed
          */
@@ -137,9 +133,6 @@ namespace YAWK\BACKUP
 
         /**
          * @brief Run a new backup, depending on chosen backup method
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param       object $db database object
          * @return      bool true: backup successful | false: backup failed
          */
@@ -308,9 +301,6 @@ namespace YAWK\BACKUP
          * @param $db
          * @param $iniFile
          * @return array|false
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          */
         public function parseIniFile($db, $iniFile)
         {   // set config file property
@@ -341,9 +331,6 @@ namespace YAWK\BACKUP
 
         /**
          * @brief get all files from current backup folder into array
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @return array|false
          */
         public function getCurrentBackupFilesArray()
@@ -363,9 +350,6 @@ namespace YAWK\BACKUP
 
         /**
          * @brief get all files from archive backup folder into array
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @return array|false
          */
         public function getArchiveBackupFilesArray()
@@ -385,9 +369,6 @@ namespace YAWK\BACKUP
 
         /**
          * @brief Include mysql backup class and run mysqldump backup
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @return      bool
          */
         public function runDatabaseBackup($db, $storeSqlTmp)
@@ -415,9 +396,6 @@ namespace YAWK\BACKUP
 
         /**
          * @brief Run File Backup from $sourceFolder
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @return      bool
          */
         public function runFileBackup($db)
@@ -441,9 +419,6 @@ namespace YAWK\BACKUP
 
         /**
          * @brief Check if ZipArchive function exists
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @return      bool
          */
         public function checkZipFunction()
@@ -461,9 +436,6 @@ namespace YAWK\BACKUP
 
         /**
          * @brief Zip a whole folder from $source to $destination.zip
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @return      bool
          */
         function zipFolder($db, $source, $destination)

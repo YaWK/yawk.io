@@ -1,5 +1,5 @@
 <?php
-/** @param $db \YAWK\db */
+/** @var $db \YAWK\db */
 if (!isset($fbLikePosting))
 {   // load facebook posting class
     require_once 'classes/fb_post.php';

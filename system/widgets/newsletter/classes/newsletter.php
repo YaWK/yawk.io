@@ -13,9 +13,7 @@ namespace YAWK\WIDGETS\NEWSLETTER\SUBSCRIBE
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
-     * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Embed any YouTube Video on your pages.
      */
     class newsletter
@@ -71,9 +69,6 @@ namespace YAWK\WIDGETS\NEWSLETTER\SUBSCRIBE
 
         /**
          * @brief Load all widget settings from database and fill object params
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @brief Load all widget settings on object init.
          */
@@ -89,9 +84,6 @@ namespace YAWK\WIDGETS\NEWSLETTER\SUBSCRIBE
 
         /**
          * @brief Print all object data
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief (for development and testing purpose)
          */
         public function printObject()
@@ -103,9 +95,6 @@ namespace YAWK\WIDGETS\NEWSLETTER\SUBSCRIBE
 
         /**
          * @brief Init Function: Loads the required JS, set properties and draw the form
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief This method does the setup and embed job
          */
         public function init()
@@ -120,9 +109,6 @@ namespace YAWK\WIDGETS\NEWSLETTER\SUBSCRIBE
 
         /**
          * @brief Load all required javascript files
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief include required javascript assets (validade, messages and ajax js file)
          */
         public function includeJS()
@@ -140,9 +126,6 @@ namespace YAWK\WIDGETS\NEWSLETTER\SUBSCRIBE
 
         /**
          * @brief Set all object properties and html markup codes depending on current widget settings
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief Set object properties and html markup
          */
         public function setProperties()

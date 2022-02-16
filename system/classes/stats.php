@@ -5,7 +5,6 @@ namespace YAWK
      * @brief Statistics - get and set user and page stats
      * @author Daniel Retzl <danielretzl@gmail.com>
      * @version 1.0.0
-     * @link http://yawk.io
      *
      */
     class stats
@@ -226,9 +225,6 @@ namespace YAWK
 
         /**
          * @brief Return the number of all currently online users
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @return int|null
          */
@@ -256,9 +252,6 @@ namespace YAWK
 
         /**
          * @brief Check and delete outdated sessions if they are expired
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param int $expireAfter Time in seconds after a session will be deleted
          * @return bool
@@ -282,9 +275,6 @@ namespace YAWK
 
         /**
          * @brief Set users online in database (stores and check sessions and timestamps)
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @return null
          */
@@ -369,9 +359,6 @@ namespace YAWK
 
         /**
          * @brief Insert statistics data into database
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @return null
          */
@@ -395,9 +382,6 @@ namespace YAWK
 
         /**
          * @brief Prepare data: get and collect, detect OS and device type
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @return null
          */
         public function prepareData()
@@ -526,9 +510,6 @@ namespace YAWK
 
         /**
          * @brief Count all messages that are stored in the database
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @return mixed
          */
@@ -548,9 +529,6 @@ namespace YAWK
 
         /**
          * @brief Count and set user stats like, how many users are registered, currently online or blocked
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @return bool
          */
@@ -587,9 +565,6 @@ namespace YAWK
 
         /**
          * @brief Count system logins
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param int $limit Contains an i number to limit the sql request
          * @return array|bool
@@ -688,9 +663,6 @@ namespace YAWK
 
         /**
          * @brief Output JS: PIE CHART login data
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param object $lang language
          * @param array $logins data array
@@ -733,9 +705,6 @@ namespace YAWK
 
         /**
          * @brief Output JS: PIE CHART daytime data
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param array $daytime data array
          * @param array language array
@@ -783,9 +752,6 @@ namespace YAWK
 
         /**
          * @brief Output JS: LINE CHART daytime data
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param array $daytimes data array
          * @param array $lang language array
@@ -818,9 +784,6 @@ namespace YAWK
 
         /**
          * @brief Output JS: BAR CHART daytime data
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param array $daytimes data array
          * @return string output the javascript data
@@ -852,9 +815,6 @@ namespace YAWK
 
         /**
          * @brief Output JS: WEEKDAY BAR CHART
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @return string output the javascript data
          */
         public function getJsonWeekdayBarChart($lang)
@@ -878,9 +838,6 @@ namespace YAWK
 
         /**
          * @brief Output JS: PIE CHART browser data
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param array $browsers data array
          * @return string output the javascript data
@@ -928,9 +885,6 @@ namespace YAWK
 
         /**
          * @brief Output JS: PIE CHART OS data
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param array $oss data array
          * @return string output the javascript data
@@ -975,9 +929,6 @@ namespace YAWK
 
         /**
          * @brief Output JS: BAR CHART OS versions
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param array $osVersions data array
          * @return string output the javascript data
@@ -1038,9 +989,6 @@ namespace YAWK
 
         /**
          * @brief Output JS: BAR CHART device types
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param object $lang language
          * @param array $deviceTypes data array
@@ -1073,9 +1021,6 @@ namespace YAWK
 
         /**
          * @brief Set and return the legend textcolor for each browser
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param string $browser contains the browser as string
          * @return string returns the textcolor for this browser as string
@@ -1125,9 +1070,6 @@ namespace YAWK
 
         /**
          * @brief Set and return the legend textcolor for each operating system
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param string $os contains the operating system as string
          * @return string returns the textcolor for this OS as string
          */
@@ -1158,9 +1100,6 @@ namespace YAWK
 
         /**
          * @brief Set and return the legend textcolor for each device type
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param string $deviceType contains the type (desktop, phone, tablet) as string
          * @return string returns the textcolor for this device type as string
          */
@@ -1184,9 +1123,6 @@ namespace YAWK
 
         /**
          * @brief Set and return the legend textcolor for each daytime
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param string $daytime contains the daytime (morning, afternoon, evening, night) as string
          * @return string returns the textcolor for this daytime as string
          */
@@ -1213,9 +1149,6 @@ namespace YAWK
 
         /**
          * @brief Set and return the legend textcolor for logins (failed | success)
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param string $login contains the status (Failes, Successful...) as string
          * @return string returns the textcolor for this login status as string
          */
@@ -1249,9 +1182,6 @@ namespace YAWK
 
         /**
          * @brief Set and return the legend textcolor for each OS Version
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param string $osVersions contains the operating system as string
          * @return string returns the textcolor for this os as string
          */
@@ -1336,9 +1266,6 @@ namespace YAWK
 
         /**
          * @brief Count and set the number of hits for each weekday
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db the database object
          * @param string $data array containing all the stats data
          * @param string $limit contains i number for sql limitation
@@ -1453,9 +1380,6 @@ namespace YAWK
 
         /**
          * @brief Calculate hits in percent for each weekday
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @return array|bool containing weekdays and number of hits in percent
          */
         public function getWeekdaysPercent($lang)
@@ -1494,9 +1418,6 @@ namespace YAWK
 
         /**
          * @brief Count and set the number of hits for each daytime
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db the database object
          * @param string $data array containing all the stats data
          * @param string $limit contains i number for sql limitation
@@ -1603,9 +1524,6 @@ namespace YAWK
 
         /**
          * @brief Calculate hits per daytime and return data in percent
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db the database object
          * @return array containing daytimes and number of hits in percent
          */
@@ -1643,9 +1561,6 @@ namespace YAWK
 
         /**
          * @brief Count and return browsers
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db the database object
          * @param string $data array containing all the stats data
          * @param string $limit contains i number for sql limitation
@@ -1746,9 +1661,6 @@ namespace YAWK
 
         /**
          * @brief Count device types (desktop, phone or tablet)
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db the database object
          * @param string $data array containing all the stats data
          * @param string $limit contains i number for sql limitation
@@ -1835,9 +1747,6 @@ namespace YAWK
 
         /**
          * @brief Count operating systems
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db the database object
          * @param string $data array containing all the stats data
          * @param string $limit contains i number for sql limitation
@@ -1922,9 +1831,6 @@ namespace YAWK
 
         /**
          * @brief Count operating systems versions
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db the database object
          * @param string $data array containing all the stats data
          * @return array|bool returning array containing all detected OS versions and their hits
@@ -2096,9 +2002,6 @@ namespace YAWK
 
         /**
          * @brief Returns an array with all stats, ordered by date_created.
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param string $interval The interval to get data
          * @param string $period The time period (YEAR, MONTH, DAY, HOUR, MINUTE or SECOND)
@@ -2173,9 +2076,6 @@ namespace YAWK
 
         /**
          * @brief Calculate some basic stats (almost outdated)
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param array $data Stats Data Array
          */
@@ -2227,9 +2127,6 @@ namespace YAWK
 
         /**
          * @brief Insert data into database
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @return bool
          */
@@ -2278,9 +2175,6 @@ namespace YAWK
 
         /**
          * @brief Draw a default box containing user statistics
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param object $lang language object
          */
@@ -2307,16 +2201,13 @@ namespace YAWK
 
         /**
          * @brief Draw default box containing OS Statistics
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param object $lang language
          * @param string $data array containing all the stats data
          * @param string $limit contains i number for sql limitation
          */
         public function drawOsBox($db, $data, $lang)
-        {   /** @param $db \YAWK\db */
+        {   /** @var $db \YAWK\db */
             // get data for this box
             $oss = $this->countOS($db, $data);
 
@@ -2438,16 +2329,13 @@ namespace YAWK
 
         /**
          * @brief Draw default box containing browser statistics
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param object $db language
          * @param string $data array containing all the stats data
          * @param string $limit contains i number for sql limitation
          */
         public function drawBrowserBox($db, $data, $lang)
-        {   /** @param $db \YAWK\db */
+        {   /** @var $db \YAWK\db */
             // get data for this box
             $browsers = $this->countBrowsers($db, $data);
 
@@ -2568,16 +2456,13 @@ namespace YAWK
 
         /**
          * @brief Draw default box containing OS versions statistics
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param object $lang language
          * @param string $data array containing all the stats data
          * @param string $limit contains i number for sql limitation
          */
         public function drawOsVersionBox($db, $data, $lang)
-        {   /** @param $db \YAWK\db */
+        {   /** @var $db \YAWK\db */
             // get data for this box
             $osVersions = $this->countOSVersions($db, $data);
 
@@ -2697,16 +2582,13 @@ namespace YAWK
 
         /**
          * @brief Draw default box containing device types
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param object $lang language
          * @param string $data array containing all the stats data
          * @param string $limit contains i number for sql limitation
          */
         public function drawDeviceTypeBox($db, $data, $lang)
-        {   /** @param $db \YAWK\db */
+        {   /** @var $db \YAWK\db */
             // get data for this box
             $deviceTypes = $this->countDeviceTypes($db, $data);
 
@@ -2832,16 +2714,13 @@ namespace YAWK
 
         /**
          * @brief Draw default box containing login statistics
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param object $lang language
          * @param string $data array containing all the stats data
          * @param string $limit contains i number for sql limitation
          */
         public function drawLoginBox($db, $lang)
-        {   /** @param $db \YAWK\db */
+        {   /** @var $db \YAWK\db */
             // get data for this box
             $logins = $this->countLogins($db);
 
@@ -2980,16 +2859,13 @@ namespace YAWK
 
         /**
          * @brief Draw default box containing daytime statistics
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param string $data array containing all the stats data
          * @param string $limit contains i number for sql limitation
          * @param object $lang language object
          */
         public function drawDaytimeBox($db, $data, $lang)
-        {   /** @param $db \YAWK\db */
+        {   /** @var $db \YAWK\db */
             // get data for this box
             $dayTimes = $this->countDaytime($db, $data, $lang);
             $dayTimesPercent = $this->getDayTimesPercent($lang);
@@ -3233,16 +3109,13 @@ namespace YAWK
 
         /**
          * @brief Draw default box containing weekday statistics
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param string $data array containing all the stats data
          * @param string $limit contains i number for sql limitation
          * @param object $lang language array
          */
             public function drawWeekdayBox($db, $data, $lang, $limit)
-        {   /** @param $db \YAWK\db */
+        {   /** @var $db \YAWK\db */
             // get data for this box
             $weekdays = $this->countWeekdays($db, $data, $lang, $limit);
             $weekdaysPercent = $this->getWeekdaysPercent($lang);
@@ -3354,9 +3227,6 @@ namespace YAWK
 
         /**
          * @brief Draw default box containing overview statistics
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param array $lang language array
          */
         public function drawOverviewBox($lang)
@@ -3385,9 +3255,6 @@ namespace YAWK
 
         /**
          * @brief Draw default box containing pages statistics
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param array $data stats data array
          * @param array $lang language array
          */
@@ -3429,9 +3296,6 @@ namespace YAWK
 
         /**
          * @brief Draw default box containing days of month statistics
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param array $lang language array
          */
         public function getDaysOfMonthBox($lang)

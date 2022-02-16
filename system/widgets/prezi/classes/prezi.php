@@ -10,9 +10,7 @@ namespace YAWK\WIDGETS\PREZI\EMBED
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
-     * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Prezi Widget - embed any prezi presentation on your page
      */
     class prezi extends \YAWK\widget
@@ -28,9 +26,6 @@ namespace YAWK\WIDGETS\PREZI\EMBED
 
         /**
          * @brief Load all widget settings from database and fill object
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @brief Load all widget settings on object init.
          */
@@ -46,9 +41,6 @@ namespace YAWK\WIDGETS\PREZI\EMBED
 
         /**
          * @brief Init and embed prezi widget
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief Example Widget Init
          */
         public function init()
@@ -60,9 +52,6 @@ namespace YAWK\WIDGETS\PREZI\EMBED
 
         /**
          * @brief embed prezi
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief Html Markup to embed the prezi presentation
          */
         public function embedPrezi()

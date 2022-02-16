@@ -11,9 +11,7 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
-     * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Embed a photo gallery on your website.
      */
     class gallery extends \YAWK\widget
@@ -82,9 +80,6 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
 
         /**
          * @brief Load all widget settings from database and fill object
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @brief Load all widget settings on object init.
          */
@@ -100,9 +95,6 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
 
         /**
          * @brief Print all object data
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief (for development and testing purpose)
          */
         public function printObject()
@@ -114,9 +106,6 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
 
         /**
          * @brief Init Gallery and load methods
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief load Javascript and draw image gallery
          */
         public function init($db)
@@ -127,9 +116,6 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
 
         /**
          * @brief Check if lightbox asset is loaded and set lightbox options
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief check lightbox asset and set options
          */
         public function loadJavascript()
@@ -164,9 +150,6 @@ namespace YAWK\WIDGETS\GALLERY\IMAGES
 
         /**
          * @brief Draw the gallery
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param db object Database object
          * @brief (for development and testing purpose)
          */

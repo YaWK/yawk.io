@@ -12,9 +12,7 @@ namespace YAWK\WIDGETS\CUSTOM_HTML\CODE
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
-     * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Embed a html/javascript code snippet.
     */
     class customHtml
@@ -26,9 +24,6 @@ namespace YAWK\WIDGETS\CUSTOM_HTML\CODE
 
         /**
          * @brief Load all widget settings from database and fill object
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @brief Load all widget settings on object init.
         */
@@ -44,9 +39,6 @@ namespace YAWK\WIDGETS\CUSTOM_HTML\CODE
 
         /**
          * @brief Init and load custom html code
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief use this method to run the clock
         */
         public function init()

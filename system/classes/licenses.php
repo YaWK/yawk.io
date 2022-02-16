@@ -12,7 +12,6 @@ namespace YAWK
      * @copyright  2018 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief License Generator Class
      */
     class licenses

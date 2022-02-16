@@ -11,9 +11,7 @@ namespace YAWK\WIDGETS\TWITCH\EMBED
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
-     * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Embed any Twitch channel
      */
     class twitch extends \YAWK\widget
@@ -41,9 +39,6 @@ namespace YAWK\WIDGETS\TWITCH\EMBED
 
         /**
          * @brief Load all widget settings from database and fill object
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @brief Load all widget settings on object init.
          */
@@ -59,9 +54,6 @@ namespace YAWK\WIDGETS\TWITCH\EMBED
 
         /**
          * @brief Init twitch widget
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief Twitch Widget Init
          */
         public function init()

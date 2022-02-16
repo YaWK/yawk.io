@@ -9,9 +9,7 @@ namespace YAWK\WIDGETS\FACEBOOK\FEED
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2019 Daniel Retzl
-     * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Facebook Page Feed
      */
 class fbFeed

@@ -12,9 +12,7 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
-     * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Loginbox Widget
      */
     class loginbox extends \YAWK\widget
@@ -78,9 +76,6 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
 
         /**
          * @brief Load all widget settings from database and fill object
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @brief Load all widget settings on object init.
          */
@@ -96,9 +91,6 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
 
         /**
          * @brief Init loginbox widget and call a function for demo purpose
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief loginbox Widget Init
          */
         public function init($db)
@@ -124,9 +116,6 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
 
         /**
          * @brief Prepare Loginbox form settings
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief Evaluate loginbox settings and prepare html markup
          */
         public function setLoginProperties()
@@ -204,9 +193,6 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
 
         /**
          * @brief Set properties of greeting and logout button
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief set properties of greeting and logout button
          */
         public function setLogoutProperties()
@@ -268,9 +254,6 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
 
         /**
          * @brief Load required javascript file
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief include required ajax js file
          */
         public function includeJS()
@@ -291,9 +274,6 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
 
         /**
          * @brief returns the login box html markup
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database object
          * @param string $username username, as option
          * @param string $password password, as option
@@ -334,9 +314,6 @@ namespace YAWK\WIDGETS\LOGINBOX\LOGIN
 
         /**
          * @brief returns the logout btn html markup
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          */
         public function drawLogoutButton($db)
         {

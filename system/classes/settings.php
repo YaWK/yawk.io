@@ -4,15 +4,11 @@ namespace YAWK {
      * @brief Settings class: get and set YaWK system settings
      * @author Daniel Retzl <danielretzl@gmail.com>
      * @version 1.0.0
-     * @link http://yawk.io
      */
     class settings
     {
         /**
          * @brief Returns an array with all setings where property is like $property.
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param string $property
          * @return mixed
@@ -38,9 +34,6 @@ namespace YAWK {
 
         /**
          * @brief Returns an array containing property as key and values corresponding to this property where p like $property%.
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param string $property
          * @return mixed
@@ -66,9 +59,6 @@ namespace YAWK {
 
         /**
          * @brief Return corresponding form elements for given settings.
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param array $settings Settings: property|value|type|sortation|activated|label|icon|heading|subtext|fieldClass|fieldType|placeholder|description|options
          * @param int $type
@@ -380,9 +370,6 @@ namespace YAWK {
 
         /**
          * @brief Returns an associative array containing the editor settings
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database object
          * @param int $typeID The ID of settings type to get.
          * @return array|bool
@@ -448,9 +435,6 @@ namespace YAWK {
 
         /**
          * @brief Returns an array with all settings data.
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @return array|bool
          */
@@ -478,7 +462,6 @@ namespace YAWK {
          * @brief Get and return value for property from settings database.
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
-         * @link http://yawk.io
          * @param object $db Database object
          * @param object $lang language array
          * @param string $property Property to select from database
@@ -510,7 +493,6 @@ namespace YAWK {
          * @brief Set value for property into settings database.
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
-         * @link http://yawk.io
          * @param object $db Database object
          * @param object $db language
          * @param string $property Property to set into database
@@ -538,7 +520,6 @@ namespace YAWK {
          * @brief Get and return longValue for property from settings database.
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
-         * @link http://yawk.io
          * @param object $db Database object
          * @param string $property Property to get longValue from database.
          * @return mixed
@@ -562,7 +543,6 @@ namespace YAWK {
          * @brief Set (update) template setting value for property.
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
-         * @link http://yawk.io
          * @param object $db Database object
          * @param string $property Template property to set
          * @param string $value Template value to set
@@ -590,7 +570,6 @@ namespace YAWK {
          * @brief Set (update) long setting value for property.
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
-         * @link http://yawk.io
          * @param object $db Database object
          * @param string $property Property to set
          * @param string $value Long value to set
@@ -626,7 +605,6 @@ namespace YAWK {
          * @brief Get setting description from requested property.
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
-         * @link http://yawk.io
          * @param object $db Database object
          * @param string $property Property to get description from.
          * @return bool
@@ -649,7 +627,6 @@ namespace YAWK {
          * @brief Get widget setting value from widgets_settings.
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
-         * @link http://yawk.io
          * @param object $db Database object
          * @param string $property Property to get value from.
          * @return bool
@@ -675,7 +652,6 @@ namespace YAWK {
          * @brief Set widget setting value into widgets_settings.
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
-         * @link http://yawk.io
          * @param object $db Database object
          * @param string $property Property to get value from.
          * @param string $value Value of requested property
@@ -710,7 +686,6 @@ namespace YAWK {
          * @brief Toggle setting offline where requested property.
          * @version 1.0.0
          * @author Daniel Retzl <danielretzl@gmail.com>
-         * @link http://yawk.io
          * @param object $db Database object
          * @param object $lang language
          * @param string $property Property to get value from.

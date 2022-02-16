@@ -1,5 +1,5 @@
 <?php
-/** @param $db \YAWK\db */
+/** @var $db \YAWK\db */
 /** BLOG PLUGIN  */
 if (!isset($blogWidget))
 {   // load blog widget class

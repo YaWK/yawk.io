@@ -3,20 +3,13 @@ namespace YAWK {
     /**
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
-     * @copyright  2009-2015 Daniel Retzl yawk.goodconnect.net
+     * @copyright  2009-2015 Daniel Retzl www.yawk.io
      * @license    https://opensource.org/licenses/MIT
-     * @version    1.2.0
-     * @link       http://yawk.website/
-     * @since      File available since Release 1.0.0
      * @brief      Throws a fancy Bootstrap Alert (success, info, warning or danger)
      * @details    Throw default bootstrap-powered alerts. (warning, succes etc...)
-     *
-     * This lets you throw a fancy designed alert message box at any
-     * time, anywhere in your script. Alert uses 5 Arguments, as shown below.
-     * Example:
-     * @example <?php YAWK\alert::draw("success", "Yey!", "Test Alert thrown! It worked!", "index.html", 5000); ?> at
-     * any place of your script where an error, info, success or danger Message
-     * needs to be thrown.
+     * This lets you throw an alert message box at any time, anywhere in your script.
+     * Alert uses 5 Arguments, as shown below. Example: any place of your script where
+     * an error, info, success or danger Message needs to be thrown.
      * <p><i>Class covers both, backend & frontend functionality.
      * See Methods Summary for Details!</i></p>
      *
@@ -26,44 +19,44 @@ namespace YAWK {
     {
         /**
          * @brief draw a fancy alert notification
-         *
          * @param string $type Bootstrap class: success, warning, danger, info or default
          * @param string $title Title of the notification box, drawn in h4
          * @param string $text The Message Text of your notification. You can use HTML tags to format it.
          * @param string $redirect URL to redirect the user via setTimeOut delay(ms). Leave empty if you just want to put on a message, but dont want to redirect the user.
          * @param int $delay How long should the notification stay on top before it hides respectively redirect. Leave empty if it should stay on top forevermore.
+         * @example <?php YAWK\alert::draw("success", "Yey!", "Test Alert thrown! It worked!", "index.html", 5000); ?>
          *
          */
         static function draw($type, $title, $text, $redirect, $delay)
         {
 
-            /** @param string $animatedEnter default animation when alert pops in */
+            // default animation when alert pops in
             $animatedEnter = "animated fadeInDown";
-            /** @param string $animatedExit default animation when alert pops out */
+            // default animation when alert pops out
             $animatedExit = "animated fadeOutUp";
-            /** @param string $placementFrom default placementFrom (top, bottom) */
+            // default placementFrom (top, bottom)
             $placementFrom = "top";
-            /** @param string $placementAlign default placementFrom (left, center, right) */
+            // default placementFrom (left, center, right)
             $placementAlign = "center";
-            /** @param string $url any URL to link to */
+            // any URL to link to
             $url = "";
-            /** @param string $urlTarget URL target */
+            // URL target
             $urlTarget = "_blank";
-            /** @param string $allowDismiss should it be allowed to dismiss this alert? */
+            // should it be allowed to dismiss this alert?
             $allowDismiss = "true";
-            /** @param string $newestOnTop display newest on top if there are more simultaneous alerts? */
+            // display newest on top if there are more simultaneous alerts?
             $newestOnTop = "false";
-            /** @param string $progressBar display a progressbar to show how long the alert will stay */
+            // display a progressbar to show how long the alert will stay
             $progressBar = "false";
-            /** @param string $offsetX offest X axis */
+            // offest X axis
             $offsetX = "10";
-            /** @param string $offsetY offest Y axis */
+            // offest Y axis
             $offsetY = "62";
-            /** @param string $spacing spacing */
+            // spacing
             $spacing = "10";
-            /** @param string $zIndex z-index */
+            // z-index
             $zIndex = "9999";
-            /** @param string $icon icon */
+            // icon
             $icon = "fa fa-info-circle";
             
             if (!isset($type) || (empty($type)))

@@ -9,9 +9,7 @@ namespace YAWK\PLUGINS\USERPAGE {
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2009-2015 Daniel Retzl
-     * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Userpage Profile Class
      */
     class stats
@@ -23,9 +21,6 @@ namespace YAWK\PLUGINS\USERPAGE {
 
         /**
          * @brief stats constructor. load properties for username
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          */
         public function __construct($db){
@@ -37,9 +32,6 @@ namespace YAWK\PLUGINS\USERPAGE {
 
         /**
          * @brief draw account stats.
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @return string account stats
          */
         public function init(){

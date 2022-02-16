@@ -12,9 +12,7 @@ namespace YAWK\WIDGETS\FACEBOOK\LIKEBUTTON
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
-     * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Facebook Like Button - embed a like button on your page
      */
     class fbLikeButton extends \YAWK\widget
@@ -34,9 +32,6 @@ namespace YAWK\WIDGETS\FACEBOOK\LIKEBUTTON
 
         /**
          * @brief Load all widget settings from database and fill object
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @brief Load all widget settings on object init.
          */
@@ -52,9 +47,6 @@ namespace YAWK\WIDGETS\FACEBOOK\LIKEBUTTON
 
         /**
          * @brief Init facebook like button
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief Facebook Like Button
          */
         public function init()

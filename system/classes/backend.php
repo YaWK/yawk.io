@@ -20,8 +20,7 @@ namespace YAWK {
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2009-2015 Daniel Retzl yawk.io
-     * @license    https://opensource.org/licenses/MIT
-     * @link       http://yawk.io/
+     * @license    https://opensource.org/licenses/MIT/
      * @brief Backend class serves a few useful functions for the admin backend.
      */
     class backend
@@ -161,7 +160,7 @@ namespace YAWK {
          * @return bool
          */
         static function checkLogin($db)
-        {   /** @param $db \YAWK\db */
+        {   /** @var $db \YAWK\db */
             /* check user login */
             $user = new \YAWK\user($db);
             if(isset($_POST['user']) && isset($_POST['password'])) {

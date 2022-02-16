@@ -16,7 +16,6 @@ namespace YAWK {
      * @copyright  2009-2016 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Widgets are small, useful tools that you can include everywhere in your website.
      */
     class widget
@@ -53,9 +52,6 @@ namespace YAWK {
 
         /**
          * @brief Print all object data
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @details  (for development and testing purpose)
          */
         public function printObject()
@@ -67,9 +63,6 @@ namespace YAWK {
 
         /**
          * @brief Get widget settings and return it as array
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @return array|bool returns array with widget settings or null
          */
@@ -116,9 +109,6 @@ namespace YAWK {
 
         /**
          * @brief return current widget path
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @return string full path to widgets folder
          */
@@ -130,9 +120,6 @@ namespace YAWK {
 
         /**
          * @brief Returns an array with all widget settings data.
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @return array|bool
          * @details TODO: IMPLEMENT GET WIDGET SETTINGS ARRRAY for issue #61
@@ -159,9 +146,6 @@ namespace YAWK {
 
         /**
          * @brief Return settings as form elements corresponding to given widget ID.
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param array  $settings Settings: property|value|type|sortation|activated|label|icon|heading|subtext|fieldClass|fieldType|placeholder|description|options
          * @param int    $widgetID
@@ -416,7 +400,7 @@ namespace YAWK {
 
                         /* SELECT FIELD */
                         /* GALLERY SELECTOR */
-                        /** @param $db \YAWK\db */
+                        /** @var $db \YAWK\db */
                         if ($setting['fieldType'] === "selectGallery")
                         {
                             // set required assets
@@ -534,9 +518,6 @@ namespace YAWK {
 
         /**
          * @brief create new widget
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param int $widgetType widget type
          * @param int $pageID page ID
@@ -545,7 +526,7 @@ namespace YAWK {
          */
         static function create($db, $widgetType, $pageID, $positions)
         {
-            /** @param $db \YAWK\db */
+            /** @var $db \YAWK\db */
             global $status;
             if ($res_widgets = $db->query("SELECT MAX(id), MAX(sort) FROM {widgets}")) {
                 // generate ID
@@ -646,9 +627,6 @@ namespace YAWK {
 
         /**
          * @brief Get widget heading and subtext, return headline
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param string $heading The Heading
          * @param string $subtext The Subtext
          * @return string|bool return the correct headline
@@ -678,9 +656,6 @@ namespace YAWK {
 
         /**
          * @brief load a widget into given position
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param string $position template position where widget should appear
          * @return null|bool include widget and return null or false
@@ -690,7 +665,7 @@ namespace YAWK {
             // current date + time
             $atm = date("Y-m-d G:i:s");
 
-            /** @param $db \YAWK\db */
+            /** @var $db \YAWK\db */
             global $currentpage;
             if ($res = $db->query("SELECT cw.id,cw.published,cw.widgetType,cw.pageID,cw.sort,cw.position, cw.date_publish, cw.date_unpublish, cwt.name, cwt.folder
     							FROM {widgets} as cw
@@ -729,16 +704,13 @@ namespace YAWK {
 
         /**
          * @brief return widget ID
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param int $id the ID
          * @return bool
          */
         static function getWidgetId($db, $id)
         {
-            /** @param $db \YAWK\db */
+            /** @var $db \YAWK\db */
             if ($res = $db->query("SELECT cp.id
                     FROM {pages} as cp
                     JOIN {widgets} as cw on cp.id = cw.pageID
@@ -760,16 +732,13 @@ namespace YAWK {
 
         /**
          * @brief get widget title and page ID and output select option
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param int $id affected widget ID
          * @return string|bool
          */
         static function getWidget($db, $id)
         {
-            /** @param $db \YAWK\db */
+            /** @var $db \YAWK\db */
             global $allpagescode;
             if ($res = $db->query("SELECT cw.pageID, cp.title
                     FROM {widgets} as cw
@@ -800,14 +769,11 @@ namespace YAWK {
 
         /**
          * @brief get widgets into array
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @return bool|mixed
          */
         static function getWidgetsArray($db)
-        {   /** @param $db \YAWK\db */
+        {   /** @var $db \YAWK\db */
             if ($res = $db->query("SELECT id, name, (
                              SELECT COUNT( * )
                              FROM {widgets}
@@ -832,9 +798,6 @@ namespace YAWK {
 
         /**
          * @brief TODO: OUTDATED??
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @details load content widget
          * @param object $db database
          * @param int $id widget ID
@@ -842,7 +805,7 @@ namespace YAWK {
          */
         static function getContentWidget($db, $id)
         {
-            /** @param $db \YAWK\db */
+            /** @var $db \YAWK\db */
             if ($res = $db->query("SELECT cw.id,cw.published,cw.widgetType,cw.pageID,cw.sort,cw.position, cwt.name, cwt.folder
     							FROM {widgets} as cw
     							JOIN {widget_types} as cwt on cw.widgetType = cwt.id
@@ -865,9 +828,6 @@ namespace YAWK {
 
         /**
          * @brief TODO: OUTDATED??
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @details load widget
          * @param object $db database
          * @param int $id widget ID
@@ -875,7 +835,7 @@ namespace YAWK {
          */
         static function loadWidget($db, $id)
         {
-            /** @param $db \YAWK\db */
+            /** @var $db \YAWK\db */
             if ($res = $db->query("SELECT cw.id,cw.published,cw.widgetType, cwt.name, cwt.folder
     							FROM {widgets} as cw
     							JOIN {widget_types} as cwt on cw.widgetType = cwt.id
@@ -913,9 +873,6 @@ namespace YAWK {
 
         /**
          * @brief toggle widget online / offline
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param int $id widget ID
          * @param int $published 0|1 1 is online, zero is offline
@@ -923,7 +880,7 @@ namespace YAWK {
          */
         function toggleOffline($db, $id, $published)
         {
-            /** @param $db \YAWK\db */
+            /** @var $db \YAWK\db */
             // TOGGLE WIDGET STATUS
             if ($res = $db->query("UPDATE {widgets}
                           SET published = '" . $published . "'
@@ -943,9 +900,6 @@ namespace YAWK {
 
         /**
          * @brief copy a widget
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param int $id widget ID to copy
          * @return bool
@@ -953,7 +907,7 @@ namespace YAWK {
         function copy($db, $id)
         {
             $originalWidgetID = $id;
-            /** @param $db \YAWK\db */
+            /** @var $db \YAWK\db */
             if ($res_widgets = $db->query("SELECT * FROM {widgets} WHERE id = '" . $id . "'"))
             {
                 // get MAX id from widgets db
@@ -1035,16 +989,13 @@ namespace YAWK {
 
         /**
          * @brief delete a widget
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param int $widget widget ID
          * @return bool
          */
         function delete($db, $widget)
         {
-            /** @param $db \YAWK\db */
+            /** @var $db \YAWK\db */
             if ($res = $db->query("DELETE FROM {widgets} WHERE id = '" . $widget . "'")) {
                 // delete corresponding widget settings
                 if (!$res_settings = $db->query("DELETE FROM {widget_settings} WHERE widgetID = '" . $widget . "'")) {
@@ -1061,15 +1012,12 @@ namespace YAWK {
 
         /**
          * @brief load widget properties into widget object
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param int $id widget ID
          * @return bool
          */
         function loadProperties($db, $id)
-        {   /** @param $db \YAWK\db */
+        {   /** @var $db \YAWK\db */
             if (isset($id))
             {   // escape string
                 $id = $db->quote($id);
@@ -1112,15 +1060,12 @@ namespace YAWK {
 
         /**
          * @brief save (update) widget settings
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @return bool
          */
         function save($db)
         {
-            /** @param $db \YAWK\db */
+            /** @var $db \YAWK\db */
             $this->position = mb_strtolower($this->position);
             // if widget should be displayed on all pages, pageID should be zero
             if (empty($this->pageID || (!isset($this->pageID)))) { $this->pageID = 0; }

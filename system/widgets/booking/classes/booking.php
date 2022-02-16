@@ -11,9 +11,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2019 Daniel Retzl
-     * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Embed booking plugin on your pages.
      */
     class bookingWidget
@@ -79,9 +77,6 @@ namespace YAWK\WIDGETS\BOOKING\FORM
 
         /**
          * @brief Load all widget settings from database and fill object
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @brief Load all widget settings on object init.
          */
@@ -97,9 +92,6 @@ namespace YAWK\WIDGETS\BOOKING\FORM
 
         /**
          * @brief Print all object data
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief (for development and testing purpose)
          */
         public function printObject()
@@ -111,9 +103,6 @@ namespace YAWK\WIDGETS\BOOKING\FORM
 
         /**
          * @brief Init Booking Widget
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief This method does the setup and embed job
          * @param object $db db object
          * @param array $lang language array
@@ -376,9 +365,6 @@ namespace YAWK\WIDGETS\BOOKING\FORM
 
         /**
          * @brief Set widget properties from database and fill object params
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief Load all widget settings.
          */
         public function setProperties()

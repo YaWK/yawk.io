@@ -12,7 +12,6 @@ use YAWK\language;
      * @copyright  2018 Daniel Retzl yawk.io
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Helper function to output custom (overriden) bootstrap css (settings.css)
      */
     class cssFramework
@@ -78,9 +77,6 @@ use YAWK\language;
 
         /**
          * @details Initialize and start check function
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @return string|null the generated css code as (big) string
          * @brief Init calls setBootstrapComponents and return all css code as string on success or null on error
          */
@@ -100,9 +96,6 @@ use YAWK\language;
 
         /**
          * @details Check and return generated CSS Code as string
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @return string|null the generated css code as (big) string
          * @brief Check CSS code and return it on success as string, otherwise return null
          */
@@ -120,9 +113,6 @@ use YAWK\language;
 
         /**
          * @brief  Check if Bootstrap is version 3 or 4 and load the required component methods
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @return true|null the generated css code as (big) string
          * @details  Return true after executing component methods or false if Bootstrap version is unknown
          */

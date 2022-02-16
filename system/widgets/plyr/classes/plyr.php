@@ -12,9 +12,7 @@ namespace YAWK\WIDGETS\PLYR\PLAYER
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
-     * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Plyr HTML5 Media Player Widget
      */
     class plyr extends \YAWK\widget
@@ -56,9 +54,6 @@ namespace YAWK\WIDGETS\PLYR\PLAYER
 
         /**
          * @brief Load all widget settings from database and fill object
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @brief Load all widget settings on object init.
          */
@@ -74,9 +69,6 @@ namespace YAWK\WIDGETS\PLYR\PLAYER
 
         /**
          * @brief Init example widget and call a function for demo purpose
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief Example Widget Init
          */
         public function init()
@@ -94,9 +86,6 @@ namespace YAWK\WIDGETS\PLYR\PLAYER
 
         /**
          * @brief Check and set media file type
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief check and set media file type
         */
         public function checkMediaFileType()

@@ -8,9 +8,7 @@ namespace YAWK\PLUGINS\USERPAGE {
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2009-2015 Daniel Retzl
-     * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Userpage Profile Class
      */
     class userpage
@@ -24,9 +22,6 @@ namespace YAWK\PLUGINS\USERPAGE {
 
         /**
          * @brief userpage constructor.
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param object $user user object
          */
@@ -41,9 +36,6 @@ namespace YAWK\PLUGINS\USERPAGE {
 
         /**
          * @brief init function check if backend is allowed and load userpage
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param object $user user
          * @return bool|null|string
@@ -72,9 +64,6 @@ namespace YAWK\PLUGINS\USERPAGE {
 
         /**
          * @brief getUserPage is a wrapper for buildPage
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param object $user object
          * @param object $lang language
@@ -86,9 +75,6 @@ namespace YAWK\PLUGINS\USERPAGE {
 
         /**
          * @brief detect admin and build a special 'ROOT' page with admin functions... TODO: in development
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param object $user object
          * @return string buildPage with admin functions
@@ -116,9 +102,6 @@ namespace YAWK\PLUGINS\USERPAGE {
 
         /**
          * @brief build the user page and draw html output
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param object $user object
          * @param int $usergroup group ID

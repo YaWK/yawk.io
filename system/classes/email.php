@@ -14,7 +14,6 @@ namespace YAWK {
      * @copyright  2009-2015 Daniel Retzl yawk.io
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Email class serve function sendEmail() to send email
      */
     class email

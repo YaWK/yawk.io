@@ -11,7 +11,6 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
      * @copyright  2009-2015 Daniel Retzl yawk.io
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief  Helper function to output custom (overriden) bootstrap 4 css (settings.css)
      */
     class bootstrap4 extends \YAWK\FRAMEWORK\cssFramework
@@ -52,9 +51,6 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
 
         /**
          * @brief  Bootstrap 4: CARDS Component CSS Code
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @details add bootstrap 4 cards component to this css code string
          */
         public function bs4_CardsCss()
@@ -310,9 +306,6 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
 
         /**
          * @brief  Bootstrap 4: BUTTONS Component CSS Code
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @details add Bootstrap 3 buttons component to this css code string
          */
         public function bs4_ButtonsCss()
@@ -693,9 +686,6 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
         }
         /**
          * @brief Bootstrap 4: JUMBOTRON Component CSS Code
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @details add Bootstrap 4 jumbotron component to this css code string
          */
         public function bs4_JumbotronCss()
@@ -753,9 +743,6 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
 
         /**
          * @brief Bootstrap 4: LIST GROUP Component CSS Code
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @details add Bootstrap 4 list group component to this css code string
          */
         public function bs4_ListGroupCss()
@@ -1088,9 +1075,6 @@ $this->cssCode .= "
 
         /**
          * @brief Bootstrap 4: FORMS Component CSS Code
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @details add Bootstrap 4 forms component to this css code string
          */
         public function bs4_FormsCss()

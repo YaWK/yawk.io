@@ -18,9 +18,7 @@ namespace YAWK\WIDGETS\FACEBOOK\GALLERY
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
-     * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Facebook Gallery Widget - grab photos from your Facebook albums.
      */
     class fbGallery

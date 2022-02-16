@@ -11,7 +11,6 @@ namespace YAWK {
      * @copyright  2009-2016 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief      The sys class - handles yawk's system core functions.
      */
     class sys
@@ -21,9 +20,6 @@ namespace YAWK {
          * @param $db object Database object
          * @param $assets array Required assets as array
          * @param $switch bool true|false If true, required assset gets loaded if not
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @return mixed
          * @details  This methods checks if given assets are loaded and load them on demand
          */
@@ -303,9 +299,6 @@ namespace YAWK {
 
         /**
          * @brief Return current base directory
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @return string
          */
         public static function getBaseDir()
@@ -315,9 +308,6 @@ namespace YAWK {
 
         /**
          * @brief Generate a random password with given length
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param int $length length of the password you wish to return
          * @return string
          */
@@ -338,9 +328,6 @@ namespace YAWK {
 
         /**
          * @brief Return the content of /robots.txt
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param string $path absolute path to the robots.txt file
          * @return string|bool
          */
@@ -367,9 +354,6 @@ namespace YAWK {
 
         /**
          * @brief Set the content of /robots.txt (overwrite)
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param string $path absolute path to the robots.txt file
          * @param string $content file content to write in robots.txt
          * @return bool
@@ -391,9 +375,6 @@ namespace YAWK {
 
         /**
          * @brief Read a directory recursively
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param string $path full path e.g. /xampp/htdocs/yawk-LTE/
          * @return array
          */
@@ -436,9 +417,6 @@ namespace YAWK {
 
         /**
          * @brief Count code lines and output a small overview
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param object $db database object
          * @param string $path the full path (including base path)
          * @param string $fileType file type with leading dot, for example: '.php'
@@ -468,9 +446,6 @@ namespace YAWK {
 
         /**
          * @brief Check if zlib is available
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @return bool
          */
         public static function checkZlib()
@@ -547,9 +522,6 @@ namespace YAWK {
 
         /**
          * @brief Minify any string: removes spaces, tabs and linebreaks.
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param       string      $content
          * @return      mixed
          */
@@ -716,9 +688,6 @@ namespace YAWK {
 
         /**
          * @brief copy an entire folder including subdirectories
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param string $source source directory
          * @param string $target target directory
          */
@@ -752,9 +721,6 @@ namespace YAWK {
 
         /**
          * @brief convert a integer status to string variable (0|1) to online / offline
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param int $i the status var
          * @param string $on string for status 1 (online, published...)
          * @param string $off string for status 0 (offline, not published...)
@@ -797,9 +763,6 @@ namespace YAWK {
 
         /**
          * @brief replace all carriage returns with linebreaks
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param string $replace searchstring
          * @param string $string replacestring
          * @return string
@@ -811,9 +774,6 @@ namespace YAWK {
 
         /**
          * @brief THIS SEEMS OUTDATED - obviously not needed anymore....
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param string $customCSS
          * @return string
          */
@@ -843,9 +803,6 @@ namespace YAWK {
 
         /**
          * @brief check global page status: returns 0|1 if page is offline / online
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param object $db database
          * @return bool
          */
@@ -871,9 +828,6 @@ namespace YAWK {
 
         /**
          * @brief output html div with offline message
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param object $db database
          */
         static function drawOfflineMessage($db)
@@ -909,9 +863,6 @@ namespace YAWK {
 
         /**
          * @brief set a timeout and force page reload via JS
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param string $location the url to redirect
          * @param int $wait the time in ms to wait before redirect
          * @return bool
@@ -929,9 +880,6 @@ namespace YAWK {
 
         /**
          * @brief check if browscap file is set
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param string $useragent full useragent
          * @return bool|null
          */
@@ -963,9 +911,6 @@ namespace YAWK {
 
         /**
          * @brief extract browser from useragent
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param string $useragent the full useragent
          * @return array array with useragent, browser, version and platform
          */
@@ -1082,9 +1027,6 @@ namespace YAWK {
 
         /**
          * @brief get operating system from useragent string
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param string $useragent full useragent string
          * @return mixed|string return string containing the OS (platform)
          */
@@ -1133,9 +1075,6 @@ namespace YAWK {
 
         /**
          * @brief measure script loading time
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param string $debugTime starting time
          * @return string return formated time in milliseconds
          */
@@ -1149,9 +1088,6 @@ namespace YAWK {
 
         /**
          * @brief convert german special chars and vowels into legal html
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param string $string to encode
          * @return string return encoded string
          */
@@ -1167,9 +1103,6 @@ namespace YAWK {
 
         /**
          * @brief if yawk is installed into a subdirectory, use this to get this prefix directory
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param object $db database
          * @return string return the directory prefix
          */
@@ -1181,9 +1114,6 @@ namespace YAWK {
 
         /**
          * @brief get hostname (url where yawk is installed) from database
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param object $db database
          * @return bool|string
          */
@@ -1196,9 +1126,6 @@ namespace YAWK {
 
         /**
          * @brief remove a directory recurse
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param string $dir the directory to delete
          * @return bool
          */
@@ -1219,9 +1146,6 @@ namespace YAWK {
 
         /**
          * @brief sometimes it is necessary to add a slash to a url.
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param string $url the url were the slash needs to be added
          * @return string return url containing the slash
          */
@@ -1237,9 +1161,6 @@ namespace YAWK {
 
         /**
          * @brief get any property from any table where id is given ID
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param object $db database
          * @param string $property what to select (field)
          * @param string $table from wich (table)
@@ -1268,9 +1189,6 @@ namespace YAWK {
 
         /**
          * @brief get requested group ID for given page ID (used in page-edit)
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param object $db database
          * @param string $id page ID
          * @param string $table the table to select from
@@ -1296,9 +1214,6 @@ namespace YAWK {
 
         /**
          * @brief get requested group ID for given page ID
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param object $db database
          * @param string $id page ID
          * @param string $table the table to select from
@@ -1327,9 +1242,6 @@ namespace YAWK {
 
         /**
          * @brief get all user groups from database
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param object $db database
          * @param string $table the table to select from
          * @return array|bool|string
@@ -1357,9 +1269,6 @@ namespace YAWK {
 
         /**
          * @brief include page header and metadata
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param object $db database
          * @param string $host host URL
          */
@@ -1392,9 +1301,6 @@ namespace YAWK {
 
         /**
          * @brief returns the current user name, if set
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @return string
          */
         static function getCurrentUserName()
@@ -1409,9 +1315,6 @@ namespace YAWK {
 
         /**
          * @brief get submenu ID for given page ID
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param object $db database
          * @param string $id page ID
          * @return mixed string|int
@@ -1441,9 +1344,6 @@ namespace YAWK {
 
         /**
          * @brief get menu item for given page ID
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param object $db database
          * @param int $id page ID
          * @return bool
@@ -1467,9 +1367,6 @@ namespace YAWK {
 
         /**
          * @brief get menu names from database
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param object $db database
          * @return array|bool
          */
@@ -1497,9 +1394,6 @@ namespace YAWK {
 
         /**
          * @brief returns menu name for given menu ID
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param object $db database
          * @param int $id menu ID
          * @return bool
@@ -1521,9 +1415,6 @@ namespace YAWK {
 
         /**
          * @brief returns menu language for given menu ID
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param object $db database
          * @param int $id menu ID
          * @return bool
@@ -1545,9 +1436,6 @@ namespace YAWK {
 
         /**
          * @brief get pages from database
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param object $db database
          * @return bool|mixed
          */
@@ -1572,9 +1460,6 @@ namespace YAWK {
 
         /**
          * @brief get user groups (roles) for given page
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param object $db database
          * @param int $id page ID
          * @param string $table from table
@@ -1595,9 +1480,6 @@ namespace YAWK {
 
         /**
          * @brief get group ID (role) for given page ID
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param object $db database
          * @param int $id affected page ID
          * @param string $table from table
@@ -1631,9 +1513,6 @@ namespace YAWK {
 
         /**
          * @brief split a date to month, day, year and time
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param string $date the date to split
          * @return array return an array w single items
          */
@@ -1704,9 +1583,6 @@ namespace YAWK {
 
         /**
          * @brief split a date to month, day, year and time this is the same as splitDate() but keep the months short
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param string $date the date to split
          * @return array return an array w single items
          */
@@ -1764,9 +1640,6 @@ namespace YAWK {
 
         /**
          * @brief how many time is been gone since given date
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param string $userdate date to calculate
          * @param array $lang language array
          * @return string return how many time has gone since $userdate
@@ -1873,9 +1746,6 @@ namespace YAWK {
 
         /**
          * @brief return weekday from given date
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param string $date the date to calculate
          * @return bool|false|string
          */
@@ -1921,9 +1791,6 @@ namespace YAWK {
 
         /**
          * @brief Returns, if given syslog category ID is active or not
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param object $db database object
          * @param string $syslogCategoryID ID of the requested syslog category
          * @return array
@@ -1977,9 +1844,6 @@ namespace YAWK {
 
         /**
          * @brief set a syslog entry to database
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param object $db database
          * @param int    $log_category log category
          * @param int    $log_type log type (info = 0 , warning = 1, error = 2)
@@ -2079,9 +1943,6 @@ namespace YAWK {
 
         /**
          * @brief get all syslog entries
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param object $db database
          * @return array|bool $syslogResults
          */
@@ -2118,9 +1979,6 @@ namespace YAWK {
 
         /**
          * @brief get all syslog categories
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @param object $db database
          * @return array|bool $syslogResults
          */

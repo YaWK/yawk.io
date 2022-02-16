@@ -11,9 +11,7 @@ namespace YAWK\WIDGETS\CLOCK\CURRENT
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
-     * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Embed a digital real-time clock on your website.
      */
     class clock
@@ -29,9 +27,6 @@ namespace YAWK\WIDGETS\CLOCK\CURRENT
 
         /**
          * @brief Load all widget settings from database and fill object
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @brief Load all widget settings on object init.
          */
@@ -47,9 +42,6 @@ namespace YAWK\WIDGETS\CLOCK\CURRENT
 
         /**
          * @brief Print all object data
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief (for development and testing purpose)
          */
         public function printObject()
@@ -61,9 +53,6 @@ namespace YAWK\WIDGETS\CLOCK\CURRENT
 
         /**
          * @brief Initialize: prepare JS and start the clock
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief use this method to run the clock
          */
         public function init()
@@ -74,9 +63,6 @@ namespace YAWK\WIDGETS\CLOCK\CURRENT
 
         /**
          * @brief Load required javascript
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief The engine behind this clock
          */
         public function loadJavascript()
@@ -103,9 +89,6 @@ namespace YAWK\WIDGETS\CLOCK\CURRENT
 
         /**
          * @brief Draw the clock on screen
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief This method draws the clock on screen
          */
         public function drawClock()

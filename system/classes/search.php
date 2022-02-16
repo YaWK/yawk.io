@@ -10,7 +10,6 @@ namespace YAWK {
      * @copyright  2017-2021 Daniel Retzl yawk.io
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Backend search class
      */
     class search

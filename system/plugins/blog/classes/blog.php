@@ -26,9 +26,7 @@ namespace YAWK\PLUGINS\BLOG {
      * See Methods Summary for Details!</i></p>
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
-     * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Handles the Blog System.
      */
     class blog
@@ -147,7 +145,6 @@ namespace YAWK\PLUGINS\BLOG {
         /**
          * @brief @brief Inject Language Tags
          * @author Daniel Retzl <danielretzl@gmail.com>
-         * @link http://yawk.io
          * @param array $lang language data array
          * @param object $language the language object
          * @return null
@@ -179,9 +176,6 @@ namespace YAWK\PLUGINS\BLOG {
 
         /**
          * @brief @brief Print blog title
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param string $title Blog Title
          * @param string $subtext Blog SubTitle
          * @param string $icon Font Awesome Icon e.g. fa fa-globe
@@ -203,9 +197,6 @@ namespace YAWK\PLUGINS\BLOG {
 
         /**
          * @brief @brief Print the latest blog subtitle from
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param int $blogid The blog id of the subtitle to get
          * @return mixed mixed|bool
@@ -225,9 +216,6 @@ namespace YAWK\PLUGINS\BLOG {
 
         /**
          * @brief @brief Get the blog title
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param int $blogid The blog id of the title to get
          * @return null
@@ -281,9 +269,6 @@ namespace YAWK\PLUGINS\BLOG {
 
         /**
          * @brief @brief Toggle a whole blog on/offline
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param int $id The blog id of the blog to toggle
          * @param int $published The publish status 0|1
@@ -305,9 +290,6 @@ namespace YAWK\PLUGINS\BLOG {
 
         /**
          * @brief @brief Toggle a single blog item (entry) on/offline
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param int $id The id of the blog item to toggle
          * @param int $published The publish status 0|1
@@ -333,9 +315,6 @@ namespace YAWK\PLUGINS\BLOG {
 
         /**
          * @brief @brief Toggle a blog comment on/offline
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param int $id The id of the comment to toggle
          * @param int $published The publish status 0|1
@@ -357,9 +336,6 @@ namespace YAWK\PLUGINS\BLOG {
 
         /**
          * @brief @brief Toggle a the group id (role) of blog item
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param int $itemgid The new group id for the blog item
          * @param int $id The id of the blog item to set
@@ -384,9 +360,6 @@ namespace YAWK\PLUGINS\BLOG {
 
         /**
          * @brief @brief This get all blog entries from database, prepare layout and draw them onscreen (frontend).
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param int $blogid The id of the blog to get entries from
          * @param int $itemid The item id to get, if a single entry is wanted
@@ -817,7 +790,6 @@ namespace YAWK\PLUGINS\BLOG {
      * @details Selection goes like this: "SELECT $property FROM {blog} WHERE id = $blogid
      * @author Daniel Retzl <danielretzl@gmail.com>
      * @version 1.0.0
-     * @link http://yawk.io
      * @param object $db Database Object
      * @param int $blogid The blog id of which we want to get the settings
      * @param string $property The property to get
@@ -848,7 +820,6 @@ namespace YAWK\PLUGINS\BLOG {
      * @brief @brief Load properties for given blog id and store $this -> $blog properties
      * @author Daniel Retzl <danielretzl@gmail.com>
      * @version 1.0.0
-     * @link http://yawk.io
      * @param object $db Database Object
      * @param int $blogid The blog id of which we want to load properties
      * @param string $property The property to get
@@ -900,7 +871,6 @@ namespace YAWK\PLUGINS\BLOG {
      * @brief @brief Load properties for given blog item (entry) and store $this -> $blog properties
      * @author Daniel Retzl <danielretzl@gmail.com>
      * @version 1.0.0
-     * @link http://yawk.io
      * @param object $db Database Object
      * @param int $blogid The blog id of which we want to load properties
      * @param int $itemid The item id of which we want to load properties
@@ -953,7 +923,6 @@ namespace YAWK\PLUGINS\BLOG {
      * @brief Save blog blog entry data. (See blog properties)
      * @author Daniel Retzl <danielretzl@gmail.com>
      * @version 1.0.0
-     * @link http://yawk.io
      * @param object $db Database Object
      * @return bool
     */
@@ -1108,7 +1077,6 @@ namespace YAWK\PLUGINS\BLOG {
      * @brief Save blog settings data. (layout, general settings, comment settings etc...)
      * @author Daniel Retzl <danielretzl@gmail.com>
      * @version 1.0.0
-     * @link http://yawk.io
      * @param object $db Database Object
      * @param object $blog The blog Object
      * @param string $property The property to get
@@ -1153,7 +1121,6 @@ namespace YAWK\PLUGINS\BLOG {
      * @brief Return a copyright footer
      * @author Daniel Retzl <danielretzl@gmail.com>
      * @version 1.0.0
-     * @link http://yawk.io
      * @param object $db Database Object
      * @return mixed Html Code
     */
@@ -1170,7 +1137,6 @@ namespace YAWK\PLUGINS\BLOG {
      * @brief Return the HTML code. To render the view, call this function with echo or print
      * @author Daniel Retzl <danielretzl@gmail.com>
      * @version 1.0.0
-     * @link http://yawk.io
      * @return mixed Html
     */
     function draw()
@@ -1182,7 +1148,6 @@ namespace YAWK\PLUGINS\BLOG {
      * @brief Get all comments for given blog + item id and stores it in $this->html
      * @author Daniel Retzl <danielretzl@gmail.com>
      * @version 1.0.0
-     * @link http://yawk.io
      * @param object $db Database Object
      * @param int $blogid The blog ID to get comments from
      * @param int $itemid The item ID to get comments from
@@ -1268,7 +1233,6 @@ namespace YAWK\PLUGINS\BLOG {
      * @brief Get all comments for given blog + item id and stores it in $this->html
      * @author Daniel Retzl <danielretzl@gmail.com>
      * @version 1.0.0
-     * @link http://yawk.io
      * @param object $db Database Object
      * @param int $blogid The blog ID to get comments from
      * @param int $itemid The item ID to get comments from
@@ -1295,7 +1259,6 @@ namespace YAWK\PLUGINS\BLOG {
      * @brief Get all comments for given blog + item id and stores it in $this->html
      * @author Daniel Retzl <danielretzl@gmail.com>
      * @version 1.0.0
-     * @link http://yawk.io
      * @param object $db Database Object
      * @param int $blogid The blog ID to get comments from
      * @param int $itemid The item ID to get comments from
@@ -1442,7 +1405,6 @@ namespace YAWK\PLUGINS\BLOG {
      * @brief Count and returns all active comments. If no result is found, false will be returned.
      * @author Daniel Retzl <danielretzl@gmail.com>
      * @version 1.0.0
-     * @link http://yawk.io
      * @param object $db Database Object
      * @param int $blogid The blog ID to count comments from
      * @param int $itemid The item ID to count comments from
@@ -1467,7 +1429,6 @@ namespace YAWK\PLUGINS\BLOG {
      * @brief Draw comments box
      * @author Daniel Retzl <danielretzl@gmail.com>
      * @version 1.0.0
-     * @link http://yawk.io
      * @param object $db Database Object
      * @return null
     */
@@ -1550,9 +1511,6 @@ namespace YAWK\PLUGINS\BLOG {
 
         /**
          * @brief @brief Get Property of any blog item
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param int $blogid The blog ID to get data from
          * @param int $itemid The item ID to get data from
@@ -1575,9 +1533,6 @@ namespace YAWK\PLUGINS\BLOG {
 
         /**
          * @brief @brief Delete a whole blog, including its contents, all entries, comments and pages.
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param int $blogid The blog ID to delete
          * @return bool
@@ -1631,9 +1586,6 @@ namespace YAWK\PLUGINS\BLOG {
 
         /**
          * @brief @brief Delete any blog item
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param int $blogid The blog ID to delete
          * @param int $itemid The item ID to delete
@@ -1678,9 +1630,6 @@ namespace YAWK\PLUGINS\BLOG {
 
         /**
          * @brief @brief Delete any blog comment
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param int $blogid The blog ID to delete
          * @param int $itemid The item ID to delete
@@ -1700,9 +1649,6 @@ namespace YAWK\PLUGINS\BLOG {
 
         /**
          * @brief @brief Create a new blog
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param string $name The name of the new blog
          * @param string $description What is this blog all about?
@@ -1768,9 +1714,6 @@ namespace YAWK\PLUGINS\BLOG {
 
         /**
          * @brief @brief Create a new blog item
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @param int $blogid Blog id to which the entry should be added
          * @param string $title Title of the new blog
@@ -1947,9 +1890,6 @@ namespace YAWK\PLUGINS\BLOG {
 
         /**
          * @brief @brief Copy a single blog entry
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @return bool
          */

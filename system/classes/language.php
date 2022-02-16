@@ -11,7 +11,6 @@ namespace YAWK {
      * @copyright  2017 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief The language class - support multilingual backend
      */
     class language
@@ -44,7 +43,6 @@ namespace YAWK {
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
-         * @link       http://yawk.io
          * @return string
          */
         public function init($db, $referer)
@@ -61,7 +59,6 @@ namespace YAWK {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @copyright 2017 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
-         * @link       http://yawk.io
          * @param object $db database object
          * @param string $referer frontend|backend from where it the call referred?
          * @return string
@@ -188,7 +185,6 @@ namespace YAWK {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @copyright 2017 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
-         * @link       http://yawk.io
          * @return string
          */
         static function getCurrentLanguageStatic()
@@ -255,7 +251,6 @@ namespace YAWK {
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
-         * @link       http://yawk.io
          * @return string
          */
         public function getClientLanguage()
@@ -278,7 +273,6 @@ namespace YAWK {
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
-         * @link       http://yawk.io
          * @return bool
          */
         public function getSupportedLanguages()
@@ -317,7 +311,6 @@ namespace YAWK {
          * @copyright 2017 Daniel Retzl
          * @param string $currentLanguage language in format: en-EN or en
          * @license    https://opensource.org/licenses/MIT
-         * @link       http://yawk.io
          * @return string
          */
         public function isSupported($currentLanguage)
@@ -368,7 +361,6 @@ namespace YAWK {
          * @copyright 2017 Daniel Retzl
          * @param string $defaultLanguage language in format: en-EN or en
          * @license    https://opensource.org/licenses/MIT
-         * @link       http://yawk.io
          */
         public function setDefault($defaultLanguage)
         {
@@ -385,7 +377,6 @@ namespace YAWK {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @copyright 2017 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
-         * @link       http://yawk.io
          * return string
          */
         public function getPathToLanguageFile()

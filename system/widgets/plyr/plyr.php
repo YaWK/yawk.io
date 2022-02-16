@@ -1,5 +1,5 @@
 <?php
-/** @param $db \YAWK\db */
+/** @var $db \YAWK\db */
 if (!isset($plyrPlayer))
 {   // load plyr widget class
     require_once 'classes/plyr.php';

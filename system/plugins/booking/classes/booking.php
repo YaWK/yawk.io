@@ -15,9 +15,7 @@ namespace YAWK\PLUGINS\BOOKING {
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2009-2016 Daniel Retzl
-     * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Booking Plugin is perfect if you want to let your customers submit
      * appointments from frontend. Entries can be viewed, setup and monitored in the backend.
      */

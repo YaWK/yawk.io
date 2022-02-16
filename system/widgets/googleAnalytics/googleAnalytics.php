@@ -1,5 +1,5 @@
 <?php
-/** @param $db \YAWK\db */
+/** @var $db \YAWK\db */
 // check if google analytics widget is set
 if (!isset($googleAnalytics))
 {   // load gallery widget class

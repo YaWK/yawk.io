@@ -13,9 +13,7 @@ namespace YAWK\PLUGINS\TOURDATES {
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2009-2015 Daniel Retzl
-     * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Tour Dates Plugin hands you a simple but nice, clean
      * bootstraped & sortable Data Table. You can use it to present Tour
      * Dates. (Or any other different kind of Events...) Perfect for a Band Website.
@@ -46,7 +44,6 @@ namespace YAWK\PLUGINS\TOURDATES {
         /**
          * @brief Inject Language Tags
          * @author Daniel Retzl <danielretzl@gmail.com>
-         * @link http://yawk.io
          * @param array $lang language data array
          * @param object $language the language object
          * @return null
@@ -76,9 +73,6 @@ namespace YAWK\PLUGINS\TOURDATES {
 
         /**
          * @brief get data and draw html return table for frontend
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @return bool|string the html table, inclkuding data
          */
@@ -141,9 +135,6 @@ namespace YAWK\PLUGINS\TOURDATES {
 
         /**
          * @brief get data and draw html return table for backend
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param array $lang language array
          * @return bool|string the html table, including data
@@ -214,9 +205,6 @@ namespace YAWK\PLUGINS\TOURDATES {
 
         /**
          * @brief toggle an entry online/offline, depending on published status
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param int $id event ID to toggle
          * @param int $published 0|1 1 means published, zero is not published
@@ -241,9 +229,6 @@ namespace YAWK\PLUGINS\TOURDATES {
 
         /**
          * @brief load settings into object properties
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param int $id event ID
          */
@@ -263,9 +248,6 @@ namespace YAWK\PLUGINS\TOURDATES {
 
         /**
          * @brief get highest ID from events (tourdates) database
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @return string|bool return highest ID or false
          */
@@ -290,9 +272,6 @@ namespace YAWK\PLUGINS\TOURDATES {
 
         /**
          * @brief delete an entry
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @return bool
          */
@@ -312,9 +291,6 @@ namespace YAWK\PLUGINS\TOURDATES {
 
         /**
          * @brief copy an entry
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param int $id event ID to copy
          * @return bool
@@ -350,9 +326,6 @@ namespace YAWK\PLUGINS\TOURDATES {
 
         /**
          * @brief create a new event (tourdate)
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param string $date datetime
          * @param string $band the band or artist
@@ -394,9 +367,6 @@ namespace YAWK\PLUGINS\TOURDATES {
 
         /**
          * @brief edit an entry
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param int $id event ID
          * @param string $date event datetime

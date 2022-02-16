@@ -11,7 +11,6 @@ namespace YAWK {
      * @copyright  2009-2021 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief The default menu class. Serves all the menu functions.
      */
     class menu
@@ -42,7 +41,6 @@ namespace YAWK {
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
-         * @link       http://yawk.io
          * @param object $db database
          * @param int $menuID the menuID to get data
          */
@@ -68,7 +66,6 @@ namespace YAWK {
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
-         * @link       http://yawk.io
          * @param object $db database
          * @param int $menuID the menuID to get data
          */
@@ -94,7 +91,6 @@ namespace YAWK {
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
-         * @link       http://yawk.io
          * @param object $db database
          * @param object $template template object
          */
@@ -114,7 +110,6 @@ namespace YAWK {
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
-         * @link       http://yawk.io
          * @param object $db the database object
          * @param object $lang language
          * @param string $name the name of the new menu
@@ -157,7 +152,6 @@ namespace YAWK {
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
-         * @link       http://yawk.io
          * @param object $db the database oject
          * @param int $menu affected menu ID
          * @param string $menutitle new menu title
@@ -185,7 +179,6 @@ namespace YAWK {
          * @copyright  2009-2021 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
-         * @link       http://yawk.io
          * @param object $db the database oject
          * @param int $menu affected menu ID
          * @param string $menuLanguage new menu language
@@ -222,7 +215,6 @@ namespace YAWK {
          * @copyright  2009-2021 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
-         * @link       http://yawk.io
          * @param object $db the database object
          * @param string $menuLanguage menu language
          * @return int|false $id return ID of the menu with given language or false if no ID was found
@@ -254,7 +246,6 @@ namespace YAWK {
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
-         * @link       http://yawk.io
          * @param $menu int affected menu ID
          * @param $text string new menu entry title
          * @param $href string new menu link
@@ -309,7 +300,6 @@ namespace YAWK {
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
-         * @link       http://yawk.io
          * @param object $db database object
          * @param object $lang language object
          * @param int $menuid affected menu ID
@@ -336,7 +326,6 @@ namespace YAWK {
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
-         * @link       http://yawk.io
          * @param $db object database object
          * @param $menuid int affected menu id
          * @return bool
@@ -361,7 +350,6 @@ namespace YAWK {
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
-         * @link       http://yawk.io
          * @param object $db database
          * @param object $lang language
          * @param int $id affected menu id
@@ -396,7 +384,6 @@ namespace YAWK {
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
-         * @link       http://yawk.io
          * @param $db object database
          * @param $id int affected menu entry id
          * @param $published int menu status
@@ -432,7 +419,6 @@ namespace YAWK {
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
-         * @link       http://yawk.io
          * @param object $db database
          * @param int $menu affected menu ID
          * @param int $id affected menu entry ID
@@ -477,7 +463,6 @@ namespace YAWK {
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
-         * @link       http://yawk.io
          * @param object $db database
          * @param int $menu affected menu ID
          * @param int $id affected menu entry ID
@@ -512,7 +497,6 @@ namespace YAWK {
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
-         * @link       http://yawk.io
          * @param object $db database
          * @param object $lang language
          * @param int $id affected menu ID
@@ -707,7 +691,6 @@ namespace YAWK {
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
-         * @link       http://yawk.io
          * @param object $db database obj
          * @param int $id affected menu ID
          * @param object $template template obj
@@ -1019,7 +1002,6 @@ function myFunction() {
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
-         * @link       http://yawk.io
          * @param object $db database
          * @return bool|string
          */
@@ -1046,7 +1028,6 @@ function myFunction() {
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
-         * @link       http://yawk.io
          * @param object $db database
          * @param array $lang language
          * @param int $id affected menu id

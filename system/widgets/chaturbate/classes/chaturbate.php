@@ -12,9 +12,7 @@ namespace YAWK\WIDGETS\CHATURBATE\STREAM
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
-     * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Embed chaturbate room (or stream) on your website.
      */
     class chaturbate
@@ -42,9 +40,6 @@ namespace YAWK\WIDGETS\CHATURBATE\STREAM
 
         /**
          * @brief Load all widget settings from database and fill object
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @brief Load all widget settings on object init.
          */
@@ -60,9 +55,6 @@ namespace YAWK\WIDGETS\CHATURBATE\STREAM
 
         /**
          * @brief Print all object data
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief (for development and testing purpose)
          */
         public function printObject()
@@ -80,9 +72,6 @@ namespace YAWK\WIDGETS\CHATURBATE\STREAM
 
         /**
          * @brief Set widget properties from database and fill object params
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief Load all widget settings.
          */
         public function setProperties()
@@ -119,9 +108,6 @@ namespace YAWK\WIDGETS\CHATURBATE\STREAM
 
         /**
          * @brief Embed any chaturbate room on your website
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief This method embeds the chaturbate stream
          */
         public function embed()

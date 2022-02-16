@@ -8,9 +8,7 @@ namespace YAWK\WIDGETS\EMBED_PAGE\PAGE {
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
-     * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Embed any static page in any widget position.
      */
     class embedPage
@@ -24,9 +22,6 @@ namespace YAWK\WIDGETS\EMBED_PAGE\PAGE {
 
         /**
          * @brief Load all widget settings from database and fill object
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @brief Load all widget settings on object init.
          */
@@ -42,9 +37,6 @@ namespace YAWK\WIDGETS\EMBED_PAGE\PAGE {
 
         /**
          * @brief Init and embed static page
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @brief Init and include static page.
          */

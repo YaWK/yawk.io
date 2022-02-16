@@ -6,18 +6,13 @@ namespace YAWK\PLUGINS\SIGNUP {
      * <p><i>This class covers backend functionality. See Methods Summary for Details!</i></p>
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
-     * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Handles the Blog System.
      */
     class backend
     {
         /**
          * @brief allow user group to signup
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param int $gid group ID to allow signup
          * @return bool
@@ -43,9 +38,6 @@ namespace YAWK\PLUGINS\SIGNUP {
 
         /**
          * @brief get user groups and draw select option value
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @return bool|null
          */
@@ -71,9 +63,6 @@ namespace YAWK\PLUGINS\SIGNUP {
 
         /**
          * @brief frontend? group selector
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @return bool
          */

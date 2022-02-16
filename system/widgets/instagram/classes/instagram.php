@@ -10,9 +10,7 @@ namespace YAWK\WIDGETS\INSTAGRAM\POSTING {
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
-     * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Embed Instagram on your page.
      */
     class instagram extends \YAWK\widget
@@ -32,9 +30,6 @@ namespace YAWK\WIDGETS\INSTAGRAM\POSTING {
 
         /**
          * @brief Load all widget settings from database and fill object
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @brief Load all widget settings on object init.
          */
@@ -50,9 +45,6 @@ namespace YAWK\WIDGETS\INSTAGRAM\POSTING {
 
         /**
          * @brief Print all object data
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief (for development and testing purpose)
          */
         public function printObject()
@@ -64,9 +56,6 @@ namespace YAWK\WIDGETS\INSTAGRAM\POSTING {
 
         /**
          * @brief Init and embed Instagram
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief Embed Google Maps
          */
         public function init()

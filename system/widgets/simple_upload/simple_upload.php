@@ -1,5 +1,5 @@
 <?php
-/** @param $db \YAWK\db */
+/** @var $db \YAWK\db */
 /*
 if (!isset($simpleUpload))
 {   // load gallery widget class

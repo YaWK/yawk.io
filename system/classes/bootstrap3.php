@@ -10,7 +10,6 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP3
      * @copyright  2009-2015 Daniel Retzl yawk.io
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Helper function to output custom (overriden) bootstrap 3 css (settings.css)
      */
     class bootstrap3 extends \YAWK\FRAMEWORK\cssFramework
@@ -20,9 +19,6 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP3
 
         /**
          * @brief Initialize and call bootstrap 3 methods
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @return string|null the generated css code as (big) string
          * @details  Init calls setBootstrapComponents and return all css code as string on success or null on error
          */
@@ -49,9 +45,6 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP3
 
         /**
          * @details Bootstrap 3: WELL Component CSS Code
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief add Bootstrap 3 well component to this css code string
          */
         public function bs3_WellCss()
@@ -75,9 +68,6 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP3
 
         /**
          * @details Bootstrap 3: LIST GROUP Component CSS Code
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief add Bootstrap 3 list group component to this css code string
          */
         public function bs3_ListGroupCss()
@@ -123,9 +113,6 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP3
 
         /**
          * @details Bootstrap 3: BUTTONS Component CSS Code
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief add Bootstrap 3 buttons component to this css code string
          */
         public function bs3_ButtonsCss()
@@ -507,9 +494,6 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP3
 
         /**
          * @details Bootstrap 4: FORMS Component CSS Code
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief add Bootstrap 3 forms component to this css code string
          */
         public function bs3_FormsCss()
@@ -555,9 +539,6 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP3
 
         /**
          * @details Bootstrap 3: NAVBAR Component CSS Code
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief add Bootstrap 3 navbar component to this css code string
          */
         public function bs3_NavbarCss()
@@ -726,9 +707,6 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP3
 
         /**
          * @details Bootstrap 3: JUMBOTRON Component CSS Code
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief add Bootstrap 3 jumbotron component to this css code string
          */
         public function bs3_JumbotronCss()

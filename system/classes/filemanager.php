@@ -10,7 +10,6 @@ namespace YAWK {
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2009-2015 Daniel Retzl yawk.goodconnect.net
      * @license    https://opensource.org/licenses/MIT
-     * @link       http://yawk.io
      * @since      File available since Release 1.0.0
      * @brief Basic File Manager (Backend)
      */
@@ -151,7 +150,6 @@ namespace YAWK {
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2015 Daniel Retzl yawk.goodconnect.net
          * @license    https://opensource.org/licenses/MIT
-         * @link       http://yawk.io
          * @param string $folder folder to look for files
          * @param string $path path to workout
          * @param array $lang current language array
@@ -293,7 +291,6 @@ namespace YAWK {
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2017 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
-         * @link       http://yawk.io
          * @param string $directory folder to delete
          */
         static function recursiveRemoveDirectory($directory)
@@ -325,7 +322,6 @@ namespace YAWK {
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2015 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
-         * @link       http://yawk.io
          * @param string $file file to delete
          * @param string $folder folder containing the file
          */
@@ -371,7 +367,6 @@ namespace YAWK {
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
-         * @link       http://yawk.io
          * @return     string|false
          */
         static function getPostMaxSize()
@@ -395,7 +390,6 @@ namespace YAWK {
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
-         * @link       http://yawk.io
          * @return     string|false
          */
         static function getUploadMaxFilesize()
@@ -418,7 +412,6 @@ namespace YAWK {
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
-         * @link       http://yawk.io
          * @return bool|string
          */
         static function getPhpMaxUploadSize()
@@ -449,7 +442,6 @@ namespace YAWK {
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
-         * @link       http://yawk.io
          * @param string $folder to search for files
          * @return int number of files in folder
          */
@@ -469,7 +461,6 @@ namespace YAWK {
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
-         * @link       http://yawk.io
          * @param string $folder to get files from
          */
         static function getFilesOnlyFromFolder($folder)
@@ -486,7 +477,6 @@ namespace YAWK {
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2017 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
-         * @link       http://yawk.io
          * @param string $string the affected string
          */
         static function removeSpecialChars($string)
@@ -517,7 +507,6 @@ namespace YAWK {
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
-         * @link       http://yawk.io
          * @param string $folder to get files from
          */
         static function getFilesFromFolderToArray($folder)
@@ -536,7 +525,6 @@ namespace YAWK {
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
-         * @link       http://yawk.io
          * @param string $folder to get files from
          */
         static function getSubfoldersToArray($folder)
@@ -594,7 +582,6 @@ namespace YAWK {
          * @author     Daniel Retzl <danielretzl@gmail.com>
          * @copyright  2009-2016 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
-         * @link       http://yawk.io
          * @param int|string $bytes
          * @param int|string $precision how many decimal places?
          * @return string rounded, human-readable bytes

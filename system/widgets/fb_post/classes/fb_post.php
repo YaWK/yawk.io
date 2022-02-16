@@ -10,9 +10,7 @@ namespace YAWK\WIDGETS\FACEBOOK\POSTING
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
-     * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Facebook Like Page - embed like my facebook page
      */
     class fbPosting extends \YAWK\widget
@@ -32,9 +30,6 @@ namespace YAWK\WIDGETS\FACEBOOK\POSTING
 
         /**
          * @brief Load all widget settings from database and fill object
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @brief Load all widget settings on object init.
          */
@@ -50,9 +45,6 @@ namespace YAWK\WIDGETS\FACEBOOK\POSTING
 
         /**
          * @brief Init facebook posting
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief Facebook Posting Widget
          */
         public function init()
@@ -65,9 +57,6 @@ namespace YAWK\WIDGETS\FACEBOOK\POSTING
 
         /**
          * @brief Embed any public facebook posting on your page
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief Embed any public facebook posting on your page
          */
         public function embedPosting()

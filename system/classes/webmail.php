@@ -15,8 +15,7 @@ namespace YAWK {
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2019 Daniel Retzl http://www.yawk.io
      * @license    https://opensource.org/licenses/MIT
-     * @version    1.0.0
-     * @link       http://yawk.io/
+     * @version    1.0.0/
      * @since      File available since Release 1.0.0
      * @brief Integrated IMAP Webmail
      *

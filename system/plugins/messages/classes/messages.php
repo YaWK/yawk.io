@@ -15,17 +15,12 @@ namespace YAWK\PLUGINS\MESSAGES {
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2009-2016 Daniel Retzl
-     * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
-     * @version    1.0.0
-     * @link       http://yawk.io/
+     * @version    1.0.0/
      * @brief The Messages Plugin Class. Allow your users to write messages to each other.
      */
     class messages {
         /**
          * @brief messages constructor - check if class is called from frontend or backend
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param string $location frontend or backend
          */
@@ -223,9 +218,6 @@ namespace YAWK\PLUGINS\MESSAGES {
 
         /**
          * @brief init the messaging page - check if user is logged in, else draw a login box
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @return string
          */
@@ -255,9 +247,6 @@ namespace YAWK\PLUGINS\MESSAGES {
 
         /**
          * @brief get inbox and draw menu
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @return string
          */
@@ -269,9 +258,6 @@ namespace YAWK\PLUGINS\MESSAGES {
 
         /**
          * @brief fetch messages into array
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param string $type all, trash or spam
          * @return array|string
@@ -318,9 +304,6 @@ namespace YAWK\PLUGINS\MESSAGES {
 
         /**
          * @brief fetch a single message from database
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param int $msg_id the message ID to get
          * @return array|null
@@ -335,9 +318,6 @@ namespace YAWK\PLUGINS\MESSAGES {
 
         /**
          * @brief fetch related messages into array
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param int $fromUID from user ID
          * @param int $toUID to user ID
@@ -368,9 +348,6 @@ namespace YAWK\PLUGINS\MESSAGES {
 
         /**
          * @brief draw html (output) related messages from array, each message as own box
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param array $relatedMessages related messages array
          * @return string
@@ -409,9 +386,6 @@ namespace YAWK\PLUGINS\MESSAGES {
 
         /**
          * @brief view messages
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param int $msg_id message ID
          * @return string
@@ -452,9 +426,6 @@ namespace YAWK\PLUGINS\MESSAGES {
 
         /**
          * @brief draw the complete Inbox
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param string $type spam, trash or all
          * @param array $messages messages array
          * @return string
@@ -538,9 +509,6 @@ namespace YAWK\PLUGINS\MESSAGES {
 
         /**
          * @brief draw html (output) messages menu
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @return string
          */
@@ -623,9 +591,6 @@ namespace YAWK\PLUGINS\MESSAGES {
 
         /**
          * @brief draw a new message
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param string $to username to send
          * @return string message fieldset
          */
@@ -659,9 +624,6 @@ namespace YAWK\PLUGINS\MESSAGES {
 
         /**
          * @brief mark a message as read
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param int $msg_id message ID
          * @return bool

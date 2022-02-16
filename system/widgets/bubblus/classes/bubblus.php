@@ -11,9 +11,7 @@ namespace YAWK\WIDGETS\BUBBLUS\MINDMAP
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
-     * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Embed Bubbl.us Presentations on your pages.
      */
     class bubblus
@@ -35,9 +33,6 @@ namespace YAWK\WIDGETS\BUBBLUS\MINDMAP
 
         /**
          * @brief Load all widget settings from database and fill object
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @brief Load all widget settings on object init.
          */
@@ -53,9 +48,6 @@ namespace YAWK\WIDGETS\BUBBLUS\MINDMAP
 
         /**
          * @brief Print all object data
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief (for development and testing purpose)
          */
         public function printObject()
@@ -67,9 +59,6 @@ namespace YAWK\WIDGETS\BUBBLUS\MINDMAP
 
         /**
          * @brief Set widget properties from database and fill object params
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief Load all widget settings.
          */
         public function setProperties()
@@ -102,9 +91,6 @@ namespace YAWK\WIDGETS\BUBBLUS\MINDMAP
 
         /**
          * @brief Embed any BubblUs mindmaps
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief This method does the setup and embed job
          */
         public function init()

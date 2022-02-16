@@ -11,9 +11,7 @@ namespace YAWK\WIDGETS\SOUNDCLOUD\PLAYER
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
-     * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Embed a SoundCloud audio player.
      */
     class soundcloud
@@ -51,9 +49,6 @@ namespace YAWK\WIDGETS\SOUNDCLOUD\PLAYER
 
         /**
          * @brief Load all widget settings from database and fill object
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @brief Load all widget settings on object init.
          */
@@ -69,9 +64,6 @@ namespace YAWK\WIDGETS\SOUNDCLOUD\PLAYER
 
         /**
          * @brief Print all object data
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief (for development and testing purpose)
          */
         public function printObject()
@@ -85,9 +77,6 @@ namespace YAWK\WIDGETS\SOUNDCLOUD\PLAYER
 
         /**
          * @brief Initialize: Set properties and embed SoundCloud player
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief use this method to run the clock
          */
         public function init()
@@ -101,9 +90,6 @@ namespace YAWK\WIDGETS\SOUNDCLOUD\PLAYER
 
         /**
          * @brief Prepare SoundCloud Player Properties
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief Set Player Properties and HTML Markup Code
          */
         public function setProperties()
@@ -142,9 +128,6 @@ namespace YAWK\WIDGETS\SOUNDCLOUD\PLAYER
 
         /**
          * @brief Embed SoundCloud Player
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief Load SoundCloud Iframe
          */
         public function embedPlayer()

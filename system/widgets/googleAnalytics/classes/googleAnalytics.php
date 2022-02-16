@@ -12,9 +12,7 @@ namespace YAWK\WIDGETS\GOOGLE\ANALYTICS
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
-     * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Embed Google Analytics on your page.
      */
     class googleAnalytics extends \YAWK\widget
@@ -28,9 +26,6 @@ namespace YAWK\WIDGETS\GOOGLE\ANALYTICS
 
         /**
          * @brief Load all widget settings from database and fill object
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @brief Load all widget settings on object init.
          */
@@ -47,9 +42,6 @@ namespace YAWK\WIDGETS\GOOGLE\ANALYTICS
 
         /**
          * @brief Print all object data
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief (for development and testing purpose)
          */
         public function printObject()
@@ -61,9 +53,6 @@ namespace YAWK\WIDGETS\GOOGLE\ANALYTICS
 
         /**
          * @brief Init and embed Google Analytics
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief Embed Google Analytics
          */
         public function init()

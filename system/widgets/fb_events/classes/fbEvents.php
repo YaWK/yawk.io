@@ -25,9 +25,7 @@ namespace YAWK\WIDGETS\FACEBOOK\EVENTS
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
-     * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Use Facebook Graph API to get Events from a facebook page and embed this data with your own design.
      */
 class fbEvents

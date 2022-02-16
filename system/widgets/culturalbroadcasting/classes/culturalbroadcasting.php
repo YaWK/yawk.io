@@ -12,9 +12,7 @@ namespace YAWK\WIDGETS\CULTURALBROADCASTING\STREAM
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
-     * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Embed CBA (Cultural Broadcasting Archive) Podcast Player.
      */
     class culturalBroadcastingArchive
@@ -54,9 +52,6 @@ namespace YAWK\WIDGETS\CULTURALBROADCASTING\STREAM
 
         /**
          * @brief Load all widget settings from database and fill object
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @brief Load all widget settings on object init.
          */
@@ -72,9 +67,6 @@ namespace YAWK\WIDGETS\CULTURALBROADCASTING\STREAM
 
         /**
          * @brief Print all object data
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief (for development and testing purpose)
          */
         public function printObject()
@@ -86,9 +78,6 @@ namespace YAWK\WIDGETS\CULTURALBROADCASTING\STREAM
 
         /**
          * @brief Initialize: prepare proerties and load javascript
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief use this method to run the clock
          */
         public function init()

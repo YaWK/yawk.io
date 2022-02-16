@@ -12,7 +12,6 @@ namespace YAWK {
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2009-2016 Daniel Retzl
-     * @link       http://yawk.io
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
      * @brief The default pages class. Provide all functions to handle static pages.
@@ -66,9 +65,6 @@ namespace YAWK {
 
         /**
          * @brief count and return the pages in database
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @return int|bool
          */
@@ -87,9 +83,6 @@ namespace YAWK {
 
         /**
          * @brief get and return meta tags for requested page
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param int $id affected page ID
          * @param string $type meta description
@@ -121,9 +114,6 @@ namespace YAWK {
 
         /**
          * @brief toggle page status online or offline (plus corresponding menu entries)
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param int $id affected page ID
          * @param int $published 0|1 page publish status
@@ -182,9 +172,6 @@ namespace YAWK {
 
         /**
          * @brief toggle page lock to avoid unintended changes
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param int $id affected page id
          * @param int $locked 0|1 lock status
@@ -211,9 +198,6 @@ namespace YAWK {
 
         /**
          * @brief make a copy of a page
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @return bool
          */
@@ -387,9 +371,6 @@ namespace YAWK {
 
         /**
          * @brief delete a page
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @return bool
          */
@@ -452,9 +433,6 @@ namespace YAWK {
 
         /**
          * @brief create a new page
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param string $alias page filename
          * @param int $menuID menu ID
@@ -693,9 +671,6 @@ namespace YAWK {
 
         /**
          * @brief save a static page including all settings
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @return bool
          */
@@ -818,9 +793,6 @@ namespace YAWK {
 
         /**
          * @brief delete a static content page
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param string $dirprefix directory prefix
          */
         function deleteContent($dirprefix)
@@ -854,9 +826,6 @@ namespace YAWK {
 
         /**
          * @brief write content to static page
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param string $content the content to write
          * @return bool true|false
          */
@@ -907,9 +876,6 @@ namespace YAWK {
          * @brief read content from static page
          * @param string $dirPrefix directory prefix
          * @return string html content
-         * @link http://yawk.io
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
          */
         function readContent($dirPrefix)
         {
@@ -952,9 +918,6 @@ namespace YAWK {
 
         /**
          * @brief load page properties and store as object properties
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param string $alias page filename
          */
@@ -1005,9 +968,6 @@ namespace YAWK {
 
         /**
          * @brief load page properties and store as object properties
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param string $id page id
          */
@@ -1059,9 +1019,6 @@ namespace YAWK {
 
         /**
          * @brief get latest pages
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param int $limit limit to n entries
          * @return array|string
@@ -1093,9 +1050,6 @@ namespace YAWK {
 
         /**
          * @brief get any requested page property
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param int $id affected page ID
          * @param string $property database field to get
@@ -1123,9 +1077,6 @@ namespace YAWK {
 
         /**
          * @brief get and include static page content
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param object $lang language obj
          * @return mixed

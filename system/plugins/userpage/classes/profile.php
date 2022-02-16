@@ -10,9 +10,7 @@ namespace YAWK\PLUGINS\USERPAGE {
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2009-2015 Daniel Retzl
-     * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Userpage Profile Class
      */
     class profile
@@ -28,9 +26,6 @@ namespace YAWK\PLUGINS\USERPAGE {
 
         /**
          * @brief init: check if user is logged in and draw profile or show login box
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @return string html output
          */
@@ -62,9 +57,6 @@ namespace YAWK\PLUGINS\USERPAGE {
 
         /**
          * @brief draw user profile for frontend editing
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param object $user user object
          * @return null store in object setting: $this->html

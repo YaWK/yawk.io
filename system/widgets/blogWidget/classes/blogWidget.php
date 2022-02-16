@@ -11,9 +11,7 @@ namespace YAWK\WIDGETS\BLOG\WIDGET {
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2019 Daniel Retzl
-     * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Embed a blog on your website.
      */
     class blogWidget extends \YAWK\widget
@@ -35,9 +33,6 @@ namespace YAWK\WIDGETS\BLOG\WIDGET {
 
         /**
          * @details  Load all widget settings from database and fill object
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @brief Load all widget settings on object init.
          */
@@ -53,9 +48,6 @@ namespace YAWK\WIDGETS\BLOG\WIDGET {
 
         /**
          * @brief Print all object data
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @details  (for development and testing purpose)
          */
         public function printObject()
@@ -67,9 +59,6 @@ namespace YAWK\WIDGETS\BLOG\WIDGET {
 
         /**
          * @brief Init Gallery and load methods
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @details  load Javascript and draw image gallery
          */
         public function init($db)
@@ -81,9 +70,6 @@ namespace YAWK\WIDGETS\BLOG\WIDGET {
 
         /**
          * @brief Draw the blog
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param db object Database object
          * @details  (for development and testing purpose)
          */

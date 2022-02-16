@@ -8,9 +8,7 @@ namespace YAWK\PLUGINS\SIGNUP {
      * <p><i>This class covers frontend functionality. See Methods Summary for Details!</i></p>
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
-     * @license    http://www.gnu.org/licenses/gpl-2.0  GNU/GPL 2.0
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Handles the Blog System.
      */
     class signup
@@ -36,9 +34,6 @@ namespace YAWK\PLUGINS\SIGNUP {
 
         /**
          * @brief check if the user is logged in and load userpage on demand
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @param array $lang language array
          * @return bool|null|string
@@ -82,9 +77,6 @@ namespace YAWK\PLUGINS\SIGNUP {
 
         /**
          * @brief draw html output adultcheck or form on demand
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @return string return html form
          */

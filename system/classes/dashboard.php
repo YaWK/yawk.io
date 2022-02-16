@@ -13,8 +13,7 @@ namespace YAWK\BACKEND
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2009-2016 Daniel Retzl http://yawk.io
      * @license    https://opensource.org/licenses/MIT
-     * @version    1.0.0
-     * @link       http://yawk.io/
+     * @version    1.0.0/
      * @brief Dashboard class serves a few useful functions for the admin backend.
      */
     class dashboard

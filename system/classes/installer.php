@@ -52,7 +52,6 @@ namespace YAWK {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @copyright 2017 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
-         * @link       http://yawk.io
          */
         function __construct()
         {
@@ -101,7 +100,6 @@ namespace YAWK {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @copyright 2017 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
-         * @link       http://yawk.io
          */
         public function init()
         {
@@ -178,7 +176,6 @@ namespace YAWK {
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @copyright 2017 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
-         * @link       http://yawk.io
          */
         public function setup($language, $lang)
         {   /* CHECK + SET LANGUAGE */
@@ -251,7 +248,6 @@ namespace YAWK {
          * @param array $lang language data array
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @license    https://opensource.org/licenses/MIT
-         * @link       http://yawk.io
          */
         public function step1($language, $lang)
         {
@@ -286,7 +282,6 @@ namespace YAWK {
          * @param array $lang language data array
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @license    https://opensource.org/licenses/MIT
-         * @link       http://yawk.io
          */
         public function step2($setup, $language, $lang)
         {
@@ -391,7 +386,6 @@ namespace YAWK {
          * @param array $lang language data array
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @license    https://opensource.org/licenses/MIT
-         * @link       http://yawk.io
          */
         public function step3($setup, $language, $lang)
         {
@@ -505,7 +499,6 @@ namespace YAWK {
          * @param array $lang language data array
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @license    https://opensource.org/licenses/MIT
-         * @link       http://yawk.io
          */
         public function step4($setup, $language, $lang)
         {
@@ -609,7 +602,6 @@ namespace YAWK {
          * @param array $lang array language data array
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @license    https://opensource.org/licenses/MIT
-         * @link       http://yawk.io
          */
         public function step5($setup, $language, $lang)
         {
@@ -702,7 +694,6 @@ namespace YAWK {
         /** @brief this function writes the .htaccess file to the admin/ folder
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @license    https://opensource.org/licenses/MIT
-         * @link       http://yawk.io
          */
         public function  writeHtaccessFileToAdminFolder()
         {
@@ -904,7 +895,6 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
         /** @brief check server requirements and set object params
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @license    https://opensource.org/licenses/MIT
-         * @link       http://yawk.io
          */
         public function checkServerRequirements()
         {
@@ -970,7 +960,6 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
         /** Check supported languages and build options for select field
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @license    https://opensource.org/licenses/MIT
-         * @link       http://yawk.io
          */
         public function getLanguageSelectOptions($language, $lang)
         {
@@ -999,8 +988,7 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
         /** @brief Check if php version is bigger than required
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @license    https://opensource.org/licenses/MIT
-         * @link       http://yawk.io
-         * return bool
+         * @return bool
          */
         public function checkPhpVersion()
         {
@@ -1019,8 +1007,7 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
         /** @brief Check if the weberver is running on apache
          * @author Daniel Retzl <danielretzl@gmail.com>
          * @license    https://opensource.org/licenses/MIT
-         * @link       http://yawk.io
-         * return bool
+         * @return bool
          */
         public function checkApacheVersion()
         {   // check if server software info is readable and set
@@ -1064,9 +1051,6 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
 
         /**
          * @brief Check if zlib is available
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          * @return bool
          */
         public function checkZlib()
@@ -1085,10 +1069,7 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
 
         /**
          * @brief Check if mod_rewrite is available
-         * <p>Note: this does not work on some restricted configured shared hosting providers.</p>
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
+         * @details <p>Note: this does not work on some restricted configured shared hosting providers.</p>
          * @return bool
          */
         public function checkModRewrite()
@@ -1123,9 +1104,6 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
 
         /**
          * @brief Draw the installer's footer with links to yawk.io and github
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          */
         public function footer()
         {
@@ -1145,9 +1123,6 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
 
         /**
          * @brief Call the footer and end the html body and file
-         * @author      Daniel Retzl <danielretzl@gmail.com>
-         * @version     1.0.0
-         * @link        http://yawk.io
          */
         function __destruct()
         {

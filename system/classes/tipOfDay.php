@@ -15,7 +15,6 @@ namespace YAWK {
      * @copyright  2009-2015 Daniel Retzl yawk.io
      * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief TipOfDay class serve functions to get and draw a tip of the day
      */
     class tipOfDay extends \YAWK\alert
@@ -87,7 +86,7 @@ namespace YAWK {
         /**
          * @brief Get a random tip from database that is still unseen.
          * @param $db
-         * return bool
+         * @return bool
          */
         public function getRandomTipData($db)
         {
@@ -135,7 +134,7 @@ namespace YAWK {
          */
         public function getNextTipData($db)
         {
-            /** @param $db \YAWK\db */
+            /** @var $db \YAWK\db */
             // query data: ordered ascending by ID, only entries that are unseen
             if ($res = $db->query("SELECT * FROM {tips} WHERE published = 1 ORDER BY id ASC LIMIT 1"))
             {

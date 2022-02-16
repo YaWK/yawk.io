@@ -12,9 +12,7 @@ namespace YAWK\WIDGETS\FUCKADBLOCK\BLOCK
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
-     * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Detect and react to user's installed AdBlocker.
      */
     class fuckadblock
@@ -44,9 +42,6 @@ namespace YAWK\WIDGETS\FUCKADBLOCK\BLOCK
 
         /**
          * @brief Load all widget settings from database and fill object
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @brief Load all widget settings on object init.
          */
@@ -63,9 +58,6 @@ namespace YAWK\WIDGETS\FUCKADBLOCK\BLOCK
 
         /**
          * @brief The main function to init fuckAdBlock
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief Prepare properties and init fuckAdBlock
          */
         public function init()

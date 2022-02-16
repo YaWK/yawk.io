@@ -12,8 +12,7 @@ namespace YAWK\BACKEND {
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2009-2016 Daniel Retzl
      * @license    https://opensource.org/licenses/MIT
-     * @version    1.0.0
-     * @link       http://yawk.io/
+     * @version    1.0.0/
      * @since      File available since Release 1.0.0
      * @brief Backend class serves a few useful functions for the admin backend.
      */
@@ -248,9 +247,6 @@ namespace YAWK\BACKEND {
 
         /**
          * @brief Draw body and header Tag
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @return null
          */
         function drawHtmlBody(){
@@ -264,9 +260,6 @@ namespace YAWK\BACKEND {
 
         /**
          * @brief Draw logo in the top left corner
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database object
          * @param object $lang language array
          * @return null
@@ -306,9 +299,6 @@ namespace YAWK\BACKEND {
 
         /**
          * @brief Draw the navbar (top)
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @return null
          */
         function drawHtmlNavbar(){
@@ -337,9 +327,6 @@ namespace YAWK\BACKEND {
 
         /**
          * @brief Draw right navbar
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @return null
          */
         function drawHtmlNavbarRightMenu(){
@@ -351,9 +338,6 @@ namespace YAWK\BACKEND {
 
         /**
          * @brief Draw backup icon on navbar top beside preview icon
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param array $lang Language Array
          * @return null
          */
@@ -376,9 +360,6 @@ namespace YAWK\BACKEND {
 
         /**
          * @brief Draw preview page icon on navbar top beside other notification icons
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param array $lang Language Array
          * @return null
          */
@@ -421,9 +402,6 @@ namespace YAWK\BACKEND {
 
         /**
          * @brief Messages Menu: the small icon in the right corner of top navigation. This is a facebook-like messaging preview.
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database object
          * @param array $lang Language array
          * @return null
@@ -513,9 +491,6 @@ namespace YAWK\BACKEND {
 
         /**
          * @brief Webmail Menu: small envelope icon in the right corner of top navigation. This is a preview of your emails (if you use webmail)
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database object
          * @param array $lang Language array
          * @return null
@@ -644,9 +619,6 @@ namespace YAWK\BACKEND {
 
         /**
          * @brief Draw navbar notification. This tells you whats going on in your project.
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database object
          * @param object $lang Language object
          * @param $user
@@ -796,9 +768,6 @@ namespace YAWK\BACKEND {
 
         /**
          * @brief Show your user account details. Counts your friends and connections, let you log out.
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database object
          * @param object $user User object
          * @return null
@@ -882,9 +851,6 @@ namespace YAWK\BACKEND {
 
         /**
          * @brief End Navbar
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @return null
          */
         function drawHtmlNavbarHeaderEnd(){
@@ -902,9 +868,6 @@ namespace YAWK\BACKEND {
 
         /**
          * @brief Left sidebar navigation
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database object
          * @param object $user User object
          * @param object $lang Language object
@@ -1222,9 +1185,6 @@ namespace YAWK\BACKEND {
 
         /**
          * @brief HTML Content Header (manually written in \includes)
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $lang Language object
          * @return null
          */
@@ -1235,9 +1195,6 @@ namespace YAWK\BACKEND {
 
         /**
          * @brief HTML Content Header Breadcrumbs (manually written in \includes)
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @return null
          */
         function drawHtmlContentBreadcrumbs(){
@@ -1247,9 +1204,6 @@ namespace YAWK\BACKEND {
 
         /**
          * @brief output the html content - depending wheter its a plugin or a static admin page
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database object
          * @param object $lang Language object
          * @param object $user User object - not in use atm, check this!
@@ -1319,9 +1273,6 @@ namespace YAWK\BACKEND {
 
         /**
          * @brief End Content
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @return null
          */
         function drawHtmlContentClose()
@@ -1333,9 +1284,6 @@ namespace YAWK\BACKEND {
 
         /**
          * @brief Draw a Footer on every backend page.
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @return null
          */
         function drawHtmlFooter($db)
@@ -1381,9 +1329,6 @@ namespace YAWK\BACKEND {
 
         /**
          * @brief Draw right, collapsable sidebar
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @return null
          */
         function drawHtmlRightSidebar($lang){
@@ -1467,9 +1412,6 @@ namespace YAWK\BACKEND {
 
         /**
          * @brief Include needed JS files
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @return null
          */
         function drawHtmlJSIncludes(){
@@ -1490,9 +1432,6 @@ namespace YAWK\BACKEND {
 
         /**
          * @brief SetUp Backend FX and end html body
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database
          * @return null
          */
@@ -1515,9 +1454,6 @@ namespace YAWK\BACKEND {
 
         /**
          * @brief draw a simple collapse box
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param string $header
          * @param string $content
          */

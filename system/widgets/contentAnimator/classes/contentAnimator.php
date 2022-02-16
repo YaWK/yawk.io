@@ -13,9 +13,7 @@ namespace YAWK\WIDGETS\CONTENTANIMATOR\ANIMATE
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
-     * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Add a pre-defined effect to any of your content elements.
      */
     class contentAnimator
@@ -33,9 +31,6 @@ namespace YAWK\WIDGETS\CONTENTANIMATOR\ANIMATE
 
         /**
          * @brief Load all widget settings from database and fill object
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @brief Load all widget settings on object init.
          */
@@ -51,9 +46,6 @@ namespace YAWK\WIDGETS\CONTENTANIMATOR\ANIMATE
 
         /**
          * @brief Print all object data
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief (for development and testing purpose)
          */
         public function printObject()
@@ -65,9 +57,6 @@ namespace YAWK\WIDGETS\CONTENTANIMATOR\ANIMATE
 
         /**
          * @brief Initialize: prepare proerties and load javascript
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief use this method to run the clock
          */
         public function init()

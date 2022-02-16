@@ -11,9 +11,7 @@ namespace YAWK\WIDGETS\SUBMENU\EMBED
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
-     * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Submenu widget - embed any menu on any page in any position
      */
     class submenu extends \YAWK\widget
@@ -29,9 +27,6 @@ namespace YAWK\WIDGETS\SUBMENU\EMBED
 
         /**
          * @brief Load all widget settings from database and fill object
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @brief Load all widget settings on object init.
          */
@@ -47,9 +42,6 @@ namespace YAWK\WIDGETS\SUBMENU\EMBED
 
         /**
          * @brief Init submenu widget and call a function for demo purpose
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief submenu Widget Init
          */
         public function init($db)

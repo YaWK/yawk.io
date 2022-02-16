@@ -11,9 +11,7 @@ namespace YAWK\WIDGETS\YOUTUBE\VIDEO
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
-     * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Embed any YouTube Video on your pages.
      */
     class youtube
@@ -50,10 +48,7 @@ namespace YAWK\WIDGETS\YOUTUBE\VIDEO
         public $cssMarkup = '';
 
         /**
-         * @brief Load all widget settings from database and fill object params
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
+         * @details  Load all widget settings from database and fill object params
          * @param object $db Database Object
          * @brief Load all widget settings on object init.
          */
@@ -69,10 +64,7 @@ namespace YAWK\WIDGETS\YOUTUBE\VIDEO
 
         /**
          * @brief Print all object data
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
-         * @brief (for development and testing purpose)
+         * @details  (for development and testing purpose)
          */
         public function printObject()
         {
@@ -83,10 +75,7 @@ namespace YAWK\WIDGETS\YOUTUBE\VIDEO
 
         /**
          * @brief Check settings and embed the YouTube Video
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
-         * @brief This method does the setup and embed job
+         * @details  This method does the setup and embed job
          */
         public function embedVideo()
         {

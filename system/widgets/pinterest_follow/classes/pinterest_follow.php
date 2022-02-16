@@ -11,9 +11,7 @@ namespace YAWK\WIDGETS\PINTEREST\FOLLOW
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
-     * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Pinterest Follow Widget
      */
     class pinterestFollow extends \YAWK\widget
@@ -29,9 +27,6 @@ namespace YAWK\WIDGETS\PINTEREST\FOLLOW
 
         /**
          * @brief Load all widget settings from database and fill object
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db Database Object
          * @brief Load all widget settings on object init.
          */
@@ -47,9 +42,6 @@ namespace YAWK\WIDGETS\PINTEREST\FOLLOW
 
         /**
          * @brief Init example widget and call a function for demo purpose
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief Example Widget Init
          */
         public function init()
@@ -60,9 +52,6 @@ namespace YAWK\WIDGETS\PINTEREST\FOLLOW
 
         /**
          * @brief Embed Pinterest Follow Button
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @brief Embed Pinterest Follow Button
          */
         public function embedPinterestFollow()

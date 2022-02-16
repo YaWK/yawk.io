@@ -5,7 +5,6 @@ namespace YAWK\PLUGINS\SIGNUP {
      * <p>serve all methods to draw the user signup form</p>
      * @author Daniel Retzl <danielretzl@gmail.com>
      * @version 1.0.0
-     * @link http://yawk.io
      */
     class buildForm extends \YAWK\PLUGINS\SIGNUP\signup
     {
@@ -16,9 +15,6 @@ namespace YAWK\PLUGINS\SIGNUP {
 
         /**
          * @brief initialize form (build it)
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @return string return html code
          */
@@ -29,9 +25,6 @@ namespace YAWK\PLUGINS\SIGNUP {
 
         /**
          * @brief loads the header, layout and footer of the form
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @return string return html form
          */
@@ -44,9 +37,6 @@ namespace YAWK\PLUGINS\SIGNUP {
 
         /**
          * @brief build the form
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          * @return string return html form
          */
@@ -61,9 +51,6 @@ namespace YAWK\PLUGINS\SIGNUP {
 
         /**
          * @brief get form header
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          */
         public function getHeader()
         {
@@ -73,9 +60,6 @@ namespace YAWK\PLUGINS\SIGNUP {
 
         /**
          * @brief get form title
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          */
         public function getTitle($db)
@@ -86,9 +70,6 @@ namespace YAWK\PLUGINS\SIGNUP {
 
         /**
          * @brief get form legend
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          */
         public function getLegend($db)
@@ -121,9 +102,6 @@ namespace YAWK\PLUGINS\SIGNUP {
 
         /**
          * @brief build form on depending layout
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          */
         public function getLayout($db)
@@ -178,9 +156,6 @@ namespace YAWK\PLUGINS\SIGNUP {
 
         /**
          * @brief get and return a select field with all groups as option values
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          */
         public function getGroupSelect($db)
@@ -207,9 +182,6 @@ namespace YAWK\PLUGINS\SIGNUP {
 
         /**
          * @brief draw html output: all mandatory fields
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          */
         public function getMandatoryFields(){
             $this->html .= "<label for=\"username\">Username</label>
@@ -228,9 +200,6 @@ namespace YAWK\PLUGINS\SIGNUP {
 
         /**
          * @brief draw html output: checkbox for terms of service
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param $db
          */
         public function getTerms($db){
@@ -243,9 +212,6 @@ namespace YAWK\PLUGINS\SIGNUP {
 
         /**
          * @brief draw html output of all additional fields
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          */
         public function getAdditionalFields($db){
@@ -285,9 +251,6 @@ namespace YAWK\PLUGINS\SIGNUP {
 
         /**
          * @brief draw the submit button
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @version 1.0.0
-         * @link http://yawk.io
          * @param object $db database
          */
         public function getSubmitButton($db){

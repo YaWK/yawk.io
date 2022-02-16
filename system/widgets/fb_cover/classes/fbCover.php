@@ -12,9 +12,7 @@ namespace YAWK\WIDGETS\FACEBOOK\FBCOVER
      *
      * @author     Daniel Retzl <danielretzl@gmail.com>
      * @copyright  2018 Daniel Retzl
-     * @license    https://opensource.org/licenses/MIT
      * @version    1.0.0
-     * @link       http://yawk.io
      * @brief Facebook Cover widget - Embed current cover image from your Facebook page.
      */
 class fbCover
