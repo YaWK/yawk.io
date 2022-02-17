@@ -1660,15 +1660,7 @@ namespace YAWK\PLUGINS\BLOG {
         {
             /** @var $db \YAWK\db */
             /* generate ID manually to prevent id holes    */
-            if ($res_blog = $db->query("SELECT MAX(id), MAX(sort) FROM {blog}")) {   // fetch data
-                $row = mysqli_fetch_row($res_blog);
-                if (!isset($row[0])) {
-                    $id = 1;
-                } else {
-                    $id = $row[0]++;
-                }
 
-                $sort = $row[1]++;
                 $published = 1;
                 $name = htmlentities($name);
                 $description = htmlentities($description);
@@ -1678,37 +1670,55 @@ namespace YAWK\PLUGINS\BLOG {
 
                 // add new blog into database
                 if ($db->query("INSERT INTO {blog} (sort, published, name, description, icon)
-	                        VALUES('" . $sort . "',
+	                        VALUES(1,
 	                        '" . $published . "',
 	                        '" . $name . "',
 	                        '" . $description . "',
 	                        '" . $icon . "')"))
                 {
-                    // create blog page
-                    if (!isset($page))
-                    {   // create new page object
-                        $page = new \YAWK\page();
-                    }
-                    if ($page->create($db, $name, $menuID, $locked, $id, 0) === true)
-                    {   // success
-                        return true;
+                    // get ID of this blog; we need the blogID to assign it correctly to the static page afterwards
+                    if (!$res_blog = $db->query("SELECT MAX(id), MAX(sort) FROM {blog}"))
+                    {   // this is the first blog
+                        $blogId = 1;
                     }
                     else
-                    {   // create page failed, throw error...
-                        \YAWK\alert::draw("danger", "Error: ", "Could not create blog page! Please enter all fields.", "", "2200");
-                        return false;
+                    {   // fetch data and set blogID
+                        $row = mysqli_fetch_row($res_blog);
+                        if (!isset($row[0])) {
+                            $blogId = 1;
+                        } else {
+                            $blogId = $row[0]++;
+                        }
                     }
+
+                    if ($row = $db->query("SELECT blogid FROM {pages} WHERE blogid = '" . $blogId . "' LIMIT 1"))
+                    {
+                        $res = mysqli_fetch_row($row);
+                    } else { $res = null; }
+                        if ($res != $blogId)
+                        {
+                            // create blog page
+                            if (!isset($page))
+                            {   // create new page object
+                                $page = new \YAWK\page();
+                            }
+                            if ($page->create($db, $name, $menuID, $locked, $blogId, 0) === true)
+                            {   // success
+                                return true;
+                            }
+                            else
+                            {   // create page failed, throw error...
+                                \YAWK\alert::draw("danger", "Error: ", "Could not create blog page! Please enter all fields.", "", "2200");
+                                return false;
+                            }
+                        }
+
                 }
                 else
                 {   // q failed
                     \YAWK\alert::draw("danger", "Error: ", "Could not create blog page database entry - please try it again.", "", "3800");
                     return false;
                 }
-            }
-            else
-            {   // q getMAXid failed
-                return false;
-            }
         }
 
 

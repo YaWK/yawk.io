@@ -477,22 +477,6 @@ namespace YAWK {
             // final filename
             $link = "$alias" . ".html";
 
-            if ($blogid !== '0')
-            {
-                // it must be a blog...
-                // ## select max id from blog
-                if ($res = $db->query("SELECT MAX(id) FROM {blog}"))
-                {
-                    $row = mysqli_fetch_row($res);
-                    $blogid = $row[0];
-                }
-                else
-                {   // throw error
-                    sys::setSyslog($db, 7, 1, "failed to fetch MAX(id) FROM {blog}", 0, 0, 0, 0);
-                    alert::draw("danger","Error:", "Could not fetch MAX(id) FROM {blog}", "page=page-new", "4300");
-                }
-            }
-
             // if menu select field is not empty
             if ($menuID !== "empty") {
                 // ## select max ID from menu + add menu entry
@@ -634,7 +618,7 @@ namespace YAWK {
                // $keyw = htmlentities($keyw);
                 // add local metatags
                 if (!$db->query("INSERT INTO {meta_local} (name, page, content)
-                        VALUES ($desc, $id, $title)"))
+                        VALUES ('".$title."', '".$id."', '".$desc."')"))
                 {   // error inserting page into database - throw error
                     sys::setSyslog($db, 7, 2, "failed to store local meta tags $title", 0, 0, 0, 0);
                     // \YAWK\alert::draw("warning", "Error!", "Failed to insert meta description.", "", 4300);

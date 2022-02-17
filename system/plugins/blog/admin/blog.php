@@ -46,7 +46,7 @@ if (isset($_GET['addblog']))
 }
 
 // DELETE BLOG
-if (isset($_GET['delete']) || ($_GET === "1"))
+if (isset($_GET['delete']) || ($_GET == "1"))
 {
     // if all is set to 1, the full blog, including all items will be deleted
     if (isset($_GET['all']) && ($_GET['all'] === "true"))
