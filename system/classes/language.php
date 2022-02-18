@@ -59,48 +59,8 @@ namespace YAWK {
          * @param string $referer frontend|backend from where it the call referred?
          * @return string
          */
-        public function getCurrentLanguage($db, $referer)
+        public function getCurrentLanguage($db, $referer): string
         {
-            /**
-            // check if a GET param is set
-            if (isset($_GET['lang']) && (!empty($_GET['lang'])))
-            {
-                $this->currentLanguage = $_GET['lang'];     // sst GET param as current language
-                // register and overwrite session var
-                $_SESSION['lang'] = $this->currentLanguage;
-                // and check if cookie is set
-                if (!isset($_COOKIE['lang']) || (empty($_COOKIE['lang'])))
-                {   // if session is set, but cookie is not
-                    // try to set it via PHP (will not work, because output started before...)
-                    // @setcookie("lang", $this->currentLanguage, time() + (60 * 60 * 24 * 1460));
-                    // instead: set the cookie via JS
-                    echo "<script>document.cookie = 'lang=$this->currentLanguage';</script>";
-                }
-                // language set, cookie set
-                return $this->currentLanguage;
-            }
-            else
-            {
-                // GET param not set, check if there is a $_SESSION[lang]
-                if (isset($_SESSION['lang']) || (!empty($_SESSION['lang'])))
-                {
-                    // session var is set
-                    $this->currentLanguage = $_SESSION['lang'];
-                    return $this->currentLanguage;
-                }
-                // SESSION param not set, check if there is a $_COOKIE[lang]
-                elseif (isset($_COOKIE['lang']) || (!empty($_COOKIE['lang'])))
-                {
-                    // cookie var is set
-                    $this->currentLanguage = $_COOKIE['lang'];
-                    return $this->currentLanguage;
-                }
-                else
-                {
-
-                }
-            }
-            */
 
             if (isset($referer) && (is_string($referer)))
             {
@@ -193,8 +153,8 @@ namespace YAWK {
                 // register and overwrite session var
                 $_SESSION['lang'] = $currentLanguage;
                 // and check if cookie is set
-                if (!isset($_COOKIE['lang']) || (empty($_COOKIE['lang'])))
-                {   // if not, try to set it - with error supressor to avoid notices if output started before
+                if (empty($_COOKIE['lang']))
+                {   // if not, try to set it - with error suppressor to avoid notices if output started before
                     @setcookie('lang', $currentLanguage, time() + (60 * 60 * 24 * 1460));
                 }
                 /* language set, cookie set */
@@ -356,7 +316,6 @@ namespace YAWK {
 
         /**
          * @brief Returns the path to the language file
-         * @author Daniel Retzl <danielretzl@gmail.com>
          * @copyright 2017 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          * return string
@@ -416,7 +375,7 @@ namespace YAWK {
 
         /**
          * @brief set client language and parse corresponding ini file to an array called $lang
-         * @param string $currentLanguage the current language as string (eg en-US)
+         * @param string $currentLanguage the current language as string (e.g. en-US)
          * @return array|bool $lang returns a language array
          */
         public function setLanguage(string $currentLanguage)
