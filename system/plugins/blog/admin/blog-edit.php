@@ -1,7 +1,13 @@
 <?php
+
+use YAWK\BACKEND\AdminLTE;
+use YAWK\db;
+use YAWK\PLUGINS\BLOG\blog;
+use YAWK\settings;
+
 include '../system/plugins/blog/classes/blog.php';
 // check if blog object is set
-if (!isset($blog)) { $blog = new \YAWK\PLUGINS\BLOG\blog(); }
+if (!isset($blog)) { $blog = new blog(); }
 // check if page object is set
 if (!isset($page)) { $page = new \YAWK\page(); }
 // check if language is set
@@ -9,30 +15,33 @@ if (!isset($language) || (!isset($lang)))
 {   // inject (add) language tags to core $lang array
     $lang = \YAWK\language::inject(@$lang, "../system/plugins/blog/language/");
 }
+if (!isset($db)){
+    $db = new db();
+}
 // SAVE BLOG ENTRY
 if (isset($_POST['save'])) {
     // check if blogtitle is set
-    if (!isset($_POST['blogtitle']) || (empty($_POST['blogtitle'])))
+    if ((empty($_POST['blogtitle'])))
     {   // blogtitle is empty, set unnamed as default value
         $_POST['blogtitle'] = "unnamed";
     }
     // check if filename is set
-    if (!isset($_POST['filename']) || (empty($_POST['filename'])))
+    if ((empty($_POST['filename'])))
     {   // user entered no filename, take blogtitle as filename (processing will be done in save function)
         $_POST['filename'] = $_POST['blogtitle'];
     }
     // check if meta description is set
-    if (!isset($_POST['metadescription']) || (empty($_POST['metadescription'])))
+    if ((empty($_POST['metadescription'])))
     {   // if not, take blogtitle as description
         $_POST['metadescription'] = $_POST['blogtitle'];
     }
     // check if meta keywords are set
-    if (!isset($_POST['metakeywords']) || (empty($_POST['metakeywords'])))
+    if ((empty($_POST['metakeywords'])))
     {   // if not, take blogtitle as description
         $_POST['metakeywords'] = "";
     }
     // check if a teasertext is set
-    if (!isset($_POST['teasertext']) || (empty($_POST['teasertext'])))
+    if ((empty($_POST['teasertext'])))
     {   // if not, leave old teasertext (hidden post field)
         $_POST['teasertext'] = $_POST['oldteasertext'];
     }
@@ -69,7 +78,7 @@ if (isset($_POST['save'])) {
     }
     else
     {   // saving failed, throw error
-        YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[BLOG] " . $_GET['blogid'] . " " . $_POST['title'] . " - " . $_POST['subtitle'] . " $lang[NOT] $lang[SAVED]","","3800");
+        YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[BLOG] " . $_GET['blogid'] . " " . $_POST['blogtitle'] . " - " . $_POST['subtitle'] . " $lang[NOT] $lang[SAVED]","","3800");
     }
 }
 
@@ -89,7 +98,7 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 /* draw Title on top */
-\YAWK\PLUGINS\BLOG\blog::getBlogTitle($blog->blogtitle, $lang['EDIT'], $blog->icon);
+blog::getBlogTitle($blog->blogtitle, $lang['EDIT'], $blog->icon);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
             <li><a href=\"index.php?page=plugins\" title=\"$lang[PLUGINS]\"> $lang[PLUGINS]</a></li>
@@ -124,7 +133,7 @@ echo"<ol class=\"breadcrumb\">
 </script>
 <?php
 // get settings for editor
-$editorSettings = \YAWK\settings::getEditorSettings($db, 14);
+$editorSettings = settings::getEditorSettings($db, 14);
 ?>
 <!-- include summernote css/js-->
 <!-- include codemirror (codemirror.css, codemirror.js, xml.js) -->
@@ -437,7 +446,7 @@ $blog->layout = $blog->getBlogProperty($db, $blog->blogid, "layout");
                                size=\"64\"
                                maxlength=\"255\"
                                value=\"$blog->subtitle\">";
-            echo \YAWK\AdminLTE::drawCollapsableBox($header, $content);
+            echo AdminLTE::drawCollapsableBox($header, $content);
             ?>
 
             <!-- PUBLISHING -->

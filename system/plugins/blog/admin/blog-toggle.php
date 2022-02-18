@@ -1,4 +1,7 @@
 <?php
+
+use YAWK\db;
+
 include '../system/plugins/blog/classes/blog.php';
 // check if blog object is set
 if (!isset($blog)) { $blog = new \YAWK\PLUGINS\BLOG\blog(); }
@@ -6,6 +9,9 @@ if (!isset($blog)) { $blog = new \YAWK\PLUGINS\BLOG\blog(); }
 if (!isset($language) || (!isset($lang)))
 {   // inject (add) language tags to core $lang array
     $lang = \YAWK\language::inject(@$lang, "../system/plugins/blog/language/");
+}
+if (!isset($db)){
+    $db = new db();
 }
 
 $blog->published = $_GET['published'];

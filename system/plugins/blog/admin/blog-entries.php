@@ -1,4 +1,8 @@
 <?php
+
+use YAWK\alert;
+use YAWK\db;
+
 include '../system/plugins/blog/classes/blog.php';
 // check if blog object is set
 if (!isset($blog)) { $blog = new \YAWK\PLUGINS\BLOG\blog(); }
@@ -6,6 +10,9 @@ if (!isset($blog)) { $blog = new \YAWK\PLUGINS\BLOG\blog(); }
 if (!isset($language) || (!isset($lang)))
 {   // inject (add) language tags to core $lang array
     $lang = \YAWK\language::inject(@$lang, "../system/plugins/blog/language/");
+}
+if (!isset($db)){
+    $db = new db();
 }
 // SET BLOG ITEM PROPERTIES
 if (isset($_GET['blogid']))
@@ -25,9 +32,9 @@ $blog->comments = $blog->getBlogProperty($db, $blog->id, "comments");
 if (isset($_GET['toggle']))
 {
     $published = $_GET['published'];
-    if (isset($_GET['itemid']) && (!empty($_GET['itemid']) && (is_numeric($_GET['itemid']))))
+    if (isset($_GET['id']) && (!empty($_GET['id']) && (is_numeric($_GET['id']))))
     {
-        $blog->itemid = $_GET['itemid'];
+        $blog->itemid = $_GET['id'];
     }
     else
         {
@@ -47,11 +54,11 @@ if (isset($_GET['toggle']))
 
     if ($blog->toggleItemOffline($db, $blog->itemid, $published))
     {   //
-        print \YAWK\alert::draw($color, "$lang[PAGE] $lang[IS] $lang[NOW] $published", "$lang[PAGE_TOGGLE] $lang[SUCCESSFUL]", "", 800);
+        print alert::draw($color, "$lang[PAGE] $lang[IS] $lang[NOW] $status", "$lang[PAGE_TOGGLE] $lang[SUCCESSFUL]", "", 800);
     }
     else
     {
-        print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[PAGE_TOGGLE_FAILED]", "", 6800);
+        print alert::draw("danger", "$lang[ERROR]", "$lang[PAGE_TOGGLE_FAILED]", "", 6800);
     }
 
 }
@@ -76,11 +83,11 @@ if (isset($_GET['copy']))
         {
             if($blog->copyItem($db))
             {   // success
-                \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[BLOG] $lang[ITEM] ".$_GET['itemid']." $lang[COPIED]","","2000");
+                alert::draw("success", "$lang[SUCCESS]", "$lang[BLOG] $lang[ITEM] ".$_GET['itemid']." $lang[COPIED]","","2000");
             }
             else
             {   // copy failed, throw error
-                \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[BLOG] $lang[ITEM]", "plugin=blog&pluginpage=blog-entries&blogid=$blog->id $lang[COPY] $lang[FAILED]","3800");
+                alert::draw("danger", "$lang[ERROR]", "$lang[BLOG] $lang[ITEM]", "plugin=blog&pluginpage=blog-entries&blogid=$blog->id $lang[COPY] $lang[FAILED]","3800");
             }
         }
     }
@@ -98,7 +105,7 @@ if (isset($_GET['delete']) || ($_GET === "1"))
     {   // delete blog item
         if (!$blog->deleteItem($db, $_GET['blogid'], $_GET['itemid'], $_GET['pageid']))
         {   // delete item failed, throw error
-            \YAWK\alert::draw("danger", "$lang[ERROR] $lang[ID] #$_GET[itemid] / $_GET[title]", "$lang[PAGE_DEL_FAILED]", "", 5800);
+            alert::draw("danger", "$lang[ERROR] $lang[ID] #$_GET[itemid] / $_GET[title]", "$lang[PAGE_DEL_FAILED]", "", 5800);
         }
     }
 }
@@ -110,11 +117,11 @@ if (isset($_GET['deletecomment']))
         // delete comment
         if (isset($_GET['commentid']) && (isset($_GET['itemid']) && (isset($_GET['blogid'])))) {
             if ($blog->deleteComment($db, $_GET['blogid'], $_GET['itemid'], $_GET['commentid'])) {
-                \YAWK\alert::draw("success", "$lang[SUCCESS] ", "$lang[COMMENT] $lang[ID] " . $_GET['id'] . " $lang[DELETED]", "","1200");
+                alert::draw("success", "$lang[SUCCESS] ", "$lang[COMMENT] $lang[ID] " . $_GET['id'] . " $lang[DELETED]", "","1200");
             }
             else
             {
-                \YAWK\alert::draw("danger", "$lang[ERROR] ", "$lang[DELETE] $lang[COMMENT] $lang[ID] " . $_GET['id'] . " ", "","3800");
+                alert::draw("danger", "$lang[ERROR] ", "$lang[DELETE] $lang[COMMENT] $lang[ID] " . $_GET['id'] . " ", "","3800");
             }
         }
     }
@@ -267,7 +274,7 @@ echo "
     }
     else
     {
-        \YAWK\alert::draw("warning", "$lang[WARNING] ", "$lang[BLOG_ENTRY_DEL_FAILED]", "","3800");
+        alert::draw("warning", "$lang[WARNING] ", "$lang[BLOG_ENTRY_DEL_FAILED]", "","3800");
     }
     ?>
     </tbody>

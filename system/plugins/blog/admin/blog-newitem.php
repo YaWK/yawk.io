@@ -1,17 +1,28 @@
 <?php
+
+use YAWK\alert;
+use YAWK\BACKEND\AdminLTE;
+use YAWK\db;
+use YAWK\language;
+use YAWK\PLUGINS\BLOG\blog;
+use YAWK\sys;
+
 include '../system/classes/editor.php';
 include '../system/plugins/blog/classes/blog.php';
 // check if blog object is set
-if (!isset($blog)) { $blog = new \YAWK\PLUGINS\BLOG\blog(); }
+if (!isset($blog)) { $blog = new blog(); }
 // check if language is set
 if (!isset($language) || (!isset($lang)))
 {   // inject (add) language tags to core $lang array
-    $lang = \YAWK\language::inject(@$lang, "../system/plugins/blog/language/");
+    $lang = language::inject(@$lang, "../system/plugins/blog/language/");
+}
+if (!isset($db)){
+    $db = new db();
 }
 
 if (isset($_POST['create']) && isset($_POST['blogid']))
 {
-    $blog = new \YAWK\PLUGINS\BLOG\blog();
+    $blog = new blog();
     $blog->blogid = $db->quote($_POST['blogid']);
     $blog->title = $db->quote($_POST['title']);
     $blog->subtitle = $db->quote($_POST['subtitle']);
@@ -26,13 +37,13 @@ if (isset($_POST['create']) && isset($_POST['blogid']))
 
     if ($blog->createItem($db, $blog->blogid, $blog->title, $blog->subtitle, $blog->published, $blog->teasertext, $blog->blogtext, $blog->date_publish, $blog->date_unpublish, $blog->thumbnail, $blog->youtubeUrl, $blog->weblink)) {
         // echo YAWK\alert::draw("success", "Success!", "Your entry $blog->title was saved.","plugin=blog&pluginpage=blog-entries&blogid=".$blog->blogid."", 9800);
-        YAWK\alert::draw("success", "$lang[SUCCESS]", "$blog->title $lang[SAVED]", "plugin=blog&pluginpage=blog-entries&blogid=".$blog->blogid."", 1200);
-        \YAWK\sys::setSyslog($db, 5, 0, "blog item $blog->title saved", 0, 0, 0, 0);
+        alert::draw("success", "$lang[SUCCESS]", "$blog->title $lang[SAVED]", "plugin=blog&pluginpage=blog-entries&blogid=".$blog->blogid."", 1200);
+        sys::setSyslog($db, 5, 0, "blog item $blog->title saved", 0, 0, 0, 0);
     }
     else
     {   // create failed, throw error
-        \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[BLOG_ADD_ITEM_FAILED]","","3800");
-        \YAWK\sys::setSyslog($db, 7, 1, "unable to save blog item $blog->title", 0, 0, 0, 0);
+        alert::draw("danger", "$lang[ERROR]", "$lang[BLOG_ADD_ITEM_FAILED]","","3800");
+        sys::setSyslog($db, 7, 1, "unable to save blog item $blog->title", 0, 0, 0, 0);
     }
 }
 
@@ -362,7 +373,7 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
                                id=\"subtitle\"
                                size=\"64\"
                                maxlength=\"255\">";
-                echo \YAWK\AdminLTE::drawCollapsableBox($header, $content);
+                echo AdminLTE::drawCollapsableBox($header, $content);
                 ?>
 
                 <!-- PUBLISHING -->
