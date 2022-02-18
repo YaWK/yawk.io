@@ -40,25 +40,21 @@ namespace YAWK {
 
         /**
          * @brief initialize and return current language
-         * @author     Daniel Retzl <danielretzl@gmail.com>
+         * @return array|bool
          * @copyright  2009-2016 Daniel Retzl
-         * @license    https://opensource.org/licenses/MIT
-         * @return string
          */
         public function init($db, $referer)
         {
             // set current language
             $this->httpAcceptedLanguage = $this->getClientLanguage();
-            $this->currentFrontendLanguage = \YAWK\settings::getSetting($db, "frontendLanguage");
+            $this->currentFrontendLanguage = settings::getSetting($db, "frontendLanguage");
             $this->currentLanguage = $this->getCurrentLanguage($db, $referer);
             return $this->setLanguage($this->currentLanguage);
         }
 
         /**
          * @brief returns the currently set language
-         * @author Daniel Retzl <danielretzl@gmail.com>
          * @copyright 2017 Daniel Retzl
-         * @license    https://opensource.org/licenses/MIT
          * @param object $db database object
          * @param string $referer frontend|backend from where it the call referred?
          * @return string
@@ -110,7 +106,7 @@ namespace YAWK {
             {
                 if ($referer == "frontend")
                 {
-                    if ($this->currentLanguage = \YAWK\settings::getSetting($db, "frontendLanguage"))
+                    if ($this->currentLanguage = settings::getSetting($db, "frontendLanguage"))
                     {
                         $_SESSION['lang'] = $this->currentLanguage;
                         // return current language from db-settings// if not, try to set it - with error supressor to avoid notices if output started before
@@ -128,7 +124,7 @@ namespace YAWK {
                 else if ($referer == "backend")
                 {
 
-                    if ($this->currentLanguage = \YAWK\settings::getSetting($db, "backendLanguage"))
+                    if ($this->currentLanguage = settings::getSetting($db, "backendLanguage"))
                     {
                         $_SESSION['lang'] = $this->currentLanguage;
                         // return current language from db-settings// if not, try to set it - with error supressor to avoid notices if output started before
@@ -145,7 +141,7 @@ namespace YAWK {
                 }
                 else
                 {
-                    if ($this->currentLanguage = \YAWK\settings::getSetting($db, "backendLanguage"))
+                    if ($this->currentLanguage = settings::getSetting($db, "backendLanguage"))
                     {
                         $_SESSION['lang'] = $this->currentLanguage;
                         // return current language from db-settings// if not, try to set it - with error supressor to avoid notices if output started before
@@ -163,7 +159,7 @@ namespace YAWK {
             }
             else
             {
-                if ($this->currentLanguage = \YAWK\settings::getSetting($db, "backendLanguage"))
+                if ($this->currentLanguage = settings::getSetting($db, "backendLanguage"))
                 {
                     $_SESSION['lang'] = $this->currentLanguage;
                     // return current language from db-settings// if not, try to set it - with error supressor to avoid notices if output started before
@@ -207,18 +203,16 @@ namespace YAWK {
             else
             {
                 // GET param not set, check if there is a $_SESSION[lang]
-                if (isset($_SESSION['lang']) || (!empty($_SESSION['lang'])))
+                if (isset($_SESSION['lang']) && (!empty($_SESSION['lang'])))
                 {
                     // session var is set
-                    $currentLanguage = $_SESSION['lang'];
-                    return $currentLanguage;
+                    return $_SESSION['lang'];
                 }
                 // SESSION param not set, check if there is a $_COOKIE[lang]
-                elseif (isset($_COOKIE['lang']) || (!empty($_COOKIE['lang'])))
+                elseif (isset($_COOKIE['lang']) && (!empty($_COOKIE['lang'])))
                 {
                     // cookie var is set
-                    $currentLanguage = $_COOKIE['lang'];
-                    return $currentLanguage;
+                    return $_COOKIE['lang'];
                 }
                 else
                 {
@@ -227,20 +221,14 @@ namespace YAWK {
                     {   // create new db object
                         require_once '../system/classes/db.php';
                         require_once '../system/classes/settings.php';
-                        $db = new \YAWK\db();
+                        $db = new db();
                     }
                     // get backend language setting and save string eg. (en-EN) in $this->current
-                    if ($currentLanguage = (\YAWK\settings::getSetting($db, "backendLanguage")) === true)
-                    {
-                        // return current db-settings language
-                        return $currentLanguage;
-                    }
-                    else
-                    {   // failed to get backend language
+                    if (!($currentLanguage = (settings::getSetting($db, "backendLanguage")) === true)) {   // failed to get backend language
                         $currentLanguage = "en-EN";   // default: en-EN
                         // return default value (en-EN)
-                        return $currentLanguage;
                     }
+                    return $currentLanguage;
                 }
             }
         }
@@ -253,7 +241,7 @@ namespace YAWK {
          * @license    https://opensource.org/licenses/MIT
          * @return string
          */
-        public function getClientLanguage()
+        public function getClientLanguage(): ?string
         {
             // check if browser tells any accepted language
             if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) || (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])))
@@ -275,18 +263,14 @@ namespace YAWK {
          * @license    https://opensource.org/licenses/MIT
          * @return bool
          */
-        public function getSupportedLanguages()
+        public function getSupportedLanguages(): bool
         {
             // walk /admin/language folder and get all language files into an array
             require_once ('system/classes/filemanager.php');
             $languageFiles = filemanager::getFilesFromFolderToArray('admin/language');
             foreach ($languageFiles AS $file)
             {
-                if ($file === ".htaccess")
-                {
-
-                }
-                else
+                if ($file != ".htaccess")
                 {
                     $globalLanguageTag = substr($file, 5, -7);
                     $this->supportedLanguagesGlobal[] = $globalLanguageTag;
@@ -307,13 +291,12 @@ namespace YAWK {
 
         /**
          * @brief Check if a language is supported. This functions expect currentLanguage string in format "en-EN" or "en"
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @copyright 2017 Daniel Retzl
          * @param string $currentLanguage language in format: en-EN or en
+         * @return bool
          * @license    https://opensource.org/licenses/MIT
-         * @return string
+         * @copyright 2017 Daniel Retzl
          */
-        public function isSupported($currentLanguage)
+        public function isSupported(string $currentLanguage): bool
         {
             // create arrays with supported languages, one in format "en", the other one "en-EN"
             $this->getSupportedLanguages();
@@ -357,14 +340,13 @@ namespace YAWK {
 
         /**
          * @brief Set a language as default and load (set) it current language
-         * @author Daniel Retzl <danielretzl@gmail.com>
-         * @copyright 2017 Daniel Retzl
          * @param string $defaultLanguage language in format: en-EN or en
+         * @copyright 2017 Daniel Retzl
          * @license    https://opensource.org/licenses/MIT
          */
-        public function setDefault($defaultLanguage)
+        public function setDefault(string $defaultLanguage)
         {
-            if (isset($defaultLanguage) && (!empty($defaultLanguage)))
+            if ((!empty($defaultLanguage)))
             {
                 // set default language
                 $this->currentLanguage = $defaultLanguage;
@@ -437,7 +419,7 @@ namespace YAWK {
          * @param string $currentLanguage the current language as string (eg en-US)
          * @return array|bool $lang returns a language array
          */
-        public function setLanguage($currentLanguage)
+        public function setLanguage(string $currentLanguage)
         {
             $this->pathToFile = $this->getPathToLanguageFile();
 
@@ -488,9 +470,9 @@ namespace YAWK {
          * @param string $pathToFile absolute path to the injectable language file
          * @return array $lang returns pushed language array
          */
-        static function inject($lang, $pathToFile)
+        static function inject(array $lang, string $pathToFile): array
         {
-            // check if language is saved in session or cookie to prevent unneccessary db actions
+            // check if language is saved in session or cookie to prevent unnecessary db actions
             if (isset($_SESSION['lang']))
             {   // set from session setting
                 $currentLanguage = $_SESSION['lang'];
@@ -505,9 +487,9 @@ namespace YAWK {
             }
             else
                 {   // get current language from db
-                    $currentLanguage = \YAWK\language::getCurrentLanguageStatic();
+                    $currentLanguage = language::getCurrentLanguageStatic();
                     if (isset($currentLanguage) && (!empty($currentLanguage)))
-                    {   // set session var to save database ressources
+                    {   // set session var to save database resources
                         $_SESSION['lang'] = $currentLanguage;
                     }
                 }
