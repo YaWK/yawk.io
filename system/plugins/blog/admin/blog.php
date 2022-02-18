@@ -1,14 +1,21 @@
 <?php
+
+use YAWK\alert;
+use YAWK\backend;
+use YAWK\db;
+use YAWK\language;
+use YAWK\PLUGINS\BLOG\blog;
+
 include '../system/plugins/blog/classes/blog.php';
 // check if blog object is set
-if (!isset($blog)) { $blog = new \YAWK\PLUGINS\BLOG\blog(); }
+if (!isset($blog)) { $blog = new blog(); }
 // check if language is set
 if (!isset($language) || (!isset($lang)))
 {   // inject (add) language tags to core $lang array
-    $lang = \YAWK\language::inject(@$lang, "../system/plugins/blog/language/");
+    $lang = language::inject(@$lang, "../system/plugins/blog/language/");
 }
 if (!isset($db)){
-    $db = new \YAWK\db();
+    $db = new db();
 }
 
 // ADD BLOG
@@ -32,15 +39,15 @@ if (isset($_GET['addblog']))
         // create new blog
         if ($blog->create($db, $name, $description, $menuID, $icon) === true)
         {   // if the user did not set an icon, notify him that he should / can do that.
-            if (empty($icon) || (!isset($icon)))
+            if (empty($icon))
             {   // no icon is set, throw a info alert in users face
-                \YAWK\alert::draw("info", "$lang[DID_YOU_KNOW]", "$lang[BLOG_TIP_ICONS]", "", 12400);
+                alert::draw("info", "$lang[DID_YOU_KNOW]", "$lang[BLOG_TIP_ICONS]", "", 12400);
             }
-            print \YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[BLOG_ADD_OK]", "", 800);
+            print alert::draw("success", "$lang[SUCCESS]", "$lang[BLOG_ADD_OK]", "", 800);
         }
         else
         {   // could not create blog, throw error
-            print \YAWK\alert::draw("danger", "$lang[ERROR]", "$lang[BLOG_ADD_FAILED] $name","",3800);
+            print alert::draw("danger", "$lang[ERROR]", "$lang[BLOG_ADD_FAILED] $name","",3800);
         }
     }
 }
@@ -55,12 +62,11 @@ if (isset($_GET['delete']) || ($_GET == "1"))
         {   // delete full blog including whole content
             if (!$blog->delete($db, $_GET['blog']))
             {   // delete blog failed, throw error
-                \YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[BLOG_DEL_FAILED] " . $_GET['itemid'] . " ","plugin=blog", 5800);
+                alert::draw("warning", "$lang[ERROR]", "$lang[BLOG_DEL_FAILED] " . $_GET['itemid'] . " ","plugin=blog", 5800);
             }
         }
     }
 }
-YAWK\backend::getTitle($lang['BLOG'], $lang['BLOGS_SUBTEXT']);
 ?>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -82,7 +88,7 @@ echo "
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
 /* draw Title on top */
-echo \YAWK\backend::getTitle($lang['BLOG'], $lang['BLOGS_SUBTEXT']);
+echo backend::getTitle($lang['BLOG'], $lang['BLOGS_SUBTEXT']);
 echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
             <li><a href=\"index.php?page=plugins\" title=\"$lang[PLUGINS]\"> $lang[PLUGINS]</a></li>
@@ -113,7 +119,7 @@ echo"<ol class=\"breadcrumb\">
     </thead>
     <tbody>
     <?php
-    $blog = new \YAWK\PLUGINS\BLOG\blog();
+    $blog = new blog();
 
     if ($res = $db->query("SELECT * FROM {blog} ORDER BY id"))
     {
@@ -170,13 +176,13 @@ echo"<ol class=\"breadcrumb\">
         }
         else
         {
-            \YAWK\alert::draw("warning", "$lang[WARNING]", "$lang[BLOG_FETCH_FAILED]","","3800");
+            alert::draw("warning", "$lang[WARNING]", "$lang[BLOG_FETCH_FAILED]","","3800");
         }
     }
     }
     else
     {
-        \YAWK\alert::draw("warning", "$lang[WARNING]", "$lang[BLOG_FETCH_FAILED]","","3800");
+        alert::draw("warning", "$lang[WARNING]", "$lang[BLOG_FETCH_FAILED]","","3800");
     }
     ?>
     </tbody>
