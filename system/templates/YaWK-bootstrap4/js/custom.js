@@ -18,11 +18,11 @@ $(document).ready(function ()
     // KEEP DIV IN VIEWPORT
 	// to keep any div box in the viewport after scrolling down, set class="scrollingDiv"
     var $scrollingDiv = $("#scrollingDiv");
-    $(window).scroll(function(){            
-        $scrollingDiv
-            .stop()
-            .animate({"marginTop": ($(window).scrollTop() )}, 0);         
-    }); 
+      $(window).scroll(function(){            
+            $scrollingDiv
+                .stop()
+                .animate({"marginTop": ($(window).scrollTop() )}, 0);         
+        }); 
     
     // SMOOTH SCROLL TO ANCHORS
     // if you want your internal links to smooth scroll, set class="sliding-link" target must be a div with id="yourtag"
