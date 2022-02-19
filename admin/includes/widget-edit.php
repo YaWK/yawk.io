@@ -38,6 +38,7 @@ use YAWK\alert;
 use YAWK\backend;
 use YAWK\db;
 use YAWK\language;
+use YAWK\sys;
 use YAWK\template;
 use YAWK\widget;
 
@@ -73,6 +74,8 @@ else
         $widget->date_unpublish = $db->quote($_POST['date_unpublish']);
         $widget->widgetTitle = $db->quote($_POST['widgetTitle']);
         $widget->blocked = isset($_POST['mystatus']);
+        // if date publish is not set, set it to current datetime
+        if (empty($widget->date_publish)) { $widget->date_publish = sys::now(); }
 
       // save widget state
   	    if ($widget->save($db) === true)
