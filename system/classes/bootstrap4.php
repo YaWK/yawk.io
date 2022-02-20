@@ -22,7 +22,7 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
          * @brief  Call all the methods to set bootstrap 4 custom css and return it as string.
          * @return string|null
          */
-        public function init()
+        public function init(): ?string
         {
             // set css tags for Bootstrap 4
             $this->bs4_CardsCss();
@@ -972,6 +972,7 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
                 border-style: ".$this->tplSettings['navbar-borderstyle'].";
                 border-width: ".$this->tplSettings['navbar-bordersize'].";
                 border-color: #".$this->tplSettings['border-menubgcolor'].";
+                text-shadow: ".$this->tplSettings['globaltext-fontshadowsize']." #".$this->tplSettings['fontshadow-menucolor'].";
             }
             
             .navbar-bg-custom {
@@ -994,6 +995,7 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
             
             .navbar-brand {
                 color: #".$this->tplSettings['brand-menucolor'].";
+                text-shadow: ".$this->tplSettings['globaltext-fontshadowsize']." #".$this->tplSettings['fontshadow-menucolor'].";
             }
             
             .navbar-brand:hover, .navbar-brand:focus {
@@ -1035,8 +1037,8 @@ namespace YAWK\FRAMEWORK\BOOTSTRAP4
 // to avoid encoding errors, the icon bars will be held in this variable:
 $svg = "data:image/svg+xml;charset=utf8,%3Csvg%20viewBox='0 0 30 30'%20xmlns='http://www.w3.org/2000/svg'%3E%3Cpath%20stroke='%23".$this->tplSettings['iconbar-menubgcolor']."'%20stroke-width='2'%20stroke-linecap='round'%20stroke-miterlimit='10'%20d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E";
 
-// css goes on with custom toggle icon
-$this->cssCode .= "
+            // css goes on with custom toggle icon
+            $this->cssCode .= "
             .navbar-light .custom-toggler .navbar-toggler-icon {
             background-image: url(\"".$svg."\");
             }";

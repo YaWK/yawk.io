@@ -269,10 +269,10 @@ namespace YAWK\BACKEND {
          */
         function drawHtmlLogo($db, $lang)
         {   // check, if URL or personal text should be displayed...
-            if ($this->backendLayout === "layout-top-nav"){
+            if ($this->backendLayout == "layout-top-nav"){
                 return null;
             }
-            if (settings::getSetting($db, "backendLogoUrl") === "1")
+            if (settings::getSetting($db, "backendLogoUrl") == "1")
             {   // URL is requested, -> get hostname (project URL)
                 $host = settings::getSetting($db, "host");
                 $chars = (strlen($host));
@@ -286,7 +286,7 @@ namespace YAWK\BACKEND {
                 }
             }
             else
-                {   // personal text requestet, -> get logo text + subtext
+                {   // personal text requested, -> get logo text + subtext
                     $logoText = "<b>". settings::getSetting($db, "backendLogoText")."</b>";
                     $logoText .= settings::getSetting($db, "backendLogoSubText");
                 }
@@ -305,7 +305,7 @@ namespace YAWK\BACKEND {
          * @return null
          */
         function drawHtmlNavbar(){
-            if ($this->backendLayout === "layout-top-nav"){
+            if ($this->backendLayout == "layout-top-nav"){
                 echo "
     <nav class=\"navbar navbar-static-top\" role=\"navigation\">
       <div class=\"container\">
@@ -1206,7 +1206,7 @@ namespace YAWK\BACKEND {
         }
 
         /**
-         * @brief output the html content - depending wheter its a plugin or a static admin page
+         * @brief output the html content - depending on whether it's a plugin or a static admin page
          * @param object $db Database object
          * @param object $lang Language object
          * @param object $user User object - not in use atm, check this!
