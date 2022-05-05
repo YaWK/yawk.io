@@ -1,14 +1,14 @@
 {
   "name": "yawk/yawk.io",
   "description": "Yet another Web Kit - CMS and Web Management Tool",
-  "version": "1.0.2205",
+  "version": "1.0.0",
   "type": "project",
   "keywords": ["CMS", "website", "homepage", "content management", "wordpress alternative", "git"],
   "homepage": "https://yawk.io",
   "download": "https://github.com/YaWK/yawk.io/archive/refs/heads/master.zip",
   "time": "2022-05-05",
   "minimum-stability": "dev",
-  "prefer-stable": false,
+  "prefer-stable": true,
   "license": "MIT",
   "authors": [
     {
