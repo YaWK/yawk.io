@@ -11,7 +11,6 @@
   "keywords": ["CMS", "website", "homepage", "content management", "wordpress alternative", "git"],
   "homepage": "https://yawk.io",
   "time": "2022-05-05",
-  "minimum-stability": "dev",
   "prefer-stable": false,
   "license": "MIT",
   "authors": [
