@@ -33,6 +33,5 @@
     "docs": "https://docs.yawk.io/"
   },
   "require": {
-    "YaWK/yawk.io": "dev-master"
   }
 }
