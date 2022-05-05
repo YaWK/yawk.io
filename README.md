@@ -53,13 +53,17 @@ There are two ways to load YaWK on your webserver:<br><br>
 <li><u>If you have root/shell access:</u> <b>git clone https://github.com/YaWK/yawk.io</b>
     <br><br>
     or
+    if you are using composer you can type: <b>composer create yawk/yawk.io -s dev</b>
     <br><br>
+    <i>(afterwards move files from yawk.io folder to your project's root directory if necessary.)</i>
+    <br><br>
+ATTENTION: Files must be accessable by webserver user & group. Make sure to check/set correct user/group permissions (example: chown -R www-data:www-data yourfolder)
+<br><br>
 </li>
 <li>
     <u>If you're using a webhost:</u> Download the .zip package, extract it on your computer and upload the extracted files to your webserver. Use any FTP client and upload the files to the root directory of your webserver.
 </li>
 </ol>
-
 <h4>Minimum Server / Webhosting Requirements:</h4>
 <ul>
 <li>PHP 5.6+ (PHP 7+ recommended)</li>
