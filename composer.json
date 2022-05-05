@@ -7,7 +7,6 @@
     }
   ],
   "description": "Yet another Web Kit - CMS and Web Management Tool",
-  "version": "1.0.0",
   "type": "project",
   "keywords": ["CMS", "website", "homepage", "content management", "wordpress alternative", "git"],
   "homepage": "https://yawk.io",
