@@ -1,5 +1,11 @@
 {
-  "name": "yawk/yawk.io",
+  "name":  "yawk/yawk.io",
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/YAWK/yawk.io"
+    }
+  ],
   "description": "Yet another Web Kit - CMS and Web Management Tool",
   "version": "1.0.0",
   "type": "project",
@@ -27,5 +33,6 @@
     "docs": "https://docs.yawk.io/"
   },
   "require": {
+    "YaWK/yawk.io": "dev-master"
   }
 }
