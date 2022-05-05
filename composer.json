@@ -5,6 +5,7 @@
   "type": "project",
   "keywords": ["CMS", "website", "homepage", "content management", "wordpress alternative"],
   "homepage": "https://yawk.io",
+  "download": "https://github.com/YaWK/yawk.io/archive/refs/heads/master.zip",
   "time": "2022-05-05",
   "minimum-stability": "dev",
   "prefer-stable": false,
