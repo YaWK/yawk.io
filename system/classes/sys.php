@@ -1042,6 +1042,9 @@ namespace YAWK {
 
             $os_platform    =   "Unknown OS Platform";
             $os_array       =   array(
+                'Sec-CH-UA-Platform'  =>  'Windows 11',
+                'Windows NT 10.0; Win64; x64'  =>  'Windows 10',
+                '/Windows NT 10.0'      =>  'Windows 10',
                 '/windows nt 6.2/i'     =>  'Windows 8',
                 '/windows nt 6.1/i'     =>  'Windows 7',
                 '/windows nt 6.0/i'     =>  'Windows Vista',
