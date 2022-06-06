@@ -14,7 +14,7 @@ namespace YAWK
         /** * @param int uid (user id) who affected this entry */
         public $uid = 0;
         /** * @param int gid (group id) who affected this entry */
-        public $gid;
+        public $gid = 0;
         /** * @param int phpSessionID current php session ID */
         public $phpSessionID;
         /** * @param string currentTimeStamp current time stamp */
@@ -22,7 +22,7 @@ namespace YAWK
         /** * @param int currentOnline how many users are currently online */
         public $currentOnline = 0;
         /** * @param int 0|1 was the user logged in? */
-        public $logged_in;
+        public $logged_in = 0;
         /** * @param string detected user language */
         public $acceptLanguage;
         /** * @param string IP address who affected this entry */
@@ -365,7 +365,7 @@ namespace YAWK
         public function setStats($db)
         {   /* @param $db \YAWK\db */
             // check if stats are enabled
-            if (\YAWK\settings::getSetting($db, "statsEnable") === "1")
+            if (\YAWK\settings::getSetting($db, "statsEnable") == 1)
             {   // prepare user information that we can easily collect
                 $this->prepareData();
                 // set online users
