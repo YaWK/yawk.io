@@ -130,7 +130,7 @@ if (isset($_GET['del']) && ($_GET['del'] === "1"))
             if ($sql = $db->query("SELECT menu, alias FROM {pages} WHERE menu = $row[id]"))
             {
                 $result = mysqli_fetch_row($sql);
-                if ($result[0] == $row['id'])
+                if (isset($result[0]) && ($result[0] == $row['id']))
                 {
                     $subMenuLabel = "<i class=\"label label-default\">$lang[SUBMENU]</i>";
                     $pageName = "<small><small>@</small> $result[1].html</small>";
