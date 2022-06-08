@@ -2885,28 +2885,28 @@ namespace YAWK {
 
                 $row = mysqli_fetch_assoc($resInternal);
                 // print_r($res);
-                if ($row['link'] === $property['internal']) {
+                if (is_array($property['internal']) && $row['link'] === $property['internal']) {
                     $selectedInternal = " selected";
                 } else {
                     $selectedInternal = '';
                 }
 
                 $row = mysqli_fetch_assoc($resUrl1);
-                if ($row['link'] === $property['url1']) {
+                if (is_array($property['url1']) && $row['link'] === $property['url1']) {
                     $selectedUrl1 = " selected";
                 } else {
                     $selectedUrl1 = '';
                 }
 
                 $row = mysqli_fetch_assoc($resUrl2);
-                if ($row['link'] === $property['url2']) {
+                if (is_array($property['url2']) && $row['link'] === $property['url2']) {
                     $selectedUrl2 = " selected";
                 } else {
                     $selectedUrl2 = '';
                 }
 
                 $row = mysqli_fetch_assoc($resUrl3);
-                if ($row['link'] === $property['url3']) {
+                if (is_array($property['url3']) && $row['link'] === $property['url3']) {
                     $selectedUrl3 = " selected";
                 } else {
                     $selectedUrl3 = '';
