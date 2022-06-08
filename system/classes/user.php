@@ -1319,7 +1319,7 @@ namespace YAWK {
                 if ($res = $db->query("SELECT username FROM {users} WHERE username='" . $username . "'"))
                 {
                     $row = mysqli_fetch_row($res); // username is already taken
-                    if ($row[0])
+                    if (!is_null($row[0]))
                     {
                         if ($row[0] === $username)
                         {

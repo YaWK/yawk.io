@@ -634,6 +634,12 @@ namespace YAWK {
             if (isset($this->language) && (!empty($this->language)))
             {   // set path for new language page
                 $filename = $this->path.$this->language."/".$alias.".php";
+                if (!is_dir($this->path.$this->language)){
+                    if (!mkdir($this->path.$this->language)){
+                        sys::setSyslog($db, 7, 2, "failed to create language folder: $this->path.$this->language");
+                        return false;
+                    }
+                }
             }
             else
             {   // set path for root dir

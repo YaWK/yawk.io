@@ -93,7 +93,7 @@ namespace YAWK {
             else {
                 // calculate delay time for notify before redirect
                 $n_delay = $delay;
-                $n_delay = $n_delay / 2.5;
+                $n_delay = $n_delay / 3;
                 $n_delay = round($n_delay);
             }
 
