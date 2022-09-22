@@ -616,7 +616,7 @@ namespace YAWK {
                                 else {
                                     $parentID2name = $db->query("SELECT text FROM {menu} WHERE menuID = $id AND id=$row[parentID]");
                                     $parentName = mysqli_fetch_row($parentID2name);
-                                    $menuSelected = "<option value=\"" . $row['parentID'] . "\" selected>" . $parentName[0] . "</option>";
+                                    $menuSelected = "<option value=\"" . isset($row['parentID']) . "\" selected>" . isset($parentName[0]) . "</option>";
                                 }
                             }
                         }
