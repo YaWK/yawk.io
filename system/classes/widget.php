@@ -760,7 +760,6 @@ namespace YAWK {
                         }
                     echo $row[1];
                 }
-                return $row[0];
             }
             // something else has happened
             \YAWK\sys::setSyslog($db, 39, 1, "failed to get widget ID <b>$id</b>", 0, 0, 0, 0);
