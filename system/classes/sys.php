@@ -1354,18 +1354,23 @@ namespace YAWK {
         static function getMenuItem($db, $id)
         {
             /** @param $db \YAWK\db $res */
-            if ($res = $db->query("SELECT p.menu, m.name
+            if ($row = $db->query("SELECT p.menu, m.name
 	                              FROM {pages} as p
 	                              JOIN {menu_names} as m on m.id = p.menu
 	                              WHERE p.id = $id"))
             {
-                $row = mysqli_fetch_row($res);
-                return $row[1];
+                $res = mysqli_fetch_row($row);
+                if (isset($res[1])){
+                    return $res[1];
+                }
+                else {
+                    return null;
+                }
             }
             else
-                {
-                    return 0;
-                }
+            {
+                return null;
+            }
         }
 
         /**
