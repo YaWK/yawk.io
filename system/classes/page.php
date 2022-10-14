@@ -100,7 +100,12 @@ namespace YAWK {
                                   AND name = '$type'"))
             {   // output meta content description
                 $row = $res->fetch_assoc();
-                return $row['content'];
+                if (!empty(($res['content']))){
+                    return $res['content'];
+                }
+                else {
+                    return null;
+                }
             }
             else {
                 // throw alert
