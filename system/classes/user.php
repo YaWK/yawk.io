@@ -925,7 +925,12 @@ namespace YAWK {
 	                                WHERE id = $uid"))
             {
                 $row = $res->fetch_row();
-                return $row[0];
+                if (isset($row[0])){
+                    return $row[0];
+                }
+                else {
+                    return false;
+                }
             }
             // q failed
             return false;
