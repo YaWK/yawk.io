@@ -296,7 +296,7 @@ if(isset($_POST['add'])) {
                                class="form-control"
                                name="menutitle"
                                maxlength="128"
-                               value="<?php $menuName = sys::getMenuName($db, $_GET['menu']); ?>">
+                               value="<?php echo $menuName; ?>">
 
                     <input name="changetitle"
                            style="margin-top:5px;"
