@@ -1449,15 +1449,15 @@ namespace YAWK {
          */
         static function getPages($db)
         {   /** @var $db \YAWK\db */
-            if ($res = $db->query("SELECT id, title
+            if ($row = $db->query("SELECT id, title
                                   FROM {pages} ORDER BY title"))
             {
                 $PagesArray = array();
-                while ($row = $res->fetch_assoc())
+                while ($res = $row->fetch_assoc())
                 {
-                    $PagesArray[] = $row;
+                    $pagesArray[] = $res;
                 }
-                return $res;
+                return $pagesArray ?? false;
             }
             else
             {

@@ -152,17 +152,30 @@ echo"<ol class=\"breadcrumb\">
      <select id="widgetType" name="widgetType" class="form-control">
      <option value="<?php echo $widget->widgetType; ?>"><?php echo $widget->name; ?></option>
      </select>
-    <!-- PAGE -->
-    <label for="pageID"><?php echo $lang['ON_PAGE']; ?></label>
-        <select id="pageID" name="pageID" class="form-control">
-        <option value="<?php echo $widget->getWidgetId($db, $widget->id); ?>"><?php echo $widget->getWidget($db, $widget->id); ?></option>
-        <option value="0"><?php echo $lang['ON_ALL_PAGES']; ?></option>
-        <?php
-            foreach(YAWK\sys::getPages($db) as $page)
-            {
-                echo "<option value=\"".$page['id']."\">".$page['title']."</option>";
-            }
-        ?>
+      <!-- PAGE -->
+      <label for="pageID"><?php echo $lang['ON_PAGE']; ?></label>
+      <select id="pageID" name="pageID" class="form-control">
+          <?php
+          $pages = \YAWK\sys::getPages($db);
+          foreach ($pages as $page)
+          {
+              // check, if option needs to be selected
+              if ($widget->pageID == $page['id']){
+                  $selectedHtml = " selected";
+              } else { $selectedHtml = ""; }
+
+              if ($widget->pageID == 0){
+                  $allSelected = " selected";
+              } else { $allSelected = ""; }
+
+              // draw options
+              if (isset($page['id']) && (isset($page['title']))) {
+                  echo "<option value=\"".$page['id']."\"$selectedHtml>".$page['title']."</option>";
+              }
+          }
+          // all pages option
+          echo"<option value=\"0\"$allSelected>$lang[ON_ALL_PAGES]</option>";
+          ?>
       </select>
   <!-- POSITION -->
   <label for="positions"><?php echo $lang['AT_POSITION']; ?></label>
