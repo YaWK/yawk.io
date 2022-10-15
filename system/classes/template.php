@@ -2884,29 +2884,29 @@ namespace YAWK {
                                          AND link = '" . $property['url3'] . "'");
 
                 $row = mysqli_fetch_assoc($resInternal);
-                // print_r($res);
-                if (is_array($property['internal']) && $row['link'] === $property['internal']) {
+                if (isset($property['internal']) && isset($row['link']) && $row['link'] === $property['internal']) {
                     $selectedInternal = " selected";
                 } else {
                     $selectedInternal = '';
                 }
 
                 $row = mysqli_fetch_assoc($resUrl1);
-                if (is_array($property['url1']) && $row['link'] === $property['url1']) {
+                if (isset($property['url1']) && isset($row['link']) && $row['link'] === $property['url1']) {
                     $selectedUrl1 = " selected";
                 } else {
                     $selectedUrl1 = '';
                 }
 
                 $row = mysqli_fetch_assoc($resUrl2);
-                if (is_array($property['url2']) && $row['link'] === $property['url2']) {
+                // echo "<br>VAR : "; // print_r($property);
+                if (isset($property['url2']) && isset($row['link']) && $row['link'] === $property['url2']) {
                     $selectedUrl2 = " selected";
                 } else {
                     $selectedUrl2 = '';
                 }
 
                 $row = mysqli_fetch_assoc($resUrl3);
-                if (is_array($property['url3']) && $row['link'] === $property['url3']) {
+                if (isset($property['url3']) && isset($row['link']) && $row['link'] === $property['url3']) {
                     $selectedUrl3 = " selected";
                 } else {
                     $selectedUrl3 = '';
