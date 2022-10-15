@@ -60,7 +60,7 @@ namespace YAWK\BACKEND
                 $since = \YAWK\sys::time_ago($property['date_publish'], $lang);
                 echo"<li class=\"item\">
                         <div class=\"product-img\">
-                            <img src=\"../system/engines/AdminLTE/dist/img/default-50x50.gif\" alt=\"Product Image\">
+                            <i class=\"fa fa-file-code-o fa-2x text-muted\"></i>
                         </div>
                         <div class=\"product-info\">
                             <a href=\"index.php?page=page-edit&alias=$property[alias]&id=$property[id]\" class=\"product-title\">$property[title]
