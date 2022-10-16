@@ -58,7 +58,7 @@ namespace YAWK {
             $zIndex = "9999";
             // icon
             $icon = "fa fa-info-circle";
-            
+
             if (!isset($type) || (empty($type)))
             {
                 $type = "info";
@@ -93,8 +93,10 @@ namespace YAWK {
             else {
                 // calculate delay time for notify before redirect
                 $n_delay = $delay;
-                $n_delay = $n_delay / 3;
-                $n_delay = round($n_delay);
+                if (is_int($n_delay)){
+                    $n_delay = $n_delay / 3;
+                    $n_delay = round($n_delay);
+                }
             }
 
             if ($delay === "null")
@@ -171,9 +173,9 @@ namespace YAWK {
                 return \YAWK\sys::setTimeout("index.php?$redirect", $delay);
             }
             else
-                {
-                    return null;
-                }
+            {
+                return null;
+            }
         } // ./draw
     } // ./class alert
 } // ./namespace
