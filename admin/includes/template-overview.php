@@ -615,7 +615,12 @@ echo"</section><!-- Main content -->
                     <label id="newTplVersionLabel" for="newTplVersion"><?php echo $lang['VERSION']; ?></label>
                     <input id="newTplVersion" class="form-control" name="newTplVersion" placeholder="1.0">
                     <label id="newTplFrameworkLabel" for="newTplFramework"><?php echo $lang['FRAMEWORK']; ?></label>
-                    <input id="newTplFramework" class="form-control" name="newTplFramework" placeholder="Bootstrap v4">
+                    <select id="newTplFramework" class="form-control" name="newTplFramework">
+                        <?php if ($template->framework == "bootstrap4") { $bs4Selected = " selected"; } else { $bs4Selected = ''; } ?>
+                        <?php if ($template->framework == "bootstrap3") { $bs3Selected = " selected"; } else { $bs3Selected = ''; } ?>
+                        <option value="bootstrap4"<?php echo $bs4Selected;?>>Bootstrap 4</option>
+                        <option value="bootstrap3"<?php echo $bs3Selected;?>>Bootstrap 3</option>
+                    </select>
                     <label id="newTplLicenseLabel" for="newTplLicense"><?php echo $lang['LICENSE']; ?></label>
                     <select id="newTplLicense" class="form-control" name="newTplLicense">
                         <option value=""><?php echo $lang['PLEASE_SELECT']; ?></option>

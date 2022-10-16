@@ -57,7 +57,7 @@ namespace YAWK {
         /** * @param string the current loaded Bootstrap version */
         public $bootstrapVersion;
         /** * @param string required framework for this template */
-        public $framework;
+        public $framework = 'bootstrap4';
         /** * @param string template's license */
         public $license;
         /** * @param int which template is currently set to active? */
