@@ -14,44 +14,44 @@
         // $("#tplHeading").text(newTplName);
     }
 
-$(document).ready(function() {
+    $(document).ready(function() {
 
-    // store all elements in vars
-    uploadModal = $("#uploadModal");
-    savebutton = $("#savebutton");
-    savebuttonIcon = $("#savebuttonIcon");
-    savebuttonText = $("#savebuttonText");
-    cancelButton = $("#cancelButton");
-    dismissButton = $("#dismissButton");
-    loadingText = $(savebutton).attr("data-loadingText");
+        // store all elements in vars
+        uploadModal = $("#uploadModal");
+        savebutton = $("#savebutton");
+        savebuttonIcon = $("#savebuttonIcon");
+        savebuttonText = $("#savebuttonText");
+        cancelButton = $("#cancelButton");
+        dismissButton = $("#dismissButton");
+        loadingText = $(savebutton).attr("data-loadingText");
 
-    // following code will be executed when modal upload window is shown
-    $(uploadModal).on('shown.bs.modal', function () {
+        // following code will be executed when modal upload window is shown
+        $(uploadModal).on('shown.bs.modal', function () {
 
-        // indicate loading state by click on upload button
-        $(savebutton).click(function() {
+            // indicate loading state by click on upload button
+            $(savebutton).click(function() {
 
-            // disable close on outer click
-            $(uploadModal).attr('data-backdrop', 'static');
-            // disable close on keyboard (ESC key)
-            $(uploadModal).attr('data-keyboard', 'false');
+                // disable close on outer click
+                $(uploadModal).attr('data-backdrop', 'static');
+                // disable close on keyboard (ESC key)
+                $(uploadModal).attr('data-keyboard', 'false');
 
-            // change color of button
-            $(savebutton).removeClass('btn btn-success').addClass('btn btn-warning');
-            // add loading indicator (spinning icon)
-            $(savebuttonIcon).removeClass('fa fa-check').addClass('fa fa-spinner fa-spin fa-fw');
-            // hide times icon in upper right corner
-            $(dismissButton).fadeOut();
-            // load add loading indicator text to upload btn
-            $(savebuttonText).html(loadingText);
+                // change color of button
+                $(savebutton).removeClass('btn btn-success').addClass('btn btn-warning');
+                // add loading indicator (spinning icon)
+                $(savebuttonIcon).removeClass('fa fa-check').addClass('fa fa-spinner fa-spin fa-fw');
+                // hide times icon in upper right corner
+                $(dismissButton).fadeOut();
+                // load add loading indicator text to upload btn
+                $(savebuttonText).html(loadingText);
 
-            // disable buttons to avoid interrupt by user
-            $(cancelButton).prop("disabled", true);
-            $(savebutton).attr("disabled", true);
-            // submit the form - upload template
-            $('form#uploadForm').submit();
+                // disable buttons to avoid interrupt by user
+                $(cancelButton).prop("disabled", true);
+                $(savebutton).attr("disabled", true);
+                // submit the form - upload template
+                $('form#uploadForm').submit();
+            });
         });
-    });
 
         // make template table sortable
         $('#table-sort').dataTable( {
@@ -85,14 +85,14 @@ if (isset($_GET) && (!empty($_GET)))
                 \YAWK\alert::draw("success", $lang['TPL_ZIP_CREATED_TITLE'], $lang['TPL_ZIP_CREATED_MSG'], "", 2400);
             }
             else
-                {   // ERROR: generating download package failed
-                    \YAWK\alert::draw("danger", $lang['TPL_ZIP_FAILED_TITLE'], $lang['TPL_ZIP_FAILED_MSG'], "", 8600);
-                }
+            {   // ERROR: generating download package failed
+                \YAWK\alert::draw("danger", $lang['TPL_ZIP_FAILED_TITLE'], $lang['TPL_ZIP_FAILED_MSG'], "", 8600);
+            }
         }
         else
-            {   // no template folder set
-                die ('no folder sent');
-            }
+        {   // no template folder set
+            die ('no folder sent');
+        }
     }
     // ACTION: upload
     if (isset($_GET['action']) && ($_GET['action']) === "upload")
@@ -112,9 +112,9 @@ if (isset($_GET) && (!empty($_GET)))
             }
         }
         else
-            {   // no post data set - throw error
-                \YAWK\alert::draw("danger", $lang['ERROR'], $lang['UPLOAD_FAILED'], "", 8600);
-            }
+        {   // no post data set - throw error
+            \YAWK\alert::draw("danger", $lang['ERROR'], $lang['UPLOAD_FAILED'], "", 8600);
+        }
     }
 }
 ?>
@@ -169,7 +169,7 @@ if (isset($_GET['delete']) && ($_GET['delete'] === "1"))
 
 // COPY TEMPLATE
 if (isset($_POST['savenewtheme']) && (!empty($_POST['savenewtheme']))
-|| (isset($_GET['savenewtheme']) && (!empty($_GET['savenewtheme']))))
+    || (isset($_GET['savenewtheme']) && (!empty($_GET['savenewtheme']))))
 {
     if (isset($_POST['id']) && (!empty($_POST['id'])))
     {
@@ -224,6 +224,12 @@ if (isset($_POST['savenewtheme']) && (!empty($_POST['savenewtheme']))
     if (isset($_POST['newTplVersion']) && (!empty($_POST['newTplVersion'])))
     {   // set new tpl weblink
         $template->version = $db->quote($_POST['newTplVersion']);
+    }
+    else { $template->version = "1.0"; }
+
+    if (isset($_POST['newTplFramework']) && (!empty($_POST['newTplFramework'])))
+    {   // set new tpl weblink
+        $template->framework = $db->quote($_POST['newTplFramework']);
     }
     else { $template->version = "1.0"; }
 
@@ -319,8 +325,7 @@ $getID = \YAWK\settings::getSetting($db, "selectedTemplate");
 $template->loadProperties($db, $getID);
 // previewButton is an empty string - why? this should be checked
 $previewButton = "";
-?>
-<?php
+
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
     <!-- Content Wrapper. Contains page content -->
@@ -351,109 +356,109 @@ echo"</section><!-- Main content -->
                 <h3 class="box-title"><?php echo "$lang[DETAILS] <small>$lang[OF_CURRENT_ACTIVE_THEME]"; ?></small></h3>
             </div>
             <div class="box-body">
-            <dl class="dl-horizontal">
-                <?php
-                // PREPARE TEMPLATE DETAILS VARS
-                // author URL
-                if (isset($template->authorUrl) && (!empty($template->authorUrl)))
-                {   // set author's link
-                    $authorUrl = "<small>&nbsp;<a href=\"$template->authorUrl\" target=\"_blank\" title=\"$lang[AUTHORS_WEBLINK_DESC]\"
+                <dl class="dl-horizontal">
+                    <?php
+                    // PREPARE TEMPLATE DETAILS VARS
+                    // author URL
+                    if (isset($template->authorUrl) && (!empty($template->authorUrl)))
+                    {   // set author's link
+                        $authorUrl = "<small>&nbsp;<a href=\"$template->authorUrl\" target=\"_blank\" title=\"$lang[AUTHORS_WEBLINK_DESC]\"
                                 <i class=\"fa fa-external-link\"></i></a></small>";
-                }
-                else { $authorUrl = ""; }
+                    }
+                    else { $authorUrl = ""; }
 
-                // author
-                if (isset($template->author) && (!empty($template->author)))
-                {   // set author
-                    $author = "<dt>$lang[AUTHOR]</dt><dd>$template->author&nbsp;$authorUrl</dd>";
-                }
-                else { $author = ""; }
+                    // author
+                    if (isset($template->author) && (!empty($template->author)))
+                    {   // set author
+                        $author = "<dt>$lang[AUTHOR]</dt><dd>$template->author&nbsp;$authorUrl</dd>";
+                    }
+                    else { $author = ""; }
 
-                // weblink
-                if (isset($template->weblink) && (!empty($template->weblink)))
-                {   // set author's link
-                    $weblink = "<dt>$lang[WEBLINK]</dt><dd><a href=\"$template->weblink\" target=\"_blank\" title=\"$lang[PROJECT_WEBLINK_DESC]\">$template->weblink</a></dd>";
-                }
-                else { $weblink= ""; }
+                    // weblink
+                    if (isset($template->weblink) && (!empty($template->weblink)))
+                    {   // set author's link
+                        $weblink = "<dt>$lang[WEBLINK]</dt><dd><a href=\"$template->weblink\" target=\"_blank\" title=\"$lang[PROJECT_WEBLINK_DESC]\">$template->weblink</a></dd>";
+                    }
+                    else { $weblink= ""; }
 
-                // modifyDate
-                if (isset($template->modifyDate) && ($template->modifyDate !== NULL))
-                {   // set modifyDate
-                    $modifyDate = "<dt>$lang[MODIFIED]</dt><dd>$template->modifyDate</dd>";
-                }
-                else { $modifyDate = ''; }
+                    // modifyDate
+                    if (isset($template->modifyDate) && ($template->modifyDate !== NULL))
+                    {   // set modifyDate
+                        $modifyDate = "<dt>$lang[MODIFIED]</dt><dd>$template->modifyDate</dd>";
+                    }
+                    else { $modifyDate = ''; }
 
-                // releaseDate
-                if (isset($template->releaseDate) && ($template->releaseDate !== NULL))
-                {   // set release date
-                    $releaseDate = "<dt>$lang[RELEASED]</dt><dd>$template->releaseDate</dd>";
-                }
-                else { $releaseDate = ''; }
+                    // releaseDate
+                    if (isset($template->releaseDate) && ($template->releaseDate !== NULL))
+                    {   // set release date
+                        $releaseDate = "<dt>$lang[RELEASED]</dt><dd>$template->releaseDate</dd>";
+                    }
+                    else { $releaseDate = ''; }
 
-                // description
-                if (isset($template->description) && (!empty($template->description)))
-                {   // set author
-                    $description = "<dt>$lang[DESCRIPTION]</dt><dd>$template->description</dd>";
-                }
-                else { $description = ""; }
+                    // description
+                    if (isset($template->description) && (!empty($template->description)))
+                    {   // set author
+                        $description = "<dt>$lang[DESCRIPTION]</dt><dd>$template->description</dd>";
+                    }
+                    else { $description = ""; }
 
-                // version
-                if (isset($template->version) && (!empty($template->version)))
-                {   // set author
-                    $version = "<dt>$lang[VERSION]</dt><dd>$template->version</dd>";
-                }
-                else { $version = ""; }
+                    // version
+                    if (isset($template->version) && (!empty($template->version)))
+                    {   // set author
+                        $version = "<dt>$lang[VERSION]</dt><dd>$template->version</dd>";
+                    }
+                    else { $version = ""; }
 
-                if (isset($template->subAuthorUrl) && (!empty($template->subAuthorUrl)))
-                {   // set author's link
-                    $subauthorurl = "<small>&nbsp;<a href=\"$template->subAuthorUrl\" target=\"_blank\" title=\"$lang[MODIFIED_BY_LINKDESC]\"
+                    if (isset($template->subAuthorUrl) && (!empty($template->subAuthorUrl)))
+                    {   // set author's link
+                        $subauthorurl = "<small>&nbsp;<a href=\"$template->subAuthorUrl\" target=\"_blank\" title=\"$lang[MODIFIED_BY_LINKDESC]\"
                                 <i class=\"fa fa-external-link\"></i></a></small>";
-                }
-                else { $subauthorurl = ""; }
+                    }
+                    else { $subauthorurl = ""; }
 
-                // subAuthor
-                if (isset($template->subAuthor) && (!empty($template->subAuthor)))
-                {   // set subAuthor
-                    $subauthor = "<dt>$lang[MODIFIED_BY]</dt><dd>$template->subAuthor&nbsp;$subauthorurl</dd>";
-                }
-                else { $subauthor = ""; }
+                    // subAuthor
+                    if (isset($template->subAuthor) && (!empty($template->subAuthor)))
+                    {   // set subAuthor
+                        $subauthor = "<dt>$lang[MODIFIED_BY]</dt><dd>$template->subAuthor&nbsp;$subauthorurl</dd>";
+                    }
+                    else { $subauthor = ""; }
 
-                // required framework
-                if (isset($template->framework) && (!empty($template->framework)))
-                {   // set required framework markup
-                    $framework = "<dt>$lang[FRAMEWORK]</dt><dd>$template->framework</dd>";
-                }
-                else { $framework = ""; }
+                    // required framework
+                    if (isset($template->framework) && (!empty($template->framework)))
+                    {   // set required framework markup
+                        $framework = "<dt>$lang[FRAMEWORK]</dt><dd>$template->framework</dd>";
+                    }
+                    else { $framework = ""; }
 
-                // license
-                if (isset($template->license) && (!empty($template->license)))
-                {   // set license markup
-                    $license = "<dt>$lang[LICENSE]</dt><dd>$template->license</dd>";
-                }
-                else { $license = ""; }
+                    // license
+                    if (isset($template->license) && (!empty($template->license)))
+                    {   // set license markup
+                        $license = "<dt>$lang[LICENSE]</dt><dd>$template->license</dd>";
+                    }
+                    else { $license = ""; }
 
-                $settings = "<dt>$lang[SETTINGS]</dt>
+                    $settings = "<dt>$lang[SETTINGS]</dt>
                             <dd>".$template->countTemplateSettings($db, $template->id)."</dd>";
 
-                ?>
-                <dt><?php echo "$lang[TEMPLATE] $lang[NAME]"; ?></dt>
-                <dd><b><?php echo $template->name; ?></b></dd>
-                <dt><?php echo $lang['STATUS']; ?></dt>
-                <dd><b><?php echo $infoBadge; ?></b></dd>
+                    ?>
+                    <dt><?php echo "$lang[TEMPLATE] $lang[NAME]"; ?></dt>
+                    <dd><b><?php echo $template->name; ?></b></dd>
+                    <dt><?php echo $lang['STATUS']; ?></dt>
+                    <dd><b><?php echo $infoBadge; ?></b></dd>
 
-                <?php echo $description.$author.$weblink.$framework.$license.$version.$releaseDate.$settings."<br>".$subauthor.$modifyDate; ?>
+                    <?php echo $description.$author.$weblink.$framework.$license.$version.$releaseDate.$settings."<br>".$subauthor.$modifyDate; ?>
 
-                <dt>&nbsp;</dt>
-                <dd>&nbsp;</dd>
+                    <dt>&nbsp;</dt>
+                    <dd>&nbsp;</dd>
 
-                <dt><?php echo $lang['ASSETS']; ?></dt>
-                <dd>
-                    <?php echo $lang['ASSETS_USED']; ?><br>
-                    <?php \YAWK\template::drawAssetsTitles($db, $template->id, $lang); ?>
-                </dd>
-                <dt>&nbsp;</dt>
-                <dd>&nbsp;</dd>
-            </dl>
+                    <dt><?php echo $lang['ASSETS']; ?></dt>
+                    <dd>
+                        <?php echo $lang['ASSETS_USED']; ?><br>
+                        <?php \YAWK\template::drawAssetsTitles($db, $template->id, $lang); ?>
+                    </dd>
+                    <dt>&nbsp;</dt>
+                    <dd>&nbsp;</dd>
+                </dl>
             </div>
         </div>
     </div>
@@ -579,7 +584,7 @@ echo"</section><!-- Main content -->
     </div>
 </div>
 
-<!-- Modal --COPY TEMPLATE-- -->
+<!-- Modal ==COPY TEMPLATE== -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal2Label" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -609,6 +614,8 @@ echo"</section><!-- Main content -->
                     <input id="newTplWeblink" class="form-control" name="newTplWeblink" placeholder="https://">
                     <label id="newTplVersionLabel" for="newTplVersion"><?php echo $lang['VERSION']; ?></label>
                     <input id="newTplVersion" class="form-control" name="newTplVersion" placeholder="1.0">
+                    <label id="newTplFrameworkLabel" for="newTplFramework"><?php echo $lang['FRAMEWORK']; ?></label>
+                    <input id="newTplFramework" class="form-control" name="newTplFramework" placeholder="Bootstrap v4">
                     <label id="newTplLicenseLabel" for="newTplLicense"><?php echo $lang['LICENSE']; ?></label>
                     <select id="newTplLicense" class="form-control" name="newTplLicense">
                         <option value=""><?php echo $lang['PLEASE_SELECT']; ?></option>
@@ -631,7 +638,7 @@ echo"</section><!-- Main content -->
 </div>
 
 
-<!-- Modal --UPLOAD MODAL-- -->
+<!-- Modal ==UPLOAD MODAL== -->
 <div class="modal fade" id="uploadModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
