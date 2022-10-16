@@ -71,14 +71,14 @@ namespace YAWK\BACKEND {
                             </style>";
                 }
                 else
-                    {
-                        $this->paceLoader .= "}</style>";
-                    }
+                {
+                    $this->paceLoader .= "}</style>";
+                }
             }
             else
-                {
-                    $this->paceLoader = '';
-                }
+            {
+                $this->paceLoader = '';
+            }
         }
 
         /**
@@ -245,21 +245,21 @@ namespace YAWK\BACKEND {
     |               | sidebar-mini                            |
     |---------------------------------------------------------|
     -->";
-    return null;
-    } // ./ drawHtmlHeader
+            return null;
+        } // ./ drawHtmlHeader
 
         /**
          * @brief Draw body and header Tag
          * @return null
          */
         function drawHtmlBody(){
-    echo "
+            echo "
     <body class=\"hold-transition $this->backendSkin $this->backendLayout\">
         <div class=\"wrapper\">
         <!-- Main Header -->
         <header class=\"main-header\">";
-    return null;
-    }
+            return null;
+        }
 
         /**
          * @brief Draw logo in the top left corner
@@ -286,10 +286,10 @@ namespace YAWK\BACKEND {
                 }
             }
             else
-                {   // personal text requested, -> get logo text + subtext
-                    $logoText = "<b>". settings::getSetting($db, "backendLogoText")."</b>";
-                    $logoText .= settings::getSetting($db, "backendLogoSubText");
-                }
+            {   // personal text requested, -> get logo text + subtext
+                $logoText = "<b>". settings::getSetting($db, "backendLogoText")."</b>";
+                $logoText .= settings::getSetting($db, "backendLogoSubText");
+            }
             echo "<!-- Logo -->
             <a href=\"../index.html\" class=\"logo\" title=\"$lang[GOTO_WEBSITE]\" target=\"_blank\">
               <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -449,22 +449,22 @@ namespace YAWK\BACKEND {
                   <li>
                     <!-- inner menu: contains the messages -->
                     <ul class=\"menu\">";
-                    // loop new messages data
-                    foreach ($newMessages as $message)
-                    {   // get sender username from ID
+            // loop new messages data
+            foreach ($newMessages as $message)
+            {   // get sender username from ID
 
-                        $from = \YAWK\user::getUserNameFromID($db, $message['fromUID']);
-                        $picture = \YAWK\user::getUserImage("backend", $from, "img-circle", 20,20);
-                        $timeago = \YAWK\sys::time_ago($message['msg_date'], $lang);
-                        $msg_id = $message['msg_id'];
-                        // get 32 chars message preview
-                        $preview = $message['msg_body'];
-                        $preview = substr($preview, -80);
-                        $message = substr($message['msg_body'], -30);
-                        // $preview = substr($message['msg_body'], -10);
-                       // $preview = $message['msg_body'];
+                $from = \YAWK\user::getUserNameFromID($db, $message['fromUID']);
+                $picture = \YAWK\user::getUserImage("backend", $from, "img-circle", 20,20);
+                $timeago = \YAWK\sys::time_ago($message['msg_date'], $lang);
+                $msg_id = $message['msg_id'];
+                // get 32 chars message preview
+                $preview = $message['msg_body'];
+                $preview = substr($preview, -80);
+                $message = substr($message['msg_body'], -30);
+                // $preview = substr($message['msg_body'], -10);
+                // $preview = $message['msg_body'];
 
-                        echo"<li><!-- start message -->
+                echo"<li><!-- start message -->
                            <a href=\"index.php?plugin=messages&pluginpage=mailbox&msg_id=".$msg_id."\" title=\"$preview\">
                           <div class=\"pull-left\">
                             <!-- User Image -->
@@ -480,10 +480,10 @@ namespace YAWK\BACKEND {
                           <p>$message</p>
                         </a>
                       </li><!-- end message -->";
-                    }
-                    // ./ end foreach new messages
+            }
+            // ./ end foreach new messages
 
-                    echo "</ul><!-- /.menu -->
+            echo "</ul><!-- /.menu -->
                   </li>
                   <li class=\"footer\"><a href=\"index.php?plugin=messages&pluginpage=mailbox\">See All Messages</a></li>
                 </ul>
@@ -533,9 +533,9 @@ namespace YAWK\BACKEND {
                 $i = 0;
             }
             else
-                {   // yep: count emails
-                    $i = count ($emails);
-                }
+            {   // yep: count emails
+                $i = count ($emails);
+            }
 
             // one email only
             if ($i == 1)
@@ -604,8 +604,8 @@ namespace YAWK\BACKEND {
                         <a href=\"index.php?page=webmail-message&folder=inbox&msgno=".$email_number."\">
                         <b><small>".utf8_decode(imap_utf8($overview[0]->from))."</small></b><br>
                         ".$overview[0]->subject."<br>";
-                        // <small>".substr($message, 0, 64)."</small><br>
-                        echo"<small><i class=\"fa fa-clock-o\"></i> ".$timeAgo."</small>
+                    // <small>".substr($message, 0, 64)."</small><br>
+                    echo"<small><i class=\"fa fa-clock-o\"></i> ".$timeAgo."</small>
                         </a>    
                     </li>";
                 }
@@ -636,7 +636,7 @@ namespace YAWK\BACKEND {
             $i_total = $i_syslog + $i_notifications;
             $notifications = \YAWK\user::getAllNotifications($db);
             $my_notifications = \YAWK\user::getMyNotifications($db, $_SESSION['uid']);
-            
+
             if ($i_total !== 0)
             {   // if notification available, ring bell and show label...
                 $bell = "swing";
@@ -671,63 +671,63 @@ namespace YAWK\BACKEND {
                   <li>
                     <!-- Inner Menu: contains the notifications -->
                     <ul id=\"notification-menu\" class=\"menu\">";
-                    if (isset($my_notifications) && is_array($my_notifications))
-                    {   // if personal notifications are available
-                        $i = 0;
-                        foreach ($my_notifications as $my_note)
+            if (isset($my_notifications) && is_array($my_notifications))
+            {   // if personal notifications are available
+                $i = 0;
+                foreach ($my_notifications as $my_note)
+                {
+                    $getUsername = 0;
+                    $UID = 0;
+
+                    // calculate datetime pretty
+                    $timeAgo = \YAWK\sys::time_ago($my_note['log_date'], $lang);
+
+                    // PREPARE VARS FOR PERSONAL NOTIFICATIONS
+                    // #user# wants to be your friend
+                    if ($my_note['msg_id'] == 1)
+                    {   // who (from)
+                        $UID = $my_note['fromUID'];
+                        $getUsername = 1;
+                    }
+                    // #user# accepted / declined your friendship
+                    if ($my_note['msg_id'] == 2 || $my_note['msg_id'] == 3)
+                    {   //
+                        $UID = $my_note['fromUID'];
+                        $getUsername = 1;
+                    }
+                    // #user# disconnected your friendship
+                    if ($my_note['msg_id'] == 4)
+                    {   // find out correct user who sent the original request
+                        if ($my_note['toUID'] == $_SESSION['uid'])
                         {
-                            $getUsername = 0;
-                            $UID = 0;
+                            $UID = $my_note['fromUID'];
+                            $getUsername = 1;
+                        }
+                        elseif ($my_note['fromUID'] == $_SESSION['uid'])
+                        {
+                            $UID = $my_note['toUID'];
+                            $getUsername = 1;
+                        }
+                    }
+                    // #users# follows you
+                    if ($my_note['msg_id'] == 5 || $my_note['msg_id'] == 6)
+                    {
+                        $UID = $my_note['fromUID'];
+                        $getUsername = 1;
+                    }
 
-                            // calculate datetime pretty
-                            $timeAgo = \YAWK\sys::time_ago($my_note['log_date'], $lang);
+                    if ($getUsername == '1')
+                    {   // replace #username# with proper username
+                        $username = \YAWK\user::getUserNameFromID($db, $UID);
+                        $my_msg = str_replace('#username#', $username,$my_note['message']);
+                    }
+                    else
+                    {   // just output the plain notifiy msg from db
+                        $my_msg = $my_note['message'];
+                    }
+                    $i++;
 
-                            // PREPARE VARS FOR PERSONAL NOTIFICATIONS
-                            // #user# wants to be your friend
-                            if ($my_note['msg_id'] == 1)
-                            {   // who (from)
-                                $UID = $my_note['fromUID'];
-                                $getUsername = 1;
-                            }
-                            // #user# accepted / declined your friendship
-                            if ($my_note['msg_id'] == 2 || $my_note['msg_id'] == 3)
-                            {   //
-                                $UID = $my_note['fromUID'];
-                                $getUsername = 1;
-                            }
-                            // #user# disconnected your friendship
-                            if ($my_note['msg_id'] == 4)
-                            {   // find out correct user who sent the original request
-                                if ($my_note['toUID'] == $_SESSION['uid'])
-                                {
-                                    $UID = $my_note['fromUID'];
-                                    $getUsername = 1;
-                                }
-                                elseif ($my_note['fromUID'] == $_SESSION['uid'])
-                                {
-                                    $UID = $my_note['toUID'];
-                                    $getUsername = 1;
-                                }
-                            }
-                            // #users# follows you
-                            if ($my_note['msg_id'] == 5 || $my_note['msg_id'] == 6)
-                            {
-                                $UID = $my_note['fromUID'];
-                                $getUsername = 1;
-                            }
-
-                            if ($getUsername == '1')
-                            {   // replace #username# with proper username
-                                $username = \YAWK\user::getUserNameFromID($db, $UID);
-                                $my_msg = str_replace('#username#', $username,$my_note['message']);
-                            }
-                            else
-                            {   // just output the plain notifiy msg from db
-                                $my_msg = $my_note['message'];
-                            }
-                            $i++;
-
-                            echo "<li><!-- start notification -->
+                    echo "<li><!-- start notification -->
                             <a href=\"index.php?page=friendslist\" id=\"labelNotification\" title=\"\">
                               <div class=\"pull-left\">
                                 <i id=\"label-".$i."\" class=\"$my_note[icon] $my_note[type]\"></i>&nbsp; <small><i>$my_msg</i><br>
@@ -738,16 +738,16 @@ namespace YAWK\BACKEND {
                             </a>
 
                           </li><!-- end notification -->";
-                        }
-                    }
+                }
+            }
 
-                    if (isset($notifications) && is_array($notifications))
-                    {   // if notifications are available
-                        foreach ($notifications as $note)
-                        {   // loop data
-                            $timeAgo = \YAWK\sys::time_ago($note['log_date'], $lang);
+            if (isset($notifications) && is_array($notifications))
+            {   // if notifications are available
+                foreach ($notifications as $note)
+                {   // loop data
+                    $timeAgo = \YAWK\sys::time_ago($note['log_date'], $lang);
 
-                            echo "<li id=\"note-$note[log_id]\"><a href=\"index.php?page=syslog#$note[log_id]\" title=\"\">
+                    echo "<li id=\"note-$note[log_id]\"><a href=\"index.php?page=syslog#$note[log_id]\" title=\"\">
                             <div class=\"pull-left\">
                             <!-- User Image -->
                                 <i class=\"$note[icon] $note[type]\"></i>&nbsp; <small>$note[message]<br>
@@ -759,9 +759,9 @@ namespace YAWK\BACKEND {
                           <!-- The message -->
 
                         </a></li>";
-                        }
-                    }
-                    echo "</ul>
+                }
+            }
+            echo "</ul>
                   </li>
                   <li class=\"footer\"><a id=\"syslogLink\" data-uid=\"$_SESSION[uid]\" href=\"index.php?page=syslog\">$lang[SYSLOG_VIEW]</a></li>
                 </ul>
@@ -918,11 +918,11 @@ namespace YAWK\BACKEND {
                     <a href=\"index.php\"><i class=\"fa fa-dashboard\"></i> <span>$lang[DASHBOARD]</span></a>
                 </li>";
 
-                // PAGES TREEVIEW MENU
-                if (isset($_GET['page']) && (strpos($_GET['page'], 'page') !== false))
-                { $activeClass = " class=\"active\""; }
-                else { $activeClass = ''; }
-                echo "<li$activeClass>
+            // PAGES TREEVIEW MENU
+            if (isset($_GET['page']) && (strpos($_GET['page'], 'page') !== false))
+            { $activeClass = " class=\"active\""; }
+            else { $activeClass = ''; }
+            echo "<li$activeClass>
                   <a href=\"#\">
                     <i class=\"fa fa-file-word-o\"></i>
                     <span>$lang[PAGES]</span>
@@ -939,11 +939,11 @@ namespace YAWK\BACKEND {
                     </li>
                 </ul>";
 
-                // MENU TREEVIEW MENU
+            // MENU TREEVIEW MENU
             if (isset($_GET['page']) && (strpos($_GET['page'], 'menu') !== false))
-                { $activeClass = " class=\"active\""; }
-                else { $activeClass = ''; }
-                echo "<li$activeClass>
+            { $activeClass = " class=\"active\""; }
+            else { $activeClass = ''; }
+            echo "<li$activeClass>
                       <a href=\"#\">
                         <i class=\"fa fa-bars\"></i>
                         <span>$lang[MENUS]</span>
@@ -960,11 +960,11 @@ namespace YAWK\BACKEND {
                         </li>
                     </ul>";
 
-                // USER TREEVIEW MENU
-                if (isset($_GET['page']) && (strpos($_GET['page'], 'user') !== false))
-                { $activeClass = " class=\"active\""; }
-                else { $activeClass = ''; }
-                echo "<li$activeClass>
+            // USER TREEVIEW MENU
+            if (isset($_GET['page']) && (strpos($_GET['page'], 'user') !== false))
+            { $activeClass = " class=\"active\""; }
+            else { $activeClass = ''; }
+            echo "<li$activeClass>
                       <a href=\"#\">
                       <i class=\"fa fa-user\"></i>
                         <span>$lang[USERS]</span>
@@ -980,11 +980,11 @@ namespace YAWK\BACKEND {
                         </li>
                       </ul>";
 
-                // PLUGINS TREEVIEW MENU
-                if (isset($_GET['page']) && (strpos($_GET['page'], 'plugin') !== false))
-                { $activeClass = " class=\"active\""; }
-                else { $activeClass = ''; }
-                echo "<li$activeClass>
+            // PLUGINS TREEVIEW MENU
+            if (isset($_GET['page']) && (strpos($_GET['page'], 'plugin') !== false))
+            { $activeClass = " class=\"active\""; }
+            else { $activeClass = ''; }
+            echo "<li$activeClass>
                       <a href=\"#\">
                         <i class=\"fa fa-plug\"></i>
                         <span>$lang[PLUGINS]</span>
@@ -1001,11 +1001,11 @@ namespace YAWK\BACKEND {
                         </li>
                       </ul>";
 
-                // WIDGETS TREEVIEW MENU
-                if (isset($_GET['page']) && (strpos($_GET['page'], 'widget') !== false))
-                { $activeClass = " class=\"active\""; }
-                else { $activeClass = ''; }
-                echo "<li$activeClass>
+            // WIDGETS TREEVIEW MENU
+            if (isset($_GET['page']) && (strpos($_GET['page'], 'widget') !== false))
+            { $activeClass = " class=\"active\""; }
+            else { $activeClass = ''; }
+            echo "<li$activeClass>
                       <a href=\"#\">
                         <i class=\"fa fa-tags\"></i>
                         <span>$lang[WIDGETS]</span>
@@ -1022,11 +1022,11 @@ namespace YAWK\BACKEND {
                         </li>
                       </ul>";
 
-                // FILEMANAGER TREEVIEW MENU
-                if (isset($_GET['page']) && (strpos($_GET['page'], 'filemanager') !== false))
-                { $activeClass = " class=\"active\""; }
-                else { $activeClass = ''; }
-                echo "<li$activeClass>
+            // FILEMANAGER TREEVIEW MENU
+            if (isset($_GET['page']) && (strpos($_GET['page'], 'filemanager') !== false))
+            { $activeClass = " class=\"active\""; }
+            else { $activeClass = ''; }
+            echo "<li$activeClass>
                         <a href=\"#\">
                         <i class=\"fa fa-folder-open\"></i>
                         <span>$lang[FILEMANAGER]</span>
@@ -1051,17 +1051,17 @@ namespace YAWK\BACKEND {
             echo "<li$activeClass>
                   <a href=\"#\">
                     <i class=\"fa fa-paint-brush\"></i>
-                    <span>$lang[TPL]</span>
+                    <span>$lang[DESIGN]</span>
                     <span class=\"pull-right-container\">
                       <i class=\"fa fa-angle-left pull-right\"></i>
                     </span>
                   </a>
                     <ul class=\"treeview-menu\">
                         <li ";echo (isset($_GET['page']) && $_GET['page'] == 'template-overview') ? "class=\"active\"" : ""; echo">
-                            <a href=\"index.php?page=template-overview\"><i class=\"fa fa-home\"></i> $lang[OVERVIEW]</a>
+                            <a href=\"index.php?page=template-overview\"><i class=\"fa fa-cube\"></i> $lang[TPL]</a>
                         </li>
                         <li ";echo (isset($_GET['page']) && $_GET['page'] == 'template-positions') ? "class=\"active\"" : ""; echo">
-                            <a href=\"index.php?page=template-positions\"><i class=\"fa fa-cube\"></i> $lang[POSITIONS]</a>
+                            <a href=\"index.php?page=template-positions\"><i class=\"fa fa-sitemap\"></i> $lang[POSITIONS]</a>
                         </li>
                         <li ";echo (isset($_GET['page']) && $_GET['page'] == 'template-redesign') ? "class=\"active\"" : ""; echo">
                             <a href=\"index.php?page=template-redesign\"><i class=\"fa fa-paint-brush\"></i>$lang[DESIGN]</a>
@@ -1133,8 +1133,8 @@ namespace YAWK\BACKEND {
             if (isset($_GET['page']) && (strpos($_GET['page'], 'settings') !== false))
             { $activeClass = " class=\"active\""; }
             else { $activeClass = ''; }
-                
-         echo"
+
+            echo"
         <li$activeClass>
           <a href=\"#\">
             <i class=\"fa fa-gear\"></i>
