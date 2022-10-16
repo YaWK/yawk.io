@@ -234,9 +234,6 @@ namespace YAWK {
             }
 
             $this->id++;
-            echo "<pre>";
-            print_r($this);
-            echo "</pre>";
 
             // ## add new page to db pages
             if ($result = $db->query("INSERT INTO {pages} (id,gid,date_created,date_publish,alias,title,blogid,locked,lang,plugin)
@@ -244,8 +241,8 @@ namespace YAWK {
                                            '" . $this->gid . "',
                                            '" . $currentDateTime . "',
                                            '" . $currentDateTime . "',
-                                           '" . $this->alias . "',
-                                           '" . $this->title . "',
+                                           '" . $this->alias.'-copy'."',
+                                           '" . $this->title .'-copy'."',
                                            '" . $this->blogid . "',
                                            '" . $this->locked . "',
                                            '" . $this->language . "',
@@ -282,27 +279,37 @@ namespace YAWK {
 
                         // prepare files to get copied into new language sub folder
                         $page = $this->path.$this->alias.".php";
-                        $newPage = $this->path.$this->language."/".$this->alias.".php";
+                        $newPage = $this->path.$this->language."/".$this->alias."-copy.php";
                     }
                 }
                 else
                 {   // prepare files to get copied into content/pages/ root folder
                     $page = $this->path.$this->alias.".php";
-                    $newPage = $this->path.$this->alias."_copy.php";
+                    $newPage = $this->path.$this->alias."-copy.php";
                 }
 
                 // copy file
                 if (!copy($page, $newPage) && !chmod($newPage, 0777))
                 {
                     sys::setSyslog($db, 8, 1, "copy failed: $page to $newPage", 0, 0, 0, 0);
-                    print alert::draw("danger", "Error!", "File could not be copied. permissions of /content/pages !", "", "");
+                    print alert::draw("danger", "Error!", "File could not be copied. Check folder permissions of /content/pages !", "", "");
                 }
+                else {
+                    // file copies successfully...
+                    return true;
+                }
+                /*
 
                 // ## selectmenuID from menu db
-                if ($db->query("SELECT menuID FROM {menu} WHERE title LIKE '" . $this->title . "'"))
+                if ($row = $db->query("SELECT menuID FROM {menu} WHERE title LIKE '" . $this->title . "'"))
                 {
-                    $row = mysqli_fetch_row($res);
-                    $menuID = $row[0];
+                    $res = mysqli_fetch_row($row);
+                    if (isset($res[0])){
+                        $menuID = $res[0];
+                    }
+                    else {
+                        $menuID = 0;
+                    }
                 }
                 else
                 {   // select failed, throw error
@@ -312,25 +319,26 @@ namespace YAWK {
                 }
 
                 // ## select max ID from menu
-                if ($res = $db->query("SELECT MAX(id) FROM {menu}"))
+                if ($row = $db->query("SELECT MAX(id) FROM {menu}"))
                 {
-                    $row = mysqli_fetch_row($res);
-                    if (!isset($row[0]))
+                    $res = mysqli_fetch_row($row);
+                    if (!isset($res[0]))
                     { // if not, give it a ID of 1
                         $newMenuID = 1;
                     }
                     else
                     {   // if entry exists, add +1 to ID #
-                        $newMenuID = $row[0]++;
+                        $newMenuID = $res[0]++;
                     }
                 }
                 else
                 {
-                    $newMenuID = '';
+                    $newMenuID = 0;
                     // select MAX(id) from menu failed, throw error
                     sys::setSyslog($db, 23, 1, "failed to fetch MAX(id) from menu", 0, 0, 0, 0);
                     echo alert::draw("warning","Warning", "Could not fetch MAX(id) from menu", "", "");
                 }
+
 
                 // to increment sort var correctly, check if there is an entry in the menu
                 if ($res = $db->query("SELECT MAX(sort) FROM {menu} WHERE menuID = '" . $menuID . "'"))
@@ -365,6 +373,7 @@ namespace YAWK {
                     sys::setSyslog($db, 23, 1, "failed to select menu entry for: $menuID", 0, 0, 0, 0);
                     echo alert::draw("warning","Warning", "Could not select menu entry for: $menuID", "", "");
                 }
+                    */
             }
             else
             {
@@ -373,6 +382,7 @@ namespace YAWK {
             sys::setSyslog($db, 8, 1, "copy $this->path.$this->alias failed.", 0, 0, 0, 0);
             return false;
         }
+
 
         /**
          * @brief delete a page
