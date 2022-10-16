@@ -1835,9 +1835,9 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (1058, 1, 'card-footer-bgcolor', 'F7F7F7', '#F7F7F7', '', 61, 1, 1, 'TPL_CARD_FOOTER_BGCOLOR', 'form-control color', 'color', '', 'TPL_CARD_FOOTER_BGCOLOR_PH', 'TPL_CARD_FOOTER_BGCOLOR_DESC', '', '', ''),
 (1059, 1, 'card-footer-border-bottom', '1px solid', '1px solid', '', 61, 1, 1, 'TPL_CARD_FOOTER_BORDER', 'form-control', '', '', 'TPL_CARD_FOOTER_BORDER_PH', 'TPL_CARD_FOOTER_BORDER_DESC', '', '', ''),
 (1060, 1, 'card-footer-border-bottom-color', 'D9D9D9', '#d9d9d9', '', 61, 1, 1, 'TPL_CARD_FOOTER_BORDER_COLOR', 'form-control color', 'color', '', 'TPL_CARD_FOOTER_BORDER_COLOR_PH', 'TPL_CARD_FOOTER_BORDER_COLOR_DESC', '', '', ''),
-(1061, 1, 'listgroup-itemActiveBackgroundColor', '007BFF', '007bff', '', 15, 1, 0, 'TPL_LISTGROUP_ITEM_ACTIVE_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
-(1062, 1, 'listgroup-itemActiveBorderColor', '007BFF', '007bff', '', 15, 1, 0, 'TPL_LISTGROUP_ITEM_ACTIVE_BORDER_COLOR', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
-(1063, 1, 'toggle-menu-bordercolor', 'CCCCCC', 'ccc', '', 11, 1, 4, 'TPL_MENU_BORDERCOLOR_TOGGLE', 'form-control color', '', '', 'TPL_COLOR_PLACEHOLDER', '', '', '', ''),
+(1061, 1, 'listgroup-itemActiveBackgroundColor', '007BFF', '007bff', '', 15, 1, 0, 'TPL_LISTGROUP_ITEM_ACTIVE_BGCOLOR', 'form-control color', '', '', 'TPL_COLOR_PH', '', '', '', ''),
+(1062, 1, 'listgroup-itemActiveBorderColor', '007BFF', '007bff', '', 15, 1, 0, 'TPL_LISTGROUP_ITEM_ACTIVE_BORDER_COLOR', 'form-control color', '', '', 'TPL_COLOR_PH', '', '', '', ''),
+(1063, 1, 'toggle-menu-bordercolor', 'CCCCCC', 'ccc', '', 11, 1, 4, 'TPL_MENU_BORDERCOLOR_TOGGLE', 'form-control color', '', '', 'TPL_COLOR_PH', '', '', '', ''),
 (1064, 1, 'navbar-borderstyle', 'solid', 'solid', '', 11, 1, 11, 'NAVBAR_BORDERSTYLE', 'form-control', 'select', 'solid,solid:dashed,dashed:dotted,dotted', '', '', '', '', ''),
 (1065, 1, 'navbar-bordersize', '1px', '1px', '', 11, 1, 11, 'NAVBAR_BORDERSIZE', 'form-control', '', '', 'PH_1PX', '', '', '', ''),
 (1066, 1, 'navbar-sticky', '1', '1', '', 10, 1, 11, 'NAVBAR_STICKY', 'form-control', 'checkbox toggle', '', '', '', '', 'NAVBAR_STICKY_HEADING', 'NAVBAR_STICKY_SUBTEXT'),
@@ -1846,7 +1846,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (1069, 1, 'navbar-vertical-divider', '0', '0', '', 10, 1, 11, 'NAVBAR_V_DIVIDER', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
 (1070, 1, 'card-footer-border-top', '1px solid', '1px solid', '', 61, 1, 1, 'TPL_CARD_FOOTER_BORDER', 'form-control', '', '', 'TPL_CARD_FOOTER_BORDER_PH', 'TPL_CARD_FOOTER_BORDER_DESC', '', '', ''),
 (1071, 1, 'card-footer-border-top-color', 'D9D9D9', '#d9d9d9', '', 61, 1, 1, 'TPL_CARD_FOOTER_BORDER_COLOR', 'form-control color', 'color', '', 'TPL_CARD_FOOTER_BORDER_COLOR_PH', 'TPL_CARD_FOOTER_BORDER_COLOR_DESC', '', '', ''),
-(1072, 1, 'toggle-menubgcolor', 'F8F8F8', 'F8F8F8', '', 11, 1, 5, 'TPL_TOGGLE_MENUBGCOLOR', 'form-control color', '', '', 'TPL_TOGGLE_MENUBGCOLOR_PLACEHOLDER', 'TPL_TOGGLE_MENUBGCOLOR_DESC', '', '', '');
+(1072, 1, 'toggle-menubgcolor', 'F8F8F8', 'F8F8F8', '', 11, 1, 5, 'TPL_MENU_BGCOLOR', 'form-control color', '', '', '', '', '', '', '');
 
 
     CREATE TABLE `cms_template_settings_types` (
