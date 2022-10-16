@@ -1849,7 +1849,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (1072, 1, 'toggle-menubgcolor', 'F8F8F8', 'F8F8F8', '', 11, 1, 5, 'TPL_MENU_BGCOLOR', 'form-control color', '', '', '', '', '', '', '');
 
 
-    CREATE TABLE `cms_template_settings_types` (
+CREATE TABLE `cms_template_settings_types` (
   `id` int(11) NOT NULL,
   `type` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -2666,7 +2666,7 @@ ALTER TABLE `cms_syslog_categories`
 ALTER TABLE `cms_templates`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 ALTER TABLE `cms_template_settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1060;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1063;
 ALTER TABLE `cms_template_settings_types`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 ALTER TABLE `cms_tips`
