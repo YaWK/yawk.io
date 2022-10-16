@@ -87,7 +87,6 @@ if (isset($_POST['save']) && (isset($_GET['action']) && (isset($_GET['id']))))
                 }
             }
 
-
         } // end if isset $_GET['action']
 
         // get all template settings fresh form database into array
@@ -163,7 +162,7 @@ if (isset($_POST['save']) && (isset($_GET['action']) && (isset($_GET['id']))))
 
         // $content .= $bootstrap->test();
 
-    $content .= "/* jQUERY form validate error mesage text color */
+        $content .= "/* jQUERY form validate error mesage text color */
     .error {
         color: #".$tplSettings['form-error'].";
         font-weight: bold;
