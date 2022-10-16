@@ -295,7 +295,7 @@ namespace YAWK {
                     print alert::draw("danger", "Error!", "File could not be copied. Check folder permissions of /content/pages !", "", "");
                 }
                 else {
-                    // file copies successfully...
+                    // file copied successfully...
                     return true;
                 }
                 /*
