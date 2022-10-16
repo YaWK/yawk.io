@@ -872,7 +872,7 @@ namespace YAWK {
          * @param string $dirPrefix directory prefix
          * @return string html content
          */
-        function readContent($dirPrefix)
+        function readContent($dirPrefix): string
         {
             // check, if language is set
             if (isset($this->language) && (!empty($this->language)))
@@ -883,14 +883,21 @@ namespace YAWK {
             {   // no language set, build path for content/pages root folder
                 $filename = $this->path.$this->alias.".php";
             }
-            // open page file
-            $handle = @fopen($filename, "rw");
-            // read content into var
-            $content = @fread($handle, filesize($filename));
-            // close resource
-            fclose($handle);
-            // and return page content
-            return $content;
+            if(file_exists($filename)){
+                // open page file
+                $handle = @fopen($filename, "rw");
+                // read content into var
+                $content = @fread($handle, filesize($filename));
+                // close resource
+                fclose($handle);
+                // and return page content
+                return $content;
+            }
+            else
+            {
+                return 'ERROR: Unable to read content of file: '.$filename.'
+Maybe the file has been physically deleted, moved or renamed.';
+            }
         }
 
         function getCurrentLanguageByID($db, $id){
