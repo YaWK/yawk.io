@@ -576,7 +576,7 @@ namespace YAWK\BACKEND {
                   <li>
                     <!-- inner menu: contains the messages -->
                     <ul class=\"menu\">";
-            if($emails)
+            if(isset($emails))
             {
                 // newest first
                 rsort($emails);
