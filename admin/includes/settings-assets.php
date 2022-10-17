@@ -16,9 +16,9 @@ if (isset($_GET['delete']) && ($_GET['delete'] == 1))
             alert::draw("success", "$lang[SUCCESS]", "$lang[ASSET_DEL_OK]", "", "800");
         }
         else
-            {   // failed to delete, throw error msg
-                alert::draw("danger", "$lang[ERROR]", "$lang[ASSET_DEL_FAILED]", "", "2600");
-            }
+        {   // failed to delete, throw error msg
+            alert::draw("danger", "$lang[ERROR]", "$lang[ASSET_DEL_FAILED]", "", "2600");
+        }
     }
 }
 // ENABLE / DISABLE ASSET
@@ -62,17 +62,26 @@ if (isset($_POST) && (!empty($_POST)))
         $url2 = $db->quote($_POST['url2']);
         $url3 = $db->quote($_POST['url3']);
 
+        $row = $db->query("SELECT MAX(sortation) FROM {assets_types}");
+        $res = mysqli_fetch_row($row);
+        if (isset($res[0])){
+            $sortation = $res[0];
+        }
+        else {
+            $sortation = 0;
+        }
+
         // add asset to db
-        if ($db->query("INSERT INTO {assets_types} (type, asset, property, internal, url1, url2, url3) 
-                        VALUES ('".$assetType."', '".$assetName."', '".$property."', '".$internal."', 
+        if ($db->query("INSERT INTO {assets_types} (type, sortation, asset, property, internal, url1, url2, url3) 
+                        VALUES ('".$assetType."', '".$sortation."', '".$assetName."', '".$property."', '".$internal."', 
                         '".$url1."', '".$url2."', '".$url3."')"))
         {   // all good, throw success msg
             alert::draw("success", "$lang[SUCCESS]", "$lang[ASSET_ADD_OK]", "", "1800");
         }
         else
-            {   // failed to add new asset - throw error msg
-                alert::draw("danger", "$lang[ERROR]", "$lang[ASSET_ADD_FAILED]", "", "2600");
-            }
+        {   // failed to add new asset - throw error msg
+            alert::draw("danger", "$lang[ERROR]", "$lang[ASSET_ADD_FAILED]", "", "2600");
+        }
     }
 
     // UPDATE EXISTING ASSET
@@ -145,18 +154,18 @@ echo"</section><!-- Main content -->
                 $assetStatus = "<i class=\"label label-success\">$lang[ONLINE]</i>";
             }
             else
-                {
-                    $assetStatus = "<i class=\"label label-danger\">$lang[OFFLINE]</i>";
-                }
+            {
+                $assetStatus = "<i class=\"label label-danger\">$lang[OFFLINE]</i>";
+            }
 
             if ($row['type'] == 1)
             {
                 $assetType1Selected = "selected";
             }
             else
-                {
-                    $assetType1Selected = '';
-                }
+            {
+                $assetType1Selected = '';
+            }
             if ($row['type'] == 2)
             {
                 $assetType2Selected = "selected";
@@ -217,8 +226,8 @@ echo"</section><!-- Main content -->
                   </div>
               </div>";
 
-                    }
-                ?>
+        }
+        ?>
     </div>
     <div class="col-md-4">
         <!-- add new asset form -->
@@ -227,25 +236,25 @@ echo"</section><!-- Main content -->
                 <h3 class="box-title"><?php echo $lang['ASSET']; ?>  <small><?php echo $lang['ADD']; ?> </small></h3>
             </div>
             <div class="box-body">
-            <form name="newAsset" role="form" action="index.php?page=settings-assets&newAsset=true" method="POST">
-                <label for="assetName"><?php echo $lang['NAME']; ?></label>
-                <input type="text" class="form-control" name="assetName" id="assetName" placeholder="<?php echo $lang['ASSET_NAME_PH']; ?>">
-                <label for="internal"><?php echo $lang['INTERNAL']; ?></label>
-                <input type="text" class="form-control" name="internal" id="internal" placeholder="<?php echo $lang['ASSET_INTERNAL_PH']; ?>">
-                <label for="url1"><?php echo $lang['URL']; ?> 1</label>
-                <input type="text" class="form-control" name="url1" id="url1" placeholder="<?php echo $lang['ASSET_URL_PH']; ?>">
-                <label for="url2"><?php echo $lang['URL']; ?> 2</label>
-                <input type="text" class="form-control" name="url2" id="url2" placeholder="<?php echo $lang['ASSET_URL_PH']; ?>">
-                <label for="url3"><?php echo $lang['URL']; ?> 3</label>
-                <input type="text" class="form-control" name="url3" id="url3" placeholder="<?php echo $lang['ASSET_URL_PH']; ?>">
-                <label for="assetType"><?php echo $lang['TYPE']; ?></label>
-                <select class="form-control" name="assetType" id="assetType">
-                    <option value="1"><?php echo $lang['REQUIRED']; ?></option>
-                    <option value="2" selected><?php echo $lang['OPTIONAL']; ?></option>
-                    <option value="3"><?php echo $lang['USER_DEFINED']; ?></option>
-                </select>
-                <button class="btn btn-success pull-right" id="newAsset" name="newAsset" style="margin-top:2px;"><i id="savebuttonIcon" class="fa fa-check"></i>&nbsp;&nbsp;<?php echo $lang['ASSET_ADD']; ?></button>
-            </form>
+                <form name="newAsset" role="form" action="index.php?page=settings-assets&newAsset=true" method="POST">
+                    <label for="assetName"><?php echo $lang['NAME']; ?></label>
+                    <input type="text" class="form-control" name="assetName" id="assetName" placeholder="<?php echo $lang['ASSET_NAME_PH']; ?>">
+                    <label for="internal"><?php echo $lang['INTERNAL']; ?></label>
+                    <input type="text" class="form-control" name="internal" id="internal" placeholder="<?php echo $lang['ASSET_INTERNAL_PH']; ?>">
+                    <label for="url1"><?php echo $lang['URL']; ?> 1</label>
+                    <input type="text" class="form-control" name="url1" id="url1" placeholder="<?php echo $lang['ASSET_URL_PH']; ?>">
+                    <label for="url2"><?php echo $lang['URL']; ?> 2</label>
+                    <input type="text" class="form-control" name="url2" id="url2" placeholder="<?php echo $lang['ASSET_URL_PH']; ?>">
+                    <label for="url3"><?php echo $lang['URL']; ?> 3</label>
+                    <input type="text" class="form-control" name="url3" id="url3" placeholder="<?php echo $lang['ASSET_URL_PH']; ?>">
+                    <label for="assetType"><?php echo $lang['TYPE']; ?></label>
+                    <select class="form-control" name="assetType" id="assetType">
+                        <option value="1"><?php echo $lang['REQUIRED']; ?></option>
+                        <option value="2" selected><?php echo $lang['OPTIONAL']; ?></option>
+                        <option value="3"><?php echo $lang['USER_DEFINED']; ?></option>
+                    </select>
+                    <button class="btn btn-success pull-right" id="newAsset" name="newAsset" style="margin-top:2px;"><i id="savebuttonIcon" class="fa fa-check"></i>&nbsp;&nbsp;<?php echo $lang['ASSET_ADD']; ?></button>
+                </form>
             </div>
         </div>
     </div>
