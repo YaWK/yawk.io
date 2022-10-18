@@ -18,9 +18,9 @@ see what's going on and what has been done over the past few days, weeks, months
 <h3><u>R O A D M A P for 2022: <small></small></u></h3>
 <b>Currently in development:</b>
 <ul>
-<li>Codebase update to ensure PHP 8 compatibility</li>
-<li>Migrate all code docs to doxygen because APIGEN is outdated</li>
-<li>Add support for multilingual FrontEnd (Content) Pages and Menus</li>
+<li>Codebase update to ensure PHP 8 compatibility ✓</li>
+<li>Migrate all code docs to doxygen because APIGEN is outdated ✓</li>
+<li>Add support for multilingual FrontEnd (Content) Pages and Menus ✓</li>
 <li>Major Updates of all Assets and Social Widgets </li>
 <li>Add templates and demo pages <i><small>(scheduled until end of 2022)</small></i></li>
 <li><i><small>and of course: check and fix language errors, major and minor bugs</small></i></li>
