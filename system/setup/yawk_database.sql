@@ -1844,8 +1844,8 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 (1067, 1, 'navbar-brand', '1', '0', '', 10, 1, 11, 'NAVBAR_BRAND', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
 (1068, 1, 'navbar-center', '0', '1', '', 10, 1, 11, 'NAVBAR_CENTER', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
 (1069, 1, 'navbar-vertical-divider', '0', '0', '', 10, 1, 11, 'NAVBAR_V_DIVIDER', 'form-control', 'checkbox toggle', '', '', '', '', '', ''),
-(1070, 1, 'card-footer-border-top', '1px solid', '1px solid', '', 61, 1, 1, 'TPL_CARD_FOOTER_BORDER', 'form-control', '', '', 'TPL_CARD_FOOTER_BORDER_PH', 'TPL_CARD_FOOTER_BORDER_DESC', '', '', ''),
-(1071, 1, 'card-footer-border-top-color', 'D9D9D9', '#d9d9d9', '', 61, 1, 1, 'TPL_CARD_FOOTER_BORDER_COLOR', 'form-control color', 'color', '', 'TPL_CARD_FOOTER_BORDER_COLOR_PH', 'TPL_CARD_FOOTER_BORDER_COLOR_DESC', '', '', ''),
+(1070, 1, 'card-footer-border-top', '1px solid', '1px solid', '', 61, 1, 1, 'TPL_CARD_FOOTER_BORDER', 'form-control', '', '', 'TPL_CARD_FOOTER_BORDER_PH', '', '', '', ''),
+(1071, 1, 'card-footer-border-top-color', 'D9D9D9', '#d9d9d9', '', 61, 1, 1, 'TPL_CARD_FOOTER_BORDER_COLOR', 'form-control color', 'color', '', 'TPL_CARD_FOOTER_BORDER_COLOR_PH', '', '', '', ''),
 (1072, 1, 'toggle-menubgcolor', 'F8F8F8', 'F8F8F8', '', 11, 1, 5, 'TPL_MENU_BGCOLOR', 'form-control color', '', '', '', '', '', '', '');
 
 
