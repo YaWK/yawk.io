@@ -144,9 +144,9 @@ namespace YAWK {
                         return $row[0];
                     }
                     else
-                        {   // no ID found
-                            return false;
-                        }
+                    {   // no ID found
+                        return false;
+                    }
                 }
                 else
                 {   // no user with this token hash value found
@@ -201,22 +201,22 @@ namespace YAWK {
                         return true;
                     }
                     else
-                        {   // password cannot be changed
-                            \YAWK\sys::setSyslog($db, 11, 1, "failed to update password of user $uid ", $uid, 0, 0, 0);
-                            return false;
-                        }
-                }
-                else
-                    {   // uid not set or not valid
-                        \YAWK\sys::setSyslog($db, 11, 1, "uid not set, empty or wrong datatype", $uid, 0, 0, 0);
+                    {   // password cannot be changed
+                        \YAWK\sys::setSyslog($db, 11, 1, "failed to update password of user $uid ", $uid, 0, 0, 0);
                         return false;
                     }
-            }
-            else
-                {   // new password not set or not valid
-                    \YAWK\sys::setSyslog($db, 11, 1, "failed to update user password: new password not set, empty or not valid", $uid, 0, 0, 0);
+                }
+                else
+                {   // uid not set or not valid
+                    \YAWK\sys::setSyslog($db, 11, 1, "uid not set, empty or wrong datatype", $uid, 0, 0, 0);
                     return false;
                 }
+            }
+            else
+            {   // new password not set or not valid
+                \YAWK\sys::setSyslog($db, 11, 1, "failed to update user password: new password not set, empty or not valid", $uid, 0, 0, 0);
+                return false;
+            }
         }
 
         /**
@@ -278,11 +278,11 @@ namespace YAWK {
                         $to = \YAWK\user::getUserEmail($db, $username);
                     }
                     else
-                        {   // password recipient
-                            $to = $email;
-                            // get username
-                            $username = self::getUserNameFromID($db, $uid);
-                        }
+                    {   // password recipient
+                        $to = $email;
+                        // get username
+                        $username = self::getUserNameFromID($db, $uid);
+                    }
 
                     // get admin email address
                     $from = \YAWK\settings::getSetting($db, "admin_email");
@@ -327,18 +327,18 @@ namespace YAWK {
                         }
                     }
                     else
-                        {   // NOT VALID EMAIL ADDRESS (to:)
-                            \YAWK\alert::draw("warning", $lang['ERROR'], $lang['EMAIL_ADD_INVALID'], "", 3800);
-                            \YAWK\sys::setSyslog($db, 11, 1, "invalid email address $to", $uid, 0, 0, 0);
-                            return false;
-                        }
-                }
-                else
-                    {   // error: hash value could not be stored / updated in database
-                        \YAWK\sys::setSyslog($db, 11, 1, "failed to update hash value in database", $uid, 0, 0, 0);
-                        \YAWK\alert::draw("warning", "Hash Value", "could not be stored.", "", 3800);
+                    {   // NOT VALID EMAIL ADDRESS (to:)
+                        \YAWK\alert::draw("warning", $lang['ERROR'], $lang['EMAIL_ADD_INVALID'], "", 3800);
+                        \YAWK\sys::setSyslog($db, 11, 1, "invalid email address $to", $uid, 0, 0, 0);
                         return false;
                     }
+                }
+                else
+                {   // error: hash value could not be stored / updated in database
+                    \YAWK\sys::setSyslog($db, 11, 1, "failed to update hash value in database", $uid, 0, 0, 0);
+                    \YAWK\alert::draw("warning", "Hash Value", "could not be stored.", "", 3800);
+                    return false;
+                }
             }
         }
 
@@ -379,19 +379,19 @@ namespace YAWK {
                             return $_SESSION['username'];
                         }
                         else
-                            {   // username seems not to be valid
-                                return false;
-                            }
-                    }
-                    else
-                        {   // user is there, but not logged in
+                        {   // username seems not to be valid
                             return false;
                         }
-                }
-                else
-                    {   // session username is not set
+                    }
+                    else
+                    {   // user is there, but not logged in
                         return false;
                     }
+                }
+                else
+                {   // session username is not set
+                    return false;
+                }
             }
             // no session - check if $_GET is set instead
             else if (isset($_GET))
@@ -403,19 +403,19 @@ namespace YAWK {
                         return $_GET['user'];
                     }
                     else
-                        {   // user is not logged in
-                            return false;
-                        }
-                }
-                else
-                    {   // $_GET user is not set, empty or not valid
+                    {   // user is not logged in
                         return false;
                     }
-            }
-            else
-                {   // no user is there
+                }
+                else
+                {   // $_GET user is not set, empty or not valid
                     return false;
                 }
+            }
+            else
+            {   // no user is there
+                return false;
+            }
         }
 
         /**
@@ -437,16 +437,16 @@ namespace YAWK {
                     return $row[0];
                 }
                 else
-                    {
-                        \YAWK\sys::setSyslog($db, 11, 1, "failed to get templateID from user db ", $uid, 0, 0, 0);
-                        return false;
-                    }
-            }
-            else
                 {
-                    \YAWK\sys::setSyslog($db, 11, 1, "failed to query templateID from user db ", $uid, 0, 0, 0);
+                    \YAWK\sys::setSyslog($db, 11, 1, "failed to get templateID from user db ", $uid, 0, 0, 0);
                     return false;
                 }
+            }
+            else
+            {
+                \YAWK\sys::setSyslog($db, 11, 1, "failed to query templateID from user db ", $uid, 0, 0, 0);
+                return false;
+            }
         }
 
         /**
@@ -466,15 +466,15 @@ namespace YAWK {
                         return true;
                     }
                     else
-                        {
-                            return false;
-                        }
-                }
-                else
                     {
-                        \YAWK\sys::setSyslog($db, 11, 1, "failed to get overrideTemplate status from user db ", 0, 0, 0, 0);
                         return false;
                     }
+                }
+                else
+                {
+                    \YAWK\sys::setSyslog($db, 11, 1, "failed to get overrideTemplate status from user db ", 0, 0, 0, 0);
+                    return false;
+                }
             }
             else
             {
@@ -492,28 +492,28 @@ namespace YAWK {
          */
         public function setUserTemplate($db, $overrideTemplate, $userTemplateID, $uid)
         {   /* @param $db \YAWK\db */
-        if (!isset($overrideTemplate) && (!is_numeric($overrideTemplate)))
-        {   // wrong param
-            return false;
-        }
-        if (!isset($userTemplateID) && (!is_numeric($userTemplateID)))
-        {   // wrong param
-            return false;
-        }
-        if (!isset($uid) && (!is_numeric($uid)))
-        {   // wrong param
-            return false;
-        }
+            if (!isset($overrideTemplate) && (!is_numeric($overrideTemplate)))
+            {   // wrong param
+                return false;
+            }
+            if (!isset($userTemplateID) && (!is_numeric($userTemplateID)))
+            {   // wrong param
+                return false;
+            }
+            if (!isset($uid) && (!is_numeric($uid)))
+            {   // wrong param
+                return false;
+            }
 
             if ($res = $db->query("UPDATE {users} SET overrideTemplate = $overrideTemplate, templateID = $userTemplateID WHERE id = $uid"))
             {
                 return true;
             }
             else
-                {
-                    \YAWK\sys::setSyslog($db, 11, 1, "failed to update user template override - template ID: $userTemplateID", $uid, 0, 0, 0);
-                    return false;
-                }
+            {
+                \YAWK\sys::setSyslog($db, 11, 1, "failed to update user template override - template ID: $userTemplateID", $uid, 0, 0, 0);
+                return false;
+            }
         }
 
         /**
@@ -553,15 +553,15 @@ namespace YAWK {
                     \YAWK\alert::draw("success", "showing login data for user: $user", " ", "",2400);
                 }
                 else
-                    {   // user not found in table, so draw an alert and show all logins...
-                        $sqlStr = '';
-                        \YAWK\alert::draw("warning", "Error!", "<h4>No login data available.</h4> Could not get data for user <b>$user</b>. Displaying all data instead.", "",5000);
-                    }
+                {   // user not found in table, so draw an alert and show all logins...
+                    $sqlStr = '';
+                    \YAWK\alert::draw("warning", "Error!", "<h4>No login data available.</h4> Could not get data for user <b>$user</b>. Displaying all data instead.", "",5000);
+                }
             }
             else
-                {   // show all logins
-                    $sqlStr = '';
-                }
+            {   // show all logins
+                $sqlStr = '';
+            }
             if ($res = $db->query("SELECT * FROM {logins} $sqlStr"))
             {   // fetch data in loop
                 while ($row = $res->fetch_assoc())
@@ -573,15 +573,15 @@ namespace YAWK {
                     return $loginsArray;
                 }
                 else
-                    {   // something went wrong
-                        return false;
-                    }
-            }
-            else
-                {   // could not query login data...
-                    \YAWK\sys::setSyslog($db, 11, 1, "failed to query login data of $user ", 0, 0, 0, 0);
+                {   // something went wrong
                     return false;
                 }
+            }
+            else
+            {   // could not query login data...
+                \YAWK\sys::setSyslog($db, 11, 1, "failed to query login data of $user ", 0, 0, 0, 0);
+                return false;
+            }
         }
 
         /**
@@ -599,14 +599,14 @@ namespace YAWK {
                     return true;
                 }
                 else
-                    {
-                        return false;
-                    }
-            }
-            else
                 {
                     return false;
                 }
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /**
@@ -1202,6 +1202,8 @@ namespace YAWK {
                                         city = '" . $this->city . "',
                                         country = '" . $this->country . "',
                                         job = '" . $this->job . "',
+                                        overrideTemplate = '" . $this->overrideTemplate . "',
+                                        templateID = '" . $this->templateID . "',
                                         gid = '" . $this->gid . "'
                       WHERE id = '" . $this->id . "'"))
             {
@@ -1298,9 +1300,9 @@ namespace YAWK {
                 $id = $row[0] + 1;
             }
             else
-                {   // if ID could not be determined, set 1 as default
-                    $id = 1;
-                }
+            {   // if ID could not be determined, set 1 as default
+                $id = 1;
+            }
             // lowercase username
             $username = mb_strtolower($username);
 
@@ -1560,15 +1562,15 @@ namespace YAWK {
                 return true;
             }
             else
-                {
-                    \YAWK\sys::setSyslog($db, 11, 1, "login failed due wrong credentials from <b>".$username."</b>", 0, 0, 0, 0);
-                    // checkPassword failed
-                    /* echo "<div class=\"container bg-danger\"><br><h2>Warning! <small>Login failed!</h2>
-                    <b>Please check your login credentials and try again in a few seconds.</b>
-                    <br><small>You will be redirected to <a class=\"small\" href=\"$host\">$host</a>.</small><br><br></div>";
-                    \YAWK\sys::setTimeout("index.html", 10000); */
-                    return false;
-                }
+            {
+                \YAWK\sys::setSyslog($db, 11, 1, "login failed due wrong credentials from <b>".$username."</b>", 0, 0, 0, 0);
+                // checkPassword failed
+                /* echo "<div class=\"container bg-danger\"><br><h2>Warning! <small>Login failed!</h2>
+                <b>Please check your login credentials and try again in a few seconds.</b>
+                <br><small>You will be redirected to <a class=\"small\" href=\"$host\">$host</a>.</small><br><br></div>";
+                \YAWK\sys::setTimeout("index.html", 10000); */
+                return false;
+            }
         }
 
         /**
@@ -1631,7 +1633,7 @@ namespace YAWK {
 
             // check user and password vars
             if (isset($user) && (!empty($user) && (is_string($user)
-            && (isset($password) && (!empty($password) && (is_string($password)))))))
+                        && (isset($password) && (!empty($password) && (is_string($password)))))))
             {
                 // check if user is logged in
                 if (self::isLoggedIn($db, $user) === false)
@@ -1654,9 +1656,9 @@ namespace YAWK {
                 return false;
             }
             else
-                {   // login data wrong
-                    return false;
-                }
+            {   // login data wrong
+                return false;
+            }
         }
 
         /**
@@ -1712,95 +1714,95 @@ namespace YAWK {
                     return false;
                 }
                 else
-                    {   // LOGIN SUCCESSFUL
-                        // try to re-new session ID
-                        @session_regenerate_id();
-                        // set session username
-                        $_SESSION['username'] = $username;
-                        // set logged_in session status to true
-                        $_SESSION['logged_in'] = true;
-                        // store successful login
-                        \YAWK\sys::setSyslog($db, 10, 0, "login <b>$username</b> successful", $_SESSION['uid'], 0, 0, 0);
-                        // self::storeLogin($db, 0, "frontend", $username, $password);
-                        return true;
-                    }
+                {   // LOGIN SUCCESSFUL
+                    // try to re-new session ID
+                    @session_regenerate_id();
+                    // set session username
+                    $_SESSION['username'] = $username;
+                    // set logged_in session status to true
+                    $_SESSION['logged_in'] = true;
+                    // store successful login
+                    \YAWK\sys::setSyslog($db, 10, 0, "login <b>$username</b> successful", $_SESSION['uid'], 0, 0, 0);
+                    // self::storeLogin($db, 0, "frontend", $username, $password);
+                    return true;
+                }
             }
             else
-                {   // check password failed
-                    $uid = \YAWK\user::getUserIdFromName($db, $username);
-                    \YAWK\sys::setSyslog($db, 11, 1, "failed to login <b>$username</b>", $uid, 0, 0, 0);
-                    // return \YAWK\alert::draw("warning", "Login failed...", "Please try to re-login in a few seconds...", "",3000);
-                    return false;
-/*
-                if (!isset($_SESSION['failed'])){
-                    $_SESSION['failed']=1;
-                    $this->storeLogin($db, 1, "frontend", $username, $password);
-                    return false;
-                }
-                else {
-                    $_SESSION['failed']++;
-                    $this->storeLogin($db, 1, "frontend", $username, $password);
-                    // return false;
-                }
-                if ($_SESSION['failed'] == 2){
-                    echo "<div class=\"well\">";
-                    echo \YAWK\alert::draw("danger", "<h3><i class=\"fa fa-exclamation-triangle\"></i> ACHTUNG!", "2. Fehlversuch!</h3>
-                    <b>Du hast noch einen Versuch um deinen Benutzernamen und das Passwort korrekt einzugeben.</b>","", 6200);
-                    echo "</div>";
-                    $this->storeLogin($db, 1, "frontend", $username, $password);
-                    return false;
-                }
-                if ($_SESSION['failed'] == 3){
-                    echo "<div class=\"container\"><div class=\"well\">";
-                    echo \YAWK\alert::draw("danger", "<h3><i class=\"fa fa-exclamation-triangle\"></i> ACHTUNG!", "3. Fehlversuch!</h3>
-                    <b>Beim n&auml;chsten falschen Versuch wird die Prozedur geloggt und der Admin informiert.</b>","",6200);
-                    echo "</div></div>";
-                    $this->storeLogin($db, 1, "frontend", $username, $password);
-                    return false;
-                }
-                if ($_SESSION['failed'] >= 10){
-                    echo "<div class=\"container\"><div class=\"well\">";
-                    echo \YAWK\alert::draw("danger", "<h3><i class=\"fa fa-exclamation-triangle\"></i> ACHTUNG!", "$_SESSION[failed]. Fehlversuch!</h3>
-                    <b>Du wurdest gewarnt! Brute Force Attacken sind strafbar. Es wird Anzeige erstattet.</b><br>
-                    <b>Du bist nicht berechtigt Dich einzuloggen. Du wurdest gewarnt. Lass den Schwachsinn.</b><br>
-                    Datum: $date_now<br>
-                    Deine IP: $_SERVER[REMOTE_ADDR]<br>
-                    Agent: $_SERVER[HTTP_USER_AGENT]","",12200);
-                    echo "</div></div>";
-                    $domain = \YAWK\settings::getSetting($db, "domain");
-                    $to = \YAWK\settings::getSetting($db, "admin_email");
-                    $from = "script@".$domain."";
-                    $message = "FAILED LOGIN ATTEMPT!\n\r
-                        Date     : $date_now\n
-                        Message  : User tried a FrontEnd Login more than $_SESSION[failed] times!!!\n
-                        User     : $this->username\n
-                        Password : $this->password\n";
-                    \YAWK\email::sendEmail($from, $to, "","LOGIN WARNING! on $domain", $message);
-                    $this->storeLogin($db, 1, "frontend", $username, $password);
-                    return false;
-                }
-                if ($_SESSION['failed'] >= 4){
-                    echo "<div class=\"container\"><div class=\"well\">";
-                    echo \YAWK\alert::draw("danger", "<h3><i class=\"fa fa-exclamation-triangle\"></i> ACHTUNG!", "$_SESSION[failed]. Fehlversuch!</h3>
-                    <b>Offensichtlich bist Du nicht berechtigt, Dich hier einzuloggen.<br>
-                    </b><i>Deine wiederholten Zugriffe wurden aus Sicherheitsgr&uuml;nden geloggt. Admin ist informiert.</i>","",6200);
-                    echo "</div></div>";
-                    $domain = \YAWK\settings::getSetting($db, "domain");
-                    $to = \YAWK\settings::getSetting($db, "admin_email");
-                    $from = "script@".$domain."";
-                    $message = "FAILED LOGIN ATTEMPT!\n\r
-                        Date     : $date_now\n
-                        Message  : User tried a FrontEnd Login without sufficient right!\n
-                        User     : $this->username\n
-                        Password : $this->password\n";
-                    \YAWK\email::sendEmail($from, $to, "","LOGIN WARNING! on $domain", $message);
-                    $this->storeLogin($db, 1, "frontend", $username, $password);
-                    //\YAWK\backend::setTimeout("startseite.html", 6400);
-                    return false;
-                }
-
+            {   // check password failed
+                $uid = \YAWK\user::getUserIdFromName($db, $username);
+                \YAWK\sys::setSyslog($db, 11, 1, "failed to login <b>$username</b>", $uid, 0, 0, 0);
+                // return \YAWK\alert::draw("warning", "Login failed...", "Please try to re-login in a few seconds...", "",3000);
                 return false;
-*/
+                /*
+                                if (!isset($_SESSION['failed'])){
+                                    $_SESSION['failed']=1;
+                                    $this->storeLogin($db, 1, "frontend", $username, $password);
+                                    return false;
+                                }
+                                else {
+                                    $_SESSION['failed']++;
+                                    $this->storeLogin($db, 1, "frontend", $username, $password);
+                                    // return false;
+                                }
+                                if ($_SESSION['failed'] == 2){
+                                    echo "<div class=\"well\">";
+                                    echo \YAWK\alert::draw("danger", "<h3><i class=\"fa fa-exclamation-triangle\"></i> ACHTUNG!", "2. Fehlversuch!</h3>
+                                    <b>Du hast noch einen Versuch um deinen Benutzernamen und das Passwort korrekt einzugeben.</b>","", 6200);
+                                    echo "</div>";
+                                    $this->storeLogin($db, 1, "frontend", $username, $password);
+                                    return false;
+                                }
+                                if ($_SESSION['failed'] == 3){
+                                    echo "<div class=\"container\"><div class=\"well\">";
+                                    echo \YAWK\alert::draw("danger", "<h3><i class=\"fa fa-exclamation-triangle\"></i> ACHTUNG!", "3. Fehlversuch!</h3>
+                                    <b>Beim n&auml;chsten falschen Versuch wird die Prozedur geloggt und der Admin informiert.</b>","",6200);
+                                    echo "</div></div>";
+                                    $this->storeLogin($db, 1, "frontend", $username, $password);
+                                    return false;
+                                }
+                                if ($_SESSION['failed'] >= 10){
+                                    echo "<div class=\"container\"><div class=\"well\">";
+                                    echo \YAWK\alert::draw("danger", "<h3><i class=\"fa fa-exclamation-triangle\"></i> ACHTUNG!", "$_SESSION[failed]. Fehlversuch!</h3>
+                                    <b>Du wurdest gewarnt! Brute Force Attacken sind strafbar. Es wird Anzeige erstattet.</b><br>
+                                    <b>Du bist nicht berechtigt Dich einzuloggen. Du wurdest gewarnt. Lass den Schwachsinn.</b><br>
+                                    Datum: $date_now<br>
+                                    Deine IP: $_SERVER[REMOTE_ADDR]<br>
+                                    Agent: $_SERVER[HTTP_USER_AGENT]","",12200);
+                                    echo "</div></div>";
+                                    $domain = \YAWK\settings::getSetting($db, "domain");
+                                    $to = \YAWK\settings::getSetting($db, "admin_email");
+                                    $from = "script@".$domain."";
+                                    $message = "FAILED LOGIN ATTEMPT!\n\r
+                                        Date     : $date_now\n
+                                        Message  : User tried a FrontEnd Login more than $_SESSION[failed] times!!!\n
+                                        User     : $this->username\n
+                                        Password : $this->password\n";
+                                    \YAWK\email::sendEmail($from, $to, "","LOGIN WARNING! on $domain", $message);
+                                    $this->storeLogin($db, 1, "frontend", $username, $password);
+                                    return false;
+                                }
+                                if ($_SESSION['failed'] >= 4){
+                                    echo "<div class=\"container\"><div class=\"well\">";
+                                    echo \YAWK\alert::draw("danger", "<h3><i class=\"fa fa-exclamation-triangle\"></i> ACHTUNG!", "$_SESSION[failed]. Fehlversuch!</h3>
+                                    <b>Offensichtlich bist Du nicht berechtigt, Dich hier einzuloggen.<br>
+                                    </b><i>Deine wiederholten Zugriffe wurden aus Sicherheitsgr&uuml;nden geloggt. Admin ist informiert.</i>","",6200);
+                                    echo "</div></div>";
+                                    $domain = \YAWK\settings::getSetting($db, "domain");
+                                    $to = \YAWK\settings::getSetting($db, "admin_email");
+                                    $from = "script@".$domain."";
+                                    $message = "FAILED LOGIN ATTEMPT!\n\r
+                                        Date     : $date_now\n
+                                        Message  : User tried a FrontEnd Login without sufficient right!\n
+                                        User     : $this->username\n
+                                        Password : $this->password\n";
+                                    \YAWK\email::sendEmail($from, $to, "","LOGIN WARNING! on $domain", $message);
+                                    $this->storeLogin($db, 1, "frontend", $username, $password);
+                                    //\YAWK\backend::setTimeout("startseite.html", 6400);
+                                    return false;
+                                }
+
+                                return false;
+                */
             }
         }
 
@@ -1865,7 +1867,7 @@ namespace YAWK {
                 {
                     $_SESSION['failed']++;
                 }
-                    echo "<script>
+                echo "<script>
                             // RE-LOGIN TIMER
                                 $('div *').prop('disabled', true);
                                 var count = 8;
@@ -1887,59 +1889,59 @@ namespace YAWK {
                                     document.getElementById(\"timer\").innerHTML=count; // watch for spelling
                                 }
                             </script>";
-                    \YAWK\alert::draw("danger", "Login failed!", "Please check your login data and try to re-login in a few seconds!","","3500");
-                    $uid = \YAWK\user::getUserIdFromName($db, $username);
+                \YAWK\alert::draw("danger", "Login failed!", "Please check your login data and try to re-login in a few seconds!","","3500");
+                $uid = \YAWK\user::getUserIdFromName($db, $username);
                 $this->storeLogin($db, 0, "backend", $username, $password);
                 \YAWK\sys::setSyslog($db, 11, 1, "failed to login <b>$username</b>", $uid, 0, 0, 0);
                 // \YAWK\alert::draw("danger", "Login failed!", "Please check your login data and try again.", "", 6000);
 
                 /**
                 if ($_SESSION['failed'] == 2){
-                    echo \YAWK\alert::draw("danger", "<h3><i class=\"fa fa-exclamation-triangle\"></i> ATTENTION!", "2nd failed try!</h3>
-                            <b>Next failed login will be logged for security reasons.</b>","","3800");
-                    $this->storeLogin($db, 0, "backend", $username, $password);
-                    return false;
+                echo \YAWK\alert::draw("danger", "<h3><i class=\"fa fa-exclamation-triangle\"></i> ATTENTION!", "2nd failed try!</h3>
+                <b>Next failed login will be logged for security reasons.</b>","","3800");
+                $this->storeLogin($db, 0, "backend", $username, $password);
+                return false;
                 }
                 else if ($_SESSION['failed'] >= 4){
-                    echo \YAWK\alert::draw("danger", "<h3><i class=\"fa fa-exclamation-triangle\"></i> ATTENTION!", "$_SESSION[failed]. failed try!</h3>
-                    <b>You are not allowed to login here. You have been warned.<br>
-                    The Admin is informed. Remember: BruteForce Attacks are against the law. <i style=\"text-decoration: underline;\">
-                    Case of recurrence will be logged and prosecuted.</i></b><br><br>
-                    Date: $date_now<br>
-                    Your IP: $_SERVER[REMOTE_ADDR]<br>
-                    Browser: $_SERVER[HTTP_USER_AGENT]</b>","","6800");
-                    $domain = \YAWK\settings::getSetting($db, "domain");
-                    $to = \YAWK\settings::getSetting($db, "admin_email");
-                    $from = "script@".$domain."";
-                    $message = "FAILED LOGIN ATTEMPT!\n\r
-                        Date     : $date_now\n
-                        Message  : User tried a Backend Login more than 4 times!!!\n
-                        User     : $this->username\n
-                        Password : $this->password\n";
-                    \YAWK\email::sendEmail($from, $to, "", "LOGIN WARNING! on $domain", $message);
-                    $this->storeLogin($db, 0, "backend", $username, $password);
-                    return false;
+                echo \YAWK\alert::draw("danger", "<h3><i class=\"fa fa-exclamation-triangle\"></i> ATTENTION!", "$_SESSION[failed]. failed try!</h3>
+                <b>You are not allowed to login here. You have been warned.<br>
+                The Admin is informed. Remember: BruteForce Attacks are against the law. <i style=\"text-decoration: underline;\">
+                Case of recurrence will be logged and prosecuted.</i></b><br><br>
+                Date: $date_now<br>
+                Your IP: $_SERVER[REMOTE_ADDR]<br>
+                Browser: $_SERVER[HTTP_USER_AGENT]</b>","","6800");
+                $domain = \YAWK\settings::getSetting($db, "domain");
+                $to = \YAWK\settings::getSetting($db, "admin_email");
+                $from = "script@".$domain."";
+                $message = "FAILED LOGIN ATTEMPT!\n\r
+                Date     : $date_now\n
+                Message  : User tried a Backend Login more than 4 times!!!\n
+                User     : $this->username\n
+                Password : $this->password\n";
+                \YAWK\email::sendEmail($from, $to, "", "LOGIN WARNING! on $domain", $message);
+                $this->storeLogin($db, 0, "backend", $username, $password);
+                return false;
                 }
 
                 else if ($_SESSION['failed'] >= 3) {
-                    echo \YAWK\alert::draw("danger", "<h3><i class=\"fa fa-exclamation-triangle\"></i> ATTENTION!", "$_SESSION[failed]. failed try!</h3>
-                    <b>You are not allowed to login here. You have been warned.<br>
-                    The Admin is informed. Remember: BruteForce Attacks are against the law. <i style=\"text-decoration: underline;\">
-                    Case of recurrence will be logged and prosecuted.</i></b><br><br>
-                    Date: $date_now<br>
-                    Your IP: $_SERVER[REMOTE_ADDR]<br>
-                    Browser: $_SERVER[HTTP_USER_AGENT]</b>","","6800");
-                    $domain = \YAWK\settings::getSetting($db, "domain");
-                    $to = \YAWK\settings::getSetting($db, "admin_email");
-                    $from = "script@" . $domain . "";
-                    $message = "FAILED LOGIN ATTEMPT!\n\r
-                            Date     : $date_now\n
-                            Message  : User tried a Backend Login without sufficient right!\n
-                            User     : $this->username\n
-                            Password : $this->password\n";
-                    \YAWK\email::sendEmail($from, $to, "", "LOGIN WARNING! on $domain", $message);
-                    $this->storeLogin($db, 0, "backend", $username, $password);
-                    return false;
+                echo \YAWK\alert::draw("danger", "<h3><i class=\"fa fa-exclamation-triangle\"></i> ATTENTION!", "$_SESSION[failed]. failed try!</h3>
+                <b>You are not allowed to login here. You have been warned.<br>
+                The Admin is informed. Remember: BruteForce Attacks are against the law. <i style=\"text-decoration: underline;\">
+                Case of recurrence will be logged and prosecuted.</i></b><br><br>
+                Date: $date_now<br>
+                Your IP: $_SERVER[REMOTE_ADDR]<br>
+                Browser: $_SERVER[HTTP_USER_AGENT]</b>","","6800");
+                $domain = \YAWK\settings::getSetting($db, "domain");
+                $to = \YAWK\settings::getSetting($db, "admin_email");
+                $from = "script@" . $domain . "";
+                $message = "FAILED LOGIN ATTEMPT!\n\r
+                Date     : $date_now\n
+                Message  : User tried a Backend Login without sufficient right!\n
+                User     : $this->username\n
+                Password : $this->password\n";
+                \YAWK\email::sendEmail($from, $to, "", "LOGIN WARNING! on $domain", $message);
+                $this->storeLogin($db, 0, "backend", $username, $password);
+                return false;
                 }
                  *  */
                 return false;
@@ -2080,7 +2082,7 @@ namespace YAWK {
             {   // if a username is sent via get param...
                 if (isset($_GET['user'])
                     && (!empty($_GET['user'])
-                    && (is_string($_GET['user']))))
+                        && (is_string($_GET['user']))))
                 {
                     // logout user
                     if (!$res = $db->query("UPDATE {users}
@@ -2096,13 +2098,13 @@ namespace YAWK {
                         return false;
                     }
                     else
-                        {   // user logged out from database, destroy session
-                            $_SESSION['failed']=0;
-                            $_SESSION['logged_in']=0;
-                            session_destroy();
-                            \YAWK\sys::setSyslog($db, 9, 0, "logout <b>".$_GET['username']."</b>", 0, 0, 0, 0);
-                            return true;
-                        }
+                    {   // user logged out from database, destroy session
+                        $_SESSION['failed']=0;
+                        $_SESSION['logged_in']=0;
+                        session_destroy();
+                        \YAWK\sys::setSyslog($db, 9, 0, "logout <b>".$_GET['username']."</b>", 0, 0, 0, 0);
+                        return true;
+                    }
                 }
                 // DELETE SESSION
                 $_SESSION['failed']=0;
@@ -2124,21 +2126,21 @@ namespace YAWK {
             // & just pick users who are set to online in database
             $res = $db->query("SELECT username, email, public_email, online FROM {users} WHERE privacy != 1");
             while ($row = mysqli_fetch_assoc($res)){
-            // first char uppcerase
-            $username = ucfirst($row['username']);
-            // check if users email adress is public
-            if ($row['email'] && $row['public_email'] === '0'){
-            $email = $row['email'];
-            } else {
-            $email = "";
-            } // if not, build an empty string
-            if ($row['online'] === '0') {
-            $color = "text-danger";
-            }
-            else {
-            $color = "text-success";
-            }
-            echo "<ul class=\"list-group\">
+                // first char uppcerase
+                $username = ucfirst($row['username']);
+                // check if users email adress is public
+                if ($row['email'] && $row['public_email'] === '0'){
+                    $email = $row['email'];
+                } else {
+                    $email = "";
+                } // if not, build an empty string
+                if ($row['online'] === '0') {
+                    $color = "text-danger";
+                }
+                else {
+                    $color = "text-success";
+                }
+                echo "<ul class=\"list-group\">
             <li class=\"list-group-item\"><span class=\"".$color."\"><strong>".$username." &nbsp;&nbsp;<small>".$email."</strong></small></span></li>
             </ul>";
             }

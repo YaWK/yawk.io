@@ -8,147 +8,157 @@ use YAWK\user;
 
 /** @var $db db */
 /** @var $lang language */
-    if (!isset($user))
-    {   // no username obj is set
-        if (isset($_GET['user']))
-        {   // create new user obj
-            $user = new user($db);
-            // load properties for given user
-            $user->loadProperties($db, $_GET['user']);
+if (!isset($user))
+{   // no username obj is set
+    if (isset($_GET['user']))
+    {   // create new user obj
+        $user = new user($db);
+        // load properties for given user
+        $user->loadProperties($db, $_GET['user']);
+    }
+}
+else
+{   // obj is set
+    if (isset($_GET['user']))
+    {   // user var is set,
+        // load user properties
+        $user->loadProperties($db, $_GET['user']);
+    }
+}
+
+// if SAVE is clicked
+if(isset($_POST['save']))
+{   // prepare username
+    $user->username = trim($user->username);
+    $user->username = strip_tags($_POST['username']);
+    if (isset($_FILES['userpicture']) && (!empty($_FILES['userpicture']['name'])))
+    {   // if a user image is set,
+        // check file extension...
+        $file_ext = substr($_FILES['userpicture']['name'], 0, -4);  // get the last 3 chars
+        if ($file_ext == ".jpg") {
+            $ext = 'jpg';
+        }
+        elseif ($file_ext == "jpeg") {
+            $ext = 'jpg';
+        }
+        elseif ($file_ext == ".gif") {
+            $ext = 'gif';
+        }
+        elseif ($file_ext == "png") {
+            $ext = 'png';
+        }
+
+        // SET USER IMAGE UPLOAD SETTINGS
+        $target_dir = "../media/images/users/";
+        $target_file = $target_dir . basename("$user->username.jpg");
+        $uploadOk = 1;
+        // Check if image file is a actual image or fake image
+        if(isset($_POST["submit"]))
+        {   // if user image form is sent
+            $check = getimagesize($_FILES["userpicture"]["tmp_name"]);
+            if($check !== false)
+            {   // throw info
+                // echo "File is an image - " . $check["mime"] . ".";
+                // upload good
+                $uploadOk = 1;
+            }
+            else
+            {   // throw error
+                // echo "File is not an image.";
+                $uploadOk = 0;
+            }
+        }
+        // Check if file already exists
+        /*
+            if (file_exists($target_file)) {
+                echo "Sorry, file already exists.";
+                $uploadOk = 0;
+            }
+        */
+        // Check file size
+        if ($_FILES["userpicture"]["size"] > 2560000) {
+            echo alert::draw("warning", "$lang[ERROR]", "$lang[FILE_UPLOAD_TOO_LARGE]","page=users","4800");
+            $uploadOk = 0;
+        }
+
+        // Allow certain file formats
+        $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+        if($imageFileType != "jpg" && $imageFileType != "jpeg" && $imageFileType != "png" && $imageFileType != "gif") {
+            echo alert::draw("warning", "$lang[ERROR]", "$lang[UPLOAD_ONLY_IMG_ALLOWED]","page=users","4800");
+            $uploadOk = 0;
+        }
+
+        // Check if $uploadOk is set to 0 by an error
+        if ($uploadOk == 0)
+        {
+            echo alert::draw("danger", "$lang[ERROR]", "$lang[FILE_UPLOAD_FAILED]","page=users","4800");
+            // if everything is ok, try to upload file
+        }
+        else
+        {
+            if (!move_uploaded_file($_FILES["userpicture"]["tmp_name"], $target_file))
+            {
+                echo alert::draw("danger", "$lang[ERROR]", "$lang[FILE_UPLOAD_ERROR_CHMOD]","page=users","4800");
+            }
         }
     }
-    else
-    {   // obj is set
-        if (isset($_GET['user']))
-        {   // user var is set,
-            // load user properties
-            $user->loadProperties($db, $_GET['user']);
+    // prepare password
+    $password1 = htmlentities($_POST['password1']);
+    $password2 = htmlentities($_POST['password2']);
+    // check, if passwords match
+    if ($password1 == $password2) {
+        $password_check = $password1;
+        // vermeidung von doppelter md5 kodierung
+        if ($res = $db->query("SELECT password FROM {users} WHERE username='".$_GET['user']."'"))
+        {
+            $row = mysqli_fetch_row($res);
+            // wenn pwd gleich wie db, dann db wert
+            if ($row[0] == $password_check)
+            {   // do not change password
+                $user->password = $row[0];
+            }
+            else
+            {   // set new user password
+                $user->password = md5($password1);
+            }
+
+            // if no templateID was sent, set default template (id: 1) which should always be loadable
+            if (empty($_POST['templateID'])) { $_POST['templateID'] = 1; }
+            // if override template was not sent, set default value (0) which means user is not able to override tpl
+            if (empty($_POST['overrideTemplate'])) { $_POST['overrideTemplate'] = 0; }
+
+            // prepare vars
+            $user->username = htmlentities($_POST['username']);
+            $user->email = htmlentities($_POST['email']);
+            $user->url = htmlentities($_POST['url']);
+            $user->twitter = htmlentities($_POST['twitter']);
+            $user->facebook = htmlentities($_POST['facebook']);
+            $user->firstname = htmlentities($_POST['firstname']);
+            $user->lastname = htmlentities($_POST['lastname']);
+            $user->street = htmlentities($_POST['street']);
+            $user->zipcode = htmlentities($_POST['zipcode']);
+            $user->city = htmlentities($_POST['city']);
+            $user->country = htmlentities($_POST['country']);
+            $user->job = htmlentities($_POST['job']);
+            $user->templateID = htmlentities($_POST['templateID']);
+            $user->overrideTemplate = htmlentities($_POST['overrideTemplate']);
+            $user->gid = htmlentities($_POST['gid']);
+
+            if (!isset($_POST['privacy']) OR (empty($_POST['privacy'])))
+            {
+                $_POST['privacy'] = 0;
+            }
+            if (!isset($_POST['mystatus']) OR (empty($_POST['mystatus'])))
+            {
+                $_POST['mystatus'] = 0;
+            }
+            $user->privacy=$db->quote($_POST['privacy']);
+            $user->blocked=$db->quote($_POST['mystatus']);
+            // save user
+            $user->save($db);
         }
     }
-    // if SAVE is clicked
-    if(isset($_POST['save']))
-    {   // prepare username
-        $user->username = trim($user->username);
-        $user->username = strip_tags($_POST['username']);
-        if (isset($_FILES['userpicture']) && (!empty($_FILES['userpicture']['name'])))
-        {   // if a user image is set,
-            // check file extension...
-            $file_ext = substr($_FILES['userpicture']['name'], 0, -4);  // get the last 3 chars
-            if ($file_ext == ".jpg") {
-                $ext = 'jpg';
-            }
-            elseif ($file_ext == "jpeg") {
-                $ext = 'jpg';
-            }
-            elseif ($file_ext == ".gif") {
-                $ext = 'gif';
-            }
-            elseif ($file_ext == "png") {
-                $ext = 'png';
-            }
-
-            // SET USER IMAGE UPLOAD SETTINGS
-            $target_dir = "../media/images/users/";
-            $target_file = $target_dir . basename("$user->username.jpg");
-            $uploadOk = 1;
-            // Check if image file is a actual image or fake image
-            if(isset($_POST["submit"]))
-            {   // if user image form is sent
-                $check = getimagesize($_FILES["userpicture"]["tmp_name"]);
-                if($check !== false)
-                {   // throw info
-                    // echo "File is an image - " . $check["mime"] . ".";
-                    // upload good
-                    $uploadOk = 1;
-                }
-                else
-                {   // throw error
-                  // echo "File is not an image.";
-                  $uploadOk = 0;
-              }
-          }
-          // Check if file already exists
-          /*
-              if (file_exists($target_file)) {
-                  echo "Sorry, file already exists.";
-                  $uploadOk = 0;
-              }
-          */
-          // Check file size
-              if ($_FILES["userpicture"]["size"] > 2560000) {
-                  echo alert::draw("warning", "$lang[ERROR]", "$lang[FILE_UPLOAD_TOO_LARGE]","page=users","4800");
-                  $uploadOk = 0;
-              }
-
-            // Allow certain file formats
-            $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
-               if($imageFileType != "jpg" && $imageFileType != "jpeg" && $imageFileType != "png" && $imageFileType != "gif") {
-                  echo alert::draw("warning", "$lang[ERROR]", "$lang[UPLOAD_ONLY_IMG_ALLOWED]","page=users","4800");
-                  $uploadOk = 0;
-              }
-
-          // Check if $uploadOk is set to 0 by an error
-              if ($uploadOk == 0)
-              {
-                  echo alert::draw("danger", "$lang[ERROR]", "$lang[FILE_UPLOAD_FAILED]","page=users","4800");
-                // if everything is ok, try to upload file
-              }
-              else
-                  {
-                    if (!move_uploaded_file($_FILES["userpicture"]["tmp_name"], $target_file))
-                    {
-                      echo alert::draw("danger", "$lang[ERROR]", "$lang[FILE_UPLOAD_ERROR_CHMOD]","page=users","4800");
-                    }
-                }
-        }
-      // prepare password
-      $password1 = htmlentities($_POST['password1']);
-      $password2 = htmlentities($_POST['password2']);
-      // check, if passwords match
-	  if ($password1 == $password2) {
-	  $password_check = $password1;
-	  // vermeidung von doppelter md5 kodierung
-          if ($res = $db->query("SELECT password FROM {users} WHERE username='".$_GET['user']."'"))
-          {
-              $row = mysqli_fetch_row($res);
-              // wenn pwd gleich wie db, dann db wert
-              if ($row[0] == $password_check)
-              {   // do not change password
-                  $user->password = $row[0];
-              }
-              else
-              {   // set new user password
-                  $user->password = md5($password1);
-              }
-              // prepare vars
-              $user->username = htmlentities($_POST['username']);
-              $user->email = htmlentities($_POST['email']);
-              $user->url = htmlentities($_POST['url']);
-              $user->twitter = htmlentities($_POST['twitter']);
-              $user->facebook = htmlentities($_POST['facebook']);
-              $user->firstname = htmlentities($_POST['firstname']);
-              $user->lastname = htmlentities($_POST['lastname']);
-              $user->street = htmlentities($_POST['street']);
-              $user->zipcode = htmlentities($_POST['zipcode']);
-              $user->city = htmlentities($_POST['city']);
-              $user->country = htmlentities($_POST['country']);
-              $user->job = htmlentities($_POST['job']);
-              $user->gid = htmlentities($_POST['gid']);
-              if (!isset($_POST['privacy']) OR (empty($_POST['privacy'])))
-              {
-                  $_POST['privacy'] = 0;
-              }
-              if (!isset($_POST['mystatus']) OR (empty($_POST['mystatus'])))
-              {
-                  $_POST['mystatus'] = 0;
-              }
-              $user->privacy=$db->quote($_POST['privacy']);
-              $user->blocked=$db->quote($_POST['mystatus']);
-              // save user
-              $user->save($db);
-          }
-      }
-  } //. end if isset [SAVE]
+} //. end if isset [SAVE]
 
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
@@ -156,9 +166,9 @@ echo "
 <div class=\"content-wrapper\" id=\"content-FX\">
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
-        /* draw Title on top */
-        echo backend::getTitle($lang['USER_PROFILE_EDIT'], $_GET['user']);
-        echo"<ol class=\"breadcrumb\">
+/* draw Title on top */
+echo backend::getTitle($lang['USER_PROFILE_EDIT'], $_GET['user']);
+echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
             <li><a href=\"index.php?page=users\" title=\"$lang[USERS]\"> $lang[USERS]</a></li>
             <li class=\"active\"><a href=\"index.php?page=user-edit&user=$_GET[user]\" title=\"$lang[EDIT]: $_GET[user]\"> $_GET[user]</a></li>
@@ -269,7 +279,6 @@ echo "<script type='text/javascript'>
             <div class="box box-default">
                 <div class="box-body box-profile">
                     <?php echo user::getUserImage("backend","$user->username", "profile-user-img img-responsive img-circle", '140', '140'); ?>
-                    <!-- <img class="profile-user-img img-responsive img-circle" src="../../dist/img/user4-128x128.jpg" alt="User profile picture"> -->
 
                     <h3 class="profile-username text-center"><?php echo backend::getFullUsername($user); ?></h3>
 
@@ -278,19 +287,19 @@ echo "<script type='text/javascript'>
 
                     <ul class="list-group list-group-unbordered">
                         <li class="list-group-item">
-                                <?php
-                                // count user friends
-                                $i_followers = user::countMyFollowers($db, $user->id);
-                                if ($i_followers > 0)
-                                {
-                                    $followersLink = "<a href=\"index.php?page=list-follower&uid=$user->id\">$lang[FOLLOWERS]</a>";
-                                }
-                                else
-                                {
-                                    $followersLink = "$lang[FOLLOWER]";
-                                }
-                                ?>
-                                <b><?php echo $followersLink; ?></b> <a class="pull-right"><?php echo $i_followers ?></a>
+                            <?php
+                            // count user friends
+                            $i_followers = user::countMyFollowers($db, $user->id);
+                            if ($i_followers > 0)
+                            {
+                                $followersLink = "<a href=\"index.php?page=list-follower&uid=$user->id\">$lang[FOLLOWERS]</a>";
+                            }
+                            else
+                            {
+                                $followersLink = "$lang[FOLLOWER]";
+                            }
+                            ?>
+                            <b><?php echo $followersLink; ?></b> <a class="pull-right"><?php echo $i_followers ?></a>
                         </li>
                         <li class="list-group-item">
                             <b>Likes</b> <a class="pull-right"><?php echo $user->likes; ?></a>
@@ -405,30 +414,59 @@ echo "<script type='text/javascript'>
             <?php // if ($user->gid <= 5) { ?>
 
             <div class="box box-default">
-             <div class="box-body">
-            <label><?php echo $lang['ASSIGN_TO_GROUP']; ?>
-                <select name="gid" style="width: 240px;" class="form-control">
-                    <option value="<?php echo $user->gid; ?>"><?php echo $user->getGroupNameFromID($db, $user->gid); ?></option>
-                    <option value="1">---</option>
-                    <?php
-                    foreach(YAWK\sys::getGroups($db, "users") as $role){
+                <div class="box-body">
+                    <label><?php echo $lang['ASSIGN_TO_GROUP']; ?>
+                        <select name="gid" style="width: 240px;" class="form-control">
+                            <option value="<?php echo $user->gid; ?>"><?php echo $user->getGroupNameFromID($db, $user->gid); ?></option>
+                            <option value="1">---</option>
+                            <?php
+                            foreach(YAWK\sys::getGroups($db, "users") as $role){
 
-                        echo "<option value=\"".$role['id']."\"";
-                        echo ">".$role['value']."</option>";
-                    }
-                    ?>
-                </select>
-            </label>
+                                echo "<option value=\"".$role['id']."\"";
+                                echo ">".$role['value']."</option>";
+                            }
+                            ?>
+                        </select>
+                    </label>
 
-            <label for="job"><?php echo $lang['JOB_DESCRIPTION']; ?><input type="text" id="job" name="job" value="<?php echo $user->job; ?>" placeholder="<?php echo $lang['JOB_PLACEHOLDER']; ?>" class="form-control"></label>
-            <?php if ($user->blocked === '1') { $code1="checked=\"checked\""; } else $code1=""; ?>
-            <?php if ($user->privacy === '1') { $code2="checked=\"checked\""; } else $code2=""; ?>
+                    <label for="job"><?php echo $lang['JOB_DESCRIPTION']; ?><input type="text" id="job" name="job" value="<?php echo $user->job; ?>" placeholder="<?php echo $lang['JOB_PLACEHOLDER']; ?>" class="form-control"></label>
+                    <?php if ($user->blocked === '1') { $code1="checked=\"checked\""; } else $code1=""; ?>
+                    <?php if ($user->privacy === '1') { $code2="checked=\"checked\""; } else $code2=""; ?>
 
-            <label for="mystatus"><input type="checkbox" id="mystatus" name="mystatus" value="1" <?php echo $code1 ?>> <?php echo $lang['LOGIN_LOCK']; ?></label>&nbsp;&nbsp;&nbsp;&nbsp;
-            <label for="privacy"><input type="checkbox" id="privacy" name="privacy" value="1" <?php echo $code2 ?>> <?php echo $lang['HIDE_FROM_WHOIS_ONLINE']; ?></label>&nbsp;
+                    <label for="mystatus"><input type="checkbox" id="mystatus" name="mystatus" value="1" <?php echo $code1 ?>> <?php echo $lang['LOGIN_LOCK']; ?></label>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label for="privacy"><input type="checkbox" id="privacy" name="privacy" value="1" <?php echo $code2 ?>> <?php echo $lang['HIDE_FROM_WHOIS_ONLINE']; ?></label>&nbsp;
 
                 </div>
             </div>
+
+            <!-- ##### TEMPLATE OVERRIDE SETTINGS ##### -->
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><i class="fa fa-cube"></i> <?php echo "$lang[TPL] <small>$lang[TPL_USER_DEFINED]</small>"; ?></h3>
+                </div>
+                <div class="box-body">
+                    <label for="templateID"><?php echo $lang['TPL']." ".$lang['ID']; ?>
+                        <input type="text" style="width:75px;" id="templateID" name="templateID" value="<?php echo $user->templateID; ?>" placeholder="<?php echo $lang['ID']; ?>" class="form-control">
+                    </label>
+                    <label for="overrideTemplate"><?php echo $lang['TPL_ALLOW_OVERRIDE']; ?>
+                        <select id="overrideTemplate" name="overrideTemplate" class="form-control">
+                            <?php
+                            if ($user->overrideTemplate == 1)
+                            {
+                                echo '<option value="1" selected>'.$lang['ALLOWED'].'</option>';
+                                echo '<option value="0">'.$lang['FORBIDDEN'].'</option>';
+                            }
+                            else {
+                                echo '<option value="0" selected>'.$lang['FORBIDDEN'].'</option>';
+                                echo '<option value="1">'.$lang['ALLOWED'].'</option>';
+
+                            }
+                            ?>
+                        </select>
+                    </label>
+                </div>
+            </div>
+
 
             <!-- ##### USER PIC UPLOAD ##### -->
             <div class="box box-default">
@@ -436,96 +474,94 @@ echo "<script type='text/javascript'>
                     <h3 class="box-title"><i class="fa fa-photo"></i> <?php echo "$lang[YOUR_PHOTO] <small>$lang[UPLOAD_A_NEW_PIC]</small>"; ?></h3>
                 </div>
                 <div class="box-body">
-                  <?php  echo YAWK\user::getUserImage("backend","$user->username", "img-circle", 140, 140); ?>
-                  <input type="file" class="btn btn-warning" name="userpicture" id="userpicture">
+                    <?php  echo YAWK\user::getUserImage("backend","$user->username", "img-circle", 140, 140); ?>
+                    <input type="file" class="btn btn-warning" name="userpicture" id="userpicture">
                 </div>
-           </div>
+            </div>
 
         </div>
 
         <div class="col-md-8">
             <br>
             <div class="box box-default">
-            <div class="box-header with-border">
-                <h3 class="box-title"><?php echo "$lang[USER_DATA] <small>$lang[USERNAME_EMAIL_PWD]</small>"; ?></h3>
-            </div>
+                <div class="box-header with-border">
+                    <h3 class="box-title"><?php echo "$lang[USER_DATA] <small>$lang[USERNAME_EMAIL_PWD]</small>"; ?></h3>
+                </div>
                 <div class="box-body">
-            <?php if ($user->username === "admin" OR $user->username === "root")
-                  {
-                      $disabled="disabled aria-disabled=\"true\" title=\"$user->username $lang[NOT_CHANGEABLE]\" readonly=\"readonly\"";
-                  }
-                  else
-                  {
-                      $disabled="";
-                  }
-            ?>
+                    <?php if ($user->username === "admin" OR $user->username === "root")
+                    {
+                        $disabled="title=\"$user->username $lang[NOT_CHANGEABLE]\" readonly=\"readonly\"";
+                    }
+                    else
+                    {
+                        $disabled="";
+                    }
+                    ?>
 
-            <dl class="dl-horizontal">
-                <dt><label for="username"><b class="fa fa-user"></b> &nbsp;<?php echo $lang['USERNAME']; ?></label></dt>
-                <dd><input type="text" id="username" name="username" class="form-control" maxlength="100" <?php echo $disabled; ?> value="<?php echo $user->username; ?>"></dd>
+                    <dl class="dl-horizontal">
+                        <dt><label for="username"><b class="fa fa-user"></b> &nbsp;<?php echo $lang['USERNAME']; ?></label></dt>
+                        <dd><input type="text" id="username" name="username" class="form-control" maxlength="100" <?php echo $disabled; ?> value="<?php echo $user->username; ?>"></dd>
 
-                <dt><label for="email"><b class="fa fa-envelope-o"></b> &nbsp;<?php echo $lang['EMAIL']; ?></label></dt>
-                <dd><input type="text" id="email" name="email" class="form-control" maxlength="100" value="<?php echo $user->email; ?>"></dd>
+                        <dt><label for="email"><b class="fa fa-envelope-o"></b> &nbsp;<?php echo $lang['EMAIL']; ?></label></dt>
+                        <dd><input type="text" id="email" name="email" class="form-control" maxlength="100" value="<?php echo $user->email; ?>"></dd>
 
-                <dt><label for="password1"><b class="fa fa-key"></b> &nbsp;<?php echo $lang['PASSWORD']; ?></label></dt>
-                <dd><input name="password1" id="password1" type="password" class="form-control" maxlength="100" value="<?php echo $user->password; ?>"></dd>
+                        <dt><label for="password1"><b class="fa fa-key"></b> &nbsp;<?php echo $lang['PASSWORD']; ?></label></dt>
+                        <dd><input name="password1" id="password1" type="password" class="form-control" maxlength="100" value="<?php echo $user->password; ?>"></dd>
 
-                <dt><label for="password2"><b class="fa fa-key"></b> &nbsp;<?php echo $lang['PASSWORD']; ?><br><small><?php echo $lang['REPEAT']; ?></small></label></dt>
-                <dd><input name="password2" id="password2" type="password" class="form-control"maxlength="100" value="<?php echo $user->password; ?>">&nbsp; </dd>
-            </dl>
+                        <dt><label for="password2"><b class="fa fa-key"></b> &nbsp;<?php echo $lang['PASSWORD']; ?><br><small><?php echo $lang['REPEAT']; ?></small></label></dt>
+                        <dd><input name="password2" id="password2" type="password" class="form-control"maxlength="100" value="<?php echo $user->password; ?>">&nbsp; </dd>
+                    </dl>
 
                 </div>
             </div>
 
-<!-- OPTIONAL USER SETTINGS -->
-  <div class="box box-default">
-    <div class="box-header with-border">
-        <h3 class="box-title"><i class="fa fa-home"></i> <?php echo "$lang[OPTIONAL_PERSONAL_DATA] <small>$lang[FIRSTNAME_LASTNAME_ADDRESS]"; ?></small></h3>
-    </div>
-    <div class="box-body">
-        <dl class="dl-horizontal">
-            <dt><label for="firstname"><?php echo $lang['FIRSTNAME']; ?></label></dt>
-            <dd><input type="text" class="form-control" id="firstname" name="firstname" maxlength="100" value="<?php echo $user->firstname; ?>"></dd>
+            <!-- OPTIONAL USER SETTINGS -->
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><i class="fa fa-home"></i> <?php echo "$lang[OPTIONAL_PERSONAL_DATA] <small>$lang[FIRSTNAME_LASTNAME_ADDRESS]"; ?></small></h3>
+                </div>
+                <div class="box-body">
+                    <dl class="dl-horizontal">
+                        <dt><label for="firstname"><?php echo $lang['FIRSTNAME']; ?></label></dt>
+                        <dd><input type="text" class="form-control" id="firstname" name="firstname" maxlength="100" value="<?php echo $user->firstname; ?>"></dd>
 
-            <dt><label for="lastname"><?php echo $lang['LASTNAME']; ?></label></dt>
-            <dd><input type="text" class="form-control" id="lastname" name="lastname" maxlength="100" value="<?php echo $user->lastname; ?>"></dd>
+                        <dt><label for="lastname"><?php echo $lang['LASTNAME']; ?></label></dt>
+                        <dd><input type="text" class="form-control" id="lastname" name="lastname" maxlength="100" value="<?php echo $user->lastname; ?>"></dd>
 
-            <dt><label for="street"><?php echo $lang['STREET']; ?></label></dt>
-            <dd><input type="text" class="form-control" id="street" name="street" maxlength="100" value="<?php echo $user->street; ?>"></dd>
+                        <dt><label for="street"><?php echo $lang['STREET']; ?></label></dt>
+                        <dd><input type="text" class="form-control" id="street" name="street" maxlength="100" value="<?php echo $user->street; ?>"></dd>
 
-            <dt><label for="zipcode"><?php echo $lang['ZIPCODE']; ?></label></dt>
-            <dd><input type="text" class="form-control" id="zipcode" name="zipcode" maxlength="12" value="<?php echo $user->zipcode; ?>"></dd>
+                        <dt><label for="zipcode"><?php echo $lang['ZIPCODE']; ?></label></dt>
+                        <dd><input type="text" class="form-control" id="zipcode" name="zipcode" maxlength="12" value="<?php echo $user->zipcode; ?>"></dd>
 
-            <dt><label for="city"><?php echo $lang['CITY']; ?></label></dt>
-            <dd><input type="text" class="form-control" id="city" name="city" maxlength="100" value="<?php echo $user->city; ?>"></dd>
+                        <dt><label for="city"><?php echo $lang['CITY']; ?></label></dt>
+                        <dd><input type="text" class="form-control" id="city" name="city" maxlength="100" value="<?php echo $user->city; ?>"></dd>
 
-            <dt><label for="country"><?php echo $lang['COUNTRY']; ?></label></dt>
-            <dd><input type="text" class="form-control" id="country" name="country" maxlength="100" value="<?php echo $user->country; ?>"></dd>
-        </dl>
-    </div>
-  </div>
+                        <dt><label for="country"><?php echo $lang['COUNTRY']; ?></label></dt>
+                        <dd><input type="text" class="form-control" id="country" name="country" maxlength="100" value="<?php echo $user->country; ?>"></dd>
+                    </dl>
+                </div>
+            </div>
 
-<!-- SOCIAL MEDIA USER SETTINGS -->
-    <div class="box box-default">
-        <div class="box-header with-border">
-            <h3 class="box-title"><i class="fa fa-facebook-official"></i> <?php echo "$lang[SOCIAL_MEDIA_LINKS] <small>$lang[WEBSITE], $lang[TWITTER], $lang[FACEBOOK]</small>"; ?></h3>
+            <!-- SOCIAL MEDIA USER SETTINGS -->
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><i class="fa fa-facebook-official"></i> <?php echo "$lang[SOCIAL_MEDIA_LINKS] <small>$lang[WEBSITE], $lang[TWITTER], $lang[FACEBOOK]</small>"; ?></h3>
+                </div>
+                <div class="box-body">
+                    <dl class="dl-horizontal">
+                        <dt><label for="url"><i class="fa fa-globe"></i> <?php echo "$lang[WEBSITE]"; ?></label></dt>
+                        <dd><input type="text" class="form-control" placeholder="http://www.yourdomain.com/" id="url" name="url" maxlength="100" value="<?php echo $user->url; ?>"></dd>
+
+                        <dt><label for="twitter"><i class="fa fa-twitter"></i> <?php echo "$lang[TWITTER]"; ?></label></dt>
+                        <dd><input type="text" class="form-control" placeholder="http://www.twitter.com/yourprofile" id="twitter" name="twitter" maxlength="100" value="<?php echo $user->twitter; ?>"></dd>
+
+                        <dt><label for="facebook"><i class="fa fa-facebook-official"></i> <?php echo "$lang[FACEBOOK]"; ?></label></dt>
+                        <dd><input type="text" class="form-control" placeholder="http://www.facebook.com/yourprofile" id="facebook" name="facebook" maxlength="100" value="<?php echo $user->facebook; ?>"></dd>
+                    </dl>
+
+                </div>
+            </div>
         </div>
-        <div class="box-body">
-            <dl class="dl-horizontal">
-                <dt><label for="url"><i class="fa fa-globe"></i> <?php echo "$lang[WEBSITE]"; ?></label></dt>
-                <dd><input type="text" class="form-control" placeholder="http://www.yourdomain.com/" id="url" name="url" maxlength="100" value="<?php echo $user->url; ?>"></dd>
-
-                <dt><label for="twitter"><i class="fa fa-twitter"></i> <?php echo "$lang[TWITTER]"; ?></label></dt>
-                <dd><input type="text" class="form-control" placeholder="http://www.twitter.com/yourprofile" id="twitter" name="twitter" maxlength="100" value="<?php echo $user->twitter; ?>"></dd>
-
-                <dt><label for="facebook"><i class="fa fa-facebook-official"></i> <?php echo "$lang[FACEBOOK]"; ?></label></dt>
-                <dd><input type="text" class="form-control" placeholder="http://www.facebook.com/yourprofile" id="facebook" name="facebook" maxlength="100" value="<?php echo $user->facebook; ?>"></dd>
-            </dl>
-
-        </div>
-     </div>
-
-        </div>
     </div>
-
-  </form>
+</form>
