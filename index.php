@@ -26,11 +26,22 @@
  * @brief  Index.php - the main entry point (controller) of the website's frontend
  *
  */
+
+use YAWK\controller;
+use YAWK\db;
+use YAWK\page;
+use YAWK\PLUGINS\SIGNUP\signup;
+use YAWK\settings;
+use YAWK\stats;
+use YAWK\sys;
+use YAWK\template;
+use YAWK\user;
+
 session_start();
-header('Cache-control: private');               // IE 6 FIX
-error_reporting(E_ALL ^ E_STRICT);              // just for development purpose!!!
-ini_set('display_errors', 1);                   // DISPLAY ALL ERRORS - DEVELOPMENT ONLY!!!
-error_reporting(1);                             // no error reporting
+header('Cache-control: private');             // IE 6 FIX
+error_reporting(E_ALL ^ E_STRICT);          // just for development purpose!!!
+ini_set('display_errors', 1);            // DISPLAY ALL ERRORS - DEVELOPMENT ONLY!!!
+error_reporting(1);                         // no error reporting
 /* include core files */
 require_once('system/classes/db.php');               // database connection
 require_once('system/classes/settings.php');         // get/set settings from settings db
@@ -47,11 +58,11 @@ require_once('system/classes/controller.php');       // frontEnd init and filena
 require_once('system/classes/stats.php');            // statistics functions
 /* set database object */
 if (!isset($db)) {
-    $db = new \YAWK\db();
+    $db = new db();
 }
 
 /* language object */
-if (!isset($lang) || (empty($lang)))
+if (empty($lang))
 {   // create new language obj if none exists
     $language = new YAWK\language();
     // init language
@@ -62,50 +73,49 @@ if (!isset($lang) || (empty($lang)))
 
 /* set template object */
 if (!isset($template)) {
-    $template = new \YAWK\template();
+    $template = new template();
 }
 /* set user object */
 if (!isset($user)) {
-    $user = new \YAWK\user($db);
+    $user = new user($db);
 }
 /* set page object */
 if (!isset($page)) {
-    $page = new \YAWK\page();
+    $page = new page();
     $currentpage = $page;
 }
 /* set controller object */
 if (!isset($controller)) {
-    $controller = new \YAWK\controller();
+    $controller = new controller();
 }
 /* set stats object */
 if (!isset($stats)) {
-    $stats = new \YAWK\stats();
+    $stats = new stats();
     $stats->setStats($db);
 }
 // lets go with the frontEnd...
 // \YAWK\sys::outputObjects($template, $language, $controller, $page, $user, $stats);
 // \YAWK\controller::frontEndInit($db, $currentpage, $user, $template);
-if (\YAWK\sys::isOffline($db)) {   // backend-users (admins) can see the frontend,
+if (sys::isOffline($db)) {   // backend-users (admins) can see the frontend,
     // while the site is still offline to guests & no-admins
-    \YAWK\sys::drawOfflineMessage($db);
+    sys::drawOfflineMessage($db);
     exit;
 }
 // check if user wants to register (signUp)
 if (isset($_GET['signup']) && ($_GET['signup']) == 1) {
     include('system/plugins/signup/classes/signup.php');
-    $signup = new \YAWK\PLUGINS\SIGNUP\signup();
+    $signup = new signup();
     echo $signup->sayHello($db, $lang);
 }
 
 // URL controller - this loads the properties of each page */
 if (isset($_GET['include']) && (!empty($_GET['include'])))
-{
-    // LOGOUT SENT VIA GET (yourdomain.com/logout)
+{   // LOGOUT SENT VIA GET (yourdomain.com/logout)
     if ($_GET['include'] === "logout")
     {   // start logout procedure
         if ($user->logout($db) === true)
         {   // redirect user to index page
-            \YAWK\sys::setTimeout("index.html", 0);
+            sys::setTimeout("index.html", 0);
             exit;
         }
     }
@@ -118,19 +128,21 @@ if (isset($_GET['include']) && (!empty($_GET['include'])))
             {   // check if custom redirect url after login is requested
                 if (isset($_POST['loginboxRedirect']) && (!empty($_POST['loginboxRedirect'])))
                 {   // redirect to custom url
-                    if (isset($_POST['loginboxRedirectTime']) && (!empty($_POST['loginboxRedirectTime']) && (is_numeric($_POST['loginboxRedirectTime']))))
+                    if (isset($_POST['loginboxRedirectTime'])
+                    && (!empty($_POST['loginboxRedirectTime'])
+                    && (is_numeric($_POST['loginboxRedirectTime']))))
                     {   // delay before redirect
-                        \YAWK\sys::setTimeout($_POST['loginboxRedirect'], $_POST['loginboxRedirectTime']);
+                        sys::setTimeout($_POST['loginboxRedirect'], $_POST['loginboxRedirectTime']);
                     }
                     else
-                        {   // redirect w/o delay
-                            \YAWK\sys::setTimeout($_POST['loginboxRedirect'], 0);
-                        }
+                    {   // redirect w/o delay
+                        sys::setTimeout($_POST['loginboxRedirect'], 0);
+                    }
                 }
                 else
-                    {   // redirect to inded page (only in html mode)
-                        $_GET['include'] = "index";
-                    }
+                {   // redirect to index page (only in html mode)
+                    $_GET['include'] = "index";
+                }
             }
         }
     }
@@ -138,7 +150,7 @@ if (isset($_GET['include']) && (!empty($_GET['include'])))
     // URL is set and not empty - lets go, load properties for given page
     $page->loadProperties($db, $db->quote($_GET['include']));
 
-    // different GET controller actions can be done here...
+    // more different GET controller actions can be done here...
 }
 else
 {   // if no page is given, set index as default page
@@ -148,40 +160,64 @@ else
 }
 
 // get global selected template ID
-$template->id = \YAWK\settings::getSetting($db, "selectedTemplate");
+$template->id = settings::getSetting($db, "selectedTemplate");
 $template->selectedTemplate = $template->id;
-// call template controller
-if (\YAWK\user::isAnybodyThere($db))
+// set template loading mechanism, depending on state and settings (user is logged in, allowed to override etc...)
+if (user::isAnybodyThere($db))
 {   // user seems to be logged in...
     // load template name from {users}
     $user->loadProperties($db, $_SESSION['username']);
+
     // check if user is allowed to overrule selectedTemplate
-    if ($user->overrideTemplate == true)
+    if ($user->overrideTemplate == 1)
     {   // set user template ID to session
         $_SESSION['userTemplateID'] = $user->templateID;
         // get template by user templateID
-        $template->name = \YAWK\template::getTemplateNameById($db, $user->templateID);
+        $template->name = template::getTemplateNameById($db, $user->templateID);
         // include page, based on user templateID
-        if(!include("system/templates/".$template->name."/index.php"))
-        {   // if template not exists, show selectedTemplate
-            $templateName = \YAWK\template::getTemplateNameById($db, $template->selectedTemplate);
-            include("system/templates/".$template->name."/index.php");
+        $tplPath = 'system/templates/'.$template->name.'/index.php';
+
+        // check if user template is loadable
+        if (is_file($tplPath))
+        {   // load properties for user overridden template
+            $template->loadProperties($db, $user->templateID);
+            // load user template
+            include($tplPath);
+        }
+        else
+        {   // user template is not loadable
+            die("Unable to include user overriden template ID ".$user->templateID." (".$template->name.") from template path: ".$tplPath." <br>Either database config is faulty or Template ID: (".$user->templateID.") is not correctly installed.");
         }
     }
     else
-        {   // user is not allowed to overrule template, show global default (selectedTemplate) instead.
-            $template->name = \YAWK\template::getTemplateNameById($db, $user->templateID);
-            if(!include("system/templates/".$template->name."/index.php"))
-            {
-                die("Unable to include template. Either database config is faulty or YaWK is not correctly installed.");
-            }
+    {   // DEFAULT (GLOBAL) TEMPLATE
+        // user is not allowed to overrule template, show global default (selectedTemplate) instead.
+        $template->name = template::getTemplateNameById($db, $template->selectedTemplate);
+        $tplPath = "system/templates/".$template->name."/index.php";
+        if (is_file($tplPath))
+        {   // load properties for default template
+            $template->loadProperties($db, $template->selectedTemplate);
+            // load global default (admin selected template)
+            include($tplPath);
         }
-}
-else
-    {   // user is NOT logged in, load default template (selectedTemplate) from settings db
-        $template->name = \YAWK\template::getTemplateNameById($db, $user->templateID);
-        if(!include("system/templates/".$template->name."/index.php"))
-        {
-            die("Unable to include template. Either database config is faulty or YaWK is not correctly installed.");
+        else
+        {   // user = logged in, default template not loadable
+            die("Unable to include default template ID ".$user->templateID." (".$template->name.") for logged in user from path: ".$tplPath." <br>Either database config is faulty or selected Template ID: (".$user->templateID.") is not correctly installed.");
         }
     }
+}
+else
+{   // user is NOT logged in, load default template (selectedTemplate) from settings db
+    $template->name = template::getTemplateNameById($db, $template->selectedTemplate);
+    $tplPath = "system/templates/".$template->name."/index.php";
+
+    if (is_file($tplPath))
+    {   // load properties for default template
+        $template->loadProperties($db, $template->selectedTemplate);
+        include ($tplPath);
+    }
+    else
+    {   // no user logged in, default template not loadable
+        die("Unable to include default template ID ".$template->selectedTemplate." (".$template->name.") for guest user from path: ".$tplPath." <br>Either database config is faulty or selected Template ID: (".$user->templateID.") is not correctly installed.");
+    }
+}
