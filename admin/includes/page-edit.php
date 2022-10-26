@@ -6,6 +6,7 @@ use YAWK\language;
 use YAWK\settings;
 use YAWK\sys;
 use YAWK\user;
+use YAWK\widget;
 
 // CHECK REQUIRED OBJECTS
 if (!isset($page)) // if no page object is set
@@ -42,26 +43,26 @@ if(isset($_POST['save'])){
     $page->language = $db->quote($_POST['language']);
     // after preparing the vars, update db + write content
     if($page->save($db)) {
-          // encode chars
+        // encode chars
         //  $_POST['content'] = \YAWK\sys::encodeChars($_POST['content']);
-         $_POST['content'] = utf8_encode($_POST['content']);
-         $_POST['content'] = utf8_decode($_POST['content']);
+        $_POST['content'] = utf8_encode($_POST['content']);
+        $_POST['content'] = utf8_decode($_POST['content']);
         // write content to file
         if ($page->writeContent(stripslashes(str_replace('\r\n', '', ($_POST['content']))))) {
             print YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[PAGE_SAVED]","", 800);
-          }
-          else {
-              print YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[FILE] $page->alias $lang[NOT_SAVED]. $lang[CHECK_CHMOD]", "", "8200");
+        }
+        else {
+            print YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[FILE] $page->alias $lang[NOT_SAVED]. $lang[CHECK_CHMOD]", "", "8200");
 
-          }
+        }
     }
     else {
-       print YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[PAGE_DB_FAILED] $page->alias $lang[DB_WRITE_FAILED]", "", "8200");
+        print YAWK\alert::draw("warning", "$lang[ERROR]", "$lang[PAGE_DB_FAILED] $page->alias $lang[DB_WRITE_FAILED]", "", "8200");
     }
 }
-// path to cms	
+// path to cms
 $dirprefix = YAWK\sys::getDirPrefix($db);
-// path to cms	
+// path to cms
 $host = YAWK\sys::getHost($db);
 
 /* alias string manipulation */
@@ -74,7 +75,7 @@ $page->alias = preg_replace($specialChars, $replacedChars, $page->alias);       
 $page->alias = preg_replace("/[^a-z0-9\-\/]/i", "", $page->alias); // final check: just numbers and chars are allowed
 
 // make sure that user cannot change index' article name (index.php/html)
- if ($page->alias === "index") { $readonly = "readonly"; }
+if ($page->alias === "index") { $readonly = "readonly"; }
 ?>
 
 <!-- bootstrap date-timepicker -->
@@ -122,13 +123,13 @@ $editorSettings = settings::getEditorSettings($db, 14);
         });
     }
     saveHotkey();
-$(document).ready(function() {
-    // textarea that will be transformed into editor
-    var editor = ('textarea#summernote');
-    var savebutton = ('#savebutton');
-    var savebuttonIcon = ('#savebuttonIcon');
-    // ok, lets go...
-    // we need to check if user clicked on save button
+    $(document).ready(function() {
+        // textarea that will be transformed into editor
+        var editor = ('textarea#summernote');
+        var savebutton = ('#savebutton');
+        var savebuttonIcon = ('#savebuttonIcon');
+        // ok, lets go...
+        // we need to check if user clicked on save button
         $(savebutton).click(function() {
             $(savebutton).removeClass('btn btn-success').addClass('btn btn-warning');
             $(savebuttonIcon).removeClass('fa fa-check').addClass('fa fa-spinner fa-spin fa-fw');
@@ -152,20 +153,20 @@ $(document).ready(function() {
 
         });
 
-    // BEFORE SUMMERNOTE loads: 3 important lines of code!
-    // to display images in backend correctly, we need to change the path of every image.
-    // procedure is the same as above (see #savebutton.click)
-    // get the value of summernote textarea
-    
-    if ( $(editor).length) {    // check if element exists in dom to load editor correctly
-        var text = $(editor).val();
-        // search for <img> tags and update src ../ to get images viewed in summernote
-        var backend = text.replace(/<img src=\x22media/g, "<img src=\x22../media");
-        // put the new string back into <textarea>
-        $(editor).val(backend); // set new value into textarea
-    }
+        // BEFORE SUMMERNOTE loads: 3 important lines of code!
+        // to display images in backend correctly, we need to change the path of every image.
+        // procedure is the same as above (see #savebutton.click)
+        // get the value of summernote textarea
 
-    <?php
+        if ( $(editor).length) {    // check if element exists in dom to load editor correctly
+            var text = $(editor).val();
+            // search for <img> tags and update src ../ to get images viewed in summernote
+            var backend = text.replace(/<img src=\x22media/g, "<img src=\x22../media");
+            // put the new string back into <textarea>
+            $(editor).val(backend); // set new value into textarea
+        }
+
+        <?php
         if ($editorSettings['editorAutoCodeview'] === "true")
         {
             // summernote.init -
@@ -175,79 +176,79 @@ $(document).ready(function() {
                 $(editor).summernote('codeview.toggle');
             });";
         }
-    ?>
+        ?>
 
-    // INIT SUMMERNOTE EDITOR
-    $("#summernote").summernote({    // set editor itself
-        height: <?php echo $editorSettings['editorHeight']; ?>,                 // set editor height
-        minHeight: null,             // set minimum height of editor
-        maxHeight: null,             // set maximum height of editor
-        focus: true,                 // set focus to editable area after initializing summernote
+        // INIT SUMMERNOTE EDITOR
+        $("#summernote").summernote({    // set editor itself
+            height: <?php echo $editorSettings['editorHeight']; ?>,                 // set editor height
+            minHeight: null,             // set minimum height of editor
+            maxHeight: null,             // set maximum height of editor
+            focus: true,                 // set focus to editable area after initializing summernote
 
-        // popover tooltips
-        popover: {
-            image: [
-                ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
-                /* ['float', ['floatLeft', 'floatRight', 'floatNone']], // those are the old regular float buttons */
-                ['floatBS', ['floatBSLeft', 'floatBSNone', 'floatBSRight']],    // bootstrap class buttons (float/pull)
-                ['custom', ['imageAttributes', 'imageShape']], // forked plugin: image-attributes.js
-                ['remove', ['removeMedia']]
-            ]
-        },
-        // language for plugin image-attributes.js
-        lang: '<?php echo $lang['CURRENT_LANGUAGE']; ?>',
+            // popover tooltips
+            popover: {
+                image: [
+                    ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+                    /* ['float', ['floatLeft', 'floatRight', 'floatNone']], // those are the old regular float buttons */
+                    ['floatBS', ['floatBSLeft', 'floatBSNone', 'floatBSRight']],    // bootstrap class buttons (float/pull)
+                    ['custom', ['imageAttributes', 'imageShape']], // forked plugin: image-attributes.js
+                    ['remove', ['removeMedia']]
+                ]
+            },
+            // language for plugin image-attributes.js
+            lang: '<?php echo $lang['CURRENT_LANGUAGE']; ?>',
 
-        // powerup the codeview with codemirror theme
-        codemirror: { // codemirror options
-            theme: '<?php echo $editorSettings['editorTheme']; ?>',                       // codeview theme
-            lineNumbers: <?php echo $editorSettings['editorLineNumbers']; ?>,             // display lineNumbers true|false
-            undoDepth: <?php echo $editorSettings['editorUndoDepth']; ?>,                 // how many undo steps should be saved? (default: 200)
-            smartIndent: <?php echo $editorSettings['editorSmartIndent']; ?>,             // better indent
-            indentUnit: <?php echo $editorSettings['editorIndentUnit']; ?>,               // how many spaces auto indent? (default: 2)
-            scrollbarStyle: null,                                                         // styling of the scrollbars
-            matchBrackets: <?php echo $editorSettings['editorMatchBrackets']; ?>,         // highlight corresponding brackets
-            autoCloseBrackets: <?php echo $editorSettings['editorCloseBrackets'];?>,      // auto insert close brackets
-            autoCloseTags: <?php echo $editorSettings['editorCloseTags']; ?>,             // auto insert close tags after opening
-            value: "<html>\n  " + document.documentElement.innerHTML + "\n</html>",       // all html
-            mode: "htmlmixed",                                                            // editor mode
-            matchTags: {bothTags: <?php echo $editorSettings['editorMatchTags']; ?>},     // hightlight matching tags: both
-            extraKeys: {"Ctrl-J": "toMatchingTag", "Ctrl-Space": "autocomplete"},         // press ctrl-j to jump to next matching tab
-            styleActiveLine: <?php echo $editorSettings['editorActiveLine']; ?>,           // highlight the active line (where the cursor is)
-            autoRefresh: true
-        },
+            // powerup the codeview with codemirror theme
+            codemirror: { // codemirror options
+                theme: '<?php echo $editorSettings['editorTheme']; ?>',                       // codeview theme
+                lineNumbers: <?php echo $editorSettings['editorLineNumbers']; ?>,             // display lineNumbers true|false
+                undoDepth: <?php echo $editorSettings['editorUndoDepth']; ?>,                 // how many undo steps should be saved? (default: 200)
+                smartIndent: <?php echo $editorSettings['editorSmartIndent']; ?>,             // better indent
+                indentUnit: <?php echo $editorSettings['editorIndentUnit']; ?>,               // how many spaces auto indent? (default: 2)
+                scrollbarStyle: null,                                                         // styling of the scrollbars
+                matchBrackets: <?php echo $editorSettings['editorMatchBrackets']; ?>,         // highlight corresponding brackets
+                autoCloseBrackets: <?php echo $editorSettings['editorCloseBrackets'];?>,      // auto insert close brackets
+                autoCloseTags: <?php echo $editorSettings['editorCloseTags']; ?>,             // auto insert close tags after opening
+                value: "<html>\n  " + document.documentElement.innerHTML + "\n</html>",       // all html
+                mode: "htmlmixed",                                                            // editor mode
+                matchTags: {bothTags: <?php echo $editorSettings['editorMatchTags']; ?>},     // hightlight matching tags: both
+                extraKeys: {"Ctrl-J": "toMatchingTag", "Ctrl-Space": "autocomplete"},         // press ctrl-j to jump to next matching tab
+                styleActiveLine: <?php echo $editorSettings['editorActiveLine']; ?>,           // highlight the active line (where the cursor is)
+                autoRefresh: true
+            },
 
-        // plugin: summernote-cleaner.js
-        // this allows to copy/paste from word, browsers etc.
-        cleaner: { // does the job well: no messy code anymore!
-            action: 'both', // both|button|paste 'button' only cleans via toolbar button, 'paste' only clean when pasting content, both does both options.
-            newline: '<br>' // Summernote's default is to use '<p><br></p>'
+            // plugin: summernote-cleaner.js
+            // this allows to copy/paste from word, browsers etc.
+            cleaner: { // does the job well: no messy code anymore!
+                action: 'both', // both|button|paste 'button' only cleans via toolbar button, 'paste' only clean when pasting content, both does both options.
+                newline: '<br>' // Summernote's default is to use '<p><br></p>'
 
-            // silent mode:
-            // from my pov it is not necessary to notify the user about the code cleaning process.
-            // it throws just a useless, annoying bubble everytime you hit the save button.
-            // BUT: if you need this notification, you can enable it by uncommenting the following 3 lines
-            // notTime:2400,                                            // Time to display notifications.
-            // notStyle:'position:absolute;bottom:0;left:2px',          // Position of notification
-            // icon:'<i class="note-icon">[Your Button]</i>'            // Display an icon
-        }
-    }); // end summernote
-}); // end document ready
+                // silent mode:
+                // from my pov it is not necessary to notify the user about the code cleaning process.
+                // it throws just a useless, annoying bubble everytime you hit the save button.
+                // BUT: if you need this notification, you can enable it by uncommenting the following 3 lines
+                // notTime:2400,                                            // Time to display notifications.
+                // notStyle:'position:absolute;bottom:0;left:2px',          // Position of notification
+                // icon:'<i class="note-icon">[Your Button]</i>'            // Display an icon
+            }
+        }); // end summernote
+    }); // end document ready
 </script>
 
 <script type="text/javascript" >
-$(document).ready(function() {
+    $(document).ready(function() {
 // load datetimepicker  (start time)
-$('#datetimepicker1').datetimepicker({
-    format: 'YYYY-MM-DD HH:mm:ss'
-});
+        $('#datetimepicker1').datetimepicker({
+            format: 'YYYY-MM-DD HH:mm:ss'
+        });
 // load 2nd datetimepicker (end time)
-$('#datetimepicker2').datetimepicker({
-    format: 'YYYY-MM-DD HH:mm:ss'
+        $('#datetimepicker2').datetimepicker({
+            format: 'YYYY-MM-DD HH:mm:ss'
 
-});
+        });
 
-}); //]]>  /* END document.ready */
-/* ...end admin jQ controlls  */
+    }); //]]>  /* END document.ready */
+    /* ...end admin jQ controlls  */
 </script>
 
 <?php
@@ -257,9 +258,9 @@ echo "
 <div class=\"content-wrapper\" id=\"content-FX\">
     <!-- Content Header (Page header) -->
     <section class=\"content-header\">";
-        /* draw Title on top */
-        echo backend::getTitle($page->title, $lang['PAGE_EDIT']);
-        echo"<ol class=\"breadcrumb\">
+/* draw Title on top */
+echo backend::getTitle($page->title, $lang['PAGE_EDIT']);
+echo"<ol class=\"breadcrumb\">
             <li><a href=\"index.php\" title=\"$lang[DASHBOARD]\"><i class=\"fa fa-dashboard\"></i> $lang[DASHBOARD]</a></li>
             <li><a href=\"index.php?page=pages\" title=\"$lang[PAGES]\"> $lang[PAGES]</a></li>
             <li class=\"active\"><a href=\"index.php?page=page-edit\" title=\"$lang[PAGE_EDIT]\"> $lang[PAGE_EDIT]</a></li>
@@ -270,206 +271,236 @@ echo "
 ?>
 
 <!-- FORM -->
-  <form name="form" role="form" action="index.php?page=page-edit&site=<?php print $page->alias; ?>&id=<?php echo $page->id; ?>" method="post">
-      <div class="row">
-          <div class="col-md-8">
-    <!-- EDITOR -->
-    <label for="summernote"></label>
-  	<textarea id="summernote" name="content"><?php print $page->readContent("../"); ?> </textarea>
+<form name="form" role="form" action="index.php?page=page-edit&site=<?php print $page->alias; ?>&id=<?php echo $page->id; ?>" method="post">
+    <div class="row">
+        <div class="col-md-8">
+            <!-- EDITOR -->
+            <label for="summernote"></label>
+            <textarea id="summernote" name="content"><?php print $page->readContent("../"); ?> </textarea>
 
-    <!-- SAVE BUTTON -->
-    <div class="text-right">
-        <button type="submit" id="savebutton" name="save" class="btn btn-success">
-            <i id="savebuttonIcon" class="fa fa-check"></i> &nbsp;<?php print $lang['SAVE_CHANGES']; ?>
-        </button>
-    </div>
+            <!-- SAVE BUTTON -->
+            <div class="text-right">
+                <button type="submit" id="savebutton" name="save" class="btn btn-success">
+                    <i id="savebuttonIcon" class="fa fa-check"></i> &nbsp;<?php print $lang['SAVE_CHANGES']; ?>
+                </button>
+            </div>
 
-	<input type="hidden" name="searchstring" value="<?php print $page->alias; ?>.html" >
-	<input type="hidden" name="id" value="<?php print $_GET['id']; ?>" >
+            <input type="hidden" name="searchstring" value="<?php print $page->alias; ?>.html" >
+            <input type="hidden" name="id" value="<?php print $_GET['id']; ?>" >
 
-<br><br>
+            <br><br>
 
-          </div>
-          <div class="col-md-4">
-          <!-- 2nd col -->
-              <!-- TITLE and FILENAME -->
-              <div class="box box-default">
-                  <div class="box-header with-border">
-                      <h3 class="box-title"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;<?php echo $lang['SETTINGS']; ?> <small> <?php echo "$lang[TITLE] $lang[AND] $lang[FILENAME]"; ?></small></h3>
-                      <!-- box-tools -->
-                      <div class="box-tools pull-right">
-                          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                          </button>
-                      </div>
-                      <!-- /.box-tools -->
-                  </div>
-                  <div class="box-body" style="display: block;">
-                      <label for="title"><?php print $lang['TITLE']; ?></label>
-                      <input id="title" class="form-control" name="title" maxlength="255" value="<?php print $page->title; ?>">
+        </div>
+        <div class="col-md-4">
+            <!-- 2nd col -->
+            <!-- TITLE and FILENAME -->
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;<?php echo $lang['SETTINGS']; ?> <small> <?php echo "$lang[TITLE] $lang[AND] $lang[FILENAME]"; ?></small></h3>
+                    <!-- box-tools -->
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                    <!-- /.box-tools -->
+                </div>
+                <div class="box-body" style="display: block;">
+                    <label for="title"><?php print $lang['TITLE']; ?></label>
+                    <input id="title" class="form-control" name="title" maxlength="255" value="<?php print $page->title; ?>">
 
-                      <label for="alias"><?php echo $lang['FILENAME']; ?></label>
-                      <input id="alias" class="form-control" name="alias" maxlength="255"
-                      <?php if (isset($readonly)) { print $readonly; } ?> value="<?php print $page->alias; ?>">
+                    <label for="alias"><?php echo $lang['FILENAME']; ?></label>
+                    <input id="alias" class="form-control" name="alias" maxlength="255"
+                        <?php if (isset($readonly)) { print $readonly; } ?> value="<?php print $page->alias; ?>">
 
-                      <label for="language"><?php print $lang['LANGUAGE']; ?></label>
-                      <select id="language" name="language" class="form-control">
-                          <?php
-                          if (isset($page->language) && (!empty($page->language)))
-                          {
-                              echo "<option value=".$page->language." selected>$page->language</option>";
-                          }
-                          echo language::drawLanguageSelectOptions();
-                          ?>
-                      </select>
-                  </div>
-              </div>
+                    <label for="language"><?php print $lang['LANGUAGE']; ?></label>
+                    <select id="language" name="language" class="form-control">
+                        <?php
+                        if (isset($page->language) && (!empty($page->language)))
+                        {
+                            echo "<option value=".$page->language." selected>$page->language</option>";
+                        }
+                        echo \YAWK\language::drawLanguageSelectOptions();
+                        ?>
+                    </select>
+                </div>
+            </div>
 
-              <!-- PUBLISHING -->
-              <div class="box box-default">
-                  <div class="box-header with-border">
-                      <h3 class="box-title"><i class="fa fa-clock-o"></i>&nbsp;&nbsp;<?php echo $lang['PUBLISHING']; ?> <small><?php echo "$lang[EFFECTIVE_TIME] $lang[AND] $lang[PRIVACY]"; ?></small></h3>
-                      <!-- box-tools -->
-                      <div class="box-tools pull-right">
-                          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                          </button>
-                      </div>
-                      <!-- /.box-tools -->
-                  </div>
-                  <div class="box-body">
-                      <label for="datetimepicker1"><?php print $lang['START_PUBLISH']; ?></label>
-                      <input class="form-control" id="datetimepicker1" name="date_publish" maxlength="19" value="<?php print $page->date_publish; ?>">
+            <!-- WIDGET OVERVIEW -->
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><i class="fa fa-tags"></i>&nbsp;&nbsp;<?php echo $lang['WIDGETS']; ?> <small><?php echo $lang['WIDGETS_ON_THIS_PAGE']; ?></small></h3>
+                    <!-- box-tools -->
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                    <!-- /.box-tools -->
+                </div>
+                <div class="box-body" style="display: block;">
+                    <!-- A LIST OF WIDGETS THAT ARE BOUND TO THIS PAGE -->
+                    <?php
+                    // get widget list from database
+                    $widgetList = YAWK\widget::loadWidgetsOfPage($db, $page);
+                    // loop through all found widgets
+                    foreach ($widgetList as $widget) {
+                        // set color of widget depending on published state
+                        if ($widget['published'] == 1){ $wTextColor = 'default'; } else { $wTextColor = 'danger'; }
 
-                      <!-- END PUBLISH DATE -->
-                      <label for="datetimepicker2"><?php print $lang['END_PUBLISH']; ?></label>
-                      <input type="text" class="form-control" id="datetimepicker2" name="date_unpublish" maxlength="19" value="<?php print $page->date_unpublish; ?>">
+                        // set widget info tag
+                        if ($widget['pageID'] == 0){ $wPageInfo = 'all'; } else { $wPageInfo = 'this'; }
 
-                      <label for="gidselect"> <?php print $lang['PAGE_VISIBLE']; ?></label>
-                      <select id="gidselect" name="gid" class="form-control">
-                                  <option value="<?php print sys::getGroupId($db, $page->id, "pages"); ?>" selected><?php print user::getGroupNameFromID($db, $page->gid); ?></option>
-                                  <?php
-                                  foreach(YAWK\sys::getGroups($db, "pages") as $role) {
-                                      print "<option value=\"".$role['id']."\"";
-                                      if (isset($_POST['gid'])) {
-                                          if($_POST['gid'] === $role['id']) {
-                                              print " selected=\"selected\"";
-                                          }
-                                          else if($page->gid === $role['id'] && !$_POST['gid']) {
-                                              print " selected=\"selected\"";
-                                          }
-                                      }
-                                      print ">".$role['value']."</option>";
-                                  }
-                                  ?>
-                      </select>
+                        // draw widget bubble
+                        echo "<p style=\"float:left; margin-right:5px;\"><a href=\"index.php?page=widget-edit&widget=".$widget['id']."\" class=\"btn btn-xs btn-".$wTextColor."\" title=\"".$widget['name']." ".$lang['WIDGET_EDIT']."\">
+                          ".$widget['name']." @<small> ".$wPageInfo." | ".$widget['position']."</small></a></p>";
+                    }
+                    ?>
+                </div>
+            </div>
 
-                      <!-- PAGE ON / OFF STATUS -->
-                      <label for="published"><?php print $lang['PAGE_STATUS']; ?></label>
-                      <?php if($page->published === '1')
-                      {
-                          $publishedHtml = "<option value=\"1\" selected=\"selected\">$lang[ONLINE]</option>";
-                          $publishedHtml .= "<option value=\"0\" >offline</option>";
-                      }
-                      else
-                          {
-                              $publishedHtml = "<option value=\"0\" selected=\"selected\">$lang[OFFLINE]</option>";
-                              $publishedHtml .= "<option value=\"1\" >online</option>";
-                          }
-                      ?>
-                          <select id="published" name="published" class="form-control">
-                          <?php echo $publishedHtml; ?>
-                          </select>
-                  </div>
-              </div>
 
-              <!-- META TAGS -->
-              <div class="box box-default">
-                  <div class="box-header with-border">
-                      <h3 class="box-title"><i class="fa fa-google"></i>&nbsp;&nbsp;<?php echo $lang['META_TAGS']; ?> <small><?php echo $lang['PAGE_SEO']; ?></small></h3>
-                      <!-- box-tools -->
-                      <div class="box-tools pull-right">
-                          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                          </button>
-                      </div>
-                      <!-- /.box-tools -->
-                  </div>
-                  <div class="box-body" style="display: block;">
-                      <!-- LOCAL META SITE DESCRIPTION -->
-                      <label for="metadescription"><?php echo $lang['META_DESC']; ?></label>
-                      <input type="text" size="64" id="metadescription" class="form-control" maxlength="255" placeholder="<?php echo $lang['META_DESC_PLACEHOLDER']; ?>" name="metadescription" value="<?php print $page->getMetaTags($db, $page->id, "description"); ?>">
-                      <!-- LOCAL META SITE KEYWORDS -->
-                      <label for="metakeywords"><?php echo $lang['META_KEYWORDS']; ?></label>
-                      <input type="text" size="64" id="metakeywords" class="form-control" placeholder="<?php echo $lang['META_KEYWORDS_PLACEHOLDER']; ?>" name="metakeywords" value="<?php print $page->getMetaTags($db, $page->id, "keywords");  ?>">
-                  </div>
-              </div>
+            <!-- PUBLISHING -->
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><i class="fa fa-clock-o"></i>&nbsp;&nbsp;<?php echo $lang['PUBLISHING']; ?> <small><?php echo "$lang[EFFECTIVE_TIME] $lang[AND] $lang[PRIVACY]"; ?></small></h3>
+                    <!-- box-tools -->
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                    <!-- /.box-tools -->
+                </div>
+                <div class="box-body">
+                    <label for="datetimepicker1"><?php print $lang['START_PUBLISH']; ?></label>
+                    <input class="form-control" id="datetimepicker1" name="date_publish" maxlength="19" value="<?php print $page->date_publish; ?>">
 
-              <!-- BG IMAGE -->
-              <div class="box box-default">
-                  <div class="box-header with-border">
-                      <h3 class="box-title"><i class="fa fa-photo"></i>&nbsp;&nbsp;<?php echo $lang['BG_IMAGE']; ?> <small><?php echo $lang['SPECIFIC_PAGE']; ?></small></h3>
-                      <!-- box-tools -->
-                      <div class="box-tools pull-right">
-                          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                          </button>
-                      </div>
-                      <!-- /.box-tools -->
-                  </div>
-                  <div class="box-body" style="display: block;">
-                      <!-- PAGE BG IMAGE -->
-                      <label for="bgimage"><?php echo $lang['BG_IMAGE']; ?></label>
-                      <input id="bgimage" type="text" size="64" class="form-control" placeholder="media/images/background.jpg" name="bgimage" value="<?php print $page->bgimage;  ?>">
-                  </div>
-              </div>
+                    <!-- END PUBLISH DATE -->
+                    <label for="datetimepicker2"><?php print $lang['END_PUBLISH']; ?></label>
+                    <input type="text" class="form-control" id="datetimepicker2" name="date_unpublish" maxlength="19" value="<?php print $page->date_unpublish; ?>">
 
-              <!-- SUBMENU SELECTOR -->
-              <div class="box box-default">
-                  <div class="box-header with-border">
-                      <h3 class="box-title"><i class="fa fa-bars"></i>&nbsp;&nbsp;<?php echo $lang['SUBMENU']; ?> <small><?php echo $lang['ADD_PAGE_MENU'] ?></small></h3>
-                      <!-- box-tools -->
-                      <div class="box-tools pull-right">
-                          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                          </button>
-                      </div>
-                      <!-- /.box-tools -->
-                  </div>
-                  <div class="box-body" style="display: block;">
-                      <!-- SUB MENU SELECTOR -->
-                      <label for="menu"><?php echo $lang['SUBMENU']; ?></label>
-                          <select name="menu" id="menu" class="form-control">
-
-                              <?php
-                                // get submenu ID
-                                $subMenuID = sys::getSubMenu($db, $page->id);
-                              ?>
-                              <option value="<?php print $subMenuID ?>"><?php print sys::getMenuItem($db, $page->id); ?></option>
-                              <?php
-                                if ($subMenuID == 0)
-                                {
-                                    print "<option value=\"0\" selected aria-selected=\"true\">-- No Menu --</option>";
+                    <label for="gidselect"> <?php print $lang['PAGE_VISIBLE']; ?></label>
+                    <select id="gidselect" name="gid" class="form-control">
+                        <option value="<?php print sys::getGroupId($db, $page->id, "pages"); ?>" selected><?php print user::getGroupNameFromID($db, $page->gid); ?></option>
+                        <?php
+                        foreach(YAWK\sys::getGroups($db, "pages") as $role) {
+                            print "<option value=\"".$role['id']."\"";
+                            if (isset($_POST['gid'])) {
+                                if($_POST['gid'] === $role['id']) {
+                                    print " selected=\"selected\"";
                                 }
-                                else
-                                    {
-                                        print "<option value=\"0\">-- No Menu --</option>";
-                                    }
+                                else if($page->gid === $role['id'] && !$_POST['gid']) {
+                                    print " selected=\"selected\"";
+                                }
+                            }
+                            print ">".$role['value']."</option>";
+                        }
+                        ?>
+                    </select>
 
-                              foreach(YAWK\sys::getMenus($db) as $menue){
-                                  print "<option value=\"".$menue['id']."\"";
-                                  if (isset($_POST['menu'])) {
-                                      if($_POST['menu'] === $menue['id']){
-                                          print " selected=\"selected\"";
-                                      }
-                                      else if($page->menu === $menue['id'] && !$_POST['menu']){
-                                          print " selected=\"selected\"";
-                                      }
-                                  }
-                                  print ">".$menue['name']."</option>";
-                              }
-                              ?>
-                          </select>
-                  </div>
-              </div>
+                    <!-- PAGE ON / OFF STATUS -->
+                    <label for="published"><?php print $lang['PAGE_STATUS']; ?></label>
+                    <?php if($page->published === '1')
+                    {
+                        $publishedHtml = "<option value=\"1\" selected=\"selected\">$lang[ONLINE]</option>";
+                        $publishedHtml .= "<option value=\"0\" >offline</option>";
+                    }
+                    else
+                    {
+                        $publishedHtml = "<option value=\"0\" selected=\"selected\">$lang[OFFLINE]</option>";
+                        $publishedHtml .= "<option value=\"1\" >online</option>";
+                    }
+                    ?>
+                    <select id="published" name="published" class="form-control">
+                        <?php echo $publishedHtml; ?>
+                    </select>
+                </div>
+            </div>
 
-          </div>
-      </div>
+            <!-- META TAGS -->
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><i class="fa fa-google"></i>&nbsp;&nbsp;<?php echo $lang['META_TAGS']; ?> <small><?php echo $lang['PAGE_SEO']; ?></small></h3>
+                    <!-- box-tools -->
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                    <!-- /.box-tools -->
+                </div>
+                <div class="box-body" style="display: block;">
+                    <!-- LOCAL META SITE DESCRIPTION -->
+                    <label for="metadescription"><?php echo $lang['META_DESC']; ?></label>
+                    <input type="text" size="64" id="metadescription" class="form-control" maxlength="255" placeholder="<?php echo $lang['META_DESC_PLACEHOLDER']; ?>" name="metadescription" value="<?php print $page->getMetaTags($db, $page->id, "description"); ?>">
+                    <!-- LOCAL META SITE KEYWORDS -->
+                    <label for="metakeywords"><?php echo $lang['META_KEYWORDS']; ?></label>
+                    <input type="text" size="64" id="metakeywords" class="form-control" placeholder="<?php echo $lang['META_KEYWORDS_PLACEHOLDER']; ?>" name="metakeywords" value="<?php print $page->getMetaTags($db, $page->id, "keywords");  ?>">
+                </div>
+            </div>
 
-      </form>
+            <!-- BG IMAGE -->
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><i class="fa fa-photo"></i>&nbsp;&nbsp;<?php echo $lang['BG_IMAGE']; ?> <small><?php echo $lang['SPECIFIC_PAGE']; ?></small></h3>
+                    <!-- box-tools -->
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                    <!-- /.box-tools -->
+                </div>
+                <div class="box-body" style="display: block;">
+                    <!-- PAGE BG IMAGE -->
+                    <label for="bgimage"><?php echo $lang['BG_IMAGE']; ?></label>
+                    <input id="bgimage" type="text" size="64" class="form-control" placeholder="media/images/background.jpg" name="bgimage" value="<?php print $page->bgimage;  ?>">
+                </div>
+            </div>
 
+            <!-- SUBMENU SELECTOR -->
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><i class="fa fa-bars"></i>&nbsp;&nbsp;<?php echo $lang['SUBMENU']; ?> <small><?php echo $lang['ADD_PAGE_MENU'] ?></small></h3>
+                    <!-- box-tools -->
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                    <!-- /.box-tools -->
+                </div>
+                <div class="box-body" style="display: block;">
+                    <!-- SUB MENU SELECTOR -->
+                    <label for="menu"><?php echo $lang['SUBMENU']; ?></label>
+                    <select name="menu" id="menu" class="form-control">
+
+                        <?php
+                        // get submenu ID
+                        $subMenuID = sys::getSubMenu($db, $page->id);
+                        ?>
+                        <option value="<?php print $subMenuID ?>"><?php print sys::getMenuItem($db, $page->id); ?></option>
+                        <?php
+                        if ($subMenuID == 0)
+                        {
+                            print "<option value=\"0\" selected aria-selected=\"true\">-- No Menu --</option>";
+                        }
+                        else
+                        {
+                            print "<option value=\"0\">-- No Menu --</option>";
+                        }
+
+                        foreach(YAWK\sys::getMenus($db) as $menue){
+                            print "<option value=\"".$menue['id']."\"";
+                            if (isset($_POST['menu'])) {
+                                if($_POST['menu'] === $menue['id']){
+                                    print " selected=\"selected\"";
+                                }
+                                else if($page->menu === $menue['id'] && !$_POST['menu']){
+                                    print " selected=\"selected\"";
+                                }
+                            }
+                            print ">".$menue['name']."</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
