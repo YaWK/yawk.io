@@ -325,38 +325,9 @@ echo"<ol class=\"breadcrumb\">
                 </div>
             </div>
 
-            <!-- WIDGET OVERVIEW -->
-            <div class="box box-default">
-                <div class="box-header with-border">
-                    <h3 class="box-title"><i class="fa fa-tags"></i>&nbsp;&nbsp;<?php echo $lang['WIDGETS']; ?> <small><?php echo $lang['WIDGETS_ON_THIS_PAGE']; ?></small></h3>
-                    <!-- box-tools -->
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                        </button>
-                    </div>
-                    <!-- /.box-tools -->
-                </div>
-                <div class="box-body" style="display: block;">
-                    <!-- A LIST OF WIDGETS THAT ARE BOUND TO THIS PAGE -->
-                    <?php
-                    // get widget list from database
-                    $widgetList = YAWK\widget::loadWidgetsOfPage($db, $page);
-                    // loop through all found widgets
-                    foreach ($widgetList as $widget) {
-                        // set color of widget depending on published state
-                        if ($widget['published'] == 1){ $wTextColor = 'default'; } else { $wTextColor = 'danger'; }
-
-                        // set widget info tag
-                        if ($widget['pageID'] == 0){ $wPageInfo = 'all'; } else { $wPageInfo = 'this'; }
-
-                        // draw widget bubble
-                        echo "<p style=\"float:left; margin-right:5px;\"><a href=\"index.php?page=widget-edit&widget=".$widget['id']."\" class=\"btn btn-xs btn-".$wTextColor."\" title=\"".$widget['name']." ".$lang['WIDGET_EDIT']."\">
-                          ".$widget['name']." @<small> ".$wPageInfo." | ".$widget['position']."</small></a></p>";
-                    }
-                    ?>
-                </div>
-            </div>
-
+            <?php // draw a box containing widgets of this current page
+            YAWK\backend::drawWidgetsOnPageBox($db, $page, $lang);
+            ?>
 
             <!-- PUBLISHING -->
             <div class="box box-default">

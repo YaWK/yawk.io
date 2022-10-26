@@ -178,9 +178,9 @@ namespace YAWK {
                         $_SESSION['passwordFail']++;
                     }
                     else
-                        {   // first wrong try
-                            $_SESSION['passwordFail'] = 1;
-                        }
+                    {   // first wrong try
+                        $_SESSION['passwordFail'] = 1;
+                    }
                     // log this user login / store @ login db table
                     $user->storeLogin($db, 1, "backend", $_POST['user'], $_POST['password']);
                     return false;
@@ -248,9 +248,9 @@ namespace YAWK {
                 $resetBtn = "<a class=\"btn btn-danger\" data-toggle=\"modal\" data-target=\"#myModal\"><i class=\"fa fa-question-circle\"></i> &nbsp;$lang[PASSWORD_FORGOTTEN]</a>";
             }
             else
-                {   // password not wrong - no button needed
-                    $resetBtn = "&nbsp;";
-                }
+            {   // password not wrong - no button needed
+                $resetBtn = "&nbsp;";
+            }
 
             // check if any page is requested
             if (isset($_GET['page']) && (!empty($_GET['page'])))
@@ -258,9 +258,9 @@ namespace YAWK {
                 $redirect = "?page=".$_GET['page']."";
             }
             else
-                {   // redirect requested
-                    $redirect = '';
-                }
+            {   // redirect requested
+                $redirect = '';
+            }
 
             $form = "<form role=\"form\" class=\"form-horizontal\" action=\"index.php".$redirect."\" method=\"post\">
             <input type=\"text\" class=\"form-control\" maxlength=\"128\" id=\"user\" value=\"".$username."\" name=\"user\" style=\"margin-bottom:4px;\" placeholder=\"Username\">
@@ -310,10 +310,10 @@ namespace YAWK {
                       <button type=\"submit\" class=\"btn btn-success\"><i class=\"fa fa-check\"></i> &nbsp;$lang[PASSWORD_RESET]</button>
                       <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\"><i class=\"fa fa-times\"></i>&nbsp; $lang[CANCEL]</button>
                       <hr>";
-                        $ip = $_SERVER['REMOTE_ADDR'];
-                        $hostname = gethostname();
-                        $network = gethostbyaddr($_SERVER['REMOTE_ADDR']);
-                      $modalWindow .= "<div class=\"text-left small\"><i><small>Access from IP: $ip @ $hostname from network: $network will be logged.</small></i></div>
+            $ip = $_SERVER['REMOTE_ADDR'];
+            $hostname = gethostname();
+            $network = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+            $modalWindow .= "<div class=\"text-left small\"><i><small>Access from IP: $ip @ $hostname from network: $network will be logged.</small></i></div>
                     </div>
                   </div>
                   
@@ -328,8 +328,8 @@ namespace YAWK {
                         <div class=\"box box-default\">
                             <div class=\"box-body\">
                             <h3>Login :: <small>" . $title . "</small></h3><br>";
-                        $loginBox .= \YAWK\backend::drawLoginForm("","", $lang);
-                        $loginBox .= "
+            $loginBox .= \YAWK\backend::drawLoginForm("","", $lang);
+            $loginBox .= "
                         </div>
                         <br><br>
                     </div>
@@ -395,8 +395,8 @@ namespace YAWK {
             }
             else {
                 $pagesArray = '';
-            echo   \YAWK\alert::draw("danger", "Error!", "Sorry, fetch database error: getPagesArray failed.","",4200);
-            // die ("Sorry, fetch database error: getPagesArray failed.");
+                echo   \YAWK\alert::draw("danger", "Error!", "Sorry, fetch database error: getPagesArray failed.","",4200);
+                // die ("Sorry, fetch database error: getPagesArray failed.");
             }
             return $pagesArray;
         }
@@ -496,14 +496,68 @@ namespace YAWK {
                         // no download icon
                     }
                     else
-                        {   // download font icon
-                            echo "<a href=\"$folder$font\" title=\"$lang[DOWNLOAD] $font\"><i class=\"fa fa-arrow-circle-o-down pull-right\" 
+                    {   // download font icon
+                        echo "<a href=\"$folder$font\" title=\"$lang[DOWNLOAD] $font\"><i class=\"fa fa-arrow-circle-o-down pull-right\" 
                             data-toggle=\"tooltip\" title=\"$lang[TO_DOWNLOAD]\" style=\"margin-top:4px;\"></i></a>&nbsp;&nbsp;";
-                        }
+                    }
                     // close tags
                     echo "</small></h4><hr>";
                 }
             }
         }
+
+
+        /**
+         * @brief Draw a box containing all widgets that are linked with given page.
+         * Every Widget gets drawn as small bubble/button and is linked with the
+         * corresponding Widget-edit page. This increased the workflow while editing
+         * a page and their widgets.
+         * @param object $db Database handle
+         * @param object $page current page object
+         * @param array $lang language array
+         */
+        static function drawWidgetsOnPageBox($db, $page, $lang)
+        {
+            // get widget list from database
+            $widgetList = widget::loadWidgetsOfPage($db, $page);
+
+
+            // Draw a list of widgets, what are bound to this given page->id
+            echo'<!-- WIDGET OVERVIEW -->
+                <div class="box box-default">
+                  <div class="box-header with-border">
+                      <h3 class="box-title"><i class="fa fa-tags"></i>&nbsp;&nbsp;'.$lang["WIDGETS"].' <small>'.$lang["WIDGETS_ON_THIS_PAGE"].'</small></h3>
+                      <!-- box-tools -->
+                      <div class="box-tools pull-right">
+                          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                          </button>
+                      </div>
+                  <!-- /.box-tools -->
+                  </div>
+                  <div class="box-body" style="display: block;">';
+            if (isset($widgetList) && (is_array($widgetList)))
+            {
+                // loop through all found widgets
+                foreach ($widgetList as $widget)
+                {
+                    // set color of widget depending on published state
+                    if ($widget['published'] == 1){ $wTextColor = 'default'; } else { $wTextColor = 'danger'; }
+
+                    // set widget info tag
+                    if ($widget['pageID'] == 0){ $wPageInfo = 'all'; } else { $wPageInfo = 'this'; }
+
+                    // draw widget bubble
+                    echo '<p style="float:left; margin-right:5px;"><a href="index.php?page=widget-edit&widget='.$widget['id'].'" class="btn btn-xs btn-'.$wTextColor.'" title="'.$lang['EDIT'].': '.$widget['name'].' '.$lang['WIDGET'].'">
+                        '.$widget['name'].' @<small> '.$wPageInfo.' | '.$widget['position'].'</small></a></p>';
+                }
+            }
+            else {
+                echo'<p>'.$lang['NO_WIDGET_CREATED'].' <small><i>(<a href="index.php?page=widget-new">'.$lang['CREATE'].'</a>)</small></p>';
+            }
+            echo'</div>
+                </div>';
+
+        } // eof drawWidgetsOnPageBox
+
     } /* END class::backend */
 }

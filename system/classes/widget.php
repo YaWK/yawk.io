@@ -1142,7 +1142,12 @@ namespace YAWK {
                 while ($result = mysqli_fetch_assoc($row)){
                     $list[] = $result;
                 }
-                return $list;
+                if (isset($list) && (is_array($list))){
+                    return $list;
+                }
+                else {
+                    return false;
+                }
             }
         }
 
