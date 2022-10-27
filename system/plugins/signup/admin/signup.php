@@ -1,8 +1,22 @@
 <?php
 // check if language is set
+use YAWK\db;
+use YAWK\language;
+use YAWK\template;
+use YAWK\user;
+
+if (!isset($db)){
+    $db = new db();
+}
 if (!isset($language) || (!isset($lang)))
 {   // inject (add) language tags to core $lang array
-    $lang = \YAWK\language::inject(@$lang, "../system/plugins/signup/language/");
+    $lang = language::inject(@$lang, "../system/plugins/signup/language/");
+}
+if (!isset($user)){
+    $user = new user($db);
+}
+if (!isset($template)){
+    $template = new template($db);
 }
 // include '../system/plugins/signup/classes/signup.php';
 include '../system/plugins/signup/classes/backend.php';
@@ -284,7 +298,7 @@ else {
                 <br><br>
 
                 <?php
-                $groupIDArray = \YAWK\user::getAllGroupIDs($db);
+                $groupIDArray = user::getAllGroupIDs($db);
                 foreach ($groupIDArray as $gid){
                     echo "<!-- LEGEND INPUT FIELDS -->
                 <div id=\"$gid[0]_hidden\">
@@ -364,10 +378,10 @@ else {
             <!-- error / valid text color -->
             <fieldset>
                 <legend><i class="glyphicon glyphicon-text-color"></i> &nbsp;<?php echo "$lang[COLORS] <small>$lang[SIGNUP_COLORS_SUBTEXT]</small>"; ?></legend>
-                <label for="formerror"><?php echo $lang['ERROR_TEXT_COLOR']; ?> <small>default: #<?php echo \YAWK\template::getTemplateSetting($db, "valueDefault", "form-error") ;?></small></label><br>
-                <input type="text" id="formerror" name="formerror-tpl" class="form-control color" value="<?php echo \YAWK\template::getTemplateSetting($db, "value", "form-error");?>" title="Error Text Color"><br>
-                <label for="formvalid"><?php echo $lang['VALID_TEXT_COLOR']; ?> <small>default: #<?php echo \YAWK\template::getTemplateSetting($db, "valueDefault", "form-valid") ;?></small></label><br>
-                <input type="text" id="formvalid" name="formvalid-tpl" class="form-control color" value="<?php echo \YAWK\template::getTemplateSetting($db, "value", "form-valid");?>" title="Valid Text Color"><br>
+                <label for="formerror"><?php echo $lang['ERROR_TEXT_COLOR']; ?> <small>default: #<?php echo template::getTemplateSetting($db, "valueDefault", "form-error", $user, $template) ;?></small></label><br>
+                <input type="text" id="formerror" name="formerror-tpl" class="form-control color" value="<?php echo template::getTemplateSetting($db, "value", "form-error", $user, $template);?>" title="Error Text Color"><br>
+                <label for="formvalid"><?php echo $lang['VALID_TEXT_COLOR']; ?> <small>default: #<?php echo template::getTemplateSetting($db, "valueDefault", "form-valid", $user, $template) ;?></small></label><br>
+                <input type="text" id="formvalid" name="formvalid-tpl" class="form-control color" value="<?php echo template::getTemplateSetting($db, "value", "form-valid", $user, $template);?>" title="Valid Text Color"><br>
             </fieldset>
         </div>
         <div role="tabpanel" class="tab-pane fade in" id="termstab">
