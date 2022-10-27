@@ -68,12 +68,23 @@ namespace YAWK {
 
         /**
          * @brief return ID of current (active) template
-         * @param object $db
+         * @param object $db database object
          * @return int the ID of the currently selected template
          */
-        static function getCurrentTemplateId($db)
+        static function getCurrentTemplateId(object $db): int
         {   // return value of property selectedTemplate from settings db
-            return \YAWK\settings::getSetting($db, "selectedTemplate");
+            // outdated: return \YAWK\settings::getSetting($db, "selectedTemplate");
+
+            if (!isset($user)){
+                $user = new user($db);
+            }
+            if (!isset($template)){
+                $template = new template();
+            }
+
+            // since user can override his template, there are more specific checks needed,
+            // which template is currently active and which ID we will return. To do that:
+            return template::getValidTemplateID($db, $user, $template);
         }
 
         /**
@@ -82,7 +93,7 @@ namespace YAWK {
          * @param string $name
          * @return bool true|false
          */
-        public function checkIfTemplateAlreadyExists($db, $name)
+        public function checkIfTemplateAlreadyExists(object $db, string $name): bool
         {
             // check if name is set, not empty and valid type
             if (isset($name) && (!empty($name) && (is_string($name))))
@@ -992,7 +1003,7 @@ namespace YAWK {
 
             // to delete the files, we need to get the template folder's name
             // this function checks if template exits in database + if folder physically exists on disk
-            $templateFolder = \YAWK\template::getCurrentTemplateName($db, "backend", $templateID);
+            $templateFolder = template::getCurrentTemplateName($db, "backend", $templateID);
 
             // check if template folder exists...
             if (is_dir(dirname("../system/templates/".$templateFolder."")))
@@ -1056,7 +1067,7 @@ namespace YAWK {
         {
             if (!isset($user) || empty($user))
             {
-                $user = new \YAWK\user($db);
+                $user = new user($db);
             }
             // get template settings
             if (isset($user))
@@ -1106,9 +1117,10 @@ namespace YAWK {
          * @param string $position The position to load
          * @param array  $positions Positions [enabled] status array
          * @param array  $indicators Positions [indicator] status array
+         * @param object $user the current user object
          * @param object $template Template object
          */
-        public static function getPositionDivBox($db, $lang, $position, $row, $bootstrapGrid, $positions, $indicators, $template)
+        public static function getPositionDivBox($db, $lang, $position, $row, $bootstrapGrid, $positions, $indicators, $user, $template)
         {
             global $currentpage;
             if (isset($row) && (!empty($row))) {
@@ -1141,7 +1153,7 @@ namespace YAWK {
                 // output position div box
                 echo "$startRow";
                 echo "<div class=\"$bootstrapGrid pos-$position\" id=\"$position\" $indicatorStyle>$indicatorText";
-                \YAWK\template::setPosition($db, $lang, "$position-pos", $currentpage, $template);
+                template::setPosition($db, $lang, "$position-pos", $currentpage, $user, $template);
                 echo "
                       </div>";
                 echo "$endRow";
@@ -2446,7 +2458,7 @@ namespace YAWK {
         static function getActiveBodyFont($db, $user, $template)
         {
             /* @var \YAWK\db $db */
-            $bodyFont = \YAWK\template::getTemplateSetting($db, "value", "globaltext-fontfamily", $user, $template);
+            $bodyFont = template::getTemplateSetting($db, "value", "globaltext-fontfamily", $user, $template);
             $bodyFontFamily = "font-family: $bodyFont";
             return $bodyFontFamily;
         }
@@ -2531,13 +2543,43 @@ namespace YAWK {
          * @param object $db database
          * @param string $field the setting (field) to get
          * @param string $property the property to get
-         * @return array | bool
+         * @return bool
          */
         static function getTemplateSetting($db, $field, $property, $user, $template)
         {   /** @var $db \YAWK\db */
-            // to ensure, we get the correct setting of the right template,
+
+            // to ensure, we get the setting of the correct template get a valid template ID
+            $validTemplateID = template::getValidTemplateID($db, $user, $template);
+
+            // query the template setting
+            if ($row = $db->query("SELECT $field
+                        	FROM {template_settings}
+                            WHERE property = '" . $property . "'
+                            AND templateID = '" . $validTemplateID . "'"))
+            {   // fetch data
+                $res = mysqli_fetch_row($row);
+                if (!empty($res))
+                {   // return valid template ID
+                    return $res[0];
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        /**
+         * @brief check the current template ID, considering if user is logged in, allowed to override template and so on
+         * @param object $db database
+         * @param object $user the current user object
+         * @param object $template the current page object
+         * @return int
+         */
+        static function getValidTemplateID($db, $user, $template)
+        {
             // it is important to do some checks to determine the correct template id
-            // to do that, we need data from 2 objects (user and template)
+            // to do that, we need data from 2 objects;
 
             // check if template and user obj are there and not empty
             if (isset($user) && (isset($template)))
@@ -2545,7 +2587,6 @@ namespace YAWK {
 
                 if ($user->overrideTemplate == 1)
                 {   // ok, get user templateID
-                    echo "overr";
                     if (!empty($user->templateID))
                     {   // set templateID for following query
                         $validTemplateID = $user->templateID;
@@ -2570,23 +2611,8 @@ namespace YAWK {
             {   // unable to determine template from objects, load active (global) template instead
                 $validTemplateID = settings::getSetting($db, "selectedTemplate");
             }
-
-            // query the template setting
-            if ($row = $db->query("SELECT $field
-                        	FROM {template_settings}
-                            WHERE property = '" . $property . "'
-                            AND templateID = '" . $validTemplateID . "'"))
-            {   // fetch data
-                $res = mysqli_fetch_row($row);
-                if (!empty($res))
-                {   // return valid template ID
-                    return $res[0];
-                }
-                else
-                {
-                    return false;
-                }
-            }
+            // must be set
+            return $validTemplateID;
         }
 
         /**
@@ -2674,10 +2700,11 @@ namespace YAWK {
         /**
          * @brief set template position and output the correct data depending on position
          * @param object $db database
+         * @param object $user the current user object
          * @param string $position the template position
          * @param object $template template object
          */
-        static function setPosition($db, $lang, $position, $currentpage, $template)
+        static function setPosition($db, $lang, $position, $currentpage, $user, $template)
         {
             $main_set = 0;
             $globalmenu_set = 0;
@@ -2694,7 +2721,7 @@ namespace YAWK {
                         // if var is set, but empty, show all users
                         if (empty($_GET['user'])) {
                             echo "<h2>Show all users</h2>";
-                            \YAWK\user::getUserList($db);
+                            user::getUserList($db);
                         } else {
                             // show userpage
                             echo "<h2>Show Profile of user $_GET[user]</h2>";
@@ -2717,7 +2744,7 @@ namespace YAWK {
 
                 // if position is globalmenu
                 if ($position == "globalmenu") {
-                    \YAWK\menu::displayGlobalMenu($db, $template);
+                    \YAWK\menu::displayGlobalMenu($db, $user, $template);
                     $globalmenu_set = 1;
                 }
                 // in any other case, simply load a div box onto given position
@@ -2905,7 +2932,7 @@ namespace YAWK {
             }
 
             // get assets, depending on type from database
-            $assets = \YAWK\template::getAssetsByType($db, $type);
+            $assets = template::getAssetsByType($db, $type);
 
             foreach ($assets as $asset => $property) {
                 $resInternal = $db->query("SELECT link from {assets} 

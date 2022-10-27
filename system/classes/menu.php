@@ -92,15 +92,16 @@ namespace YAWK {
          * @license    https://opensource.org/licenses/MIT
          * @version    1.0.0
          * @param object $db database
+         * @param object $user current user object
          * @param object $template template object
          */
-        static function displayGlobalMenu($db, $template)
+        static function displayGlobalMenu($db, $user, $template)
         {   /** @param db $db */
             $res = $db->query("SELECT value FROM {settings}
                                WHERE property = 'globalmenuid'");
             if ($row = mysqli_fetch_row($res)) {
                 if ($published = self::getMenuStatus($db, $row[0]) != '0') {
-                    self::display($db, $row[0], $template);
+                    self::display($db, $row[0], $user, $template);
                 }
             }
         }
@@ -161,8 +162,8 @@ namespace YAWK {
         {
             /** @param $db db $res */
             if ($res = $db->query("UPDATE {menu_names} SET
-    							  		name = '" . $menutitle . "'
-    							        WHERE id = '" . $menu . "'"))
+                                        name = '" . $menutitle . "'
+                                        WHERE id = '" . $menu . "'"))
             {
                 \YAWK\sys::setSyslog($db, 21, 0,"updated menu title <b>$menutitle</b>", 0, 0, 0, 0);
                 return true;
@@ -193,11 +194,11 @@ namespace YAWK {
             }
             /** @param $db db $res */
             if ($res = $db->query("UPDATE {menu_names} SET
-    							  		menuLanguage = '" . $menuLanguage . "'
-    							        WHERE id = '" . $menu . "'") &&
+                                        menuLanguage = '" . $menuLanguage . "'
+                                        WHERE id = '" . $menu . "'") &&
                 ($res = $db->query("UPDATE {menu} SET
-    							  		menuLanguage = '" . $menuLanguage . "'
-    							        WHERE menuID = '" . $menu . "'")))
+                                        menuLanguage = '" . $menuLanguage . "'
+                                        WHERE menuID = '" . $menu . "'")))
 
             {
                 \YAWK\sys::setSyslog($db, 21, 0,"updated menu language of menu ID $menu to <b>$menuLanguage</b>", 0, 0, 0, 0);
@@ -436,8 +437,8 @@ namespace YAWK {
             $menuName = \YAWK\menu::getMenuNameByID($db, $menu);
             $date_changed = date("Y-m-d G:i:s");
             if ($res = $db->query("UPDATE {menu} SET
-    							  sort = '" . $sort . "',
-    							  href = '" . $href . "',
+                                  sort = '" . $sort . "',
+                                  href = '" . $href . "',
                                   text = '" . $text . "',
                                   title = '" . $title . "',
                                   gid = '" . $gid . "',
@@ -561,9 +562,9 @@ namespace YAWK {
   <tbody>";
             // get menu entries from database
             if ($res = $db->query("SELECT id, text, title, href, gid, target, sort, parentID, published
-  							 FROM {menu}
-  							 WHERE menuID = '".$id."'
-  							 ORDER BY sort, parentID, title"))
+                             FROM {menu}
+                             WHERE menuID = '".$id."'
+                             ORDER BY sort, parentID, title"))
             {
                 while ($row = mysqli_fetch_assoc($res))
                 {
@@ -693,9 +694,10 @@ namespace YAWK {
          * @version    1.0.0
          * @param object $db database obj
          * @param int $id affected menu ID
+         * @param object $user current user obj
          * @param object $template template obj
          */
-        static function display($db, $id, $template)
+        static function display($db, $id, $user, $template)
         {   /** @param db $db */
             $divider = '';
             if (isset($_SESSION['gid'])) {
@@ -738,7 +740,7 @@ namespace YAWK {
 
             // Menu builder function, parentId 0 is the root
 
-            function buildMenu($db, $parent, $menu, $id, $currentRole, $divider, $template)
+            function buildMenu($db, $parent, $menu, $id, $currentRole, $divider, $user, $template)
             {   /** @param db $db */
 
                 // check if template ID is set
@@ -762,25 +764,21 @@ namespace YAWK {
 
                 // echo "<pre>";print_r($menu);echo"</pre>"; exit;
                 $navBarBrand = '';
-                $title_status = template::getTemplateSetting($db, "value", "globalmenu-title", $user, $template);
                 $navbar_center = template::getTemplateSetting($db, "value", "navbar-center", $user, $template);
                 if ($navbar_center == "1") { $navbar_center = " w-100 justify-content-center"; }
                 else { $navbar_center = ""; }
 
-                if ($title_status != '0')
+                // get menu title
+                $res = $db->query("SELECT name FROM {menu_names} WHERE id='" . $id . "'");
+                $row = mysqli_fetch_row($res);
+                $menuName = $row[0];
+                if (!empty($menuName))
                 {
-                    // get menu title
-                    $res = $db->query("SELECT name FROM {menu_names} WHERE id='" . $id . "'");
-                    $row = mysqli_fetch_row($res);
-                    $menuName = $row[0];
-                    if (!empty($menuName))
-                    {
-                        $navBarBrand = "<a class=\"navbar-brand\" id=\"navbar-brand\" href=\"index.html\">" . $menuName . "</a>";
-                    }
-                    else
-                    {
-                        $navBarBrand = "";
-                    }
+                    $navBarBrand = "<a class=\"navbar-brand\" id=\"navbar-brand\" href=\"index.html\">" . $menuName . "</a>";
+                }
+                else
+                {
+                    $navBarBrand = "";
                 }
 
                 // DRAW BOOTSTRAP 4 MENU
@@ -937,8 +935,8 @@ function myFunction() {
                             // set parents w child items (dropdown lists)
                             if (isset($menu['parents'][$itemId])) {
                                 $html .= "<li class=\"dropdown\">
-            				<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">" . $menu['items'][$itemId]['text'] . " <b class=\"caret\"></b></a>
-            				<ul class=\"dropdown-menu\">";
+                            <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">" . $menu['items'][$itemId]['text'] . " <b class=\"caret\"></b></a>
+                            <ul class=\"dropdown-menu\">";
 
                                 // select child items from db
                                 foreach ($menu['parents'][$itemId] as $child) {
@@ -954,7 +952,7 @@ function myFunction() {
                                 }
                                 // boostrap navi ends here
                                 $html .= "</ul>
-	              </li>";
+                  </li>";
 
                             }
                         } // end html markup of nav area
@@ -993,8 +991,7 @@ function myFunction() {
                 return null;
             }
 
-            echo buildMenu($db, 0, $menu, $id, $currentRole, $divider, $template);
-
+            echo buildMenu($db, 0, $menu, $id, $currentRole, $divider, $user, $template);
         }
 
         /**
