@@ -762,8 +762,8 @@ namespace YAWK {
 
                 // echo "<pre>";print_r($menu);echo"</pre>"; exit;
                 $navBarBrand = '';
-                $title_status = template::getTemplateSetting($db, "value", "globalmenu-title");
-                $navbar_center = template::getTemplateSetting($db, "value", "navbar-center");
+                $title_status = template::getTemplateSetting($db, "value", "globalmenu-title", $user, $template);
+                $navbar_center = template::getTemplateSetting($db, "value", "navbar-center", $user, $template);
                 if ($navbar_center == "1") { $navbar_center = " w-100 justify-content-center"; }
                 else { $navbar_center = ""; }
 

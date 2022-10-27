@@ -2443,10 +2443,10 @@ namespace YAWK {
          * @param $db
          * @return string
          */
-        static function getActiveBodyFont($db)
+        static function getActiveBodyFont($db, $user, $template)
         {
             /* @var \YAWK\db $db */
-            $bodyFont = \YAWK\template::getTemplateSetting($db, "value", "globaltext-fontfamily");
+            $bodyFont = \YAWK\template::getTemplateSetting($db, "value", "globaltext-fontfamily", $user, $template);
             $bodyFontFamily = "font-family: $bodyFont";
             return $bodyFontFamily;
         }
@@ -2531,21 +2531,61 @@ namespace YAWK {
          * @param object $db database
          * @param string $field the setting (field) to get
          * @param string $property the property to get
-         * @return bool
+         * @return array | bool
          */
-        static function getTemplateSetting($db, $field, $property)
-        {
-            /** @var $db \YAWK\db */
-            $tpl_id = settings::getSetting($db, "selectedTemplate");
-            if ($res = $db->query("SELECT $field
+        static function getTemplateSetting($db, $field, $property, $user, $template)
+        {   /** @var $db \YAWK\db */
+            // to ensure, we get the correct setting of the right template,
+            // it is important to do some checks to determine the correct template id
+            // to do that, we need data from 2 objects (user and template)
+
+            // check if template and user obj are there and not empty
+            if (isset($user) && (isset($template)))
+            {   // check, if user is allowed to override template
+
+                if ($user->overrideTemplate == 1)
+                {   // ok, get user templateID
+                    echo "overr";
+                    if (!empty($user->templateID))
+                    {   // set templateID for following query
+                        $validTemplateID = $user->templateID;
+                    }
+                    else
+                    {   // user->TemplateID not set, instead use default template
+                        if (!empty($template->selectedTemplate))
+                        {   // set global defined (current active), default template ID
+                            $validTemplateID = $template->selectedTemplate;
+                        }
+                    }
+                }
+                else
+                {   // user is not allowed to override template, use default template
+                    if (!empty($template->selectedTemplate))
+                    {   // set global defined (current active), default template ID
+                        $validTemplateID = $template->selectedTemplate;
+                    }
+                }
+            }
+            else
+            {   // unable to determine template from objects, load active (global) template instead
+                $validTemplateID = settings::getSetting($db, "selectedTemplate");
+            }
+
+            // query the template setting
+            if ($row = $db->query("SELECT $field
                         	FROM {template_settings}
                             WHERE property = '" . $property . "'
-                            AND templateID = '" . $tpl_id . "'")
-            ) {   // fetch data
-                $row = mysqli_fetch_row($res);
-                return $row[0];
-            } else {   // q failed
-                return false;
+                            AND templateID = '" . $validTemplateID . "'"))
+            {   // fetch data
+                $res = mysqli_fetch_row($row);
+                if (!empty($res))
+                {   // return valid template ID
+                    return $res[0];
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
 
@@ -2636,7 +2676,6 @@ namespace YAWK {
          * @param object $db database
          * @param string $position the template position
          * @param object $template template object
-
          */
         static function setPosition($db, $lang, $position, $currentpage, $template)
         {
