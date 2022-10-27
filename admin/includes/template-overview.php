@@ -497,18 +497,24 @@ echo"</section><!-- Main content -->
                         {   // get active template id
                             $activeTemplateId = \YAWK\settings::getSetting($db, "selectedTemplate");
 
+                            // set copy icon
+                            $tplCopyName = $row['name']."-copy";
+                            $tplName = $row['name'];
+
                             if ($row['id'] === $activeTemplateId)
                             {   // set published online
                                 $pub = "success"; $pubtext="$lang[ONLINE]";
                                 $statusText = "$lang[TPL_ON]";
                                 // do not allow to delete current active template
                                 $deleteIcon = "<i class=\"fa fa-ban\" title=\"$lang[TPL_DEL_FAILED_DUE_ACTIVE]\"></i>";
+                                $copyIcon = "<a title=\"$lang[COPY]\" onclick=\"setCopyTplSettings('$tplName');\" href=\"#\" data-toggle=\"modal\" data-target=\"#myModal\" data-tplName=\"$row[name]\"><i class=\"fa fa-copy\"></i></a>";
                             }
                             else if ($row['id'] === "1" && ($activeTemplateId !== $row['id']))
                             {   // do not allow to delete default template
                                 $pub = "danger"; $pubtext = "$lang[OFFLINE]";
                                 $statusText = "$lang[TPL_OFF]";
                                 $deleteIcon = "<i class=\"fa fa-ban\" title=\"$lang[TPL_DEL_DEFAULT_FAILED]\"></i>";
+                                $copyIcon = "<span title=\"$lang[COPY_ONLY_ACTIVE_TPL]\" href=\"#\"<i class=\"fa fa-copy text-muted\"></i></span>";
                             }
                             else
                             {   // set published offline
@@ -518,6 +524,7 @@ echo"</section><!-- Main content -->
                                 $deleteIcon = "<a class=\"fa fa-trash-o\" role=\"dialog\" data-confirm=\"$lang[TPL_DEL_CONFIRM] &laquo;".$row['name']." ID: ".$row['id']."&raquo;\"
                                 title=\"".$lang['TEMPLATE']."&nbsp;".$lang['DELETE']."\" href=\"index.php?page=template-overview&delete=1&templateID=".$row['id']."\"></a>";
                                 $previewLabel = '';
+                                $copyIcon = "<span title=\"$lang[COPY_ONLY_ACTIVE_TPL]\" href=\"#\"<i class=\"fa fa-copy text-muted\"></i></span>";
                             }
                             if ($row['id'] == ($userTemplateID) && ($row['id'] == $activeTemplateId))
                             {
@@ -553,11 +560,7 @@ echo"</section><!-- Main content -->
                                 $screenshot = "<img src=\"../system/templates/".$row['name']."/images/screenshot.jpg\" width=\"200\" class=\"img-rounded\">";
                             }
 
-                            // set copy icon
-                            $tplCopyName = $row['name']."-copy";
-                            $tplName = $row['name'];
                             $description = "copy of: ".$row['name']."";
-                            $copyIcon = "<a title=\"$lang[COPY]\" onclick=\"setCopyTplSettings('$tplName');\" href=\"#\" data-toggle=\"modal\" data-target=\"#myModal\" data-tplName=\"$row[name]\"><i class=\"fa fa-copy\"></i></a>";
                             $downloadIcon = "<a id=\"downloadTemplateLink-$row[id]\" title=\"$lang[TPL_DOWNLOAD]\" href=\"index.php?page=template-overview&action=download&folder=$tplName&id=$row[id]\" data-tplName=\"$tplName\"><i id=\"downloadTemplateIcon-$row[id]\" class=\"fa fa-file-zip-o\"></i></a>";
 
                             echo "<tr>
@@ -569,7 +572,7 @@ echo"</section><!-- Main content -->
           <td>".$activeBoldStart."<a href=\"index.php?page=template-positions&id=".$row['id']."\"><div style=\"width:100%\">".$row['name']."</div></a>".$row['description']."".$activeBoldEnd."</td>
           <td><a href=\"index.php?page=template-positions&id=".$row['id']."\" title=\"$lang[EDIT]: ".$row['name']."\">".$screenshot."</a></td>
           <td class=\"text-center\">
-            $downloadIcon &nbsp;
+            $downloadIcon &nbsp;            
             $copyIcon &nbsp;
             $deleteIcon 
           </td>
