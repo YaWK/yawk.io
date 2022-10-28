@@ -41,7 +41,7 @@ see what's going on and what has been done over the past few days, weeks, months
 <hr>
 <h3>Download Notes:</h3>
 <u><b>Please remember:</b></u> before you download this pre-release version: YaWK is currently in active development and <b>NOT YET RELEASED</b>.
-If you like, you can get a sneak peak - feel free to download the latest current development version from GitHub: <br>
+If you like, you can get a sneak peek - feel free to download the latest current development version from GitHub: <br>
 <br><b>https://github.com/YaWK/yawk.io/archive/master.zip</b>
 <br><br>
 But please consider - YaWK is in constant development and underlies <i>nearly daily changes</i>. Due this fact it can not be guaranteed that everything work in this test version as expected. You may <i>possibly</i> encounter some major or minor warnings or bugs.
