@@ -22,6 +22,7 @@ see what's going on and what has been done over the past few days, weeks, months
 <li>Migrate all code docs to doxygen because APIGEN is outdated ✓</li>
 <li>Add support for multilingual FrontEnd (Content) Pages and Menus ✓</li>
 <li>Major Updates of all Assets and Social Widgets </li>
+<li>Update CSS Framework to support the latest Bootstrap version (5.x)</li>
 <li>Add templates and demo pages <i><small>(scheduled until end of 2022)</small></i></li>
 <li><i><small>and of course: check and fix language errors, major and minor bugs</small></i></li>
 </ul>
@@ -35,7 +36,7 @@ see what's going on and what has been done over the past few days, weeks, months
 </ul>
 <b>Add social media channels</b>
 <ul>
-<li>YouTube tutorial videos</li>
+<li>YouTube HowTo videos</li>
 </ul>
 <hr>
 <h3>Download Notes:</h3>
@@ -43,7 +44,7 @@ see what's going on and what has been done over the past few days, weeks, months
 If you like, you can get a sneak peak - feel free to download the latest current development version from GitHub: <br>
 <br><b>https://github.com/YaWK/yawk.io/archive/master.zip</b>
 <br><br>
-But please consider - YaWK is is in constant development and underlies <i>nearly daily changes</i>. Due this fact it can not be guaranteed that everything work in this test version as expected. You may <i>possibly</i> encounter some major or minor warnings or bugs.
+But please consider - YaWK is in constant development and underlies <i>nearly daily changes</i>. Due this fact it can not be guaranteed that everything work in this test version as expected. You may <i>possibly</i> encounter some major or minor warnings or bugs.
 <br><br>
 Before YaWK will be officially released, you will always get the current development version. After the first version is officially released, there will be a seperate development branch. You should wait for the official first release before you use YaWK in productive environment. I'm happy about comments, stars, followers and / or code contributions. Thank You!
 <hr>
