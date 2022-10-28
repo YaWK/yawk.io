@@ -28,11 +28,11 @@ see what's going on and what has been done over the past few days, weeks, months
 </ul>
 <b>Update official website</b>
 <ul>
-<li>Update http://test.yawk.io to current version</li>
+<li>Update https://test.yawk.io to current version</li>
 <li>Add feature showcase</li>
 <li>Add support page <small><i>(and ticket system)</i></small></li>
 <li>Add admin handbook <small><i>(pdf and / or html)</i></small></li>
-<li>Add developer manual <small><i>(http://docs.yawk.io)</i></small></li>
+<li>Add developer manual <small><i>(https://docs.yawk.io)</i></small></li>
 </ul>
 <b>Add social media channels</b>
 <ul>
@@ -58,7 +58,7 @@ There are two ways to load YaWK on your webserver:<br><br>
     <br><br>
     <i>(afterwards move files from yawk.io folder to your project's root directory if necessary.)</i>
     <br><br>
-ATTENTION: Files must be accessable by webserver user & group. Make sure to check/set correct user/group permissions (example: chown -R www-data:www-data yourfolder)
+ATTENTION: Files must be accessible by webserver user & group. Make sure to check/set correct user/group permissions (example: chown -R www-data:www-data yourfolder)
 <br><br>
 </li>
 <li>
