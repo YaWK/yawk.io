@@ -1222,8 +1222,18 @@ namespace YAWK\BACKEND {
 
             if(isset($_GET['page']))
             {   // load given page
-                include(controller::filterfilename($db, $lang, "includes/".$_GET['page']));
-                self::drawHtmlContentClose();
+                $node = "includes/".$_GET['page']."";
+                $filename = "includes/".$_GET['page'].".php";
+
+                if (is_file($filename))
+                {   // ok, include this backend filge
+                    include(controller::filterfilename($db, $lang, $node));
+                    self::drawHtmlContentClose();
+                }
+                else
+                {   // backend page not found, throw error msg
+                    \YAWK\alert::draw("danger", $lang['ERROR'], $lang['FILE_NOT_FOUND'].": <b>".$filename."</b> <br><i>".$lang['REDIRECT_INFO']." ".$lang['TO'].": ".$lang['BACKEND']." ".$lang['HOME_PAGE']."</i>", "index.php?page=dashboard", "8400");
+                }
             }
 
             else if(isset($_GET['plugin']) && (!isset($_GET['pluginpage'])))
