@@ -167,8 +167,8 @@ namespace YAWK {
             $tpl_id = settings::getSetting($db, "selectedTemplate");
             // fetch template positions
             if ($res = $db->query("SELECT positions
-	                              FROM {templates}
-	                              WHERE id = '" . $tpl_id . "'")
+                                FROM {templates}
+                                WHERE id = '" . $tpl_id . "'")
             ) {   // fetch data
                 $posArray = array();
                 while ($row = $res->fetch_assoc()) {
@@ -217,19 +217,19 @@ namespace YAWK {
 
             // copy new template into database
             if ($res = $db->query("INSERT INTO {templates} (name, positions, description, releaseDate, author, authorUrl, weblink, subAuthor, subAuthorUrl, modifyDate, version, framework, license)
-  	                               VALUES('" . $this->newTplName . "', 
+                                   VALUES('" . $this->newTplName . "', 
                                           '" . $this->positions . "',
-  	                                      '" . $this->description . "',
-  	                                      '" . $now . "',
-  	                                      '" . $this->author . "',
-  	                                      '" . $this->authorUrl . "',
+                                          '" . $this->description . "',
+                                          '" . $now . "',
+                                          '" . $this->author . "',
+                                          '" . $this->authorUrl . "',
                                           '" . $this->weblink . "',
                                           '" . $this->subAuthor ."',
-  	                                      '" . $this->subAuthorUrl ."',
-  	                                      '" . $now . "',
+                                          '" . $this->subAuthorUrl ."',
+                                          '" . $now . "',
                                           '" . $this->version . "',
-  	                                      '" . $this->framework . "',
-  	                                      '" . $this->license . "')"))
+                                          '" . $this->framework . "',
+                                          '" . $this->license . "')"))
             {
 
             }
@@ -430,8 +430,8 @@ namespace YAWK {
             /** @param \YAWK\db $db */
             // returns an array with all template IDs
             $mysqlRes = $db->query("SELECT id, name
-	                              FROM {templates}
-	                              ORDER by name ASC");
+                                FROM {templates}
+                                ORDER by name ASC");
             while ($row = mysqli_fetch_assoc($mysqlRes)) {
                 $res[] = $row;
             }
@@ -1376,7 +1376,7 @@ namespace YAWK {
                                 }
                                 echo "<label for=\"$setting[property]\">$setting[label]</label>&nbsp;$setting[description]&nbsp;
                                   <input type=\"password\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
-										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\">";
+                     value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\">";
                             }
                             /* INPUT TEXT FIELD */
                             else if ($setting['fieldType'] === "input")
@@ -1390,7 +1390,7 @@ namespace YAWK {
                                 echo "<label for=\"$setting[property]\">$setting[label]&nbsp;$setting[description]&nbsp;
                                   <small><i class=\"small\" style=\"font-weight:normal\">$lang[DEFAULT]: $setting[valueDefault]</i></small></label>
                                   <input type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
-										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\">";
+                     value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\">";
                             }
 
                             /* COLOR TEXT FIELD */
@@ -1404,7 +1404,7 @@ namespace YAWK {
                                 echo "<label for=\"$setting[property]\">$setting[label]&nbsp;$setting[description]&nbsp;
                                   <small><i class=\"small\" style=\"font-weight:normal\">$lang[DEFAULT]: $setting[valueDefault]</i></small></label>
                                   <input type=\"text\" class=\"$setting[fieldClass]\" id=\"$setting[property]\" name=\"$setting[property]\" 
-										 value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\">";
+                     value=\"$setting[value]\" placeholder=\"$lang[$placeholder]\">";
                             }
                             else
                             {
@@ -1986,13 +1986,13 @@ namespace YAWK {
                 echo "<div id=\"googlefontcontainer\">";
 
                 if ($res = $db->query("SELECT id, font, description, activated
-    							FROM {gfonts}
-    							WHERE activated = 1
-    							AND id != 0
-    							ORDER BY font")
+                  FROM {gfonts}
+                  WHERE activated = 1
+                  AND id != 0
+                  ORDER BY font")
                 ) {
                     while ($row = mysqli_fetch_array($res)) {
-                        //	test output:
+                        //  test output:
                         $id = $row[0];
                         $value = $row[1];
                         $description = $row[2];
@@ -2038,7 +2038,7 @@ namespace YAWK {
                 if (isset($gfont) && (!empty($gfont))) {
                     // try to delete google font by name
                     if ($res = $db->query("DELETE from {gfonts}
-                     			   WHERE font LIKE '%" . $gfont . "%'")
+                             WHERE font LIKE '%" . $gfont . "%'")
                     ) {   // success
                         return true;
                     } else {   // q failed
@@ -2048,7 +2048,7 @@ namespace YAWK {
                 }
             } else {   // delete google font by ID
                 if ($res = $db->query("DELETE from {gfonts}
-                     			   WHERE id = '" . $gfontid . "'")
+                             WHERE id = '" . $gfontid . "'")
                 ) {   // success
                     return true;
                 } else {   // q failed
@@ -2082,7 +2082,7 @@ namespace YAWK {
                 $row = mysqli_fetch_row($res);
                 $id = $row[0] + 1;
                 if ($res = $db->query("INSERT INTO {gfonts} (id, font, description)
-  	                                   VALUES('" . $id . "', '" . $gfont . "', '" . $description . "')")
+                                       VALUES('" . $id . "', '" . $gfont . "', '" . $description . "')")
                 ) {   // success
                     return true;
                 } else {   // fetch failed
@@ -2553,7 +2553,7 @@ namespace YAWK {
 
             // query the template setting
             if ($row = $db->query("SELECT $field
-                        	FROM {template_settings}
+                          FROM {template_settings}
                             WHERE property = '" . $property . "'
                             AND templateID = '" . $validTemplateID . "'"))
             {   // fetch data
@@ -2611,6 +2611,11 @@ namespace YAWK {
             {   // unable to determine template from objects, load active (global) template instead
                 $validTemplateID = settings::getSetting($db, "selectedTemplate");
             }
+            // for any reasons, that valid template ID could not be set
+            if (!isset($validTemplateID) || (empty($validTemplateID)))
+            {   // set current (active / selected) template as templateID
+                $validTemplateID = settings::getSetting($db, "selectedTemplate");
+            }
             // must be set
             return $validTemplateID;
         }
@@ -2637,8 +2642,8 @@ namespace YAWK {
                     echo "<meta name=\"" . $row[0] . "\" content=\"" . $row[1] . "\" />";
                 } else {
                     $get_globaltags = $db->query("SELECT content
-		                        FROM {meta_global}
-		                        WHERE name = 'description'");
+                            FROM {meta_global}
+                            WHERE name = 'description'");
                     $row = mysqli_fetch_row($get_globaltags);
                     while ($i > 0) {
                         echo "<meta name=\"description\" content=\"" . $row[0] . "\" />";
@@ -2770,7 +2775,7 @@ namespace YAWK {
             }
             $array = array();
             $res = $db->query("SELECT property, value, longValue
-                        	FROM {template_settings}
+                          FROM {template_settings}
                             WHERE templateID = $templateID");
 
             while ($row = mysqli_fetch_assoc($res)) {
