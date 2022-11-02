@@ -1126,7 +1126,7 @@ namespace YAWK {
          * @brief Returns an array of all widgets that are linked with given page->id
          * @param object $db database
          * @param object $page the current page object
-         * @return array return all widgets that are connected with this page
+         * @return array|bool return all widgets that are connected with this page
          */
         static function loadWidgetsOfPage($db, $page)
         {
@@ -1148,6 +1148,29 @@ namespace YAWK {
                 else {
                     return false;
                 }
+            }
+        }
+
+
+        /**
+         * @brief Return all widget types as associative array
+         * @param object $db database
+         * @return array|bool return all widgets types from database
+         */
+        public static function getAllWidgetTypes($db)
+        {
+            $row = $db->query("SELECT * FROM {widget_types} ORDER BY name");
+            while ($res = mysqli_fetch_assoc($row))
+            {
+                $widgetTypes[] = $res;
+            }
+            if (is_array($widgetTypes) && (!empty($widgetTypes))){
+                return $widgetTypes;
+            }
+            else
+            {
+                \YAWK\sys::setSyslog($db, 39, 1, "failed to get list of widget types. $widgetTypes is empty or not set.", 0, 0, 0, 0);
+                return false;
             }
         }
 
