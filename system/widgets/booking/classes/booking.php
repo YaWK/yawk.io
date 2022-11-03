@@ -1,6 +1,10 @@
 <?php
 namespace YAWK\WIDGETS\BOOKING\FORM
 {
+
+    use YAWK\db;
+    use YAWK\settings;
+
     /**
      * @details<b>Booking Widget of Booking Plugin.</b>
      *
@@ -80,7 +84,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
          * @param object $db Database Object
          * @brief Load all widget settings on object init.
          */
-        public function __construct($db)
+        public function __construct(object $db)
         {
             // load this widget settings from db
             $this->widget = new \YAWK\widget();
@@ -108,8 +112,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
          * @param array $lang language array
          */
         public function init($db, $lang)
-        {   /** @param \YAWK\db */
-
+        {
             // set widget obj properties
             $this->setProperties();
 
@@ -288,7 +291,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
             <link rel=\"stylesheet\" href=\"system/engines/jquery/timepicker/jquery.timepicker.css\">
             <script src=\"//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js\"></script>";
 
-            if (\YAWK\settings::getSetting($db, "frontendLanguage") === "de-DE")
+            if (settings::getSetting($db, "frontendLanguage") === "de-DE")
             {
                 echo "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/de.js\"></script>
                       <script type=\"text/javascript\" src=\"system/engines/jquery/messages_de.min.js\"></script>";
@@ -360,7 +363,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
             echo $this->drawFrontendForm($lang);
 
             // draw thank you message div (hidden until submit)
-            echo $this->drawThankYouMessage($lang);
+            echo $this->drawThankYouMessage($db, $lang);
         }
 
         /**
@@ -400,13 +403,9 @@ namespace YAWK\WIDGETS\BOOKING\FORM
          * (will be displayed after successful submit)
          * @return string html code
          */
-        public function drawThankYouMessage($lang)
+        public function drawThankYouMessage($db, $lang): string
         {
-            if (!isset($db))
-            {
-                $db = new \YAWK\db();
-            }
-            $hostname = \YAWK\settings::getSetting($db, "host");
+            $hostname = settings::getSetting($db, "host");
             $html = "";
             $html .= "
             <div class=\"hidden d-none\" id=\"thankYouMessage\">
@@ -427,7 +426,7 @@ namespace YAWK\WIDGETS\BOOKING\FORM
          * @brief draw (output) html of the frontend form. This is displayed to the user. He will use to place a booking
          * @return string
          */
-        public function drawFrontendForm($lang)
+        public function drawFrontendForm($lang): string
         {
             // init form html code markup variable
             $html = "";
