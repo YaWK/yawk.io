@@ -111,7 +111,6 @@ echo"<ol class=\"breadcrumb\">
                         $widgetTypes = \YAWK\widget::getAllWidgetTypes($db);
                         if (isset($widgetTypes) && (is_array($widgetTypes)))
                         {   // draw widget types list data
-
                             foreach ($widgetTypes as $widget)
                             {
                                 // check widget contains language files
@@ -133,8 +132,10 @@ echo"<ol class=\"breadcrumb\">
 
                                 if (!empty($widget['icon']))
                                 {
+                                    if (!empty($widget['color'])){ $colorMarkup = 'color:#'.$widget['color'].';'; }
+                                    else { $colorMarkup='color:#666'; }
                                     echo '<div class="col-md-4 text-center" style="top:-20px;">';
-                                    echo '<h1><i class="'.$widget['icon'].' text-muted" style="vertical-align:middle;"></i></h1>';
+                                    echo '<h1><i class="'.$widget['icon'].'" style="vertical-align:middle;'.$colorMarkup.'"></i></h1>';
                                 }
                                 else {
                                     echo '<div class="col-md-4 text-center">';
