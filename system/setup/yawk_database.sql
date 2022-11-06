@@ -2417,7 +2417,9 @@ CREATE TABLE `cms_widget_types` (
   `status` int(11) NOT NULL DEFAULT '1',
   `name` varchar(128) NOT NULL,
   `folder` varchar(128) NOT NULL,
-  `description` text NOT NULL
+  `description` text NOT NULL,
+  `icon` varchar(128) NOT NULL,
+  `color` varchar(6) NOT NULL DEFAULT 'cccccc'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`, `icon`, `color`) VALUES
