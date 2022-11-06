@@ -559,5 +559,21 @@ namespace YAWK {
 
         } // eof drawWidgetsOnPageBox
 
+        /**
+         * @brief Draw a small question mark, enabling a tooltip on hover.
+         * toolTipText must be a string and will usually come from any language file.
+         * @param string $toolTipText text that will appear as tooltip on mouseover
+         */
+        public static function printTooltip($toolTipText)
+        {
+            if (!empty($toolTipText))
+            {   // print out toolTip markup
+                echo '<small><i class="fa fa-question-circle-o text-info" data-placement="auto right" data-toggle="tooltip" title="'.$toolTipText.'"></i></small>';
+            }
+            else {
+                echo '<small><i class="fa fa-question-circle-o text-info" data-placement="auto right" data-toggle="tooltip" title="Tooltip fehlt leider :("></i></small>';
+            }
+        }
+
     } /* END class::backend */
 }
