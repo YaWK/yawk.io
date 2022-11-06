@@ -15,7 +15,7 @@ if (!isset($page)) // if no page object is set
 }
 
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
-    echo "
+echo "
     <!-- Content Wrapper. Contains page content -->
     <div class=\"content-wrapper\" id=\"content-FX\">
     <!-- Content Header (Page header) -->
@@ -35,71 +35,75 @@ echo"<ol class=\"breadcrumb\">
 /* focus input text field on page load */
 backend::setFocus("alias");
 if(isset($_POST['alias']) && (!empty($_POST['alias'])))
-  {
-      $page->alias = $db->quote($_POST['alias']);
-      $page->menu = $db->quote($_POST['menuID']);
-      $page->blogid = $db->quote($_POST['blogid']);
-      $page->locked = $db->quote($_POST['locked']);
-      $page->plugin="";
-      $page->language = $db->quote($_POST['language']);
-      /* create page function */
-      if($page->create($db, $page->alias, $page->menu, $page->locked, $page->blogid, $page->plugin))
-      {
-          // YAWK\sys::setNotification($db, 1, "$lang[PAGE] $alias.html $lang[CREATED].", $user->id, 0, 0, 0);
-          alert::draw("success", "$lang[SUCCESS]", "$lang[PAGE] $lang[CREATED]","","420");
-          backend::setTimeout("index.php?page=pages",1260);
-      }
-      else
-      {   // create new page failed
-          print alert::draw("danger", "$lang[ERROR]", "$lang[SAVE] $lang[OF] $lang[PAGE] <strong>".$this->alias."</strong> $lang[FAILED]","page=page-new","4800");
-      }
+{
+    $page->alias = $db->quote($_POST['alias']);
+    $page->menu = $db->quote($_POST['menuID']);
+    $page->blogid = $db->quote($_POST['blogid']);
+    $page->locked = $db->quote($_POST['locked']);
+    $page->plugin="";
+    $page->language = $db->quote($_POST['language']);
+    /* create page function */
+    if($page->create($db, $page->alias, $page->menu, $page->locked, $page->blogid, $page->plugin))
+    {
+        // YAWK\sys::setNotification($db, 1, "$lang[PAGE] $alias.html $lang[CREATED].", $user->id, 0, 0, 0);
+        alert::draw("success", "$lang[SUCCESS]", "$lang[PAGE] $lang[CREATED]","","420");
+        backend::setTimeout("index.php?page=pages",1260);
+    }
+    else
+    {   // create new page failed
+        print alert::draw("danger", "$lang[ERROR]", "$lang[SAVE] $lang[OF] $lang[PAGE] <strong>".$this->alias."</strong> $lang[FAILED]","page=page-new","4800");
+    }
 
-  }
+}
 ?>
 <!-- FORM -->
 <div class="box box-default">
     <div class="box-body">
-<br>
-<form role="form" class="form-inline" action="index.php?page=page-new" method="post">
-  <label for="alias"><?php print $lang['PAGE_ADD_SUBTEXT']; ?>  </label><br>
-  <!-- TEXT FIELD -->
-  <input type="text" id="alias" size="84" name="alias" class="form-control" maxlength="255" 
-  placeholder="<?php print $lang['PAGE_ADD_PLACEHOLDER']; ?>" /> .html
+        <br>
+        <form role="form" class="form-inline" action="index.php?page=page-new" method="post">
+            <label for="alias"><?php print $lang['PAGE_ADD_SUBTEXT']; ?>
+                <?php echo backend::printTooltip($lang['TT_PAGE_FILENAME']); ?></label><br>
+            <!-- TEXT FIELD -->
+            <input type="text" id="alias" size="84" name="alias" class="form-control" maxlength="255"
+                   placeholder="<?php print $lang['PAGE_ADD_PLACEHOLDER']; ?>" /> .html
 
-<br><br>
-    <label for="language"><?php echo $lang['ASSIGN_LANGUAGE']; ?></label><br>
-    <select id="language" name="language" class="form-control">
-        <?php
-            echo language::drawLanguageSelectOptions();
-        ?>
-    </select>
+            <br><br>
+            <label for="language"><?php echo $lang['ASSIGN_LANGUAGE']; ?>
+                <?php echo backend::printTooltip($lang['TT_PAGE_LANGUAGE']); ?>
+            </label><br>
+            <select id="language" name="language" class="form-control">
+                <?php
+                echo language::drawLanguageSelectOptions();
+                ?>
+            </select>
 
-    <br><br>
-    <!-- MENU SELECTOR -->
-    &nbsp;&nbsp;<label for="menuID"><?php print $lang['IN_MENU']; ?></label> <select id="menuID" name="menuID" class="btn btn-default">
-        <?php
-        foreach (YAWK\backend::getMenusArray($db) AS $menue){
-            echo "<option value=\"".$menue['id']."\"";
-            if (isset($_POST['menu'])) {
-                if($_POST['menu'] === $menue['id']){
-                    echo " selected=\"selected\"";
+            <br><br>
+            <!-- MENU SELECTOR -->
+            &nbsp;&nbsp;<label for="menuID"><?php print $lang['IN_MENU']; ?>
+                <?php echo backend::printTooltip($lang['TT_PAGE_MENU']); ?></label> <select id="menuID" name="menuID" class="btn btn-default">
+                <?php
+                foreach (YAWK\backend::getMenusArray($db) AS $menue){
+                    echo "<option value=\"".$menue['id']."\"";
+                    if (isset($_POST['menu'])) {
+                        if($_POST['menu'] === $menue['id']){
+                            echo " selected=\"selected\"";
+                        }
+                        else if($page->menu === $menue['id'] && !$_POST['menu']){
+                            echo " selected=\"selected\"";
+                        }
+                    }
+                    echo ">".$menue['name']."</option>";
                 }
-                else if($page->menu === $menue['id'] && !$_POST['menu']){
-                    echo " selected=\"selected\"";
-                }
-            }
-            echo ">".$menue['name']."</option>";
-        }
-        ?>
-        <option value="empty"><?php echo $lang['NO_ENTRY']; ?></option>
-    </select>
+                ?>
+                <option value="empty"><?php echo $lang['NO_ENTRY']; ?></option>
+            </select>
 
-    <!-- SUBMIT BUTTON -->
-    <input type="submit" class="btn btn-success" value="<?php print $lang['PAGE_ADD_BTN']; ?>" />
+            <!-- SUBMIT BUTTON -->
+            <input type="submit" class="btn btn-success" value="<?php print $lang['PAGE_ADD_BTN']; ?>" />
 
-    <input type="hidden" name="blogid" value="0">
-  <input type="hidden" name="locked" value="0">
-</form>
-<br>
+            <input type="hidden" name="blogid" value="0">
+            <input type="hidden" name="locked" value="0">
+        </form>
+        <br>
     </div>
 </div>
