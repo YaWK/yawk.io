@@ -151,7 +151,7 @@ echo"<ol class=\"breadcrumb\">
                     <label for="widgetType"><?php echo $lang['WIDGET']; ?>
                         <?php echo backend::printTooltip($lang['TT_WIDGET_NAME']); ?>
                     </label>
-                    <select id="widgetType" name="widgetType" class="form-control">
+                    <select id="widgetType" name="widgetType" class="form-control" readonly>
                         <option value="<?php echo $widget->widgetType; ?>"><?php echo $widget->name; ?></option>
                     </select>
                     <!-- PAGE -->
@@ -208,28 +208,34 @@ echo"<ol class=\"breadcrumb\">
                     <input id="datetimepicker1" name="date_publish" autocomplete="off" class="form-control" value="<?php echo $widget->date_publish; ?>">
 
                     <!-- DATE_UNPUBLISH -->
-                    <label for ="datetimepicker2"><?php echo $lang['END_PUBLISH']; ?></label>
+                    <label for ="datetimepicker2"><?php echo $lang['END_PUBLISH']; ?>
+                        <?php echo backend::printTooltip($lang['TT_WIDGET_UNPUBLISH_DATE']); ?></label>
                     <input id="datetimepicker2" name="date_unpublish" autocomplete="off" class="form-control" value="<?php echo $widget->date_unpublish; ?>">
                     <br>
                     <!-- MARGIN TOP -->
-                    <label for="marginTop"><?php echo "$lang[MARGIN_TOP] <i><small>$lang[LEAVE_BLANK_FOR_NO_MARGIN]</small></i>"; ?></label>
+                    <label for="marginTop"><?php echo "$lang[MARGIN_TOP] <i><small>$lang[LEAVE_BLANK_FOR_NO_MARGIN]</small></i>"; ?>
+                        <?php echo backend::printTooltip($lang['TT_WIDGET_MARGIN_TOP']); ?></label>
                     <input type="text" id="marginTop" class="form-control" placeholder="" name="marginTop" maxlength="11" value="<?php echo $widget->marginTop; ?>">
                     <!-- MARGIN BOTTOM -->
-                    <label for="marginBottom"><?php echo "$lang[MARGIN_BOTTOM] <i><small>$lang[LEAVE_BLANK_FOR_NO_MARGIN]</small></i>"; ?></label>
+                    <label for="marginBottom"><?php echo "$lang[MARGIN_BOTTOM] <i><small>$lang[LEAVE_BLANK_FOR_NO_MARGIN]</small></i>"; ?>
+                        <?php echo backend::printTooltip($lang['TT_WIDGET_MARGIN_BOTTOM']); ?></label>
                     <input type="text" id="marginBottom" class="form-control" name="marginBottom" placeholder="" maxlength="11" value="<?php echo $widget->marginBottom; ?>">
                     <br>
                     <!-- SORTATION -->
-                    <label for="sort"><?php echo $lang['SORTATION_ORDER']; ?></label>
+                    <label for="sort"><?php echo $lang['SORTATION_ORDER']; ?>
+                        <?php echo backend::printTooltip($lang['TT_WIDGET_SORTATION_ORDER']); ?></label>
                     <input id="sort" type="text" class="form-control" name="sort" maxlength="6" value="<?php echo $widget->sort; ?>">
 
                     <!-- NOTE -->
-                    <label for ="widgetTitle"><?php echo $lang['NOTE']; ?></label>
+                    <label for ="widgetTitle"><?php echo $lang['NOTE']; ?>
+                        <?php echo backend::printTooltip($lang['TT_WIDGET_NOTE']); ?></label>
                     <input id="widgetTitle" name="widgetTitle" class="form-control" value="<?php echo $widget->widgetTitle; ?>">
                     <br>
 
                     <!-- PUBLISHED / UNPUBLISHED CHECKBOX -->
                     <?php if ($widget->published == "1") { $checkedHtml="checked=\"checked\""; } else $checkedHtml = ''; ?>
-                    <input id="publish" name="publish" value="1" type="checkbox" <?php echo $checkedHtml ?>> <label for="publish"><?php echo "$lang[PUBLISHED]"; ?></label>
+                    <input id="publish" name="publish" value="1" type="checkbox" <?php echo $checkedHtml ?>> <label for="publish"><?php echo "$lang[PUBLISHED]"; ?>
+                        <?php echo backend::printTooltip($lang['TT_WIDGET_PUBLISH']); ?></label>
 
                 </div>
             </div>
