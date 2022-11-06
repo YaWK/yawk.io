@@ -55,7 +55,8 @@ echo"<ol class=\"breadcrumb\">
                             }
                             ?>
                         </select>
-                        <label for="pageID"><?php echo $lang['ON_PAGE']; ?>:</label>
+                        <label for="pageID"><?php echo $lang['ON_PAGE']; ?>:
+                            <?php echo backend::printTooltip($lang['TT_WIDGET_PAGE']); ?></label>
                         <select id="pageID" name="pageID" class="form-control">
                             <option value="0"><?php echo $lang['ON_ALL_PAGES']; ?></option>
                             <?php
@@ -74,7 +75,8 @@ echo"<ol class=\"breadcrumb\">
                             }
                             ?>
                         </select>
-                        <label for="position"><?php echo $lang['AT_POSITION']; ?></label>
+                        <label for="position"><?php echo $lang['AT_POSITION']; ?>
+                            <?php echo backend::printTooltip($lang['TT_WIDGET_POS']); ?></label>
                         <select id="position" name="positions" class="form-control">
                             <option value=""></option>
                             <?php

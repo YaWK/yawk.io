@@ -236,7 +236,6 @@ echo"<ol class=\"breadcrumb\">
                     <?php if ($widget->published == "1") { $checkedHtml="checked=\"checked\""; } else $checkedHtml = ''; ?>
                     <input id="publish" name="publish" value="1" type="checkbox" <?php echo $checkedHtml ?>> <label for="publish"><?php echo "$lang[PUBLISHED]"; ?>
                         <?php echo backend::printTooltip($lang['TT_WIDGET_PUBLISH']); ?></label>
-
                 </div>
             </div>
         </div> <!-- end left col -->
