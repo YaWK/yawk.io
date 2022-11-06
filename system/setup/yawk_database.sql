@@ -11,7 +11,7 @@ CREATE TABLE `cms_assets` (
   `sortation` int(11) NOT NULL,
   `asset` varchar(255) NOT NULL,
   `link` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_assets` (`id`, `templateID`, `type`, `sortation`, `asset`, `link`) VALUES
 (1, 1, 'js', 1, 'jQuery 1.x', 'system/engines/jquery/jquery-1.12.4.min.js'),
@@ -30,7 +30,7 @@ CREATE TABLE `cms_assets_types` (
   `url1` varchar(255) NOT NULL,
   `url2` varchar(255) NOT NULL,
   `url3` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_assets_types` (`id`, `published`, `type`, `sortation`, `asset`, `property`, `internal`, `url1`, `url2`, `url3`) VALUES
 (1, 1, 1, 6, 'Bootstrap 3 JS', 'bootstrap3-js', 'system/engines/bootstrap3/dist/js/bootstrap.min.js', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js', ''),
@@ -75,7 +75,7 @@ CREATE TABLE `cms_blog` (
   `limitEntries` int(1) NOT NULL DEFAULT '0',
   `frontendIcon` int(1) NOT NULL DEFAULT '0',
   `showTotalVotes` int(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_blog_comments` (
   `id` int(11) NOT NULL,
@@ -92,7 +92,7 @@ CREATE TABLE `cms_blog_comments` (
   `isParent` int(1) NOT NULL DEFAULT '0',
   `isChild` int(1) NOT NULL DEFAULT '0',
   `parentID` int(11) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_blog_items` (
   `blogid` int(11) NOT NULL DEFAULT '1',
@@ -120,14 +120,14 @@ CREATE TABLE `cms_blog_items` (
   `itemcomments` int(1) NOT NULL DEFAULT '-1',
   `voteUp` int(11) NOT NULL DEFAULT '0',
   `voteDown` int(11) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_follower` (
   `id` int(11) NOT NULL,
   `requestDate` datetime DEFAULT NULL,
   `follower` int(11) NOT NULL,
   `hunted` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_friends` (
   `id` int(11) NOT NULL,
@@ -137,7 +137,7 @@ CREATE TABLE `cms_friends` (
   `friendB` int(11) NOT NULL,
   `confirmed` int(1) NOT NULL DEFAULT '0',
   `aborted` int(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_gfonts` (
   `id` int(11) NOT NULL,
@@ -145,7 +145,7 @@ CREATE TABLE `cms_gfonts` (
   `description` varchar(256) NOT NULL,
   `setting` varchar(32) NOT NULL,
   `activated` int(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_gfonts` (`id`, `font`, `description`, `setting`, `activated`) VALUES
 (0, 'none', 'no google font selected', '', 0),
@@ -238,7 +238,7 @@ CREATE TABLE `cms_logins` (
   `useragent` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE `cms_menu` (
@@ -259,7 +259,7 @@ CREATE TABLE `cms_menu` (
 `divider` int(11) NOT NULL DEFAULT 0,
 `blogid` int(11) NOT NULL DEFAULT 0,
 `menuLanguage` varchar(7) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_menu` (`id`, `sort`, `gid`, `menuID`, `parentID`, `published`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `title`, `text`, `href`, `target`, `divider`, `blogid`, `menuLanguage`) VALUES
 (1, 1, 1, 1, 0, 1, '2018-03-01 00:00:00', '2018-03-04 19:12:11', '2018-03-04 19:12:11', NULL, '', 'Welcome!', 'index.html', '_self', 0, 0, '');
@@ -269,7 +269,7 @@ CREATE TABLE `cms_menu_names` (
   `name` varchar(30) NOT NULL,
   `published` int(1) NOT NULL DEFAULT '1',
   `menuLanguage` varchar(7) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_menu_names` (`id`, `name`, `published`, `menuLanguage`) VALUES
 (1, 'MainMenu', 1, '');
@@ -277,7 +277,7 @@ INSERT INTO `cms_menu_names` (`id`, `name`, `published`, `menuLanguage`) VALUES
 CREATE TABLE `cms_meta_global` (
   `name` varchar(255) NOT NULL,
   `content` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_meta_global` (`name`, `content`) VALUES
 ('author', 'YaWK'),
@@ -289,7 +289,7 @@ CREATE TABLE `cms_meta_local` (
   `name` varchar(100) NOT NULL,
   `page` int(11) NOT NULL,
   `content` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_newsletter` (
   `id` int(11) NOT NULL,
@@ -297,7 +297,7 @@ CREATE TABLE `cms_newsletter` (
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `active` int(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_notifications` (
   `log_id` int(11) NOT NULL,
@@ -309,14 +309,14 @@ CREATE TABLE `cms_notifications` (
   `toUID` int(11) NOT NULL DEFAULT '0',
   `toGID` int(11) NOT NULL DEFAULT '0',
   `seen` int(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_notifications_msg` (
   `id` int(11) NOT NULL,
   `active` int(1) NOT NULL DEFAULT '1',
   `type` int(11) NOT NULL,
   `message` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_pages` (
   `id` int(11) NOT NULL,
@@ -335,7 +335,7 @@ CREATE TABLE `cms_pages` (
   `blogid` int(11) DEFAULT '0',
   `plugin` varchar(255) NOT NULL DEFAULT '0',
   `lang` varchar(7) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_pages` (`id`, `published`, `gid`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `alias`, `title`, `bgimage`, `owner`, `menu`, `locked`, `blogid`, `plugin`, `lang`) VALUES
 (1, 1, 1, '2018-03-08 00:00:00', '2018-03-08 00:00:00', '2018-03-08 00:00:00', NULL, 'index', 'Welcome to Yet another Web Kit!', '', -1, 0, 0, 0, '0', '');
@@ -346,7 +346,7 @@ CREATE TABLE `cms_plugins` (
   `description` varchar(255) NOT NULL,
   `icon` varchar(128) NOT NULL,
   `activated` int(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_plugins` (`id`, `name`, `description`, `icon`, `activated`) VALUES
 (1, 'tourdates', 'Termine, Events, Konzerte, Tourdaten u.&auml;. in einer sortierbaren Tabelle verwalten.', 'fa fa-table', 1),
@@ -383,7 +383,7 @@ CREATE TABLE `cms_plugin_booking` (
   `referer` varchar(255) NOT NULL,
   `cut` int(1) NOT NULL DEFAULT '0',
   `invited` int(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_plugin_faq` (
   `id` int(11) NOT NULL,
@@ -392,7 +392,7 @@ CREATE TABLE `cms_plugin_faq` (
   `cat` int(6) NOT NULL DEFAULT '1',
   `question` text NOT NULL,
   `answer` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_plugin_gallery` (
   `id` int(11) NOT NULL,
@@ -420,7 +420,7 @@ CREATE TABLE `cms_plugin_gallery` (
   `watermarkColor` varchar(7) NOT NULL,
   `watermarkBorderColor` varchar(7) NOT NULL,
   `watermarkBorder` varchar(12) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_plugin_gallery_items` (
   `id` int(11) NOT NULL,
@@ -430,7 +430,7 @@ CREATE TABLE `cms_plugin_gallery_items` (
   `title` varchar(255) NOT NULL,
   `author` varchar(255) NOT NULL,
   `authorUrl` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_plugin_msg` (
   `msg_id` int(11) NOT NULL,
@@ -442,7 +442,7 @@ CREATE TABLE `cms_plugin_msg` (
   `msg_read` int(1) NOT NULL DEFAULT '0',
   `trash` int(1) NOT NULL,
   `spam` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_plugin_tourdates` (
   `id` int(11) NOT NULL,
@@ -451,7 +451,7 @@ CREATE TABLE `cms_plugin_tourdates` (
   `venue` varchar(128) NOT NULL,
   `published` int(1) NOT NULL DEFAULT '1',
   `fburl` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_settings` (
   `property` varchar(255) NOT NULL,
@@ -469,7 +469,7 @@ CREATE TABLE `cms_settings` (
   `placeholder` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
   `options` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation`, `activated`, `label`, `icon`, `heading`, `subtext`, `fieldClass`, `fieldType`, `placeholder`, `description`, `options`) VALUES
 ('admin_email', '', '', 9, 5, 1, 'ADMIN_EMAIL_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
@@ -616,7 +616,7 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 CREATE TABLE `cms_settings_types` (
   `id` int(11) NOT NULL,
   `value` varchar(64) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_settings_types` (`id`, `value`) VALUES
 (1, 'system'),
@@ -661,7 +661,7 @@ CREATE TABLE `cms_stats` (
   `date_created` datetime DEFAULT NULL,
   `referer` varchar(255) NOT NULL,
   `page` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_syslog` (
   `log_id` int(11) NOT NULL,
@@ -673,7 +673,7 @@ CREATE TABLE `cms_syslog` (
   `toUID` int(11) NOT NULL DEFAULT '0',
   `toGID` int(11) NOT NULL DEFAULT '0',
   `seen` int(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_syslog_categories` (
   `id` int(11) NOT NULL,
@@ -682,7 +682,7 @@ CREATE TABLE `cms_syslog_categories` (
   `icon` varchar(128) NOT NULL,
   `type` varchar(255) NOT NULL,
   `notify` int(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_syslog_categories` (`id`, `active`, `property`, `icon`, `type`, `notify`) VALUES
 (1, 0, 'system-info', 'fa fa-wrench', 'text-default', 0),
@@ -754,7 +754,7 @@ CREATE TABLE `cms_templates` (
   `version` varchar(64) NOT NULL,
   `framework` varchar(64) NOT NULL,
   `license` varchar(128) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_templates` (`id`, `active`, `name`, `positions`, `description`, `releaseDate`, `author`, `authorUrl`, `weblink`, `subAuthor`, `subAuthorUrl`, `modifyDate`, `version`, `framework`, `license`) VALUES
 (1, 1, 'YaWK-bootstrap4', 'outerTop:outerLeft:outerRight:intro:globalmenu:top:leftMenu:mainTop:mainTopLeft:mainTopCenter:mainTopRight:main:mainBottom:mainBottomLeft:mainBottomCenter:mainBottomRight:mainFooter:mainFooterLeft:mainFooterCenter:mainFooterRight:rightMenu:bottom:footer:hiddentoolbar:debug:outerBottom', 'Bootstrap 4 Default Theme.', '2019-01-13 00:15:00', 'Daniel Retzl ', 'https://github.com/YaWK', 'https://www.yawk.io', 'Daniel Retzl', '', '2019-01-13 00:15:00', '1.0.0', 'bootstrap4', 'MIT');
@@ -778,7 +778,7 @@ CREATE TABLE `cms_template_settings` (
   `icon` varchar(128) NOT NULL,
   `heading` varchar(255) NOT NULL,
   `subtext` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `valueDefault`, `longValue`, `type`, `activated`, `sort`, `label`, `fieldClass`, `fieldType`, `options`, `placeholder`, `description`, `icon`, `heading`, `subtext`) VALUES
 (1, 1, 'heading-gfont', '76', '1', '', 0, 1, 0, 'Global GoogleFont ID', 'form-control', '', '', 'Default Google Font', '', '', '', ''),
@@ -1852,7 +1852,7 @@ INSERT INTO `cms_template_settings` (`id`, `templateID`, `property`, `value`, `v
 CREATE TABLE `cms_template_settings_types` (
   `id` int(11) NOT NULL,
   `type` varchar(64) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_template_settings_types` (`id`, `type`) VALUES
 (1, 'positions'),
@@ -1923,7 +1923,7 @@ CREATE TABLE `cms_tips` (
   `tipHeading` varchar(255) NOT NULL,
   `tipText` varchar(255) NOT NULL,
   `tipLink` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_tips` (`id`, `published`, `tipHeading`, `tipText`, `tipLink`) VALUES
 (1, 0, 'TOD_1_H', 'TOD_1_T', ''),
@@ -1965,13 +1965,13 @@ CREATE TABLE `cms_users` (
   `overrideTemplate` int(1) NOT NULL DEFAULT '1',
   `templateID` int(6) NOT NULL DEFAULT '1',
   `hashValue` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_users_online` (
   `uid` int(11) NOT NULL,
   `phpSessionID` varchar(128) NOT NULL,
   `currentTimeStamp` varchar(64) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_user_groups` (
   `id` int(11) NOT NULL,
@@ -1979,7 +1979,7 @@ CREATE TABLE `cms_user_groups` (
   `color` varchar(64) NOT NULL,
   `signup_allowed` int(1) NOT NULL DEFAULT '0',
   `backend_allowed` int(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_user_groups` (`id`, `value`, `color`, `signup_allowed`, `backend_allowed`) VALUES
 (1, 'Guest', 'success', 1, 0),
@@ -2000,7 +2000,7 @@ CREATE TABLE `cms_widgets` (
   `date_publish` datetime DEFAULT NULL,
   `date_unpublish` datetime DEFAULT NULL,
   `widgetTitle` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT INTO `cms_widgets` (`id`, `published`, `widgetType`, `pageID`, `sort`, `position`, `marginTop`, `marginBottom`, `date_publish`, `date_unpublish`, `widgetTitle`) VALUES
 (1, 1, 10, 0, 1, 'intro', 0, 0, '2019-08-13 19:00:56', NULL, 'Bootstrap Carousel (above globalmenu)');
 
@@ -2020,7 +2020,7 @@ CREATE TABLE `cms_widget_defaults` (
   `placeholder` varchar(255) NOT NULL,
   `options` text NOT NULL,
   `id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_widget_defaults` (`property`, `value`, `widgetType`, `activated`, `sortation`, `label`, `icon`, `heading`, `subtext`, `description`, `fieldClass`, `fieldType`, `placeholder`, `options`, `id`) VALUES
 ('loginboxLoginBtnText', 'Login', 1, 1, 10, 'LABEL_LOGINBOX_LOGIN_BTNTEXT', 'fa fa-toggle-on', 'TITLE_LOGINBOX_BUTTONS', '', 'DESC_LOGINBOX_LOGIN_BTNTEXT', 'form-control', '', 'PH_LOGINBOX_LOGIN_BTNTEXT', '', 1),
@@ -2408,7 +2408,7 @@ CREATE TABLE `cms_widget_settings` (
   `placeholder` varchar(255) NOT NULL,
   `options` text NOT NULL,
   `description` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT INTO `cms_widget_settings` (`id`, `widgetID`, `property`, `value`, `widgetType`, `activated`, `sortation`, `label`, `icon`, `heading`, `subtext`, `fieldClass`, `fieldType`, `placeholder`, `options`, `description`) VALUES
 (1, 1, 'customHtmlCode', '<div id=\"carouselExampleIndicators\" class=\"carousel slide\" data-ride=\"carousel\">\r\n  <ol class=\"carousel-indicators\">\r\n    <li data-target=\"#carouselExampleIndicators\" data-slide-to=\"0\" class=\"active\"></li>\r\n    <li data-target=\"#carouselExampleIndicators\" data-slide-to=\"1\"></li>\r\n    <li data-target=\"#carouselExampleIndicators\" data-slide-to=\"2\"></li>\r\n  </ol>\r\n  <div class=\"carousel-inner\">\r\n    <div class=\"carousel-item active\">\r\n      <img class=\"d-block w-100\" src=\"https://picsum.photos/1920/600\" alt=\"First slide\">\r\n    </div>\r\n    <div class=\"carousel-item\">\r\n      <img class=\"d-block w-100\" src=\"https://picsum.photos/1920/600\" alt=\"Second slide\">\r\n    </div>\r\n    <div class=\"carousel-item\">\r\n      <img class=\"d-block w-100\" src=\"https://picsum.photos/1920/600\" alt=\"Third slide\">\r\n    </div>\r\n  </div>\r\n  <a class=\"carousel-control-prev\" href=\"#carouselExampleIndicators\" role=\"button\" data-slide=\"prev\">\r\n    <span class=\"carousel-control-prev-icon\" aria-hidden=\"true\"></span>\r\n    <span class=\"sr-only\">Previous</span>\r\n  </a>\r\n  <a class=\"carousel-control-next\" href=\"#carouselExampleIndicators\" role=\"button\" data-slide=\"next\">\r\n    <span class=\"carousel-control-next-icon\" aria-hidden=\"true\"></span>\r\n    <span class=\"sr-only\">Next</span>\r\n  </a>\r\n</div>', 10, 1, 0, 'LABEL_CUSTOM_HTML_CODE_CONTENT', '', '', '', 'form-control', 'editor', 'PH_CUSTOM_HTML_CODE_CONTENT', '', 'DESC_CUSTOM_HTML_CODE_CONTENT');
 
@@ -2418,7 +2418,7 @@ CREATE TABLE `cms_widget_types` (
   `name` varchar(128) NOT NULL,
   `folder` varchar(128) NOT NULL,
   `description` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cms_widget_types` (`id`, `status`, `name`, `folder`, `description`, `icon`, `color`) VALUES
 (1,	1,	'Loginbox',	'loginbox',	'Display a User Login Box',	'fa fa-user-circle-o',	''),
