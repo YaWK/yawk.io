@@ -239,14 +239,14 @@ namespace YAWK\PLUGINS\BLOG {
                     $icon = "<i class=\"fa $icon\"></i>&nbsp;";
                 }
                 else
-                    {   // no icon is set, leave empty
-                        $icon = '';
-                    }
-            }
-            else
-                {   // icon disabled
+                {   // no icon is set, leave empty
                     $icon = '';
                 }
+            }
+            else
+            {   // icon disabled
+                $icon = '';
+            }
 
             if ($showTitle && $showDesc == 1) {   // show title AND description
                 print "<div class=\"container-fluid\">";
@@ -261,9 +261,9 @@ namespace YAWK\PLUGINS\BLOG {
                 print "<h1>$icon"."$description</h1><br>";
             }
             else
-                {   // just open a new container for following content (body, footer...)
-                    print "<div class=\"container-fluid\">";
-                }
+            {   // just open a new container for following content (body, footer...)
+                print "<div class=\"container-fluid\">";
+            }
             return null;
         }
 
@@ -307,10 +307,10 @@ namespace YAWK\PLUGINS\BLOG {
                 return true;
             }
             else
-                {
-                    // toggle blog item failed
-                    return false;
-                }
+            {
+                // toggle blog item failed
+                return false;
+            }
         }
 
         /**
@@ -353,9 +353,9 @@ namespace YAWK\PLUGINS\BLOG {
                 return true;
             }
             else
-                {   // update item group id failed
-                    return false;
-                }
+            {   // update item group id failed
+                return false;
+            }
         }
 
         /**
@@ -404,9 +404,9 @@ namespace YAWK\PLUGINS\BLOG {
                 $limitSql = "LIMIT $limit";
             }
             else
-                {
-                    $limitSql = '';
-                }
+            {
+                $limitSql = '';
+            }
 
             // select settings for given blog id
             $res = $db->query("SELECT * FROM {blog_items}
@@ -467,9 +467,9 @@ namespace YAWK\PLUGINS\BLOG {
                     $prettydate = trim($prettydate);
                 }
                 else
-                    {   // display no date
-                        $prettydate = '';
-                    }
+                {   // display no date
+                    $prettydate = '';
+                }
 
                 if ($this->permaLink === '1')
                 {   // show permalink of this entry
@@ -479,29 +479,29 @@ namespace YAWK\PLUGINS\BLOG {
                     $this->permaLink = "share this URL: <a href=\"$host/$alias.html\">$host/$alias.html</a>";
                 }
                 else
-                    {   // no permalink
-                        $page = new \YAWK\page();
-                        $alias = $page->getProperty($db, $this->pageid, "alias");
-                        $this->permaLink = '';
-                    }
+                {   // no permalink
+                    $page = new \YAWK\page();
+                    $alias = $page->getProperty($db, $this->pageid, "alias");
+                    $this->permaLink = '';
+                }
 
                 if ($this->showAuthor === '1')
                 {   //  show author of this entry
                     $author = "by <strong>$this->author</strong>";
                 }
                 else
-                    {   // do not display author
-                        $author = '';
-                    }
+                {   // do not display author
+                    $author = '';
+                }
 
                 if ($this->voting === '1')
                 {   // show voting box
                     $voting = self::drawVotingBox($db, $this->voteUp, $this->voteDown);
                 }
                 else
-                    {   // no voting
-                        $voting = '';
-                    }
+                {   // no voting
+                    $voting = '';
+                }
 
                 // current date + time
                 $atm = date("Y-m-d G:i:s");
@@ -516,9 +516,9 @@ namespace YAWK\PLUGINS\BLOG {
                     $session_gid = $_SESSION['gid'];
                 }
                 else
-                    {
-                        $session_gid = 1;
-                    }
+                {
+                    $session_gid = 1;
+                }
                 // check if content is outdated
                 if ($this->date_unpublish < $atm XOR $this->date_unpublish === NULL)
                 {
@@ -536,17 +536,17 @@ namespace YAWK\PLUGINS\BLOG {
                         $showAllButton = '';
                     }
                     else
+                    {
+                        if ($this->preview === 0)
                         {
-                            if ($this->preview === 0)
-                            {
-                                $showAllButton = "<a class=\"btn btn-default\" role=\"button\" href=\"$alias.html\"><i class=\"fa fa-bars\"></i> &nbsp;alles anzeigen</a>";
-                            }
-                            else
-                                {
-                                    $showAllButton = '';
-                                }
-                        $blogtextHtml = '';
+                            $showAllButton = "<a class=\"btn btn-default\" role=\"button\" href=\"$alias.html\"><i class=\"fa fa-bars\"></i> &nbsp;alles anzeigen</a>";
                         }
+                        else
+                        {
+                            $showAllButton = '';
+                        }
+                        $blogtextHtml = '';
+                    }
 
                     // check & set the different layouts
                     // LAYOUT 0 = 1 col, TEXT BLOG
@@ -567,14 +567,14 @@ namespace YAWK\PLUGINS\BLOG {
                                 $this->html .= self::draw_commentbox($db, $lang);
                             }
                             else
-                                {   // display btn with link to the full view
-                                    $this->html .= "<br><a class='btn btn-default' role='button' href=\"$alias.html\"><i class='fa fa-bars'></i> &nbsp;anzeigen</a>";
-                                }
+                            {   // display btn with link to the full view
+                                $this->html .= "<br><a class='btn btn-default' role='button' href=\"$alias.html\"><i class='fa fa-bars'></i> &nbsp;anzeigen</a>";
+                            }
                         }
                         else
-                            {   // no comments, show all button
-                                $this->html .= $showAllButton;
-                            }
+                        {   // no comments, show all button
+                            $this->html .= $showAllButton;
+                        }
                         if ($this->spacer === '1')
                         {
                             $this->html .= "<hr><br><br>";
@@ -604,14 +604,14 @@ namespace YAWK\PLUGINS\BLOG {
                                 $this->html .= self::draw_commentbox($db);
                             }
                             else
-                                {   // display btn with link to the full view
-                                    $this->html .= "<br><a class='btn btn-default' href=\"$alias.html\"><i class='fa fa-bars'></i> &nbsp;anzeigen</a>";
-                                }
+                            {   // display btn with link to the full view
+                                $this->html .= "<br><a class='btn btn-default' href=\"$alias.html\"><i class='fa fa-bars'></i> &nbsp;anzeigen</a>";
+                            }
                         }
                         else
-                            {   // no comments, show all button
-                                $this->html .= $showAllButton;
-                            }
+                        {   // no comments, show all button
+                            $this->html .= $showAllButton;
+                        }
 
                         if ($this->spacer === '1')
                         {
@@ -629,9 +629,9 @@ namespace YAWK\PLUGINS\BLOG {
                             $imgHtml = "<br><a href=\"$alias.html\"><img src=\"" . $this->thumbnail . "\" class=\"img-thumbnail img-righty-less hvr-grow\"></a><br><br>";
                         }
                         else
-                            {   // no thumbnail, empty markup
-                                $imgHtml = '';
-                            }
+                        {   // no thumbnail, empty markup
+                            $imgHtml = '';
+                        }
 
                         // fill HTML code
                         $this->html .= "
@@ -640,29 +640,29 @@ namespace YAWK\PLUGINS\BLOG {
                           <small class=\"pull-right\"><i>$this->permaLink$prettydate $author</i></small><br>
                            <h2>$this->title&nbsp;<small>$this->subtitle</small></h2>$this->teasertext ".$blogtextHtml . "";
 
-                            // are comments enabled?
-                            if ($this->comments !== '0')
+                        // are comments enabled?
+                        if ($this->comments !== '0')
+                        {
+                            if (isset($full_view) && ($full_view === 1))
                             {
-                                if (isset($full_view) && ($full_view === 1))
-                                {
-                                    $this->html .= self::draw_commentbox($db);
-                                    // $this->html .= $voting;
-                                }
-                                else
-                                    {
-                                        $this->html .= "<br><a class=\"btn btn-dark hvr-grow\" href=\"$alias.html\"><i class='fa fa-bars'></i> &nbsp;Show more</a><br><br>";
-                                    }
+                                $this->html .= self::draw_commentbox($db);
+                                // $this->html .= $voting;
                             }
                             else
-                                {
-                                    $this->html .= $showAllButton;
-                                }
-
-                            if ($this->spacer === '1')
                             {
-                                $this->html .= "<hr>";
+                                $this->html .= "<br><a class=\"btn btn-dark hvr-grow\" href=\"$alias.html\"><i class='fa fa-bars'></i> &nbsp;Show more</a><br><br>";
                             }
-                            $this->html .= "</div>
+                        }
+                        else
+                        {
+                            $this->html .= $showAllButton;
+                        }
+
+                        if ($this->spacer === '1')
+                        {
+                            $this->html .= "<hr>";
+                        }
+                        $this->html .= "</div>
                           <div class=\"col-md-12 col-sm-12 col-lg-4\">
                           <br>$imgHtml </div>
     
@@ -677,28 +677,28 @@ namespace YAWK\PLUGINS\BLOG {
                             <small class=\"pull-right\"><i>$this->permaLink$prettydate $author</i></small>
                             <h2>$this->title&nbsp;<small>$this->subtitle</small></h2>$imgHtml $this->teasertext" . $blogtextHtml . "
                             ";
-                                // are comments enabled?
-                                if ($this->comments !== '0')
-                                {
-                                    if (isset($full_view) && ($full_view === 1))
-                                    {
-                                        $this->html .= self::draw_commentbox($db);
-                                    }
-                                    else
-                                        {
-                                            $this->html .= "<a href=\"$alias.html\"><i class='btn btn-info'>comments anzeigen</i></a>";
-                                        }
-                                }
-                                else
-                                    {
-                                        $this->html .= $showAllButton;
-                                    }
+                        // are comments enabled?
+                        if ($this->comments !== '0')
+                        {
+                            if (isset($full_view) && ($full_view === 1))
+                            {
+                                $this->html .= self::draw_commentbox($db);
+                            }
+                            else
+                            {
+                                $this->html .= "<a href=\"$alias.html\"><i class='btn btn-info'>comments anzeigen</i></a>";
+                            }
+                        }
+                        else
+                        {
+                            $this->html .= $showAllButton;
+                        }
 
-                                if ($this->spacer === '1')
-                                {
-                                    $this->html .= "<hr>";
-                                }
-                                $this->html .= "</div>
+                        if ($this->spacer === '1')
+                        {
+                            $this->html .= "<hr>";
+                        }
+                        $this->html .= "</div>
                           <div class=\"col-xs-6 col-md-4\"><br>advertising space
                             </div>
                         </div><br><br>";
@@ -732,9 +732,9 @@ namespace YAWK\PLUGINS\BLOG {
                                 $this->html .= "<hr><br><br>";
                             }
                             else
-                                {
-                                    $this->html .= "<br><br>";
-                                }
+                            {
+                                $this->html .= "<br><br>";
+                            }
                         }
                     }
                 }
@@ -742,224 +742,224 @@ namespace YAWK\PLUGINS\BLOG {
             return null;
         }
 
-    /**
-    * @details +++ still in development +++ not for production use! - Draw a voting box (thumbs up/down)
-    * @author Daniel Retzl <danielretzl@gmail.com>
-    * @version 0.0.0
-    * @link http://yawk.io
-    * @param object $db Database Object
-    * @param int $voteUp Vote up integer
-    * @param int $voteDown Vote down integer
-    * @return mixed Html voting box
-    */
-    function drawVotingBox($db, $voteUp, $voteDown)
-    {   /** @var $db \YAWK\db */
-        if ($this->voting === '1')
-        {
-            $totalVotes = $voteUp + $voteDown;
-            // check, if there are any votes yet
-            if ($totalVotes === 0)
-            {   // if not, set this text:
-                $totalText = "<b>Be the first to vote!</b>";
-            }
-            // check if total votes should be shown or not
-            if ($this->showTotalVotes === '1')
+        /**
+         * @details +++ still in development +++ not for production use! - Draw a voting box (thumbs up/down)
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 0.0.0
+         * @link http://yawk.io
+         * @param object $db Database Object
+         * @param int $voteUp Vote up integer
+         * @param int $voteDown Vote down integer
+         * @return mixed Html voting box
+         */
+        function drawVotingBox($db, $voteUp, $voteDown)
+        {   /** @var $db \YAWK\db */
+            if ($this->voting === '1')
             {
-                // show total votes
-                $totalText = "<b>Total Votes:</b> <span id=\"totalVotesText\">$totalVotes</span>";
-            }
-            else
-            {   // no total votes, empty markup
-                $totalText = "";
-            }
+                $totalVotes = $voteUp + $voteDown;
+                // check, if there are any votes yet
+                if ($totalVotes === 0)
+                {   // if not, set this text:
+                    $totalText = "<b>Be the first to vote!</b>";
+                }
+                // check if total votes should be shown or not
+                if ($this->showTotalVotes === '1')
+                {
+                    // show total votes
+                    $totalText = "<b>Total Votes:</b> <span id=\"totalVotesText\">$totalVotes</span>";
+                }
+                else
+                {   // no total votes, empty markup
+                    $totalText = "";
+                }
 
-            $votingBox = "<div class=\"mx-auto d-block\"><h3>Vote this</h3><br><h5><small>$totalText
+                $votingBox = "<div class=\"mx-auto d-block\"><h3>Vote this</h3><br><h5><small>$totalText
             <span id=\"voteUp\" class=\"hvr-grow\" style=\"cursor:pointer;\"><i class=\"fa fa-thumbs-o-up fa-3x\" id=\"voteUpIcon\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"LIKE this\"></i>&nbsp;(<span id=\"voteUpText\"><small>$voteUp</small></span>)</span>
             &nbsp; 
             <span id=\"voteDown\" class=\"hvr-grow\" style=\"cursor:pointer;\"><i class=\"fa fa-thumbs-o-down fa-3x\" id=\"voteDownIcon\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Dislike this\"></i>&nbsp;(<span id=\"voteDownText\"><small>$voteDown</small></span>)</span><br></small></h5></div>";
-            return $votingBox;
-        }
-        else
+                return $votingBox;
+            }
+            else
             {   // no voting allowed
                 return null;
             }
-    }
+        }
 
-    /**
-     * @brief @brief Get any blog property you want from given blogid.
-     * @details Selection goes like this: "SELECT $property FROM {blog} WHERE id = $blogid
-     * @author Daniel Retzl <danielretzl@gmail.com>
-     * @version 1.0.0
-     * @param object $db Database Object
-     * @param int $blogid The blog id of which we want to get the settings
-     * @param string $property The property to get
-     * @return mixed|bool
-    */
-    function getBlogProperty($db, $blogid, $property)
-    {
-        /** @var $db \YAWK\db */
-        if ($res = $db->query("SELECT $property FROM {blog} WHERE id = '" . $blogid . "'"))
-        {   // fetch data
-            if ($row = mysqli_fetch_row($res))
-            {
-                // success
-                return $row['0'];
-            }
-            else
+        /**
+         * @brief @brief Get any blog property you want from given blogid.
+         * @details Selection goes like this: "SELECT $property FROM {blog} WHERE id = $blogid
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @param object $db Database Object
+         * @param int $blogid The blog id of which we want to get the settings
+         * @param string $property The property to get
+         * @return mixed|bool
+         */
+        static function getBlogProperty($db, $blogid, $property)
+        {
+            /** @var $db \YAWK\db */
+            if ($res = $db->query("SELECT $property FROM {blog} WHERE id = '" . $blogid . "'"))
+            {   // fetch data
+                if ($row = mysqli_fetch_row($res))
+                {
+                    // success
+                    return $row['0'];
+                }
+                else
                 {   // fetch failed
                     return false;
                 }
-        }
-        else
+            }
+            else
             {   // q failed
                 return false;
             }
-    }
+        }
 
-    /**
-     * @brief @brief Load properties for given blog id and store $this -> $blog properties
-     * @author Daniel Retzl <danielretzl@gmail.com>
-     * @version 1.0.0
-     * @param object $db Database Object
-     * @param int $blogid The blog id of which we want to load properties
-     * @param string $property The property to get
-     * @return bool
-    */
-    function loadBlogProperties($db, $blogid)
-    {
-        /** @var $db \YAWK\db */
-        if ($res = $db->query("SELECT * FROM {blog} WHERE id = '" . $blogid . "'"))
-        {   // fetch data
-            if ($row = mysqli_fetch_array($res))
-            {   // set properties
-                $this->id = $row['id'];
-                $this->sort = $row['sort'];
-                $this->published = $row['published'];
-                $this->name = $row['name'];
-                $this->description = $row['description'];
-                $this->icon = $row['icon'];
-                $this->showTitle = $row['showtitle'];
-                $this->showDesc = $row['showdesc'];
-                $this->showDate = $row['showdate'];
-                $this->showAuthor = $row['showauthor'];
-                $this->sequence = $row['sequence'];
-                $this->sortation = $row['sortation'];
-                $this->footer = $row['footer'];
-                $this->comments = $row['comments'];
-                $this->gid = $row['gid'];
-                $this->permaLink = $row['permalink'];
-                $this->layout = $row['layout'];
-                $this->preview = $row['preview'];
-                $this->voting = $row['voting'];
-                $this->spacer = $row['spacer'];
-                $this->frontendIcon = $row['frontendIcon'];
-                $this->showTotalVotes = $row['showTotalVotes'];
-                return true;
-            }
-            else
+        /**
+         * @brief @brief Load properties for given blog id and store $this -> $blog properties
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @param object $db Database Object
+         * @param int $blogid The blog id of which we want to load properties
+         * @param string $property The property to get
+         * @return bool
+         */
+        function loadBlogProperties($db, $blogid)
+        {
+            /** @var $db \YAWK\db */
+            if ($res = $db->query("SELECT * FROM {blog} WHERE id = '" . $blogid . "'"))
+            {   // fetch data
+                if ($row = mysqli_fetch_array($res))
+                {   // set properties
+                    $this->id = $row['id'];
+                    $this->sort = $row['sort'];
+                    $this->published = $row['published'];
+                    $this->name = $row['name'];
+                    $this->description = $row['description'];
+                    $this->icon = $row['icon'];
+                    $this->showTitle = $row['showtitle'];
+                    $this->showDesc = $row['showdesc'];
+                    $this->showDate = $row['showdate'];
+                    $this->showAuthor = $row['showauthor'];
+                    $this->sequence = $row['sequence'];
+                    $this->sortation = $row['sortation'];
+                    $this->footer = $row['footer'];
+                    $this->comments = $row['comments'];
+                    $this->gid = $row['gid'];
+                    $this->permaLink = $row['permalink'];
+                    $this->layout = $row['layout'];
+                    $this->preview = $row['preview'];
+                    $this->voting = $row['voting'];
+                    $this->spacer = $row['spacer'];
+                    $this->frontendIcon = $row['frontendIcon'];
+                    $this->showTotalVotes = $row['showTotalVotes'];
+                    return true;
+                }
+                else
                 {   // fetch failed
                     return false;
                 }
-        }
-        else
+            }
+            else
             {   // q failed
                 return false;
             }
-    }
+        }
 
-    /**
-     * @brief @brief Load properties for given blog item (entry) and store $this -> $blog properties
-     * @author Daniel Retzl <danielretzl@gmail.com>
-     * @version 1.0.0
-     * @param object $db Database Object
-     * @param int $blogid The blog id of which we want to load properties
-     * @param int $itemid The item id of which we want to load properties
-     * @return bool
-    */
-    function loadItemProperties($db, $blogid, $itemid)
-    {   /** @var $db \YAWK\db */
-        if ($res = $db->query("SELECT * FROM {blog_items}
+        /**
+         * @brief @brief Load properties for given blog item (entry) and store $this -> $blog properties
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @param object $db Database Object
+         * @param int $blogid The blog id of which we want to load properties
+         * @param int $itemid The item id of which we want to load properties
+         * @return bool
+         */
+        function loadItemProperties($db, $blogid, $itemid)
+        {   /** @var $db \YAWK\db */
+            if ($res = $db->query("SELECT * FROM {blog_items}
                         WHERE blogid = '" . $blogid . "'
                         AND id = '" . $itemid . "'"))
-        {   // fetch data
-            if ($row = mysqli_fetch_array($res)) {   // set blog ITEM properties
-                $this->blogid = $row['blogid'];
-                $this->itemid = $row['id'];
-                $this->uid = $row['uid'];
-                $this->pageid = $row['pageid'];
-                $this->sort = $row['sort'];
-                $this->published = $row['published'];
-                $this->itemgid = $row['itemgid'];
-                $this->teaser = $row['teaser'];
-                $this->blogtitle = $row['title'];
-                $this->filename = $row['filename'];
-                $this->subtitle = $row['subtitle'];
-                $this->date_created = $row['date_created'];
-                $this->date_changed = $row['date_changed'];
-                $this->date_publish = $row['date_publish'];
-                $this->date_unpublish = $row['date_unpublish'];
-                $this->teasertext = $row['teasertext'];
-                $this->blogtext = $row['blogtext'];
-                $this->author = $row['author'];
-                $this->thumbnail = $row['thumbnail'];
-                $this->youtubeUrl = $row['youtubeUrl'];
-                $this->weblink = $row['weblink'];
-                $this->itemlayout = $row['itemlayout'];
-                $this->itemcomments = $row['itemcomments'];
+            {   // fetch data
+                if ($row = mysqli_fetch_array($res)) {   // set blog ITEM properties
+                    $this->blogid = $row['blogid'];
+                    $this->itemid = $row['id'];
+                    $this->uid = $row['uid'];
+                    $this->pageid = $row['pageid'];
+                    $this->sort = $row['sort'];
+                    $this->published = $row['published'];
+                    $this->itemgid = $row['itemgid'];
+                    $this->teaser = $row['teaser'];
+                    $this->blogtitle = $row['title'];
+                    $this->filename = $row['filename'];
+                    $this->subtitle = $row['subtitle'];
+                    $this->date_created = $row['date_created'];
+                    $this->date_changed = $row['date_changed'];
+                    $this->date_publish = $row['date_publish'];
+                    $this->date_unpublish = $row['date_unpublish'];
+                    $this->teasertext = $row['teasertext'];
+                    $this->blogtext = $row['blogtext'];
+                    $this->author = $row['author'];
+                    $this->thumbnail = $row['thumbnail'];
+                    $this->youtubeUrl = $row['youtubeUrl'];
+                    $this->weblink = $row['weblink'];
+                    $this->itemlayout = $row['itemlayout'];
+                    $this->itemcomments = $row['itemcomments'];
+                }
+                else
+                {   // fetch failed
+                    return false;
+                }
             }
             else
-            {   // fetch failed
+            {   // q failed
                 return false;
             }
+            return true;
         }
-        else
-        {   // q failed
-            return false;
-        }
-        return true;
-    }
 
-    /**
-     * @brief Save blog blog entry data. (See blog properties)
-     * @author Daniel Retzl <danielretzl@gmail.com>
-     * @version 1.0.0
-     * @param object $db Database Object
-     * @return bool
-    */
-    function save($db)
-    {
-        /** @var $db \YAWK\db */
-        $date_changed = date("Y-m-d G:i:s");
-        // $this->teasertext = stripslashes(str_replace('\r\n', '', $this->teasertext));
-        /* alias string manipulation to generate a valid filename */
-        $this->filename = mb_strtolower($this->filename); // lowercase
-        $this->filename = str_replace(" ", "-", $this->filename); // replace all ' ' with -
-        // special chars
-        $umlaute = array("/ä/", "/ü/", "/ö/", "/Ä/", "/Ü/", "/Ö/", "/ß/"); // array of special chars
-        $ersetze = array("ae", "ue", "oe", "ae", "ue", "oe", "ss"); // array of replacement chars
-        $this->filename = preg_replace($umlaute, $ersetze, $this->filename);      // replace with preg
-        $this->filename = preg_replace("/[^a-z0-9\-\/]/i", "", $this->filename); // final check: just numbers and chars are allowed
-
-        // get filename from pages db
-        $res = $db->query("SELECT alias FROM {pages} WHERE id = '" . $this->pageid . "'");
-        $row = mysqli_fetch_row($res);
-        $alias_old = $row[0];
-        $filename_old = "../content/pages/" . $alias_old . ".php";
-        $filename = "../content/pages/" . $this->filename . ".php";
-        // set content of the plugin file
-        $content = "<?php \$blog_id = $this->blogid; \$item_id = $this->itemid; \$full_view = 1; include 'system/plugins/blog/blog.php'; ?>";
-        if (file_exists($filename_old))
+        /**
+         * @brief Save blog blog entry data. (See blog properties)
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @param object $db Database Object
+         * @return bool
+         */
+        function save($db)
         {
-            $handle = fopen($filename, "wr");
-            $res = fwrite($handle, $content);
-            fclose($handle);
-            chmod($filename, 0777);
-            if (!$res)
-            {   // cannot write file, throw error
-                \YAWK\alert::draw("danger", "Error", "could not write file: $filename", "", "4200");
+            /** @var $db \YAWK\db */
+            $date_changed = date("Y-m-d G:i:s");
+            // $this->teasertext = stripslashes(str_replace('\r\n', '', $this->teasertext));
+            /* alias string manipulation to generate a valid filename */
+            $this->filename = mb_strtolower($this->filename); // lowercase
+            $this->filename = str_replace(" ", "-", $this->filename); // replace all ' ' with -
+            // special chars
+            $umlaute = array("/ä/", "/ü/", "/ö/", "/Ä/", "/Ü/", "/Ö/", "/ß/"); // array of special chars
+            $ersetze = array("ae", "ue", "oe", "ae", "ue", "oe", "ss"); // array of replacement chars
+            $this->filename = preg_replace($umlaute, $ersetze, $this->filename);      // replace with preg
+            $this->filename = preg_replace("/[^a-z0-9\-\/]/i", "", $this->filename); // final check: just numbers and chars are allowed
+
+            // get filename from pages db
+            $res = $db->query("SELECT alias FROM {pages} WHERE id = '" . $this->pageid . "'");
+            $row = mysqli_fetch_row($res);
+            $alias_old = $row[0];
+            $filename_old = "../content/pages/" . $alias_old . ".php";
+            $filename = "../content/pages/" . $this->filename . ".php";
+            // set content of the plugin file
+            $content = "<?php \$blog_id = $this->blogid; \$item_id = $this->itemid; \$full_view = 1; include 'system/plugins/blog/blog.php'; ?>";
+            if (file_exists($filename_old))
+            {
+                $handle = fopen($filename, "wr");
+                $res = fwrite($handle, $content);
+                fclose($handle);
+                chmod($filename, 0777);
+                if (!$res)
+                {   // cannot write file, throw error
+                    \YAWK\alert::draw("danger", "Error", "could not write file: $filename", "", "4200");
+                }
             }
-        }
-        else
+            else
             {
                 $handle = fopen($filename, "wr");
                 $res = fwrite($handle, $content);
@@ -970,44 +970,44 @@ namespace YAWK\PLUGINS\BLOG {
                     \YAWK\alert::draw("danger", "Error", "could not create file: $filename", "", "4200");
                 }
             }
-        // convert html special chars
-        
-        
-        $this->title = htmlentities($this->title);
-        $this->subtitle = htmlentities($this->subtitle);
+            // convert html special chars
 
-        // $this->blogtext = nl2br(htmlentities($this->blogtext, ENT_QUOTES, 'UTF-8'));
 
-        // UPDATE PAGES TABLE
-        if ($res = $db->query("UPDATE {pages} SET
+            $this->title = htmlentities($this->title);
+            $this->subtitle = htmlentities($this->subtitle);
+
+            // $this->blogtext = nl2br(htmlentities($this->blogtext, ENT_QUOTES, 'UTF-8'));
+
+            // UPDATE PAGES TABLE
+            if ($res = $db->query("UPDATE {pages} SET
             alias = '" . $this->filename . "',
             title = '" . $this->blogtitle . "'
             WHERE id = '" . $this->pageid . "'"))
-        {
-            // UPDATE LOCAL META KEYWORDS
-            if (!$db->query("UPDATE {meta_local} SET
+            {
+                // UPDATE LOCAL META KEYWORDS
+                if (!$db->query("UPDATE {meta_local} SET
                     name = 'keywords',
                     content = '" . $this->metakeywords . "'
                     WHERE page = '" . $this->pageid . "'
                     AND name = 'keywords'"))
-            {   // could not insert, throw alert
-                \YAWK\alert::draw("warning", "Failed to update keywords.", "Keywords could not be saved.", "", 5800);
-            }
+                {   // could not insert, throw alert
+                    \YAWK\alert::draw("warning", "Failed to update keywords.", "Keywords could not be saved.", "", 5800);
+                }
 
-            // UPDATE LOCAL META DESCRIPTION
-            if (!$db->query("UPDATE {meta_local} SET
+                // UPDATE LOCAL META DESCRIPTION
+                if (!$db->query("UPDATE {meta_local} SET
                     content = '" . $this->metadescription . "'
                     WHERE page = '" . $this->pageid . "'
                     AND name = 'description' "))
-            {   // could not insert, throw alert
-                \YAWK\alert::draw("warning", "Failed to update meta description.", "Meta description could not be saved.", "", 5800);
-            }
+                {   // could not insert, throw alert
+                    \YAWK\alert::draw("warning", "Failed to update meta description.", "Meta description could not be saved.", "", 5800);
+                }
 
-            // UPDATE BLOG ENTRY ITSELF
-            if ($this->date_unpublish === "0000-00-00 00:00:00" || (empty($this->date_unpublish)))
-            {
-                // sql code with date_unblish = NULL
-                if ($res = $db->query("UPDATE {blog_items} SET
+                // UPDATE BLOG ENTRY ITSELF
+                if ($this->date_unpublish === "0000-00-00 00:00:00" || (empty($this->date_unpublish)))
+                {
+                    // sql code with date_unblish = NULL
+                    if ($res = $db->query("UPDATE {blog_items} SET
                     published = '" . $this->published . "',
                     itemgid = '" . $this->itemgid . "',
                     sort = '" . $this->sort . "',
@@ -1027,15 +1027,15 @@ namespace YAWK\PLUGINS\BLOG {
                     itemcomments = '" . $this->itemcomments . "'
                     WHERE id = '" . $this->itemid . "'
                     AND blogid = '" . $this->blogid . "'"))
-                {   // success
-                    return true;
+                    {   // success
+                        return true;
+                    }
+                    else
+                    {   // update blog items failed,
+                        return false;
+                    }
                 }
                 else
-                {   // update blog items failed,
-                    return false;
-                }
-            }
-            else
                 {
                     // sql insert with a valid user selected unpublish date
                     if ($res = $db->query("UPDATE {blog_items} SET
@@ -1066,29 +1066,29 @@ namespace YAWK\PLUGINS\BLOG {
                         return false;
                     }
                 }
+            }
+            else
+            {   // update pages failed, abort +
+                return false;
+            }
         }
-        else
-        {   // update pages failed, abort +
-            return false;
-        }
-    }
 
-    /**
-     * @brief Save blog settings data. (layout, general settings, comment settings etc...)
-     * @author Daniel Retzl <danielretzl@gmail.com>
-     * @version 1.0.0
-     * @param object $db Database Object
-     * @param object $blog The blog Object
-     * @param string $property The property to get
-     * @return bool
-    */
-    public function setup($db, $blog)
-    {
-        /** @var $db \YAWK\db */
-        // convert html special chars
-        // $this->name = htmlentities($blog->name);
-        // $this->description = htmlentities($blog->description);
-        if ($db->query("UPDATE {blog} SET
+        /**
+         * @brief Save blog settings data. (layout, general settings, comment settings etc...)
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @param object $db Database Object
+         * @param object $blog The blog Object
+         * @param string $property The property to get
+         * @return bool
+         */
+        public function setup($db, $blog)
+        {
+            /** @var $db \YAWK\db */
+            // convert html special chars
+            // $this->name = htmlentities($blog->name);
+            // $this->description = htmlentities($blog->description);
+            if ($db->query("UPDATE {blog} SET
                     name = '" . $this->name . "',
                     description = '" . $this->description . "',
                     icon = '" . $this->icon . "',
@@ -1108,225 +1108,225 @@ namespace YAWK\PLUGINS\BLOG {
                     limitEntries = '" . $this->limitEntries. "',
                     showTotalVotes = '" . $this->showTotalVotes. "'
                     WHERE id = '" . $this->blogid . "'"))
-        {
-            return true;
-        }
-        else
+            {
+                return true;
+            }
+            else
             {
                 return false;
             }
-    }
-
-    /**
-     * @brief Return a copyright footer
-     * @author Daniel Retzl <danielretzl@gmail.com>
-     * @version 1.0.0
-     * @param object $db Database Object
-     * @return mixed Html Code
-    */
-    function getFooter($db)
-    {
-        /** @var $db \YAWK\db */
-        $this->year_created = date("Y"); // current year
-        $hostURL = \YAWK\settings::getSetting($db, "host");
-        return $this->html .= "<small><i class='pull-right'>Copyright (C) $this->year_created $hostURL</i></small>";
-    }
-
-
-    /**
-     * @brief Return the HTML code. To render the view, call this function with echo or print
-     * @author Daniel Retzl <danielretzl@gmail.com>
-     * @version 1.0.0
-     * @return mixed Html
-    */
-    function draw()
-    {   // mixed HTML, built, filled and modified previously by several blog class methods
-        return $this->html;
-    }
-
-    /**
-     * @brief Get all comments for given blog + item id and stores it in $this->html
-     * @author Daniel Retzl <danielretzl@gmail.com>
-     * @version 1.0.0
-     * @param object $db Database Object
-     * @param int $blogid The blog ID to get comments from
-     * @param int $itemid The item ID to get comments from
-     * @param array $row The current dataset
-     * @return null
-    */
-    function getAllComments($db, $blogid, $itemid, $row, $lang)
-    {
-        /** @var $db \YAWK\db */
-        $replies = 0;
-        $replyForm = "";
-        $replyCount = 1;
-        // prepare vars + design
-        // get the date and make it pretty
-        $date = \YAWK\sys::splitDate($row['date_created']);
-        $prettydate = "$date[day]. $date[month] $date[year] um $date[time]";
-
-        // if emailadress is set
-        if (isset($row['email']) && (!empty($row['email']))) {
-            // draw mailto: link
-            $emailUrl = "<a href=\"mailto:" . $row['email'] . "\" class=\"text-black\">" . $row['name'] . "</a>";
-        } else { // draw the comment's author grey colored
-            $emailUrl = "<span class=\"text-grey\">" . $row['name'] . "</span>";
         }
 
-        // if user was NOT logged in, it was a public comment
-        if ($row['uid'] === '0' || $row['gid'] === '0') {
-            $VipStyle = 'h5'; // smaller size for not logged in users
-        } else { // bigger tag if user was a VIP
-            $VipStyle = "h4 style=\"color: #912F40;\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"VIP User\"";
+        /**
+         * @brief Return a copyright footer
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @param object $db Database Object
+         * @return mixed Html Code
+         */
+        function getFooter($db)
+        {
+            /** @var $db \YAWK\db */
+            $this->year_created = date("Y"); // current year
+            $hostURL = \YAWK\settings::getSetting($db, "host");
+            return $this->html .= "<small><i class='pull-right'>Copyright (C) $this->year_created $hostURL</i></small>";
         }
 
-        // build reply link based on $i replies
-        // count comment replies from parent items
-        if ($sql_replies = $db->query("SELECT id FROM {blog_comments} WHERE parentID = '" . $row['id'] . "' AND published = '1'")) {   // fetch data in loop
-            while ($res = mysqli_fetch_assoc($sql_replies)) {   // add 1 for each loop cycle
-                $replies++;
-            }
+
+        /**
+         * @brief Return the HTML code. To render the view, call this function with echo or print
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @return mixed Html
+         */
+        function draw()
+        {   // mixed HTML, built, filled and modified previously by several blog class methods
+            return $this->html;
         }
-        // if there are replies
-        if ($replies > 0) {   // draw "comments" link ($i replies)
-            $replyLink = "<small class=\"pull-right\"><a href='#replyBox$row[id]' data-toggle=\"collapse\" aria-expanded=\"false\" aria-controls=\"replyBox\" id='" . $row['id'] . "'>Kommentare ($replies)</a></small>";
-        } else {   // draw "reply" link
-            $replyLink = "<small class=\"pull-right\"><a href='#form' data-toggle=\"collapse\" aria-expanded=\"false\" aria-controls=\"form\" id='" . $row['id'] . "'>antworten</a></small>";
-        }
-        // if comment ain't got a parent id
-        if ($row['parentID'] == 0) {
+
+        /**
+         * @brief Get all comments for given blog + item id and stores it in $this->html
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @param object $db Database Object
+         * @param int $blogid The blog ID to get comments from
+         * @param int $itemid The item ID to get comments from
+         * @param array $row The current dataset
+         * @return null
+         */
+        function getAllComments($db, $blogid, $itemid, $row, $lang)
+        {
+            /** @var $db \YAWK\db */
+            $replies = 0;
             $replyForm = "";
-        } else {   // display reply form
-            if ($replyCount <= 2) {
-                $replyForm = "<form role='form' method='post'>
+            $replyCount = 1;
+            // prepare vars + design
+            // get the date and make it pretty
+            $date = \YAWK\sys::splitDate($row['date_created']);
+            $prettydate = "$date[day]. $date[month] $date[year] um $date[time]";
+
+            // if emailadress is set
+            if (isset($row['email']) && (!empty($row['email']))) {
+                // draw mailto: link
+                $emailUrl = "<a href=\"mailto:" . $row['email'] . "\" class=\"text-black\">" . $row['name'] . "</a>";
+            } else { // draw the comment's author grey colored
+                $emailUrl = "<span class=\"text-grey\">" . $row['name'] . "</span>";
+            }
+
+            // if user was NOT logged in, it was a public comment
+            if ($row['uid'] === '0' || $row['gid'] === '0') {
+                $VipStyle = 'h5'; // smaller size for not logged in users
+            } else { // bigger tag if user was a VIP
+                $VipStyle = "h4 style=\"color: #912F40;\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"VIP User\"";
+            }
+
+            // build reply link based on $i replies
+            // count comment replies from parent items
+            if ($sql_replies = $db->query("SELECT id FROM {blog_comments} WHERE parentID = '" . $row['id'] . "' AND published = '1'")) {   // fetch data in loop
+                while ($res = mysqli_fetch_assoc($sql_replies)) {   // add 1 for each loop cycle
+                    $replies++;
+                }
+            }
+            // if there are replies
+            if ($replies > 0) {   // draw "comments" link ($i replies)
+                $replyLink = "<small class=\"pull-right\"><a href='#replyBox$row[id]' data-toggle=\"collapse\" aria-expanded=\"false\" aria-controls=\"replyBox\" id='" . $row['id'] . "'>Kommentare ($replies)</a></small>";
+            } else {   // draw "reply" link
+                $replyLink = "<small class=\"pull-right\"><a href='#form' data-toggle=\"collapse\" aria-expanded=\"false\" aria-controls=\"form\" id='" . $row['id'] . "'>antworten</a></small>";
+            }
+            // if comment ain't got a parent id
+            if ($row['parentID'] == 0) {
+                $replyForm = "";
+            } else {   // display reply form
+                if ($replyCount <= 2) {
+                    $replyForm = "<form role='form' method='post'>
                     <input type='text' name='name' class='form-control'>
                     <textarea class='form-control' name='comment'></textarea>
                     </form>";
-            } else {   // no reply form
-                $replyForm = "";
-            }
-        }
-
-        $this->html .= "$replyForm";
-        $this->html .= "<i><$VipStyle>" . $emailUrl . " <small>am $prettydate</small></i></h5>";
-        $this->html .= "<p>" . $row['comment'] . "</p>$replyLink";
-        //  $this->html .="<small class=\"pull-right\"><a href='#replyBox$row[id]' data-toggle=\"collapse\" aria-expanded=\"false\" aria-controls=\"replyBox\" id='".$row['id']."'>$btnText</a></small>";
-        /* The following sql checks whether there's any reply for the comment */
-        if ($res = $db->query("SELECT * FROM {blog_comments}
-                               WHERE blogid='" . $blogid . "' AND itemid='" . $itemid . "' AND parentID = '" . $row['id'] . "'")
-        ) {
-            if (mysqli_num_rows($res) > 0) // there is at least reply
-            {   // draw entry
-                $this->html .= "<div class=\"collapse\" id=\"replyBox$row[id]\"><blockquote>";
-                while ($row = mysqli_fetch_assoc($res)) {
-                    //   self::draw_commentbox();
-                    self::getAllComments($db, $blogid, $itemid, $row, $lang);
+                } else {   // no reply form
+                    $replyForm = "";
                 }
-                $this->html .= "</blockquote></div>";
             }
+
+            $this->html .= "$replyForm";
+            $this->html .= "<i><$VipStyle>" . $emailUrl . " <small>am $prettydate</small></i></h5>";
+            $this->html .= "<p>" . $row['comment'] . "</p>$replyLink";
+            //  $this->html .="<small class=\"pull-right\"><a href='#replyBox$row[id]' data-toggle=\"collapse\" aria-expanded=\"false\" aria-controls=\"replyBox\" id='".$row['id']."'>$btnText</a></small>";
+            /* The following sql checks whether there's any reply for the comment */
+            if ($res = $db->query("SELECT * FROM {blog_comments}
+                               WHERE blogid='" . $blogid . "' AND itemid='" . $itemid . "' AND parentID = '" . $row['id'] . "'")
+            ) {
+                if (mysqli_num_rows($res) > 0) // there is at least reply
+                {   // draw entry
+                    $this->html .= "<div class=\"collapse\" id=\"replyBox$row[id]\"><blockquote>";
+                    while ($row = mysqli_fetch_assoc($res)) {
+                        //   self::draw_commentbox();
+                        self::getAllComments($db, $blogid, $itemid, $row, $lang);
+                    }
+                    $this->html .= "</blockquote></div>";
+                }
+            }
+            $this->html .= "<br>";
+            return null;
         }
-        $this->html .= "<br>";
-        return null;
-    }
 
-    /**
-     * @brief Get all comments for given blog + item id and stores it in $this->html
-     * @author Daniel Retzl <danielretzl@gmail.com>
-     * @version 1.0.0
-     * @param object $db Database Object
-     * @param int $blogid The blog ID to get comments from
-     * @param int $itemid The item ID to get comments from
-     * @return null
-    */
-    function drawComments($db, $blogid, $itemid, $lang)
-    {
-        /** @var $db \YAWK\db */
-        // build html
-        $this->html .= "<div id=\comment_thread\">";
-
-        // get parent items
-        $res = $db->query("SELECT * FROM {blog_comments} WHERE blogid = '" . $blogid . "' AND itemid = '" . $itemid . "' ORDER BY date_created DESC");
-        while ($row = mysqli_fetch_assoc($res)) {
-            self::getComments($db, $blogid, $itemid);
-            //     self::getAllComments($blogid, $itemid, $row);
-        }
-        $this->html .= "</div>";
-        return null;
-    }
-
-
-    /**
-     * @brief Get all comments for given blog + item id and stores it in $this->html
-     * @author Daniel Retzl <danielretzl@gmail.com>
-     * @version 1.0.0
-     * @param object $db Database Object
-     * @param int $blogid The blog ID to get comments from
-     * @param int $itemid The item ID to get comments from
-     * @return null
-    */
-    function getComments($db, $blogid, $itemid)
-    {
-        /** @var $db \YAWK\db */
-        /* ADMIN ONLY */
-        // ADMIN? - SHOW ALL COMMENTS:
-        if ($_SESSION['gid'] >=5)
+        /**
+         * @brief Get all comments for given blog + item id and stores it in $this->html
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @param object $db Database Object
+         * @param int $blogid The blog ID to get comments from
+         * @param int $itemid The item ID to get comments from
+         * @return null
+         */
+        function drawComments($db, $blogid, $itemid, $lang)
         {
-            // GET COMMENTS
-            $sql = $db->query("SELECT * FROM {blog_comments} WHERE blogid = '".$blogid."'");
-            while($row = mysqli_fetch_row($sql))
-            {
-                 $sql2 = $db->query("SELECT username FROM {users} WHERE id = '".$row[0]."'");
-                 while($row2 = mysqli_fetch_row($sql2))
-                 {
-                     // DRAW COMMENTS
-                     $this->comments .= "<i>von: <strong>$row2[0]</i></strong><br> &nbsp;$row[1]<br><br>";
-                 }
-            }
-        } // end admin check */
-        // GET COMMENTS
+            /** @var $db \YAWK\db */
+            // build html
+            $this->html .= "<div id=\comment_thread\">";
 
-        // set var defaults
-        $comment_replies = 0;
-        $indent = "";
-        $padding = "padding-left: 0.3em;";
-        // build html...
-        $this->html .= "<div id=\"comment_thread\">";
-        if ($res = $db->query("SELECT * FROM {blog_comments}
+            // get parent items
+            $res = $db->query("SELECT * FROM {blog_comments} WHERE blogid = '" . $blogid . "' AND itemid = '" . $itemid . "' ORDER BY date_created DESC");
+            while ($row = mysqli_fetch_assoc($res)) {
+                self::getComments($db, $blogid, $itemid);
+                //     self::getAllComments($blogid, $itemid, $row);
+            }
+            $this->html .= "</div>";
+            return null;
+        }
+
+
+        /**
+         * @brief Get all comments for given blog + item id and stores it in $this->html
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @param object $db Database Object
+         * @param int $blogid The blog ID to get comments from
+         * @param int $itemid The item ID to get comments from
+         * @return null
+         */
+        function getComments($db, $blogid, $itemid)
+        {
+            /** @var $db \YAWK\db */
+            /* ADMIN ONLY */
+            // ADMIN? - SHOW ALL COMMENTS:
+            if ($_SESSION['gid'] >=5)
+            {
+                // GET COMMENTS
+                $sql = $db->query("SELECT * FROM {blog_comments} WHERE blogid = '".$blogid."'");
+                while($row = mysqli_fetch_row($sql))
+                {
+                    $sql2 = $db->query("SELECT username FROM {users} WHERE id = '".$row[0]."'");
+                    while($row2 = mysqli_fetch_row($sql2))
+                    {
+                        // DRAW COMMENTS
+                        $this->comments .= "<i>von: <strong>$row2[0]</i></strong><br> &nbsp;$row[1]<br><br>";
+                    }
+                }
+            } // end admin check */
+            // GET COMMENTS
+
+            // set var defaults
+            $comment_replies = 0;
+            $indent = "";
+            $padding = "padding-left: 0.3em;";
+            // build html...
+            $this->html .= "<div id=\"comment_thread\">";
+            if ($res = $db->query("SELECT * FROM {blog_comments}
                                    WHERE blogid = '" . $blogid . "'
                                    AND itemid = '" . $itemid . "'
                                    AND published = '1'
                                    ORDER BY date_created DESC"))
-        {
-            while ($row = mysqli_fetch_assoc($res))
             {
-                $comment_id = $row['id'];
-                $comment = $row['comment'];
-                $uid = $row['uid'];
-                $gid = $row['gid'];
-                $name = $row['name'];
-                $email = $row['email'];
-                $date_created = $row['date_created'];
-                $isParent = $row['isParent'];
-                $isChild = $row['isChild'];
-                $parentID = $row['parentID'];
-
-                $date = \YAWK\sys::splitDate($date_created);
-                $prettydate = "$date[day]. $date[month] $date[year] um $date[time]";
-
-                // if zero, set text link "answer..."
-                if ($isParent === '0')
+                while ($row = mysqli_fetch_assoc($res))
                 {
-                    //
-                    if ($isChild !== '1')
+                    $comment_id = $row['id'];
+                    $comment = $row['comment'];
+                    $uid = $row['uid'];
+                    $gid = $row['gid'];
+                    $name = $row['name'];
+                    $email = $row['email'];
+                    $date_created = $row['date_created'];
+                    $isParent = $row['isParent'];
+                    $isChild = $row['isChild'];
+                    $parentID = $row['parentID'];
+
+                    $date = \YAWK\sys::splitDate($date_created);
+                    $prettydate = "$date[day]. $date[month] $date[year] um $date[time]";
+
+                    // if zero, set text link "answer..."
+                    if ($isParent === '0')
                     {
-                        $indent = "";
-                        $padding = "padding-left: 0.3em;";
-                        $collapse = "";
-                        $collapseFooter = "";
-                        // no child items available, because this is not a parent item
-                        $reply_link = "<small><a href=\"#replyBox\" class=\"pull-right small\"><i>antworten... </i><i class=\"fa fa-chevron-down\"></i></a></small>";
-                    }
-                    else
+                        //
+                        if ($isChild !== '1')
+                        {
+                            $indent = "";
+                            $padding = "padding-left: 0.3em;";
+                            $collapse = "";
+                            $collapseFooter = "";
+                            // no child items available, because this is not a parent item
+                            $reply_link = "<small><a href=\"#replyBox\" class=\"pull-right small\"><i>antworten... </i><i class=\"fa fa-chevron-down\"></i></a></small>";
+                        }
+                        else
                         {
                             $reply_link = "";
                             $indent = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
@@ -1334,8 +1334,8 @@ namespace YAWK\PLUGINS\BLOG {
                             $collapse = "<div class=\"collapse\" id=\"replyBox\"><blockquote>";
                             $collapseFooter = "</blockquote></div>";
                         }
-                }
-                else
+                    }
+                    else
                     {
                         // get parent items from db
                         $sql_replies = $db->query("SELECT * FROM {blog_comments} WHERE parentID = '" . $comment_id . "' AND published = '1'");
@@ -1343,35 +1343,35 @@ namespace YAWK\PLUGINS\BLOG {
                         {
                             $comment_replies++;
                         }
-                    $collapse = "<div class=\"collapse\" id=\"replyBox\"><blockquote>";
-                    $collapseFooter = "</blockquote></div>";
-                    // draw reply link with i comments
-                    $reply_link = "<small><a href=\"#replyBox\" data-toggle=\"collapse\" aria-expanded=\"true\" aria-controls=\"replyBox\" class=\"pull-right small\"><i>Kommentare ($comment_replies) </i><i class=\"fa fa-chevron-down\"></i></a></small>";
+                        $collapse = "<div class=\"collapse\" id=\"replyBox\"><blockquote>";
+                        $collapseFooter = "</blockquote></div>";
+                        // draw reply link with i comments
+                        $reply_link = "<small><a href=\"#replyBox\" data-toggle=\"collapse\" aria-expanded=\"true\" aria-controls=\"replyBox\" class=\"pull-right small\"><i>Kommentare ($comment_replies) </i><i class=\"fa fa-chevron-down\"></i></a></small>";
                     }
 
-                // if there is no user id (uid) or group id (gid)...
-                if ($uid === '0' || $gid === '0')
-                {
-                    // this is a GUEST COMMENT
-                    // check if comment got an email adress and set link color
-                    if (!empty($email))
+                    // if there is no user id (uid) or group id (gid)...
+                    if ($uid === '0' || $gid === '0')
                     {
-                        $emailLink = "<a href=\"mailto:$email\" class=\"text-black\">$name</a>";
-                    }
-                    else
+                        // this is a GUEST COMMENT
+                        // check if comment got an email adress and set link color
+                        if (!empty($email))
+                        {
+                            $emailLink = "<a href=\"mailto:$email\" class=\"text-black\">$name</a>";
+                        }
+                        else
                         {
                             $emailLink = "<span class=\"text-grey\">$name</span>";
                         }
 
-                    // draw guest comments
-                    //  $this->html .= $collapse;
-                    $this->html .= "<p><i><h5><strong>" . $emailLink . "</strong> <small>am " . $prettydate . "</small></h5></i>" . $comment . "
+                        // draw guest comments
+                        //  $this->html .= $collapse;
+                        $this->html .= "<p><i><h5><strong>" . $emailLink . "</strong> <small>am " . $prettydate . "</small></h5></i>" . $comment . "
                     </p><hr>";
-                    // $reply_link </p><hr></div>";
-                    //     $this->html .= "<p><i><h5>".$indent."<strong>".$emailLink."</strong> <small>am " . $prettydate . "</small></h5></i><div style=\"$padding\">".$comment."</div>
-                    //     $this->html .= "$reply_link</p><hr>";
-                }
-                else    // uid or gid value is not zero...
+                        // $reply_link </p><hr></div>";
+                        //     $this->html .= "<p><i><h5>".$indent."<strong>".$emailLink."</strong> <small>am " . $prettydate . "</small></h5></i><div style=\"$padding\">".$comment."</div>
+                        //     $this->html .= "$reply_link</p><hr>";
+                    }
+                    else    // uid or gid value is not zero...
                     {
                         // which means this is a REGISTERED USER COMMENT
                         // check if comment got an email and set link color
@@ -1390,65 +1390,65 @@ namespace YAWK\PLUGINS\BLOG {
                             //   $reply_link</p><hr>";
                         }
                     }
-            } // end while fetch comments
-        }
-        else    // unable to query blog comments
+                } // end while fetch comments
+            }
+            else    // unable to query blog comments
             {   // q failed
                 $this->html = 'Failed to query comments database.';
             }
-        $this->html .= "</div>";
-        return null;
-    }
+            $this->html .= "</div>";
+            return null;
+        }
 
 
-    /**
-     * @brief Count and returns all active comments. If no result is found, false will be returned.
-     * @author Daniel Retzl <danielretzl@gmail.com>
-     * @version 1.0.0
-     * @param object $db Database Object
-     * @param int $blogid The blog ID to count comments from
-     * @param int $itemid The item ID to count comments from
-     * @return mixed bool
-    */
-    static function countActiveComments($db, $blogid, $itemid)
-    {
-        /** @var $db \YAWK\db */
-        if ($res = $db->query("SELECT COUNT(id) FROM {blog_comments}
+        /**
+         * @brief Count and returns all active comments. If no result is found, false will be returned.
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @param object $db Database Object
+         * @param int $blogid The blog ID to count comments from
+         * @param int $itemid The item ID to count comments from
+         * @return mixed bool
+         */
+        static function countActiveComments($db, $blogid, $itemid)
+        {
+            /** @var $db \YAWK\db */
+            if ($res = $db->query("SELECT COUNT(id) FROM {blog_comments}
                                    WHERE blogid = " . $blogid . "
                                    AND itemid=" . $itemid . " AND published = '1' ")
-        ) {   // fetch data
-            $result = mysqli_fetch_row($res);
-            return $result[0];
-        } else {
-            return false;
+            ) {   // fetch data
+                $result = mysqli_fetch_row($res);
+                return $result[0];
+            } else {
+                return false;
+            }
         }
-    }
 
 
-    /**
-     * @brief Draw comments box
-     * @author Daniel Retzl <danielretzl@gmail.com>
-     * @version 1.0.0
-     * @param object $db Database Object
-     * @return null
-    */
-    function draw_commentbox($db)
-    {   /** @var $db \YAWK\db */
-        // check if user is logged in
-        if (isset($_SESSION['logged_in']) && ($_SESSION['logged_in'] == true)) {
-            // check if uid and gid is set
-            if (isset($_SESSION['uid']) && (isset($_SESSION['gid']))) {
-                if (isset($_SESSION['username'])) {
-                    $username = $_SESSION['username'];
-                }
-                else
+        /**
+         * @brief Draw comments box
+         * @author Daniel Retzl <danielretzl@gmail.com>
+         * @version 1.0.0
+         * @param object $db Database Object
+         * @return null
+         */
+        function draw_commentbox($db)
+        {   /** @var $db \YAWK\db */
+            // check if user is logged in
+            if (isset($_SESSION['logged_in']) && ($_SESSION['logged_in'] == true)) {
+                // check if uid and gid is set
+                if (isset($_SESSION['uid']) && (isset($_SESSION['gid']))) {
+                    if (isset($_SESSION['username'])) {
+                        $username = $_SESSION['username'];
+                    }
+                    else
                     {
                         $username = "";
                     }
-                $hidden_uid = $_SESSION['uid'];
-                $hidden_gid = $_SESSION['gid'];
-                $i = self::countActiveComments($db, $this->blogid, $this->itemid);
-                $this->html .= "
+                    $hidden_uid = $_SESSION['uid'];
+                    $hidden_gid = $_SESSION['gid'];
+                    $i = self::countActiveComments($db, $this->blogid, $this->itemid);
+                    $this->html .= "
                 <div class=\"row\">
                 <div id=\"comments\" class=\"col-md-8\">
                 <h4>Comments, please! <!-- <small>Give your mustard (:</small> --></h4>
@@ -1463,28 +1463,28 @@ namespace YAWK\PLUGINS\BLOG {
                     <input type=\"hidden\" id=\"name\" name=\"name\" value=\"$username\">
                 </div>";
 
-                $this->html .= self::getComments($db, $this->blogid, $this->itemid);
-                $this->html .= "</div>
+                    $this->html .= self::getComments($db, $this->blogid, $this->itemid);
+                    $this->html .= "</div>
                 <div class=\"col-md-4 mx-auto d-block\">";
                     $this->html .= self::drawVotingBox($db, $this->voteUp, $this->voteDown);
-                $this->html .= "</div>
+                    $this->html .= "</div>
                 </div>";
 
 
-            } // session uid or gid is empty, user is not logged in correctly
-            else
+                } // session uid or gid is empty, user is not logged in correctly
+                else
                 {
                     echo \YAWK\alert::draw("danger", "Error!", "Cannot detect User Status. Obviously you are not correctly logged-in. Please try to re-login.", "", "4200");
                     exit;
                 }
             }
             else
-                {
-                    // user is not logged in
-                    $hidden_uid = 0;
-                    $hidden_gid = 0;
-                    $i = self::countActiveComments($db, $this->blogid, $this->itemid);
-                    $this->html .= "
+            {
+                // user is not logged in
+                $hidden_uid = 0;
+                $hidden_gid = 0;
+                $i = self::countActiveComments($db, $this->blogid, $this->itemid);
+                $this->html .= "
                     <div class=\"row\">
                     <div id=\"comments\" class=\"col-md-8\">
                     <h4>Comments, please! <!-- <small>Give your mustard (:</small> --></h4>
@@ -1498,15 +1498,15 @@ namespace YAWK\PLUGINS\BLOG {
                         <input type=\"hidden\" id=\"itemid\" name=\"itemid\" value=\"" . $this->itemid . "\">
                         <input type=\"hidden\" id=\"blogid\" name=\"blogid\" value=\"" . $this->blogid . "\">
                     </div>";
-                        $this->html .= self::getComments($db, $this->blogid, $this->itemid);
-                        $this->html .= "</div>
+                $this->html .= self::getComments($db, $this->blogid, $this->itemid);
+                $this->html .= "</div>
                     <div class=\"col-md-4 mx-auto d-block\">";
-                        $this->html .= self::drawVotingBox($db, $this->voteUp, $this->voteDown);
-                        $this->html .= "</div>
+                $this->html .= self::drawVotingBox($db, $this->voteUp, $this->voteDown);
+                $this->html .= "</div>
                     </div>";
 
             }
-        return null;
+            return null;
         }
 
         /**
@@ -1614,11 +1614,11 @@ namespace YAWK\PLUGINS\BLOG {
                             return false;
                         }
                     } else {   // delete failed, throw error
-                       //  \YAWK\alert::draw("warning", "Error: ", "Could not delete item from database", "", "3800");
+                        //  \YAWK\alert::draw("warning", "Error: ", "Could not delete item from database", "", "3800");
                         return false;
                     }
                 } else {   // fetch failed, throw error
-                   // \YAWK\alert::draw("danger", "Error: ", "Could not fetch alias from pages database.", "", "3800");
+                    // \YAWK\alert::draw("danger", "Error: ", "Could not fetch alias from pages database.", "", "3800");
                     return false;
                 }
             } else {   // q failed
@@ -1661,64 +1661,64 @@ namespace YAWK\PLUGINS\BLOG {
             /** @var $db \YAWK\db */
             /* generate ID manually to prevent id holes    */
 
-                $published = 1;
-                $name = htmlentities($name);
-                $description = htmlentities($description);
-                $name = $db->quote($name);
-                $description = $db->quote($description);
-                $locked = 1;
+            $published = 1;
+            $name = htmlentities($name);
+            $description = htmlentities($description);
+            $name = $db->quote($name);
+            $description = $db->quote($description);
+            $locked = 1;
 
-                // add new blog into database
-                if ($db->query("INSERT INTO {blog} (sort, published, name, description, icon)
+            // add new blog into database
+            if ($db->query("INSERT INTO {blog} (sort, published, name, description, icon)
 	                        VALUES(1,
 	                        '" . $published . "',
 	                        '" . $name . "',
 	                        '" . $description . "',
 	                        '" . $icon . "')"))
-                {
-                    // get ID of this blog; we need the blogID to assign it correctly to the static page afterwards
-                    if (!$res_blog = $db->query("SELECT MAX(id), MAX(sort) FROM {blog}"))
-                    {   // this is the first blog
-                        $blogId = 1;
-                    }
-                    else
-                    {   // fetch data and set blogID
-                        $row = mysqli_fetch_row($res_blog);
-                        if (!isset($row[0])) {
-                            $blogId = 1;
-                        } else {
-                            $blogId = $row[0]++;
-                        }
-                    }
-
-                    if ($row = $db->query("SELECT blogid FROM {pages} WHERE blogid = '" . $blogId . "' LIMIT 1"))
-                    {
-                        $res = mysqli_fetch_row($row);
-                    } else { $res = null; }
-                        if ($res != $blogId)
-                        {
-                            // create blog page
-                            if (!isset($page))
-                            {   // create new page object
-                                $page = new \YAWK\page();
-                            }
-                            if ($page->create($db, $name, $menuID, $locked, $blogId, 0) === true)
-                            {   // success
-                                return true;
-                            }
-                            else
-                            {   // create page failed, throw error...
-                                \YAWK\alert::draw("danger", "Error: ", "Could not create blog page! Please enter all fields.", "", "2200");
-                                return false;
-                            }
-                        }
-
+            {
+                // get ID of this blog; we need the blogID to assign it correctly to the static page afterwards
+                if (!$res_blog = $db->query("SELECT MAX(id), MAX(sort) FROM {blog}"))
+                {   // this is the first blog
+                    $blogId = 1;
                 }
                 else
-                {   // q failed
-                    \YAWK\alert::draw("danger", "Error: ", "Could not create blog page database entry - please try it again.", "", "3800");
-                    return false;
+                {   // fetch data and set blogID
+                    $row = mysqli_fetch_row($res_blog);
+                    if (!isset($row[0])) {
+                        $blogId = 1;
+                    } else {
+                        $blogId = $row[0]++;
+                    }
                 }
+
+                if ($row = $db->query("SELECT blogid FROM {pages} WHERE blogid = '" . $blogId . "' LIMIT 1"))
+                {
+                    $res = mysqli_fetch_row($row);
+                } else { $res = null; }
+                if ($res != $blogId)
+                {
+                    // create blog page
+                    if (!isset($page))
+                    {   // create new page object
+                        $page = new \YAWK\page();
+                    }
+                    if ($page->create($db, $name, $menuID, $locked, $blogId, 0) === true)
+                    {   // success
+                        return true;
+                    }
+                    else
+                    {   // create page failed, throw error...
+                        \YAWK\alert::draw("danger", "Error: ", "Could not create blog page! Please enter all fields.", "", "2200");
+                        return false;
+                    }
+                }
+
+            }
+            else
+            {   // q failed
+                \YAWK\alert::draw("danger", "Error: ", "Could not create blog page database entry - please try it again.", "", "3800");
+                return false;
+            }
         }
 
 
@@ -1771,12 +1771,12 @@ namespace YAWK\PLUGINS\BLOG {
                                 '" . $locked . "',
                                 '" . $this->blogid . "')")
                 ) {   // q insert page into database failed
-                   //  \YAWK\alert::draw("danger", "Error: ", "Could not insert blog page into database.", "", "3800");
+                    //  \YAWK\alert::draw("danger", "Error: ", "Could not insert blog page into database.", "", "3800");
                     \YAWK\sys::setSyslog($db, 7, 1, "failed to insert blog page $alias into database", 0, 0, 0, 0);
                     return false;
                 }
                 else
-                    {   // all good, go ahead...
+                {   // all good, go ahead...
                     // generate local meta tags
                     $desc = "description";
                     $keyw = "keywords";
@@ -1847,9 +1847,9 @@ namespace YAWK\PLUGINS\BLOG {
                           '" . $weblink . "')");
                     }
                     else
-                        {
-                            // sql code for zero date - insert NULL instead
-                            $res = $db->query("INSERT INTO {blog_items}
+                    {
+                        // sql code for zero date - insert NULL instead
+                        $res = $db->query("INSERT INTO {blog_items}
                                 (blogid,id,uid,pageid,sort,published,title,filename,subtitle,date_created,date_publish,date_unpublish,teasertext,blogtext,thumbnail,youtubeUrl,author,weblink)
                           VALUES('" . $this->blogid . "',
                           '" . $id . "',
@@ -1869,7 +1869,7 @@ namespace YAWK\PLUGINS\BLOG {
                           '" . $youtubeUrl . "',
                           '" . $_SESSION['username'] . "',
                           '" . $weblink . "')");
-                        }
+                    }
 
                     if ($res === true)
                     {
@@ -2009,8 +2009,8 @@ namespace YAWK\PLUGINS\BLOG {
                     }
                 }
                 else
-                    {   // add new entry to db blog_items WITH correct unpublish date
-                        if ($res = $db->query("INSERT INTO {blog_items} (blogid,id,uid,pageid,sort,published,itemgid,title,filename,subtitle,date_created,date_changed,date_publish,date_unpublish,teasertext,blogtext,author,youtubeUrl,weblink,thumbnail)
+                {   // add new entry to db blog_items WITH correct unpublish date
+                    if ($res = $db->query("INSERT INTO {blog_items} (blogid,id,uid,pageid,sort,published,itemgid,title,filename,subtitle,date_created,date_changed,date_publish,date_unpublish,teasertext,blogtext,author,youtubeUrl,weblink,thumbnail)
                         VALUES ('" . $this->blogid . "',
                                 '" . $id . "',
                                 '" . $this->uid . "',
@@ -2031,43 +2031,43 @@ namespace YAWK\PLUGINS\BLOG {
                                 '" . $this->youtubeUrl . "',
                                 '" . $this->weblink . "',
                                 '" . $this->thumbnail . "')"))
-                        {   // blog items inserted into database
-                            // generate local meta tags
-                            $desc = "description";
-                            $keyw = "keywords";
-                            $words = "";
-                            // insert local meta description to db meta_local
-                            if (!$res = $db->query("INSERT INTO {meta_local} (name,page,content)
+                    {   // blog items inserted into database
+                        // generate local meta tags
+                        $desc = "description";
+                        $keyw = "keywords";
+                        $words = "";
+                        // insert local meta description to db meta_local
+                        if (!$res = $db->query("INSERT INTO {meta_local} (name,page,content)
                         VALUES ('" . $desc . "', '" . $id . "', '" . $this->blogtitle . "')"))
-                            {   // inset local meta description failed
-                                // \YAWK\alert::draw("warning", "Warning: ", "Could not store meta description.", "", "3800");
-                            }
-                            if (!$res = $db->query("INSERT INTO {meta_local} (name,page,content)
+                        {   // inset local meta description failed
+                            // \YAWK\alert::draw("warning", "Warning: ", "Could not store meta description.", "", "3800");
+                        }
+                        if (!$res = $db->query("INSERT INTO {meta_local} (name,page,content)
                         VALUES ('" . $keyw . "','" . $id . "','" . $words . "')"))
-                            {   // insert local meta keywords
-                                // \YAWK\alert::draw("warning", "Warning: ", "Could not store meta description.", "", "3800");
-                            }
-                            // prepare loading page content
-                            $content = "<?php \$blog_id = $this->blogid; \$item_id = $id; \$full_view = 1; include 'system/plugins/blog/blog.php'; ?>";
-                            // prepare file
-                            $filename = "../content/pages/" . $alias . ".php";
-                            $handle = fopen($filename, "wr");
-                            if (fwrite($handle, $content))
-                            {   // create file
-                                fclose($handle);
-                                chmod($filename, 0777);
-                            }
-                            else
-                            {   // could not create file, throw error
-                                \YAWK\alert::draw("error", "Error: ", "Could not create loading file $filename", "", "3800");
-                            }
+                        {   // insert local meta keywords
+                            // \YAWK\alert::draw("warning", "Warning: ", "Could not store meta description.", "", "3800");
+                        }
+                        // prepare loading page content
+                        $content = "<?php \$blog_id = $this->blogid; \$item_id = $id; \$full_view = 1; include 'system/plugins/blog/blog.php'; ?>";
+                        // prepare file
+                        $filename = "../content/pages/" . $alias . ".php";
+                        $handle = fopen($filename, "wr");
+                        if (fwrite($handle, $content))
+                        {   // create file
+                            fclose($handle);
+                            chmod($filename, 0777);
                         }
                         else
-                        {   // insert blog item failed,
-                            \YAWK\alert::draw("danger", "Error: ", "Insert Blog item failed.", "","3600");
-                            return false;
+                        {   // could not create file, throw error
+                            \YAWK\alert::draw("error", "Error: ", "Could not create loading file $filename", "", "3800");
                         }
                     }
+                    else
+                    {   // insert blog item failed,
+                        \YAWK\alert::draw("danger", "Error: ", "Insert Blog item failed.", "","3600");
+                        return false;
+                    }
+                }
 
             }
             else
@@ -2075,8 +2075,8 @@ namespace YAWK\PLUGINS\BLOG {
                 \YAWK\alert::draw("danger", "Error: ", "Insert pages database failed.", "","3600");
                 return false;
             }
-        // all good,
-        return true;
+            // all good,
+            return true;
         } // ./ end function copy item
 
     } // ./ end class blog
