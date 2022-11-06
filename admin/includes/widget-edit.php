@@ -61,43 +61,43 @@ else
 }
 
 // USER CLICKED ON SAVE
-  if(isset($_POST['save']))
-  {     // escape form vars
-        $widget->published = isset($_POST['publish']);
-        $widget->pageID = $db->quote($_POST['pageID']);
-        $widget->widgetType = $db->quote($_POST['widgetType']);
-        $widget->sort = $db->quote($_POST['sort']);
-        $widget->position = $db->quote($_POST['positions']);
-        $widget->marginTop = $db->quote($_POST['marginTop']);
-        $widget->marginBottom = $db->quote($_POST['marginBottom']);
-        $widget->date_publish = $db->quote($_POST['date_publish']);
-        $widget->date_unpublish = $db->quote($_POST['date_unpublish']);
-        $widget->widgetTitle = $db->quote($_POST['widgetTitle']);
-        $widget->blocked = isset($_POST['mystatus']);
-        // if date publish is not set, set it to current datetime
-        if (empty($widget->date_publish)) { $widget->date_publish = sys::now(); }
+if(isset($_POST['save']))
+{     // escape form vars
+    $widget->published = isset($_POST['publish']);
+    $widget->pageID = $db->quote($_POST['pageID']);
+    $widget->widgetType = $db->quote($_POST['widgetType']);
+    $widget->sort = $db->quote($_POST['sort']);
+    $widget->position = $db->quote($_POST['positions']);
+    $widget->marginTop = $db->quote($_POST['marginTop']);
+    $widget->marginBottom = $db->quote($_POST['marginBottom']);
+    $widget->date_publish = $db->quote($_POST['date_publish']);
+    $widget->date_unpublish = $db->quote($_POST['date_unpublish']);
+    $widget->widgetTitle = $db->quote($_POST['widgetTitle']);
+    $widget->blocked = isset($_POST['mystatus']);
+    // if date publish is not set, set it to current datetime
+    if (empty($widget->date_publish)) { $widget->date_publish = sys::now(); }
 
-      // save widget state
-  	    if ($widget->save($db) === true)
-  	    {
-            alert::draw("success", "$lang[SUCCESS]", "$lang[WIDGET] $lang[SETTINGS] $lang[SAVED]", "","1200");
-        }
-        else
-            {
-                alert::draw("danger", "$lang[ERROR]", "$lang[WIDGET] $lang[SETTINGS] $lang[NOT_SAVED]", "","2400");
-            }
+    // save widget state
+    if ($widget->save($db) === true)
+    {
+        alert::draw("success", "$lang[SUCCESS]", "$lang[WIDGET] $lang[SETTINGS] $lang[SAVED]", "","1200");
+    }
+    else
+    {
+        alert::draw("danger", "$lang[ERROR]", "$lang[WIDGET] $lang[SETTINGS] $lang[NOT_SAVED]", "","2400");
+    }
 
-   	  foreach($_POST as $property=>$value)
-      {
-   		if($property != "save")
+    foreach($_POST as $property=>$value)
+    {
+        if($property != "save")
         {
             if (isset($_GET['widget']) && is_numeric($_GET['widget']))
             {   // save widget settings
                 YAWK\settings::setWidgetSetting($db, $property, $value, $_GET['widget']);
             }
-   	    }
- 	  }
-  }
+        }
+    }
+}
 
 // TEMPLATE WRAPPER - HEADER & breadcrumbs
 echo "
@@ -138,116 +138,125 @@ echo"<ol class=\"breadcrumb\">
 </script>
 <!-- FORM -->
 <form name="form" role="form" action="index.php?page=widget-edit&widget=<?php echo $widget->id; ?>" method="post">
-<div class="row">
-<!-- LEFT -->
-<div class="col-md-4">
-<!-- BASIC WIDGET SETTINGS -->
-<div class="box box-default">
-  <div class="box-header with-border">
-    <h3 class="box-title"><?php echo "$lang[COMMON_WIDGET_SETTINGS]"; ?></h3>
-  </div>
-  <div class="box-body">
-    <!-- WIDGET -->
-    <label for="widgetType"><?php echo $lang['WIDGET']; ?></label>
-     <select id="widgetType" name="widgetType" class="form-control">
-     <option value="<?php echo $widget->widgetType; ?>"><?php echo $widget->name; ?></option>
-     </select>
-      <!-- PAGE -->
-      <label for="pageID"><?php echo $lang['ON_PAGE']; ?></label>
-      <select id="pageID" name="pageID" class="form-control">
-          <?php
-          $pages = \YAWK\sys::getPages($db);
-          foreach ($pages as $page)
-          {
-              // check, if option needs to be selected
-              if ($widget->pageID == $page['id']){
-                  $selectedHtml = " selected";
-              } else { $selectedHtml = ""; }
+    <div class="row">
+        <!-- LEFT -->
+        <div class="col-md-4">
+            <!-- BASIC WIDGET SETTINGS -->
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><?php echo "$lang[COMMON_WIDGET_SETTINGS]"; ?></h3>
+                </div>
+                <div class="box-body">
+                    <!-- WIDGET -->
+                    <label for="widgetType"><?php echo $lang['WIDGET']; ?>
+                        <?php echo backend::printTooltip($lang['TT_WIDGET_NAME']); ?>
+                    </label>
+                    <select id="widgetType" name="widgetType" class="form-control">
+                        <option value="<?php echo $widget->widgetType; ?>"><?php echo $widget->name; ?></option>
+                    </select>
+                    <!-- PAGE -->
+                    <label for="pageID"><?php echo $lang['ON_PAGE']; ?>
+                        <?php echo backend::printTooltip($lang['TT_WIDGET_PAGE']); ?>
+                    </label>
+                    <select id="pageID" name="pageID" class="form-control">
+                        <?php
+                        $pages = \YAWK\sys::getPages($db);
+                        foreach ($pages as $page)
+                        {
+                            // check, if option needs to be selected
+                            if ($widget->pageID == $page['id']){
+                                $selectedHtml = " selected";
+                            }
+                            else { $selectedHtml = ""; }
 
-              if ($widget->pageID == 0){
-                  $allSelected = " selected";
-              } else { $allSelected = ""; }
+                            if ($widget->pageID == 0){
+                                $allSelected = " selected";
+                            }
+                            else { $allSelected = ""; }
 
-              // draw options
-              if (isset($page['id']) && (isset($page['title']))) {
-                  echo "<option value=\"".$page['id']."\"$selectedHtml>".$page['title']."</option>";
-              }
-          }
-          // all pages option
-          echo"<option value=\"0\"$allSelected>$lang[ON_ALL_PAGES]</option>";
-          ?>
-      </select>
-  <!-- POSITION -->
-  <label for="positions"><?php echo $lang['AT_POSITION']; ?></label>
-    <select id="positions" name="positions" class="form-control">
-     <option value="<?php echo $widget->position; ?>"><?php echo $widget->position; ?></option>
-     <option value="">-----</option>
+                            // draw options
+                            if (isset($page['id']) && (isset($page['title']))) {
+                                echo "<option value=\"".$page['id']."\"$selectedHtml>".$page['title']."</option>";
+                            }
+                        }
+                        // all pages option
+                        echo"<option value=\"0\"$allSelected>$lang[ON_ALL_PAGES]</option>";
+                        ?>
+                    </select>
+                    <!-- POSITION -->
+                    <label for="positions"><?php echo $lang['AT_POSITION']; ?>
+                        <?php echo backend::printTooltip($lang['TT_WIDGET_POS']); ?>
+                    </label>
+                    <select id="positions" name="positions" class="form-control">
+                        <option value="<?php echo $widget->position; ?>"><?php echo $widget->position; ?></option>
+                        <option value="">-----</option>
 
-    <?php /* get tpl positions */
-      $i = 0;
-    $position[$i] = array();
-    foreach(template::getTemplatePositions($db) as $position[$i]){
-        echo "<option value=\"".$position[$i]."\">".$position[$i]."</option>";
-        $i++;
-      }
-    ?>
-   </select>
+                        <?php /* get tpl positions */
+                        $i = 0;
+                        $position[$i] = array();
+                        foreach(template::getTemplatePositions($db) as $position[$i]){
+                            echo "<option value=\"".$position[$i]."\">".$position[$i]."</option>";
+                            $i++;
+                        }
+                        ?>
+                    </select>
 
-  <br>
-  <!-- DATE_PUBLISH -->
-  <label for ="datetimepicker1"><?php echo $lang['START_PUBLISH']; ?></label>
-      <input id="datetimepicker1" name="date_publish" autocomplete="off" class="form-control" value="<?php echo $widget->date_publish; ?>">
+                    <br>
+                    <!-- DATE_PUBLISH -->
+                    <label for ="datetimepicker1"><?php echo $lang['START_PUBLISH']; ?>
+                        <?php echo backend::printTooltip($lang['TT_WIDGET_PUBLISH_DATE']); ?></label>
+                    <input id="datetimepicker1" name="date_publish" autocomplete="off" class="form-control" value="<?php echo $widget->date_publish; ?>">
 
-  <!-- DATE_UNPUBLISH -->
-  <label for ="datetimepicker2"><?php echo $lang['END_PUBLISH']; ?></label>
-    <input id="datetimepicker2" name="date_unpublish" autocomplete="off" class="form-control" value="<?php echo $widget->date_unpublish; ?>">
-  <br>
-      <!-- MARGIN TOP -->
-      <label for="marginTop"><?php echo "$lang[MARGIN_TOP] <i><small>$lang[LEAVE_BLANK_FOR_NO_MARGIN]</small></i>"; ?></label>
-          <input type="text" id="marginTop" class="form-control" placeholder="" name="marginTop" maxlength="11" value="<?php echo $widget->marginTop; ?>">
-      <!-- MARGIN BOTTOM -->
-      <label for="marginBottom"><?php echo "$lang[MARGIN_BOTTOM] <i><small>$lang[LEAVE_BLANK_FOR_NO_MARGIN]</small></i>"; ?></label>
-          <input type="text" id="marginBottom" class="form-control" name="marginBottom" placeholder="" maxlength="11" value="<?php echo $widget->marginBottom; ?>">
-      <br>
-  <!-- SORTATION -->
-  <label for="sort"><?php echo $lang['SORTATION_ORDER']; ?></label>
-  <input id="sort" type="text" class="form-control" name="sort" maxlength="6" value="<?php echo $widget->sort; ?>">
+                    <!-- DATE_UNPUBLISH -->
+                    <label for ="datetimepicker2"><?php echo $lang['END_PUBLISH']; ?></label>
+                    <input id="datetimepicker2" name="date_unpublish" autocomplete="off" class="form-control" value="<?php echo $widget->date_unpublish; ?>">
+                    <br>
+                    <!-- MARGIN TOP -->
+                    <label for="marginTop"><?php echo "$lang[MARGIN_TOP] <i><small>$lang[LEAVE_BLANK_FOR_NO_MARGIN]</small></i>"; ?></label>
+                    <input type="text" id="marginTop" class="form-control" placeholder="" name="marginTop" maxlength="11" value="<?php echo $widget->marginTop; ?>">
+                    <!-- MARGIN BOTTOM -->
+                    <label for="marginBottom"><?php echo "$lang[MARGIN_BOTTOM] <i><small>$lang[LEAVE_BLANK_FOR_NO_MARGIN]</small></i>"; ?></label>
+                    <input type="text" id="marginBottom" class="form-control" name="marginBottom" placeholder="" maxlength="11" value="<?php echo $widget->marginBottom; ?>">
+                    <br>
+                    <!-- SORTATION -->
+                    <label for="sort"><?php echo $lang['SORTATION_ORDER']; ?></label>
+                    <input id="sort" type="text" class="form-control" name="sort" maxlength="6" value="<?php echo $widget->sort; ?>">
 
-  <!-- NOTE -->
-  <label for ="widgetTitle"><?php echo $lang['NOTE']; ?></label>
-  <input id="widgetTitle" name="widgetTitle" class="form-control" value="<?php echo $widget->widgetTitle; ?>">
-  <br>
+                    <!-- NOTE -->
+                    <label for ="widgetTitle"><?php echo $lang['NOTE']; ?></label>
+                    <input id="widgetTitle" name="widgetTitle" class="form-control" value="<?php echo $widget->widgetTitle; ?>">
+                    <br>
 
-  <!-- PUBLISHED / UNPUBLISHED CHECKBOX -->
-  <?php if ($widget->published == "1") { $checkedHtml="checked=\"checked\""; } else $checkedHtml = ''; ?>
-  <input id="publish" name="publish" value="1" type="checkbox" <?php echo $checkedHtml ?>> <label for="publish"><?php echo "$lang[PUBLISHED]"; ?></label>
+                    <!-- PUBLISHED / UNPUBLISHED CHECKBOX -->
+                    <?php if ($widget->published == "1") { $checkedHtml="checked=\"checked\""; } else $checkedHtml = ''; ?>
+                    <input id="publish" name="publish" value="1" type="checkbox" <?php echo $checkedHtml ?>> <label for="publish"><?php echo "$lang[PUBLISHED]"; ?></label>
 
-  </div>
-</div>
-</div> <!-- end left col -->
+                </div>
+            </div>
+        </div> <!-- end left col -->
 
-<!-- RIGHT -->
-  <div class="col-md-8">
-    <div class="box box-default">
-    <div class="box-header with-border">
-    <h3 class="box-title"><?php echo "$widget->name $lang[WIDGET] $lang[SETTINGS]"; ?></h3>
+        <!-- RIGHT -->
+        <div class="col-md-8">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><?php echo "$widget->name $lang[WIDGET] $lang[SETTINGS]"; ?></h3>
 
-        <button type="submit" id="savebutton" name="save" class="btn btn-success pull-right">
-            <i id="savebuttonIcon" class="fa fa-check"></i> &nbsp;<?php echo $lang['WIDGETS_SAVE_BTN']; ?>
-        </button>
-  </div>
-  <div class="box-body">
-  <!-- MORE WIDGET SETTINGS -->
-  <?php
-    // draw settings (form elements) for this widget
-    $settings = widget::getAllSettingsIntoArray($db, $widget->id);
-    $widget->getWidgetFormElements($db, $settings, $widget->id, $widget->folder, $lang);
-  ?>
-  <br><input type="hidden" name="widgetID" value="<?php echo $widget->id; ?>">
-  <br>
+                    <button type="submit" id="savebutton" name="save" class="btn btn-success pull-right">
+                        <i id="savebuttonIcon" class="fa fa-check"></i> &nbsp;<?php echo $lang['WIDGETS_SAVE_BTN']; ?>
+                    </button>
+                </div>
+                <div class="box-body">
+                    <!-- MORE WIDGET SETTINGS -->
+                    <?php
+                    // draw settings (form elements) for this widget
+                    $settings = widget::getAllSettingsIntoArray($db, $widget->id);
+                    $widget->getWidgetFormElements($db, $settings, $widget->id, $widget->folder, $lang);
+                    ?>
+                    <br><input type="hidden" name="widgetID" value="<?php echo $widget->id; ?>">
+                    <br>
 
-  </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 </form>
