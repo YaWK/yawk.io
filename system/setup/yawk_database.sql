@@ -284,13 +284,6 @@ INSERT INTO `cms_meta_global` (`name`, `content`) VALUES
 ('description', 'This Text appears on search engines. It is the typical description of your page underneath the link or title of every search result.'),
 ('robots', 'all');
 
-CREATE TABLE `cms_meta_local` (
-  `id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `page` int(11) NOT NULL,
-  `content` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 CREATE TABLE `cms_newsletter` (
   `id` int(11) NOT NULL,
   `date_created` datetime DEFAULT NULL,
@@ -334,11 +327,13 @@ CREATE TABLE `cms_pages` (
   `locked` int(1) DEFAULT '0',
   `blogid` int(11) DEFAULT '0',
   `plugin` varchar(255) NOT NULL DEFAULT '0',
-  `lang` varchar(7) DEFAULT NULL
+  `lang` varchar(7) DEFAULT NULL,
+  `meta_local` varchar(255) DEFAULT NULL,
+  `meta_keywords` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `cms_pages` (`id`, `published`, `gid`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `alias`, `title`, `bgimage`, `owner`, `menu`, `locked`, `blogid`, `plugin`, `lang`) VALUES
-(1, 1, 1, '2018-03-08 00:00:00', '2018-03-08 00:00:00', '2018-03-08 00:00:00', NULL, 'index', 'Welcome to Yet another Web Kit!', '', -1, 0, 0, 0, '0', '');
+INSERT INTO `cms_pages` (`id`, `published`, `gid`, `date_created`, `date_changed`, `date_publish`, `date_unpublish`, `alias`, `title`, `bgimage`, `owner`, `menu`, `locked`, `blogid`, `plugin`, `lang`, `meta_local`, `meta_keywords`) VALUES
+(1, 1, 1, '2018-03-08 00:00:00', '2018-03-08 00:00:00', '2018-03-08 00:00:00', NULL, 'index', 'Welcome to Yet another Web Kit!', '', -1, 0, 0, 0, '0', '', 'This is the home (index) page of the website  ', 'Home, Index, Keyword1, Keyword 2, ...');
 
 CREATE TABLE `cms_plugins` (
   `id` int(11) NOT NULL,
@@ -2511,9 +2506,6 @@ ALTER TABLE `cms_menu_names`
 ALTER TABLE `cms_meta_global`
   ADD PRIMARY KEY (`name`);
 
-ALTER TABLE `cms_meta_local`
-  ADD PRIMARY KEY (`id`);
-
 ALTER TABLE `cms_newsletter`
   ADD PRIMARY KEY (`id`);
 
@@ -2635,8 +2627,6 @@ ALTER TABLE `cms_menu`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 ALTER TABLE `cms_menu_names`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-ALTER TABLE `cms_meta_local`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_newsletter`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `cms_notifications`

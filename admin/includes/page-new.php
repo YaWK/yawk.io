@@ -62,7 +62,7 @@ if(isset($_POST['alias']) && (!empty($_POST['alias'])))
         <br>
         <form role="form" class="form-inline" action="index.php?page=page-new" method="post">
             <label for="alias"><?php print $lang['PAGE_ADD_SUBTEXT']; ?>
-                <?php echo backend::printTooltip($lang['TT_PAGE_FILENAME']); ?></label><br>
+                <?php echo backend::printTooltip($lang['TT_PAGE_TITLE']); ?></label><br>
             <!-- TEXT FIELD -->
             <input type="text" id="alias" size="84" name="alias" class="form-control" maxlength="255"
                    placeholder="<?php print $lang['PAGE_ADD_PLACEHOLDER']; ?>" /> .html

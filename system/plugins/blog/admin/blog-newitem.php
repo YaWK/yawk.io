@@ -34,8 +34,10 @@ if (isset($_POST['create']) && isset($_POST['blogid']))
     $blog->thumbnail = $db->quote($_POST['thumbnail']);
     $blog->youtubeUrl = $db->quote($_POST['youtubeUrl']);
     $blog->weblink = $db->quote($_POST['weblink']);
+    $blog->meta_local = "Meta Tag Description";
+    $blog->meta_keywords = "Keyword 1, Keyword2, ...";
 
-    if ($blog->createItem($db, $blog->blogid, $blog->title, $blog->subtitle, $blog->published, $blog->teasertext, $blog->blogtext, $blog->date_publish, $blog->date_unpublish, $blog->thumbnail, $blog->youtubeUrl, $blog->weblink)) {
+    if ($blog->createItem($db, $blog->blogid, $blog->title, $blog->subtitle, $blog->published, $blog->teasertext, $blog->blogtext, $blog->date_publish, $blog->date_unpublish, $blog->thumbnail, $blog->youtubeUrl, $blog->weblink, $blog->meta_local, $blog->meta_keywords)) {
         // echo YAWK\alert::draw("success", "Success!", "Your entry $blog->title was saved.","plugin=blog&pluginpage=blog-entries&blogid=".$blog->blogid."", 9800);
         alert::draw("success", "$lang[SUCCESS]", "$blog->title $lang[SAVED]", "plugin=blog&pluginpage=blog-entries&blogid=".$blog->blogid."", 1200);
         sys::setSyslog($db, 5, 0, "blog item $blog->title saved", 0, 0, 0, 0);
@@ -306,19 +308,19 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
         }); // end summernote
     }); // end document ready
 </script>
-    <form name="form" role="form" action="index.php?plugin=blog&pluginpage=blog-newitem" method="post">
+<form name="form" role="form" action="index.php?plugin=blog&pluginpage=blog-newitem" method="post">
 
-        <div class="row">
-            <div class="col-md-9">
-                <label for="blogtitle"><?php print $lang['TITLE']; ?></label>
-                <input type="text"
-                       class="form-control input-lg"
-                       id="title"
-                       name="title">
-                <br>
-                <?php if ($blog->layout !== "0")
-                {
-                    echo "
+    <div class="row">
+        <div class="col-md-9">
+            <label for="blogtitle"><?php print $lang['TITLE']; ?></label>
+            <input type="text"
+                   class="form-control input-lg"
+                   id="title"
+                   name="title">
+            <br>
+            <?php if ($blog->layout !== "0")
+            {
+                echo "
         <!-- EDITOR -->
         <label for=\"summernote\">$lang[TEASER_TEXT]</label>
         <textarea
@@ -326,40 +328,40 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
             class=\"form-control\"
             style=\"margin-top:10px;\"
             name=\"teasertext\"></textarea>";
-                }
-                ?>
-                <!-- EDITOR -->
-                <label for="summernote2"><?php echo $lang['BLOG_TEXT']; ?></label>
-                <textarea
+            }
+            ?>
+            <!-- EDITOR -->
+            <label for="summernote2"><?php echo $lang['BLOG_TEXT']; ?></label>
+            <textarea
                     id="summernote2"
                     class="form-control"
                     style="margin-top:10px;"
                     name="blogtext"
                     cols="50"
                     rows="18"></textarea>
-            </div> <!-- end left col -->
+        </div> <!-- end left col -->
 
-            <div class="col-md-3">
-                <!-- right col -->
-                <!-- SAVE BUTTON -->
-                <button type="submit"
-                        id="savebutton"
-                        name="save"
-                        class="btn btn-success pull-right">
-                    <i id="savebuttonIcon" class="fa fa-check"></i> &nbsp;<?php print $lang['ADD_ENTRY']; ?>
-                </button>
+        <div class="col-md-3">
+            <!-- right col -->
+            <!-- SAVE BUTTON -->
+            <button type="submit"
+                    id="savebutton"
+                    name="save"
+                    class="btn btn-success pull-right">
+                <i id="savebuttonIcon" class="fa fa-check"></i> &nbsp;<?php print $lang['ADD_ENTRY']; ?>
+            </button>
 
-                <!-- CANCEL BUTTON -->
-                <a class="btn btn-default pull-right" href="index.php?plugin=blog&pluginpage=blog-entries&blogid=<?php echo $_GET['blogid']; ?>">
-                    <i id="cancelbuttonIcon" class="fa fa-backward"></i> &nbsp;<?php print $lang['BACK']; ?>
-                </a>
+            <!-- CANCEL BUTTON -->
+            <a class="btn btn-default pull-right" href="index.php?plugin=blog&pluginpage=blog-entries&blogid=<?php echo $_GET['blogid']; ?>">
+                <i id="cancelbuttonIcon" class="fa fa-backward"></i> &nbsp;<?php print $lang['BACK']; ?>
+            </a>
 
-                <br><br><br>
+            <br><br><br>
 
-                <?php
-                // SETTINGS: filename + subtitle
-                $header = "<i class=\"fa fa-file-text-o\"></i>&nbsp; $lang[SETTINGS] <small>$lang[TITLE] &amp; $lang[FILENAME]</small>";
-                $content = "<label for=\"filename\">$lang[FILENAME]</label><br>
+            <?php
+            // SETTINGS: filename + subtitle
+            $header = "<i class=\"fa fa-file-text-o\"></i>&nbsp; $lang[SETTINGS] <small>$lang[TITLE] &amp; $lang[FILENAME]</small>";
+            $content = "<label for=\"filename\">$lang[FILENAME]</label><br>
                     <input type=\"text\"
                                class=\"form-control\"
                                name=\"filename\"
@@ -373,28 +375,28 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
                                id=\"subtitle\"
                                size=\"64\"
                                maxlength=\"255\">";
-                echo AdminLTE::drawCollapsableBox($header, $content);
-                ?>
+            echo AdminLTE::drawCollapsableBox($header, $content);
+            ?>
 
-                <!-- PUBLISHING -->
-                <div class="box box-default">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><i class="fa fa-clock-o"></i>
-                            &nbsp;<?php echo "$lang[PUBLISHING] <small>$lang[EFFECTIVE_TIME] &amp; $lang[PRIVACY]</small>"; ?>
-                        </h3>
-                        <!-- box-tools -->
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                            </button>
-                        </div>
-                        <!-- /.box-tools -->
+            <!-- PUBLISHING -->
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><i class="fa fa-clock-o"></i>
+                        &nbsp;<?php echo "$lang[PUBLISHING] <small>$lang[EFFECTIVE_TIME] &amp; $lang[PRIVACY]</small>"; ?>
+                    </h3>
+                    <!-- box-tools -->
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
                     </div>
-                    <!-- /.box-header -->
-                    <div class="box-body" style="display: block;">
+                    <!-- /.box-tools -->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body" style="display: block;">
 
-                        <!-- start publish datetimepicker -->
-                        <label for="datetimepicker1"><i class="fa fa-calendar"></i> <?php print $lang['START_PUBLISH']; ?></label><br>
-                        <input
+                    <!-- start publish datetimepicker -->
+                    <label for="datetimepicker1"><i class="fa fa-calendar"></i> <?php print $lang['START_PUBLISH']; ?></label><br>
+                    <input
                             class="form-control"
                             id="datetimepicker1"
                             type="text"
@@ -402,9 +404,9 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
                             maxlength="19"
                             value="<?php echo date("Y-m-d H:i:s"); ?>"
 
-                        <!-- end publish datetimepicker -->
-                        <label for="datetimepicker2"><i class="fa fa-ban"></i> <?php print $lang['END_PUBLISH']; ?></label><br>
-                        <input
+                    <!-- end publish datetimepicker -->
+                    <label for="datetimepicker2"><i class="fa fa-ban"></i> <?php print $lang['END_PUBLISH']; ?></label><br>
+                    <input
                             type="text"
                             class="form-control"
                             id="datetimepicker2"
@@ -412,91 +414,91 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
                             maxlength="19"
                             value="">
 
-                        <!-- group id selector -->
-                        <label for="gidselect"><i class="fa fa-users"></i> <?php print $lang['PAGE_VISIBLE']; ?></label>
-                        <select id="gidselect" name="itemgid" class="form-control">
-                            <?php
-                            foreach(YAWK\sys::getGroups($db, "pages") as $role) {
-                                print "<option value=\"".$role['id']."\"";
-                                if (isset($_POST['gid'])) {
-                                    if($_POST['gid'] === $role['id']) {
-                                        print " selected=\"selected\"";
-                                    }
-                                    else if($blog->itemgid === $role['id'] && !$_POST['itemgid']) {
-                                        print " selected=\"selected\"";
-                                    }
+                    <!-- group id selector -->
+                    <label for="gidselect"><i class="fa fa-users"></i> <?php print $lang['PAGE_VISIBLE']; ?></label>
+                    <select id="gidselect" name="itemgid" class="form-control">
+                        <?php
+                        foreach(YAWK\sys::getGroups($db, "pages") as $role) {
+                            print "<option value=\"".$role['id']."\"";
+                            if (isset($_POST['gid'])) {
+                                if($_POST['gid'] === $role['id']) {
+                                    print " selected=\"selected\"";
                                 }
-                                print ">".$role['value']."</option>";
+                                else if($blog->itemgid === $role['id'] && !$_POST['itemgid']) {
+                                    print " selected=\"selected\"";
+                                }
                             }
-                            ?>
-                        </select>
+                            print ">".$role['value']."</option>";
+                        }
+                        ?>
+                    </select>
 
-                        <!-- PAGE ON / OFF STATUS -->
-                        <label for="published"><i class="fa fa-eye"></i> <?php print $lang['ENTRY'];print"&nbsp;";print $lang['ONLINE']; ?></label><br>
-                        <?php if($blog->published == 1){
-                            $publishedHtml = "<option value=\"1\" selected=\"selected\">$lang[ONLINE]</option>";
-                            $publishedHtml .= "<option value=\"0\" >$lang[OFFLINE]</option>";
-                        } else {
-                            $publishedHtml = "<option value=\"0\" selected=\"selected\">$lang[OFFLINE]</option>";
-                            $publishedHtml .= "<option value=\"1\" >$lang[ONLINE]</option>";
-                        } ?>
-                        <select id="published" name="published" class="form-control">
-                            <?php echo $publishedHtml; ?>
-                        </select>
-                    </div>
-                    <!-- /.box-body -->
+                    <!-- PAGE ON / OFF STATUS -->
+                    <label for="published"><i class="fa fa-eye"></i> <?php print $lang['ENTRY'];print"&nbsp;";print $lang['ONLINE']; ?></label><br>
+                    <?php if($blog->published == 1){
+                        $publishedHtml = "<option value=\"1\" selected=\"selected\">$lang[ONLINE]</option>";
+                        $publishedHtml .= "<option value=\"0\" >$lang[OFFLINE]</option>";
+                    } else {
+                        $publishedHtml = "<option value=\"0\" selected=\"selected\">$lang[OFFLINE]</option>";
+                        $publishedHtml .= "<option value=\"1\" >$lang[ONLINE]</option>";
+                    } ?>
+                    <select id="published" name="published" class="form-control">
+                        <?php echo $publishedHtml; ?>
+                    </select>
                 </div>
+                <!-- /.box-body -->
+            </div>
 
-                <!-- META TAGS -->
-                <div class="box box-default">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><i class="fa fa-google"></i>&nbsp;&nbsp;<?php echo "$lang[META_TAGS] <small>$lang[SEO]"; ?></h3>
-                        <!-- box-tools -->
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                            </button>
-                        </div>
-                        <!-- /.box-tools -->
+            <!-- META TAGS -->
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><i class="fa fa-google"></i>&nbsp;&nbsp;<?php echo "$lang[META_TAGS] <small>$lang[SEO]"; ?></h3>
+                    <!-- box-tools -->
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
                     </div>
-                    <!-- /.box-header -->
-                    <div class="box-body" style="display: block;">
-                        <!-- LOCAL META SITE DESCRIPTION -->
-                        <label for="metadescription"><?php echo "$lang[META_DESC]"; ?></label><br>
-                        <textarea cols="64"
-                                  rows="2"
-                                  id="metadescription"
-                                  class="form-control"
-                                  maxlength="255"
-                                  placeholder="<?php echo "$lang[PAGE_DESC_PLACEHOLDER]"; ?>"
-                                  name="metadescription"></textarea>
-                        <!-- LOCAL META SITE KEYWORDS -->
-                        <label for="metakeywords"><?php echo "$lang[META_KEYWORDS]"; ?></label>
-                        <input type="text"
-                               size="64"
-                               id="metakeywords"
-                               class="form-control"
-                               placeholder="<?php echo "$lang[KEYWORD] 1, $lang[KEYWORD] 2, $lang[KEYWORD] 3..."; ?>"
-                               name="metakeywords">
-                    </div>
-                    <!-- /.box-body -->
+                    <!-- /.box-tools -->
                 </div>
+                <!-- /.box-header -->
+                <div class="box-body" style="display: block;">
+                    <!-- LOCAL META SITE DESCRIPTION -->
+                    <label for="metadescription"><?php echo "$lang[META_DESC]"; ?></label><br>
+                    <textarea cols="64"
+                              rows="2"
+                              id="metadescription"
+                              class="form-control"
+                              maxlength="255"
+                              placeholder="<?php echo "$lang[PAGE_DESC_PLACEHOLDER]"; ?>"
+                              name="metadescription"></textarea>
+                    <!-- LOCAL META SITE KEYWORDS -->
+                    <label for="metakeywords"><?php echo "$lang[META_KEYWORDS]"; ?></label>
+                    <input type="text"
+                           size="64"
+                           id="metakeywords"
+                           class="form-control"
+                           placeholder="<?php echo "$lang[KEYWORD] 1, $lang[KEYWORD] 2, $lang[KEYWORD] 3..."; ?>"
+                           name="metakeywords">
+                </div>
+                <!-- /.box-body -->
+            </div>
 
-                <!-- blog thumbnail -->
-                <div class="box box-default">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><i class="fa fa-photo"></i>&nbsp;&nbsp;<?php echo "$lang[TEASER] <small>$lang[TEASER_IMG]</small>"; ?></h3>
-                        <!-- box-tools -->
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                            </button>
-                        </div>
-                        <!-- /.box-tools -->
+            <!-- blog thumbnail -->
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><i class="fa fa-photo"></i>&nbsp;&nbsp;<?php echo "$lang[TEASER] <small>$lang[TEASER_IMG]</small>"; ?></h3>
+                    <!-- box-tools -->
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
                     </div>
-                    <!-- /.box-header -->
-                    <div class="box-body" style="display: block;">
-                        <!-- THUMBNAIL IMAGE -->
-                        <label for="thumbnail"><?php print $lang['THUMBNAIL']; ?>&nbsp;</label><br>
-                        <input
+                    <!-- /.box-tools -->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body" style="display: block;">
+                    <!-- THUMBNAIL IMAGE -->
+                    <label for="thumbnail"><?php print $lang['THUMBNAIL']; ?>&nbsp;</label><br>
+                    <input
                             type="text"
                             class="form-control"
                             id="thumbnail"
@@ -504,9 +506,9 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
                             size="64"
                             maxlength="255"
                             placeholder="media/images/anyfile.jpg">
-                        <label for="thumbnail"><i class="fa fa-youtube"></i> &nbsp;<?php print $lang['YOUTUBEURL']; ?>&nbsp;</label><br>
-                        <!-- YouTube Link -->
-                        <input
+                    <label for="thumbnail"><i class="fa fa-youtube"></i> &nbsp;<?php print $lang['YOUTUBEURL']; ?>&nbsp;</label><br>
+                    <!-- YouTube Link -->
+                    <input
                             type="text"
                             class="form-control"
                             id="youtubeUrl"
@@ -514,102 +516,102 @@ $editorSettings = \YAWK\settings::getEditorSettings($db, 14);
                             size="64"
                             maxlength="255"
                             placeholder="https://www.youtube.com/embed/1A2B3C4D5E6F">
-                    </div>
-                    <!-- /.box-body -->
                 </div>
-
-                <!-- blog thumbnail -->
-                <div class="box box-default">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><i class="fa fa-bars"></i>&nbsp;&nbsp;<?php echo "$lang[SUBMENU] <small>$lang[SUBMENU_SUBTEXT]</small>"; ?></h3>
-                        <!-- box-tools -->
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                            </button>
-                        </div>
-                        <!-- /.box-tools -->
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body" style="display: block;">
-                        <!-- SUB MENU SELECTOR -->
-                        <label for="menu"><?php echo $lang['SUBMENU']; ?></label>
-                        <select name="menu" class="form-control">
-                            <option value="0"><?php echo $lang['NO_MENU_SELECTED']; ?></option>
-                            <?php
-                            foreach(YAWK\sys::getMenus($db) as $menue){
-                                print "<option value=\"".$menue['id']."\"";
-                                if (isset($_POST['menu'])) {
-                                    if($_POST['menu'] === $menue['id']){
-                                        print " selected=\"selected\"";
-                                    }
-                                    else if($page->menu === $menue['id'] && !$_POST['menu']){
-                                        print " selected=\"selected\"";
-                                    }
-                                }
-                                print ">".$menue['name']."</option>";
-                            }
-                            ?>
-                        </select>
-                    </div>
-                    <!-- /.box-body -->
-                </div>
-
-
-                <!-- blog thumbnail -->
-                <div class="box box-default">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><i class="fa fa-object-ungroup"></i>&nbsp;&nbsp;<?php echo "$lang[LAYOUT] <small>$lang[AND] $lang[COMMENTS]</small>"; ?></h3>
-                        <!-- box-tools -->
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                            </button>
-                        </div>
-                        <!-- /.box-tools -->
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body" style="display: block;">
-                        <!-- LAYOUT -->
-                        <label for="itemlayout"><?php print $lang['LAYOUT']; ?>&nbsp;</label><br>
-                        <select name="itemlayout" id="itemlayout" class="form-control">
-                            <option value="-1"><?php echo $lang['BLOG_SETTING']; ?></option>
-                            <option value="0"><?php echo $lang['BLOG_LAYOUT_1COL_TEXTBLOG']; ?></option>
-                            <option value="1"><?php echo $lang['BLOG_LAYOUT_2COL_TEASER_L']; ?></option>
-                            <option value="2"><?php echo $lang['BLOG_LAYOUT_2COL_TEASER_R']; ?></option>
-                            <option value="3"><?php echo $lang['BLOG_LAYOUT_3COL_NEWSPAPER']; ?></option>
-                            <option value="4"><?php echo $lang['BLOG_LAYOUT_1COL_YOUTUBE']; ?></option>
-                        </select>
-
-                        <!-- COMMENTS -->
-                        <label for="itemcomments"><i class="fa fa-comment-o"></i> &nbsp;<?php print $lang['COMMENTS']; ?>&nbsp;</label><br>
-                        <select name="itemcomments" id="itemcomments" class="form-control">
-                            <option value="-1"><?php echo $lang['BLOG_SETTING']; ?></option>
-                            <option value="1"><?php echo $lang['COMMENTS_ALLOWED']; ?></option>
-                            <option value="0"><?php echo $lang['COMMENTS_FORBIDDEN']; ?></option>
-                        </select>
-                    </div>
-                    <!-- /.box-body -->
-                </div>
-                <!-- /. ADDITIONAL BOXES-->
-                <?php
-                    if (!isset($_GET['blogid']))
-                    {
-                        $blog->icon = $blog->getBlogProperty($db, $_GET['blogid'], "icon");
-                        $blog->name = $blog->getBlogProperty($db, $_GET['blogid'], "name");
-                        $blog->id = $blog->getBlogProperty($db, $_GET['blogid'], "id");
-                    }
-                    else
-                    {
-                        $blog->id = $_GET['blogid'];
-                    }
-                ?>
-
-                <!-- HIDDEN FIELDS -->
-                <input type="hidden" name="create" value="1">
-                <input type="hidden" name="blogid" value="<?php print $blog->id; ?>">
-                <input type="hidden" name="itemid" value="<?php print $blog->itemid; ?>">
-                <input type="hidden" name="pageid" value="<?php print $blog->pageid; ?>">
-                <input type="hidden" name="oldteasertext" value="<?php print $blog->teasertext; ?>">
-
+                <!-- /.box-body -->
             </div>
+
+            <!-- blog thumbnail -->
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><i class="fa fa-bars"></i>&nbsp;&nbsp;<?php echo "$lang[SUBMENU] <small>$lang[SUBMENU_SUBTEXT]</small>"; ?></h3>
+                    <!-- box-tools -->
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                    <!-- /.box-tools -->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body" style="display: block;">
+                    <!-- SUB MENU SELECTOR -->
+                    <label for="menu"><?php echo $lang['SUBMENU']; ?></label>
+                    <select name="menu" class="form-control">
+                        <option value="0"><?php echo $lang['NO_MENU_SELECTED']; ?></option>
+                        <?php
+                        foreach(YAWK\sys::getMenus($db) as $menue){
+                            print "<option value=\"".$menue['id']."\"";
+                            if (isset($_POST['menu'])) {
+                                if($_POST['menu'] === $menue['id']){
+                                    print " selected=\"selected\"";
+                                }
+                                else if($page->menu === $menue['id'] && !$_POST['menu']){
+                                    print " selected=\"selected\"";
+                                }
+                            }
+                            print ">".$menue['name']."</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+                <!-- /.box-body -->
+            </div>
+
+
+            <!-- blog thumbnail -->
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><i class="fa fa-object-ungroup"></i>&nbsp;&nbsp;<?php echo "$lang[LAYOUT] <small>$lang[AND] $lang[COMMENTS]</small>"; ?></h3>
+                    <!-- box-tools -->
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                    <!-- /.box-tools -->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body" style="display: block;">
+                    <!-- LAYOUT -->
+                    <label for="itemlayout"><?php print $lang['LAYOUT']; ?>&nbsp;</label><br>
+                    <select name="itemlayout" id="itemlayout" class="form-control">
+                        <option value="-1"><?php echo $lang['BLOG_SETTING']; ?></option>
+                        <option value="0"><?php echo $lang['BLOG_LAYOUT_1COL_TEXTBLOG']; ?></option>
+                        <option value="1"><?php echo $lang['BLOG_LAYOUT_2COL_TEASER_L']; ?></option>
+                        <option value="2"><?php echo $lang['BLOG_LAYOUT_2COL_TEASER_R']; ?></option>
+                        <option value="3"><?php echo $lang['BLOG_LAYOUT_3COL_NEWSPAPER']; ?></option>
+                        <option value="4"><?php echo $lang['BLOG_LAYOUT_1COL_YOUTUBE']; ?></option>
+                    </select>
+
+                    <!-- COMMENTS -->
+                    <label for="itemcomments"><i class="fa fa-comment-o"></i> &nbsp;<?php print $lang['COMMENTS']; ?>&nbsp;</label><br>
+                    <select name="itemcomments" id="itemcomments" class="form-control">
+                        <option value="-1"><?php echo $lang['BLOG_SETTING']; ?></option>
+                        <option value="1"><?php echo $lang['COMMENTS_ALLOWED']; ?></option>
+                        <option value="0"><?php echo $lang['COMMENTS_FORBIDDEN']; ?></option>
+                    </select>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /. ADDITIONAL BOXES-->
+            <?php
+            if (!isset($_GET['blogid']))
+            {
+                $blog->icon = $blog->getBlogProperty($db, $_GET['blogid'], "icon");
+                $blog->name = $blog->getBlogProperty($db, $_GET['blogid'], "name");
+                $blog->id = $blog->getBlogProperty($db, $_GET['blogid'], "id");
+            }
+            else
+            {
+                $blog->id = $_GET['blogid'];
+            }
+            ?>
+
+            <!-- HIDDEN FIELDS -->
+            <input type="hidden" name="create" value="1">
+            <input type="hidden" name="blogid" value="<?php print $blog->id; ?>">
+            <input type="hidden" name="itemid" value="<?php print $blog->itemid; ?>">
+            <input type="hidden" name="pageid" value="<?php print $blog->pageid; ?>">
+            <input type="hidden" name="oldteasertext" value="<?php print $blog->teasertext; ?>">
+
         </div>
-    </form>
+    </div>
+</form>

@@ -31,14 +31,14 @@ if (isset($_POST['save'])) {
         $_POST['filename'] = $_POST['blogtitle'];
     }
     // check if meta description is set
-    if ((empty($_POST['metadescription'])))
+    if ((empty($_POST['meta_local'])))
     {   // if not, take blogtitle as description
-        $_POST['metadescription'] = $_POST['blogtitle'];
+        $_POST['meta_local'] = $_POST['blogtitle'];
     }
     // check if meta keywords are set
-    if ((empty($_POST['metakeywords'])))
+    if ((empty($_POST['meta_keywords'])))
     {   // if not, take blogtitle as description
-        $_POST['metakeywords'] = "";
+        $_POST['meta_keywords'] = "";
     }
     // check if a teasertext is set
     if ((empty($_POST['teasertext'])))
@@ -62,16 +62,16 @@ if (isset($_POST['save'])) {
     $blog->pageid = $db->quote($_POST['pageid']);
     $blog->thumbnail = $db->quote($_POST['thumbnail']);
     $blog->youtubeUrl = $db->quote($_POST['youtubeUrl']);
-    $blog->metakeywords = $db->quote($_POST['metakeywords']);
-    $blog->metadescription = $db->quote($_POST['metadescription']);
+    $blog->meta_local = $db->quote($_POST['meta_local']);
+    $blog->meta_keywords = $db->quote($_POST['meta_keywords']);
     $blog->itemlayout = $db->quote($_POST['itemlayout']);
     $blog->itemcomments = $db->quote($_POST['itemcomments']);
 
     // Summernote Editor \r\n removal
 
-        // $blog->blogtext = stripslashes(str_replace('\r\n','&#x000D;', ($blog->blogtext)));
-        // $blog->teasertext = stripslashes(str_replace('\r\n','&#x000D;', ($blog->teasertext)));
-    
+    // $blog->blogtext = stripslashes(str_replace('\r\n','&#x000D;', ($blog->blogtext)));
+    // $blog->teasertext = stripslashes(str_replace('\r\n','&#x000D;', ($blog->teasertext)));
+
     if ($blog->save($db))
     {   // throw success notify
         YAWK\alert::draw("success", "$lang[SUCCESS]", "$lang[ENTRY] $lang[SAVED]", "", "800");
@@ -109,26 +109,26 @@ echo"<ol class=\"breadcrumb\">
     <section class=\"content\">";
 /* page content start here */
 ?>
-    <script type="text/javascript">
-        function saveHotkey() {
-            // simply disables save event for chrome
-            $(window).keypress(function (event) {
-                if (!(event.which === 115 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) && !(event.which == 19)) return true;
+<script type="text/javascript">
+    function saveHotkey() {
+        // simply disables save event for chrome
+        $(window).keypress(function (event) {
+            if (!(event.which === 115 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) && !(event.which == 19)) return true;
+            event.preventDefault();
+            formmodified=0; // do not warn user, just save.
+            return false;
+        });
+        // used to process the cmd+s and ctrl+s events
+        $(document).keydown(function (event) {
+            if (event.which === 83 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) {
                 event.preventDefault();
+                $('#savebutton').click(); // SAVE FORM AFTER PRESSING STRG-S hotkey
                 formmodified=0; // do not warn user, just save.
+                // save(event);
                 return false;
-            });
-            // used to process the cmd+s and ctrl+s events
-            $(document).keydown(function (event) {
-                if (event.which === 83 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) {
-                    event.preventDefault();
-                    $('#savebutton').click(); // SAVE FORM AFTER PRESSING STRG-S hotkey
-                    formmodified=0; // do not warn user, just save.
-                    // save(event);
-                    return false;
-                }
-            });
-        }
+            }
+        });
+    }
     saveHotkey();
 </script>
 <?php
@@ -150,72 +150,72 @@ $editorSettings = settings::getEditorSettings($db, 14);
 <script src="../system/engines/summernote/dist/summernote-image-attributes.js"></script>
 <script src="../system/engines/summernote/dist/summernote-floats-bs.js"></script>
 <script type="text/javascript">
-$(document).ready(function() {
+    $(document).ready(function() {
 // textarea that will be transformed into editor
-var editor = ('textarea#summernote');
-var editor2 = ('textarea#summernote2');
-var savebutton = ('#savebutton');
-var savebuttonIcon = ('#savebuttonIcon');
+        var editor = ('textarea#summernote');
+        var editor2 = ('textarea#summernote2');
+        var savebutton = ('#savebutton');
+        var savebuttonIcon = ('#savebuttonIcon');
 // ok, lets go...
 // we need to check if user clicked on save button
-$(savebutton).click(function() {
-$(savebutton).removeClass('btn btn-success').addClass('btn btn-warning');
-$(savebuttonIcon).removeClass('fa fa-check').addClass('fa fa-spinner fa-spin fa-fw');
+        $(savebutton).click(function() {
+            $(savebutton).removeClass('btn btn-success').addClass('btn btn-warning');
+            $(savebuttonIcon).removeClass('fa fa-check').addClass('fa fa-spinner fa-spin fa-fw');
 // to save, even if the editor is currently opened in code view
 // we need to check if codeview is currently active:
-if ($(editor).summernote('codeview.isActivated')) {
+            if ($(editor).summernote('codeview.isActivated')) {
 // if so, turn it off.
-$(editor).summernote('codeview.deactivate');
-}
+                $(editor).summernote('codeview.deactivate');
+            }
 
-if ($(editor2).summernote('codeview.isActivated')) {
+            if ($(editor2).summernote('codeview.isActivated')) {
 // if so, turn it off.
-$(editor2).summernote('codeview.deactivate');
-}
+                $(editor2).summernote('codeview.deactivate');
+            }
 // to display images in frontend correctly, we need to change the path of every image.
 // to do that, the current value of textarea will be read into var text and search/replaced
 // and written back into the textarea. utf-8 encoding/decoding happens in php, before saving into db.
 // get the value of summernote textarea
-    if ( $(editor).length) {    // check if element exists in dom to load editor correctly
-        var text = $(editor).val();
-        // search for <img> tags and revert src ../ to set correct path for frontend
-        var frontend = text.replace(/<img src=\x22..\/media/g,"<img src=\x22media");
-        // put the new string back into <textarea>
-        $(editor).val(frontend); // to make sure that saving works
-    }
+            if ( $(editor).length) {    // check if element exists in dom to load editor correctly
+                var text = $(editor).val();
+                // search for <img> tags and revert src ../ to set correct path for frontend
+                var frontend = text.replace(/<img src=\x22..\/media/g,"<img src=\x22media");
+                // put the new string back into <textarea>
+                $(editor).val(frontend); // to make sure that saving works
+            }
 
-    if ( $(editor2).length) {    // check if element exists in dom to load editor correctly
-        // do the same thing for the 2nd textarea:
-        var text2 = $(editor2).val();
-        // search for <img> tags and revert src ../ to set correct path for frontend
-        var frontend2 = text2.replace(/<img src=\x22..\/media/g, "<img src=\x22media");
-        // put the new string back into <textarea>
-        $(editor2).val(frontend2); // to make sure that saving works
-    }
-});
+            if ( $(editor2).length) {    // check if element exists in dom to load editor correctly
+                // do the same thing for the 2nd textarea:
+                var text2 = $(editor2).val();
+                // search for <img> tags and revert src ../ to set correct path for frontend
+                var frontend2 = text2.replace(/<img src=\x22..\/media/g, "<img src=\x22media");
+                // put the new string back into <textarea>
+                $(editor2).val(frontend2); // to make sure that saving works
+            }
+        });
 
-    // BEFORE SUMMERNOTE loads: 3 important lines of code!
-    // to display images in backend correctly, we need to change the path of every image.
-    // procedure is the same as above (see #savebutton.click)
-    // get the value of summernote textarea
+        // BEFORE SUMMERNOTE loads: 3 important lines of code!
+        // to display images in backend correctly, we need to change the path of every image.
+        // procedure is the same as above (see #savebutton.click)
+        // get the value of summernote textarea
 
-    if ( $(editor).length) {    // check if element exists in dom to load editor correctly
-        var text = $(editor).val();
-        // search for <img> tags and update src ../ to get images viewed in summernote
-        var backend = text.replace(/<img src=\"media/g, "<img src=\"../media");
-        // put the new string back into <textarea>
-        $(editor).val(backend); // set new value into textarea
-    }
+        if ( $(editor).length) {    // check if element exists in dom to load editor correctly
+            var text = $(editor).val();
+            // search for <img> tags and update src ../ to get images viewed in summernote
+            var backend = text.replace(/<img src=\"media/g, "<img src=\"../media");
+            // put the new string back into <textarea>
+            $(editor).val(backend); // set new value into textarea
+        }
 
-    if ( $(editor2).length) {    // check if element exists in dom to load editor correctly
-        // do the same thing for the 2nd textarea:
-        var text2 = $(editor2).val();
-        // search for <img> tags and update src ../ to get images viewed in summernote
-        var backend2 = text2.replace(/<img src=\"media/g, "<img src=\"../media");
-        // put the new string back into <textarea>
-        $(editor2).val(backend2); // set new value into textarea
+        if ( $(editor2).length) {    // check if element exists in dom to load editor correctly
+            // do the same thing for the 2nd textarea:
+            var text2 = $(editor2).val();
+            // search for <img> tags and update src ../ to get images viewed in summernote
+            var backend2 = text2.replace(/<img src=\"media/g, "<img src=\"../media");
+            // put the new string back into <textarea>
+            $(editor2).val(backend2); // set new value into textarea
 
-    }
+        }
         <?php
         // check if codeview is enabled on default
         if ($editorSettings['editorAutoCodeview'] === "true")
@@ -233,117 +233,117 @@ $(editor2).summernote('codeview.deactivate');
         }
         ?>
 
-    // INIT SUMMERNOTE EDITOR
-    $('#summernote').summernote({    // set editor itself
-        height: <?php echo $editorSettings['editorTeaserHeight']; ?>,                 // set editor height
-        minHeight: null,             // set minimum height of editor
-        maxHeight: null,             // set maximum height of editor
-        focus: true,                 // set focus to editable area after initializing summernote
+        // INIT SUMMERNOTE EDITOR
+        $('#summernote').summernote({    // set editor itself
+            height: <?php echo $editorSettings['editorTeaserHeight']; ?>,                 // set editor height
+            minHeight: null,             // set minimum height of editor
+            maxHeight: null,             // set maximum height of editor
+            focus: true,                 // set focus to editable area after initializing summernote
 
-        // popover tooltips
-        popover: {
-            image: [
-                ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
-                /* ['float', ['floatLeft', 'floatRight', 'floatNone']], // those are the old regular float buttons */
-                ['floatBS', ['floatBSLeft', 'floatBSNone', 'floatBSRight']],    // bootstrap class buttons (float/pull)
-                ['custom', ['imageAttributes', 'imageShape']], // forked plugin: image-attributes.js
-                ['remove', ['removeMedia']]
-            ]
-        },
-        // language for plugin image-attributes.js
-        lang: '<?php echo $lang['CURRENT_LANGUAGE']; ?>',
+            // popover tooltips
+            popover: {
+                image: [
+                    ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+                    /* ['float', ['floatLeft', 'floatRight', 'floatNone']], // those are the old regular float buttons */
+                    ['floatBS', ['floatBSLeft', 'floatBSNone', 'floatBSRight']],    // bootstrap class buttons (float/pull)
+                    ['custom', ['imageAttributes', 'imageShape']], // forked plugin: image-attributes.js
+                    ['remove', ['removeMedia']]
+                ]
+            },
+            // language for plugin image-attributes.js
+            lang: '<?php echo $lang['CURRENT_LANGUAGE']; ?>',
 
-        // powerup the codeview with codemirror theme
-        codemirror: { // codemirror options
-            theme: '<?php echo $editorSettings['editorTheme']; ?>',                       // codeview theme
-            lineNumbers: <?php echo $editorSettings['editorLineNumbers']; ?>,             // display lineNumbers true|false
-            undoDepth: <?php echo $editorSettings['editorUndoDepth']; ?>,                 // how many undo steps should be saved? (default: 200)
-            smartIndent: <?php echo $editorSettings['editorSmartIndent']; ?>,             // better indent
-            indentUnit: <?php echo $editorSettings['editorIndentUnit']; ?>,               // how many spaces auto indent? (default: 2)
-            scrollbarStyle: null,                                                         // styling of the scrollbars
-            matchBrackets: <?php echo $editorSettings['editorMatchBrackets']; ?>,         // highlight corresponding brackets
-            autoCloseBrackets: <?php echo $editorSettings['editorCloseBrackets'];?>,      // auto insert close brackets
-            autoCloseTags: <?php echo $editorSettings['editorCloseTags']; ?>,             // auto insert close tags after opening
-            value: "<html>\n  " + document.documentElement.innerHTML + "\n</html>",       // all html
-            mode: "htmlmixed",                                                            // editor mode
-            matchTags: {bothTags: <?php echo $editorSettings['editorMatchTags']; ?>},     // hightlight matching tags: both
-            extraKeys: {"Ctrl-J": "toMatchingTag", "Ctrl-Space": "autocomplete"},         // press ctrl-j to jump to next matching tab
-            styleActiveLine: <?php echo $editorSettings['editorActiveLine']; ?>,           // highlight the active line (where the cursor is)
-            autoRefresh: true
-        },
+            // powerup the codeview with codemirror theme
+            codemirror: { // codemirror options
+                theme: '<?php echo $editorSettings['editorTheme']; ?>',                       // codeview theme
+                lineNumbers: <?php echo $editorSettings['editorLineNumbers']; ?>,             // display lineNumbers true|false
+                undoDepth: <?php echo $editorSettings['editorUndoDepth']; ?>,                 // how many undo steps should be saved? (default: 200)
+                smartIndent: <?php echo $editorSettings['editorSmartIndent']; ?>,             // better indent
+                indentUnit: <?php echo $editorSettings['editorIndentUnit']; ?>,               // how many spaces auto indent? (default: 2)
+                scrollbarStyle: null,                                                         // styling of the scrollbars
+                matchBrackets: <?php echo $editorSettings['editorMatchBrackets']; ?>,         // highlight corresponding brackets
+                autoCloseBrackets: <?php echo $editorSettings['editorCloseBrackets'];?>,      // auto insert close brackets
+                autoCloseTags: <?php echo $editorSettings['editorCloseTags']; ?>,             // auto insert close tags after opening
+                value: "<html>\n  " + document.documentElement.innerHTML + "\n</html>",       // all html
+                mode: "htmlmixed",                                                            // editor mode
+                matchTags: {bothTags: <?php echo $editorSettings['editorMatchTags']; ?>},     // hightlight matching tags: both
+                extraKeys: {"Ctrl-J": "toMatchingTag", "Ctrl-Space": "autocomplete"},         // press ctrl-j to jump to next matching tab
+                styleActiveLine: <?php echo $editorSettings['editorActiveLine']; ?>,           // highlight the active line (where the cursor is)
+                autoRefresh: true
+            },
 
-        // plugin: summernote-cleaner.js
-        // this allows to copy/paste from word, browsers etc.
-        cleaner: { // does the job well: no messy code anymore!
-            action: 'both', // both|button|paste 'button' only cleans via toolbar button, 'paste' only clean when pasting content, both does both options.
-            newline: '<br>' // Summernote's default is to use '<p><br></p>'
+            // plugin: summernote-cleaner.js
+            // this allows to copy/paste from word, browsers etc.
+            cleaner: { // does the job well: no messy code anymore!
+                action: 'both', // both|button|paste 'button' only cleans via toolbar button, 'paste' only clean when pasting content, both does both options.
+                newline: '<br>' // Summernote's default is to use '<p><br></p>'
 
-            // silent mode:
-            // from my pov it is not necessary to notify the user about the code cleaning process.
-            // it throws just a useless, annoying bubble everytime you hit the save button.
-            // BUT: if you need this notification, you can enable it by uncommenting the following 3 lines
-            // notTime:2400,                                            // Time to display notifications.
-            // notStyle:'position:absolute;bottom:0;left:2px',          // Position of notification
-            // icon:'<i class="note-icon">[Your Button]</i>'            // Display an icon
-        }
-    }); // end summernote
+                // silent mode:
+                // from my pov it is not necessary to notify the user about the code cleaning process.
+                // it throws just a useless, annoying bubble everytime you hit the save button.
+                // BUT: if you need this notification, you can enable it by uncommenting the following 3 lines
+                // notTime:2400,                                            // Time to display notifications.
+                // notStyle:'position:absolute;bottom:0;left:2px',          // Position of notification
+                // icon:'<i class="note-icon">[Your Button]</i>'            // Display an icon
+            }
+        }); // end summernote
 
 
-    // INIT SUMMERNOTE 2 EDITOR
-    $('#summernote2').summernote({    // set editor itself
-        height: <?php echo $editorSettings['editorHeight']; ?>,                 // set editor height
-        minHeight: null,             // set minimum height of editor
-        maxHeight: null,             // set maximum height of editor
-        focus: false,                 // set focus to editable area after initializing summernote
+        // INIT SUMMERNOTE 2 EDITOR
+        $('#summernote2').summernote({    // set editor itself
+            height: <?php echo $editorSettings['editorHeight']; ?>,                 // set editor height
+            minHeight: null,             // set minimum height of editor
+            maxHeight: null,             // set maximum height of editor
+            focus: false,                 // set focus to editable area after initializing summernote
 
-        // popover tooltips
-        popover: {
-            image: [
-                ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
-                /* ['float', ['floatLeft', 'floatRight', 'floatNone']], // those are the old regular float buttons */
-                ['floatBS', ['floatBSLeft', 'floatBSNone', 'floatBSRight']],    // bootstrap class buttons (float/pull)
-                ['custom', ['imageAttributes', 'imageShape']], // forked plugin: image-attributes.js
-                ['remove', ['removeMedia']]
-            ]
-        },
-        // language for plugin image-attributes.js
-        lang: '<?php echo $lang['CURRENT_LANGUAGE']; ?>',
+            // popover tooltips
+            popover: {
+                image: [
+                    ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+                    /* ['float', ['floatLeft', 'floatRight', 'floatNone']], // those are the old regular float buttons */
+                    ['floatBS', ['floatBSLeft', 'floatBSNone', 'floatBSRight']],    // bootstrap class buttons (float/pull)
+                    ['custom', ['imageAttributes', 'imageShape']], // forked plugin: image-attributes.js
+                    ['remove', ['removeMedia']]
+                ]
+            },
+            // language for plugin image-attributes.js
+            lang: '<?php echo $lang['CURRENT_LANGUAGE']; ?>',
 
-        // powerup the codeview with codemirror theme
-        codemirror: { // codemirror options
-            theme: '<?php echo $editorSettings['editorTheme']; ?>',                       // codeview theme
-            lineNumbers: <?php echo $editorSettings['editorLineNumbers']; ?>,             // display lineNumbers true|false
-            undoDepth: <?php echo $editorSettings['editorUndoDepth']; ?>,                 // how many undo steps should be saved? (default: 200)
-            smartIndent: <?php echo $editorSettings['editorSmartIndent']; ?>,             // better indent
-            indentUnit: <?php echo $editorSettings['editorIndentUnit']; ?>,               // how many spaces auto indent? (default: 2)
-            scrollbarStyle: null,                                                         // styling of the scrollbars
-            matchBrackets: <?php echo $editorSettings['editorMatchBrackets']; ?>,         // highlight corresponding brackets
-            autoCloseBrackets: <?php echo $editorSettings['editorCloseBrackets'];?>,      // auto insert close brackets
-            autoCloseTags: <?php echo $editorSettings['editorCloseTags']; ?>,             // auto insert close tags after opening
-            value: "<html>\n  " + document.documentElement.innerHTML + "\n</html>",       // all html
-            mode: "htmlmixed",                                                            // editor mode
-            matchTags: {bothTags: <?php echo $editorSettings['editorMatchTags']; ?>},     // hightlight matching tags: both
-            extraKeys: {"Ctrl-J": "toMatchingTag", "Ctrl-Space": "autocomplete"},         // press ctrl-j to jump to next matching tab
-            styleActiveLine: <?php echo $editorSettings['editorActiveLine']; ?>,           // highlight the active line (where the cursor is)
-            autoRefresh: true
-        },
+            // powerup the codeview with codemirror theme
+            codemirror: { // codemirror options
+                theme: '<?php echo $editorSettings['editorTheme']; ?>',                       // codeview theme
+                lineNumbers: <?php echo $editorSettings['editorLineNumbers']; ?>,             // display lineNumbers true|false
+                undoDepth: <?php echo $editorSettings['editorUndoDepth']; ?>,                 // how many undo steps should be saved? (default: 200)
+                smartIndent: <?php echo $editorSettings['editorSmartIndent']; ?>,             // better indent
+                indentUnit: <?php echo $editorSettings['editorIndentUnit']; ?>,               // how many spaces auto indent? (default: 2)
+                scrollbarStyle: null,                                                         // styling of the scrollbars
+                matchBrackets: <?php echo $editorSettings['editorMatchBrackets']; ?>,         // highlight corresponding brackets
+                autoCloseBrackets: <?php echo $editorSettings['editorCloseBrackets'];?>,      // auto insert close brackets
+                autoCloseTags: <?php echo $editorSettings['editorCloseTags']; ?>,             // auto insert close tags after opening
+                value: "<html>\n  " + document.documentElement.innerHTML + "\n</html>",       // all html
+                mode: "htmlmixed",                                                            // editor mode
+                matchTags: {bothTags: <?php echo $editorSettings['editorMatchTags']; ?>},     // hightlight matching tags: both
+                extraKeys: {"Ctrl-J": "toMatchingTag", "Ctrl-Space": "autocomplete"},         // press ctrl-j to jump to next matching tab
+                styleActiveLine: <?php echo $editorSettings['editorActiveLine']; ?>,           // highlight the active line (where the cursor is)
+                autoRefresh: true
+            },
 
-        // plugin: summernote-cleaner.js
-        // this allows to copy/paste from word, browsers etc.
-        cleaner: { // does the job well: no messy code anymore!
-            action: 'both', // both|button|paste 'button' only cleans via toolbar button, 'paste' only clean when pasting content, both does both options.
-            newline: '<br>' // Summernote's default is to use '<p><br></p>'
+            // plugin: summernote-cleaner.js
+            // this allows to copy/paste from word, browsers etc.
+            cleaner: { // does the job well: no messy code anymore!
+                action: 'both', // both|button|paste 'button' only cleans via toolbar button, 'paste' only clean when pasting content, both does both options.
+                newline: '<br>' // Summernote's default is to use '<p><br></p>'
 
-            // silent mode:
-            // from my pov it is not necessary to notify the user about the code cleaning process.
-            // it throws just a useless, annoying bubble everytime you hit the save button.
-            // BUT: if you need this notification, you can enable it by uncommenting the following 3 lines
-            // notTime:2400,                                            // Time to display notifications.
-            // notStyle:'position:absolute;bottom:0;left:2px',          // Position of notification
-            // icon:'<i class="note-icon">[Your Button]</i>'            // Display an icon
-        }
-    }); // end summernote
-}); // end document ready
+                // silent mode:
+                // from my pov it is not necessary to notify the user about the code cleaning process.
+                // it throws just a useless, annoying bubble everytime you hit the save button.
+                // BUT: if you need this notification, you can enable it by uncommenting the following 3 lines
+                // notTime:2400,                                            // Time to display notifications.
+                // notStyle:'position:absolute;bottom:0;left:2px',          // Position of notification
+                // icon:'<i class="note-icon">[Your Button]</i>'            // Display an icon
+            }
+        }); // end summernote
+    }); // end document ready
 </script>
 
 <!-- bootstrap date-timepicker -->
@@ -376,19 +376,19 @@ $blog->layout = $blog->getBlogProperty($db, $blog->blogid, "layout");
       action="index.php?plugin=blog&pluginpage=blog-edit&blogid=<?php print $blog->blogid; ?>&itemid=<?php print $blog->itemid; ?>"
       method="post">
 
-<div class="row">
-    <div class="col-md-9">
-        <label for="blogtitle"><?php print $lang['TITLE']; ?></label>
-        <input type="text"
-               class="form-control input-lg"
-               id="blogtitle"
-               name="blogtitle"
-               value="<?php print $blog->blogtitle; ?>">
-        <br>
-    <?php
-    if ($blog->teaser !== "0")
-    {
-        echo "
+    <div class="row">
+        <div class="col-md-9">
+            <label for="blogtitle"><?php print $lang['TITLE']; ?></label>
+            <input type="text"
+                   class="form-control input-lg"
+                   id="blogtitle"
+                   name="blogtitle"
+                   value="<?php print $blog->blogtitle; ?>">
+            <br>
+            <?php
+            if ($blog->teaser !== "0")
+            {
+                echo "
         <!-- EDITOR -->
         <label for=\"summernote\">$lang[TEASER_TEXT]</label>
         <textarea
@@ -396,36 +396,36 @@ $blog->layout = $blog->getBlogProperty($db, $blog->blogid, "layout");
             class=\"form-control\"
             style=\"margin-top:10px;\"
             name=\"teasertext\">".$blog->teasertext."</textarea>";
-    }
-        ?>
-    <!-- EDITOR -->
-    <label for="summernote2"><?php echo $lang['BLOG_TEXT']; ?></label>
+            }
+            ?>
+            <!-- EDITOR -->
+            <label for="summernote2"><?php echo $lang['BLOG_TEXT']; ?></label>
 
-    <textarea
-        id="summernote2"
-        class="form-control"
-        style="margin-top:10px;"
-        name="blogtext"
-        cols="50"
-        rows="18"><?php print $blog->blogtext; ?></textarea>
-    </div> <!-- end left col -->
+            <textarea
+                    id="summernote2"
+                    class="form-control"
+                    style="margin-top:10px;"
+                    name="blogtext"
+                    cols="50"
+                    rows="18"><?php print $blog->blogtext; ?></textarea>
+        </div> <!-- end left col -->
 
-    <div class="col-md-3">
-    <!-- right col -->
-        <!-- SAVE BUTTON -->
-        <button type="submit"
-                id="savebutton"
-                name="save"
-                class="btn btn-success pull-right">
+        <div class="col-md-3">
+            <!-- right col -->
+            <!-- SAVE BUTTON -->
+            <button type="submit"
+                    id="savebutton"
+                    name="save"
+                    class="btn btn-success pull-right">
                 <i id="savebuttonIcon" class="fa fa-check"></i> &nbsp;<?php print $lang['SAVE_CHANGES']; ?>
-        </button>
+            </button>
 
-        <!-- CANCEL BUTTON -->
-        <a class="btn btn-default pull-right" href="index.php?plugin=blog&pluginpage=blog-entries&blogid=<?php echo $_GET['blogid']; ?>">
-            <i id="cancelbuttonIcon" class="fa fa-backward"></i> &nbsp;<?php print $lang['BACK']; ?>
-        </a>
+            <!-- CANCEL BUTTON -->
+            <a class="btn btn-default pull-right" href="index.php?plugin=blog&pluginpage=blog-entries&blogid=<?php echo $_GET['blogid']; ?>">
+                <i id="cancelbuttonIcon" class="fa fa-backward"></i> &nbsp;<?php print $lang['BACK']; ?>
+            </a>
 
-        <br><br><br>
+            <br><br><br>
 
             <?php
             // SETTINGS: filename + subtitle
@@ -468,22 +468,22 @@ $blog->layout = $blog->getBlogProperty($db, $blog->blogid, "layout");
                     <!-- start publish datetimepicker -->
                     <label for="datetimepicker1"><i class="fa fa-calendar"></i> <?php print $lang['START_PUBLISH']; ?></label><br>
                     <input
-                        class="form-control"
-                        id="datetimepicker1"
-                        type="text"
-                        name="date_publish"
-                        maxlength="19"
-                        value="<?php print $blog->date_publish; ?>">
+                            class="form-control"
+                            id="datetimepicker1"
+                            type="text"
+                            name="date_publish"
+                            maxlength="19"
+                            value="<?php print $blog->date_publish; ?>">
 
                     <!-- end publish datetimepicker -->
                     <label for="datetimepicker2"><i class="fa fa-ban"></i> <?php print $lang['END_PUBLISH']; ?></label><br>
                     <input
-                        type="text"
-                        class="form-control"
-                        id="datetimepicker2"
-                        name="date_unpublish"
-                        maxlength="19"
-                        value="<?php print $blog->date_unpublish; ?>">
+                            type="text"
+                            class="form-control"
+                            id="datetimepicker2"
+                            name="date_unpublish"
+                            maxlength="19"
+                            value="<?php print $blog->date_unpublish; ?>">
 
                     <!-- group id selector -->
                     <label for="gidselect"><i class="fa fa-users"></i> <?php print $lang['PAGE_VISIBLE']; ?></label>
@@ -535,24 +535,24 @@ $blog->layout = $blog->getBlogProperty($db, $blog->blogid, "layout");
                 <!-- /.box-header -->
                 <div class="box-body" style="display: block;">
                     <!-- LOCAL META SITE DESCRIPTION -->
-                    <label for="metadescription"><?php echo "$lang[META_DESC]"; ?></label><br>
+                    <label for="meta_local"><?php echo "$lang[META_DESC]"; ?></label><br>
                     <textarea cols="64"
                               rows="2"
-                              id="metadescription"
+                              id="meta_local"
                               class="form-control"
                               maxlength="255"
                               placeholder="<?php echo "$lang[PAGE_DESC_PLACEHOLDER]"; ?>"
-                              name="metadescription"><?php print $page->getMetaTags($db, $blog->pageid, "description"); ?>
+                              name="meta_local"><?php print $blog->meta_local ?>
                     </textarea>
                     <!-- LOCAL META SITE KEYWORDS -->
-                    <label for="metakeywords"><?php echo "$lang[META_KEYWORDS]"; ?></label>
+                    <label for="meta_keywords"><?php echo "$lang[META_KEYWORDS]"; ?></label>
                     <input type="text"
                            size="64"
-                           id="metakeywords"
+                           id="meta_keywords"
                            class="form-control"
                            placeholder="<?php echo "$lang[KEYWORD] 1, $lang[KEYWORD] 2, $lang[KEYWORD] 3..."; ?>"
-                           name="metakeywords"
-                           value="<?php print $page->getMetaTags($db, $blog->pageid, "keywords");  ?>">
+                           name="meta_keywords"
+                           value="<?php print $blog->meta_keywords;  ?>">
                 </div>
                 <!-- /.box-body -->
             </div>
@@ -573,25 +573,25 @@ $blog->layout = $blog->getBlogProperty($db, $blog->blogid, "layout");
                     <!-- THUMBNAIL IMAGE -->
                     <label for="thumbnail"><?php print $lang['THUMBNAIL']; ?>&nbsp;</label><br>
                     <input
-                        type="text"
-                        class="form-control"
-                        id="thumbnail"
-                        name="thumbnail"
-                        size="64"
-                        maxlength="255"
-                        placeholder="media/images/anyfile.jpg"
-                        value="<?php print $blog->thumbnail; ?>">
+                            type="text"
+                            class="form-control"
+                            id="thumbnail"
+                            name="thumbnail"
+                            size="64"
+                            maxlength="255"
+                            placeholder="media/images/anyfile.jpg"
+                            value="<?php print $blog->thumbnail; ?>">
                     <label for="thumbnail"><i class="fa fa-youtube"></i> &nbsp;<?php print $lang['YOUTUBEURL']; ?>&nbsp;</label><br>
                     <!-- YouTube Link -->
                     <input
-                        type="text"
-                        class="form-control"
-                        id="youtubeUrl"
-                        name="youtubeUrl"
-                        size="64"
-                        maxlength="255"
-                        placeholder="https://www.youtube.com/embed/1A2B3C4D5E6F"
-                        value="<?php print $blog->youtubeUrl; ?>">
+                            type="text"
+                            class="form-control"
+                            id="youtubeUrl"
+                            name="youtubeUrl"
+                            size="64"
+                            maxlength="255"
+                            placeholder="https://www.youtube.com/embed/1A2B3C4D5E6F"
+                            value="<?php print $blog->youtubeUrl; ?>">
                 </div>
                 <!-- /.box-body -->
             </div>
@@ -611,106 +611,106 @@ $blog->layout = $blog->getBlogProperty($db, $blog->blogid, "layout");
                 <div class="box-body" style="display: block;">
                     <!-- SUB MENU SELECTOR -->
                     <label for="menu"><?php echo $lang['SUBMENU']; ?></label>
-                        <select name="menu" class="form-control">
-                            <option value="<?php print \YAWK\sys::getSubMenu($db, $page->id); ?>"><?php print \YAWK\sys::getMenuItem($db, $page->id); ?></option>
-                            <option value="0"><?php echo $lang['NO_MENU_SELECTED']; ?></option>
-                            <?php
-                            foreach(YAWK\sys::getMenus($db) as $menue){
-                                print "<option value=\"".$menue['id']."\"";
-                                if (isset($_POST['menu'])) {
-                                    if($_POST['menu'] === $menue['id']){
-                                        print " selected=\"selected\"";
-                                    }
-                                    else if($page->menu === $menue['id'] && !$_POST['menu']){
-                                        print " selected=\"selected\"";
-                                    }
+                    <select name="menu" class="form-control">
+                        <option value="<?php print \YAWK\sys::getSubMenu($db, $page->id); ?>"><?php print \YAWK\sys::getMenuItem($db, $page->id); ?></option>
+                        <option value="0"><?php echo $lang['NO_MENU_SELECTED']; ?></option>
+                        <?php
+                        foreach(YAWK\sys::getMenus($db) as $menue){
+                            print "<option value=\"".$menue['id']."\"";
+                            if (isset($_POST['menu'])) {
+                                if($_POST['menu'] === $menue['id']){
+                                    print " selected=\"selected\"";
                                 }
-                                print ">".$menue['name']."</option>";
+                                else if($page->menu === $menue['id'] && !$_POST['menu']){
+                                    print " selected=\"selected\"";
+                                }
                             }
-                            ?>
-                        </select>
+                            print ">".$menue['name']."</option>";
+                        }
+                        ?>
+                    </select>
                 </div>
                 <!-- /.box-body -->
             </div>
 
 
-        <!-- blog thumbnail -->
-        <div class="box box-default">
-            <div class="box-header with-border">
-                <h3 class="box-title"><i class="fa fa-object-ungroup"></i>&nbsp;&nbsp;<?php echo "$lang[LAYOUT] <small>$lang[AND] $lang[COMMENTS]</small>"; ?></h3>
-                <!-- box-tools -->
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                    </button>
+            <!-- blog thumbnail -->
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><i class="fa fa-object-ungroup"></i>&nbsp;&nbsp;<?php echo "$lang[LAYOUT] <small>$lang[AND] $lang[COMMENTS]</small>"; ?></h3>
+                    <!-- box-tools -->
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                    <!-- /.box-tools -->
                 </div>
-                <!-- /.box-tools -->
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body" style="display: block;">
-                <!-- LAYOUT -->
-                <label for="itemlayout"><?php print $lang['LAYOUT']; ?>&nbsp;</label><br>
-                <select name="itemlayout" id="itemlayout" class="form-control"><?php
-                    $layoutOptions = '';
-                    $currentLayout = '';
-                    $layouts = array(
-                        "-1" => "$lang[BLOG_SETTING]",
-                        "0" => "$lang[BLOG_LAYOUT_1COL_TEXTBLOG]",
-                        "1" => "$lang[BLOG_LAYOUT_2COL_TEASER_L]",
-                        "2" => "$lang[BLOG_LAYOUT_2COL_TEASER_R]",
-                        "3" => "$lang[BLOG_LAYOUT_3COL_NEWSPAPER]",
-                        "4" => "$lang[BLOG_LAYOUT_1COL_YOUTUBE]");
-                    foreach ($layouts as $id => $layout)
-                    {
-                        if ($blog->itemlayout == $id)
+                <!-- /.box-header -->
+                <div class="box-body" style="display: block;">
+                    <!-- LAYOUT -->
+                    <label for="itemlayout"><?php print $lang['LAYOUT']; ?>&nbsp;</label><br>
+                    <select name="itemlayout" id="itemlayout" class="form-control"><?php
+                        $layoutOptions = '';
+                        $currentLayout = '';
+                        $layouts = array(
+                            "-1" => "$lang[BLOG_SETTING]",
+                            "0" => "$lang[BLOG_LAYOUT_1COL_TEXTBLOG]",
+                            "1" => "$lang[BLOG_LAYOUT_2COL_TEASER_L]",
+                            "2" => "$lang[BLOG_LAYOUT_2COL_TEASER_R]",
+                            "3" => "$lang[BLOG_LAYOUT_3COL_NEWSPAPER]",
+                            "4" => "$lang[BLOG_LAYOUT_1COL_YOUTUBE]");
+                        foreach ($layouts as $id => $layout)
                         {
-                            $currentLayout = "
+                            if ($blog->itemlayout == $id)
+                            {
+                                $currentLayout = "
                     <option value=\"$blog->layout\">$layout</option>";
-                        }
-                        else
+                            }
+                            else
                             {
                                 $layoutOptions .= "
                     <option value=\"$id\">$layout</option>";
                             }
-                    }
-                    // load option w current value
-                    echo $currentLayout.$layoutOptions;
-                    ?>
+                        }
+                        // load option w current value
+                        echo $currentLayout.$layoutOptions;
+                        ?>
 
-                </select>
-                <label for="itemcomments"><i class="fa fa-comment-o"></i> &nbsp;<?php print $lang['COMMENTS']; ?>&nbsp;</label><br>
-                <!-- Comment Settings -->
-                <select name="itemcomments" id="itemcomments" class="form-control">
-                    <option value="-1"><?php echo $lang['BLOG_SETTING']; ?></option>
-                    <option value="1"><?php echo $lang['COMMENTS_ALLOWED']; ?></option>
-                    <option value="0"><?php echo $lang['COMMENTS_FORBIDDEN']; ?></option>
-                </select>
-                <label for="teaser"><i class="fa fa-newspaper-o"></i> &nbsp;<?php print $lang['TEASER']."&nbsp;".$lang['TEXT']; ?>&nbsp;</label><br>
-                <!-- Teaser Settings -->
-                <select name="teaser" id="teaser" class="form-control">
-                    <?php
+                    </select>
+                    <label for="itemcomments"><i class="fa fa-comment-o"></i> &nbsp;<?php print $lang['COMMENTS']; ?>&nbsp;</label><br>
+                    <!-- Comment Settings -->
+                    <select name="itemcomments" id="itemcomments" class="form-control">
+                        <option value="-1"><?php echo $lang['BLOG_SETTING']; ?></option>
+                        <option value="1"><?php echo $lang['COMMENTS_ALLOWED']; ?></option>
+                        <option value="0"><?php echo $lang['COMMENTS_FORBIDDEN']; ?></option>
+                    </select>
+                    <label for="teaser"><i class="fa fa-newspaper-o"></i> &nbsp;<?php print $lang['TEASER']."&nbsp;".$lang['TEXT']; ?>&nbsp;</label><br>
+                    <!-- Teaser Settings -->
+                    <select name="teaser" id="teaser" class="form-control">
+                        <?php
                         if ($blog->teaser === '1')
                         {
                             echo '<option value="1" selected aria-selected="true">'.$lang['ENABLED'].'</option>';
                             echo '<option value="0">'.$lang['DISABLED'].'</option>';
                         }
                         else
-                            {
-                                echo '<option value="0" selected aria-selected="true">'.$lang['DISABLED'].'</option>';
-                                echo '<option value="1">'.$lang['ENABLED'].'</option>';
-                            }
-                    ?>
-                </select>
+                        {
+                            echo '<option value="0" selected aria-selected="true">'.$lang['DISABLED'].'</option>';
+                            echo '<option value="1">'.$lang['ENABLED'].'</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+                <!-- /.box-body -->
             </div>
-            <!-- /.box-body -->
+            <!-- /. ADDITIONAL BOXES-->
+
+            <!-- HIDDEN FIELDS -->
+            <input type="hidden" name="blogid" value="<?php print $blog->blogid; ?>">
+            <input type="hidden" name="itemid" value="<?php print $blog->itemid; ?>">
+            <input type="hidden" name="pageid" value="<?php print $blog->pageid; ?>">
+            <input type="hidden" name="oldteasertext" value="<?php print $blog->teasertext; ?>">
+
         </div>
-        <!-- /. ADDITIONAL BOXES-->
-
-    <!-- HIDDEN FIELDS -->
-    <input type="hidden" name="blogid" value="<?php print $blog->blogid; ?>">
-    <input type="hidden" name="itemid" value="<?php print $blog->itemid; ?>">
-    <input type="hidden" name="pageid" value="<?php print $blog->pageid; ?>">
-    <input type="hidden" name="oldteasertext" value="<?php print $blog->teasertext; ?>">
-
     </div>
-</div>
 </form>

@@ -37,10 +37,10 @@ if(isset($_POST['save'])){
     $page->published = $db->quote($_POST['published']);
     $page->date_publish = $db->quote($_POST['date_publish']);
     $page->date_unpublish = $db->quote($_POST['date_unpublish']);
-    $page->metadescription = $db->quote($_POST['metadescription']);
-    $page->metakeywords = $db->quote($_POST['metakeywords']);
     $page->bgimage = $db->quote($_POST['bgimage']);
     $page->language = $db->quote($_POST['language']);
+    $page->meta_local = $db->quote($_POST['meta_local']);
+    $page->meta_keywords = $db->quote($_POST['meta_keywords']);
     // after preparing the vars, update db + write content
     if($page->save($db)) {
         // encode chars
@@ -305,14 +305,20 @@ echo"<ol class=\"breadcrumb\">
                     <!-- /.box-tools -->
                 </div>
                 <div class="box-body" style="display: block;">
-                    <label for="title"><?php print $lang['TITLE']; ?></label>
+                    <label for="title"><?php print $lang['TITLE']; ?>
+                        <?php echo backend::printTooltip($lang['TT_PAGE_TITLE']); ?>
+                    </label>
                     <input id="title" class="form-control" name="title" maxlength="255" value="<?php print $page->title; ?>">
 
-                    <label for="alias"><?php echo $lang['FILENAME']; ?></label>
+                    <label for="alias"><?php echo $lang['FILENAME']; ?>
+                        <?php echo backend::printTooltip($lang['TT_PAGE_FILENAME']); ?>
+                    </label>
                     <input id="alias" class="form-control" name="alias" maxlength="255"
                         <?php if (isset($readonly)) { print $readonly; } ?> value="<?php print $page->alias; ?>">
 
-                    <label for="language"><?php print $lang['LANGUAGE']; ?></label>
+                    <label for="language"><?php print $lang['LANGUAGE']; ?>
+                        <?php echo backend::printTooltip($lang['TT_PAGE_LANGUAGE']); ?>
+                    </label>
                     <select id="language" name="language" class="form-control">
                         <?php
                         if (isset($page->language) && (!empty($page->language)))
@@ -341,14 +347,20 @@ echo"<ol class=\"breadcrumb\">
                     <!-- /.box-tools -->
                 </div>
                 <div class="box-body">
-                    <label for="datetimepicker1"><?php print $lang['START_PUBLISH']; ?></label>
+                    <label for="datetimepicker1"><?php print $lang['START_PUBLISH']; ?>
+                        <?php echo backend::printTooltip($lang['TT_PAGE_PUBLISH_DATE']); ?>
+                    </label>
                     <input class="form-control" id="datetimepicker1" name="date_publish" maxlength="19" value="<?php print $page->date_publish; ?>">
 
                     <!-- END PUBLISH DATE -->
-                    <label for="datetimepicker2"><?php print $lang['END_PUBLISH']; ?></label>
+                    <label for="datetimepicker2"><?php print $lang['END_PUBLISH']; ?>
+                        <?php echo backend::printTooltip($lang['TT_PAGE_UNPUBLISH_DATE']); ?>
+                    </label>
                     <input type="text" class="form-control" id="datetimepicker2" name="date_unpublish" maxlength="19" value="<?php print $page->date_unpublish; ?>">
 
-                    <label for="gidselect"> <?php print $lang['PAGE_VISIBLE']; ?></label>
+                    <label for="gidselect"> <?php print $lang['PAGE_VISIBLE']; ?>
+                        <?php echo backend::printTooltip($lang['TT_PAGE_USERGROUP']); ?>
+                    </label>
                     <select id="gidselect" name="gid" class="form-control">
                         <option value="<?php print sys::getGroupId($db, $page->id, "pages"); ?>" selected><?php print user::getGroupNameFromID($db, $page->gid); ?></option>
                         <?php
@@ -368,7 +380,9 @@ echo"<ol class=\"breadcrumb\">
                     </select>
 
                     <!-- PAGE ON / OFF STATUS -->
-                    <label for="published"><?php print $lang['PAGE_STATUS']; ?></label>
+                    <label for="published"><?php print $lang['PAGE_STATUS']; ?>
+                        <?php echo backend::printTooltip($lang['TT_PAGE_PUBLISH']); ?>
+                    </label>
                     <?php if($page->published === '1')
                     {
                         $publishedHtml = "<option value=\"1\" selected=\"selected\">$lang[ONLINE]</option>";
@@ -400,10 +414,10 @@ echo"<ol class=\"breadcrumb\">
                 <div class="box-body" style="display: block;">
                     <!-- LOCAL META SITE DESCRIPTION -->
                     <label for="metadescription"><?php echo $lang['META_DESC']; ?></label>
-                    <input type="text" size="64" id="metadescription" class="form-control" maxlength="255" placeholder="<?php echo $lang['META_DESC_PLACEHOLDER']; ?>" name="metadescription" value="<?php print $page->getMetaTags($db, $page->id, "description"); ?>">
+                    <input type="text" size="64" id="meta_local" class="form-control" maxlength="255" placeholder="<?php echo $lang['META_DESC_PLACEHOLDER']; ?>" name="meta_local" value="<?php print $page->meta_local; ?>">
                     <!-- LOCAL META SITE KEYWORDS -->
                     <label for="metakeywords"><?php echo $lang['META_KEYWORDS']; ?></label>
-                    <input type="text" size="64" id="metakeywords" class="form-control" placeholder="<?php echo $lang['META_KEYWORDS_PLACEHOLDER']; ?>" name="metakeywords" value="<?php print $page->getMetaTags($db, $page->id, "keywords");  ?>">
+                    <input type="text" size="64" id="meta_keywords" class="form-control" placeholder="<?php echo $lang['META_KEYWORDS_PLACEHOLDER']; ?>" name="meta_keywords" value="<?php print $page->meta_keywords; ?>">
                 </div>
             </div>
 

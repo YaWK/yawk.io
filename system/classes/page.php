@@ -62,6 +62,10 @@ namespace YAWK {
         public $newLanguage;
         /** * @param string the root path where pages are physically stored  */
         public $path = "../content/pages/";
+        /** * @param string the meta tags description of this page  */
+        public $meta_local = "Meta Tag Description";
+        /** * @param string the meta tags keywords of this page  */
+        public $meta_keywords = "Meta Tag Keywords";
 
         /**
          * @brief count and return the pages in database
@@ -88,29 +92,40 @@ namespace YAWK {
          * @param string $type meta description
          * @return string|bool meta tags as string
          */
-        function getMetaTags($db, $id, $type)
+        public static function getMetaTags($db, $id, $type)
         {   /** @param $db db $res */
-            if (!isset($type) or (empty($type))) {
-                // set default type description | keywords
-                $type = "description";
-            }
-            if ($res = $db->query("SELECT content
-                                  FROM {meta_local}
-                                  WHERE page = ".$id."
-                                  AND name = '$type'"))
+            if ($row = $db->query("SELECT meta_local, meta_keywords
+                                  FROM {pages}
+                                  WHERE id = '".$id."'"))
             {   // output meta content description
-                $row = $res->fetch_assoc();
-                if (!empty(($res['content']))){
-                    return $res['content'];
-                }
-                else {
-                    return null;
+                $res = $row->fetch_assoc();
+                if (!empty($type))
+                {
+                    if ($type == "meta_local"){
+                        if (!empty($res['meta_local'])){
+                            return $res['meta_local'];
+                        }
+                        else {
+                            return null;
+                        }
+                    }
+                    else if ($type == "meta_keywords"){
+                        if (!empty($res['meta_keywords'])){
+                            return $res['meta_keywords'];
+                        }
+                        else {
+                            return null;
+                        }
+                    }
+                    else {
+                        return null;
+                    }
                 }
             }
             else {
                 // throw alert
                 sys::setSyslog($db, 7, 1, "failed to fetch meta $type for page ID $id", 0, 0, 0, 0);
-                alert::draw("warning", "Warning", "Could not fetch meta $type for page ID $id", "",4200);
+                return alert::draw("warning", "Warning", "Could not fetch meta $type for page ID $id", "",4200);
             }
             // q failed
             return false;
@@ -236,7 +251,7 @@ namespace YAWK {
             $this->id++;
 
             // ## add new page to db pages
-            if ($result = $db->query("INSERT INTO {pages} (id,gid,date_created,date_publish,alias,title,blogid,locked,lang,plugin)
+            if ($result = $db->query("INSERT INTO {pages} (id,gid,date_created,date_publish,alias,title,blogid,locked,lang,meta_local,meta_keywords,plugin)
                                    VALUES ('" . $this->id . "',
                                            '" . $this->gid . "',
                                            '" . $currentDateTime . "',
@@ -246,6 +261,8 @@ namespace YAWK {
                                            '" . $this->blogid . "',
                                            '" . $this->locked . "',
                                            '" . $this->language . "',
+                                           '" . $this->meta_local . "',
+                                           '" . $this->meta_keywords . "',
                                            '" . $this->plugin . "')"))
             {
                 /* TODO: COPY META TAGS when COPY PAGE
@@ -295,7 +312,7 @@ namespace YAWK {
                     print alert::draw("danger", "Error!", "File could not be copied. Check folder permissions of /content/pages !", "", "");
                 }
                 else {
-                    // file copied successfully...
+                    // file copies successfully...
                     return true;
                 }
                 /*
@@ -383,7 +400,6 @@ namespace YAWK {
             return false;
         }
 
-
         /**
          * @brief delete a page
          * @param object $db database
@@ -409,11 +425,6 @@ namespace YAWK {
             else
             {   // deleted menu syslog entry
                 sys::setSyslog($db, 21, 0, "deleted menu of ../content/pages/$this->alias.php", 0, 0, 0, 0);
-            }
-            // delete item from meta_local db
-            if (!$db->query("DELETE FROM {meta_local} WHERE page = '" . $this->id. "'")) {
-                sys::setSyslog($db, 7, 1, "failed to delete local meta tags of $this->alias from database", 0, 0, 0, 0);
-                alert::draw("warning", "Warning:", "could not delete local meta tags from database", "pages", "4300");
             }
 
             // check, if language is set and build path + filename
@@ -611,7 +622,7 @@ namespace YAWK {
 
             $alias = htmlentities($alias);
             // ## add new page to db pages
-            if ($db->query("INSERT INTO {pages} (id,published,date_created,date_changed,date_publish,date_unpublish,alias,title,locked,blogid,plugin,lang)
+            if (!$db->query("INSERT INTO {pages} (id,published,date_created,date_changed,date_publish,date_unpublish,alias,title,locked,blogid,plugin,lang)
                                    VALUES ('" . $id . "',
                                            '" . $published . "',
                                            '" . $date_created . "',
@@ -624,22 +635,6 @@ namespace YAWK {
                                            '" . $blogid . "',
                                            '".$plugin."',
                                            '".$this->language."')"))
-            {
-                // insert page successful, now generate some local meta tags
-                $desc = "description";
-               // $keyw = "keywords";
-               // $words = "keyword1, keyword2, keyword3, keyword4";
-                $desc = htmlentities($desc);
-               // $keyw = htmlentities($keyw);
-                // add local metatags
-                if (!$db->query("INSERT INTO {meta_local} (name, page, content)
-                        VALUES ('".$title."', '".$id."', '".$desc."')"))
-                {   // error inserting page into database - throw error
-                    sys::setSyslog($db, 7, 2, "failed to store local meta tags $title", 0, 0, 0, 0);
-                    // \YAWK\alert::draw("warning", "Error!", "Failed to insert meta description.", "", 4300);
-                }
-            }
-            else
             {   // error inserting page into database - throw error
                 sys::setSyslog($db, 7, 2, "unable to add page $alias into database.", 0, 0, 0, 0);
                 alert::draw("danger", "Error!", "unable to add new page ($alias) id: $id into pages database.", "", 4300);
@@ -697,28 +692,6 @@ namespace YAWK {
             // old alias string
             $oldAlias = substr($this->searchstring, 0, -5);  // remove last 5 chars (.html) to get the plain filename
 
-            // update local meta description
-            if (!$db->query("UPDATE {meta_local}
-  					SET content = '" . $this->metadescription . "'
-                    WHERE name = 'description'
-                    AND page = '" . $this->id . "'"))
-            {
-                // throw error msg
-                sys::setSyslog($db, 7, 2, "failed to update local meta description of page ID $this->id.", 0, 0, 0, 0);
-                alert::draw("warning", "Warning", "local meta description could not be stored in database.", "", 4200);
-            }
-
-            // update local meta tag keywords
-            if (!$db->query("UPDATE {meta_local}
-  					SET content = '" . $this->metakeywords . "'
-                    WHERE name = 'keywords'
-                    AND page = '" . $this->id . "'"))
-            {
-                // throw error msg
-                sys::setSyslog($db, 7, 2, "failed to update local meta keywords of page ID $this->id.", 0, 0, 0, 0);
-                alert::draw("warning", "Warning", "local meta keywords could not be stored in database.", "", 4200);
-            }
-
             // update menu entry
             /*
             if (!$db->query("UPDATE {menu}
@@ -749,7 +722,9 @@ namespace YAWK {
                         alias = '" . $this->alias . "',
                         menu = '" . $this->menu . "',
                         bgimage = '" . $this->bgimage . "',
-                        lang = '" . $this->language . "'
+                        lang = '" . $this->language . "',
+                        meta_local = '" . $this->meta_local . "',
+                        meta_keywords = '" . $this->meta_keywords . "'
                     WHERE id = '" . $this->id . "'"))
                 {
                     // throw error
@@ -778,7 +753,9 @@ namespace YAWK {
                         alias = '" . $this->alias . "',
                         menu = '" . $this->menu . "',
                         bgimage = '" . $this->bgimage . "',
-                        lang = '" . $this->language . "'
+                        lang = '" . $this->language . "',
+                        meta_local = '" . $this->meta_local . "',
+                        meta_keywords = '" . $this->meta_keywords . "'
                     WHERE id = '" . $this->id . "'"))
                 {
                     // throw error
@@ -955,6 +932,8 @@ Maybe the file has been physically deleted, moved or renamed.';
                     $this->blogid = $row['blogid'];
                     $this->plugin = $row['plugin'];
                     $this->language = $row['lang'];
+                    $this->meta_local = $row['meta_local'];
+                    $this->meta_keywords = $row['meta_keywords'];
                     $this->alias = $alias;
                 }
                 else
@@ -1006,6 +985,8 @@ Maybe the file has been physically deleted, moved or renamed.';
                     $this->blogid = $row['blogid'];
                     $this->plugin = $row['plugin'];
                     $this->language = $row['lang'];
+                    $this->meta_local = $row['meta_local'];
+                    $this->meta_keywords = $row['meta_keywords'];
                 }
                 else
                 {   // 404 error handling
@@ -1208,26 +1189,26 @@ Maybe the file has been physically deleted, moved or renamed.';
                 $languageFolder = '';
                 $trailingSlash = '';
 
-                    // build array containing all content sub folders
-                    $contentLanguageFolders = array();
-                    foreach (new DirectoryIterator($path) as $fileInfo) {
-                        if($fileInfo->isDot()) continue;
-                        if($fileInfo->isFile()) continue;
-                        if($fileInfo->isDir())
-                            $contentLanguageFolders[] = $fileInfo->getFilename();
+                // build array containing all content sub folders
+                $contentLanguageFolders = array();
+                foreach (new DirectoryIterator($path) as $fileInfo) {
+                    if($fileInfo->isDot()) continue;
+                    if($fileInfo->isFile()) continue;
+                    if($fileInfo->isDir())
+                        $contentLanguageFolders[] = $fileInfo->getFilename();
 
-                        // check if user's language is available in content folder
-                        if ($language->httpAcceptedLanguage == $fileInfo->getFilename())
-                        {   // this is the language we have detected from the user - you want it, we got it
-                            $languageFolder = $fileInfo->getFilename();
-                            $trailingSlash = "/";
-                            // echo "<script>document.cookie = \"userSelectedLanguage=$languageFolder; expires=Thu, 04 Nov 2021 12:00:00 UTC\"; </script>";
-                        }
-                        else
-                        {   // leave empty, take from root dir
-                            $languageFolder = '';
-                        }
+                    // check if user's language is available in content folder
+                    if ($language->httpAcceptedLanguage == $fileInfo->getFilename())
+                    {   // this is the language we have detected from the user - you want it, we got it
+                        $languageFolder = $fileInfo->getFilename();
+                        $trailingSlash = "/";
+                        // echo "<script>document.cookie = \"userSelectedLanguage=$languageFolder; expires=Thu, 04 Nov 2021 12:00:00 UTC\"; </script>";
                     }
+                    else
+                    {   // leave empty, take from root dir
+                        $languageFolder = '';
+                    }
+                }
 
                 if (isset($_GET['language']) && (!empty($_GET['language'])))
                 {
@@ -1243,15 +1224,15 @@ Maybe the file has been physically deleted, moved or renamed.';
                     $languageFolder = $_COOKIE['userSelectedLanguage'];
                     $trailingSlash = "/";
                 }
-            /*
-                echo "<pre>";
-                print_r($contentLanguageFolders);
-                echo "lang folder: ".$languageFolder;
-                echo "</pre>";
+                /*
+                    echo "<pre>";
+                    print_r($contentLanguageFolders);
+                    echo "lang folder: ".$languageFolder;
+                    echo "</pre>";
 
-                echo "<br>";
-                echo $path.$languageFolder.$trailingSlash.$this->alias.$fileExt."<br>";
-            */
+                    echo "<br>";
+                    echo $path.$languageFolder.$trailingSlash.$this->alias.$fileExt."<br>";
+                */
 
                 if (in_array("$languageFolder", $contentLanguageFolders)) {
                     // check if folder for this language is available
@@ -1286,8 +1267,8 @@ Maybe the file has been physically deleted, moved or renamed.';
                 }
                 else
                 {       // echo "desired language $languageFolder not in array, loading file from root folder";
-                        /** @noinspection PhpIncludeInspection */
-                        return include(controller::filterfilename($db, $lang, $path.$this->alias));
+                    /** @noinspection PhpIncludeInspection */
+                    return include(controller::filterfilename($db, $lang, $path.$this->alias));
                 }
             }
             return true;

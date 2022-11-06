@@ -126,9 +126,9 @@ namespace YAWK\PLUGINS\BLOG {
         /** * @param string $weblink any external weblink */
         public $weblink;
         /** * @param string $metakeywords meta keywords */
-        public $metakeywords;
+        public $meta_local;
         /** * @param string $metadescription meta description */
-        public $metadescription;
+        public $meta_keywords;
         /** * @param int|string $itemlayout blog item layout */
         public $itemlayout;
         /** * @param int|string $itemcomments show blog item comments, yes or no */
@@ -906,6 +906,10 @@ namespace YAWK\PLUGINS\BLOG {
                     $this->weblink = $row['weblink'];
                     $this->itemlayout = $row['itemlayout'];
                     $this->itemcomments = $row['itemcomments'];
+
+                    // todo: improve query to select join instead! (this spares two db requests)
+                    $this->meta_local = \YAWK\page::getMetaTags($db, $this->pageid, "meta_local");
+                    $this->meta_keywords = \YAWK\page::getMetaTags($db, $this->pageid, "meta_keywords");
                 }
                 else
                 {   // fetch failed
@@ -928,6 +932,7 @@ namespace YAWK\PLUGINS\BLOG {
          */
         function save($db)
         {
+            if (empty($this->sort)){ $this->sort = 1; }
             /** @var $db \YAWK\db */
             $date_changed = date("Y-m-d G:i:s");
             // $this->teasertext = stripslashes(str_replace('\r\n', '', $this->teasertext));
@@ -972,36 +977,23 @@ namespace YAWK\PLUGINS\BLOG {
             }
             // convert html special chars
 
-
-            $this->title = htmlentities($this->title);
-            $this->subtitle = htmlentities($this->subtitle);
+            if (!empty($this->title)) {
+                $this->title = htmlentities($this->title);
+            }
+            if (!empty($this->subtitle)){
+                $this->subtitle = htmlentities($this->subtitle);
+            }
 
             // $this->blogtext = nl2br(htmlentities($this->blogtext, ENT_QUOTES, 'UTF-8'));
 
             // UPDATE PAGES TABLE
             if ($res = $db->query("UPDATE {pages} SET
             alias = '" . $this->filename . "',
-            title = '" . $this->blogtitle . "'
+            title = '" . $this->blogtitle . "',
+            meta_local = '" . $this->meta_local . "',
+            meta_keywords = '" . $this->meta_keywords . "'
             WHERE id = '" . $this->pageid . "'"))
             {
-                // UPDATE LOCAL META KEYWORDS
-                if (!$db->query("UPDATE {meta_local} SET
-                    name = 'keywords',
-                    content = '" . $this->metakeywords . "'
-                    WHERE page = '" . $this->pageid . "'
-                    AND name = 'keywords'"))
-                {   // could not insert, throw alert
-                    \YAWK\alert::draw("warning", "Failed to update keywords.", "Keywords could not be saved.", "", 5800);
-                }
-
-                // UPDATE LOCAL META DESCRIPTION
-                if (!$db->query("UPDATE {meta_local} SET
-                    content = '" . $this->metadescription . "'
-                    WHERE page = '" . $this->pageid . "'
-                    AND name = 'description' "))
-                {   // could not insert, throw alert
-                    \YAWK\alert::draw("warning", "Failed to update meta description.", "Meta description could not be saved.", "", 5800);
-                }
 
                 // UPDATE BLOG ENTRY ITSELF
                 if ($this->date_unpublish === "0000-00-00 00:00:00" || (empty($this->date_unpublish)))
@@ -1670,11 +1662,11 @@ namespace YAWK\PLUGINS\BLOG {
 
             // add new blog into database
             if ($db->query("INSERT INTO {blog} (sort, published, name, description, icon)
-	                        VALUES(1,
-	                        '" . $published . "',
-	                        '" . $name . "',
-	                        '" . $description . "',
-	                        '" . $icon . "')"))
+                            VALUES(1,
+                            '" . $published . "',
+                            '" . $name . "',
+                            '" . $description . "',
+                            '" . $icon . "')"))
             {
                 // get ID of this blog; we need the blogID to assign it correctly to the static page afterwards
                 if (!$res_blog = $db->query("SELECT MAX(id), MAX(sort) FROM {blog}"))
@@ -1737,7 +1729,7 @@ namespace YAWK\PLUGINS\BLOG {
          * @param string $weblink Any URL (external Link, related information)
          * @return bool
          */
-        function createItem($db, $blogid, $title, $subtitle, $published, $teasertext, $blogtext, $date_publish, $date_unpublish, $thumbnail, $youtubeUrl, $weblink)
+        function createItem($db, $blogid, $title, $subtitle, $published, $teasertext, $blogtext, $date_publish, $date_unpublish, $thumbnail, $youtubeUrl, $weblink, $meta_local, $meta_keywords)
         {
             /** @var $db \YAWK\db */
 
@@ -1761,7 +1753,7 @@ namespace YAWK\PLUGINS\BLOG {
                 // ## add new page to db pages
                 // convert html special chars
                 $title = htmlentities($title);
-                if (!$res = $db->query("INSERT INTO {pages} (id,published,date_created,date_publish,alias,title,locked,blogid)
+                if (!$res = $db->query("INSERT INTO {pages} (id,published,date_created,date_publish,alias,title,locked,blogid,meta_local,meta_keywords)
                         VALUES ('" . $page_id . "',
                                 '" . $published . "',
                                 '" . $date_created . "',
@@ -1769,34 +1761,16 @@ namespace YAWK\PLUGINS\BLOG {
                                 '" . $alias . "',
                                 '" . $title . "',
                                 '" . $locked . "',
-                                '" . $this->blogid . "')")
+                                '" . $this->blogid . "',
+                                '" . $this->meta_local . "',
+                                '" . $this->meta_keywords . "')")
                 ) {   // q insert page into database failed
                     //  \YAWK\alert::draw("danger", "Error: ", "Could not insert blog page into database.", "", "3800");
                     \YAWK\sys::setSyslog($db, 7, 1, "failed to insert blog page $alias into database", 0, 0, 0, 0);
                     return false;
                 }
                 else
-                {   // all good, go ahead...
-                    // generate local meta tags
-                    $desc = "description";
-                    $keyw = "keywords";
-                    $words = "";
-                    $desc = htmlentities($desc);
-                    $keyw = htmlentities($keyw);
-                    // add local meta tags to db meta_local
-                    if (!$res = $db->query("INSERT INTO {meta_local} (name,page,content)
-                        VALUES ('" . $desc . "', '" . $page_id . "', '" . $title . "')")
-                    ) {   // insert local meta description failed, throw error
-                        // \YAWK\alert::draw("warning", "Warning: ", "Could not store local meta description in database!", "", "3800");
-                        \YAWK\sys::setSyslog($db, 7, 1, "failed to store local meta description of page ID $page_id", 0, 0, 0, 0);
-                    }
-                    if (!$res = $db->query("INSERT INTO {meta_local} (name,page,content)
-                        VALUES ('" . $keyw . "','" . $page_id . "','" . $words . "')")
-                    ) {   // insert local meta keywords failed, throw error
-                        // \YAWK\alert::draw("warning", "Warning: ", "Could not store local meta keywords in database!", "", "3800");
-                        \YAWK\sys::setSyslog($db, 7, 1, "failed to store local meta keywords of page ID $page_id", 0, 0, 0, 0);
-                    }
-
+                {
                     /* generate ID manually to prevent id holes    */
                     if ($res_blog = $db->query("SELECT MAX(id), MAX(sort) FROM {blog_items}"))
                     {   // add ID
@@ -1930,7 +1904,7 @@ namespace YAWK\PLUGINS\BLOG {
             }
 
             // ## add new page to db pages
-            if ($res = $db->query("INSERT INTO {pages} (id,gid,published,date_created,date_publish,alias,title,locked,blogid)
+            if ($res = $db->query("INSERT INTO {pages} (id,gid,published,date_created,date_publish,alias,title,locked,blogid,meta_local,meta_keywords)
                         VALUES ('" . $pageid . "',
                                 '" . $gid . "',
                                 '" . $published . "',
@@ -1939,7 +1913,9 @@ namespace YAWK\PLUGINS\BLOG {
                                 '" . $alias . "',
                                 '" . $this->blogtitle . "',
                                 '" . $locked . "',
-                                '" . $this->blogid . "')"))
+                                '" . $this->blogid . "',
+                                '" . $this->meta_local . "',
+                                '" . $this->meta_keywords . "')"))
             {   // select max id from blog_items
                 if ($res = $db->query("SELECT MAX(id) FROM {blog_items}"))
                 {   // fetch data and prepare ID
@@ -2032,21 +2008,7 @@ namespace YAWK\PLUGINS\BLOG {
                                 '" . $this->weblink . "',
                                 '" . $this->thumbnail . "')"))
                     {   // blog items inserted into database
-                        // generate local meta tags
-                        $desc = "description";
-                        $keyw = "keywords";
-                        $words = "";
-                        // insert local meta description to db meta_local
-                        if (!$res = $db->query("INSERT INTO {meta_local} (name,page,content)
-                        VALUES ('" . $desc . "', '" . $id . "', '" . $this->blogtitle . "')"))
-                        {   // inset local meta description failed
-                            // \YAWK\alert::draw("warning", "Warning: ", "Could not store meta description.", "", "3800");
-                        }
-                        if (!$res = $db->query("INSERT INTO {meta_local} (name,page,content)
-                        VALUES ('" . $keyw . "','" . $id . "','" . $words . "')"))
-                        {   // insert local meta keywords
-                            // \YAWK\alert::draw("warning", "Warning: ", "Could not store meta description.", "", "3800");
-                        }
+
                         // prepare loading page content
                         $content = "<?php \$blog_id = $this->blogid; \$item_id = $id; \$full_view = 1; include 'system/plugins/blog/blog.php'; ?>";
                         // prepare file
