@@ -131,6 +131,47 @@ namespace YAWK {
             return false;
         }
 
+        /**
+         * @brief get and return meta tags of requested page as array
+         * @param object $db database
+         * @param int $id affected page ID
+         * @param string $type meta description
+         * @return array|bool meta tags as array
+         */
+        public static function getMetaTagsArray($db, $id)
+        {   /** @param $db db $res */
+            if ($row = $db->query("SELECT meta_local, meta_keywords
+                                  FROM {pages}
+                                  WHERE id = '".$id."'"))
+            {   // output meta content description
+                $res = $row->fetch_assoc();
+                if (is_array($res)
+                    && (!empty($res['meta_local'])
+                        && (!empty($res['meta_keywords'])))){
+                    return $res;
+                }
+                else {
+                    // meta tags not set, get global meta tags
+                    $res['meta_local'] = \YAWK\settings::getSetting($db, "globalmetatext");
+                    $res['meta_keywords'] = \YAWK\settings::getSetting($db, "globalmetakeywords");
+                    if (!empty($res['meta_local']) && (!empty($res['meta_keywords']))){
+                        return $res;
+                    }
+                    else {
+                        $res['meta_local'] = "Unable to get Meta Description for this page. Neither local or global meta description found.";
+                        $res['meta_keywords'] = "Unable to get Meta Keywords for this page. Neither local or global meta keywords found.";
+                        return $res;
+                    }
+                }
+            }
+            else {
+                // throw alert
+                sys::setSyslog($db, 7, 1, "failed to fetch meta tags for page ID $id", 0, 0, 0, 0);
+                $res['meta_local'] = "Unable to get Meta Description for this page. Neither local or global meta description found.";
+                $res['meta_keywords'] = "Unable to get Meta Keywords for this page. Neither local or global meta keywords found.";
+                return $res;
+            }
+        }
 
         /**
          * @brief toggle page status online or offline (plus corresponding menu entries)
