@@ -413,10 +413,14 @@ echo"<ol class=\"breadcrumb\">
                 </div>
                 <div class="box-body" style="display: block;">
                     <!-- LOCAL META SITE DESCRIPTION -->
-                    <label for="metadescription"><?php echo $lang['META_DESC']; ?></label>
+                    <label for="meta_local"><?php echo $lang['META_DESC']; ?>
+                        <?php echo backend::printTooltip($lang['TT_PAGE_METALOCAL']); ?>
+                    </label>
                     <input type="text" size="64" id="meta_local" class="form-control" maxlength="255" placeholder="<?php echo $lang['META_DESC_PLACEHOLDER']; ?>" name="meta_local" value="<?php print $page->meta_local; ?>">
                     <!-- LOCAL META SITE KEYWORDS -->
-                    <label for="metakeywords"><?php echo $lang['META_KEYWORDS']; ?></label>
+                    <label for="meta_keywords"><?php echo $lang['META_KEYWORDS']; ?>
+                        <?php echo backend::printTooltip($lang['TT_PAGE_KEYWORDS']); ?>
+                    </label>
                     <input type="text" size="64" id="meta_keywords" class="form-control" placeholder="<?php echo $lang['META_KEYWORDS_PLACEHOLDER']; ?>" name="meta_keywords" value="<?php print $page->meta_keywords; ?>">
                 </div>
             </div>
