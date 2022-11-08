@@ -32,7 +32,6 @@ if(isset($_POST['save'])){
     $page->gid = $db->quote($_POST['gid']);
     $page->title = $db->quote($_POST['title']);
     $page->alias = $db->quote($_POST['alias']);
-    $page->menu = $db->quote($_POST['menu']);
     $page->searchstring = $db->quote($_POST['searchstring']);
     $page->published = $db->quote($_POST['published']);
     $page->date_publish = $db->quote($_POST['date_publish']);
@@ -442,54 +441,4 @@ echo"<ol class=\"breadcrumb\">
                     <input id="bgimage" type="text" size="64" class="form-control" placeholder="media/images/background.jpg" name="bgimage" value="<?php print $page->bgimage;  ?>">
                 </div>
             </div>
-
-            <!-- SUBMENU SELECTOR -->
-            <div class="box box-default">
-                <div class="box-header with-border">
-                    <h3 class="box-title"><i class="fa fa-bars"></i>&nbsp;&nbsp;<?php echo $lang['SUBMENU']; ?> <small><?php echo $lang['ADD_PAGE_MENU'] ?></small></h3>
-                    <!-- box-tools -->
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                        </button>
-                    </div>
-                    <!-- /.box-tools -->
-                </div>
-                <div class="box-body" style="display: block;">
-                    <!-- SUB MENU SELECTOR -->
-                    <label for="menu"><?php echo $lang['SUBMENU']; ?></label>
-                    <select name="menu" id="menu" class="form-control">
-
-                        <?php
-                        // get submenu ID
-                        $subMenuID = sys::getSubMenu($db, $page->id);
-                        ?>
-                        <option value="<?php print $subMenuID ?>"><?php print sys::getMenuItem($db, $page->id); ?></option>
-                        <?php
-                        if ($subMenuID == 0)
-                        {
-                            print "<option value=\"0\" selected aria-selected=\"true\">-- No Menu --</option>";
-                        }
-                        else
-                        {
-                            print "<option value=\"0\">-- No Menu --</option>";
-                        }
-
-                        foreach(YAWK\sys::getMenus($db) as $menue){
-                            print "<option value=\"".$menue['id']."\"";
-                            if (isset($_POST['menu'])) {
-                                if($_POST['menu'] === $menue['id']){
-                                    print " selected=\"selected\"";
-                                }
-                                else if($page->menu === $menue['id'] && !$_POST['menu']){
-                                    print " selected=\"selected\"";
-                                }
-                            }
-                            print ">".$menue['name']."</option>";
-                        }
-                        ?>
-                    </select>
-                </div>
-            </div>
-        </div>
-    </div>
 </form>
