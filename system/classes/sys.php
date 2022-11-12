@@ -43,88 +43,88 @@ namespace YAWK {
                     return false;
                 }
                 else    // valid template ID, go ahead and...
-                    {   // walk through required assets array
-                        foreach ($assets as $asset => $type)
-                        {
-                            // check if asset is loaded
-                            if ($res = $db->query(("SELECT asset FROM {assets}
+                {   // walk through required assets array
+                    foreach ($assets as $asset => $type)
+                    {
+                        // check if asset is loaded
+                        if ($res = $db->query(("SELECT asset FROM {assets}
                             WHERE asset = '" . $asset . "' 
                             AND templateID = '".$templateID."'")))
+                        {
+                            if ($row = (mysqli_fetch_row($res)))
                             {
-                                if ($row = (mysqli_fetch_row($res)))
+                                if (count($row) > 0)
                                 {
-                                    if (count($row) > 0)
-                                    {
-                                        // asset found, set loop counter +1
-                                        $successful++;
-                                    }
+                                    // asset found, set loop counter +1
+                                    $successful++;
                                 }
-                                else    // asset not found
-                                {   // check if switch is true and asset should be loaded...
-                                    if (isset($switch) && ($switch == 'true'))
-                                    {   // select data from asset types db
-                                        if ($res = $db->query("SELECT * FROM {assets_types} WHERE asset = '".$asset."'"))
-                                        {   // foreach result
-                                            while ($row = (mysqli_fetch_assoc($res)))
-                                            {
-                                                // check link (internal or external)
-                                                if (isset($row['internal']) && (!empty($row['internal'])))
-                                                {   // internal link
-                                                    $row['link'] = $row['internal'];
-                                                }
-                                                elseif (isset($row['url1']) && (!empty($row['url1'])))
-                                                {   // external link
-                                                    $row['link'] = $row['url1'];
-                                                }
+                            }
+                            else    // asset not found
+                            {   // check if switch is true and asset should be loaded...
+                                if (isset($switch) && ($switch == 'true'))
+                                {   // select data from asset types db
+                                    if ($res = $db->query("SELECT * FROM {assets_types} WHERE asset = '".$asset."'"))
+                                    {   // foreach result
+                                        while ($row = (mysqli_fetch_assoc($res)))
+                                        {
+                                            // check link (internal or external)
+                                            if (isset($row['internal']) && (!empty($row['internal'])))
+                                            {   // internal link
+                                                $row['link'] = $row['internal'];
+                                            }
+                                            elseif (isset($row['url1']) && (!empty($row['url1'])))
+                                            {   // external link
+                                                $row['link'] = $row['url1'];
+                                            }
 
-                                                // load required asset into database
-                                                if ($db->query("INSERT INTO {assets} (templateID, type, sortation, asset, link) VALUES ('" . $templateID . "', '" . $type . "', '" . $row['sortation']. "','" . $row['asset'] . "', '" . $row['link'] . "')"))
-                                                {   // asset successfully loaded
-                                                    $successful++;
-                                                }
-                                                else
-                                                {   // no success - do nothing
-                                                    return \YAWK\alert::draw("danger", "ERROR", "Unable to insert Asset into Assets database. Please add this asset $asset manually.", "", 12000);
-                                                }
+                                            // load required asset into database
+                                            if ($db->query("INSERT INTO {assets} (templateID, type, sortation, asset, link) VALUES ('" . $templateID . "', '" . $type . "', '" . $row['sortation']. "','" . $row['asset'] . "', '" . $row['link'] . "')"))
+                                            {   // asset successfully loaded
+                                                $successful++;
+                                            }
+                                            else
+                                            {   // no success - do nothing
+                                                return \YAWK\alert::draw("danger", "ERROR", "Unable to insert Asset into Assets database. Please add this asset $asset manually.", "", 12000);
                                             }
                                         }
-                                        else
-                                        {
-                                            // required asset not found in database - add manually!
-                                            // die ('required asset is not in database - add manually!');
-                                            return \YAWK\alert::draw("danger", "ERROR", "Required Asset is not in the database! Please check, if this asset is registered!", "", 12000);
-                                        }
-                                        // select data of this asset
                                     }
                                     else
-                                    {   // switch is false, means enable asset is not requested
-                                        return \YAWK\alert::draw("warning", "Warning - please check this!", "Unable to load asset! $asset Please check required template assets manually!", "", 12000);
+                                    {
+                                        // required asset not found in database - add manually!
+                                        // die ('required asset is not in database - add manually!');
+                                        return \YAWK\alert::draw("danger", "ERROR", "Required Asset is not in the database! Please check, if this asset is registered!", "", 12000);
                                     }
+                                    // select data of this asset
+                                }
+                                else
+                                {   // switch is false, means enable asset is not requested
+                                    return \YAWK\alert::draw("warning", "Warning - please check this!", "Unable to load asset! $asset Please check required template assets manually!", "", 12000);
                                 }
                             }
-                            else
-                                {   // error selecting asset from database
-                                    return \YAWK\alert::draw("warning", "Warning - this widget requires an additional asset!", "Asset $asset not loaded! Please load this asset within system/asset settings.", "", 12000);
-                                }
-                        }
-
-                        // check if count and assetItems match to see if everything worked like expected
-                        if ($assetItems === $successful)
-                        {   // all assets loaded
-                            // die ('Required assset was not loaded');
-                            return \YAWK\alert::draw("success", "Asset System Information", "I have found out that the required asset was not loaded. I've successfully fixed this for you.", "", 6200);
                         }
                         else
-                            {   // not all asset items could get loaded...
-                                // die ('Unable to load all assets');
-                                return \YAWK\alert::draw("warning", "Warning - please check this!", "Unable to load asset! $asset Please check required template assets manually!", "", 12000);
-                            }
+                        {   // error selecting asset from database
+                            return \YAWK\alert::draw("warning", "Warning - this widget requires an additional asset!", "Asset $asset not loaded! Please load this asset within system/asset settings.", "", 12000);
+                        }
                     }
+
+                    // check if count and assetItems match to see if everything worked like expected
+                    if ($assetItems === $successful)
+                    {   // all assets loaded
+                        // die ('Required assset was not loaded');
+                        return \YAWK\alert::draw("success", "Asset System Information", "I have found out that the required asset was not loaded. I've successfully fixed this for you.", "", 6200);
+                    }
+                    else
+                    {   // not all asset items could get loaded...
+                        // die ('Unable to load all assets');
+                        return \YAWK\alert::draw("warning", "Warning - please check this!", "Unable to load asset! $asset Please check required template assets manually!", "", 12000);
+                    }
+                }
             }
             else
-                {   // no assets are set
-                    return false;
-                }
+            {   // no assets are set
+                return false;
+            }
         }
 
         /**
@@ -334,22 +334,22 @@ namespace YAWK {
         public static function getRobotsText($db, $path)
         {
             $robotsText = "$path/robots.txt";
-                $file = file_get_contents($robotsText);
-                if (!empty($file))
+            $file = file_get_contents($robotsText);
+            if (!empty($file))
+            {
+                return $file;
+            }
+            else
+            {   // try to get robots.txt from database
+                if ($file = \YAWK\settings::getLongSetting($db, "robotsText-long"))
                 {
                     return $file;
                 }
                 else
-                    {   // try to get robots.txt from database
-                        if ($file = \YAWK\settings::getLongSetting($db, "robotsText-long"))
-                        {
-                            return $file;
-                        }
-                        else
-                        {   // db setting robotsText-long is empty
-                            return false;
-                        }
-                    }
+                {   // db setting robotsText-long is empty
+                    return false;
+                }
+            }
         }
 
         /**
@@ -368,9 +368,9 @@ namespace YAWK {
                 return true;
             }
             else
-                {
-                    return false;
-                }
+            {
+                return false;
+            }
         }
 
         /**
@@ -404,10 +404,10 @@ namespace YAWK {
                             }
                         }
                         else
-                            {
-                                $result[] = $name;
-                                $files_count = $files_count + 1;
-                            }
+                        {
+                            $result[] = $name;
+                            $files_count = $files_count + 1;
+                        }
                     }
                 }
             }
@@ -499,25 +499,25 @@ namespace YAWK {
                 return false;
             }
             else
+            {
+                $dir = dir($source);
+                while (false !== $entry = $dir->read())
                 {
-                    $dir = dir($source);
-                    while (false !== $entry = $dir->read())
+                    // Skip pointers
+                    if ($entry == '.' || $entry == '..')
                     {
-                        // Skip pointers
-                        if ($entry == '.' || $entry == '..')
-                        {
-                            continue;
-                        }
-                        // Deep copy directories
-                        if (self::xcopy("$source/$entry", "$dest/$entry", $permissions))
-                        {
-                            // return false;
-                        }
+                        continue;
                     }
-                    // Clean up
-                    $dir->close();
-                    return true;
+                    // Deep copy directories
+                    if (self::xcopy("$source/$entry", "$dest/$entry", $permissions))
+                    {
+                        // return false;
+                    }
                 }
+                // Clean up
+                $dir->close();
+                return true;
+            }
         }
 
         /**
@@ -714,9 +714,9 @@ namespace YAWK {
                 $d->close();
             }
             else
-                {
-                    copy( $source, $target );
-                }
+            {
+                copy( $source, $target );
+            }
         }
 
         /**
@@ -750,9 +750,9 @@ namespace YAWK {
                     $status = $off;
                 }
                 else
-                    {
-                        $status = "error: \$i status undefined";
-                    }
+                {
+                    $status = "error: \$i status undefined";
+                }
             }
             else
             {   // ID not set or not a number
@@ -848,14 +848,14 @@ namespace YAWK {
             // draw offline message
             echo "<div class=\"container-fluid\">";
             echo "<div class=\"row\">";
-                echo "<div class=\"col-md-2\"></div>";
-                echo "<div class=\"col-md-8 text-center\">
+            echo "<div class=\"col-md-2\"></div>";
+            echo "<div class=\"col-md-8 text-center\">
                         <br><br>
                         <img src=\"".$offlineimg."\" class=\"img-responsive mx-auto d-block animated flipInX\" title=\"This website is under construction. Come back again later.\">
                         <br><br>
                         <div class=\"animated fadeIn\">".$offlinemsg."</div>
                       </div>";
-                echo "<div class=\"col-md-2\"></div>";
+            echo "<div class=\"col-md-2\"></div>";
             echo "</div>";
             echo "</div>";
             exit;
@@ -921,9 +921,9 @@ namespace YAWK {
                 $u_agent = $useragent;
             }
             else
-                {
-                    $u_agent = $_SERVER['HTTP_USER_AGENT'];
-                }
+            {
+                $u_agent = $_SERVER['HTTP_USER_AGENT'];
+            }
             $bname = 'Unknown';
             $platform = 'Unknown';
             $ub = '';
@@ -1142,9 +1142,9 @@ namespace YAWK {
                 return rmdir($dir);
             }
             else
-                {
-                    return false;
-                }
+            {
+                return false;
+            }
         }
 
         /**
@@ -1264,7 +1264,7 @@ namespace YAWK {
                 {
                     $groupsArray[] = $row;
                 }
-            return $groupsArray;
+                return $groupsArray;
             }
             // q failed
             return false;
@@ -1283,23 +1283,6 @@ namespace YAWK {
 <base href=\"".$host."\">
 <meta http-equiv=\"Content-Type\" content=\"text/html\">
 <link rel=\"shortcut icon\" href=\"favicon.ico\" type=\"image/x-icon\">";
-            $get_localtags = $db->query("SELECT name, content
-                    FROM {meta_local}
-                    WHERE page = '" . $currentpage->id . "'");
-            while ($row = mysqli_fetch_row($get_localtags)) {
-                if (isset($row['1']) && !empty($row['1'])) {
-                    echo "<meta name=\"" . $row[0] . "\" content=\"" . $row[1] . "\" />";
-                } else {
-                    $get_globaltags = $db->query("SELECT content
-		                        FROM {meta_global}
-		                        WHERE name = 'description'");
-                    $row = mysqli_fetch_row($get_globaltags);
-                    while ($i > 0) {
-                        echo "<meta name=\"description\" content=\"" . $row[0] . "\" />";
-                        $i--;
-                    }
-                }
-            }
         }
 
         /**
@@ -1335,14 +1318,14 @@ namespace YAWK {
                     return "0";
                 }
                 else
-                    {
-                        return $row[0];
-                    }
+                {
+                    return $row[0];
+                }
             }
             else
-                {
-                    return "0";
-                }
+            {
+                return "0";
+            }
         }
 
         /**
@@ -1457,7 +1440,7 @@ namespace YAWK {
                 {
                     $pagesArray[] = $res;
                 }
-                return $pagesArray ?? false;
+                return $pagesArray;
             }
             else
             {
@@ -1687,19 +1670,19 @@ namespace YAWK {
 
                 if ($t >= 7 && $t < 13)
                 {
-                $time_ago = $lang['A_WEEK_AGO'];
+                    $time_ago = $lang['A_WEEK_AGO'];
                 }
                 elseif ($t >= 14 && $t < 20)
                 {
-                $time_ago = $lang['TWO_WEEKS_AGO'];
+                    $time_ago = $lang['TWO_WEEKS_AGO'];
                 }
                 elseif ($t >= 21 && $t < 27)
                 {
-                $time_ago = $lang['THREE_WEEKS_AGO'];
+                    $time_ago = $lang['THREE_WEEKS_AGO'];
                 }
                 elseif ($t >= 28 && $t < 31)
                 {
-                $time_ago = $lang['FOUR_WEEKS_AGO'];
+                    $time_ago = $lang['FOUR_WEEKS_AGO'];
                 }
                 else if ($t > 1)
                 {
@@ -1835,19 +1818,19 @@ namespace YAWK {
                     }
                 }
                 else
-                    {   // unable to query database, set notification ON default
-                        $syslogSettings['active'] = 1;
-                        $syslogSettings['notify'] = 1;
-                        return $syslogSettings;
-                    }
-                    return $syslogSettings;
-            }
-            else
-                {   // no category ID was sent, set notification ON default
+                {   // unable to query database, set notification ON default
                     $syslogSettings['active'] = 1;
                     $syslogSettings['notify'] = 1;
                     return $syslogSettings;
                 }
+                return $syslogSettings;
+            }
+            else
+            {   // no category ID was sent, set notification ON default
+                $syslogSettings['active'] = 1;
+                $syslogSettings['notify'] = 1;
+                return $syslogSettings;
+            }
         }
 
         /**
@@ -1913,9 +1896,9 @@ namespace YAWK {
                     $seen = 0;  // means notification WILL be drawn
                 }
                 else
-                    {   // set syslog entry to state 'seen'
-                        $seen = 1;  // means notification will NOT be drawn
-                    }
+                {   // set syslog entry to state 'seen'
+                    $seen = 1;  // means notification will NOT be drawn
+                }
 
                 // only add syslog entry if category is enabled for logging (active)
                 if ($syslogSettings[0]['active'] == 1)
@@ -1939,14 +1922,14 @@ namespace YAWK {
                     }
                 }
                 else
-                    {   // syslog disabled for this category
-                        return null;
-                    }
-            }
-            else
-                {   // syslog is disabled
+                {   // syslog disabled for this category
                     return null;
                 }
+            }
+            else
+            {   // syslog is disabled
+                return null;
+            }
         }
 
         /**
@@ -1965,7 +1948,7 @@ namespace YAWK {
                                        ORDER BY log.log_date DESC"))
             {   // syslog entry set
                 while ($row = mysqli_fetch_assoc($res))
-                // check if array is set and not empty
+                    // check if array is set and not empty
                 {   // build syslog results array
                     $syslogResults[] = $row;
                 }
@@ -1975,9 +1958,9 @@ namespace YAWK {
                     return $syslogResults;
                 }
                 else
-                    {   // array is not set or empty
-                        return false;
-                    }
+                {   // array is not set or empty
+                    return false;
+                }
             }
             else
             {   // failed to query syslog data from db
@@ -2112,9 +2095,9 @@ namespace YAWK {
                 return true;
             }
             else
-                {   // failed to return ini file
-                    return false;
-                }
+            {   // failed to return ini file
+                return false;
+            }
         }
 
         /**
@@ -2149,9 +2132,9 @@ namespace YAWK {
                 return true;
             }
             else
-                {
-                    return false;
-                }
+            {
+                return false;
+            }
         }
 
     } // ./class widget
