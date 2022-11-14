@@ -32,6 +32,7 @@ see what's going on and what has been done over the past few days, weeks, months
 <ul>
 <li>Update https://test.yawk.io to current version</li>
 <li>Add feature showcase</li>
+<li>Update CSS Framework to completely support Bootstrap 5.x</li>
 <li>Add support page <small><i>(and ticket system)</i></small></li>
 <li>Add admin handbook <small><i>(pdf and / or html)</i></small></li>
 <li>Add developer manual <small><i>(https://docs.yawk.io)</i></small></li>
