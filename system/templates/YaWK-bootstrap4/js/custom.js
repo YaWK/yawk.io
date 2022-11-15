@@ -1,4 +1,4 @@
-$(document).ready(function () 
+$(document).ready(function ()
 {
     // SMOOTH SCROLL TO TOP
     // to activate smooth scroll from bottom to top SET class="scrollup" on the element you wish to send you upwards
@@ -8,30 +8,42 @@ $(document).ready(function ()
         }, 600);
         return false;
     });
-    
+
+    // Frontend Switch (dark / light mode)
+    // store ID within localstorage to reduce database calls on page load
+    $('#darkMode').click(function(){
+        var id = $('#darkMode').data('id');
+        document.cookie='frontendSwitchID='+id;
+    });
+    $('#lightMode').click(function(){
+        var id = $('#lightMode').data('id');
+        document.cookie='frontendSwitchID='+id;
+    });
+
+
     // FADE OUT ANY ELEMENT ON SCROLL DOWN
     // If you want to fade out an element on scroll down, set class="scrollDownFadeOut"
     $(window).scroll(function() {
-  		$(".scrollDownFadeOut").css("opacity", 1 - $(window).scrollTop() / 1400);
-	});
+        $(".scrollDownFadeOut").css("opacity", 1 - $(window).scrollTop() / 1400);
+    });
 
     // KEEP DIV IN VIEWPORT
-	// to keep any div box in the viewport after scrolling down, set class="scrollingDiv"
+    // to keep any div box in the viewport after scrolling down, set class="scrollingDiv"
     var $scrollingDiv = $("#scrollingDiv");
-      $(window).scroll(function(){            
-            $scrollingDiv
-                .stop()
-                .animate({"marginTop": ($(window).scrollTop() )}, 0);         
-        }); 
-    
+    $(window).scroll(function(){
+        $scrollingDiv
+            .stop()
+            .animate({"marginTop": ($(window).scrollTop() )}, 0);
+    });
+
     // SMOOTH SCROLL TO ANCHORS
     // if you want your internal links to smooth scroll, set class="sliding-link" target must be a div with id="yourtag"
-$(".sliding-link").click(function(e) {
-    e.preventDefault();
-    var aid = $(this).attr("href");
-    $('html,body').animate({scrollTop: $(aid).offset().top - 150},'slow');
-    window.location.hash = aid;
-});
+    $(".sliding-link").click(function(e) {
+        e.preventDefault();
+        var aid = $(this).attr("href");
+        $('html,body').animate({scrollTop: $(aid).offset().top - 150},'slow');
+        window.location.hash = aid;
+    });
 
     // set class="protected" to hide r.mouse context menu
     /*
@@ -57,19 +69,19 @@ $(".sliding-link").click(function(e) {
         if (terminate === true){
             // just to be sure - ask the user once again
             var terminateUser = window.confirm("Bist Du Dir wirklich ganz sicher?\n"+
-            "Diese Aktion kann nicht rueckgaengig gemacht werden.");
+                "Diese Aktion kann nicht rueckgaengig gemacht werden.");
             if (terminateUser === true){
                 // the php file who set the user off in db
-                  $.get('system/templates/YaWK-bootstrap3/js/terminate-user.php', function(data) {
-                   if (data === "true"){
-                       setTimeout ("window.location='logout.html'", 0);
-                      //  alert ("it worked!");
-                   }
-                      else {
-                       alert ("Fehler: "+data);
-                   }
-                   // alert("Server Returned: " + data); // true if it worked
-                 });
+                $.get('system/templates/YaWK-bootstrap3/js/terminate-user.php', function(data) {
+                    if (data === "true"){
+                        setTimeout ("window.location='logout.html'", 0);
+                        //  alert ("it worked!");
+                    }
+                    else {
+                        alert ("Fehler: "+data);
+                    }
+                    // alert("Server Returned: " + data); // true if it worked
+                });
             }
         }
     });
