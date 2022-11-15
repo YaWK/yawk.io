@@ -800,9 +800,9 @@ namespace YAWK {
                     if (!empty($darkThemeID) && !empty($lightThemeID))
                     {   // html markup that draws our darkmode switch
                         $templateSwitchMarkup = "<div id=\"frontendSwitch\" class=\"pull-right\">
-                        <a href=\"index.php?templateID=".$darkThemeID."\"><i id=\"darkMode\" data-id=\"".$darkThemeID."\" class=\"fa fa-moon-o\"></i></a> 
+                        <a href=\"index.php?templateID=".$darkThemeID."\" class=\"text-muted\"><i id=\"darkMode\" data-id=\"".$darkThemeID."\" class=\"fa fa-moon-o\"></i></a> 
                             <span style=\"color:#ccc; margin-left:5px; margin-right:5px;\">|</span> 
-                        <a href=\"index.php?templateID=".$lightThemeID."\"><i id=\"lightMode\" data-id=\"".$lightThemeID."\" class=\"fa fa-sun-o\"></i></a></div>";
+                        <a href=\"index.php?templateID=".$lightThemeID."\" class=\"text-muted\"><i id=\"lightMode\" data-id=\"".$lightThemeID."\" class=\"fa fa-sun-o\"></i></a></div>";
                     }
                 }
 
