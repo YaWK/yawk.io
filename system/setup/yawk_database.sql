@@ -483,7 +483,7 @@ INSERT INTO `cms_settings` (`property`, `value`, `longValue`, `type`, `sortation
 ('backendFXtime', '820', '', 20, 7, 1, 'BACKENDFXTIME_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('backendFXtype', 'fadeIn In', '', 20, 6, 1, 'BACKENDFXTYPE_LABEL', '', '', '', 'form-control', 'select', '', '', 'fadeIn,Fade In:slideDown,Slide Down'),
 ('backendLanguage', 'de-DE', '', 19, 4, 1, 'BACKENDLANGUAGE_LABEL', '', '', '', 'form-control', '', '', '', ''),
-('backendLayout', 'sidebar-collapse sidebar-mini', '', 2, 2, 1, 'BACKENDLAYOUT_LABEL', '', '', '', 'form-control', 'select', '', 'BACKENDLAYOUT_DESC', 'fixed,Fixed:sidebar-collapse,Sidebar Collapsed:sidebar-collapse sidebar-mini,Sidebar Mini Collapsed:sidebar-mini,Sidebar Mini Open:layout-boxed,Layout Boxed:layout-top-nav,Layout Top Nav'),
+('backendLayout', 'sidebar-mini', '', 2, 2, 1, 'BACKENDLAYOUT_LABEL', '', '', '', 'form-control', 'select', '', 'BACKENDLAYOUT_DESC', 'fixed,Fixed:sidebar-collapse,Sidebar Collapsed:sidebar-collapse sidebar-mini,Sidebar Mini Collapsed:sidebar-mini,Sidebar Mini Open:layout-boxed,Layout Boxed:layout-top-nav,Layout Top Nav'),
 ('backendLogoSubText', '.io', '', 12, 2, 1, 'BACKENDLOGOSUBTEXT_LABEL', '', '', '', 'form-control', 'input', '', '', ''),
 ('backendLogoText', '', '', 12, 1, 1, 'BACKENDLOGOTEXT_LABEL', 'fa fa-bars', 'BACKENDLOGOTEXT_HEADING', 'BACKENDLOGOTEXT_SUBTEXT', 'form-control', 'input', '', '', ''),
 ('backendLogoUrl', '1', '', 12, 3, 1, 'BACKENDLOGOURL_LABEL', '', '', '', 'form-control', 'checkbox', '', '', ''),
